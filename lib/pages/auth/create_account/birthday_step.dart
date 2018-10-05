@@ -1,9 +1,10 @@
+import 'package:Openbook/blocs_provider.dart';
+import 'package:Openbook/pages/auth/create_account/create_account_bloc.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:intl/intl.dart';
 
 class AuthBirthdayStepPage extends StatefulWidget {
   @override
@@ -15,11 +16,14 @@ class AuthBirthdayStepPage extends StatefulWidget {
 
 class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final TextEditingController _controller = new TextEditingController();
+
+  CreateAccountBloc createAccountBloc;
 
   @override
   Widget build(BuildContext context) {
     var localizationService = LocalizationService.of(context);
+    var blocsProvider = OpenbookBlocsProvider.of(context);
+    createAccountBloc = blocsProvider.createAccountBloc;
 
     String whenBirthdayText =
         localizationService.trans('AUTH.CREATE_ACC.WHEN_BIRTHDAY');
@@ -27,9 +31,11 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
+            child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 40.0),
           child:
               _buildWhensYourBirthday(text: whenBirthdayText, context: context),
-        ),
+        )),
       ),
       backgroundColor: Color(0xFFFFA7BA),
       bottomNavigationBar: BottomAppBar(
@@ -107,35 +113,41 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
         ),
         Form(
             key: _formKey,
-            autovalidate: true,
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(children: <Widget>[
                     new Expanded(
-                        child: new TextFormField(
-                      //validator: (val) => isValidBirthday(val) ? null : 'Not a valid date',
-                      decoration: new InputDecoration(
-                        hintText: 'Enter your date of birth',
-                        border: OutlineInputBorder(),
-                        //border: UnderlineInputBorder(),
-                        //labelText: 'Birthday',
-                        //labelStyle: TextStyle(color: Colors.white),
-                        //hintStyle: TextStyle(color: Colors.white54),
-                        filled: true,
-                        fillColor: Colors.white,
+                        child: GestureDetector(
+                      onTap: () {
+                        _chooseDate(context, null);
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        child: IgnorePointer(
+                            child: StreamBuilder(
+                                stream: createAccountBloc.birthdayText,
+                                initialData: null,
+                                builder: (context, snapshot) {
+
+                                  var textController = new TextEditingController(text: snapshot.data);
+
+                                  return TextFormField(
+                                    textAlign: TextAlign.center,
+                                    enabled: false,
+                                    //validator: (val) => isValidBirthday(val) ? null : 'Not a valid date',
+                                    decoration: new InputDecoration(
+                                      hintText: 'MM-DD-YYYY',
+                                      border: OutlineInputBorder(),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    controller: textController,
+                                    //keyboardType: TextInputType.datetime,
+                                  );
+                                })),
                       ),
-                      //controller: _controller,
-                      //keyboardType: TextInputType.datetime,
                     )),
-                    new IconButton(
-                      icon: new Icon(Icons.arrow_drop_down),
-                      tooltip: 'Choose date',
-                      onPressed: (() {
-                        //_chooseDate(context, _controller.text);
-                      }),
-                    )
                   ]),
                 ),
               ],
@@ -146,7 +158,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
 
   Future _chooseDate(BuildContext context, String initialDateString) async {
     var now = new DateTime.now();
-    var initialDate = convertToDate(initialDateString) ?? now;
+    var initialDate = now;
     initialDate = (initialDate.year >= 1900 && initialDate.isBefore(now)
         ? initialDate
         : now);
@@ -159,21 +171,6 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
 
     if (result == null) return;
 
-    _controller.text = new DateFormat.yMd().format(result);
-  }
-
-  DateTime convertToDate(String input) {
-    try {
-      var d = new DateFormat.yMd().parseStrict(input);
-      return d;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  bool isValidBirthday(String birthday) {
-    if (birthday.isEmpty) return true;
-    var d = convertToDate(birthday);
-    return d != null && d.isBefore(new DateTime.now());
+    createAccountBloc.birthday.add(result);
   }
 }
