@@ -2,8 +2,14 @@ import 'package:Openbook/delegates/localization_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
+//import 'package:flutter/rendering.dart';
 
-void main() => runApp(new MyApp());
+void main() {
+  //debugPaintSizeEnabled = true;
+  //debugPaintBaselinesEnabled = true;
+  //debugPaintPointersEnabled = true;
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -29,6 +35,9 @@ class MyApp extends StatelessWidget {
           return supportedLocales.first;
         },
         theme: new ThemeData(
+            buttonTheme: ButtonThemeData(
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(2.0))),
             // This is the theme of your application.
             //
             // Try running your application with "flutter run". You'll see the
