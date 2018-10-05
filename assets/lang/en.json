@@ -3,5 +3,6 @@
   "AUTH.GOT_ACCOUNT": "Got an account?",
   "AUTH.LOGIN": "Log in",
   "AUTH.CREATE_ACCOUNT": "Create an account",
-  "AUTH.OR": "or"
+  "AUTH.OR": "or",
+  "AUTH.CREATE_ACC.LETS_GET_STARTED": "Let's get started!"
 }

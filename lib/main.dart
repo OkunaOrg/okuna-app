@@ -1,4 +1,6 @@
 import 'package:Openbook/delegates/localization_delegate.dart';
+import 'package:Openbook/pages/auth/birthday_step.dart';
+import 'package:Openbook/pages/auth/get_started.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
@@ -48,6 +50,10 @@ class MyApp extends StatelessWidget {
             // counter didn't reset back to zero; the application is not restarted.
             primarySwatch: Colors.orange,
             fontFamily: 'NunitoSans'),
-        routes: {'/': (BuildContext context) => AuthSplashPage()});
+        routes: {
+          '/': (BuildContext context) => AuthSplashPage(),
+          '/auth/get-started': (BuildContext context) => AuthGetStartedPage(),
+          '/auth/birthday_step': (BuildContext context) => AuthBirthdayStepPage(),
+        });
   }
 }
