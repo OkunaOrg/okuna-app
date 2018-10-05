@@ -46,7 +46,7 @@ class OBPrimaryButton extends StatelessWidget {
       height: height,
       child: FlatButton(
           textColor: Colors.white,
-          color: Colors.green,
+          color: Color(0xFF80E37A),
           child: this.child,
           onPressed: this.onPressed,
           shape: new RoundedRectangleBorder(

@@ -31,7 +31,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
               _buildWhensYourBirthday(text: whenBirthdayText, context: context),
         ),
       ),
-      backgroundColor: Colors.pink,
+      backgroundColor: Color(0xFFFFA7BA),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -116,15 +116,15 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                     new Expanded(
                         child: new TextFormField(
                       //validator: (val) => isValidBirthday(val) ? null : 'Not a valid date',
-                          style: TextStyle(color: Colors.white, fontSize: 18.0),
                       decoration: new InputDecoration(
                         hintText: 'Enter your date of birth',
-                        border: UnderlineInputBorder(),
-                        labelText: 'Birthday',
-                        labelStyle: TextStyle(color: Colors.white),
-                        hintStyle: TextStyle(color: Colors.white54)
-                        //filled: true,
-                        //fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        //border: UnderlineInputBorder(),
+                        //labelText: 'Birthday',
+                        //labelStyle: TextStyle(color: Colors.white),
+                        //hintStyle: TextStyle(color: Colors.white54),
+                        filled: true,
+                        fillColor: Colors.white,
                       ),
                       //controller: _controller,
                       //keyboardType: TextInputType.datetime,
