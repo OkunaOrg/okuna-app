@@ -22,7 +22,7 @@ class AuthBirthdayStepPage extends StatelessWidget {
         color: Colors.transparent,
         elevation: 0.0,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
