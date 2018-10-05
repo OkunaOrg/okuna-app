@@ -4,5 +4,8 @@
   "AUTH.LOGIN": "Log in",
   "AUTH.CREATE_ACCOUNT": "Create an account",
   "AUTH.OR": "or",
-  "AUTH.CREATE_ACC.LETS_GET_STARTED": "Let's get started!"
+  "AUTH.CREATE_ACC.LETS_GET_STARTED": "Let's get started!",
+  "AUTH.CREATE_ACC.PREVIOUS": "Previous",
+  "AUTH.CREATE_ACC.NEXT": "Next",
+  "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "When's your birthday?"
 }

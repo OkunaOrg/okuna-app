@@ -9,6 +9,10 @@ class AuthGetStartedPage extends StatelessWidget {
     var localizationService = LocalizationService.of(context);
     String letsGetStartedText =
         localizationService.trans('AUTH.CREATE_ACC.LETS_GET_STARTED');
+    String previousText =
+        localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String nextText =
+        localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return Scaffold(
       body: Center(
@@ -24,9 +28,9 @@ class AuthGetStartedPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: _buildPreviousButton(context: context),
+                child: _buildPreviousButton(context: context, text: previousText),
               ),
-              Expanded(child: _buildNextButton(context: context)),
+              Expanded(child: _buildNextButton(context: context, text: nextText)),
             ],
           ),
         ),
@@ -50,18 +54,18 @@ class AuthGetStartedPage extends StatelessWidget {
     );
   }
 
-  Widget _buildNextButton({@required BuildContext context}) {
+  Widget _buildNextButton({@required BuildContext context, @required String text}) {
     return OBPrimaryButton(
       isFullWidth: true,
       isLarge: true,
-      child: Text('Next', style: TextStyle(fontSize: 18.0)),
+      child: Text(text, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
         Navigator.pushNamed(context, '/auth/birthday_step');
       },
     );
   }
 
-  Widget _buildPreviousButton({@required BuildContext context}) {
+  Widget _buildPreviousButton({@required BuildContext context, @required String text}) {
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -72,7 +76,7 @@ class AuthGetStartedPage extends StatelessWidget {
             width: 10.0,
           ),
           Text(
-            'Previous',
+            text,
             style: TextStyle(fontSize: 18.0),
           )
         ],

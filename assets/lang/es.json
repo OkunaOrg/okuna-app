@@ -1,8 +1,11 @@
 {
-  "AUTH.HEADLINE": "🕊 A better social network.",
-  "AUTH.GOT_ACCOUNT": "Got an account?",
-  "AUTH.LOGIN": "Log in",
-  "AUTH.CREATE_ACCOUNT": "Create an account",
-  "AUTH.OR": "or",
-  "AUTH.CREATE_ACC.LETS_GET_STARTED": "Let's get started!"
+  "AUTH.HEADLINE": "🕊 Una red social mejor.",
+  "AUTH.GOT_ACCOUNT": "Tienes una cuenta?",
+  "AUTH.LOGIN": "Iniciar sesion",
+  "AUTH.CREATE_ACCOUNT": "Crea una cuenta",
+  "AUTH.OR": "o",
+  "AUTH.CREATE_ACC.LETS_GET_STARTED": "Comenzemos!",
+  "AUTH.CREATE_ACC.PREVIOUS": "Anterior",
+  "AUTH.CREATE_ACC.NEXT": "Siguiente",
+  "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "Cuando es tu cumpleaños?"
 }
