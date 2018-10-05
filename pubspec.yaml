@@ -13,6 +13,8 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  intl: ^0.15.7
+  rxdart: ^0.18.1
   flutter:
     sdk: flutter
   flutter_localizations:
