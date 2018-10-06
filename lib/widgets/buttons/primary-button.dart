@@ -48,7 +48,7 @@ class OBPrimaryButton extends StatelessWidget {
           textColor: Colors.white,
           color: Color(0xFF7ED321),
           child: this.child,
-          onPressed: this.onPressed,
+          onPressed: onPressed,
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(2.0))),
     );

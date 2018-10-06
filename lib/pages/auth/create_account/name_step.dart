@@ -6,19 +6,17 @@ import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class AuthBirthdayStepPage extends StatefulWidget {
+class AuthNameStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthBirthdayStepPageState();
+    return AuthNameStepPageState();
   }
 }
 
-class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
+class AuthNameStepPageState extends State<AuthNameStepPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   CreateAccountBloc createAccountBloc;
-
-  TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +24,10 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     var blocsProvider = OpenbookBlocsProvider.of(context);
     createAccountBloc = blocsProvider.createAccountBloc;
 
-    String whenBirthdayText =
-        localizationService.trans('AUTH.CREATE_ACC.WHEN_BIRTHDAY');
-    String birthdayPlaceholderText =
-        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
-    String birthdayErrorText =
-        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_ERROR');
+    String whatNameText =
+        localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
+    String namePlaceholderText =
+        localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
     String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
     String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
@@ -42,18 +38,17 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhensYourBirthday(
-                        text: whenBirthdayText, context: context),
+                    _buildWhatYourName(
+                        text: whatNameText, context: context),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildBirthdayForm(
-                        birthdayInputPlaceholder: birthdayPlaceholderText),
-                    _buildEmailError(text: birthdayErrorText)
+                    _buildNameForm(
+                        nameInputPlaceholder: namePlaceholderText)
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFFFF4A6B),
+      backgroundColor: Color(0xFF9013FE),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -64,8 +59,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child:
-                    _buildPreviousButton(context: context, text: previousText),
+                child: _buildPreviousButton(context: context, text: previousText),
               ),
               Expanded(child: _buildNextButton(text: nextText)),
             ],
@@ -75,55 +69,16 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildEmailError({@required String text}) {
-    return StreamBuilder(
-      stream: createAccountBloc.birthdayIsValid,
-      initialData: null,
-      builder: (context, snapshot) {
-        var data = snapshot.data;
-        if (data == null || data == true) {
-          return Container();
-        }
-
-        return Container(
-          padding: EdgeInsets.only(top: 20.0),
-          child: Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
-        );
-      },
+  Widget _buildNextButton({@required String text}) {
+    return OBPrimaryButton(
+      isFullWidth: true,
+      isLarge: true,
+      child: Text(text, style: TextStyle(fontSize: 18.0)),
+      onPressed: () {},
     );
   }
 
-  Widget _buildNextButton({@required String text}) {
-    return StreamBuilder(
-        stream: createAccountBloc.birthdayIsValid,
-        initialData: null,
-        builder: (context, snapshot) {
-          var data = snapshot.data;
-
-          Function onPressed;
-
-          if (data == null || data == false) {
-            onPressed = () {
-              // We want to trigger a validation error
-              createAccountBloc.birthday.add(null);
-            };
-          } else {
-            onPressed = () {
-              Navigator.pushNamed(context, '/auth/name_step');
-            };
-          }
-
-          return OBPrimaryButton(
-            isFullWidth: true,
-            isLarge: true,
-            child: Text(text, style: TextStyle(fontSize: 18.0)),
-            onPressed: onPressed,
-          );
-        });
-  }
-
-  Widget _buildPreviousButton(
-      {@required BuildContext context, @required String text}) {
+  Widget _buildPreviousButton({@required BuildContext context, @required String text}) {
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -148,12 +103,12 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildWhensYourBirthday(
+  Widget _buildWhatYourName(
       {@required String text, @required BuildContext context}) {
     return Column(
       children: <Widget>[
         Text(
-          '🎂',
+          '📛',
           style: TextStyle(fontSize: 45.0),
         ),
         SizedBox(
@@ -168,7 +123,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildBirthdayForm({@required String birthdayInputPlaceholder}) {
+  Widget _buildNameForm({@required String nameInputPlaceholder}) {
     return Form(
         key: _formKey,
         child: Column(
@@ -178,23 +133,23 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                 new Expanded(
                     child: GestureDetector(
                   onTap: () {
-                    _chooseDate(context, null);
+
                   },
                   child: Container(
                     color: Colors.transparent,
                     child: IgnorePointer(
                         child: StreamBuilder(
-                            stream: createAccountBloc.birthdayText,
+                            stream: createAccountBloc.validatedName,
                             initialData: null,
                             builder: (context, snapshot) {
-                              textController = new TextEditingController(
+                              var textController = new TextEditingController(
                                   text: snapshot.data);
 
                               return TextFormField(
                                 textAlign: TextAlign.center,
                                 enabled: false,
                                 decoration: new InputDecoration(
-                                  hintText: birthdayInputPlaceholder,
+                                  hintText: nameInputPlaceholder,
                                   border: OutlineInputBorder(),
                                   filled: true,
                                   fillColor: Colors.white,
@@ -208,23 +163,5 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             ),
           ],
         ));
-  }
-
-  Future _chooseDate(BuildContext context, String initialDateString) async {
-    var now = new DateTime.now();
-    var initialDate = now;
-    initialDate = (initialDate.year >= 1900 && initialDate.isBefore(now)
-        ? initialDate
-        : now);
-
-    var result = await showDatePicker(
-        context: context,
-        initialDate: initialDate,
-        firstDate: new DateTime(1900),
-        lastDate: new DateTime.now());
-
-    if (result == null) return;
-
-    createAccountBloc.birthday.add(result);
   }
 }

@@ -2,6 +2,7 @@ import 'package:Openbook/delegates/localization_delegate.dart';
 import 'package:Openbook/pages/auth/create_account/birthday_step.dart';
 import 'package:Openbook/pages/auth/create_account/get_started.dart';
 import 'package:Openbook/blocs_provider.dart';
+import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
@@ -57,6 +58,8 @@ class MyApp extends StatelessWidget {
           '/auth/get-started': (BuildContext context) => AuthGetStartedPage(),
           '/auth/birthday_step': (BuildContext context) =>
               AuthBirthdayStepPage(),
+          '/auth/name_step': (BuildContext context) =>
+              AuthNameStepPage(),
         }));
   }
 }
