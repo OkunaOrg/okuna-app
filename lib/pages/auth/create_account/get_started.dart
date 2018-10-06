@@ -9,15 +9,17 @@ class AuthGetStartedPage extends StatelessWidget {
     var localizationService = LocalizationService.of(context);
     String letsGetStartedText =
         localizationService.trans('AUTH.CREATE_ACC.LETS_GET_STARTED');
-    String previousText =
-        localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
-    String nextText =
-        localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return Scaffold(
-      body: Center(
-          child: SingleChildScrollView(
-              child: _buildLetsGetStarted(text: letsGetStartedText))),
+      backgroundColor: Color(0xFF151726),
+      body: Container(
+        decoration: _buildGetStartedDecoration(),
+        child: Center(
+            child: SingleChildScrollView(
+                child: _buildLetsGetStarted(text: letsGetStartedText))),
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -28,9 +30,11 @@ class AuthGetStartedPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: _buildPreviousButton(context: context, text: previousText),
+                child:
+                    _buildPreviousButton(context: context, text: previousText),
               ),
-              Expanded(child: _buildNextButton(context: context, text: nextText)),
+              Expanded(
+                  child: _buildNextButton(context: context, text: nextText)),
             ],
           ),
         ),
@@ -49,12 +53,23 @@ class AuthGetStartedPage extends StatelessWidget {
           height: 20.0,
         ),
         Text(text,
-            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold))
+            style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white))
       ],
     );
   }
 
-  Widget _buildNextButton({@required BuildContext context, @required String text}) {
+  BoxDecoration _buildGetStartedDecoration() {
+    return new BoxDecoration(
+        image: new DecorationImage(
+            image: new AssetImage('assets/images/pixel-universe.jpg'),
+            fit: BoxFit.cover));
+  }
+
+  Widget _buildNextButton(
+      {@required BuildContext context, @required String text}) {
     return OBPrimaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -65,19 +80,23 @@ class AuthGetStartedPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPreviousButton({@required BuildContext context, @required String text}) {
+  Widget _buildPreviousButton(
+      {@required BuildContext context, @required String text}) {
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
       child: Row(
         children: <Widget>[
-          Icon(Icons.arrow_back_ios),
+          Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
           SizedBox(
             width: 10.0,
           ),
           Text(
             text,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
           )
         ],
       ),
