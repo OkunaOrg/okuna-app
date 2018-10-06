@@ -14,12 +14,27 @@ class AuthNameStepPage extends StatefulWidget {
 }
 
 class AuthNameStepPageState extends State<AuthNameStepPage> {
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+  bool isSubmitted = false;
 
   CreateAccountBloc createAccountBloc;
 
+  TextEditingController _nameController = TextEditingController();
+
+  void _onNameControllerChange() {
+    String name = _nameController.text;
+    createAccountBloc.name.add(name);
+  }
+
+  @override
+  void dispose() {
+    _nameController.removeListener(_onNameControllerChange);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+
     var localizationService = LocalizationService.of(context);
     var blocsProvider = OpenbookBlocsProvider.of(context);
     createAccountBloc = blocsProvider.createAccountBloc;
@@ -30,6 +45,8 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
         localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
     String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
     String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String nameErrorText =
+        localizationService.trans('AUTH.CREATE_ACC.NAME_ERROR');
 
     return Scaffold(
       body: Center(
@@ -38,13 +55,15 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhatYourName(
-                        text: whatNameText, context: context),
+                    _buildWhatYourName(text: whatNameText, context: context),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildNameForm(
-                        nameInputPlaceholder: namePlaceholderText)
+                    _buildNameForm(nameInputPlaceholder: namePlaceholderText),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    _buildNameError(text: nameErrorText)
                   ],
                 ))),
       ),
@@ -59,7 +78,8 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: _buildPreviousButton(context: context, text: previousText),
+                child:
+                    _buildPreviousButton(context: context, text: previousText),
               ),
               Expanded(child: _buildNextButton(text: nextText)),
             ],
@@ -69,16 +89,58 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildNextButton({@required String text}) {
-    return OBPrimaryButton(
-      isFullWidth: true,
-      isLarge: true,
-      child: Text(text, style: TextStyle(fontSize: 18.0)),
-      onPressed: () {},
+  Widget _buildNameError({@required String text}) {
+    return StreamBuilder(
+      stream: createAccountBloc.nameIsValid,
+      initialData: true,
+      builder: (context, snapshot) {
+        var data = snapshot.data;
+        if (data == true || ! isSubmitted) {
+          return Container();
+        }
+
+        return Container(
+          padding: EdgeInsets.only(top: 20.0),
+          child:
+              Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
+        );
+      },
     );
   }
 
-  Widget _buildPreviousButton({@required BuildContext context, @required String text}) {
+  Widget _buildNextButton({@required String text}) {
+    return StreamBuilder(
+      stream: createAccountBloc.nameIsValid,
+      initialData: false,
+      builder: (context, snapshot) {
+        bool nameIsValid = snapshot.data;
+
+        Function onPressed;
+
+        if (nameIsValid) {
+          onPressed = () {
+            Navigator.pushNamed(context, '/auth/username_step');
+          };
+        } else {
+          onPressed = () {
+            setState(() {
+              isSubmitted = true;
+            });
+          };
+        }
+
+        return OBPrimaryButton(
+          isFullWidth: true,
+          isLarge: true,
+          child: Text(text, style: TextStyle(fontSize: 18.0)),
+          onPressed: onPressed,
+        );
+      },
+    );
+  }
+
+  Widget _buildPreviousButton(
+      {@required BuildContext context, @required String text}) {
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -124,44 +186,42 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
   }
 
   Widget _buildNameForm({@required String nameInputPlaceholder}) {
-    return Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Row(children: <Widget>[
-                new Expanded(
-                    child: GestureDetector(
-                  onTap: () {
+    return Column(
+      children: <Widget>[
+        Container(
+          child: Row(children: <Widget>[
+            new Expanded(
+              child: Container(
+                color: Colors.transparent,
+                child: StreamBuilder(
+                  stream: createAccountBloc.validatedName,
+                  initialData: '',
+                  builder: (context, snapshot) {
+                    if(!isSubmitted){
+                      _nameController.text = snapshot.data;
+                    }
 
+                    return TextField(
+                      onChanged: (String value) {
+                        createAccountBloc.name.add(value);
+                      },
+                      style: TextStyle(fontSize: 18.0, color: Colors.black),
+                      //textAlign: TextAlign.center,
+                      decoration: new InputDecoration(
+                        hintText: nameInputPlaceholder,
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      controller: _nameController,
+                    );
                   },
-                  child: Container(
-                    color: Colors.transparent,
-                    child: IgnorePointer(
-                        child: StreamBuilder(
-                            stream: createAccountBloc.validatedName,
-                            initialData: null,
-                            builder: (context, snapshot) {
-                              var textController = new TextEditingController(
-                                  text: snapshot.data);
-
-                              return TextFormField(
-                                textAlign: TextAlign.center,
-                                enabled: false,
-                                decoration: new InputDecoration(
-                                  hintText: nameInputPlaceholder,
-                                  border: OutlineInputBorder(),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                controller: textController,
-                              );
-                            })),
-                  ),
-                )),
-              ]),
+                ),
+              ),
             ),
-          ],
-        ));
+          ]),
+        ),
+      ],
+    );
   }
 }

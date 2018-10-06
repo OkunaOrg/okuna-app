@@ -11,5 +11,6 @@
   "AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER": "MM-DD-YYYY",
   "AUTH.CREATE_ACC.BIRTHDAY_ERROR": "😅 Por favor proporciona un cumpleaños",
   "AUTH.CREATE_ACC.WHAT_NAME": "Como te llamas?",
-  "AUTH.CREATE_ACC.NAME_PLACEHOLDER": "Luis Miguel"
+  "AUTH.CREATE_ACC.NAME_PLACEHOLDER": "Luis Miguel",
+  "AUTH.CREATE_ACC.NAME_ERROR": "😅 Please provide a valid name"
 }
