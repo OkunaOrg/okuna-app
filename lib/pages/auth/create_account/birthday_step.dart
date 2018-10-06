@@ -145,7 +145,6 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                               return TextFormField(
                                 textAlign: TextAlign.center,
                                 enabled: false,
-                                //validator: (val) => isValidBirthday(val) ? null : 'Not a valid date',
                                 decoration: new InputDecoration(
                                   hintText: birthdayInputPlaceholder,
                                   border: OutlineInputBorder(),
