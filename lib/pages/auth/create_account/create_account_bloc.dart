@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
 
 class CreateAccountBloc {
-  final _userRegistrationData = UserRegistrationData();
+  final userRegistrationData = UserRegistrationData();
 
   Sink<DateTime> get birthday => _birthdayController.sink;
   final _birthdayController = StreamController<DateTime>();
@@ -49,26 +49,27 @@ class CreateAccountBloc {
   }
 
   void _onEmail(String email) {
-    _userRegistrationData.email = email;
+    userRegistrationData.email = email;
   }
 
   void _onName(String name) {
-    if(name.length <2 || name.length > 32){
+    if (name.length < 2 || name.length > 32) {
       _nameIsValidSubject.add(false);
       _validatedNameSubject.add(null);
+      userRegistrationData.name = null;
       return;
     }
-    _userRegistrationData.name = name;
+    userRegistrationData.name = name;
     _nameIsValidSubject.add(true);
     _validatedNameSubject.add(name);
   }
 
   void _onUsername(String username) {
-    _userRegistrationData.username = username;
+    userRegistrationData.username = username;
   }
 
   void _onPassword(String password) {
-    _userRegistrationData.password = password;
+    userRegistrationData.password = password;
   }
 
   void _onBirthday(DateTime birthday) {
@@ -78,7 +79,7 @@ class CreateAccountBloc {
     }
 
     String parsedDate = new DateFormat.yMd().format(birthday);
-    _userRegistrationData.birthday = parsedDate;
+    userRegistrationData.birthday = parsedDate;
     _birthdayTextSubject.add(parsedDate);
     _birthdayIsValidSubject.add(true);
   }

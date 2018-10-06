@@ -14,27 +14,15 @@ class AuthNameStepPage extends StatefulWidget {
 }
 
 class AuthNameStepPageState extends State<AuthNameStepPage> {
-
   bool isSubmitted = false;
+  bool isBootstrapped = false;
 
   CreateAccountBloc createAccountBloc;
 
   TextEditingController _nameController = TextEditingController();
 
-  void _onNameControllerChange() {
-    String name = _nameController.text;
-    createAccountBloc.name.add(name);
-  }
-
-  @override
-  void dispose() {
-    _nameController.removeListener(_onNameControllerChange);
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-
     var localizationService = LocalizationService.of(context);
     var blocsProvider = OpenbookBlocsProvider.of(context);
     createAccountBloc = blocsProvider.createAccountBloc;
@@ -95,7 +83,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
       initialData: true,
       builder: (context, snapshot) {
         var data = snapshot.data;
-        if (data == true || ! isSubmitted) {
+        if (data == true || !isSubmitted) {
           return Container();
         }
 
@@ -186,38 +174,37 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
   }
 
   Widget _buildNameForm({@required String nameInputPlaceholder}) {
+    // If we use StreamBuilder to build the TexField it has a weird
+    // bug which places the cursor at the beginning of the label everytime
+    // the stream changes. Therefore a flag is used to bootstrap initial value
+
+    if(!isBootstrapped){
+      _nameController.text = createAccountBloc.userRegistrationData.name;
+      isBootstrapped = true;
+    }
+
     return Column(
       children: <Widget>[
         Container(
           child: Row(children: <Widget>[
             new Expanded(
               child: Container(
-                color: Colors.transparent,
-                child: StreamBuilder(
-                  stream: createAccountBloc.validatedName,
-                  initialData: '',
-                  builder: (context, snapshot) {
-                    if(!isSubmitted){
-                      _nameController.text = snapshot.data;
-                    }
-
-                    return TextField(
-                      onChanged: (String value) {
-                        createAccountBloc.name.add(value);
-                      },
-                      style: TextStyle(fontSize: 18.0, color: Colors.black),
-                      //textAlign: TextAlign.center,
-                      decoration: new InputDecoration(
-                        hintText: nameInputPlaceholder,
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      controller: _nameController,
-                    );
-                  },
-                ),
-              ),
+                  color: Colors.transparent,
+                  child: TextField(
+                    autocorrect: false,
+                    onChanged: (String value) {
+                      createAccountBloc.name.add(value);
+                    },
+                    style: TextStyle(fontSize: 18.0, color: Colors.black),
+                    //textAlign: TextAlign.center,
+                    decoration: new InputDecoration(
+                      hintText: nameInputPlaceholder,
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    controller: _nameController,
+                  )),
             ),
           ]),
         ),
