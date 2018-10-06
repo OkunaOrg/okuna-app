@@ -196,7 +196,6 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
                       createAccountBloc.name.add(value);
                     },
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
-                    //textAlign: TextAlign.center,
                     decoration: new InputDecoration(
                       hintText: nameInputPlaceholder,
                       border: OutlineInputBorder(),

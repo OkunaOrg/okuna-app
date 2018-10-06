@@ -191,8 +191,8 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                                   text: snapshot.data);
 
                               return TextFormField(
-                                textAlign: TextAlign.center,
                                 enabled: false,
+                                style: TextStyle(fontSize: 18.0, color: Colors.black),
                                 decoration: new InputDecoration(
                                   hintText: birthdayInputPlaceholder,
                                   border: OutlineInputBorder(),
