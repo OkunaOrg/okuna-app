@@ -7,5 +7,6 @@
   "AUTH.CREATE_ACC.LETS_GET_STARTED": "Comenzemos!",
   "AUTH.CREATE_ACC.PREVIOUS": "Anterior",
   "AUTH.CREATE_ACC.NEXT": "Siguiente",
-  "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "Cuando es tu cumpleaños?"
+  "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "Cuando es tu cumpleaños?",
+  "AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER": "MM-DD-YYYY"
 }

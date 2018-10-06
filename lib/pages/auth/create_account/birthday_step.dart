@@ -9,7 +9,6 @@ import 'dart:async';
 class AuthBirthdayStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return AuthBirthdayStepPageState();
   }
 }
@@ -28,13 +27,22 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     String whenBirthdayText =
         localizationService.trans('AUTH.CREATE_ACC.WHEN_BIRTHDAY');
 
+    String birthdayPlaceholderText =
+        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
             child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40.0),
           child:
-              _buildWhensYourBirthday(text: whenBirthdayText, context: context),
+              Column(
+                children: <Widget>[
+                  _buildWhensYourBirthday(text: whenBirthdayText, context: context),
+                  SizedBox(height: 20.0,),
+                  _buildBirthdayForm(birthdayInputPlaceholder: birthdayPlaceholderText)
+                ],
+              )
         )),
       ),
       backgroundColor: Color(0xFFFFA7BA),
@@ -108,52 +116,51 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white)),
-        SizedBox(
-          height: 20.0,
-        ),
-        Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child: Row(children: <Widget>[
-                    new Expanded(
-                        child: GestureDetector(
-                      onTap: () {
-                        _chooseDate(context, null);
-                      },
-                      child: Container(
-                        color: Colors.transparent,
-                        child: IgnorePointer(
-                            child: StreamBuilder(
-                                stream: createAccountBloc.birthdayText,
-                                initialData: null,
-                                builder: (context, snapshot) {
-
-                                  var textController = new TextEditingController(text: snapshot.data);
-
-                                  return TextFormField(
-                                    textAlign: TextAlign.center,
-                                    enabled: false,
-                                    //validator: (val) => isValidBirthday(val) ? null : 'Not a valid date',
-                                    decoration: new InputDecoration(
-                                      hintText: 'MM-DD-YYYY',
-                                      border: OutlineInputBorder(),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                    ),
-                                    controller: textController,
-                                    //keyboardType: TextInputType.datetime,
-                                  );
-                                })),
-                      ),
-                    )),
-                  ]),
-                ),
-              ],
-            ))
       ],
     );
+  }
+
+  Widget _buildBirthdayForm({@required String birthdayInputPlaceholder}) {
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Row(children: <Widget>[
+                new Expanded(
+                    child: GestureDetector(
+                  onTap: () {
+                    _chooseDate(context, null);
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    child: IgnorePointer(
+                        child: StreamBuilder(
+                            stream: createAccountBloc.birthdayText,
+                            initialData: null,
+                            builder: (context, snapshot) {
+                              var textController = new TextEditingController(
+                                  text: snapshot.data);
+
+                              return TextFormField(
+                                textAlign: TextAlign.center,
+                                enabled: false,
+                                //validator: (val) => isValidBirthday(val) ? null : 'Not a valid date',
+                                decoration: new InputDecoration(
+                                  hintText: birthdayInputPlaceholder,
+                                  border: OutlineInputBorder(),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
+                                controller: textController,
+                              );
+                            })),
+                  ),
+                )),
+              ]),
+            ),
+          ],
+        ));
   }
 
   Future _chooseDate(BuildContext context, String initialDateString) async {
