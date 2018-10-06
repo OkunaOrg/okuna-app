@@ -87,7 +87,8 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
 
         return Container(
           padding: EdgeInsets.only(top: 20.0),
-          child: Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
+          child:
+              Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
         );
       },
     );
@@ -154,7 +155,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
       children: <Widget>[
         Text(
           '🎂',
-          style: TextStyle(fontSize: 45.0),
+          style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         SizedBox(
           height: 20.0,
@@ -192,7 +193,8 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
 
                               return TextFormField(
                                 enabled: false,
-                                style: TextStyle(fontSize: 18.0, color: Colors.black),
+                                style: TextStyle(
+                                    fontSize: 18.0, color: Colors.black),
                                 decoration: new InputDecoration(
                                   hintText: birthdayInputPlaceholder,
                                   border: OutlineInputBorder(),

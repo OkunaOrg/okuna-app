@@ -28,6 +28,10 @@ class CreateAccountBloc {
 
   final _validatedNameSubject = BehaviorSubject<String>();
 
+  Stream<String> get validatedUsername => _validatedUsernameSubject.stream;
+
+  final _validatedUsernameSubject = BehaviorSubject<String>();
+
   Stream<String> get birthdayText => _birthdayTextSubject.stream;
 
   final _birthdayTextSubject = BehaviorSubject<String>();
@@ -39,6 +43,10 @@ class CreateAccountBloc {
   Stream<bool> get nameIsValid => _nameIsValidSubject.stream;
 
   final _nameIsValidSubject = BehaviorSubject<bool>();
+
+  Stream<bool> get usernameIsValid => _usernameIsValidSubject.stream;
+
+  final _usernameIsValidSubject = BehaviorSubject<bool>();
 
   CreateAccountBloc() {
     _emailController.stream.listen(_onEmail);
@@ -65,7 +73,15 @@ class CreateAccountBloc {
   }
 
   void _onUsername(String username) {
+    if (username.length < 2 || username.length > 32) {
+      _usernameIsValidSubject.add(false);
+      _validatedUsernameSubject.add(null);
+      userRegistrationData.username = null;
+      return;
+    }
     userRegistrationData.username = username;
+    _usernameIsValidSubject.add(true);
+    _validatedUsernameSubject.add(username);
   }
 
   void _onPassword(String password) {

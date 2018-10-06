@@ -12,5 +12,8 @@
   "AUTH.CREATE_ACC.BIRTHDAY_ERROR": "😅 Please provide a birthday",
   "AUTH.CREATE_ACC.WHAT_NAME": "What's your name?",
   "AUTH.CREATE_ACC.NAME_PLACEHOLDER": "James Bond",
-  "AUTH.CREATE_ACC.NAME_ERROR": "😅 Please provide a valid name"
+  "AUTH.CREATE_ACC.NAME_ERROR": "😅 Please provide a valid name",
+  "AUTH.CREATE_ACC.WHAT_USERNAME": "What username would you like to have?",
+  "AUTH.CREATE_ACC.USERNAME_PLACEHOLDER": "pablopicasso",
+  "AUTH.CREATE_ACC.USERNAME_ERROR": "😅 Please provide a valid username"
 }
