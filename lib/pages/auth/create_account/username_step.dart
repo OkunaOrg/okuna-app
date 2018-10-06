@@ -54,7 +54,7 @@ class AuthNameStepPageState extends State<AuthUsernameStepPage> {
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFF338CF5),
+      backgroundColor: Color(0xFF3286FF),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
