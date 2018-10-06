@@ -26,24 +26,27 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
 
     String whenBirthdayText =
         localizationService.trans('AUTH.CREATE_ACC.WHEN_BIRTHDAY');
-
     String birthdayPlaceholderText =
         localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
+    String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
             child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40.0),
-          child:
-              Column(
-                children: <Widget>[
-                  _buildWhensYourBirthday(text: whenBirthdayText, context: context),
-                  SizedBox(height: 20.0,),
-                  _buildBirthdayForm(birthdayInputPlaceholder: birthdayPlaceholderText)
-                ],
-              )
-        )),
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                child: Column(
+                  children: <Widget>[
+                    _buildWhensYourBirthday(
+                        text: whenBirthdayText, context: context),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    _buildBirthdayForm(
+                        birthdayInputPlaceholder: birthdayPlaceholderText)
+                  ],
+                ))),
       ),
       backgroundColor: Color(0xFFFF4A6B),
       bottomNavigationBar: BottomAppBar(
@@ -56,9 +59,9 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: _buildPreviousButton(context: context),
+                child: _buildPreviousButton(context: context, text: previousText),
               ),
-              Expanded(child: _buildNextButton()),
+              Expanded(child: _buildNextButton(text: nextText)),
             ],
           ),
         ),
@@ -66,16 +69,16 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildNextButton() {
+  Widget _buildNextButton({@required String text}) {
     return OBPrimaryButton(
       isFullWidth: true,
       isLarge: true,
-      child: Text('Next', style: TextStyle(fontSize: 18.0)),
+      child: Text(text, style: TextStyle(fontSize: 18.0)),
       onPressed: () {},
     );
   }
 
-  Widget _buildPreviousButton({@required BuildContext context}) {
+  Widget _buildPreviousButton({@required BuildContext context, @required String text}) {
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -89,7 +92,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             width: 10.0,
           ),
           Text(
-            'Previous',
+            text,
             style: TextStyle(fontSize: 18.0, color: Colors.white),
           )
         ],
