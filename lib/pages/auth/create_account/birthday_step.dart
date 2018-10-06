@@ -18,6 +18,8 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
 
   CreateAccountBloc createAccountBloc;
 
+  TextEditingController textController;
+
   @override
   Widget build(BuildContext context) {
     var localizationService = LocalizationService.of(context);
@@ -28,6 +30,8 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
         localizationService.trans('AUTH.CREATE_ACC.WHEN_BIRTHDAY');
     String birthdayPlaceholderText =
         localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
+    String birthdayErrorText =
+        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_ERROR');
     String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
     String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
@@ -44,7 +48,8 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                       height: 20.0,
                     ),
                     _buildBirthdayForm(
-                        birthdayInputPlaceholder: birthdayPlaceholderText)
+                        birthdayInputPlaceholder: birthdayPlaceholderText),
+                    _buildEmailError(text: birthdayErrorText)
                   ],
                 ))),
       ),
@@ -59,7 +64,8 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: _buildPreviousButton(context: context, text: previousText),
+                child:
+                    _buildPreviousButton(context: context, text: previousText),
               ),
               Expanded(child: _buildNextButton(text: nextText)),
             ],
@@ -69,16 +75,55 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildNextButton({@required String text}) {
-    return OBPrimaryButton(
-      isFullWidth: true,
-      isLarge: true,
-      child: Text(text, style: TextStyle(fontSize: 18.0)),
-      onPressed: () {},
+  Widget _buildEmailError({@required String text}) {
+    return StreamBuilder(
+      stream: createAccountBloc.birthdayIsValid,
+      initialData: null,
+      builder: (context, snapshot) {
+        var data = snapshot.data;
+        if (data == null || data == true) {
+          return Container();
+        }
+
+        return Container(
+          padding: EdgeInsets.only(top: 20.0),
+          child: Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
+        );
+      },
     );
   }
 
-  Widget _buildPreviousButton({@required BuildContext context, @required String text}) {
+  Widget _buildNextButton({@required String text}) {
+    return StreamBuilder(
+        stream: createAccountBloc.birthdayIsValid,
+        initialData: null,
+        builder: (context, snapshot) {
+          var data = snapshot.data;
+
+          Function onPressed;
+
+          if (data == null || data == false) {
+            onPressed = () {
+              // We want to trigger a validation error
+              createAccountBloc.birthday.add(null);
+            };
+          } else {
+            onPressed = () {
+              Navigator.pushNamed(context, '/auth/name_step');
+            };
+          }
+
+          return OBPrimaryButton(
+            isFullWidth: true,
+            isLarge: true,
+            child: Text(text, style: TextStyle(fontSize: 18.0)),
+            onPressed: onPressed,
+          );
+        });
+  }
+
+  Widget _buildPreviousButton(
+      {@required BuildContext context, @required String text}) {
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -142,12 +187,12 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                             stream: createAccountBloc.birthdayText,
                             initialData: null,
                             builder: (context, snapshot) {
-                              var textController = new TextEditingController(
+                              textController = new TextEditingController(
                                   text: snapshot.data);
 
                               return TextFormField(
-                                textAlign: TextAlign.center,
                                 enabled: false,
+                                style: TextStyle(fontSize: 18.0, color: Colors.black),
                                 decoration: new InputDecoration(
                                   hintText: birthdayInputPlaceholder,
                                   border: OutlineInputBorder(),

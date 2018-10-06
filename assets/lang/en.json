@@ -8,5 +8,9 @@
   "AUTH.CREATE_ACC.PREVIOUS": "Previous",
   "AUTH.CREATE_ACC.NEXT": "Next",
   "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "When's your birthday?",
-  "AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER": "MM-DD-YYYY"
+  "AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER": "MM-DD-YYYY",
+  "AUTH.CREATE_ACC.BIRTHDAY_ERROR": "😅 Please provide a birthday",
+  "AUTH.CREATE_ACC.WHAT_NAME": "What's your name?",
+  "AUTH.CREATE_ACC.NAME_PLACEHOLDER": "James Bond",
+  "AUTH.CREATE_ACC.NAME_ERROR": "😅 Please provide a valid name"
 }
