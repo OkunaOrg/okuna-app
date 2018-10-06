@@ -13,6 +13,8 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  intl: ^0.15.7
+  rxdart: ^0.18.1
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -42,6 +44,7 @@ flutter:
   assets:
     - assets/images/splash-background.jpg
     - assets/images/openbook-logo.png
+    - assets/images/pixel-universe.jpg
     - assets/lang/es.json
     - assets/lang/en.json
 

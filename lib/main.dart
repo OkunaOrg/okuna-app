@@ -1,7 +1,11 @@
 import 'package:Openbook/delegates/localization_delegate.dart';
+import 'package:Openbook/pages/auth/create_account/birthday_step.dart';
+import 'package:Openbook/pages/auth/create_account/get_started.dart';
+import 'package:Openbook/blocs_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
+
 //import 'package:flutter/rendering.dart';
 
 void main() {
@@ -15,7 +19,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return OpenbookBlocsProvider(MaterialApp(
         title: 'Openbook',
         supportedLocales: [const Locale('es', 'ES'), const Locale('en', 'US')],
         localizationsDelegates: [
@@ -46,8 +50,13 @@ class MyApp extends StatelessWidget {
             // "hot reload" (press "r" in the console where you ran "flutter run",
             // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
             // counter didn't reset back to zero; the application is not restarted.
-            primarySwatch: Colors.orange,
+            primarySwatch: Colors.grey,
             fontFamily: 'NunitoSans'),
-        routes: {'/': (BuildContext context) => AuthSplashPage()});
+        routes: {
+          '/': (BuildContext context) => AuthSplashPage(),
+          '/auth/get-started': (BuildContext context) => AuthGetStartedPage(),
+          '/auth/birthday_step': (BuildContext context) =>
+              AuthBirthdayStepPage(),
+        }));
   }
 }

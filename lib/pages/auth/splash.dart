@@ -38,7 +38,7 @@ class AuthSplashPage extends StatelessWidget {
                             padding: EdgeInsets.symmetric(vertical: 20.0),
                             child: _buildOr(orText),
                           ),
-                          _buildCreateAccountButton(createAccountText)
+                          _buildCreateAccountButton(createAccountText, context)
                         ],
                       ),
                     ),
@@ -99,7 +99,7 @@ class AuthSplashPage extends StatelessWidget {
         onPressed: () {});
   }
 
-  Widget _buildCreateAccountButton(String text) {
+  Widget _buildCreateAccountButton(String text, BuildContext context) {
     return OBSecondaryButton(
         isLarge: true,
         isFullWidth: true,
@@ -107,6 +107,8 @@ class AuthSplashPage extends StatelessWidget {
           text,
           style: TextStyle(fontSize: 20.0),
         ),
-        onPressed: () {});
+        onPressed: () {
+          Navigator.pushNamed(context, '/auth/get-started');
+        });
   }
 }
