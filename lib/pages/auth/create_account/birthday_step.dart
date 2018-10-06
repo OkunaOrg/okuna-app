@@ -45,7 +45,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
               )
         )),
       ),
-      backgroundColor: Color(0xFFFFA7BA),
+      backgroundColor: Color(0xFFFF4A6B),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
