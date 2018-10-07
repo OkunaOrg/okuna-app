@@ -23,8 +23,6 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
 
   @override
   Widget build(BuildContext context) {
-    isBootstrapped = false;
-
     var openbookProvider = OpenbookProvider.of(context);
     localizationService = openbookProvider.localizationService;
     createAccountBloc = openbookProvider.createAccountBloc;
