@@ -47,7 +47,7 @@ class AuthGetStartedPage extends StatelessWidget {
       children: <Widget>[
         Text(
           '🚀',
-          style: TextStyle(fontSize: 45.0),
+          style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         SizedBox(
           height: 20.0,
