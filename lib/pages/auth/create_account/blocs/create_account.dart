@@ -3,6 +3,8 @@ import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
+import 'package:sprintf/sprintf.dart';
+
 
 class CreateAccountBloc {
   ValidationService _validationService;
@@ -65,6 +67,8 @@ class CreateAccountBloc {
   Stream<String> get validatedUsername => _validatedUsernameSubject.stream;
 
   final _validatedUsernameSubject = BehaviorSubject<String>();
+
+  StreamSubscription<bool> _usernameCheckSub;
 
   // Username ends
 
@@ -130,7 +134,7 @@ class CreateAccountBloc {
       return;
     }
 
-    if(!_validationService.isValidBirthday(birthday)){
+    if (!_validationService.isValidBirthday(birthday)) {
       _onBirthdayIsInvalid();
       return;
     }
@@ -139,18 +143,19 @@ class CreateAccountBloc {
   }
 
   void _onBirthdayIsEmpty() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
     _birthdayFeedbackSubject.add(errorFeedback);
     _onBirthdayIsInvalid();
   }
 
-  void _onBirthdayIsInvalid(){
+  void _onBirthdayIsInvalid() {
     _birthdayIsValidSubject.add(false);
     _validatedBirthdaySubject.add(null);
     userRegistrationData.birthday = null;
   }
 
-  void _onBirthdayIsValid(DateTime birthday){
+  void _onBirthdayIsValid(DateTime birthday) {
     String parsedDate = new DateFormat.yMd().format(birthday);
 
     _birthdayFeedbackSubject.add(null);
@@ -163,8 +168,9 @@ class CreateAccountBloc {
 
   // Name begins
 
-  bool hasName(){
-    return userRegistrationData.name != null && userRegistrationData.name.isNotEmpty;
+  bool hasName() {
+    return userRegistrationData.name != null &&
+        userRegistrationData.name.isNotEmpty;
   }
 
   void _onName(String name) {
@@ -178,7 +184,7 @@ class CreateAccountBloc {
       return;
     }
 
-    if(!_validationService.isAlphanumericWithSpaces(name)){
+    if (!_validationService.isAlphanumericWithSpaces(name)) {
       _onNameInvalidCharacters();
       return;
     }
@@ -187,30 +193,33 @@ class CreateAccountBloc {
   }
 
   void _onNameIsEmpty() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.NAME_EMPTY_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.NAME_EMPTY_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
     _onNameIsInvalid();
   }
 
   void _onNameTooLong() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.NAME_MAX_LENGTH_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.NAME_MAX_LENGTH_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
     _onNameIsInvalid();
   }
 
   void _onNameInvalidCharacters() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.NAME_CHARACTERS_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.NAME_CHARACTERS_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
     _onNameIsInvalid();
   }
 
-  void _onNameIsInvalid(){
+  void _onNameIsInvalid() {
     _nameIsValidSubject.add(false);
     _validatedNameSubject.add(null);
     userRegistrationData.name = null;
   }
 
-  void _onNameIsValid(String name){
+  void _onNameIsValid(String name) {
     _nameFeedbackSubject.add(null);
 
     userRegistrationData.name = name;
@@ -222,7 +231,13 @@ class CreateAccountBloc {
 
   // Username begins
 
-  void _onUsername(String username) {
+  void _onUsername(String username) async {
+
+    if(_usernameCheckSub != null){
+      _usernameCheckSub.cancel();
+      _usernameCheckSub = null;
+    }
+
     if (username == null || username.isEmpty) {
       _onUsernameIsEmpty();
       return;
@@ -233,44 +248,74 @@ class CreateAccountBloc {
       return;
     }
 
-    if(!_validationService.isAlphanumericWithUnderscores(username)){
+    if (!_validationService.isAlphanumericWithUnderscores(username)) {
       _onUsernameInvalidCharacters();
       return;
     }
 
-    _onUsernameIsValid(username);
+    _usernameCheckSub = _checkUsernameIsAvailable(username).asStream().listen((bool usernameIsAvailable){
+      if(!usernameIsAvailable){
+        _onUsernameIsNotAvailable(username);
+        return;
+      }
+
+      _onUsernameIsValid(username);
+    });
   }
 
   void _onUsernameIsEmpty() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.USERNAME_EMPTY_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_EMPTY_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
     _onUsernameIsInvalid();
   }
 
   void _onUsernameTooLong() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.USERNAME_MAX_LENGTH_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_MAX_LENGTH_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
     _onUsernameIsInvalid();
   }
 
   void _onUsernameInvalidCharacters() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHARACTERS_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHARACTERS_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
     _onUsernameIsInvalid();
   }
 
-  void _onUsernameIsInvalid(){
+  void _onUsernameIsNotAvailable(String username) {
+    String errorFeedback =
+    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_TAKEN_ERROR');
+
+    String parsedFeedback = sprintf(errorFeedback, [username]);
+    _usernameFeedbackSubject.add(parsedFeedback);
+    _onUsernameIsInvalid();
+  }
+
+  void _onUsernameIsInvalid() {
     _usernameIsValidSubject.add(false);
     _validatedUsernameSubject.add(null);
     userRegistrationData.username = null;
   }
 
-  void _onUsernameIsValid(String username){
+  void _onUsernameIsValid(String username) {
     _usernameFeedbackSubject.add(null);
 
     userRegistrationData.username = username;
     _validatedUsernameSubject.add(username);
     _usernameIsValidSubject.add(true);
+  }
+
+  Future<bool> _checkUsernameIsAvailable(String username) async {
+
+    String progressFeedback =
+    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
+    _usernameFeedbackSubject.add(progressFeedback);
+
+    return Future<bool>.delayed(new Duration(seconds: 1), () {
+      return true;
+    });
   }
 
   // Username ends
@@ -292,24 +337,26 @@ class CreateAccountBloc {
   }
 
   void _onEmailIsEmpty() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR');
     _emailFeedbackSubject.add(errorFeedback);
     _onEmailIsInvalid();
   }
 
   void _onEmailIsNotQualifiedEmail() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.EMAIL_INVALID_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_INVALID_ERROR');
     _emailFeedbackSubject.add(errorFeedback);
     _onEmailIsInvalid();
   }
 
-  void _onEmailIsInvalid(){
+  void _onEmailIsInvalid() {
     _emailIsValidSubject.add(false);
     _validatedEmailSubject.add(null);
     userRegistrationData.email = null;
   }
 
-  void _onEmailIsValid(String email){
+  void _onEmailIsValid(String email) {
     _emailFeedbackSubject.add(null);
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
@@ -331,7 +378,7 @@ class CreateAccountBloc {
       return;
     }
 
-    if(password.length > 64){
+    if (password.length > 64) {
       _onPasswordTooLong();
       return;
     }
@@ -340,30 +387,33 @@ class CreateAccountBloc {
   }
 
   void _onPasswordIsEmpty() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
     _onPasswordIsInvalid();
   }
 
   void _onPasswordTooSmall() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
     _onPasswordIsInvalid();
   }
 
   void _onPasswordTooLong() {
-    String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
     _onPasswordIsInvalid();
   }
 
-  void _onPasswordIsInvalid(){
+  void _onPasswordIsInvalid() {
     _passwordIsValidSubject.add(false);
     _validatedPasswordSubject.add(null);
     userRegistrationData.email = null;
   }
 
-  void _onPasswordIsValid(String password){
+  void _onPasswordIsValid(String password) {
     _passwordFeedbackSubject.add(null);
 
     userRegistrationData.password = password;
@@ -371,7 +421,7 @@ class CreateAccountBloc {
     _passwordIsValidSubject.add(true);
   }
 
-  // Password ends
+// Password ends
 }
 
 class UserRegistrationData {
