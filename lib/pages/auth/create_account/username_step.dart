@@ -154,7 +154,7 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
     return Column(
       children: <Widget>[
         Text(
-          '🧙',
+          '🤔',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         SizedBox(
