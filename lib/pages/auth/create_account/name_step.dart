@@ -79,9 +79,8 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
         }
 
         return Container(
-          padding: EdgeInsets.only(top: 20.0),
           child:
-              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0)),
+              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0), textAlign: TextAlign.center,),
         );
       },
     );
