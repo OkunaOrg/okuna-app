@@ -1,9 +1,11 @@
 import 'package:Openbook/delegates/localization_delegate.dart';
 import 'package:Openbook/pages/auth/create_account/birthday_step.dart';
 import 'package:Openbook/pages/auth/create_account/get_started.dart';
-import 'package:Openbook/blocs_provider.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/pages/auth/create_account/username_step.dart';
+import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return OpenbookBlocsProvider(MaterialApp(
+    return OpenbookProvider(MaterialApp(
         title: 'Openbook',
         supportedLocales: [const Locale('es', 'ES'), const Locale('en', 'US')],
         localizationsDelegates: [
@@ -55,12 +57,23 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.grey,
             fontFamily: 'NunitoSans'),
         routes: {
-          '/': (BuildContext context) => AuthSplashPage(),
+          '/': (BuildContext context) {
+
+            // I'm not sure where to do this otherwise.
+            // This block MUST be executed before loading any route.
+            var localizationService = LocalizationService.of(context);
+            var validationService = ValidationService();
+
+            var openbookBlocsProvider = OpenbookProvider.of(context);
+            openbookBlocsProvider.setLocalizationService(localizationService);
+            openbookBlocsProvider.setValidationService(validationService);
+
+            return AuthSplashPage();
+          },
           '/auth/get-started': (BuildContext context) => AuthGetStartedPage(),
           '/auth/birthday_step': (BuildContext context) =>
               AuthBirthdayStepPage(),
-          '/auth/name_step': (BuildContext context) =>
-              AuthNameStepPage(),
+          '/auth/name_step': (BuildContext context) => AuthNameStepPage(),
           '/auth/username_step': (BuildContext context) =>
               AuthUsernameStepPage(),
         }));

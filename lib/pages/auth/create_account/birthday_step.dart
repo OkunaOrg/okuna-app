@@ -1,5 +1,5 @@
-import 'package:Openbook/blocs_provider.dart';
-import 'package:Openbook/pages/auth/create_account/create_account_bloc.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
@@ -23,7 +23,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
   @override
   Widget build(BuildContext context) {
     var localizationService = LocalizationService.of(context);
-    var blocsProvider = OpenbookBlocsProvider.of(context);
+    var blocsProvider = OpenbookProvider.of(context);
     createAccountBloc = blocsProvider.createAccountBloc;
 
     String whenBirthdayText =
@@ -31,7 +31,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     String birthdayPlaceholderText =
         localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
     String birthdayErrorText =
-        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_ERROR');
+        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
     String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
     String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
@@ -185,7 +185,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                     color: Colors.transparent,
                     child: IgnorePointer(
                         child: StreamBuilder(
-                            stream: createAccountBloc.birthdayText,
+                            stream: createAccountBloc.validatedBirthday,
                             initialData: null,
                             builder: (context, snapshot) {
                               textController = new TextEditingController(

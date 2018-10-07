@@ -1,5 +1,5 @@
-import 'package:Openbook/blocs_provider.dart';
-import 'package:Openbook/pages/auth/create_account/create_account_bloc.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
@@ -26,7 +26,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     isBootstrapped = false;
 
     var localizationService = LocalizationService.of(context);
-    var blocsProvider = OpenbookBlocsProvider.of(context);
+    var blocsProvider = OpenbookProvider.of(context);
     createAccountBloc = blocsProvider.createAccountBloc;
 
     String whatNameText =
