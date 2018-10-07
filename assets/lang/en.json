@@ -8,6 +8,7 @@
   "AUTH.CREATE_ACC.PREVIOUS": "Previous",
   "AUTH.CREATE_ACC.NEXT": "Next",
   "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "When's your birthday?",
+  "AUTH.CREATE_ACC.BIRTHDAY_SUCCESS": "🍰 Best. Day. Ever.",
   "AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER": "MM-DD-YYYY",
   "AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR": "😱 Your birthday can't be empty",
   "AUTH.CREATE_ACC.WHAT_NAME": "How should we call you?",

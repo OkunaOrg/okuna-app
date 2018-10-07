@@ -5,7 +5,6 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/pages/auth/create_account/username_step.dart';
 import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
@@ -62,11 +61,9 @@ class MyApp extends StatelessWidget {
             // I'm not sure where to do this otherwise.
             // This block MUST be executed before loading any route.
             var localizationService = LocalizationService.of(context);
-            var validationService = ValidationService();
 
             var openbookBlocsProvider = OpenbookProvider.of(context);
             openbookBlocsProvider.setLocalizationService(localizationService);
-            openbookBlocsProvider.setValidationService(validationService);
 
             return AuthSplashPage();
           },

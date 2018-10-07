@@ -17,23 +17,16 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   CreateAccountBloc createAccountBloc;
+  LocalizationService localizationService;
 
   TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
-    var localizationService = LocalizationService.of(context);
-    var blocsProvider = OpenbookProvider.of(context);
-    createAccountBloc = blocsProvider.createAccountBloc;
+    var openbookProvider = OpenbookProvider.of(context);
 
-    String whenBirthdayText =
-        localizationService.trans('AUTH.CREATE_ACC.WHEN_BIRTHDAY');
-    String birthdayPlaceholderText =
-        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
-    String birthdayErrorText =
-        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
-    String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
-    String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    createAccountBloc = openbookProvider.createAccountBloc;
+    localizationService = openbookProvider.localizationService;
 
     return Scaffold(
       body: Center(
@@ -42,14 +35,12 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhensYourBirthday(
-                        text: whenBirthdayText, context: context),
+                    _buildWhensYourBirthday(context: context),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildBirthdayForm(
-                        birthdayInputPlaceholder: birthdayPlaceholderText),
-                    _buildEmailError(text: birthdayErrorText)
+                    _buildBirthdayForm(),
+                    _buildEmailError()
                   ],
                 ))),
       ),
@@ -65,9 +56,9 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             children: <Widget>[
               Expanded(
                 child:
-                    _buildPreviousButton(context: context, text: previousText),
+                    _buildPreviousButton(context: context),
               ),
-              Expanded(child: _buildNextButton(text: nextText)),
+              Expanded(child: _buildNextButton()),
             ],
           ),
         ),
@@ -75,26 +66,29 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildEmailError({@required String text}) {
+  Widget _buildEmailError() {
     return StreamBuilder(
-      stream: createAccountBloc.birthdayIsValid,
+      stream: createAccountBloc.birthdayFeedback,
       initialData: null,
       builder: (context, snapshot) {
-        var data = snapshot.data;
-        if (data == null || data == true) {
+        var feedback = snapshot.data;
+        if (feedback == null) {
           return Container();
         }
 
         return Container(
           padding: EdgeInsets.only(top: 20.0),
           child:
-              Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
+              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0)),
         );
       },
     );
   }
 
-  Widget _buildNextButton({@required String text}) {
+  Widget _buildNextButton() {
+
+    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+
     return StreamBuilder(
         stream: createAccountBloc.birthdayIsValid,
         initialData: null,
@@ -117,14 +111,17 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
           return OBPrimaryButton(
             isFullWidth: true,
             isLarge: true,
-            child: Text(text, style: TextStyle(fontSize: 18.0)),
+            child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
             onPressed: onPressed,
           );
         });
   }
 
   Widget _buildPreviousButton(
-      {@required BuildContext context, @required String text}) {
+      {@required BuildContext context}) {
+
+    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -138,7 +135,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             width: 10.0,
           ),
           Text(
-            text,
+            buttonText,
             style: TextStyle(fontSize: 18.0, color: Colors.white),
           )
         ],
@@ -149,8 +146,10 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildWhensYourBirthday(
-      {@required String text, @required BuildContext context}) {
+  Widget _buildWhensYourBirthday({@required BuildContext context}) {
+    String whenBirthdayText =
+        localizationService.trans('AUTH.CREATE_ACC.WHEN_BIRTHDAY');
+
     return Column(
       children: <Widget>[
         Text(
@@ -160,7 +159,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
         SizedBox(
           height: 20.0,
         ),
-        Text(text,
+        Text(whenBirthdayText,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -169,7 +168,11 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
     );
   }
 
-  Widget _buildBirthdayForm({@required String birthdayInputPlaceholder}) {
+  Widget _buildBirthdayForm() {
+
+    String birthdayInputPlaceholder =
+    localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
+
     return Form(
         key: _formKey,
         child: Column(

@@ -5,25 +5,29 @@ import 'package:flutter/material.dart';
 
 class OpenbookProvider extends InheritedWidget {
   CreateAccountBloc createAccountBloc = CreateAccountBloc();
+  ValidationService validationService = ValidationService();
+  LocalizationService localizationService;
 
-  OpenbookProvider(child) : super(child: child);
+  OpenbookProvider(child) : super(child: child) {
+    createAccountBloc.setValidationService(validationService);
+  }
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
     return true;
   }
 
-  setLocalizationService(LocalizationService localizationService){
+  setLocalizationService(LocalizationService newLocalizationService) {
+    localizationService = newLocalizationService;
     createAccountBloc.setLocalizationService(localizationService);
   }
 
-  setValidationService(ValidationService validationService){
+  setValidationService(ValidationService newValidationService) {
+    validationService = newValidationService;
     createAccountBloc.setValidationService(validationService);
   }
 
   static OpenbookProvider of(BuildContext context) {
     return context.inheritFromWidgetOfExactType(OpenbookProvider);
   }
-
-
 }
