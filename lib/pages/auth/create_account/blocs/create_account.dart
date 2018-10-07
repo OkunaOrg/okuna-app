@@ -147,14 +147,13 @@ class CreateAccountBloc {
   void _onBirthdayIsInvalid(){
     _birthdayIsValidSubject.add(false);
     _validatedBirthdaySubject.add(null);
+    userRegistrationData.birthday = null;
   }
 
   void _onBirthdayIsValid(DateTime birthday){
     String parsedDate = new DateFormat.yMd().format(birthday);
 
-    String successFeedback = _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_SUCCESS');
-    _birthdayFeedbackSubject.add(successFeedback);
-
+    _birthdayFeedbackSubject.add(null);
     userRegistrationData.birthday = parsedDate;
     _validatedBirthdaySubject.add(parsedDate);
     _birthdayIsValidSubject.add(true);
@@ -163,6 +162,10 @@ class CreateAccountBloc {
   // Birthday ends
 
   // Name begins
+
+  bool hasName(){
+    return userRegistrationData.name != null && userRegistrationData.name.isNotEmpty;
+  }
 
   void _onName(String name) {
     if (name == null || name.isEmpty) {
@@ -204,11 +207,11 @@ class CreateAccountBloc {
   void _onNameIsInvalid(){
     _nameIsValidSubject.add(false);
     _validatedNameSubject.add(null);
+    userRegistrationData.name = null;
   }
 
   void _onNameIsValid(String name){
-    String successFeedback = _localizationService.trans('AUTH.CREATE_ACC.NAME_SUCCESS');
-    _nameFeedbackSubject.add(successFeedback);
+    _nameFeedbackSubject.add(null);
 
     userRegistrationData.name = name;
     _validatedNameSubject.add(name);
@@ -259,11 +262,11 @@ class CreateAccountBloc {
   void _onUsernameIsInvalid(){
     _usernameIsValidSubject.add(false);
     _validatedUsernameSubject.add(null);
+    userRegistrationData.username = null;
   }
 
   void _onUsernameIsValid(String username){
-    String successFeedback = _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SUCCESS');
-    _usernameFeedbackSubject.add(successFeedback);
+    _usernameFeedbackSubject.add(null);
 
     userRegistrationData.username = username;
     _validatedUsernameSubject.add(username);
@@ -303,12 +306,11 @@ class CreateAccountBloc {
   void _onEmailIsInvalid(){
     _emailIsValidSubject.add(false);
     _validatedEmailSubject.add(null);
+    userRegistrationData.email = null;
   }
 
   void _onEmailIsValid(String email){
-    String successFeedback = _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
-    _emailFeedbackSubject.add(successFeedback);
-
+    _emailFeedbackSubject.add(null);
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
     _emailIsValidSubject.add(true);
@@ -358,11 +360,11 @@ class CreateAccountBloc {
   void _onPasswordIsInvalid(){
     _passwordIsValidSubject.add(false);
     _validatedPasswordSubject.add(null);
+    userRegistrationData.email = null;
   }
 
   void _onPasswordIsValid(String password){
-    String successFeedback = _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_SUCCESS');
-    _passwordFeedbackSubject.add(successFeedback);
+    _passwordFeedbackSubject.add(null);
 
     userRegistrationData.password = password;
     _validatedPasswordSubject.add(password);

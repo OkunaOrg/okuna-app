@@ -17,26 +17,17 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
   bool isBootstrapped = false;
 
   CreateAccountBloc createAccountBloc;
+  LocalizationService localizationService;
 
   TextEditingController _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     isBootstrapped = false;
 
-    var localizationService = LocalizationService.of(context);
-    var blocsProvider = OpenbookProvider.of(context);
-    createAccountBloc = blocsProvider.createAccountBloc;
-
-    String whatNameText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
-    String namePlaceholderText =
-        localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
-    String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
-    String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
-    String nameErrorText =
-        localizationService.trans('AUTH.CREATE_ACC.NAME_ERROR');
+    var openbookProvider = OpenbookProvider.of(context);
+    localizationService = openbookProvider.localizationService;
+    createAccountBloc = openbookProvider.createAccountBloc;
 
     return Scaffold(
       body: Center(
@@ -45,15 +36,15 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhatYourName(text: whatNameText, context: context),
+                    _buildWhatYourName(context: context),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildNameForm(nameInputPlaceholder: namePlaceholderText),
+                    _buildNameForm(),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildNameError(text: nameErrorText)
+                    _buildNameError()
                   ],
                 ))),
       ),
@@ -69,9 +60,9 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
             children: <Widget>[
               Expanded(
                 child:
-                    _buildPreviousButton(context: context, text: previousText),
+                    _buildPreviousButton(context: context),
               ),
-              Expanded(child: _buildNextButton(text: nextText)),
+              Expanded(child: _buildNextButton()),
             ],
           ),
         ),
@@ -79,26 +70,30 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildNameError({@required String text}) {
+  Widget _buildNameError() {
     return StreamBuilder(
-      stream: createAccountBloc.nameIsValid,
-      initialData: true,
+      stream: createAccountBloc.nameFeedback,
+      initialData: null,
       builder: (context, snapshot) {
-        var data = snapshot.data;
-        if (data == true || !isSubmitted) {
+        String feedback = snapshot.data;
+        if (feedback == null || !isSubmitted) {
           return Container();
         }
 
         return Container(
           padding: EdgeInsets.only(top: 20.0),
           child:
-              Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
+              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0)),
         );
       },
     );
   }
 
-  Widget _buildNextButton({@required String text}) {
+  Widget _buildNextButton() {
+
+    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+
+
     return StreamBuilder(
       stream: createAccountBloc.nameIsValid,
       initialData: false,
@@ -114,6 +109,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
         } else {
           onPressed = () {
             setState(() {
+              createAccountBloc.name.add(_nameController.text);
               isSubmitted = true;
             });
           };
@@ -122,7 +118,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
         return OBPrimaryButton(
           isFullWidth: true,
           isLarge: true,
-          child: Text(text, style: TextStyle(fontSize: 18.0)),
+          child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
           onPressed: onPressed,
         );
       },
@@ -130,7 +126,11 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
   }
 
   Widget _buildPreviousButton(
-      {@required BuildContext context, @required String text}) {
+      {@required BuildContext context}) {
+
+    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+
+
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
@@ -144,7 +144,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
             width: 10.0,
           ),
           Text(
-            text,
+            buttonText,
             style: TextStyle(fontSize: 18.0, color: Colors.white),
           )
         ],
@@ -155,8 +155,10 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildWhatYourName(
-      {@required String text, @required BuildContext context}) {
+  Widget _buildWhatYourName({@required BuildContext context}) {
+    String whatNameText =
+        localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
+
     return Column(
       children: <Widget>[
         Text(
@@ -166,7 +168,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
         SizedBox(
           height: 20.0,
         ),
-        Text(text,
+        Text(whatNameText,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -175,15 +177,18 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildNameForm({@required String nameInputPlaceholder}) {
+  Widget _buildNameForm() {
     // If we use StreamBuilder to build the TexField it has a weird
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
-    if(!isBootstrapped){
+    if (!isBootstrapped) {
       _nameController.text = createAccountBloc.userRegistrationData.name;
       isBootstrapped = true;
     }
+
+    String nameInputPlaceholder =
+        localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
 
     return Column(
       children: <Widget>[
