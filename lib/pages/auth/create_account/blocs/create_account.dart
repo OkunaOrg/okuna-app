@@ -89,6 +89,8 @@ class CreateAccountBloc {
 
   final _validatedEmailSubject = BehaviorSubject<String>();
 
+  StreamSubscription<bool> _emailCheckSub;
+
   // Email ends
 
   // Password begins
@@ -313,7 +315,7 @@ class CreateAccountBloc {
     _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
     _usernameFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 1), () {
+    return Future<bool>.delayed(new Duration(seconds: 3), () {
       return true;
     });
   }
@@ -323,6 +325,12 @@ class CreateAccountBloc {
   // Email begins
 
   void _onEmail(String email) {
+
+    if(_usernameCheckSub != null){
+      _usernameCheckSub.cancel();
+      _usernameCheckSub = null;
+    }
+
     if (email == null || email.isEmpty) {
       _onEmailIsEmpty();
       return;
@@ -333,7 +341,14 @@ class CreateAccountBloc {
       return;
     }
 
-    _onEmailIsValid(email);
+    _emailCheckSub = _checkEmailIsAvailable(email).asStream().listen((bool emailIsAvailable){
+      if(!emailIsAvailable){
+        _onEmailIsNotAvailable(email);
+        return;
+      }
+
+      _onEmailIsValid(email);
+    });
   }
 
   void _onEmailIsEmpty() {
@@ -350,6 +365,15 @@ class CreateAccountBloc {
     _onEmailIsInvalid();
   }
 
+  void _onEmailIsNotAvailable(String email) {
+    String errorFeedback =
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
+
+    String parsedFeedback = sprintf(errorFeedback, [email]);
+    _emailFeedbackSubject.add(parsedFeedback);
+    _onEmailIsInvalid();
+  }
+
   void _onEmailIsInvalid() {
     _emailIsValidSubject.add(false);
     _validatedEmailSubject.add(null);
@@ -361,6 +385,17 @@ class CreateAccountBloc {
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
     _emailIsValidSubject.add(true);
+  }
+
+  Future<bool> _checkEmailIsAvailable(String email) async {
+
+    String progressFeedback =
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
+    _emailFeedbackSubject.add(progressFeedback);
+
+    return Future<bool>.delayed(new Duration(seconds: 1), () {
+      return true;
+    });
   }
 
   // Email ends
