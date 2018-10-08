@@ -14,7 +14,7 @@ class AuthUsernameStepPage extends StatefulWidget {
 
 class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
   bool isSubmitted;
-  bool isBootstrapped = false;
+  bool isBootstrapped;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
@@ -23,6 +23,7 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
 
   @override
   void initState() {
+    isBootstrapped = false;
     isSubmitted = false;
     super.initState();
   }
@@ -181,9 +182,8 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
-    if (!isBootstrapped) {
-      _usernameController.text =
-          createAccountBloc.userRegistrationData.username;
+    if (!isBootstrapped && createAccountBloc.hasUsername()) {
+      _usernameController.text = createAccountBloc.getUsername();
       isBootstrapped = true;
     }
 

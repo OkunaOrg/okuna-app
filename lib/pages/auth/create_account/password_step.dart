@@ -5,26 +5,28 @@ import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 
-class AuthNameStepPage extends StatefulWidget {
+class AuthPasswordStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthNameStepPageState();
+    return AuthPasswordStepPageState();
   }
 }
 
-class AuthNameStepPageState extends State<AuthNameStepPage> {
+class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
   bool isSubmitted;
+  bool passwordIsVisible;
   bool isBootstrapped;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
 
-  TextEditingController _nameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     isBootstrapped = false;
     isSubmitted = false;
+    passwordIsVisible = false;
     super.initState();
   }
 
@@ -41,19 +43,19 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhatYourName(context: context),
+                    _buildWhatYourPassword(context: context),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildNameForm(),
+                    _buildPasswordForm(),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildNameError()
+                    _buildPasswordError()
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFF9013FE),
+      backgroundColor: Color(0xFF383838),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -74,9 +76,9 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildNameError() {
+  Widget _buildPasswordError() {
     return StreamBuilder(
-      stream: createAccountBloc.nameFeedback,
+      stream: createAccountBloc.passwordFeedback,
       initialData: null,
       builder: (context, snapshot) {
         String feedback = snapshot.data;
@@ -99,21 +101,21 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return StreamBuilder(
-      stream: createAccountBloc.nameIsValid,
+      stream: createAccountBloc.passwordIsValid,
       initialData: false,
       builder: (context, snapshot) {
-        bool nameIsValid = snapshot.data;
+        bool passwordIsValid = snapshot.data;
 
         Function onPressed;
 
-        if (nameIsValid) {
+        if (passwordIsValid) {
           onPressed = () {
-            Navigator.pushNamed(context, '/auth/username_step');
+            Navigator.pushNamed(context, '/auth/done_step');
           };
         } else {
           onPressed = () {
             setState(() {
-              createAccountBloc.name.add(_nameController.text);
+              createAccountBloc.password.add(_passwordController.text);
               isSubmitted = true;
             });
           };
@@ -156,20 +158,20 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildWhatYourName({@required BuildContext context}) {
-    String whatNameText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
+  Widget _buildWhatYourPassword({@required BuildContext context}) {
+    String whatPasswordText =
+        localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
 
     return Column(
       children: <Widget>[
         Text(
-          '📛',
+          '🔒',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         SizedBox(
           height: 20.0,
         ),
-        Text(whatNameText,
+        Text(whatPasswordText,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -178,18 +180,15 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildNameForm() {
+  Widget _buildPasswordForm() {
     // If we use StreamBuilder to build the TexField it has a weird
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
-    if (!isBootstrapped && createAccountBloc.hasName()) {
-      _nameController.text = createAccountBloc.getName();
+    if (!isBootstrapped && createAccountBloc.hasPassword()) {
+      _passwordController.text = createAccountBloc.getPassword();
       isBootstrapped = true;
     }
-
-    String nameInputPlaceholder =
-        localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
 
     return Column(
       children: <Widget>[
@@ -199,23 +198,37 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
               child: Container(
                   color: Colors.transparent,
                   child: TextField(
+                    obscureText: !passwordIsVisible,
                     autocorrect: false,
                     onChanged: (String value) {
-                      createAccountBloc.name.add(value);
+                      createAccountBloc.password.add(value);
                     },
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     decoration: new InputDecoration(
-                      hintText: nameInputPlaceholder,
+                      suffixIcon: GestureDetector(
+                        child: Icon(passwordIsVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onTap: () {
+                          _togglePasswordVisibility();
+                        },
+                      ),
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.white,
                     ),
-                    controller: _nameController,
+                    controller: _passwordController,
                   )),
             ),
           ]),
         ),
       ],
     );
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      passwordIsVisible = !passwordIsVisible;
+    });
   }
 }
