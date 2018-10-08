@@ -32,7 +32,6 @@
   "AUTH.CREATE_ACC.EMAIL_CHECK": "🤞 Just a moment, checking if an account already exists.",
   "AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR": "🤔 An account already exists for that email.",
   "AUTH.CREATE_ACC.WHAT_PASSWORD": "Choose a password",
-  "AUTH.CREATE_ACC.PASSWORD_PLACEHOLDER": "SuperSecurePassword_9000!",
   "AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR": "😱 Your password can't be empty",
   "AUTH.CREATE_ACC.PASSWORD_MAX_LENGTH_ERROR": "😅 A password can't be longer than 64 characters.",
   "AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR": "😅 A password must be at least 8 characters."

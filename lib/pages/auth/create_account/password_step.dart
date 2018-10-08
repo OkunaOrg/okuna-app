@@ -13,13 +13,22 @@ class AuthPasswordStepPage extends StatefulWidget {
 }
 
 class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
-  bool isSubmitted = false;
+  bool isSubmitted;
+  bool passwordIsVisible;
+
   bool isBootstrapped = false;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
 
   TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    isSubmitted = false;
+    passwordIsVisible = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +66,7 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child:
-                    _buildPreviousButton(context: context),
+                child: _buildPreviousButton(context: context),
               ),
               Expanded(child: _buildNextButton()),
             ],
@@ -79,17 +87,18 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
         }
 
         return Container(
-          child:
-              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0), textAlign: TextAlign.center,),
+          child: Text(
+            feedback,
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+            textAlign: TextAlign.center,
+          ),
         );
       },
     );
   }
 
   Widget _buildNextButton() {
-
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
-
 
     return StreamBuilder(
       stream: createAccountBloc.passwordIsValid,
@@ -122,11 +131,8 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
     );
   }
 
-  Widget _buildPreviousButton(
-      {@required BuildContext context}) {
-
+  Widget _buildPreviousButton({@required BuildContext context}) {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
-
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -180,12 +186,10 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     if (!isBootstrapped) {
-      _passwordController.text = createAccountBloc.userRegistrationData.password;
+      _passwordController.text =
+          createAccountBloc.userRegistrationData.password;
       isBootstrapped = true;
     }
-
-    String passwordInputPlaceholder =
-        localizationService.trans('AUTH.CREATE_ACC.PASSWORD_PLACEHOLDER');
 
     return Column(
       children: <Widget>[
@@ -195,14 +199,21 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
               child: Container(
                   color: Colors.transparent,
                   child: TextField(
-                    obscureText: true,
+                    obscureText: !passwordIsVisible,
                     autocorrect: false,
                     onChanged: (String value) {
                       createAccountBloc.password.add(value);
                     },
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     decoration: new InputDecoration(
-                      hintText: passwordInputPlaceholder,
+                      suffixIcon: GestureDetector(
+                        child: Icon(passwordIsVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onTap: () {
+                          _togglePasswordVisibility();
+                        },
+                      ),
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.white,
@@ -214,5 +225,11 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
         ),
       ],
     );
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      passwordIsVisible = !passwordIsVisible;
+    });
   }
 }

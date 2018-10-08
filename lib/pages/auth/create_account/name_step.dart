@@ -13,13 +13,19 @@ class AuthNameStepPage extends StatefulWidget {
 }
 
 class AuthNameStepPageState extends State<AuthNameStepPage> {
-  bool isSubmitted = false;
+  bool isSubmitted;
   bool isBootstrapped = false;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
 
   TextEditingController _nameController = TextEditingController();
+
+  @override
+  void initState() {
+    isSubmitted = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +63,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child:
-                    _buildPreviousButton(context: context),
+                child: _buildPreviousButton(context: context),
               ),
               Expanded(child: _buildNextButton()),
             ],
@@ -79,17 +84,18 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
         }
 
         return Container(
-          child:
-              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0), textAlign: TextAlign.center,),
+          child: Text(
+            feedback,
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+            textAlign: TextAlign.center,
+          ),
         );
       },
     );
   }
 
   Widget _buildNextButton() {
-
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
-
 
     return StreamBuilder(
       stream: createAccountBloc.nameIsValid,
@@ -122,11 +128,8 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
     );
   }
 
-  Widget _buildPreviousButton(
-      {@required BuildContext context}) {
-
+  Widget _buildPreviousButton({@required BuildContext context}) {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
-
 
     return OBSecondaryButton(
       isFullWidth: true,
