@@ -5,7 +5,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 
-
 class CreateAccountBloc {
   ValidationService _validationService;
   LocalizationService _localizationService;
@@ -88,6 +87,8 @@ class CreateAccountBloc {
   Stream<String> get validatedEmail => _validatedEmailSubject.stream;
 
   final _validatedEmailSubject = BehaviorSubject<String>();
+
+  StreamSubscription<bool> _emailCheckSub;
 
   // Email ends
 
@@ -233,10 +234,7 @@ class CreateAccountBloc {
 
   void _onUsername(String username) async {
 
-    if(_usernameCheckSub != null){
-      _usernameCheckSub.cancel();
-      _usernameCheckSub = null;
-    }
+    _clearUsername();
 
     if (username == null || username.isEmpty) {
       _onUsernameIsEmpty();
@@ -253,11 +251,17 @@ class CreateAccountBloc {
       return;
     }
 
-    _usernameCheckSub = _checkUsernameIsAvailable(username).asStream().listen((bool usernameIsAvailable){
-      if(!usernameIsAvailable){
+    _usernameCheckSub = _checkUsernameIsAvailable(username)
+        .asStream()
+        .listen((bool usernameIsAvailable) {
+      if (!usernameIsAvailable) {
         _onUsernameIsNotAvailable(username);
         return;
       }
+
+      String feedback =
+          _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SUCCESS');
+      _usernameFeedbackSubject.add(feedback);
 
       _onUsernameIsValid(username);
     });
@@ -267,53 +271,51 @@ class CreateAccountBloc {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.USERNAME_EMPTY_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
-    _onUsernameIsInvalid();
   }
 
   void _onUsernameTooLong() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.USERNAME_MAX_LENGTH_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
-    _onUsernameIsInvalid();
   }
 
   void _onUsernameInvalidCharacters() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHARACTERS_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
-    _onUsernameIsInvalid();
   }
 
   void _onUsernameIsNotAvailable(String username) {
     String errorFeedback =
-    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_TAKEN_ERROR');
+        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_TAKEN_ERROR');
 
     String parsedFeedback = sprintf(errorFeedback, [username]);
     _usernameFeedbackSubject.add(parsedFeedback);
-    _onUsernameIsInvalid();
   }
 
-  void _onUsernameIsInvalid() {
+  void _clearUsername() {
+    if (_usernameCheckSub != null) {
+      _usernameCheckSub.cancel();
+      _usernameCheckSub = null;
+    }
+
     _usernameIsValidSubject.add(false);
     _validatedUsernameSubject.add(null);
     userRegistrationData.username = null;
   }
 
   void _onUsernameIsValid(String username) {
-    _usernameFeedbackSubject.add(null);
-
     userRegistrationData.username = username;
     _validatedUsernameSubject.add(username);
     _usernameIsValidSubject.add(true);
   }
 
   Future<bool> _checkUsernameIsAvailable(String username) async {
-
     String progressFeedback =
-    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
+        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
     _usernameFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 1), () {
+    return Future<bool>.delayed(new Duration(seconds: 3), () {
       return true;
     });
   }
@@ -323,6 +325,8 @@ class CreateAccountBloc {
   // Email begins
 
   void _onEmail(String email) {
+    _clearEmail();
+
     if (email == null || email.isEmpty) {
       _onEmailIsEmpty();
       return;
@@ -333,34 +337,68 @@ class CreateAccountBloc {
       return;
     }
 
-    _onEmailIsValid(email);
+    _emailCheckSub = _checkEmailIsAvailable(email)
+        .asStream()
+        .listen((bool emailIsAvailable) {
+      if (!emailIsAvailable) {
+        _onEmailIsNotAvailable(email);
+        return;
+      }
+
+      String feedback =
+          _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
+      _emailFeedbackSubject.add(feedback);
+
+      _onEmailIsValid(email);
+    });
   }
 
   void _onEmailIsEmpty() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR');
     _emailFeedbackSubject.add(errorFeedback);
-    _onEmailIsInvalid();
   }
 
   void _onEmailIsNotQualifiedEmail() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.EMAIL_INVALID_ERROR');
     _emailFeedbackSubject.add(errorFeedback);
-    _onEmailIsInvalid();
   }
 
-  void _onEmailIsInvalid() {
-    _emailIsValidSubject.add(false);
-    _validatedEmailSubject.add(null);
-    userRegistrationData.email = null;
+  void _onEmailIsNotAvailable(String email) {
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
+
+    String parsedFeedback = sprintf(errorFeedback, [email]);
+    _emailFeedbackSubject.add(parsedFeedback);
   }
 
   void _onEmailIsValid(String email) {
-    _emailFeedbackSubject.add(null);
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
     _emailIsValidSubject.add(true);
+  }
+
+  Future<bool> _checkEmailIsAvailable(String email) async {
+    String progressFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
+    _emailFeedbackSubject.add(progressFeedback);
+
+    return Future<bool>.delayed(new Duration(seconds: 3), () {
+      return true;
+    });
+  }
+
+
+  void _clearEmail() {
+    if (_emailCheckSub != null) {
+      _emailCheckSub.cancel();
+      _emailCheckSub = null;
+    }
+
+    _emailIsValidSubject.add(false);
+    _validatedEmailSubject.add(null);
+    userRegistrationData.email = null;
   }
 
   // Email ends
