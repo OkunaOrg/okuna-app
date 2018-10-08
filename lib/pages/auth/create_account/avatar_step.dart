@@ -1,32 +1,34 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class AuthPasswordStepPage extends StatefulWidget {
+class AuthAvatarStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthPasswordStepPageState();
+    return AuthAvatarStepPageState();
   }
 }
 
-class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
+class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
+  File _avatarImage;
+
   bool isSubmitted;
-  bool passwordIsVisible;
   bool isBootstrapped;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
 
-  TextEditingController _passwordController = TextEditingController();
-
   @override
   void initState() {
     isBootstrapped = false;
     isSubmitted = false;
-    passwordIsVisible = false;
     super.initState();
   }
 
@@ -43,19 +45,19 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhatYourPassword(context: context),
+                    _buildWhatYourAvatar(context: context),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildPasswordForm(),
+                    _buildAvatarPicker(),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildPasswordError()
+                    _buildAvatarError()
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFF383838),
+      backgroundColor: Color(0xFFFFBF39),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -76,9 +78,9 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
     );
   }
 
-  Widget _buildPasswordError() {
+  Widget _buildAvatarError() {
     return StreamBuilder(
-      stream: createAccountBloc.passwordFeedback,
+      stream: createAccountBloc.avatarFeedback,
       initialData: null,
       builder: (context, snapshot) {
         String feedback = snapshot.data;
@@ -101,21 +103,21 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return StreamBuilder(
-      stream: createAccountBloc.passwordIsValid,
+      stream: createAccountBloc.avatarIsValid,
       initialData: false,
       builder: (context, snapshot) {
-        bool passwordIsValid = snapshot.data;
+        bool avatarIsValid = snapshot.data;
 
         Function onPressed;
 
-        if (passwordIsValid) {
+        if (avatarIsValid) {
           onPressed = () {
-            Navigator.pushNamed(context, '/auth/avatar_step');
+            Navigator.pushNamed(context, '/auth/done_step');
           };
         } else {
           onPressed = () {
             setState(() {
-              createAccountBloc.password.add(_passwordController.text);
+              //createAccountBloc.avatar.add(null);
               isSubmitted = true;
             });
           };
@@ -158,20 +160,13 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
     );
   }
 
-  Widget _buildWhatYourPassword({@required BuildContext context}) {
-    String whatPasswordText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
+  Widget _buildWhatYourAvatar({@required BuildContext context}) {
+    String whatAvatarText =
+        localizationService.trans('AUTH.CREATE_ACC.WHAT_AVATAR');
 
     return Column(
       children: <Widget>[
-        Text(
-          '🔒',
-          style: TextStyle(fontSize: 45.0, color: Colors.white),
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        Text(whatPasswordText,
+        Text(whatAvatarText,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -180,55 +175,53 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
     );
   }
 
-  Widget _buildPasswordForm() {
+  Widget _buildAvatarPicker() {
     // If we use StreamBuilder to build the TexField it has a weird
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
-    if (!isBootstrapped && createAccountBloc.hasPassword()) {
-      _passwordController.text = createAccountBloc.getPassword();
-      isBootstrapped = true;
+    if (!isBootstrapped && createAccountBloc.hasAvatar()) {
+      //_avatarController.text = createAccountBloc.getAvatar();
+      //isBootstrapped = true;
     }
 
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(children: <Widget>[
-            new Expanded(
-              child: Container(
-                  color: Colors.transparent,
-                  child: TextField(
-                    obscureText: !passwordIsVisible,
-                    autocorrect: false,
-                    onChanged: (String value) {
-                      createAccountBloc.password.add(value);
-                    },
-                    style: TextStyle(fontSize: 18.0, color: Colors.black),
-                    decoration: new InputDecoration(
-                      suffixIcon: GestureDetector(
-                        child: Icon(passwordIsVisible
-                            ? Icons.visibility_off
-                            : Icons.visibility),
-                        onTap: () {
-                          _togglePasswordVisibility();
-                        },
-                      ),
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    controller: _passwordController,
-                  )),
-            ),
-          ]),
-        ),
-      ],
+    return GestureDetector(
+      onTap: () async {
+        File image = await _getUserImage();
+        createAccountBloc.avatar.add(image);
+      },
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 150.0,
+            width: 150.0,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+            child: StreamBuilder(
+                stream: createAccountBloc.validatedAvatar,
+                initialData: null,
+                builder: (context, snapshot) {
+                  var data = snapshot.data;
+
+                  if(data == null){
+                    return Image.asset('assets/images/avatar.png');
+                  }
+
+                  return Image.file(snapshot.data);
+                }),
+          ),
+          SizedBox(height: 20.0),
+          Text(
+            'Tap to change',
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+          )
+        ],
+      ),
     );
   }
 
-  void _togglePasswordVisibility() {
-    setState(() {
-      passwordIsVisible = !passwordIsVisible;
-    });
+  Future<File> _getUserImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    return image;
   }
 }

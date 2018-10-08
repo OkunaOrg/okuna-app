@@ -16,6 +16,7 @@ dependencies:
   intl: ^0.15.7
   rxdart: ^0.18.1
   sprintf: "^4.0.0"
+  image_picker: ^0.4.10
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -46,6 +47,7 @@ flutter:
     - assets/images/splash-background.jpg
     - assets/images/openbook-logo.png
     - assets/images/pixel-universe.jpg
+    - assets/images/avatar.png
     - assets/lang/es.json
     - assets/lang/en.json
 
