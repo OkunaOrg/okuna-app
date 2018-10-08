@@ -261,6 +261,10 @@ class CreateAccountBloc {
         return;
       }
 
+      String feedback =
+      _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SUCCESS');
+      _usernameFeedbackSubject.add(feedback);
+
       _onUsernameIsValid(username);
     });
   }
@@ -269,6 +273,7 @@ class CreateAccountBloc {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.USERNAME_EMPTY_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
+
     _onUsernameIsInvalid();
   }
 
@@ -302,8 +307,6 @@ class CreateAccountBloc {
   }
 
   void _onUsernameIsValid(String username) {
-    _usernameFeedbackSubject.add(null);
-
     userRegistrationData.username = username;
     _validatedUsernameSubject.add(username);
     _usernameIsValidSubject.add(true);
@@ -347,6 +350,10 @@ class CreateAccountBloc {
         return;
       }
 
+      String feedback =
+      _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
+      _emailFeedbackSubject.add(feedback);
+
       _onEmailIsValid(email);
     });
   }
@@ -381,7 +388,6 @@ class CreateAccountBloc {
   }
 
   void _onEmailIsValid(String email) {
-    _emailFeedbackSubject.add(null);
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
     _emailIsValidSubject.add(true);
@@ -393,7 +399,7 @@ class CreateAccountBloc {
     _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
     _emailFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 1), () {
+    return Future<bool>.delayed(new Duration(seconds: 3), () {
       return true;
     });
   }
