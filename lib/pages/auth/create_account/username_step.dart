@@ -46,7 +46,7 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFF3286FF),
+      backgroundColor: Color(0xFF439AFB),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -154,7 +154,7 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
     return Column(
       children: <Widget>[
         Text(
-          '🤔',
+          '🧙',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         SizedBox(
