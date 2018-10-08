@@ -129,6 +129,14 @@ class CreateAccountBloc {
 
   // Birthday begins
 
+  bool hasBirthday(){
+    return userRegistrationData.birthday != null;
+  }
+
+  String getBirthday(){
+    return userRegistrationData.birthday;
+  }
+
   void _onBirthday(DateTime birthday) {
 
     _clearBirthday();
@@ -177,9 +185,12 @@ class CreateAccountBloc {
 
   // Name begins
 
-  bool hasName() {
-    return userRegistrationData.name != null &&
-        userRegistrationData.name.isNotEmpty;
+  bool hasName(){
+    return userRegistrationData.name != null;
+  }
+
+  String getName(){
+    return userRegistrationData.name;
   }
 
   void _onName(String name) {
@@ -238,6 +249,14 @@ class CreateAccountBloc {
   // Name ends
 
   // Username begins
+
+  bool hasUsername(){
+    return userRegistrationData.username != null;
+  }
+
+  String getUsername(){
+    return userRegistrationData.username;
+  }
 
   void _onUsername(String username) async {
 
@@ -331,6 +350,14 @@ class CreateAccountBloc {
 
   // Email begins
 
+  bool hasEmail(){
+    return userRegistrationData.email != null;
+  }
+
+  String getEmail(){
+    return userRegistrationData.email;
+  }
+
   void _onEmail(String email) {
     _clearEmail();
 
@@ -412,6 +439,14 @@ class CreateAccountBloc {
 
   // Password begins
 
+  bool hasPassword(){
+    return userRegistrationData.password != null;
+  }
+
+  String getPassword(){
+    return userRegistrationData.password;
+  }
+
   void _onPassword(String password) {
     _clearPassword();
 
@@ -462,7 +497,7 @@ class CreateAccountBloc {
   void _clearPassword(){
     _passwordIsValidSubject.add(false);
     _validatedPasswordSubject.add(null);
-    userRegistrationData.email = null;
+    userRegistrationData.password = null;
   }
 
 // Password ends
