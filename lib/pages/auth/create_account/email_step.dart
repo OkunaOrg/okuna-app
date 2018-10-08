@@ -13,13 +13,19 @@ class AuthEmailStepPage extends StatefulWidget {
 }
 
 class AuthEmailStepPageState extends State<AuthEmailStepPage> {
-  bool isSubmitted = false;
+  bool isSubmitted;
   bool isBootstrapped = false;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
 
   TextEditingController _emailController = TextEditingController();
+
+  @override
+  void initState() {
+    isSubmitted = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
