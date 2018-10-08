@@ -5,27 +5,21 @@ import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 
-class AuthEmailStepPage extends StatefulWidget {
+class AuthPasswordStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthEmailStepPageState();
+    return AuthPasswordStepPageState();
   }
 }
 
-class AuthEmailStepPageState extends State<AuthEmailStepPage> {
-  bool isSubmitted;
+class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
+  bool isSubmitted = false;
   bool isBootstrapped = false;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
 
-  TextEditingController _emailController = TextEditingController();
-
-  @override
-  void initState() {
-    isSubmitted = false;
-    super.initState();
-  }
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +34,19 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhatYourEmail(context: context),
+                    _buildWhatYourPassword(context: context),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildEmailForm(),
+                    _buildPasswordForm(),
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildEmailError()
+                    _buildPasswordError()
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFFFF3939),
+      backgroundColor: Color(0xFF383838),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -63,7 +57,8 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: _buildPreviousButton(context: context),
+                child:
+                    _buildPreviousButton(context: context),
               ),
               Expanded(child: _buildNextButton()),
             ],
@@ -73,9 +68,9 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
     );
   }
 
-  Widget _buildEmailError() {
+  Widget _buildPasswordError() {
     return StreamBuilder(
-      stream: createAccountBloc.emailFeedback,
+      stream: createAccountBloc.passwordFeedback,
       initialData: null,
       builder: (context, snapshot) {
         String feedback = snapshot.data;
@@ -84,33 +79,34 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
         }
 
         return Container(
-          child: Text(feedback,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 18.0)),
+          child:
+              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0), textAlign: TextAlign.center,),
         );
       },
     );
   }
 
   Widget _buildNextButton() {
+
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
+
     return StreamBuilder(
-      stream: createAccountBloc.emailIsValid,
+      stream: createAccountBloc.passwordIsValid,
       initialData: false,
       builder: (context, snapshot) {
-        bool emailIsValid = snapshot.data;
+        bool passwordIsValid = snapshot.data;
 
         Function onPressed;
 
-        if (emailIsValid) {
+        if (passwordIsValid) {
           onPressed = () {
-            Navigator.pushNamed(context, '/auth/password_step');
+            Navigator.pushNamed(context, '/auth/done_step');
           };
         } else {
           onPressed = () {
             setState(() {
-              createAccountBloc.email.add(_emailController.text);
+              createAccountBloc.password.add(_passwordController.text);
               isSubmitted = true;
             });
           };
@@ -126,8 +122,11 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
     );
   }
 
-  Widget _buildPreviousButton({@required BuildContext context}) {
+  Widget _buildPreviousButton(
+      {@required BuildContext context}) {
+
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -153,21 +152,20 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
     );
   }
 
-  Widget _buildWhatYourEmail({@required BuildContext context}) {
-    String whatEmailText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_EMAIL');
+  Widget _buildWhatYourPassword({@required BuildContext context}) {
+    String whatPasswordText =
+        localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
 
     return Column(
       children: <Widget>[
         Text(
-          '💌',
+          '🔒',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         SizedBox(
           height: 20.0,
         ),
-        Text(whatEmailText,
-            textAlign: TextAlign.center,
+        Text(whatPasswordText,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -176,19 +174,18 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
     );
   }
 
-  Widget _buildEmailForm() {
+  Widget _buildPasswordForm() {
     // If we use StreamBuilder to build the TexField it has a weird
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     if (!isBootstrapped) {
-      _emailController.text =
-          createAccountBloc.userRegistrationData.email;
+      _passwordController.text = createAccountBloc.userRegistrationData.password;
       isBootstrapped = true;
     }
 
-    String emailInputPlaceholder =
-        localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
+    String passwordInputPlaceholder =
+        localizationService.trans('AUTH.CREATE_ACC.PASSWORD_PLACEHOLDER');
 
     return Column(
       children: <Widget>[
@@ -198,18 +195,19 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
               child: Container(
                   color: Colors.transparent,
                   child: TextField(
+                    obscureText: true,
                     autocorrect: false,
                     onChanged: (String value) {
-                      createAccountBloc.email.add(value);
+                      createAccountBloc.password.add(value);
                     },
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     decoration: new InputDecoration(
-                      hintText: emailInputPlaceholder,
+                      hintText: passwordInputPlaceholder,
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.white,
                     ),
-                    controller: _emailController,
+                    controller: _passwordController,
                   )),
             ),
           ]),

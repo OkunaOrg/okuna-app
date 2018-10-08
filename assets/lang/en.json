@@ -10,6 +10,7 @@
   "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "When's your birthday?",
   "AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER": "MM-DD-YYYY",
   "AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR": "😱 Your birthday can't be empty",
+  "AUTH.CREATE_ACC.BIRTHDAY_INVALID_ERROR": "😱 Please provide a valid birthday.",
   "AUTH.CREATE_ACC.WHAT_NAME": "What's your name?",
   "AUTH.CREATE_ACC.NAME_PLACEHOLDER": "James Bond",
   "AUTH.CREATE_ACC.NAME_EMPTY_ERROR": "😱 Your name can't be empty.",
@@ -30,8 +31,8 @@
   "AUTH.CREATE_ACC.EMAIL_INVALID_ERROR": "😅 Please provide a valid email address.",
   "AUTH.CREATE_ACC.EMAIL_CHECK": "🤞 Just a moment, checking if an account already exists.",
   "AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR": "🤔 An account already exists for that email.",
-  "AUTH.CREATE_ACC.WHAT_PASSWORD": "Create a password",
-  "AUTH.CREATE_ACC.PASSWORD_PLACEHOLDER": "",
+  "AUTH.CREATE_ACC.WHAT_PASSWORD": "Choose a password",
+  "AUTH.CREATE_ACC.PASSWORD_PLACEHOLDER": "SuperSecurePassword_9000!",
   "AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR": "😱 Your password can't be empty",
   "AUTH.CREATE_ACC.PASSWORD_MAX_LENGTH_ERROR": "😅 A password can't be longer than 64 characters.",
   "AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR": "😅 A password must be at least 8 characters."

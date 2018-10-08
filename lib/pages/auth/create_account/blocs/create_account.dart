@@ -130,6 +130,9 @@ class CreateAccountBloc {
   // Birthday begins
 
   void _onBirthday(DateTime birthday) {
+
+    _clearBirthday();
+
     if (birthday == null) {
       _onBirthdayIsEmpty();
       return;
@@ -147,13 +150,12 @@ class CreateAccountBloc {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
     _birthdayFeedbackSubject.add(errorFeedback);
-    _onBirthdayIsInvalid();
   }
 
   void _onBirthdayIsInvalid() {
-    _birthdayIsValidSubject.add(false);
-    _validatedBirthdaySubject.add(null);
-    userRegistrationData.birthday = null;
+    String errorFeedback =
+    _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_INVALID_ERROR');
+    _birthdayFeedbackSubject.add(errorFeedback);
   }
 
   void _onBirthdayIsValid(DateTime birthday) {
@@ -163,6 +165,12 @@ class CreateAccountBloc {
     userRegistrationData.birthday = parsedDate;
     _validatedBirthdaySubject.add(parsedDate);
     _birthdayIsValidSubject.add(true);
+  }
+
+  void _clearBirthday(){
+    _birthdayIsValidSubject.add(false);
+    _validatedBirthdaySubject.add(null);
+    userRegistrationData.birthday = null;
   }
 
   // Birthday ends
@@ -175,6 +183,8 @@ class CreateAccountBloc {
   }
 
   void _onName(String name) {
+    _clearName();
+
     if (name == null || name.isEmpty) {
       _onNameIsEmpty();
       return;
@@ -197,27 +207,18 @@ class CreateAccountBloc {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.NAME_EMPTY_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
-    _onNameIsInvalid();
   }
 
   void _onNameTooLong() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.NAME_MAX_LENGTH_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
-    _onNameIsInvalid();
   }
 
   void _onNameInvalidCharacters() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.NAME_CHARACTERS_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
-    _onNameIsInvalid();
-  }
-
-  void _onNameIsInvalid() {
-    _nameIsValidSubject.add(false);
-    _validatedNameSubject.add(null);
-    userRegistrationData.name = null;
   }
 
   void _onNameIsValid(String name) {
@@ -226,6 +227,12 @@ class CreateAccountBloc {
     userRegistrationData.name = name;
     _validatedNameSubject.add(name);
     _nameIsValidSubject.add(true);
+  }
+
+  void _clearName(){
+    _nameIsValidSubject.add(false);
+    _validatedNameSubject.add(null);
+    userRegistrationData.name = null;
   }
 
   // Name ends
@@ -406,6 +413,8 @@ class CreateAccountBloc {
   // Password begins
 
   void _onPassword(String password) {
+    _clearPassword();
+
     if (password == null || password.isEmpty) {
       _onPasswordIsEmpty();
       return;
@@ -428,27 +437,18 @@ class CreateAccountBloc {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
-    _onPasswordIsInvalid();
   }
 
   void _onPasswordTooSmall() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
-    _onPasswordIsInvalid();
   }
 
   void _onPasswordTooLong() {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
-    _onPasswordIsInvalid();
-  }
-
-  void _onPasswordIsInvalid() {
-    _passwordIsValidSubject.add(false);
-    _validatedPasswordSubject.add(null);
-    userRegistrationData.email = null;
   }
 
   void _onPasswordIsValid(String password) {
@@ -457,6 +457,12 @@ class CreateAccountBloc {
     userRegistrationData.password = password;
     _validatedPasswordSubject.add(password);
     _passwordIsValidSubject.add(true);
+  }
+
+  void _clearPassword(){
+    _passwordIsValidSubject.add(false);
+    _validatedPasswordSubject.add(null);
+    userRegistrationData.email = null;
   }
 
 // Password ends
