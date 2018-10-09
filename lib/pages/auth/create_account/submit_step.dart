@@ -192,7 +192,7 @@ class AuthSubmitPageState extends State<AuthSubmitPage> {
   void _requestCreateAccount() async {
     bool createdAccount = await createAccountBloc.createAccount();
     if (createdAccount) {
-      Navigator.pushNamed(context, '/auth/success');
+      Navigator.pushNamed(context, '/auth/done_step');
     }
     mustRequestCreateAccount = false;
   }

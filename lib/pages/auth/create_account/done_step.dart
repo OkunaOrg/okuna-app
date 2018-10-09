@@ -64,7 +64,10 @@ class AuthDonePageState extends State<AuthDonePage> {
 
     return Column(
       children: <Widget>[
-        Image.asset('assets/images/fiesta-parrot.gif', width: 70.0, height: 70.0,),
+        Text(
+          '🎉‍',
+          style: TextStyle(fontSize: 45.0, color: Colors.white),
+        ),
         SizedBox(
           height: 20.0,
         ),
