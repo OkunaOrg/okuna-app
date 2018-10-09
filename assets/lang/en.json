@@ -40,6 +40,14 @@
   "AUTH.CREATE_ACC.AVATAR_TAP_TO_CHANGE": "Tap to change",
   "AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA": "Take a photo",
   "AUTH.CREATE_ACC.AVATAR_CHOOSE_GALLERY": "Use an existing photo",
-  "AUTH.CREATE_ACC.AVATAR_REMOVE_PHOTO": "Remove photo"
+  "AUTH.CREATE_ACC.AVATAR_REMOVE_PHOTO": "Remove photo",
+  "AUTH.CREATE_ACC.DONE": "Create account",
+  "AUTH.CREATE_ACC.SUBMIT_LOADING_TITLE": "Hang in there!",
+  "AUTH.CREATE_ACC.SUBMIT_LOADING_DESC": "We're creating your account.",
+  "AUTH.CREATE_ACC.SUBMIT_ERROR_TITLE": "Oh no...",
+  "AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_USERNAME_TAKEN": "It looks like someone took the username just now.",
+  "AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_EMAIL_TAKEN": "It looks like someone created an account with your email just now.",
+  "AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_SERVER": "Our servers are not feeling quite well. Please try again in a couple of seconds.",
+  "AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_UNKNOWN": "You should never see this message. We have notified our engineers. Please try again in a couple of minutes."
 
 }
