@@ -3,6 +3,7 @@ import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
 import 'package:sprintf/sprintf.dart';
 
 class CreateAccountBloc {
@@ -111,12 +112,32 @@ class CreateAccountBloc {
 
   // Password ends
 
+  // Avatar begins
+
+  Sink<File> get avatar => _avatarController.sink;
+  final _avatarController = StreamController<File>();
+
+  Stream<bool> get avatarIsValid => _avatarIsValidSubject.stream;
+
+  final _avatarIsValidSubject = BehaviorSubject<bool>();
+
+  Stream<String> get avatarFeedback => _avatarFeedbackSubject.stream;
+
+  final _avatarFeedbackSubject = BehaviorSubject<String>();
+
+  Stream<File> get validatedAvatar => _validatedAvatarSubject.stream;
+
+  final _validatedAvatarSubject = BehaviorSubject<File>();
+
+  // Avatar ends
+
   CreateAccountBloc() {
     _emailController.stream.listen(_onEmail);
     _nameController.stream.listen(_onName);
     _passwordController.stream.listen(_onPassword);
     _usernameController.stream.listen(_onUsername);
     _birthdayController.stream.listen(_onBirthday);
+    _avatarController.stream.listen(_onAvatar);
   }
 
   void setLocalizationService(LocalizationService localizationService) {
@@ -129,16 +150,15 @@ class CreateAccountBloc {
 
   // Birthday begins
 
-  bool hasBirthday(){
+  bool hasBirthday() {
     return userRegistrationData.birthday != null;
   }
 
-  String getBirthday(){
+  String getBirthday() {
     return userRegistrationData.birthday;
   }
 
   void _onBirthday(DateTime birthday) {
-
     _clearBirthday();
 
     if (birthday == null) {
@@ -162,7 +182,7 @@ class CreateAccountBloc {
 
   void _onBirthdayIsInvalid() {
     String errorFeedback =
-    _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_INVALID_ERROR');
+        _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_INVALID_ERROR');
     _birthdayFeedbackSubject.add(errorFeedback);
   }
 
@@ -175,7 +195,7 @@ class CreateAccountBloc {
     _birthdayIsValidSubject.add(true);
   }
 
-  void _clearBirthday(){
+  void _clearBirthday() {
     _birthdayIsValidSubject.add(false);
     _validatedBirthdaySubject.add(null);
     userRegistrationData.birthday = null;
@@ -185,11 +205,11 @@ class CreateAccountBloc {
 
   // Name begins
 
-  bool hasName(){
+  bool hasName() {
     return userRegistrationData.name != null;
   }
 
-  String getName(){
+  String getName() {
     return userRegistrationData.name;
   }
 
@@ -240,7 +260,7 @@ class CreateAccountBloc {
     _nameIsValidSubject.add(true);
   }
 
-  void _clearName(){
+  void _clearName() {
     _nameIsValidSubject.add(false);
     _validatedNameSubject.add(null);
     userRegistrationData.name = null;
@@ -250,16 +270,15 @@ class CreateAccountBloc {
 
   // Username begins
 
-  bool hasUsername(){
+  bool hasUsername() {
     return userRegistrationData.username != null;
   }
 
-  String getUsername(){
+  String getUsername() {
     return userRegistrationData.username;
   }
 
   void _onUsername(String username) async {
-
     _clearUsername();
 
     if (username == null || username.isEmpty) {
@@ -341,7 +360,7 @@ class CreateAccountBloc {
         _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
     _usernameFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 3), () {
+    return Future<bool>.delayed(new Duration(seconds: 1), () {
       return true;
     });
   }
@@ -350,11 +369,11 @@ class CreateAccountBloc {
 
   // Email begins
 
-  bool hasEmail(){
+  bool hasEmail() {
     return userRegistrationData.email != null;
   }
 
-  String getEmail(){
+  String getEmail() {
     return userRegistrationData.email;
   }
 
@@ -418,11 +437,10 @@ class CreateAccountBloc {
         _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
     _emailFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 3), () {
+    return Future<bool>.delayed(new Duration(seconds: 1), () {
       return true;
     });
   }
-
 
   void _clearEmail() {
     if (_emailCheckSub != null) {
@@ -439,11 +457,11 @@ class CreateAccountBloc {
 
   // Password begins
 
-  bool hasPassword(){
+  bool hasPassword() {
     return userRegistrationData.password != null;
   }
 
-  String getPassword(){
+  String getPassword() {
     return userRegistrationData.password;
   }
 
@@ -494,13 +512,48 @@ class CreateAccountBloc {
     _passwordIsValidSubject.add(true);
   }
 
-  void _clearPassword(){
+  void _clearPassword() {
     _passwordIsValidSubject.add(false);
     _validatedPasswordSubject.add(null);
     userRegistrationData.password = null;
   }
 
 // Password ends
+
+  // Avatar begins
+
+  bool hasAvatar() {
+    return userRegistrationData.avatar != null;
+  }
+
+  File getAvatar() {
+    return userRegistrationData.avatar;
+  }
+
+  void _onAvatar(File avatar) {
+    _clearAvatar();
+
+    if (avatar == null) {
+      // Avatar is optional, therefore no feedback to user.
+      return;
+    }
+
+    _onAvatarIsValid(avatar);
+  }
+
+  void _onAvatarIsValid(File avatar) {
+    userRegistrationData.avatar = avatar;
+    _validatedAvatarSubject.add(avatar);
+    _avatarIsValidSubject.add(true);
+  }
+
+  void _clearAvatar() {
+    _avatarIsValidSubject.add(false);
+    _validatedAvatarSubject.add(null);
+    userRegistrationData.avatar = null;
+  }
+
+// Email ends
 }
 
 class UserRegistrationData {
@@ -509,4 +562,5 @@ class UserRegistrationData {
   String username;
   String email;
   String password;
+  File avatar;
 }

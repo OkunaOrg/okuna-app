@@ -110,7 +110,7 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
 
         if (passwordIsValid) {
           onPressed = () {
-            Navigator.pushNamed(context, '/auth/done_step');
+            Navigator.pushNamed(context, '/auth/avatar_step');
           };
         } else {
           onPressed = () {
