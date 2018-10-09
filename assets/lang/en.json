@@ -36,5 +36,10 @@
   "AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR": "😱 Your password can't be empty",
   "AUTH.CREATE_ACC.PASSWORD_MAX_LENGTH_ERROR": "😅 A password can't be longer than 64 characters.",
   "AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR": "😅 A password must be at least 8 characters.",
-  "AUTH.CREATE_ACC.WHAT_AVATAR": "Choose a profile picture"
+  "AUTH.CREATE_ACC.WHAT_AVATAR": "Choose a profile picture",
+  "AUTH.CREATE_ACC.AVATAR_TAP_TO_CHANGE": "Tap to change",
+  "AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA": "Take a photo",
+  "AUTH.CREATE_ACC.AVATAR_CHOOSE_GALLERY": "Use an existing photo",
+  "AUTH.CREATE_ACC.AVATAR_REMOVE_PHOTO": "Remove photo"
+
 }
