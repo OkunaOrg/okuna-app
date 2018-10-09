@@ -8,6 +8,8 @@ import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
+
 
 class AuthAvatarStepPage extends StatefulWidget {
   @override
@@ -197,18 +199,23 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
             width: 150.0,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
-            child: StreamBuilder(
-                stream: createAccountBloc.validatedAvatar,
-                initialData: null,
-                builder: (context, snapshot) {
-                  var data = snapshot.data;
+            /// For some reason the image taken with the camera overflows the container while
+            /// the asset one doesnt. ClipRRect fixes this.
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: StreamBuilder(
+                  stream: createAccountBloc.validatedAvatar,
+                  initialData: null,
+                  builder: (context, snapshot) {
+                    var data = snapshot.data;
 
-                  if(data == null){
-                    return Image.asset('assets/images/avatar.png');
-                  }
+                    if(data == null){
+                      return Image.asset('assets/images/avatar.png');
+                    }
 
-                  return Image.file(snapshot.data);
-                }),
+                    return Image.file(snapshot.data, fit: BoxFit.fill);
+                  }),
+            ),
           ),
           SizedBox(height: 20.0),
           Text(
@@ -222,6 +229,17 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
 
   Future<File> _getUserImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    return image;
+    if(image == null){
+      return null;
+    }
+
+    File croppedFile = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      ratioX: 1.0,
+      ratioY: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+    );
+    return croppedFile;
   }
 }
