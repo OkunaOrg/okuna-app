@@ -1,114 +1,147 @@
+import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 
-class AuthSplashPage extends StatelessWidget {
+class AuthSplashPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return AuthSplashPageState();
+  }
+}
+
+class AuthSplashPageState extends State<AuthSplashPage> {
+  LocalizationService localizationService;
+  CreateAccountBloc createAccountBloc;
+
   @override
   Widget build(BuildContext context) {
-    var localizationService = LocalizationService.of(context);
-    String gotAccountText = localizationService.trans('AUTH.GOT_ACCOUNT');
-    String createAccountText = localizationService.trans('AUTH.CREATE_ACCOUNT');
-    String loginText = localizationService.trans('AUTH.LOGIN');
-    String orText = localizationService.trans('AUTH.OR');
+    var openbookProvider = OpenbookProvider.of(context);
+    localizationService = openbookProvider.localizationService;
+    createAccountBloc = openbookProvider.createAccountBloc;
 
     return Scaffold(
-        body: Container(
-            child: Center(
-                child: SingleChildScrollView(
-                    child: Row(
-              children: <Widget>[
-                Expanded(
-                    child: Column(
-                  children: <Widget>[
-                    _buildLogo(),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    _buildHeadline(localizationService),
-                    SizedBox(height: 40.0),
-                    Container(
-                      padding: EdgeInsets.all(18.0),
-                      child: Column(
-                        children: <Widget>[
-                          _buildGotAccount(gotAccountText),
-                          SizedBox(height: 20.0),
-                          _buildLoginButton(loginText),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
-                            child: _buildOr(orText),
-                          ),
-                          _buildCreateAccountButton(createAccountText, context)
-                        ],
-                      ),
-                    ),
-                  ],
-                ))
-              ],
-            ))),
-            decoration: _buildSplashScreenDecoration()));
-  }
-
-  Widget _buildHeadline(LocalizationService localizationService) {
-    String headline = localizationService.trans('AUTH.HEADLINE');
-
-    return Text(
-      headline,
-      style: TextStyle(fontSize: 18.0),
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: new AssetImage('assets/images/splash-background.png'),
+                fit: BoxFit.cover)),
+        padding: EdgeInsets.symmetric(horizontal: 40.0),
+        child: Center(child: SingleChildScrollView(child: _buildLogo())),
+      ),
+      bottomNavigationBar: _buildBottomBar(),
     );
   }
 
-  BoxDecoration _buildSplashScreenDecoration() {
-    return new BoxDecoration(
-        image: new DecorationImage(
-            colorFilter: new ColorFilter.mode(
-                Colors.black.withOpacity(0.1), BlendMode.dstATop),
-            image: new AssetImage('assets/images/splash-background.jpg'),
-            fit: BoxFit.cover));
+  Widget _buildBottomBar() {
+    return BottomAppBar(
+      color: Colors.white,
+      elevation: 0.0,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(child: _buildCreateAccountButton(context: context)),
+            Expanded(
+              child: _buildLoginButton(context: context),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildLogo() {
-    return Image.asset(
-      'assets/images/openbook-logo.png',
-      width: 200.0,
+
+    String headlineText = localizationService.trans('AUTH.HEADLINE');
+
+
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset('assets/images/openbook-o-logo.png', height: 35.0, width: 35.0,),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              width: 2.0,
+              height: 20.0,
+              decoration: BoxDecoration(
+                color: Colors.black12,
+                borderRadius: BorderRadius.circular(100.0)
+              ),
+            ),
+            Text('Open',
+                style: TextStyle(
+                  fontSize: 38.0,
+                  fontWeight: FontWeight.bold,
+                  //color: Colors.white
+                )),
+            Text('book',
+                style: TextStyle(
+                  fontSize: 38.0,
+                  //color: Colors.white
+                )),
+          ],
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+        Text(headlineText,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 22.0,
+              //color: Colors.white
+            ))
+      ],
     );
   }
 
-  Widget _buildGotAccount(String text) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 18.0),
-    );
-  }
+  Widget _buildLoginButton({@required BuildContext context}) {
+    String buttonText = localizationService.trans('AUTH.LOGIN');
 
-  Widget _buildOr(String text) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 18.0),
-    );
-  }
-
-  Widget _buildLoginButton(String text) {
     return OBPrimaryButton(
-        isLarge: true,
-        isFullWidth: true,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 20.0),
-        ),
-        onPressed: () {});
+      isFullWidth: true,
+      isLarge: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            buttonText,
+            style: TextStyle(fontSize: 18.0),
+          )
+        ],
+      ),
+      onPressed: () {
+        print('Entering the realm of Openbook!');
+      },
+    );
   }
 
-  Widget _buildCreateAccountButton(String text, BuildContext context) {
+  Widget _buildCreateAccountButton({@required BuildContext context}) {
+    String buttonText = localizationService.trans('AUTH.CREATE_ACCOUNT');
+
     return OBSecondaryButton(
-        isLarge: true,
-        isFullWidth: true,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 20.0),
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, '/auth/get-started');
-        });
+      isFullWidth: true,
+      isLarge: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            buttonText,
+            style: TextStyle(fontSize: 18.0),
+          )
+        ],
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/auth/get-started');
+      },
+    );
   }
 }

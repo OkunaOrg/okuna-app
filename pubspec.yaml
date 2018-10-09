@@ -45,8 +45,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/splash-background.jpg
-    - assets/images/openbook-logo.png
+    - assets/images/splash-background.png
+    - assets/images/openbook-o-logo.png
     - assets/images/pixel-universe.jpg
     - assets/images/confetti-background.gif
     - assets/images/avatar.png
