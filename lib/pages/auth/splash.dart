@@ -130,14 +130,10 @@ class AuthSplashPageState extends State<AuthSplashPage> {
     return OBSecondaryButton(
       isFullWidth: true,
       isLarge: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            buttonText,
-            style: TextStyle(fontSize: 18.0),
-          )
-        ],
+      child: Text(
+        buttonText,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 18.0),
       ),
       onPressed: () {
         Navigator.pushNamed(context, '/auth/get-started');

@@ -3,7 +3,7 @@
   "AUTH.LOGIN": "Log in",
   "AUTH.CREATE_ACCOUNT": "Create account",
   "AUTH.CREATE_ACC.LETS_GET_STARTED": "Let's get started!",
-  "AUTH.CREATE_ACC.PREVIOUS": "Previous",
+  "AUTH.CREATE_ACC.PREVIOUS": "Back",
   "AUTH.CREATE_ACC.NEXT": "Next",
   "AUTH.CREATE_ACC.CREATE_ACCOUNT": "Create account",
   "AUTH.CREATE_ACC.WHEN_BIRTHDAY": "When's your birthday?",

@@ -172,6 +172,7 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
           height: 20.0,
         ),
         Text(whatPasswordText,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,

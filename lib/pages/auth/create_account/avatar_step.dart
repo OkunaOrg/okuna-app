@@ -104,7 +104,7 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
     return OBPrimaryButton(
       isFullWidth: true,
       isLarge: true,
-      child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
+      child: Text(buttonText, style: TextStyle(fontSize: 16.0), textAlign: TextAlign.center,),
       onPressed: () {
         Navigator.pushNamed(context, '/auth/submit_step');
       },
@@ -145,6 +145,7 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
     return Column(
       children: <Widget>[
         Text(whatAvatarText,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,

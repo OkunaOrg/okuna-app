@@ -55,8 +55,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child:
-                    _buildPreviousButton(context: context),
+                child: _buildPreviousButton(context: context),
               ),
               Expanded(child: _buildNextButton()),
             ],
@@ -78,15 +77,14 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
 
         return Container(
           padding: EdgeInsets.only(top: 20.0),
-          child:
-              Text(feedback, style: TextStyle(color: Colors.white, fontSize: 18.0)),
+          child: Text(feedback,
+              style: TextStyle(color: Colors.white, fontSize: 18.0)),
         );
       },
     );
   }
 
   Widget _buildNextButton() {
-
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return StreamBuilder(
@@ -117,9 +115,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
         });
   }
 
-  Widget _buildPreviousButton(
-      {@required BuildContext context}) {
-
+  Widget _buildPreviousButton({@required BuildContext context}) {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
 
     return OBSecondaryButton(
@@ -155,23 +151,24 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
         Text(
           '🎂',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
+          textAlign: TextAlign.center,
         ),
         SizedBox(
           height: 20.0,
         ),
-        Text(whenBirthdayText,
-            style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
+        Text(
+          whenBirthdayText,
+          style: TextStyle(
+              fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }
 
   Widget _buildBirthdayForm() {
-
     String birthdayInputPlaceholder =
-    localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
+        localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_PLACEHOLDER');
 
     return Form(
         key: _formKey,
