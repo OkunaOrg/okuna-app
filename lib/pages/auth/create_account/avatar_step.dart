@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
-
 class AuthAvatarStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -189,8 +188,7 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
 
     return GestureDetector(
       onTap: () async {
-        File image = await _getUserImage();
-        createAccountBloc.avatar.add(image);
+        _getUserImage(context);
       },
       child: Column(
         children: <Widget>[
@@ -199,6 +197,7 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
             width: 150.0,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+
             /// For some reason the image taken with the camera overflows the container while
             /// the asset one doesnt. ClipRRect fixes this.
             child: ClipRRect(
@@ -209,7 +208,7 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
                   builder: (context, snapshot) {
                     var data = snapshot.data;
 
-                    if(data == null){
+                    if (data == null) {
                       return Image.asset('assets/images/avatar.png');
                     }
 
@@ -227,9 +226,58 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
     );
   }
 
-  Future<File> _getUserImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    if(image == null){
+  Future<File> _getUserImage(BuildContext context) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new ListTile(
+                leading: new Icon(Icons.camera_alt),
+                title: new Text('Camera'),
+                onTap: () async {
+                  var image = await _getUserImageWithSource(ImageSource.camera);
+                  Navigator.pop(context);
+                  if (image != null) createAccountBloc.avatar.add(image);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.photo_album),
+                title: new Text('Gallery'),
+                onTap: () async {
+                  var image =
+                      await _getUserImageWithSource(ImageSource.gallery);
+                  Navigator.pop(context);
+                  if (image != null) createAccountBloc.avatar.add(image);
+                },
+              ),
+              StreamBuilder(
+                stream: createAccountBloc.validatedAvatar,
+                builder: (context, snapshot){
+                  var data = snapshot.data;
+                  if(data == null){
+                    return Container();
+                  }
+
+                  return new ListTile(
+                    leading: new Icon(Icons.delete),
+                    title: new Text('Remove picture'),
+                    onTap: () async {
+                      createAccountBloc.avatar.add(null);
+                      Navigator.pop(context);
+                    },
+                  );
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  Future<File> _getUserImageWithSource(ImageSource source) async {
+    var image = await ImagePicker.pickImage(source: source);
+    if (image == null) {
       return null;
     }
 
