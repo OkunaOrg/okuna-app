@@ -170,6 +170,7 @@ class AuthNameStepPageState extends State<AuthNameStepPage> {
           height: 20.0,
         ),
         Text(whatNameText,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
