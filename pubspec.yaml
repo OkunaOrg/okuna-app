@@ -48,6 +48,8 @@ flutter:
     - assets/images/splash-background.jpg
     - assets/images/openbook-logo.png
     - assets/images/pixel-universe.jpg
+    - assets/images/confetti-background.gif
+    - assets/images/fiesta-parrot.gif
     - assets/images/avatar.png
     - assets/lang/es.json
     - assets/lang/en.json

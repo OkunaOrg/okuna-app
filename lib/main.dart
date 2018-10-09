@@ -1,6 +1,7 @@
 import 'package:Openbook/delegates/localization_delegate.dart';
 import 'package:Openbook/pages/auth/create_account/avatar_step.dart';
 import 'package:Openbook/pages/auth/create_account/birthday_step.dart';
+import 'package:Openbook/pages/auth/create_account/done_step.dart';
 import 'package:Openbook/pages/auth/create_account/email_step.dart';
 import 'package:Openbook/pages/auth/create_account/get_started.dart';
 import 'package:Openbook/pages/auth/create_account/submit_step.dart';
@@ -98,6 +99,10 @@ class MyApp extends StatelessWidget {
         '/auth/submit_step': (BuildContext context) {
           bootstrapOpenbookProviderInContext(context);
           return AuthSubmitPage();
+        },
+        '/auth/done_step': (BuildContext context) {
+          bootstrapOpenbookProviderInContext(context);
+          return AuthDonePage();
         }
       },
     ));
