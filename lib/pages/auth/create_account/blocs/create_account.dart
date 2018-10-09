@@ -131,6 +131,18 @@ class CreateAccountBloc {
 
   // Avatar ends
 
+  // Create account begins
+
+  Stream<bool> get createAccountInProgress => _createAccountInProgressSubject.stream;
+
+  final _createAccountInProgressSubject = BehaviorSubject<bool>();
+
+  Stream<String> get createAccountErrorFeedback => _createAccountErrorFeedbackSubject.stream;
+
+  final _createAccountErrorFeedbackSubject = BehaviorSubject<String>();
+
+  // Create account ends
+
   CreateAccountBloc() {
     _emailController.stream.listen(_onEmail);
     _nameController.stream.listen(_onName);
@@ -360,7 +372,7 @@ class CreateAccountBloc {
         _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
     _usernameFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 1), () {
+    return Future<bool>.delayed(new Duration(seconds: 0), () {
       return true;
     });
   }
@@ -437,7 +449,7 @@ class CreateAccountBloc {
         _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
     _emailFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 1), () {
+    return Future<bool>.delayed(new Duration(seconds: 0), () {
       return true;
     });
   }
@@ -554,6 +566,22 @@ class CreateAccountBloc {
   }
 
 // Email ends
+
+  Future<bool> createAccount(){
+    _clearCreateAccount();
+
+    _createAccountInProgressSubject.add(true);
+
+    return Future<bool>.delayed(new Duration(seconds: 3), () {
+      _createAccountInProgressSubject.add(false);
+      return true;
+    });
+  }
+
+  void _clearCreateAccount(){
+    _createAccountInProgressSubject.add(null);
+    _createAccountErrorFeedbackSubject.add(null);
+  }
 }
 
 class UserRegistrationData {

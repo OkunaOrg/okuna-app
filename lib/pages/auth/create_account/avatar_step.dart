@@ -18,8 +18,6 @@ class AuthAvatarStepPage extends StatefulWidget {
 }
 
 class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
-  File _avatarImage;
-
   bool isSubmitted;
   bool isBootstrapped;
 
@@ -101,35 +99,14 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = localizationService.trans('AUTH.CREATE_ACC.DONE');
 
-    return StreamBuilder(
-      stream: createAccountBloc.avatarIsValid,
-      initialData: false,
-      builder: (context, snapshot) {
-        bool avatarIsValid = snapshot.data;
-
-        Function onPressed;
-
-        if (avatarIsValid) {
-          onPressed = () {
-            Navigator.pushNamed(context, '/auth/done_step');
-          };
-        } else {
-          onPressed = () {
-            setState(() {
-              //createAccountBloc.avatar.add(null);
-              isSubmitted = true;
-            });
-          };
-        }
-
-        return OBPrimaryButton(
-          isFullWidth: true,
-          isLarge: true,
-          child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-          onPressed: onPressed,
-        );
+    return OBPrimaryButton(
+      isFullWidth: true,
+      isLarge: true,
+      child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
+      onPressed: () {
+        Navigator.pushNamed(context, '/auth/submit_step');
       },
     );
   }
@@ -227,11 +204,12 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
   }
 
   Future<File> _getUserImage(BuildContext context) async {
-
-    String cameraOptionText = localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA');
-    String galleryOptionText = localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_GALLERY');
-    String removeOptionText = localizationService.trans('AUTH.CREATE_ACC.AVATAR_REMOVE_PHOTO');
-
+    String cameraOptionText =
+        localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA');
+    String galleryOptionText =
+        localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_GALLERY');
+    String removeOptionText =
+        localizationService.trans('AUTH.CREATE_ACC.AVATAR_REMOVE_PHOTO');
 
     showModalBottomSheet(
         context: context,
@@ -260,9 +238,9 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
               ),
               StreamBuilder(
                 stream: createAccountBloc.validatedAvatar,
-                builder: (context, snapshot){
+                builder: (context, snapshot) {
                   var data = snapshot.data;
-                  if(data == null){
+                  if (data == null) {
                     return Container();
                   }
 
