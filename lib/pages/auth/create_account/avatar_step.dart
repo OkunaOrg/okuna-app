@@ -227,15 +227,21 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
   }
 
   Future<File> _getUserImage(BuildContext context) async {
+
+    String cameraOptionText = localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA');
+    String galleryOptionText = localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_GALLERY');
+    String removeOptionText = localizationService.trans('AUTH.CREATE_ACC.AVATAR_REMOVE_PHOTO');
+
+
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return new Column(
+          return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               new ListTile(
                 leading: new Icon(Icons.camera_alt),
-                title: new Text('Camera'),
+                title: new Text(cameraOptionText),
                 onTap: () async {
                   var image = await _getUserImageWithSource(ImageSource.camera);
                   Navigator.pop(context);
@@ -243,8 +249,8 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
                 },
               ),
               new ListTile(
-                leading: new Icon(Icons.photo_album),
-                title: new Text('Gallery'),
+                leading: new Icon(Icons.photo_library),
+                title: new Text(galleryOptionText),
                 onTap: () async {
                   var image =
                       await _getUserImageWithSource(ImageSource.gallery);
@@ -262,7 +268,7 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
 
                   return new ListTile(
                     leading: new Icon(Icons.delete),
-                    title: new Text('Remove picture'),
+                    title: new Text(removeOptionText),
                     onTap: () async {
                       createAccountBloc.avatar.add(null);
                       Navigator.pop(context);
