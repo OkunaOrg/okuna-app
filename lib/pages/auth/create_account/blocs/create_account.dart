@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Openbook/services/auth-api.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -9,6 +10,7 @@ import 'package:sprintf/sprintf.dart';
 class CreateAccountBloc {
   ValidationService _validationService;
   LocalizationService _localizationService;
+  AuthApiService _authApiService;
 
   // Serves as a snapshot to the data
   final userRegistrationData = UserRegistrationData();
@@ -133,11 +135,13 @@ class CreateAccountBloc {
 
   // Create account begins
 
-  Stream<bool> get createAccountInProgress => _createAccountInProgressSubject.stream;
+  Stream<bool> get createAccountInProgress =>
+      _createAccountInProgressSubject.stream;
 
   final _createAccountInProgressSubject = BehaviorSubject<bool>();
 
-  Stream<String> get createAccountErrorFeedback => _createAccountErrorFeedbackSubject.stream;
+  Stream<String> get createAccountErrorFeedback =>
+      _createAccountErrorFeedbackSubject.stream;
 
   final _createAccountErrorFeedbackSubject = BehaviorSubject<String>();
 
@@ -158,6 +162,10 @@ class CreateAccountBloc {
 
   void setValidationService(ValidationService validationService) {
     _validationService = validationService;
+  }
+
+  void setAuthApiService(AuthApiService authApiService) {
+    _authApiService = authApiService;
   }
 
   // Birthday begins
@@ -188,13 +196,13 @@ class CreateAccountBloc {
 
   void _onBirthdayIsEmpty() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
     _birthdayFeedbackSubject.add(errorFeedback);
   }
 
   void _onBirthdayIsInvalid() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_INVALID_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_INVALID_ERROR');
     _birthdayFeedbackSubject.add(errorFeedback);
   }
 
@@ -248,19 +256,19 @@ class CreateAccountBloc {
 
   void _onNameIsEmpty() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_EMPTY_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.NAME_EMPTY_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
   }
 
   void _onNameTooLong() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_MAX_LENGTH_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.NAME_MAX_LENGTH_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
   }
 
   void _onNameInvalidCharacters() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_CHARACTERS_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.NAME_CHARACTERS_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
   }
 
@@ -317,7 +325,7 @@ class CreateAccountBloc {
       }
 
       String feedback =
-          _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SUCCESS');
+      _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SUCCESS');
       _usernameFeedbackSubject.add(feedback);
 
       _onUsernameIsValid(username);
@@ -326,25 +334,25 @@ class CreateAccountBloc {
 
   void _onUsernameIsEmpty() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_EMPTY_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_EMPTY_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
   }
 
   void _onUsernameTooLong() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_MAX_LENGTH_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_MAX_LENGTH_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
   }
 
   void _onUsernameInvalidCharacters() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHARACTERS_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHARACTERS_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
   }
 
   void _onUsernameIsNotAvailable(String username) {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_TAKEN_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_TAKEN_ERROR');
 
     String parsedFeedback = sprintf(errorFeedback, [username]);
     _usernameFeedbackSubject.add(parsedFeedback);
@@ -369,7 +377,7 @@ class CreateAccountBloc {
 
   Future<bool> _checkUsernameIsAvailable(String username) async {
     String progressFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
+    _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
     _usernameFeedbackSubject.add(progressFeedback);
 
     return Future<bool>.delayed(new Duration(seconds: 0), () {
@@ -411,7 +419,7 @@ class CreateAccountBloc {
       }
 
       String feedback =
-          _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
+      _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
       _emailFeedbackSubject.add(feedback);
 
       _onEmailIsValid(email);
@@ -420,19 +428,19 @@ class CreateAccountBloc {
 
   void _onEmailIsEmpty() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR');
     _emailFeedbackSubject.add(errorFeedback);
   }
 
   void _onEmailIsNotQualifiedEmail() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_INVALID_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_INVALID_ERROR');
     _emailFeedbackSubject.add(errorFeedback);
   }
 
   void _onEmailIsNotAvailable(String email) {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
 
     String parsedFeedback = sprintf(errorFeedback, [email]);
     _emailFeedbackSubject.add(parsedFeedback);
@@ -446,7 +454,7 @@ class CreateAccountBloc {
 
   Future<bool> _checkEmailIsAvailable(String email) async {
     String progressFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
     _emailFeedbackSubject.add(progressFeedback);
 
     return Future<bool>.delayed(new Duration(seconds: 0), () {
@@ -500,19 +508,19 @@ class CreateAccountBloc {
 
   void _onPasswordIsEmpty() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
   }
 
   void _onPasswordTooSmall() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
   }
 
   void _onPasswordTooLong() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
   }
 
@@ -567,7 +575,7 @@ class CreateAccountBloc {
 
 // Email ends
 
-  Future<bool> createAccount(){
+  Future<bool> createAccount() {
     _clearCreateAccount();
 
     _createAccountInProgressSubject.add(true);
@@ -578,7 +586,7 @@ class CreateAccountBloc {
     });
   }
 
-  void _clearCreateAccount(){
+  void _clearCreateAccount() {
     _createAccountInProgressSubject.add(null);
     _createAccountErrorFeedbackSubject.add(null);
   }
