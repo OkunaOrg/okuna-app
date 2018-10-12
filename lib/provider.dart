@@ -1,3 +1,4 @@
+import 'package:Openbook/config.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';
@@ -25,6 +26,10 @@ class OpenbookProvider extends InheritedWidget {
   setValidationService(ValidationService newValidationService) {
     validationService = newValidationService;
     createAccountBloc.setValidationService(validationService);
+  }
+
+  String getAPIUrl(){
+    return Config.apiURL;
   }
 
   static OpenbookProvider of(BuildContext context) {
