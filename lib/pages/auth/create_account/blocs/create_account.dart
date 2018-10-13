@@ -208,7 +208,7 @@ class CreateAccountBloc {
   }
 
   void _onBirthdayIsValid(DateTime birthday) {
-    String parsedDate = new DateFormat.yMd().format(birthday);
+    String parsedDate = DateFormat('dd-MM-yyyy').format(birthday);
 
     _birthdayFeedbackSubject.add(null);
     userRegistrationData.birthday = parsedDate;
@@ -420,9 +420,8 @@ class CreateAccountBloc {
       return;
     }
 
-    _emailCheckSub = _checkEmailIsAvailable(email)
-        .asStream()
-        .listen((Response response) {
+    _emailCheckSub =
+        _checkEmailIsAvailable(email).asStream().listen((Response response) {
       if (response.statusCode == HttpStatus.accepted) {
         _onEmailIsAvailable(email);
       } else if (response.statusCode == HttpStatus.badRequest) {
@@ -455,7 +454,7 @@ class CreateAccountBloc {
 
   void _onEmailIsAvailable(String email) {
     String feedback =
-    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
     _emailFeedbackSubject.add(feedback);
 
     _onEmailIsValid(email);
@@ -477,7 +476,7 @@ class CreateAccountBloc {
 
   void _onEmailCheckServerError() {
     String errorFeedback =
-    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
     _emailFeedbackSubject.add(errorFeedback);
   }
 
@@ -589,6 +588,9 @@ class CreateAccountBloc {
   void _clearAvatar() {
     _avatarIsValidSubject.add(false);
     _validatedAvatarSubject.add(null);
+    if(userRegistrationData.avatar != null){
+      userRegistrationData.avatar.deleteSync();
+    }
     userRegistrationData.avatar = null;
   }
 
@@ -599,15 +601,50 @@ class CreateAccountBloc {
 
     _createAccountInProgressSubject.add(true);
 
-    return Future<bool>.delayed(new Duration(seconds: 3), () {
-      _createAccountInProgressSubject.add(false);
-      return true;
+    return _authApiService
+        .createAccount(
+            email: userRegistrationData.email,
+            username: userRegistrationData.username,
+            name: userRegistrationData.name,
+            birthDate: userRegistrationData.birthday,
+            password: userRegistrationData.password,
+            avatar: userRegistrationData.avatar)
+        .then((StreamedResponse response) {
+      if (response.statusCode == HttpStatus.created) {
+        return true;
+      }
+
+      String errorFeedback;
+
+      if (response.statusCode == HttpStatus.badRequest) {
+        // Validation errors.
+        // TODO Display specific validation errors.
+        errorFeedback = _localizationService
+            .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_VALIDATION');
+      } else {
+        // Server error
+        errorFeedback = _localizationService
+            .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_SERVER');
+      }
+
+      _createAccountErrorFeedbackSubject.add(errorFeedback);
+
+      return false;
     });
   }
 
   void _clearCreateAccount() {
     _createAccountInProgressSubject.add(null);
     _createAccountErrorFeedbackSubject.add(null);
+  }
+
+  void clearAll(){
+    _clearCreateAccount();
+    _clearBirthday();
+    _clearName();
+    _clearEmail();
+    _clearAvatar();
+    _clearUsername();
   }
 }
 

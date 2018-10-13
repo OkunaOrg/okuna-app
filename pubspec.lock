@@ -229,7 +229,7 @@ packages:
     source: hosted
     version: "1.1.6"
   mime:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: mime
       url: "https://pub.dartlang.org"
