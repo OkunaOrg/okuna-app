@@ -22,4 +22,8 @@ class AuthApiService {
   Future<Response> checkUsernameIsAvailable({@required String username}) {
     return _httpService.postJSON('$apiURL$CHECK_USERNAME_PATH', body: {'username': username});
   }
+
+  Future<Response> checkEmailIsAvailable({@required String email}) {
+    return _httpService.postJSON('$apiURL$CHECK_EMAIL_PATH', body: {'email': email});
+  }
 }

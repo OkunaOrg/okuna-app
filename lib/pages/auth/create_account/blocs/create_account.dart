@@ -92,7 +92,7 @@ class CreateAccountBloc {
 
   final _validatedEmailSubject = BehaviorSubject<String>();
 
-  StreamSubscription<bool> _emailCheckSub;
+  StreamSubscription<Response> _emailCheckSub;
 
   // Email ends
 
@@ -422,17 +422,14 @@ class CreateAccountBloc {
 
     _emailCheckSub = _checkEmailIsAvailable(email)
         .asStream()
-        .listen((bool emailIsAvailable) {
-      if (!emailIsAvailable) {
+        .listen((Response response) {
+      if (response.statusCode == HttpStatus.accepted) {
+        _onEmailIsAvailable(email);
+      } else if (response.statusCode == HttpStatus.badRequest) {
         _onEmailIsNotAvailable(email);
-        return;
+      } else {
+        _onEmailCheckServerError();
       }
-
-      String feedback =
-          _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
-      _emailFeedbackSubject.add(feedback);
-
-      _onEmailIsValid(email);
     });
   }
 
@@ -456,20 +453,32 @@ class CreateAccountBloc {
     _emailFeedbackSubject.add(parsedFeedback);
   }
 
+  void _onEmailIsAvailable(String email) {
+    String feedback =
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
+    _emailFeedbackSubject.add(feedback);
+
+    _onEmailIsValid(email);
+  }
+
   void _onEmailIsValid(String email) {
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
     _emailIsValidSubject.add(true);
   }
 
-  Future<bool> _checkEmailIsAvailable(String email) async {
+  Future<Response> _checkEmailIsAvailable(String email) async {
     String progressFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
     _emailFeedbackSubject.add(progressFeedback);
 
-    return Future<bool>.delayed(new Duration(seconds: 0), () {
-      return true;
-    });
+    return _authApiService.checkEmailIsAvailable(email: email);
+  }
+
+  void _onEmailCheckServerError() {
+    String errorFeedback =
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
+    _emailFeedbackSubject.add(errorFeedback);
   }
 
   void _clearEmail() {
