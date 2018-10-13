@@ -16,6 +16,7 @@ class OpenbookProvider extends InheritedWidget {
   OpenbookProvider(child) : super(child: child) {
     createAccountBloc.setValidationService(validationService);
     authApiService.setHttpService(httpService);
+    authApiService.setApiURL(getAPIUrl());
     createAccountBloc.setAuthApiService(authApiService);
   }
 

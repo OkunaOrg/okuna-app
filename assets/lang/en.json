@@ -23,6 +23,7 @@
   "AUTH.CREATE_ACC.USERNAME_CHARACTERS_ERROR": "😅 A username can only contain alphanumeric characters and underscores.",
   "AUTH.CREATE_ACC.USERNAME_TAKEN_ERROR": "😩 The username @%s is taken.",
   "AUTH.CREATE_ACC.USERNAME_CHECK": "🤞 Just a moment, checking if the username is available.",
+  "AUTH.CREATE_ACC.USERNAME_SERVER_ERROR": "😭 We're experiencing issues with our servers, please try again in a couple of minutes.",
   "AUTH.CREATE_ACC.WHAT_EMAIL": "What's your email?",
   "AUTH.CREATE_ACC.EMAIL_PLACEHOLDER": "john_travolta@mail.com",
   "AUTH.CREATE_ACC.EMAIL_SUCCESS": "✅ No existing account found.",
