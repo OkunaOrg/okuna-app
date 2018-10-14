@@ -31,21 +31,24 @@ class AuthApiService {
         .postJSON('$apiURL$CHECK_EMAIL_PATH', body: {'email': email});
   }
 
-  Future<StreamedResponse> createAccount(
-      {@required String email,
-      @required String username,
-      @required String name,
-      @required String birthDate,
-      @required String password,
-      @required File avatar}) {
+  Future<StreamedResponse> createAccount({@required String email,
+    @required String username,
+    @required String name,
+    @required String birthDate,
+    @required String password, File avatar}) {
 
-    return _httpService.postMultiform('$apiURL$CREATE_ACCOUNT_PATH', body: {
+    Map<String, dynamic> body = {
       'email': email,
       'username': username,
       'name': name,
       'birth_date': birthDate,
-      'password': password,
-      'avatar': avatar
-    });
+      'password': password
+    };
+
+    if (avatar != null){
+      body['avatar'] = avatar;
+    }
+
+    return _httpService.postMultiform('$apiURL$CREATE_ACCOUNT_PATH', body: body);
   }
 }
