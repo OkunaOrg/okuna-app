@@ -8,6 +8,22 @@ import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:sprintf/sprintf.dart';
 
+/// TODO This was the first ever logic component/service.
+/// Documentation and patterns from google for state management, logic encapsulation,
+/// and more are quite crappy at this stage. Therefore this file resulted to be an experiment
+/// which tried some of the patterns and we quickly discovered their shortcomings
+/// and awkwardness. We need to rework this file in the future with the user
+/// experience in mind rather than sticking to a pattern such as the BLOC which
+/// dictates that everything is input and output streams. Leaving no room
+/// for one time operations and behaviour related specifically to those kind
+/// of operations.
+/// The resulting veredict is.. use streams for eventful data. Provide methods
+/// for actions rather than "Sinks" as they can be explicit about the operation
+/// performed on the arguments and have a beginning and an ending which can
+/// be easily reflected in the UI instead of having stream subscriptions
+/// to the beginning or end of these all over the place instead of the
+/// place where called. Implicit vs explicit.
+
 class CreateAccountBloc {
   ValidationService _validationService;
   LocalizationService _localizationService;
