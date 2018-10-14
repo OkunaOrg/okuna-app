@@ -13,6 +13,8 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  mime: ^0.9.6+2
+  http: ^0.12.0
   intl: ^0.15.7
   rxdart: ^0.18.1
   sprintf: "^4.0.0"
@@ -30,7 +32,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.6.1"
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icon.png"
+  adaptive_icon_background: "#FFFFFFFF"
+  adaptive_icon_foreground: "assets/images/icon-adaptive-foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

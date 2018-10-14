@@ -3,6 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class AuthSubmitPage extends StatefulWidget {
   @override
@@ -192,6 +193,7 @@ class AuthSubmitPageState extends State<AuthSubmitPage> {
   void _requestCreateAccount() async {
     bool createdAccount = await createAccountBloc.createAccount();
     if (createdAccount) {
+      createAccountBloc.clearAll();
       Navigator.pushNamed(context, '/auth/done_step');
     }
     mustRequestCreateAccount = false;

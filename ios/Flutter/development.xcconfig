@@ -1,0 +1,9 @@
+//
+//  development.xcconfig
+//  Runner
+//
+//
+
+include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main-dev.dart

@@ -1,14 +1,33 @@
 import 'dart:async';
+import 'package:Openbook/services/auth-api.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';
+import 'package:http/http.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:sprintf/sprintf.dart';
 
+/// TODO This was the first ever logic component/service.
+/// Documentation and patterns from google for state management, logic encapsulation,
+/// and more are quite crappy at this stage. Therefore this file resulted to be an experiment
+/// which tried some of the patterns and we quickly discovered their shortcomings
+/// and awkwardness. We need to rework this file in the future with the user
+/// experience in mind rather than sticking to a pattern such as the BLOC which
+/// dictates that everything is input and output streams. Leaving no room
+/// for one time operations and behaviour related specifically to those kind
+/// of operations.
+/// The resulting veredict is.. use streams for eventful data. Provide methods
+/// for actions rather than "Sinks" as they can be explicit about the operation
+/// performed on the arguments and have a beginning and an ending which can
+/// be easily reflected in the UI instead of having stream subscriptions
+/// to the beginning or end of these all over the place instead of the
+/// place where called. Implicit vs explicit.
+
 class CreateAccountBloc {
   ValidationService _validationService;
   LocalizationService _localizationService;
+  AuthApiService _authApiService;
 
   // Serves as a snapshot to the data
   final userRegistrationData = UserRegistrationData();
@@ -53,9 +72,6 @@ class CreateAccountBloc {
 
   // Username begins
 
-  Sink<String> get username => _usernameController.sink;
-  final _usernameController = StreamController<String>();
-
   Stream<bool> get usernameIsValid => _usernameIsValidSubject.stream;
 
   final _usernameIsValidSubject = BehaviorSubject<bool>();
@@ -68,14 +84,9 @@ class CreateAccountBloc {
 
   final _validatedUsernameSubject = BehaviorSubject<String>();
 
-  StreamSubscription<bool> _usernameCheckSub;
-
   // Username ends
 
   // Email begins
-
-  Sink<String> get email => _emailController.sink;
-  final _emailController = StreamController<String>();
 
   Stream<bool> get emailIsValid => _emailIsValidSubject.stream;
 
@@ -88,8 +99,6 @@ class CreateAccountBloc {
   Stream<String> get validatedEmail => _validatedEmailSubject.stream;
 
   final _validatedEmailSubject = BehaviorSubject<String>();
-
-  StreamSubscription<bool> _emailCheckSub;
 
   // Email ends
 
@@ -133,21 +142,21 @@ class CreateAccountBloc {
 
   // Create account begins
 
-  Stream<bool> get createAccountInProgress => _createAccountInProgressSubject.stream;
+  Stream<bool> get createAccountInProgress =>
+      _createAccountInProgressSubject.stream;
 
   final _createAccountInProgressSubject = BehaviorSubject<bool>();
 
-  Stream<String> get createAccountErrorFeedback => _createAccountErrorFeedbackSubject.stream;
+  Stream<String> get createAccountErrorFeedback =>
+      _createAccountErrorFeedbackSubject.stream;
 
   final _createAccountErrorFeedbackSubject = BehaviorSubject<String>();
 
   // Create account ends
 
   CreateAccountBloc() {
-    _emailController.stream.listen(_onEmail);
     _nameController.stream.listen(_onName);
     _passwordController.stream.listen(_onPassword);
-    _usernameController.stream.listen(_onUsername);
     _birthdayController.stream.listen(_onBirthday);
     _avatarController.stream.listen(_onAvatar);
   }
@@ -158,6 +167,10 @@ class CreateAccountBloc {
 
   void setValidationService(ValidationService validationService) {
     _validationService = validationService;
+  }
+
+  void setAuthApiService(AuthApiService authApiService) {
+    _authApiService = authApiService;
   }
 
   // Birthday begins
@@ -199,7 +212,7 @@ class CreateAccountBloc {
   }
 
   void _onBirthdayIsValid(DateTime birthday) {
-    String parsedDate = new DateFormat.yMd().format(birthday);
+    String parsedDate = DateFormat('dd-MM-yyyy').format(birthday);
 
     _birthdayFeedbackSubject.add(null);
     userRegistrationData.birthday = parsedDate;
@@ -290,37 +303,38 @@ class CreateAccountBloc {
     return userRegistrationData.username;
   }
 
-  void _onUsername(String username) async {
-    _clearUsername();
+  Future<bool> setUsername(String username) async {
+    clearUsername();
 
     if (username == null || username.isEmpty) {
       _onUsernameIsEmpty();
-      return;
+      return Future.value(false);
     }
 
     if (username.length > 50) {
       _onUsernameTooLong();
-      return;
+      return Future.value(false);
     }
 
     if (!_validationService.isAlphanumericWithUnderscores(username)) {
       _onUsernameInvalidCharacters();
-      return;
+      return Future.value(false);
     }
 
-    _usernameCheckSub = _checkUsernameIsAvailable(username)
-        .asStream()
-        .listen((bool usernameIsAvailable) {
-      if (!usernameIsAvailable) {
+    return _checkUsernameIsAvailable(username).then((Response response) {
+      if (response.statusCode == HttpStatus.accepted) {
+        _onUsernameIsAvailable(username);
+        return true;
+      } else if (response.statusCode == HttpStatus.badRequest) {
         _onUsernameIsNotAvailable(username);
-        return;
+        return false;
+      } else {
+        _onUsernameCheckServerError();
+        return false;
       }
-
-      String feedback =
-          _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SUCCESS');
-      _usernameFeedbackSubject.add(feedback);
-
-      _onUsernameIsValid(username);
+    }).catchError((error) {
+      _onUsernameCheckServerError();
+      return false;
     });
   }
 
@@ -342,6 +356,12 @@ class CreateAccountBloc {
     _usernameFeedbackSubject.add(errorFeedback);
   }
 
+  void _onUsernameIsAvailable(String username) {
+    _usernameFeedbackSubject.add(null);
+
+    _onUsernameIsValid(username);
+  }
+
   void _onUsernameIsNotAvailable(String username) {
     String errorFeedback =
         _localizationService.trans('AUTH.CREATE_ACC.USERNAME_TAKEN_ERROR');
@@ -350,12 +370,14 @@ class CreateAccountBloc {
     _usernameFeedbackSubject.add(parsedFeedback);
   }
 
-  void _clearUsername() {
-    if (_usernameCheckSub != null) {
-      _usernameCheckSub.cancel();
-      _usernameCheckSub = null;
-    }
+  void _onUsernameCheckServerError() {
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SERVER_ERROR');
+    _usernameFeedbackSubject.add(errorFeedback);
+  }
 
+  void clearUsername() {
+    _usernameFeedbackSubject.add(null);
     _usernameIsValidSubject.add(false);
     _validatedUsernameSubject.add(null);
     userRegistrationData.username = null;
@@ -367,14 +389,8 @@ class CreateAccountBloc {
     _usernameIsValidSubject.add(true);
   }
 
-  Future<bool> _checkUsernameIsAvailable(String username) async {
-    String progressFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
-    _usernameFeedbackSubject.add(progressFeedback);
-
-    return Future<bool>.delayed(new Duration(seconds: 0), () {
-      return true;
-    });
+  Future<Response> _checkUsernameIsAvailable(String username) {
+    return _authApiService.checkUsernameIsAvailable(username: username);
   }
 
   // Username ends
@@ -389,32 +405,33 @@ class CreateAccountBloc {
     return userRegistrationData.email;
   }
 
-  void _onEmail(String email) {
-    _clearEmail();
+  Future<bool> setEmail(String email) {
+    clearEmail();
 
     if (email == null || email.isEmpty) {
       _onEmailIsEmpty();
-      return;
+      return Future.value(false);
     }
 
     if (!_validationService.isQualifiedEmail(email)) {
       _onEmailIsNotQualifiedEmail();
-      return;
+      return Future.value(false);
     }
 
-    _emailCheckSub = _checkEmailIsAvailable(email)
-        .asStream()
-        .listen((bool emailIsAvailable) {
-      if (!emailIsAvailable) {
+    return _checkEmailIsAvailable(email).then((Response response) {
+      if (response.statusCode == HttpStatus.accepted) {
+        _onEmailIsAvailable(email);
+        return Future.value(true);
+      } else if (response.statusCode == HttpStatus.badRequest) {
         _onEmailIsNotAvailable(email);
-        return;
+        return Future.value(false);
+      } else {
+        _onEmailCheckServerError();
+        return Future.value(false);
       }
-
-      String feedback =
-          _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
-      _emailFeedbackSubject.add(feedback);
-
-      _onEmailIsValid(email);
+    }).catchError((error) {
+      _onEmailCheckServerError();
+      return false;
     });
   }
 
@@ -438,28 +455,28 @@ class CreateAccountBloc {
     _emailFeedbackSubject.add(parsedFeedback);
   }
 
+  void _onEmailIsAvailable(String email) {
+    _onEmailIsValid(email);
+  }
+
   void _onEmailIsValid(String email) {
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
     _emailIsValidSubject.add(true);
   }
 
-  Future<bool> _checkEmailIsAvailable(String email) async {
-    String progressFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
-    _emailFeedbackSubject.add(progressFeedback);
-
-    return Future<bool>.delayed(new Duration(seconds: 0), () {
-      return true;
-    });
+  Future<Response> _checkEmailIsAvailable(String email) async {
+    return _authApiService.checkEmailIsAvailable(email: email);
   }
 
-  void _clearEmail() {
-    if (_emailCheckSub != null) {
-      _emailCheckSub.cancel();
-      _emailCheckSub = null;
-    }
+  void _onEmailCheckServerError() {
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
+    _emailFeedbackSubject.add(errorFeedback);
+  }
 
+  void clearEmail() {
+    _emailFeedbackSubject.add(null);
     _emailIsValidSubject.add(false);
     _validatedEmailSubject.add(null);
     userRegistrationData.email = null;
@@ -562,25 +579,72 @@ class CreateAccountBloc {
   void _clearAvatar() {
     _avatarIsValidSubject.add(false);
     _validatedAvatarSubject.add(null);
+    if (userRegistrationData.avatar != null) {
+      userRegistrationData.avatar.deleteSync();
+    }
     userRegistrationData.avatar = null;
   }
 
 // Email ends
 
-  Future<bool> createAccount(){
+  Future<bool> createAccount() {
     _clearCreateAccount();
 
     _createAccountInProgressSubject.add(true);
 
-    return Future<bool>.delayed(new Duration(seconds: 3), () {
-      _createAccountInProgressSubject.add(false);
-      return true;
+    return _authApiService
+        .createAccount(
+            email: userRegistrationData.email,
+            username: userRegistrationData.username,
+            name: userRegistrationData.name,
+            birthDate: userRegistrationData.birthday,
+            password: userRegistrationData.password,
+            avatar: userRegistrationData.avatar)
+        .then((StreamedResponse response) {
+      if (response.statusCode == HttpStatus.created) {
+        return true;
+      }
+
+      if (response.statusCode == HttpStatus.badRequest) {
+        _onCreateAccountValidationError(response);
+      } else {
+        _onCreateAccountServerError();
+      }
+      return false;
+    }).catchError((error) {
+      _onCreateAccountServerError();
+      return false;
     });
   }
 
-  void _clearCreateAccount(){
+  void _onCreateAccountServerError() {
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_SERVER');
+
+    _createAccountErrorFeedbackSubject.add(errorFeedback);
+  }
+
+  void _onCreateAccountValidationError(StreamedResponse response) {
+    // Validation errors.
+    // TODO Display specific validation errors.
+    String errorFeedback = _localizationService
+        .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_VALIDATION');
+
+    _createAccountErrorFeedbackSubject.add(errorFeedback);
+  }
+
+  void _clearCreateAccount() {
     _createAccountInProgressSubject.add(null);
     _createAccountErrorFeedbackSubject.add(null);
+  }
+
+  void clearAll() {
+    _clearCreateAccount();
+    _clearBirthday();
+    _clearName();
+    clearEmail();
+    _clearAvatar();
+    clearUsername();
   }
 }
 

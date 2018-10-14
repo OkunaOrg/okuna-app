@@ -15,13 +15,16 @@ class OBPrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   final bool isLarge;
+  final bool isDisabled;
   final bool isFullWidth;
+  final bool isLoading;
 
-  const OBPrimaryButton(
-      {@required this.child,
-      @required this.onPressed,
-      this.isLarge = false,
-      this.isFullWidth = false});
+  const OBPrimaryButton({@required this.child,
+    @required this.onPressed,
+    this.isDisabled = false,
+    this.isLoading = false,
+    this.isLarge = false,
+    this.isFullWidth = false});
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +44,25 @@ class OBPrimaryButton extends StatelessWidget {
       minWidth = 88.0;
     }
 
+    var buttonChild = isLoading ? _getLoadingIndicator() : child;
+
+    var button = FlatButton(
+        textColor: Colors.white,
+        color: Color(0xFF7ED321),
+        child: buttonChild,
+        onPressed: isLoading ? (){} : onPressed,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(50.0)));
+
+
     return ButtonTheme(
-      minWidth: minWidth,
-      height: height,
-      child: FlatButton(
-          textColor: Colors.white,
-          color: Color(0xFF7ED321),
-          child: this.child,
-          onPressed: onPressed,
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(2.0))),
+        minWidth: minWidth,
+        height: height,
+        child: isDisabled ? Opacity(opacity: 0.5, child: button,) : button
     );
+  }
+
+  Widget _getLoadingIndicator() {
+    return SizedBox(height: 20.0, width: 20.0, child: CircularProgressIndicator(strokeWidth: 2.0, valueColor: new AlwaysStoppedAnimation<Color>(Colors.white)),);
   }
 }

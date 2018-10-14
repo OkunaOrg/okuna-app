@@ -15,6 +15,7 @@ class AuthEmailStepPage extends StatefulWidget {
 class AuthEmailStepPageState extends State<AuthEmailStepPage> {
   bool isSubmitted;
   bool isBootstrapped;
+  bool emailCheckInProgress;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
@@ -25,6 +26,7 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
   void initState() {
     isBootstrapped = false;
     isSubmitted = false;
+    emailCheckInProgress = false;
     super.initState();
   }
 
@@ -96,33 +98,26 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
   Widget _buildNextButton() {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
-    return StreamBuilder(
-      stream: createAccountBloc.emailIsValid,
-      initialData: false,
-      builder: (context, snapshot) {
-        bool emailIsValid = snapshot.data;
-
-        Function onPressed;
-
-        if (emailIsValid) {
-          onPressed = () {
-            Navigator.pushNamed(context, '/auth/password_step');
-          };
-        } else {
-          onPressed = () {
-            setState(() {
-              createAccountBloc.email.add(_emailController.text);
-              isSubmitted = true;
+    return OBPrimaryButton(
+      isFullWidth: true,
+      isLarge: true,
+      isLoading: emailCheckInProgress,
+      child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
+      onPressed: () {
+        setState(() {
+          emailCheckInProgress = true;
+          isSubmitted = true;
+          createAccountBloc
+              .setEmail(_emailController.text)
+              .then((bool emailWasSet) {
+            setState((){
+              emailCheckInProgress = false;
             });
-          };
-        }
-
-        return OBPrimaryButton(
-          isFullWidth: true,
-          isLarge: true,
-          child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-          onPressed: onPressed,
-        );
+            if (emailWasSet) {
+              Navigator.pushNamed(context, '/auth/password_step');
+            }
+          });
+        });
       },
     );
   }
@@ -200,7 +195,7 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
                   child: TextField(
                     autocorrect: false,
                     onChanged: (String value) {
-                      createAccountBloc.email.add(value);
+                      createAccountBloc.clearEmail();
                     },
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     decoration: new InputDecoration(
