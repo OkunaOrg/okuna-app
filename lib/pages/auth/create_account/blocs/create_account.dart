@@ -56,9 +56,6 @@ class CreateAccountBloc {
 
   // Username begins
 
-  Sink<String> get username => _usernameController.sink;
-  final _usernameController = StreamController<String>();
-
   Stream<bool> get usernameIsValid => _usernameIsValidSubject.stream;
 
   final _usernameIsValidSubject = BehaviorSubject<bool>();
@@ -70,8 +67,6 @@ class CreateAccountBloc {
   Stream<String> get validatedUsername => _validatedUsernameSubject.stream;
 
   final _validatedUsernameSubject = BehaviorSubject<String>();
-
-  StreamSubscription<Response> _usernameCheckSub;
 
   // Username ends
 
@@ -152,7 +147,6 @@ class CreateAccountBloc {
     _emailController.stream.listen(_onEmail);
     _nameController.stream.listen(_onName);
     _passwordController.stream.listen(_onPassword);
-    _usernameController.stream.listen(_onUsername);
     _birthdayController.stream.listen(_onBirthday);
     _avatarController.stream.listen(_onAvatar);
   }
@@ -299,34 +293,37 @@ class CreateAccountBloc {
     return userRegistrationData.username;
   }
 
-  void _onUsername(String username) async {
-    _clearUsername();
+  Future<bool> setUsername(String username) async {
+    clearUsername();
 
     if (username == null || username.isEmpty) {
       _onUsernameIsEmpty();
-      return;
+      return Future.value(false);
     }
 
     if (username.length > 50) {
       _onUsernameTooLong();
-      return;
+      return Future.value(false);
     }
 
     if (!_validationService.isAlphanumericWithUnderscores(username)) {
       _onUsernameInvalidCharacters();
-      return;
+      return Future.value(false);
     }
 
-    _usernameCheckSub = _checkUsernameIsAvailable(username)
-        .asStream()
-        .listen((Response response) {
+    return _checkUsernameIsAvailable(username).then((Response response){
       if (response.statusCode == HttpStatus.accepted) {
         _onUsernameIsAvailable(username);
+        return true;
       } else if (response.statusCode == HttpStatus.badRequest) {
         _onUsernameIsNotAvailable(username);
+        return false;
       } else {
         _onUsernameCheckServerError();
+        return false;
       }
+    }).catchError((error){
+      _onUsernameCheckServerError();
     });
   }
 
@@ -349,9 +346,7 @@ class CreateAccountBloc {
   }
 
   void _onUsernameIsAvailable(String username) {
-    String feedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_SUCCESS');
-    _usernameFeedbackSubject.add(feedback);
+    _usernameFeedbackSubject.add(null);
 
     _onUsernameIsValid(username);
   }
@@ -370,12 +365,8 @@ class CreateAccountBloc {
     _usernameFeedbackSubject.add(errorFeedback);
   }
 
-  void _clearUsername() {
-    if (_usernameCheckSub != null) {
-      _usernameCheckSub.cancel();
-      _usernameCheckSub = null;
-    }
-
+  void clearUsername() {
+    _usernameFeedbackSubject.add(null);
     _usernameIsValidSubject.add(false);
     _validatedUsernameSubject.add(null);
     userRegistrationData.username = null;
@@ -388,10 +379,6 @@ class CreateAccountBloc {
   }
 
   Future<Response> _checkUsernameIsAvailable(String username) {
-    String progressFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHECK');
-    _usernameFeedbackSubject.add(progressFeedback);
-
     return _authApiService.checkUsernameIsAvailable(username: username);
   }
 
@@ -644,7 +631,7 @@ class CreateAccountBloc {
     _clearName();
     _clearEmail();
     _clearAvatar();
-    _clearUsername();
+    clearUsername();
   }
 }
 

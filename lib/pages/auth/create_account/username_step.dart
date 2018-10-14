@@ -15,6 +15,7 @@ class AuthUsernameStepPage extends StatefulWidget {
 class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
   bool isSubmitted;
   bool isBootstrapped;
+  bool usernameCheckInProgress;
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
@@ -25,6 +26,7 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
   void initState() {
     isBootstrapped = false;
     isSubmitted = false;
+    usernameCheckInProgress = false;
     super.initState();
   }
 
@@ -96,33 +98,26 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
   Widget _buildNextButton() {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
-    return StreamBuilder(
-      stream: createAccountBloc.usernameIsValid,
-      initialData: false,
-      builder: (context, snapshot) {
-        bool usernameIsValid = snapshot.data;
-
-        Function onPressed;
-
-        if (usernameIsValid) {
-          onPressed = () {
-            Navigator.pushNamed(context, '/auth/email_step');
-          };
-        } else {
-          onPressed = () {
-            setState(() {
-              createAccountBloc.username.add(_usernameController.text);
-              isSubmitted = true;
-            });
-          };
-        }
-
-        return OBPrimaryButton(
-          isFullWidth: true,
-          isLarge: true,
-          child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-          onPressed: onPressed,
-        );
+    return OBPrimaryButton(
+      isFullWidth: true,
+      isLarge: true,
+      isLoading: usernameCheckInProgress,
+      child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
+      onPressed: () {
+        setState(() {
+          usernameCheckInProgress = true;
+          isSubmitted = true;
+          createAccountBloc
+              .setUsername(_usernameController.text)
+              .then((bool usernameWasSet) {
+                setState((){
+                  usernameCheckInProgress = false;
+                });
+            if (usernameWasSet) {
+              Navigator.pushNamed(context, '/auth/email_step');
+            }
+          });
+        });
       },
     );
   }
@@ -200,7 +195,7 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
                   child: TextField(
                     autocorrect: false,
                     onChanged: (String value) {
-                      createAccountBloc.username.add(value);
+                      createAccountBloc.clearUsername();
                     },
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     decoration: new InputDecoration(
