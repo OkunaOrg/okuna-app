@@ -72,9 +72,6 @@ class CreateAccountBloc {
 
   // Email begins
 
-  Sink<String> get email => _emailController.sink;
-  final _emailController = StreamController<String>();
-
   Stream<bool> get emailIsValid => _emailIsValidSubject.stream;
 
   final _emailIsValidSubject = BehaviorSubject<bool>();
@@ -86,8 +83,6 @@ class CreateAccountBloc {
   Stream<String> get validatedEmail => _validatedEmailSubject.stream;
 
   final _validatedEmailSubject = BehaviorSubject<String>();
-
-  StreamSubscription<Response> _emailCheckSub;
 
   // Email ends
 
@@ -144,7 +139,6 @@ class CreateAccountBloc {
   // Create account ends
 
   CreateAccountBloc() {
-    _emailController.stream.listen(_onEmail);
     _nameController.stream.listen(_onName);
     _passwordController.stream.listen(_onPassword);
     _birthdayController.stream.listen(_onBirthday);
@@ -311,7 +305,7 @@ class CreateAccountBloc {
       return Future.value(false);
     }
 
-    return _checkUsernameIsAvailable(username).then((Response response){
+    return _checkUsernameIsAvailable(username).then((Response response) {
       if (response.statusCode == HttpStatus.accepted) {
         _onUsernameIsAvailable(username);
         return true;
@@ -322,7 +316,7 @@ class CreateAccountBloc {
         _onUsernameCheckServerError();
         return false;
       }
-    }).catchError((error){
+    }).catchError((error) {
       _onUsernameCheckServerError();
     });
   }
@@ -394,28 +388,32 @@ class CreateAccountBloc {
     return userRegistrationData.email;
   }
 
-  void _onEmail(String email) {
-    _clearEmail();
+  Future<bool> setEmail(String email) {
+    clearEmail();
 
     if (email == null || email.isEmpty) {
       _onEmailIsEmpty();
-      return;
+      return Future.value(false);
     }
 
     if (!_validationService.isQualifiedEmail(email)) {
       _onEmailIsNotQualifiedEmail();
-      return;
+      return Future.value(false);
     }
 
-    _emailCheckSub =
-        _checkEmailIsAvailable(email).asStream().listen((Response response) {
+    return _checkEmailIsAvailable(email).then((Response response) {
       if (response.statusCode == HttpStatus.accepted) {
         _onEmailIsAvailable(email);
+        return Future.value(true);
       } else if (response.statusCode == HttpStatus.badRequest) {
         _onEmailIsNotAvailable(email);
+        return Future.value(false);
       } else {
         _onEmailCheckServerError();
+        return Future.value(false);
       }
+    }).catchError((error) {
+      _onEmailCheckServerError();
     });
   }
 
@@ -440,10 +438,6 @@ class CreateAccountBloc {
   }
 
   void _onEmailIsAvailable(String email) {
-    String feedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SUCCESS');
-    _emailFeedbackSubject.add(feedback);
-
     _onEmailIsValid(email);
   }
 
@@ -454,10 +448,6 @@ class CreateAccountBloc {
   }
 
   Future<Response> _checkEmailIsAvailable(String email) async {
-    String progressFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_CHECK');
-    _emailFeedbackSubject.add(progressFeedback);
-
     return _authApiService.checkEmailIsAvailable(email: email);
   }
 
@@ -467,12 +457,8 @@ class CreateAccountBloc {
     _emailFeedbackSubject.add(errorFeedback);
   }
 
-  void _clearEmail() {
-    if (_emailCheckSub != null) {
-      _emailCheckSub.cancel();
-      _emailCheckSub = null;
-    }
-
+  void clearEmail() {
+    _emailFeedbackSubject.add(null);
     _emailIsValidSubject.add(false);
     _validatedEmailSubject.add(null);
     userRegistrationData.email = null;
@@ -575,7 +561,7 @@ class CreateAccountBloc {
   void _clearAvatar() {
     _avatarIsValidSubject.add(false);
     _validatedAvatarSubject.add(null);
-    if(userRegistrationData.avatar != null){
+    if (userRegistrationData.avatar != null) {
       userRegistrationData.avatar.deleteSync();
     }
     userRegistrationData.avatar = null;
@@ -625,11 +611,11 @@ class CreateAccountBloc {
     _createAccountErrorFeedbackSubject.add(null);
   }
 
-  void clearAll(){
+  void clearAll() {
     _clearCreateAccount();
     _clearBirthday();
     _clearName();
-    _clearEmail();
+    clearEmail();
     _clearAvatar();
     clearUsername();
   }
