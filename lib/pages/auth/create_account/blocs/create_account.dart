@@ -603,23 +603,31 @@ class CreateAccountBloc {
         return true;
       }
 
-      String errorFeedback;
-
       if (response.statusCode == HttpStatus.badRequest) {
-        // Validation errors.
-        // TODO Display specific validation errors.
-        errorFeedback = _localizationService
-            .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_VALIDATION');
+        _onCreateAccountValidationError(response);
       } else {
-        // Server error
-        errorFeedback = _localizationService
-            .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_SERVER');
+        _onCreateAccountServerError();
       }
-
-      _createAccountErrorFeedbackSubject.add(errorFeedback);
-
       return false;
+    }).catchError(() {
+      _onCreateAccountServerError();
     });
+  }
+
+  void _onCreateAccountServerError() {
+    String errorFeedback =
+        _localizationService.trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_SERVER');
+
+    _createAccountErrorFeedbackSubject.add(errorFeedback);
+  }
+
+  void _onCreateAccountValidationError(StreamedResponse response) {
+    // Validation errors.
+    // TODO Display specific validation errors.
+    String errorFeedback = _localizationService
+        .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_VALIDATION');
+
+    _createAccountErrorFeedbackSubject.add(errorFeedback);
   }
 
   void _clearCreateAccount() {
