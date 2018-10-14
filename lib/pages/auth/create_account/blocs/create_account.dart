@@ -334,6 +334,7 @@ class CreateAccountBloc {
       }
     }).catchError((error) {
       _onUsernameCheckServerError();
+      return false;
     });
   }
 
@@ -430,6 +431,7 @@ class CreateAccountBloc {
       }
     }).catchError((error) {
       _onEmailCheckServerError();
+      return false;
     });
   }
 
@@ -609,8 +611,9 @@ class CreateAccountBloc {
         _onCreateAccountServerError();
       }
       return false;
-    }).catchError(() {
+    }).catchError((error) {
       _onCreateAccountServerError();
+      return false;
     });
   }
 

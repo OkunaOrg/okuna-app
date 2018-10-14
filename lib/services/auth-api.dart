@@ -37,6 +37,7 @@ class AuthApiService {
     @required String birthDate,
     @required String password, File avatar}) {
 
+
     Map<String, dynamic> body = {
       'email': email,
       'username': username,
