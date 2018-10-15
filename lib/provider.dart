@@ -28,6 +28,7 @@ class OpenbookProvider extends InheritedWidget {
   setLocalizationService(LocalizationService newLocalizationService) {
     localizationService = newLocalizationService;
     createAccountBloc.setLocalizationService(localizationService);
+    httpService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {
