@@ -21,7 +21,6 @@ class HttpService {
       bool appendTimezoneHeader}) {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers,
-        appendTimezoneHeader: appendTimezoneHeader,
         appendLanguageHeader: appendLanguageHeader);
 
     return http.post(url,
@@ -61,7 +60,6 @@ class HttpService {
 
     var finalHeaders = _getHeadersWithConfig(
         headers: headers,
-        appendTimezoneHeader: appendTimezoneHeader,
         appendLanguageHeader: appendLanguageHeader);
 
     request.headers.addAll(finalHeaders);
@@ -96,16 +94,9 @@ class HttpService {
     return _localizationService.getLocale().languageCode;
   }
 
-  String _getTimezone() {
-    String timezone = DateTime.now().timeZoneName;
-    if (timezone == 'CEST') timezone = 'CET';
-    return timezone;
-  }
-
   Map<String, String> _getHeadersWithConfig(
       {Map<String, String> headers = const {},
-      bool appendLanguageHeader,
-      bool appendTimezoneHeader}) {
+      bool appendLanguageHeader}) {
     Map<String, String> finalHeaders = Map.from(headers);
 
     /// NOTE If we set the default value in the parameters, if other functions
@@ -115,10 +106,8 @@ class HttpService {
     /// See https://github.com/dart-lang/sdk/issues/33918
 
     appendLanguageHeader = appendLanguageHeader ?? true;
-    appendTimezoneHeader = appendTimezoneHeader ?? true;
 
     if (appendLanguageHeader) finalHeaders['Accept-Language'] = _getLanguage();
-    if (appendTimezoneHeader) finalHeaders['Time-Zone'] = _getTimezone();
 
     return finalHeaders;
   }
