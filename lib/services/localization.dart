@@ -16,8 +16,7 @@ class LocalizationService {
   Map<String, String> _sentences;
 
   Future<bool> load() async {
-    String data = await rootBundle
-        .loadString('assets/lang/${this.locale.languageCode}.json');
+    String data = await rootBundle.loadString('assets/lang/${this.locale.languageCode}.json');
     Map<String, dynamic> _result = json.decode(data);
 
     this._sentences = new Map();
@@ -30,9 +29,5 @@ class LocalizationService {
 
   String trans(String key) {
     return this._sentences[key];
-  }
-
-  Locale getLocale() {
-    return locale;
   }
 }
