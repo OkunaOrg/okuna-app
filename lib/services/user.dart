@@ -1,12 +1,10 @@
-import 'dart:_http';
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/auth-api.dart';
-import 'package:Openbook/services/http.dart';
+import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/secure-storage.dart';
-import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -27,17 +25,17 @@ class UserService {
 
   Future<void> loginWithCredentials(
       {@required String username, @required String password}) async {
-    Response response = await _authApiService.loginWithCredentials(
+    HttpieResponse response = await _authApiService.loginWithCredentials(
         username: username, password: password);
 
-    if (response.statusCode == HttpStatus.ok) {
-      var parsedResponse = json.decode(response.body);
+    if (response.isOk()) {
+      var parsedResponse = response.parseJsonBody();
       var authToken = parsedResponse['token'];
       await loginWithAuthToken(authToken);
-    } else if (response.statusCode == HttpStatus.unauthorized) {
+    } else if (response.isUnauthorized()) {
       throw CredentialsMismatchError('The provided credentials do not match.');
     } else {
-      throw RequestError(response);
+      throw HttpieRequestError(response);
     }
   }
 
@@ -61,12 +59,12 @@ class UserService {
   Future<void> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
-    Response response = await _authApiService.getUserWithAuthToken(_authToken);
-    if (response.statusCode == HttpStatus.ok) {
+    HttpieResponse response = await _authApiService.getUserWithAuthToken(_authToken);
+    if (response.isOk()) {
       var user = User.fromJson(json.decode(response.body));
       _setUser(user);
     } else {
-      throw RequestError(response);
+      throw HttpieRequestError(response);
     }
   }
 

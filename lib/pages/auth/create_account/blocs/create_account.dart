@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:Openbook/services/auth-api.dart';
+import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';
-import 'package:http/http.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
@@ -321,21 +321,23 @@ class CreateAccountBloc {
       return Future.value(false);
     }
 
-    return _checkUsernameIsAvailable(username).then((Response response) {
-      if (response.statusCode == HttpStatus.accepted) {
+    var isAvailable = false;
+
+    try {
+      HttpieResponse response = await _checkUsernameIsAvailable(username);
+      if (response.isAccepted()) {
         _onUsernameIsAvailable(username);
-        return true;
-      } else if (response.statusCode == HttpStatus.badRequest) {
+        isAvailable = true;
+      } else if (response.isBadRequest()) {
         _onUsernameIsNotAvailable(username);
-        return false;
       } else {
         _onUsernameCheckServerError();
-        return false;
       }
-    }).catchError((error) {
+    } catch (error) {
       _onUsernameCheckServerError();
-      return false;
-    });
+      rethrow;
+    }
+    return isAvailable;
   }
 
   void _onUsernameIsEmpty() {
@@ -389,7 +391,7 @@ class CreateAccountBloc {
     _usernameIsValidSubject.add(true);
   }
 
-  Future<Response> _checkUsernameIsAvailable(String username) {
+  Future<HttpieResponse> _checkUsernameIsAvailable(String username) {
     return _authApiService.checkUsernameIsAvailable(username: username);
   }
 
@@ -405,7 +407,7 @@ class CreateAccountBloc {
     return userRegistrationData.email;
   }
 
-  Future<bool> setEmail(String email) {
+  Future<bool> setEmail(String email) async {
     clearEmail();
 
     if (email == null || email.isEmpty) {
@@ -418,21 +420,24 @@ class CreateAccountBloc {
       return Future.value(false);
     }
 
-    return _checkEmailIsAvailable(email).then((Response response) {
-      if (response.statusCode == HttpStatus.accepted) {
+    bool emailIsAvailable = false;
+
+    try {
+      HttpieResponse response = await _checkEmailIsAvailable(email);
+      if (response.isAccepted()) {
         _onEmailIsAvailable(email);
-        return Future.value(true);
-      } else if (response.statusCode == HttpStatus.badRequest) {
+        emailIsAvailable = true;
+      } else if (response.isBadRequest()) {
         _onEmailIsNotAvailable(email);
-        return Future.value(false);
       } else {
         _onEmailCheckServerError();
-        return Future.value(false);
       }
-    }).catchError((error) {
+    } catch (error) {
       _onEmailCheckServerError();
-      return false;
-    });
+      rethrow;
+    }
+
+    return emailIsAvailable;
   }
 
   void _onEmailIsEmpty() {
@@ -465,7 +470,7 @@ class CreateAccountBloc {
     _emailIsValidSubject.add(true);
   }
 
-  Future<Response> _checkEmailIsAvailable(String email) async {
+  Future<HttpieResponse> _checkEmailIsAvailable(String email) async {
     return _authApiService.checkEmailIsAvailable(email: email);
   }
 
@@ -587,34 +592,34 @@ class CreateAccountBloc {
 
 // Email ends
 
-  Future<bool> createAccount() {
+  Future<bool> createAccount() async {
     _clearCreateAccount();
 
     _createAccountInProgressSubject.add(true);
 
-    return _authApiService
-        .createAccount(
-            email: userRegistrationData.email,
-            username: userRegistrationData.username,
-            name: userRegistrationData.name,
-            birthDate: userRegistrationData.birthday,
-            password: userRegistrationData.password,
-            avatar: userRegistrationData.avatar)
-        .then((StreamedResponse response) {
-      if (response.statusCode == HttpStatus.created) {
-        return true;
-      }
+    var accountWasCreated = false;
 
-      if (response.statusCode == HttpStatus.badRequest) {
+    try {
+      HttpieStreamedResponse response = await _authApiService.createAccount(
+          email: userRegistrationData.email,
+          username: userRegistrationData.username,
+          name: userRegistrationData.name,
+          birthDate: userRegistrationData.birthday,
+          password: userRegistrationData.password,
+          avatar: userRegistrationData.avatar);
+      if (response.isCreated()) {
+        accountWasCreated = true;
+      } else if (response.isBadRequest()) {
         _onCreateAccountValidationError(response);
       } else {
         _onCreateAccountServerError();
       }
-      return false;
-    }).catchError((error) {
+    } catch (error) {
       _onCreateAccountServerError();
-      return false;
-    });
+      rethrow;
+    }
+
+    return accountWasCreated;
   }
 
   void _onCreateAccountServerError() {
@@ -624,7 +629,7 @@ class CreateAccountBloc {
     _createAccountErrorFeedbackSubject.add(errorFeedback);
   }
 
-  void _onCreateAccountValidationError(StreamedResponse response) {
+  void _onCreateAccountValidationError(HttpieStreamedResponse response) {
     // Validation errors.
     // TODO Display specific validation errors.
     String errorFeedback = _localizationService

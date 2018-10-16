@@ -6,26 +6,28 @@ import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-class HttpService {
+class HttpieService {
   LocalizationService _localizationService;
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
   }
 
-  Future<http.Response> post(url,
+  Future<HttpieResponse> post(url,
       {Map<String, String> headers,
       body,
       Encoding encoding,
-      bool appendLanguageHeader}) {
+      bool appendLanguageHeader}) async {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers, appendLanguageHeader: appendLanguageHeader);
 
-    return http.post(url,
+    var response = await http.post(url,
         headers: finalHeaders, body: body, encoding: encoding);
+
+    return HttpieResponse(response);
   }
 
-  Future<http.Response> postJSON(url,
+  Future<HttpieResponse> postJSON(url,
       {Map<String, String> headers = const {},
       body,
       Encoding encoding,
@@ -46,19 +48,20 @@ class HttpService {
         appendLanguageHeader: appendLanguageHeader);
   }
 
-  Future<http.Response> get(url,
-      {Map<String, String> headers, bool appendLanguageHeader}) {
+  Future<HttpieResponse> get(url,
+      {Map<String, String> headers, bool appendLanguageHeader}) async {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers, appendLanguageHeader: appendLanguageHeader);
 
-    return http.get(url, headers: finalHeaders);
+    var response = await http.get(url, headers: finalHeaders);
+    return HttpieResponse(response);
   }
 
-  Future<http.StreamedResponse> postMultiform(String url,
+  Future<HttpieStreamedResponse> postMultiform(String url,
       {Map<String, String> headers = const {},
       Map<String, dynamic> body,
       Encoding encoding,
-      bool appendLanguageHeader}) {
+      bool appendLanguageHeader}) async {
     var request = new http.MultipartRequest("POST", Uri.parse(url));
 
     var finalHeaders = _getHeadersWithConfig(
@@ -82,14 +85,14 @@ class HttpService {
 
         fileFields.add(fileFuture);
       } else {
-        throw ('Unsupported multiform value type');
+        throw HttpieArgumentsError('Unsupported multiform value type');
       }
     });
 
-    return Future.wait(fileFields).then((files) {
-      files.forEach((file) => request.files.add(file));
-      return request.send();
-    });
+    var files = await Future.wait(fileFields);
+    files.forEach((file) => request.files.add(file));
+    var response = await request.send();
+    return HttpieStreamedResponse(response);
   }
 
   String _getLanguage() {
@@ -114,18 +117,67 @@ class HttpService {
   }
 }
 
-class RequestError implements Exception {
-  final http.Response response;
+abstract class BaseResponse<T extends http.BaseResponse> {
+  T _httpResponse;
 
-  const RequestError(http.Response this.response);
-
-  String toString() => 'ServerError:$response.statusCode - $response.body';
+  BaseResponse(this._httpResponse);
 
   bool isInternalServerError() {
-    return response.statusCode == HttpStatus.internalServerError;
+    return _httpResponse.statusCode == HttpStatus.internalServerError;
   }
 
-  bool isBadRequest(){
-    return response.statusCode == HttpStatus.badRequest;
+  bool isBadRequest() {
+    return _httpResponse.statusCode == HttpStatus.badRequest;
   }
+
+  bool isOk() {
+    return _httpResponse.statusCode == HttpStatus.ok;
+  }
+
+  bool isUnauthorized() {
+    return _httpResponse.statusCode == HttpStatus.unauthorized;
+  }
+
+  bool isAccepted() {
+    return _httpResponse.statusCode == HttpStatus.accepted;
+  }
+
+  bool isCreated() {
+    return _httpResponse.statusCode == HttpStatus.created;
+  }
+
+  int get statusCode => _httpResponse.statusCode;
+}
+
+class HttpieResponse extends BaseResponse<http.Response> {
+  HttpieResponse(_httpResponse) : super(_httpResponse);
+
+  String get body => _httpResponse.body;
+
+  Map<String, dynamic> parseJsonBody() {
+    return json.decode(body);
+  }
+
+  http.Response get httpResponse => _httpResponse;
+}
+
+class HttpieStreamedResponse extends BaseResponse<http.StreamedResponse> {
+  HttpieStreamedResponse(_httpResponse) : super(_httpResponse);
+}
+
+class HttpieRequestError implements Exception {
+  final HttpieResponse response;
+
+  const HttpieRequestError(HttpieResponse this.response);
+
+  String toString() =>
+      'HttpieRequestError:$response.statusCode - $response.body';
+}
+
+class HttpieArgumentsError implements Exception {
+  final String msg;
+
+  const HttpieArgumentsError(this.msg);
+
+  String toString() => 'HttpieArgumentsError: $msg';
 }
