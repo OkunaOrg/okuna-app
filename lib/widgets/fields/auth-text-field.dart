@@ -59,7 +59,7 @@ class AuthTextField extends StatelessWidget {
     this.autocorrect = false,
     this.prefixIcon,
     this.suffixIcon,
-    this.maxLines,
+    this.maxLines = 1,
     this.maxLength,
     this.maxLengthEnforced = true,
     this.onChanged,
