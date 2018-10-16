@@ -1,8 +1,9 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
-import 'package:Openbook/widgets/fields/auth-text-field.dart';
+import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
 class AuthLoginPage extends StatefulWidget {
@@ -13,15 +14,19 @@ class AuthLoginPage extends StatefulWidget {
 }
 
 class AuthLoginPageState extends State<AuthLoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
   bool isSubmitted;
+  bool passwordIsVisible;
 
   LocalizationService localizationService;
 
-  TextEditingController _usernameController = TextEditingController();
+  ValidationService validationService;
 
   @override
   void initState() {
     isSubmitted = false;
+    passwordIsVisible = false;
     super.initState();
   }
 
@@ -29,6 +34,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     localizationService = openbookProvider.localizationService;
+    validationService = openbookProvider.validationService;
 
     return Scaffold(
       body: Center(
@@ -37,9 +43,9 @@ class AuthLoginPageState extends State<AuthLoginPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhatYourName(context: context),
+                    _buildHeading(context: context),
                     SizedBox(
-                      height: 20.0,
+                      height: 30.0,
                     ),
                     _buildLoginForm(),
                     SizedBox(
@@ -61,7 +67,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
               Expanded(
                 child: _buildPreviousButton(context: context),
               ),
-              Expanded(child: _buildNextButton()),
+              Expanded(child: _buildLoginButton()),
             ],
           ),
         ),
@@ -79,14 +85,19 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     );
   }
 
-  Widget _buildNextButton() {
+  Widget _buildLoginButton() {
     String buttonText = localizationService.trans('AUTH.LOGIN.LOGIN');
 
     return OBPrimaryButton(
       isFullWidth: true,
       isLarge: true,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-      onPressed: () {},
+      onPressed: () {
+        if (_formKey.currentState.validate()) {
+          // If the form is valid, display a snackbar. In the real world, you'd
+          // often want to call a server or save the information in a database
+        }
+      },
     );
   }
 
@@ -114,8 +125,9 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     );
   }
 
-  Widget _buildWhatYourName({@required BuildContext context}) {
-    String headerText = localizationService.trans('AUTH.LOGIN.TITLE');
+  Widget _buildHeading({@required BuildContext context}) {
+    String titleText = localizationService.trans('AUTH.LOGIN.TITLE');
+    String subtitleText = localizationService.trans('AUTH.LOGIN.SUBTITLE');
 
     return Column(
       children: <Widget>[
@@ -126,9 +138,14 @@ class AuthLoginPageState extends State<AuthLoginPage> {
         SizedBox(
           height: 20.0,
         ),
-        Text(headerText,
+        Text(titleText,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
+        SizedBox(
+          height: 10.0,
+        ),
+        Text(subtitleText,
+            textAlign: TextAlign.center, style: TextStyle(fontSize: 16.0)),
       ],
     );
   }
@@ -138,37 +155,92 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
-    String usernameInputPlaceholder =
-        localizationService.trans('AUTH.LOGIN.USERNAME_PLACEHOLDER');
+    String usernameInputLabel =
+        localizationService.trans('AUTH.LOGIN.USERNAME_LABEL');
 
-    String passwordInputPlaceholder =
-        localizationService.trans('AUTH.LOGIN.PASSWORD_PLACEHOLDER');
+    String passwordInputLabel =
+        localizationService.trans('AUTH.LOGIN.PASSWORD_LABEL');
 
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(children: <Widget>[
-            new Expanded(
-              child: Container(
-                  color: Colors.transparent,
-                  child: Column(
-                    children: <Widget>[
-                      AuthTextField(
-                        autocorrect: false,
-                        hintText: usernameInputPlaceholder,
-                        controller: _usernameController,
-                      ),
-                      AuthTextField(
-                        autocorrect: false,
-                        hintText: passwordInputPlaceholder,
-                        controller: _usernameController,
-                      )
-                    ],
-                  )),
+    EdgeInsetsGeometry inputContentPadding =
+        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
+
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Row(children: <Widget>[
+                new Expanded(
+                  child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            validator: _validateUsername,
+                            decoration: InputDecoration(
+                              contentPadding: inputContentPadding,
+                              labelText: usernameInputLabel,
+                              border: OutlineInputBorder(),
+                            ),
+                            autocorrect: false,
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          TextFormField(
+                            obscureText: !passwordIsVisible,
+                            validator: _validatePassword,
+                            decoration: InputDecoration(
+                              suffixIcon: GestureDetector(
+                                child: Icon(passwordIsVisible
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                                onTap: () {
+                                  _togglePasswordVisibility();
+                                },
+                              ),
+                              contentPadding: inputContentPadding,
+                              labelText: passwordInputLabel,
+                              border: OutlineInputBorder(),
+                            ),
+                            autocorrect: false,
+                          )
+                        ],
+                      )),
+                ),
+              ]),
             ),
-          ]),
-        ),
-      ],
-    );
+          ],
+        ));
+  }
+
+  String _validateUsername(String value) {
+    if (value.length == 0) {
+      return localizationService.trans('AUTH.LOGIN.USERNAME_EMPTY_ERROR');
+    }
+
+    if (validationService.isUsernameAllowedLength(value)) {
+      return localizationService.trans('AUTH.LOGIN.USERNAME_LENGTH_ERROR');
+    }
+
+    if (!validationService.isUsernameAllowedCharacters(value)) {
+      return localizationService.trans('AUTH.LOGIN.USERNAME_CHARACTERS_ERROR');
+    }
+  }
+
+  String _validatePassword(String value) {
+    if (value.length == 0) {
+      return localizationService.trans('AUTH.LOGIN.PASSWORD_EMPTY_ERROR');
+    }
+
+    if (validationService.isPasswordAllowedLength(value)) {
+      return localizationService.trans('AUTH.LOGIN.PASSWORD_LENGTH_ERROR');
+    }
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      passwordIsVisible = !passwordIsVisible;
+    });
   }
 }

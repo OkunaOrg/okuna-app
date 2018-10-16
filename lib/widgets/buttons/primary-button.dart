@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class OBPrimaryButton extends StatelessWidget {
-  static const double LARGE_HEIGHT = 53.0;
+  static const double LARGE_HEIGHT = 46.0;
   static const double NORMAL_HEIGHT = 44.0;
 
   /// The widget below this widget in the tree.

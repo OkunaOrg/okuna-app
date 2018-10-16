@@ -246,7 +246,7 @@ class CreateAccountBloc {
       return;
     }
 
-    if (name.length > 50) {
+    if (!_validationService.isNameAllowedLength(name)) {
       _onNameTooLong();
       return;
     }
@@ -267,7 +267,7 @@ class CreateAccountBloc {
 
   void _onNameTooLong() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_MAX_LENGTH_ERROR');
+        _localizationService.trans('AUTH.CREATE_ACC.NAME_LENGTH_ERROR');
     _nameFeedbackSubject.add(errorFeedback);
   }
 
@@ -311,12 +311,12 @@ class CreateAccountBloc {
       return Future.value(false);
     }
 
-    if (username.length > 50) {
+    if (!_validationService.isUsernameAllowedLength(username)) {
       _onUsernameTooLong();
       return Future.value(false);
     }
 
-    if (!_validationService.isAlphanumericWithUnderscores(username)) {
+    if (!_validationService.isUsernameAllowedCharacters(username)) {
       _onUsernameInvalidCharacters();
       return Future.value(false);
     }
@@ -348,7 +348,7 @@ class CreateAccountBloc {
 
   void _onUsernameTooLong() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_MAX_LENGTH_ERROR');
+        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_LENGTH_ERROR');
     _usernameFeedbackSubject.add(errorFeedback);
   }
 
@@ -507,13 +507,8 @@ class CreateAccountBloc {
       return;
     }
 
-    if (password.length < 8) {
-      _onPasswordTooSmall();
-      return;
-    }
-
-    if (password.length > 64) {
-      _onPasswordTooLong();
+    if (!_validationService.isPasswordAllowedLength(password)) {
+      _onPasswordLengthError();
       return;
     }
 
@@ -526,15 +521,9 @@ class CreateAccountBloc {
     _passwordFeedbackSubject.add(errorFeedback);
   }
 
-  void _onPasswordTooSmall() {
+  void _onPasswordLengthError() {
     String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
-    _passwordFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onPasswordTooLong() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_MIN_LENGTH_ERROR');
+        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_LENGTH_ERROR');
     _passwordFeedbackSubject.add(errorFeedback);
   }
 

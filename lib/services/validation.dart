@@ -28,4 +28,20 @@ class ValidationService {
 
     return regExp.hasMatch(str);
   }
+
+  bool isPasswordAllowedLength(String password) {
+    return password.length >= 8 && password.length <= 64;
+  }
+
+  bool isUsernameAllowedLength(String username) {
+    return username.length > 0 && username.length < 50;
+  }
+
+  bool isUsernameAllowedCharacters(String username) {
+    return isAlphanumericWithUnderscores(username);
+  }
+
+  bool isNameAllowedLength(String name){
+    return name.length >= 1 && name.length <= 50;
+  }
 }
