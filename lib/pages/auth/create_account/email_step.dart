@@ -3,6 +3,7 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
+import 'package:Openbook/widgets/fields/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
 class AuthEmailStepPage extends StatefulWidget {
@@ -192,18 +193,12 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
             new Expanded(
               child: Container(
                   color: Colors.transparent,
-                  child: TextField(
+                  child: AuthTextField(
+                    hintText: emailInputPlaceholder,
                     autocorrect: false,
                     onChanged: (String value) {
                       createAccountBloc.clearEmail();
                     },
-                    style: TextStyle(fontSize: 18.0, color: Colors.black),
-                    decoration: new InputDecoration(
-                      hintText: emailInputPlaceholder,
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
                     controller: _emailController,
                   )),
             ),

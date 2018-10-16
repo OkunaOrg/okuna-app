@@ -2,6 +2,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
+import 'package:Openbook/widgets/fields/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
 class AuthLoginPage extends StatefulWidget {
@@ -85,9 +86,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
       isFullWidth: true,
       isLarge: true,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-      onPressed: (){
-
-      },
+      onPressed: () {},
     );
   }
 
@@ -99,9 +98,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
       isLarge: true,
       child: Row(
         children: <Widget>[
-          Icon(
-            Icons.arrow_back_ios
-          ),
+          Icon(Icons.arrow_back_ios),
           SizedBox(
             width: 10.0,
           ),
@@ -118,8 +115,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
   }
 
   Widget _buildWhatYourName({@required BuildContext context}) {
-    String headerText =
-        localizationService.trans('AUTH.LOGIN.TITLE');
+    String headerText = localizationService.trans('AUTH.LOGIN.TITLE');
 
     return Column(
       children: <Widget>[
@@ -132,9 +128,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
         ),
         Text(headerText,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -159,26 +153,14 @@ class AuthLoginPageState extends State<AuthLoginPage> {
                   color: Colors.transparent,
                   child: Column(
                     children: <Widget>[
-                      TextField(
+                      AuthTextField(
                         autocorrect: false,
-                        style: TextStyle(fontSize: 18.0, color: Colors.black),
-                        decoration: new InputDecoration(
-                          hintText: usernameInputPlaceholder,
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
+                        hintText: usernameInputPlaceholder,
                         controller: _usernameController,
                       ),
-                      TextField(
+                      AuthTextField(
                         autocorrect: false,
-                        style: TextStyle(fontSize: 18.0, color: Colors.black),
-                        decoration: new InputDecoration(
-                          hintText: passwordInputPlaceholder,
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
+                        hintText: passwordInputPlaceholder,
                         controller: _usernameController,
                       )
                     ],

@@ -3,6 +3,7 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
+import 'package:Openbook/widgets/fields/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
 class AuthPasswordStepPage extends StatefulWidget {
@@ -198,25 +199,19 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
             new Expanded(
               child: Container(
                   color: Colors.transparent,
-                  child: TextField(
+                  child: AuthTextField(
                     obscureText: !passwordIsVisible,
                     autocorrect: false,
                     onChanged: (String value) {
                       createAccountBloc.password.add(value);
                     },
-                    style: TextStyle(fontSize: 18.0, color: Colors.black),
-                    decoration: new InputDecoration(
-                      suffixIcon: GestureDetector(
-                        child: Icon(passwordIsVisible
-                            ? Icons.visibility_off
-                            : Icons.visibility),
-                        onTap: () {
-                          _togglePasswordVisibility();
-                        },
-                      ),
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
+                    suffixIcon: GestureDetector(
+                      child: Icon(passwordIsVisible
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                      onTap: () {
+                        _togglePasswordVisibility();
+                      },
                     ),
                     controller: _passwordController,
                   )),
