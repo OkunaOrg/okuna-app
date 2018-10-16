@@ -42,6 +42,10 @@ class AuthTextField extends StatelessWidget {
 
   final Widget suffixIcon;
 
+  final double fontSize;
+
+  final EdgeInsetsGeometry contentPadding;
+
   AuthTextField({
     Key key,
     this.controller,
@@ -64,6 +68,8 @@ class AuthTextField extends StatelessWidget {
     this.inputFormatters,
     this.enabled,
     this.keyboardAppearance,
+    this.fontSize = 18.0,
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0)
   });
 
   @override
@@ -86,8 +92,9 @@ class AuthTextField extends StatelessWidget {
       enabled: enabled,
       keyboardAppearance: keyboardAppearance,
       autocorrect: autocorrect,
-      style: TextStyle(fontSize: 18.0, color: Colors.black),
+      style: TextStyle(fontSize: fontSize, color: Colors.black),
       decoration: new InputDecoration(
+        contentPadding: contentPadding,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         hintText: hintText,
