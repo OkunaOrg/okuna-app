@@ -19,8 +19,7 @@ class HttpService {
       Encoding encoding,
       bool appendLanguageHeader}) {
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers,
-        appendLanguageHeader: appendLanguageHeader);
+        headers: headers, appendLanguageHeader: appendLanguageHeader);
 
     return http.post(url,
         headers: finalHeaders, body: body, encoding: encoding);
@@ -47,6 +46,14 @@ class HttpService {
         appendLanguageHeader: appendLanguageHeader);
   }
 
+  Future<http.Response> get(url,
+      {Map<String, String> headers, bool appendLanguageHeader}) {
+    var finalHeaders = _getHeadersWithConfig(
+        headers: headers, appendLanguageHeader: appendLanguageHeader);
+
+    return http.get(url, headers: finalHeaders);
+  }
+
   Future<http.StreamedResponse> postMultiform(String url,
       {Map<String, String> headers = const {},
       Map<String, dynamic> body,
@@ -55,8 +62,7 @@ class HttpService {
     var request = new http.MultipartRequest("POST", Uri.parse(url));
 
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers,
-        appendLanguageHeader: appendLanguageHeader);
+        headers: headers, appendLanguageHeader: appendLanguageHeader);
 
     request.headers.addAll(finalHeaders);
 
@@ -91,8 +97,7 @@ class HttpService {
   }
 
   Map<String, String> _getHeadersWithConfig(
-      {Map<String, String> headers = const {},
-      bool appendLanguageHeader}) {
+      {Map<String, String> headers = const {}, bool appendLanguageHeader}) {
     Map<String, String> finalHeaders = Map.from(headers);
 
     /// NOTE If we set the default value in the parameters, if other functions
