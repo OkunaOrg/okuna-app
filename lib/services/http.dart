@@ -113,3 +113,19 @@ class HttpService {
     return finalHeaders;
   }
 }
+
+class RequestError implements Exception {
+  final http.Response response;
+
+  const RequestError(http.Response this.response);
+
+  String toString() => 'ServerError:$response.statusCode - $response.body';
+
+  bool isInternalServerError() {
+    return response.statusCode == HttpStatus.internalServerError;
+  }
+
+  bool isBadRequest(){
+    return response.statusCode == HttpStatus.badRequest;
+  }
+}

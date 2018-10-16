@@ -3,6 +3,8 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth-api.dart';
 import 'package:Openbook/services/http.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/secure-storage.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,8 @@ class OpenbookProvider extends InheritedWidget {
   ValidationService validationService = ValidationService();
   HttpService httpService = HttpService();
   AuthApiService authApiService = AuthApiService();
+  SecureStorageService secureStorageService = SecureStorageService();
+  UserService userService = UserService();
   LocalizationService localizationService;
 
   OpenbookProvider(child) : super(child: child) {
@@ -18,6 +22,8 @@ class OpenbookProvider extends InheritedWidget {
     authApiService.setHttpService(httpService);
     authApiService.setApiURL(getAPIUrl());
     createAccountBloc.setAuthApiService(authApiService);
+    userService.setAuthApiService(authApiService);
+    userService.setSecureStorageService(secureStorageService);
   }
 
   @override
