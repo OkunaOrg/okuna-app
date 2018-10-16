@@ -17,8 +17,7 @@ class HttpService {
       {Map<String, String> headers,
       body,
       Encoding encoding,
-      bool appendLanguageHeader,
-      bool appendTimezoneHeader}) {
+      bool appendLanguageHeader}) {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers,
         appendLanguageHeader: appendLanguageHeader);
@@ -31,8 +30,7 @@ class HttpService {
       {Map<String, String> headers = const {},
       body,
       Encoding encoding,
-      bool appendLanguageHeader,
-      bool appendTimezoneHeader}) {
+      bool appendLanguageHeader}) {
     String jsonBody = json.encode(body);
 
     Map<String, String> jsonHeaders = {
@@ -46,16 +44,14 @@ class HttpService {
         headers: jsonHeaders,
         body: jsonBody,
         encoding: encoding,
-        appendLanguageHeader: appendLanguageHeader,
-        appendTimezoneHeader: appendTimezoneHeader);
+        appendLanguageHeader: appendLanguageHeader);
   }
 
   Future<http.StreamedResponse> postMultiform(String url,
       {Map<String, String> headers = const {},
       Map<String, dynamic> body,
       Encoding encoding,
-      bool appendLanguageHeader,
-      bool appendTimezoneHeader}) {
+      bool appendLanguageHeader}) {
     var request = new http.MultipartRequest("POST", Uri.parse(url));
 
     var finalHeaders = _getHeadersWithConfig(
