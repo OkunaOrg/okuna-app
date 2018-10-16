@@ -119,7 +119,7 @@ class AuthSplashPageState extends State<AuthSplashPage> {
         ],
       ),
       onPressed: () {
-        print('Entering the realm of Openbook!');
+        Navigator.pushNamed(context, '/auth/login');
       },
     );
   }
@@ -133,7 +133,7 @@ class AuthSplashPageState extends State<AuthSplashPage> {
       child: Text(
         buttonText,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18.0),
+        style: TextStyle(fontSize: 16.0),
       ),
       onPressed: () {
         Navigator.pushNamed(context, '/auth/get-started');
