@@ -1,5 +1,7 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
@@ -17,22 +19,25 @@ class AuthLoginPageState extends State<AuthLoginPage> {
 
   bool _isSubmitted;
   bool _passwordIsVisible;
+  String _loginFeedback;
+  bool _loginInProgress;
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  LocalizationService localizationService;
-
-  ValidationService validationService;
+  LocalizationService _localizationService;
+  ValidationService _validationService;
+  UserService _userService;
 
   @override
   void initState() {
-    _isSubmitted = false;
-    _passwordIsVisible = false;
     super.initState();
 
-    _usernameController.addListener(_validateForm);
+    _loginInProgress = false;
+    _isSubmitted = false;
+    _passwordIsVisible = false;
 
+    _usernameController.addListener(_validateForm);
     _passwordController.addListener(_validateForm);
   }
 
@@ -46,8 +51,9 @@ class AuthLoginPageState extends State<AuthLoginPage> {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    localizationService = openbookProvider.localizationService;
-    validationService = openbookProvider.validationService;
+    _localizationService = openbookProvider.localizationService;
+    _validationService = openbookProvider.validationService;
+    _userService = openbookProvider.userService;
 
     return Scaffold(
       body: Center(
@@ -64,7 +70,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    _buildNameError()
+                    _buildLoginFeedback()
                   ],
                 ))),
       ),
@@ -80,7 +86,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
               Expanded(
                 child: _buildPreviousButton(context: context),
               ),
-              Expanded(child: _buildContinueButton()),
+              Expanded(child: _buildContinueButton(context)),
             ],
           ),
         ),
@@ -88,38 +94,56 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     );
   }
 
-  Widget _buildNameError() {
+  Widget _buildLoginFeedback() {
+    if (_loginFeedback == null) return Container();
+
     return Container(
       child: Text(
-        'this is error text',
-        style: TextStyle(color: Colors.white, fontSize: 18.0),
+        _loginFeedback,
+        style: TextStyle(fontSize: 16.0, color: Colors.deepOrange),
         textAlign: TextAlign.center,
       ),
     );
   }
 
-  Widget _buildContinueButton() {
-    String buttonText = localizationService.trans('AUTH.LOGIN.LOGIN');
+  Widget _buildContinueButton(BuildContext context) {
+    String buttonText = _localizationService.trans('AUTH.LOGIN.LOGIN');
 
     return OBPrimaryButton(
+      isLoading: _loginInProgress,
       isFullWidth: true,
       isLarge: true,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-      onPressed: () {
+      onPressed: () async {
         _isSubmitted = true;
         if (_validateForm()) {
-          // Proceed to login
-          String username = _usernameController.text;
-          String password = _passwordController.text;
-          print(username);
-          print(password);
+          await _login(context);
         }
       },
     );
   }
 
+  Future<void> _login(BuildContext context) async {
+    _setLoginInProgress(true);
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+    try {
+      await _userService.loginWithCredentials(
+          username: username, password: password);
+      _setLoginFeedback('Successfully logged in');
+    } on CredentialsMismatchError {
+      _setLoginFeedback('Credentials do not match');
+    } on HttpieRequestError {
+      _setLoginFeedback('Uh oh, we\'re experiencing issues with our servers.');
+    } on HttpieConnectionRefusedError {
+      _setLoginFeedback(
+          'We can\'t reach our servers. Are you connected to the internet?');
+    }
+    _setLoginInProgress(false);
+  }
+
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.LOGIN.PREVIOUS');
+    String buttonText = _localizationService.trans('AUTH.LOGIN.PREVIOUS');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -143,8 +167,8 @@ class AuthLoginPageState extends State<AuthLoginPage> {
   }
 
   Widget _buildHeading({@required BuildContext context}) {
-    String titleText = localizationService.trans('AUTH.LOGIN.TITLE');
-    String subtitleText = localizationService.trans('AUTH.LOGIN.SUBTITLE');
+    String titleText = _localizationService.trans('AUTH.LOGIN.TITLE');
+    String subtitleText = _localizationService.trans('AUTH.LOGIN.SUBTITLE');
 
     return Column(
       children: <Widget>[
@@ -173,10 +197,10 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     String usernameInputLabel =
-        localizationService.trans('AUTH.LOGIN.USERNAME_LABEL');
+        _localizationService.trans('AUTH.LOGIN.USERNAME_LABEL');
 
     String passwordInputLabel =
-        localizationService.trans('AUTH.LOGIN.PASSWORD_LABEL');
+        _localizationService.trans('AUTH.LOGIN.PASSWORD_LABEL');
 
     EdgeInsetsGeometry inputContentPadding =
         EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
@@ -237,15 +261,15 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     if (!_isSubmitted) return null;
 
     if (value.length == 0) {
-      return localizationService.trans('AUTH.LOGIN.USERNAME_EMPTY_ERROR');
+      return _localizationService.trans('AUTH.LOGIN.USERNAME_EMPTY_ERROR');
     }
 
-    if (!validationService.isUsernameAllowedLength(value)) {
-      return localizationService.trans('AUTH.LOGIN.USERNAME_LENGTH_ERROR');
+    if (!_validationService.isUsernameAllowedLength(value)) {
+      return _localizationService.trans('AUTH.LOGIN.USERNAME_LENGTH_ERROR');
     }
 
-    if (!validationService.isUsernameAllowedCharacters(value)) {
-      return localizationService.trans('AUTH.LOGIN.USERNAME_CHARACTERS_ERROR');
+    if (!_validationService.isUsernameAllowedCharacters(value)) {
+      return _localizationService.trans('AUTH.LOGIN.USERNAME_CHARACTERS_ERROR');
     }
   }
 
@@ -253,12 +277,19 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     if (!_isSubmitted) return null;
 
     if (value.length == 0) {
-      return localizationService.trans('AUTH.LOGIN.PASSWORD_EMPTY_ERROR');
+      return _localizationService.trans('AUTH.LOGIN.PASSWORD_EMPTY_ERROR');
     }
 
-    if (!validationService.isPasswordAllowedLength(value)) {
-      return localizationService.trans('AUTH.LOGIN.PASSWORD_LENGTH_ERROR');
+    if (!_validationService.isPasswordAllowedLength(value)) {
+      return _localizationService.trans('AUTH.LOGIN.PASSWORD_LENGTH_ERROR');
     }
+  }
+
+  bool _validateForm() {
+    if (_loginFeedback != null) {
+      _setLoginFeedback(null);
+    }
+    return _formKey.currentState.validate();
   }
 
   void _togglePasswordVisibility() {
@@ -267,7 +298,15 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     });
   }
 
-  bool _validateForm() {
-    return _formKey.currentState.validate();
+  void _setLoginFeedback(String feedback) {
+    setState(() {
+      _loginFeedback = feedback;
+    });
+  }
+
+  void _setLoginInProgress(bool loginInProgress) {
+    setState(() {
+      _loginInProgress = loginInProgress;
+    });
   }
 }

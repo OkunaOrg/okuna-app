@@ -21,10 +21,18 @@ class HttpieService {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers, appendLanguageHeader: appendLanguageHeader);
 
-    var response = await http.post(url,
-        headers: finalHeaders, body: body, encoding: encoding);
-
-    return HttpieResponse(response);
+    try {
+      var response = await http.post(url,
+          headers: finalHeaders, body: body, encoding: encoding);
+      return HttpieResponse(response);
+    } on SocketException catch (error) {
+      if (error.osError.errorCode == 61) {
+        // Connection refused.
+        throw HttpieConnectionRefusedError(error);
+      } else {
+        rethrow;
+      }
+    }
   }
 
   Future<HttpieResponse> postJSON(url,
@@ -172,6 +180,19 @@ class HttpieRequestError implements Exception {
 
   String toString() =>
       'HttpieRequestError:$response.statusCode - $response.body';
+}
+
+class HttpieConnectionRefusedError implements Exception {
+  final SocketException socketException;
+
+  const HttpieConnectionRefusedError(this.socketException);
+
+  String toString(){
+    String address = socketException.address.toString();
+    String port = socketException.port.toString();
+    return 'HttpieConnectionRefusedError: Connection refused on $address and port $port';
+  }
+
 }
 
 class HttpieArgumentsError implements Exception {
