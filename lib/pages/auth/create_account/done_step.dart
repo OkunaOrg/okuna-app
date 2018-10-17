@@ -108,7 +108,8 @@ class AuthDonePageState extends State<AuthDonePage> {
         ],
       ),
       onPressed: () {
-        print('Entering the realm of Openbook!');
+        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.pushNamed(context, '/auth/login');
       },
     );
   }
