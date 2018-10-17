@@ -7,12 +7,12 @@ import 'package:Openbook/pages/auth/create_account/get_started.dart';
 import 'package:Openbook/pages/auth/create_account/submit_step.dart';
 import 'package:Openbook/pages/auth/create_account/password_step.dart';
 import 'package:Openbook/pages/auth/login.dart';
+import 'package:Openbook/pages/main/main.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/pages/auth/create_account/username_step.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/pages/auth/splash.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
 
 class MyApp extends StatelessWidget {
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         /// something before loading any route, therefore this ugliness.
         '/': (BuildContext context) {
           bootstrapOpenbookProviderInContext(context);
-          return AuthSplashPage();
+          return MainPage();
         },
         '/auth/get-started': (BuildContext context) {
           bootstrapOpenbookProviderInContext(context);
@@ -99,6 +99,10 @@ class MyApp extends StatelessWidget {
         '/auth/login': (BuildContext context) {
           bootstrapOpenbookProviderInContext(context);
           return AuthLoginPage();
+        },
+        '/main': (BuildContext context) {
+          bootstrapOpenbookProviderInContext(context);
+          return MainPage();
         }
       },
     ));
