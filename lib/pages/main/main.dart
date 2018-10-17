@@ -25,6 +25,47 @@ class MainPageState extends State<MainPage> {
     _localizationService = openbookProvider.localizationService;
     _userService = openbookProvider.userService;
 
+    return Scaffold(
+      drawer: _buildDrawer(),
+      body: _buildCupertinoScaffold(),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the Drawer if there isn't enough vertical
+      // space to fit everything.
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Text('Drawer Header'),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+          ),
+          ListTile(
+            title: Text('Item 1'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+          ListTile(
+            title: Text('Item 2'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCupertinoScaffold() {
     return CupertinoTabScaffold(
       tabBuilder: (BuildContext context, int index) {
         return CupertinoTabView(
@@ -46,6 +87,11 @@ class MainPageState extends State<MainPage> {
         BottomNavigationBarItem(title: Text('Home'), icon: Icon(Icons.home)),
         BottomNavigationBarItem(
             title: Text('Search'), icon: Icon(Icons.search)),
+        BottomNavigationBarItem(title: Text('Post'), icon: Icon(Icons.add)),
+        BottomNavigationBarItem(
+            title: Text('Notifications'), icon: Icon(Icons.notifications)),
+        BottomNavigationBarItem(
+            title: Text('Communities'), icon: Icon(Icons.people)),
       ]),
     );
   }
