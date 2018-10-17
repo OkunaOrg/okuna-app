@@ -3,7 +3,6 @@ import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
-import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
 class AuthLoginPage extends StatefulWidget {
@@ -16,8 +15,11 @@ class AuthLoginPage extends StatefulWidget {
 class AuthLoginPageState extends State<AuthLoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  bool isSubmitted;
-  bool passwordIsVisible;
+  bool _isSubmitted;
+  bool _passwordIsVisible;
+
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   LocalizationService localizationService;
 
@@ -25,9 +27,20 @@ class AuthLoginPageState extends State<AuthLoginPage> {
 
   @override
   void initState() {
-    isSubmitted = false;
-    passwordIsVisible = false;
+    _isSubmitted = false;
+    _passwordIsVisible = false;
     super.initState();
+
+    _usernameController.addListener(_validateForm);
+
+    _passwordController.addListener(_validateForm);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _usernameController.removeListener(_validateForm);
+    _passwordController.removeListener(_validateForm);
   }
 
   @override
@@ -67,7 +80,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
               Expanded(
                 child: _buildPreviousButton(context: context),
               ),
-              Expanded(child: _buildLoginButton()),
+              Expanded(child: _buildContinueButton()),
             ],
           ),
         ),
@@ -85,7 +98,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildContinueButton() {
     String buttonText = localizationService.trans('AUTH.LOGIN.LOGIN');
 
     return OBPrimaryButton(
@@ -93,9 +106,13 @@ class AuthLoginPageState extends State<AuthLoginPage> {
       isLarge: true,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
-        if (_formKey.currentState.validate()) {
-          // If the form is valid, display a snackbar. In the real world, you'd
-          // often want to call a server or save the information in a database
+        _isSubmitted = true;
+        if (_validateForm()) {
+          // Proceed to login
+          String username = _usernameController.text;
+          String password = _passwordController.text;
+          print(username);
+          print(password);
         }
       },
     );
@@ -176,6 +193,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                            controller: _usernameController,
                             validator: _validateUsername,
                             decoration: InputDecoration(
                               contentPadding: inputContentPadding,
@@ -188,11 +206,12 @@ class AuthLoginPageState extends State<AuthLoginPage> {
                             height: 20.0,
                           ),
                           TextFormField(
-                            obscureText: !passwordIsVisible,
+                            controller: _passwordController,
+                            obscureText: !_passwordIsVisible,
                             validator: _validatePassword,
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
-                                child: Icon(passwordIsVisible
+                                child: Icon(_passwordIsVisible
                                     ? Icons.visibility_off
                                     : Icons.visibility),
                                 onTap: () {
@@ -215,11 +234,13 @@ class AuthLoginPageState extends State<AuthLoginPage> {
   }
 
   String _validateUsername(String value) {
+    if (!_isSubmitted) return null;
+
     if (value.length == 0) {
       return localizationService.trans('AUTH.LOGIN.USERNAME_EMPTY_ERROR');
     }
 
-    if (validationService.isUsernameAllowedLength(value)) {
+    if (!validationService.isUsernameAllowedLength(value)) {
       return localizationService.trans('AUTH.LOGIN.USERNAME_LENGTH_ERROR');
     }
 
@@ -229,18 +250,24 @@ class AuthLoginPageState extends State<AuthLoginPage> {
   }
 
   String _validatePassword(String value) {
+    if (!_isSubmitted) return null;
+
     if (value.length == 0) {
       return localizationService.trans('AUTH.LOGIN.PASSWORD_EMPTY_ERROR');
     }
 
-    if (validationService.isPasswordAllowedLength(value)) {
+    if (!validationService.isPasswordAllowedLength(value)) {
       return localizationService.trans('AUTH.LOGIN.PASSWORD_LENGTH_ERROR');
     }
   }
 
   void _togglePasswordVisibility() {
     setState(() {
-      passwordIsVisible = !passwordIsVisible;
+      _passwordIsVisible = !_passwordIsVisible;
     });
+  }
+
+  bool _validateForm() {
+    return _formKey.currentState.validate();
   }
 }
