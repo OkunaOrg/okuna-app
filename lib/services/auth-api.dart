@@ -1,19 +1,20 @@
 import 'dart:io';
 
-import 'package:Openbook/services/http.dart';
-import 'package:http/http.dart';
+import 'package:Openbook/services/httpie.dart';
 import 'package:meta/meta.dart';
 
 class AuthApiService {
-  HttpService _httpService;
+  HttpieService _httpService;
 
   String apiURL;
 
   static const CHECK_USERNAME_PATH = 'api/auth/username-check/';
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
+  static const GET_USER_PATH = 'api/auth/user/';
+  static const LOGIN_PATH = 'api/auth/login/';
 
-  void setHttpService(HttpService httpService) {
+  void setHttpService(HttpieService httpService) {
     _httpService = httpService;
   }
 
@@ -21,23 +22,23 @@ class AuthApiService {
     apiURL = newApiURL;
   }
 
-  Future<Response> checkUsernameIsAvailable({@required String username}) {
+  Future<HttpieResponse> checkUsernameIsAvailable({@required String username}) {
     return _httpService
         .postJSON('$apiURL$CHECK_USERNAME_PATH', body: {'username': username});
   }
 
-  Future<Response> checkEmailIsAvailable({@required String email}) {
+  Future<HttpieResponse> checkEmailIsAvailable({@required String email}) {
     return _httpService
         .postJSON('$apiURL$CHECK_EMAIL_PATH', body: {'email': email});
   }
 
-  Future<StreamedResponse> createAccount({@required String email,
-    @required String username,
-    @required String name,
-    @required String birthDate,
-    @required String password, File avatar}) {
-
-
+  Future<HttpieStreamedResponse> createAccount(
+      {@required String email,
+      @required String username,
+      @required String name,
+      @required String birthDate,
+      @required String password,
+      File avatar}) {
     Map<String, dynamic> body = {
       'email': email,
       'username': username,
@@ -46,10 +47,23 @@ class AuthApiService {
       'password': password
     };
 
-    if (avatar != null){
+    if (avatar != null) {
       body['avatar'] = avatar;
     }
 
-    return _httpService.postMultiform('$apiURL$CREATE_ACCOUNT_PATH', body: body);
+    return _httpService.postMultiform('$apiURL$CREATE_ACCOUNT_PATH',
+        body: body);
+  }
+
+  Future<HttpieResponse> getUserWithAuthToken(String authToken) {
+    Map<String, String> headers = {'Authorization': 'Token $authToken'};
+
+    return _httpService.get('$apiURL$GET_USER_PATH', headers: headers);
+  }
+
+  Future<HttpieResponse> loginWithCredentials(
+      {@required String username, @required String password}) {
+    return this._httpService.postJSON('$apiURL$LOGIN_PATH',
+        body: {'username': username, 'password': password});
   }
 }

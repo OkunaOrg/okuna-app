@@ -3,6 +3,7 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
+import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -191,16 +192,10 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                               textController = new TextEditingController(
                                   text: snapshot.data);
 
-                              return TextFormField(
+
+                              return AuthTextField(
                                 enabled: false,
-                                style: TextStyle(
-                                    fontSize: 18.0, color: Colors.black),
-                                decoration: new InputDecoration(
-                                  hintText: birthdayInputPlaceholder,
-                                  border: OutlineInputBorder(),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
+                                hintText: birthdayInputPlaceholder,
                                 controller: textController,
                               );
                             })),

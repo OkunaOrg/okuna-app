@@ -3,6 +3,7 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
+import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
 class AuthUsernameStepPage extends StatefulWidget {
@@ -192,19 +193,13 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
             new Expanded(
               child: Container(
                   color: Colors.transparent,
-                  child: TextField(
+                  child: AuthTextField(
                     autocorrect: false,
                     onChanged: (String value) {
                       createAccountBloc.clearUsername();
                     },
-                    style: TextStyle(fontSize: 18.0, color: Colors.black),
-                    decoration: new InputDecoration(
-                      prefixIcon: Icon(Icons.alternate_email),
-                      hintText: usernameInputPlaceholder,
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
+                    prefixIcon: Icon(Icons.alternate_email),
+                    hintText: usernameInputPlaceholder,
                     controller: _usernameController,
                   )),
             ),

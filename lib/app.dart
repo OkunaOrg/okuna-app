@@ -6,6 +6,7 @@ import 'package:Openbook/pages/auth/create_account/email_step.dart';
 import 'package:Openbook/pages/auth/create_account/get_started.dart';
 import 'package:Openbook/pages/auth/create_account/submit_step.dart';
 import 'package:Openbook/pages/auth/create_account/password_step.dart';
+import 'package:Openbook/pages/auth/login.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/pages/auth/create_account/username_step.dart';
@@ -94,6 +95,10 @@ class MyApp extends StatelessWidget {
         '/auth/done_step': (BuildContext context) {
           bootstrapOpenbookProviderInContext(context);
           return AuthDonePage();
+        },
+        '/auth/login': (BuildContext context) {
+          bootstrapOpenbookProviderInContext(context);
+          return AuthLoginPage();
         }
       },
     ));
