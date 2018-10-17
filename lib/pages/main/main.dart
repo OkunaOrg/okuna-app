@@ -41,20 +41,51 @@ class MainPageState extends State<MainPage> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('Drawer Header'),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
+            child: Text('Drawer Header')
           ),
           ListTile(
-            title: Text('Item 1'),
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
             onTap: () {
               // Update the state of the app
               // ...
             },
           ),
           ListTile(
-            title: Text('Item 2'),
+            leading: Icon(Icons.people),
+            title: Text('Connections'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Settings'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.help),
+            title: Text('Help & Support'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.format_paint),
+            title: Text('Customize'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Log out'),
             onTap: () {
               // Update the state of the app
               // ...
