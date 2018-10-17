@@ -56,5 +56,8 @@
   "AUTH.LOGIN.PASSWORD_LENGTH_ERROR": "Password must be between 8 and 64 characters.",
   "AUTH.LOGIN.USERNAME_EMPTY_ERROR": "Username is required.",
   "AUTH.LOGIN.USERNAME_LENGTH_ERROR": "Username can't be longer than 30 characters.",
-  "AUTH.LOGIN.USERNAME_CHARACTERS_ERROR": "Username can only contain alphanumeric characters and underscores."
+  "AUTH.LOGIN.USERNAME_CHARACTERS_ERROR": "Username can only contain alphanumeric characters and underscores.",
+  "AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR": "The provided credentials do not match.",
+  "AUTH.LOGIN.SERVER_ERROR": "Uh oh.. We're experiencing server issues. Please try again in a few minutes.",
+  "AUTH.LOGIN.CONNECTION_ERROR": "We can't reach our servers. Are you connected to the internet?"
 }

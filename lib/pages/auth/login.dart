@@ -132,12 +132,13 @@ class AuthLoginPageState extends State<AuthLoginPage> {
           username: username, password: password);
       _setLoginFeedback('Successfully logged in');
     } on CredentialsMismatchError {
-      _setLoginFeedback('Credentials do not match');
+      _setLoginFeedback(
+          _localizationService.trans('AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR'));
     } on HttpieRequestError {
-      _setLoginFeedback('Uh oh, we\'re experiencing issues with our servers.');
+      _setLoginFeedback(_localizationService.trans('AUTH.LOGIN.SERVER_ERROR'));
     } on HttpieConnectionRefusedError {
       _setLoginFeedback(
-          'We can\'t reach our servers. Are you connected to the internet?');
+          _localizationService.trans('AUTH.LOGIN.CONNECTION_ERROR'));
     }
     _setLoginInProgress(false);
   }
