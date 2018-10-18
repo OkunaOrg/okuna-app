@@ -1,5 +1,6 @@
-import 'package:Openbook/pages/main/widgets/drawer/widgets/accounts.dart';
-import 'package:Openbook/pages/main/widgets/drawer/widgets/user-overview.dart';
+import 'package:Openbook/pages/main/widgets/drawer/widgets/body.dart';
+import 'package:Openbook/pages/main/widgets/drawer/widgets/footer.dart';
+import 'package:Openbook/pages/main/widgets/drawer/widgets/header/header.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
@@ -30,84 +31,11 @@ class MainDrawerState extends State<MainDrawer> {
         child: Container(
       child: Column(
         children: <Widget>[
-          _buildDrawerHeader(),
-          Expanded(child: _buildDrawerMenuItems()),
-          _buildDrawerFooter()
+          MainDrawerHeader(),
+          Expanded(child: MainDrawerBody()),
+          MainDrawerFooter()
         ],
       ),
     ));
-  }
-
-  Widget _buildDrawerHeader() {
-    return DrawerHeader(
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            MainDrawerAccounts(),
-          SizedBox(height: 10.0),
-          MainDrawerUserOverview()],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDrawerMenuItems() {
-    return ListView(
-      // Important: Remove any padding from the ListView.
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.person),
-          title: Text('Profile'),
-          onTap: () {
-            // Update the state of the app
-            // ...
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.people),
-          title: Text('Connections'),
-          onTap: () {
-            // Update the state of the app
-            // ...
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.settings),
-          title: Text('Settings'),
-          onTap: () {
-            // Update the state of the app
-            // ...
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.help),
-          title: Text('Help & Support'),
-          onTap: () {
-            // Update the state of the app
-            // ...
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.format_paint),
-          title: Text('Customize'),
-          onTap: () {
-            // Update the state of the app
-            // ...
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDrawerFooter() {
-    return ListTile(
-      leading: Icon(Icons.exit_to_app),
-      title: Text('Log out'),
-      onTap: () {
-        // Update the state of the app
-        // ...
-      },
-    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MainDrawerUserOverview extends StatelessWidget {
+class MainDrawerHeaderUserOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

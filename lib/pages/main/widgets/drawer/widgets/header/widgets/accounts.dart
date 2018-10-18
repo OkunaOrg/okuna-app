@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MainDrawerAccounts extends StatelessWidget {
+class MainDrawerHeaderAccounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
