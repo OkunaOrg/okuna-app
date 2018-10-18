@@ -2,7 +2,9 @@ import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
+import 'package:Openbook/pages/main/widgets/drawer/bottom-tab-bar.dart';
 import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
+import 'package:Openbook/pages/main/widgets/drawer/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
@@ -50,7 +52,7 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget _buildCupertinoScaffold() {
-    return CupertinoTabScaffold(
+    return OBCupertinoTabScaffold(
       tabBuilder: (BuildContext context, int index) {
         return CupertinoTabView(
           builder: (BuildContext context) {
@@ -58,23 +60,25 @@ class MainPageState extends State<MainPage> {
           },
         );
       },
-      tabBar: CupertinoTabBar(
+      tabBar: OBCupertinoTabBar(
         currentIndex: _currentIndex,
+        onTap: (int index) {
+          // When index == 2 dont allow index change
+          if (index == 2) {
+            // Open post modal
+            return false;
+          }
+
+          return true;
+        },
         items: [
-          BottomNavigationBarItem(title: Text('Home'), icon: Icon(Icons.home)),
+          BottomNavigationBarItem(title: Container(), icon: Icon(Icons.home, size: 25.0,)),
+          BottomNavigationBarItem(title: Container(), icon: Icon(Icons.search, size: 25.0,)),
+          BottomNavigationBarItem(title: Container(), icon: Icon(Icons.add, size: 25.0,)),
           BottomNavigationBarItem(
-              title: Text('Search'), icon: Icon(Icons.search)),
+              title: Container(), icon: Icon(Icons.notifications, size: 20.0,)),
           BottomNavigationBarItem(
-              title: IgnorePointer(
-                child: Text('Post'),
-              ),
-              icon: IgnorePointer(
-                child: Icon(Icons.add),
-              )),
-          BottomNavigationBarItem(
-              title: Text('Notifications'), icon: Icon(Icons.notifications)),
-          BottomNavigationBarItem(
-              title: Text('Chat'), icon: Icon(Icons.message)),
+              title: Container(), icon: Icon(Icons.message, size: 20.0,)),
         ],
       ),
     );
