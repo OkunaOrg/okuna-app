@@ -1,3 +1,5 @@
+import 'package:Openbook/pages/main/widgets/drawer/widgets/accounts.dart';
+import 'package:Openbook/pages/main/widgets/drawer/widgets/user-overview.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
@@ -39,7 +41,12 @@ class MainDrawerState extends State<MainDrawer> {
   Widget _buildDrawerHeader() {
     return DrawerHeader(
       child: Container(
-        child: Column(),
+        child: Column(
+          children: <Widget>[
+            MainDrawerAccounts(),
+          SizedBox(height: 10.0),
+          MainDrawerUserOverview()],
+        ),
       ),
     );
   }

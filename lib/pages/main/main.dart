@@ -1,6 +1,6 @@
 import 'package:Openbook/pages/main/pages/home.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
-import 'package:Openbook/pages/main/widgets/drawer.dart';
+import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
