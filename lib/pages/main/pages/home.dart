@@ -1,3 +1,4 @@
+import 'package:Openbook/pages/main/widgets/drawer/avatar-drawer-opener.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,7 @@ class MainHomePageState extends State<MainHomePage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          leading: GestureDetector(child: Icon(Icons.menu, size: 25.0,), onTap: (){
-            Scaffold.of(context).openDrawer();
-          },),
+          leading: MainAvatarDrawerOpener(),
           middle: Text('Home page'),
           trailing: Icon(Icons.message, size: 25.0,),
         ),
