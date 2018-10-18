@@ -1,3 +1,4 @@
+import 'package:Openbook/pages/main/modals/create-post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
@@ -20,7 +21,6 @@ class MainPage extends StatefulWidget {
 
 class MainPageState extends State<MainPage> {
   @override
-  Widget _activePage;
   LocalizationService _localizationService;
   UserService _userService;
   int _currentIndex;
@@ -66,19 +66,44 @@ class MainPageState extends State<MainPage> {
           // When index == 2 dont allow index change
           if (index == 2) {
             // Open post modal
+            Navigator.of(context).push(CreatePostModal());
+
             return false;
           }
 
           return true;
         },
         items: [
-          BottomNavigationBarItem(title: Container(), icon: Icon(Icons.home, size: 25.0,)),
-          BottomNavigationBarItem(title: Container(), icon: Icon(Icons.search, size: 25.0,)),
-          BottomNavigationBarItem(title: Container(), icon: Icon(Icons.add, size: 25.0,)),
           BottomNavigationBarItem(
-              title: Container(), icon: Icon(Icons.notifications, size: 20.0,)),
+              title: Container(),
+              icon: Icon(
+                Icons.home,
+                size: 25.0,
+              )),
           BottomNavigationBarItem(
-              title: Container(), icon: Icon(Icons.message, size: 20.0,)),
+              title: Container(),
+              icon: Icon(
+                Icons.search,
+                size: 25.0,
+              )),
+          BottomNavigationBarItem(
+              title: Container(),
+              icon: Icon(
+                Icons.add,
+                size: 25.0,
+              )),
+          BottomNavigationBarItem(
+              title: Container(),
+              icon: Icon(
+                Icons.notifications,
+                size: 20.0,
+              )),
+          BottomNavigationBarItem(
+              title: Container(),
+              icon: Icon(
+                Icons.people,
+                size: 20.0,
+              )),
         ],
       ),
     );
