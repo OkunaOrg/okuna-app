@@ -2,22 +2,23 @@ import 'package:Openbook/pages/main/widgets/drawer/avatar-drawer-opener.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainSearchPage extends StatefulWidget {
+class MainNotificationsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainSearchPageState();
+    return MainNotificationsPageState();
   }
 }
 
-class MainSearchPageState extends State<MainSearchPage> {
+class MainNotificationsPageState extends State<MainNotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: Text('Search'),
+          middle: Text('Notifications'),
         ),
         child: Center(
-          child: TextField(),
-        ));
+          child: Text('Notifications Page Content'),
+        )
+    );
   }
 }
