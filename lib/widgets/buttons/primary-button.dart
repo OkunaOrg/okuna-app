@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class OBPrimaryButton extends StatelessWidget {
   static const double LARGE_HEIGHT = 46.0;
   static const double NORMAL_HEIGHT = 44.0;
+  static const double SMALL_HEIGHT = 30.0;
 
   /// The widget below this widget in the tree.
   ///
@@ -15,16 +16,19 @@ class OBPrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   final bool isLarge;
+  final bool isSmall;
   final bool isDisabled;
   final bool isFullWidth;
   final bool isLoading;
 
-  const OBPrimaryButton({@required this.child,
-    @required this.onPressed,
-    this.isDisabled = false,
-    this.isLoading = false,
-    this.isLarge = false,
-    this.isFullWidth = false});
+  const OBPrimaryButton(
+      {@required this.child,
+      @required this.onPressed,
+      this.isDisabled = false,
+      this.isLoading = false,
+      this.isLarge = false,
+      this.isSmall = false,
+      this.isFullWidth = false});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,8 @@ class OBPrimaryButton extends StatelessWidget {
 
     if (isLarge) {
       height = LARGE_HEIGHT;
+    } else if (isSmall) {
+      height = SMALL_HEIGHT;
     } else {
       height = NORMAL_HEIGHT;
     }
@@ -50,19 +56,28 @@ class OBPrimaryButton extends StatelessWidget {
         textColor: Colors.white,
         color: Color(0xFF7ED321),
         child: buttonChild,
-        onPressed: isLoading ? (){} : onPressed,
+        onPressed: isLoading ? () {} : onPressed,
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(50.0)));
-
 
     return ButtonTheme(
         minWidth: minWidth,
         height: height,
-        child: isDisabled ? Opacity(opacity: 0.5, child: button,) : button
-    );
+        child: isDisabled
+            ? Opacity(
+                opacity: 0.5,
+                child: button,
+              )
+            : button);
   }
 
   Widget _getLoadingIndicator() {
-    return SizedBox(height: 20.0, width: 20.0, child: CircularProgressIndicator(strokeWidth: 2.0, valueColor: new AlwaysStoppedAnimation<Color>(Colors.white)),);
+    return SizedBox(
+      height: 20.0,
+      width: 20.0,
+      child: CircularProgressIndicator(
+          strokeWidth: 2.0,
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.white)),
+    );
   }
 }

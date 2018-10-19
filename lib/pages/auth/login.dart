@@ -130,7 +130,7 @@ class AuthLoginPageState extends State<AuthLoginPage> {
     try {
       await _userService.loginWithCredentials(
           username: username, password: password);
-      _setLoginFeedback('Successfully logged in');
+      Navigator.pushNamed(context, '/main');
     } on CredentialsMismatchError {
       _setLoginFeedback(
           _localizationService.trans('AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR'));
