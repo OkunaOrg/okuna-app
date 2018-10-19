@@ -41,8 +41,7 @@ class MainDrawerHeaderAccounts extends StatelessWidget {
     );
   }
 
-  Widget _buildUserAvatar(UserService userService){
-
+  Widget _buildUserAvatar(UserService userService) {
     return StreamBuilder(
       stream: userService.loggedInUserChange,
       initialData: null,
