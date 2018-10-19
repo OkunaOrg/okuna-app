@@ -160,6 +160,8 @@ class MainPageState extends State<MainPage> {
     _loggedInUserChangeSubscription =
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
 
+    if (_userService.isLoggedIn()) return;
+
     try {
       await _userService.loginWithStoredAuthToken();
     } catch (error) {
