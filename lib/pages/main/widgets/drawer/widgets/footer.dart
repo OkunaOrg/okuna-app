@@ -6,10 +6,11 @@ class MainDrawerFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var userService = openbookProvider.userService;
+    var localizationService = openbookProvider.localizationService;
 
     return ListTile(
       leading: Icon(Icons.exit_to_app),
-      title: Text('Log out'),
+      title: Text(localizationService.trans('DRAWER.LOGOUT')),
       onTap: () {
         userService.logout();
       },

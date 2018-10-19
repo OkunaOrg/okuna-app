@@ -6,9 +6,9 @@ import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
-import 'package:Openbook/pages/main/widgets/drawer/bottom-tab-bar.dart';
+import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
-import 'package:Openbook/pages/main/widgets/drawer/tab-scaffold.dart';
+import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
@@ -24,7 +24,6 @@ class MainPage extends StatefulWidget {
 
 class MainPageState extends State<MainPage> {
   @override
-  LocalizationService _localizationService;
   UserService _userService;
   int _currentIndex;
   bool _needsBootstrap;
@@ -55,7 +54,6 @@ class MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    _localizationService = openbookProvider.localizationService;
     _userService = openbookProvider.userService;
 
     if (_needsBootstrap) {

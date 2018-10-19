@@ -1,4 +1,4 @@
-import 'package:Openbook/pages/main/widgets/drawer/avatar-drawer-opener.dart';
+import 'package:Openbook/pages/main/widgets/avatar-drawer-opener.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
