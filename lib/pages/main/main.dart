@@ -9,6 +9,7 @@ import 'package:Openbook/pages/main/widgets/drawer/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,6 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   @override
   LocalizationService _localizationService;
-  UserService _userService;
   int _currentIndex;
 
   List<Widget> _tabPages;
@@ -31,6 +31,7 @@ class MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _currentIndex = 0;
+    // Caching to preserve state
     _tabPages = [
       MainHomePage(),
       MainSearchPage(),
@@ -43,7 +44,6 @@ class MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _localizationService = openbookProvider.localizationService;
-    _userService = openbookProvider.userService;
 
     return Scaffold(
       drawer: MainDrawer(),
@@ -66,8 +66,7 @@ class MainPageState extends State<MainPage> {
           // When index == 2 dont allow index change
           if (index == 2) {
             // Open post modal
-            Navigator.of(context).push(CreatePostModal());
-
+            _openCreatePostModal();
             return false;
           }
 
@@ -131,5 +130,13 @@ class MainPageState extends State<MainPage> {
     }
 
     return page;
+  }
+
+  void _openCreatePostModal() {
+    Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return CreatePostModal();
+        }));
   }
 }
