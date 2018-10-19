@@ -7,6 +7,7 @@ import 'package:Openbook/pages/auth/create_account/get_started.dart';
 import 'package:Openbook/pages/auth/create_account/submit_step.dart';
 import 'package:Openbook/pages/auth/create_account/password_step.dart';
 import 'package:Openbook/pages/auth/login.dart';
+import 'package:Openbook/pages/auth/splash.dart';
 import 'package:Openbook/pages/main/main.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
@@ -60,6 +61,10 @@ class MyApp extends StatelessWidget {
             bootstrapOpenbookProviderInContext(context);
             return MainPage();
           },
+          '/auth': (BuildContext context) {
+            bootstrapOpenbookProviderInContext(context);
+            return AuthSplashPage();
+          },
           '/auth/get-started': (BuildContext context) {
             bootstrapOpenbookProviderInContext(context);
             return AuthGetStartedPage();
@@ -99,10 +104,6 @@ class MyApp extends StatelessWidget {
           '/auth/login': (BuildContext context) {
             bootstrapOpenbookProviderInContext(context);
             return AuthLoginPage();
-          },
-          '/main': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return MainPage();
           }
         }));
   }
