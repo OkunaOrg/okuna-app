@@ -59,5 +59,11 @@
   "AUTH.LOGIN.USERNAME_CHARACTERS_ERROR": "Username can only contain alphanumeric characters and underscores.",
   "AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR": "The provided credentials do not match.",
   "AUTH.LOGIN.SERVER_ERROR": "Uh oh.. We're experiencing server issues. Please try again in a few minutes.",
-  "AUTH.LOGIN.CONNECTION_ERROR": "We can't reach our servers. Are you connected to the internet?"
+  "AUTH.LOGIN.CONNECTION_ERROR": "We can't reach our servers. Are you connected to the internet?",
+  "DRAWER.PROFILE": "Profile",
+  "DRAWER.CONNECTIONS": "Connections",
+  "DRAWER.SETTINGS": "Settings",
+  "DRAWER.HELP": "Help & Support",
+  "DRAWER.CUSTOMIZE": "Customize",
+  "DRAWER.LOGOUT": "Log out"
 }

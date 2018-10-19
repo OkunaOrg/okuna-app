@@ -15,6 +15,7 @@ class UserService {
 
   AuthApiService _authApiService;
 
+  // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
 
   User _loggedInUser;
@@ -22,6 +23,11 @@ class UserService {
   String _authToken;
 
   final _loggedInUserChangeSubject = BehaviorSubject<User>();
+
+  Future<void> logout() async {
+    await _removeStoredAuthToken();
+    _removeLoggedInUser();
+  }
 
   Future<void> loginWithCredentials(
       {@required String username, @required String password}) async {
@@ -59,13 +65,23 @@ class UserService {
   Future<void> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
-    HttpieResponse response = await _authApiService.getUserWithAuthToken(_authToken);
+    HttpieResponse response =
+        await _authApiService.getUserWithAuthToken(_authToken);
     if (response.isOk()) {
       var user = User.fromJson(json.decode(response.body));
-      _setUser(user);
+      _setLoggedInUser(user);
+    } else if (response.isUnauthorized()) {
+      throw AuthTokenInvalidError();
     } else {
       throw HttpieRequestError(response);
     }
+  }
+
+  Future<bool> loginWithStoredAuthToken() async {
+    var token = await _getStoredAuthToken();
+    if (token == null) throw AuthTokenMissingError();
+
+    await loginWithAuthToken(token);
   }
 
   Future<bool> hasAuthToken() async {
@@ -73,9 +89,14 @@ class UserService {
     return authToken != null;
   }
 
-  void _setUser(User user) {
+  void _setLoggedInUser(User user) {
     _loggedInUser = user;
     _loggedInUserChangeSubject.add(user);
+  }
+
+  void _removeLoggedInUser(){
+    _loggedInUser = null;
+    _loggedInUserChangeSubject.add(null);
   }
 
   Future<void> _setAuthToken(String authToken) async {
@@ -90,9 +111,13 @@ class UserService {
 
   Future<String> _getStoredAuthToken() async {
     String authToken =
-        await this._secureStorageService.get(key: STORAGE_AUTH_TOKEN_KEY);
+        await _secureStorageService.get(key: STORAGE_AUTH_TOKEN_KEY);
     if (authToken != null) _authToken = authToken;
     return authToken;
+  }
+
+  Future<void> _removeStoredAuthToken() async {
+    _secureStorageService.remove(key: STORAGE_AUTH_TOKEN_KEY);
   }
 }
 
@@ -108,4 +133,10 @@ class AuthTokenMissingError implements Exception {
   const AuthTokenMissingError();
 
   String toString() => 'AuthTokenMissingError: No auth token was found.';
+}
+
+class AuthTokenInvalidError implements Exception {
+  const AuthTokenInvalidError();
+
+  String toString() => 'InvalidAuthTokenError: The provided token is invalid.';
 }

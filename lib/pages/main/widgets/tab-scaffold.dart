@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:Openbook/pages/main/widgets/drawer/bottom-tab-bar.dart';
+import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
 import 'package:flutter/widgets.dart';
 
 /// Implements a tabbed iOS application's root layout and behavior structure.
