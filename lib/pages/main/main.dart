@@ -173,7 +173,7 @@ class MainPageState extends State<MainPage> {
 
   void _onLoggedInUserChange(User newUser) {
     if (newUser == null) {
-      Navigator.pushNamed(context, '/auth');
+      Navigator.pushReplacementNamed(context, '/auth');
     }
   }
 }
