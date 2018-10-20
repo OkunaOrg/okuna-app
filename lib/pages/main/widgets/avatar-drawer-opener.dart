@@ -1,8 +1,14 @@
+import 'package:Openbook/models/user.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:flutter/material.dart';
 
 class MainAvatarDrawerOpener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    var userService = openbookProvider.userService;
+
     return Row(
       children: <Widget>[
         GestureDetector(
@@ -13,7 +19,7 @@ class MainAvatarDrawerOpener extends StatelessWidget {
                 color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: _buildUserAvatar(),
+              child: _buildUserAvatar(userService),
             ),
           ),
           onTap: () {
@@ -24,7 +30,23 @@ class MainAvatarDrawerOpener extends StatelessWidget {
     );
   }
 
-  Widget _buildUserAvatar(){
-    return Image.asset('assets/images/avatar.png');
+  Widget _buildUserAvatar(UserService userService) {
+    return StreamBuilder(
+      stream: userService.loggedInUserChange,
+      initialData: null,
+      builder: (context, AsyncSnapshot<User> snapshot) {
+        var user = snapshot.data;
+
+        var avatar;
+
+        if (user == null) {
+          avatar = Image.asset('assets/images/avatar.png');
+        } else {
+          avatar = Image.network(user.profile.avatar);
+        }
+
+        return avatar;
+      },
+    );
   }
 }

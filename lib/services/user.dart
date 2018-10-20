@@ -89,6 +89,10 @@ class UserService {
     return authToken != null;
   }
 
+  bool isLoggedIn(){
+    return _loggedInUser != null;
+  }
+
   void _setLoggedInUser(User user) {
     _loggedInUser = user;
     _loggedInUserChangeSubject.add(user);
