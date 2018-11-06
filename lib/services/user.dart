@@ -22,7 +22,7 @@ class UserService {
 
   String _authToken;
 
-  final _loggedInUserChangeSubject = ReplaySubject<User>();
+  final _loggedInUserChangeSubject = ReplaySubject<User>(maxSize: 1);
 
   Future<void> logout() async {
     await _removeStoredAuthToken();

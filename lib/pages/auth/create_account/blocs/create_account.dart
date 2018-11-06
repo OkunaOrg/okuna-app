@@ -39,15 +39,15 @@ class CreateAccountBloc {
 
   Stream<bool> get birthdayIsValid => _birthdayIsValidSubject.stream;
 
-  final _birthdayIsValidSubject = ReplaySubject<bool>();
+  final _birthdayIsValidSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<String> get birthdayFeedback => _birthdayFeedbackSubject.stream;
 
-  final _birthdayFeedbackSubject = ReplaySubject<String>();
+  final _birthdayFeedbackSubject = ReplaySubject<String>(maxSize: 1);
 
   Stream<String> get validatedBirthday => _validatedBirthdaySubject.stream;
 
-  final _validatedBirthdaySubject = ReplaySubject<String>();
+  final _validatedBirthdaySubject = ReplaySubject<String>(maxSize: 1);
 
   // Birthday ends
 
@@ -58,15 +58,15 @@ class CreateAccountBloc {
 
   Stream<bool> get nameIsValid => _nameIsValidSubject.stream;
 
-  final _nameIsValidSubject = ReplaySubject<bool>();
+  final _nameIsValidSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<String> get nameFeedback => _nameFeedbackSubject.stream;
 
-  final _nameFeedbackSubject = ReplaySubject<String>();
+  final _nameFeedbackSubject = ReplaySubject<String>(maxSize: 1);
 
   Stream<String> get validatedName => _validatedNameSubject.stream;
 
-  final _validatedNameSubject = ReplaySubject<String>();
+  final _validatedNameSubject = ReplaySubject<String>(maxSize: 1);
 
   // Name ends
 
@@ -74,15 +74,15 @@ class CreateAccountBloc {
 
   Stream<bool> get usernameIsValid => _usernameIsValidSubject.stream;
 
-  final _usernameIsValidSubject = ReplaySubject<bool>();
+  final _usernameIsValidSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<String> get usernameFeedback => _usernameFeedbackSubject.stream;
 
-  final _usernameFeedbackSubject = ReplaySubject<String>();
+  final _usernameFeedbackSubject = ReplaySubject<String>(maxSize: 1);
 
   Stream<String> get validatedUsername => _validatedUsernameSubject.stream;
 
-  final _validatedUsernameSubject = ReplaySubject<String>();
+  final _validatedUsernameSubject = ReplaySubject<String>(maxSize: 1);
 
   // Username ends
 
@@ -90,15 +90,15 @@ class CreateAccountBloc {
 
   Stream<bool> get emailIsValid => _emailIsValidSubject.stream;
 
-  final _emailIsValidSubject = ReplaySubject<bool>();
+  final _emailIsValidSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<String> get emailFeedback => _emailFeedbackSubject.stream;
 
-  final _emailFeedbackSubject = ReplaySubject<String>();
+  final _emailFeedbackSubject = ReplaySubject<String>(maxSize: 1);
 
   Stream<String> get validatedEmail => _validatedEmailSubject.stream;
 
-  final _validatedEmailSubject = ReplaySubject<String>();
+  final _validatedEmailSubject = ReplaySubject<String>(maxSize: 1);
 
   // Email ends
 
@@ -109,15 +109,15 @@ class CreateAccountBloc {
 
   Stream<bool> get passwordIsValid => _passwordIsValidSubject.stream;
 
-  final _passwordIsValidSubject = ReplaySubject<bool>();
+  final _passwordIsValidSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<String> get passwordFeedback => _passwordFeedbackSubject.stream;
 
-  final _passwordFeedbackSubject = ReplaySubject<String>();
+  final _passwordFeedbackSubject = ReplaySubject<String>(maxSize: 1);
 
   Stream<String> get validatedPassword => _validatedPasswordSubject.stream;
 
-  final _validatedPasswordSubject = ReplaySubject<String>();
+  final _validatedPasswordSubject = ReplaySubject<String>(maxSize: 1);
 
   // Password ends
 
@@ -128,15 +128,15 @@ class CreateAccountBloc {
 
   Stream<bool> get avatarIsValid => _avatarIsValidSubject.stream;
 
-  final _avatarIsValidSubject = ReplaySubject<bool>();
+  final _avatarIsValidSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<String> get avatarFeedback => _avatarFeedbackSubject.stream;
 
-  final _avatarFeedbackSubject = ReplaySubject<String>();
+  final _avatarFeedbackSubject = ReplaySubject<String>(maxSize: 1);
 
   Stream<File> get validatedAvatar => _validatedAvatarSubject.stream;
 
-  final _validatedAvatarSubject = ReplaySubject<File>();
+  final _validatedAvatarSubject = ReplaySubject<File>(maxSize: 1);
 
   // Avatar ends
 
@@ -145,12 +145,12 @@ class CreateAccountBloc {
   Stream<bool> get createAccountInProgress =>
       _createAccountInProgressSubject.stream;
 
-  final _createAccountInProgressSubject = ReplaySubject<bool>();
+  final _createAccountInProgressSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<String> get createAccountErrorFeedback =>
       _createAccountErrorFeedbackSubject.stream;
 
-  final _createAccountErrorFeedbackSubject = ReplaySubject<String>();
+  final _createAccountErrorFeedbackSubject = ReplaySubject<String>(maxSize: 1);
 
   // Create account ends
 
