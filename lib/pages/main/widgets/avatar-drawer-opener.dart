@@ -16,7 +16,8 @@ class MainAvatarDrawerOpener extends StatelessWidget {
             height: 25.0,
             width: 25.0,
             decoration: BoxDecoration(
-                color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
+                color: Colors.black12,
+                borderRadius: BorderRadius.circular(10.0)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: _buildUserAvatar(userService),
@@ -40,12 +41,16 @@ class MainAvatarDrawerOpener extends StatelessWidget {
         var avatar;
 
         if (user == null) {
-          avatar = Image.asset('assets/images/avatar.png');
+          avatar = AssetImage('assets/images/avatar.png');
         } else {
-          avatar = Image.network(user.profile.avatar);
+          avatar = NetworkImage(user.profile.avatar);
         }
 
-        return avatar;
+        return Container(
+          child: null,
+          decoration: BoxDecoration(
+              image: DecorationImage(image: avatar, fit: BoxFit.cover)),
+        );
       },
     );
   }
