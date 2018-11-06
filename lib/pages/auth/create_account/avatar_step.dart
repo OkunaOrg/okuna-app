@@ -274,9 +274,6 @@ class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
       maxHeight: 500,
     );
 
-    // Clean up un-cropped-photo
-    image.deleteSync();
-
     return croppedFile;
   }
 }
