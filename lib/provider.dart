@@ -8,7 +8,24 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
 
-class OpenbookProvider extends InheritedWidget {
+class OpenbookProvider extends StatefulWidget {
+  Widget child;
+
+  OpenbookProvider({this.child});
+
+  @override
+  OpenbookProviderState createState() {
+    return OpenbookProviderState();
+  }
+
+  static OpenbookProviderState of(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(_OpenbookProvider)
+            as _OpenbookProvider)
+        .data;
+  }
+}
+
+class OpenbookProviderState extends State<OpenbookProvider> {
   CreateAccountBloc createAccountBloc = CreateAccountBloc();
   ValidationService validationService = ValidationService();
   HttpieService httpService = HttpieService();
@@ -17,7 +34,9 @@ class OpenbookProvider extends InheritedWidget {
   UserService userService = UserService();
   LocalizationService localizationService;
 
-  OpenbookProvider(child) : super(child: child) {
+  @override
+  void initState() {
+    super.initState();
     createAccountBloc.setValidationService(validationService);
     authApiService.setHttpService(httpService);
     authApiService.setApiURL(getAPIUrl());
@@ -27,8 +46,11 @@ class OpenbookProvider extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(InheritedWidget oldWidget) {
-    return true;
+  Widget build(BuildContext context) {
+    return new _OpenbookProvider(
+      data: this,
+      child: widget.child,
+    );
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {
@@ -45,8 +67,16 @@ class OpenbookProvider extends InheritedWidget {
   String getAPIUrl() {
     return Config.apiURL;
   }
+}
 
-  static OpenbookProvider of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(OpenbookProvider);
+class _OpenbookProvider extends InheritedWidget {
+  final OpenbookProviderState data;
+
+  _OpenbookProvider({Key key, this.data, Widget child})
+      : super(key: key, child: child);
+
+  @override
+  bool updateShouldNotify(_OpenbookProvider old) {
+    return true;
   }
 }

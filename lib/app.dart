@@ -20,92 +20,94 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return OpenbookProvider(MaterialApp(
-        title: 'Openbook',
-        supportedLocales: [const Locale('es', 'ES'), const Locale('en', 'US')],
-        localizationsDelegates: [
-          const LocalizationServiceDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
-        ],
-        localeResolutionCallback:
-            (Locale locale, Iterable<Locale> supportedLocales) {
-          for (Locale supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale.languageCode ||
-                supportedLocale.countryCode == locale.countryCode) {
-              return supportedLocale;
+    return OpenbookProvider(
+      child: MaterialApp(
+          title: 'Openbook',
+          supportedLocales: [const Locale('es', 'ES'), const Locale('en', 'US')],
+          localizationsDelegates: [
+            const LocalizationServiceDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          localeResolutionCallback:
+              (Locale locale, Iterable<Locale> supportedLocales) {
+            for (Locale supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale.languageCode ||
+                  supportedLocale.countryCode == locale.countryCode) {
+                return supportedLocale;
+              }
             }
-          }
 
-          return supportedLocales.first;
-        },
-        theme: new ThemeData(
-            buttonTheme: ButtonThemeData(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(2.0))),
-            // This is the theme of your application.
-            //
-            // Try running your application with "flutter run". You'll see the
-            // application has a blue toolbar. Then, without quitting the app, try
-            // changing the primarySwatch below to Colors.green and then invoke
-            // "hot reload" (press "r" in the console where you ran "flutter run",
-            // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
-            // counter didn't reset back to zero; the application is not restarted.
-            primarySwatch: Colors.grey,
-            fontFamily: 'NunitoSans'),
-        routes: {
-          /// The openbookProvider uses services available in the context
-          /// Their connection must be bootstrapped but no other way to execute
-          /// something before loading any route, therefore this ugliness.
-          '/': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return MainPage();
+            return supportedLocales.first;
           },
-          '/auth': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthSplashPage();
-          },
-          '/auth/get-started': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthGetStartedPage();
-          },
-          '/auth/birthday_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthBirthdayStepPage();
-          },
-          '/auth/name_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthNameStepPage();
-          },
-          '/auth/username_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthUsernameStepPage();
-          },
-          '/auth/email_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthEmailStepPage();
-          },
-          '/auth/password_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthPasswordStepPage();
-          },
-          '/auth/avatar_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthAvatarStepPage();
-          },
-          '/auth/submit_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthSubmitPage();
-          },
-          '/auth/done_step': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthDonePage();
-          },
-          '/auth/login': (BuildContext context) {
-            bootstrapOpenbookProviderInContext(context);
-            return AuthLoginPage();
-          }
-        }));
+          theme: new ThemeData(
+              buttonTheme: ButtonThemeData(
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(2.0))),
+              // This is the theme of your application.
+              //
+              // Try running your application with "flutter run". You'll see the
+              // application has a blue toolbar. Then, without quitting the app, try
+              // changing the primarySwatch below to Colors.green and then invoke
+              // "hot reload" (press "r" in the console where you ran "flutter run",
+              // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
+              // counter didn't reset back to zero; the application is not restarted.
+              primarySwatch: Colors.grey,
+              fontFamily: 'NunitoSans'),
+          routes: {
+            /// The openbookProvider uses services available in the context
+            /// Their connection must be bootstrapped but no other way to execute
+            /// something before loading any route, therefore this ugliness.
+            '/': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return MainPage();
+            },
+            '/auth': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthSplashPage();
+            },
+            '/auth/get-started': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthGetStartedPage();
+            },
+            '/auth/birthday_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthBirthdayStepPage();
+            },
+            '/auth/name_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthNameStepPage();
+            },
+            '/auth/username_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthUsernameStepPage();
+            },
+            '/auth/email_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthEmailStepPage();
+            },
+            '/auth/password_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthPasswordStepPage();
+            },
+            '/auth/avatar_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthAvatarStepPage();
+            },
+            '/auth/submit_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthSubmitPage();
+            },
+            '/auth/done_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthDonePage();
+            },
+            '/auth/login': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return AuthLoginPage();
+            }
+          }),
+    );
   }
 }
 

@@ -10,7 +10,6 @@ import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
 import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
