@@ -26,7 +26,8 @@ class HttpieService {
           headers: finalHeaders, body: body, encoding: encoding);
       return HttpieResponse(response);
     } on SocketException catch (error) {
-      if (error.osError.errorCode == 61) {
+      var errorCode = error.osError.errorCode;
+      if (errorCode == 61 || errorCode == 111) {
         // Connection refused.
         throw HttpieConnectionRefusedError(error);
       } else {
@@ -187,12 +188,11 @@ class HttpieConnectionRefusedError implements Exception {
 
   const HttpieConnectionRefusedError(this.socketException);
 
-  String toString(){
+  String toString() {
     String address = socketException.address.toString();
     String port = socketException.port.toString();
     return 'HttpieConnectionRefusedError: Connection refused on $address and port $port';
   }
-
 }
 
 class HttpieArgumentsError implements Exception {
