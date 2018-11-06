@@ -22,7 +22,7 @@ class UserService {
 
   String _authToken;
 
-  final _loggedInUserChangeSubject = BehaviorSubject<User>();
+  final _loggedInUserChangeSubject = ReplaySubject<User>();
 
   Future<void> logout() async {
     await _removeStoredAuthToken();
@@ -89,7 +89,7 @@ class UserService {
     return authToken != null;
   }
 
-  bool isLoggedIn(){
+  bool isLoggedIn() {
     return _loggedInUser != null;
   }
 
@@ -98,7 +98,7 @@ class UserService {
     _loggedInUserChangeSubject.add(user);
   }
 
-  void _removeLoggedInUser(){
+  void _removeLoggedInUser() {
     _loggedInUser = null;
     _loggedInUserChangeSubject.add(null);
   }

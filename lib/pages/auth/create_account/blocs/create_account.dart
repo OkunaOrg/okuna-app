@@ -39,15 +39,15 @@ class CreateAccountBloc {
 
   Stream<bool> get birthdayIsValid => _birthdayIsValidSubject.stream;
 
-  final _birthdayIsValidSubject = BehaviorSubject<bool>();
+  final _birthdayIsValidSubject = ReplaySubject<bool>();
 
   Stream<String> get birthdayFeedback => _birthdayFeedbackSubject.stream;
 
-  final _birthdayFeedbackSubject = BehaviorSubject<String>();
+  final _birthdayFeedbackSubject = ReplaySubject<String>();
 
   Stream<String> get validatedBirthday => _validatedBirthdaySubject.stream;
 
-  final _validatedBirthdaySubject = BehaviorSubject<String>();
+  final _validatedBirthdaySubject = ReplaySubject<String>();
 
   // Birthday ends
 
@@ -58,15 +58,15 @@ class CreateAccountBloc {
 
   Stream<bool> get nameIsValid => _nameIsValidSubject.stream;
 
-  final _nameIsValidSubject = BehaviorSubject<bool>();
+  final _nameIsValidSubject = ReplaySubject<bool>();
 
   Stream<String> get nameFeedback => _nameFeedbackSubject.stream;
 
-  final _nameFeedbackSubject = BehaviorSubject<String>();
+  final _nameFeedbackSubject = ReplaySubject<String>();
 
   Stream<String> get validatedName => _validatedNameSubject.stream;
 
-  final _validatedNameSubject = BehaviorSubject<String>();
+  final _validatedNameSubject = ReplaySubject<String>();
 
   // Name ends
 
@@ -74,15 +74,15 @@ class CreateAccountBloc {
 
   Stream<bool> get usernameIsValid => _usernameIsValidSubject.stream;
 
-  final _usernameIsValidSubject = BehaviorSubject<bool>();
+  final _usernameIsValidSubject = ReplaySubject<bool>();
 
   Stream<String> get usernameFeedback => _usernameFeedbackSubject.stream;
 
-  final _usernameFeedbackSubject = BehaviorSubject<String>();
+  final _usernameFeedbackSubject = ReplaySubject<String>();
 
   Stream<String> get validatedUsername => _validatedUsernameSubject.stream;
 
-  final _validatedUsernameSubject = BehaviorSubject<String>();
+  final _validatedUsernameSubject = ReplaySubject<String>();
 
   // Username ends
 
@@ -90,15 +90,15 @@ class CreateAccountBloc {
 
   Stream<bool> get emailIsValid => _emailIsValidSubject.stream;
 
-  final _emailIsValidSubject = BehaviorSubject<bool>();
+  final _emailIsValidSubject = ReplaySubject<bool>();
 
   Stream<String> get emailFeedback => _emailFeedbackSubject.stream;
 
-  final _emailFeedbackSubject = BehaviorSubject<String>();
+  final _emailFeedbackSubject = ReplaySubject<String>();
 
   Stream<String> get validatedEmail => _validatedEmailSubject.stream;
 
-  final _validatedEmailSubject = BehaviorSubject<String>();
+  final _validatedEmailSubject = ReplaySubject<String>();
 
   // Email ends
 
@@ -109,15 +109,15 @@ class CreateAccountBloc {
 
   Stream<bool> get passwordIsValid => _passwordIsValidSubject.stream;
 
-  final _passwordIsValidSubject = BehaviorSubject<bool>();
+  final _passwordIsValidSubject = ReplaySubject<bool>();
 
   Stream<String> get passwordFeedback => _passwordFeedbackSubject.stream;
 
-  final _passwordFeedbackSubject = BehaviorSubject<String>();
+  final _passwordFeedbackSubject = ReplaySubject<String>();
 
   Stream<String> get validatedPassword => _validatedPasswordSubject.stream;
 
-  final _validatedPasswordSubject = BehaviorSubject<String>();
+  final _validatedPasswordSubject = ReplaySubject<String>();
 
   // Password ends
 
@@ -128,15 +128,15 @@ class CreateAccountBloc {
 
   Stream<bool> get avatarIsValid => _avatarIsValidSubject.stream;
 
-  final _avatarIsValidSubject = BehaviorSubject<bool>();
+  final _avatarIsValidSubject = ReplaySubject<bool>();
 
   Stream<String> get avatarFeedback => _avatarFeedbackSubject.stream;
 
-  final _avatarFeedbackSubject = BehaviorSubject<String>();
+  final _avatarFeedbackSubject = ReplaySubject<String>();
 
   Stream<File> get validatedAvatar => _validatedAvatarSubject.stream;
 
-  final _validatedAvatarSubject = BehaviorSubject<File>();
+  final _validatedAvatarSubject = ReplaySubject<File>();
 
   // Avatar ends
 
@@ -145,12 +145,12 @@ class CreateAccountBloc {
   Stream<bool> get createAccountInProgress =>
       _createAccountInProgressSubject.stream;
 
-  final _createAccountInProgressSubject = BehaviorSubject<bool>();
+  final _createAccountInProgressSubject = ReplaySubject<bool>();
 
   Stream<String> get createAccountErrorFeedback =>
       _createAccountErrorFeedbackSubject.stream;
 
-  final _createAccountErrorFeedbackSubject = BehaviorSubject<String>();
+  final _createAccountErrorFeedbackSubject = ReplaySubject<String>();
 
   // Create account ends
 
