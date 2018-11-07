@@ -32,10 +32,7 @@ class MainDrawerHeaderUserOverview extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  Text(
-                    135.toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                  _buildUserPostsCount(userService),
                   SizedBox(
                     width: 2.0,
                     height: 1,
@@ -45,10 +42,7 @@ class MainDrawerHeaderUserOverview extends StatelessWidget {
                     width: 10.0,
                     height: 1,
                   ),
-                  Text(
-                    '3.5k',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                  _buildUserFollowersCount(userService),
                   SizedBox(
                     width: 2.0,
                     height: 1,
@@ -105,6 +99,52 @@ class MainDrawerHeaderUserOverview extends StatelessWidget {
         return Text(
           username,
           style: TextStyle(fontSize: 16.0),
+        );
+      },
+    );
+  }
+
+  Widget _buildUserFollowersCount(UserService userService){
+    return StreamBuilder(
+      stream: userService.loggedInUserChange,
+      initialData: null,
+      builder: (context, AsyncSnapshot<User> snapshot) {
+        var snapshotData = snapshot.data;
+
+        var followersCount;
+
+        if (snapshotData == null) {
+          followersCount = 0;
+        } else {
+          followersCount = snapshot.data.followersCount;
+        }
+
+        return Text(
+          followersCount.toString(),
+          style: TextStyle(fontWeight: FontWeight.bold),
+        );
+      },
+    );
+  }
+
+  Widget _buildUserPostsCount(UserService userService){
+    return StreamBuilder(
+      stream: userService.loggedInUserChange,
+      initialData: null,
+      builder: (context, AsyncSnapshot<User> snapshot) {
+        var snapshotData = snapshot.data;
+
+        var postsCount;
+
+        if (snapshotData == null) {
+          postsCount = 0;
+        } else {
+          postsCount = snapshot.data.postsCount;
+        }
+
+        return Text(
+          postsCount.toString(),
+          style: TextStyle(fontWeight: FontWeight.bold),
         );
       },
     );
