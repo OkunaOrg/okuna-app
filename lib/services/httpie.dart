@@ -8,6 +8,15 @@ import 'package:http_parser/http_parser.dart';
 
 class HttpieService {
   LocalizationService _localizationService;
+  String authorizationToken;
+
+  void setAuthorizationToken(String token) {
+    authorizationToken = token;
+  }
+
+  void removeAuthorizationToken() {
+    authorizationToken = null;
+  }
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
@@ -17,9 +26,12 @@ class HttpieService {
       {Map<String, String> headers,
       body,
       Encoding encoding,
-      bool appendLanguageHeader}) async {
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers, appendLanguageHeader: appendLanguageHeader);
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
 
     try {
       var response = await http.post(url,
@@ -40,7 +52,8 @@ class HttpieService {
       {Map<String, String> headers = const {},
       body,
       Encoding encoding,
-      bool appendLanguageHeader}) {
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
     String jsonBody = json.encode(body);
 
     Map<String, String> jsonHeaders = {
@@ -54,7 +67,8 @@ class HttpieService {
         headers: jsonHeaders,
         body: jsonBody,
         encoding: encoding,
-        appendLanguageHeader: appendLanguageHeader);
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
   }
 
   Future<HttpieResponse> get(url,
@@ -70,11 +84,14 @@ class HttpieService {
       {Map<String, String> headers = const {},
       Map<String, dynamic> body,
       Encoding encoding,
-      bool appendLanguageHeader}) async {
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
     var request = new http.MultipartRequest("POST", Uri.parse(url));
 
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers, appendLanguageHeader: appendLanguageHeader);
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
 
     request.headers.addAll(finalHeaders);
 
@@ -109,7 +126,9 @@ class HttpieService {
   }
 
   Map<String, String> _getHeadersWithConfig(
-      {Map<String, String> headers = const {}, bool appendLanguageHeader}) {
+      {Map<String, String> headers = const {},
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
     Map<String, String> finalHeaders = Map.from(headers);
 
     /// NOTE If we set the default value in the parameters, if other functions
@@ -119,17 +138,22 @@ class HttpieService {
     /// See https://github.com/dart-lang/sdk/issues/33918
 
     appendLanguageHeader = appendLanguageHeader ?? true;
+    appendAuthorizationToken = appendAuthorizationToken ?? false;
 
     if (appendLanguageHeader) finalHeaders['Accept-Language'] = _getLanguage();
+
+    if (appendAuthorizationToken && authorizationToken != null) {
+      finalHeaders['Authorization'] = 'Token $authorizationToken';
+    }
 
     return finalHeaders;
   }
 }
 
-abstract class BaseResponse<T extends http.BaseResponse> {
+abstract class HttpieBaseResponse<T extends http.BaseResponse> {
   T _httpResponse;
 
-  BaseResponse(this._httpResponse);
+  HttpieBaseResponse(this._httpResponse);
 
   bool isInternalServerError() {
     return _httpResponse.statusCode == HttpStatus.internalServerError;
@@ -158,7 +182,7 @@ abstract class BaseResponse<T extends http.BaseResponse> {
   int get statusCode => _httpResponse.statusCode;
 }
 
-class HttpieResponse extends BaseResponse<http.Response> {
+class HttpieResponse extends HttpieBaseResponse<http.Response> {
   HttpieResponse(_httpResponse) : super(_httpResponse);
 
   String get body => _httpResponse.body;
@@ -170,8 +194,19 @@ class HttpieResponse extends BaseResponse<http.Response> {
   http.Response get httpResponse => _httpResponse;
 }
 
-class HttpieStreamedResponse extends BaseResponse<http.StreamedResponse> {
+class HttpieStreamedResponse extends HttpieBaseResponse<http.StreamedResponse> {
   HttpieStreamedResponse(_httpResponse) : super(_httpResponse);
+
+  Future<String> readAsString() {
+    var completer = new Completer();
+    var contents = new StringBuffer();
+    this
+        ._httpResponse
+        .stream
+        .transform(Utf8Decoder())
+        .listen(null, onDone: () => completer.complete(contents.toString()));
+    return completer.future;
+  }
 }
 
 class HttpieRequestError implements Exception {

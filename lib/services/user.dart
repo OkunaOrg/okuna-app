@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/posts-list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/auth-api.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/posts-api.dart';
 import 'package:Openbook/services/secure-storage.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,6 +18,8 @@ class UserService {
   static const STORAGE_AUTH_TOKEN_KEY = 'authToken';
 
   AuthApiService _authApiService;
+  HttpieService _httpieService;
+  PostsApiService _postsApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -24,8 +30,25 @@ class UserService {
 
   final _loggedInUserChangeSubject = ReplaySubject<User>(maxSize: 1);
 
+  void setAuthApiService(AuthApiService authApiService) {
+    _authApiService = authApiService;
+  }
+
+  void setPostsApiService(PostsApiService postsApiService) {
+    _postsApiService = postsApiService;
+  }
+
+  void setHttpieService(HttpieService httpieService) {
+    _httpieService = httpieService;
+  }
+
+  void setSecureStorageService(SecureStorageService secureStorageService) {
+    _secureStorageService = secureStorageService;
+  }
+
   Future<void> logout() async {
     await _removeStoredAuthToken();
+    _httpieService.removeAuthorizationToken();
     _removeLoggedInUser();
   }
 
@@ -54,27 +77,14 @@ class UserService {
     return _loggedInUser;
   }
 
-  void setAuthApiService(AuthApiService authApiService) {
-    _authApiService = authApiService;
-  }
-
-  void setSecureStorageService(SecureStorageService secureStorageService) {
-    _secureStorageService = secureStorageService;
-  }
-
   Future<void> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
     HttpieResponse response =
         await _authApiService.getUserWithAuthToken(_authToken);
-    if (response.isOk()) {
-      var user = User.fromJson(json.decode(response.body));
-      _setLoggedInUser(user);
-    } else if (response.isUnauthorized()) {
-      throw AuthTokenInvalidError();
-    } else {
-      throw HttpieRequestError(response);
-    }
+    _checkResponseIsOk(response);
+    var user = User.fromJson(json.decode(response.body));
+    _setLoggedInUser(user);
   }
 
   Future<bool> loginWithStoredAuthToken() async {
@@ -93,6 +103,32 @@ class UserService {
     return _loggedInUser != null;
   }
 
+  Future<PostsList> getAllPosts() async {
+    HttpieResponse response = await _postsApiService.getAllPosts();
+    _checkResponseIsOk(response);
+    return PostsList.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> createPost(
+      {@required String text, List<int> circleIds, File image}) async {
+    HttpieStreamedResponse response = await _postsApiService.createPost(
+        text: text, circleIds: circleIds, image: image);
+
+    _checkResponseIsOk(response);
+    String responseBody = await response.readAsString();
+    return Post.fromJson(json.decode(responseBody));
+  }
+
+  void _checkResponseIsOk(HttpieBaseResponse response) {
+    if (response.isOk()) return;
+
+    if (response.isUnauthorized()) {
+      throw AuthTokenInvalidError();
+    } else {
+      throw HttpieRequestError(response);
+    }
+  }
+
   void _setLoggedInUser(User user) {
     _loggedInUser = user;
     _loggedInUserChangeSubject.add(user);
@@ -105,6 +141,7 @@ class UserService {
 
   Future<void> _setAuthToken(String authToken) async {
     _authToken = authToken;
+    _httpieService.setAuthorizationToken(authToken);
     await _storeAuthToken(authToken);
   }
 
@@ -137,6 +174,12 @@ class AuthTokenMissingError implements Exception {
   const AuthTokenMissingError();
 
   String toString() => 'AuthTokenMissingError: No auth token was found.';
+}
+
+class NotLoggedInUserError implements Exception {
+  const NotLoggedInUserError();
+
+  String toString() => 'NotLoggedInUserError: No user is logged in.';
 }
 
 class AuthTokenInvalidError implements Exception {

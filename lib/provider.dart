@@ -3,6 +3,7 @@ import 'package:Openbook/services/auth-api.dart';
 import 'package:Openbook/services/environment-loader.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/posts-api.dart';
 import 'package:Openbook/services/secure-storage.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -30,6 +31,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ValidationService validationService = ValidationService();
   HttpieService httpService = HttpieService();
   AuthApiService authApiService = AuthApiService();
+  PostsApiService postsApiService = PostsApiService();
   SecureStorageService secureStorageService = SecureStorageService();
   UserService userService = UserService();
   LocalizationService localizationService;
@@ -43,6 +45,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     authApiService.setHttpService(httpService);
     createAccountBloc.setAuthApiService(authApiService);
     userService.setAuthApiService(authApiService);
+    userService.setPostsApiService(postsApiService);
+    userService.setHttpieService(httpService);
     userService.setSecureStorageService(secureStorageService);
   }
 
