@@ -1,6 +1,6 @@
-import 'package:Openbook/config.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth-api.dart';
+import 'package:Openbook/services/environment-loader.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/secure-storage.dart';
@@ -37,12 +37,19 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   @override
   void initState() {
     super.initState();
+    initAsyncState();
+
     createAccountBloc.setValidationService(validationService);
     authApiService.setHttpService(httpService);
-    authApiService.setApiURL(getAPIUrl());
     createAccountBloc.setAuthApiService(authApiService);
     userService.setAuthApiService(authApiService);
     userService.setSecureStorageService(secureStorageService);
+  }
+
+  void initAsyncState() async {
+    Environment environment =
+        await EnvironmentLoader(environmentPath: ".env.json").load();
+    authApiService.setApiURL(environment.API_URL);
   }
 
   @override
@@ -62,10 +69,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   setValidationService(ValidationService newValidationService) {
     validationService = newValidationService;
     createAccountBloc.setValidationService(validationService);
-  }
-
-  String getAPIUrl() {
-    return Config.apiURL;
   }
 }
 
