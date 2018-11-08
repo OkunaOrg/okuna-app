@@ -14,8 +14,9 @@ class MainHomePageState extends State<MainHomePage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          backgroundColor: Colors.white,
           leading: MainAvatarDrawerOpener(),
-          middle: Text('Home page'),
+          middle: Text('Home'),
           trailing: Icon(Icons.message, size: 25.0,),
         ),
         child: Center(

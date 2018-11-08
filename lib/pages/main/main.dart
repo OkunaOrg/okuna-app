@@ -100,7 +100,10 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget _createTabBar() {
+    double tabBarIconsSize = 20.0;
+
     return OBCupertinoTabBar(
+      backgroundColor: Colors.white,
       currentIndex: _currentIndex,
       onTap: (int index) {
         // When index == 2 dont allow index change
@@ -114,36 +117,48 @@ class MainPageState extends State<MainPage> {
       },
       items: [
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.home,
-              size: 25.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarItemIcon('home'),
+          activeIcon: _buildBottomNavigationBarActiveItemIcon('home'),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.search,
-              size: 25.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarItemIcon('search'),
+          activeIcon: _buildBottomNavigationBarActiveItemIcon('search'),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.add,
-              size: 25.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarItemIcon('create-post'),
+          activeIcon: _buildBottomNavigationBarActiveItemIcon('create-post'),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.notifications,
-              size: 20.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarItemIcon('notifications'),
+          activeIcon: _buildBottomNavigationBarActiveItemIcon('notifications'),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.people,
-              size: 20.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarItemIcon('communities'),
+          activeIcon: _buildBottomNavigationBarActiveItemIcon('communities'),
+        ),
       ],
+    );
+  }
+
+  Widget _buildBottomNavigationBarActiveItemIcon(String iconName) {
+    return Image.asset(
+      'assets/images/icons/$iconName-icon.png',
+      height: 20.0,
+    );
+  }
+
+  Widget _buildBottomNavigationBarItemIcon(String iconName) {
+    return Opacity(
+      opacity: 0.3,
+      child: Image.asset(
+        'assets/images/icons/$iconName-icon.png',
+        height: 18.0,
+      ),
     );
   }
 
