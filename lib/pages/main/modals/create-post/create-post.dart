@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Openbook/helpers/hex-color.dart';
+import 'package:Openbook/pages/main/modals/create-post/widgets/post-image-previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -37,7 +38,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   bool hasAudience;
   bool hasBurner;
 
-  File image;
+  File postImage;
 
   @override
   void initState() {
@@ -98,6 +99,31 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildNewPostContent() {
+    List<Widget> postItems = [
+      TextField(
+        controller: textController,
+        autofocus: true,
+        textCapitalization: TextCapitalization.sentences,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        style: TextStyle(color: Colors.black87, fontSize: 18.0),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'What\'s going on?',
+        ),
+        autocorrect: true,
+      ),
+    ];
+
+    if (hasImage) {
+      postItems.add(PostImagePreviewer(
+        postImage,
+        onRemove: () {
+          _removePostImage();
+        },
+      ));
+    }
+
     return Expanded(
         child: Container(
       padding: EdgeInsets.only(left: 20.0),
@@ -111,21 +137,11 @@ class CreatePostModalState extends State<CreatePostModal> {
             child: SingleChildScrollView(
               physics: ClampingScrollPhysics(),
               child: Container(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-                child: TextField(
-                  controller: textController,
-                  autofocus: true,
-                  textCapitalization: TextCapitalization.sentences,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  style: TextStyle(color: Colors.black87, fontSize: 18.0),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'What\'s going on?',
-                  ),
-                  autocorrect: true,
-                ),
-              ),
+                  padding:
+                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: postItems)),
             ),
           )
         ],
@@ -205,7 +221,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         ),
         onPressed: () async {
           File image = await _pickImage(ImageSource.gallery);
-          if (image != null) _setImage(image);
+          if (image != null) _setPostImage(image);
         },
       ),
       OBPillButton(
@@ -217,7 +233,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         ),
         onPressed: () async {
           File image = await _pickImage(ImageSource.camera);
-          if (image != null) _setImage(image);
+          if (image != null) _setPostImage(image);
         },
       ),
       OBPillButton(
@@ -271,10 +287,17 @@ class CreatePostModalState extends State<CreatePostModal> {
     });
   }
 
-  void _setImage(File image) {
+  void _setPostImage(File image) {
     setState(() {
-      this.image = image;
+      this.postImage = image;
       hasImage = true;
+    });
+  }
+
+  void _removePostImage() {
+    setState(() {
+      if (this.postImage != null) this.postImage.delete();
+      hasImage = false;
     });
   }
 
