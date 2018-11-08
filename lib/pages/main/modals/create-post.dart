@@ -61,24 +61,20 @@ class CreatePostModalState extends State<CreatePostModal> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 20.0,
-                            ),
                             Expanded(
-                                child: SingleChildScrollView(
-                              child: Column(
-                                children: <Widget>[
-                                  TextField(
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 5,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'What\'s up?'),
-                                    autocorrect: true,
-                                  ),
-                                ],
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    left: 20.0, right: 20.0, bottom: 20.0),
+                                child: TextField(
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                      hintText: 'What\'s up?'),
+                                  autocorrect: true,
+                                ),
                               ),
-                            ))
+                            )
                           ],
                         ),
                       ),
