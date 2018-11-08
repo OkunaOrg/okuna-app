@@ -1,3 +1,4 @@
+import 'package:Openbook/helpers/hex-color.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
@@ -95,6 +96,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           ),
           Expanded(
             child: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
               child: Container(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                 child: TextField(
@@ -127,7 +129,9 @@ class CreatePostModalState extends State<CreatePostModal> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Expanded(
-              child: Text(textFeedback),
+              child: Text(textFeedback, style: TextStyle(
+                color: HexColor('#F13A59')
+              ),),
             ),
             Text('$charactersCount/$MAX_ALLOWED_CHARACTERS')
           ],
@@ -208,7 +212,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       isPostTextAllowedLength =
           _validationService.isPostTextAllowedLength(text);
       textFeedback = !isPostTextAllowedLength
-          ? 'Post cannot be longer than $MAX_ALLOWED_CHARACTERS characters'
+          ? 'Post cannot be longer than $MAX_ALLOWED_CHARACTERS characters.'
           : '';
     });
   }
