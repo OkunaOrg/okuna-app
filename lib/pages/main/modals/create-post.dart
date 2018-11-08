@@ -69,9 +69,15 @@ class CreatePostModalState extends State<CreatePostModal> {
                                     padding: EdgeInsets.only(
                                         left: 20.0, right: 20.0, bottom: 20.0),
                                     child: TextField(
+                                      autofocus: true,
+                                      textCapitalization: TextCapitalization.sentences,
                                       keyboardType: TextInputType.multiline,
                                       maxLines: null,
                                       cursorColor: Colors.black26,
+                                      style: TextStyle(
+                                        color: Colors.black87,
+                                        fontSize: 18.0
+                                      ),
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'What\'s going on?'),
