@@ -17,18 +17,25 @@ class MainHomePageState extends State<MainHomePage> {
           backgroundColor: Colors.white,
           leading: MainAvatarDrawerOpener(),
           middle: Text('Home'),
-          trailing: Icon(Icons.message, size: 25.0,),
+          trailing: Image.asset(
+            'assets/images/icons/chat-icon.png',
+            height: 20.0,
+          ),
         ),
         child: Center(
-          child: CupertinoButton(child: Text('Push'), onPressed: (){
-            Navigator.of(context).push(CupertinoPageRoute<void>(
-              title: 'Pushed',
-              builder: (BuildContext context) => CupertinoPageScaffold(
-                navigationBar: CupertinoNavigationBar(),
-                child: Center(child: Text('Hi'),),),
-            ));
-          }),
-        )
-    );
+          child: CupertinoButton(
+              child: Text('Push'),
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute<void>(
+                  title: 'Pushed',
+                  builder: (BuildContext context) => CupertinoPageScaffold(
+                        navigationBar: CupertinoNavigationBar(),
+                        child: Center(
+                          child: Text('Hi'),
+                        ),
+                      ),
+                ));
+              }),
+        ));
   }
 }

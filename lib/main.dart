@@ -21,9 +21,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OpenbookProvider(
-              child: MaterialApp(
-              title: 'Openbook',
-              supportedLocales: [const Locale('es', 'ES'), const Locale('en', 'US')],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Openbook',
+          supportedLocales: [
+            const Locale('es', 'ES'),
+            const Locale('en', 'US')
+          ],
           localizationsDelegates: [
             const LocalizationServiceDelegate(),
             GlobalMaterialLocalizations.delegate,
@@ -31,10 +35,9 @@ class MyApp extends StatelessWidget {
           ],
           localeResolutionCallback:
               (Locale locale, Iterable<Locale> supportedLocales) {
-
-                if(locale == null){
-                  return supportedLocales.last;
-                }
+            if (locale == null) {
+              return supportedLocales.last;
+            }
 
             for (Locale supportedLocale in supportedLocales) {
               if (supportedLocale.languageCode == locale.languageCode ||
@@ -121,7 +124,6 @@ void bootstrapOpenbookProviderInContext(BuildContext context) {
   var localizationService = LocalizationService.of(context);
   openbookProvider.setLocalizationService(localizationService);
 }
-
 
 void main() {
   runApp(new MyApp());

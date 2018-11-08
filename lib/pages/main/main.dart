@@ -154,7 +154,7 @@ class MainPageState extends State<MainPage> {
 
   Widget _buildBottomNavigationBarItemIcon(String iconName) {
     return Opacity(
-      opacity: 0.3,
+      opacity: 0.5,
       child: Image.asset(
         'assets/images/icons/$iconName-icon.png',
         height: 18.0,
