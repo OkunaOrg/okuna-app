@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:Openbook/helpers/hex-color.dart';
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -9,6 +10,8 @@ import 'package:Openbook/widgets/buttons/pill-button.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreatePostModal extends StatefulWidget {
   @override
@@ -18,15 +21,23 @@ class CreatePostModal extends StatefulWidget {
 }
 
 class CreatePostModalState extends State<CreatePostModal> {
-  TextEditingController textController;
-  bool isPostTextAllowedLength;
-  int charactersCount;
-
+  static const double actionIconHeight = 20.0;
+  static const double actionSpacing = 10.0;
   static const int MAX_ALLOWED_CHARACTERS =
       ValidationService.MAX_ALLOWED_POST_TEXT_CHARACTERS;
 
   UserService _userService;
   ValidationService _validationService;
+
+  TextEditingController textController;
+  int charactersCount;
+
+  bool isPostTextAllowedLength;
+  bool hasImage;
+  bool hasAudience;
+  bool hasBurner;
+
+  File image;
 
   @override
   void initState() {
@@ -35,6 +46,9 @@ class CreatePostModalState extends State<CreatePostModal> {
     textController.addListener(_onPostTextChanged);
     charactersCount = 0;
     isPostTextAllowedLength = false;
+    hasImage = false;
+    hasAudience = false;
+    hasBurner = false;
   }
 
   @override
@@ -142,69 +156,109 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildPostActions() {
-    double actionIconHeight = 20.0;
-    double actionSpacing = 10.0;
+    List<Widget> postActions = [];
+
+    if (!hasImage) {
+      postActions.addAll(_getImagePostActions());
+    }
+
+    if (!hasAudience) {
+      postActions.add(_buildAudiencePostAction());
+    }
+
+    if (!hasBurner) {
+      postActions.add(_buildBurnerPostAction());
+    }
+
+    // Add spacing
+    List<Widget> spacedPostActions = [];
+
+    int actionsCount = postActions.length;
+
+    for (int i = 0; i < actionsCount; i++) {
+      var postAction = postActions[i];
+      spacedPostActions.add(_buildPostActionHorizontalSpacing());
+      spacedPostActions.add(postAction);
+
+      if (i == actionsCount - 1) {
+        spacedPostActions.add(_buildPostActionHorizontalSpacing());
+      }
+    }
 
     return Container(
       height: 51.0,
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       color: Color.fromARGB(3, 0, 0, 0),
       child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          SizedBox(
-            width: actionSpacing,
-          ),
-          OBPillButton(
-            text: 'Media',
-            hexColor: '#FCC14B',
-            icon: Image.asset(
-              'assets/images/icons/media-icon.png',
-              height: actionIconHeight,
-            ),
-            onPressed: () {},
-          ),
-          SizedBox(
-            width: actionSpacing,
-          ),
-          OBPillButton(
-            text: 'GIF',
-            hexColor: '#0F0F0F',
-            icon: Image.asset(
-              'assets/images/icons/gif-icon.png',
-              height: actionIconHeight,
-            ),
-            onPressed: () {},
-          ),
-          SizedBox(
-            width: actionSpacing,
-          ),
-          OBPillButton(
-            text: 'Audience',
-            hexColor: '#80E37A',
-            icon: Image.asset(
-              'assets/images/icons/audience-icon.png',
-              height: actionIconHeight,
-            ),
-            onPressed: () {},
-          ),
-          SizedBox(
-            width: actionSpacing,
-          ),
-          OBPillButton(
-            text: 'Burner',
-            hexColor: '#F13A59',
-            icon: Image.asset(
-              'assets/images/icons/burner-icon.png',
-              height: actionIconHeight,
-            ),
-            onPressed: () {},
-          ),
-          SizedBox(
-            width: actionSpacing,
-          ),
-        ],
+          scrollDirection: Axis.horizontal, children: spacedPostActions),
+    );
+  }
+
+  List<Widget> _getImagePostActions() {
+    return [
+      OBPillButton(
+        text: 'Media',
+        hexColor: '#FCC14B',
+        icon: Image.asset(
+          'assets/images/icons/media-icon.png',
+          height: actionIconHeight,
+        ),
+        onPressed: () async {
+          File image = await _pickImage(ImageSource.gallery);
+          if (image != null) _setImage(image);
+        },
       ),
+      OBPillButton(
+        text: 'Camera',
+        hexColor: '#00B7FF',
+        icon: Image.asset(
+          'assets/images/icons/camera-icon.png',
+          height: actionIconHeight,
+        ),
+        onPressed: () async {
+          File image = await _pickImage(ImageSource.camera);
+          if (image != null) _setImage(image);
+        },
+      ),
+      OBPillButton(
+        text: 'GIF',
+        hexColor: '#0F0F0F',
+        icon: Image.asset(
+          'assets/images/icons/gif-icon.png',
+          height: actionIconHeight,
+        ),
+        onPressed: () {},
+      ),
+    ];
+  }
+
+  Widget _buildBurnerPostAction() {
+    return OBPillButton(
+      text: 'Burner',
+      hexColor: '#F13A59',
+      icon: Image.asset(
+        'assets/images/icons/burner-icon.png',
+        height: actionIconHeight,
+      ),
+      onPressed: () {},
+    );
+  }
+
+  Widget _buildAudiencePostAction() {
+    return OBPillButton(
+      text: 'Audience',
+      hexColor: '#80E37A',
+      icon: Image.asset(
+        'assets/images/icons/audience-icon.png',
+        height: actionIconHeight,
+      ),
+      onPressed: () {},
+    );
+  }
+
+  Widget _buildPostActionHorizontalSpacing() {
+    return SizedBox(
+      width: actionSpacing,
     );
   }
 
@@ -215,5 +269,29 @@ class CreatePostModalState extends State<CreatePostModal> {
       isPostTextAllowedLength =
           _validationService.isPostTextAllowedLength(text);
     });
+  }
+
+  void _setImage(File image) {
+    setState(() {
+      this.image = image;
+      hasImage = true;
+    });
+  }
+
+  Future<File> _pickImage(ImageSource source) async {
+    var image = await ImagePicker.pickImage(source: source);
+    if (image == null) {
+      return null;
+    }
+
+    File croppedFile = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      ratioX: 1.0,
+      ratioY: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+    );
+
+    return croppedFile;
   }
 }

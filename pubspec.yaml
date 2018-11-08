@@ -78,6 +78,7 @@ flutter:
     - assets/images/icons/communities-icon.png
     - assets/images/icons/create-post-icon.png
     - assets/images/icons/chat-icon.png
+    - assets/images/icons/camera-icon.png
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
