@@ -21,7 +21,6 @@ class CreatePostModalState extends State<CreatePostModal> {
   TextEditingController textController;
   bool isPostTextAllowedLength;
   int charactersCount;
-  String textFeedback;
 
   static const int MAX_ALLOWED_CHARACTERS =
       ValidationService.MAX_ALLOWED_POST_TEXT_CHARACTERS;
@@ -36,7 +35,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     textController.addListener(_onPostTextChanged);
     charactersCount = 0;
     isPostTextAllowedLength = false;
-    textFeedback = '';
   }
 
   @override
@@ -77,6 +75,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       ),
       middle: Text('New post'),
       trailing: OBPrimaryButton(
+        isDisabled: !isPostTextAllowedLength,
         isSmall: true,
         onPressed: () {},
         child: Text('Share'),
@@ -87,7 +86,6 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildNewPostContent() {
     return Expanded(
         child: Container(
-      padding: EdgeInsets.only(left: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -128,12 +126,11 @@ class CreatePostModalState extends State<CreatePostModal> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Expanded(
-              child: Text(textFeedback, style: TextStyle(
-                color: HexColor('#F13A59')
-              ),),
-            ),
-            Text('$charactersCount/$MAX_ALLOWED_CHARACTERS')
+            Text('$charactersCount/$MAX_ALLOWED_CHARACTERS',
+            style: TextStyle(
+              color: isPostTextAllowedLength ? Colors.black26 : HexColor('#F13A59'),
+              fontWeight: isPostTextAllowedLength ? FontWeight.normal : FontWeight.bold
+            ),)
           ],
         ));
   }
@@ -211,9 +208,6 @@ class CreatePostModalState extends State<CreatePostModal> {
       charactersCount = text.length;
       isPostTextAllowedLength =
           _validationService.isPostTextAllowedLength(text);
-      textFeedback = !isPostTextAllowedLength
-          ? 'Post cannot be longer than $MAX_ALLOWED_CHARACTERS characters.'
-          : '';
     });
   }
 }
