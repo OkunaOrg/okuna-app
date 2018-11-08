@@ -18,10 +18,9 @@ class CreatePostModal extends StatefulWidget {
 
 class CreatePostModalState extends State<CreatePostModal> {
   TextEditingController textController;
-  bool maxCharactersReached;
+  bool isPostTextAllowedLength;
   int charactersCount;
   String textFeedback;
-  GlobalKey<FormState> formKey;
 
   static const int MAX_ALLOWED_CHARACTERS =
       ValidationService.MAX_ALLOWED_POST_TEXT_CHARACTERS;
@@ -35,8 +34,8 @@ class CreatePostModalState extends State<CreatePostModal> {
     textController = TextEditingController();
     textController.addListener(_onPostTextChanged);
     charactersCount = 0;
-    maxCharactersReached = false;
-    formKey = GlobalKey<FormState>();
+    isPostTextAllowedLength = false;
+    textFeedback = '';
   }
 
   @override
@@ -57,7 +56,11 @@ class CreatePostModalState extends State<CreatePostModal> {
           child: SafeArea(
               child: Container(
                   child: Column(
-            children: <Widget>[_buildNewPostContent(), _buildPostActions()],
+            children: <Widget>[
+              _buildNewPostContent(),
+              _buildPostInfoBar(),
+              _buildPostActions()
+            ],
           )))),
     );
   }
@@ -91,28 +94,44 @@ class CreatePostModalState extends State<CreatePostModal> {
             size: UserAvatarSize.medium,
           ),
           Expanded(
-            child: Container(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-                child: Form(
-                  key: formKey,
-                  child: TextFormField(
-                    controller: textController,
-                    validator: _validatePostText,
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    style: TextStyle(color: Colors.black87, fontSize: 18.0),
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'What\'s going on?'),
-                    autocorrect: true,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+                child: TextField(
+                  controller: textController,
+                  autofocus: true,
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  style: TextStyle(color: Colors.black87, fontSize: 18.0),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'What\'s going on?',
                   ),
-                )),
+                  autocorrect: true,
+                ),
+              ),
+            ),
           )
         ],
       ),
     ));
+  }
+
+  Widget _buildPostInfoBar() {
+    return Container(
+        padding:
+            EdgeInsets.only(right: 20.0, bottom: 5.0, top: 5.0, left: 20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Expanded(
+              child: Text(textFeedback),
+            ),
+            Text('$charactersCount/$MAX_ALLOWED_CHARACTERS')
+          ],
+        ));
   }
 
   Widget _buildPostActions() {
@@ -184,24 +203,13 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   void _onPostTextChanged() {
     String text = textController.text;
-    int textLength = text.length;
-    if(text != null && textLength > 0){
+    setState(() {
       charactersCount = text.length;
-      maxCharactersReached = charactersCount > MAX_ALLOWED_CHARACTERS;
-      print(text);
-      _validateForm();
-    }
-  }
-
-  String _validatePostText(String value) {
-    if (!_validationService.isPostTextAllowedLength(value)) {
-      var errorMsg =
-          'Post cannot be longer than $MAX_ALLOWED_CHARACTERS characters';
-      return errorMsg;
-    }
-  }
-
-  bool _validateForm() {
-    return formKey.currentState.validate();
+      isPostTextAllowedLength =
+          _validationService.isPostTextAllowedLength(text);
+      textFeedback = !isPostTextAllowedLength
+          ? 'Post cannot be longer than $MAX_ALLOWED_CHARACTERS characters'
+          : '';
+    });
   }
 }
