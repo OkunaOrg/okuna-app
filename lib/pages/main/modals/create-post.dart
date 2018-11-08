@@ -71,6 +71,7 @@ class CreatePostModalState extends State<CreatePostModal> {
                                     child: TextField(
                                       keyboardType: TextInputType.multiline,
                                       maxLines: null,
+                                      cursorColor: Colors.black26,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'What\'s going on?'),
@@ -114,11 +115,12 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildPostActions() {
     return Container(
       height: 51.0,
-      padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 10.0),
-      color: Colors.black12,
+      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+      color: Color.fromARGB(3, 0, 0, 0),
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
+          SizedBox(width: 10.0,),
           OBPillButton(
             text: 'Media',
             hexColor: '#FCC14B',
@@ -146,6 +148,7 @@ class CreatePostModalState extends State<CreatePostModal> {
             icon: Icon(Icons.cancel),
             onPressed: () {},
           ),
+          SizedBox(width: 10.0,),
         ],
       ),
     );
