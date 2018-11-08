@@ -62,6 +62,16 @@ flutter:
     - assets/images/avatar.png
     - assets/lang/es.json
     - assets/lang/en.json
+    - assets/images/icons/gif-icon.png
+    - assets/images/icons/media-icon.png
+    - assets/images/icons/profile-icon.png
+    - assets/images/icons/connections-icon.png
+    - assets/images/icons/burner-icon.png
+    - assets/images/icons/settings-icon.png
+    - assets/images/icons/help-icon.png
+    - assets/images/icons/customize-icon.png
+    - assets/images/icons/logout-icon.png
+    - assets/images/icons/audience-icon.png
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

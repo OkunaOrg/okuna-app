@@ -113,6 +113,10 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildPostActions() {
+
+    double actionIconHeight = 20.0;
+    double actionSpacing = 10.0;
+
     return Container(
       height: 51.0,
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -120,35 +124,35 @@ class CreatePostModalState extends State<CreatePostModal> {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          SizedBox(width: 10.0,),
+          SizedBox(width: actionSpacing,),
           OBPillButton(
             text: 'Media',
             hexColor: '#FCC14B',
-            icon: Icon(Icons.cancel),
+            icon: Image.asset('assets/images/icons/media-icon.png', height: actionIconHeight,),
             onPressed: () {},
           ),
-          SizedBox(width: 10.0,),
+          SizedBox(width: actionSpacing,),
           OBPillButton(
             text: 'GIF',
             hexColor: '#0F0F0F',
-            icon: Icon(Icons.cancel),
+            icon: Image.asset('assets/images/icons/gif-icon.png', height: actionIconHeight,),
             onPressed: () {},
           ),
-          SizedBox(width: 10.0,),
+          SizedBox(width: actionSpacing,),
           OBPillButton(
-            text: 'Poll',
+            text: 'Audience',
             hexColor: '#80E37A',
-            icon: Icon(Icons.cancel),
+            icon: Image.asset('assets/images/icons/audience-icon.png', height: actionIconHeight,),
             onPressed: () {},
           ),
-          SizedBox(width: 10.0,),
+          SizedBox(width: actionSpacing,),
           OBPillButton(
-            text: 'Event',
+            text: 'Burner',
             hexColor: '#F13A59',
-            icon: Icon(Icons.cancel),
+            icon: Image.asset('assets/images/icons/burner-icon.png', height: actionIconHeight,),
             onPressed: () {},
           ),
-          SizedBox(width: 10.0,),
+          SizedBox(width: actionSpacing,),
         ],
       ),
     );
