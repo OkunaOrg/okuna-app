@@ -1,6 +1,7 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
 import 'package:Openbook/widgets/avatars/user-avatar.dart';
 import 'package:Openbook/widgets/buttons/pill-button.dart';
@@ -16,15 +17,39 @@ class CreatePostModal extends StatefulWidget {
 }
 
 class CreatePostModalState extends State<CreatePostModal> {
+  TextEditingController textController;
+  bool maxCharactersReached;
+  int charactersCount;
+  String textFeedback;
+  GlobalKey<FormState> formKey;
+
+  static const int MAX_ALLOWED_CHARACTERS =
+      ValidationService.MAX_ALLOWED_POST_TEXT_CHARACTERS;
+
+  UserService _userService;
+  ValidationService _validationService;
+
   @override
   void initState() {
     super.initState();
+    textController = TextEditingController();
+    textController.addListener(_onPostTextChanged);
+    charactersCount = 0;
+    maxCharactersReached = false;
+    formKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    textController.removeListener(_onPostTextChanged);
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    var userService = openbookProvider.userService;
+    _userService = openbookProvider.userService;
+    _validationService = openbookProvider.validationService;
 
     return Material(
       child: CupertinoPageScaffold(
@@ -32,10 +57,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           child: SafeArea(
               child: Container(
                   child: Column(
-            children: <Widget>[
-              _buildNewPostContent(userService),
-              _buildPostActions()
-            ],
+            children: <Widget>[_buildNewPostContent(), _buildPostActions()],
           )))),
     );
   }
@@ -58,29 +80,35 @@ class CreatePostModalState extends State<CreatePostModal> {
     );
   }
 
-  Widget _buildNewPostContent(userService) {
+  Widget _buildNewPostContent() {
     return Expanded(
         child: Container(
       padding: EdgeInsets.only(left: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          LoggedInUserAvatar(size: UserAvatarSize.medium,),
+          LoggedInUserAvatar(
+            size: UserAvatarSize.medium,
+          ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-              child: TextField(
-                autofocus: true,
-                textCapitalization: TextCapitalization.sentences,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                cursorColor: Colors.black26,
-                style: TextStyle(color: Colors.black87, fontSize: 18.0),
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: 'What\'s going on?'),
-                autocorrect: true,
-              ),
-            ),
+                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                child: Form(
+                  key: formKey,
+                  child: TextFormField(
+                    controller: textController,
+                    validator: _validatePostText,
+                    autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    style: TextStyle(color: Colors.black87, fontSize: 18.0),
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'What\'s going on?'),
+                    autocorrect: true,
+                  ),
+                )),
           )
         ],
       ),
@@ -152,5 +180,28 @@ class CreatePostModalState extends State<CreatePostModal> {
         ],
       ),
     );
+  }
+
+  void _onPostTextChanged() {
+    String text = textController.text;
+    int textLength = text.length;
+    if(text != null && textLength > 0){
+      charactersCount = text.length;
+      maxCharactersReached = charactersCount > MAX_ALLOWED_CHARACTERS;
+      print(text);
+      _validateForm();
+    }
+  }
+
+  String _validatePostText(String value) {
+    if (!_validationService.isPostTextAllowedLength(value)) {
+      var errorMsg =
+          'Post cannot be longer than $MAX_ALLOWED_CHARACTERS characters';
+      return errorMsg;
+    }
+  }
+
+  bool _validateForm() {
+    return formKey.currentState.validate();
   }
 }

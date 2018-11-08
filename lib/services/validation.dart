@@ -1,4 +1,6 @@
 class ValidationService {
+  static const int MAX_ALLOWED_POST_TEXT_CHARACTERS = 560;
+
   bool isQualifiedEmail(String email) {
     String p =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -31,6 +33,10 @@ class ValidationService {
 
   bool isPasswordAllowedLength(String password) {
     return password.length >= 8 && password.length <= 64;
+  }
+
+  bool isPostTextAllowedLength(String postText) {
+    return postText.length < MAX_ALLOWED_POST_TEXT_CHARACTERS;
   }
 
   bool isUsernameAllowedLength(String username) {
