@@ -86,6 +86,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildNewPostContent() {
     return Expanded(
         child: Container(
+      padding: EdgeInsets.only(left: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -126,11 +127,16 @@ class CreatePostModalState extends State<CreatePostModal> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Text('$charactersCount/$MAX_ALLOWED_CHARACTERS',
-            style: TextStyle(
-              color: isPostTextAllowedLength ? Colors.black26 : HexColor('#F13A59'),
-              fontWeight: isPostTextAllowedLength ? FontWeight.normal : FontWeight.bold
-            ),)
+            Text(
+              '$charactersCount/$MAX_ALLOWED_CHARACTERS',
+              style: TextStyle(
+                  color: isPostTextAllowedLength
+                      ? Colors.black26
+                      : HexColor('#F13A59'),
+                  fontWeight: isPostTextAllowedLength
+                      ? FontWeight.normal
+                      : FontWeight.bold),
+            )
           ],
         ));
   }
