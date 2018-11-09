@@ -1,4 +1,5 @@
 import 'package:Openbook/pages/main/widgets/avatar-drawer-opener.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,10 +18,7 @@ class MainHomePageState extends State<MainHomePage> {
           backgroundColor: Colors.white,
           leading: MainAvatarDrawerOpener(),
           middle: Text('Home'),
-          trailing: Image.asset(
-            'assets/images/icons/chat-icon.png',
-            height: 20.0,
-          ),
+          trailing: OBIcon(OBIcons.chat),
         ),
         child: Center(
           child: CupertinoButton(
