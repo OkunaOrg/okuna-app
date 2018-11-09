@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:Openbook/helpers/hex-color.dart';
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/pages/main/modals/create-post/widgets/post-image-previewer.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
@@ -29,38 +32,42 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   UserService _userService;
   ValidationService _validationService;
+  ToastService _toastService;
 
-  TextEditingController textController;
-  int charactersCount;
+  TextEditingController _textController;
+  int _charactersCount;
 
-  bool isPostTextAllowedLength;
-  bool hasImage;
-  bool hasAudience;
-  bool hasBurner;
+  bool _isPostTextAllowedLength;
+  bool _hasImage;
+  bool _hasAudience;
+  bool _hasBurner;
 
-  File postImage;
+  File _postImage;
 
-  VoidCallback postImageWidgetRemover;
+  VoidCallback _postImageWidgetRemover;
 
-  List<Widget> postItemsWidgets;
+  List<Widget> _postItemsWidgets;
+
+  bool _isCreatePostInProgress;
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
-    textController.addListener(_onPostTextChanged);
-    charactersCount = 0;
-    isPostTextAllowedLength = false;
-    hasImage = false;
-    hasAudience = false;
-    hasBurner = false;
-    postItemsWidgets = [_buildPostTextField()];
+    _textController = TextEditingController();
+    _textController.addListener(_onPostTextChanged);
+    _charactersCount = 0;
+    _isPostTextAllowedLength = false;
+    _hasImage = false;
+    _hasAudience = false;
+    _hasBurner = false;
+    _isCreatePostInProgress = false;
+    _postItemsWidgets = [_buildPostTextField()];
   }
 
   @override
   void dispose() {
     super.dispose();
-    textController.removeListener(_onPostTextChanged);
+    _textController.removeListener(_onPostTextChanged);
   }
 
   @override
@@ -68,6 +75,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _validationService = openbookProvider.validationService;
+    _toastService = openbookProvider.toastService;
 
     return Material(
       child: CupertinoPageScaffold(
@@ -84,6 +92,32 @@ class CreatePostModalState extends State<CreatePostModal> {
     );
   }
 
+  Future<void> createPost() async {
+    _setCreatePostInProgress(true);
+
+    try {
+      await _userService.createPost(
+          text: _textController.text, image: _postImage);
+      // Remove modal
+      Navigator.pop(context);
+      // Show toast
+      _toastService.success(
+          message: '🎉 Your post has been created!', context: context);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(
+          title: 'Can\'t reach Openbook.',
+          message:
+              'Please make sure you are connected to the internet and try again.',
+          context: context);
+    } catch (e) {
+      _toastService.error(
+          message: 'Uh.. something is not right.', context: context);
+      _setCreatePostInProgress(false);
+      throw e;
+    }
+    _setCreatePostInProgress(false);
+  }
+
   Widget _buildNavigationBar() {
     return CupertinoNavigationBar(
       backgroundColor: Colors.white,
@@ -95,9 +129,10 @@ class CreatePostModalState extends State<CreatePostModal> {
       ),
       middle: Text('New post'),
       trailing: OBPrimaryButton(
-        isDisabled: !isPostTextAllowedLength,
+        isDisabled: !_isPostTextAllowedLength,
+        isLoading: _isCreatePostInProgress,
         isSmall: true,
-        onPressed: () {},
+        onPressed: createPost,
         child: Text('Share'),
       ),
     );
@@ -121,7 +156,7 @@ class CreatePostModalState extends State<CreatePostModal> {
                       EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: postItemsWidgets)),
+                      children: _postItemsWidgets)),
             ),
           )
         ],
@@ -131,7 +166,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   Widget _buildPostTextField() {
     return TextField(
-      controller: textController,
+      controller: _textController,
       autofocus: true,
       textCapitalization: TextCapitalization.sentences,
       keyboardType: TextInputType.multiline,
@@ -154,12 +189,12 @@ class CreatePostModalState extends State<CreatePostModal> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Text(
-              '$charactersCount/$MAX_ALLOWED_CHARACTERS',
+              '$_charactersCount/$MAX_ALLOWED_CHARACTERS',
               style: TextStyle(
-                  color: isPostTextAllowedLength
+                  color: _isPostTextAllowedLength
                       ? Colors.black26
                       : HexColor('#F13A59'),
-                  fontWeight: isPostTextAllowedLength
+                  fontWeight: _isPostTextAllowedLength
                       ? FontWeight.normal
                       : FontWeight.bold),
             )
@@ -170,15 +205,15 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildPostActions() {
     List<Widget> postActions = [];
 
-    if (!hasImage) {
+    if (!_hasImage) {
       postActions.addAll(_getImagePostActions());
     }
 
-    if (!hasAudience) {
+    if (!_hasAudience) {
       postActions.add(_buildAudiencePostAction());
     }
 
-    if (!hasBurner) {
+    if (!_hasBurner) {
       postActions.add(_buildBurnerPostAction());
     }
 
@@ -275,35 +310,35 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _onPostTextChanged() {
-    String text = textController.text;
+    String text = _textController.text;
     setState(() {
-      charactersCount = text.length;
-      isPostTextAllowedLength =
+      _charactersCount = text.length;
+      _isPostTextAllowedLength =
           _validationService.isPostTextAllowedLength(text);
     });
   }
 
   void _setPostImage(File image) {
     setState(() {
-      this.postImage = image;
-      hasImage = true;
+      this._postImage = image;
+      _hasImage = true;
 
       var postImageWidget = PostImagePreviewer(
-        postImage,
+        _postImage,
         onRemove: () {
           _removePostImage();
         },
       );
 
-      postImageWidgetRemover = _addPostItemWidget(postImageWidget);
+      _postImageWidgetRemover = _addPostItemWidget(postImageWidget);
     });
   }
 
   void _removePostImage() {
     setState(() {
-      if (this.postImage != null) this.postImage.delete();
-      hasImage = false;
-      postImageWidgetRemover();
+      if (this._postImage != null) this._postImage.delete();
+      _hasImage = false;
+      _postImageWidgetRemover();
     });
   }
 
@@ -311,13 +346,13 @@ class CreatePostModalState extends State<CreatePostModal> {
     var widgetSpacing = SizedBox(
       height: 20.0,
     );
-    postItemsWidgets.add(widgetSpacing);
-    postItemsWidgets.add(postItemWidget);
+    _postItemsWidgets.add(widgetSpacing);
+    _postItemsWidgets.add(postItemWidget);
     return () {
-      List<Widget> newPostItemsWidgets = List.from(postItemsWidgets);
+      List<Widget> newPostItemsWidgets = List.from(_postItemsWidgets);
       newPostItemsWidgets.remove(postItemWidget);
       newPostItemsWidgets.remove(widgetSpacing);
-      postItemsWidgets = newPostItemsWidgets;
+      _postItemsWidgets = newPostItemsWidgets;
     };
   }
 
@@ -336,5 +371,11 @@ class CreatePostModalState extends State<CreatePostModal> {
     );
 
     return croppedFile;
+  }
+
+  void _setCreatePostInProgress(bool createPostInProgress) {
+    setState(() {
+      _isCreatePostInProgress = createPostInProgress;
+    });
   }
 }

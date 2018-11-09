@@ -5,6 +5,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts-api.dart';
 import 'package:Openbook/services/secure-storage.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   PostsApiService postsApiService = PostsApiService();
   SecureStorageService secureStorageService = SecureStorageService();
   UserService userService = UserService();
+  ToastService toastService = ToastService();
   LocalizationService localizationService;
 
   @override
@@ -48,12 +50,14 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setPostsApiService(postsApiService);
     userService.setHttpieService(httpService);
     userService.setSecureStorageService(secureStorageService);
+    postsApiService.setHttpieService(httpService);
   }
 
   void initAsyncState() async {
     Environment environment =
         await EnvironmentLoader(environmentPath: ".env.json").load();
     authApiService.setApiURL(environment.API_URL);
+    postsApiService.setApiURL(environment.API_URL);
   }
 
   @override

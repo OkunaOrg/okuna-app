@@ -11,6 +11,7 @@ import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
 import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -118,47 +119,38 @@ class MainPageState extends State<MainPage> {
       items: [
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarItemIcon('home'),
-          activeIcon: _buildBottomNavigationBarActiveItemIcon('home'),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.home)),
+          activeIcon: OBIcon(OBIcons.home),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarItemIcon('search'),
-          activeIcon: _buildBottomNavigationBarActiveItemIcon('search'),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.search)),
+          activeIcon: OBIcon(OBIcons.search),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarItemIcon('create-post'),
-          activeIcon: _buildBottomNavigationBarActiveItemIcon('create-post'),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.createPost)),
+          activeIcon: OBIcon(OBIcons.createPost),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarItemIcon('notifications'),
-          activeIcon: _buildBottomNavigationBarActiveItemIcon('notifications'),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.notifications)),
+          activeIcon: OBIcon(OBIcons.notifications),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarItemIcon('communities'),
-          activeIcon: _buildBottomNavigationBarActiveItemIcon('communities'),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.communities)),
+          activeIcon: OBIcon(OBIcons.communities),
         ),
       ],
     );
   }
 
-  Widget _buildBottomNavigationBarActiveItemIcon(String iconName) {
-    return Image.asset(
-      'assets/images/icons/$iconName-icon.png',
-      height: 20.0,
-    );
-  }
 
-  Widget _buildBottomNavigationBarItemIcon(String iconName) {
+  Widget _buildBottomNavigationBarInactiveItemIcon(Widget icon) {
     return Opacity(
       opacity: 0.5,
-      child: Image.asset(
-        'assets/images/icons/$iconName-icon.png',
-        height: 18.0,
-      ),
+      child: icon,
     );
   }
 

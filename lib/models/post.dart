@@ -10,7 +10,9 @@ class Post {
   Post({this.id, this.created, this.text, this.creator_id, this.image});
 
   factory Post.fromJson(Map<String, dynamic> parsedJson) {
-    var postImage = PostImage.fromJSON(parsedJson['profile']);
+    var postImageData = parsedJson['image'];
+    var postImage;
+    if (postImageData != null) postImage = PostImage.fromJSON(postImageData);
 
     return Post(
         id: parsedJson['id'],

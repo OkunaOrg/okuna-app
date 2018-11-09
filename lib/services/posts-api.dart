@@ -12,7 +12,7 @@ class PostsApiService {
   static const GET_POSTS_PATH = 'api/posts/';
   static const CREATE_POST_PATH = 'api/posts/';
 
-  void setHttpService(HttpieService httpService) {
+  void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
   }
 

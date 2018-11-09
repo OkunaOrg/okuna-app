@@ -114,19 +114,19 @@ class UserService {
     HttpieStreamedResponse response = await _postsApiService.createPost(
         text: text, circleIds: circleIds, image: image);
 
-    _checkResponseIsOk(response);
+    _checkResponseIsCreated(response);
     String responseBody = await response.readAsString();
     return Post.fromJson(json.decode(responseBody));
   }
 
+  void _checkResponseIsCreated(HttpieBaseResponse response) {
+    if (response.isCreated()) return;
+    throw HttpieRequestError(response);
+  }
+
   void _checkResponseIsOk(HttpieBaseResponse response) {
     if (response.isOk()) return;
-
-    if (response.isUnauthorized()) {
-      throw AuthTokenInvalidError();
-    } else {
-      throw HttpieRequestError(response);
-    }
+    throw HttpieRequestError(response);
   }
 
   void _setLoggedInUser(User user) {

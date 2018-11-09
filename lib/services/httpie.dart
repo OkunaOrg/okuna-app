@@ -198,24 +198,36 @@ class HttpieStreamedResponse extends HttpieBaseResponse<http.StreamedResponse> {
   HttpieStreamedResponse(_httpResponse) : super(_httpResponse);
 
   Future<String> readAsString() {
-    var completer = new Completer();
+    var completer = new Completer<String>();
     var contents = new StringBuffer();
-    this
-        ._httpResponse
-        .stream
-        .transform(Utf8Decoder())
-        .listen(null, onDone: () => completer.complete(contents.toString()));
+    this._httpResponse.stream.transform(utf8.decoder).listen((String data) {
+      contents.write(data);
+    }, onDone: () {
+      completer.complete(contents.toString());
+    });
     return completer.future;
   }
 }
 
-class HttpieRequestError implements Exception {
-  final HttpieResponse response;
+class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
+  final T response;
 
-  const HttpieRequestError(HttpieResponse this.response);
+  const HttpieRequestError(this.response);
 
-  String toString() =>
-      'HttpieRequestError:$response.statusCode - $response.body';
+  String toString() {
+    String statusCode = response.statusCode.toString();
+    return 'HttpieRequestError:$statusCode';
+  }
+
+  Future<String> body() async {
+    if (response is HttpieResponse) {
+      var castedResponse = this.response as HttpieResponse;
+      return castedResponse.body;
+    } else if (response is HttpieStreamedResponse) {
+      var castedResponse = this.response as HttpieStreamedResponse;
+      return await castedResponse.readAsString();
+    }
+  }
 }
 
 class HttpieConnectionRefusedError implements Exception {
