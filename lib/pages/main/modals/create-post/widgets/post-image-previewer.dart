@@ -33,21 +33,25 @@ class PostImagePreviewer extends StatelessWidget {
     if (onRemove == null) return imagePreview;
 
     return Stack(
+      overflow: Overflow.visible,
       children: <Widget>[
         imagePreview,
         Positioned(
-          right: 10.0,
-          top: 10.0,
-          child: SizedBox(
-            width: 30.0,
-            height: 30.0,
-            child: FloatingActionButton(
-              onPressed: onRemove,
-              backgroundColor: Colors.black87,
-              child: Icon(Icons.clear, color: Colors.white, size: 20.0,),
-            ),
-          )
-        ),
+            right: -10.0,
+            top: -10.0,
+            child: SizedBox(
+              width: 30.0,
+              height: 30.0,
+              child: FloatingActionButton(
+                onPressed: onRemove,
+                backgroundColor: Colors.black87,
+                child: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+              ),
+            )),
       ],
     );
   }
