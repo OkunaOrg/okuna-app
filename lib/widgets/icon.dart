@@ -61,6 +61,11 @@ class OBIcons {
   static const notifications = OBIconData('notifications');
   static const communities = OBIconData('communities');
   static const chat = OBIconData('chat');
+  static const media = OBIconData('media');
+  static const camera = OBIconData('camera');
+  static const gif = OBIconData('gif');
+  static const audience = OBIconData('audience');
+  static const burner = OBIconData('burner');
 }
 
 @immutable

@@ -55,6 +55,7 @@ class ToastService {
       @required ToastType type}) {
     Widget icon;
 
+
     switch (type) {
       case ToastType.warning:
         icon = OBIcon(OBIcons.warning);

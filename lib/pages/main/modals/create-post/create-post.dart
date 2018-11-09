@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:Openbook/helpers/hex-color.dart';
-import 'package:Openbook/models/post.dart';
 import 'package:Openbook/pages/main/modals/create-post/widgets/post-image-previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -12,10 +10,12 @@ import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
 import 'package:Openbook/widgets/avatars/user-avatar.dart';
 import 'package:Openbook/widgets/buttons/pill-button.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
   @override
@@ -193,7 +193,7 @@ class CreatePostModalState extends State<CreatePostModal> {
               style: TextStyle(
                   color: _isPostTextAllowedLength
                       ? Colors.black26
-                      : HexColor('#F13A59'),
+                      : Pigment.fromString('#F13A59'),
                   fontWeight: _isPostTextAllowedLength
                       ? FontWeight.normal
                       : FontWeight.bold),
@@ -246,10 +246,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       OBPillButton(
         text: 'Media',
         hexColor: '#FCC14B',
-        icon: Image.asset(
-          'assets/images/icons/media-icon.png',
-          height: actionIconHeight,
-        ),
+        icon: OBIcon(OBIcons.media),
         onPressed: () async {
           File image = await _pickImage(ImageSource.gallery);
           if (image != null) _setPostImage(image);
@@ -258,10 +255,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       OBPillButton(
         text: 'Camera',
         hexColor: '#00B7FF',
-        icon: Image.asset(
-          'assets/images/icons/camera-icon.png',
-          height: actionIconHeight,
-        ),
+        icon: OBIcon(OBIcons.camera),
         onPressed: () async {
           File image = await _pickImage(ImageSource.camera);
           if (image != null) _setPostImage(image);
@@ -270,10 +264,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       OBPillButton(
         text: 'GIF',
         hexColor: '#0F0F0F',
-        icon: Image.asset(
-          'assets/images/icons/gif-icon.png',
-          height: actionIconHeight,
-        ),
+        icon: OBIcon(OBIcons.gif),
         onPressed: () {},
       ),
     ];
@@ -283,10 +274,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     return OBPillButton(
       text: 'Burner',
       hexColor: '#F13A59',
-      icon: Image.asset(
-        'assets/images/icons/burner-icon.png',
-        height: actionIconHeight,
-      ),
+      icon: OBIcon(OBIcons.burner),
       onPressed: () {},
     );
   }
@@ -295,10 +283,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     return OBPillButton(
       text: 'Audience',
       hexColor: '#80E37A',
-      icon: Image.asset(
-        'assets/images/icons/audience-icon.png',
-        height: actionIconHeight,
-      ),
+      icon: OBIcon(OBIcons.audience),
       onPressed: () {},
     );
   }

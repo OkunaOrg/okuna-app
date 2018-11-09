@@ -1,5 +1,5 @@
-import 'package:Openbook/helpers/hex-color.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBPillButton extends StatelessWidget {
   final String text;
@@ -30,7 +30,7 @@ class OBPillButton extends StatelessWidget {
             ),
           ],
         ),
-        color: HexColor(hexColor),
+        color: Pigment.fromString(hexColor),
         onPressed: onPressed,
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(50.0)));
