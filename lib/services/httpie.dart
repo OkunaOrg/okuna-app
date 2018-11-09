@@ -37,14 +37,8 @@ class HttpieService {
       var response = await http.post(url,
           headers: finalHeaders, body: body, encoding: encoding);
       return HttpieResponse(response);
-    } on SocketException catch (error) {
-      var errorCode = error.osError.errorCode;
-      if (errorCode == 61 || errorCode == 111) {
-        // Connection refused.
-        throw HttpieConnectionRefusedError(error);
-      } else {
-        rethrow;
-      }
+    } catch (error) {
+      _handleRequestError(error);
     }
   }
 
@@ -76,8 +70,12 @@ class HttpieService {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers, appendLanguageHeader: appendLanguageHeader);
 
-    var response = await http.get(url, headers: finalHeaders);
-    return HttpieResponse(response);
+    try {
+      var response = await http.get(url, headers: finalHeaders);
+      return HttpieResponse(response);
+    } catch (error) {
+      _handleRequestError(error);
+    }
   }
 
   Future<HttpieStreamedResponse> postMultiform(String url,
@@ -117,8 +115,13 @@ class HttpieService {
 
     var files = await Future.wait(fileFields);
     files.forEach((file) => request.files.add(file));
-    var response = await request.send();
-    return HttpieStreamedResponse(response);
+
+    try {
+      var response = await request.send();
+      return HttpieStreamedResponse(response);
+    } catch (error) {
+      _handleRequestError(error);
+    }
   }
 
   String _getLanguage() {
@@ -147,6 +150,17 @@ class HttpieService {
     }
 
     return finalHeaders;
+  }
+
+  void _handleRequestError(error) {
+    if (error is SocketException) {
+      var errorCode = error.osError.errorCode;
+      if (errorCode == 61 || errorCode == 111) {
+        // Connection refused.
+        throw HttpieConnectionRefusedError(error);
+      }
+    }
+    throw error;
   }
 }
 
