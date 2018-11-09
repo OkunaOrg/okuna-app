@@ -105,7 +105,7 @@ class HttpieService {
         // The silly multipart API requires media type to be in type & subtype.
         var fileMimeTypeSplit = fileMimeType.split('/');
 
-        var fileFuture = http.MultipartFile.fromPath('avatar', value.path,
+        var fileFuture = http.MultipartFile.fromPath(key, value.path,
             contentType:
                 new MediaType(fileMimeTypeSplit[0], fileMimeTypeSplit[1]));
 
