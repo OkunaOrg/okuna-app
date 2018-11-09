@@ -73,12 +73,12 @@ class ToastService {
         throw 'Unsupported ToastType';
     }
 
-    var toast = Flushbar(
+/*    var toast = Flushbar(
       title: title,
       message: message,
       duration: toastDuration
     );
 
-    toast.show(context);
+    toast.show(context);*/
   }
 }

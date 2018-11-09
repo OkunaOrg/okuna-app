@@ -129,7 +129,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       ),
       middle: Text('New post'),
       trailing: OBPrimaryButton(
-        isDisabled: !_isPostTextAllowedLength,
+        isDisabled: !_isPostTextAllowedLength || _charactersCount == 0,
         isLoading: _isCreatePostInProgress,
         isSmall: true,
         onPressed: createPost,
@@ -337,7 +337,9 @@ class CreatePostModalState extends State<CreatePostModal> {
       List<Widget> newPostItemsWidgets = List.from(_postItemsWidgets);
       newPostItemsWidgets.remove(postItemWidget);
       newPostItemsWidgets.remove(widgetSpacing);
-      _postItemsWidgets = newPostItemsWidgets;
+      setState(() {
+        _postItemsWidgets = newPostItemsWidgets;
+      });
     };
   }
 
