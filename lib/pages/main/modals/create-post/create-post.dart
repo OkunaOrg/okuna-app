@@ -40,6 +40,10 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   File postImage;
 
+  VoidCallback postImageWidgetRemover;
+
+  List<Widget> postItemsWidgets;
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +54,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     hasImage = false;
     hasAudience = false;
     hasBurner = false;
+    postItemsWidgets = [_buildPostTextField()];
   }
 
   @override
@@ -99,31 +104,6 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildNewPostContent() {
-    List<Widget> postItems = [
-      TextField(
-        controller: textController,
-        autofocus: true,
-        textCapitalization: TextCapitalization.sentences,
-        keyboardType: TextInputType.multiline,
-        maxLines: null,
-        style: TextStyle(color: Colors.black87, fontSize: 18.0),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: 'What\'s going on?',
-        ),
-        autocorrect: true,
-      ),
-    ];
-
-    if (hasImage) {
-      postItems.add(PostImagePreviewer(
-        postImage,
-        onRemove: () {
-          _removePostImage();
-        },
-      ));
-    }
-
     return Expanded(
         child: Container(
       padding: EdgeInsets.only(left: 20.0),
@@ -141,12 +121,28 @@ class CreatePostModalState extends State<CreatePostModal> {
                       EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: postItems)),
+                      children: postItemsWidgets)),
             ),
           )
         ],
       ),
     ));
+  }
+
+  Widget _buildPostTextField() {
+    return TextField(
+      controller: textController,
+      autofocus: true,
+      textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
+      style: TextStyle(color: Colors.black87, fontSize: 18.0),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: 'What\'s going on?',
+      ),
+      autocorrect: true,
+    );
   }
 
   Widget _buildPostInfoBar() {
@@ -291,6 +287,15 @@ class CreatePostModalState extends State<CreatePostModal> {
     setState(() {
       this.postImage = image;
       hasImage = true;
+
+      var postImageWidget = PostImagePreviewer(
+        postImage,
+        onRemove: () {
+          _removePostImage();
+        },
+      );
+
+      postImageWidgetRemover = _addPostItemWidget(postImageWidget);
     });
   }
 
@@ -298,7 +303,22 @@ class CreatePostModalState extends State<CreatePostModal> {
     setState(() {
       if (this.postImage != null) this.postImage.delete();
       hasImage = false;
+      postImageWidgetRemover();
     });
+  }
+
+  VoidCallback _addPostItemWidget(Widget postItemWidget) {
+    var widgetSpacing = SizedBox(
+      height: 20.0,
+    );
+    postItemsWidgets.add(widgetSpacing);
+    postItemsWidgets.add(postItemWidget);
+    return () {
+      List<Widget> newPostItemsWidgets = List.from(postItemsWidgets);
+      newPostItemsWidgets.remove(postItemWidget);
+      newPostItemsWidgets.remove(widgetSpacing);
+      postItemsWidgets = newPostItemsWidgets;
+    };
   }
 
   Future<File> _pickImage(ImageSource source) async {
