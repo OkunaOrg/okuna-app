@@ -10,11 +10,12 @@ class UserAvatar extends StatelessWidget {
   static const double AVATAR_SIZE_SMALL = 30.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
   static const ImageProvider DEFAULT_AVATAR =
-  AssetImage('assets/images/avatar.png');
+      AssetImage('assets/images/avatar.png');
 
-  UserAvatar({this.avatarImage = DEFAULT_AVATAR,
-    this.size = UserAvatarSize.small,
-    this.onPressed});
+  UserAvatar(
+      {this.avatarImage = DEFAULT_AVATAR,
+      this.size = UserAvatarSize.small,
+      this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,6 @@ class UserAvatar extends StatelessWidget {
         break;
     }
 
-    // Stupid dart when no argument was passed to constructor takes it as
-    // literal null value passed instead of none. Skipping the default value
-    // specified.
     var finalAvatarImage = avatarImage ?? DEFAULT_AVATAR;
 
     double avatarBorderRadius = 10.0;
@@ -45,15 +43,16 @@ class UserAvatar extends StatelessWidget {
       height: avatarSize,
       width: avatarSize,
       child: Container(
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(avatarBorderRadius),
-            child: Container(
-              child: null,
-              decoration: BoxDecoration(
-                  image:
-                  DecorationImage(image:finalAvatarImage, fit: BoxFit.cover)),
-            )),
-      ),
+          child: ClipRRect(
+        borderRadius: BorderRadius.circular(avatarBorderRadius),
+        child: Container(
+          child: FadeInImage(
+            placeholder: DEFAULT_AVATAR,
+            image: finalAvatarImage,
+            fit: BoxFit.cover,
+          ),
+        ),
+      )),
     );
 
     if (onPressed == null) return avatar;
