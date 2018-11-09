@@ -109,13 +109,13 @@ class CreatePostModalState extends State<CreatePostModal> {
           message:
               'Please make sure you are connected to the internet and try again.',
           context: context);
+      _setCreatePostInProgress(false);
     } catch (e) {
       _toastService.error(
           message: 'Uh.. something is not right.', context: context);
       _setCreatePostInProgress(false);
       throw e;
     }
-    _setCreatePostInProgress(false);
   }
 
   Widget _buildNavigationBar() {
@@ -248,6 +248,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         hexColor: '#FCC14B',
         icon: OBIcon(OBIcons.media),
         onPressed: () async {
+          _unfocusTextField();
           File image = await _pickImage(ImageSource.gallery);
           if (image != null) _setPostImage(image);
         },
@@ -257,6 +258,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         hexColor: '#00B7FF',
         icon: OBIcon(OBIcons.camera),
         onPressed: () async {
+          _unfocusTextField();
           File image = await _pickImage(ImageSource.camera);
           if (image != null) _setPostImage(image);
         },
@@ -331,15 +333,18 @@ class CreatePostModalState extends State<CreatePostModal> {
     var widgetSpacing = SizedBox(
       height: 20.0,
     );
-    _postItemsWidgets.add(widgetSpacing);
-    _postItemsWidgets.add(postItemWidget);
+
+    List<Widget> newPostItemsWidgets = List.from(_postItemsWidgets);
+    newPostItemsWidgets.add(widgetSpacing);
+    newPostItemsWidgets.add(postItemWidget);
+
+    _setPostItemsWidgets(newPostItemsWidgets);
+
     return () {
       List<Widget> newPostItemsWidgets = List.from(_postItemsWidgets);
       newPostItemsWidgets.remove(postItemWidget);
       newPostItemsWidgets.remove(widgetSpacing);
-      setState(() {
-        _postItemsWidgets = newPostItemsWidgets;
-      });
+      _setPostItemsWidgets(newPostItemsWidgets);
     };
   }
 
@@ -364,5 +369,15 @@ class CreatePostModalState extends State<CreatePostModal> {
     setState(() {
       _isCreatePostInProgress = createPostInProgress;
     });
+  }
+
+  void _setPostItemsWidgets(List<Widget> postItemsWidgets) {
+    setState(() {
+      _postItemsWidgets = postItemsWidgets;
+    });
+  }
+
+  void _unfocusTextField() {
+    FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
