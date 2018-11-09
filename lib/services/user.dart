@@ -115,6 +115,10 @@ class UserService {
         text: text, circleIds: circleIds, image: image);
 
     _checkResponseIsCreated(response);
+
+    // Post counts have changed
+    refreshUser();
+
     String responseBody = await response.readAsString();
     return Post.fromJson(json.decode(responseBody));
   }

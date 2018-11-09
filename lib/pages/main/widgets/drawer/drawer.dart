@@ -15,15 +15,8 @@ class MainDrawer extends StatefulWidget {
 }
 
 class MainDrawerState extends State<MainDrawer> {
-  LocalizationService _localizationService;
-  UserService _userService;
-
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _localizationService = openbookProvider.localizationService;
-    _userService = openbookProvider.userService;
-
     return Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the Drawer if there isn't enough vertical
