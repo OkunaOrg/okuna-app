@@ -119,6 +119,9 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildNavigationBar() {
+    bool newPostButtonIsEnabled =
+        (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage;
+
     return CupertinoNavigationBar(
       backgroundColor: Colors.white,
       leading: GestureDetector(
@@ -129,7 +132,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       ),
       middle: Text('New post'),
       trailing: OBPrimaryButton(
-        isDisabled: !_isPostTextAllowedLength || _charactersCount == 0,
+        isDisabled: !newPostButtonIsEnabled,
         isLoading: _isCreatePostInProgress,
         isSmall: true,
         onPressed: createPost,
