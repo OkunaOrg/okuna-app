@@ -7,14 +7,14 @@ import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 
-class AuthLoginPage extends StatefulWidget {
+class OBAuthLoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthLoginPageState();
+    return OBAuthLoginPageState();
   }
 }
 
-class AuthLoginPageState extends State<AuthLoginPage> {
+class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isSubmitted;

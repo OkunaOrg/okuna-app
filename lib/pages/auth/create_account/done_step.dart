@@ -4,15 +4,15 @@ import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:flutter/material.dart';
 
-class AuthDonePage extends StatefulWidget {
+class OBAuthDonePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return AuthDonePageState();
+    return OBAuthDonePageState();
   }
 }
 
-class AuthDonePageState extends State<AuthDonePage> {
+class OBAuthDonePageState extends State<OBAuthDonePage> {
   LocalizationService localizationService;
   CreateAccountBloc createAccountBloc;
 

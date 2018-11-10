@@ -3,20 +3,20 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainHomePage extends StatefulWidget {
+class OBMainHomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainHomePageState();
+    return OBMainHomePageState();
   }
 }
 
-class MainHomePageState extends State<MainHomePage> {
+class OBMainHomePageState extends State<OBMainHomePage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           backgroundColor: Colors.white,
-          leading: MainAvatarDrawerOpener(),
+          leading: OBMainAvatarDrawerOpener(),
           middle: Text('Home'),
           trailing: OBIcon(OBIcons.chat),
         ),

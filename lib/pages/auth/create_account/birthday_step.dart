@@ -7,14 +7,14 @@ import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart'
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class AuthBirthdayStepPage extends StatefulWidget {
+class OBAuthBirthdayStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthBirthdayStepPageState();
+    return OBAuthBirthdayStepPageState();
   }
 }
 
-class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
+class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   CreateAccountBloc createAccountBloc;
@@ -193,7 +193,7 @@ class AuthBirthdayStepPageState extends State<AuthBirthdayStepPage> {
                                   text: snapshot.data);
 
 
-                              return AuthTextField(
+                              return OBAuthTextField(
                                 enabled: false,
                                 hintText: birthdayInputPlaceholder,
                                 controller: textController,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AuthTextField extends StatelessWidget {
+class OBAuthTextField extends StatelessWidget {
   final TextEditingController controller;
 
   final FocusNode focusNode;
@@ -46,7 +46,7 @@ class AuthTextField extends StatelessWidget {
 
   final EdgeInsetsGeometry contentPadding;
 
-  AuthTextField({
+  OBAuthTextField({
     Key key,
     this.controller,
     this.focusNode,

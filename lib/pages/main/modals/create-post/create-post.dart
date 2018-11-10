@@ -145,8 +145,8 @@ class CreatePostModalState extends State<CreatePostModal> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              LoggedInUserAvatar(
-                size: UserAvatarSize.medium,
+              OBLoggedInUserAvatar(
+                size: OBUserAvatarSize.medium,
               ),
               SizedBox(
                 height: 12.0,
@@ -307,7 +307,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       this._postImage = image;
       _hasImage = true;
 
-      var postImageWidget = PostImagePreviewer(
+      var postImageWidget = OBPostImagePreviewer(
         _postImage,
         onRemove: () {
           _removePostImage();

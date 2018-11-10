@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
-class AuthAvatarStepPage extends StatefulWidget {
+class OBAuthAvatarStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthAvatarStepPageState();
+    return OBAuthAvatarStepPageState();
   }
 }
 
-class AuthAvatarStepPageState extends State<AuthAvatarStepPage> {
+class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
   bool isSubmitted;
   bool isBootstrapped;
 

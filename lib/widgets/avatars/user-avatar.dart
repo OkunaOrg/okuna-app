@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-enum UserAvatarSize { small, medium }
+enum OBUserAvatarSize { small, medium }
 
-class UserAvatar extends StatelessWidget {
+class OBUserAvatar extends StatelessWidget {
   final ImageProvider avatarImage;
-  final UserAvatarSize size;
+  final OBUserAvatarSize size;
   final VoidCallback onPressed;
 
   static const double AVATAR_SIZE_SMALL = 30.0;
@@ -12,22 +12,22 @@ class UserAvatar extends StatelessWidget {
   static const ImageProvider DEFAULT_AVATAR =
       AssetImage('assets/images/avatar.png');
 
-  UserAvatar(
+  OBUserAvatar(
       {this.avatarImage = DEFAULT_AVATAR,
-      this.size = UserAvatarSize.small,
+      this.size = OBUserAvatarSize.small,
       this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     double avatarSize;
 
-    UserAvatarSize finalSize = size ?? UserAvatarSize.small;
+    OBUserAvatarSize finalSize = size ?? OBUserAvatarSize.small;
 
     switch (finalSize) {
-      case UserAvatarSize.small:
+      case OBUserAvatarSize.small:
         avatarSize = AVATAR_SIZE_SMALL;
         break;
-      case UserAvatarSize.medium:
+      case OBUserAvatarSize.medium:
         avatarSize = AVATAR_SIZE_MEDIUM;
         break;
     }

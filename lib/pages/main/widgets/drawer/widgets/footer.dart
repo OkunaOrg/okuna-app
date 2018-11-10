@@ -1,7 +1,7 @@
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 
-class MainDrawerFooter extends StatelessWidget {
+class OBMainDrawerFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);

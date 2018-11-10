@@ -7,14 +7,14 @@ import 'package:Openbook/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainDrawer extends StatefulWidget {
+class OBMainDrawer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainDrawerState();
+    return OBMainDrawerState();
   }
 }
 
-class MainDrawerState extends State<MainDrawer> {
+class OBMainDrawerState extends State<OBMainDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -24,9 +24,9 @@ class MainDrawerState extends State<MainDrawer> {
         child: Container(
       child: Column(
         children: <Widget>[
-          MainDrawerHeader(),
-          Expanded(child: MainDrawerBody()),
-          MainDrawerFooter()
+          OBMainDrawerHeader(),
+          Expanded(child: OBMainDrawerBody()),
+          OBMainDrawerFooter()
         ],
       ),
     ));

@@ -6,14 +6,14 @@ import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
-class AuthEmailStepPage extends StatefulWidget {
+class OBAuthEmailStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthEmailStepPageState();
+    return OBAuthEmailStepPageState();
   }
 }
 
-class AuthEmailStepPageState extends State<AuthEmailStepPage> {
+class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   bool isSubmitted;
   bool isBootstrapped;
   bool emailCheckInProgress;
@@ -193,7 +193,7 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
             new Expanded(
               child: Container(
                   color: Colors.transparent,
-                  child: AuthTextField(
+                  child: OBAuthTextField(
                     hintText: emailInputPlaceholder,
                     autocorrect: false,
                     onChanged: (String value) {

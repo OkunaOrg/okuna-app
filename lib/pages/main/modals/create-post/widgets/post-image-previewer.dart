@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-class PostImagePreviewer extends StatelessWidget {
+class OBPostImagePreviewer extends StatelessWidget {
   File postImage;
   final VoidCallback onRemove;
 
-  PostImagePreviewer(this.postImage, {this.onRemove});
+  OBPostImagePreviewer(this.postImage, {this.onRemove});
 
   @override
   Widget build(BuildContext context) {

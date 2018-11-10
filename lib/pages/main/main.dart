@@ -15,14 +15,14 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatefulWidget {
+class OBMainPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainPageState();
+    return OBMainPageState();
   }
 }
 
-class MainPageState extends State<MainPage> {
+class OBMainPageState extends State<OBMainPage> {
   @override
   UserService _userService;
   int _currentIndex;
@@ -38,10 +38,10 @@ class MainPageState extends State<MainPage> {
     _currentIndex = 0;
     // Caching to preserve state
     _tabPages = [
-      MainHomePage(),
-      MainSearchPage(),
-      MainNotificationsPage(),
-      MainCommunitiesPage()
+      OBMainHomePage(),
+      OBMainSearchPage(),
+      OBMainNotificationsPage(),
+      OBMainCommunitiesPage()
     ];
   }
 
@@ -62,7 +62,7 @@ class MainPageState extends State<MainPage> {
     }
 
     return Scaffold(
-      drawer: MainDrawer(),
+      drawer: OBMainDrawer(),
       body: OBCupertinoTabScaffold(
         tabBuilder: (BuildContext context, int index) {
           return CupertinoTabView(

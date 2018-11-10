@@ -2,7 +2,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
-class MainDrawerBody extends StatelessWidget {
+class OBMainDrawerBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);

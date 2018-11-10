@@ -2,16 +2,16 @@ import 'package:Openbook/pages/main/widgets/drawer/widgets/header/widgets/accoun
 import 'package:Openbook/pages/main/widgets/drawer/widgets/header/widgets/user-overview.dart';
 import 'package:flutter/material.dart';
 
-class MainDrawerHeader extends StatelessWidget{
+class OBMainDrawerHeader extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return DrawerHeader(
       child: Container(
         child: Column(
           children: <Widget>[
-            MainDrawerHeaderAccounts(),
+            OBMainDrawerHeaderAccounts(),
             SizedBox(height: 10.0),
-            MainDrawerHeaderUserOverview()],
+            OBMainDrawerHeaderUserOverview()],
         ),
       ),
     );

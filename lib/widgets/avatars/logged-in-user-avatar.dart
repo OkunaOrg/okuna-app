@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 
 /// Like the UserAvatar widget but displays the avatar of
 /// the logged in user.
-class LoggedInUserAvatar extends StatelessWidget {
-  final UserAvatarSize size;
+class OBLoggedInUserAvatar extends StatelessWidget {
+  final OBUserAvatarSize size;
   final VoidCallback onPressed;
 
-  LoggedInUserAvatar({this.size, this.onPressed});
+  OBLoggedInUserAvatar({this.size, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class LoggedInUserAvatar extends StatelessWidget {
           avatarImage = NetworkImage(user.profile.avatar);
         }
 
-        return UserAvatar(
+        return OBUserAvatar(
           avatarImage: avatarImage,
           size: size,
           onPressed: onPressed,

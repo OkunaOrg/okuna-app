@@ -3,17 +3,16 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
-class AuthSubmitPage extends StatefulWidget {
+class OBAuthSubmitPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return AuthSubmitPageState();
+    return OBAuthSubmitPageState();
   }
 }
 
-class AuthSubmitPageState extends State<AuthSubmitPage> {
+class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
   LocalizationService localizationService;
   CreateAccountBloc createAccountBloc;
 

@@ -1,15 +1,14 @@
-import 'package:Openbook/pages/main/widgets/avatar-drawer-opener.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainSearchPage extends StatefulWidget {
+class OBMainSearchPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainSearchPageState();
+    return OBMainSearchPageState();
   }
 }
 
-class MainSearchPageState extends State<MainSearchPage> {
+class OBMainSearchPageState extends State<OBMainSearchPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(

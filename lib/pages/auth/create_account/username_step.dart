@@ -6,14 +6,14 @@ import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
-class AuthUsernameStepPage extends StatefulWidget {
+class OBAuthUsernameStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthUsernameStepPageState();
+    return OBAuthUsernameStepPageState();
   }
 }
 
-class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
+class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
   bool isSubmitted;
   bool isBootstrapped;
   bool usernameCheckInProgress;
@@ -193,7 +193,7 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
             new Expanded(
               child: Container(
                   color: Colors.transparent,
-                  child: AuthTextField(
+                  child: OBAuthTextField(
                     autocorrect: false,
                     onChanged: (String value) {
                       createAccountBloc.clearUsername();

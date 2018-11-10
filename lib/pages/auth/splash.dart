@@ -6,14 +6,14 @@ import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:Openbook/widgets/splash-logo.dart';
 import 'package:flutter/material.dart';
 
-class AuthSplashPage extends StatefulWidget {
+class OBAuthSplashPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthSplashPageState();
+    return OBAuthSplashPageState();
   }
 }
 
-class AuthSplashPageState extends State<AuthSplashPage> {
+class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   LocalizationService localizationService;
   CreateAccountBloc createAccountBloc;
 
@@ -61,7 +61,7 @@ class AuthSplashPageState extends State<AuthSplashPage> {
 
     return Column(
       children: <Widget>[
-        SplashLogo(),
+        OBSplashLogo(),
         SizedBox(
           height: 20.0,
         ),
