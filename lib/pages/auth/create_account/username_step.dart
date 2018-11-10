@@ -111,12 +111,12 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
           createAccountBloc
               .setUsername(_usernameController.text)
               .then((bool usernameWasSet) {
-                setState((){
-                  usernameCheckInProgress = false;
-                });
+            _setUsernameCheckInProgress(false);
             if (usernameWasSet) {
               Navigator.pushNamed(context, '/auth/email_step');
             }
+          }).catchError((error) {
+            _setUsernameCheckInProgress(false);
           });
         });
       },
@@ -207,5 +207,11 @@ class AuthUsernameStepPageState extends State<AuthUsernameStepPage> {
         ),
       ],
     );
+  }
+
+  void _setUsernameCheckInProgress(bool newUsernameCheckInProgress) {
+    setState(() {
+      usernameCheckInProgress = newUsernameCheckInProgress;
+    });
   }
 }

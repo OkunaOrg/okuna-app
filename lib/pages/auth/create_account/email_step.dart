@@ -111,12 +111,12 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
           createAccountBloc
               .setEmail(_emailController.text)
               .then((bool emailWasSet) {
-            setState((){
-              emailCheckInProgress = false;
-            });
+            _setEmailCheckInProgress(false);
             if (emailWasSet) {
               Navigator.pushNamed(context, '/auth/password_step');
             }
+          }).catchError((error) {
+            _setEmailCheckInProgress(false);
           });
         });
       },
@@ -206,5 +206,11 @@ class AuthEmailStepPageState extends State<AuthEmailStepPage> {
         ),
       ],
     );
+  }
+
+  void _setEmailCheckInProgress(bool newEmailCheckInProgress) {
+    setState(() {
+      emailCheckInProgress = newEmailCheckInProgress;
+    });
   }
 }

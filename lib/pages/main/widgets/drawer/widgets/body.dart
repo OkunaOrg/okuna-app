@@ -1,5 +1,5 @@
-
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawerBody extends StatelessWidget {
@@ -13,7 +13,7 @@ class MainDrawerBody extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.person),
+          leading: OBIcon(OBIcons.profile),
           title: Text(localizationService.trans('DRAWER.PROFILE')),
           onTap: () {
             // Update the state of the app
@@ -21,7 +21,7 @@ class MainDrawerBody extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: Icon(Icons.people),
+          leading: OBIcon(OBIcons.connections),
           title: Text(localizationService.trans('DRAWER.CONNECTIONS')),
           onTap: () {
             // Update the state of the app
@@ -29,7 +29,7 @@ class MainDrawerBody extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: Icon(Icons.settings),
+          leading: OBIcon(OBIcons.settings),
           title: Text(localizationService.trans('DRAWER.SETTINGS')),
           onTap: () {
             // Update the state of the app
@@ -37,7 +37,7 @@ class MainDrawerBody extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: Icon(Icons.help),
+          leading: OBIcon(OBIcons.help),
           title: Text(localizationService.trans('DRAWER.HELP')),
           onTap: () {
             // Update the state of the app
@@ -45,7 +45,7 @@ class MainDrawerBody extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: Icon(Icons.format_paint),
+          leading: OBIcon(OBIcons.customize),
           title: Text(localizationService.trans('DRAWER.CUSTOMIZE')),
           onTap: () {
             // Update the state of the app

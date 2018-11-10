@@ -13,6 +13,8 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  pigment: ^1.0.3
+  flushbar: ^1.0.1
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
@@ -62,6 +64,28 @@ flutter:
     - assets/images/avatar.png
     - assets/lang/es.json
     - assets/lang/en.json
+    - assets/images/icons/gif-icon.png
+    - assets/images/icons/media-icon.png
+    - assets/images/icons/profile-icon.png
+    - assets/images/icons/connections-icon.png
+    - assets/images/icons/burner-icon.png
+    - assets/images/icons/settings-icon.png
+    - assets/images/icons/help-icon.png
+    - assets/images/icons/customize-icon.png
+    - assets/images/icons/logout-icon.png
+    - assets/images/icons/audience-icon.png
+    - assets/images/icons/home-icon.png
+    - assets/images/icons/notifications-icon.png
+    - assets/images/icons/search-icon.png
+    - assets/images/icons/communities-icon.png
+    - assets/images/icons/create-post-icon.png
+    - assets/images/icons/chat-icon.png
+    - assets/images/icons/camera-icon.png
+    - assets/images/icons/warning-icon.png
+    - assets/images/icons/success-icon.png
+    - assets/images/icons/error-icon.png
+    - assets/images/icons/info-icon.png
+    - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

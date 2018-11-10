@@ -108,7 +108,7 @@ class AuthDonePageState extends State<AuthDonePage> {
         ],
       ),
       onPressed: () {
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.popUntil(context, ModalRoute.withName('/auth'));
         Navigator.pushNamed(context, '/auth/login');
       },
     );

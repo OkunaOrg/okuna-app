@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/main/modals/create-post.dart';
+import 'package:Openbook/pages/main/modals/create-post/create-post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
@@ -10,8 +10,8 @@ import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
 import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -101,7 +101,10 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget _createTabBar() {
+    double tabBarIconsSize = 20.0;
+
     return OBCupertinoTabBar(
+      backgroundColor: Colors.white,
       currentIndex: _currentIndex,
       onTap: (int index) {
         // When index == 2 dont allow index change
@@ -115,36 +118,39 @@ class MainPageState extends State<MainPage> {
       },
       items: [
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.home,
-              size: 25.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.home)),
+          activeIcon: OBIcon(OBIcons.home),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.search,
-              size: 25.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.search)),
+          activeIcon: OBIcon(OBIcons.search),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.add,
-              size: 25.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.createPost)),
+          activeIcon: OBIcon(OBIcons.createPost),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.notifications,
-              size: 20.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.notifications)),
+          activeIcon: OBIcon(OBIcons.notifications),
+        ),
         BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(
-              Icons.people,
-              size: 20.0,
-            )),
+          title: Container(),
+          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.communities)),
+          activeIcon: OBIcon(OBIcons.communities),
+        ),
       ],
+    );
+  }
+
+
+  Widget _buildBottomNavigationBarInactiveItemIcon(Widget icon) {
+    return Opacity(
+      opacity: 0.5,
+      child: icon,
     );
   }
 

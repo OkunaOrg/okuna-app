@@ -8,6 +8,15 @@ import 'package:http_parser/http_parser.dart';
 
 class HttpieService {
   LocalizationService _localizationService;
+  String authorizationToken;
+
+  void setAuthorizationToken(String token) {
+    authorizationToken = token;
+  }
+
+  void removeAuthorizationToken() {
+    authorizationToken = null;
+  }
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
@@ -17,21 +26,19 @@ class HttpieService {
       {Map<String, String> headers,
       body,
       Encoding encoding,
-      bool appendLanguageHeader}) async {
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers, appendLanguageHeader: appendLanguageHeader);
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
 
     try {
       var response = await http.post(url,
           headers: finalHeaders, body: body, encoding: encoding);
       return HttpieResponse(response);
-    } on SocketException catch (error) {
-      if (error.osError.errorCode == 61) {
-        // Connection refused.
-        throw HttpieConnectionRefusedError(error);
-      } else {
-        rethrow;
-      }
+    } catch (error) {
+      _handleRequestError(error);
     }
   }
 
@@ -39,7 +46,8 @@ class HttpieService {
       {Map<String, String> headers = const {},
       body,
       Encoding encoding,
-      bool appendLanguageHeader}) {
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
     String jsonBody = json.encode(body);
 
     Map<String, String> jsonHeaders = {
@@ -53,7 +61,8 @@ class HttpieService {
         headers: jsonHeaders,
         body: jsonBody,
         encoding: encoding,
-        appendLanguageHeader: appendLanguageHeader);
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
   }
 
   Future<HttpieResponse> get(url,
@@ -61,19 +70,57 @@ class HttpieService {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers, appendLanguageHeader: appendLanguageHeader);
 
-    var response = await http.get(url, headers: finalHeaders);
-    return HttpieResponse(response);
+    try {
+      var response = await http.get(url, headers: finalHeaders);
+      return HttpieResponse(response);
+    } catch (error) {
+      _handleRequestError(error);
+    }
   }
 
   Future<HttpieStreamedResponse> postMultiform(String url,
-      {Map<String, String> headers = const {},
+      {Map<String, String> headers,
       Map<String, dynamic> body,
       Encoding encoding,
-      bool appendLanguageHeader}) async {
-    var request = new http.MultipartRequest("POST", Uri.parse(url));
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
+    return _multipartRequest(url,
+        method: 'POST',
+        headers: headers,
+        body: body,
+        encoding: encoding,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+  }
+
+  Future<HttpieStreamedResponse> putMultiform(String url,
+      {Map<String, String> headers,
+      Map<String, dynamic> body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
+    return _multipartRequest(url,
+        method: 'PUT',
+        headers: headers,
+        body: body,
+        encoding: encoding,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+  }
+
+  Future<HttpieStreamedResponse> _multipartRequest(String url,
+      {Map<String, String> headers,
+      String method,
+      Map<String, dynamic> body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
+    var request = new http.MultipartRequest(method, Uri.parse(url));
 
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers, appendLanguageHeader: appendLanguageHeader);
+        headers: headers ?? {},
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
 
     request.headers.addAll(finalHeaders);
 
@@ -87,7 +134,7 @@ class HttpieService {
         // The silly multipart API requires media type to be in type & subtype.
         var fileMimeTypeSplit = fileMimeType.split('/');
 
-        var fileFuture = http.MultipartFile.fromPath('avatar', value.path,
+        var fileFuture = http.MultipartFile.fromPath(key, value.path,
             contentType:
                 new MediaType(fileMimeTypeSplit[0], fileMimeTypeSplit[1]));
 
@@ -99,7 +146,15 @@ class HttpieService {
 
     var files = await Future.wait(fileFields);
     files.forEach((file) => request.files.add(file));
-    var response = await request.send();
+
+    var response;
+
+    try {
+      response = await request.send();
+    } catch (error) {
+      _handleRequestError(error);
+    }
+
     return HttpieStreamedResponse(response);
   }
 
@@ -108,7 +163,9 @@ class HttpieService {
   }
 
   Map<String, String> _getHeadersWithConfig(
-      {Map<String, String> headers = const {}, bool appendLanguageHeader}) {
+      {Map<String, String> headers = const {},
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
     Map<String, String> finalHeaders = Map.from(headers);
 
     /// NOTE If we set the default value in the parameters, if other functions
@@ -118,17 +175,33 @@ class HttpieService {
     /// See https://github.com/dart-lang/sdk/issues/33918
 
     appendLanguageHeader = appendLanguageHeader ?? true;
+    appendAuthorizationToken = appendAuthorizationToken ?? false;
 
     if (appendLanguageHeader) finalHeaders['Accept-Language'] = _getLanguage();
 
+    if (appendAuthorizationToken && authorizationToken != null) {
+      finalHeaders['Authorization'] = 'Token $authorizationToken';
+    }
+
     return finalHeaders;
+  }
+
+  void _handleRequestError(error) {
+    if (error is SocketException) {
+      var errorCode = error.osError.errorCode;
+      if (errorCode == 61 || errorCode == 111) {
+        // Connection refused.
+        throw HttpieConnectionRefusedError(error);
+      }
+    }
+    throw error;
   }
 }
 
-abstract class BaseResponse<T extends http.BaseResponse> {
+abstract class HttpieBaseResponse<T extends http.BaseResponse> {
   T _httpResponse;
 
-  BaseResponse(this._httpResponse);
+  HttpieBaseResponse(this._httpResponse);
 
   bool isInternalServerError() {
     return _httpResponse.statusCode == HttpStatus.internalServerError;
@@ -157,7 +230,7 @@ abstract class BaseResponse<T extends http.BaseResponse> {
   int get statusCode => _httpResponse.statusCode;
 }
 
-class HttpieResponse extends BaseResponse<http.Response> {
+class HttpieResponse extends HttpieBaseResponse<http.Response> {
   HttpieResponse(_httpResponse) : super(_httpResponse);
 
   String get body => _httpResponse.body;
@@ -169,17 +242,40 @@ class HttpieResponse extends BaseResponse<http.Response> {
   http.Response get httpResponse => _httpResponse;
 }
 
-class HttpieStreamedResponse extends BaseResponse<http.StreamedResponse> {
+class HttpieStreamedResponse extends HttpieBaseResponse<http.StreamedResponse> {
   HttpieStreamedResponse(_httpResponse) : super(_httpResponse);
+
+  Future<String> readAsString() {
+    var completer = new Completer<String>();
+    var contents = new StringBuffer();
+    this._httpResponse.stream.transform(utf8.decoder).listen((String data) {
+      contents.write(data);
+    }, onDone: () {
+      completer.complete(contents.toString());
+    });
+    return completer.future;
+  }
 }
 
-class HttpieRequestError implements Exception {
-  final HttpieResponse response;
+class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
+  final T response;
 
-  const HttpieRequestError(HttpieResponse this.response);
+  const HttpieRequestError(this.response);
 
-  String toString() =>
-      'HttpieRequestError:$response.statusCode - $response.body';
+  String toString() {
+    String statusCode = response.statusCode.toString();
+    return 'HttpieRequestError:$statusCode';
+  }
+
+  Future<String> body() async {
+    if (response is HttpieResponse) {
+      var castedResponse = this.response as HttpieResponse;
+      return castedResponse.body;
+    } else if (response is HttpieStreamedResponse) {
+      var castedResponse = this.response as HttpieStreamedResponse;
+      return await castedResponse.readAsString();
+    }
+  }
 }
 
 class HttpieConnectionRefusedError implements Exception {
@@ -187,12 +283,11 @@ class HttpieConnectionRefusedError implements Exception {
 
   const HttpieConnectionRefusedError(this.socketException);
 
-  String toString(){
+  String toString() {
     String address = socketException.address.toString();
     String port = socketException.port.toString();
     return 'HttpieConnectionRefusedError: Connection refused on $address and port $port';
   }
-
 }
 
 class HttpieArgumentsError implements Exception {

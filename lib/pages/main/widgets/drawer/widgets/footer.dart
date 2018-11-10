@@ -8,8 +8,13 @@ class MainDrawerFooter extends StatelessWidget {
     var userService = openbookProvider.userService;
     var localizationService = openbookProvider.localizationService;
 
+    double tileIconHeight = 20.0;
+
     return ListTile(
-      leading: Icon(Icons.exit_to_app),
+      leading: Image.asset(
+        'assets/images/icons/logout-icon.png',
+        height: tileIconHeight,
+      ),
       title: Text(localizationService.trans('DRAWER.LOGOUT')),
       onTap: () {
         userService.logout();
