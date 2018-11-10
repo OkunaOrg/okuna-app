@@ -32,6 +32,8 @@ class PostImagePreviewer extends StatelessWidget {
 
     if (onRemove == null) return imagePreview;
 
+    double buttonSize = 30.0;
+
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
@@ -39,16 +41,19 @@ class PostImagePreviewer extends StatelessWidget {
         Positioned(
             right: -10.0,
             top: -10.0,
-            child: SizedBox(
-              width: 30.0,
-              height: 30.0,
-              child: FloatingActionButton(
-                onPressed: onRemove,
-                backgroundColor: Colors.black87,
-                child: Icon(
-                  Icons.clear,
-                  color: Colors.white,
-                  size: 20.0,
+            child: GestureDetector(
+              onTap: onRemove,
+              child: SizedBox(
+                width: buttonSize,
+                height: buttonSize,
+                child: FloatingActionButton(
+                  onPressed: onRemove,
+                  backgroundColor: Colors.black87,
+                  child: Icon(
+                    Icons.clear,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
                 ),
               ),
             )),
