@@ -83,11 +83,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           child: SafeArea(
               child: Container(
                   child: Column(
-            children: <Widget>[
-              _buildNewPostContent(),
-              _buildPostInfoBar(),
-              _buildPostActions()
-            ],
+            children: <Widget>[_buildNewPostContent(), _buildPostActions()],
           )))),
     );
   }
@@ -114,7 +110,6 @@ class CreatePostModalState extends State<CreatePostModal> {
       _toastService.error(
           message: 'Uh.. something is not right.', context: context);
       _setCreatePostInProgress(false);
-      throw e;
     }
   }
 
@@ -148,8 +143,16 @@ class CreatePostModalState extends State<CreatePostModal> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          LoggedInUserAvatar(
-            size: UserAvatarSize.medium,
+          Column(
+            children: <Widget>[
+              LoggedInUserAvatar(
+                size: UserAvatarSize.medium,
+              ),
+              SizedBox(
+                height: 12.0,
+              ),
+              _buildRemainingCharacters(),
+            ],
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -167,6 +170,19 @@ class CreatePostModalState extends State<CreatePostModal> {
     ));
   }
 
+  Widget _buildRemainingCharacters() {
+    return Text(
+      (MAX_ALLOWED_CHARACTERS - _charactersCount).toString(),
+      style: TextStyle(
+          fontSize: 12.0,
+          color: _isPostTextAllowedLength
+              ? Colors.black26
+              : Pigment.fromString('#F13A59'),
+          fontWeight:
+              _isPostTextAllowedLength ? FontWeight.normal : FontWeight.bold),
+    );
+  }
+
   Widget _buildPostTextField() {
     return TextField(
       controller: _textController,
@@ -181,28 +197,6 @@ class CreatePostModalState extends State<CreatePostModal> {
       ),
       autocorrect: true,
     );
-  }
-
-  Widget _buildPostInfoBar() {
-    return Container(
-        padding:
-            EdgeInsets.only(right: 20.0, bottom: 5.0, top: 5.0, left: 20.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Text(
-              '$_charactersCount/$MAX_ALLOWED_CHARACTERS',
-              style: TextStyle(
-                  color: _isPostTextAllowedLength
-                      ? Colors.black26
-                      : Pigment.fromString('#F13A59'),
-                  fontWeight: _isPostTextAllowedLength
-                      ? FontWeight.normal
-                      : FontWeight.bold),
-            )
-          ],
-        ));
   }
 
   Widget _buildPostActions() {
