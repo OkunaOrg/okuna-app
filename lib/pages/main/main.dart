@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/main/modals/create-post/create-post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
-import 'package:Openbook/pages/main/pages/home.dart';
+import 'package:Openbook/pages/main/pages/home/home.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
 import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';

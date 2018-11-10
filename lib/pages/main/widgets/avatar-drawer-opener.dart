@@ -1,7 +1,7 @@
 import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
 import 'package:flutter/material.dart';
 
-class OBMainAvatarDrawerOpener extends StatelessWidget {
+class OBLoggedInUserAvatarDrawerOpener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(

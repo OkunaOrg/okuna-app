@@ -1,3 +1,4 @@
+import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
 import 'package:Openbook/pages/main/widgets/avatar-drawer-opener.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,24 +17,10 @@ class OBMainHomePageState extends State<OBMainHomePage> {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           backgroundColor: Colors.white,
-          leading: OBMainAvatarDrawerOpener(),
+          leading: OBLoggedInUserAvatarDrawerOpener(),
           middle: Text('Home'),
           trailing: OBIcon(OBIcons.chat),
         ),
-        child: Center(
-          child: CupertinoButton(
-              child: Text('Push'),
-              onPressed: () {
-                Navigator.of(context).push(CupertinoPageRoute<void>(
-                  title: 'Pushed',
-                  builder: (BuildContext context) => CupertinoPageScaffold(
-                        navigationBar: CupertinoNavigationBar(),
-                        child: Center(
-                          child: Text('Hi'),
-                        ),
-                      ),
-                ));
-              }),
-        ));
+        child: OBHomePosts());
   }
 }

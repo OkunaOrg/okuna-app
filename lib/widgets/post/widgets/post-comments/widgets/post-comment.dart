@@ -10,7 +10,6 @@ class OBPostComment extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
+    return SizedBox();
   }
 }
