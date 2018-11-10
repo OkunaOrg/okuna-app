@@ -80,11 +80,10 @@ class CreatePostModalState extends State<CreatePostModal> {
     return Material(
       child: CupertinoPageScaffold(
           navigationBar: _buildNavigationBar(),
-          child: SafeArea(
-              child: Container(
-                  child: Column(
-            children: <Widget>[_buildNewPostContent(), _buildPostActions()],
-          )))),
+          child: Container(
+              child: Column(
+                children: <Widget>[_buildNewPostContent(), _buildPostActions()],
+              ))),
     );
   }
 
@@ -139,7 +138,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildNewPostContent() {
     return Expanded(
         child: Container(
-      padding: EdgeInsets.only(left: 20.0),
+      padding: EdgeInsets.only(left: 20.0, top: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
