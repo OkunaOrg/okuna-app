@@ -27,20 +27,22 @@ class PostsApiService {
   }
 
   Future<HttpieStreamedResponse> createPost(
-      {@required String text, List<int> circleIds, File image}) {
-    Map<String, dynamic> body = {
-      'text': text,
-    };
+      {String text, List<int> circleIds, File image}) {
+    Map<String, dynamic> body = {};
 
     if (image != null) {
       body['image'] = image;
+    }
+
+    if (text != null && text.length > 0) {
+      body['text'] = text;
     }
 
     if (circleIds != null) {
       body['circle_id'] = circleIds.join(',');
     }
 
-    return _httpService.postMultiform('$apiURL$CREATE_POST_PATH',
+    return _httpService.putMultiform('$apiURL$CREATE_POST_PATH',
         body: body, appendAuthorizationToken: true);
   }
 }

@@ -79,15 +79,46 @@ class HttpieService {
   }
 
   Future<HttpieStreamedResponse> postMultiform(String url,
-      {Map<String, String> headers = const {},
+      {Map<String, String> headers,
+      Map<String, dynamic> body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
+    return _multipartRequest(url,
+        method: 'POST',
+        headers: headers,
+        body: body,
+        encoding: encoding,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+  }
+
+  Future<HttpieStreamedResponse> putMultiform(String url,
+      {Map<String, String> headers,
+      Map<String, dynamic> body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
+    return _multipartRequest(url,
+        method: 'PUT',
+        headers: headers,
+        body: body,
+        encoding: encoding,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+  }
+
+  Future<HttpieStreamedResponse> _multipartRequest(String url,
+      {Map<String, String> headers,
+      String method,
       Map<String, dynamic> body,
       Encoding encoding,
       bool appendLanguageHeader,
       bool appendAuthorizationToken}) async {
-    var request = new http.MultipartRequest("POST", Uri.parse(url));
+    var request = new http.MultipartRequest(method, Uri.parse(url));
 
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers,
+        headers: headers ?? {},
         appendLanguageHeader: appendLanguageHeader,
         appendAuthorizationToken: appendAuthorizationToken);
 
@@ -116,12 +147,15 @@ class HttpieService {
     var files = await Future.wait(fileFields);
     files.forEach((file) => request.files.add(file));
 
+    var response;
+
     try {
-      var response = await request.send();
-      return HttpieStreamedResponse(response);
+      response = await request.send();
     } catch (error) {
       _handleRequestError(error);
     }
+
+    return HttpieStreamedResponse(response);
   }
 
   String _getLanguage() {

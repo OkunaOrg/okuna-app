@@ -109,6 +109,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       _toastService.error(
           message: 'Uh.. something is not right.', context: context);
       _setCreatePostInProgress(false);
+      rethrow;
     }
   }
 

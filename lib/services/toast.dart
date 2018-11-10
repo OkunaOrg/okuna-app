@@ -73,6 +73,8 @@ class ToastService {
         throw 'Unsupported ToastType';
     }
 
+    print(message);
+
 /*    var toast = Flushbar(
       title: title,
       message: message,

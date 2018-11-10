@@ -110,7 +110,7 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {@required String text, List<int> circleIds, File image}) async {
+      {String text, List<int> circleIds, File image}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
         text: text, circleIds: circleIds, image: image);
 
