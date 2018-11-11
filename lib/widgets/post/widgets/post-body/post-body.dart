@@ -20,8 +20,18 @@ class OBPostBody extends StatelessWidget {
       bodyItems.add(OBPostBodyText(_post));
     }
 
-    return Column(
-      children: bodyItems,
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: bodyItems,
+            ),
+          )
+        )
+      ],
     );
   }
 }

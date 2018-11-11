@@ -1,15 +1,21 @@
-
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/widgets/avatars/user-avatar.dart';
 import 'package:flutter/material.dart';
 
-class OBPostHeader extends StatelessWidget{
-
+class OBPostHeader extends StatelessWidget {
   final Post _post;
 
   OBPostHeader(this._post);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
+    return ListTile(
+      leading: OBUserAvatar(
+        size: OBUserAvatarSize.small,
+        avatarImage: NetworkImage(_post.getCreatorAvatar()),
+      ),
+      trailing: Icon(Icons.more_vert),
+      title: Text(_post.getCreatorUsername(), style: TextStyle(fontWeight: FontWeight.bold),),
+    );
   }
 }

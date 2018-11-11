@@ -53,7 +53,6 @@ class OBHomePostsState extends State<OBHomePosts> {
         onOffsetChange: _onOffsetCallback,
         controller: _refreshController,
         child: new ListView.builder(
-          itemExtent: 40.0,
           itemCount: _posts.length,
           itemBuilder: (context, index) {
             var post = _posts[index];

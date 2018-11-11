@@ -34,7 +34,7 @@ class Post {
     var postComments;
     if (postCommentsData != null)
       postComments = PostCommentsList.fromJson(postCommentsData);
-    
+
     return Post(
         id: parsedJson['id'],
         creatorId: parsedJson['creator_id'],
@@ -59,5 +59,21 @@ class Post {
 
   List<PostComment> getPostComments() {
     return commentsList.comments;
+  }
+
+  String getCreatorUsername() {
+    return creator.username;
+  }
+
+  String getCreatorAvatar() {
+    return creator.profile.avatar;
+  }
+
+  String getImage() {
+    return image.image;
+  }
+
+  String getText() {
+    return text;
   }
 }
