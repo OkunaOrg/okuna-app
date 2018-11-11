@@ -1,6 +1,5 @@
 import 'package:Openbook/models/post.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class OBPostBodyImage extends StatelessWidget {
   final Post _post;

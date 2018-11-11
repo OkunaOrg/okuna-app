@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import "package:pull_to_refresh/pull_to_refresh.dart";
 
 class OBHomePosts extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return OBHomePostsState();
@@ -21,6 +22,8 @@ class OBHomePostsState extends State<OBHomePosts> {
   UserService _userService;
   StreamSubscription _loggedInUserChangeSubscription;
   RefreshController _refreshController;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -46,18 +49,16 @@ class OBHomePostsState extends State<OBHomePosts> {
       _needsBootstrap = false;
     }
 
-    return SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
+    return RefreshIndicator(
+        key: _refreshIndicatorKey,
         onRefresh: _onRefresh,
-        controller: _refreshController,
-        child: new ListView.builder(
-          itemCount: _posts.length,
-          itemBuilder: (context, index) {
-            var post = _posts[index];
-            return OBPost(post);
-          },
-        ));
+        child: ListView.builder(
+            padding: kMaterialListPadding,
+            itemCount: _posts.length,
+            itemBuilder: (context, index) {
+              var post = _posts[index];
+              return OBPost(post);
+            }));
   }
 
   void _bootstrap() async {
@@ -65,12 +66,8 @@ class OBHomePostsState extends State<OBHomePosts> {
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
   }
 
-  void _onRefresh(bool upperRefresh) {
-    if (upperRefresh) {
-      _refreshPosts();
-    } else {
-      _getMorePosts();
-    }
+  Future<void> _onRefresh() {
+    return _refreshPosts();
   }
 
   void _onLoggedInUserChange(User newUser) async {
@@ -78,10 +75,9 @@ class OBHomePostsState extends State<OBHomePosts> {
     _refreshPosts();
   }
 
-  void _refreshPosts() async {
+  Future<void> _refreshPosts() async {
     _posts = (await _userService.getAllPosts()).posts;
     _setPosts(_posts);
-    _refreshController.sendBack(true, RefreshStatus.completed);
   }
 
   void _getMorePosts() async {
