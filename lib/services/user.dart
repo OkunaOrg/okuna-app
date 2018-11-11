@@ -103,8 +103,11 @@ class UserService {
     return _loggedInUser != null;
   }
 
-  Future<PostsList> getAllPosts() async {
-    HttpieResponse response = await _postsApiService.getAllPosts();
+  Future<PostsList> getAllPosts(
+      {List<int> listIds, List<int> circleIds, int maxId, int count}) async {
+
+    HttpieResponse response = await _postsApiService.getAllPosts(
+        listIds: listIds, circleIds: circleIds, maxId: maxId, count: count);
     _checkResponseIsOk(response);
     return PostsList.fromJson(json.decode(response.body));
   }

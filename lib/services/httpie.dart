@@ -67,12 +67,17 @@ class HttpieService {
 
   Future<HttpieResponse> get(url,
       {Map<String, String> headers,
+      Map<String, dynamic> queryParameters,
       bool appendLanguageHeader,
       bool appendAuthorizationToken}) async {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers,
         appendLanguageHeader: appendLanguageHeader,
         appendAuthorizationToken: appendAuthorizationToken);
+
+    if (queryParameters != null && queryParameters.keys.length > 0) {
+      url = url + _makeQueryString(queryParameters);
+    }
 
     try {
       var response = await http.get(url, headers: finalHeaders);
@@ -195,6 +200,14 @@ class HttpieService {
       }
     }
     throw error;
+  }
+
+  String _makeQueryString(Map<String, dynamic> queryParameters) {
+    String queryString = '?';
+    queryParameters.forEach((key, value) {
+      queryString += '$key=' + value.toString();
+    });
+    return queryString;
   }
 }
 

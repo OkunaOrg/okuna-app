@@ -48,9 +48,8 @@ class OBHomePostsState extends State<OBHomePosts> {
 
     return SmartRefresher(
         enablePullDown: true,
-        enablePullUp: false,
+        enablePullUp: true,
         onRefresh: _onRefresh,
-        onOffsetChange: _onOffsetCallback,
         controller: _refreshController,
         child: new ListView.builder(
           itemCount: _posts.length,
@@ -69,11 +68,9 @@ class OBHomePostsState extends State<OBHomePosts> {
   void _onRefresh(bool upperRefresh) {
     if (upperRefresh) {
       _refreshPosts();
+    } else {
+      _getMorePosts();
     }
-  }
-
-  void _onOffsetCallback(bool what, double offset) {
-    //print('Offset $what $offset');
   }
 
   void _onLoggedInUserChange(User newUser) async {
@@ -85,6 +82,19 @@ class OBHomePostsState extends State<OBHomePosts> {
     _posts = (await _userService.getAllPosts()).posts;
     _setPosts(_posts);
     _refreshController.sendBack(true, RefreshStatus.completed);
+  }
+
+  void _getMorePosts() async {
+    var lastPost = _posts.last;
+    var lastPostId = lastPost.id;
+    var morePosts = (await _userService.getAllPosts(maxId: lastPostId)).posts;
+    _refreshController.sendBack(false, RefreshStatus.completed);
+
+    if(morePosts.length > 0){
+      setState(() {
+        _posts.addAll(morePosts);
+      });
+    }
   }
 
   void _setPosts(List<Post> posts) {
