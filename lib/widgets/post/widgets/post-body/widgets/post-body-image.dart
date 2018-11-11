@@ -14,17 +14,10 @@ class OBPostBodyImage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: screenWidth),
-      child: Stack(
-        children: <Widget>[
-          Center(
-            child: FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image: imageUrl,
-            ),
-          ),
-        ],
-      ),
-    );
+        constraints: BoxConstraints(minHeight: screenWidth),
+        child: FadeInImage(
+          placeholder: AssetImage('assets/images/loading.gif'),
+          image: NetworkImage(imageUrl),
+        ));
   }
 }

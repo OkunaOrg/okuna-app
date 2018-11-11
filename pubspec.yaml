@@ -90,6 +90,7 @@ flutter:
     - assets/images/icons/comments-icon.png
     - assets/images/icons/comment-icon.png
     - assets/images/icons/react-icon.png
+    - assets/images/loading.gif
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
