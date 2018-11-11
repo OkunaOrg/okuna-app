@@ -48,7 +48,7 @@ class OBHomePostsState extends State<OBHomePosts> {
 
     return SmartRefresher(
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         onRefresh: _onRefresh,
         onOffsetChange: _onOffsetCallback,
         controller: _refreshController,

@@ -87,6 +87,9 @@ flutter:
     - assets/images/icons/success-icon.png
     - assets/images/icons/error-icon.png
     - assets/images/icons/info-icon.png
+    - assets/images/icons/comments-icon.png
+    - assets/images/icons/comment-icon.png
+    - assets/images/icons/react-icon.png
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

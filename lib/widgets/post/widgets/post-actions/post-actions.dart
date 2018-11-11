@@ -14,8 +14,12 @@ class OBPostActions extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        OBPostActionComment(_post),
-        OBPostActionReact(_post),
+        Expanded(
+          child: OBPostActionComment(_post),
+        ),
+        Expanded(
+          child: OBPostActionReact(_post),
+        )
       ],
     );
   }

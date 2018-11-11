@@ -21,8 +21,6 @@ class OBMainHomePageState extends State<OBMainHomePage> {
           middle: Text('Home'),
           trailing: OBIcon(OBIcons.chat),
         ),
-        child: Container(
-          child: OBHomePosts(),
-        ));
+        child: OBHomePosts());
   }
 }

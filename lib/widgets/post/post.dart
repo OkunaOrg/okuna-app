@@ -20,7 +20,7 @@ class OBPost extends StatelessWidget {
           OBPostBody(_post),
           OBPostComments(_post),
           OBPostReactions(_post),
-          OBPostActions(_post)
+          OBPostActions(_post),
         ],
       ),
     );

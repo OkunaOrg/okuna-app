@@ -66,6 +66,9 @@ class OBIcons {
   static const gif = OBIconData('gif');
   static const audience = OBIconData('audience');
   static const burner = OBIconData('burner');
+  static const comment = OBIconData('comment');
+  static const comments = OBIconData('comments');
+  static const react = OBIconData('react');
 }
 
 @immutable
