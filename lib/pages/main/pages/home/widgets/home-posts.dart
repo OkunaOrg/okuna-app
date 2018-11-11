@@ -85,16 +85,15 @@ class OBHomePostsState extends State<OBHomePosts> {
   }
 
   void _getMorePosts() async {
+    print('Getting more posts');
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     var morePosts = (await _userService.getAllPosts(maxId: lastPostId)).posts;
-    _refreshController.sendBack(false, RefreshStatus.completed);
 
-    if(morePosts.length > 0){
-      setState(() {
-        _posts.addAll(morePosts);
-      });
-    }
+    setState(() {
+      _refreshController.sendBack(false, RefreshStatus.completed);
+      _posts.addAll(morePosts);
+    });
   }
 
   void _setPosts(List<Post> posts) {
