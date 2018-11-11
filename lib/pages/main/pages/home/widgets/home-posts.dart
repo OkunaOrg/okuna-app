@@ -1,34 +1,96 @@
+import 'dart:async';
 
-
+import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/post/post.dart';
 import 'package:flutter/material.dart';
+import "package:pull_to_refresh/pull_to_refresh.dart";
 
-class OBHomePosts extends StatefulWidget{
+class OBHomePosts extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return OBHomePostsState();
   }
 }
 
-class OBHomePostsState extends State<OBHomePosts>{
+class OBHomePostsState extends State<OBHomePosts> {
+  List<Post> _posts;
+  bool _needsBootstrap;
+  UserService _userService;
+  StreamSubscription _loggedInUserChangeSubscription;
+  RefreshController _refreshController;
 
   @override
   void initState() {
     super.initState();
+    _posts = [];
+    _needsBootstrap = true;
+    _refreshController = RefreshController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _loggedInUserChangeSubscription.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
     var provider = OpenbookProvider.of(context);
-    UserService userService = provider.userService;
+    _userService = provider.userService;
 
-    // TODO: implement build
-    return SizedBox();
+    if (_needsBootstrap) {
+      _bootstrap();
+      _needsBootstrap = false;
+    }
+
+    return SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        onRefresh: _onRefresh,
+        onOffsetChange: _onOffsetCallback,
+        controller: _refreshController,
+        child: new ListView.builder(
+          itemExtent: 40.0,
+          itemCount: _posts.length,
+          itemBuilder: (context, index) {
+            var post = _posts[index];
+            return OBPost(post);
+          },
+        ));
   }
 
+  void _bootstrap() async {
+    _loggedInUserChangeSubscription =
+        _userService.loggedInUserChange.listen(_onLoggedInUserChange);
+  }
 
-  void refreshPosts(){
+  void _onRefresh(bool upperRefresh) {
+    if (upperRefresh) {
+      _refreshPosts();
+    }
+  }
 
+  void _onOffsetCallback(bool what, double offset) {
+    //print('Offset $what $offset');
+  }
+
+  void _onLoggedInUserChange(User newUser) async {
+    if (newUser == null) return;
+    _refreshPosts();
+  }
+
+  void _refreshPosts() async {
+    _posts = (await _userService.getAllPosts()).posts;
+    _setPosts(_posts);
+    _refreshController.sendBack(true, RefreshStatus.completed);
+  }
+
+  void _setPosts(List<Post> posts) {
+    setState(() {
+      this._posts = posts;
+    });
   }
 }

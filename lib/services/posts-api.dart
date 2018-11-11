@@ -22,7 +22,7 @@ class PostsApiService {
 
   Future<HttpieResponse> getAllPosts(
       {List<int> listIds, List<int> circleIds, int maxId, int count}) {
-    return _httpService.postJSON('$apiURL$GET_POSTS_PATH',
+    return _httpService.get('$apiURL$GET_POSTS_PATH',
         appendAuthorizationToken: true);
   }
 
