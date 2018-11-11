@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post-comment.dart';
 import 'package:Openbook/models/post-comments-list.dart';
 import 'package:Openbook/models/post-image.dart';
+import 'package:Openbook/models/user.dart';
 
 class Post {
   int id;
@@ -9,6 +10,7 @@ class Post {
   String text;
   PostImage image;
   PostCommentsList commentsList;
+  User creator;
 
   Post(
       {this.id,
@@ -16,6 +18,7 @@ class Post {
       this.text,
       this.creatorId,
       this.image,
+      this.creator,
       this.commentsList});
 
   factory Post.fromJson(Map<String, dynamic> parsedJson) {
@@ -23,16 +26,21 @@ class Post {
     var postImage;
     if (postImageData != null) postImage = PostImage.fromJSON(postImageData);
 
+    var postCreatorData = parsedJson['creator'];
+    var postCreator;
+    if (postCreatorData != null) postCreator = User.fromJson(postCreatorData);
+
     var postCommentsData = parsedJson['comments'];
     var postComments;
     if (postCommentsData != null)
       postComments = PostCommentsList.fromJson(postCommentsData);
-
+    
     return Post(
         id: parsedJson['id'],
         creatorId: parsedJson['creator_id'],
         created: parsedJson['email'],
         text: parsedJson['text'],
+        creator: postCreator,
         image: postImage,
         commentsList: postComments);
   }
