@@ -6,10 +6,13 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:flutter/material.dart';
-import "package:pull_to_refresh/pull_to_refresh.dart";
 import 'package:loadmore/loadmore.dart';
 
 class OBHomePosts extends StatefulWidget {
+  OBHomePostsController controller;
+
+  OBHomePosts({this.controller});
+
   @override
   State<StatefulWidget> createState() {
     return OBHomePostsState();
@@ -21,6 +24,8 @@ class OBHomePostsState extends State<OBHomePosts> {
   bool _needsBootstrap;
   UserService _userService;
   StreamSubscription _loggedInUserChangeSubscription;
+  ScrollController _postsScrollController;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -29,9 +34,11 @@ class OBHomePostsState extends State<OBHomePosts> {
   @override
   void initState() {
     super.initState();
+    if(widget.controller != null) widget.controller.attach(this);
     _posts = [];
     _needsBootstrap = true;
     _loadingFinished = false;
+    _postsScrollController = ScrollController();
   }
 
   @override
@@ -58,6 +65,7 @@ class OBHomePostsState extends State<OBHomePosts> {
             isFinish: _loadingFinished,
             textBuilder: DefaultLoadMoreTextBuilder.english,
             child: ListView.builder(
+                controller: _postsScrollController,
                 padding: kMaterialListPadding,
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
@@ -65,6 +73,14 @@ class OBHomePostsState extends State<OBHomePosts> {
                   return OBPost(post);
                 }),
             onLoadMore: _loadMorePosts));
+  }
+
+  void scrollToTop() {
+    _postsScrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 
   void _bootstrap() async {
@@ -92,10 +108,9 @@ class OBHomePostsState extends State<OBHomePosts> {
     var lastPostId = lastPost.id;
     var morePosts = (await _userService.getAllPosts(maxId: lastPostId)).posts;
 
-
-    if(morePosts.length == 0){
+    if (morePosts.length == 0) {
       _setLoadingFinished(true);
-    }else{
+    } else {
       setState(() {
         _posts.addAll(morePosts);
       });
@@ -110,9 +125,27 @@ class OBHomePostsState extends State<OBHomePosts> {
     });
   }
 
-  void _setLoadingFinished(bool loadingFinished){
+  void _setLoadingFinished(bool loadingFinished) {
     setState(() {
       _loadingFinished = loadingFinished;
     });
+  }
+}
+
+class OBHomePostsController {
+  OBHomePostsState _homePostsState;
+
+  /// Register the OBHomePostsState to the controller
+  void attach(OBHomePostsState homePostsState) {
+    assert(homePostsState != null, 'Cannot attach to empty state');
+    _homePostsState = homePostsState;
+  }
+
+  void scrollToTop() {
+    _homePostsState.scrollToTop();
+  }
+
+  bool isAttached(){
+    return _homePostsState != null;
   }
 }

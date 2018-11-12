@@ -4,14 +4,11 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBMainHomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return OBMainHomePageState();
-  }
-}
+class OBMainHomePage extends StatelessWidget {
+  OBHomePostsController homePostsController;
 
-class OBMainHomePageState extends State<OBMainHomePage> {
+  OBMainHomePage({this.homePostsController});
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -21,6 +18,8 @@ class OBMainHomePageState extends State<OBMainHomePage> {
           middle: Text('Home'),
           trailing: OBIcon(OBIcons.chat),
         ),
-        child: OBHomePosts());
+        child: OBHomePosts(
+          controller: homePostsController,
+        ));
   }
 }

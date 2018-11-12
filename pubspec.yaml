@@ -14,7 +14,6 @@ environment:
 
 dependencies:
   loadmore: ^1.0.1
-  pull_to_refresh: ^1.1.6
   pigment: ^1.0.3
   flushbar: ^1.1.0
   flutter_secure_storage: ^3.1.2
