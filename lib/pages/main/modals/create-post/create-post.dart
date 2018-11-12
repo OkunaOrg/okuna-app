@@ -85,14 +85,12 @@ class CreatePostModalState extends State<CreatePostModal> {
     _toastService = openbookProvider.toastService;
 
     return Scaffold(
-      key: _scaffoldKey,
-      body: CupertinoPageScaffold(
-          navigationBar: _buildNavigationBar(),
-          child: Container(
-              child: Column(
-            children: <Widget>[_buildNewPostContent(), _buildPostActions()],
-          ))),
-    );
+        key: _scaffoldKey,
+        appBar: _buildAppBar(),
+        body: Container(
+            child: Column(
+          children: <Widget>[_buildNewPostContent(), _buildPostActions()],
+        )));
   }
 
   Future<void> createPost() async {
@@ -115,26 +113,34 @@ class CreatePostModalState extends State<CreatePostModal> {
     }
   }
 
-  Widget _buildNavigationBar() {
+  Widget _buildAppBar() {
     bool newPostButtonIsEnabled =
         (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage;
 
-    return CupertinoNavigationBar(
+    return AppBar(
+      title: Text('New post'),
       backgroundColor: Colors.white,
-      leading: GestureDetector(
-        child: Icon(Icons.close, color: Colors.black87),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      middle: Text('New post'),
-      trailing: OBPrimaryButton(
-        isDisabled: !newPostButtonIsEnabled,
-        isLoading: _isCreatePostInProgress,
-        isSmall: true,
-        onPressed: createPost,
-        child: Text('Share'),
-      ),
+      elevation: 1.0,
+      actions: <Widget>[
+        Container(
+          padding: EdgeInsets.all(10.0),
+          // This is weird. If we do not add this, the button is not visible
+          color: Colors.white,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              OBPrimaryButton(
+                isDisabled: !newPostButtonIsEnabled,
+                isLoading: _isCreatePostInProgress,
+                isSmall: true,
+                onPressed: createPost,
+                child: Text('Share'),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 
