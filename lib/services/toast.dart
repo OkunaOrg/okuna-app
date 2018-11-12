@@ -8,52 +8,69 @@ enum ToastType { info, warning, success, error }
 class ToastService {
   static const Duration toastDuration = Duration(seconds: 3);
 
-  void info(
-      {String title,
-      @required String message,
-      @required BuildContext context}) {
-    toast(
-        title: title, message: message, context: context, type: ToastType.info);
-  }
-
-  void warning(
-      {String title,
-      @required String message,
-      @required BuildContext context}) {
+  void warning({
+    String title,
+    @required String message,
+    BuildContext context,
+    GlobalKey<ScaffoldState> scaffoldKey,
+  }) {
     toast(
         title: title,
         message: message,
+        type: ToastType.warning,
         context: context,
-        type: ToastType.warning);
+        scaffoldKey: scaffoldKey);
   }
 
-  void success(
-      {String title,
-      @required String message,
-      @required BuildContext context}) {
+  void success({
+    String title,
+    @required String message,
+    BuildContext context,
+    GlobalKey<ScaffoldState> scaffoldKey,
+  }) {
     toast(
         title: title,
         message: message,
+        type: ToastType.success,
         context: context,
-        type: ToastType.success);
+        scaffoldKey: scaffoldKey);
   }
 
-  void error(
-      {String title,
-      @required String message,
-      @required BuildContext context}) {
+  void error({
+    String title,
+    @required String message,
+    BuildContext context,
+    GlobalKey<ScaffoldState> scaffoldKey,
+  }) {
     toast(
         title: title,
         message: message,
+        type: ToastType.error,
         context: context,
-        type: ToastType.error);
+        scaffoldKey: scaffoldKey);
   }
 
-  void toast(
-      {String title,
-      @required String message,
-      @required BuildContext context,
-      @required ToastType type}) {
+  void info({
+    String title,
+    @required String message,
+    BuildContext context,
+    GlobalKey<ScaffoldState> scaffoldKey,
+  }) {
+    toast(
+        title: title,
+        message: message,
+        type: ToastType.info,
+        context: context,
+        scaffoldKey: scaffoldKey);
+  }
+
+  void toast({
+    String title,
+    @required String message,
+    @required ToastType type,
+    BuildContext context,
+    GlobalKey<ScaffoldState> scaffoldKey,
+  }) {
     Widget icon;
     Color backgroundColor;
 
@@ -78,20 +95,33 @@ class ToastService {
         throw 'Unsupported ToastType';
     }
 
-    print(message);
-
-/*    var toast = Flushbar(
-      title: title,
-      message: message,
-      duration: toastDuration,
+    var snackBar = SnackBar(
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          icon,
+          SizedBox(
+            width: 20.0,
+          ),
+          Flexible(
+            child: Text(
+              message,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )
+        ],
+      ),
       backgroundColor: backgroundColor,
-      //borderRadius: 500.0,
-      //aroundPadding: 60.0,
-      flushbarPosition: FlushbarPosition.BOTTOM,
+      duration: toastDuration,
     );
 
-    toast.show(context);
-
-    */
+    if (scaffoldKey != null) {
+      scaffoldKey.currentState.showSnackBar(snackBar);
+    } else if (context != null) {
+      Scaffold.of(context).showSnackBar(snackBar);
+    } else {
+      throw 'scaffoldKey or context argument is required.';
+    }
   }
 }

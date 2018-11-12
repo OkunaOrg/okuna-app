@@ -119,7 +119,7 @@ class OBMainPageState extends State<OBMainPage> {
           return false;
         }
 
-        if(_lastIndex == 0 && index == 0){
+        if (_lastIndex == 0 && index == 0) {
           _homePostsController.scrollToTop();
         }
 

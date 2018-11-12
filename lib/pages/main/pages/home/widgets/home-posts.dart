@@ -4,6 +4,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
@@ -25,6 +26,7 @@ class OBHomePostsState extends State<OBHomePosts> {
   List<Post> _posts;
   bool _needsBootstrap;
   UserService _userService;
+  ToastService _toastService;
   StreamSubscription _loggedInUserChangeSubscription;
   ScrollController _postsScrollController;
 
@@ -53,6 +55,7 @@ class OBHomePostsState extends State<OBHomePosts> {
   Widget build(BuildContext context) {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
+    _toastService = provider.toastService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -100,15 +103,21 @@ class OBHomePostsState extends State<OBHomePosts> {
   }
 
   Future<void> _refreshPosts() async {
-    _posts = (await _userService.getAllPosts()).posts;
-    _setPosts(_posts);
-    _setLoadingFinished(false);
+    try {
+      _posts = (await _userService.getAllPosts()).posts;
+      _setPosts(_posts);
+      _setLoadingFinished(false);
+    } on HttpieConnectionRefusedError catch (error) {
+      _onConnectionRefusedError(error);
+    } catch (error) {
+      _onUnknownError(error);
+    }
   }
 
   Future<bool> _loadMorePosts() async {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
-    try{
+    try {
       var morePosts = (await _userService.getAllPosts(maxId: lastPostId)).posts;
 
       if (morePosts.length == 0) {
@@ -118,13 +127,14 @@ class OBHomePostsState extends State<OBHomePosts> {
           _posts.addAll(morePosts);
         });
       }
-
       return true;
-    } on HttpieConnectionRefusedError {
-      return false;
-    } catch(error){
-      return false;
+    } on HttpieConnectionRefusedError catch (error) {
+      _onConnectionRefusedError(error);
+    } catch (error) {
+      _onUnknownError(error);
     }
+
+    return false;
   }
 
   void _setPosts(List<Post> posts) {
@@ -137,6 +147,14 @@ class OBHomePostsState extends State<OBHomePosts> {
     setState(() {
       _loadingFinished = loadingFinished;
     });
+  }
+
+  void _onConnectionRefusedError(HttpieConnectionRefusedError error) {
+    _toastService.error(message: 'No internet connection', context: context);
+  }
+
+  void _onUnknownError(Error error) {
+    _toastService.error(message: 'Unknown error', context: context);
   }
 }
 
@@ -172,9 +190,14 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBIcon(OBIcons.error, size: OBIconSize.small,),
-            SizedBox(width: 10.0,),
-            Text('Could not load more posts.')
+            OBIcon(
+              OBIcons.error,
+              size: OBIconSize.small,
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Text('Failed to load more posts.')
           ],
         ),
       );
@@ -204,7 +227,9 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             OBIcon(OBIcons.finish),
-            SizedBox(width: 10.0,),
+            SizedBox(
+              width: 10.0,
+            ),
             Text('No more posts to retrieve.')
           ],
         ),
