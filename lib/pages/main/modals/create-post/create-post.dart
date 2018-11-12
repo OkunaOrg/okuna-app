@@ -85,6 +85,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     _toastService = openbookProvider.toastService;
 
     return Scaffold(
+        backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: _buildAppBar(),
         body: Container(
