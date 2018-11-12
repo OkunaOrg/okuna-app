@@ -18,6 +18,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
+  VoidCallback onPostCreated;
+
+  CreatePostModal({this.onPostCreated});
+
   @override
   State<StatefulWidget> createState() {
     return CreatePostModalState();
@@ -99,15 +103,13 @@ class CreatePostModalState extends State<CreatePostModal> {
           text: _textController.text, image: _postImage);
       // Remove modal
       Navigator.pop(context);
+      if (widget.onPostCreated != null) widget.onPostCreated();
     } on HttpieConnectionRefusedError {
       _toastService.error(
-          scaffoldKey: _scaffoldKey,
-          message:
-              'No internet connection');
+          scaffoldKey: _scaffoldKey, message: 'No internet connection');
       _setCreatePostInProgress(false);
     } catch (e) {
-      _toastService.error(
-          scaffoldKey: _scaffoldKey, message: 'Unknown error.');
+      _toastService.error(scaffoldKey: _scaffoldKey, message: 'Unknown error.');
       _setCreatePostInProgress(false);
       rethrow;
     }

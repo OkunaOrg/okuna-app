@@ -171,7 +171,9 @@ class OBMainPageState extends State<OBMainPage> {
     Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
         builder: (BuildContext context) {
-          return CreatePostModal();
+          return CreatePostModal(onPostCreated: (){
+            _homePostsController.scrollToTop();
+          });
         }));
   }
 
