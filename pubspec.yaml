@@ -13,6 +13,7 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  timeago: ^2.0.9
   loadmore: ^1.0.1
   pigment: ^1.0.3
   flushbar: ^1.1.0

@@ -19,9 +19,14 @@ class OBPostHeader extends StatelessWidget {
           Icons.more_vert,
           color: Colors.black,
         ),
-        title: Text(
-          _post.getCreatorUsername(),
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              _post.getCreatorUsername(),
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
     );

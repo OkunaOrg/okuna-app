@@ -2,11 +2,13 @@ import 'package:Openbook/models/post-comment.dart';
 import 'package:Openbook/models/post-comments-list.dart';
 import 'package:Openbook/models/post-image.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 
 class Post {
   int id;
   int creatorId;
-  String created;
+  DateTime created;
   String text;
   PostImage image;
   PostCommentsList commentsList;
@@ -35,10 +37,12 @@ class Post {
     if (postCommentsData != null)
       postComments = PostCommentsList.fromJson(postCommentsData);
 
+    DateTime created = DateTime.parse(parsedJson['created']).toLocal();
+
     return Post(
         id: parsedJson['id'],
         creatorId: parsedJson['creator_id'],
-        created: parsedJson['email'],
+        created: created,
         text: parsedJson['text'],
         creator: postCreator,
         image: postImage,
@@ -75,5 +79,9 @@ class Post {
 
   String getText() {
     return text;
+  }
+
+  String getRelativeCreated(){
+    return timeago.format(created);
   }
 }
