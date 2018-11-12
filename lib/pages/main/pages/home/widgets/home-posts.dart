@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
@@ -34,7 +36,7 @@ class OBHomePostsState extends State<OBHomePosts> {
   @override
   void initState() {
     super.initState();
-    if(widget.controller != null) widget.controller.attach(this);
+    if (widget.controller != null) widget.controller.attach(this);
     _posts = [];
     _needsBootstrap = true;
     _loadingFinished = false;
@@ -63,7 +65,7 @@ class OBHomePostsState extends State<OBHomePosts> {
         child: LoadMore(
             whenEmptyLoad: false,
             isFinish: _loadingFinished,
-            textBuilder: DefaultLoadMoreTextBuilder.english,
+            delegate: OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
                 controller: _postsScrollController,
                 padding: kMaterialListPadding,
@@ -106,17 +108,23 @@ class OBHomePostsState extends State<OBHomePosts> {
   Future<bool> _loadMorePosts() async {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
-    var morePosts = (await _userService.getAllPosts(maxId: lastPostId)).posts;
+    try{
+      var morePosts = (await _userService.getAllPosts(maxId: lastPostId)).posts;
 
-    if (morePosts.length == 0) {
-      _setLoadingFinished(true);
-    } else {
-      setState(() {
-        _posts.addAll(morePosts);
-      });
+      if (morePosts.length == 0) {
+        _setLoadingFinished(true);
+      } else {
+        setState(() {
+          _posts.addAll(morePosts);
+        });
+      }
+
+      return true;
+    } on HttpieConnectionRefusedError {
+      return false;
+    } catch(error){
+      return false;
     }
-
-    return true;
   }
 
   void _setPosts(List<Post> posts) {
@@ -145,7 +153,64 @@ class OBHomePostsController {
     _homePostsState.scrollToTop();
   }
 
-  bool isAttached(){
+  bool isAttached() {
     return _homePostsState != null;
+  }
+}
+
+class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
+  const OBHomePostsLoadMoreDelegate();
+
+  @override
+  Widget buildChild(LoadMoreStatus status,
+      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.english}) {
+    String text = builder(status);
+
+    if (status == LoadMoreStatus.fail) {
+      return Container(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            OBIcon(OBIcons.error, size: OBIconSize.small,),
+            SizedBox(width: 10.0,),
+            Text('Could not load more posts.')
+          ],
+        ),
+      );
+    }
+    if (status == LoadMoreStatus.idle) {
+      // No clue why is this even a state.
+      return SizedBox();
+    }
+    if (status == LoadMoreStatus.loading) {
+      return Container(
+          child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: 20.0,
+            maxWidth: 20.0,
+          ),
+          child: CircularProgressIndicator(
+            strokeWidth: 2.0,
+          ),
+        ),
+      ));
+    }
+    if (status == LoadMoreStatus.nomore) {
+      return Container(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            OBIcon(OBIcons.finish),
+            SizedBox(width: 10.0,),
+            Text('No more posts to retrieve.')
+          ],
+        ),
+      );
+    }
+
+    return Text(text);
   }
 }

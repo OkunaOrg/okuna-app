@@ -89,6 +89,9 @@ flutter:
     - assets/images/icons/comments-icon.png
     - assets/images/icons/comment-icon.png
     - assets/images/icons/react-icon.png
+    - assets/images/icons/finish-icon.png
+    - assets/images/icons/finish-icon.png
+    - assets/images/icons/load-more-posts-icon.gif
     - assets/images/loading.gif
     - .env.json
 
