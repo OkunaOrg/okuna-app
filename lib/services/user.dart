@@ -17,6 +17,7 @@ class UserService {
 
   static const STORAGE_KEY_AUTH_TOKEN = 'authToken';
   static const STORAGE_KEY_USER_DATA = 'data';
+  static const STORAGE_FIRST_POSTS_DATA = 'firstPostsData';
 
   AuthApiService _authApiService;
   HttpieService _httpieService;
@@ -48,6 +49,7 @@ class UserService {
   }
 
   Future<void> logout() async {
+    await _removeStoredFirstPostsData();
     await _removeStoredUserData();
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
@@ -118,11 +120,31 @@ class UserService {
   }
 
   Future<PostsList> getAllPosts(
-      {List<int> listIds, List<int> circleIds, int maxId, int count}) async {
-    HttpieResponse response = await _postsApiService.getAllPosts(
-        listIds: listIds, circleIds: circleIds, maxId: maxId, count: count);
-    _checkResponseIsOk(response);
-    return PostsList.fromJson(json.decode(response.body));
+      {List<int> listIds,
+      List<int> circleIds,
+      int maxId,
+      int count,
+      bool areFirstPosts = false}) async {
+    try {
+      HttpieResponse response = await _postsApiService.getAllPosts(
+          listIds: listIds, circleIds: circleIds, maxId: maxId, count: count);
+      _checkResponseIsOk(response);
+      String postsData = response.body;
+      if (areFirstPosts) {
+        this._storeFirstPostsData(postsData);
+      }
+      return _makePostsList(postsData);
+    } on HttpieConnectionRefusedError {
+      if(areFirstPosts){
+        // Response failed. Use stored first posts.
+        String firstPostsData = await this._getStoredFirstPostsData();
+        if (firstPostsData != null) {
+          var postsList = _makePostsList(firstPostsData);
+          return postsList;
+        }
+      }
+      rethrow;
+    }
   }
 
   Future<Post> createPost(
@@ -191,8 +213,24 @@ class UserService {
     return _userStorage.get(STORAGE_KEY_USER_DATA);
   }
 
+  Future<void> _storeFirstPostsData(String firstPostsData) {
+    return _userStorage.set(STORAGE_FIRST_POSTS_DATA, firstPostsData);
+  }
+
+  Future<void> _removeStoredFirstPostsData() async {
+    _userStorage.remove(STORAGE_FIRST_POSTS_DATA);
+  }
+
+  Future<String> _getStoredFirstPostsData() async {
+    return _userStorage.get(STORAGE_FIRST_POSTS_DATA);
+  }
+
   User _makeUser(String userData) {
     return User.fromJson(json.decode(userData));
+  }
+
+  PostsList _makePostsList(String postsData) {
+    return PostsList.fromJson(json.decode(postsData));
   }
 }
 

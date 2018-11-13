@@ -62,6 +62,10 @@ class OBHomePostsState extends State<OBHomePosts> {
       _needsBootstrap = false;
     }
 
+    return _buildTimeline();
+  }
+
+  Widget _buildTimeline() {
     return RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _onRefresh,
@@ -94,7 +98,7 @@ class OBHomePostsState extends State<OBHomePosts> {
   }
 
   Future<void> _onRefresh() {
-    return _refreshPosts();
+    return _refreshPosts(areFirstPosts: false);
   }
 
   void _onLoggedInUserChange(User newUser) async {
@@ -102,9 +106,9 @@ class OBHomePostsState extends State<OBHomePosts> {
     _refreshPosts();
   }
 
-  Future<void> _refreshPosts() async {
+  Future<void> _refreshPosts({areFirstPosts = true}) async {
     try {
-      _posts = (await _userService.getAllPosts()).posts;
+      _posts = (await _userService.getAllPosts(areFirstPosts: areFirstPosts)).posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
     } on HttpieConnectionRefusedError catch (error) {
@@ -132,6 +136,7 @@ class OBHomePostsState extends State<OBHomePosts> {
       _onConnectionRefusedError(error);
     } catch (error) {
       _onUnknownError(error);
+      rethrow;
     }
 
     return false;
