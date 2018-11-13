@@ -1,6 +1,7 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth-api.dart';
 import 'package:Openbook/services/environment-loader.dart';
+import 'package:Openbook/services/file-cache.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts-api.dart';
@@ -36,6 +37,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StorageService storageService = StorageService();
   UserService userService = UserService();
   ToastService toastService = ToastService();
+  FileCacheService fileCacheService = FileCacheService();
+
   LocalizationService localizationService;
 
   @override

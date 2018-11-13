@@ -108,7 +108,8 @@ class OBHomePostsState extends State<OBHomePosts> {
 
   Future<void> _refreshPosts({areFirstPosts = true}) async {
     try {
-      _posts = (await _userService.getAllPosts(areFirstPosts: areFirstPosts)).posts;
+      _posts =
+          (await _userService.getAllPosts(areFirstPosts: areFirstPosts)).posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
     } on HttpieConnectionRefusedError catch (error) {
@@ -195,14 +196,11 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBIcon(
-              OBIcons.error,
-              size: OBIconSize.small,
-            ),
+            Icon(Icons.refresh),
             SizedBox(
               width: 10.0,
             ),
-            Text('Failed to load more posts.')
+            Text('Tap to retry loading posts.')
           ],
         ),
       );

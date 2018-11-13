@@ -13,6 +13,8 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  flutter_cache_manager: ^0.2.0+1
+  cached_network_image: ^0.5.0+1
   timeago: ^2.0.9
   loadmore: ^1.0.1
   pigment: ^1.0.3
