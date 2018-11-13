@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/main/modals/create-post/create-post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
-import 'package:Openbook/pages/main/pages/home.dart';
+import 'package:Openbook/pages/main/pages/home/home.dart';
+import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
 import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
@@ -15,19 +16,21 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatefulWidget {
+class OBMainPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainPageState();
+    return OBMainPageState();
   }
 }
 
-class MainPageState extends State<MainPage> {
+class OBMainPageState extends State<OBMainPage> {
   @override
   UserService _userService;
   int _currentIndex;
+  int _lastIndex;
   bool _needsBootstrap;
   StreamSubscription _loggedInUserChangeSubscription;
+  OBHomePostsController _homePostsController;
 
   List<Widget> _tabPages;
 
@@ -35,13 +38,17 @@ class MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _needsBootstrap = true;
+    _lastIndex = 0;
     _currentIndex = 0;
+    _homePostsController = OBHomePostsController();
     // Caching to preserve state
     _tabPages = [
-      MainHomePage(),
-      MainSearchPage(),
-      MainNotificationsPage(),
-      MainCommunitiesPage()
+      OBMainHomePage(
+        homePostsController: _homePostsController,
+      ),
+      OBMainSearchPage(),
+      OBMainNotificationsPage(),
+      OBMainCommunitiesPage()
     ];
   }
 
@@ -62,7 +69,7 @@ class MainPageState extends State<MainPage> {
     }
 
     return Scaffold(
-      drawer: MainDrawer(),
+      drawer: OBMainDrawer(),
       body: OBCupertinoTabScaffold(
         tabBuilder: (BuildContext context, int index) {
           return CupertinoTabView(
@@ -101,8 +108,6 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget _createTabBar() {
-    double tabBarIconsSize = 20.0;
-
     return OBCupertinoTabBar(
       backgroundColor: Colors.white,
       currentIndex: _currentIndex,
@@ -114,6 +119,11 @@ class MainPageState extends State<MainPage> {
           return false;
         }
 
+        if (_lastIndex == 0 && index == 0) {
+          _homePostsController.scrollToTop();
+        }
+
+        _lastIndex = index;
         return true;
       },
       items: [
@@ -124,28 +134,31 @@ class MainPageState extends State<MainPage> {
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.search)),
+          icon:
+              _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.search)),
           activeIcon: OBIcon(OBIcons.search),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.createPost)),
+          icon: _buildBottomNavigationBarInactiveItemIcon(
+              OBIcon(OBIcons.createPost)),
           activeIcon: OBIcon(OBIcons.createPost),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.notifications)),
+          icon: _buildBottomNavigationBarInactiveItemIcon(
+              OBIcon(OBIcons.notifications)),
           activeIcon: OBIcon(OBIcons.notifications),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.communities)),
+          icon: _buildBottomNavigationBarInactiveItemIcon(
+              OBIcon(OBIcons.communities)),
           activeIcon: OBIcon(OBIcons.communities),
         ),
       ],
     );
   }
-
 
   Widget _buildBottomNavigationBarInactiveItemIcon(Widget icon) {
     return Opacity(
@@ -158,7 +171,9 @@ class MainPageState extends State<MainPage> {
     Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
         builder: (BuildContext context) {
-          return CreatePostModal();
+          return CreatePostModal(onPostCreated: (){
+            _homePostsController.scrollToTop();
+          });
         }));
   }
 

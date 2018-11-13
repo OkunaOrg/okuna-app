@@ -68,51 +68,51 @@ class MyApp extends StatelessWidget {
             /// something before loading any route, therefore this ugliness.
             '/': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return MainPage();
+              return OBMainPage();
             },
             '/auth': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthSplashPage();
+              return OBAuthSplashPage();
             },
             '/auth/get-started': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthGetStartedPage();
+              return OBAuthGetStartedPage();
             },
             '/auth/birthday_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthBirthdayStepPage();
+              return OBAuthBirthdayStepPage();
             },
             '/auth/name_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthNameStepPage();
+              return OBAuthNameStepPage();
             },
             '/auth/username_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthUsernameStepPage();
+              return OBAuthUsernameStepPage();
             },
             '/auth/email_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthEmailStepPage();
+              return OBAuthEmailStepPage();
             },
             '/auth/password_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthPasswordStepPage();
+              return OBAuthPasswordStepPage();
             },
             '/auth/avatar_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthAvatarStepPage();
+              return OBAuthAvatarStepPage();
             },
             '/auth/submit_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthSubmitPage();
+              return OBAuthSubmitPage();
             },
             '/auth/done_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthDonePage();
+              return OBAuthDonePage();
             },
             '/auth/login': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return AuthLoginPage();
+              return OBAuthLoginPage();
             }
           }),
     );

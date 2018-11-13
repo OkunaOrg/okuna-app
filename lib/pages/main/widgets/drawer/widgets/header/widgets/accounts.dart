@@ -2,13 +2,13 @@ import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
 import 'package:Openbook/widgets/avatars/user-avatar.dart';
 import 'package:flutter/material.dart';
 
-class MainDrawerHeaderAccounts extends StatelessWidget {
+class OBMainDrawerHeaderAccounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        LoggedInUserAvatar(
-          size: UserAvatarSize.medium,
+        OBLoggedInUserAvatar(
+          size: OBUserAvatarSize.medium,
         ),
         Expanded(
           child: Row(

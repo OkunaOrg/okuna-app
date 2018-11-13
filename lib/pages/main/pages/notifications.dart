@@ -1,15 +1,14 @@
-import 'package:Openbook/pages/main/widgets/avatar-drawer-opener.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainNotificationsPage extends StatefulWidget {
+class OBMainNotificationsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainNotificationsPageState();
+    return OBMainNotificationsPageState();
   }
 }
 
-class MainNotificationsPageState extends State<MainNotificationsPage> {
+class OBMainNotificationsPageState extends State<OBMainNotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(

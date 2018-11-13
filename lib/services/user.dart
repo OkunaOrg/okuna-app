@@ -8,14 +8,16 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/auth-api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/posts-api.dart';
-import 'package:Openbook/services/secure-storage.dart';
+import 'package:Openbook/services/storage.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserService {
-  SecureStorageService _secureStorageService;
+  Storage _userStorage;
 
-  static const STORAGE_AUTH_TOKEN_KEY = 'authToken';
+  static const STORAGE_KEY_AUTH_TOKEN = 'authToken';
+  static const STORAGE_KEY_USER_DATA = 'data';
+  static const STORAGE_FIRST_POSTS_DATA = 'firstPostsData';
 
   AuthApiService _authApiService;
   HttpieService _httpieService;
@@ -42,11 +44,13 @@ class UserService {
     _httpieService = httpieService;
   }
 
-  void setSecureStorageService(SecureStorageService secureStorageService) {
-    _secureStorageService = secureStorageService;
+  void setStorageService(StorageService storageService) {
+    _userStorage = storageService.getSecureStorage(namespace: 'user');
   }
 
   Future<void> logout() async {
+    await _removeStoredFirstPostsData();
+    await _removeStoredUserData();
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
     _removeLoggedInUser();
@@ -80,11 +84,23 @@ class UserService {
   Future<void> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
-    HttpieResponse response =
-        await _authApiService.getUserWithAuthToken(_authToken);
-    _checkResponseIsOk(response);
-    var user = User.fromJson(json.decode(response.body));
-    _setLoggedInUser(user);
+    try {
+      HttpieResponse response =
+          await _authApiService.getUserWithAuthToken(_authToken);
+      _checkResponseIsOk(response);
+      var userData = response.body;
+      await _storeUserData(userData);
+      var user = _makeUser(userData);
+      _setLoggedInUser(user);
+    } on HttpieConnectionRefusedError {
+      // Response failed. Use stored user.
+      String userData = await this._getStoredUserData();
+      if (userData != null) {
+        var user = _makeUser(userData);
+        _setLoggedInUser(user);
+      }
+      rethrow;
+    }
   }
 
   Future<bool> loginWithStoredAuthToken() async {
@@ -103,10 +119,32 @@ class UserService {
     return _loggedInUser != null;
   }
 
-  Future<PostsList> getAllPosts() async {
-    HttpieResponse response = await _postsApiService.getAllPosts();
-    _checkResponseIsOk(response);
-    return PostsList.fromJson(json.decode(response.body));
+  Future<PostsList> getAllPosts(
+      {List<int> listIds,
+      List<int> circleIds,
+      int maxId,
+      int count,
+      bool areFirstPosts = false}) async {
+    try {
+      HttpieResponse response = await _postsApiService.getAllPosts(
+          listIds: listIds, circleIds: circleIds, maxId: maxId, count: count);
+      _checkResponseIsOk(response);
+      String postsData = response.body;
+      if (areFirstPosts) {
+        this._storeFirstPostsData(postsData);
+      }
+      return _makePostsList(postsData);
+    } on HttpieConnectionRefusedError {
+      if(areFirstPosts){
+        // Response failed. Use stored first posts.
+        String firstPostsData = await this._getStoredFirstPostsData();
+        if (firstPostsData != null) {
+          var postsList = _makePostsList(firstPostsData);
+          return postsList;
+        }
+      }
+      rethrow;
+    }
   }
 
   Future<Post> createPost(
@@ -150,19 +188,49 @@ class UserService {
   }
 
   Future<void> _storeAuthToken(String authToken) {
-    return _secureStorageService.set(
-        key: STORAGE_AUTH_TOKEN_KEY, value: authToken);
+    return _userStorage.set(STORAGE_KEY_AUTH_TOKEN, authToken);
   }
 
   Future<String> _getStoredAuthToken() async {
-    String authToken =
-        await _secureStorageService.get(key: STORAGE_AUTH_TOKEN_KEY);
+    String authToken = await _userStorage.get(STORAGE_KEY_AUTH_TOKEN);
     if (authToken != null) _authToken = authToken;
     return authToken;
   }
 
   Future<void> _removeStoredAuthToken() async {
-    _secureStorageService.remove(key: STORAGE_AUTH_TOKEN_KEY);
+    _userStorage.remove(STORAGE_KEY_AUTH_TOKEN);
+  }
+
+  Future<void> _storeUserData(String userData) {
+    return _userStorage.set(STORAGE_KEY_USER_DATA, userData);
+  }
+
+  Future<void> _removeStoredUserData() async {
+    _userStorage.remove(STORAGE_KEY_USER_DATA);
+  }
+
+  Future<String> _getStoredUserData() async {
+    return _userStorage.get(STORAGE_KEY_USER_DATA);
+  }
+
+  Future<void> _storeFirstPostsData(String firstPostsData) {
+    return _userStorage.set(STORAGE_FIRST_POSTS_DATA, firstPostsData);
+  }
+
+  Future<void> _removeStoredFirstPostsData() async {
+    _userStorage.remove(STORAGE_FIRST_POSTS_DATA);
+  }
+
+  Future<String> _getStoredFirstPostsData() async {
+    return _userStorage.get(STORAGE_FIRST_POSTS_DATA);
+  }
+
+  User _makeUser(String userData) {
+    return User.fromJson(json.decode(userData));
+  }
+
+  PostsList _makePostsList(String postsData) {
+    return PostsList.fromJson(json.decode(postsData));
   }
 }
 

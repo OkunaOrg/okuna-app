@@ -6,14 +6,14 @@ import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
 import 'package:flutter/material.dart';
 
-class AuthPasswordStepPage extends StatefulWidget {
+class OBAuthPasswordStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AuthPasswordStepPageState();
+    return OBAuthPasswordStepPageState();
   }
 }
 
-class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
+class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   bool isSubmitted;
   bool passwordIsVisible;
   bool isBootstrapped;
@@ -199,7 +199,7 @@ class AuthPasswordStepPageState extends State<AuthPasswordStepPage> {
             new Expanded(
               child: Container(
                   color: Colors.transparent,
-                  child: AuthTextField(
+                  child: OBAuthTextField(
                     obscureText: !passwordIsVisible,
                     autocorrect: false,
                     onChanged: (String value) {

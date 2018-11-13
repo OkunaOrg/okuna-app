@@ -13,8 +13,12 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  flutter_cache_manager: ^0.2.0+1
+  cached_network_image: ^0.5.0+1
+  timeago: ^2.0.9
+  loadmore: ^1.0.1
   pigment: ^1.0.3
-  flushbar: ^1.0.1
+  flushbar: ^1.1.0
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
@@ -85,6 +89,13 @@ flutter:
     - assets/images/icons/success-icon.png
     - assets/images/icons/error-icon.png
     - assets/images/icons/info-icon.png
+    - assets/images/icons/comments-icon.png
+    - assets/images/icons/comment-icon.png
+    - assets/images/icons/react-icon.png
+    - assets/images/icons/finish-icon.png
+    - assets/images/icons/finish-icon.png
+    - assets/images/icons/load-more-posts-icon.gif
+    - assets/images/loading.gif
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

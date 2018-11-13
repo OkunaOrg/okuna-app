@@ -1,12 +1,12 @@
 import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
 import 'package:flutter/material.dart';
 
-class MainAvatarDrawerOpener extends StatelessWidget {
+class OBLoggedInUserAvatarDrawerOpener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        LoggedInUserAvatar(onPressed: (){
+        OBLoggedInUserAvatar(onPressed: (){
           Scaffold.of(context).openDrawer();
         },)
       ],

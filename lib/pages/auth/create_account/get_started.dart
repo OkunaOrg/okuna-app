@@ -3,7 +3,7 @@ import 'package:Openbook/widgets/buttons/primary-button.dart';
 import 'package:Openbook/widgets/buttons/secondary-button.dart';
 import 'package:flutter/material.dart';
 
-class AuthGetStartedPage extends StatelessWidget {
+class OBAuthGetStartedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var localizationService = LocalizationService.of(context);

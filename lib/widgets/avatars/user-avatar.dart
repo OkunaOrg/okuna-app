@@ -1,38 +1,48 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-enum UserAvatarSize { small, medium }
+enum OBUserAvatarSize { small, medium }
 
-class UserAvatar extends StatelessWidget {
-  final ImageProvider avatarImage;
-  final UserAvatarSize size;
+class OBUserAvatar extends StatelessWidget {
+  final String avatarUrl;
+  final OBUserAvatarSize size;
   final VoidCallback onPressed;
 
   static const double AVATAR_SIZE_SMALL = 30.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
-  static const ImageProvider DEFAULT_AVATAR =
-      AssetImage('assets/images/avatar.png');
+  static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
-  UserAvatar(
-      {this.avatarImage = DEFAULT_AVATAR,
-      this.size = UserAvatarSize.small,
-      this.onPressed});
+  OBUserAvatar(
+      {this.avatarUrl, this.size = OBUserAvatarSize.small, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     double avatarSize;
 
-    UserAvatarSize finalSize = size ?? UserAvatarSize.small;
+    OBUserAvatarSize finalSize = size ?? OBUserAvatarSize.small;
 
     switch (finalSize) {
-      case UserAvatarSize.small:
+      case OBUserAvatarSize.small:
         avatarSize = AVATAR_SIZE_SMALL;
         break;
-      case UserAvatarSize.medium:
+      case OBUserAvatarSize.medium:
         avatarSize = AVATAR_SIZE_MEDIUM;
         break;
     }
 
-    var finalAvatarImage = avatarImage ?? DEFAULT_AVATAR;
+    Widget finalAvatarImage;
+
+    var placeholderImage = Image.asset(DEFAULT_AVATAR_ASSET);
+
+    if (avatarUrl != null) {
+      finalAvatarImage = CachedNetworkImage(
+        imageUrl: avatarUrl,
+        placeholder: placeholderImage,
+        errorWidget: placeholderImage,
+      );
+    } else {
+      finalAvatarImage = placeholderImage;
+    }
 
     double avatarBorderRadius = 10.0;
 
@@ -45,13 +55,7 @@ class UserAvatar extends StatelessWidget {
       child: Container(
           child: ClipRRect(
         borderRadius: BorderRadius.circular(avatarBorderRadius),
-        child: Container(
-          child: FadeInImage(
-            placeholder: DEFAULT_AVATAR,
-            image: finalAvatarImage,
-            fit: BoxFit.cover,
-          ),
-        ),
+        child: Container(child: finalAvatarImage),
       )),
     );
 

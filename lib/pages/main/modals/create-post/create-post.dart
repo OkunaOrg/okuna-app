@@ -18,6 +18,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
+  VoidCallback onPostCreated;
+
+  CreatePostModal({this.onPostCreated});
+
   @override
   State<StatefulWidget> createState() {
     return CreatePostModalState();
@@ -50,9 +54,12 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   bool _isCreatePostInProgress;
 
+  GlobalKey<ScaffoldState> _scaffoldKey;
+
   @override
   void initState() {
     super.initState();
+    _scaffoldKey = GlobalKey<ScaffoldState>();
     _textController = TextEditingController();
     _textController.addListener(_onPostTextChanged);
     _charactersCount = 0;
@@ -77,14 +84,14 @@ class CreatePostModalState extends State<CreatePostModal> {
     _validationService = openbookProvider.validationService;
     _toastService = openbookProvider.toastService;
 
-    return Material(
-      child: CupertinoPageScaffold(
-          navigationBar: _buildNavigationBar(),
-          child: Container(
-              child: Column(
-                children: <Widget>[_buildNewPostContent(), _buildPostActions()],
-              ))),
-    );
+    return Scaffold(
+        backgroundColor: Colors.white,
+        key: _scaffoldKey,
+        appBar: _buildNavigationBar(),
+        body: Container(
+            child: Column(
+          children: <Widget>[_buildNewPostContent(), _buildPostActions()],
+        )));
   }
 
   Future<void> createPost() async {
@@ -95,19 +102,13 @@ class CreatePostModalState extends State<CreatePostModal> {
           text: _textController.text, image: _postImage);
       // Remove modal
       Navigator.pop(context);
-      // Show toast
-      _toastService.success(
-          message: '🎉 Your post has been created!', context: context);
+      if (widget.onPostCreated != null) widget.onPostCreated();
     } on HttpieConnectionRefusedError {
       _toastService.error(
-          title: 'Can\'t reach Openbook.',
-          message:
-              'Please make sure you are connected to the internet and try again.',
-          context: context);
+          scaffoldKey: _scaffoldKey, message: 'No internet connection');
       _setCreatePostInProgress(false);
     } catch (e) {
-      _toastService.error(
-          message: 'Uh.. something is not right.', context: context);
+      _toastService.error(scaffoldKey: _scaffoldKey, message: 'Unknown error.');
       _setCreatePostInProgress(false);
       rethrow;
     }
@@ -145,8 +146,8 @@ class CreatePostModalState extends State<CreatePostModal> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              LoggedInUserAvatar(
-                size: UserAvatarSize.medium,
+              OBLoggedInUserAvatar(
+                size: OBUserAvatarSize.medium,
               ),
               SizedBox(
                 height: 12.0,
@@ -307,7 +308,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       this._postImage = image;
       _hasImage = true;
 
-      var postImageWidget = PostImagePreviewer(
+      var postImageWidget = OBPostImagePreviewer(
         _postImage,
         onRemove: () {
           _removePostImage();

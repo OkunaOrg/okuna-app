@@ -22,7 +22,19 @@ class PostsApiService {
 
   Future<HttpieResponse> getAllPosts(
       {List<int> listIds, List<int> circleIds, int maxId, int count}) {
-    return _httpService.postJSON('$apiURL$GET_POSTS_PATH',
+
+    Map<String, dynamic> queryParams = {};
+
+    if(listIds != null) queryParams['lists_ids'] = listIds;
+
+    if(circleIds != null) queryParams['circle_ids'] = circleIds;
+
+    if(count != null) queryParams['count'] = count;
+
+    if(maxId != null) queryParams['max_id'] = maxId;
+
+    return _httpService.get('$apiURL$GET_POSTS_PATH',
+        queryParameters: queryParams,
         appendAuthorizationToken: true);
   }
 

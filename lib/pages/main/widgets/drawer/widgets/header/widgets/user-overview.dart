@@ -3,7 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:flutter/material.dart';
 
-class MainDrawerHeaderUserOverview extends StatelessWidget {
+class OBMainDrawerHeaderUserOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);

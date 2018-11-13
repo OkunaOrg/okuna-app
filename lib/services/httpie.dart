@@ -66,9 +66,18 @@ class HttpieService {
   }
 
   Future<HttpieResponse> get(url,
-      {Map<String, String> headers, bool appendLanguageHeader}) async {
+      {Map<String, String> headers,
+      Map<String, dynamic> queryParameters,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
     var finalHeaders = _getHeadersWithConfig(
-        headers: headers, appendLanguageHeader: appendLanguageHeader);
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+
+    if (queryParameters != null && queryParameters.keys.length > 0) {
+      url = url + _makeQueryString(queryParameters);
+    }
 
     try {
       var response = await http.get(url, headers: finalHeaders);
@@ -166,13 +175,9 @@ class HttpieService {
       {Map<String, String> headers = const {},
       bool appendLanguageHeader,
       bool appendAuthorizationToken}) {
-    Map<String, String> finalHeaders = Map.from(headers);
+    headers = headers ?? {};
 
-    /// NOTE If we set the default value in the parameters, if other functions
-    /// pass an empty argument, it will become null and override the default value
-    /// This is a very weird thing of dart. It should take the default value
-    /// when the value passed down is null.
-    /// See https://github.com/dart-lang/sdk/issues/33918
+    Map<String, String> finalHeaders = Map.from(headers);
 
     appendLanguageHeader = appendLanguageHeader ?? true;
     appendAuthorizationToken = appendAuthorizationToken ?? false;
@@ -195,6 +200,14 @@ class HttpieService {
       }
     }
     throw error;
+  }
+
+  String _makeQueryString(Map<String, dynamic> queryParameters) {
+    String queryString = '?';
+    queryParameters.forEach((key, value) {
+      queryString += '$key=' + value.toString();
+    });
+    return queryString;
   }
 }
 
@@ -264,7 +277,14 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
 
   String toString() {
     String statusCode = response.statusCode.toString();
-    return 'HttpieRequestError:$statusCode';
+    String stringifiedError = 'HttpieRequestError:$statusCode';
+
+    if (response is HttpieResponse) {
+      var castedResponse = this.response as HttpieResponse;
+      stringifiedError = stringifiedError + ' | ' + castedResponse.body;
+    }
+
+    return stringifiedError;
   }
 
   Future<String> body() async {
