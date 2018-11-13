@@ -1,21 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 enum OBUserAvatarSize { small, medium }
 
 class OBUserAvatar extends StatelessWidget {
-  final ImageProvider avatarImage;
+  final String avatarUrl;
   final OBUserAvatarSize size;
   final VoidCallback onPressed;
 
   static const double AVATAR_SIZE_SMALL = 30.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
-  static const ImageProvider DEFAULT_AVATAR =
-      AssetImage('assets/images/avatar.png');
+  static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
   OBUserAvatar(
-      {this.avatarImage = DEFAULT_AVATAR,
-      this.size = OBUserAvatarSize.small,
-      this.onPressed});
+      {this.avatarUrl, this.size = OBUserAvatarSize.small, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,19 @@ class OBUserAvatar extends StatelessWidget {
         break;
     }
 
-    var finalAvatarImage = avatarImage ?? DEFAULT_AVATAR;
+    Widget finalAvatarImage;
+
+    var placeholderImage = Image.asset(DEFAULT_AVATAR_ASSET);
+
+    if (avatarUrl != null) {
+      finalAvatarImage = CachedNetworkImage(
+        imageUrl: avatarUrl,
+        placeholder: placeholderImage,
+        errorWidget: placeholderImage,
+      );
+    } else {
+      finalAvatarImage = placeholderImage;
+    }
 
     double avatarBorderRadius = 10.0;
 
@@ -45,13 +55,7 @@ class OBUserAvatar extends StatelessWidget {
       child: Container(
           child: ClipRRect(
         borderRadius: BorderRadius.circular(avatarBorderRadius),
-        child: Container(
-          child: FadeInImage(
-            placeholder: DEFAULT_AVATAR,
-            image: finalAvatarImage,
-            fit: BoxFit.cover,
-          ),
-        ),
+        child: Container(child: finalAvatarImage),
       )),
     );
 

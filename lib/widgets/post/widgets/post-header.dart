@@ -13,7 +13,7 @@ class OBPostHeader extends StatelessWidget {
       child: ListTile(
         leading: OBUserAvatar(
           size: OBUserAvatarSize.small,
-          avatarImage: NetworkImage(_post.getCreatorAvatar()),
+          avatarUrl: _post.getCreatorAvatar(),
         ),
         trailing: Icon(
           Icons.more_vert,

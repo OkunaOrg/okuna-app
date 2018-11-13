@@ -25,11 +25,11 @@ class OBLoggedInUserAvatar extends StatelessWidget {
 
         var avatarImage;
         if (user != null) {
-          avatarImage = NetworkImage(user.profile.avatar);
+          avatarImage = user.profile.avatar;
         }
 
         return OBUserAvatar(
-          avatarImage: avatarImage,
+          avatarUrl: avatarImage,
           size: size,
           onPressed: onPressed,
         );
