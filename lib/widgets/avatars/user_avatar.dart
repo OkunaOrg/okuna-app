@@ -49,7 +49,6 @@ class OBUserAvatar extends StatelessWidget {
 
     var avatar = Container(
       decoration: BoxDecoration(
-          color: Colors.black12,
           borderRadius: BorderRadius.circular(avatarBorderRadius)),
       height: avatarSize,
       width: avatarSize,
