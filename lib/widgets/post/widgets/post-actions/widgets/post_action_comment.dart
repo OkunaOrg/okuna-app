@@ -21,10 +21,10 @@ class OBPostActionComment extends StatelessWidget {
       color: Color.fromARGB(5, 0, 0, 0),
       textColor: Colors.black87,
       onPressed: () {
-        Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute<void>(
+        Navigator.of(context).push(CupertinoPageRoute<void>(
             builder: (BuildContext context) => Material(
-              child: OBCommentsPage(_post),
-            )));
+                  child: OBCommentsPage(_post),
+                )));
       },
     );
   }

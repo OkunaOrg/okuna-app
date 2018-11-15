@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/main/pages/comments/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
@@ -16,10 +17,12 @@ class OBCommentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return OBCupertinoPageScaffold(
+        backgroundColor: Colors.blue,
+        //resizeToAvoidBottomInset: true,
         navigationBar: _buildNavigationBar(),
-        child: SafeArea(
-          top: false,
+        child: Container(
+          color: Colors.greenAccent,
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

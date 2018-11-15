@@ -68,9 +68,8 @@ class OBMainPageState extends State<OBMainPage> {
       _needsBootstrap = false;
     }
 
-    return Scaffold(
-      drawer: OBMainDrawer(),
-      body: OBCupertinoTabScaffold(
+    return Material(
+      child: OBCupertinoTabScaffold(
         tabBuilder: (BuildContext context, int index) {
           return CupertinoTabView(
             builder: (BuildContext context) {
