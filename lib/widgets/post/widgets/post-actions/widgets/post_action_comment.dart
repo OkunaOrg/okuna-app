@@ -1,5 +1,5 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/main/pages/comments/comments.dart';
+import 'package:Openbook/pages/main/pages/post/post.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +23,7 @@ class OBPostActionComment extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).push(CupertinoPageRoute<void>(
             builder: (BuildContext context) => Material(
-                  child: OBCommentsPage(_post),
+                  child: OBPostPage(_post),
                 )));
       },
     );

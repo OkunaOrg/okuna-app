@@ -1,5 +1,5 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/main/pages/comments/widgets/page_scaffold.dart';
+import 'package:Openbook/pages/main/pages/post/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
@@ -10,10 +10,10 @@ import 'package:Openbook/widgets/post/widgets/post_timestamp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommentsPage extends StatelessWidget {
+class OBPostPage extends StatelessWidget {
   final Post post;
 
-  OBCommentsPage(this.post);
+  OBPostPage(this.post);
 
   @override
   Widget build(BuildContext context) {
