@@ -42,6 +42,23 @@ class HttpieService {
     }
   }
 
+  Future<HttpieResponse> delete(url,
+      {Map<String, String> headers,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
+    var finalHeaders = _getHeadersWithConfig(
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+
+    try {
+      var response = await http.delete(url, headers: finalHeaders);
+      return HttpieResponse(response);
+    } catch (error) {
+      _handleRequestError(error);
+    }
+  }
+
   Future<HttpieResponse> postJSON(url,
       {Map<String, String> headers = const {},
       body,

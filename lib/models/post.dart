@@ -1,5 +1,5 @@
 import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_comments_list.dart';
+import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_image.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -11,7 +11,7 @@ class Post {
   DateTime created;
   String text;
   PostImage image;
-  PostCommentsList commentsList;
+  PostCommentList commentsList;
   User creator;
 
   Post(
@@ -35,7 +35,7 @@ class Post {
     var postCommentsData = parsedJson['comments'];
     var postComments;
     if (postCommentsData != null)
-      postComments = PostCommentsList.fromJson(postCommentsData);
+      postComments = PostCommentList.fromJson(postCommentsData);
 
     DateTime created = DateTime.parse(parsedJson['created']).toLocal();
 

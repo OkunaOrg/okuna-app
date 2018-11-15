@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/auth_api.dart';
@@ -119,14 +121,14 @@ class UserService {
     return _loggedInUser != null;
   }
 
-  Future<PostsList> getAllPosts(
+  Future<PostsList> getTimelinePosts(
       {List<int> listIds,
       List<int> circleIds,
       int maxId,
       int count,
       bool areFirstPosts = false}) async {
     try {
-      HttpieResponse response = await _postsApiService.getAllPosts(
+      HttpieResponse response = await _postsApiService.getTimelinePosts(
           listIds: listIds, circleIds: circleIds, maxId: maxId, count: count);
       _checkResponseIsOk(response);
       String postsData = response.body;
@@ -135,7 +137,7 @@ class UserService {
       }
       return _makePostsList(postsData);
     } on HttpieConnectionRefusedError {
-      if(areFirstPosts){
+      if (areFirstPosts) {
         // Response failed. Use stored first posts.
         String firstPostsData = await this._getStoredFirstPostsData();
         if (firstPostsData != null) {
@@ -160,6 +162,15 @@ class UserService {
     String responseBody = await response.readAsString();
     return Post.fromJson(json.decode(responseBody));
   }
+
+  Future<void> deletePost(Post post) {}
+
+  Future<PostComment> commentPost(String text) {}
+
+  Future<void> deletePostCommnent(PostComment postComment) {}
+
+  Future<PostCommentList> getCommentsForPost(Post post,
+      {int count, int minId}) {}
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {
     if (response.isCreated()) return;

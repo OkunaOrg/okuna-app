@@ -1,17 +1,17 @@
 import 'package:Openbook/models/post_comment.dart';
 
-class PostCommentsList {
+class PostCommentList {
   final List<PostComment> comments;
 
-  PostCommentsList({
+  PostCommentList({
     this.comments,
   });
 
-  factory PostCommentsList.fromJson(List<dynamic> parsedJson) {
+  factory PostCommentList.fromJson(List<dynamic> parsedJson) {
     List<PostComment> postComments =
         parsedJson.map((postJson) => PostComment.fromJson(postJson)).toList();
 
-    return new PostCommentsList(
+    return new PostCommentList(
       comments: postComments,
     );
   }

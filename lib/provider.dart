@@ -6,6 +6,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
+import 'package:Openbook/services/string_template.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -38,6 +39,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   UserService userService = UserService();
   ToastService toastService = ToastService();
   FileCacheService fileCacheService = FileCacheService();
+  StringTemplateService stringTemplateService = StringTemplateService();
 
   LocalizationService localizationService;
 
@@ -54,6 +56,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setHttpieService(httpService);
     userService.setStorageService(storageService);
     postsApiService.setHttpieService(httpService);
+    postsApiService.setStringTemplateService(stringTemplateService);
   }
 
   void initAsyncState() async {
