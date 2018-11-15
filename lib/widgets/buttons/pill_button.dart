@@ -4,7 +4,8 @@ import 'package:pigment/pigment.dart';
 class OBPillButton extends StatelessWidget {
   final String text;
   final Widget icon;
-  final String hexColor;
+  final Color color;
+  final Color textColor;
 
   final VoidCallback onPressed;
 
@@ -12,25 +13,23 @@ class OBPillButton extends StatelessWidget {
       {@required this.text,
       @required this.icon,
       @required this.onPressed,
-      this.hexColor});
+      this.color,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
     var button = FlatButton(
-        textColor: Colors.white,
+        textColor: textColor ?? Colors.white,
         child: Row(
           children: <Widget>[
             icon,
             SizedBox(
               width: 10.0,
             ),
-            Text(
-              text,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            Text(text),
           ],
         ),
-        color: Pigment.fromString(hexColor),
+        color: color,
         onPressed: onPressed,
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(50.0)));

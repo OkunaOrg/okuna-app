@@ -243,7 +243,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     return [
       OBPillButton(
         text: 'Media',
-        hexColor: '#FCC14B',
+        color: Pigment.fromString('#FCC14B'),
         icon: OBIcon(OBIcons.media),
         onPressed: () async {
           _unfocusTextField();
@@ -253,7 +253,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       ),
       OBPillButton(
         text: 'Camera',
-        hexColor: '#00B7FF',
+        color: Pigment.fromString('#00B7FF'),
         icon: OBIcon(OBIcons.camera),
         onPressed: () async {
           _unfocusTextField();
@@ -263,7 +263,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       ),
       OBPillButton(
         text: 'GIF',
-        hexColor: '#0F0F0F',
+        color: Pigment.fromString('#0F0F0F'),
         icon: OBIcon(OBIcons.gif),
         onPressed: () {},
       ),
@@ -273,7 +273,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildBurnerPostAction() {
     return OBPillButton(
       text: 'Burner',
-      hexColor: '#F13A59',
+      color: Pigment.fromString('#F13A59'),
       icon: OBIcon(OBIcons.burner),
       onPressed: () {},
     );
@@ -282,7 +282,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildAudiencePostAction() {
     return OBPillButton(
       text: 'Audience',
-      hexColor: '#80E37A',
+      color: Pigment.fromString('#80E37A'),
       icon: OBIcon(OBIcons.audience),
       onPressed: () {},
     );
