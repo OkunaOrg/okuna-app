@@ -2,11 +2,12 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
-class OBMainDrawerBody extends StatelessWidget {
+class OBMainMenuBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = openbookProvider.localizationService;
+    var userService = openbookProvider.userService;
 
     return ListView(
       // Important: Remove any padding from the ListView.
@@ -52,6 +53,13 @@ class OBMainDrawerBody extends StatelessWidget {
             // ...
           },
         ),
+        ListTile(
+          leading: OBIcon(OBIcons.logout),
+          title: Text(localizationService.trans('DRAWER.LOGOUT')),
+          onTap: () {
+            userService.logout();
+          },
+        )
       ],
     );
   }

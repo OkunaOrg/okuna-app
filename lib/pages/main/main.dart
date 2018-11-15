@@ -5,16 +5,15 @@ import 'package:Openbook/pages/main/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home/home.dart';
 import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
+import 'package:Openbook/pages/main/pages/menu/menu.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
 import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
-import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
 import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -55,7 +54,8 @@ class OBMainPageState extends State<OBMainPage> {
       ),
       OBMainSearchPage(),
       OBMainNotificationsPage(),
-      OBMainCommunitiesPage()
+      OBMainCommunitiesPage(),
+      OBMainMenuPage()
     ];
   }
 
@@ -105,6 +105,9 @@ class OBMainPageState extends State<OBMainPage> {
         break;
       case 4:
         page = _tabPages[3];
+        break;
+      case 5:
+        page = _tabPages[4];
         break;
       default:
         throw 'Unhandled index';
@@ -156,10 +159,26 @@ class OBMainPageState extends State<OBMainPage> {
               size: 25.0, color: Pigment.fromString('#980df9')),
         ),
         BottomNavigationBarItem(
+            title: Container(),
+            icon: OBLoggedInUserAvatar(
+              size: OBUserAvatarSize.small,
+            ),
+            activeIcon: Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(500), border: Border.all(color: Colors.red)),
+              padding: EdgeInsets.all(2.0),
+              child: OBLoggedInUserAvatar(
+                size: OBUserAvatarSize.small,
+              ),
+            )),
+        BottomNavigationBarItem(
           title: Container(),
-          icon: OBLoggedInUserAvatar(
-            size: OBUserAvatarSize.small,
+          icon: Icon(
+            Icons.menu,
+            size: 25.0,
           ),
+          activeIcon: Icon(Icons.menu,
+              size: 25.0, color: Pigment.fromString('#ff9400')),
         ),
       ],
     );
