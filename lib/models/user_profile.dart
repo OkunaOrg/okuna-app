@@ -1,8 +1,8 @@
 class UserProfile {
-  int id;
-  String name;
-  String birthDate;
-  String avatar;
+  final int id;
+  final String name;
+  final String birthDate;
+  final String avatar;
 
   UserProfile({this.id, this.name, this.birthDate, this.avatar});
 

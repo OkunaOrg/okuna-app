@@ -1,8 +1,8 @@
 class PostComment {
-  int id;
-  int creatorId;
-  DateTime created;
-  String text;
+  final int id;
+  final int creatorId;
+  final DateTime created;
+  final String text;
 
   PostComment({this.id, this.created, this.text, this.creatorId});
 

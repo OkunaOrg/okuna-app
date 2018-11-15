@@ -6,13 +6,13 @@ import 'package:timeago/timeago.dart' as timeago;
 
 
 class Post {
-  int id;
-  int creatorId;
-  DateTime created;
-  String text;
-  PostImage image;
-  PostCommentList commentsList;
-  User creator;
+  final int id;
+  final int creatorId;
+  final DateTime created;
+  final String text;
+  final PostImage image;
+  final PostCommentList commentsList;
+  final User creator;
 
   Post(
       {this.id,

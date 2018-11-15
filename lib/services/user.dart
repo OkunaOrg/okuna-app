@@ -163,14 +163,34 @@ class UserService {
     return Post.fromJson(json.decode(responseBody));
   }
 
-  Future<void> deletePost(Post post) {}
+  Future<void> deletePost(Post post) async {
+    HttpieResponse response = await _postsApiService.deletePostWithId(post.id);
+    _checkResponseIsOk(response);
+  }
 
-  Future<PostComment> commentPost(String text) {}
+  Future<PostComment> commentPost(
+      {@required Post post, @required String text}) async {
+    HttpieResponse response =
+        await _postsApiService.commentPost(postId: post.id, text: text);
+    _checkResponseIsCreated(response);
+    return PostComment.fromJson(json.decode(response.body));
+  }
 
-  Future<void> deletePostCommnent(PostComment postComment) {}
+  Future<void> deletePostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.deletePostComment(
+        postCommentId: postComment.id, postId: post.id);
+    _checkResponseIsOk(response);
+  }
 
   Future<PostCommentList> getCommentsForPost(Post post,
-      {int count, int minId}) {}
+      {int count, int minId}) async {
+    HttpieResponse response = await _postsApiService
+        .getCommentsForPostWithId(post.id, count: count, minId: minId);
+    _checkResponseIsOk(response);
+
+    return PostCommentList.fromJson(json.decode(response.body));
+  }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {
     if (response.isCreated()) return;

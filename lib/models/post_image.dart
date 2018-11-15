@@ -1,5 +1,5 @@
 class PostImage {
-  String image;
+  final String image;
 
   PostImage({this.image});
 

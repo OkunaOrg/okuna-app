@@ -1,12 +1,12 @@
 import 'package:Openbook/models/user_profile.dart';
 
 class User {
-  int id;
-  String email;
-  String username;
-  UserProfile profile;
-  int followersCount;
-  int postsCount;
+  final int id;
+  final String email;
+  final String username;
+  final UserProfile profile;
+  final int followersCount;
+  final int postsCount;
 
   User(
       {this.username,
