@@ -10,17 +10,16 @@ class OBPostActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Expanded(
-          child: OBPostActionComment(_post),
-        ),
-        Expanded(
-          child: OBPostActionReact(_post),
-        )
-      ],
-    );
+    return Container(
+        padding: EdgeInsets.only(left: 20.0, top: 10.0),
+        height: 65.0,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            OBPostActionReact(_post),
+            SizedBox(width: 20.0,),
+            OBPostActionComment(_post)
+          ],
+        ));
   }
 }

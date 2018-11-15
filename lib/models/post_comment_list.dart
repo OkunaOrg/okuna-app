@@ -8,6 +8,7 @@ class PostCommentList {
   });
 
   factory PostCommentList.fromJson(List<dynamic> parsedJson) {
+
     List<PostComment> postComments =
         parsedJson.map((postJson) => PostComment.fromJson(postJson)).toList();
 

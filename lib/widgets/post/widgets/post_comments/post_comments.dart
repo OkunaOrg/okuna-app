@@ -9,17 +9,36 @@ class OBPostComments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasCommentsCount = _post.hasCommentsCount();
+    bool hasComments = _post.hasComments();
 
-    if (!_post.hasComments()) return SizedBox();
+    if (!hasCommentsCount && !hasComments) {
+      return SizedBox();
+    }
 
-    List<Widget> posts = [];
+    List<Widget> postComments = [];
 
-    _post.getPostComments().forEach((postComment) {
-      posts.add(OBPostComment(postComment));
-    });
+    if (hasComments) {
+      _post.getPostComments().forEach((postComment) {
+        postComments.add(OBPostComment(postComment));
+      });
+    }
 
-    return Column(
-      children: posts,
+    if (hasCommentsCount) {
+      int commentsCount = _post.commentsCount;
+      postComments.add(Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: Text('View all $commentsCount comments'),
+      ));
+    }
+
+    return Container(
+      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: postComments,
+      ),
     );
   }
 }

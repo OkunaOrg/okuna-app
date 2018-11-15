@@ -4,10 +4,11 @@ import 'package:Openbook/models/post_image.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-
 class Post {
   final int id;
   final int creatorId;
+  final int reactionsCount;
+  final int commentsCount;
   final DateTime created;
   final String text;
   final PostImage image;
@@ -21,6 +22,8 @@ class Post {
       this.creatorId,
       this.image,
       this.creator,
+      this.reactionsCount,
+      this.commentsCount,
       this.commentsList});
 
   factory Post.fromJson(Map<String, dynamic> parsedJson) {
@@ -44,6 +47,8 @@ class Post {
         creatorId: parsedJson['creator_id'],
         created: created,
         text: parsedJson['text'],
+        reactionsCount: parsedJson['reactions_count'],
+        commentsCount: parsedJson['comments_count'],
         creator: postCreator,
         image: postImage,
         commentsList: postComments);
@@ -59,6 +64,10 @@ class Post {
 
   bool hasComments() {
     return commentsList != null && commentsList.comments.length > 0;
+  }
+
+  bool hasCommentsCount() {
+    return commentsCount != null && commentsCount > 0;
   }
 
   List<PostComment> getPostComments() {
@@ -81,7 +90,7 @@ class Post {
     return text;
   }
 
-  String getRelativeCreated(){
+  String getRelativeCreated() {
     return timeago.format(created);
   }
 }

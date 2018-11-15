@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_image.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_text.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +25,12 @@ class OBPostBody extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: bodyItems,
-            ),
-          )
-        )
+            child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: bodyItems,
+          ),
+        ))
       ],
     );
   }

@@ -116,6 +116,7 @@ class OBHomePostsState extends State<OBHomePosts> {
       _onConnectionRefusedError(error);
     } catch (error) {
       _onUnknownError(error);
+      rethrow;
     }
   }
 

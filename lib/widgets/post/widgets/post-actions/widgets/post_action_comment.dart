@@ -9,16 +9,18 @@ class OBPostActionComment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: (){},
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          OBIcon(OBIcons.comment, size: OBIconSize.medium,),
-          SizedBox(width: 10.0,),
-          Text('Comment')
-        ],
-      ),
+    return ButtonTheme(
+      height: 50,
+      minWidth: 50,
+      child: FlatButton(
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(500.0)),
+          color: Color.fromARGB(5, 0, 0, 0),
+          onPressed: () {},
+          child: OBIcon(
+            OBIcons.comment,
+            size: OBIconSize.medium,
+          )),
     );
   }
 }

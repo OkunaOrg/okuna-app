@@ -16,13 +16,14 @@ class OBPost extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           OBPostHeader(_post),
           OBPostBody(_post),
-          OBPostTimestamp(_post),
           OBPostComments(_post),
           OBPostReactions(_post),
           OBPostActions(_post),
+          OBPostTimestamp(_post),
         ],
       ),
     );

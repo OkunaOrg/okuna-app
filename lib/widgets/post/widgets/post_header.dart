@@ -9,25 +9,23 @@ class OBPostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListTile(
-        leading: OBUserAvatar(
-          size: OBUserAvatarSize.small,
-          avatarUrl: _post.getCreatorAvatar(),
-        ),
-        trailing: Icon(
-          Icons.more_vert,
-          color: Colors.black,
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              _post.getCreatorUsername(),
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
+    return ListTile(
+      leading: OBUserAvatar(
+        size: OBUserAvatarSize.medium,
+        avatarUrl: _post.getCreatorAvatar(),
+      ),
+      trailing: Icon(
+        Icons.more_vert,
+        color: Colors.black,
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            _post.getCreatorUsername(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
       ),
     );
   }

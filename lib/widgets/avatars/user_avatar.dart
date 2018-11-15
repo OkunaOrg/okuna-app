@@ -8,8 +8,9 @@ class OBUserAvatar extends StatelessWidget {
   final OBUserAvatarSize size;
   final VoidCallback onPressed;
 
-  static const double AVATAR_SIZE_SMALL = 30.0;
-  static const double AVATAR_SIZE_MEDIUM = 40.0;
+  static const double AVATAR_SIZE_SMALL = 20.0;
+  static const double AVATAR_SIZE_MEDIUM = 30.0;
+  static const double AVATAR_SIZE_LARGE = 40.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
   OBUserAvatar(
