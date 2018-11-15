@@ -14,10 +14,12 @@ class OBPostHeader extends StatelessWidget {
         size: OBUserAvatarSize.medium,
         avatarUrl: _post.getCreatorAvatar(),
       ),
-      trailing: Icon(
-        Icons.more_vert,
-        color: Colors.black,
-      ),
+      trailing: IconButton(
+          icon: Icon(
+            Icons.more_vert,
+            color: Colors.black,
+          ),
+          onPressed: () {}),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

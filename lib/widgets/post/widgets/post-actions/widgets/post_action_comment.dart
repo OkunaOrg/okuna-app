@@ -1,6 +1,8 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/main/pages/comments/comments.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBPostActionComment extends StatelessWidget {
@@ -18,7 +20,10 @@ class OBPostActionComment extends StatelessWidget {
       ),
       color: Color.fromARGB(5, 0, 0, 0),
       textColor: Colors.black87,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).push(CupertinoPageRoute<void>(
+            builder: (BuildContext context) => OBCommentsPage(_post)));
+      },
     );
   }
 }
