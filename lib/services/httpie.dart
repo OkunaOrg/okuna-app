@@ -194,7 +194,7 @@ class HttpieService {
   void _handleRequestError(error) {
     if (error is SocketException) {
       var errorCode = error.osError.errorCode;
-      if (errorCode == 61 || errorCode == 111) {
+      if (errorCode == 61 || errorCode == 111 || errorCode == 51) {
         // Connection refused.
         throw HttpieConnectionRefusedError(error);
       }
