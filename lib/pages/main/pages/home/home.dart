@@ -4,6 +4,7 @@ import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBMainHomePage extends StatelessWidget {
   OBMainPageController mainPageController;
@@ -16,8 +17,9 @@ class OBMainHomePage extends StatelessWidget {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           backgroundColor: Colors.white,
-          middle: Text('Home'),
-          trailing: OBIcon(OBIcons.chat),
+          middle: Text(
+            'Home',
+          ),
         ),
         child: Stack(
           children: <Widget>[

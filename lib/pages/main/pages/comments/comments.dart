@@ -18,11 +18,9 @@ class OBCommentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OBCupertinoPageScaffold(
-        backgroundColor: Colors.blue,
         //resizeToAvoidBottomInset: true,
         navigationBar: _buildNavigationBar(),
         child: Container(
-          color: Colors.greenAccent,
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -61,7 +59,6 @@ class OBCommentsPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       decoration: BoxDecoration(
-          color: Colors.red,
           border: Border(top: BorderSide(color: Color.fromARGB(10, 0, 0, 0)))),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -74,7 +71,10 @@ class OBCommentsPage extends StatelessWidget {
             width: 20.0,
           ),
           Flexible(
-            child: TextField(),
+            child: TextField(
+              autofocus: true,
+              autocorrect: true,
+            ),
           ),
           FlatButton(
             onPressed: () {
