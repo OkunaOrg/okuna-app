@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/main/modals/create-post/create-post.dart';
+import 'package:Openbook/pages/main/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home/home.dart';
 import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';

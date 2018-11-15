@@ -1,4 +1,4 @@
-import 'package:Openbook/models/user-profile.dart';
+import 'package:Openbook/models/user_profile.dart';
 
 class User {
   int id;

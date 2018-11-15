@@ -1,5 +1,5 @@
 
-import 'package:Openbook/models/post-comment.dart';
+import 'package:Openbook/models/post_comment.dart';
 import 'package:flutter/material.dart';
 
 class OBPostComment extends StatelessWidget{

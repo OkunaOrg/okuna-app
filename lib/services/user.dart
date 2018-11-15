@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/posts-list.dart';
+import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/services/auth-api.dart';
+import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/posts-api.dart';
+import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';

@@ -1,7 +1,7 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/avatars/user-avatar.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 /// Like the UserAvatar widget but displays the avatar of

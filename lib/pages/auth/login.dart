@@ -3,8 +3,8 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/primary-button.dart';
-import 'package:Openbook/widgets/buttons/secondary-button.dart';
+import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthLoginPage extends StatefulWidget {

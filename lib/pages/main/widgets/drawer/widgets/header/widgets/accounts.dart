@@ -1,5 +1,5 @@
-import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
-import 'package:Openbook/widgets/avatars/user-avatar.dart';
+import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class OBMainDrawerHeaderAccounts extends StatelessWidget {

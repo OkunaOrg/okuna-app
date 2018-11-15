@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:Openbook/pages/main/modals/create-post/widgets/post-image-previewer.dart';
+import 'package:Openbook/pages/main/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/logged-in-user-avatar.dart';
-import 'package:Openbook/widgets/avatars/user-avatar.dart';
-import 'package:Openbook/widgets/buttons/pill-button.dart';
-import 'package:Openbook/widgets/buttons/primary-button.dart';
+import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/buttons/pill_button.dart';
+import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
-import 'package:Openbook/models/post-comment.dart';
-import 'package:Openbook/models/post-comments-list.dart';
-import 'package:Openbook/models/post-image.dart';
+import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/post_comments_list.dart';
+import 'package:Openbook/models/post_image.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

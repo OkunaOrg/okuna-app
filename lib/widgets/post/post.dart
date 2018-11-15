@@ -1,10 +1,10 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/post-actions.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/post-body.dart';
-import 'package:Openbook/widgets/post/widgets/post-comments/post-comments.dart';
-import 'package:Openbook/widgets/post/widgets/post-header.dart';
-import 'package:Openbook/widgets/post/widgets/post-reactions.dart';
-import 'package:Openbook/widgets/post/widgets/post-timestamp.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
+import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
+import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
+import 'package:Openbook/widgets/post/widgets/post_header.dart';
+import 'package:Openbook/widgets/post/widgets/post_reactions.dart';
+import 'package:Openbook/widgets/post/widgets/post_timestamp.dart';
 import 'package:flutter/material.dart';
 
 class OBPost extends StatelessWidget {

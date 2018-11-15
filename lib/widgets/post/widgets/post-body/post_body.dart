@@ -1,6 +1,6 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/widgets/post-body-image.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/widgets/post-body-text.dart';
+import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_image.dart';
+import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_text.dart';
 import 'package:flutter/material.dart';
 
 class OBPostBody extends StatelessWidget {

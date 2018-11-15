@@ -1,4 +1,4 @@
-import 'package:Openbook/models/post-comment.dart';
+import 'package:Openbook/models/post_comment.dart';
 
 class PostCommentsList {
   final List<PostComment> comments;

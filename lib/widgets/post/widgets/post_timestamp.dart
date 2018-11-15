@@ -1,5 +1,5 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/widgets/avatars/user-avatar.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class OBPostTimestamp extends StatelessWidget {
