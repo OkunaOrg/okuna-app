@@ -1,4 +1,6 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header.dart';
@@ -15,17 +17,21 @@ class OBCommentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: _buildNavigationBar(),
-      child: Column(
-        //crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: _buildPost(),
+        navigationBar: _buildNavigationBar(),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: _buildPost(),
+                ),
+              ),
+              _buildCommentAction()
+            ],
           ),
-          _buildCommentAction()
-        ],
-      ),
-    );
+        ));
   }
 
   Widget _buildNavigationBar() {
@@ -50,13 +56,23 @@ class OBCommentsPage extends StatelessWidget {
 
   Widget _buildCommentAction() {
     return Container(
-      height: 60.0,
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       decoration: BoxDecoration(
+          color: Colors.red,
           border: Border(top: BorderSide(color: Color.fromARGB(10, 0, 0, 0)))),
       child: Row(
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text('Hi')
+          OBLoggedInUserAvatar(
+            size: OBUserAvatarSize.medium,
+          ),
+          SizedBox(
+            width: 20.0,
+          ),
+          Flexible(
+            child: TextField(),
+          )
         ],
       ),
     );
