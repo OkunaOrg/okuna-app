@@ -1,5 +1,7 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/main/pages/profile/profile.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBPostHeader extends StatelessWidget {
@@ -10,9 +12,14 @@ class OBPostHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: OBUserAvatar(
-        size: OBUserAvatarSize.medium,
-        avatarUrl: _post.getCreatorAvatar(),
+      leading: GestureDetector(
+        onTap: () {
+          _onWantsPostCreatorProfile(context);
+        },
+        child: OBUserAvatar(
+          size: OBUserAvatarSize.medium,
+          avatarUrl: _post.getCreatorAvatar(),
+        ),
       ),
       trailing: IconButton(
           icon: Icon(
@@ -23,12 +30,22 @@ class OBPostHeader extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            _post.getCreatorUsername(),
-            style: TextStyle(fontWeight: FontWeight.bold),
+          GestureDetector(
+            onTap: () {
+              _onWantsPostCreatorProfile(context);
+            },
+            child: Text(
+              _post.getCreatorUsername(),
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  void _onWantsPostCreatorProfile(BuildContext context) {
+    Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => OBProfilePage(_post.creator)));
   }
 }

@@ -28,7 +28,7 @@ class OBCommentsPage extends StatelessWidget {
                   child: _buildPost(),
                 ),
               ),
-              _buildCommentAction()
+              _buildCommentAction(context)
             ],
           ),
         ));
@@ -54,7 +54,7 @@ class OBCommentsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCommentAction() {
+  Widget _buildCommentAction(context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       decoration: BoxDecoration(
@@ -72,6 +72,12 @@ class OBCommentsPage extends StatelessWidget {
           ),
           Flexible(
             child: TextField(),
+          ),
+          FlatButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/');
+            },
+            child: Text('Go?'),
           )
         ],
       ),
