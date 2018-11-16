@@ -78,6 +78,10 @@ class Post {
     return creator.username;
   }
 
+  int getCreatorId() {
+    return creator.id;
+  }
+
   String getCreatorAvatar() {
     return creator.profile.avatar;
   }
