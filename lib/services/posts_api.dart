@@ -71,7 +71,7 @@ class PostsApiService {
     Map<String, dynamic> body = {'text': text};
 
     String path = _makeCommentPostPath(postId);
-    return _httpService.postJSON(_makeApiUrl(path),
+    return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 

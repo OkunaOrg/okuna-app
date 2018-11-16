@@ -34,6 +34,7 @@ class OBPostPageState extends State<OBPostPage> {
   ToastService _toastService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
+  ScrollController _postCommentsScrollController;
   List<PostComment> _postComments;
   bool _noMoreItemsToLoad;
   bool _needsBootstrap;
@@ -42,6 +43,7 @@ class OBPostPageState extends State<OBPostPage> {
   @override
   void initState() {
     super.initState();
+    _postCommentsScrollController = ScrollController();
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
     _postComments = [];
@@ -76,6 +78,7 @@ class OBPostPageState extends State<OBPostPage> {
                         isFinish: _noMoreItemsToLoad,
                         delegate: OBInfinitePostCommentsLoadMoreDelegate(),
                         child: ListView.builder(
+                            controller: _postCommentsScrollController,
                             padding: EdgeInsets.all(0),
                             itemCount: postWidgetsCount + _postComments.length,
                             itemBuilder: (context, index) {
@@ -113,6 +116,9 @@ class OBPostPageState extends State<OBPostPage> {
                 widget.post,
                 autofocus: widget.autofocusCommentInput,
                 commentTextFieldFocusNode: _commentInputFocusNode,
+                onPostCommentCreated: () {
+                  _refreshComments();
+                },
               )
             ],
           ),
@@ -135,6 +141,7 @@ class OBPostPageState extends State<OBPostPage> {
       _postComments =
           (await _userService.getCommentsForPost(widget.post)).comments;
       _setPostComments(_postComments);
+      _scrollToTop();
       _setNoMoreItemsToLoad(false);
     } on HttpieConnectionRefusedError catch (error) {
       _onConnectionRefusedError(error);
@@ -145,6 +152,8 @@ class OBPostPageState extends State<OBPostPage> {
   }
 
   Future<bool> _loadMoreComments() async {
+    if (_postComments.length == 0) return true;
+
     var lastPost = _postComments.last;
     var lastPostId = lastPost.id;
 
@@ -167,6 +176,14 @@ class OBPostPageState extends State<OBPostPage> {
     }
 
     return false;
+  }
+
+  void _scrollToTop() {
+    _postCommentsScrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 
   void _onWantsToComment() {
