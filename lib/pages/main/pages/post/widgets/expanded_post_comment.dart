@@ -45,7 +45,7 @@ class OBExpandedPostComment extends StatelessWidget {
               ),
               Text(
                 _postComment.getRelativeCreated(),
-                style: TextStyle(fontSize: 10.0),
+                style: TextStyle(fontSize: 12.0),
               )
             ],
           ))

@@ -27,19 +27,18 @@ class OBPostHeader extends StatelessWidget {
             color: Colors.black,
           ),
           onPressed: () {}),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              _onWantsPostCreatorProfile(context);
-            },
-            child: Text(
-              _post.getCreatorUsername(),
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
+      title: GestureDetector(
+        onTap: () {
+          _onWantsPostCreatorProfile(context);
+        },
+        child: Text(
+          _post.getCreatorUsername(),
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      subtitle: Text(
+        _post.getRelativeCreated(),
+        style: TextStyle(fontSize: 12.0),
       ),
     );
   }

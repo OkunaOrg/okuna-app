@@ -4,7 +4,6 @@ import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/post/widgets/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions.dart';
-import 'package:Openbook/widgets/post/widgets/post_timestamp.dart';
 import 'package:flutter/material.dart';
 
 class OBPost extends StatelessWidget {
@@ -23,7 +22,6 @@ class OBPost extends StatelessWidget {
           OBPostComments(_post),
           OBPostReactions(_post),
           OBPostActions(_post),
-          OBPostTimestamp(_post),
         ],
       ),
     );

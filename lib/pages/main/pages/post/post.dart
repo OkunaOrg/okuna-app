@@ -10,7 +10,6 @@ import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions.dart';
-import 'package:Openbook/widgets/post/widgets/post_timestamp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -61,7 +60,7 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    int postWidgetsCount = 5;
+    int postWidgetsCount = 4;
 
     return OBCupertinoPageScaffold(
         //resizeToAvoidBottomInset: true,
@@ -104,9 +103,6 @@ class OBPostPageState extends State<OBPostPage> {
                                   case 3:
                                     return OBPostActions(widget.post,
                                         onWantsToComment: _onWantsToComment);
-                                    break;
-                                  case 4:
-                                    return OBPostTimestamp(widget.post);
                                     break;
                                   default:
                                     throw 'Unhandled index';
