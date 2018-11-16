@@ -29,15 +29,11 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
-  PostComment _postComment;
-  Post _post;
 
   @override
   void initState() {
     super.initState();
     _requestInProgress = false;
-    _postComment = widget.postComment;
-    _post = widget.post;
   }
 
   @override
@@ -57,7 +53,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
       );
     }
 
-    if (_postComment.getCommenterId() == loggedInUser.id) {
+    if (widget.postComment.getCommenterId() == loggedInUser.id) {
       // Its our own comment
       postTile = Slidable(
         delegate: new SlidableDrawerDelegate(),
@@ -85,7 +81,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
         children: <Widget>[
           OBUserAvatar(
             size: OBUserAvatarSize.medium,
-            avatarUrl: _postComment.getCommenterProfileAvatar(),
+            avatarUrl: widget.postComment.getCommenterProfileAvatar(),
           ),
           SizedBox(
             width: 20.0,
@@ -98,20 +94,20 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
                   maxLines: null,
                   text: TextSpan(children: [
                     TextSpan(
-                        text: _postComment.getCommenterUsername(),
+                        text: widget.postComment.getCommenterUsername(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87)),
                     TextSpan(text: '  '),
                     TextSpan(
-                        text: _postComment.text,
+                        text: widget.postComment.text,
                         style: TextStyle(color: Colors.black87))
                   ])),
               SizedBox(
                 height: 5.0,
               ),
               Text(
-                _postComment.getRelativeCreated(),
+                widget.postComment.getRelativeCreated(),
                 style: TextStyle(fontSize: 12.0),
               )
             ],
@@ -125,7 +121,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     _setRequestInProgress(true);
     try {
       await _userService.deletePostComment(
-          postComment: _postComment, post: _post);
+          postComment: widget.postComment, post: widget.post);
       _setRequestInProgress(false);
       if (widget.onPostCommentDeletedCallback != null) {
         widget.onPostCommentDeletedCallback();
