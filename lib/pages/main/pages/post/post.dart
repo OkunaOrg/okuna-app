@@ -6,7 +6,6 @@ import 'package:Openbook/pages/main/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header.dart';
@@ -73,52 +72,54 @@ class OBPostPageState extends State<OBPostPage> {
               Expanded(
                 child: RefreshIndicator(
                     key: _refreshIndicatorKey,
-                    child: LoadMore(
-                        whenEmptyLoad: false,
-                        isFinish: _noMoreItemsToLoad,
-                        delegate: OBInfinitePostCommentsLoadMoreDelegate(),
-                        child: ListView.builder(
-                            controller: _postCommentsScrollController,
-                            padding: EdgeInsets.all(0),
-                            itemCount: postWidgetsCount + _postComments.length,
-                            itemBuilder: (context, index) {
-                              if (index > (postWidgetsCount - 1)) {
-                                var post =
-                                    _postComments[index - (postWidgetsCount)];
-                                return OBExpandedPostComment(post);
-                              }
+                    child: GestureDetector(
+                      onTap: _unfocusCommentInput,
+                      child: LoadMore(
+                          whenEmptyLoad: false,
+                          isFinish: _noMoreItemsToLoad,
+                          delegate: OBInfinitePostCommentsLoadMoreDelegate(),
+                          child: ListView.builder(
+                              controller: _postCommentsScrollController,
+                              padding: EdgeInsets.all(0),
+                              itemCount:
+                                  postWidgetsCount + _postComments.length,
+                              itemBuilder: (context, index) {
+                                if (index > (postWidgetsCount - 1)) {
+                                  var post =
+                                      _postComments[index - (postWidgetsCount)];
+                                  return OBExpandedPostComment(post);
+                                }
 
-                              switch (index) {
-                                case 0:
-                                  return OBPostHeader(widget.post);
-                                  break;
-                                case 1:
-                                  return OBPostBody(widget.post);
-                                  break;
-                                case 2:
-                                  return OBPostReactions(widget.post);
-                                  break;
-                                case 3:
-                                  return OBPostActions(widget.post,
-                                      onWantsToComment: _onWantsToComment);
-                                  break;
-                                case 4:
-                                  return OBPostTimestamp(widget.post);
-                                  break;
-                                default:
-                                  throw 'Unhandled index';
-                              }
-                            }),
-                        onLoadMore: _loadMoreComments),
+                                switch (index) {
+                                  case 0:
+                                    return OBPostHeader(widget.post);
+                                    break;
+                                  case 1:
+                                    return OBPostBody(widget.post);
+                                    break;
+                                  case 2:
+                                    return OBPostReactions(widget.post);
+                                    break;
+                                  case 3:
+                                    return OBPostActions(widget.post,
+                                        onWantsToComment: _onWantsToComment);
+                                    break;
+                                  case 4:
+                                    return OBPostTimestamp(widget.post);
+                                    break;
+                                  default:
+                                    throw 'Unhandled index';
+                                }
+                              }),
+                          onLoadMore: _loadMoreComments),
+                    ),
                     onRefresh: _refreshComments),
               ),
               OBPostCommenter(
                 widget.post,
                 autofocus: widget.autofocusCommentInput,
                 commentTextFieldFocusNode: _commentInputFocusNode,
-                onPostCommentCreated: () {
-                  _refreshComments();
-                },
+                onPostCommentCreated: _onPostCommentCreated,
               )
             ],
           ),
@@ -178,6 +179,11 @@ class OBPostPageState extends State<OBPostPage> {
     return false;
   }
 
+  void _onPostCommentCreated() {
+    _unfocusCommentInput();
+    _refreshComments();
+  }
+
   void _scrollToTop() {
     _postCommentsScrollController.animateTo(
       0.0,
@@ -187,7 +193,15 @@ class OBPostPageState extends State<OBPostPage> {
   }
 
   void _onWantsToComment() {
+    _focusCommentInput();
+  }
+
+  void _focusCommentInput() {
     FocusScope.of(context).requestFocus(_commentInputFocusNode);
+  }
+
+  void _unfocusCommentInput() {
+    FocusScope.of(context).requestFocus(new FocusNode());
   }
 
   void _addPostComments(List<PostComment> postComments) {
