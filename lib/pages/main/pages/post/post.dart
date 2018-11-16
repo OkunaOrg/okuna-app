@@ -87,7 +87,9 @@ class OBPostPage extends StatelessWidget {
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                style: TextStyle(fontSize: 14.0, color: Colors.black87),
                 decoration: InputDecoration(
+                  hintText: 'Write something nice...',
                   contentPadding: inputContentPadding,
                   border: InputBorder.none,
                 ),
