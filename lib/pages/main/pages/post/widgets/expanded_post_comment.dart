@@ -21,7 +21,7 @@ class OBExpandedPostComment extends StatelessWidget {
             avatarUrl: _postComment.commenter.profile.avatar,
           ),
           SizedBox(
-            width: 10.0,
+            width: 20.0,
           ),
           Expanded(
               child: Column(
@@ -35,7 +35,7 @@ class OBExpandedPostComment extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87)),
-                    TextSpan(text: ' '),
+                    TextSpan(text: '  '),
                     TextSpan(
                         text: _postComment.text,
                         style: TextStyle(color: Colors.black87))
@@ -44,7 +44,7 @@ class OBExpandedPostComment extends StatelessWidget {
                 height: 5.0,
               ),
               Text(
-                _postComment.getRelativeCreated().toUpperCase(),
+                _postComment.getRelativeCreated(),
                 style: TextStyle(fontSize: 10.0),
               )
             ],
