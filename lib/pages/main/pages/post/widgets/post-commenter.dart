@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -12,7 +13,7 @@ class OBPostCommenter extends StatefulWidget {
   final Post post;
   final bool autofocus;
   final FocusNode commentTextFieldFocusNode;
-  final VoidCallback onPostCommentCreated;
+  final OnPostCommentCreatedCallback onPostCommentCreated;
 
   OBPostCommenter(this.post,
       {this.autofocus = false,
@@ -109,10 +110,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _setCommentInProgress(true);
     try {
       String commentText = _textController.text;
-      await _userService.commentPost(text: commentText, post: widget.post);
+      PostComment createdPostComment =
+          await _userService.commentPost(text: commentText, post: widget.post);
       _textController.clear();
       _setCommentInProgress(false);
-      if (widget.onPostCommentCreated != null) widget.onPostCommentCreated();
+      if (widget.onPostCommentCreated != null)
+        widget.onPostCommentCreated(createdPostComment);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection');
       _setCommentInProgress(false);
@@ -129,3 +132,5 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     });
   }
 }
+
+typedef void OnPostCommentCreatedCallback(PostComment createdPostComment);

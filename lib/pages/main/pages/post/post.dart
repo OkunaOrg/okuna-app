@@ -180,9 +180,11 @@ class OBPostPageState extends State<OBPostPage> {
     return false;
   }
 
-  void _onPostCommentCreated() {
+  void _onPostCommentCreated(PostComment createdPostComment) {
     _unfocusCommentInput();
-    _refreshComments();
+    setState(() {
+      this._postComments.insert(0, createdPostComment);
+    });
   }
 
   void _scrollToTop() {
