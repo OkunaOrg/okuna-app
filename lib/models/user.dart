@@ -27,4 +27,8 @@ class User {
         username: parsedJson['username'],
         profile: userProfile);
   }
+
+  String getProfileAvatar() {
+    return this.profile.avatar;
+  }
 }

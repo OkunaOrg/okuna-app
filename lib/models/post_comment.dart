@@ -31,4 +31,13 @@ class PostComment {
   String getCommenterUsername() {
     return this.commenter.username;
   }
+
+  String getCommenterProfileAvatar(){
+    return this.commenter.getProfileAvatar();
+  }
+
+  int getCommenterId() {
+    return this.commenter.id;
+  }
+
 }

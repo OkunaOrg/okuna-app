@@ -15,7 +15,7 @@ class PostsApiService {
   static const DELETE_POST_PATH = 'api/posts/{postId}/';
   static const COMMENT_POST_PATH = 'api/posts/{postId}/comments/';
   static const DELETE_POST_COMMENT_PATH =
-      'api/posts/{postId}/comments/{postCommentId}';
+      'api/posts/{postId}/comments/{postCommentId}/';
   static const GET_POST_COMMENTS_PATH = 'api/posts/{postId}/comments/';
 
   void setHttpieService(HttpieService httpService) {
@@ -119,8 +119,8 @@ class PostsApiService {
 
   String _makeDeletePostCommentPath(
       {@required postCommentId, @required postId}) {
-    return _stringTemplateService.parse(
-        COMMENT_POST_PATH, {'postCommentId': postCommentId, 'postId': postId});
+    return _stringTemplateService.parse(DELETE_POST_COMMENT_PATH,
+        {'postCommentId': postCommentId, 'postId': postId});
   }
 
   String _makeApiUrl(String string) {

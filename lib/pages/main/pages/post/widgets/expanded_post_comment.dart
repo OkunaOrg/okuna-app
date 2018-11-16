@@ -1,16 +1,83 @@
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/user.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:Openbook/services/httpie.dart';
 
-class OBExpandedPostComment extends StatelessWidget {
-  final PostComment _postComment;
+class OBExpandedPostComment extends StatefulWidget {
+  final PostComment postComment;
+  final Post post;
+  final VoidCallback onPostCommentDeletedCallback;
 
-  OBExpandedPostComment(this._postComment);
+  OBExpandedPostComment(
+      {@required this.post,
+      @required this.postComment,
+      this.onPostCommentDeletedCallback});
+
+  @override
+  State<StatefulWidget> createState() {
+    return OBExpandedPostCommentState();
+  }
+}
+
+class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
+  bool _requestInProgress;
+  UserService _userService;
+  ToastService _toastService;
+  PostComment _postComment;
+  Post _post;
+
+  @override
+  void initState() {
+    super.initState();
+    _requestInProgress = false;
+    _postComment = widget.postComment;
+    _post = widget.post;
+  }
 
   @override
   Widget build(BuildContext context) {
-    String commenterUsername = _postComment.getCommenterUsername();
+    var provider = OpenbookProvider.of(context);
+    _userService = provider.userService;
+    _toastService = provider.toastService;
 
+    User loggedInUser = _userService.getLoggedInUser();
+
+    Widget postTile = _buildPostTile();
+
+    if (_requestInProgress) {
+      postTile = Opacity(
+        opacity: 0.5,
+        child: postTile,
+      );
+    }
+
+    if (_postComment.getCommenterId() == loggedInUser.id) {
+      // Its our own comment
+      postTile = Slidable(
+        delegate: new SlidableDrawerDelegate(),
+        actionExtentRatio: 0.25,
+        child: postTile,
+        secondaryActions: <Widget>[
+          new IconSlideAction(
+            caption: 'Delete',
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: _deletePostComment,
+          ),
+        ],
+      );
+    }
+
+    return postTile;
+  }
+
+  Widget _buildPostTile() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
@@ -18,7 +85,7 @@ class OBExpandedPostComment extends StatelessWidget {
         children: <Widget>[
           OBUserAvatar(
             size: OBUserAvatarSize.medium,
-            avatarUrl: _postComment.commenter.profile.avatar,
+            avatarUrl: _postComment.getCommenterProfileAvatar(),
           ),
           SizedBox(
             width: 20.0,
@@ -31,7 +98,7 @@ class OBExpandedPostComment extends StatelessWidget {
                   maxLines: null,
                   text: TextSpan(children: [
                     TextSpan(
-                        text: commenterUsername,
+                        text: _postComment.getCommenterUsername(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87)),
@@ -53,4 +120,30 @@ class OBExpandedPostComment extends StatelessWidget {
       ),
     );
   }
+
+  void _deletePostComment() async {
+    _setRequestInProgress(true);
+    try {
+      await _userService.deletePostComment(
+          postComment: _postComment, post: _post);
+      _setRequestInProgress(false);
+      if (widget.onPostCommentDeletedCallback != null) {
+        widget.onPostCommentDeletedCallback();
+      }
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection');
+      _setRequestInProgress(false);
+    } catch (e) {
+      _toastService.error(message: 'Unknown error.');
+      _setRequestInProgress(false);
+      rethrow;
+    }
+  }
+
+  void _setRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
+  }
 }
+

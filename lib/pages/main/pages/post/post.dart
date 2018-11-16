@@ -33,7 +33,7 @@ class OBPostPageState extends State<OBPostPage> {
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _postCommentsScrollController;
-  List<PostComment> _postComments;
+  List<PostComment> _postComments = [];
   bool _noMoreItemsToLoad;
   bool _needsBootstrap;
   FocusNode _commentInputFocusNode;
@@ -63,7 +63,6 @@ class OBPostPageState extends State<OBPostPage> {
     int postWidgetsCount = 4;
 
     return OBCupertinoPageScaffold(
-        //resizeToAvoidBottomInset: true,
         navigationBar: _buildNavigationBar(),
         child: Container(
           child: Column(
@@ -85,9 +84,18 @@ class OBPostPageState extends State<OBPostPage> {
                                   postWidgetsCount + _postComments.length,
                               itemBuilder: (context, index) {
                                 if (index > (postWidgetsCount - 1)) {
-                                  var post =
-                                      _postComments[index - (postWidgetsCount)];
-                                  return OBExpandedPostComment(post);
+                                  var postCommentIndex =
+                                      index - postWidgetsCount;
+                                  var postComment =
+                                      _postComments[postCommentIndex];
+                                  return OBExpandedPostComment(
+                                    postComment: postComment,
+                                    post: widget.post,
+                                    onPostCommentDeletedCallback: () {
+                                      _removePostCommentAtIndex(
+                                          postCommentIndex);
+                                    },
+                                  );
                                 }
 
                                 switch (index) {
@@ -177,6 +185,12 @@ class OBPostPageState extends State<OBPostPage> {
     }
 
     return false;
+  }
+
+  void _removePostCommentAtIndex(int index) {
+    setState(() {
+      _postComments.removeAt(index);
+    });
   }
 
   void _onPostCommentCreated(PostComment createdPostComment) {
