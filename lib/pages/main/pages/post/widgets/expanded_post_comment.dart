@@ -14,7 +14,7 @@ class OBExpandedPostComment extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           OBUserAvatar(
             size: OBUserAvatarSize.medium,
