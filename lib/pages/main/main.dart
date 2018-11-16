@@ -205,6 +205,8 @@ class OBMainPageState extends State<OBMainPage> {
     } catch (error) {
       if (error is AuthTokenMissingError || error is AuthTokenInvalidError) {
         await _userService.logout();
+      } else{
+        rethrow;
       }
     }
   }
