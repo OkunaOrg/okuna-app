@@ -134,8 +134,11 @@ class OBPostPageState extends State<OBPostPage> {
     );
   }
 
-  void _bootstrap() {
-    _refreshComments();
+  void _bootstrap() async {
+    await _refreshComments();
+    if (widget.autofocusCommentInput) {
+      _scrollToBottom();
+    }
   }
 
   Future<void> _refreshComments() async {
@@ -190,6 +193,14 @@ class OBPostPageState extends State<OBPostPage> {
   void _scrollToTop() {
     _postCommentsScrollController.animateTo(
       0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  void _scrollToBottom() {
+    _postCommentsScrollController.animateTo(
+      _postCommentsScrollController.position.maxScrollExtent,
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
