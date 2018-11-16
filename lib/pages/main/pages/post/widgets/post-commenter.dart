@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 class OBPostCommenter extends StatelessWidget {
   final Post post;
   final bool autofocus;
+  final FocusNode commentTextFieldFocusNode;
 
-  OBPostCommenter(this.post, {this.autofocus});
+  OBPostCommenter(this.post, {this.autofocus, this.commentTextFieldFocusNode});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class OBPostCommenter extends StatelessWidget {
                 color: Color.fromARGB(10, 0, 0, 0),
               ),
               child: TextField(
+                focusNode: commentTextFieldFocusNode ?? null,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 style: TextStyle(fontSize: 14.0, color: Colors.black87),

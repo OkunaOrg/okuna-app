@@ -37,6 +37,7 @@ class OBPostPageState extends State<OBPostPage> {
   List<PostComment> _postComments;
   bool _noMoreItemsToLoad;
   bool _needsBootstrap;
+  FocusNode _commentInputFocusNode;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class OBPostPageState extends State<OBPostPage> {
     _needsBootstrap = true;
     _postComments = [];
     _noMoreItemsToLoad = true;
+    _commentInputFocusNode = FocusNode();
   }
 
   @override
@@ -94,7 +96,8 @@ class OBPostPageState extends State<OBPostPage> {
                                   return OBPostReactions(widget.post);
                                   break;
                                 case 3:
-                                  return OBPostActions(widget.post);
+                                  return OBPostActions(widget.post,
+                                      onWantsToComment: _onWantsToComment);
                                   break;
                                 case 4:
                                   return OBPostTimestamp(widget.post);
@@ -106,8 +109,11 @@ class OBPostPageState extends State<OBPostPage> {
                         onLoadMore: _loadMoreComments),
                     onRefresh: _refreshComments),
               ),
-              OBPostCommenter(widget.post,
-                  autofocus: widget.autofocusCommentInput)
+              OBPostCommenter(
+                widget.post,
+                autofocus: widget.autofocusCommentInput,
+                commentTextFieldFocusNode: _commentInputFocusNode,
+              )
             ],
           ),
         ));
@@ -161,6 +167,10 @@ class OBPostPageState extends State<OBPostPage> {
     }
 
     return false;
+  }
+
+  void _onWantsToComment() {
+    FocusScope.of(context).requestFocus(_commentInputFocusNode);
   }
 
   void _addPostComments(List<PostComment> postComments) {

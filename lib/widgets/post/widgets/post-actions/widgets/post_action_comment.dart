@@ -7,11 +7,22 @@ import 'package:flutter/material.dart';
 
 class OBPostActionComment extends StatelessWidget {
   final Post _post;
+  final VoidCallback onWantsToComment;
 
-  OBPostActionComment(this._post);
+  OBPostActionComment(this._post, {this.onWantsToComment});
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback finalOnWantsToComment;
+
+    if (this.onWantsToComment != null) {
+      finalOnWantsToComment = this.onWantsToComment;
+    } else {
+      finalOnWantsToComment = () {
+        _defaultOnWantsToComment(context);
+      };
+    }
+
     return OBPillButton(
       text: 'Comment',
       icon: OBIcon(
@@ -20,15 +31,17 @@ class OBPostActionComment extends StatelessWidget {
       ),
       color: Color.fromARGB(5, 0, 0, 0),
       textColor: Colors.black87,
-      onPressed: () {
-        Navigator.of(context).push(CupertinoPageRoute<void>(
-            builder: (BuildContext context) => Material(
-                  child: OBPostPage(
-                    _post,
-                    autofocusCommentInput: true,
-                  ),
-                )));
-      },
+      onPressed: finalOnWantsToComment,
     );
+  }
+
+  void _defaultOnWantsToComment(BuildContext context) {
+    Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBPostPage(
+                _post,
+                autofocusCommentInput: true,
+              ),
+            )));
   }
 }
