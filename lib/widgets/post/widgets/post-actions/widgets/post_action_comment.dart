@@ -23,7 +23,10 @@ class OBPostActionComment extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).push(CupertinoPageRoute<void>(
             builder: (BuildContext context) => Material(
-                  child: OBPostPage(_post),
+                  child: OBPostPage(
+                    _post,
+                    autofocusCommentInput: true,
+                  ),
                 )));
       },
     );
