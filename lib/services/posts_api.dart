@@ -83,11 +83,11 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> getCommentsForPostWithId(int postId,
-      {int count, int minId}) {
+      {int count, int maxId}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
-    if (minId != null) queryParams['min_id'] = minId;
+    if (maxId != null) queryParams['max_id'] = maxId;
 
     String path = _makeGetPostCommentsPath(postId);
 

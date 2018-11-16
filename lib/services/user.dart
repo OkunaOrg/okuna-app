@@ -184,9 +184,9 @@ class UserService {
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
-      {int count, int minId}) async {
+      {int count, int maxId}) async {
     HttpieResponse response = await _postsApiService
-        .getCommentsForPostWithId(post.id, count: count, minId: minId);
+        .getCommentsForPostWithId(post.id, count: count, maxId: maxId);
     _checkResponseIsOk(response);
 
     return PostCommentList.fromJson(json.decode(response.body));

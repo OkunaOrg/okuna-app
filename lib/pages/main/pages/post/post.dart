@@ -144,7 +144,7 @@ class OBPostPageState extends State<OBPostPage> {
 
     try {
       var moreComments = (await _userService.getCommentsForPost(widget.post,
-              minId: lastPostId))
+              maxId: lastPostId))
           .comments;
 
       if (moreComments.length == 0) {
