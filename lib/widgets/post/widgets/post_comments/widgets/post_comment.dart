@@ -26,7 +26,7 @@ class OBPostComment extends StatelessWidget {
           RichText(
               text: TextSpan(children: [
             TextSpan(
-                text: '@$commenterUsername',
+                text: commenterUsername,
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black87)),
             TextSpan(text: ' '),

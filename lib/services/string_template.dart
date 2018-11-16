@@ -3,7 +3,7 @@ class StringTemplateService {
     String finalString = string;
 
     values.forEach((String key, dynamic value) {
-      finalString.replaceAll('{$key}', value.toString());
+      finalString = finalString.replaceAll('{$key}', value.toString());
     });
 
     return finalString;

@@ -75,7 +75,7 @@ class OBHomePostsState extends State<OBHomePosts> {
             delegate: OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
                 controller: _postsScrollController,
-                padding: kMaterialListPadding,
+                padding: EdgeInsets.all(0),
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
