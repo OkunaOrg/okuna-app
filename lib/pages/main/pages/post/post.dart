@@ -121,7 +121,7 @@ class OBPostPageState extends State<OBPostPage> {
   }
 
   void _bootstrap() {
-    //_refreshComments();
+    _refreshComments();
   }
 
   Future<void> _refreshComments() async {
@@ -232,19 +232,7 @@ class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return Container(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            OBIcon(OBIcons.finish),
-            SizedBox(
-              width: 10.0,
-            ),
-            Text('No more comments.')
-          ],
-        ),
-      );
+      return SizedBox();
     }
 
     return Text(text);
