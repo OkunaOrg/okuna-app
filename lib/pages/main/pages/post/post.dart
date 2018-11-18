@@ -31,7 +31,7 @@ class OBPostPageState extends State<OBPostPage> {
   UserService _userService;
   ToastService _toastService;
 
-  GlobalKey _commentsTitleKey;
+  GlobalKey _postCommentsKey;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _postCommentsScrollController;
   List<PostComment> _postComments = [];
@@ -48,7 +48,7 @@ class OBPostPageState extends State<OBPostPage> {
     _postComments = [];
     _noMoreItemsToLoad = true;
     _commentInputFocusNode = FocusNode();
-    _commentsTitleKey = new GlobalKey();
+    _postCommentsKey = new GlobalKey();
   }
 
   @override
@@ -128,10 +128,10 @@ class OBPostPageState extends State<OBPostPage> {
                                       children: <Widget>[
                                         Divider(),
                                         Padding(
-                                          key: _commentsTitleKey,
+                                          key: _postCommentsKey,
                                           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                                           child: Text(
-                                            'Comments',
+                                            _postComments.length > 0 ? 'Latest comments': 'Be the first to comment!',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16.0,
@@ -170,7 +170,7 @@ class OBPostPageState extends State<OBPostPage> {
   void _bootstrap() async {
     await _refreshComments();
     Future.delayed(const Duration(milliseconds: 300), () {
-      _scrollToFirstComment();
+      _scrollToComments();
     });
   }
 
@@ -237,9 +237,9 @@ class OBPostPageState extends State<OBPostPage> {
     );
   }
 
-  void _scrollToFirstComment() {
-    Scrollable.ensureVisible(_commentsTitleKey.currentContext,
-        curve: Curves.easeOut, duration: const Duration(milliseconds: 700));
+  void _scrollToComments() {
+    Scrollable.ensureVisible(_postCommentsKey.currentContext,
+        curve: Curves.easeOut, duration: const Duration(milliseconds: 400));
   }
 
   void _onWantsToComment() {
