@@ -31,6 +31,7 @@ class OBPostPageState extends State<OBPostPage> {
   UserService _userService;
   ToastService _toastService;
 
+  GlobalKey _firstCommentKey;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _postCommentsScrollController;
   List<PostComment> _postComments = [];
@@ -47,6 +48,7 @@ class OBPostPageState extends State<OBPostPage> {
     _postComments = [];
     _noMoreItemsToLoad = true;
     _commentInputFocusNode = FocusNode();
+    _firstCommentKey = new GlobalKey();
   }
 
   @override
@@ -83,19 +85,38 @@ class OBPostPageState extends State<OBPostPage> {
                               itemCount:
                                   postWidgetsCount + _postComments.length,
                               itemBuilder: (context, index) {
-                                if (index > (postWidgetsCount - 1)) {
+                                int postCommentsIndexDelimiter =
+                                    postWidgetsCount - 1;
+
+                                if (index > postCommentsIndexDelimiter) {
                                   var postCommentIndex =
                                       index - postWidgetsCount;
                                   var postComment =
                                       _postComments[postCommentIndex];
-                                  return OBExpandedPostComment(
-                                    postComment: postComment,
-                                    post: widget.post,
-                                    onPostCommentDeletedCallback: () {
-                                      _removePostCommentAtIndex(
-                                          postCommentIndex);
-                                    },
-                                  );
+
+                                  var onPostCommentDeletedCallback = () {
+                                    _removePostCommentAtIndex(postCommentIndex);
+                                  };
+
+                                  bool isFirstPostComment =
+                                      index == (postCommentsIndexDelimiter + 1);
+
+                                  if (isFirstPostComment) {
+                                    return OBExpandedPostComment(
+                                      key: _firstCommentKey,
+                                      postComment: postComment,
+                                      post: widget.post,
+                                      onPostCommentDeletedCallback:
+                                          onPostCommentDeletedCallback,
+                                    );
+                                  } else {
+                                    return OBExpandedPostComment(
+                                      postComment: postComment,
+                                      post: widget.post,
+                                      onPostCommentDeletedCallback:
+                                          onPostCommentDeletedCallback,
+                                    );
+                                  }
                                 }
 
                                 switch (index) {
@@ -140,9 +161,9 @@ class OBPostPageState extends State<OBPostPage> {
 
   void _bootstrap() async {
     await _refreshComments();
-    if (widget.autofocusCommentInput) {
-      _scrollToBottom();
-    }
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _scrollToFirstComment();
+    });
   }
 
   Future<void> _refreshComments() async {
@@ -208,12 +229,9 @@ class OBPostPageState extends State<OBPostPage> {
     );
   }
 
-  void _scrollToBottom() {
-    _postCommentsScrollController.animateTo(
-      _postCommentsScrollController.position.maxScrollExtent,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+  void _scrollToFirstComment() {
+    Scrollable.ensureVisible(_firstCommentKey.currentContext,
+        curve: Curves.easeOut, duration: const Duration(milliseconds: 700));
   }
 
   void _onWantsToComment() {

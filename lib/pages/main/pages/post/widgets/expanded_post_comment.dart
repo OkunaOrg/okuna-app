@@ -17,7 +17,9 @@ class OBExpandedPostComment extends StatefulWidget {
   OBExpandedPostComment(
       {@required this.post,
       @required this.postComment,
-      this.onPostCommentDeletedCallback});
+      Key key,
+      this.onPostCommentDeletedCallback})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -142,4 +144,3 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     });
   }
 }
-
