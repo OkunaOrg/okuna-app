@@ -62,7 +62,7 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    int postWidgetsCount = 4;
+    int postWidgetsCount = 5;
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -98,25 +98,12 @@ class OBPostPageState extends State<OBPostPage> {
                                     _removePostCommentAtIndex(postCommentIndex);
                                   };
 
-                                  bool isFirstPostComment =
-                                      index == (postCommentsIndexDelimiter + 1);
-
-                                  if (isFirstPostComment) {
-                                    return OBExpandedPostComment(
-                                      key: _firstCommentKey,
-                                      postComment: postComment,
-                                      post: widget.post,
-                                      onPostCommentDeletedCallback:
-                                          onPostCommentDeletedCallback,
-                                    );
-                                  } else {
-                                    return OBExpandedPostComment(
-                                      postComment: postComment,
-                                      post: widget.post,
-                                      onPostCommentDeletedCallback:
-                                          onPostCommentDeletedCallback,
-                                    );
-                                  }
+                                  return OBExpandedPostComment(
+                                    postComment: postComment,
+                                    post: widget.post,
+                                    onPostCommentDeletedCallback:
+                                    onPostCommentDeletedCallback,
+                                  );
                                 }
 
                                 switch (index) {
@@ -132,6 +119,9 @@ class OBPostPageState extends State<OBPostPage> {
                                   case 3:
                                     return OBPostActions(widget.post,
                                         onWantsToComment: _onWantsToComment);
+                                    break;
+                                  case 4:
+                                    return Divider(key: _firstCommentKey,);
                                     break;
                                   default:
                                     throw 'Unhandled index';

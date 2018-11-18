@@ -22,6 +22,7 @@ class OBPost extends StatelessWidget {
           OBPostComments(_post),
           OBPostReactions(_post),
           OBPostActions(_post),
+          Divider()
         ],
       ),
     );
