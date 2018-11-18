@@ -10,15 +10,20 @@ class OBPostActionReact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OBPillButton(
-      text: 'React',
-      icon: OBIcon(
-        OBIcons.react,
-        size: OBIconSize.medium,
-      ),
-      color: Color.fromARGB(5, 0, 0, 0),
-      textColor: Colors.black87,
-      onPressed: () {},
-    );
+    return FlatButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            OBIcon(OBIcons.like),
+            SizedBox(
+              width: 10.0,
+            ),
+            Text('Like'),
+          ],
+        ),
+        color: Color.fromARGB(5, 0, 0, 0),
+        onPressed: () {},
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(50.0)));
   }
 }

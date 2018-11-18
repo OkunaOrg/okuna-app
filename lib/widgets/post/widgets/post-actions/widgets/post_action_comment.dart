@@ -23,16 +23,21 @@ class OBPostActionComment extends StatelessWidget {
       };
     }
 
-    return OBPillButton(
-      text: 'Comment',
-      icon: OBIcon(
-        OBIcons.comment,
-        size: OBIconSize.medium,
-      ),
-      color: Color.fromARGB(5, 0, 0, 0),
-      textColor: Colors.black87,
-      onPressed: finalOnWantsToComment,
-    );
+    return FlatButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            OBIcon(OBIcons.comment),
+            SizedBox(
+              width: 10.0,
+            ),
+            Text('Comment'),
+          ],
+        ),
+        color: Color.fromARGB(5, 0, 0, 0),
+        onPressed: finalOnWantsToComment,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(50.0)));
   }
 
   void _defaultOnWantsToComment(BuildContext context) {
