@@ -31,7 +31,7 @@ class OBPostPageState extends State<OBPostPage> {
   UserService _userService;
   ToastService _toastService;
 
-  GlobalKey _firstCommentKey;
+  GlobalKey _commentsTitleKey;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _postCommentsScrollController;
   List<PostComment> _postComments = [];
@@ -48,7 +48,7 @@ class OBPostPageState extends State<OBPostPage> {
     _postComments = [];
     _noMoreItemsToLoad = true;
     _commentInputFocusNode = FocusNode();
-    _firstCommentKey = new GlobalKey();
+    _commentsTitleKey = new GlobalKey();
   }
 
   @override
@@ -102,7 +102,7 @@ class OBPostPageState extends State<OBPostPage> {
                                     postComment: postComment,
                                     post: widget.post,
                                     onPostCommentDeletedCallback:
-                                    onPostCommentDeletedCallback,
+                                        onPostCommentDeletedCallback,
                                   );
                                 }
 
@@ -121,7 +121,25 @@ class OBPostPageState extends State<OBPostPage> {
                                         onWantsToComment: _onWantsToComment);
                                     break;
                                   case 4:
-                                    return Divider(key: _firstCommentKey,);
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Divider(),
+                                        Padding(
+                                          key: _commentsTitleKey,
+                                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                                          child: Text(
+                                            'Comments',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16.0,
+                                                color: Colors.black38),
+                                          ),
+                                        ),
+                                      ],
+                                    );
                                     break;
                                   default:
                                     throw 'Unhandled index';
@@ -220,7 +238,7 @@ class OBPostPageState extends State<OBPostPage> {
   }
 
   void _scrollToFirstComment() {
-    Scrollable.ensureVisible(_firstCommentKey.currentContext,
+    Scrollable.ensureVisible(_commentsTitleKey.currentContext,
         curve: Curves.easeOut, duration: const Duration(milliseconds: 700));
   }
 
