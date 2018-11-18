@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:Openbook/services/auth-api.dart';
+import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/validation.dart';

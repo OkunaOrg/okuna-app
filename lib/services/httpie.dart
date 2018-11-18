@@ -42,6 +42,43 @@ class HttpieService {
     }
   }
 
+  Future<HttpieResponse> put(url,
+      {Map<String, String> headers,
+      body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
+    var finalHeaders = _getHeadersWithConfig(
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+
+    try {
+      var response = await http.put(url,
+          headers: finalHeaders, body: body, encoding: encoding);
+      return HttpieResponse(response);
+    } catch (error) {
+      _handleRequestError(error);
+    }
+  }
+
+  Future<HttpieResponse> delete(url,
+      {Map<String, String> headers,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
+    var finalHeaders = _getHeadersWithConfig(
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+
+    try {
+      var response = await http.delete(url, headers: finalHeaders);
+      return HttpieResponse(response);
+    } catch (error) {
+      _handleRequestError(error);
+    }
+  }
+
   Future<HttpieResponse> postJSON(url,
       {Map<String, String> headers = const {},
       body,
@@ -50,14 +87,31 @@ class HttpieService {
       bool appendAuthorizationToken}) {
     String jsonBody = json.encode(body);
 
-    Map<String, String> jsonHeaders = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-    };
+    Map<String, String> jsonHeaders = _getJsonHeaders();
 
     jsonHeaders.addAll(headers);
 
     return post(url,
+        headers: jsonHeaders,
+        body: jsonBody,
+        encoding: encoding,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+  }
+
+  Future<HttpieResponse> putJSON(url,
+      {Map<String, String> headers = const {},
+      body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
+    String jsonBody = json.encode(body);
+
+    Map<String, String> jsonHeaders = _getJsonHeaders();
+
+    jsonHeaders.addAll(headers);
+
+    return put(url,
         headers: jsonHeaders,
         body: jsonBody,
         encoding: encoding,
@@ -194,12 +248,23 @@ class HttpieService {
   void _handleRequestError(error) {
     if (error is SocketException) {
       var errorCode = error.osError.errorCode;
-      if (errorCode == 61 || errorCode == 111) {
+      if (errorCode == 61 ||
+          errorCode == 111 ||
+          errorCode == 51 ||
+          errorCode == 64) {
         // Connection refused.
         throw HttpieConnectionRefusedError(error);
       }
     }
+
     throw error;
+  }
+
+  Map<String, String> _getJsonHeaders() {
+    return {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
   }
 
   String _makeQueryString(Map<String, dynamic> queryParameters) {

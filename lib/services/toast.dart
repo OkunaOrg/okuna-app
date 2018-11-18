@@ -95,33 +95,6 @@ class ToastService {
         throw 'Unsupported ToastType';
     }
 
-    var snackBar = SnackBar(
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          icon,
-          SizedBox(
-            width: 20.0,
-          ),
-          Flexible(
-            child: Text(
-              message,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )
-        ],
-      ),
-      backgroundColor: backgroundColor,
-      duration: toastDuration,
-    );
-
-    if (scaffoldKey != null) {
-      scaffoldKey.currentState.showSnackBar(snackBar);
-    } else if (context != null) {
-      Scaffold.of(context).showSnackBar(snackBar);
-    } else {
-      throw 'scaffoldKey or context argument is required.';
-    }
+    print(message);
   }
 }

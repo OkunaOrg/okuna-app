@@ -75,7 +75,7 @@ class OBHomePostsState extends State<OBHomePosts> {
             delegate: OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
                 controller: _postsScrollController,
-                padding: kMaterialListPadding,
+                padding: EdgeInsets.all(0),
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
@@ -109,13 +109,14 @@ class OBHomePostsState extends State<OBHomePosts> {
   Future<void> _refreshPosts({areFirstPosts = true}) async {
     try {
       _posts =
-          (await _userService.getAllPosts(areFirstPosts: areFirstPosts)).posts;
+          (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts)).posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
     } on HttpieConnectionRefusedError catch (error) {
       _onConnectionRefusedError(error);
     } catch (error) {
       _onUnknownError(error);
+      rethrow;
     }
   }
 
@@ -123,7 +124,7 @@ class OBHomePostsState extends State<OBHomePosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      var morePosts = (await _userService.getAllPosts(maxId: lastPostId)).posts;
+      var morePosts = (await _userService.getTimelinePosts(maxId: lastPostId)).posts;
 
       if (morePosts.length == 0) {
         _setLoadingFinished(true);

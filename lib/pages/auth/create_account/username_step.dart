@@ -1,9 +1,9 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/buttons/primary-button.dart';
-import 'package:Openbook/widgets/buttons/secondary-button.dart';
-import 'package:Openbook/pages/auth/create_account/widgets/auth-text-field.dart';
+import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/secondary_button.dart';
+import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthUsernameStepPage extends StatefulWidget {

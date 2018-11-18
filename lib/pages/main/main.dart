@@ -1,20 +1,22 @@
 import 'dart:async';
 
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/main/modals/create-post/create-post.dart';
+import 'package:Openbook/pages/main/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home/home.dart';
 import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
+import 'package:Openbook/pages/main/pages/menu/menu.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
 import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
-import 'package:Openbook/pages/main/widgets/drawer/drawer.dart';
 import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBMainPage extends StatefulWidget {
   @override
@@ -31,6 +33,7 @@ class OBMainPageState extends State<OBMainPage> {
   bool _needsBootstrap;
   StreamSubscription _loggedInUserChangeSubscription;
   OBHomePostsController _homePostsController;
+  OBMainPageController _controller;
 
   List<Widget> _tabPages;
 
@@ -40,15 +43,19 @@ class OBMainPageState extends State<OBMainPage> {
     _needsBootstrap = true;
     _lastIndex = 0;
     _currentIndex = 0;
+    _controller = OBMainPageController();
+    _controller.attach(this);
     _homePostsController = OBHomePostsController();
     // Caching to preserve state
     _tabPages = [
       OBMainHomePage(
+        mainPageController: _controller,
         homePostsController: _homePostsController,
       ),
       OBMainSearchPage(),
       OBMainNotificationsPage(),
-      OBMainCommunitiesPage()
+      OBMainCommunitiesPage(),
+      OBMainMenuPage()
     ];
   }
 
@@ -68,9 +75,8 @@ class OBMainPageState extends State<OBMainPage> {
       _needsBootstrap = false;
     }
 
-    return Scaffold(
-      drawer: OBMainDrawer(),
-      body: OBCupertinoTabScaffold(
+    return Material(
+      child: OBCupertinoTabScaffold(
         tabBuilder: (BuildContext context, int index) {
           return CupertinoTabView(
             builder: (BuildContext context) {
@@ -100,6 +106,9 @@ class OBMainPageState extends State<OBMainPage> {
       case 4:
         page = _tabPages[3];
         break;
+      case 5:
+        page = _tabPages[4];
+        break;
       default:
         throw 'Unhandled index';
     }
@@ -112,66 +121,74 @@ class OBMainPageState extends State<OBMainPage> {
       backgroundColor: Colors.white,
       currentIndex: _currentIndex,
       onTap: (int index) {
-        // When index == 2 dont allow index change
-        if (index == 2) {
-          // Open post modal
-          _openCreatePostModal();
-          return false;
-        }
-
         if (_lastIndex == 0 && index == 0) {
           _homePostsController.scrollToTop();
         }
-
         _lastIndex = index;
         return true;
       },
       items: [
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.home)),
-          activeIcon: OBIcon(OBIcons.home),
+          icon: Icon(Icons.home, size: 25.0),
+          activeIcon: Icon(
+            Icons.home,
+            size: 25.0,
+            color: Pigment.fromString('#6bd509'),
+          ),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon:
-              _buildBottomNavigationBarInactiveItemIcon(OBIcon(OBIcons.search)),
-          activeIcon: OBIcon(OBIcons.search),
+          icon: Icon(Icons.search, size: 25.0),
+          activeIcon: Icon(Icons.search,
+              size: 25.0, color: Pigment.fromString('#379eff')),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(
-              OBIcon(OBIcons.createPost)),
-          activeIcon: OBIcon(OBIcons.createPost),
+          icon: Icon(Icons.notifications, size: 23.0),
+          activeIcon: Icon(Icons.notifications,
+              size: 25.0, color: Pigment.fromString('#f6006f')),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(
-              OBIcon(OBIcons.notifications)),
-          activeIcon: OBIcon(OBIcons.notifications),
+          icon: Icon(
+            Icons.people,
+            size: 25.0,
+          ),
+          activeIcon: Icon(Icons.people,
+              size: 25.0, color: Pigment.fromString('#980df9')),
         ),
         BottomNavigationBarItem(
+            title: Container(),
+            icon: OBLoggedInUserAvatar(
+              size: OBUserAvatarSize.small,
+            ),
+            activeIcon: Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(500), border: Border.all(color: Colors.red)),
+              padding: EdgeInsets.all(2.0),
+              child: OBLoggedInUserAvatar(
+                size: OBUserAvatarSize.small,
+              ),
+            )),
+        BottomNavigationBarItem(
           title: Container(),
-          icon: _buildBottomNavigationBarInactiveItemIcon(
-              OBIcon(OBIcons.communities)),
-          activeIcon: OBIcon(OBIcons.communities),
+          icon: Icon(
+            Icons.menu,
+            size: 25.0,
+          ),
+          activeIcon: Icon(Icons.menu,
+              size: 25.0, color: Pigment.fromString('#ff9400')),
         ),
       ],
     );
   }
 
-  Widget _buildBottomNavigationBarInactiveItemIcon(Widget icon) {
-    return Opacity(
-      opacity: 0.5,
-      child: icon,
-    );
-  }
-
-  void _openCreatePostModal() {
+  void openCreatePostModal() {
     Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
         builder: (BuildContext context) {
-          return CreatePostModal(onPostCreated: (){
+          return CreatePostModal(onPostCreated: () {
             _homePostsController.scrollToTop();
           });
         }));
@@ -188,6 +205,8 @@ class OBMainPageState extends State<OBMainPage> {
     } catch (error) {
       if (error is AuthTokenMissingError || error is AuthTokenInvalidError) {
         await _userService.logout();
+      } else{
+        rethrow;
       }
     }
   }
@@ -196,5 +215,17 @@ class OBMainPageState extends State<OBMainPage> {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     }
+  }
+}
+
+class OBMainPageController {
+  OBMainPageState _mainPageState;
+
+  void attach(OBMainPageState mainPage) {
+    _mainPageState = mainPage;
+  }
+
+  openCreatePostModal() {
+    _mainPageState.openCreatePostModal();
   }
 }
