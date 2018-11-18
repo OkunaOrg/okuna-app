@@ -25,29 +25,14 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Openbook',
           supportedLocales: [
+            const Locale('en', 'US'),
             const Locale('es', 'ES'),
-            const Locale('en', 'US')
           ],
           localizationsDelegates: [
             const LocalizationServiceDelegate(),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate
           ],
-          localeResolutionCallback:
-              (Locale locale, Iterable<Locale> supportedLocales) {
-            if (locale == null) {
-              return supportedLocales.last;
-            }
-
-            for (Locale supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale.languageCode ||
-                  supportedLocale.countryCode == locale.countryCode) {
-                return supportedLocale;
-              }
-            }
-
-            return supportedLocales.first;
-          },
           theme: new ThemeData(
               buttonTheme: ButtonThemeData(
                   shape: new RoundedRectangleBorder(

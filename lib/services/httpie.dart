@@ -44,10 +44,10 @@ class HttpieService {
 
   Future<HttpieResponse> put(url,
       {Map<String, String> headers,
-        body,
-        Encoding encoding,
-        bool appendLanguageHeader,
-        bool appendAuthorizationToken}) async {
+      body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
     var finalHeaders = _getHeadersWithConfig(
         headers: headers,
         appendLanguageHeader: appendLanguageHeader,
@@ -256,6 +256,7 @@ class HttpieService {
         throw HttpieConnectionRefusedError(error);
       }
     }
+
     throw error;
   }
 
