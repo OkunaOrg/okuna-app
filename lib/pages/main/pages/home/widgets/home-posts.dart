@@ -92,6 +92,12 @@ class OBHomePostsState extends State<OBHomePosts> {
     );
   }
 
+  void addPostToTop(Post post) {
+    setState(() {
+      this._posts.insert(0, post);
+    });
+  }
+
   void _bootstrap() async {
     _loggedInUserChangeSubscription =
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
@@ -104,12 +110,14 @@ class OBHomePostsState extends State<OBHomePosts> {
   void _onLoggedInUserChange(User newUser) async {
     if (newUser == null) return;
     _refreshPosts();
+    _loggedInUserChangeSubscription.cancel();
   }
 
   Future<void> _refreshPosts({areFirstPosts = true}) async {
     try {
       _posts =
-          (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts)).posts;
+          (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts))
+              .posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
     } on HttpieConnectionRefusedError catch (error) {
@@ -124,7 +132,8 @@ class OBHomePostsState extends State<OBHomePosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      var morePosts = (await _userService.getTimelinePosts(maxId: lastPostId)).posts;
+      var morePosts =
+          (await _userService.getTimelinePosts(maxId: lastPostId)).posts;
 
       if (morePosts.length == 0) {
         _setLoadingFinished(true);
@@ -172,6 +181,10 @@ class OBHomePostsController {
   void attach(OBHomePostsState homePostsState) {
     assert(homePostsState != null, 'Cannot attach to empty state');
     _homePostsState = homePostsState;
+  }
+
+  void addPostToTop(Post post) {
+    return _homePostsState.addPostToTop(post);
   }
 
   void scrollToTop() {

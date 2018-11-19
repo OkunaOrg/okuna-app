@@ -1,10 +1,9 @@
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/main/main.dart';
 import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
+
 
 class OBMainHomePage extends StatelessWidget {
   OBMainPageController mainPageController;

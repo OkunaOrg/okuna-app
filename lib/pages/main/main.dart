@@ -164,8 +164,9 @@ class OBMainPageState extends State<OBMainPage> {
               size: OBUserAvatarSize.small,
             ),
             activeIcon: Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(500), border: Border.all(color: Colors.red)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(500),
+                  border: Border.all(color: Colors.red)),
               padding: EdgeInsets.all(2.0),
               child: OBLoggedInUserAvatar(
                 size: OBUserAvatarSize.small,
@@ -188,7 +189,8 @@ class OBMainPageState extends State<OBMainPage> {
     Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
         builder: (BuildContext context) {
-          return CreatePostModal(onPostCreated: () {
+          return CreatePostModal(onPostCreated: (createdPost) {
+            _homePostsController.addPostToTop(createdPost);
             _homePostsController.scrollToTop();
           });
         }));
@@ -205,7 +207,7 @@ class OBMainPageState extends State<OBMainPage> {
     } catch (error) {
       if (error is AuthTokenMissingError || error is AuthTokenInvalidError) {
         await _userService.logout();
-      } else{
+      } else {
         rethrow;
       }
     }
