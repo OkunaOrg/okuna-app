@@ -1,16 +1,11 @@
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 
-class OBEmojiSearchBar extends StatefulWidget {
-  OBEmojiSearchBar({Key key}) : super(key: key);
+class OBEmojiSearchBar extends StatelessWidget {
+  OBEmojiSearchBarOnSearch onSearch;
 
-  @override
-  OBEmojiSearchBarState createState() {
-    return OBEmojiSearchBarState();
-  }
-}
+  OBEmojiSearchBar({Key key, @required this.onSearch}) : super(key: key);
 
-class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
   Widget build(BuildContext context) {
     var provider = OpenbookProvider.of(context);
 
@@ -37,6 +32,7 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
                 color: Color.fromARGB(10, 0, 0, 0),
               ),
               child: TextField(
+                onChanged: onSearch,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 style: TextStyle(fontSize: 14.0, color: Colors.black87),
@@ -54,3 +50,5 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
     );
   }
 }
+
+typedef void OBEmojiSearchBarOnSearch(String searchString);

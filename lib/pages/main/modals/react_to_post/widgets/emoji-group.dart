@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class OBEmojiGroup extends StatelessWidget {
   final EmojiGroup emojiGroup;
+  final OnEmojiPressed onEmojiPressed;
 
-  OBEmojiGroup(this.emojiGroup);
+  OBEmojiGroup(this.emojiGroup, {this.onEmojiPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,10 @@ class OBEmojiGroup extends StatelessWidget {
               Wrap(
                 spacing: 20.0,
                 children: this.emojiGroup.emojis.emojis.map((Emoji emoji) {
-                  return OBEmoji(emoji);
+                  return OBEmoji(
+                    emoji,
+                    onEmojiPressed: onEmojiPressed,
+                  );
                 }).toList(),
               )
             ],

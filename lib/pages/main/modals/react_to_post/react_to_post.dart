@@ -60,7 +60,12 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
         key: _scaffoldKey,
         appBar: _buildNavigationBar(),
         body: Column(
-          children: <Widget>[OBEmojiSearchBar(), _buildEmojiGroups()],
+          children: <Widget>[
+            OBEmojiSearchBar(
+              onSearch: _onSearch,
+            ),
+            _buildEmojiGroups()
+          ],
         ));
   }
 
@@ -81,7 +86,10 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
         child: Container(
             child: Column(
                 children: _emojiGroups.map((EmojiGroup emojiGroup) {
-      return OBEmojiGroup(emojiGroup);
+      return OBEmojiGroup(
+        emojiGroup,
+        onEmojiPressed: _onEmojiPressed,
+      );
     }).toList())));
   }
 
@@ -103,6 +111,14 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
       _setReactToPostInProgress(false);
       rethrow;
     }
+  }
+
+  void _onEmojiPressed(Emoji pressedEmoji) {
+    print(pressedEmoji.keyword);
+  }
+
+  void _onSearch(String searchString) {
+    print(searchString);
   }
 
   void _bootstrap() async {
