@@ -3,8 +3,10 @@ import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
-import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji-group.dart';
+import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji_groups/emoji_groups.dart';
+import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji_groups/widgets/emoji_group/emoji_group.dart';
 import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji-search-bar.dart';
+import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji_search_results.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
@@ -31,17 +33,22 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
 
   bool _isReactToPostInProgress;
   bool _needsBootstrap;
+  bool _hasSearch;
 
   GlobalKey<ScaffoldState> _scaffoldKey;
 
   List<EmojiGroup> _emojiGroups;
+  List<Emoji> _allEmojis;
+  List<Emoji> _emojiSearchResults;
 
   @override
   void initState() {
     super.initState();
     _scaffoldKey = GlobalKey<ScaffoldState>();
     _emojiGroups = [];
+    _emojiSearchResults = [];
     _needsBootstrap = true;
+    _hasSearch = false;
   }
 
   @override
@@ -60,11 +67,18 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
         key: _scaffoldKey,
         appBar: _buildNavigationBar(),
         body: Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             OBEmojiSearchBar(
               onSearch: _onSearch,
             ),
-            _buildEmojiGroups()
+            Expanded(
+                child: _hasSearch
+                    ? OBEmojiSearchResults(_emojiSearchResults)
+                    : OBEmojiGroups(
+                        _emojiGroups,
+                        onEmojiPressed: _onEmojiPressed,
+                      ))
           ],
         ));
   }
@@ -79,18 +93,6 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
           },
         ),
         middle: Text('React to post'));
-  }
-
-  Widget _buildEmojiGroups() {
-    return Expanded(
-        child: Container(
-            child: Column(
-                children: _emojiGroups.map((EmojiGroup emojiGroup) {
-      return OBEmojiGroup(
-        emojiGroup,
-        onEmojiPressed: _onEmojiPressed,
-      );
-    }).toList())));
   }
 
   Future<void> reactToPost(Emoji emoji) async {
@@ -118,7 +120,20 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
   }
 
   void _onSearch(String searchString) {
-    print(searchString);
+    if (searchString.length == 0) {
+      _setHasSearch(false);
+      return;
+    }
+
+    if (!_hasSearch) _setHasSearch(true);
+
+    String standarisedSearchStr = searchString.toLowerCase();
+
+    List<Emoji> results = _allEmojis.where((Emoji emoji) {
+      return emoji.keyword.contains(standarisedSearchStr);
+    }).toList();
+
+    _setEmojiSearchResults(results);
   }
 
   void _bootstrap() async {
@@ -128,13 +143,30 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
 
   void _setEmojiGroups(List<EmojiGroup> emojiGroups) {
     setState(() {
-      this._emojiGroups = emojiGroups;
+      _emojiGroups = emojiGroups;
+      List<Emoji> newAllEmojis = [];
+      _emojiGroups.forEach((EmojiGroup emojiGroup) {
+        newAllEmojis.addAll(emojiGroup.getEmojis());
+      });
+      _allEmojis = newAllEmojis;
+    });
+  }
+
+  void _setEmojiSearchResults(List<Emoji> emojiSearchResults) {
+    setState(() {
+      _emojiSearchResults = emojiSearchResults;
     });
   }
 
   void _setReactToPostInProgress(bool reactToPostInProgress) {
     setState(() {
       _isReactToPostInProgress = reactToPostInProgress;
+    });
+  }
+
+  void _setHasSearch(bool hasSearch) {
+    setState(() {
+      _hasSearch = hasSearch;
     });
   }
 }

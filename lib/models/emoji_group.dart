@@ -1,3 +1,4 @@
+import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_list.dart';
 
 class EmojiGroup {
@@ -29,5 +30,9 @@ class EmojiGroup {
         order: parsedJson['order'],
         color: parsedJson['color'],
         emojis: emojis);
+  }
+
+  List<Emoji> getEmojis() {
+    return emojis.emojis;
   }
 }
