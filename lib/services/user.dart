@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -12,6 +13,7 @@ import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -28,6 +30,7 @@ class UserService {
   AuthApiService _authApiService;
   HttpieService _httpieService;
   PostsApiService _postsApiService;
+  EmojisApiService _emojisApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -44,6 +47,10 @@ class UserService {
 
   void setPostsApiService(PostsApiService postsApiService) {
     _postsApiService = postsApiService;
+  }
+
+  void setEmojisApiService(EmojisApiService emojisApiService) {
+    _emojisApiService = emojisApiService;
   }
 
   void setHttpieService(HttpieService httpieService) {
@@ -230,6 +237,14 @@ class UserService {
     _checkResponseIsOk(response);
 
     return PostCommentList.fromJson(json.decode(response.body));
+  }
+
+  Future<EmojiGroupList> getEmojiGroups() async {
+    HttpieResponse response = await this._emojisApiService.getEmojiGroups();
+
+    _checkResponseIsOk(response);
+
+    return EmojiGroupList.fromJson(json.decode(response.body));
   }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {

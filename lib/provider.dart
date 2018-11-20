@@ -1,5 +1,6 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
 import 'package:Openbook/services/file_cache.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -40,6 +41,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ToastService toastService = ToastService();
   FileCacheService fileCacheService = FileCacheService();
   StringTemplateService stringTemplateService = StringTemplateService();
+  EmojisApiService emojisApiService = EmojisApiService();
 
   LocalizationService localizationService;
 
@@ -53,6 +55,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setAuthApiService(authApiService);
     userService.setAuthApiService(authApiService);
     userService.setPostsApiService(postsApiService);
+    userService.setEmojisApiService(emojisApiService);
     userService.setHttpieService(httpService);
     userService.setStorageService(storageService);
     postsApiService.setHttpieService(httpService);
@@ -64,6 +67,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         await EnvironmentLoader(environmentPath: ".env.json").load();
     authApiService.setApiURL(environment.API_URL);
     postsApiService.setApiURL(environment.API_URL);
+    emojisApiService.setApiURL(environment.API_URL);
   }
 
   @override
