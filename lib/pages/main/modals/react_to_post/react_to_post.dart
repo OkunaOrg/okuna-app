@@ -5,7 +5,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji_groups/emoji_groups.dart';
 import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji_groups/widgets/emoji_group/emoji_group.dart';
-import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji-search-bar.dart';
+import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji_search_bar.dart';
 import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji_search_results.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';

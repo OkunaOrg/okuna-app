@@ -13,7 +13,7 @@ class OBEmoji extends StatelessWidget {
     return IconButton(
       icon: CachedNetworkImage(
         imageUrl: emoji.image,
-        placeholder: Image(image: AssetImage('assets/images/loading.gif')),
+        placeholder: SizedBox(),
         errorWidget: Container(
           child: Center(child: Text('?')),
         ),
