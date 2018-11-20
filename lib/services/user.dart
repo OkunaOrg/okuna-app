@@ -2,9 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
+import 'package:Openbook/models/post_reaction.dart';
+import 'package:Openbook/models/post_reaction_list.dart';
+import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/auth_api.dart';
@@ -166,6 +170,41 @@ class UserService {
   Future<void> deletePost(Post post) async {
     HttpieResponse response = await _postsApiService.deletePostWithId(post.id);
     _checkResponseIsOk(response);
+  }
+
+  Future<PostReaction> reactToPost(
+      {@required Post post, @required Emoji emoji}) async {
+    HttpieResponse response =
+        await _postsApiService.reactToPost(postId: post.id, emojiId: emoji.id);
+    _checkResponseIsCreated(response);
+    return PostReaction.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deletePostReaction(
+      {@required PostReaction postReaction, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.deletePostReaction(
+        postReactionId: postReaction.id, postId: post.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<PostReactionList> getReactionsForPost(Post post,
+      {int count, int maxId, Emoji emoji}) async {
+    HttpieResponse response = await _postsApiService
+        .getReactionsForPostWithId(post.id, count: count, maxId: maxId);
+
+    _checkResponseIsOk(response);
+
+    return PostReactionList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostReactionsEmojiCountList> getReactionsEmojiCountForPost(
+      Post post) async {
+    HttpieResponse response =
+        await _postsApiService.getReactionsEmojiCountForPostWithId(post.id);
+
+    _checkResponseIsOk(response);
+
+    return PostReactionsEmojiCountList.fromJson(json.decode(response.body));
   }
 
   Future<PostComment> commentPost(
