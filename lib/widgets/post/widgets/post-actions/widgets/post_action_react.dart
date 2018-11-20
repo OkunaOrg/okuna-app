@@ -14,11 +14,11 @@ class OBPostActionReact extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBIcon(OBIcons.like),
+            OBIcon(OBIcons.react),
             SizedBox(
               width: 10.0,
             ),
-            Text('Like'),
+            Text('React'),
           ],
         ),
         color: Color.fromARGB(5, 0, 0, 0),
