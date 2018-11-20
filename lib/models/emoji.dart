@@ -4,8 +4,15 @@ class Emoji {
   final int order;
   final DateTime created;
   final String color;
+  final String image;
 
-  Emoji({this.keyword, this.id, this.order, this.created, this.color});
+  Emoji(
+      {this.keyword,
+      this.id,
+      this.order,
+      this.created,
+      this.color,
+      this.image});
 
   factory Emoji.fromJson(Map<String, dynamic> parsedJson) {
     DateTime created = DateTime.parse(parsedJson['created']).toLocal();
@@ -13,6 +20,7 @@ class Emoji {
     return Emoji(
         id: parsedJson['id'],
         keyword: parsedJson['keyword'],
+        image: parsedJson['image'],
         created: created,
         order: parsedJson['order'],
         color: parsedJson['color']);
