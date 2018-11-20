@@ -187,6 +187,7 @@ class UserService {
       {int count, int maxId}) async {
     HttpieResponse response = await _postsApiService
         .getCommentsForPostWithId(post.id, count: count, maxId: maxId);
+
     _checkResponseIsOk(response);
 
     return PostCommentList.fromJson(json.decode(response.body));
@@ -283,10 +284,4 @@ class NotLoggedInUserError implements Exception {
   const NotLoggedInUserError();
 
   String toString() => 'NotLoggedInUserError: No user is logged in.';
-}
-
-class AuthTokenInvalidError implements Exception {
-  const AuthTokenInvalidError();
-
-  String toString() => 'InvalidAuthTokenError: The provided token is invalid.';
 }
