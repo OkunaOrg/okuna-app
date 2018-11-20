@@ -7,6 +7,7 @@ import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji-group.dar
 import 'package:Openbook/pages/main/modals/react_to_post/widgets/emoji-search-bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:flutter/cupertino.dart';
