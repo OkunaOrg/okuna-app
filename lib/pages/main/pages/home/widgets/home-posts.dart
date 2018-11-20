@@ -74,6 +74,7 @@ class OBHomePostsState extends State<OBHomePosts> {
             isFinish: _loadingFinished,
             delegate: OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
                 controller: _postsScrollController,
                 padding: EdgeInsets.all(0),
                 itemCount: _posts.length,
