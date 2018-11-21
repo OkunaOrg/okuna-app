@@ -48,8 +48,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
                 AsyncSnapshot<PostReactionsEmojiCountList> snapshot) {
               if (snapshot.data == null) return SizedBox();
 
-              List<PostReactionsEmojiCount> emojiCounts =
-                  snapshot.data.reactions;
+              List<PostReactionsEmojiCount> emojiCounts = snapshot.data.counts;
 
               if (emojiCounts.length == 0) return SizedBox();
 
@@ -82,47 +81,17 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
   void _onEmojiReactionCountPressed(PostReactionsEmojiCount pressedEmojiCount,
       List<PostReactionsEmojiCount> emojiCounts) async {
-    var newEmojiCounts = emojiCounts.toList();
-
     bool reacted = widget.post.isReactionEmoji(pressedEmojiCount.emoji);
 
     if (reacted) {
       await _deleteReaction();
-      // Remove reaction
-      if (pressedEmojiCount.count > 1) {
-        // There was more than one reaction. Minus one it.
-        var newEmojiCount = pressedEmojiCount.copy(
-            newReacted: false, newCount: pressedEmojiCount.count - 1);
-        int index = newEmojiCounts.indexOf(pressedEmojiCount);
-        newEmojiCounts[index] = newEmojiCount;
-      } else {
-        newEmojiCounts.remove(pressedEmojiCount);
-      }
       widget.post.clearReaction();
     } else {
-      PostReaction previousReaction = widget.post.reaction;
       // React
       PostReaction newPostReaction =
           await _reactToPost(pressedEmojiCount.emoji);
-
       widget.post.setReaction(newPostReaction);
-
-      newEmojiCounts = newEmojiCounts.map((emojiCount) {
-        int count = emojiCount.count;
-        if (previousReaction != null &&
-            previousReaction.getEmojiId() == emojiCount.getEmojiId()) {
-          // Decrement
-          count = count - 1;
-        } else if (newPostReaction.getEmojiId() == emojiCount.getEmojiId()) {
-          // Increment
-          count = count + 1;
-        }
-        return emojiCount.copy(newCount: count);
-      }).toList();
     }
-
-    widget.post.setReactionsEmojiCounts(
-        PostReactionsEmojiCountList(reactions: newEmojiCounts));
   }
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {

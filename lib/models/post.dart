@@ -127,7 +127,7 @@ class Post {
   }
 
   List<PostReactionsEmojiCount> getEmojiCounts() {
-    return reactionsEmojiCounts.reactions.toList();
+    return reactionsEmojiCounts.counts.toList();
   }
 
   String getCreatorUsername() {
@@ -158,9 +158,48 @@ class Post {
     this.setReaction(null);
   }
 
-  void setReaction(PostReaction reaction) {
-    this.reaction = reaction;
-    _reactionChangeSubject.add(reaction);
+  void setReaction(PostReaction newReaction) {
+    bool hasReaction = this.hasReaction();
+
+    if (!hasReaction && newReaction == null) {
+      throw 'Trying to remove no reaction';
+    }
+
+    var newEmojiCounts = reactionsEmojiCounts.counts.toList();
+
+    if (hasReaction) {
+      var currentReactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
+        return emojiCount.getEmojiId() == reaction.getEmojiId();
+      });
+
+      if (currentReactionEmojiCount.count > 1) {
+        // Decrement emoji reaction counts
+        currentReactionEmojiCount.count -= 1;
+      } else {
+        // Remove emoji reaction count
+        newEmojiCounts.remove(currentReactionEmojiCount);
+      }
+    }
+
+    if (newReaction != null) {
+      var reactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
+        return emojiCount.getEmojiId() == newReaction.getEmojiId();
+      }, orElse: null);
+
+      if (reactionEmojiCount != null) {
+        // Up existing count
+        reactionEmojiCount.count += 1;
+      } else {
+        // Add new emoji count
+        newEmojiCounts
+            .add(PostReactionsEmojiCount(emoji: newReaction.emoji, count: 1));
+      }
+    }
+
+    this.reaction = newReaction;
+    _reactionChangeSubject.add(newReaction);
+    this.setReactionsEmojiCounts(
+        PostReactionsEmojiCountList(counts: newEmojiCounts));
   }
 
   void setCommented(bool commented) {

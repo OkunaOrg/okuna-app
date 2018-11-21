@@ -2,7 +2,7 @@ import 'package:Openbook/models/emoji.dart';
 
 class PostReactionsEmojiCount {
   final Emoji emoji;
-  final int count;
+  int count;
 
   PostReactionsEmojiCount({this.emoji, this.count});
 

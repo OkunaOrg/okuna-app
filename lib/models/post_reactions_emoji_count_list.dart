@@ -1,10 +1,10 @@
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 
 class PostReactionsEmojiCountList {
-  final List<PostReactionsEmojiCount> reactions;
+  final List<PostReactionsEmojiCount> counts;
 
   PostReactionsEmojiCountList({
-    this.reactions,
+    this.counts,
   });
 
   factory PostReactionsEmojiCountList.fromJson(List<dynamic> parsedJson) {
@@ -13,7 +13,7 @@ class PostReactionsEmojiCountList {
         .toList();
 
     return new PostReactionsEmojiCountList(
-      reactions: postReactionsEmojiCounts,
+      counts: postReactionsEmojiCounts,
     );
   }
 }

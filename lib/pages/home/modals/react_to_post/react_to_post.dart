@@ -14,10 +14,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBReactToPostModal extends StatefulWidget {
-  OnPostCreatedCallback onReactedToPost;
   Post post;
 
-  OBReactToPostModal(this.post, {this.onReactedToPost});
+  OBReactToPostModal(this.post);
 
   @override
   State<StatefulWidget> createState() {
@@ -93,15 +92,19 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
         middle: Text('React to post'));
   }
 
-  Future<void> reactToPost(Emoji emoji) async {
+  void _onEmojiPressed(Emoji pressedEmoji) {
+    _reactToPost(pressedEmoji);
+  }
+
+  Future<PostReaction> _reactToPost(Emoji emoji) async {
     _setReactToPostInProgress(true);
 
     try {
-      PostReaction createdPost =
+      PostReaction postReaction =
           await _userService.reactToPost(post: widget.post, emoji: emoji);
+      widget.post.setReaction(postReaction);
       // Remove modal
       Navigator.pop(context);
-      if (widget.onReactedToPost != null) widget.onReactedToPost(createdPost);
     } on HttpieConnectionRefusedError {
       _toastService.error(
           scaffoldKey: _scaffoldKey, message: 'No internet connection');
@@ -111,10 +114,6 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
       _setReactToPostInProgress(false);
       rethrow;
     }
-  }
-
-  void _onEmojiPressed(Emoji pressedEmoji) {
-    print(pressedEmoji.keyword);
   }
 
   void _onSearch(String searchString) {
