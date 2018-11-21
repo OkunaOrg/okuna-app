@@ -51,7 +51,9 @@ class OBPostActionReact extends StatelessWidget {
                 ? Pigment.fromString(reaction.getEmojiColor())
                 : Color.fromARGB(5, 0, 0, 0),
             onPressed: () {
-              if (onWantsToReactToPost != null) {
+              if (hasReaction) {
+                _post.clearReaction();
+              } else if (onWantsToReactToPost != null) {
                 onWantsToReactToPost(_post);
               }
             },

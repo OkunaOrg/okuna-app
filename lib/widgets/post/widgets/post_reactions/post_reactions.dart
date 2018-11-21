@@ -39,35 +39,36 @@ class OBPostReactionsState extends State<OBPostReactions> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
 
-    return Container(
-        height: 51,
-        child: StreamBuilder(
-            stream: widget.post.reactionsEmojiCountsChangeSubject,
-            initialData: widget.post.reactionsEmojiCounts,
-            builder: (BuildContext context,
-                AsyncSnapshot<PostReactionsEmojiCountList> snapshot) {
-              if (snapshot.data == null) return SizedBox();
+    return StreamBuilder(
+        stream: widget.post.reactionsEmojiCountsChangeSubject,
+        initialData: widget.post.reactionsEmojiCounts,
+        builder: (BuildContext context,
+            AsyncSnapshot<PostReactionsEmojiCountList> snapshot) {
+          if (snapshot.data == null) return SizedBox();
 
-              List<PostReactionsEmojiCount> emojiCounts = snapshot.data.counts;
+          List<PostReactionsEmojiCount> emojiCounts = snapshot.data.counts;
 
-              if (emojiCounts.length == 0) return SizedBox();
+          if (emojiCounts.length == 0) return SizedBox();
 
-              return ListView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  children: emojiCounts.map((emojiCount) {
-                    return OBEmojiReactionCount(
-                      emojiCount,
-                      reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                      onPressed: _requestInProgress
-                          ? null
-                          : (pressedEmojiCount) {
-                              _onEmojiReactionCountPressed(
-                                  pressedEmojiCount, emojiCounts);
-                            },
-                    );
-                  }).toList());
-            }));
+          return Container(
+            height: 51,
+            child: ListView(
+                physics: AlwaysScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                children: emojiCounts.map((emojiCount) {
+                  return OBEmojiReactionCount(
+                    emojiCount,
+                    reacted: widget.post.isReactionEmoji(emojiCount.emoji),
+                    onPressed: _requestInProgress
+                        ? null
+                        : (pressedEmojiCount) {
+                            _onEmojiReactionCountPressed(
+                                pressedEmojiCount, emojiCounts);
+                          },
+                  );
+                }).toList()),
+          );
+        });
   }
 
   void _onEmojiReactionCountPressed(PostReactionsEmojiCount pressedEmojiCount,
