@@ -65,8 +65,6 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    int postWidgetsCount = 5;
-
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: Container(
@@ -85,75 +83,52 @@ class OBPostPageState extends State<OBPostPage> {
                               physics: AlwaysScrollableScrollPhysics(),
                               controller: _postCommentsScrollController,
                               padding: EdgeInsets.all(0),
-                              itemCount:
-                                  postWidgetsCount + _postComments.length,
+                              itemCount: _postComments.length + 1,
                               itemBuilder: (context, index) {
-                                int postCommentsIndexDelimiter =
-                                    postWidgetsCount - 1;
-
-                                if (index > postCommentsIndexDelimiter) {
-                                  var postCommentIndex =
-                                      index - postWidgetsCount;
-                                  var postComment =
-                                      _postComments[postCommentIndex];
-
-                                  var onPostCommentDeletedCallback = () {
-                                    _removePostCommentAtIndex(postCommentIndex);
-                                  };
-
-                                  return OBExpandedPostComment(
-                                    postComment: postComment,
-                                    post: widget.post,
-                                    onPostCommentDeletedCallback:
-                                        onPostCommentDeletedCallback,
+                                if (index == 0) {
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      OBPostHeader(widget.post),
+                                      OBPostBody(widget.post),
+                                      OBPostReactions(widget.post),
+                                      OBPostActions(
+                                        widget.post,
+                                        onWantsToCommentPost: _onWantsToComment,
+                                        onWantsToReactToPost:
+                                            widget.onWantsToReactToPost,
+                                      ),
+                                      Divider(),
+                                      Padding(
+                                        key: _postCommentsKey,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.0, vertical: 10.0),
+                                        child: Text(
+                                          _postComments.length > 0
+                                              ? 'Latest comments'
+                                              : 'Be the first to comment!',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0,
+                                              color: Colors.black38),
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 }
 
-                                switch (index) {
-                                  case 0:
-                                    return OBPostHeader(widget.post);
-                                    break;
-                                  case 1:
-                                    return OBPostBody(widget.post);
-                                    break;
-                                  case 2:
-                                    return OBPostReactions(widget.post);
-                                    break;
-                                  case 3:
-                                    return OBPostActions(
-                                      widget.post,
-                                      onWantsToCommentPost: _onWantsToComment,
-                                      onWantsToReactToPost:
-                                          widget.onWantsToReactToPost,
-                                    );
-                                    break;
-                                  case 4:
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Divider(),
-                                        Padding(
-                                          key: _postCommentsKey,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.0, vertical: 10.0),
-                                          child: Text(
-                                            _postComments.length > 0
-                                                ? 'Latest comments'
-                                                : 'Be the first to comment!',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0,
-                                                color: Colors.black38),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                    break;
-                                  default:
-                                    throw 'Unhandled index';
-                                }
+                                var postComment = _postComments[index];
+
+                                var onPostCommentDeletedCallback = () {
+                                  _removePostCommentAtIndex(index);
+                                };
+
+                                return OBExpandedPostComment(
+                                  postComment: postComment,
+                                  post: widget.post,
+                                  onPostCommentDeletedCallback:
+                                      onPostCommentDeletedCallback,
+                                );
                               }),
                           onLoadMore: _loadMoreComments),
                     ),
