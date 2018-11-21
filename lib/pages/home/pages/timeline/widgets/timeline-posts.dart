@@ -14,25 +14,25 @@ import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
-class OBHomePosts extends StatefulWidget {
-  final OBHomePostsController controller;
+class OBTimelinePosts extends StatefulWidget {
+  final OBTimelinePostsController controller;
   final OnWantsToCommentPost onWantsToCommentPost;
   final OnWantsToReactToPost onWantsToReactToPost;
   final OnWantsToSeePostComments onWantsToSeePostComments;
 
-  OBHomePosts(
+  OBTimelinePosts(
       {this.controller,
       this.onWantsToReactToPost,
       this.onWantsToCommentPost,
       this.onWantsToSeePostComments});
 
   @override
-  State<StatefulWidget> createState() {
-    return OBHomePostsState();
+  OBTimelinePostsState createState() {
+    return OBTimelinePostsState();
   }
 }
 
-class OBHomePostsState extends State<OBHomePosts> {
+class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<Post> _posts;
   bool _needsBootstrap;
   UserService _userService;
@@ -190,17 +190,17 @@ class OBHomePostsState extends State<OBHomePosts> {
   }
 }
 
-class OBHomePostsController {
-  OBHomePostsState _homePostsState;
+class OBTimelinePostsController {
+  OBTimelinePostsState _homePostsState;
 
   /// Register the OBHomePostsState to the controller
-  void attach(OBHomePostsState homePostsState) {
+  void attach(OBTimelinePostsState homePostsState) {
     assert(homePostsState != null, 'Cannot attach to empty state');
     _homePostsState = homePostsState;
   }
 
   void addPostToTop(Post post) {
-    return _homePostsState.addPostToTop(post);
+    _homePostsState.addPostToTop(post);
   }
 
   void scrollToTop() {

@@ -1,5 +1,4 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/main/pages/post/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,8 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/main/pages/post/widgets/expanded_post_comment.dart';
-import 'package:Openbook/pages/main/pages/post/widgets/page_scaffold.dart';
-import 'package:Openbook/pages/main/pages/post/widgets/post-commenter.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/page_scaffold.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';

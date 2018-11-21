@@ -8,7 +8,7 @@ import 'package:Openbook/pages/auth/create_account/submit_step.dart';
 import 'package:Openbook/pages/auth/create_account/password_step.dart';
 import 'package:Openbook/pages/auth/login.dart';
 import 'package:Openbook/pages/auth/splash.dart';
-import 'package:Openbook/pages/main/main.dart';
+import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/pages/auth/create_account/username_step.dart';
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             /// something before loading any route, therefore this ugliness.
             '/': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return OBMainPage();
+              return OBHomePage();
             },
             '/auth': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);

@@ -2,17 +2,16 @@ import 'dart:async';
 
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/main/modals/create_post/create_post.dart';
-import 'package:Openbook/pages/main/modals/react_to_post/react_to_post.dart';
-import 'package:Openbook/pages/main/pages/communities.dart';
-import 'package:Openbook/pages/main/pages/home/home.dart';
-import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
-import 'package:Openbook/pages/main/pages/menu/menu.dart';
-import 'package:Openbook/pages/main/pages/notifications.dart';
-import 'package:Openbook/pages/main/pages/post/post.dart';
-import 'package:Openbook/pages/main/pages/search.dart';
-import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
-import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
+import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
+import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
+import 'package:Openbook/pages/home/pages/communities.dart';
+import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
+import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Openbook/pages/home/pages/menu/menu.dart';
+import 'package:Openbook/pages/home/pages/notifications.dart';
+import 'package:Openbook/pages/home/pages/search.dart';
+import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
+import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
@@ -22,22 +21,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-class OBMainPage extends StatefulWidget {
+class OBHomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return OBMainPageState();
+    return OBHomePageState();
   }
 }
 
-class OBMainPageState extends State<OBMainPage> {
+class OBHomePageState extends State<OBHomePage> {
   @override
   UserService _userService;
   int _currentIndex;
   int _lastIndex;
   bool _needsBootstrap;
   StreamSubscription _loggedInUserChangeSubscription;
-  OBHomePostsController _homePostsController;
-  OBMainPageController _controller;
+  OBTimelinePageController _timelinePageController;
 
   List<Widget> _tabPages;
 
@@ -47,16 +45,13 @@ class OBMainPageState extends State<OBMainPage> {
     _needsBootstrap = true;
     _lastIndex = 0;
     _currentIndex = 0;
-    _controller = OBMainPageController();
-    _controller.attach(this);
-    _homePostsController = OBHomePostsController();
+    _timelinePageController = OBTimelinePageController();
     // Caching to preserve state
     _tabPages = [
-      OBMainHomePage(
-        mainPageController: _controller,
-        homePostsController: _homePostsController,
-        onWantsToReactToPost: _onWantsToReactToPost,
-      ),
+      OBTimelinePage(
+          controller: _timelinePageController,
+          onWantsToReactToPost: _onWantsToReactToPost,
+          onWantsToCreatePost: _onWantsToCreatePost),
       OBMainSearchPage(),
       OBMainNotificationsPage(),
       OBMainCommunitiesPage(),
@@ -127,7 +122,7 @@ class OBMainPageState extends State<OBMainPage> {
       currentIndex: _currentIndex,
       onTap: (int index) {
         if (_lastIndex == 0 && index == 0) {
-          _homePostsController.scrollToTop();
+          _timelinePageController.scrollToTop();
         }
         _lastIndex = index;
         return true;
@@ -190,15 +185,14 @@ class OBMainPageState extends State<OBMainPage> {
     );
   }
 
-  void openCreatePostModal() {
-    Navigator.of(context).push(MaterialPageRoute(
+  Future<Post> _onWantsToCreatePost() async {
+    Post createdPost = await Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
         builder: (BuildContext context) {
-          return CreatePostModal(onPostCreated: (createdPost) {
-            _homePostsController.addPostToTop(createdPost);
-            _homePostsController.scrollToTop();
-          });
+          return CreatePostModal();
         }));
+
+    return createdPost;
   }
 
   void _onWantsToReactToPost(Post post) {
@@ -229,17 +223,5 @@ class OBMainPageState extends State<OBMainPage> {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     }
-  }
-}
-
-class OBMainPageController {
-  OBMainPageState _mainPageState;
-
-  void attach(OBMainPageState mainPage) {
-    _mainPageState = mainPage;
-  }
-
-  openCreatePostModal() {
-    _mainPageState.openCreatePostModal();
   }
 }
