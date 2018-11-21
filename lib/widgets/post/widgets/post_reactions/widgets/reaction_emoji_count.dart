@@ -20,7 +20,7 @@ class OBEmojiReactionCount extends StatelessWidget {
       ),
       child: FlatButton(
         onPressed: () {
-          onPressed(postReactionsEmojiCount);
+          if (onPressed != null) onPressed(postReactionsEmojiCount);
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

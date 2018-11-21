@@ -29,7 +29,6 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _requestInProgress = false;
   }
@@ -65,10 +64,12 @@ class OBPostReactionsState extends State<OBPostReactions> {
                 return OBEmojiReactionCount(
                   emojiCount,
                   reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                  onPressed: (pressedEmojiCount) {
-                    _onEmojiReactionCountPressed(
-                        pressedEmojiCount, emojiCounts);
-                  },
+                  onPressed: _requestInProgress
+                      ? null
+                      : (pressedEmojiCount) {
+                          _onEmojiReactionCountPressed(
+                              pressedEmojiCount, emojiCounts);
+                        },
                 );
               }));
 
@@ -108,7 +109,8 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
       newEmojiCounts = newEmojiCounts.map((emojiCount) {
         int count = emojiCount.count;
-        if (previousReaction != null && previousReaction.getEmojiId() == emojiCount.getEmojiId()) {
+        if (previousReaction != null &&
+            previousReaction.getEmojiId() == emojiCount.getEmojiId()) {
           // Decrement
           count = count - 1;
         } else if (newPostReaction.getEmojiId() == emojiCount.getEmojiId()) {
