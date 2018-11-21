@@ -3,23 +3,48 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/widgets/reaction_emoji_count.dart';
 import 'package:flutter/material.dart';
 
-class OBPostReactions extends StatelessWidget {
+class OBPostReactions extends StatefulWidget {
   final Post post;
-  final OnWantsToReact onWantsToReact;
-  final OnWantsToUnReact onWantsToUnReact;
 
-  OBPostReactions(this.post, {this.onWantsToReact, this.onWantsToUnReact});
+  OBPostReactions(this.post);
+
+  @override
+  State<StatefulWidget> createState() {
+    return OBPostReactionsState();
+  }
+}
+
+class OBPostReactionsState extends State<OBPostReactions> {
+  UserService _userService;
+  ToastService _toastService;
+
+  bool _requestInProgress;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _requestInProgress = false;
+  }
 
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    _userService = openbookProvider.userService;
+    _toastService = openbookProvider.toastService;
+
     return Container(
         height: 51,
         child: StreamBuilder(
-            stream: post.reactionsEmojiCountsChangeSubject,
-            initialData: post.reactionsEmojiCounts,
+            stream: widget.post.reactionsEmojiCountsChangeSubject,
+            initialData: widget.post.reactionsEmojiCounts,
             builder: (BuildContext context,
                 AsyncSnapshot<PostReactionsEmojiCountList> snapshot) {
               if (snapshot.data == null) return SizedBox();
@@ -39,7 +64,7 @@ class OBPostReactions extends StatelessWidget {
               listItems.addAll(emojiCounts.map((emojiCount) {
                 return OBEmojiReactionCount(
                   emojiCount,
-                  reacted: post.isReactionEmoji(emojiCount.emoji),
+                  reacted: widget.post.isReactionEmoji(emojiCount.emoji),
                   onPressed: (pressedEmojiCount) {
                     _onEmojiReactionCountPressed(
                         pressedEmojiCount, emojiCounts);
@@ -58,10 +83,10 @@ class OBPostReactions extends StatelessWidget {
       List<PostReactionsEmojiCount> emojiCounts) async {
     var newEmojiCounts = emojiCounts.toList();
 
-    bool reacted = post.isReactionEmoji(pressedEmojiCount.emoji);
+    bool reacted = widget.post.isReactionEmoji(pressedEmojiCount.emoji);
 
     if (reacted) {
-      await onWantsToUnReact();
+      await _deleteReaction();
       // Remove reaction
       if (pressedEmojiCount.count > 1) {
         // There was more than one reaction. Minus one it.
@@ -72,33 +97,64 @@ class OBPostReactions extends StatelessWidget {
       } else {
         newEmojiCounts.remove(pressedEmojiCount);
       }
-      post.clearReaction();
+      widget.post.clearReaction();
     } else {
+      PostReaction previousReaction = widget.post.reaction;
       // React
       PostReaction newPostReaction =
-          await onWantsToReact(pressedEmojiCount.emoji);
+          await _reactToPost(pressedEmojiCount.emoji);
 
-      post.setReaction(newPostReaction);
+      widget.post.setReaction(newPostReaction);
 
       newEmojiCounts = newEmojiCounts.map((emojiCount) {
-        bool isPressedEmojiCount = emojiCount == pressedEmojiCount;
-        int count;
-        if (post.isReactionEmoji(emojiCount.emoji)) {
-          // If was reacted, decrement
-          count = emojiCount.count - 1;
-        } else {
-          // If its the pressed one, add one, else do nothing
-          count = isPressedEmojiCount ? emojiCount.count + 1 : emojiCount.count;
+        int count = emojiCount.count;
+        if (previousReaction != null && previousReaction.getEmojiId() == emojiCount.getEmojiId()) {
+          // Decrement
+          count = count - 1;
+        } else if (newPostReaction.getEmojiId() == emojiCount.getEmojiId()) {
+          // Increment
+          count = count + 1;
         }
         return emojiCount.copy(newCount: count);
       }).toList();
     }
 
-    post.setReactionsEmojiCounts(
+    widget.post.setReactionsEmojiCounts(
         PostReactionsEmojiCountList(reactions: newEmojiCounts));
   }
+
+  Future<PostReaction> _reactToPost(Emoji emoji) async {
+    _setRequestInProgress(true);
+    try {
+      return await _userService.reactToPost(post: widget.post, emoji: emoji);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection');
+    } catch (e) {
+      _toastService.error(message: 'Unknown error.');
+      rethrow;
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
+
+  Future<void> _deleteReaction() async {
+    _setRequestInProgress(true);
+    try {
+      await _userService.deletePostReaction(
+          postReaction: widget.post.reaction, post: widget.post);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection');
+    } catch (e) {
+      _toastService.error(message: 'Unknown error.');
+      rethrow;
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
+
+  void _setRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
+  }
 }
-
-typedef Future<PostReaction> OnWantsToReact(Emoji emoji);
-
-typedef Future<PostReaction> OnWantsToUnReact();
