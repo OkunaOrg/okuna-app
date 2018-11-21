@@ -55,6 +55,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
       PostReactionsEmojiCount postReactionsEmojiCount) {
     setState(() {
       if (postReactionsEmojiCount.reacted) {
+        // Remove reaction
         if (postReactionsEmojiCount.count > 1) {
           // There was more than one reaction. Minus one it.
           var newEmojiCount = postReactionsEmojiCount.copy(
@@ -65,11 +66,22 @@ class OBPostReactionsState extends State<OBPostReactions> {
           _emojiCounts.remove(postReactionsEmojiCount);
         }
       } else {
+        // React
         // Wants to react this
-        var newEmojiCount = postReactionsEmojiCount.copy(
-            newReacted: true, newCount: postReactionsEmojiCount.count + 1);
-        int index = _emojiCounts.indexOf(postReactionsEmojiCount);
-        _emojiCounts[index] = newEmojiCount;
+        _emojiCounts = _emojiCounts.map((emojiCount) {
+          bool isPressedEmojiCount = emojiCount == postReactionsEmojiCount;
+          bool reacted = isPressedEmojiCount;
+          int count;
+          if (emojiCount.reacted) {
+            // If was reacted, decrement
+            count = emojiCount.count - 1;
+          } else {
+            // If its the pressed one, add one, else do nothing
+            count =
+                isPressedEmojiCount ? emojiCount.count + 1 : emojiCount.count;
+          }
+          return emojiCount.copy(newReacted: reacted, newCount: count);
+        }).toList();
       }
     });
   }
