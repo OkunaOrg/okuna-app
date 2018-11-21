@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 
 class OBEmojiReactionCount extends StatelessWidget {
   PostReactionsEmojiCount postReactionsEmojiCount;
+  bool reacted;
   OnPressed onPressed;
 
-  OBEmojiReactionCount(this.postReactionsEmojiCount, {this.onPressed});
+  OBEmojiReactionCount(this.postReactionsEmojiCount,
+      {this.onPressed, this.reacted});
 
   @override
   Widget build(BuildContext context) {
-    bool reacted = postReactionsEmojiCount.reacted;
     var emoji = postReactionsEmojiCount.emoji;
 
     return ConstrainedBox(

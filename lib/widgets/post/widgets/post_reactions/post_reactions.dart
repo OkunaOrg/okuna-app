@@ -39,6 +39,7 @@ class OBPostReactions extends StatelessWidget {
               listItems.addAll(emojiCounts.map((emojiCount) {
                 return OBEmojiReactionCount(
                   emojiCount,
+                  reacted: post.isReactionEmoji(emojiCount.emoji),
                   onPressed: (pressedEmojiCount) {
                     _onEmojiReactionCountPressed(
                         pressedEmojiCount, emojiCounts);
@@ -57,8 +58,10 @@ class OBPostReactions extends StatelessWidget {
       List<PostReactionsEmojiCount> emojiCounts) async {
     var newEmojiCounts = emojiCounts.toList();
 
-    if (pressedEmojiCount.reacted) {
-      // await widget.onWantsToUnReact();
+    bool reacted = post.isReactionEmoji(pressedEmojiCount.emoji);
+
+    if (reacted) {
+      await onWantsToUnReact();
       // Remove reaction
       if (pressedEmojiCount.count > 1) {
         // There was more than one reaction. Minus one it.
@@ -69,26 +72,26 @@ class OBPostReactions extends StatelessWidget {
       } else {
         newEmojiCounts.remove(pressedEmojiCount);
       }
-      post.setReacted(false);
+      post.clearReaction();
     } else {
       // React
-      // await widget.onWantsToReact(pressedEmojiCount.emoji);
-      // Wants to react this
+      PostReaction newPostReaction =
+          await onWantsToReact(pressedEmojiCount.emoji);
+
+      post.setReaction(newPostReaction);
+
       newEmojiCounts = newEmojiCounts.map((emojiCount) {
         bool isPressedEmojiCount = emojiCount == pressedEmojiCount;
-        bool reacted = isPressedEmojiCount;
         int count;
-        if (emojiCount.reacted) {
+        if (post.isReactionEmoji(emojiCount.emoji)) {
           // If was reacted, decrement
           count = emojiCount.count - 1;
         } else {
           // If its the pressed one, add one, else do nothing
           count = isPressedEmojiCount ? emojiCount.count + 1 : emojiCount.count;
         }
-        return emojiCount.copy(newReacted: reacted, newCount: count);
+        return emojiCount.copy(newCount: count);
       }).toList();
-
-      post.setReacted(true);
     }
 
     post.setReactionsEmojiCounts(

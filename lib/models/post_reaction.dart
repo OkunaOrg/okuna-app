@@ -11,9 +11,14 @@ class PostReaction {
   PostReaction({this.id, this.created, this.emoji, this.reactor});
 
   factory PostReaction.fromJson(Map<String, dynamic> parsedJson) {
-    DateTime created = DateTime.parse(parsedJson['created']).toLocal();
+    DateTime created;
+    var createdData = parsedJson['created'];
+    if (createdData != null) created = DateTime.parse(createdData).toLocal();
 
-    User reactor = User.fromJson(parsedJson['reactor']);
+    User reactor;
+    var reactorData = parsedJson['reactor'];
+    if (reactorData != null) reactor = User.fromJson(reactorData);
+
     Emoji emoji = Emoji.fromJson(parsedJson['emoji']);
 
     return PostReaction(
@@ -34,5 +39,22 @@ class PostReaction {
 
   int getReactorId() {
     return this.reactor.id;
+  }
+
+  int getEmojiId() {
+    return this.emoji.id;
+  }
+
+  String getEmojiImage() {
+    return this.emoji.image;
+  }
+
+
+  String getEmojiColor() {
+    return this.emoji.color;
+  }
+
+  PostReaction copy({Emoji newEmoji}) {
+    return PostReaction(emoji: newEmoji ?? emoji);
   }
 }

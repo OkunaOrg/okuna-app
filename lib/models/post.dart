@@ -1,6 +1,8 @@
+import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_image.dart';
+import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/user.dart';
@@ -17,12 +19,14 @@ class Post {
   final PostImage image;
   final PostCommentList commentsList;
   final User creator;
+
   PostReactionsEmojiCountList reactionsEmojiCounts;
-  bool reacted;
+  PostReaction reaction;
   bool commented;
 
-  Stream<bool> get reactedChangeSubject => _reactedChangeSubject.stream;
-  final _reactedChangeSubject = ReplaySubject<bool>(maxSize: 1);
+  Stream<PostReaction> get reactionChangeSubject =>
+      _reactionChangeSubject.stream;
+  final _reactionChangeSubject = ReplaySubject<PostReaction>(maxSize: 1);
 
   Stream<bool> get commentedChangeSubject => _commentedChangeSubject.stream;
   final _commentedChangeSubject = ReplaySubject<bool>(maxSize: 1);
@@ -42,7 +46,7 @@ class Post {
       this.reactionsCount,
       this.commentsCount,
       this.commentsList,
-      this.reacted,
+      this.reaction,
       this.commented,
       this.reactionsEmojiCounts});
 
@@ -54,6 +58,11 @@ class Post {
     var postCreatorData = parsedJson['creator'];
     var postCreator;
     if (postCreatorData != null) postCreator = User.fromJson(postCreatorData);
+
+    var postReaction;
+    var postReactionData = parsedJson['reaction'];
+    if (postReactionData != null)
+      postReaction = PostReaction.fromJson(postReactionData);
 
     var reactionsEmojiCountsData = parsedJson['reactions_emoji_counts'];
     var reactionsEmojiCounts;
@@ -72,21 +81,29 @@ class Post {
         id: parsedJson['id'],
         creatorId: parsedJson['creator_id'],
         created: created,
-        reacted: parsedJson['reacted'],
         commented: parsedJson['commented'],
         text: parsedJson['text'],
         reactionsCount: parsedJson['reactions_count'],
         commentsCount: parsedJson['comments_count'],
         creator: postCreator,
         image: postImage,
+        reaction: postReaction,
         commentsList: postComments,
         reactionsEmojiCounts: reactionsEmojiCounts);
   }
 
   void dispose() {
-    _reactedChangeSubject.close();
+    _reactionChangeSubject.close();
     _commentedChangeSubject.close();
     _reactionsEmojiCountsChangeSubject.close();
+  }
+
+  bool hasReaction() {
+    return reaction != null;
+  }
+
+  bool isReactionEmoji(Emoji emoji) {
+    return hasReaction() && reaction.getEmojiId() == emoji.id;
   }
 
   bool hasImage() {
@@ -137,12 +154,16 @@ class Post {
     return timeago.format(created);
   }
 
-  void setReacted(reacted) {
-    this.reacted = reacted;
-    _reactedChangeSubject.add(reacted);
+  void clearReaction() {
+    this.setReaction(null);
   }
 
-  void setCommented(commented) {
+  void setReaction(PostReaction reaction) {
+    this.reaction = reaction;
+    _reactionChangeSubject.add(reaction);
+  }
+
+  void setCommented(bool commented) {
     this.commented = commented;
     _commentedChangeSubject.add(commented);
   }
