@@ -22,14 +22,10 @@ class Post {
 
   PostReactionsEmojiCountList reactionsEmojiCounts;
   PostReaction reaction;
-  bool commented;
 
   Stream<PostReaction> get reactionChangeSubject =>
       _reactionChangeSubject.stream;
   final _reactionChangeSubject = ReplaySubject<PostReaction>(maxSize: 1);
-
-  Stream<bool> get commentedChangeSubject => _commentedChangeSubject.stream;
-  final _commentedChangeSubject = ReplaySubject<bool>(maxSize: 1);
 
   Stream<PostReactionsEmojiCountList> get reactionsEmojiCountsChangeSubject =>
       _reactionsEmojiCountsChangeSubject.stream;
@@ -47,7 +43,6 @@ class Post {
       this.commentsCount,
       this.commentsList,
       this.reaction,
-      this.commented,
       this.reactionsEmojiCounts});
 
   factory Post.fromJson(Map<String, dynamic> parsedJson) {
@@ -81,7 +76,6 @@ class Post {
         id: parsedJson['id'],
         creatorId: parsedJson['creator_id'],
         created: created,
-        commented: parsedJson['commented'],
         text: parsedJson['text'],
         reactionsCount: parsedJson['reactions_count'],
         commentsCount: parsedJson['comments_count'],
@@ -94,7 +88,6 @@ class Post {
 
   void dispose() {
     _reactionChangeSubject.close();
-    _commentedChangeSubject.close();
     _reactionsEmojiCountsChangeSubject.close();
   }
 
@@ -200,11 +193,6 @@ class Post {
     _reactionChangeSubject.add(newReaction);
     this.setReactionsEmojiCounts(
         PostReactionsEmojiCountList(counts: newEmojiCounts));
-  }
-
-  void setCommented(bool commented) {
-    this.commented = commented;
-    _commentedChangeSubject.add(commented);
   }
 
   void setReactionsEmojiCounts(PostReactionsEmojiCountList emojiCounts) {
