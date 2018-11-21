@@ -7,6 +7,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions.dart';
@@ -18,8 +19,10 @@ import 'package:Openbook/services/httpie.dart';
 class OBPostPage extends StatefulWidget {
   final Post post;
   final bool autofocusCommentInput;
+  final OnWantsToReactToPost onWantsToReactToPost;
 
-  OBPostPage(this.post, {this.autofocusCommentInput: false});
+  OBPostPage(this.post,
+      {this.autofocusCommentInput: false, this.onWantsToReactToPost});
 
   @override
   State<OBPostPage> createState() {
@@ -117,8 +120,12 @@ class OBPostPageState extends State<OBPostPage> {
                                     return OBPostReactions(widget.post);
                                     break;
                                   case 3:
-                                    return OBPostActions(widget.post,
-                                        onWantsToComment: _onWantsToComment);
+                                    return OBPostActions(
+                                      widget.post,
+                                      onWantsToCommentPost: _onWantsToComment,
+                                      onWantsToReactToPost:
+                                          widget.onWantsToReactToPost,
+                                    );
                                     break;
                                   case 4:
                                     return Column(
@@ -129,9 +136,12 @@ class OBPostPageState extends State<OBPostPage> {
                                         Divider(),
                                         Padding(
                                           key: _postCommentsKey,
-                                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20.0, vertical: 10.0),
                                           child: Text(
-                                            _postComments.length > 0 ? 'Latest comments': 'Be the first to comment!',
+                                            _postComments.length > 0
+                                                ? 'Latest comments'
+                                                : 'Be the first to comment!',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16.0,
@@ -242,7 +252,7 @@ class OBPostPageState extends State<OBPostPage> {
         curve: Curves.easeOut, duration: const Duration(milliseconds: 400));
   }
 
-  void _onWantsToComment() {
+  void _onWantsToComment(Post post) {
     _focusCommentInput();
   }
 

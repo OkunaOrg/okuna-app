@@ -1,27 +1,17 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/main/pages/post/post.dart';
-import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBPostActionComment extends StatelessWidget {
   final Post _post;
-  final VoidCallback onWantsToComment;
+  final OnWantsToCommentPost onWantsToCommentPost;
 
-  OBPostActionComment(this._post, {this.onWantsToComment});
+  OBPostActionComment(this._post, {this.onWantsToCommentPost});
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback finalOnWantsToComment;
-
-    if (this.onWantsToComment != null) {
-      finalOnWantsToComment = this.onWantsToComment;
-    } else {
-      finalOnWantsToComment = () {
-        _defaultOnWantsToComment(context);
-      };
-    }
+    OnWantsToCommentPost finalOnWantsToComment;
 
     return FlatButton(
         child: Row(
@@ -35,18 +25,15 @@ class OBPostActionComment extends StatelessWidget {
           ],
         ),
         color: Color.fromARGB(5, 0, 0, 0),
-        onPressed: finalOnWantsToComment,
+        onPressed: () {
+          if (onWantsToCommentPost != null) {
+            onWantsToCommentPost(_post);
+          }
+        },
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(50.0)));
   }
-
-  void _defaultOnWantsToComment(BuildContext context) {
-    Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBPostPage(
-                _post,
-                autofocusCommentInput: true,
-              ),
-            )));
-  }
 }
+
+
+typedef void OnWantsToCommentPost(Post post);

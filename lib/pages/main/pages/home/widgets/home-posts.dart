@@ -8,13 +8,18 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
 class OBHomePosts extends StatefulWidget {
-  OBHomePostsController controller;
+  final OBHomePostsController controller;
+  final OnWantsToCommentPost onWantsToCommentPost;
+  final OnWantsToReactToPost onWantsToReactToPost;
 
-  OBHomePosts({this.controller});
+  OBHomePosts(
+      {this.controller, this.onWantsToReactToPost, this.onWantsToCommentPost});
 
   @override
   State<StatefulWidget> createState() {
@@ -80,7 +85,11 @@ class OBHomePostsState extends State<OBHomePosts> {
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
-                  return OBPost(post);
+                  return OBPost(
+                    post,
+                    onWantsToReactToPost: widget.onWantsToReactToPost,
+                    onWantsToCommentPost: widget.onWantsToCommentPost,
+                  );
                 }),
             onLoadMore: _loadMorePosts));
   }

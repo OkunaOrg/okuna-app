@@ -1,12 +1,15 @@
 import 'dart:async';
 
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/main/modals/create_post/create_post.dart';
+import 'package:Openbook/pages/main/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/main/pages/communities.dart';
 import 'package:Openbook/pages/main/pages/home/home.dart';
 import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
 import 'package:Openbook/pages/main/pages/menu/menu.dart';
 import 'package:Openbook/pages/main/pages/notifications.dart';
+import 'package:Openbook/pages/main/pages/post/post.dart';
 import 'package:Openbook/pages/main/pages/search.dart';
 import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
@@ -52,6 +55,7 @@ class OBMainPageState extends State<OBMainPage> {
       OBMainHomePage(
         mainPageController: _controller,
         homePostsController: _homePostsController,
+        onWantsToReactToPost: _onWantsToReactToPost,
       ),
       OBMainSearchPage(),
       OBMainNotificationsPage(),
@@ -195,6 +199,14 @@ class OBMainPageState extends State<OBMainPage> {
             _homePostsController.scrollToTop();
           });
         }));
+  }
+
+  void _onWantsToReactToPost(Post post) {
+    Navigator.of(context, rootNavigator: true).push(MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) => Material(
+              child: OBReactToPostModal(post),
+            )));
   }
 
   void _bootstrap() async {
