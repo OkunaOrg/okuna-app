@@ -1,6 +1,9 @@
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_image.dart';
+import 'package:Openbook/models/post_reaction.dart';
+import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -14,6 +17,9 @@ class Post {
   final PostImage image;
   final PostCommentList commentsList;
   final User creator;
+  PostReactionsEmojiCountList reactionsEmojiCounts;
+  bool reacted;
+  bool commented;
 
   Post(
       {this.id,
@@ -24,7 +30,10 @@ class Post {
       this.creator,
       this.reactionsCount,
       this.commentsCount,
-      this.commentsList});
+      this.commentsList,
+      this.reacted,
+      this.commented,
+      this.reactionsEmojiCounts});
 
   factory Post.fromJson(Map<String, dynamic> parsedJson) {
     var postImageData = parsedJson['image'];
@@ -34,6 +43,12 @@ class Post {
     var postCreatorData = parsedJson['creator'];
     var postCreator;
     if (postCreatorData != null) postCreator = User.fromJson(postCreatorData);
+
+    var reactionsEmojiCountsData = parsedJson['reactions_emoji_counts'];
+    var reactionsEmojiCounts;
+    if (reactionsEmojiCountsData != null)
+      reactionsEmojiCounts =
+          PostReactionsEmojiCountList.fromJson(reactionsEmojiCountsData);
 
     var postCommentsData = parsedJson['comments'];
     var postComments;
@@ -46,12 +61,15 @@ class Post {
         id: parsedJson['id'],
         creatorId: parsedJson['creator_id'],
         created: created,
+        reacted: parsedJson['reacted'],
+        commented: parsedJson['commented'],
         text: parsedJson['text'],
         reactionsCount: parsedJson['reactions_count'],
         commentsCount: parsedJson['comments_count'],
         creator: postCreator,
         image: postImage,
-        commentsList: postComments);
+        commentsList: postComments,
+        reactionsEmojiCounts: reactionsEmojiCounts);
   }
 
   bool hasImage() {
@@ -72,6 +90,10 @@ class Post {
 
   List<PostComment> getPostComments() {
     return commentsList.comments;
+  }
+
+  List<PostReactionsEmojiCount> getEmojiCounts(){
+    return reactionsEmojiCounts.reactions.toList();
   }
 
   String getCreatorUsername() {

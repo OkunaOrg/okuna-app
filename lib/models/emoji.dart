@@ -15,7 +15,10 @@ class Emoji {
       this.image});
 
   factory Emoji.fromJson(Map<String, dynamic> parsedJson) {
-    DateTime created = DateTime.parse(parsedJson['created']).toLocal();
+    DateTime created;
+    if (parsedJson['created'] != null) {
+      created = DateTime.parse(parsedJson['created']).toLocal();
+    }
 
     return Emoji(
         id: parsedJson['id'],

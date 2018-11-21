@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
@@ -186,7 +187,7 @@ class OBHomePageState extends State<OBHomePage> {
   }
 
   Future<Post> _onWantsToCreatePost() async {
-    Post createdPost = await Navigator.of(context).push(MaterialPageRoute(
+    Post createdPost = await Navigator.of(context).push(MaterialPageRoute<Post>(
         fullscreenDialog: true,
         builder: (BuildContext context) {
           return CreatePostModal();
@@ -195,12 +196,15 @@ class OBHomePageState extends State<OBHomePage> {
     return createdPost;
   }
 
-  void _onWantsToReactToPost(Post post) {
-    Navigator.of(context, rootNavigator: true).push(MaterialPageRoute<void>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) => Material(
-              child: OBReactToPostModal(post),
-            )));
+  Future<PostReaction> _onWantsToReactToPost(Post post) async {
+    PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute<PostReaction>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBReactToPostModal(post),
+                )));
+
+    return postReaction;
   }
 
   void _bootstrap() async {
