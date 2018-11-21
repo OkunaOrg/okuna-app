@@ -16,7 +16,7 @@ class OBEmojiReactionCount extends StatelessWidget {
 
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth: 70,
+        maxWidth: 100,
       ),
       child: FlatButton(
         onPressed: () {

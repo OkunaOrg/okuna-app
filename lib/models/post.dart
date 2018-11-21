@@ -184,7 +184,7 @@ class Post {
     if (newReaction != null) {
       var reactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
         return emojiCount.getEmojiId() == newReaction.getEmojiId();
-      }, orElse: null);
+      }, orElse: () {});
 
       if (reactionEmojiCount != null) {
         // Up existing count

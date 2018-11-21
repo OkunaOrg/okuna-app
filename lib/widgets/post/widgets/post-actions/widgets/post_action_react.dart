@@ -40,15 +40,16 @@ class OBPostActionReact extends StatelessWidget {
                 Text(
                   hasReaction ? 'Reacted' : 'React',
                   style: TextStyle(
-                      fontWeight:
-                          hasReaction ? FontWeight.bold : FontWeight.normal,
-                      color: hasReaction
-                          ? Pigment.fromString(reaction.getEmojiColor())
-                          : Colors.black),
+                    color: hasReaction ? Colors.white : Colors.black,
+                    fontWeight:
+                        hasReaction ? FontWeight.bold : FontWeight.normal,
+                  ),
                 ),
               ],
             ),
-            color: Color.fromARGB(5, 0, 0, 0),
+            color: hasReaction
+                ? Pigment.fromString(reaction.getEmojiColor())
+                : Color.fromARGB(5, 0, 0, 0),
             onPressed: () {
               if (onWantsToReactToPost != null) {
                 onWantsToReactToPost(_post);

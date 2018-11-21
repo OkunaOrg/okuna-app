@@ -52,30 +52,21 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
               if (emojiCounts.length == 0) return SizedBox();
 
-              List<Widget> listItems = [
-                // Padding
-                SizedBox(
-                  width: 20.0,
-                )
-              ];
-
-              listItems.addAll(emojiCounts.map((emojiCount) {
-                return OBEmojiReactionCount(
-                  emojiCount,
-                  reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                  onPressed: _requestInProgress
-                      ? null
-                      : (pressedEmojiCount) {
-                          _onEmojiReactionCountPressed(
-                              pressedEmojiCount, emojiCounts);
-                        },
-                );
-              }));
-
               return ListView(
                   physics: AlwaysScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: listItems);
+                  children: emojiCounts.map((emojiCount) {
+                    return OBEmojiReactionCount(
+                      emojiCount,
+                      reacted: widget.post.isReactionEmoji(emojiCount.emoji),
+                      onPressed: _requestInProgress
+                          ? null
+                          : (pressedEmojiCount) {
+                              _onEmojiReactionCountPressed(
+                                  pressedEmojiCount, emojiCounts);
+                            },
+                    );
+                  }).toList());
             }));
   }
 
