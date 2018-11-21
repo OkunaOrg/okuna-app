@@ -10,25 +10,33 @@ class OBPostActionReact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            OBIcon(OBIcons.react),
-            SizedBox(
-              width: 10.0,
+    return StreamBuilder(
+      initialData: _post.reacted,
+      stream: _post.reactedChangeSubject,
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        bool reacted = snapshot.data;
+
+        return FlatButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                OBIcon(OBIcons.react),
+                SizedBox(
+                  width: 10.0,
+                ),
+                reacted ? Text('Reacted') : Text('React'),
+              ],
             ),
-            Text('React'),
-          ],
-        ),
-        color: Color.fromARGB(5, 0, 0, 0),
-        onPressed: () {
-          if (onWantsToReactToPost != null) {
-            onWantsToReactToPost(_post);
-          }
-        },
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(50.0)));
+            color: Color.fromARGB(5, 0, 0, 0),
+            onPressed: () {
+              if (onWantsToReactToPost != null) {
+                onWantsToReactToPost(_post);
+              }
+            },
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(50.0)));
+      },
+    );
   }
 }
 

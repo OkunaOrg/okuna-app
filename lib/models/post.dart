@@ -1,10 +1,10 @@
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_image.dart';
-import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Post {
@@ -20,6 +20,17 @@ class Post {
   PostReactionsEmojiCountList reactionsEmojiCounts;
   bool reacted;
   bool commented;
+
+  Stream<bool> get reactedChangeSubject => _reactedChangeSubject.stream;
+  final _reactedChangeSubject = ReplaySubject<bool>(maxSize: 1);
+
+  Stream<bool> get commentedChangeSubject => _commentedChangeSubject.stream;
+  final _commentedChangeSubject = ReplaySubject<bool>(maxSize: 1);
+
+  Stream<PostReactionsEmojiCountList> get reactionsEmojiCountsChangeSubject =>
+      _reactionsEmojiCountsChangeSubject.stream;
+  final _reactionsEmojiCountsChangeSubject =
+      ReplaySubject<PostReactionsEmojiCountList>(maxSize: 1);
 
   Post(
       {this.id,
@@ -72,6 +83,12 @@ class Post {
         reactionsEmojiCounts: reactionsEmojiCounts);
   }
 
+  void dispose() {
+    _reactedChangeSubject.close();
+    _commentedChangeSubject.close();
+    _reactionsEmojiCountsChangeSubject.close();
+  }
+
   bool hasImage() {
     return image != null;
   }
@@ -92,7 +109,7 @@ class Post {
     return commentsList.comments;
   }
 
-  List<PostReactionsEmojiCount> getEmojiCounts(){
+  List<PostReactionsEmojiCount> getEmojiCounts() {
     return reactionsEmojiCounts.reactions.toList();
   }
 
@@ -118,5 +135,20 @@ class Post {
 
   String getRelativeCreated() {
     return timeago.format(created);
+  }
+
+  void setReacted(reacted) {
+    this.reacted = reacted;
+    _reactedChangeSubject.add(reacted);
+  }
+
+  void setCommented(commented) {
+    this.commented = commented;
+    _commentedChangeSubject.add(commented);
+  }
+
+  void setReactionsEmojiCounts(PostReactionsEmojiCountList emojiCounts) {
+    reactionsEmojiCounts = emojiCounts;
+    _reactionsEmojiCountsChangeSubject.add(emojiCounts);
   }
 }
