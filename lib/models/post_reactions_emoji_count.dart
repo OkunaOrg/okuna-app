@@ -22,4 +22,8 @@ class PostReactionsEmojiCount {
         count: newCount ?? this.count,
         reacted: newReacted != null ? newReacted : this.reacted);
   }
+
+  String getPrettyCount() {
+    return count.toString();
+  }
 }

@@ -13,31 +13,36 @@ class OBEmojiReactionCount extends StatelessWidget {
     bool reacted = postReactionsEmojiCount.reacted;
     var emoji = postReactionsEmojiCount.emoji;
 
-    return FlatButton(
-      onPressed: () {
-        onPressed(postReactionsEmojiCount);
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CachedNetworkImage(
-            height: 18.0,
-            imageUrl: emoji.image,
-            placeholder: SizedBox(),
-            errorWidget: Container(
-              child: Center(child: Text('?')),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: 70,
+      ),
+      child: FlatButton(
+        onPressed: () {
+          onPressed(postReactionsEmojiCount);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CachedNetworkImage(
+              height: 18.0,
+              imageUrl: emoji.image,
+              placeholder: SizedBox(),
+              errorWidget: Container(
+                child: Center(child: Text('?')),
+              ),
             ),
-          ),
-          SizedBox(
-            width: 10.0,
-          ),
-          Text(
-            postReactionsEmojiCount.count.toString(),
-            style: TextStyle(
-                color: reacted ? Colors.black87 : Colors.black38,
-                fontWeight: reacted ? FontWeight.bold : FontWeight.normal),
-          )
-        ],
+            SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              postReactionsEmojiCount.getPrettyCount(),
+              style: TextStyle(
+                  color: reacted ? Colors.black87 : Colors.black38,
+                  fontWeight: reacted ? FontWeight.bold : FontWeight.normal),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -29,41 +29,47 @@ class OBPostReactionsState extends State<OBPostReactions> {
       return SizedBox();
     }
 
-    // Sort list by count
-    _emojiCounts.sort((a, b) {
-      return b.count.compareTo(a.count);
-    });
+    List<Widget> listItems = [
+      // Padding
+      SizedBox(
+        width: 20.0,
+      )
+    ];
+
+    listItems.addAll(_emojiCounts.map((emojiCount) {
+      return OBEmojiReactionCount(
+        emojiCount,
+        onPressed: _onEmojiReactionCountPressed,
+      );
+    }));
 
     return Container(
         height: 51,
         child: ListView(
+            physics: AlwaysScrollableScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: _emojiCounts.map((emojiCount) {
-              return OBEmojiReactionCount(
-                emojiCount,
-                onPressed: _onEmojiReactionCountPressed,
-              );
-            }).toList()));
+            children: listItems));
   }
 
   void _onEmojiReactionCountPressed(
       PostReactionsEmojiCount postReactionsEmojiCount) {
-
-
     setState(() {
-      _emojiCounts.remove(postReactionsEmojiCount);
-      if(postReactionsEmojiCount.reacted){
+      if (postReactionsEmojiCount.reacted) {
         if (postReactionsEmojiCount.count > 1) {
           // There was more than one reaction. Minus one it.
           var newEmojiCount = postReactionsEmojiCount.copy(
               newReacted: false, newCount: postReactionsEmojiCount.count - 1);
-          _emojiCounts.add(newEmojiCount);
+          int index = _emojiCounts.indexOf(postReactionsEmojiCount);
+          _emojiCounts[index] = newEmojiCount;
+        } else {
+          _emojiCounts.remove(postReactionsEmojiCount);
         }
-      }else{
+      } else {
         // Wants to react this
         var newEmojiCount = postReactionsEmojiCount.copy(
             newReacted: true, newCount: postReactionsEmojiCount.count + 1);
-        _emojiCounts.add(newEmojiCount);
+        int index = _emojiCounts.indexOf(postReactionsEmojiCount);
+        _emojiCounts[index] = newEmojiCount;
       }
     });
   }
