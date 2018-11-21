@@ -40,6 +40,14 @@ class OBMainHomePage extends StatelessWidget {
                               onWantsToReactToPost: onWantsToReactToPost),
                         )));
               },
+              onWantsToSeePostComments: (Post post) {
+                Navigator.of(context).push(CupertinoPageRoute<void>(
+                    builder: (BuildContext context) => Material(
+                          child: OBPostPage(post,
+                              autofocusCommentInput: false,
+                              onWantsToReactToPost: onWantsToReactToPost),
+                        )));
+              },
             ),
             Positioned(
                 bottom: 20.0,

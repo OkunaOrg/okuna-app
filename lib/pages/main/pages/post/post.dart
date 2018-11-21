@@ -179,7 +179,7 @@ class OBPostPageState extends State<OBPostPage> {
 
   void _bootstrap() async {
     await _refreshComments();
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       _scrollToComments();
     });
   }

@@ -12,8 +12,12 @@ class OBPost extends StatelessWidget {
   final Post _post;
   final OnWantsToCommentPost onWantsToCommentPost;
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToSeePostComments onWantsToSeePostComments;
 
-  OBPost(this._post, {this.onWantsToReactToPost, this.onWantsToCommentPost});
+  OBPost(this._post,
+      {this.onWantsToReactToPost,
+      this.onWantsToCommentPost,
+      this.onWantsToSeePostComments});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,10 @@ class OBPost extends StatelessWidget {
         children: <Widget>[
           OBPostHeader(_post),
           OBPostBody(_post),
-          OBPostComments(_post),
+          OBPostComments(
+            _post,
+            onWantsToSeePostComments: onWantsToSeePostComments,
+          ),
           OBPostReactions(_post),
           OBPostActions(
             _post,
