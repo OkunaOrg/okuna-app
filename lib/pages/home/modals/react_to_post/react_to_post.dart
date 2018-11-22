@@ -78,7 +78,10 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
             Expanded(
                 child: _hasSearch
                     ? OBEmojiSearchResults(
-                        _emojiSearchResults, _emojiSearchQuery)
+                        _emojiSearchResults,
+                        _emojiSearchQuery,
+                        onEmojiPressed: _onEmojiPressed,
+                      )
                     : OBEmojiGroups(
                         _emojiGroups,
                         onEmojiPressed: _onEmojiPressed,

@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class OBEmojiSearchResults extends StatelessWidget {
   final List<Emoji> results;
   final String searchQuery;
+  final OnEmojiPressed onEmojiPressed;
 
-  OBEmojiSearchResults(this.results, this.searchQuery, {Key key})
+  OBEmojiSearchResults(this.results, this.searchQuery,
+      {Key key, @required this.onEmojiPressed})
       : super(key: key);
 
   @override
@@ -23,6 +25,9 @@ class OBEmojiSearchResults extends StatelessWidget {
           Emoji emoji = results[index];
 
           return ListTile(
+            onTap: () {
+              onEmojiPressed(emoji);
+            },
             leading: ConstrainedBox(
               constraints: BoxConstraints(maxHeight: 25),
               child: CachedNetworkImage(
@@ -47,7 +52,8 @@ class OBEmojiSearchResults extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.sentiment_dissatisfied, size: 30.0, color: Colors.black26),
+              Icon(Icons.sentiment_dissatisfied,
+                  size: 30.0, color: Colors.black26),
               SizedBox(
                 height: 20.0,
               ),
