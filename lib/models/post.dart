@@ -43,7 +43,10 @@ class Post {
       this.commentsCount,
       this.commentsList,
       this.reaction,
-      this.reactionsEmojiCounts});
+      this.reactionsEmojiCounts}) {
+    _reactionChangeSubject.add(this.reaction);
+    _reactionsEmojiCountsChangeSubject.add(this.reactionsEmojiCounts);
+  }
 
   factory Post.fromJson(Map<String, dynamic> parsedJson) {
     var postImageData = parsedJson['image'];
