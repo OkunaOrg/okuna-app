@@ -38,8 +38,6 @@ class OBHomePageState extends State<OBHomePage> {
   StreamSubscription _loggedInUserChangeSubscription;
   OBTimelinePageController _timelinePageController;
 
-  List<Widget> _tabPages;
-
   @override
   void initState() {
     super.initState();
@@ -47,17 +45,6 @@ class OBHomePageState extends State<OBHomePage> {
     _lastIndex = 0;
     _currentIndex = 0;
     _timelinePageController = OBTimelinePageController();
-    // Caching to preserve state
-    _tabPages = [
-      OBTimelinePage(
-          controller: _timelinePageController,
-          onWantsToReactToPost: _onWantsToReactToPost,
-          onWantsToCreatePost: _onWantsToCreatePost),
-      OBMainSearchPage(),
-      OBMainNotificationsPage(),
-      OBMainCommunitiesPage(),
-      OBMainMenuPage()
-    ];
   }
 
   @override
@@ -94,21 +81,24 @@ class OBHomePageState extends State<OBHomePage> {
     Widget page;
     switch (index) {
       case 0:
-        page = _tabPages[0];
+        page = OBTimelinePage(
+            controller: _timelinePageController,
+            onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToCreatePost: _onWantsToCreatePost);
         break;
       case 1:
-        page = _tabPages[1];
+        page =  OBMainSearchPage();
         break;
       case 2:
         break;
       case 3:
-        page = _tabPages[2];
+        page = OBMainNotificationsPage();
         break;
       case 4:
-        page = _tabPages[3];
+        page = OBMainCommunitiesPage();
         break;
       case 5:
-        page = _tabPages[4];
+        page = OBMainMenuPage();
         break;
       default:
         throw 'Unhandled index';
@@ -199,10 +189,11 @@ class OBHomePageState extends State<OBHomePage> {
   Future<PostReaction> _onWantsToReactToPost(Post post) async {
     PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
         .push(MaterialPageRoute<PostReaction>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBReactToPostModal(post),
-                )));
+        fullscreenDialog: true,
+        builder: (BuildContext context) =>
+            Material(
+              child: OBReactToPostModal(post),
+            )));
 
     return postReaction;
   }

@@ -171,7 +171,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   void _setPosts(List<Post> posts) {
     setState(() {
-      this._posts = posts;
+      _posts = posts;
     });
   }
 
