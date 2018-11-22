@@ -22,30 +22,26 @@ class OBEmojiGroup extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 10),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(groupName,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black38)),
-              SizedBox(
-                height: 10.0,
-              ),
-              Wrap(
-                spacing: 20.0,
-                children: this.emojiGroup.emojis.emojis.map((Emoji emoji) {
-                  return OBEmoji(
-                    emoji,
-                    onEmojiPressed: onEmojiPressed,
-                  );
-                }).toList(),
-              )
-            ],
+          Text(groupName,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  color: Colors.black38)),
+          SizedBox(
+            height: 10.0,
+          ),
+          Wrap(
+            runSpacing: 20.0,
+            spacing: 20.0,
+            children: this.emojiGroup.emojis.emojis.map((Emoji emoji) {
+              return OBEmoji(
+                emoji,
+                onEmojiPressed: onEmojiPressed,
+              );
+            }).toList(),
           )
         ],
       ),
