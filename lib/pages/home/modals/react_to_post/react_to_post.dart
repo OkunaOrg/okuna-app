@@ -13,6 +13,8 @@ import 'package:Openbook/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+enum OBReactToPostModalStatus { searching, suggesting, overview }
+
 class OBReactToPostModal extends StatefulWidget {
   Post post;
 
@@ -27,6 +29,7 @@ class OBReactToPostModal extends StatefulWidget {
 class OBReactToPostModalState extends State<OBReactToPostModal> {
   UserService _userService;
   ToastService _toastService;
+  OBReactToPostModalStatus _status;
 
   bool _isReactToPostInProgress;
   bool _needsBootstrap;
@@ -46,6 +49,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
     _emojiSearchResults = [];
     _needsBootstrap = true;
     _hasSearch = false;
+    _status = OBReactToPostModalStatus.overview;
   }
 
   @override

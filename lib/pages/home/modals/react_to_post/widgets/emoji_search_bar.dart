@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class OBEmojiSearchBar extends StatefulWidget {
   OBEmojiSearchBarOnSearch onSearch;
+  VoidCallback onCancel;
 
   OBEmojiSearchBar({Key key, @required this.onSearch}) : super(key: key);
 
@@ -13,10 +14,12 @@ class OBEmojiSearchBar extends StatefulWidget {
 
 class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
   TextEditingController _textController;
+  FocusNode _textFocusNode;
 
   @override
   void initState() {
     super.initState();
+    _textFocusNode = FocusNode();
     _textController = TextEditingController();
     _textController.addListener(() {
       widget.onSearch(_textController.text);
@@ -25,10 +28,10 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    bool hasClearButton = _textController.text.length > 0;
+    bool hasText = _textController.text.length > 0;
 
     EdgeInsetsGeometry inputContentPadding = EdgeInsets.only(
-        top: 8.0, bottom: 8.0, left: 20, right: hasClearButton ? 40 : 20);
+        top: 8.0, bottom: 8.0, left: 20, right: hasText ? 40 : 20);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -42,9 +45,11 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
             width: 20.0,
           ),
           Icon(Icons.search),
+          SizedBox(
+            width: 20.0,
+          ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(left: 10.0, right: 20.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Color.fromARGB(10, 0, 0, 0),
@@ -52,6 +57,7 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
               child: Stack(
                 children: <Widget>[
                   TextField(
+                    focusNode: _textFocusNode,
                     controller: _textController,
                     keyboardType: TextInputType.multiline,
                     style: TextStyle(fontSize: 14.0, color: Colors.black87),
@@ -61,7 +67,7 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
                         border: InputBorder.none),
                     autocorrect: true,
                   ),
-                  hasClearButton
+                  hasText
                       ? Positioned(
                           right: 0,
                           child: _buildClearButton(),
@@ -70,7 +76,16 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
                 ],
               ),
             ),
-          )
+          ),
+          hasText
+              ? FlatButton(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  child: Text('Cancel'),
+                  onPressed: _cancelSearch,
+                )
+              : SizedBox(
+                  width: 20.0,
+                )
         ],
       ),
     );
@@ -91,9 +106,14 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
   }
 
   void _clearText() {
-    setState(() {
-      _textController.clear();
-    });
+    _textController.clear();
+  }
+
+  void _cancelSearch() {
+    // Unfocus text
+    FocusScope.of(context).requestFocus(new FocusNode());
+    _textController.clear();
+    if (widget.onCancel != null) widget.onCancel();
   }
 }
 
