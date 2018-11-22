@@ -1,6 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 
 class OBPostHeader extends StatelessWidget {
   final Post _post;
+  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
-  OBPostHeader(this._post);
+  OBPostHeader(this._post, {this.onWantsToSeeUserProfile});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +22,12 @@ class OBPostHeader extends StatelessWidget {
     bool isPostOwner = user.id == _post.getCreatorId();
 
     return ListTile(
-      leading: GestureDetector(
-        onTap: () {
-          _onWantsPostCreatorProfile(context);
+      leading: OBUserAvatar(
+        onPressed: () {
+          onWantsToSeeUserProfile(_post.creator);
         },
-        child: OBUserAvatar(
-          size: OBUserAvatarSize.medium,
-          avatarUrl: _post.getCreatorAvatar(),
-        ),
+        size: OBUserAvatarSize.medium,
+        avatarUrl: _post.getCreatorAvatar(),
       ),
       trailing: IconButton(
           icon: Icon(
@@ -79,7 +78,7 @@ class OBPostHeader extends StatelessWidget {
           }),
       title: GestureDetector(
         onTap: () {
-          _onWantsPostCreatorProfile(context);
+          onWantsToSeeUserProfile(_post.creator);
         },
         child: Text(
           _post.getCreatorUsername(),
@@ -91,10 +90,5 @@ class OBPostHeader extends StatelessWidget {
         style: TextStyle(fontSize: 12.0),
       ),
     );
-  }
-
-  void _onWantsPostCreatorProfile(BuildContext context) {
-    Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => OBProfilePage(_post.creator)));
   }
 }

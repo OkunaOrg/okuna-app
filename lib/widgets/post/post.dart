@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
@@ -13,11 +14,13 @@ class OBPost extends StatelessWidget {
   final OnWantsToCommentPost onWantsToCommentPost;
   final OnWantsToReactToPost onWantsToReactToPost;
   final OnWantsToSeePostComments onWantsToSeePostComments;
+  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBPost(this._post,
       {this.onWantsToReactToPost,
       this.onWantsToCommentPost,
-      this.onWantsToSeePostComments});
+      this.onWantsToSeePostComments,
+      this.onWantsToSeeUserProfile});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,8 @@ class OBPost extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          OBPostHeader(_post),
+          OBPostHeader(_post,
+              onWantsToSeeUserProfile: onWantsToSeeUserProfile),
           OBPostBody(_post),
           OBPostReactions(_post),
           OBPostComments(

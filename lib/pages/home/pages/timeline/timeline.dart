@@ -1,4 +1,6 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -45,6 +47,12 @@ class OBTimelinePageState extends State<OBTimelinePage> {
             OBTimelinePosts(
               controller: _timelinePostsController,
               onWantsToReactToPost: widget.onWantsToReactToPost,
+              onWantsToSeeUserProfile: (User user) {
+                Navigator.of(context).push(CupertinoPageRoute<void>(
+                    builder: (BuildContext context) => Material(
+                          child: OBProfilePage(user),
+                        )));
+              },
               onWantsToCommentPost: (Post post) {
                 Navigator.of(context).push(CupertinoPageRoute<void>(
                     builder: (BuildContext context) => Material(

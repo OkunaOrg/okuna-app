@@ -1,8 +1,10 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
+import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -22,7 +24,7 @@ class OBPostPage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
 
   OBPostPage(this.post,
-      {this.autofocusCommentInput: false, this.onWantsToReactToPost});
+      {this.autofocusCommentInput: false, @required this.onWantsToReactToPost});
 
   @override
   State<OBPostPage> createState() {
@@ -90,7 +92,11 @@ class OBPostPageState extends State<OBPostPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      OBPostHeader(widget.post),
+                                      OBPostHeader(
+                                        widget.post,
+                                        onWantsToSeeUserProfile:
+                                            _onWantsToSeeUserProfile,
+                                      ),
                                       OBPostBody(widget.post),
                                       OBPostReactions(widget.post),
                                       OBPostActions(
@@ -129,6 +135,8 @@ class OBPostPageState extends State<OBPostPage> {
                                 return OBExpandedPostComment(
                                   postComment: postComment,
                                   post: widget.post,
+                                  onWantsToSeeUserProfile:
+                                      _onWantsToSeeUserProfile,
                                   onPostCommentDeletedCallback:
                                       onPostCommentDeletedCallback,
                                 );
@@ -146,6 +154,13 @@ class OBPostPageState extends State<OBPostPage> {
             ],
           ),
         ));
+  }
+
+  void _onWantsToSeeUserProfile(User user) {
+    Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBProfilePage(user),
+            )));
   }
 
   Widget _buildNavigationBar() {
