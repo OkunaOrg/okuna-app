@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,9 @@ class OBPostActionReact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = OpenbookProvider.of(context);
+    var userService = provider.userService;
+
     return StreamBuilder(
       initialData: _post.reaction,
       stream: _post.reactionChangeSubject,
@@ -50,8 +54,10 @@ class OBPostActionReact extends StatelessWidget {
             color: hasReaction
                 ? Pigment.fromString(reaction.getEmojiColor())
                 : Color.fromARGB(5, 0, 0, 0),
-            onPressed: () {
+            onPressed: () async {
               if (hasReaction) {
+                await userService.deletePostReaction(
+                    postReaction: reaction, post: _post);
                 _post.clearReaction();
               } else if (onWantsToReactToPost != null) {
                 onWantsToReactToPost(_post);

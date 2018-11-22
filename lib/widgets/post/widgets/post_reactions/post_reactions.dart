@@ -44,6 +44,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
         initialData: widget.post.reactionsEmojiCounts,
         builder: (BuildContext context,
             AsyncSnapshot<PostReactionsEmojiCountList> snapshot) {
+
           if (snapshot.data == null) return SizedBox();
 
           List<PostReactionsEmojiCount> emojiCounts = snapshot.data.counts;
