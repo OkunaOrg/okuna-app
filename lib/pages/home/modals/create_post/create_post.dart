@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:Openbook/pages/main/modals/create_post/widgets/post_image_previewer.dart';
+import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -18,10 +19,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
-  VoidCallback onPostCreated;
-
-  CreatePostModal({this.onPostCreated});
-
   @override
   State<StatefulWidget> createState() {
     return CreatePostModalState();
@@ -98,11 +95,10 @@ class CreatePostModalState extends State<CreatePostModal> {
     _setCreatePostInProgress(true);
 
     try {
-      await _userService.createPost(
+      Post createdPost = await _userService.createPost(
           text: _textController.text, image: _postImage);
       // Remove modal
-      Navigator.pop(context);
-      if (widget.onPostCreated != null) widget.onPostCreated();
+      Navigator.pop(context, createdPost);
     } on HttpieConnectionRefusedError {
       _toastService.error(
           scaffoldKey: _scaffoldKey, message: 'No internet connection');
@@ -379,3 +375,5 @@ class CreatePostModalState extends State<CreatePostModal> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
+
+typedef void OnPostCreatedCallback(Post createdPost);

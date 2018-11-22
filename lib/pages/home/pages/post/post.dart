@@ -1,15 +1,16 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/main/pages/post/widgets/expanded_post_comment.dart';
-import 'package:Openbook/pages/main/pages/post/widgets/page_scaffold.dart';
-import 'package:Openbook/pages/main/pages/post/widgets/post-commenter.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/page_scaffold.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header.dart';
-import 'package:Openbook/widgets/post/widgets/post_reactions.dart';
+import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -18,8 +19,10 @@ import 'package:Openbook/services/httpie.dart';
 class OBPostPage extends StatefulWidget {
   final Post post;
   final bool autofocusCommentInput;
+  final OnWantsToReactToPost onWantsToReactToPost;
 
-  OBPostPage(this.post, {this.autofocusCommentInput: false});
+  OBPostPage(this.post,
+      {this.autofocusCommentInput: false, this.onWantsToReactToPost});
 
   @override
   State<OBPostPage> createState() {
@@ -62,8 +65,6 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    int postWidgetsCount = 5;
-
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: Container(
@@ -82,68 +83,55 @@ class OBPostPageState extends State<OBPostPage> {
                               physics: AlwaysScrollableScrollPhysics(),
                               controller: _postCommentsScrollController,
                               padding: EdgeInsets.all(0),
-                              itemCount:
-                                  postWidgetsCount + _postComments.length,
+                              itemCount: _postComments.length + 1,
                               itemBuilder: (context, index) {
-                                int postCommentsIndexDelimiter =
-                                    postWidgetsCount - 1;
-
-                                if (index > postCommentsIndexDelimiter) {
-                                  var postCommentIndex =
-                                      index - postWidgetsCount;
-                                  var postComment =
-                                      _postComments[postCommentIndex];
-
-                                  var onPostCommentDeletedCallback = () {
-                                    _removePostCommentAtIndex(postCommentIndex);
-                                  };
-
-                                  return OBExpandedPostComment(
-                                    postComment: postComment,
-                                    post: widget.post,
-                                    onPostCommentDeletedCallback:
-                                        onPostCommentDeletedCallback,
+                                if (index == 0) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      OBPostHeader(widget.post),
+                                      OBPostBody(widget.post),
+                                      OBPostReactions(widget.post),
+                                      OBPostActions(
+                                        widget.post,
+                                        onWantsToCommentPost: _onWantsToComment,
+                                        onWantsToReactToPost:
+                                            widget.onWantsToReactToPost,
+                                      ),
+                                      Divider(),
+                                      Padding(
+                                        key: _postCommentsKey,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.0, vertical: 10.0),
+                                        child: Text(
+                                          _postComments.length > 0
+                                              ? 'Latest comments'
+                                              : 'Be the first to comment!',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0,
+                                              color: Colors.black38),
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 }
 
-                                switch (index) {
-                                  case 0:
-                                    return OBPostHeader(widget.post);
-                                    break;
-                                  case 1:
-                                    return OBPostBody(widget.post);
-                                    break;
-                                  case 2:
-                                    return OBPostReactions(widget.post);
-                                    break;
-                                  case 3:
-                                    return OBPostActions(widget.post,
-                                        onWantsToComment: _onWantsToComment);
-                                    break;
-                                  case 4:
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Divider(),
-                                        Padding(
-                                          key: _postCommentsKey,
-                                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                                          child: Text(
-                                            _postComments.length > 0 ? 'Latest comments': 'Be the first to comment!',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0,
-                                                color: Colors.black38),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                    break;
-                                  default:
-                                    throw 'Unhandled index';
-                                }
+                                int commentIndex = index - 1;
+
+                                var postComment = _postComments[commentIndex];
+
+                                var onPostCommentDeletedCallback = () {
+                                  _removePostCommentAtIndex(commentIndex);
+                                };
+
+                                return OBExpandedPostComment(
+                                  postComment: postComment,
+                                  post: widget.post,
+                                  onPostCommentDeletedCallback:
+                                      onPostCommentDeletedCallback,
+                                );
                               }),
                           onLoadMore: _loadMoreComments),
                     ),
@@ -169,7 +157,7 @@ class OBPostPageState extends State<OBPostPage> {
 
   void _bootstrap() async {
     await _refreshComments();
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       _scrollToComments();
     });
   }
@@ -242,7 +230,7 @@ class OBPostPageState extends State<OBPostPage> {
         curve: Curves.easeOut, duration: const Duration(milliseconds: 400));
   }
 
-  void _onWantsToComment() {
+  void _onWantsToComment(Post post) {
     _focusCommentInput();
   }
 

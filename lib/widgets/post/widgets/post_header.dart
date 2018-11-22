@@ -1,6 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/main/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/cupertino.dart';

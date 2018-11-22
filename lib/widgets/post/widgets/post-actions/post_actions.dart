@@ -5,23 +5,30 @@ import 'package:flutter/material.dart';
 
 class OBPostActions extends StatelessWidget {
   final Post _post;
-  final VoidCallback onWantsToComment;
+  final OnWantsToCommentPost onWantsToCommentPost;
+  final OnWantsToReactToPost onWantsToReactToPost;
 
-  OBPostActions(this._post, {this.onWantsToComment});
+  OBPostActions(this._post,
+      {this.onWantsToCommentPost, this.onWantsToReactToPost});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 20.0, top: 10.0),
+        padding: EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
         height: 65.0,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            OBPostActionComment(_post, onWantsToComment: onWantsToComment),
+            Expanded(
+                child: OBPostActionReact(_post,
+                    onWantsToReactToPost: onWantsToReactToPost)),
             SizedBox(
               width: 20.0,
             ),
-            OBPostActionReact(_post),
+            Expanded(
+              child: OBPostActionComment(_post,
+                  onWantsToCommentPost: onWantsToCommentPost),
+            ),
           ],
         ));
   }

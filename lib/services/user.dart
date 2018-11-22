@@ -2,12 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
+import 'package:Openbook/models/post_reaction.dart';
+import 'package:Openbook/models/post_reaction_list.dart';
+import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -24,6 +30,7 @@ class UserService {
   AuthApiService _authApiService;
   HttpieService _httpieService;
   PostsApiService _postsApiService;
+  EmojisApiService _emojisApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -40,6 +47,10 @@ class UserService {
 
   void setPostsApiService(PostsApiService postsApiService) {
     _postsApiService = postsApiService;
+  }
+
+  void setEmojisApiService(EmojisApiService emojisApiService) {
+    _emojisApiService = emojisApiService;
   }
 
   void setHttpieService(HttpieService httpieService) {
@@ -168,6 +179,41 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
+  Future<PostReaction> reactToPost(
+      {@required Post post, @required Emoji emoji}) async {
+    HttpieResponse response =
+        await _postsApiService.reactToPost(postId: post.id, emojiId: emoji.id);
+    _checkResponseIsCreated(response);
+    return PostReaction.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deletePostReaction(
+      {@required PostReaction postReaction, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.deletePostReaction(
+        postReactionId: postReaction.id, postId: post.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<PostReactionList> getReactionsForPost(Post post,
+      {int count, int maxId, Emoji emoji}) async {
+    HttpieResponse response = await _postsApiService
+        .getReactionsForPostWithId(post.id, count: count, maxId: maxId);
+
+    _checkResponseIsOk(response);
+
+    return PostReactionList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostReactionsEmojiCountList> getReactionsEmojiCountForPost(
+      Post post) async {
+    HttpieResponse response =
+        await _postsApiService.getReactionsEmojiCountForPostWithId(post.id);
+
+    _checkResponseIsOk(response);
+
+    return PostReactionsEmojiCountList.fromJson(json.decode(response.body));
+  }
+
   Future<PostComment> commentPost(
       {@required Post post, @required String text}) async {
     HttpieResponse response =
@@ -187,9 +233,18 @@ class UserService {
       {int count, int maxId}) async {
     HttpieResponse response = await _postsApiService
         .getCommentsForPostWithId(post.id, count: count, maxId: maxId);
+
     _checkResponseIsOk(response);
 
     return PostCommentList.fromJson(json.decode(response.body));
+  }
+
+  Future<EmojiGroupList> getEmojiGroups() async {
+    HttpieResponse response = await this._emojisApiService.getEmojiGroups();
+
+    _checkResponseIsOk(response);
+
+    return EmojiGroupList.fromJson(json.decode(response.body));
   }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {
@@ -283,10 +338,4 @@ class NotLoggedInUserError implements Exception {
   const NotLoggedInUserError();
 
   String toString() => 'NotLoggedInUserError: No user is logged in.';
-}
-
-class AuthTokenInvalidError implements Exception {
-  const AuthTokenInvalidError();
-
-  String toString() => 'InvalidAuthTokenError: The provided token is invalid.';
 }

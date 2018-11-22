@@ -1,16 +1,20 @@
 import 'dart:async';
 
+import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/main/modals/create_post/create_post.dart';
-import 'package:Openbook/pages/main/pages/communities.dart';
-import 'package:Openbook/pages/main/pages/home/home.dart';
-import 'package:Openbook/pages/main/pages/home/widgets/home-posts.dart';
-import 'package:Openbook/pages/main/pages/menu/menu.dart';
-import 'package:Openbook/pages/main/pages/notifications.dart';
-import 'package:Openbook/pages/main/pages/search.dart';
-import 'package:Openbook/pages/main/widgets/bottom-tab-bar.dart';
-import 'package:Openbook/pages/main/widgets/tab-scaffold.dart';
+import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
+import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
+import 'package:Openbook/pages/home/pages/communities.dart';
+import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
+import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Openbook/pages/home/pages/menu/menu.dart';
+import 'package:Openbook/pages/home/pages/notifications.dart';
+import 'package:Openbook/pages/home/pages/search.dart';
+import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
+import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
@@ -18,24 +22,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-class OBMainPage extends StatefulWidget {
+class OBHomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return OBMainPageState();
+    return OBHomePageState();
   }
 }
 
-class OBMainPageState extends State<OBMainPage> {
+class OBHomePageState extends State<OBHomePage> {
   @override
   UserService _userService;
   int _currentIndex;
   int _lastIndex;
   bool _needsBootstrap;
   StreamSubscription _loggedInUserChangeSubscription;
-  OBHomePostsController _homePostsController;
-  OBMainPageController _controller;
-
-  List<Widget> _tabPages;
+  OBTimelinePageController _timelinePageController;
 
   @override
   void initState() {
@@ -43,20 +44,7 @@ class OBMainPageState extends State<OBMainPage> {
     _needsBootstrap = true;
     _lastIndex = 0;
     _currentIndex = 0;
-    _controller = OBMainPageController();
-    _controller.attach(this);
-    _homePostsController = OBHomePostsController();
-    // Caching to preserve state
-    _tabPages = [
-      OBMainHomePage(
-        mainPageController: _controller,
-        homePostsController: _homePostsController,
-      ),
-      OBMainSearchPage(),
-      OBMainNotificationsPage(),
-      OBMainCommunitiesPage(),
-      OBMainMenuPage()
-    ];
+    _timelinePageController = OBTimelinePageController();
   }
 
   @override
@@ -93,21 +81,24 @@ class OBMainPageState extends State<OBMainPage> {
     Widget page;
     switch (index) {
       case 0:
-        page = _tabPages[0];
+        page = OBTimelinePage(
+            controller: _timelinePageController,
+            onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToCreatePost: _onWantsToCreatePost);
         break;
       case 1:
-        page = _tabPages[1];
+        page =  OBMainSearchPage();
         break;
       case 2:
         break;
       case 3:
-        page = _tabPages[2];
+        page = OBMainNotificationsPage();
         break;
       case 4:
-        page = _tabPages[3];
+        page = OBMainCommunitiesPage();
         break;
       case 5:
-        page = _tabPages[4];
+        page = OBMainMenuPage();
         break;
       default:
         throw 'Unhandled index';
@@ -122,7 +113,7 @@ class OBMainPageState extends State<OBMainPage> {
       currentIndex: _currentIndex,
       onTap: (int index) {
         if (_lastIndex == 0 && index == 0) {
-          _homePostsController.scrollToTop();
+          _timelinePageController.scrollToTop();
         }
         _lastIndex = index;
         return true;
@@ -164,8 +155,9 @@ class OBMainPageState extends State<OBMainPage> {
               size: OBUserAvatarSize.small,
             ),
             activeIcon: Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(500), border: Border.all(color: Colors.red)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(500),
+                  border: Border.all(color: Colors.red)),
               padding: EdgeInsets.all(2.0),
               child: OBLoggedInUserAvatar(
                 size: OBUserAvatarSize.small,
@@ -184,14 +176,26 @@ class OBMainPageState extends State<OBMainPage> {
     );
   }
 
-  void openCreatePostModal() {
-    Navigator.of(context).push(MaterialPageRoute(
+  Future<Post> _onWantsToCreatePost() async {
+    Post createdPost = await Navigator.of(context).push(MaterialPageRoute<Post>(
         fullscreenDialog: true,
         builder: (BuildContext context) {
-          return CreatePostModal(onPostCreated: () {
-            _homePostsController.scrollToTop();
-          });
+          return CreatePostModal();
         }));
+
+    return createdPost;
+  }
+
+  Future<PostReaction> _onWantsToReactToPost(Post post) async {
+    PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute<PostReaction>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) =>
+            Material(
+              child: OBReactToPostModal(post),
+            )));
+
+    return postReaction;
   }
 
   void _bootstrap() async {
@@ -203,11 +207,10 @@ class OBMainPageState extends State<OBMainPage> {
     try {
       await _userService.loginWithStoredAuthToken();
     } catch (error) {
-      if (error is AuthTokenMissingError || error is AuthTokenInvalidError) {
+      if (error is AuthTokenMissingError || error is HttpieRequestError) {
         await _userService.logout();
-      } else{
-        rethrow;
       }
+      rethrow;
     }
   }
 
@@ -215,17 +218,5 @@ class OBMainPageState extends State<OBMainPage> {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     }
-  }
-}
-
-class OBMainPageController {
-  OBMainPageState _mainPageState;
-
-  void attach(OBMainPageState mainPage) {
-    _mainPageState = mainPage;
-  }
-
-  openCreatePostModal() {
-    _mainPageState.openCreatePostModal();
   }
 }

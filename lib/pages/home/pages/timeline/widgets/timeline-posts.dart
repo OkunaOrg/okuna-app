@@ -8,21 +8,31 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
+import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
-class OBHomePosts extends StatefulWidget {
-  OBHomePostsController controller;
+class OBTimelinePosts extends StatefulWidget {
+  final OBTimelinePostsController controller;
+  final OnWantsToCommentPost onWantsToCommentPost;
+  final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToSeePostComments onWantsToSeePostComments;
 
-  OBHomePosts({this.controller});
+  OBTimelinePosts(
+      {this.controller,
+      this.onWantsToReactToPost,
+      this.onWantsToCommentPost,
+      this.onWantsToSeePostComments});
 
   @override
-  State<StatefulWidget> createState() {
-    return OBHomePostsState();
+  OBTimelinePostsState createState() {
+    return OBTimelinePostsState();
   }
 }
 
-class OBHomePostsState extends State<OBHomePosts> {
+class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<Post> _posts;
   bool _needsBootstrap;
   UserService _userService;
@@ -74,12 +84,18 @@ class OBHomePostsState extends State<OBHomePosts> {
             isFinish: _loadingFinished,
             delegate: OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
                 controller: _postsScrollController,
                 padding: EdgeInsets.all(0),
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
-                  return OBPost(post);
+                  return OBPost(
+                    post,
+                    onWantsToReactToPost: widget.onWantsToReactToPost,
+                    onWantsToCommentPost: widget.onWantsToCommentPost,
+                    onWantsToSeePostComments: widget.onWantsToSeePostComments,
+                  );
                 }),
             onLoadMore: _loadMorePosts));
   }
@@ -90,6 +106,12 @@ class OBHomePostsState extends State<OBHomePosts> {
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
+  }
+
+  void addPostToTop(Post post) {
+    setState(() {
+      this._posts.insert(0, post);
+    });
   }
 
   void _bootstrap() async {
@@ -104,12 +126,14 @@ class OBHomePostsState extends State<OBHomePosts> {
   void _onLoggedInUserChange(User newUser) async {
     if (newUser == null) return;
     _refreshPosts();
+    _loggedInUserChangeSubscription.cancel();
   }
 
   Future<void> _refreshPosts({areFirstPosts = true}) async {
     try {
       _posts =
-          (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts)).posts;
+          (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts))
+              .posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
     } on HttpieConnectionRefusedError catch (error) {
@@ -124,7 +148,8 @@ class OBHomePostsState extends State<OBHomePosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      var morePosts = (await _userService.getTimelinePosts(maxId: lastPostId)).posts;
+      var morePosts =
+          (await _userService.getTimelinePosts(maxId: lastPostId)).posts;
 
       if (morePosts.length == 0) {
         _setLoadingFinished(true);
@@ -146,7 +171,7 @@ class OBHomePostsState extends State<OBHomePosts> {
 
   void _setPosts(List<Post> posts) {
     setState(() {
-      this._posts = posts;
+      _posts = posts;
     });
   }
 
@@ -165,13 +190,17 @@ class OBHomePostsState extends State<OBHomePosts> {
   }
 }
 
-class OBHomePostsController {
-  OBHomePostsState _homePostsState;
+class OBTimelinePostsController {
+  OBTimelinePostsState _homePostsState;
 
   /// Register the OBHomePostsState to the controller
-  void attach(OBHomePostsState homePostsState) {
+  void attach(OBTimelinePostsState homePostsState) {
     assert(homePostsState != null, 'Cannot attach to empty state');
     _homePostsState = homePostsState;
+  }
+
+  void addPostToTop(Post post) {
+    _homePostsState.addPostToTop(post);
   }
 
   void scrollToTop() {

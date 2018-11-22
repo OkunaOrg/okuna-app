@@ -69,6 +69,7 @@ class OBIcons {
   static const comment = OBIconData('comment-icon.png');
   static const comments = OBIconData('comments-icon.png');
   static const react = OBIconData('react-icon.png');
+  static const like = OBIconData('like-icon.png');
   static const finish = OBIconData('finish-icon.png');
   static const loadingMorePosts = OBIconData('load-more-posts-icon.gif');
 }

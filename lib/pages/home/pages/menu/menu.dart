@@ -1,4 +1,4 @@
-import 'package:Openbook/pages/main/pages/menu/widgets/body.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

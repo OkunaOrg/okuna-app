@@ -1,12 +1,12 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/main/pages/post/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBPostComments extends StatelessWidget {
   final Post _post;
+  final OnWantsToSeePostComments onWantsToSeePostComments;
 
-  OBPostComments(this._post);
+  OBPostComments(this._post, {this.onWantsToSeePostComments});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +24,7 @@ class OBPostComments extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(CupertinoPageRoute<void>(
-                  builder: (BuildContext context) => Material(
-                        child: OBPostPage(_post),
-                      )));
+              onWantsToSeePostComments(_post);
             },
             child: Padding(
               padding: EdgeInsets.only(top: 10),
@@ -39,3 +36,5 @@ class OBPostComments extends StatelessWidget {
     );
   }
 }
+
+typedef void OnWantsToSeePostComments(Post post);
