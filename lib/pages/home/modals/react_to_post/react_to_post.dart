@@ -40,6 +40,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
   List<EmojiGroup> _emojiGroups;
   List<Emoji> _allEmojis;
   List<Emoji> _emojiSearchResults;
+  String _emojiSearchQuery;
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
     _scaffoldKey = GlobalKey<ScaffoldState>();
     _emojiGroups = [];
     _emojiSearchResults = [];
+    _emojiSearchQuery = '';
     _needsBootstrap = true;
     _hasSearch = false;
     _status = OBReactToPostModalStatus.overview;
@@ -75,7 +77,8 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
             ),
             Expanded(
                 child: _hasSearch
-                    ? OBEmojiSearchResults(_emojiSearchResults)
+                    ? OBEmojiSearchResults(
+                        _emojiSearchResults, _emojiSearchQuery)
                     : OBEmojiGroups(
                         _emojiGroups,
                         onEmojiPressed: _onEmojiPressed,
@@ -135,6 +138,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
     }).toList();
 
     _setEmojiSearchResults(results);
+    _setEmojiSearchQuery(searchString);
   }
 
   void _bootstrap() async {
@@ -156,6 +160,12 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
   void _setEmojiSearchResults(List<Emoji> emojiSearchResults) {
     setState(() {
       _emojiSearchResults = emojiSearchResults;
+    });
+  }
+
+  void _setEmojiSearchQuery(String searchQuery) {
+    setState(() {
+      _emojiSearchQuery = searchQuery;
     });
   }
 
