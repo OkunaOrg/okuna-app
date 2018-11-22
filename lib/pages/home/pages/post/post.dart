@@ -87,7 +87,8 @@ class OBPostPageState extends State<OBPostPage> {
                               itemBuilder: (context, index) {
                                 if (index == 0) {
                                   return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       OBPostHeader(widget.post),
                                       OBPostBody(widget.post),
@@ -117,10 +118,12 @@ class OBPostPageState extends State<OBPostPage> {
                                   );
                                 }
 
-                                var postComment = _postComments[index];
+                                int commentIndex = index - 1;
+
+                                var postComment = _postComments[commentIndex];
 
                                 var onPostCommentDeletedCallback = () {
-                                  _removePostCommentAtIndex(index);
+                                  _removePostCommentAtIndex(commentIndex);
                                 };
 
                                 return OBExpandedPostComment(
