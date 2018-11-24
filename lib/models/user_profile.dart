@@ -5,6 +5,7 @@ class UserProfile {
   final String avatar;
   final String cover;
   final String bio;
+  final String location;
   final bool followersCountVisible;
 
   UserProfile(
@@ -14,6 +15,7 @@ class UserProfile {
       this.avatar,
       this.cover,
       this.bio,
+      this.location,
       this.followersCountVisible});
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
@@ -24,7 +26,7 @@ class UserProfile {
         avatar: parsedJson['avatar'],
         cover: parsedJson['cover'],
         bio: parsedJson['bio'],
-        followersCountVisible: parsedJson['followers_count_visible']
-    );
+        location: parsedJson['location'],
+        followersCountVisible: parsedJson['followers_count_visible']);
   }
 }

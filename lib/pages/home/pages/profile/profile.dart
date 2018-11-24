@@ -1,8 +1,11 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,19 +46,93 @@ class OBProfilePageState extends State<OBProfilePage> {
       _needsBootstrap = false;
     }
 
-    String username = _user.username;
     return CupertinoPageScaffold(
-      navigationBar: _buildNavigationBar(),
-      child: Container(
-        child: Text('Profile of user $username'),
+      child: Stack(
+        children: <Widget>[
+          Positioned(child: OBProfileCover(_user)),
+          SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                OBProfileNavBar(_user),
+                Container(
+                  margin: EdgeInsets.only(top: 100),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.white),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Row(
+                          children: <Widget>[
+                            OBUserAvatar(
+                              avatarUrl: _user.getProfileAvatar(),
+                              size: OBUserAvatarSize.large,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      _user.getProfileName(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                    Text(
+                                      '@' + _user.username,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black45),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.more_vert),
+                              onPressed: () {},
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.0, vertical: 20.0),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Flexible(
+                                  child: Text(_user.getProfileBio()),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Flexible(
+                                  child: Text(_user.getProfileLocation()),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
-    );
-  }
-
-  Widget _buildNavigationBar() {
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
-      middle: Text('Profile'),
     );
   }
 

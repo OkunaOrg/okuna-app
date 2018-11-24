@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-enum OBUserAvatarSize { small, medium }
+enum OBUserAvatarSize { small, medium, large }
 
 class OBUserAvatar extends StatelessWidget {
   final String avatarUrl;
@@ -10,7 +10,7 @@ class OBUserAvatar extends StatelessWidget {
 
   static const double AVATAR_SIZE_SMALL = 20.0;
   static const double AVATAR_SIZE_MEDIUM = 30.0;
-  static const double AVATAR_SIZE_LARGE = 40.0;
+  static const double AVATAR_SIZE_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
   OBUserAvatar(
@@ -28,6 +28,9 @@ class OBUserAvatar extends StatelessWidget {
         break;
       case OBUserAvatarSize.medium:
         avatarSize = AVATAR_SIZE_MEDIUM;
+        break;
+      case OBUserAvatarSize.large:
+        avatarSize = AVATAR_SIZE_LARGE;
         break;
     }
 

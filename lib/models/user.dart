@@ -31,4 +31,20 @@ class User {
   String getProfileAvatar() {
     return this.profile.avatar;
   }
+
+  String getProfileName() {
+    return this.profile.name;
+  }
+
+  String getProfileCover() {
+    return this.profile.cover;
+  }
+
+  String getProfileBio() {
+    return this.profile.bio;
+  }
+
+  String getProfileLocation() {
+    return this.profile.location;
+  }
 }

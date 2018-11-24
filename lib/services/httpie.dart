@@ -311,7 +311,9 @@ abstract class HttpieBaseResponse<T extends http.BaseResponse> {
 class HttpieResponse extends HttpieBaseResponse<http.Response> {
   HttpieResponse(_httpResponse) : super(_httpResponse);
 
-  String get body => _httpResponse.body;
+  String get body {
+    return utf8.decode(_httpResponse.bodyBytes);
+  }
 
   Map<String, dynamic> parseJsonBody() {
     return json.decode(body);
