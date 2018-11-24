@@ -137,10 +137,16 @@ class UserService {
       List<int> circleIds,
       int maxId,
       int count,
+      String username,
       bool areFirstPosts = false}) async {
     try {
       HttpieResponse response = await _postsApiService.getTimelinePosts(
-          listIds: listIds, circleIds: circleIds, maxId: maxId, count: count);
+          listIds: listIds,
+          circleIds: circleIds,
+          maxId: maxId,
+          count: count,
+          username: username,
+          authenticatedRequest: true);
       _checkResponseIsOk(response);
       String postsData = response.body;
       if (areFirstPosts) {
@@ -245,6 +251,13 @@ class UserService {
     _checkResponseIsOk(response);
 
     return EmojiGroupList.fromJson(json.decode(response.body));
+  }
+
+  Future<User> getUserWithUsername(String username) async {
+    HttpieResponse response = await _authApiService
+        .getUserWithUsername(username, authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
   }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {

@@ -37,7 +37,12 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> getTimelinePosts(
-      {List<int> listIds, List<int> circleIds, int maxId, int count}) {
+      {List<int> listIds,
+      List<int> circleIds,
+      int maxId,
+      int count,
+      String username,
+      bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
 
     if (listIds != null) queryParams['lists_ids'] = listIds;
@@ -48,8 +53,10 @@ class PostsApiService {
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
+    if (username != null) queryParams['username'] = username;
+
     return _httpService.get(_makeApiUrl(GET_POSTS_PATH),
-        queryParameters: queryParams, appendAuthorizationToken: true);
+        queryParameters: queryParams, appendAuthorizationToken: authenticatedRequest);
   }
 
   Future<HttpieStreamedResponse> createPost(
