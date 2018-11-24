@@ -19,6 +19,8 @@ class Post {
   final PostImage image;
   final PostCommentList commentsList;
   final User creator;
+  final bool publicComments;
+  final bool publicReactions;
 
   PostReactionsEmojiCountList reactionsEmojiCounts;
   PostReaction reaction;
@@ -43,7 +45,9 @@ class Post {
       this.commentsCount,
       this.commentsList,
       this.reaction,
-      this.reactionsEmojiCounts}) {
+      this.reactionsEmojiCounts,
+      this.publicComments,
+      this.publicReactions}) {
     _reactionChangeSubject.add(this.reaction);
     _reactionsEmojiCountsChangeSubject.add(this.reactionsEmojiCounts);
   }
@@ -82,6 +86,8 @@ class Post {
         text: parsedJson['text'],
         reactionsCount: parsedJson['reactions_count'],
         commentsCount: parsedJson['comments_count'],
+        publicComments: parsedJson['public_comments'],
+        publicReactions: parsedJson['public_reactions'],
         creator: postCreator,
         image: postImage,
         reaction: postReaction,
@@ -100,6 +106,10 @@ class Post {
 
   bool isReactionEmoji(Emoji emoji) {
     return hasReaction() && reaction.getEmojiId() == emoji.id;
+  }
+
+  bool hasPublicInteractions() {
+    return publicReactions && publicComments;
   }
 
   bool hasImage() {
