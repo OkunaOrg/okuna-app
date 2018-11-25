@@ -75,61 +75,60 @@ class OBProfilePageState extends State<OBProfilePage> {
         overflow: Overflow.visible,
         children: <Widget>[
           Positioned(child: OBProfileCover(_user)),
-          SafeArea(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: RefreshIndicator(
-                        key: _refreshIndicatorKey,
-                        child: LoadMore(
-                            whenEmptyLoad: false,
-                            isFinish: !_morePostsToLoad,
-                            delegate: OBHomePostsLoadMoreDelegate(),
-                            child: ListView.builder(
-                                physics: AlwaysScrollableScrollPhysics(),
-                                padding: EdgeInsets.all(0),
-                                itemCount: _posts.length + 1,
-                                itemBuilder: (context, index) {
-                                  if (index == 0) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        Container(
-                                            margin: EdgeInsets.only(top: 100),
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.only(
-                                                    topRight:
-                                                        Radius.circular(50),
-                                                    topLeft:
-                                                        Radius.circular(50)),
-                                                color: Colors.white),
-                                            child: OBProfileCard(_user)),
-                                      ],
-                                    );
-                                  }
-
-                                  int postIndex = index - 1;
-
-                                  var post = _posts[postIndex];
-
-                                  return OBPost(
-                                    post,
-                                    onWantsToReactToPost:
-                                        widget.onWantsToReactToPost,
-                                    onWantsToCommentPost:
-                                        widget.onWantsToCommentPost,
-                                    onWantsToSeePostComments:
-                                        widget.onWantsToSeePostComments,
-                                    onWantsToSeeUserProfile:
-                                        widget.onWantsToSeeUserProfile,
+          Container(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: RefreshIndicator(
+                    displacement: 130,
+                      key: _refreshIndicatorKey,
+                      child: LoadMore(
+                          whenEmptyLoad: false,
+                          isFinish: !_morePostsToLoad,
+                          delegate: OBHomePostsLoadMoreDelegate(),
+                          child: ListView.builder(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              padding: EdgeInsets.all(0),
+                              itemCount: _posts.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index == 0) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Container(
+                                          margin: EdgeInsets.only(top: 200),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                  topRight:
+                                                  Radius.circular(50),
+                                                  topLeft:
+                                                  Radius.circular(50)),
+                                              color: Colors.white),
+                                          child: OBProfileCard(_user)),
+                                    ],
                                   );
-                                }),
-                            onLoadMore: _loadMorePosts),
-                        onRefresh: _refresh),
-                  )
-                ],
-              ),
+                                }
+
+                                int postIndex = index - 1;
+
+                                var post = _posts[postIndex];
+
+                                return OBPost(
+                                  post,
+                                  onWantsToReactToPost:
+                                  widget.onWantsToReactToPost,
+                                  onWantsToCommentPost:
+                                  widget.onWantsToCommentPost,
+                                  onWantsToSeePostComments:
+                                  widget.onWantsToSeePostComments,
+                                  onWantsToSeeUserProfile:
+                                  widget.onWantsToSeeUserProfile,
+                                );
+                              }),
+                          onLoadMore: _loadMorePosts),
+                      onRefresh: _refresh),
+                )
+              ],
             ),
           )
         ],
