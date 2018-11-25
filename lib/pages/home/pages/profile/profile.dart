@@ -9,6 +9,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/buttons/refresh_button.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
@@ -39,19 +40,16 @@ class OBProfilePage extends StatefulWidget {
 class OBProfilePageState extends State<OBProfilePage> {
   User _user;
   bool _needsBootstrap;
-  bool _refreshUserInProgress;
-  bool _refreshPostsInProgress;
+  bool _refreshInProgress;
   bool _morePostsToLoad;
   List<Post> _posts;
   UserService _userService;
   ToastService _toastService;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
 
   @override
   void initState() {
     super.initState();
-    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-    _refreshUserInProgress = false;
+    _refreshInProgress = false;
     _needsBootstrap = true;
     _morePostsToLoad = false;
     _user = widget.user;
@@ -77,6 +75,12 @@ class OBProfilePageState extends State<OBProfilePage> {
             Navigator.pop(context);
           },
         ),
+        trailing: OBRefreshButton(
+          isLoading: _refreshInProgress,
+          onPressed: () {
+            _refresh();
+          },
+        ),
         backgroundColor: Colors.white,
         middle: Text(
           '@' + _user.username,
@@ -91,51 +95,46 @@ class OBProfilePageState extends State<OBProfilePage> {
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: RefreshIndicator(
-                      key: _refreshIndicatorKey,
-                      child: LoadMore(
-                          whenEmptyLoad: false,
-                          isFinish: !_morePostsToLoad,
-                          delegate: OBHomePostsLoadMoreDelegate(),
-                          child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              padding: EdgeInsets.all(0),
-                              itemCount: _posts.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index == 0) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      Container(
-                                          margin: EdgeInsets.only(top: 200),
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(50),
-                                                  topLeft: Radius.circular(50)),
-                                              color: Colors.white),
-                                          child: OBProfileCard(_user)),
-                                    ],
-                                  );
-                                }
+                  child: LoadMore(
+                      whenEmptyLoad: false,
+                      isFinish: !_morePostsToLoad,
+                      delegate: OBHomePostsLoadMoreDelegate(),
+                      child: ListView.builder(
+                          physics: ClampingScrollPhysics(),
+                          padding: EdgeInsets.all(0),
+                          itemCount: _posts.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Container(
+                                      margin: EdgeInsets.only(top: 200),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(50),
+                                              topLeft: Radius.circular(50)),
+                                          color: Colors.white),
+                                      child: OBProfileCard(_user)),
+                                ],
+                              );
+                            }
 
-                                int postIndex = index - 1;
+                            int postIndex = index - 1;
 
-                                var post = _posts[postIndex];
+                            var post = _posts[postIndex];
 
-                                return OBPost(
-                                  post,
-                                  onWantsToReactToPost:
-                                      widget.onWantsToReactToPost,
-                                  onWantsToCommentPost:
-                                      widget.onWantsToCommentPost,
-                                  onWantsToSeePostComments:
-                                      widget.onWantsToSeePostComments,
-                                  onWantsToSeeUserProfile:
-                                      widget.onWantsToSeeUserProfile,
-                                );
-                              }),
-                          onLoadMore: _loadMorePosts),
-                      onRefresh: _refresh),
+                            return OBPost(
+                              post,
+                              onWantsToReactToPost: widget.onWantsToReactToPost,
+                              onWantsToCommentPost: widget.onWantsToCommentPost,
+                              onWantsToSeePostComments:
+                                  widget.onWantsToSeePostComments,
+                              onWantsToSeeUserProfile:
+                                  widget.onWantsToSeeUserProfile,
+                            );
+                          }),
+                      onLoadMore: _loadMorePosts),
                 )
               ],
             ),
@@ -150,38 +149,28 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   Future<void> _refresh() async {
-    await Future.wait([_refreshUser(), _refreshPosts()]);
-  }
-
-  Future<void> _refreshUser() async {
-    _setRefreshUserInProgress(true);
-
+    _setRefreshInProgress(true);
     try {
-      var user = await _userService.getUserWithUsername(_user.username);
-      _setUser(user);
+      await Future.wait([_refreshUser(), _refreshPosts()]);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection');
     } catch (e) {
       _toastService.error(message: 'Unknown error.');
       rethrow;
     } finally {
-      _setRefreshUserInProgress(false);
+      _setRefreshInProgress(false);
     }
   }
 
+  Future<void> _refreshUser() async {
+    var user = await _userService.getUserWithUsername(_user.username);
+    _setUser(user);
+  }
+
   Future<void> _refreshPosts() async {
-    _setRefreshPostsInProgress(true);
-    try {
-      _posts = (await _userService.getTimelinePosts()).posts;
-      _setPosts(_posts);
-    } on HttpieConnectionRefusedError catch (error) {
-      _toastService.error(message: 'No internet connection');
-    } catch (error) {
-      _toastService.error(message: 'Unknown error.');
-      rethrow;
-    } finally {
-      _setRefreshPostsInProgress(false);
-    }
+    _posts =
+        (await _userService.getTimelinePosts(username: _user.username)).posts;
+    _setPosts(_posts);
   }
 
   Future<bool> _loadMorePosts() async {
@@ -222,15 +211,9 @@ class OBProfilePageState extends State<OBProfilePage> {
     });
   }
 
-  void _setRefreshUserInProgress(bool refreshUserInProgress) {
+  void _setRefreshInProgress(bool refreshInProgress) {
     setState(() {
-      this._refreshUserInProgress = refreshUserInProgress;
-    });
-  }
-
-  void _setRefreshPostsInProgress(bool refreshPostsInProgress) {
-    setState(() {
-      this._refreshPostsInProgress = refreshPostsInProgress;
+      this._refreshInProgress = refreshInProgress;
     });
   }
 
