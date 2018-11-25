@@ -82,6 +82,8 @@ class OBProfilePageState extends State<OBProfilePage> {
                                   children: <Widget>[
                                     Text(
                                       _user.getProfileName(),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18),
