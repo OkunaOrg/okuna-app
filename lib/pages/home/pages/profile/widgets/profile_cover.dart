@@ -9,6 +9,10 @@ class OBProfileCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String profileCover = user.getProfileCover();
+
+    if (profileCover == null) return SizedBox();
+
     return Container(
       height: 260,
       child: Row(
@@ -17,7 +21,7 @@ class OBProfileCover extends StatelessWidget {
           Expanded(
             child: CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl: user.getProfileCover(),
+              imageUrl: profileCover,
               placeholder: null,
               errorWidget: null,
             ),

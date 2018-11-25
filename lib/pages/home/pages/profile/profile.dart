@@ -2,7 +2,9 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_location.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_name.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_username.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -91,20 +93,8 @@ class OBProfilePageState extends State<OBProfilePage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text(
-                                            _user.getProfileName(),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                          ),
-                                          Text(
-                                            '@' + _user.username,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black45),
-                                          )
+                                          OBProfileName(_user),
+                                          OBProfileUsername(_user)
                                         ],
                                       ),
                                     ),
