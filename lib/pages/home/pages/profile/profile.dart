@@ -70,7 +70,19 @@ class OBProfilePageState extends State<OBProfilePage> {
     }
 
     return CupertinoPageScaffold(
-      navigationBar: OBProfileNavBar(_user),
+      navigationBar: CupertinoNavigationBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: Colors.white,
+        middle: Text(
+          '@' + _user.username,
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
       child: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
@@ -80,7 +92,6 @@ class OBProfilePageState extends State<OBProfilePage> {
               children: <Widget>[
                 Expanded(
                   child: RefreshIndicator(
-                    displacement: 130,
                       key: _refreshIndicatorKey,
                       child: LoadMore(
                           whenEmptyLoad: false,
@@ -99,10 +110,8 @@ class OBProfilePageState extends State<OBProfilePage> {
                                           margin: EdgeInsets.only(top: 200),
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
-                                                  topRight:
-                                                  Radius.circular(50),
-                                                  topLeft:
-                                                  Radius.circular(50)),
+                                                  topRight: Radius.circular(50),
+                                                  topLeft: Radius.circular(50)),
                                               color: Colors.white),
                                           child: OBProfileCard(_user)),
                                     ],
@@ -116,13 +125,13 @@ class OBProfilePageState extends State<OBProfilePage> {
                                 return OBPost(
                                   post,
                                   onWantsToReactToPost:
-                                  widget.onWantsToReactToPost,
+                                      widget.onWantsToReactToPost,
                                   onWantsToCommentPost:
-                                  widget.onWantsToCommentPost,
+                                      widget.onWantsToCommentPost,
                                   onWantsToSeePostComments:
-                                  widget.onWantsToSeePostComments,
+                                      widget.onWantsToSeePostComments,
                                   onWantsToSeeUserProfile:
-                                  widget.onWantsToSeeUserProfile,
+                                      widget.onWantsToSeeUserProfile,
                                 );
                               }),
                           onLoadMore: _loadMorePosts),
