@@ -44,6 +44,10 @@ class User {
     return this.profile.bio;
   }
 
+  String getProfileUrl() {
+    return this.profile.url;
+  }
+
   String getProfileLocation() {
     return this.profile.location;
   }

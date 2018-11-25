@@ -1,16 +1,16 @@
 import 'package:Openbook/models/user.dart';
 import 'package:flutter/material.dart';
 
-class OBProfileLocation extends StatelessWidget {
+class OBProfileUrl extends StatelessWidget {
   User user;
 
-  OBProfileLocation(this.user);
+  OBProfileUrl(this.user);
 
   @override
   Widget build(BuildContext context) {
-    String location = user.getProfileLocation();
+    String url = user.getProfileUrl();
 
-    if (location == null) {
+    if (url == null) {
       return SizedBox();
     }
 
@@ -21,7 +21,7 @@ class OBProfileLocation extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Icon(
-          Icons.location_on,
+          Icons.link,
           size: 14,
           color: color,
         ),
@@ -29,12 +29,12 @@ class OBProfileLocation extends StatelessWidget {
           width: 10,
         ),
         Flexible(
-          child: Text(
-            location,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: color),
-          ),
+            child: Text(
+              url,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: color),
+            )
         )
       ],
     );

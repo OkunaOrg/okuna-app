@@ -5,6 +5,7 @@ class UserProfile {
   final String avatar;
   final String cover;
   final String bio;
+  final String url;
   final String location;
   final bool followersCountVisible;
 
@@ -15,6 +16,7 @@ class UserProfile {
       this.avatar,
       this.cover,
       this.bio,
+      this.url,
       this.location,
       this.followersCountVisible});
 
@@ -26,6 +28,7 @@ class UserProfile {
         avatar: parsedJson['avatar'],
         cover: parsedJson['cover'],
         bio: parsedJson['bio'],
+        url: parsedJson['url'],
         location: parsedJson['location'],
         followersCountVisible: parsedJson['followers_count_visible']);
   }
