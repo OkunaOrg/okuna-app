@@ -15,6 +15,10 @@ class OBProfileUrl extends StatelessWidget {
       return SizedBox();
     }
 
+    Uri uri = Uri.parse(url);
+
+    String prettyUrl = uri.host + uri.path + uri.query;
+
     Color color = Colors.black45;
 
     return GestureDetector(
@@ -33,7 +37,7 @@ class OBProfileUrl extends StatelessWidget {
           ),
           Flexible(
               child: Text(
-            url,
+                prettyUrl,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: color, decoration: TextDecoration.underline),
