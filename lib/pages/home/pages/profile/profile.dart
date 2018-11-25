@@ -1,5 +1,7 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_location.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -106,22 +108,8 @@ class OBProfilePageState extends State<OBProfilePage> {
                             horizontal: 30.0, vertical: 20.0),
                         child: Column(
                           children: <Widget>[
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                Flexible(
-                                  child: Text(_user.getProfileBio()),
-                                )
-                              ],
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                Flexible(
-                                  child: Text(_user.getProfileLocation()),
-                                )
-                              ],
-                            )
+                            OBProfileBio(_user),
+                            OBProfileLocation(_user)
                           ],
                         ),
                       )
