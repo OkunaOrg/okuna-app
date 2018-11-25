@@ -13,24 +13,19 @@ class OBProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
-        Positioned(
-          top: -((OBUserAvatar.AVATAR_SIZE_LARGE / 2) * 0.7),
-          left: 30,
-          child: OBUserAvatar(
-            avatarUrl: user.getProfileAvatar(),
-            size: OBUserAvatarSize.large,
-          ),
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Row(
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(50), topLeft: Radius.circular(50)),
+              color: Colors.white),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Row(
                 children: <Widget>[
                   SizedBox(
                     width: OBUserAvatar.AVATAR_SIZE_LARGE,
@@ -54,14 +49,25 @@ class OBProfileCard extends StatelessWidget {
                   )
                 ],
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-              child: Column(
-                children: <Widget>[OBProfileBio(user), OBProfileLocation(user)],
-              ),
-            )
-          ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    OBProfileBio(user),
+                    OBProfileLocation(user)
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        Positioned(
+          top: -((OBUserAvatar.AVATAR_SIZE_LARGE / 2) * 0.7),
+          left: 30,
+          child: OBUserAvatar(
+            avatarUrl: user.getProfileAvatar(),
+            size: OBUserAvatarSize.large,
+          ),
         ),
       ],
     );

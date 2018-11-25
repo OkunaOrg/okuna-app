@@ -14,7 +14,7 @@ class OBProfileLocation extends StatelessWidget {
       return SizedBox();
     }
 
-    Color color = Colors.black26;
+    Color color = Colors.black45;
 
     return Padding(
       padding: EdgeInsets.only(bottom: 20),
@@ -24,7 +24,7 @@ class OBProfileLocation extends StatelessWidget {
         children: <Widget>[
           Icon(
             Icons.location_on,
-            size: 16,
+            size: 14,
             color: color,
           ),
           SizedBox(

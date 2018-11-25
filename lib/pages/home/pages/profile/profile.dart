@@ -106,16 +106,11 @@ class OBProfilePageState extends State<OBProfilePage> {
                           itemBuilder: (context, index) {
                             if (index == 0) {
                               return Column(
-                                mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
-                                  Container(
-                                      margin: EdgeInsets.only(top: 200),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(50),
-                                              topLeft: Radius.circular(50)),
-                                          color: Colors.white),
-                                      child: OBProfileCard(_user)),
+                                  SizedBox(
+                                    height: 200,
+                                  ),
+                                  OBProfileCard(_user)
                                 ],
                               );
                             }
