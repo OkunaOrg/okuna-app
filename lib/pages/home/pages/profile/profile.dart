@@ -58,66 +58,78 @@ class OBProfilePageState extends State<OBProfilePage> {
               children: <Widget>[
                 OBProfileNavBar(_user),
                 Container(
-                  margin: EdgeInsets.only(top: 100),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
+                    margin: EdgeInsets.only(top: 100),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.white),
+                    child: Stack(
+                      overflow: Overflow.visible,
+                      children: <Widget>[
+                        Positioned(
+                          top: - ((OBUserAvatar.AVATAR_SIZE_LARGE / 2) * 0.7),
+                          left: 30,
+                          child: OBUserAvatar(
+                            avatarUrl: _user.getProfileAvatar(),
+                            size: OBUserAvatarSize.large,
+                          ),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            OBUserAvatar(
-                              avatarUrl: _user.getProfileAvatar(),
-                              size: OBUserAvatarSize.large,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      _user.getProfileName(),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.0),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: OBUserAvatar.AVATAR_SIZE_LARGE,
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 10.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            _user.getProfileName(),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18),
+                                          ),
+                                          Text(
+                                            '@' + _user.username,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black45),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      '@' + _user.username,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black45),
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.more_vert),
+                                    onPressed: () {},
+                                  )
+                                ],
                               ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.more_vert),
-                              onPressed: () {},
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 30.0, vertical: 20.0),
+                              child: Column(
+                                children: <Widget>[
+                                  OBProfileBio(_user),
+                                  OBProfileLocation(_user)
+                                ],
+                              ),
                             )
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.0, vertical: 20.0),
-                        child: Column(
-                          children: <Widget>[
-                            OBProfileBio(_user),
-                            OBProfileLocation(_user)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                      ],
+                    )),
               ],
             ),
           )
