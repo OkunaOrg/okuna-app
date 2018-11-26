@@ -47,30 +47,9 @@ class OBTimelinePageState extends State<OBTimelinePage> {
             OBTimelinePosts(
               controller: _timelinePostsController,
               onWantsToReactToPost: widget.onWantsToReactToPost,
-              onWantsToSeeUserProfile: (User user) {
-                Navigator.of(context).push(CupertinoPageRoute<void>(
-                    builder: (BuildContext context) => Material(
-                          child: OBProfilePage(user),
-                        )));
-              },
-              onWantsToCommentPost: (Post post) {
-                Navigator.of(context).push(CupertinoPageRoute<void>(
-                    builder: (BuildContext context) => Material(
-                          child: OBPostPage(post,
-                              autofocusCommentInput: true,
-                              onWantsToReactToPost:
-                                  widget.onWantsToReactToPost),
-                        )));
-              },
-              onWantsToSeePostComments: (Post post) {
-                Navigator.of(context).push(CupertinoPageRoute<void>(
-                    builder: (BuildContext context) => Material(
-                          child: OBPostPage(post,
-                              autofocusCommentInput: false,
-                              onWantsToReactToPost:
-                                  widget.onWantsToReactToPost),
-                        )));
-              },
+              onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+              onWantsToCommentPost: _onWantsToCommentPost,
+              onWantsToSeePostComments: _onWantsToSeePostComments,
             ),
             Positioned(
                 bottom: 20.0,
@@ -91,6 +70,35 @@ class OBTimelinePageState extends State<OBTimelinePage> {
 
   void scrollToTop() {
     _timelinePostsController.scrollToTop();
+  }
+
+  void _onWantsToSeeUserProfile(User user) {
+    Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBProfilePage(user,
+                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+                  onWantsToSeePostComments: _onWantsToSeePostComments,
+                  onWantsToCommentPost: _onWantsToCommentPost,
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
+            )));
+  }
+
+  void _onWantsToCommentPost(Post post) {
+    Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBPostPage(post,
+                  autofocusCommentInput: true,
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
+            )));
+  }
+
+  void _onWantsToSeePostComments(Post post) {
+    Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBPostPage(post,
+                  autofocusCommentInput: false,
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
+            )));
   }
 }
 

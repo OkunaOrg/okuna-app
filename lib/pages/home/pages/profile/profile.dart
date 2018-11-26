@@ -105,10 +105,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                               children: <Widget>[
                                 OBProfileCover(_user),
                                 OBProfileCard(_user),
-                                Container(
-                                  color: Colors.white,
-                                  child: Divider(),
-                                )
+                                Divider()
                               ],
                             );
                           }

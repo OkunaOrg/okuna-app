@@ -3,7 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBProfileCover extends StatelessWidget {
-  User user;
+  final User user;
+  final double height = 200.0;
 
   OBProfileCover(this.user);
 
@@ -11,10 +12,10 @@ class OBProfileCover extends StatelessWidget {
   Widget build(BuildContext context) {
     String profileCover = user.getProfileCover();
 
-    if (profileCover == null) return SizedBox();
+    if (profileCover == null) return SizedBox(height: height,);
 
     return Container(
-      height: 200,
+      height: height,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
