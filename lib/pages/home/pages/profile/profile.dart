@@ -70,9 +70,12 @@ class OBProfilePageState extends State<OBProfilePage> {
       _needsBootstrap = false;
     }
 
+    var route = ModalRoute.of(context);
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        leading: Navigator.canPop(context)
+        transitionBetweenRoutes: false,
+        leading: route is PageRoute && route.canPop
             ? IconButton(
                 icon: Icon(Icons.arrow_back_ios, color: Colors.black),
                 onPressed: () {
