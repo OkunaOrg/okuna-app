@@ -2,7 +2,6 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
-import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';

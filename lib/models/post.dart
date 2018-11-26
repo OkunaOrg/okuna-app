@@ -50,6 +50,7 @@ class Post {
   }
 
   static void addToCache(Post post) {
+    // TODO The cache will grow endlessly until user refreshes home posts
     cache[post.id] = post;
   }
 
