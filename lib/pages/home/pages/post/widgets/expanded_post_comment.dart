@@ -50,7 +50,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     _toastService = provider.toastService;
 
     _usernameTapGestureRecognizer.onTap = () {
-      widget.onWantsToSeeUserProfile(widget.post.creator);
+      widget.onWantsToSeeUserProfile(widget.postComment.commenter);
     };
 
     User loggedInUser = _userService.getLoggedInUser();
