@@ -121,7 +121,11 @@ class OBHomePageState extends State<OBHomePage> {
 
         if (tappedTab == OBHomePageTabs.home &&
             currentTab == OBHomePageTabs.home) {
-          _timelinePageController.scrollToTop();
+          if (_timelinePageController.hasPushedRoutes()) {
+            _timelinePageController.popUntilTimeline();
+          } else {
+            _timelinePageController.scrollToTop();
+          }
         }
 
         if (tappedTab == OBHomePageTabs.profile &&
