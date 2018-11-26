@@ -207,6 +207,16 @@ class Post {
     return timeago.format(created);
   }
 
+  void incrementCommentsCount() {
+    this.commentsCount += 1;
+    this._notifyUpdate();
+  }
+
+  void decreaseCommentsCount() {
+    this.commentsCount -= 1;
+    this._notifyUpdate();
+  }
+
   void clearReaction() {
     this.setReaction(null);
   }

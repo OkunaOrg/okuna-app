@@ -143,6 +143,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     try {
       await _userService.deletePostComment(
           postComment: widget.postComment, post: widget.post);
+      widget.post.decreaseCommentsCount();
       _setRequestInProgress(false);
       if (widget.onPostCommentDeletedCallback != null) {
         widget.onPostCommentDeletedCallback();

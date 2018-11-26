@@ -112,6 +112,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       String commentText = _textController.text;
       PostComment createdPostComment =
           await _userService.commentPost(text: commentText, post: widget.post);
+      widget.post.incrementCommentsCount();
       _textController.clear();
       _setCommentInProgress(false);
       if (widget.onPostCommentCreated != null)
