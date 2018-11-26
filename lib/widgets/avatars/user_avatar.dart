@@ -40,6 +40,7 @@ class OBUserAvatar extends StatelessWidget {
 
     if (avatarUrl != null) {
       finalAvatarImage = CachedNetworkImage(
+        fit: BoxFit.cover,
         imageUrl: avatarUrl,
         placeholder: placeholderImage,
         errorWidget: placeholderImage,

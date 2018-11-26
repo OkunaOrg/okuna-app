@@ -110,7 +110,11 @@ class OBProfilePageState extends State<OBProfilePage> {
                                   SizedBox(
                                     height: 200,
                                   ),
-                                  OBProfileCard(_user)
+                                  OBProfileCard(_user),
+                                  Container(
+                                    color: Colors.white,
+                                    child: Divider(),
+                                  )
                                 ],
                               );
                             }

@@ -65,7 +65,7 @@ class AuthApiService {
 
   Future<HttpieResponse> getUserWithUsername(String username,
       {bool authenticatedRequest = true}) {
-    return _httpService.get('$apiURL$GET_USERS_PATH/$username/',
+    return _httpService.get('$apiURL$GET_USERS_PATH$username/',
         appendAuthorizationToken: authenticatedRequest);
   }
 

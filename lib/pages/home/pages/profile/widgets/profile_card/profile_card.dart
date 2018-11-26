@@ -73,7 +73,7 @@ class OBProfileCard extends StatelessWidget {
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
