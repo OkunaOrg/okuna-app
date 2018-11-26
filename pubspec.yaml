@@ -20,7 +20,7 @@ dependencies:
   timeago: ^2.0.9
   loadmore: ^1.0.1
   pigment: ^1.0.3
-  flushbar: ^1.1.0
+  flushbar: ^1.1.2
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0

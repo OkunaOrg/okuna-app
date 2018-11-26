@@ -100,11 +100,10 @@ class CreatePostModalState extends State<CreatePostModal> {
       // Remove modal
       Navigator.pop(context, createdPost);
     } on HttpieConnectionRefusedError {
-      _toastService.error(
-          scaffoldKey: _scaffoldKey, message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
       _setCreatePostInProgress(false);
     } catch (e) {
-      _toastService.error(scaffoldKey: _scaffoldKey, message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       _setCreatePostInProgress(false);
       rethrow;
     }

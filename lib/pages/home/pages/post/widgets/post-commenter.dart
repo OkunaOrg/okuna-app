@@ -117,10 +117,10 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       if (widget.onPostCommentCreated != null)
         widget.onPostCommentCreated(createdPostComment);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
       _setCommentInProgress(false);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       _setCommentInProgress(false);
       rethrow;
     }

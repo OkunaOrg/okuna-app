@@ -92,9 +92,9 @@ class OBPostReactionsState extends State<OBPostReactions> {
     try {
       return await _userService.reactToPost(post: widget.post, emoji: emoji);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
     } finally {
       _setRequestInProgress(false);
@@ -107,9 +107,9 @@ class OBPostReactionsState extends State<OBPostReactions> {
       await _userService.deletePostReaction(
           postReaction: widget.post.reaction, post: widget.post);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
     } finally {
       _setRequestInProgress(false);

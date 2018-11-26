@@ -11,7 +11,7 @@ class ToastService {
   void warning({
     String title,
     @required String message,
-    BuildContext context,
+    @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
     toast(
@@ -25,7 +25,7 @@ class ToastService {
   void success({
     String title,
     @required String message,
-    BuildContext context,
+    @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
     toast(
@@ -39,7 +39,7 @@ class ToastService {
   void error({
     String title,
     @required String message,
-    BuildContext context,
+    @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
     toast(
@@ -53,7 +53,7 @@ class ToastService {
   void info({
     String title,
     @required String message,
-    BuildContext context,
+    @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
     toast(
@@ -68,7 +68,7 @@ class ToastService {
     String title,
     @required String message,
     @required ToastType type,
-    BuildContext context,
+    @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
     Widget icon;

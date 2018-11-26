@@ -141,9 +141,9 @@ class OBProfilePageState extends State<OBProfilePage> {
     try {
       await Future.wait([_refreshUser(), _refreshPosts()]);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
     } finally {
       _setRefreshInProgress(false);
@@ -178,9 +178,9 @@ class OBProfilePageState extends State<OBProfilePage> {
       }
       return true;
     } on HttpieConnectionRefusedError catch (error) {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
     }
 
