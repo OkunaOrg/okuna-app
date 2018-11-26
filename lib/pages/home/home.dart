@@ -5,8 +5,8 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
-import 'package:Openbook/pages/home/pages/communities.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
+import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
 import 'package:Openbook/pages/home/pages/notifications.dart';
@@ -37,6 +37,7 @@ class OBHomePageState extends State<OBHomePage> {
   bool _needsBootstrap;
   StreamSubscription _loggedInUserChangeSubscription;
   OBTimelinePageController _timelinePageController;
+  OBProfilePageController _profilePageController;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class OBHomePageState extends State<OBHomePage> {
     _lastIndex = 0;
     _currentIndex = 0;
     _timelinePageController = OBTimelinePageController();
+    _profilePageController = OBProfilePageController();
   }
 
   @override
@@ -79,25 +81,27 @@ class OBHomePageState extends State<OBHomePage> {
 
   Widget _getPageForTabIndex(int index) {
     Widget page;
-    switch (index) {
-      case 0:
+    switch (OBHomePageTabs.values[index]) {
+      case OBHomePageTabs.home:
         page = OBTimelinePage(
             controller: _timelinePageController,
             onWantsToReactToPost: _onWantsToReactToPost,
             onWantsToCreatePost: _onWantsToCreatePost);
         break;
-      case 1:
-        page =  OBMainSearchPage();
+      case OBHomePageTabs.search:
+        page = OBMainSearchPage();
         break;
-      case 2:
+      case OBHomePageTabs.notifications:
         break;
-      case 3:
+      case OBHomePageTabs.communities:
         page = OBMainNotificationsPage();
         break;
-      case 4:
-        page = OBOwnProfilePage(onWantsToReactToPost: _onWantsToReactToPost,);
+      case OBHomePageTabs.profile:
+        page = OBOwnProfilePage(
+            onWantsToReactToPost: _onWantsToReactToPost,
+            profilePageController: _profilePageController);
         break;
-      case 5:
+      case OBHomePageTabs.menu:
         page = OBMainMenuPage();
         break;
       default:
@@ -112,9 +116,19 @@ class OBHomePageState extends State<OBHomePage> {
       backgroundColor: Colors.white,
       currentIndex: _currentIndex,
       onTap: (int index) {
-        if (_lastIndex == 0 && index == 0) {
+        var tappedTab = OBHomePageTabs.values[index];
+        var currentTab = OBHomePageTabs.values[index];
+
+        if (tappedTab == OBHomePageTabs.home &&
+            currentTab == OBHomePageTabs.home) {
           _timelinePageController.scrollToTop();
         }
+
+        if (tappedTab == OBHomePageTabs.profile &&
+            currentTab == OBHomePageTabs.profile && _profilePageController.isAttached()) {
+          _profilePageController.scrollToTop();
+        }
+
         _lastIndex = index;
         return true;
       },
@@ -189,11 +203,10 @@ class OBHomePageState extends State<OBHomePage> {
   Future<PostReaction> _onWantsToReactToPost(Post post) async {
     PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
         .push(MaterialPageRoute<PostReaction>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) =>
-            Material(
-              child: OBReactToPostModal(post),
-            )));
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBReactToPostModal(post),
+                )));
 
     return postReaction;
   }
@@ -220,3 +233,5 @@ class OBHomePageState extends State<OBHomePage> {
     }
   }
 }
+
+enum OBHomePageTabs { home, search, notifications, communities, profile, menu }

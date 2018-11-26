@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
 
 class OBProfilePage extends StatefulWidget {
+  final OBProfilePageController controller;
   final User user;
   final OnWantsToCommentPost onWantsToCommentPost;
   final OnWantsToReactToPost onWantsToReactToPost;
@@ -27,7 +28,8 @@ class OBProfilePage extends StatefulWidget {
       {this.onWantsToSeeUserProfile,
       this.onWantsToSeePostComments,
       this.onWantsToReactToPost,
-      this.onWantsToCommentPost});
+      this.onWantsToCommentPost,
+      this.controller});
 
   @override
   OBProfilePageState createState() {
@@ -43,15 +45,18 @@ class OBProfilePageState extends State<OBProfilePage> {
   List<Post> _posts;
   UserService _userService;
   ToastService _toastService;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     _refreshInProgress = false;
     _needsBootstrap = true;
     _morePostsToLoad = false;
     _user = widget.user;
     _posts = [];
+    if (widget.controller != null) widget.controller.attach(this);
   }
 
   @override
@@ -67,12 +72,14 @@ class OBProfilePageState extends State<OBProfilePage> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        leading: Navigator.canPop(context)
+            ? IconButton(
+                icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            : SizedBox(),
         trailing: IconButton(
           icon: Icon(Icons.more_vert),
           onPressed: () {},
@@ -94,6 +101,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                     isFinish: !_morePostsToLoad,
                     delegate: OBHomePostsLoadMoreDelegate(),
                     child: ListView.builder(
+                        controller: _scrollController,
                         physics: AlwaysScrollableScrollPhysics(),
                         padding: EdgeInsets.all(0),
                         itemCount: _posts.length + 1,
@@ -127,6 +135,14 @@ class OBProfilePageState extends State<OBProfilePage> {
           )
         ],
       ),
+    );
+  }
+
+  void scrollToTop() {
+    _scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
     );
   }
 
@@ -207,5 +223,22 @@ class OBProfilePageState extends State<OBProfilePage> {
     setState(() {
       _morePostsToLoad = morePostsToLoad;
     });
+  }
+}
+
+class OBProfilePageController {
+  OBProfilePageState _timelinePageState;
+
+  void attach(OBProfilePageState profilePageState) {
+    assert(profilePageState != null, 'Cannot attach to empty state');
+    _timelinePageState = profilePageState;
+  }
+
+  bool isAttached() {
+    return _timelinePageState != null;
+  }
+
+  void scrollToTop() {
+    _timelinePageState.scrollToTop();
   }
 }

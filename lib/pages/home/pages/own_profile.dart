@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 
 class OBOwnProfilePage extends StatelessWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OBProfilePageController profilePageController;
 
-  OBOwnProfilePage({this.onWantsToReactToPost});
+  OBOwnProfilePage({this.onWantsToReactToPost, this.profilePageController});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class OBOwnProfilePage extends StatelessWidget {
         if (data == null) return SizedBox();
         return OBProfilePage(
           data,
+          controller: profilePageController,
           onWantsToReactToPost: onWantsToReactToPost,
           onWantsToSeeUserProfile: (User user) =>
               _onWantsToSeeUserProfile(context, user),
