@@ -117,7 +117,7 @@ class OBHomePageState extends State<OBHomePage> {
       currentIndex: _currentIndex,
       onTap: (int index) {
         var tappedTab = OBHomePageTabs.values[index];
-        var currentTab = OBHomePageTabs.values[index];
+        var currentTab = OBHomePageTabs.values[_lastIndex];
 
         if (tappedTab == OBHomePageTabs.home &&
             currentTab == OBHomePageTabs.home) {
@@ -125,7 +125,7 @@ class OBHomePageState extends State<OBHomePage> {
         }
 
         if (tappedTab == OBHomePageTabs.profile &&
-            currentTab == OBHomePageTabs.profile && _profilePageController.isAttached()) {
+            currentTab == OBHomePageTabs.profile) {
           _profilePageController.scrollToTop();
         }
 

@@ -234,10 +234,6 @@ class OBProfilePageController {
     _timelinePageState = profilePageState;
   }
 
-  bool isAttached() {
-    return _timelinePageState != null;
-  }
-
   void scrollToTop() {
     _timelinePageState.scrollToTop();
   }
