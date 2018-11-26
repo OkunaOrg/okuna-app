@@ -11,7 +11,8 @@ class AuthApiService {
   static const CHECK_USERNAME_PATH = 'api/auth/username-check/';
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
-  static const GET_USER_PATH = 'api/auth/user/';
+  static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
+  static const GET_USERS_PATH = 'api/auth/users/';
   static const LOGIN_PATH = 'api/auth/login/';
 
   void setHttpService(HttpieService httpService) {
@@ -58,13 +59,13 @@ class AuthApiService {
   Future<HttpieResponse> getUserWithAuthToken(String authToken) {
     Map<String, String> headers = {'Authorization': 'Token $authToken'};
 
-    return _httpService.get('$apiURL$GET_USER_PATH', headers: headers);
+    return _httpService.get('$apiURL$GET_AUTHENTICATED_USER_PATH',
+        headers: headers);
   }
 
   Future<HttpieResponse> getUserWithUsername(String username,
       {bool authenticatedRequest = true}) {
-    return _httpService.get('$apiURL$GET_USER_PATH',
-        queryParameters: {'username': username},
+    return _httpService.get('$apiURL$GET_USERS_PATH/$username/',
         appendAuthorizationToken: authenticatedRequest);
   }
 
