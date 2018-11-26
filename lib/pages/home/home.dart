@@ -6,8 +6,8 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/pages/communities.dart';
+import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
-import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
 import 'package:Openbook/pages/home/pages/notifications.dart';
 import 'package:Openbook/pages/home/pages/search.dart';
@@ -95,7 +95,7 @@ class OBHomePageState extends State<OBHomePage> {
         page = OBMainNotificationsPage();
         break;
       case 4:
-        page = OBMainCommunitiesPage();
+        page = OBOwnProfilePage(onWantsToReactToPost: _onWantsToReactToPost,);
         break;
       case 5:
         page = OBMainMenuPage();
