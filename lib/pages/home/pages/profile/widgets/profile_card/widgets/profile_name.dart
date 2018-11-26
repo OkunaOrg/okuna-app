@@ -11,7 +11,6 @@ class OBProfileName extends StatelessWidget {
     String profileName = user.getProfileName();
 
     if (profileName == null) return SizedBox();
-    // TODO: implement build
     return Text(
       profileName,
       maxLines: 2,

@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_counts/profile_counts.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
@@ -28,25 +29,19 @@ class OBProfileCard extends StatelessWidget {
               Row(
                 children: <Widget>[
                   SizedBox(
+                    height: (OBUserAvatar.AVATAR_SIZE_LARGE * 0.8),
                     width: OBUserAvatar.AVATAR_SIZE_LARGE,
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          OBProfileName(user),
-                          OBProfileUsername(user)
-                        ],
-                      ),
-                    ),
+                    child: OBProfileActions(user)
                   ),
                 ],
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  OBProfileName(user),
+                  OBProfileUsername(user),
                   OBProfileBio(user),
                   OBProfileDetails(user),
                   OBProfileCounts(user)
