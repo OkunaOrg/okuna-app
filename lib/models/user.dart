@@ -6,6 +6,7 @@ class User {
   final String username;
   final UserProfile profile;
   final int followersCount;
+  final int followingCount;
   final int postsCount;
 
   User(
@@ -14,6 +15,7 @@ class User {
       this.email,
       this.profile,
       this.followersCount,
+      this.followingCount,
       this.postsCount});
 
   factory User.fromJson(Map<String, dynamic> parsedJson) {
@@ -25,6 +27,7 @@ class User {
         postsCount: parsedJson['posts_count'],
         email: parsedJson['email'],
         username: parsedJson['username'],
+        followingCount: parsedJson['following_count'],
         profile: userProfile);
   }
 

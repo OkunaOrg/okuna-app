@@ -1,8 +1,10 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_location.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_counts/profile_counts.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_location.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_url.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_url.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
@@ -44,35 +46,14 @@ class OBProfileCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.more_vert),
-                    onPressed: () {},
-                  )
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    OBProfileBio(user),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            child: Wrap(
-                              spacing: 10.0,
-                              runSpacing: 10.0,
-                              children: <Widget>[
-                                OBProfileLocation(user),
-                                OBProfileUrl(user)
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+              Column(
+                children: <Widget>[
+                  OBProfileBio(user),
+                  OBProfileDetails(user),
+                  OBProfileCounts(user)
+                ],
               ),
             ],
           ),

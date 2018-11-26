@@ -15,14 +15,13 @@ class OBProfileBio extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.only(bottom: 10.0),
+      padding: EdgeInsets.only(top: 20),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Flexible(
             child: Text(
               bio,
-              style: TextStyle(fontSize: 16),
             ),
           )
         ],
