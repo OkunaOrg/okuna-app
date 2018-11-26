@@ -40,15 +40,13 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
     return StreamBuilder(
         stream: widget.post.updateSubject,
-        initialData: widget.post,
-        builder: (BuildContext context,
-            AsyncSnapshot<Post> snapshot) {
-
+        builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
           if (snapshot.data == null) return SizedBox();
 
           var post = snapshot.data;
 
-          List<PostReactionsEmojiCount> emojiCounts = post.reactionsEmojiCounts.counts;
+          List<PostReactionsEmojiCount> emojiCounts =
+              post.reactionsEmojiCounts.counts;
 
           if (emojiCounts.length == 0) return SizedBox();
 
