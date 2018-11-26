@@ -32,4 +32,12 @@ class UserProfile {
         location: parsedJson['location'],
         followersCountVisible: parsedJson['followers_count_visible']);
   }
+
+  bool hasLocation() {
+    return location != null;
+  }
+
+  bool hasUrl() {
+    return url != null;
+  }
 }

@@ -31,6 +31,14 @@ class User {
         profile: userProfile);
   }
 
+  bool hasProfileLocation(){
+    return profile.hasLocation();
+  }
+
+  bool hasProfileUrl(){
+    return profile.hasUrl();
+  }
+
   String getProfileAvatar() {
     return this.profile.avatar;
   }

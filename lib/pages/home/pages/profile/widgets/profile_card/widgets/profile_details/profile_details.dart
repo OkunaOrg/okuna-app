@@ -10,21 +10,25 @@ class OBProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            child: Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
-              children: <Widget>[
-                OBProfileLocation(user),
-                OBProfileUrl(user)
-              ],
-            ),
-          ),
-        )
-      ],
-    );
+    if (!user.hasProfileLocation() || !user.hasProfileUrl()) return SizedBox();
+
+    return Padding(
+        padding: EdgeInsets.only(top: 20),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Wrap(
+                  spacing: 10.0,
+                  runSpacing: 10.0,
+                  children: <Widget>[
+                    OBProfileLocation(user),
+                    OBProfileUrl(user)
+                  ],
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }
