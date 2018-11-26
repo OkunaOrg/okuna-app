@@ -21,10 +21,7 @@ class OBProfileCard extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.symmetric(horizontal: 30.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50), topLeft: Radius.circular(50)),
-              color: Colors.white),
+          color: Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[

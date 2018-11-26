@@ -14,7 +14,7 @@ class OBProfileCover extends StatelessWidget {
     if (profileCover == null) return SizedBox();
 
     return Container(
-      height: 260,
+      height: 200,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[

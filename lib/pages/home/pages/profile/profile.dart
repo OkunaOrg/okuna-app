@@ -75,11 +75,10 @@ class OBProfilePageState extends State<OBProfilePage> {
             Navigator.pop(context);
           },
         ),
-        trailing: OBRefreshButton(
-          isLoading: _refreshInProgress,
-          onPressed: () {
-            _refresh();
-          },
+        trailing: IconButton(
+          icon: Icon(Icons.more_vert),
+          onPressed: () {},
+          color: Colors.black,
         ),
         backgroundColor: Colors.white,
         middle: Text(
@@ -87,56 +86,49 @@ class OBProfilePageState extends State<OBProfilePage> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      child: Stack(
-        overflow: Overflow.visible,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Positioned(child: OBProfileCover(_user)),
-          Container(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: LoadMore(
-                      whenEmptyLoad: false,
-                      isFinish: !_morePostsToLoad,
-                      delegate: OBHomePostsLoadMoreDelegate(),
-                      child: ListView.builder(
-                          physics: ClampingScrollPhysics(),
-                          padding: EdgeInsets.all(0),
-                          itemCount: _posts.length + 1,
-                          itemBuilder: (context, index) {
-                            if (index == 0) {
-                              return Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 200,
-                                  ),
-                                  OBProfileCard(_user),
-                                  Container(
-                                    color: Colors.white,
-                                    child: Divider(),
-                                  )
-                                ],
-                              );
-                            }
-
-                            int postIndex = index - 1;
-
-                            var post = _posts[postIndex];
-
-                            return OBPost(
-                              post,
-                              onWantsToReactToPost: widget.onWantsToReactToPost,
-                              onWantsToCommentPost: widget.onWantsToCommentPost,
-                              onWantsToSeePostComments:
-                                  widget.onWantsToSeePostComments,
-                              onWantsToSeeUserProfile:
-                                  widget.onWantsToSeeUserProfile,
+          Expanded(
+            child: RefreshIndicator(
+                child: LoadMore(
+                    whenEmptyLoad: false,
+                    isFinish: !_morePostsToLoad,
+                    delegate: OBHomePostsLoadMoreDelegate(),
+                    child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(0),
+                        itemCount: _posts.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return Column(
+                              children: <Widget>[
+                                OBProfileCover(_user),
+                                OBProfileCard(_user),
+                                Container(
+                                  color: Colors.white,
+                                  child: Divider(),
+                                )
+                              ],
                             );
-                          }),
-                      onLoadMore: _loadMorePosts),
-                )
-              ],
-            ),
+                          }
+
+                          int postIndex = index - 1;
+
+                          var post = _posts[postIndex];
+
+                          return OBPost(
+                            post,
+                            onWantsToReactToPost: widget.onWantsToReactToPost,
+                            onWantsToCommentPost: widget.onWantsToCommentPost,
+                            onWantsToSeePostComments:
+                                widget.onWantsToSeePostComments,
+                            onWantsToSeeUserProfile:
+                                widget.onWantsToSeeUserProfile,
+                          );
+                        }),
+                    onLoadMore: _loadMorePosts),
+                onRefresh: _refresh),
           )
         ],
       ),
