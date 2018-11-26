@@ -40,14 +40,16 @@ class OBPostReactionsState extends State<OBPostReactions> {
     _toastService = openbookProvider.toastService;
 
     return StreamBuilder(
-        stream: widget.post.reactionsEmojiCountsChangeSubject,
-        initialData: widget.post.reactionsEmojiCounts,
+        stream: widget.post.updateSubject,
+        initialData: widget.post,
         builder: (BuildContext context,
-            AsyncSnapshot<PostReactionsEmojiCountList> snapshot) {
+            AsyncSnapshot<Post> snapshot) {
 
           if (snapshot.data == null) return SizedBox();
 
-          List<PostReactionsEmojiCount> emojiCounts = snapshot.data.counts;
+          var post = snapshot.data;
+
+          List<PostReactionsEmojiCount> emojiCounts = post.reactionsEmojiCounts.counts;
 
           if (emojiCounts.length == 0) return SizedBox();
 

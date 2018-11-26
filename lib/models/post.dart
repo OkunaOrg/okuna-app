@@ -12,27 +12,103 @@ import 'package:timeago/timeago.dart' as timeago;
 class Post {
   final int id;
   final int creatorId;
-  final int reactionsCount;
-  final int commentsCount;
   final DateTime created;
-  final String text;
-  final PostImage image;
-  final PostCommentList commentsList;
   final User creator;
-  final bool publicComments;
-  final bool publicReactions;
 
   PostReactionsEmojiCountList reactionsEmojiCounts;
   PostReaction reaction;
+  int reactionsCount;
+  int commentsCount;
+  bool publicComments;
+  bool publicReactions;
+  String text;
+  PostImage image;
+  PostCommentList commentsList;
 
-  Stream<PostReaction> get reactionChangeSubject =>
-      _reactionChangeSubject.stream;
-  final _reactionChangeSubject = ReplaySubject<PostReaction>(maxSize: 1);
+  Stream<Post> get updateSubject => _updateSubject.stream;
+  final _updateSubject = ReplaySubject<Post>(maxSize: 1);
 
-  Stream<PostReactionsEmojiCountList> get reactionsEmojiCountsChangeSubject =>
-      _reactionsEmojiCountsChangeSubject.stream;
-  final _reactionsEmojiCountsChangeSubject =
-      ReplaySubject<PostReactionsEmojiCountList>(maxSize: 1);
+  factory Post.fromJson(Map<String, dynamic> json) {
+    int postId = json['id'];
+
+    Post post = getPostWithIdFromCache(postId);
+
+    if (post != null) {
+      post.updateFromJson(json);
+      return post;
+    }
+
+    post = _makeFromJson(json);
+    addToCache(post);
+    return post;
+  }
+
+  static final Map<int, Post> cache = {};
+
+  static Post getPostWithIdFromCache(int postId) {
+    return cache[postId];
+  }
+
+  static void addToCache(Post post) {
+    cache[post.id] = post;
+  }
+
+  static void clearCache() {
+    cache.clear();
+  }
+
+  static Post _makeFromJson(json) {
+    return Post(
+        id: json['id'],
+        creatorId: json['creator_id'],
+        created: _parseCreated(json['created']),
+        text: json['text'],
+        reactionsCount: json['reactions_count'],
+        commentsCount: json['comments_count'],
+        publicComments: json['public_comments'],
+        publicReactions: json['public_reactions'],
+        creator: _parseCreator(json['creator']),
+        image: _parseImage(json['image']),
+        reaction: _parseReaction(json['reaction']),
+        commentsList: _parseCommentList(json['comments']),
+        reactionsEmojiCounts:
+            _parseReactionsEmojiCounts(json['reactions_emoji_counts']));
+  }
+
+  static DateTime _parseCreated(String created) {
+    return DateTime.parse(created).toLocal();
+  }
+
+  static PostImage _parseImage(Map image) {
+    if (image != null) {
+      return PostImage.fromJSON(image);
+    }
+  }
+
+  static User _parseCreator(Map creator) {
+    if (creator != null) {
+      return User.fromJson(creator);
+    }
+  }
+
+  static PostReaction _parseReaction(Map postReaction) {
+    if (postReaction != null) {
+      return PostReaction.fromJson(postReaction);
+    }
+  }
+
+  static PostReactionsEmojiCountList _parseReactionsEmojiCounts(
+      List reactionsEmojiCounts) {
+    if (reactionsEmojiCounts != null) {
+      return PostReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
+    }
+  }
+
+  static PostCommentList _parseCommentList(List commentList) {
+    if (commentList != null) {
+      return PostCommentList.fromJson(commentList);
+    }
+  }
 
   Post(
       {this.id,
@@ -48,56 +124,26 @@ class Post {
       this.reactionsEmojiCounts,
       this.publicComments,
       this.publicReactions}) {
-    _reactionChangeSubject.add(this.reaction);
-    _reactionsEmojiCountsChangeSubject.add(this.reactionsEmojiCounts);
+    _updateSubject.add(this);
   }
 
-  factory Post.fromJson(Map<String, dynamic> parsedJson) {
-    var postImageData = parsedJson['image'];
-    var postImage;
-    if (postImageData != null) postImage = PostImage.fromJSON(postImageData);
+  void updateFromJson(Map<String, dynamic> json) {
+    reactionsEmojiCounts =
+        _parseReactionsEmojiCounts(json['reactions_emoji_counts']);
+    reaction = _parseReaction(json['reaction']);
+    reactionsCount = json['reactions_count'];
+    commentsCount = json['comments_count'];
+    publicComments = json['public_comments'];
+    publicReactions = json['public_reactions'];
+    text = json['text'];
+    image = _parseImage(json['image']);
+    commentsList = _parseCommentList(json['comments']);
 
-    var postCreatorData = parsedJson['creator'];
-    var postCreator;
-    if (postCreatorData != null) postCreator = User.fromJson(postCreatorData);
-
-    var postReaction;
-    var postReactionData = parsedJson['reaction'];
-    if (postReactionData != null)
-      postReaction = PostReaction.fromJson(postReactionData);
-
-    var reactionsEmojiCountsData = parsedJson['reactions_emoji_counts'];
-    var reactionsEmojiCounts;
-    if (reactionsEmojiCountsData != null)
-      reactionsEmojiCounts =
-          PostReactionsEmojiCountList.fromJson(reactionsEmojiCountsData);
-
-    var postCommentsData = parsedJson['comments'];
-    var postComments;
-    if (postCommentsData != null)
-      postComments = PostCommentList.fromJson(postCommentsData);
-
-    DateTime created = DateTime.parse(parsedJson['created']).toLocal();
-
-    return Post(
-        id: parsedJson['id'],
-        creatorId: parsedJson['creator_id'],
-        created: created,
-        text: parsedJson['text'],
-        reactionsCount: parsedJson['reactions_count'],
-        commentsCount: parsedJson['comments_count'],
-        publicComments: parsedJson['public_comments'],
-        publicReactions: parsedJson['public_reactions'],
-        creator: postCreator,
-        image: postImage,
-        reaction: postReaction,
-        commentsList: postComments,
-        reactionsEmojiCounts: reactionsEmojiCounts);
+    _notifyUpdate();
   }
 
   void dispose() {
-    _reactionChangeSubject.close();
-    _reactionsEmojiCountsChangeSubject.close();
+    _updateSubject.close();
   }
 
   bool hasReaction() {
@@ -203,13 +249,17 @@ class Post {
     }
 
     this.reaction = newReaction;
-    _reactionChangeSubject.add(newReaction);
-    this.setReactionsEmojiCounts(
+    this._setReactionsEmojiCounts(
         PostReactionsEmojiCountList(counts: newEmojiCounts));
+
+    this._notifyUpdate();
   }
 
-  void setReactionsEmojiCounts(PostReactionsEmojiCountList emojiCounts) {
+  void _setReactionsEmojiCounts(PostReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
-    _reactionsEmojiCountsChangeSubject.add(emojiCounts);
+  }
+
+  void _notifyUpdate() {
+    _updateSubject.add(this);
   }
 }
