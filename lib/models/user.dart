@@ -31,11 +31,11 @@ class User {
         profile: userProfile);
   }
 
-  bool hasProfileLocation(){
+  bool hasProfileLocation() {
     return profile.hasLocation();
   }
 
-  bool hasProfileUrl(){
+  bool hasProfileUrl() {
     return profile.hasUrl();
   }
 
@@ -53,6 +53,10 @@ class User {
 
   String getProfileBio() {
     return this.profile.bio;
+  }
+
+  bool getProfileFollowersCountVisible() {
+    return this.profile.followersCountVisible;
   }
 
   String getProfileUrl() {

@@ -101,6 +101,7 @@ class OBHomePageState extends State<OBHomePage> {
         break;
       case OBHomePageTabs.profile:
         page = OBOwnProfilePage(
+            onWantsToEditUserProfile: _onWantsToEditUserProfile,
             onWantsToReactToPost: _onWantsToReactToPost,
             controller: _ownProfilePageController);
         break;

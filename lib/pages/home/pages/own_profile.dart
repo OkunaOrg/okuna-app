@@ -9,9 +9,13 @@ import 'package:flutter/material.dart';
 
 class OBOwnProfilePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToEditUserProfile onWantsToEditUserProfile;
   final OBOwnProfilePageController controller;
 
-  OBOwnProfilePage({this.onWantsToReactToPost, this.controller});
+  OBOwnProfilePage(
+      {this.onWantsToReactToPost,
+      this.controller,
+      this.onWantsToEditUserProfile});
 
   @override
   State<StatefulWidget> createState() {
@@ -45,6 +49,7 @@ class OBOwnProfilePageState extends State<OBOwnProfilePage> {
           data,
           controller: _profilePageController,
           onWantsToReactToPost: widget.onWantsToReactToPost,
+          onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
           onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
           onWantsToSeePostComments: _onWantsToSeePostComments,
           onWantsToCommentPost: _onWantsToCommentPost,
