@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class OBCover extends StatelessWidget {
-  final String imageUrl;
+  final String coverUrl;
   static const double HEIGHT = 200.0;
 
-  OBCover(this.imageUrl);
+  OBCover({@required this.coverUrl});
 
   @override
   Widget build(BuildContext context) {
-    if (imageUrl == null)
+    if (coverUrl == null)
       return SizedBox(
         height: HEIGHT,
       );
@@ -22,7 +22,7 @@ class OBCover extends StatelessWidget {
           Expanded(
             child: CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl: imageUrl,
+              imageUrl: coverUrl,
               placeholder: null,
               errorWidget: null,
             ),

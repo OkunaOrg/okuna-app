@@ -10,6 +10,8 @@ class OBProfileCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String profileCover = user.getProfileCover();
-    return OBCover(profileCover);
+    return OBCover(
+      coverUrl: profileCover,
+    );
   }
 }

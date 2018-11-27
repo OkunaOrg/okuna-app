@@ -4,7 +4,6 @@ import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/cover.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +29,9 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   TextEditingController _locationController;
   TextEditingController _bioController;
 
+  String _avatarUrl;
+  String _coverUrl;
+
   @override
   void initState() {
     _requestInProgress = false;
@@ -41,6 +43,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _locationController =
         TextEditingController(text: widget.user.getProfileLocation());
     _bioController = TextEditingController(text: widget.user.getProfileBio());
+    _avatarUrl = widget.user.getProfileAvatar();
+    _coverUrl = widget.user.getProfileCover();
     super.initState();
   }
 
@@ -191,22 +195,22 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
   Widget _buildUserAvatar() {
     return Stack(
-      overflow: Overflow.visible,
       children: <Widget>[
-        OBLoggedInUserAvatar(
+        OBUserAvatar(
+          avatarUrl: _avatarUrl,
           size: OBUserAvatarSize.large,
         ),
         Positioned(
-          bottom: -10,
-          right: -10,
+          bottom: 10,
+          right: 10,
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 40, maxHeight: 40),
+            constraints: BoxConstraints(maxWidth: 30, maxHeight: 30),
             child: FloatingActionButton(
               heroTag: Key('EditAvatar'),
               backgroundColor: Colors.white,
               child: Icon(
                 Icons.edit,
-                size: 20,
+                size: 15,
               ),
               onPressed: () {},
             ),
@@ -219,7 +223,9 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   Widget _buildUserProfileCover() {
     return Stack(
       children: <Widget>[
-        OBProfileCover(widget.user),
+        OBCover(
+          coverUrl: _coverUrl,
+        ),
         Positioned(
           bottom: 20,
           right: 20,
