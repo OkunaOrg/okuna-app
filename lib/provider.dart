@@ -8,6 +8,7 @@ import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:Openbook/services/string_template.dart';
+import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -42,6 +43,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   FileCacheService fileCacheService = FileCacheService();
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
+  ThemeService themeService = ThemeService();
 
   LocalizationService localizationService;
 

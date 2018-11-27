@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 enum OBUserAvatarSize { small, medium, large }
 
@@ -53,7 +54,7 @@ class OBUserAvatar extends StatelessWidget {
 
     var avatar = Container(
       decoration: BoxDecoration(
-          color: Colors.black12,
+          color: Pigment.fromString('#efefef'),
           borderRadius: BorderRadius.circular(avatarBorderRadius)),
       height: avatarSize,
       width: avatarSize,
