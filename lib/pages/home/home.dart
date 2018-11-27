@@ -37,7 +37,7 @@ class OBHomePageState extends State<OBHomePage> {
   bool _needsBootstrap;
   StreamSubscription _loggedInUserChangeSubscription;
   OBTimelinePageController _timelinePageController;
-  OBProfilePageController _profilePageController;
+  OBOwnProfilePageController _ownProfilePageController;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class OBHomePageState extends State<OBHomePage> {
     _lastIndex = 0;
     _currentIndex = 0;
     _timelinePageController = OBTimelinePageController();
-    _profilePageController = OBProfilePageController();
+    _ownProfilePageController = OBOwnProfilePageController();
   }
 
   @override
@@ -99,7 +99,7 @@ class OBHomePageState extends State<OBHomePage> {
       case OBHomePageTabs.profile:
         page = OBOwnProfilePage(
             onWantsToReactToPost: _onWantsToReactToPost,
-            profilePageController: _profilePageController);
+            controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
         page = OBMainMenuPage();
@@ -130,7 +130,11 @@ class OBHomePageState extends State<OBHomePage> {
 
         if (tappedTab == OBHomePageTabs.profile &&
             currentTab == OBHomePageTabs.profile) {
-          _profilePageController.scrollToTop();
+          if (_ownProfilePageController.hasPushedRoutes()) {
+            _ownProfilePageController.popUntilProfile();
+          } else {
+            _ownProfilePageController.scrollToTop();
+          }
         }
 
         _lastIndex = index;

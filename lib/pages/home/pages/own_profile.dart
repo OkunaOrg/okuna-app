@@ -7,11 +7,29 @@ import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_r
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBOwnProfilePage extends StatelessWidget {
+class OBOwnProfilePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
-  final OBProfilePageController profilePageController;
+  final OBOwnProfilePageController controller;
 
-  OBOwnProfilePage({this.onWantsToReactToPost, this.profilePageController});
+  OBOwnProfilePage({this.onWantsToReactToPost, this.controller});
+
+  @override
+  State<StatefulWidget> createState() {
+    return OBOwnProfilePageState();
+  }
+}
+
+class OBOwnProfilePageState extends State<OBOwnProfilePage> {
+  OBProfilePageController _profilePageController;
+  int _pushedRoutes;
+
+  @override
+  void initState() {
+    super.initState();
+    _pushedRoutes = 0;
+    _profilePageController = OBProfilePageController();
+    if (widget.controller != null) widget.controller.attach(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,48 +43,91 @@ class OBOwnProfilePage extends StatelessWidget {
         if (data == null) return SizedBox();
         return OBProfilePage(
           data,
-          controller: profilePageController,
-          onWantsToReactToPost: onWantsToReactToPost,
-          onWantsToSeeUserProfile: (User user) =>
-              _onWantsToSeeUserProfile(context, user),
-          onWantsToSeePostComments: (Post post) =>
-              _onWantsToSeePostComments(context, post),
-          onWantsToCommentPost: (Post post) =>
-              _onWantsToCommentPost(context, post),
+          controller: _profilePageController,
+          onWantsToReactToPost: widget.onWantsToReactToPost,
+          onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+          onWantsToSeePostComments: _onWantsToSeePostComments,
+          onWantsToCommentPost: _onWantsToCommentPost,
         );
       },
     );
   }
 
-  void _onWantsToSeeUserProfile(BuildContext context, User user) {
-    Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBProfilePage(user,
-                  onWantsToSeeUserProfile: (User user) =>
-                      _onWantsToSeeUserProfile(context, user),
-                  onWantsToSeePostComments: (Post post) =>
-                      _onWantsToSeePostComments(context, post),
-                  onWantsToCommentPost: (Post post) =>
-                      _onWantsToCommentPost(context, post),
-                  onWantsToReactToPost: onWantsToReactToPost),
-            )));
+  void scrollToTop() {
+    _profilePageController.scrollToTop();
   }
 
-  void _onWantsToCommentPost(BuildContext context, Post post) {
-    Navigator.of(context).push(CupertinoPageRoute<void>(
+  void popUntilFirst() {
+    Navigator.of(context).popUntil((Route<dynamic> r) => r.isFirst);
+    _pushedRoutes = 0;
+  }
+
+  bool hasPushedRoutes() {
+    return _pushedRoutes > 0;
+  }
+
+  void _incrementPushedRoutes() {
+    _pushedRoutes += 1;
+  }
+
+  void _decrementPushedRoutes() {
+    if (_pushedRoutes == 0) return;
+    _pushedRoutes -= 1;
+  }
+
+  void _onWantsToSeeUserProfile(User user) async {
+    _incrementPushedRoutes();
+    await Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBProfilePage(user,
+                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+                  onWantsToSeePostComments: _onWantsToSeePostComments,
+                  onWantsToCommentPost: _onWantsToCommentPost,
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
+            )));
+    _decrementPushedRoutes();
+  }
+
+  void _onWantsToCommentPost(Post post) async {
+    _incrementPushedRoutes();
+    await Navigator.of(context).push(CupertinoPageRoute<void>(
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: true,
-                  onWantsToReactToPost: onWantsToReactToPost),
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
+    _decrementPushedRoutes();
   }
 
-  void _onWantsToSeePostComments(BuildContext context, Post post) {
-    Navigator.of(context).push(CupertinoPageRoute<void>(
+  void _onWantsToSeePostComments(Post post) async {
+    _incrementPushedRoutes();
+    await Navigator.of(context).push(CupertinoPageRoute<void>(
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: false,
-                  onWantsToReactToPost: onWantsToReactToPost),
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
+    _decrementPushedRoutes();
+  }
+}
+
+class OBOwnProfilePageController {
+  OBOwnProfilePageState _ownProfilePageState;
+
+  void attach(OBOwnProfilePageState ownProfilePageState) {
+    assert(ownProfilePageState != null, 'Cannot attach to empty state');
+    _ownProfilePageState = ownProfilePageState;
+  }
+
+  void scrollToTop() {
+    _ownProfilePageState.scrollToTop();
+  }
+
+  void popUntilProfile() {
+    _ownProfilePageState.popUntilFirst();
+  }
+
+  bool hasPushedRoutes() {
+    return _ownProfilePageState.hasPushedRoutes();
   }
 }
