@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
@@ -6,6 +8,8 @@ import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/cover.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OBEditUserProfileModal extends StatefulWidget {
   final User user;
@@ -212,7 +216,10 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 Icons.edit,
                 size: 15,
               ),
-              onPressed: () {},
+              onPressed: () {
+                _showImageBottomSheet(
+                    imageType: OBEditUserProfileModalImageType.avatar);
+              },
             ),
           ),
         ),
@@ -238,12 +245,106 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 Icons.edit,
                 size: 20,
               ),
-              onPressed: () {},
+              onPressed: () {
+                _showImageBottomSheet(
+                    imageType: OBEditUserProfileModalImageType.cover);
+              },
             ),
           ),
         )
       ],
     );
+  }
+
+  void _showImageBottomSheet(
+      {@required OBEditUserProfileModalImageType imageType}) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          List<Widget> listTiles = [
+            new ListTile(
+              leading: new Icon(Icons.camera_alt),
+              title: new Text('Camera'),
+              onTap: () async {
+                var image = await _getUserImage(
+                    source: ImageSource.camera, imageType: imageType);
+                Navigator.pop(context);
+                //if (image != null) createAccountBloc.avatar.add(image);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_library),
+              title: new Text('Gallery'),
+              onTap: () async {
+                var image = await _getUserImage(
+                    source: ImageSource.gallery, imageType: imageType);
+                Navigator.pop(context);
+                //if (image != null) createAccountBloc.avatar.add(image);
+              },
+            )
+          ];
+
+          switch (imageType) {
+            case OBEditUserProfileModalImageType.cover:
+              if (_coverUrl != null) {
+                listTiles.add(ListTile(
+                  leading: new Icon(Icons.delete),
+                  title: new Text('Delete'),
+                  onTap: () async {
+                    _setCoverUrl(null);
+                    Navigator.pop(context);
+                  },
+                ));
+              }
+              break;
+            case OBEditUserProfileModalImageType.avatar:
+              if (_avatarUrl != null) {
+                listTiles.add(ListTile(
+                  leading: new Icon(Icons.delete),
+                  title: new Text('Delete'),
+                  onTap: () async {
+                    _setAvatarUrl(null);
+                    Navigator.pop(context);
+                  },
+                ));
+              }
+              break;
+          }
+
+          return Column(mainAxisSize: MainAxisSize.min, children: listTiles);
+        });
+  }
+
+  Future<File> _getUserImage(
+      {@required ImageSource source,
+      @required OBEditUserProfileModalImageType imageType}) async {
+    var image = await ImagePicker.pickImage(source: source);
+
+    if (image == null) {
+      return null;
+    }
+
+    double ratioX;
+    double ratioY;
+
+    switch (imageType) {
+      case OBEditUserProfileModalImageType.cover:
+        ratioX = 16.0;
+        ratioY = 9.0;
+        break;
+      case OBEditUserProfileModalImageType.avatar:
+        ratioX = 1.0;
+        ratioY = 1.0;
+        break;
+    }
+
+    File croppedFile = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      ratioX: ratioX,
+      ratioY: ratioY,
+    );
+
+    return croppedFile;
   }
 
   void _saveUser() {}
@@ -253,4 +354,18 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       _requestInProgress = requestInProgress;
     });
   }
+
+  void _setAvatarUrl(String avatarUrl) {
+    setState(() {
+      _avatarUrl = avatarUrl;
+    });
+  }
+
+  void _setCoverUrl(String coverUrl) {
+    setState(() {
+      _coverUrl = coverUrl;
+    });
+  }
 }
+
+enum OBEditUserProfileModalImageType { avatar, cover }
