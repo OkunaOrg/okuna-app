@@ -1,5 +1,10 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
+import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/cover.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,96 +48,122 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   Widget build(BuildContext context) {
     double iconSize = 16;
 
+    EdgeInsetsGeometry inputContentPadding =
+        EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
+
+    double coverHeight = 100;
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: _buildNavigationBar(),
         body: SingleChildScrollView(
-          child: Container(
-            child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      controller: _usernameController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Username',
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      _buildUserProfileCover(),
+                      Center(
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: (OBCover.HEIGHT / 2) -
+                                  (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
+                            ),
+                            _buildUserAvatar()
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      contentPadding: inputContentPadding,
+                      border: InputBorder.none,
+                      labelText: 'Username',
+                      prefixIcon: Icon(
+                        Icons.alternate_email,
+                        size: iconSize,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      contentPadding: inputContentPadding,
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.person, size: iconSize),
+                      labelText: 'Name',
+                    ),
+                  ),
+                  Divider(),
+                  TextFormField(
+                    controller: _urlController,
+                    decoration: InputDecoration(
+                      contentPadding: inputContentPadding,
+                      border: InputBorder.none,
+                      prefixIcon: Icon(
+                        Icons.link,
+                        size: iconSize,
+                      ),
+                      labelText: 'Url',
+                    ),
+                  ),
+                  Divider(),
+                  TextFormField(
+                    controller: _locationController,
+                    decoration: InputDecoration(
+                      contentPadding: inputContentPadding,
+                      border: InputBorder.none,
+                      labelText: 'Location',
+                      prefixIcon: Icon(
+                        Icons.location_on,
+                        size: iconSize,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  TextFormField(
+                    controller: _bioController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                        contentPadding: inputContentPadding,
+                        labelText: 'Bio',
                         prefixIcon: Icon(
-                          Icons.alternate_email,
+                          Icons.bookmark,
                           size: iconSize,
                         ),
-                      ),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.person, size: iconSize),
-                        labelText: 'Name',
-                      ),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _urlController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.link,
-                          size: iconSize,
-                        ),
-                        labelText: 'Url',
-                      ),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _locationController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Location',
-                        prefixIcon: Icon(
-                          Icons.location_on,
-                          size: iconSize,
-                        ),
-                      ),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _bioController,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                          labelText: 'Bio',
-                          prefixIcon: Icon(
-                            Icons.bookmark,
-                            size: iconSize,
-                          ),
-                          border: InputBorder.none),
-                    ),
-                    Divider(),
-                    MergeSemantics(
-                      child: ListTile(
-                        leading: Icon(Icons.supervisor_account),
-                        title: Text('Followers count'),
-                        trailing: CupertinoSwitch(
-                          value: _followersCountVisible,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _followersCountVisible = value;
-                            });
-                          },
-                        ),
-                        onTap: () {
+                        border: InputBorder.none),
+                  ),
+                  Divider(),
+                  MergeSemantics(
+                    child: ListTile(
+                      leading: Icon(Icons.supervisor_account),
+                      title: Text('Followers count'),
+                      trailing: CupertinoSwitch(
+                        value: _followersCountVisible,
+                        onChanged: (bool value) {
                           setState(() {
-                            _followersCountVisible = !_followersCountVisible;
+                            _followersCountVisible = value;
                           });
                         },
                       ),
+                      onTap: () {
+                        setState(() {
+                          _followersCountVisible = !_followersCountVisible;
+                        });
+                      },
                     ),
-                    Divider(),
-                  ],
-                )),
-          ),
+                  ),
+                  Divider(),
+                ],
+              )),
         ));
   }
 
@@ -155,6 +186,57 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         onPressed: _saveUser,
         child: Text('Save'),
       ),
+    );
+  }
+
+  Widget _buildUserAvatar() {
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        OBLoggedInUserAvatar(
+          size: OBUserAvatarSize.large,
+        ),
+        Positioned(
+          bottom: -10,
+          right: -10,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 40, maxHeight: 40),
+            child: FloatingActionButton(
+              heroTag: Key('EditAvatar'),
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.edit,
+                size: 20,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUserProfileCover() {
+    return Stack(
+      children: <Widget>[
+        OBProfileCover(widget.user),
+        Positioned(
+          bottom: 20,
+          right: 20,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 40, maxHeight: 40),
+            child: FloatingActionButton(
+              heroTag: Key('editCover'),
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.edit,
+                size: 20,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        )
+      ],
     );
   }
 
