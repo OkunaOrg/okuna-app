@@ -35,6 +35,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
   String _avatarUrl;
   String _coverUrl;
+  File _avatarFile;
+  File _coverFile;
 
   @override
   void initState() {
@@ -202,6 +204,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       children: <Widget>[
         OBUserAvatar(
           avatarUrl: _avatarUrl,
+          avatarFile: _avatarFile,
           size: OBUserAvatarSize.large,
         ),
         Positioned(
@@ -232,6 +235,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       children: <Widget>[
         OBCover(
           coverUrl: _coverUrl,
+          coverFile: _coverFile,
         ),
         Positioned(
           bottom: 20,
@@ -268,6 +272,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               onTap: () async {
                 var image = await _getUserImage(
                     source: ImageSource.camera, imageType: imageType);
+                _onUserImageSelected(image: image, imageType: imageType);
                 Navigator.pop(context);
                 //if (image != null) createAccountBloc.avatar.add(image);
               },
@@ -278,32 +283,32 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               onTap: () async {
                 var image = await _getUserImage(
                     source: ImageSource.gallery, imageType: imageType);
+                _onUserImageSelected(image: image, imageType: imageType);
                 Navigator.pop(context);
-                //if (image != null) createAccountBloc.avatar.add(image);
               },
             )
           ];
 
           switch (imageType) {
             case OBEditUserProfileModalImageType.cover:
-              if (_coverUrl != null) {
+              if (_coverUrl != null || _coverFile != null) {
                 listTiles.add(ListTile(
                   leading: new Icon(Icons.delete),
                   title: new Text('Delete'),
                   onTap: () async {
-                    _setCoverUrl(null);
+                    _clearCover();
                     Navigator.pop(context);
                   },
                 ));
               }
               break;
             case OBEditUserProfileModalImageType.avatar:
-              if (_avatarUrl != null) {
+              if (_avatarUrl != null || _avatarFile != null) {
                 listTiles.add(ListTile(
                   leading: new Icon(Icons.delete),
                   title: new Text('Delete'),
                   onTap: () async {
-                    _setAvatarUrl(null);
+                    _clearAvatar();
                     Navigator.pop(context);
                   },
                 ));
@@ -313,6 +318,20 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
           return Column(mainAxisSize: MainAxisSize.min, children: listTiles);
         });
+  }
+
+  void _onUserImageSelected(
+      {File image, OBEditUserProfileModalImageType imageType}) {
+    if (image != null) {
+      switch (imageType) {
+        case OBEditUserProfileModalImageType.avatar:
+          _setAvatarFile(image);
+          break;
+        case OBEditUserProfileModalImageType.cover:
+          _setCoverFile(image);
+          break;
+      }
+    }
   }
 
   Future<File> _getUserImage(
@@ -349,6 +368,16 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
   void _saveUser() {}
 
+  void _clearCover() {
+    _setCoverUrl(null);
+    _setCoverFile(null);
+  }
+
+  void _clearAvatar() {
+    _setAvatarUrl(null);
+    _setAvatarFile(null);
+  }
+
   void _setRequestInProgress(bool requestInProgress) {
     setState(() {
       _requestInProgress = requestInProgress;
@@ -364,6 +393,18 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   void _setCoverUrl(String coverUrl) {
     setState(() {
       _coverUrl = coverUrl;
+    });
+  }
+
+  void _setAvatarFile(File avatarFile) {
+    setState(() {
+      _avatarFile = avatarFile;
+    });
+  }
+
+  void _setCoverFile(File coverFile) {
+    setState(() {
+      _coverFile = coverFile;
     });
   }
 }

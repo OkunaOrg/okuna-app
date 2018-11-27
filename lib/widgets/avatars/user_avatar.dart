@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -6,6 +8,7 @@ enum OBUserAvatarSize { small, medium, large }
 
 class OBUserAvatar extends StatelessWidget {
   final String avatarUrl;
+  final File avatarFile;
   final OBUserAvatarSize size;
   final VoidCallback onPressed;
 
@@ -15,7 +18,10 @@ class OBUserAvatar extends StatelessWidget {
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
   OBUserAvatar(
-      {this.avatarUrl, this.size = OBUserAvatarSize.small, this.onPressed});
+      {this.avatarUrl,
+      this.size = OBUserAvatarSize.small,
+      this.onPressed,
+      this.avatarFile});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,13 @@ class OBUserAvatar extends StatelessWidget {
 
     var placeholderImage = Image.asset(DEFAULT_AVATAR_ASSET);
 
-    if (avatarUrl != null) {
+    if (avatarFile != null) {
+      finalAvatarImage = FadeInImage(
+        placeholder: AssetImage(DEFAULT_AVATAR_ASSET),
+        image: FileImage(avatarFile),
+        fit: BoxFit.cover,
+      );
+    } else if (avatarUrl != null) {
       finalAvatarImage = CachedNetworkImage(
         fit: BoxFit.cover,
         imageUrl: avatarUrl,
