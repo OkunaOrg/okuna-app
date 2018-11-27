@@ -10,11 +10,15 @@ import 'package:flutter/material.dart';
 
 class OBTimelinePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToEditUserProfile onWantsToEditUserProfile;
   final OnWantsToCreatePost onWantsToCreatePost;
   final OBTimelinePageController controller;
 
   OBTimelinePage(
-      {this.onWantsToReactToPost, this.onWantsToCreatePost, this.controller});
+      {this.onWantsToReactToPost,
+      this.onWantsToCreatePost,
+      this.controller,
+      this.onWantsToEditUserProfile});
 
   @override
   OBTimelinePageState createState() {
@@ -47,12 +51,11 @@ class OBTimelinePageState extends State<OBTimelinePage> {
         child: Stack(
           children: <Widget>[
             OBTimelinePosts(
-              controller: _timelinePostsController,
-              onWantsToReactToPost: widget.onWantsToReactToPost,
-              onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-              onWantsToCommentPost: _onWantsToCommentPost,
-              onWantsToSeePostComments: _onWantsToSeePostComments,
-            ),
+                controller: _timelinePostsController,
+                onWantsToReactToPost: widget.onWantsToReactToPost,
+                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+                onWantsToCommentPost: _onWantsToCommentPost,
+                onWantsToSeePostComments: _onWantsToSeePostComments),
             Positioned(
                 bottom: 20.0,
                 right: 20.0,
@@ -87,11 +90,14 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     _incrementPushedRoutes();
     await Navigator.of(context).push(CupertinoPageRoute<void>(
         builder: (BuildContext context) => Material(
-              child: OBProfilePage(user,
-                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                  onWantsToSeePostComments: _onWantsToSeePostComments,
-                  onWantsToCommentPost: _onWantsToCommentPost,
-                  onWantsToReactToPost: widget.onWantsToReactToPost),
+              child: OBProfilePage(
+                user,
+                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+                onWantsToSeePostComments: _onWantsToSeePostComments,
+                onWantsToCommentPost: _onWantsToCommentPost,
+                onWantsToReactToPost: widget.onWantsToReactToPost,
+                onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
+              ),
             )));
     _decrementPushedRoutes();
   }

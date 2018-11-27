@@ -1,15 +1,20 @@
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBEditUserModal extends StatefulWidget {
+class OBEditUserProfileModal extends StatefulWidget {
+  final User user;
+
+  OBEditUserProfileModal(this.user);
+
   @override
-  OBEditUserModalState createState() {
-    return OBEditUserModalState();
+  OBEditUserProfileModalState createState() {
+    return OBEditUserProfileModalState();
   }
 }
 
-class OBEditUserModalState extends State<OBEditUserModal> {
+class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   bool _requestInProgress;
 
   @override

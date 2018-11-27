@@ -4,6 +4,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
+import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
@@ -84,9 +85,11 @@ class OBHomePageState extends State<OBHomePage> {
     switch (OBHomePageTabs.values[index]) {
       case OBHomePageTabs.home:
         page = OBTimelinePage(
-            controller: _timelinePageController,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToCreatePost: _onWantsToCreatePost);
+          controller: _timelinePageController,
+          onWantsToReactToPost: _onWantsToReactToPost,
+          onWantsToCreatePost: _onWantsToCreatePost,
+          onWantsToEditUserProfile: _onWantsToEditUserProfile,
+        );
         break;
       case OBHomePageTabs.search:
         page = OBMainSearchPage();
@@ -217,6 +220,15 @@ class OBHomePageState extends State<OBHomePage> {
                 )));
 
     return postReaction;
+  }
+
+  Future<void> _onWantsToEditUserProfile(User user) async {
+    Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute<PostReaction>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBEditUserProfileModal(user),
+                )));
   }
 
   void _bootstrap() async {

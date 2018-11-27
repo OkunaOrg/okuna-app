@@ -94,6 +94,10 @@ class UserService {
     return _loggedInUser;
   }
 
+  bool isLoggedInUser(User user) {
+    return user.id == _loggedInUser.id;
+  }
+
   Future<void> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 

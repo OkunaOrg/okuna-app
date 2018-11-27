@@ -23,12 +23,14 @@ class OBProfilePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
   final OnWantsToSeePostComments onWantsToSeePostComments;
   final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
+  final OnWantsToEditUserProfile onWantsToEditUserProfile;
 
   OBProfilePage(this.user,
       {this.onWantsToSeeUserProfile,
       this.onWantsToSeePostComments,
       this.onWantsToReactToPost,
       this.onWantsToCommentPost,
+      this.onWantsToEditUserProfile,
       this.controller});
 
   @override
@@ -40,7 +42,6 @@ class OBProfilePage extends StatefulWidget {
 class OBProfilePageState extends State<OBProfilePage> {
   User _user;
   bool _needsBootstrap;
-  bool _refreshInProgress;
   bool _morePostsToLoad;
   List<Post> _posts;
   UserService _userService;
@@ -51,7 +52,6 @@ class OBProfilePageState extends State<OBProfilePage> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _refreshInProgress = false;
     _needsBootstrap = true;
     _morePostsToLoad = false;
     _user = widget.user;
@@ -113,7 +113,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                             return Column(
                               children: <Widget>[
                                 OBProfileCover(_user),
-                                OBProfileCard(_user),
+                                OBProfileCard(_user, onWantsToEditUserProfile: widget.onWantsToEditUserProfile),
                                 Divider()
                               ],
                             );
@@ -154,7 +154,6 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   Future<void> _refresh() async {
-    _setRefreshInProgress(true);
     try {
       await Future.wait([_refreshUser(), _refreshPosts()]);
     } on HttpieConnectionRefusedError {
@@ -162,9 +161,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     } catch (e) {
       _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
-    } finally {
-      _setRefreshInProgress(false);
-    }
+    } finally {}
   }
 
   Future<void> _refreshUser() async {
@@ -216,12 +213,6 @@ class OBProfilePageState extends State<OBProfilePage> {
     });
   }
 
-  void _setRefreshInProgress(bool refreshInProgress) {
-    setState(() {
-      this._refreshInProgress = refreshInProgress;
-    });
-  }
-
   void _setMorePostsToLoad(bool morePostsToLoad) {
     setState(() {
       _morePostsToLoad = morePostsToLoad;
@@ -241,3 +232,5 @@ class OBProfilePageController {
     _timelinePageState.scrollToTop();
   }
 }
+
+typedef void OnWantsToEditUserProfile(User user);
