@@ -1,9 +1,11 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
 import 'package:Openbook/services/file_cache.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -44,6 +46,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
+  ImagePickerService imagePickerService = ImagePickerService();
+  DatePickerService datePickerService = DatePickerService();
 
   LocalizationService localizationService;
 
@@ -63,6 +67,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     emojisApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);
+    validationService.setAuthApiService(authApiService);
   }
 
   void initAsyncState() async {

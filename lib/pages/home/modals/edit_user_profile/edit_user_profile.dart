@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
@@ -14,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class OBEditUserProfileModal extends StatefulWidget {
   final User user;
@@ -33,10 +37,12 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
   UserService _userService;
   ToastService _toastService;
+  DatePickerService _datePickerService;
+  ImagePickerService _imagePickerService;
+  ValidationService _validationService;
 
   bool _requestInProgress;
   final _formKey = GlobalKey<FormState>();
-  bool _followersCountVisible;
 
   TextEditingController _usernameController;
   TextEditingController _nameController;
@@ -48,11 +54,14 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   String _coverUrl;
   File _avatarFile;
   File _coverFile;
+  bool _followersCountVisible;
+  DateTime _birthDate;
 
   @override
   void initState() {
-    _requestInProgress = false;
+    super.initState();
 
+    _requestInProgress = false;
     _followersCountVisible = widget.user.getProfileFollowersCountVisible();
     _usernameController = TextEditingController(text: widget.user.username);
     _nameController = TextEditingController(text: widget.user.getProfileName());
@@ -62,7 +71,13 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _bioController = TextEditingController(text: widget.user.getProfileBio());
     _avatarUrl = widget.user.getProfileAvatar();
     _coverUrl = widget.user.getProfileCover();
-    super.initState();
+    _birthDate = widget.user.getProfileBirthDate();
+
+    _usernameController.addListener(_validateForm);
+    _nameController.addListener(_validateForm);
+    _urlController.addListener(_validateForm);
+    _locationController.addListener(_validateForm);
+    _bioController.addListener(_validateForm);
   }
 
   @override
@@ -70,6 +85,9 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _imagePickerService = openbookProvider.imagePickerService;
+    _datePickerService = openbookProvider.datePickerService;
+    _validationService = openbookProvider.validationService;
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -99,6 +117,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   ),
                   TextFormField(
                     controller: _usernameController,
+                    validator: _validationService.validateUserUsername,
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -112,6 +131,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _nameController,
+                    validator: _validationService.validateUserProfileName,
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -122,6 +142,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _urlController,
+                    validator: _validationService.validateUserProfileUrl,
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -135,6 +156,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _locationController,
+                    validator: _validationService.validateUserProfileLocation,
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -148,6 +170,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _bioController,
+                    validator: _validationService.validateUserProfileBio,
                     keyboardType: TextInputType.multiline,
                     maxLines: 3,
                     decoration: InputDecoration(
@@ -180,6 +203,25 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                     ),
                   ),
                   Divider(),
+                  MergeSemantics(
+                    child: ListTile(
+                      leading: Icon(Icons.cake),
+                      title: Text('Birth date'),
+                      trailing: Text(DateFormat.yMMMMd().format(_birthDate)),
+                      onTap: () {
+                        var minimumDate =
+                            _validationService.getMinimumBirthDate();
+                        var maximumDate =
+                            _validationService.getMaximumBirthDate();
+                        _datePickerService.pickDate(
+                            maximumDate: maximumDate,
+                            minimumDate: minimumDate,
+                            context: context,
+                            initialDate: _birthDate,
+                            onDateChanged: _setBirthDate);
+                      },
+                    ),
+                  ),
                 ],
               )),
         ));
@@ -228,8 +270,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 size: 15,
               ),
               onPressed: () {
-                _showImageBottomSheet(
-                    imageType: OBEditUserProfileModalImageType.avatar);
+                _showImageBottomSheet(imageType: OBImageType.avatar);
               },
             ),
           ),
@@ -258,8 +299,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 size: 20,
               ),
               onPressed: () {
-                _showImageBottomSheet(
-                    imageType: OBEditUserProfileModalImageType.cover);
+                _showImageBottomSheet(imageType: OBImageType.cover);
               },
             ),
           ),
@@ -268,8 +308,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     );
   }
 
-  void _showImageBottomSheet(
-      {@required OBEditUserProfileModalImageType imageType}) {
+  void _showImageBottomSheet({@required OBImageType imageType}) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -278,7 +317,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               leading: new Icon(Icons.camera_alt),
               title: new Text('Camera'),
               onTap: () async {
-                var image = await _getUserImage(
+                var image = await _imagePickerService.pickImage(
                     source: ImageSource.camera, imageType: imageType);
                 _onUserImageSelected(image: image, imageType: imageType);
                 Navigator.pop(context);
@@ -289,7 +328,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               leading: new Icon(Icons.photo_library),
               title: new Text('Gallery'),
               onTap: () async {
-                var image = await _getUserImage(
+                var image = await _imagePickerService.pickImage(
                     source: ImageSource.gallery, imageType: imageType);
                 _onUserImageSelected(image: image, imageType: imageType);
                 Navigator.pop(context);
@@ -298,7 +337,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
           ];
 
           switch (imageType) {
-            case OBEditUserProfileModalImageType.cover:
+            case OBImageType.cover:
               if (_coverUrl != null || _coverFile != null) {
                 listTiles.add(ListTile(
                   leading: new Icon(Icons.delete),
@@ -310,7 +349,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 ));
               }
               break;
-            case OBEditUserProfileModalImageType.avatar:
+            case OBImageType.avatar:
               if (_avatarUrl != null || _avatarFile != null) {
                 listTiles.add(ListTile(
                   leading: new Icon(Icons.delete),
@@ -328,50 +367,21 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         });
   }
 
-  void _onUserImageSelected(
-      {File image, OBEditUserProfileModalImageType imageType}) {
+  void _onUserImageSelected({File image, OBImageType imageType}) {
     if (image != null) {
       switch (imageType) {
-        case OBEditUserProfileModalImageType.avatar:
+        case OBImageType.avatar:
           _setAvatarFile(image);
           break;
-        case OBEditUserProfileModalImageType.cover:
+        case OBImageType.cover:
           _setCoverFile(image);
           break;
       }
     }
   }
 
-  Future<File> _getUserImage(
-      {@required ImageSource source,
-      @required OBEditUserProfileModalImageType imageType}) async {
-    var image = await ImagePicker.pickImage(source: source);
-
-    if (image == null) {
-      return null;
-    }
-
-    double ratioX;
-    double ratioY;
-
-    switch (imageType) {
-      case OBEditUserProfileModalImageType.cover:
-        ratioX = 16.0;
-        ratioY = 9.0;
-        break;
-      case OBEditUserProfileModalImageType.avatar:
-        ratioX = 1.0;
-        ratioY = 1.0;
-        break;
-    }
-
-    File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image.path,
-      ratioX: ratioX,
-      ratioY: ratioY,
-    );
-
-    return croppedFile;
+  bool _validateForm() {
+    return _formKey.currentState.validate();
   }
 
   void _saveUser() async {
@@ -383,7 +393,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         name: _nameController.text,
         username: _usernameController.text,
         url: _urlController.text,
-        birthDate: '',
+        birthDate: _birthDate,
         followersCountVisible: _followersCountVisible,
         bio: _bioController.text,
         location: _locationController.text,
@@ -437,6 +447,10 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       _coverFile = coverFile;
     });
   }
-}
 
-enum OBEditUserProfileModalImageType { avatar, cover }
+  void _setBirthDate(DateTime birthDate) {
+    setState(() {
+      _birthDate = birthDate;
+    });
+  }
+}

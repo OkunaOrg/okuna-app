@@ -28,8 +28,7 @@ class CreatePostModal extends StatefulWidget {
 class CreatePostModalState extends State<CreatePostModal> {
   static const double actionIconHeight = 20.0;
   static const double actionSpacing = 10.0;
-  static const int MAX_ALLOWED_CHARACTERS =
-      ValidationService.MAX_ALLOWED_POST_TEXT_CHARACTERS;
+  static const int MAX_ALLOWED_CHARACTERS = ValidationService.POST_MAX_LENGTH;
 
   UserService _userService;
   ValidationService _validationService;

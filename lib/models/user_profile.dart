@@ -1,7 +1,7 @@
 class UserProfile {
   final int id;
   final String name;
-  final String birthDate;
+  final DateTime birthDate;
   final String avatar;
   final String cover;
   final String bio;
@@ -21,10 +21,15 @@ class UserProfile {
       this.followersCountVisible});
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
+    var birthDateData = parsedJson['birth_date'];
+    var birthDate;
+    if (birthDateData != null)
+      birthDate = DateTime.parse(birthDateData);
+
     return UserProfile(
         id: parsedJson['id'],
         name: parsedJson['name'],
-        birthDate: parsedJson['birth_date'],
+        birthDate: birthDate,
         avatar: parsedJson['avatar'],
         cover: parsedJson['cover'],
         bio: parsedJson['bio'],

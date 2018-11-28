@@ -17,6 +17,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -125,7 +126,7 @@ class UserService {
     String username,
     String url,
     String password,
-    String birthDate,
+    DateTime birthDate,
     bool followersCountVisible,
     String bio,
     String location,
@@ -137,7 +138,7 @@ class UserService {
         username: username,
         url: url,
         password: password,
-        birthDate: birthDate,
+        birthDate: DateFormat('dd-MM-yyyy').format(birthDate),
         followersCountVisible: followersCountVisible,
         bio: bio,
         location: location);

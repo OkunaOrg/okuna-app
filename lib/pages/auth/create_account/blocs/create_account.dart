@@ -241,40 +241,16 @@ class CreateAccountBloc {
   void _onName(String name) {
     _clearName();
 
-    if (name == null || name.isEmpty) {
-      _onNameIsEmpty();
-      return;
-    }
+    if (name == null) return;
 
-    if (!_validationService.isNameAllowedLength(name)) {
-      _onNameTooLong();
-      return;
-    }
+    String validationError = _validationService.validateUserProfileName(name);
 
-    if (!_validationService.isAlphanumericWithSpaces(name)) {
-      _onNameInvalidCharacters();
+    if (validationError != null) {
+      _nameFeedbackSubject.add(validationError);
       return;
     }
 
     _onNameIsValid(name);
-  }
-
-  void _onNameIsEmpty() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_EMPTY_ERROR');
-    _nameFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onNameTooLong() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_LENGTH_ERROR');
-    _nameFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onNameInvalidCharacters() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_CHARACTERS_ERROR');
-    _nameFeedbackSubject.add(errorFeedback);
   }
 
   void _onNameIsValid(String name) {
@@ -306,56 +282,30 @@ class CreateAccountBloc {
   Future<bool> setUsername(String username) async {
     clearUsername();
 
-    if (username == null || username.isEmpty) {
-      _onUsernameIsEmpty();
-      return Future.value(false);
-    }
+    if (username == null) return Future.value(false);
 
-    if (!_validationService.isUsernameAllowedLength(username)) {
-      _onUsernameTooLong();
-      return Future.value(false);
-    }
-
-    if (!_validationService.isUsernameAllowedCharacters(username)) {
-      _onUsernameInvalidCharacters();
+    String usernameFeedback = _validationService.validateUserUsername(username);
+    if (usernameFeedback != null) {
+      _usernameFeedbackSubject.add(usernameFeedback);
       return Future.value(false);
     }
 
     var isAvailable = false;
 
     try {
-      HttpieResponse response = await _checkUsernameIsAvailable(username);
-      if (response.isAccepted()) {
+      isAvailable = await _validationService.isUsernameAvailable(username);
+
+      if (isAvailable) {
         _onUsernameIsAvailable(username);
-        isAvailable = true;
-      } else if (response.isBadRequest()) {
-        _onUsernameIsNotAvailable(username);
       } else {
-        _onUsernameCheckServerError();
+        _onUsernameIsNotAvailable(username);
       }
     } catch (error) {
       _onUsernameCheckServerError();
       rethrow;
     }
+
     return isAvailable;
-  }
-
-  void _onUsernameIsEmpty() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_EMPTY_ERROR');
-    _usernameFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onUsernameTooLong() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_LENGTH_ERROR');
-    _usernameFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onUsernameInvalidCharacters() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.USERNAME_CHARACTERS_ERROR');
-    _usernameFeedbackSubject.add(errorFeedback);
   }
 
   void _onUsernameIsAvailable(String username) {
@@ -391,10 +341,6 @@ class CreateAccountBloc {
     _usernameIsValidSubject.add(true);
   }
 
-  Future<HttpieResponse> _checkUsernameIsAvailable(String username) {
-    return _authApiService.checkUsernameIsAvailable(username: username);
-  }
-
   // Username ends
 
   // Email begins
@@ -410,27 +356,24 @@ class CreateAccountBloc {
   Future<bool> setEmail(String email) async {
     clearEmail();
 
-    if (email == null || email.isEmpty) {
-      _onEmailIsEmpty();
-      return Future.value(false);
-    }
+    if (email == null) return Future.value(false);
 
-    if (!_validationService.isQualifiedEmail(email)) {
-      _onEmailIsNotQualifiedEmail();
+    String emailFeedback = _validationService.validateUserEmail(email);
+    if (emailFeedback != null) {
+      _emailFeedbackSubject.add(emailFeedback);
       return Future.value(false);
     }
 
     bool emailIsAvailable = false;
 
+
     try {
-      HttpieResponse response = await _checkEmailIsAvailable(email);
-      if (response.isAccepted()) {
+      emailIsAvailable = await _validationService.isEmailAvailable(email);
+
+      if (emailIsAvailable) {
         _onEmailIsAvailable(email);
-        emailIsAvailable = true;
-      } else if (response.isBadRequest()) {
-        _onEmailIsNotAvailable(email);
       } else {
-        _onEmailCheckServerError();
+        _onEmailIsNotAvailable(email);
       }
     } catch (error) {
       _onEmailCheckServerError();
@@ -438,18 +381,6 @@ class CreateAccountBloc {
     }
 
     return emailIsAvailable;
-  }
-
-  void _onEmailIsEmpty() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR');
-    _emailFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onEmailIsNotQualifiedEmail() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_INVALID_ERROR');
-    _emailFeedbackSubject.add(errorFeedback);
   }
 
   void _onEmailIsNotAvailable(String email) {
@@ -468,10 +399,6 @@ class CreateAccountBloc {
     userRegistrationData.email = email;
     _validatedEmailSubject.add(email);
     _emailIsValidSubject.add(true);
-  }
-
-  Future<HttpieResponse> _checkEmailIsAvailable(String email) async {
-    return _authApiService.checkEmailIsAvailable(email: email);
   }
 
   void _onEmailCheckServerError() {
@@ -502,29 +429,15 @@ class CreateAccountBloc {
   void _onPassword(String password) {
     _clearPassword();
 
-    if (password == null || password.isEmpty) {
-      _onPasswordIsEmpty();
-      return;
-    }
+    if (password == null) return;
 
-    if (!_validationService.isPasswordAllowedLength(password)) {
-      _onPasswordLengthError();
+    String passwordFeedback = _validationService.validateUserPassword(password);
+    if (passwordFeedback != null) {
+      _passwordFeedbackSubject.add(passwordFeedback);
       return;
     }
 
     _onPasswordIsValid(password);
-  }
-
-  void _onPasswordIsEmpty() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_EMPTY_ERROR');
-    _passwordFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onPasswordLengthError() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.PASSWORD_LENGTH_ERROR');
-    _passwordFeedbackSubject.add(errorFeedback);
   }
 
   void _onPasswordIsValid(String password) {

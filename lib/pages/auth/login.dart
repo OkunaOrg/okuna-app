@@ -260,30 +260,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
 
   String _validateUsername(String value) {
     if (!_isSubmitted) return null;
-
-    if (value.length == 0) {
-      return _localizationService.trans('AUTH.LOGIN.USERNAME_EMPTY_ERROR');
-    }
-
-    if (!_validationService.isUsernameAllowedLength(value)) {
-      return _localizationService.trans('AUTH.LOGIN.USERNAME_LENGTH_ERROR');
-    }
-
-    if (!_validationService.isUsernameAllowedCharacters(value)) {
-      return _localizationService.trans('AUTH.LOGIN.USERNAME_CHARACTERS_ERROR');
-    }
+    return _validationService.validateUserUsername(value);
   }
 
   String _validatePassword(String value) {
     if (!_isSubmitted) return null;
 
-    if (value.length == 0) {
-      return _localizationService.trans('AUTH.LOGIN.PASSWORD_EMPTY_ERROR');
-    }
-
-    if (!_validationService.isPasswordAllowedLength(value)) {
-      return _localizationService.trans('AUTH.LOGIN.PASSWORD_LENGTH_ERROR');
-    }
+    return _validationService.validateUserPassword(value);
   }
 
   bool _validateForm() {
