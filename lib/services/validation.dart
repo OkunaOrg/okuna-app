@@ -74,25 +74,25 @@ class ValidationService {
     return isAlphanumericWithUnderscores(username);
   }
 
-  Future<bool> isUsernameAvailable(String username) async {
+  Future<bool> isUsernameTaken(String username) async {
     HttpieResponse response =
         await _authApiService.checkUsernameIsAvailable(username: username);
     if (response.isAccepted()) {
-      return true;
-    } else if (response.isBadRequest()) {
       return false;
+    } else if (response.isBadRequest()) {
+      return true;
     } else {
       throw HttpieRequestError(response);
     }
   }
 
-  Future<bool> isEmailAvailable(String email) async {
+  Future<bool> isEmailTaken(String email) async {
     HttpieResponse response =
         await _authApiService.checkEmailIsAvailable(email: email);
     if (response.isAccepted()) {
-      return true;
-    } else if (response.isBadRequest()) {
       return false;
+    } else if (response.isBadRequest()) {
+      return true;
     } else {
       throw HttpieRequestError(response);
     }
@@ -114,7 +114,6 @@ class ValidationService {
   String validateUserUsername(String username) {
     assert(username != null);
 
-    print('VALIDATION');
     if (username.length == 0) {
       return 'Username cannot be empty.';
     }

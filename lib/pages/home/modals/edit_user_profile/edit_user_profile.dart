@@ -40,6 +40,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
   bool _requestInProgress;
   bool _formWasSubmitted;
+  String _takenUsername;
+
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _usernameController;
@@ -118,6 +120,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                     controller: _usernameController,
                     validator: (String username) {
                       if (!_formWasSubmitted) return null;
+                      if (_takenUsername != null && _takenUsername == username) return 'Username @$_takenUsername is taken';
                       return _validationService.validateUserUsername(username);
                     },
                     decoration: InputDecoration(
@@ -406,6 +409,14 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _formWasSubmitted = true;
     _setRequestInProgress(true);
     try {
+      var username = _usernameController.text;
+      bool usernameTaken = await _isUsernameTaken(username);
+      if (usernameTaken) {
+        _setTakenUsername(username);
+        _validateForm();
+        return;
+      }
+
       await _userService.updateUser(
         avatar: _avatarFile ?? '',
         cover: _coverFile ?? '',
@@ -426,6 +437,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     } finally {
       _setRequestInProgress(false);
     }
+  }
+
+  Future<bool> _isUsernameTaken(String username) async {
+    if (username == widget.user.username) return false;
+    return _validationService.isUsernameTaken(username);
   }
 
   void _clearCover() {
@@ -471,6 +487,12 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   void _setBirthDate(DateTime birthDate) {
     setState(() {
       _birthDate = birthDate;
+    });
+  }
+
+  void _setTakenUsername(String takenUsername) {
+    setState(() {
+      _takenUsername = takenUsername;
     });
   }
 }

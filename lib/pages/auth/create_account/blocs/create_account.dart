@@ -290,12 +290,12 @@ class CreateAccountBloc {
       return Future.value(false);
     }
 
-    var isAvailable = false;
+    var usernameIsTaken = true;
 
     try {
-      isAvailable = await _validationService.isUsernameAvailable(username);
+      usernameIsTaken = await _validationService.isUsernameTaken(username);
 
-      if (isAvailable) {
+      if (!usernameIsTaken) {
         _onUsernameIsAvailable(username);
       } else {
         _onUsernameIsNotAvailable(username);
@@ -305,7 +305,7 @@ class CreateAccountBloc {
       rethrow;
     }
 
-    return isAvailable;
+    return usernameIsTaken;
   }
 
   void _onUsernameIsAvailable(String username) {
@@ -364,13 +364,12 @@ class CreateAccountBloc {
       return Future.value(false);
     }
 
-    bool emailIsAvailable = false;
-
+    bool isEmailTaken = true;
 
     try {
-      emailIsAvailable = await _validationService.isEmailAvailable(email);
+      isEmailTaken = await _validationService.isEmailTaken(email);
 
-      if (emailIsAvailable) {
+      if (!isEmailTaken) {
         _onEmailIsAvailable(email);
       } else {
         _onEmailIsNotAvailable(email);
@@ -380,7 +379,7 @@ class CreateAccountBloc {
       rethrow;
     }
 
-    return emailIsAvailable;
+    return isEmailTaken;
   }
 
   void _onEmailIsNotAvailable(String email) {

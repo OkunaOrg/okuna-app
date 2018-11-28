@@ -70,12 +70,12 @@ class AuthApiService {
 
     if (password != null) body['password'] = password;
 
-    if (birthDate != null) body['birthDate'] = birthDate;
+    if (birthDate != null) body['birth_date'] = birthDate;
 
     if (bio != null) body['bio'] = bio;
 
     if (followersCountVisible != null)
-      body['followersCountVisible'] = followersCountVisible;
+      body['followers_count_visible'] = followersCountVisible;
 
     if (location != null) body['location'] = location;
 
