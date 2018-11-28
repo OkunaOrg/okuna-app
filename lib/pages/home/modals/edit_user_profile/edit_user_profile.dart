@@ -120,7 +120,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                     controller: _usernameController,
                     validator: (String username) {
                       if (!_formWasSubmitted) return null;
-                      if (_takenUsername != null && _takenUsername == username) return 'Username @$_takenUsername is taken';
+                      if (_takenUsername != null && _takenUsername == username)
+                        return 'Username @$_takenUsername is taken';
                       return _validationService.validateUserUsername(username);
                     },
                     decoration: InputDecoration(
@@ -418,8 +419,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       }
 
       await _userService.updateUser(
-        avatar: _avatarFile ?? _avatarUrl,
-        cover: _coverFile ?? _coverUrl,
+        avatar: _avatarFile ?? _avatarUrl ?? '',
+        cover: _coverFile ?? _coverUrl ?? '',
         name: _nameController.text,
         username: _usernameController.text,
         url: _urlController.text,
