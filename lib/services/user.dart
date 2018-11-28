@@ -106,9 +106,7 @@ class UserService {
           await _authApiService.getUserWithAuthToken(_authToken);
       _checkResponseIsOk(response);
       var userData = response.body;
-      await _storeUserData(userData);
-      var user = _makeUser(userData);
-      _setLoggedInUser(user);
+      _setUserWithData(userData);
     } on HttpieConnectionRefusedError {
       // Response failed. Use stored user.
       String userData = await this._getStoredUserData();
@@ -118,6 +116,36 @@ class UserService {
       }
       rethrow;
     }
+  }
+
+  Future<User> updateUser({
+    dynamic avatar,
+    dynamic cover,
+    String name,
+    String username,
+    String url,
+    String password,
+    String birthDate,
+    bool followersCountVisible,
+    String bio,
+    String location,
+  }) async {
+    HttpieStreamedResponse response = await _authApiService.updateUser(
+        avatar: avatar,
+        cover: cover,
+        name: name,
+        username: username,
+        url: url,
+        password: password,
+        birthDate: birthDate,
+        followersCountVisible: followersCountVisible,
+        bio: bio,
+        location: location);
+
+    _checkResponseIsOk(response);
+
+    String userData = await response.readAsString();
+    return _makeUser(userData);
   }
 
   Future<bool> loginWithStoredAuthToken() async {
@@ -262,6 +290,13 @@ class UserService {
         .getUserWithUsername(username, authenticatedRequest: true);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> _setUserWithData(String userData) async {
+    await _storeUserData(userData);
+    var user = _makeUser(userData);
+    _setLoggedInUser(user);
+    return user;
   }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {

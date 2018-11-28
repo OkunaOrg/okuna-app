@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
@@ -23,6 +27,13 @@ class OBEditUserProfileModal extends StatefulWidget {
 }
 
 class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
+  static const double INPUT_ICONS_SIZE = 16;
+  static EdgeInsetsGeometry INPUT_CONTENT_PADDING =
+      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
+
+  UserService _userService;
+  ToastService _toastService;
+
   bool _requestInProgress;
   final _formKey = GlobalKey<FormState>();
   bool _followersCountVisible;
@@ -56,12 +67,9 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
   @override
   Widget build(BuildContext context) {
-    double iconSize = 16;
-
-    EdgeInsetsGeometry inputContentPadding =
-        EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
-
-    double coverHeight = 100;
+    var openbookProvider = OpenbookProvider.of(context);
+    _userService = openbookProvider.userService;
+    _toastService = openbookProvider.toastService;
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -92,12 +100,12 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   TextFormField(
                     controller: _usernameController,
                     decoration: InputDecoration(
-                      contentPadding: inputContentPadding,
+                      contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
                       labelText: 'Username',
                       prefixIcon: Icon(
                         Icons.alternate_email,
-                        size: iconSize,
+                        size: INPUT_ICONS_SIZE,
                       ),
                     ),
                   ),
@@ -105,9 +113,9 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
-                      contentPadding: inputContentPadding,
+                      contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.person, size: iconSize),
+                      prefixIcon: Icon(Icons.person, size: INPUT_ICONS_SIZE),
                       labelText: 'Name',
                     ),
                   ),
@@ -115,11 +123,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   TextFormField(
                     controller: _urlController,
                     decoration: InputDecoration(
-                      contentPadding: inputContentPadding,
+                      contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
                       prefixIcon: Icon(
                         Icons.link,
-                        size: iconSize,
+                        size: INPUT_ICONS_SIZE,
                       ),
                       labelText: 'Url',
                     ),
@@ -128,12 +136,12 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   TextFormField(
                     controller: _locationController,
                     decoration: InputDecoration(
-                      contentPadding: inputContentPadding,
+                      contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
                       labelText: 'Location',
                       prefixIcon: Icon(
                         Icons.location_on,
-                        size: iconSize,
+                        size: INPUT_ICONS_SIZE,
                       ),
                     ),
                   ),
@@ -143,11 +151,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                     keyboardType: TextInputType.multiline,
                     maxLines: 3,
                     decoration: InputDecoration(
-                        contentPadding: inputContentPadding,
+                        contentPadding: INPUT_CONTENT_PADDING,
                         labelText: 'Bio',
                         prefixIcon: Icon(
                           Icons.bookmark,
-                          size: iconSize,
+                          size: INPUT_ICONS_SIZE,
                         ),
                         border: InputBorder.none),
                   ),
@@ -366,7 +374,29 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     return croppedFile;
   }
 
-  void _saveUser() {}
+  void _saveUser() async {
+    _setRequestInProgress(true);
+    try {
+      await _userService.updateUser(
+        avatar: _avatarFile ?? '',
+        cover: _coverFile ?? '',
+        name: _nameController.text,
+        username: _usernameController.text,
+        url: _urlController.text,
+        birthDate: '',
+        followersCountVisible: _followersCountVisible,
+        bio: _bioController.text,
+        location: _locationController.text,
+      );
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection', context: context);
+    } catch (e) {
+      _toastService.error(message: 'Unknown error.', context: context);
+      rethrow;
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
 
   void _clearCover() {
     _setCoverUrl(null);

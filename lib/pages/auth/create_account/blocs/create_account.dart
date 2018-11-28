@@ -589,7 +589,7 @@ class CreateAccountBloc {
     var accountWasCreated = false;
 
     try {
-      HttpieStreamedResponse response = await _authApiService.createAccount(
+      HttpieStreamedResponse response = await _authApiService.createUser(
           email: userRegistrationData.email,
           username: userRegistrationData.username,
           name: userRegistrationData.name,
