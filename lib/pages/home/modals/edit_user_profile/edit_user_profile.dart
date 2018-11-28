@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -9,13 +8,11 @@ import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/cover.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -42,6 +39,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   ValidationService _validationService;
 
   bool _requestInProgress;
+  bool _formWasSubmitted;
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _usernameController;
@@ -49,7 +47,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   TextEditingController _urlController;
   TextEditingController _locationController;
   TextEditingController _bioController;
-
   String _avatarUrl;
   String _coverUrl;
   File _avatarFile;
@@ -62,6 +59,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     super.initState();
 
     _requestInProgress = false;
+    _formWasSubmitted = false;
+
     _followersCountVisible = widget.user.getProfileFollowersCountVisible();
     _usernameController = TextEditingController(text: widget.user.username);
     _nameController = TextEditingController(text: widget.user.getProfileName());
@@ -117,7 +116,10 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   ),
                   TextFormField(
                     controller: _usernameController,
-                    validator: _validationService.validateUserUsername,
+                    validator: (String username) {
+                      if (!_formWasSubmitted) return null;
+                      return _validationService.validateUserUsername(username);
+                    },
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -131,7 +133,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _nameController,
-                    validator: _validationService.validateUserProfileName,
+                    validator: (String profileName) {
+                      if (!_formWasSubmitted) return null;
+                      return _validationService
+                          .validateUserProfileName(profileName);
+                    },
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -142,7 +148,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _urlController,
-                    validator: _validationService.validateUserProfileUrl,
+                    validator: (String profileUrl) {
+                      if (!_formWasSubmitted) return null;
+                      return _validationService
+                          .validateUserProfileUrl(profileUrl);
+                    },
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -156,7 +166,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _locationController,
-                    validator: _validationService.validateUserProfileLocation,
+                    validator: (String profileLocation) {
+                      if (!_formWasSubmitted) return null;
+                      return _validationService
+                          .validateUserProfileLocation(profileLocation);
+                    },
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
@@ -170,7 +184,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   Divider(),
                   TextFormField(
                     controller: _bioController,
-                    validator: _validationService.validateUserProfileBio,
+                    validator: (String profileBio) {
+                      if (!_formWasSubmitted) return null;
+                      return _validationService
+                          .validateUserProfileBio(profileBio);
+                    },
                     keyboardType: TextInputType.multiline,
                     maxLines: 3,
                     decoration: InputDecoration(
@@ -243,7 +261,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,
         isSmall: true,
-        onPressed: _saveUser,
+        onPressed: _submitForm,
         child: Text('Save'),
       ),
     );
@@ -384,7 +402,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     return _formKey.currentState.validate();
   }
 
-  void _saveUser() async {
+  void _submitForm() async {
+    _formWasSubmitted = true;
     _setRequestInProgress(true);
     try {
       await _userService.updateUser(
@@ -398,6 +417,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         bio: _bioController.text,
         location: _locationController.text,
       );
+      Navigator.of(context).pop();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
