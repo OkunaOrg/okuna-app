@@ -11,6 +11,7 @@ class OBUserAvatar extends StatelessWidget {
   final File avatarFile;
   final OBUserAvatarSize size;
   final VoidCallback onPressed;
+  final BoxBorder avatarBorder;
 
   static const double AVATAR_SIZE_SMALL = 20.0;
   static const double AVATAR_SIZE_MEDIUM = 30.0;
@@ -21,7 +22,8 @@ class OBUserAvatar extends StatelessWidget {
       {this.avatarUrl,
       this.size = OBUserAvatarSize.small,
       this.onPressed,
-      this.avatarFile});
+      this.avatarFile,
+      this.avatarBorder});
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +67,16 @@ class OBUserAvatar extends StatelessWidget {
     double avatarBorderRadius = 10.0;
 
     var avatar = Container(
-      decoration: BoxDecoration(
-          color: Pigment.fromString('#efefef'),
-          borderRadius: BorderRadius.circular(avatarBorderRadius)),
-      height: avatarSize,
-      width: avatarSize,
-      child: Container(
-          child: ClipRRect(
-        borderRadius: BorderRadius.circular(avatarBorderRadius),
-        child: Container(child: finalAvatarImage),
-      )),
-    );
+        decoration: BoxDecoration(
+            color: Pigment.fromString('#efefef'),
+            borderRadius: BorderRadius.circular(avatarBorderRadius),
+            border: avatarBorder),
+        height: avatarSize,
+        width: avatarSize,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(avatarBorderRadius),
+          child: finalAvatarImage,
+        ));
 
     if (onPressed == null) return avatar;
 

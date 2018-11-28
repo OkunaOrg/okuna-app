@@ -59,6 +59,7 @@ class OBProfileCard extends StatelessWidget {
                 var user = snapshot.data;
 
                 return OBUserAvatar(
+                  avatarBorder: Border.all(color: Colors.white, width: 3),
                   avatarUrl: user?.getProfileAvatar(),
                   size: OBUserAvatarSize.large,
                 );
