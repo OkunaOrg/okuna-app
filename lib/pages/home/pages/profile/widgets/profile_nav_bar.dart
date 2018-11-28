@@ -4,34 +4,47 @@ import 'package:flutter/material.dart';
 
 class OBProfileNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
-  User user;
+  final User user;
 
   OBProfileNavBar(this.user);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return SafeArea(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            FloatingActionButton(
-              backgroundColor: Colors.white,
-              child: Icon(Icons.arrow_back_ios),
+    var route = ModalRoute.of(context);
+
+    return CupertinoNavigationBar(
+      transitionBetweenRoutes: false,
+      leading: route is PageRoute && route.canPop
+          ? IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
-            ),
-          ],
-        ),
+            )
+          : SizedBox(),
+      trailing: IconButton(
+        icon: Icon(Icons.more_vert),
+        onPressed: () {},
+        color: Colors.black,
       ),
+      backgroundColor: Colors.white,
+      middle: StreamBuilder(
+          stream: user.updateSubject,
+          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+            var user = snapshot.data;
+
+            if (user == null) return SizedBox();
+
+            return Text(
+              '@' + user.username,
+              style: TextStyle(color: Colors.black),
+            );
+          }),
     );
   }
 
   bool get fullObstruction {
-    return false;
+    return true;
   }
 
   @override

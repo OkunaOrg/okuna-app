@@ -1,13 +1,61 @@
 import 'package:Openbook/models/user_profile.dart';
+import 'package:rxdart/rxdart.dart';
 
 class User {
   final int id;
-  final String email;
-  final String username;
-  final UserProfile profile;
-  final int followersCount;
-  final int followingCount;
-  final int postsCount;
+  String email;
+  String username;
+  UserProfile profile;
+  int followersCount;
+  int followingCount;
+  int postsCount;
+
+  Stream<User> get updateSubject => _updateSubject.stream;
+  final _updateSubject = ReplaySubject<User>(maxSize: 1);
+
+  static final Map<int, User> cache = {};
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    int userId = json['id'];
+
+    User user = getUserWithIdFromCache(userId);
+
+    if (user != null) {
+      user.updateFromJson(json);
+      return user;
+    }
+
+    user = _makeFromJson(json);
+    addToCache(user);
+    return user;
+  }
+
+  static User getUserWithIdFromCache(int userId) {
+    return cache[userId];
+  }
+
+  static void addToCache(User user) {
+    cache[user.id] = user;
+  }
+
+  static void clearCache() {
+    cache.clear();
+  }
+
+  static User _makeFromJson(Map<String, dynamic> json) {
+    return User(
+        id: json['id'],
+        followersCount: json['followers_count'],
+        postsCount: json['posts_count'],
+        email: json['email'],
+        username: json['username'],
+        followingCount: json['following_count'],
+        profile: _parseUserProfile(json['profile']));
+  }
+
+  static UserProfile _parseUserProfile(Map profile) {
+    return UserProfile.fromJSON(profile);
+  }
 
   User(
       {this.username,
@@ -16,19 +64,22 @@ class User {
       this.profile,
       this.followersCount,
       this.followingCount,
-      this.postsCount});
+      this.postsCount}) {
+    _notifyUpdate();
+  }
 
-  factory User.fromJson(Map<String, dynamic> parsedJson) {
-    var userProfile = UserProfile.fromJSON(parsedJson['profile']);
+  void dispose() {
+    _updateSubject.close();
+  }
 
-    return User(
-        id: parsedJson['id'],
-        followersCount: parsedJson['followers_count'],
-        postsCount: parsedJson['posts_count'],
-        email: parsedJson['email'],
-        username: parsedJson['username'],
-        followingCount: parsedJson['following_count'],
-        profile: userProfile);
+  void updateFromJson(Map<String, dynamic> json) {
+    username = json['username'];
+    email = json['email'];
+    profile = _parseUserProfile(json['profile']);
+    followersCount = json['followers_count'];
+    followingCount = json['following_count'];
+    postsCount = json['posts_count'];
+    _notifyUpdate();
   }
 
   bool hasProfileLocation() {
@@ -69,5 +120,9 @@ class User {
 
   String getProfileLocation() {
     return this.profile.location;
+  }
+
+  void _notifyUpdate() {
+    _updateSubject.add(this);
   }
 }

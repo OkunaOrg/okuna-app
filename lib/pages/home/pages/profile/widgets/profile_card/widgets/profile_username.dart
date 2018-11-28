@@ -8,11 +8,22 @@ class OBProfileUsername extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String userUsername = user.username;
+    return StreamBuilder(
+      stream: user.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        var user = snapshot.data;
+        var username = user?.username;
 
-    return Text(
-      '@' + userUsername,
-      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45),
+        if (username == null)
+          return SizedBox(
+            height: 10.0,
+          );
+
+        return Text(
+          '@' + username,
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45),
+        );
+      },
     );
   }
 }

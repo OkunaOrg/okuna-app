@@ -3,6 +3,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -70,30 +71,8 @@ class OBProfilePageState extends State<OBProfilePage> {
       _needsBootstrap = false;
     }
 
-    var route = ModalRoute.of(context);
-
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        transitionBetweenRoutes: false,
-        leading: route is PageRoute && route.canPop
-            ? IconButton(
-                icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            : SizedBox(),
-        trailing: IconButton(
-          icon: Icon(Icons.more_vert),
-          onPressed: () {},
-          color: Colors.black,
-        ),
-        backgroundColor: Colors.white,
-        middle: Text(
-          '@' + _user.username,
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+      navigationBar: OBProfileNavBar(_user),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -113,7 +92,9 @@ class OBProfilePageState extends State<OBProfilePage> {
                             return Column(
                               children: <Widget>[
                                 OBProfileCover(_user),
-                                OBProfileCard(_user, onWantsToEditUserProfile: widget.onWantsToEditUserProfile),
+                                OBProfileCard(_user,
+                                    onWantsToEditUserProfile:
+                                        widget.onWantsToEditUserProfile),
                                 Divider()
                               ],
                             );

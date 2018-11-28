@@ -136,6 +136,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   Future<void> _refreshPosts({areFirstPosts = true}) async {
     try {
       Post.clearCache();
+      User.clearCache();
       _posts =
           (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts))
               .posts;

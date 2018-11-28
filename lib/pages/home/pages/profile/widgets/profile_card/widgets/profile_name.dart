@@ -8,14 +8,21 @@ class OBProfileName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String profileName = user.getProfileName();
+    return StreamBuilder(
+      stream: user.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        var user = snapshot.data;
+        var name = user?.getProfileName();
 
-    if (profileName == null) return SizedBox();
-    return Text(
-      profileName,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        if (name == null) return SizedBox(height: 20.0,);
+
+        return Text(
+          name,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        );
+      },
     );
   }
 }

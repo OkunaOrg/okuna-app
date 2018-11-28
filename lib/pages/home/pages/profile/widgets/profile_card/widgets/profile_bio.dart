@@ -8,24 +8,28 @@ class OBProfileBio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String bio = user.getProfileBio();
+    return StreamBuilder(
+      stream: user.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        var user = snapshot.data;
+        var bio = user?.getProfileBio();
 
-    if (bio == null) {
-      return SizedBox();
-    }
+        if (bio == null) return SizedBox();
 
-    return Padding(
-      padding: EdgeInsets.only(top: 20),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Flexible(
-            child: Text(
-              bio,
-            ),
-          )
-        ],
-      ),
+        return Padding(
+          padding: EdgeInsets.only(top: 20),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Flexible(
+                child: Text(
+                  bio,
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

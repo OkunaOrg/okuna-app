@@ -9,9 +9,16 @@ class OBProfileCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String profileCover = user.getProfileCover();
-    return OBCover(
-      coverUrl: profileCover,
+    return StreamBuilder(
+      stream: user.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        var user = snapshot.data;
+        String profileCover = user?.getProfileCover();
+
+        return OBCover(
+          coverUrl: profileCover,
+        );
+      },
     );
   }
 }

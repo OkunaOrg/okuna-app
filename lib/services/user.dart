@@ -68,6 +68,8 @@ class UserService {
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
     _removeLoggedInUser();
+    Post.clearCache();
+    User.clearCache();
   }
 
   Future<void> loginWithCredentials(

@@ -11,24 +11,32 @@ class OBProfileCounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 20.0, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Wrap(
-                runSpacing: 10.0,
-                children: <Widget>[
-                  OBProfileFollowersCount(user),
-                  OBProfilePostsCount(user),
-                  OBProfileFollowingCount(user),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+    return StreamBuilder(
+      stream: user.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        var user = snapshot.data;
+        if (user == null) return SizedBox();
+
+        return Container(
+          padding: EdgeInsets.only(top: 20.0, bottom: 10),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: Wrap(
+                    runSpacing: 10.0,
+                    children: <Widget>[
+                      OBProfileFollowersCount(user),
+                      OBProfilePostsCount(user),
+                      OBProfileFollowingCount(user),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

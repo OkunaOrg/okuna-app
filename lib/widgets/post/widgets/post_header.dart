@@ -22,13 +22,21 @@ class OBPostHeader extends StatelessWidget {
     bool isPostOwner = user.id == _post.getCreatorId();
 
     return ListTile(
-      leading: OBUserAvatar(
-        onPressed: () {
-          onWantsToSeeUserProfile(_post.creator);
-        },
-        size: OBUserAvatarSize.medium,
-        avatarUrl: _post.getCreatorAvatar(),
-      ),
+      leading: StreamBuilder(
+          stream: _post.creator.updateSubject,
+          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+            var postCreator = snapshot.data;
+
+            if (postCreator == null) return SizedBox();
+
+            return OBUserAvatar(
+              onPressed: () {
+                onWantsToSeeUserProfile(postCreator);
+              },
+              size: OBUserAvatarSize.medium,
+              avatarUrl: postCreator.getProfileAvatar(),
+            );
+          }),
       trailing: IconButton(
           icon: Icon(
             Icons.more_vert,
@@ -80,10 +88,18 @@ class OBPostHeader extends StatelessWidget {
         onTap: () {
           onWantsToSeeUserProfile(_post.creator);
         },
-        child: Text(
-          _post.getCreatorUsername(),
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        child: StreamBuilder(
+            stream: _post.creator.updateSubject,
+            builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+              var postCreator = snapshot.data;
+
+              if (postCreator == null) return SizedBox();
+
+              return Text(
+                postCreator.username,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              );
+            }),
       ),
       subtitle: Text(
         _post.getRelativeCreated(),

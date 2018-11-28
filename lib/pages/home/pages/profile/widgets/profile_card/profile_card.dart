@@ -53,10 +53,16 @@ class OBProfileCard extends StatelessWidget {
         Positioned(
           top: -((OBUserAvatar.AVATAR_SIZE_LARGE / 2) * 0.7),
           left: 30,
-          child: OBUserAvatar(
-            avatarUrl: user.getProfileAvatar(),
-            size: OBUserAvatarSize.large,
-          ),
+          child: StreamBuilder(
+              stream: user.updateSubject,
+              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                var user = snapshot.data;
+
+                return OBUserAvatar(
+                  avatarUrl: user?.getProfileAvatar(),
+                  size: OBUserAvatarSize.large,
+                );
+              }),
         ),
       ],
     );
