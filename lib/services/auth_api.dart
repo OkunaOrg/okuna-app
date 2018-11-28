@@ -50,16 +50,16 @@ class AuthApiService {
 
     if (avatar is File) {
       body['avatar'] = avatar;
-    } else if (avatar is String) {
+    } else if (avatar is String && avatar.isEmpty) {
       // This is what deletes the avatar. Ugly af.
-      body['avatar'] = '';
+      body['avatar'] = avatar;
     }
 
     if (cover is File) {
       body['cover'] = cover;
-    } else if (cover is String) {
+    } else if (cover is String && cover.isEmpty) {
       // This is what deletes the cover. Ugly af.
-      body['cover'] = '';
+      body['cover'] = cover;
     }
 
     if (name != null) body['name'] = name;

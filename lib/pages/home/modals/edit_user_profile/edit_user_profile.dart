@@ -418,8 +418,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       }
 
       await _userService.updateUser(
-        avatar: _avatarFile ?? '',
-        cover: _coverFile ?? '',
+        avatar: _avatarFile ?? _avatarUrl,
+        cover: _coverFile ?? _coverUrl,
         name: _nameController.text,
         username: _usernameController.text,
         url: _urlController.text,
