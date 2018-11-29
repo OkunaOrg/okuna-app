@@ -260,19 +260,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return Container(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            OBIcon(OBIcons.finish),
-            SizedBox(
-              width: 10.0,
-            ),
-            Text('No more posts to retrieve.')
-          ],
-        ),
-      );
+      return SizedBox();
     }
 
     return Text(text);

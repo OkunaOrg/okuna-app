@@ -101,21 +101,27 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Stack(
+                    overflow: Overflow.visible,
                     children: <Widget>[
                       _buildUserProfileCover(),
-                      Center(
+                      Positioned(
+                        left: 20,
                         child: Column(
                           children: <Widget>[
                             SizedBox(
-                              height: (OBCover.HEIGHT / 2) -
+                              height: (OBCover.HEIGHT) -
                                   (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
                             ),
                             _buildUserAvatar()
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(
+                          height: OBCover.HEIGHT +
+                              OBUserAvatar.AVATAR_SIZE_LARGE / 2)
                     ],
                   ),
+                  Divider(),
                   TextFormField(
                     controller: _usernameController,
                     validator: (String username) {
@@ -272,61 +278,71 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   }
 
   Widget _buildUserAvatar() {
-    return Stack(
-      children: <Widget>[
-        OBUserAvatar(
-          avatarUrl: _avatarUrl,
-          avatarFile: _avatarFile,
-          size: OBUserAvatarSize.large,
-        ),
-        Positioned(
-          bottom: 10,
-          right: 10,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 30, maxHeight: 30),
-            child: FloatingActionButton(
-              heroTag: Key('EditAvatar'),
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.edit,
-                size: 15,
-              ),
-              onPressed: () {
-                _showImageBottomSheet(imageType: OBImageType.avatar);
-              },
+    var _onPressed = () {
+      _showImageBottomSheet(imageType: OBImageType.avatar);
+    };
+
+    return GestureDetector(
+        onTap: _onPressed,
+        child: Stack(
+          children: <Widget>[
+            OBUserAvatar(
+              avatarBorder: Border.all(color: Colors.white, width: 3.0),
+              avatarUrl: _avatarUrl,
+              avatarFile: _avatarFile,
+              size: OBUserAvatarSize.large,
             ),
-          ),
-        ),
-      ],
-    );
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 30, maxHeight: 30),
+                child: FloatingActionButton(
+                  heroTag: Key('EditAvatar'),
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.edit,
+                    size: 15,
+                  ),
+                  onPressed: _onPressed,
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _buildUserProfileCover() {
-    return Stack(
-      children: <Widget>[
-        OBCover(
-          coverUrl: _coverUrl,
-          coverFile: _coverFile,
-        ),
-        Positioned(
-          bottom: 20,
-          right: 20,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 40, maxHeight: 40),
-            child: FloatingActionButton(
-              heroTag: Key('editCover'),
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.edit,
-                size: 20,
+    var _onPressed = () {
+      _showImageBottomSheet(imageType: OBImageType.cover);
+    };
+
+    return GestureDetector(
+      onTap: _onPressed,
+      child: Stack(
+        children: <Widget>[
+          OBCover(
+            coverUrl: _coverUrl,
+            coverFile: _coverFile,
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 40, maxHeight: 40),
+              child: FloatingActionButton(
+                heroTag: Key('editCover'),
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.edit,
+                  size: 20,
+                ),
+                onPressed: _onPressed,
               ),
-              onPressed: () {
-                _showImageBottomSheet(imageType: OBImageType.cover);
-              },
             ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 

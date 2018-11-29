@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-enum OBUserAvatarSize { small, medium, large }
+enum OBUserAvatarSize { small, medium, large, extraLarge }
 
 class OBUserAvatar extends StatelessWidget {
   final String avatarUrl;
@@ -16,6 +16,7 @@ class OBUserAvatar extends StatelessWidget {
   static const double AVATAR_SIZE_SMALL = 20.0;
   static const double AVATAR_SIZE_MEDIUM = 30.0;
   static const double AVATAR_SIZE_LARGE = 100.0;
+  static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
   OBUserAvatar(
@@ -40,6 +41,9 @@ class OBUserAvatar extends StatelessWidget {
         break;
       case OBUserAvatarSize.large:
         avatarSize = AVATAR_SIZE_LARGE;
+        break;
+      case OBUserAvatarSize.extraLarge:
+        avatarSize = AVATAR_SIZE_EXTRA_LARGE;
         break;
     }
 
