@@ -41,8 +41,11 @@ class User {
     return user;
   }
 
-  static void clearCache() {
+  static void clearNavigationCache() {
     navigationCache.clear();
+  }
+
+  static void clearSessionCache() {
     sessionCache.clear();
   }
 
