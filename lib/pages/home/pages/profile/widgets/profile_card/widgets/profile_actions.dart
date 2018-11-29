@@ -1,7 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
@@ -26,22 +25,34 @@ class OBProfileActions extends StatelessWidget {
   }
 
   _buildFollowButton() {
-    return OBPrimaryButton(
-      child: Text('Follow'),
-      isSmall: true,
+    return FlatButton(
+      color: Color(0xFF7ED321),
+      child: Text(
+        'Follow',
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+      ),
       onPressed: () {
-
+        print('Follow');
+        onWantsToEditUserProfile(user);
       },
+      shape:
+          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0)),
     );
   }
 
   _buildEditButton() {
-    return OBPrimaryButton(
-      child: Text('Edit'),
-      isSmall: true,
+    return OutlineButton(
+      color: Colors.black,
+      child: Text(
+        'Edit profile',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      borderSide: BorderSide(color: Colors.black),
       onPressed: () {
         onWantsToEditUserProfile(user);
       },
+      shape:
+          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0)),
     );
   }
 }
