@@ -7,7 +7,6 @@ import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
 import 'package:Openbook/pages/home/pages/notifications.dart';
@@ -17,7 +16,6 @@ import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +34,9 @@ class OBHomePageState extends State<OBHomePage> {
   int _currentIndex;
   int _lastIndex;
   bool _needsBootstrap;
+  String _avatarUrl;
   StreamSubscription _loggedInUserChangeSubscription;
+  StreamSubscription _loggedInUserUpdateSubscription;
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
 
@@ -54,6 +54,8 @@ class OBHomePageState extends State<OBHomePage> {
   void dispose() {
     super.dispose();
     _loggedInUserChangeSubscription.cancel();
+    if (_loggedInUserUpdateSubscription != null)
+      _loggedInUserUpdateSubscription.cancel();
   }
 
   @override
@@ -177,7 +179,8 @@ class OBHomePageState extends State<OBHomePage> {
         ),
         BottomNavigationBarItem(
             title: Container(),
-            icon: OBLoggedInUserAvatar(
+            icon: OBUserAvatar(
+              avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
             ),
             activeIcon: Container(
@@ -185,7 +188,8 @@ class OBHomePageState extends State<OBHomePage> {
                   borderRadius: BorderRadius.circular(500),
                   border: Border.all(color: Colors.red)),
               padding: EdgeInsets.all(2.0),
-              child: OBLoggedInUserAvatar(
+              child: OBUserAvatar(
+                avatarUrl: _avatarUrl,
                 size: OBUserAvatarSize.small,
               ),
             )),
@@ -251,7 +255,20 @@ class OBHomePageState extends State<OBHomePage> {
   void _onLoggedInUserChange(User newUser) {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
+    } else {
+      _loggedInUserUpdateSubscription =
+          newUser.updateSubject.listen(_onLoggedInUserUpdate);
     }
+  }
+
+  void _onLoggedInUserUpdate(User user) {
+    _setAvatarUrl(user.getProfileAvatar());
+  }
+
+  void _setAvatarUrl(String avatarUrl) {
+    setState(() {
+      _avatarUrl = avatarUrl;
+    });
   }
 }
 
