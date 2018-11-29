@@ -4,10 +4,10 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
+import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
-import 'package:Openbook/pages/home/pages/communities.dart';
+import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
-import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
 import 'package:Openbook/pages/home/pages/notifications.dart';
 import 'package:Openbook/pages/home/pages/search.dart';
@@ -16,7 +16,6 @@ import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +34,11 @@ class OBHomePageState extends State<OBHomePage> {
   int _currentIndex;
   int _lastIndex;
   bool _needsBootstrap;
+  String _avatarUrl;
   StreamSubscription _loggedInUserChangeSubscription;
+  StreamSubscription _loggedInUserUpdateSubscription;
   OBTimelinePageController _timelinePageController;
+  OBOwnProfilePageController _ownProfilePageController;
 
   @override
   void initState() {
@@ -45,12 +47,15 @@ class OBHomePageState extends State<OBHomePage> {
     _lastIndex = 0;
     _currentIndex = 0;
     _timelinePageController = OBTimelinePageController();
+    _ownProfilePageController = OBOwnProfilePageController();
   }
 
   @override
   void dispose() {
     super.dispose();
     _loggedInUserChangeSubscription.cancel();
+    if (_loggedInUserUpdateSubscription != null)
+      _loggedInUserUpdateSubscription.cancel();
   }
 
   @override
@@ -79,25 +84,30 @@ class OBHomePageState extends State<OBHomePage> {
 
   Widget _getPageForTabIndex(int index) {
     Widget page;
-    switch (index) {
-      case 0:
+    switch (OBHomePageTabs.values[index]) {
+      case OBHomePageTabs.home:
         page = OBTimelinePage(
-            controller: _timelinePageController,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToCreatePost: _onWantsToCreatePost);
+          controller: _timelinePageController,
+          onWantsToReactToPost: _onWantsToReactToPost,
+          onWantsToCreatePost: _onWantsToCreatePost,
+          onWantsToEditUserProfile: _onWantsToEditUserProfile,
+        );
         break;
-      case 1:
-        page =  OBMainSearchPage();
+      case OBHomePageTabs.search:
+        page = OBMainSearchPage();
         break;
-      case 2:
+      case OBHomePageTabs.notifications:
         break;
-      case 3:
+      case OBHomePageTabs.communities:
         page = OBMainNotificationsPage();
         break;
-      case 4:
-        page = OBMainCommunitiesPage();
+      case OBHomePageTabs.profile:
+        page = OBOwnProfilePage(
+            onWantsToEditUserProfile: _onWantsToEditUserProfile,
+            onWantsToReactToPost: _onWantsToReactToPost,
+            controller: _ownProfilePageController);
         break;
-      case 5:
+      case OBHomePageTabs.menu:
         page = OBMainMenuPage();
         break;
       default:
@@ -112,9 +122,27 @@ class OBHomePageState extends State<OBHomePage> {
       backgroundColor: Colors.white,
       currentIndex: _currentIndex,
       onTap: (int index) {
-        if (_lastIndex == 0 && index == 0) {
-          _timelinePageController.scrollToTop();
+        var tappedTab = OBHomePageTabs.values[index];
+        var currentTab = OBHomePageTabs.values[_lastIndex];
+
+        if (tappedTab == OBHomePageTabs.home &&
+            currentTab == OBHomePageTabs.home) {
+          if (_timelinePageController.hasPushedRoutes()) {
+            _timelinePageController.popUntilTimeline();
+          } else {
+            _timelinePageController.scrollToTop();
+          }
         }
+
+        if (tappedTab == OBHomePageTabs.profile &&
+            currentTab == OBHomePageTabs.profile) {
+          if (_ownProfilePageController.hasPushedRoutes()) {
+            _ownProfilePageController.popUntilProfile();
+          } else {
+            _ownProfilePageController.scrollToTop();
+          }
+        }
+
         _lastIndex = index;
         return true;
       },
@@ -151,7 +179,8 @@ class OBHomePageState extends State<OBHomePage> {
         ),
         BottomNavigationBarItem(
             title: Container(),
-            icon: OBLoggedInUserAvatar(
+            icon: OBUserAvatar(
+              avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
             ),
             activeIcon: Container(
@@ -159,7 +188,8 @@ class OBHomePageState extends State<OBHomePage> {
                   borderRadius: BorderRadius.circular(500),
                   border: Border.all(color: Colors.red)),
               padding: EdgeInsets.all(2.0),
-              child: OBLoggedInUserAvatar(
+              child: OBUserAvatar(
+                avatarUrl: _avatarUrl,
                 size: OBUserAvatarSize.small,
               ),
             )),
@@ -189,13 +219,21 @@ class OBHomePageState extends State<OBHomePage> {
   Future<PostReaction> _onWantsToReactToPost(Post post) async {
     PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
         .push(MaterialPageRoute<PostReaction>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) =>
-            Material(
-              child: OBReactToPostModal(post),
-            )));
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBReactToPostModal(post),
+                )));
 
     return postReaction;
+  }
+
+  Future<void> _onWantsToEditUserProfile(User user) async {
+    Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute<PostReaction>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBEditUserProfileModal(user),
+                )));
   }
 
   void _bootstrap() async {
@@ -217,6 +255,21 @@ class OBHomePageState extends State<OBHomePage> {
   void _onLoggedInUserChange(User newUser) {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
+    } else {
+      _loggedInUserUpdateSubscription =
+          newUser.updateSubject.listen(_onLoggedInUserUpdate);
     }
   }
+
+  void _onLoggedInUserUpdate(User user) {
+    _setAvatarUrl(user.getProfileAvatar());
+  }
+
+  void _setAvatarUrl(String avatarUrl) {
+    setState(() {
+      _avatarUrl = avatarUrl;
+    });
+  }
 }
+
+enum OBHomePageTabs { home, search, notifications, communities, profile, menu }

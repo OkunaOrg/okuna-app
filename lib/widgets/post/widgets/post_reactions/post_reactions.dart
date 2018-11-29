@@ -2,7 +2,6 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
-import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -40,14 +39,14 @@ class OBPostReactionsState extends State<OBPostReactions> {
     _toastService = openbookProvider.toastService;
 
     return StreamBuilder(
-        stream: widget.post.reactionsEmojiCountsChangeSubject,
-        initialData: widget.post.reactionsEmojiCounts,
-        builder: (BuildContext context,
-            AsyncSnapshot<PostReactionsEmojiCountList> snapshot) {
-
+        stream: widget.post.updateSubject,
+        builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
           if (snapshot.data == null) return SizedBox();
 
-          List<PostReactionsEmojiCount> emojiCounts = snapshot.data.counts;
+          var post = snapshot.data;
+
+          List<PostReactionsEmojiCount> emojiCounts =
+              post.reactionsEmojiCounts.counts;
 
           if (emojiCounts.length == 0) return SizedBox();
 
@@ -92,9 +91,9 @@ class OBPostReactionsState extends State<OBPostReactions> {
     try {
       return await _userService.reactToPost(post: widget.post, emoji: emoji);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
     } finally {
       _setRequestInProgress(false);
@@ -107,9 +106,9 @@ class OBPostReactionsState extends State<OBPostReactions> {
       await _userService.deletePostReaction(
           postReaction: widget.post.reaction, post: widget.post);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
     } finally {
       _setRequestInProgress(false);

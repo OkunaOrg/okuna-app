@@ -192,7 +192,6 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
                               textController = new TextEditingController(
                                   text: snapshot.data);
 
-
                               return OBAuthTextField(
                                 enabled: false,
                                 hintText: birthdayInputPlaceholder,

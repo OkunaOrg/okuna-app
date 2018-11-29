@@ -28,8 +28,7 @@ class CreatePostModal extends StatefulWidget {
 class CreatePostModalState extends State<CreatePostModal> {
   static const double actionIconHeight = 20.0;
   static const double actionSpacing = 10.0;
-  static const int MAX_ALLOWED_CHARACTERS =
-      ValidationService.MAX_ALLOWED_POST_TEXT_CHARACTERS;
+  static const int MAX_ALLOWED_CHARACTERS = ValidationService.POST_MAX_LENGTH;
 
   UserService _userService;
   ValidationService _validationService;
@@ -100,11 +99,10 @@ class CreatePostModalState extends State<CreatePostModal> {
       // Remove modal
       Navigator.pop(context, createdPost);
     } on HttpieConnectionRefusedError {
-      _toastService.error(
-          scaffoldKey: _scaffoldKey, message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
       _setCreatePostInProgress(false);
     } catch (e) {
-      _toastService.error(scaffoldKey: _scaffoldKey, message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       _setCreatePostInProgress(false);
       rethrow;
     }

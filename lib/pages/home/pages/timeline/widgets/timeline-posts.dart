@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -19,12 +20,14 @@ class OBTimelinePosts extends StatefulWidget {
   final OnWantsToCommentPost onWantsToCommentPost;
   final OnWantsToReactToPost onWantsToReactToPost;
   final OnWantsToSeePostComments onWantsToSeePostComments;
+  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBTimelinePosts(
       {this.controller,
       this.onWantsToReactToPost,
       this.onWantsToCommentPost,
-      this.onWantsToSeePostComments});
+      this.onWantsToSeePostComments,
+      this.onWantsToSeeUserProfile});
 
   @override
   OBTimelinePostsState createState() {
@@ -95,6 +98,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                     onWantsToReactToPost: widget.onWantsToReactToPost,
                     onWantsToCommentPost: widget.onWantsToCommentPost,
                     onWantsToSeePostComments: widget.onWantsToSeePostComments,
+                    onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
                   );
                 }),
             onLoadMore: _loadMorePosts));
@@ -131,6 +135,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   Future<void> _refreshPosts({areFirstPosts = true}) async {
     try {
+      Post.clearCache();
+      User.clearNavigationCache();
       _posts =
           (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts))
               .posts;
@@ -254,19 +260,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return Container(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            OBIcon(OBIcons.finish),
-            SizedBox(
-              width: 10.0,
-            ),
-            Text('No more posts to retrieve.')
-          ],
-        ),
-      );
+      return SizedBox();
     }
 
     return Text(text);

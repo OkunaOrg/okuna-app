@@ -18,10 +18,11 @@ class OBPostActionReact extends StatelessWidget {
     var userService = provider.userService;
 
     return StreamBuilder(
-      initialData: _post.reaction,
-      stream: _post.reactionChangeSubject,
-      builder: (BuildContext context, AsyncSnapshot<PostReaction> snapshot) {
-        PostReaction reaction = snapshot.data;
+      stream: _post.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
+        Post post = snapshot.data;
+        if (post == null) return SizedBox();
+        PostReaction reaction = post.reaction;
         bool hasReaction = reaction != null;
 
         return FlatButton(

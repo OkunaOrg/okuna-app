@@ -1,4 +1,6 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -8,11 +10,15 @@ import 'package:flutter/material.dart';
 
 class OBTimelinePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToEditUserProfile onWantsToEditUserProfile;
   final OnWantsToCreatePost onWantsToCreatePost;
   final OBTimelinePageController controller;
 
   OBTimelinePage(
-      {this.onWantsToReactToPost, this.onWantsToCreatePost, this.controller});
+      {this.onWantsToReactToPost,
+      this.onWantsToCreatePost,
+      this.controller,
+      this.onWantsToEditUserProfile});
 
   @override
   OBTimelinePageState createState() {
@@ -22,10 +28,12 @@ class OBTimelinePage extends StatefulWidget {
 
 class OBTimelinePageState extends State<OBTimelinePage> {
   OBTimelinePostsController _timelinePostsController;
+  int _pushedRoutes;
 
   @override
   void initState() {
     super.initState();
+    _pushedRoutes = 0;
     _timelinePostsController = OBTimelinePostsController();
     if (widget.controller != null) widget.controller.attach(this);
   }
@@ -43,27 +51,11 @@ class OBTimelinePageState extends State<OBTimelinePage> {
         child: Stack(
           children: <Widget>[
             OBTimelinePosts(
-              controller: _timelinePostsController,
-              onWantsToReactToPost: widget.onWantsToReactToPost,
-              onWantsToCommentPost: (Post post) {
-                Navigator.of(context).push(CupertinoPageRoute<void>(
-                    builder: (BuildContext context) => Material(
-                          child: OBPostPage(post,
-                              autofocusCommentInput: true,
-                              onWantsToReactToPost:
-                                  widget.onWantsToReactToPost),
-                        )));
-              },
-              onWantsToSeePostComments: (Post post) {
-                Navigator.of(context).push(CupertinoPageRoute<void>(
-                    builder: (BuildContext context) => Material(
-                          child: OBPostPage(post,
-                              autofocusCommentInput: false,
-                              onWantsToReactToPost:
-                                  widget.onWantsToReactToPost),
-                        )));
-              },
-            ),
+                controller: _timelinePostsController,
+                onWantsToReactToPost: widget.onWantsToReactToPost,
+                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+                onWantsToCommentPost: _onWantsToCommentPost,
+                onWantsToSeePostComments: _onWantsToSeePostComments),
             Positioned(
                 bottom: 20.0,
                 right: 20.0,
@@ -84,6 +76,62 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   void scrollToTop() {
     _timelinePostsController.scrollToTop();
   }
+
+  void popUntilFirst() {
+    Navigator.of(context).popUntil((Route<dynamic> r) => r.isFirst);
+    _pushedRoutes = 0;
+  }
+
+  bool hasPushedRoutes() {
+    return _pushedRoutes > 0;
+  }
+
+  void _onWantsToSeeUserProfile(User user) async {
+    _incrementPushedRoutes();
+    await Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBProfilePage(
+                user,
+                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+                onWantsToSeePostComments: _onWantsToSeePostComments,
+                onWantsToCommentPost: _onWantsToCommentPost,
+                onWantsToReactToPost: widget.onWantsToReactToPost,
+                onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
+              ),
+            )));
+    _decrementPushedRoutes();
+  }
+
+  void _onWantsToCommentPost(Post post) async {
+    _incrementPushedRoutes();
+    await Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBPostPage(post,
+                  autofocusCommentInput: true,
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
+            )));
+    _decrementPushedRoutes();
+  }
+
+  void _onWantsToSeePostComments(Post post) async {
+    _incrementPushedRoutes();
+    await Navigator.of(context).push(CupertinoPageRoute<void>(
+        builder: (BuildContext context) => Material(
+              child: OBPostPage(post,
+                  autofocusCommentInput: false,
+                  onWantsToReactToPost: widget.onWantsToReactToPost),
+            )));
+    _decrementPushedRoutes();
+  }
+
+  void _incrementPushedRoutes() {
+    _pushedRoutes += 1;
+  }
+
+  void _decrementPushedRoutes() {
+    if (_pushedRoutes == 0) return;
+    _pushedRoutes -= 1;
+  }
 }
 
 class OBTimelinePageController {
@@ -97,6 +145,14 @@ class OBTimelinePageController {
 
   void scrollToTop() {
     _timelinePageState.scrollToTop();
+  }
+
+  void popUntilTimeline() {
+    _timelinePageState.popUntilFirst();
+  }
+
+  bool hasPushedRoutes() {
+    return _timelinePageState.hasPushedRoutes();
   }
 }
 

@@ -17,6 +17,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -67,6 +68,9 @@ class UserService {
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
     _removeLoggedInUser();
+    Post.clearCache();
+    User.clearSessionCache();
+    User.clearNavigationCache();
   }
 
   Future<void> loginWithCredentials(
@@ -94,6 +98,10 @@ class UserService {
     return _loggedInUser;
   }
 
+  bool isLoggedInUser(User user) {
+    return user.id == _loggedInUser.id;
+  }
+
   Future<void> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
@@ -102,18 +110,46 @@ class UserService {
           await _authApiService.getUserWithAuthToken(_authToken);
       _checkResponseIsOk(response);
       var userData = response.body;
-      await _storeUserData(userData);
-      var user = _makeUser(userData);
-      _setLoggedInUser(user);
+      _setUserWithData(userData);
     } on HttpieConnectionRefusedError {
       // Response failed. Use stored user.
       String userData = await this._getStoredUserData();
       if (userData != null) {
-        var user = _makeUser(userData);
+        var user = _makeLoggedInUser(userData);
         _setLoggedInUser(user);
       }
       rethrow;
     }
+  }
+
+  Future<User> updateUser({
+    dynamic avatar,
+    dynamic cover,
+    String name,
+    String username,
+    String url,
+    String password,
+    DateTime birthDate,
+    bool followersCountVisible,
+    String bio,
+    String location,
+  }) async {
+    HttpieStreamedResponse response = await _authApiService.updateUser(
+        avatar: avatar,
+        cover: cover,
+        name: name,
+        username: username,
+        url: url,
+        password: password,
+        birthDate: DateFormat('dd-MM-yyyy').format(birthDate),
+        followersCountVisible: followersCountVisible,
+        bio: bio,
+        location: location);
+
+    _checkResponseIsOk(response);
+
+    String userData = await response.readAsString();
+    return _makeLoggedInUser(userData);
   }
 
   Future<bool> loginWithStoredAuthToken() async {
@@ -137,10 +173,16 @@ class UserService {
       List<int> circleIds,
       int maxId,
       int count,
+      String username,
       bool areFirstPosts = false}) async {
     try {
       HttpieResponse response = await _postsApiService.getTimelinePosts(
-          listIds: listIds, circleIds: circleIds, maxId: maxId, count: count);
+          listIds: listIds,
+          circleIds: circleIds,
+          maxId: maxId,
+          count: count,
+          username: username,
+          authenticatedRequest: true);
       _checkResponseIsOk(response);
       String postsData = response.body;
       if (areFirstPosts) {
@@ -247,6 +289,20 @@ class UserService {
     return EmojiGroupList.fromJson(json.decode(response.body));
   }
 
+  Future<User> getUserWithUsername(String username) async {
+    HttpieResponse response = await _authApiService
+        .getUserWithUsername(username, authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> _setUserWithData(String userData) async {
+    await _storeUserData(userData);
+    var user = _makeLoggedInUser(userData);
+    _setLoggedInUser(user);
+    return user;
+  }
+
   void _checkResponseIsCreated(HttpieBaseResponse response) {
     if (response.isCreated()) return;
     throw HttpieRequestError(response);
@@ -311,8 +367,8 @@ class UserService {
     return _userStorage.get(STORAGE_FIRST_POSTS_DATA);
   }
 
-  User _makeUser(String userData) {
-    return User.fromJson(json.decode(userData));
+  User _makeLoggedInUser(String userData) {
+    return User.fromJson(json.decode(userData), storeInSessionCache: true);
   }
 
   PostsList _makePostsList(String postsData) {

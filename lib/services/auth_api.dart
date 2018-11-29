@@ -11,7 +11,9 @@ class AuthApiService {
   static const CHECK_USERNAME_PATH = 'api/auth/username-check/';
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
-  static const GET_USER_PATH = 'api/auth/user/';
+  static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
+  static const UPDATE_AUTHENTICATED_USER_PATH = 'api/auth/user/';
+  static const GET_USERS_PATH = 'api/auth/users/';
   static const LOGIN_PATH = 'api/auth/login/';
 
   void setHttpService(HttpieService httpService) {
@@ -32,7 +34,56 @@ class AuthApiService {
         .postJSON('$apiURL$CHECK_EMAIL_PATH', body: {'email': email});
   }
 
-  Future<HttpieStreamedResponse> createAccount(
+  Future<HttpieStreamedResponse> updateUser({
+    dynamic avatar,
+    dynamic cover,
+    String name,
+    String username,
+    String url,
+    String password,
+    String birthDate,
+    bool followersCountVisible,
+    String bio,
+    String location,
+  }) {
+    Map<String, dynamic> body = {};
+
+    if (avatar is File) {
+      body['avatar'] = avatar;
+    } else if (avatar is String && avatar.isEmpty) {
+      // This is what deletes the avatar. Ugly af.
+      body['avatar'] = avatar;
+    }
+
+    if (cover is File) {
+      body['cover'] = cover;
+    } else if (cover is String && cover.isEmpty) {
+      // This is what deletes the cover. Ugly af.
+      body['cover'] = cover;
+    }
+
+    if (name != null) body['name'] = name;
+
+    if (username != null) body['username'] = username;
+
+    if (url != null) body['url'] = url;
+
+    if (password != null) body['password'] = password;
+
+    if (birthDate != null) body['birth_date'] = birthDate;
+
+    if (bio != null) body['bio'] = bio;
+
+    if (followersCountVisible != null)
+      body['followers_count_visible'] = followersCountVisible;
+
+    if (location != null) body['location'] = location;
+
+    return _httpService.patchMultiform('$apiURL$UPDATE_AUTHENTICATED_USER_PATH',
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieStreamedResponse> createUser(
       {@required String email,
       @required String username,
       @required String name,
@@ -58,7 +109,14 @@ class AuthApiService {
   Future<HttpieResponse> getUserWithAuthToken(String authToken) {
     Map<String, String> headers = {'Authorization': 'Token $authToken'};
 
-    return _httpService.get('$apiURL$GET_USER_PATH', headers: headers);
+    return _httpService.get('$apiURL$GET_AUTHENTICATED_USER_PATH',
+        headers: headers);
+  }
+
+  Future<HttpieResponse> getUserWithUsername(String username,
+      {bool authenticatedRequest = true}) {
+    return _httpService.get('$apiURL$GET_USERS_PATH$username/',
+        appendAuthorizationToken: authenticatedRequest);
   }
 
   Future<HttpieResponse> loginWithCredentials(

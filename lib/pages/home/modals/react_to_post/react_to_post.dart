@@ -116,11 +116,10 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
       // Remove modal
       Navigator.pop(context);
     } on HttpieConnectionRefusedError {
-      _toastService.error(
-          scaffoldKey: _scaffoldKey, message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
       _setReactToPostInProgress(false);
     } catch (e) {
-      _toastService.error(scaffoldKey: _scaffoldKey, message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       _setReactToPostInProgress(false);
       rethrow;
     }

@@ -5,6 +5,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -13,12 +14,14 @@ class OBExpandedPostComment extends StatefulWidget {
   final PostComment postComment;
   final Post post;
   final VoidCallback onPostCommentDeletedCallback;
+  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBExpandedPostComment(
       {@required this.post,
       @required this.postComment,
       Key key,
-      this.onPostCommentDeletedCallback})
+      this.onPostCommentDeletedCallback,
+      @required this.onWantsToSeeUserProfile})
       : super(key: key);
 
   @override
@@ -31,11 +34,13 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
+  TapGestureRecognizer _usernameTapGestureRecognizer;
 
   @override
   void initState() {
     super.initState();
     _requestInProgress = false;
+    _usernameTapGestureRecognizer = TapGestureRecognizer();
   }
 
   @override
@@ -43,6 +48,10 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+
+    _usernameTapGestureRecognizer.onTap = () {
+      widget.onWantsToSeeUserProfile(widget.postComment.commenter);
+    };
 
     User loggedInUser = _userService.getLoggedInUser();
 
@@ -75,6 +84,12 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     return postTile;
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _usernameTapGestureRecognizer.dispose();
+  }
+
   Widget _buildPostTile() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -82,6 +97,9 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           OBUserAvatar(
+            onPressed: () {
+              widget.onWantsToSeeUserProfile(widget.post.creator);
+            },
             size: OBUserAvatarSize.medium,
             avatarUrl: widget.postComment.getCommenterProfileAvatar(),
           ),
@@ -97,6 +115,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
                   text: TextSpan(children: [
                     TextSpan(
                         text: widget.postComment.getCommenterUsername(),
+                        recognizer: _usernameTapGestureRecognizer,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87)),
@@ -124,15 +143,16 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     try {
       await _userService.deletePostComment(
           postComment: widget.postComment, post: widget.post);
+      widget.post.decreaseCommentsCount();
       _setRequestInProgress(false);
       if (widget.onPostCommentDeletedCallback != null) {
         widget.onPostCommentDeletedCallback();
       }
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
       _setRequestInProgress(false);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       _setRequestInProgress(false);
       rethrow;
     }
@@ -144,3 +164,5 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     });
   }
 }
+
+typedef void OnWantsToSeeUserProfile(User user);

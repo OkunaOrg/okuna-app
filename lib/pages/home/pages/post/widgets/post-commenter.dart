@@ -112,15 +112,16 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       String commentText = _textController.text;
       PostComment createdPostComment =
           await _userService.commentPost(text: commentText, post: widget.post);
+      widget.post.incrementCommentsCount();
       _textController.clear();
       _setCommentInProgress(false);
       if (widget.onPostCommentCreated != null)
         widget.onPostCommentCreated(createdPostComment);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection');
+      _toastService.error(message: 'No internet connection', context: context);
       _setCommentInProgress(false);
     } catch (e) {
-      _toastService.error(message: 'Unknown error.');
+      _toastService.error(message: 'Unknown error.', context: context);
       _setCommentInProgress(false);
       rethrow;
     }

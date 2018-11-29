@@ -156,6 +156,21 @@ class HttpieService {
         appendAuthorizationToken: appendAuthorizationToken);
   }
 
+  Future<HttpieStreamedResponse> patchMultiform(String url,
+      {Map<String, String> headers,
+      Map<String, dynamic> body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
+    return _multipartRequest(url,
+        method: 'PATCH',
+        headers: headers,
+        body: body,
+        encoding: encoding,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+  }
+
   Future<HttpieStreamedResponse> putMultiform(String url,
       {Map<String, String> headers,
       Map<String, dynamic> body,
@@ -190,8 +205,8 @@ class HttpieService {
     List<Future> fileFields = [];
 
     body.forEach((String key, dynamic value) {
-      if (value is String) {
-        request.fields[key] = value;
+      if (value is String || value is bool) {
+        request.fields[key] = value.toString();
       } else if (value is File) {
         var fileMimeType = lookupMimeType(value.path);
         // The silly multipart API requires media type to be in type & subtype.
@@ -311,7 +326,9 @@ abstract class HttpieBaseResponse<T extends http.BaseResponse> {
 class HttpieResponse extends HttpieBaseResponse<http.Response> {
   HttpieResponse(_httpResponse) : super(_httpResponse);
 
-  String get body => _httpResponse.body;
+  String get body {
+    return utf8.decode(_httpResponse.bodyBytes);
+  }
 
   Map<String, dynamic> parseJsonBody() {
     return json.decode(body);
