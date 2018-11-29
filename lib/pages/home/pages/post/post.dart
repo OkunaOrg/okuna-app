@@ -8,11 +8,7 @@ import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
-import 'package:Openbook/widgets/post/widgets/post_header.dart';
-import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -92,20 +88,6 @@ class OBPostPageState extends State<OBPostPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      OBPostHeader(
-                                        widget.post,
-                                        onWantsToSeeUserProfile:
-                                            _onWantsToSeeUserProfile,
-                                      ),
-                                      OBPostBody(widget.post),
-                                      OBPostReactions(widget.post),
-                                      OBPostActions(
-                                        widget.post,
-                                        onWantsToCommentPost: _onWantsToComment,
-                                        onWantsToReactToPost:
-                                            widget.onWantsToReactToPost,
-                                      ),
-                                      Divider(),
                                       Padding(
                                         key: _postCommentsKey,
                                         padding: EdgeInsets.symmetric(
@@ -172,9 +154,6 @@ class OBPostPageState extends State<OBPostPage> {
 
   void _bootstrap() async {
     await _refreshComments();
-    Future.delayed(const Duration(milliseconds: 500), () {
-      _scrollToComments();
-    });
   }
 
   Future<void> _refreshComments() async {
@@ -238,19 +217,6 @@ class OBPostPageState extends State<OBPostPage> {
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
-  }
-
-  void _scrollToComments() {
-    Scrollable.ensureVisible(_postCommentsKey.currentContext,
-        curve: Curves.easeOut, duration: const Duration(milliseconds: 400));
-  }
-
-  void _onWantsToComment(Post post) {
-    _focusCommentInput();
-  }
-
-  void _focusCommentInput() {
-    FocusScope.of(context).requestFocus(_commentInputFocusNode);
   }
 
   void _unfocusCommentInput() {
