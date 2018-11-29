@@ -114,7 +114,7 @@ class UserService {
       // Response failed. Use stored user.
       String userData = await this._getStoredUserData();
       if (userData != null) {
-        var user = _makeUser(userData);
+        var user = _makeLoggedInUser(userData);
         _setLoggedInUser(user);
       }
       rethrow;
@@ -148,7 +148,7 @@ class UserService {
     _checkResponseIsOk(response);
 
     String userData = await response.readAsString();
-    return _makeUser(userData);
+    return _makeLoggedInUser(userData);
   }
 
   Future<bool> loginWithStoredAuthToken() async {
@@ -297,7 +297,7 @@ class UserService {
 
   Future<User> _setUserWithData(String userData) async {
     await _storeUserData(userData);
-    var user = _makeUser(userData);
+    var user = _makeLoggedInUser(userData);
     _setLoggedInUser(user);
     return user;
   }
@@ -366,8 +366,8 @@ class UserService {
     return _userStorage.get(STORAGE_FIRST_POSTS_DATA);
   }
 
-  User _makeUser(String userData) {
-    return User.fromJson(json.decode(userData));
+  User _makeLoggedInUser(String userData) {
+    return User.fromJson(json.decode(userData), storeInSessionCache: true);
   }
 
   PostsList _makePostsList(String postsData) {

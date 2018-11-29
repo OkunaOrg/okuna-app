@@ -1,5 +1,6 @@
 import 'package:Openbook/models/user_profile.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:dcache/dcache.dart';
 
 class User {
   final int id;
@@ -13,12 +14,17 @@ class User {
   Stream<User> get updateSubject => _updateSubject.stream;
   final _updateSubject = ReplaySubject<User>(maxSize: 1);
 
-  static final Map<int, User> cache = {};
+  static final LfuCache<int, User> navigationCache =
+      LfuCache(storage: SimpleStorage(size: 100));
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  static final SimpleCache<int, User> sessionCache =
+      SimpleCache(storage: SimpleStorage(size: 10));
+
+  factory User.fromJson(Map<String, dynamic> json,
+      {bool storeInSessionCache = false}) {
     int userId = json['id'];
 
-    User user = getUserWithIdFromCache(userId);
+    User user = navigationCache.get(userId) ?? sessionCache.get(userId);
 
     if (user != null) {
       user.updateFromJson(json);
@@ -26,20 +32,18 @@ class User {
     }
 
     user = _makeFromJson(json);
-    addToCache(user);
+
+    if (storeInSessionCache) {
+      sessionCache.set(userId, user);
+    } else {
+      navigationCache.set(userId, user);
+    }
     return user;
   }
 
-  static User getUserWithIdFromCache(int userId) {
-    return cache[userId];
-  }
-
-  static void addToCache(User user) {
-    cache[user.id] = user;
-  }
-
   static void clearCache() {
-    cache.clear();
+    navigationCache.clear();
+    sessionCache.clear();
   }
 
   static User _makeFromJson(Map<String, dynamic> json) {

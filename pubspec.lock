@@ -42,7 +42,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0+1"
+    version: "0.5.1"
   charcode:
     dependency: transitive
     description:
@@ -90,10 +90,17 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c5727795659e886a7db8b39a14e2c8987280fe1f
+      resolved-ref: e26916e095244a7e5ea61315b030d298d127ed26
       url: "https://github.com/MarkOSullivan94/dart_config.git"
     source: git
     version: "0.5.0"
+  dcache:
+    dependency: "direct main"
+    description:
+      name: dcache
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flushbar:
     dependency: "direct main"
     description:
@@ -512,7 +519,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   utf:
     dependency: transitive
     description:
@@ -577,5 +584,5 @@ packages:
     source: hosted
     version: "2.1.15"
 sdks:
-  dart: ">=2.1.0-dev.5.0 <=2.1.0-dev.9.4.flutter-f9ebf21297"
+  dart: ">=2.1.0-dev.5.0 <3.0.0"
   flutter: ">=0.5.6 <2.0.0"

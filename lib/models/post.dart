@@ -6,6 +6,7 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:dcache/dcache.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -43,15 +44,15 @@ class Post {
     return post;
   }
 
-  static final Map<int, Post> cache = {};
+  static final SimpleCache<int, Post> cache =
+      LruCache(storage: SimpleStorage(size: 100));
 
   static Post getPostWithIdFromCache(int postId) {
-    return cache[postId];
+    return cache.get(postId);
   }
 
   static void addToCache(Post post) {
-    // TODO The cache will grow endlessly until user refreshes home posts
-    cache[post.id] = post;
+    cache.set(post.id, post);
   }
 
   static void clearCache() {
