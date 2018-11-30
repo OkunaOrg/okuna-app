@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
@@ -42,6 +44,8 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   bool _requestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
+
+  StreamSubscription<UsersList> _getUsersWithQuerySubscription;
 
   @override
   void initState() {
@@ -92,20 +96,28 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   }
 
   Future<List<User>> _searchForUsersWithQuery(String query) async {
+    if (_getUsersWithQuerySubscription != null)
+      _getUsersWithQuerySubscription.cancel();
+
     _setRequestInProgress(true);
 
-    try {
-      UsersList usersList = await _userService.getUsersWithQuery(query);
+    _getUsersWithQuerySubscription = _userService
+        .getUsersWithQuery(query)
+        .asStream()
+        .listen((UsersList usersList) {
+      _getUsersWithQuerySubscription = null;
       _setUserSearchResults(usersList.users);
-      // Remove modal
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
-    } finally {
+    }, onError: (error) {
+      if (error is HttpieConnectionRefusedError) {
+        _toastService.error(
+            message: 'No internet connection', context: context);
+      } else {
+        _toastService.error(message: 'Unknown error.', context: context);
+        throw error;
+      }
+    }, onDone: () {
       _setRequestInProgress(false);
-    }
+    });
   }
 
   void _setRequestInProgress(bool requestInProgress) {
