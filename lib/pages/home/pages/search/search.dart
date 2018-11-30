@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
@@ -18,9 +19,13 @@ import 'package:flutter/material.dart';
 class OBMainSearchPage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
   final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
+  final OBMainSearchPageController controller;
 
   const OBMainSearchPage(
-      {Key key, this.onWantsToReactToPost, this.onWantsToSeeUserProfile})
+      {Key key,
+      this.onWantsToReactToPost,
+      this.onWantsToSeeUserProfile,
+      this.controller})
       : super(key: key);
 
   @override
@@ -29,12 +34,11 @@ class OBMainSearchPage extends StatefulWidget {
   }
 }
 
-class OBMainSearchPageState extends State<OBMainSearchPage> {
+class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   UserService _userService;
   ToastService _toastService;
 
   bool _hasSearch;
-  int _pushedRoutes;
   bool _requestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
@@ -42,7 +46,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   @override
   void initState() {
     super.initState();
-    _pushedRoutes = 0;
+    if (widget.controller != null) widget.controller.attach(this);
     _requestInProgress = false;
     _hasSearch = false;
     _userSearchResults = [];
@@ -134,7 +138,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   }
 
   void _onWantsToSeeUserProfile(User user) async {
-    _incrementPushedRoutes();
+    incrementPushedRoutes();
     await Navigator.of(context).push(CupertinoPageRoute<void>(
         builder: (BuildContext context) => Material(
               child: OBProfilePage(
@@ -145,37 +149,34 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
                 onWantsToReactToPost: widget.onWantsToReactToPost,
               ),
             )));
-    _decrementPushedRoutes();
+    decrementPushedRoutes();
   }
 
   void _onWantsToCommentPost(Post post) async {
-    _incrementPushedRoutes();
+    incrementPushedRoutes();
     await Navigator.of(context).push(CupertinoPageRoute<void>(
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: true,
                   onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
-    _decrementPushedRoutes();
+    decrementPushedRoutes();
   }
 
   void _onWantsToSeePostComments(Post post) async {
-    _incrementPushedRoutes();
+    incrementPushedRoutes();
     await Navigator.of(context).push(CupertinoPageRoute<void>(
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: false,
                   onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
-    _decrementPushedRoutes();
+    decrementPushedRoutes();
   }
 
-  void _incrementPushedRoutes() {
-    _pushedRoutes += 1;
-  }
-
-  void _decrementPushedRoutes() {
-    if (_pushedRoutes == 0) return;
-    _pushedRoutes -= 1;
-  }
+  @override
+  void scrollToTop() {}
 }
+
+class OBMainSearchPageController
+    extends OBBasePageStateController<OBMainSearchPageState> {}

@@ -39,6 +39,7 @@ class OBHomePageState extends State<OBHomePage> {
   StreamSubscription _loggedInUserUpdateSubscription;
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
+  OBMainSearchPageController _searchPageController;
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class OBHomePageState extends State<OBHomePage> {
     _currentIndex = 0;
     _timelinePageController = OBTimelinePageController();
     _ownProfilePageController = OBOwnProfilePageController();
+    _searchPageController = OBMainSearchPageController();
   }
 
   @override
@@ -94,7 +96,9 @@ class OBHomePageState extends State<OBHomePage> {
         );
         break;
       case OBHomePageTabs.search:
-        page = OBMainSearchPage();
+        page = OBMainSearchPage(
+          controller: _searchPageController,
+        );
         break;
       case OBHomePageTabs.notifications:
         break;
@@ -128,7 +132,7 @@ class OBHomePageState extends State<OBHomePage> {
         if (tappedTab == OBHomePageTabs.home &&
             currentTab == OBHomePageTabs.home) {
           if (_timelinePageController.hasPushedRoutes()) {
-            _timelinePageController.popUntilTimeline();
+            _timelinePageController.popUntilFirst();
           } else {
             _timelinePageController.scrollToTop();
           }
@@ -137,9 +141,18 @@ class OBHomePageState extends State<OBHomePage> {
         if (tappedTab == OBHomePageTabs.profile &&
             currentTab == OBHomePageTabs.profile) {
           if (_ownProfilePageController.hasPushedRoutes()) {
-            _ownProfilePageController.popUntilProfile();
+            _ownProfilePageController.popUntilFirst();
           } else {
             _ownProfilePageController.scrollToTop();
+          }
+        }
+
+        if (tappedTab == OBHomePageTabs.search &&
+            currentTab == OBHomePageTabs.search) {
+          if (_searchPageController.hasPushedRoutes()) {
+            _searchPageController.popUntilFirst();
+          } else {
+            _searchPageController.scrollToTop();
           }
         }
 
