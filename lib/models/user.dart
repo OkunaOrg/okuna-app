@@ -83,13 +83,21 @@ class User {
   }
 
   void updateFromJson(Map<String, dynamic> json) {
-    username = json['username'];
-    email = json['email'];
-    profile = _parseUserProfile(json['profile']);
-    followersCount = json['followers_count'];
-    followingCount = json['following_count'];
-    postsCount = json['posts_count'];
-    isFollowing = json['is_following'];
+    if (json.containsKey('username')) username = json['username'];
+    if (json.containsKey('email')) email = json['email'];
+    if (json.containsKey('profile')) {
+      if (profile != null) {
+        profile.updateFromJson(json['profile']);
+      } else {
+        profile = _parseUserProfile(json['profile']);
+      }
+    }
+    if (json.containsKey('followers_count'))
+      followersCount = json['followers_count'];
+    if (json.containsKey('following_count'))
+      followingCount = json['following_count'];
+    if (json.containsKey('posts_count')) postsCount = json['posts_count'];
+    if (json.containsKey('is_following')) isFollowing = json['is_following'];
     _notifyUpdate();
   }
 
