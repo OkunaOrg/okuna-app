@@ -11,6 +11,7 @@ class PostsApiService {
   String apiURL;
 
   static const GET_POSTS_PATH = 'api/posts/';
+  static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const DELETE_POST_PATH = 'api/posts/{postId}/';
   static const COMMENT_POST_PATH = 'api/posts/{postId}/comments/';
@@ -36,6 +37,11 @@ class PostsApiService {
     apiURL = newApiURL;
   }
 
+  Future<HttpieResponse> getTrendingPosts({bool authenticatedRequest = true}) {
+    return _httpService.get('$apiURL$GET_TRENDING_POSTS_PATH',
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
   Future<HttpieResponse> getTimelinePosts(
       {List<int> listIds,
       List<int> circleIds,
@@ -56,7 +62,8 @@ class PostsApiService {
     if (username != null) queryParams['username'] = username;
 
     return _httpService.get(_makeApiUrl(GET_POSTS_PATH),
-        queryParameters: queryParams, appendAuthorizationToken: authenticatedRequest);
+        queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
   }
 
   Future<HttpieStreamedResponse> createPost(
