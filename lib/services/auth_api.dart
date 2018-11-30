@@ -119,6 +119,13 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
+  Future<HttpieResponse> getUsersWithQuery(String query,
+      {bool authenticatedRequest = true}) {
+    return _httpService.get('$apiURL$GET_USERS_PATH',
+        queryParameters: {'query': query},
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
   Future<HttpieResponse> loginWithCredentials(
       {@required String username, @required String password}) {
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',

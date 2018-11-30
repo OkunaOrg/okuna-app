@@ -10,7 +10,7 @@ import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
 import 'package:Openbook/pages/home/pages/notifications.dart';
-import 'package:Openbook/pages/home/pages/search.dart';
+import 'package:Openbook/pages/home/pages/search/search.dart';
 import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';

@@ -10,6 +10,7 @@ class User {
   int followersCount;
   int followingCount;
   int postsCount;
+  bool isFollowing;
 
   Stream<User> get updateSubject => _updateSubject.stream;
   final _updateSubject = ReplaySubject<User>(maxSize: 1);
@@ -57,6 +58,7 @@ class User {
         email: json['email'],
         username: json['username'],
         followingCount: json['following_count'],
+        isFollowing: json['is_following'],
         profile: _parseUserProfile(json['profile']));
   }
 
@@ -71,7 +73,8 @@ class User {
       this.profile,
       this.followersCount,
       this.followingCount,
-      this.postsCount}) {
+      this.postsCount,
+      this.isFollowing}) {
     _notifyUpdate();
   }
 
@@ -86,6 +89,7 @@ class User {
     followersCount = json['followers_count'];
     followingCount = json['following_count'];
     postsCount = json['posts_count'];
+    isFollowing = json['is_following'];
     _notifyUpdate();
   }
 
