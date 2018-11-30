@@ -14,6 +14,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,26 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
 
+    Widget currentWidget;
+
+    if (_requestInProgress) {
+      currentWidget = Container(
+        padding: EdgeInsets.only(top: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[OBProgressIndicator()],
+        ),
+      );
+    } else if (_hasSearch) {
+      currentWidget = OBUserSearchResults(
+        _userSearchResults,
+        _searchQuery,
+        onSearchUserPressed: _onSearchUserPressed,
+      );
+    } else {
+      currentWidget = OBTrending();
+    }
+
     return CupertinoPageScaffold(
         backgroundColor: Colors.white,
         child: SafeArea(
@@ -73,14 +94,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
                   onSearch: _onSearch,
                   hintText: 'Search...',
                 ),
-                Expanded(
-                    child: _hasSearch
-                        ? OBUserSearchResults(
-                            _userSearchResults,
-                            _searchQuery,
-                            onSearchUserPressed: _onSearchUserPressed,
-                          )
-                        : OBTrending())
+                Expanded(child: currentWidget)
               ],
             )));
   }

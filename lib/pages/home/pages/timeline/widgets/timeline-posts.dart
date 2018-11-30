@@ -12,6 +12,7 @@ import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
@@ -248,15 +249,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
     if (status == LoadMoreStatus.loading) {
       return Container(
           child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: 20.0,
-            maxWidth: 20.0,
-          ),
-          child: CircularProgressIndicator(
-            strokeWidth: 2.0,
-          ),
-        ),
+        child: OBProgressIndicator(),
       ));
     }
     if (status == LoadMoreStatus.nomore) {
