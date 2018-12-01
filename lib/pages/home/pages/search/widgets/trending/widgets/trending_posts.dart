@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
@@ -10,8 +11,6 @@ import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_c
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:flutter/material.dart';
-
-// TODO cancel request if already in progress
 
 class OBTrendingPosts extends StatefulWidget {
   final OBTrendingPostsController controller;
@@ -40,12 +39,21 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
   List<Post> _posts;
   bool _needsBootstrap;
 
+  StreamSubscription<PostsList> _getTrendingPostsSubscription;
+
   @override
   void initState() {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _needsBootstrap = true;
     _posts = [];
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_getTrendingPostsSubscription != null)
+      _getTrendingPostsSubscription.cancel();
   }
 
   @override
@@ -82,6 +90,24 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
   }
 
   Future<void> refresh() async {
+    if (_getTrendingPostsSubscription != null)
+      _getTrendingPostsSubscription.cancel();
+
+    _getTrendingPostsSubscription = _userService
+        .getTrendingPosts()
+        .asStream()
+        .listen((PostsList postsList) {
+      _setPosts(postsList.posts);
+    }, onError: (error) {
+      if (error is HttpieConnectionRefusedError) {
+        _toastService.error(
+            message: 'No internet connection', context: context);
+      } else {
+        _toastService.error(message: 'Unknown error.', context: context);
+        throw error;
+      }
+    });
+
     try {
       PostsList postsList = await _userService.getTrendingPosts();
       _setPosts(postsList.posts);
