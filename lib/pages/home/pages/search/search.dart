@@ -6,6 +6,7 @@ import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/trending/trending.dart';
@@ -45,6 +46,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   bool _requestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
+  Widget _trendingWidget;
 
   StreamSubscription<UsersList> _getUsersWithQuerySubscription;
 
@@ -83,20 +85,22 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
       currentWidget = OBTrending();
     }
 
-    return CupertinoPageScaffold(
+    return OBCupertinoPageScaffold(
         backgroundColor: Colors.white,
-        child: SafeArea(
-            bottom: false,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                OBSearchBar(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              SafeArea(
+                bottom: false,
+                child: OBSearchBar(
                   onSearch: _onSearch,
                   hintText: 'Search...',
                 ),
-                Expanded(child: currentWidget)
-              ],
-            )));
+              ),
+              Expanded(child: currentWidget),
+            ],
+          ),
+        ));
   }
 
   void _onSearch(String query) {

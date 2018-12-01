@@ -9,8 +9,9 @@ import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
+
+// TODO cancel request if already in progress
 
 class OBTrendingPosts extends StatefulWidget {
   final OBTrendingPostsController controller;
@@ -59,7 +60,9 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     }
     return Column(
       children: [
-        ListTile(title: Text('Trending posts', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
+        ListTile(
+            title: Text('Trending posts',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
         Column(
             children: _posts.map((Post post) {
           return OBPost(
