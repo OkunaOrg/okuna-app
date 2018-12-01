@@ -107,16 +107,6 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
         throw error;
       }
     });
-
-    try {
-      PostsList postsList = await _userService.getTrendingPosts();
-      _setPosts(postsList.posts);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
-    }
   }
 
   void _setPosts(List<Post> posts) {
