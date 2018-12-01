@@ -22,13 +22,11 @@ import 'package:flutter/material.dart';
 
 class OBMainSearchPage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
   final OBMainSearchPageController controller;
 
   const OBMainSearchPage(
       {Key key,
       this.onWantsToReactToPost,
-      this.onWantsToSeeUserProfile,
       this.controller})
       : super(key: key);
 
@@ -85,6 +83,10 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
     } else {
       currentWidget = OBTrending(
         controller: _trendingController,
+        onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+        onWantsToSeePostComments: _onWantsToSeePostComments,
+        onWantsToCommentPost: _onWantsToCommentPost,
+        onWantsToReactToPost: widget.onWantsToReactToPost,
       );
     }
 

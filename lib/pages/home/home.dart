@@ -98,6 +98,7 @@ class OBHomePageState extends State<OBHomePage> {
       case OBHomePageTabs.search:
         page = OBMainSearchPage(
           controller: _searchPageController,
+          onWantsToReactToPost: _onWantsToReactToPost,
         );
         break;
       case OBHomePageTabs.notifications:
