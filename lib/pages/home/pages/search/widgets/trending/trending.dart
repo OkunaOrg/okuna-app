@@ -2,6 +2,10 @@ import 'package:Openbook/pages/home/pages/search/widgets/trending/widgets/trendi
 import 'package:flutter/material.dart';
 
 class OBTrending extends StatefulWidget {
+  final OBTrendingController controller;
+
+  OBTrending({this.controller});
+
   @override
   State<StatefulWidget> createState() {
     return OBTrendingState();
@@ -15,6 +19,7 @@ class OBTrendingState extends State<OBTrending> {
   @override
   void initState() {
     super.initState();
+    if (widget.controller != null) widget.controller.attach(this);
     _trendingPostsController = OBTrendingPostsController();
     _scrollController = ScrollController();
   }
@@ -53,7 +58,7 @@ class OBTrendingState extends State<OBTrending> {
 class OBTrendingController {
   OBTrendingState _state;
 
-  void attach(state) {
+  void attach(OBTrendingState state) {
     _state = state;
   }
 

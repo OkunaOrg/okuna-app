@@ -46,7 +46,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   bool _requestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
-  Widget _trendingWidget;
+  OBTrendingController _trendingController;
 
   StreamSubscription<UsersList> _getUsersWithQuerySubscription;
 
@@ -54,6 +54,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   void initState() {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
+    _trendingController = OBTrendingController();
     _requestInProgress = false;
     _hasSearch = false;
     _userSearchResults = [];
@@ -82,7 +83,9 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
         onSearchUserPressed: _onSearchUserPressed,
       );
     } else {
-      currentWidget = OBTrending();
+      currentWidget = OBTrending(
+        controller: _trendingController,
+      );
     }
 
     return OBCupertinoPageScaffold(
@@ -205,7 +208,9 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   }
 
   @override
-  void scrollToTop() {}
+  void scrollToTop() {
+    _trendingController.scrollToTop();
+  }
 }
 
 class OBMainSearchPageController
