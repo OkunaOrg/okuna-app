@@ -1,15 +1,14 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/pages/home/modals/react_to_post/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 
-class OBEmojiSearchResults extends StatelessWidget {
-  final List<Emoji> results;
+class OBUserSearchResults extends StatelessWidget {
+  final List<User> results;
   final String searchQuery;
-  final OnEmojiPressed onEmojiPressed;
+  final OnSearchUserPressed onSearchUserPressed;
 
-  OBEmojiSearchResults(this.results, this.searchQuery,
-      {Key key, @required this.onEmojiPressed})
+  OBUserSearchResults(this.results, this.searchQuery,
+      {Key key, @required this.onSearchUserPressed})
       : super(key: key);
 
   @override
@@ -21,24 +20,24 @@ class OBEmojiSearchResults extends StatelessWidget {
     return ListView.builder(
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
-          Emoji emoji = results[index];
+          User user = results[index];
 
           return ListTile(
             onTap: () {
-              onEmojiPressed(emoji);
+              onSearchUserPressed(user);
             },
-            leading: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 25),
-              child: CachedNetworkImage(
-                imageUrl: emoji.image,
-                placeholder:
-                    Image(image: AssetImage('assets/images/loading.gif')),
-                errorWidget: Container(
-                  child: Center(child: Text('?')),
-                ),
-              ),
+            leading: OBUserAvatar(
+              size: OBUserAvatarSize.medium,
+              avatarUrl: user.getProfileAvatar(),
             ),
-            title: Text(emoji.keyword),
+            title: Text(
+              user.username,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Row(children: [
+              Text(user.getProfileName()),
+              user.isFollowing ? Text(' · Following') : SizedBox()
+            ]),
           );
         });
   }
@@ -57,7 +56,7 @@ class OBEmojiSearchResults extends StatelessWidget {
                 height: 20.0,
               ),
               Text(
-                'No emoji found matching \'$searchQuery\'.',
+                'No user found matching \'$searchQuery\'.',
                 style: TextStyle(
                   color: Colors.black26,
                   fontWeight: FontWeight.bold,
@@ -72,3 +71,5 @@ class OBEmojiSearchResults extends StatelessWidget {
     );
   }
 }
+
+typedef void OnSearchUserPressed(User user);

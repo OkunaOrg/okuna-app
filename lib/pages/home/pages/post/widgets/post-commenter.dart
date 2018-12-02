@@ -82,7 +82,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                 maxLines: null,
                 style: TextStyle(fontSize: 14.0, color: Colors.black87),
                 decoration: InputDecoration(
-                  hintText: 'Write something nice...',
+                  hintText: 'Write something...',
                   contentPadding: inputContentPadding,
                   border: InputBorder.none,
                 ),

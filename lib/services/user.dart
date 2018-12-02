@@ -12,6 +12,7 @@ import 'package:Openbook/models/post_reaction_list.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -168,6 +169,15 @@ class UserService {
     return _loggedInUser != null;
   }
 
+  Future<PostsList> getTrendingPosts() async{
+    HttpieResponse response = await _postsApiService
+        .getTrendingPosts(authenticatedRequest: true);
+
+    _checkResponseIsOk(response);
+
+    return PostsList.fromJson(json.decode(response.body));
+  }
+
   Future<PostsList> getTimelinePosts(
       {List<int> listIds,
       List<int> circleIds,
@@ -296,6 +306,12 @@ class UserService {
     return User.fromJson(json.decode(response.body));
   }
 
+  Future<UsersList> getUsersWithQuery(String query) async {
+    HttpieResponse response = await _authApiService
+        .getUsersWithQuery(query, authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
   Future<User> _setUserWithData(String userData) async {
     await _storeUserData(userData);
     var user = _makeLoggedInUser(userData);
