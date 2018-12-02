@@ -4,6 +4,7 @@ import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
 import 'package:Openbook/services/file_cache.dart';
+import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/localization.dart';
@@ -48,6 +49,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ThemeService themeService = ThemeService();
   ImagePickerService imagePickerService = ImagePickerService();
   DatePickerService datePickerService = DatePickerService();
+  FollowsApiService followsApiService = FollowsApiService();
 
   LocalizationService localizationService;
 
@@ -58,12 +60,14 @@ class OpenbookProviderState extends State<OpenbookProvider> {
 
     createAccountBloc.setValidationService(validationService);
     authApiService.setHttpService(httpService);
+    followsApiService.setHttpService(httpService);
     createAccountBloc.setAuthApiService(authApiService);
     userService.setAuthApiService(authApiService);
     userService.setPostsApiService(postsApiService);
     userService.setEmojisApiService(emojisApiService);
     userService.setHttpieService(httpService);
     userService.setStorageService(storageService);
+    userService.setFollowsApiService(followsApiService);
     emojisApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);
@@ -76,6 +80,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     authApiService.setApiURL(environment.API_URL);
     postsApiService.setApiURL(environment.API_URL);
     emojisApiService.setApiURL(environment.API_URL);
+    followsApiService.setApiURL(environment.API_URL);
   }
 
   @override

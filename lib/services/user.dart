@@ -15,6 +15,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
+import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -33,6 +34,7 @@ class UserService {
   HttpieService _httpieService;
   PostsApiService _postsApiService;
   EmojisApiService _emojisApiService;
+  FollowsApiService _followsApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -49,6 +51,10 @@ class UserService {
 
   void setPostsApiService(PostsApiService postsApiService) {
     _postsApiService = postsApiService;
+  }
+
+  void setFollowsApiService(FollowsApiService followsApiService) {
+    _followsApiService = followsApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {
@@ -169,9 +175,9 @@ class UserService {
     return _loggedInUser != null;
   }
 
-  Future<PostsList> getTrendingPosts() async{
-    HttpieResponse response = await _postsApiService
-        .getTrendingPosts(authenticatedRequest: true);
+  Future<PostsList> getTrendingPosts() async {
+    HttpieResponse response =
+        await _postsApiService.getTrendingPosts(authenticatedRequest: true);
 
     _checkResponseIsOk(response);
 
@@ -307,11 +313,26 @@ class UserService {
   }
 
   Future<UsersList> getUsersWithQuery(String query) async {
-    HttpieResponse response = await _authApiService
-        .getUsersWithQuery(query, authenticatedRequest: true);
+    HttpieResponse response = await _authApiService.getUsersWithQuery(query,
+        authenticatedRequest: true);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }
+
+  Future<User> followUserWithUsername(String username) async {
+    HttpieResponse response =
+        await _followsApiService.followUserWithUsername(username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> unFollowUserWithUsername(String username) async {
+    HttpieResponse response =
+        await _followsApiService.unFollowUserWithUsername(username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
   Future<User> _setUserWithData(String userData) async {
     await _storeUserData(userData);
     var user = _makeLoggedInUser(userData);
