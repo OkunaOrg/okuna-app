@@ -9,6 +9,7 @@ import 'package:Openbook/services/file_cache.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/lists_api.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -54,6 +55,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   FollowsApiService followsApiService = FollowsApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
   CirclesApiService circlesApiService = CirclesApiService();
+  ListsApiService listsApiService = ListsApiService();
 
   LocalizationService localizationService;
 
@@ -65,6 +67,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setValidationService(validationService);
     circlesApiService.setHttpService(httpService);
     circlesApiService.setStringTemplateService(stringTemplateService);
+    listsApiService.setHttpService(httpService);
+    listsApiService.setStringTemplateService(stringTemplateService);
     connectionsApiService.setHttpService(httpService);
     authApiService.setHttpService(httpService);
     followsApiService.setHttpService(httpService);
@@ -91,6 +95,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     emojisApiService.setApiURL(environment.API_URL);
     followsApiService.setApiURL(environment.API_URL);
     connectionsApiService.setApiURL(environment.API_URL);
+    circlesApiService.setApiURL(environment.API_URL);
+    listsApiService.setApiURL(environment.API_URL);
   }
 
   @override
