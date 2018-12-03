@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/circles_collection.dart';
+import 'package:Openbook/models/follow_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
-import 'package:Openbook/models/list.dart';
+import 'package:Openbook/models/follow_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -25,7 +25,7 @@ import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/lists_api.dart';
+import 'package:Openbook/services/follow_lists_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:intl/intl.dart';
@@ -46,7 +46,7 @@ class UserService {
   FollowsApiService _followsApiService;
   ConnectionsApiService _connectionsApiService;
   CirclesApiService _circlesApiService;
-  ListsApiService _listsApiService;
+  FollowListsApiService _followListsApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -77,8 +77,8 @@ class UserService {
     _circlesApiService = circlesApiService;
   }
 
-  void setListsApiService(ListsApiService listsApiService) {
-    _listsApiService = listsApiService;
+  void setListsApiService(FollowListsApiService listsApiService) {
+    _followListsApiService = listsApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {
@@ -343,7 +343,8 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
-  Future<Follow> followUserWithUsername(String username, {OBList list}) async {
+  Future<Follow> followUserWithUsername(String username,
+      {FollowList list}) async {
     HttpieResponse response = await _followsApiService
         .followUserWithUsername(username, listId: list?.id);
     _checkResponseIsCreated(response);
@@ -358,7 +359,7 @@ class UserService {
   }
 
   Future<Follow> updateFollowWithUsername(String username,
-      {OBList list}) async {
+      {FollowList list}) async {
     HttpieResponse response = await _followsApiService
         .updateFollowWithUsername(username, listId: list.id);
     _checkResponseIsOk(response);
@@ -417,28 +418,31 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
-  Future<OBListsCollection> getLists() async {
-    HttpieResponse response = await _listsApiService.getLists();
+  Future<FollowListsList> getFollowLists() async {
+    HttpieResponse response = await _followListsApiService.getLists();
     _checkResponseIsOk(response);
-    return OBListsCollection.fromJson(json.decode(response.body));
+    return FollowListsList.fromJson(json.decode(response.body));
   }
 
-  Future<OBList> createList({@required String name, String emojiId}) async {
+  Future<FollowList> createFollowList(
+      {@required String name, String emojiId}) async {
     HttpieResponse response =
-        await _listsApiService.createList(name: name, emojiId: emojiId);
+        await _followListsApiService.createList(name: name, emojiId: emojiId);
     _checkResponseIsCreated(response);
-    return OBList.fromJSON(json.decode(response.body));
+    return FollowList.fromJSON(json.decode(response.body));
   }
 
-  Future<OBList> updateList(OBList list, {String name, String emojiId}) async {
-    HttpieResponse response = await _listsApiService.updateListWithId(list.id,
-        name: name, emojiId: emojiId);
+  Future<FollowList> updateFollowList(FollowList list,
+      {String name, String emojiId}) async {
+    HttpieResponse response = await _followListsApiService
+        .updateListWithId(list.id, name: name, emojiId: emojiId);
     _checkResponseIsOk(response);
-    return OBList.fromJSON(json.decode(response.body));
+    return FollowList.fromJSON(json.decode(response.body));
   }
 
-  Future<void> deleteList(OBList list) async {
-    HttpieResponse response = await _listsApiService.deleteListWithId(list.id);
+  Future<void> deleteFollowList(FollowList list) async {
+    HttpieResponse response =
+        await _followListsApiService.deleteListWithId(list.id);
     _checkResponseIsOk(response);
   }
 

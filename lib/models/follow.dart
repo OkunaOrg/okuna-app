@@ -1,9 +1,9 @@
-import 'package:Openbook/models/list.dart';
+import 'package:Openbook/models/follow_list.dart';
 import 'package:Openbook/models/user.dart';
 
 class Follow {
   final int id;
-  final OBList list;
+  final FollowList list;
   final User followedUser;
 
   Follow({this.id, this.list, this.followedUser});

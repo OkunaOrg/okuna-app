@@ -9,7 +9,7 @@ import 'package:Openbook/services/file_cache.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
-import 'package:Openbook/services/lists_api.dart';
+import 'package:Openbook/services/follow_lists_api.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -55,7 +55,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   FollowsApiService followsApiService = FollowsApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
   CirclesApiService circlesApiService = CirclesApiService();
-  ListsApiService listsApiService = ListsApiService();
+  FollowListsApiService listsApiService = FollowListsApiService();
 
   LocalizationService localizationService;
 

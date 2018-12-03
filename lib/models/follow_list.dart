@@ -1,15 +1,15 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/user.dart';
 
-class OBList {
+class FollowList {
   final int id;
   final User creator;
   final Emoji emoji;
 
-  OBList({this.id, this.creator, this.emoji});
+  FollowList({this.id, this.creator, this.emoji});
 
-  factory OBList.fromJSON(Map<String, dynamic> json) {
-    return OBList(
+  factory FollowList.fromJSON(Map<String, dynamic> json) {
+    return FollowList(
         id: json['id'],
         creator: _parseUser(json['creator']),
         emoji: _parseEmoji(json['emoji']));
