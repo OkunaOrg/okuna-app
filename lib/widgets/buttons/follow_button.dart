@@ -30,7 +30,9 @@ class OBFollowButtonState extends State<OBFollowButton> {
 
   @override
   Widget build(BuildContext context) {
-    _userService = OpenbookProvider.of(context).userService;
+    var openbookProvider = OpenbookProvider.of(context);
+    _userService = openbookProvider.userService;
+    _toastService = openbookProvider.toastService;
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -77,6 +79,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
       _toastService.error(message: 'Unknown error', context: context);
+      rethrow;
     } finally {
       _setRequestInProgress(false);
     }

@@ -11,7 +11,7 @@ class OBProfileFollowersCount extends StatelessWidget {
   Widget build(BuildContext context) {
     int followersCount = user.followersCount;
 
-    if (followersCount == null || followersCount == 0) return SizedBox();
+    if (followersCount == null || followersCount == 0 || user.getProfileFollowersCountVisible() == false) return SizedBox();
 
     String count = getPrettyCount(followersCount);
 

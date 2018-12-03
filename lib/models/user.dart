@@ -142,14 +142,14 @@ class User {
   }
 
   void incrementFollowersCount() {
-    if (this.followingCount != null) {
+    if (this.followersCount != null) {
       this.followersCount += 1;
       this._notifyUpdate();
     }
   }
 
   void decrementFollowersCount() {
-    if (this.followingCount != null) {
+    if (this.followersCount != null) {
       this.followersCount -= 1;
       this._notifyUpdate();
     }
