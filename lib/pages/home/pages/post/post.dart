@@ -5,10 +5,12 @@ import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dar
 import 'package:Openbook/pages/home/pages/post/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
+import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -63,9 +65,7 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    return OBCupertinoPageScaffold(
-        navigationBar: _buildNavigationBar(),
-        child: Container(
+    return Container(
           child: Column(
             children: <Widget>[
               Expanded(
@@ -135,23 +135,16 @@ class OBPostPageState extends State<OBPostPage> {
               )
             ],
           ),
-        ));
+        );
   }
 
   void _onWantsToSeeUserProfile(User user) {
-    Navigator.push(context, PageRouteBuilder(
-     opaque: false,
-     pageBuilder: (BuildContext context, _, __) {
-       return Material(
-         child: OBProfilePage(user),
-       );
-     },
-     transitionsBuilder: (___, Animation<double> animation, ____, Widget child) {
-       return FadeTransition(
-         opacity: animation
-       );
-     }
-    ));
+    Navigator.push(context,
+        OBSlideRightRoute(
+            key: Key('obSlideProfileViewFromComments'),
+            navigationBar: OBProfileNavBar(user),
+            widget: OBProfilePage(user)
+        ));
   }
 
   Widget _buildNavigationBar() {

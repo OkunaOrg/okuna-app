@@ -1,10 +1,12 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
+import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -88,56 +90,51 @@ class OBTimelinePageState extends State<OBTimelinePage> {
 
   void _onWantsToSeeUserProfile(User user) async {
     _incrementPushedRoutes();
-    await Navigator.push(context, PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (BuildContext context, _, __) {
-          return Material(
-            color: Color.fromARGB(0, 0, 0, 0),
-            child: OBProfilePage(
+    await Navigator.push(context,
+        OBSlideRightRoute(
+          key: Key('obSlideProfileView'),
+          navigationBar: OBProfileNavBar(user),
+            widget: OBProfilePage(
               user,
               onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
               onWantsToSeePostComments: _onWantsToSeePostComments,
               onWantsToCommentPost: _onWantsToCommentPost,
               onWantsToReactToPost: widget.onWantsToReactToPost,
               onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-            ),
-          );
-        },
-        transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-          return SlideTransition(
-            position: new Tween<Offset>(
-              begin: const Offset(1.0, 0.0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: new FadeTransition(
-                opacity: animation,
-                child: child
-              ),
-            );
-        }
-    ));
+            )
+        ));
     _decrementPushedRoutes();
   }
 
   void _onWantsToCommentPost(Post post) async {
     _incrementPushedRoutes();
-    await Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBPostPage(post,
-                  autofocusCommentInput: true,
-                  onWantsToReactToPost: widget.onWantsToReactToPost),
-            )));
+    await Navigator.push(context,
+        OBSlideRightRoute(
+            key: Key('obSlidePostComments'),
+            navigationBar: CupertinoNavigationBar(
+              backgroundColor: Colors.white,
+              middle: Text('Post'),
+            ),
+            widget: OBPostPage(post,
+                autofocusCommentInput: true,
+                onWantsToReactToPost: widget.onWantsToReactToPost)
+        ));
     _decrementPushedRoutes();
   }
 
   void _onWantsToSeePostComments(Post post) async {
     _incrementPushedRoutes();
-    await Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBPostPage(post,
-                  autofocusCommentInput: false,
-                  onWantsToReactToPost: widget.onWantsToReactToPost),
-            )));
+    await Navigator.push(context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewComments'),
+            navigationBar: CupertinoNavigationBar(
+              backgroundColor: Colors.white,
+              middle: Text('Post'),
+            ),
+            widget: OBPostPage(post,
+                autofocusCommentInput: false,
+                onWantsToReactToPost: widget.onWantsToReactToPost)
+        ));
     _decrementPushedRoutes();
   }
 
