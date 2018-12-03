@@ -79,7 +79,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
   }
 
   void _onWantsToSeeUserProfile(User user) async {
-    _incrementPushedRoutes();
+    incrementPushedRoutes();
     await Navigator.push(context,
         OBSlideRightRoute(key: Key('obSlideProfileView'),
           navigationBar: OBProfileNavBar(user),
