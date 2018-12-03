@@ -2,7 +2,6 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -82,7 +81,6 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
     incrementPushedRoutes();
     await Navigator.push(context,
         OBSlideRightRoute(key: Key('obSlideProfileView'),
-          navigationBar: OBProfileNavBar(user),
             widget: OBProfilePage(
               user,
               onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
@@ -100,10 +98,6 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
-            navigationBar: CupertinoNavigationBar(
-              backgroundColor: Colors.white,
-              middle: Text('Post'),
-            ),
             widget: OBPostPage(post,
                 autofocusCommentInput: true,
                 onWantsToReactToPost: widget.onWantsToReactToPost)
@@ -116,10 +110,6 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
-            navigationBar: CupertinoNavigationBar(
-              backgroundColor: Colors.white,
-              middle: Text('Post'),
-            ),
             widget: OBPostPage(post,
                 autofocusCommentInput: false,
                 onWantsToReactToPost: widget.onWantsToReactToPost)

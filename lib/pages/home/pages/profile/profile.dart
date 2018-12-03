@@ -72,53 +72,60 @@ class OBProfilePageState extends State<OBProfilePage> {
       _needsBootstrap = false;
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Expanded(
-          child: RefreshIndicator(
-              child: LoadMore(
-                  whenEmptyLoad: false,
-                  isFinish: !_morePostsToLoad,
-                  delegate: OBHomePostsLoadMoreDelegate(),
-                  child: ListView.builder(
-                      controller: _scrollController,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.all(0),
-                      itemCount: _posts.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return Column(
-                            children: <Widget>[
-                              OBProfileCover(_user),
-                              OBProfileCard(_user,
-                                  onWantsToEditUserProfile:
-                                  widget.onWantsToEditUserProfile),
-                              Divider()
-                            ],
-                          );
-                        }
+    return CupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        navigationBar: OBProfileNavBar(_user),
+        child: Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: RefreshIndicator(
+                  child: LoadMore(
+                      whenEmptyLoad: false,
+                      isFinish: !_morePostsToLoad,
+                      delegate: OBHomePostsLoadMoreDelegate(),
+                      child: ListView.builder(
+                          controller: _scrollController,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.all(0),
+                          itemCount: _posts.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Column(
+                                children: <Widget>[
+                                  OBProfileCover(_user),
+                                  OBProfileCard(_user,
+                                      onWantsToEditUserProfile:
+                                      widget.onWantsToEditUserProfile),
+                                  Divider()
+                                ],
+                              );
+                            }
 
-                        int postIndex = index - 1;
+                            int postIndex = index - 1;
 
-                        var post = _posts[postIndex];
+                            var post = _posts[postIndex];
 
-                        return OBPost(
-                          post,
-                          onWantsToReactToPost: widget
-                              .onWantsToReactToPost,
-                          onWantsToCommentPost: widget
-                              .onWantsToCommentPost,
-                          onWantsToSeePostComments:
-                          widget.onWantsToSeePostComments,
-                          onWantsToSeeUserProfile:
-                          widget.onWantsToSeeUserProfile,
-                        );
-                      }),
-                  onLoadMore: _loadMorePosts),
-              onRefresh: _refresh),
-        )
-      ],
+                            return OBPost(
+                              post,
+                              onWantsToReactToPost: widget
+                                  .onWantsToReactToPost,
+                              onWantsToCommentPost: widget
+                                  .onWantsToCommentPost,
+                              onWantsToSeePostComments:
+                              widget.onWantsToSeePostComments,
+                              onWantsToSeeUserProfile:
+                              widget.onWantsToSeeUserProfile,
+                            );
+                          }),
+                      onLoadMore: _loadMorePosts),
+                  onRefresh: _refresh),
+                )
+              ],
+            ),
+          )
     );
   }
 

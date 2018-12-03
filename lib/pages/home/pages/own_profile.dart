@@ -75,7 +75,6 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlideProfileViewFromProfile'),
-            navigationBar: OBProfileNavBar(user),
             widget: OBProfilePage(
               user,
               onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
@@ -93,10 +92,6 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlidePostCommentsFromProfile'),
-            navigationBar: CupertinoNavigationBar(
-              backgroundColor: Colors.white,
-              middle: Text('Post'),
-            ),
             widget: OBPostPage(post,
                 autofocusCommentInput: true,
                 onWantsToReactToPost: widget.onWantsToReactToPost)
@@ -110,10 +105,6 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlidePostCommentsFromProfile'),
-            navigationBar: CupertinoNavigationBar(
-              backgroundColor: Colors.white,
-              middle: Text('Post'),
-            ),
             widget: OBPostPage(post,
                 autofocusCommentInput: false,
                 onWantsToReactToPost: widget.onWantsToReactToPost)

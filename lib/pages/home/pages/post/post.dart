@@ -65,7 +65,15 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    return Container(
+    return CupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: Colors.white,
+          middle: Text('Post'),
+        ),
+        child: Container(
+        color: Colors.white,
+        child: Container(
           child: Column(
             children: <Widget>[
               Expanded(
@@ -86,7 +94,7 @@ class OBPostPageState extends State<OBPostPage> {
                                 if (index == 0) {
                                   return Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Padding(
                                         key: _postCommentsKey,
@@ -118,9 +126,9 @@ class OBPostPageState extends State<OBPostPage> {
                                   postComment: postComment,
                                   post: widget.post,
                                   onWantsToSeeUserProfile:
-                                      _onWantsToSeeUserProfile,
+                                  _onWantsToSeeUserProfile,
                                   onPostCommentDeletedCallback:
-                                      onPostCommentDeletedCallback,
+                                  onPostCommentDeletedCallback,
                                 );
                               }),
                           onLoadMore: _loadMoreComments),
@@ -135,14 +143,15 @@ class OBPostPageState extends State<OBPostPage> {
               )
             ],
           ),
-        );
+        ),
+      )
+    );
   }
 
   void _onWantsToSeeUserProfile(User user) {
     Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlideProfileViewFromComments'),
-            navigationBar: OBProfileNavBar(user),
             widget: OBProfilePage(user)
         ));
   }

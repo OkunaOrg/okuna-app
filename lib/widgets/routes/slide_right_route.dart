@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 
 class OBSlideRightRoute extends PageRouteBuilder {
   final Widget widget;
-  final Widget navigationBar;
   final Key key;
-  OBSlideRightRoute({this.widget, this.navigationBar, this.key})
+  OBSlideRightRoute({this.widget, this.key})
       : super(
       opaque: false,
       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
@@ -18,16 +17,9 @@ class OBSlideRightRoute extends PageRouteBuilder {
                   Navigator.pop(context);
                 },
                 key: key,
-                child: CupertinoPageScaffold(
-                    backgroundColor: Color.fromARGB(0, 0, 0, 0),
-                    navigationBar: navigationBar,
-                    child: Container(
-                        color: Colors.white,
-                        child: widget
-                    )
+                child: widget
                 )
-            )
-        );
+            );
       },
       transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
