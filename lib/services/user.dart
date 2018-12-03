@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/follow_lists_list.dart';
+import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
-import 'package:Openbook/models/follow_list.dart';
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -20,12 +20,12 @@ import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
-import 'package:Openbook/services/circles_api.dart';
+import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/follow_lists_api.dart';
+import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:intl/intl.dart';
@@ -45,8 +45,8 @@ class UserService {
   EmojisApiService _emojisApiService;
   FollowsApiService _followsApiService;
   ConnectionsApiService _connectionsApiService;
-  CirclesApiService _circlesApiService;
-  FollowListsApiService _followListsApiService;
+  ConnectionsCirclesApiService _connectionsCirclesApiService;
+  FollowsListsApiService _followsListsApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -73,12 +73,13 @@ class UserService {
     _connectionsApiService = connectionsApiService;
   }
 
-  void setCirclesApiService(CirclesApiService circlesApiService) {
-    _circlesApiService = circlesApiService;
+  void setConnectionsCirclesApiService(
+      ConnectionsCirclesApiService circlesApiService) {
+    _connectionsCirclesApiService = circlesApiService;
   }
 
-  void setListsApiService(FollowListsApiService listsApiService) {
-    _followListsApiService = listsApiService;
+  void setFollowsListsApiService(FollowsListsApiService listsApiService) {
+    _followsListsApiService = listsApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {
@@ -344,7 +345,7 @@ class UserService {
   }
 
   Future<Follow> followUserWithUsername(String username,
-      {FollowList list}) async {
+      {FollowsList list}) async {
     HttpieResponse response = await _followsApiService
         .followUserWithUsername(username, listId: list?.id);
     _checkResponseIsCreated(response);
@@ -359,7 +360,7 @@ class UserService {
   }
 
   Future<Follow> updateFollowWithUsername(String username,
-      {FollowList list}) async {
+      {FollowsList list}) async {
     HttpieResponse response = await _followsApiService
         .updateFollowWithUsername(username, listId: list.id);
     _checkResponseIsOk(response);
@@ -391,58 +392,59 @@ class UserService {
     return Connection.fromJson(json.decode(response.body));
   }
 
-  Future<CirclesList> getCircles() async {
-    HttpieResponse response = await _circlesApiService.getCircles();
+  Future<CirclesList> getConnectionsCircles() async {
+    HttpieResponse response = await _connectionsCirclesApiService.getCircles();
     _checkResponseIsOk(response);
     return CirclesList.fromJson(json.decode(response.body));
   }
 
-  Future<Circle> createCircle({@required String name, String color}) async {
-    HttpieResponse response =
-        await _circlesApiService.createCircle(name: name, color: color);
+  Future<Circle> createConnectionsCircle(
+      {@required String name, String color}) async {
+    HttpieResponse response = await _connectionsCirclesApiService.createCircle(
+        name: name, color: color);
     _checkResponseIsCreated(response);
     return Circle.fromJSON(json.decode(response.body));
   }
 
-  Future<Circle> updateCircle(Circle circle,
+  Future<Circle> updateConnectionsCircle(Circle circle,
       {String name, String color}) async {
-    HttpieResponse response = await _circlesApiService
+    HttpieResponse response = await _connectionsCirclesApiService
         .updateCircleWithId(circle.id, name: name, color: color);
     _checkResponseIsOk(response);
     return Circle.fromJSON(json.decode(response.body));
   }
 
-  Future<void> deleteCircle(Circle circle) async {
+  Future<void> deleteConnectionsCircle(Circle circle) async {
     HttpieResponse response =
-        await _circlesApiService.deleteCircleWithId(circle.id);
+        await _connectionsCirclesApiService.deleteCircleWithId(circle.id);
     _checkResponseIsOk(response);
   }
 
-  Future<FollowListsList> getFollowLists() async {
-    HttpieResponse response = await _followListsApiService.getLists();
+  Future<FollowsListsList> getFollowsLists() async {
+    HttpieResponse response = await _followsListsApiService.getLists();
     _checkResponseIsOk(response);
-    return FollowListsList.fromJson(json.decode(response.body));
+    return FollowsListsList.fromJson(json.decode(response.body));
   }
 
-  Future<FollowList> createFollowList(
+  Future<FollowsList> createFollowsList(
       {@required String name, String emojiId}) async {
     HttpieResponse response =
-        await _followListsApiService.createList(name: name, emojiId: emojiId);
+        await _followsListsApiService.createList(name: name, emojiId: emojiId);
     _checkResponseIsCreated(response);
-    return FollowList.fromJSON(json.decode(response.body));
+    return FollowsList.fromJSON(json.decode(response.body));
   }
 
-  Future<FollowList> updateFollowList(FollowList list,
+  Future<FollowsList> updateFollowsList(FollowsList list,
       {String name, String emojiId}) async {
-    HttpieResponse response = await _followListsApiService
+    HttpieResponse response = await _followsListsApiService
         .updateListWithId(list.id, name: name, emojiId: emojiId);
     _checkResponseIsOk(response);
-    return FollowList.fromJSON(json.decode(response.body));
+    return FollowsList.fromJSON(json.decode(response.body));
   }
 
-  Future<void> deleteFollowList(FollowList list) async {
+  Future<void> deleteFollowsList(FollowsList list) async {
     HttpieResponse response =
-        await _followListsApiService.deleteListWithId(list.id);
+        await _followsListsApiService.deleteListWithId(list.id);
     _checkResponseIsOk(response);
   }
 

@@ -4,16 +4,16 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/string_template.dart';
 import 'package:meta/meta.dart';
 
-class CirclesApiService {
+class FollowsListsApiService {
   HttpieService _httpService;
   StringTemplateService _stringTemplateService;
 
   String apiURL;
 
-  static const GET_CIRCLES_PATH = 'api/circles/';
-  static const CREATE_CIRCLE_PATH = 'api/circles/';
-  static const UPDATE_CIRCLE_PATH = 'api/circles/{circleId}';
-  static const DELETE_CIRCLE_PATH = 'api/circles/{circleId}';
+  static const GET_LISTS_PATH = 'api/lists/';
+  static const CREATE_LIST_PATH = 'api/lists/';
+  static const UPDATE_LIST_PATH = 'api/lists/{listId}';
+  static const DELETE_LIST_PATH = 'api/lists/{listId}';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
@@ -27,47 +27,47 @@ class CirclesApiService {
     apiURL = newApiURL;
   }
 
-  Future<HttpieResponse> getCircles() {
-    String url = _makeApiUrl(GET_CIRCLES_PATH);
+  Future<HttpieResponse> getLists() {
+    String url = _makeApiUrl(GET_LISTS_PATH);
     return _httpService.get(url, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> createCircle({@required String name, String color}) {
-    String url = _makeApiUrl(CREATE_CIRCLE_PATH);
+  Future<HttpieResponse> createList({@required String name, String emojiId}) {
+    String url = _makeApiUrl(CREATE_LIST_PATH);
     Map<String, dynamic> body = {'name': name};
 
-    if (color != null) body['color'] = color;
+    if (emojiId != null) body['emoji_id'] = emojiId;
 
     return _httpService.putJSON(url,
         appendAuthorizationToken: true, body: body);
   }
 
-  Future<HttpieResponse> updateCircleWithId(int circleId,
-      {String name, String color}) {
+  Future<HttpieResponse> updateListWithId(int listId,
+      {String name, String emojiId}) {
     Map<String, dynamic> body = {};
 
-    if (color != null) body['color'] = color;
+    if (emojiId != null) body['emoji_id'] = emojiId;
 
     if (name != null) body['name'] = name;
 
-    String url = _makeUpdateCirclePath(circleId);
+    String url = _makeUpdateListPath(listId);
     return _httpService.patchJSON(url,
         appendAuthorizationToken: true, body: body);
   }
 
-  Future<HttpieResponse> deleteCircleWithId(int circleId) {
-    String url = _makeDeleteCirclePath(circleId);
+  Future<HttpieResponse> deleteListWithId(int listId) {
+    String url = _makeDeleteListPath(listId);
     return _httpService.delete(url, appendAuthorizationToken: true);
   }
 
-  String _makeUpdateCirclePath(int circleId) {
+  String _makeUpdateListPath(int listId) {
     return _stringTemplateService
-        .parse(UPDATE_CIRCLE_PATH, {'circleId': circleId});
+        .parse(UPDATE_LIST_PATH, {'listId': listId});
   }
 
-  String _makeDeleteCirclePath(int circleId) {
+  String _makeDeleteListPath(int listId) {
     return _stringTemplateService
-        .parse(DELETE_CIRCLE_PATH, {'circleId': circleId});
+        .parse(DELETE_LIST_PATH, {'listId': listId});
   }
 
   String _makeApiUrl(String string) {

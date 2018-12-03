@@ -1,6 +1,6 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
-import 'package:Openbook/services/circles_api.dart';
+import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
@@ -9,7 +9,7 @@ import 'package:Openbook/services/file_cache.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
-import 'package:Openbook/services/follow_lists_api.dart';
+import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -54,8 +54,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DatePickerService datePickerService = DatePickerService();
   FollowsApiService followsApiService = FollowsApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
-  CirclesApiService circlesApiService = CirclesApiService();
-  FollowListsApiService listsApiService = FollowListsApiService();
+  ConnectionsCirclesApiService connectionsCirclesApiService = ConnectionsCirclesApiService();
+  FollowsListsApiService followsListsApiService = FollowsListsApiService();
 
   LocalizationService localizationService;
 
@@ -65,10 +65,10 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     initAsyncState();
 
     createAccountBloc.setValidationService(validationService);
-    circlesApiService.setHttpService(httpService);
-    circlesApiService.setStringTemplateService(stringTemplateService);
-    listsApiService.setHttpService(httpService);
-    listsApiService.setStringTemplateService(stringTemplateService);
+    connectionsCirclesApiService.setHttpService(httpService);
+    connectionsCirclesApiService.setStringTemplateService(stringTemplateService);
+    followsListsApiService.setHttpService(httpService);
+    followsListsApiService.setStringTemplateService(stringTemplateService);
     connectionsApiService.setHttpService(httpService);
     authApiService.setHttpService(httpService);
     followsApiService.setHttpService(httpService);
@@ -80,7 +80,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setStorageService(storageService);
     userService.setFollowsApiService(followsApiService);
     userService.setConnectionsApiService(connectionsApiService);
-    userService.setCirclesApiService(circlesApiService);
+    userService.setConnectionsCirclesApiService(connectionsCirclesApiService);
     emojisApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);
@@ -95,8 +95,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     emojisApiService.setApiURL(environment.API_URL);
     followsApiService.setApiURL(environment.API_URL);
     connectionsApiService.setApiURL(environment.API_URL);
-    circlesApiService.setApiURL(environment.API_URL);
-    listsApiService.setApiURL(environment.API_URL);
+    connectionsCirclesApiService.setApiURL(environment.API_URL);
+    followsListsApiService.setApiURL(environment.API_URL);
   }
 
   @override
