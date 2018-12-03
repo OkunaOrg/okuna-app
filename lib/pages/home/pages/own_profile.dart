@@ -46,19 +46,14 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var data = snapshot.data;
         if (data == null) return SizedBox();
-        return CupertinoPageScaffold(
-            navigationBar: OBProfileNavBar(data),
-            child: Material(
-              child: OBProfilePage(
-                data,
-                controller: _profilePageController,
-                onWantsToReactToPost: widget.onWantsToReactToPost,
-                onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                onWantsToSeePostComments: _onWantsToSeePostComments,
-                onWantsToCommentPost: _onWantsToCommentPost,
-            ),
-          ),
+        return OBProfilePage(
+              data,
+              controller: _profilePageController,
+              onWantsToReactToPost: widget.onWantsToReactToPost,
+              onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
+              onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+              onWantsToSeePostComments: _onWantsToSeePostComments,
+              onWantsToCommentPost: _onWantsToCommentPost,
         );
       },
     );

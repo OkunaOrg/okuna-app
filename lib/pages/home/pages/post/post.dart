@@ -65,7 +65,7 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    return CupertinoPageScaffold(
+    return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: CupertinoNavigationBar(
           backgroundColor: Colors.white,
