@@ -324,8 +324,8 @@ class UserService {
   Future<Follow> followUserWithUsername(String username,
       {FollowList list}) async {
     HttpieResponse response = await _followsApiService
-        .followUserWithUsername(username, listId: list.id);
-    _checkResponseIsOk(response);
+        .followUserWithUsername(username, listId: list?.id);
+    _checkResponseIsCreated(response);
     return Follow.fromJson(json.decode(response.body));
   }
 

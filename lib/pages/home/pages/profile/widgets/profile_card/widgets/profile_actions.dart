@@ -1,6 +1,8 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/buttons/follow.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
@@ -19,24 +21,8 @@ class OBProfileActions extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        isLoggedInUser ? _buildEditButton() : _buildFollowButton()
+        isLoggedInUser ? _buildEditButton() : OBFollowButton(user)
       ],
-    );
-  }
-
-  _buildFollowButton() {
-    return FlatButton(
-      color: Color(0xFF7ED321),
-      child: Text(
-        'Follow',
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-      ),
-      onPressed: () {
-        print('Follow');
-        onWantsToEditUserProfile(user);
-      },
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0)),
     );
   }
 
