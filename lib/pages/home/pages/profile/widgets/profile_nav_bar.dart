@@ -13,7 +13,7 @@ class OBProfileNavBar extends StatelessWidget
     var route = ModalRoute.of(context);
 
     return CupertinoNavigationBar(
-      transitionBetweenRoutes: true,
+      transitionBetweenRoutes: false,
       leading: route is PageRoute && route.canPop
           ? IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.black),
