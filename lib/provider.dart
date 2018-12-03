@@ -1,5 +1,6 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
@@ -52,6 +53,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DatePickerService datePickerService = DatePickerService();
   FollowsApiService followsApiService = FollowsApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
+  CirclesApiService circlesApiService = CirclesApiService();
 
   LocalizationService localizationService;
 
@@ -61,6 +63,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     initAsyncState();
 
     createAccountBloc.setValidationService(validationService);
+    circlesApiService.setHttpService(httpService);
+    circlesApiService.setStringTemplateService(stringTemplateService);
     connectionsApiService.setHttpService(httpService);
     authApiService.setHttpService(httpService);
     followsApiService.setHttpService(httpService);
@@ -72,6 +76,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setStorageService(storageService);
     userService.setFollowsApiService(followsApiService);
     userService.setConnectionsApiService(connectionsApiService);
+    userService.setCirclesApiService(circlesApiService);
     emojisApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);

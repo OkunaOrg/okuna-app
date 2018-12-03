@@ -62,6 +62,26 @@ class HttpieService {
     }
   }
 
+  Future<HttpieResponse> patch(url,
+      {Map<String, String> headers,
+      body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) async {
+    var finalHeaders = _getHeadersWithConfig(
+        headers: headers,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+
+    try {
+      var response = await http.patch(url,
+          headers: finalHeaders, body: body, encoding: encoding);
+      return HttpieResponse(response);
+    } catch (error) {
+      _handleRequestError(error);
+    }
+  }
+
   Future<HttpieResponse> delete(url,
       {Map<String, String> headers,
       bool appendLanguageHeader,
@@ -112,6 +132,26 @@ class HttpieService {
     jsonHeaders.addAll(headers);
 
     return put(url,
+        headers: jsonHeaders,
+        body: jsonBody,
+        encoding: encoding,
+        appendLanguageHeader: appendLanguageHeader,
+        appendAuthorizationToken: appendAuthorizationToken);
+  }
+
+  Future<HttpieResponse> patchJSON(url,
+      {Map<String, String> headers = const {},
+      body,
+      Encoding encoding,
+      bool appendLanguageHeader,
+      bool appendAuthorizationToken}) {
+    String jsonBody = json.encode(body);
+
+    Map<String, String> jsonHeaders = _getJsonHeaders();
+
+    jsonHeaders.addAll(headers);
+
+    return patch(url,
         headers: jsonHeaders,
         body: jsonBody,
         encoding: encoding,

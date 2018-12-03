@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
@@ -18,6 +19,7 @@ import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
@@ -41,6 +43,7 @@ class UserService {
   EmojisApiService _emojisApiService;
   FollowsApiService _followsApiService;
   ConnectionsApiService _connectionsApiService;
+  CirclesApiService _circlesApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -65,6 +68,10 @@ class UserService {
 
   void setConnectionsApiService(ConnectionsApiService connectionsApiService) {
     _connectionsApiService = connectionsApiService;
+  }
+
+  void setCirclesApiService(CirclesApiService circlesApiService) {
+    _circlesApiService = circlesApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {
@@ -375,6 +382,33 @@ class UserService {
             circlesIds: circles.map((circle) => circle.id));
     _checkResponseIsOk(response);
     return Connection.fromJson(json.decode(response.body));
+  }
+
+  Future<CirclesList> getCircles() async {
+    HttpieResponse response = await _circlesApiService.getCircles();
+    _checkResponseIsOk(response);
+    return CirclesList.fromJson(json.decode(response.body));
+  }
+
+  Future<Circle> createCircle({@required String name, String color}) async {
+    HttpieResponse response =
+        await _circlesApiService.createCircle(name: name, color: color);
+    _checkResponseIsCreated(response);
+    return Circle.fromJSON(json.decode(response.body));
+  }
+
+  Future<Circle> updateCircle(Circle circle,
+      {String name, String color}) async {
+    HttpieResponse response = await _circlesApiService
+        .updateCircleWithId(circle.id, name: name, color: color);
+    _checkResponseIsOk(response);
+    return Circle.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> deleteCircle(Circle circle) async {
+    HttpieResponse response =
+        await _circlesApiService.deleteCircleWithId(circle.id);
+    _checkResponseIsOk(response);
   }
 
   Future<User> _setUserWithData(String userData) async {
