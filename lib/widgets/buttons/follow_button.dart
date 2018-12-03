@@ -72,6 +72,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
     _setRequestInProgress(true);
     try {
       await _userService.followUserWithUsername(widget.user.username);
+      widget.user.incrementFollowersCount();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -85,6 +86,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
     _setRequestInProgress(true);
     try {
       await _userService.unFollowUserWithUsername(widget.user.username);
+      widget.user.decrementFollowersCount();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
