@@ -345,10 +345,10 @@ class UserService {
   }
 
   Future<Follow> followUserWithUsername(String username,
-      {List<FollowsList> followsLists}) async {
+      {List<FollowsList> followsLists = const []}) async {
     HttpieResponse response = await _followsApiService.followUserWithUsername(
         username,
-        listsIds: followsLists.map((followsList) => followsList.id));
+        listsIds: followsLists.map((followsList) => followsList.id).toList());
     _checkResponseIsCreated(response);
     return Follow.fromJson(json.decode(response.body));
   }
@@ -361,19 +361,19 @@ class UserService {
   }
 
   Future<Follow> updateFollowWithUsername(String username,
-      {List<FollowsList> followsLists}) async {
+      {List<FollowsList> followsLists = const []}) async {
     HttpieResponse response = await _followsApiService.updateFollowWithUsername(
         username,
-        listsIds: followsLists.map((followsList) => followsList.id));
+        listsIds: followsLists.map((followsList) => followsList.id).toList());
     _checkResponseIsOk(response);
     return Follow.fromJson(json.decode(response.body));
   }
 
   Future<Connection> connectWithUserWithUsername(String username,
-      {@required List<Circle> circles}) async {
+      {@required List<Circle> circles = const []}) async {
     HttpieResponse response =
         await _connectionsApiService.connectWithUserWithUsername(username,
-            circlesIds: circles.map((circle) => circle.id));
+            circlesIds: circles.map((circle) => circle.id).toList());
     _checkResponseIsCreated(response);
     return Connection.fromJson(json.decode(response.body));
   }
@@ -386,10 +386,10 @@ class UserService {
   }
 
   Future<Connection> updateConnectionWithUsername(String username,
-      {List<Circle> circles}) async {
+      {List<Circle> circles = const []}) async {
     HttpieResponse response =
         await _connectionsApiService.updateConnectionWithUsername(username,
-            circlesIds: circles.map((circle) => circle.id));
+            circlesIds: circles.map((circle) => circle.id).toList());
     _checkResponseIsOk(response);
     return Connection.fromJson(json.decode(response.body));
   }
