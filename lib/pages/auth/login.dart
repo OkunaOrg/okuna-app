@@ -3,6 +3,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
@@ -111,8 +112,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
 
     return OBPrimaryButton(
       isLoading: _loginInProgress,
-      isFullWidth: true,
-      isLarge: true,
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () async {
         _isSubmitted = true;

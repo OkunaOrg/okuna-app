@@ -1,6 +1,7 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
 
@@ -96,8 +97,8 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         localizationService.trans('AUTH.CREATE_ACC.DONE_CONTINUE');
 
     return OBPrimaryButton(
-      isFullWidth: true,
-      isLarge: true,
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

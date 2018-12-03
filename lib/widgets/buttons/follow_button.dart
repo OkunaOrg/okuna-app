@@ -3,6 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowButton extends StatefulWidget {
@@ -42,15 +43,13 @@ class OBFollowButtonState extends State<OBFollowButton> {
   }
 
   Widget _buildFollowButton() {
-    return FlatButton(
-      color: Color(0xFF7ED321),
+    return OBButton(
       child: Text(
         'Follow',
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
+      isLoading: _requestInProgress,
       onPressed: _followUser,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0)),
     );
   }
 
@@ -71,7 +70,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
   void _followUser() async {
     _setRequestInProgress(true);
     try {
-      _userService.followUserWithUsername(widget.user.username);
+      await _userService.followUserWithUsername(widget.user.username);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -84,7 +83,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
   void _unFollowUser() async {
     _setRequestInProgress(true);
     try {
-      _userService.unFollowUserWithUsername(widget.user.username);
+      await _userService.unFollowUserWithUsername(widget.user.username);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {

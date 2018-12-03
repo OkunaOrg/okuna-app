@@ -1,6 +1,7 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
@@ -100,8 +101,8 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return OBPrimaryButton(
-      isFullWidth: true,
-      isLarge: true,
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
       isLoading: usernameCheckInProgress,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
