@@ -3,7 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowButton extends StatefulWidget {
@@ -37,13 +37,16 @@ class OBFollowButtonState extends State<OBFollowButton> {
       initialData: widget.user,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
+
+        if (user?.isFollowing == null) return SizedBox();
+
         return user.isFollowing ? _buildUnfollowButton() : _buildFollowButton();
       },
     );
   }
 
   Widget _buildFollowButton() {
-    return OBButton(
+    return OBPrimaryButton(
       child: Text(
         'Follow',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -54,16 +57,14 @@ class OBFollowButtonState extends State<OBFollowButton> {
   }
 
   Widget _buildUnfollowButton() {
-    return OutlineButton(
-      color: Color(0xFF7ED321),
+    return OBPrimaryButton(
+      isOutlined: true,
       child: Text(
         'Unfollow',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      borderSide: BorderSide(color: Color(0xFF7ED321)),
+      isLoading: _requestInProgress,
       onPressed: _unFollowUser,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0)),
     );
   }
 

@@ -91,7 +91,8 @@ class OBButton extends StatelessWidget {
       width: 20.0,
       child: CircularProgressIndicator(
           strokeWidth: 2.0,
-          valueColor: AlwaysStoppedAnimation<Color>(textColor)),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(isOutlined ? color : textColor)),
     );
   }
 
