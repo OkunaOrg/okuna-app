@@ -88,17 +88,34 @@ class OBTimelinePageState extends State<OBTimelinePage> {
 
   void _onWantsToSeeUserProfile(User user) async {
     _incrementPushedRoutes();
-    await Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBProfilePage(
-                user,
-                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                onWantsToSeePostComments: _onWantsToSeePostComments,
-                onWantsToCommentPost: _onWantsToCommentPost,
-                onWantsToReactToPost: widget.onWantsToReactToPost,
-                onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
+    await Navigator.push(context, PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) {
+          return Material(
+            color: Color.fromARGB(0, 0, 0, 0),
+            child: OBProfilePage(
+              user,
+              onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+              onWantsToSeePostComments: _onWantsToSeePostComments,
+              onWantsToCommentPost: _onWantsToCommentPost,
+              onWantsToReactToPost: widget.onWantsToReactToPost,
+              onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
+            ),
+          );
+        },
+        transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+          return SlideTransition(
+            position: new Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: new FadeTransition(
+                opacity: animation,
+                child: child
               ),
-            )));
+            );
+        }
+    ));
     _decrementPushedRoutes();
   }
 

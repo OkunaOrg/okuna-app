@@ -16,6 +16,7 @@ import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
+import 'package:pigment/pigment.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
@@ -44,6 +45,7 @@ class OBProfilePageState extends State<OBProfilePage> {
   User _user;
   bool _needsBootstrap;
   bool _morePostsToLoad;
+  DragStartDetails _swipeRightProgress;
   List<Post> _posts;
   UserService _userService;
   ToastService _toastService;
@@ -71,53 +73,73 @@ class OBProfilePageState extends State<OBProfilePage> {
       _needsBootstrap = false;
     }
 
-    return CupertinoPageScaffold(
-      navigationBar: OBProfileNavBar(_user),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Expanded(
-            child: RefreshIndicator(
-                child: LoadMore(
-                    whenEmptyLoad: false,
-                    isFinish: !_morePostsToLoad,
-                    delegate: OBHomePostsLoadMoreDelegate(),
-                    child: ListView.builder(
-                        controller: _scrollController,
-                        physics: AlwaysScrollableScrollPhysics(),
-                        padding: EdgeInsets.all(0),
-                        itemCount: _posts.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return Column(
-                              children: <Widget>[
-                                OBProfileCover(_user),
-                                OBProfileCard(_user,
-                                    onWantsToEditUserProfile:
-                                        widget.onWantsToEditUserProfile),
-                                Divider()
-                              ],
-                            );
-                          }
+    return GestureDetector(
+      onHorizontalDragStart: (DragStartDetails details) {
+          setState(() {
+            _swipeRightProgress = details;
+            print(_swipeRightProgress);
+          });
+      },
+      child: CupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        navigationBar: OBProfileNavBar(_user),
+        child: Dismissible(
+            background: Container(color: Color.fromARGB(0, 0, 0, 0)),
+            direction: DismissDirection.startToEnd,
+            onDismissed: (direction) {
+              Navigator.pop(context);
+            },
+            key: Key('profile_page'),
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Expanded(
+                    child: RefreshIndicator(
+                        child: LoadMore(
+                            whenEmptyLoad: false,
+                            isFinish: !_morePostsToLoad,
+                            delegate: OBHomePostsLoadMoreDelegate(),
+                            child: ListView.builder(
+                                controller: _scrollController,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                padding: EdgeInsets.all(0),
+                                itemCount: _posts.length + 1,
+                                itemBuilder: (context, index) {
+                                  if (index == 0) {
+                                    return Column(
+                                      children: <Widget>[
+                                        OBProfileCover(_user),
+                                        OBProfileCard(_user,
+                                            onWantsToEditUserProfile:
+                                            widget.onWantsToEditUserProfile),
+                                        Divider()
+                                      ],
+                                    );
+                                  }
 
-                          int postIndex = index - 1;
+                                  int postIndex = index - 1;
 
-                          var post = _posts[postIndex];
+                                  var post = _posts[postIndex];
 
-                          return OBPost(
-                            post,
-                            onWantsToReactToPost: widget.onWantsToReactToPost,
-                            onWantsToCommentPost: widget.onWantsToCommentPost,
-                            onWantsToSeePostComments:
-                                widget.onWantsToSeePostComments,
-                            onWantsToSeeUserProfile:
-                                widget.onWantsToSeeUserProfile,
-                          );
-                        }),
-                    onLoadMore: _loadMorePosts),
-                onRefresh: _refresh),
-          )
-        ],
+                                  return OBPost(
+                                    post,
+                                    onWantsToReactToPost: widget.onWantsToReactToPost,
+                                    onWantsToCommentPost: widget.onWantsToCommentPost,
+                                    onWantsToSeePostComments:
+                                    widget.onWantsToSeePostComments,
+                                    onWantsToSeeUserProfile:
+                                    widget.onWantsToSeeUserProfile,
+                                  );
+                                }),
+                            onLoadMore: _loadMorePosts),
+                        onRefresh: _refresh),
+                  )
+                ],
+              ),
+            )
+        ),
       ),
     );
   }

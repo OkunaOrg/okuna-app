@@ -139,10 +139,19 @@ class OBPostPageState extends State<OBPostPage> {
   }
 
   void _onWantsToSeeUserProfile(User user) {
-    Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBProfilePage(user),
-            )));
+    Navigator.push(context, PageRouteBuilder(
+     opaque: false,
+     pageBuilder: (BuildContext context, _, __) {
+       return Material(
+         child: OBProfilePage(user),
+       );
+     },
+     transitionsBuilder: (___, Animation<double> animation, ____, Widget child) {
+       return FadeTransition(
+         opacity: animation
+       );
+     }
+    ));
   }
 
   Widget _buildNavigationBar() {
