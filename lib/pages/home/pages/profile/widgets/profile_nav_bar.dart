@@ -13,7 +13,7 @@ class OBProfileNavBar extends StatelessWidget
     var route = ModalRoute.of(context);
 
     return CupertinoNavigationBar(
-      transitionBetweenRoutes: false,
+      transitionBetweenRoutes: true,
       leading: route is PageRoute && route.canPop
           ? IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.black),
@@ -35,9 +35,12 @@ class OBProfileNavBar extends StatelessWidget
 
             if (user == null) return SizedBox();
 
-            return Text(
-              '@' + user.username,
-              style: TextStyle(color: Colors.black),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[Text(
+            '@' + user.username,
+              style: TextStyle(color: Colors.black,),
+            )],
             );
           }),
     );
