@@ -2,7 +2,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/page_scaffold.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';

@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
+import 'package:Openbook/models/follow.dart';
+import 'package:Openbook/models/follow_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -12,8 +14,10 @@ import 'package:Openbook/models/post_reaction_list.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
+import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -32,6 +36,7 @@ class UserService {
   HttpieService _httpieService;
   PostsApiService _postsApiService;
   EmojisApiService _emojisApiService;
+  FollowsApiService _followsApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -48,6 +53,10 @@ class UserService {
 
   void setPostsApiService(PostsApiService postsApiService) {
     _postsApiService = postsApiService;
+  }
+
+  void setFollowsApiService(FollowsApiService followsApiService) {
+    _followsApiService = followsApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {
@@ -166,6 +175,15 @@ class UserService {
 
   bool isLoggedIn() {
     return _loggedInUser != null;
+  }
+
+  Future<PostsList> getTrendingPosts() async {
+    HttpieResponse response =
+        await _postsApiService.getTrendingPosts(authenticatedRequest: true);
+
+    _checkResponseIsOk(response);
+
+    return PostsList.fromJson(json.decode(response.body));
   }
 
   Future<PostsList> getTimelinePosts(
@@ -294,6 +312,36 @@ class UserService {
         .getUserWithUsername(username, authenticatedRequest: true);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> getUsersWithQuery(String query) async {
+    HttpieResponse response = await _authApiService.getUsersWithQuery(query,
+        authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<Follow> followUserWithUsername(String username,
+      {FollowList list}) async {
+    HttpieResponse response = await _followsApiService
+        .followUserWithUsername(username, listId: list?.id);
+    _checkResponseIsCreated(response);
+    return Follow.fromJson(json.decode(response.body));
+  }
+
+  Future<User> unFollowUserWithUsername(String username) async {
+    HttpieResponse response =
+        await _followsApiService.unFollowUserWithUsername(username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<Follow> updateFollowWithUsername(String username,
+      {FollowList list}) async {
+    HttpieResponse response = await _followsApiService
+        .updateFollowWithUsername(username, listId: list.id);
+    _checkResponseIsOk(response);
+    return Follow.fromJson(json.decode(response.body));
   }
 
   Future<User> _setUserWithData(String userData) async {

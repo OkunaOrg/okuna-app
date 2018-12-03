@@ -9,6 +9,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/cover.dart';
 import 'package:flutter/cupertino.dart';
@@ -270,7 +271,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       trailing: OBPrimaryButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,
-        isSmall: true,
+        size: OBButtonSize.small,
         onPressed: _submitForm,
         child: Text('Save'),
       ),

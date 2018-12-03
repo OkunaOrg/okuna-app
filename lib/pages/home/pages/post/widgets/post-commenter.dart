@@ -5,6 +5,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -82,7 +83,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                 maxLines: null,
                 style: TextStyle(fontSize: 14.0, color: Colors.black87),
                 decoration: InputDecoration(
-                  hintText: 'Write something nice...',
+                  hintText: 'Write something...',
                   contentPadding: inputContentPadding,
                   border: InputBorder.none,
                 ),
@@ -95,8 +96,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             padding: EdgeInsets.only(right: 20.0, left: 10.0),
             child: OBPrimaryButton(
               isLoading: _commentInProgress,
-              isFullWidth: false,
-              isSmall: true,
+              size: OBButtonSize.small,
               onPressed: _commentPost,
               child: Text('Post'),
             ),

@@ -4,12 +4,12 @@ import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/widgets/emoji_groups/emoji_groups.dart';
-import 'package:Openbook/pages/home/modals/react_to_post/widgets/emoji_search_bar.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/widgets/emoji_search_results.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -72,8 +72,9 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            OBEmojiSearchBar(
+            OBSearchBar(
               onSearch: _onSearch,
+              hintText: 'Search reactions...',
             ),
             Expanded(
                 child: _hasSearch

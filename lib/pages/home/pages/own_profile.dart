@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
@@ -25,7 +26,7 @@ class OBOwnProfilePage extends StatefulWidget {
   }
 }
 
-class OBOwnProfilePageState extends State<OBOwnProfilePage> {
+class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
   OBProfilePageController _profilePageController;
   int _pushedRoutes;
 
@@ -69,26 +70,8 @@ class OBOwnProfilePageState extends State<OBOwnProfilePage> {
     _profilePageController.scrollToTop();
   }
 
-  void popUntilFirst() {
-    Navigator.of(context).popUntil((Route<dynamic> r) => r.isFirst);
-    _pushedRoutes = 0;
-  }
-
-  bool hasPushedRoutes() {
-    return _pushedRoutes > 0;
-  }
-
-  void _incrementPushedRoutes() {
-    _pushedRoutes += 1;
-  }
-
-  void _decrementPushedRoutes() {
-    if (_pushedRoutes == 0) return;
-    _pushedRoutes -= 1;
-  }
-
   void _onWantsToSeeUserProfile(User user) async {
-    _incrementPushedRoutes();
+    incrementPushedRoutes();
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlideProfileViewFromProfile'),
@@ -102,11 +85,11 @@ class OBOwnProfilePageState extends State<OBOwnProfilePage> {
               onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
             )
         ));
-    _decrementPushedRoutes();
+    decrementPushedRoutes();
   }
 
   void _onWantsToCommentPost(Post post) async {
-    _incrementPushedRoutes();
+    incrementPushedRoutes();
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlidePostCommentsFromProfile'),
@@ -119,11 +102,11 @@ class OBOwnProfilePageState extends State<OBOwnProfilePage> {
                 onWantsToReactToPost: widget.onWantsToReactToPost)
         )
       );
-    _decrementPushedRoutes();
+    decrementPushedRoutes();
   }
 
   void _onWantsToSeePostComments(Post post) async {
-    _incrementPushedRoutes();
+    incrementPushedRoutes();
     await Navigator.push(context,
         OBSlideRightRoute(
             key: Key('obSlidePostCommentsFromProfile'),
@@ -135,27 +118,13 @@ class OBOwnProfilePageState extends State<OBOwnProfilePage> {
                 autofocusCommentInput: false,
                 onWantsToReactToPost: widget.onWantsToReactToPost)
         ));
-    _decrementPushedRoutes();
+    decrementPushedRoutes();
   }
 }
 
-class OBOwnProfilePageController {
-  OBOwnProfilePageState _ownProfilePageState;
-
-  void attach(OBOwnProfilePageState ownProfilePageState) {
-    assert(ownProfilePageState != null, 'Cannot attach to empty state');
-    _ownProfilePageState = ownProfilePageState;
-  }
-
+class OBOwnProfilePageController
+    extends OBBasePageStateController<OBOwnProfilePageState> {
   void scrollToTop() {
-    _ownProfilePageState.scrollToTop();
-  }
-
-  void popUntilProfile() {
-    _ownProfilePageState.popUntilFirst();
-  }
-
-  bool hasPushedRoutes() {
-    return _ownProfilePageState.hasPushedRoutes();
+    state.scrollToTop();
   }
 }

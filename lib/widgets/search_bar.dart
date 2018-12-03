@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-class OBEmojiSearchBar extends StatefulWidget {
-  OBEmojiSearchBarOnSearch onSearch;
-  VoidCallback onCancel;
+class OBSearchBar extends StatefulWidget {
+  final OBSearchBarOnSearch onSearch;
+  final VoidCallback onCancel;
+  final String hintText;
 
-  OBEmojiSearchBar({Key key, @required this.onSearch}) : super(key: key);
+  OBSearchBar({Key key, @required this.onSearch, this.hintText, this.onCancel})
+      : super(key: key);
 
   @override
-  OBEmojiSearchBarState createState() {
-    return OBEmojiSearchBarState();
+  OBSearchBarState createState() {
+    return OBSearchBarState();
   }
 }
 
-class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
+class OBSearchBarState extends State<OBSearchBar> {
   TextEditingController _textController;
   FocusNode _textFocusNode;
 
@@ -57,12 +59,13 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
               child: Stack(
                 children: <Widget>[
                   TextField(
+                    textInputAction: TextInputAction.go,
                     focusNode: _textFocusNode,
                     controller: _textController,
                     keyboardType: TextInputType.multiline,
                     style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     decoration: InputDecoration(
-                        hintText: 'Search reaction...',
+                        hintText: widget.hintText,
                         contentPadding: inputContentPadding,
                         border: InputBorder.none),
                     autocorrect: true,
@@ -79,7 +82,7 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
           ),
           hasText
               ? FlatButton(
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   child: Text('Cancel'),
                   onPressed: _cancelSearch,
                 )
@@ -117,4 +120,4 @@ class OBEmojiSearchBarState extends State<OBEmojiSearchBar> {
   }
 }
 
-typedef void OBEmojiSearchBarOnSearch(String searchString);
+typedef void OBSearchBarOnSearch(String searchString);
