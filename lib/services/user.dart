@@ -345,9 +345,10 @@ class UserService {
   }
 
   Future<Follow> followUserWithUsername(String username,
-      {FollowsList list}) async {
-    HttpieResponse response = await _followsApiService
-        .followUserWithUsername(username, listId: list?.id);
+      {List<FollowsList> followsLists}) async {
+    HttpieResponse response = await _followsApiService.followUserWithUsername(
+        username,
+        listsIds: followsLists.map((followsList) => followsList.id));
     _checkResponseIsCreated(response);
     return Follow.fromJson(json.decode(response.body));
   }
@@ -360,9 +361,10 @@ class UserService {
   }
 
   Future<Follow> updateFollowWithUsername(String username,
-      {FollowsList list}) async {
-    HttpieResponse response = await _followsApiService
-        .updateFollowWithUsername(username, listId: list.id);
+      {List<FollowsList> followsLists}) async {
+    HttpieResponse response = await _followsApiService.updateFollowWithUsername(
+        username,
+        listsIds: followsLists.map((followsList) => followsList.id));
     _checkResponseIsOk(response);
     return Follow.fromJson(json.decode(response.body));
   }

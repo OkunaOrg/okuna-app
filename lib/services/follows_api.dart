@@ -17,10 +17,11 @@ class FollowsApiService {
     apiURL = newApiURL;
   }
 
-  Future<HttpieResponse> followUserWithUsername(String username, {int listId}) {
+  Future<HttpieResponse> followUserWithUsername(String username,
+      {List<int> listsIds}) {
     Map<String, dynamic> body = {'username': username};
 
-    if (listId != null) body['list_id'] = listId;
+    if (listsIds != null) body['lists_ids'] = listsIds;
 
     return _httpService.postJSON('$apiURL$FOLLOW_USER_PATH',
         body: body, appendAuthorizationToken: true);
@@ -32,10 +33,10 @@ class FollowsApiService {
   }
 
   Future<HttpieResponse> updateFollowWithUsername(String username,
-      {int listId}) {
+      {List<int> listsIds}) {
     Map<String, dynamic> body = {'username': username};
 
-    if (listId != null) body['list_id'] = listId;
+    if (listsIds != null) body['lists_ids'] = listsIds;
 
     return _httpService.postJSON('$apiURL$UPDATE_FOLLOW_PATH',
         body: body, appendAuthorizationToken: true);
