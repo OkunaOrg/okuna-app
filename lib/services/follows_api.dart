@@ -17,13 +17,25 @@ class FollowsApiService {
     apiURL = newApiURL;
   }
 
-  Future<HttpieResponse> followUserWithUsername(String username) {
-    return _httpService
-        .postJSON('$apiURL$FOLLOW_USER_PATH', body: {'username': username});
+  Future<HttpieResponse> followUserWithUsername(String username, {int listId}) {
+    Map<String, dynamic> body = {'username': username};
+
+    if (listId != null) body['list_id'] = listId;
+
+    return _httpService.postJSON('$apiURL$FOLLOW_USER_PATH', body: body);
   }
 
   Future<HttpieResponse> unFollowUserWithUsername(String username) {
     return _httpService
         .postJSON('$apiURL$FOLLOW_USER_PATH', body: {'username': username});
+  }
+
+  Future<HttpieResponse> updateFollowWithUsername(String username,
+      {int listId}) {
+    Map<String, dynamic> body = {'username': username};
+
+    if (listId != null) body['list_id'] = listId;
+
+    return _httpService.postJSON('$apiURL$UPDATE_FOLLOW_PATH', body: body);
   }
 }

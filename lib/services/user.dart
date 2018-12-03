@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
+import 'package:Openbook/models/follow.dart';
+import 'package:Openbook/models/follow_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -319,11 +321,12 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
-  Future<User> followUserWithUsername(String username) async {
-    HttpieResponse response =
-        await _followsApiService.followUserWithUsername(username);
+  Future<Follow> followUserWithUsername(String username,
+      {FollowList list}) async {
+    HttpieResponse response = await _followsApiService
+        .followUserWithUsername(username, listId: list.id);
     _checkResponseIsOk(response);
-    return User.fromJson(json.decode(response.body));
+    return Follow.fromJson(json.decode(response.body));
   }
 
   Future<User> unFollowUserWithUsername(String username) async {
@@ -331,6 +334,14 @@ class UserService {
         await _followsApiService.unFollowUserWithUsername(username);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body));
+  }
+
+  Future<Follow> updateFollowWithUsername(String username,
+      {FollowList list}) async {
+    HttpieResponse response = await _followsApiService
+        .updateFollowWithUsername(username, listId: list.id);
+    _checkResponseIsOk(response);
+    return Follow.fromJson(json.decode(response.body));
   }
 
   Future<User> _setUserWithData(String userData) async {
