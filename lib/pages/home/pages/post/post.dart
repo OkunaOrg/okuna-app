@@ -5,10 +5,12 @@ import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dar
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
+import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -63,8 +65,14 @@ class OBPostPageState extends State<OBPostPage> {
       _needsBootstrap = false;
     }
 
-    return OBCupertinoPageScaffold(
-        navigationBar: _buildNavigationBar(),
+    return CupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: Colors.white,
+          middle: Text('Post'),
+        ),
+        child: Container(
+        color: Colors.white,
         child: Container(
           child: Column(
             children: <Widget>[
@@ -86,7 +94,7 @@ class OBPostPageState extends State<OBPostPage> {
                                 if (index == 0) {
                                   return Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Padding(
                                         key: _postCommentsKey,
@@ -118,9 +126,9 @@ class OBPostPageState extends State<OBPostPage> {
                                   postComment: postComment,
                                   post: widget.post,
                                   onWantsToSeeUserProfile:
-                                      _onWantsToSeeUserProfile,
+                                  _onWantsToSeeUserProfile,
                                   onPostCommentDeletedCallback:
-                                      onPostCommentDeletedCallback,
+                                  onPostCommentDeletedCallback,
                                 );
                               }),
                           onLoadMore: _loadMoreComments),
@@ -135,14 +143,17 @@ class OBPostPageState extends State<OBPostPage> {
               )
             ],
           ),
-        ));
+        ),
+      )
+    );
   }
 
   void _onWantsToSeeUserProfile(User user) {
-    Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBProfilePage(user),
-            )));
+    Navigator.push(context,
+        OBSlideRightRoute(
+            key: Key('obSlideProfileViewFromComments'),
+            widget: OBProfilePage(user)
+        ));
   }
 
   Widget _buildNavigationBar() {
