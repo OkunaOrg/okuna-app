@@ -28,12 +28,10 @@ class OBOwnProfilePage extends StatefulWidget {
 
 class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
   OBProfilePageController _profilePageController;
-  int _pushedRoutes;
 
   @override
   void initState() {
     super.initState();
-    _pushedRoutes = 0;
     _profilePageController = OBProfilePageController();
     if (widget.controller != null) widget.controller.attach(this);
   }
