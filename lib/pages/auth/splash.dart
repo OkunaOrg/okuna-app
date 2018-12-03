@@ -1,6 +1,7 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:Openbook/widgets/splash_logo.dart';
@@ -79,8 +80,8 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
     String buttonText = localizationService.trans('AUTH.LOGIN');
 
     return OBPrimaryButton(
-      isFullWidth: true,
-      isLarge: true,
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

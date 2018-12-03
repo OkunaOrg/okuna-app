@@ -141,6 +141,20 @@ class User {
     return this.profile.location;
   }
 
+  void incrementFollowersCount() {
+    if (this.followersCount != null) {
+      this.followersCount += 1;
+      this._notifyUpdate();
+    }
+  }
+
+  void decrementFollowersCount() {
+    if (this.followersCount != null) {
+      this.followersCount -= 1;
+      this._notifyUpdate();
+    }
+  }
+
   void _notifyUpdate() {
     _updateSubject.add(this);
   }
