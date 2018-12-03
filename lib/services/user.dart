@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/connection.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
@@ -16,6 +18,7 @@ import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -37,6 +40,7 @@ class UserService {
   PostsApiService _postsApiService;
   EmojisApiService _emojisApiService;
   FollowsApiService _followsApiService;
+  ConnectionsApiService _connectionsApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -57,6 +61,10 @@ class UserService {
 
   void setFollowsApiService(FollowsApiService followsApiService) {
     _followsApiService = followsApiService;
+  }
+
+  void setConnectionsApiService(ConnectionsApiService connectionsApiService) {
+    _connectionsApiService = connectionsApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {
@@ -342,6 +350,31 @@ class UserService {
         .updateFollowWithUsername(username, listId: list.id);
     _checkResponseIsOk(response);
     return Follow.fromJson(json.decode(response.body));
+  }
+
+  Future<Connection> connectWithUserWithUsername(String username,
+      {@required List<Circle> circles}) async {
+    HttpieResponse response =
+        await _connectionsApiService.connectWithUserWithUsername(username,
+            circlesIds: circles.map((circle) => circle.id));
+    _checkResponseIsCreated(response);
+    return Connection.fromJson(json.decode(response.body));
+  }
+
+  Future<User> disconnectUserWithUsername(String username) async {
+    HttpieResponse response =
+        await _connectionsApiService.disconnectFromUserWithUsername(username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<Connection> updateConnectionWithUsername(String username,
+      {List<Circle> circles}) async {
+    HttpieResponse response =
+        await _connectionsApiService.updateConnectionWithUsername(username,
+            circlesIds: circles.map((circle) => circle.id));
+    _checkResponseIsOk(response);
+    return Connection.fromJson(json.decode(response.body));
   }
 
   Future<User> _setUserWithData(String userData) async {
