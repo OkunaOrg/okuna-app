@@ -69,6 +69,11 @@ class UserService {
     _followsApiService = followsApiService;
   }
 
+  void setFollowsListsApiService(
+      FollowsListsApiService followsListsApiService) {
+    _followsListsApiService = followsListsApiService;
+  }
+
   void setConnectionsApiService(ConnectionsApiService connectionsApiService) {
     _connectionsApiService = connectionsApiService;
   }
@@ -76,10 +81,6 @@ class UserService {
   void setConnectionsCirclesApiService(
       ConnectionsCirclesApiService circlesApiService) {
     _connectionsCirclesApiService = circlesApiService;
-  }
-
-  void setFollowsListsApiService(FollowsListsApiService listsApiService) {
-    _followsListsApiService = listsApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {

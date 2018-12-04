@@ -54,7 +54,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DatePickerService datePickerService = DatePickerService();
   FollowsApiService followsApiService = FollowsApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
-  ConnectionsCirclesApiService connectionsCirclesApiService = ConnectionsCirclesApiService();
+  ConnectionsCirclesApiService connectionsCirclesApiService =
+      ConnectionsCirclesApiService();
   FollowsListsApiService followsListsApiService = FollowsListsApiService();
 
   LocalizationService localizationService;
@@ -66,7 +67,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
 
     createAccountBloc.setValidationService(validationService);
     connectionsCirclesApiService.setHttpService(httpService);
-    connectionsCirclesApiService.setStringTemplateService(stringTemplateService);
+    connectionsCirclesApiService
+        .setStringTemplateService(stringTemplateService);
     followsListsApiService.setHttpService(httpService);
     followsListsApiService.setStringTemplateService(stringTemplateService);
     connectionsApiService.setHttpService(httpService);
@@ -79,6 +81,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setHttpieService(httpService);
     userService.setStorageService(storageService);
     userService.setFollowsApiService(followsApiService);
+    userService.setFollowsListsApiService(followsListsApiService);
     userService.setConnectionsApiService(connectionsApiService);
     userService.setConnectionsCirclesApiService(connectionsCirclesApiService);
     emojisApiService.setHttpService(httpService);
