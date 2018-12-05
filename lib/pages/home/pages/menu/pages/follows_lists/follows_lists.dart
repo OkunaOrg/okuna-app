@@ -131,6 +131,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                         _onFollowsListCreated(createdFollowsList);
                       }
                     },
+                    icon: Icon(Icons.add, size: 15,),
                     child: Text('Create new list')))
           ],
         ));
