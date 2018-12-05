@@ -16,8 +16,10 @@ import 'package:Openbook/services/httpie.dart';
 
 class OBFollowsListsPage extends StatefulWidget {
   final OnWantsToCreateFollowsList onWantsToCreateFollowsList;
+  final OnWantsToSeeFollowsList onWantsToSeeFollowsList;
 
-  OBFollowsListsPage({this.onWantsToCreateFollowsList});
+  OBFollowsListsPage(
+      {this.onWantsToCreateFollowsList, this.onWantsToSeeFollowsList});
 
   @override
   State<OBFollowsListsPage> createState() {
@@ -103,9 +105,9 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                                 return OBFollowsListTile(
                                   isEditing: _isEditing,
                                   followsList: followsList,
-                                  onWantsToSeeUserProfile:
-                                      _onWantsToSeeUserProfile,
                                   onLongPress: _toggleEdit,
+                                  onWantsToSeeFollowsList:
+                                      widget.onWantsToSeeFollowsList,
                                   onFollowsListDeletedCallback:
                                       onFollowsListDeletedCallback,
                                 );
@@ -120,6 +122,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                 bottom: 20.0,
                 right: 20.0,
                 child: FloatingActionButton(
+                    heroTag: Key('createFollowsListButton'),
                     backgroundColor: Colors.white,
                     onPressed: () async {
                       FollowsList createdFollowsList =
@@ -226,3 +229,4 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 }
 
 typedef Future<FollowsList> OnWantsToCreateFollowsList();
+typedef void OnWantsToSeeFollowsList(FollowsList followsList);

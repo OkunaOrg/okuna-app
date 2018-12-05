@@ -1,4 +1,5 @@
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -13,7 +14,7 @@ class OBFollowsListTile extends StatefulWidget {
   final FollowsList followsList;
   final VoidCallback onFollowsListDeletedCallback;
   final VoidCallback onLongPress;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
+  final OnWantsToSeeFollowsList onWantsToSeeFollowsList;
   final bool isEditing;
 
   OBFollowsListTile(
@@ -22,7 +23,7 @@ class OBFollowsListTile extends StatefulWidget {
       this.onFollowsListDeletedCallback,
       this.onLongPress,
       this.isEditing,
-      @required this.onWantsToSeeUserProfile})
+      this.onWantsToSeeFollowsList})
       : super(key: key);
 
   @override
@@ -50,6 +51,9 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
 
     return Container(
       child: ListTile(
+        onTap: () {
+          widget.onWantsToSeeFollowsList(widget.followsList);
+        },
         onLongPress: widget.onLongPress,
         leading: OBFollowsListIcon(
           size: OBFollowsListIconSize.medium,

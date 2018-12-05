@@ -1,5 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -9,8 +10,9 @@ import 'package:flutter/material.dart';
 
 class OBMainMenuPage extends StatefulWidget {
   final OBMainMenuPageController controller;
+  final OnWantsToCreateFollowsList onWantsToCreateFollowsList;
 
-  OBMainMenuPage({this.controller});
+  OBMainMenuPage({this.controller, this.onWantsToCreateFollowsList});
 
   @override
   State<StatefulWidget> createState() {
@@ -105,8 +107,16 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
             widget: OBFollowsListsPage(
-              onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
+              onWantsToSeeFollowsList: _onWantsToSeeFollowsList,
+              onWantsToCreateFollowsList: widget.onWantsToCreateFollowsList,
             )));
+    decrementPushedRoutes();
+  }
+
+  void _onWantsToSeeFollowsList(FollowsList followsList) async {
+    incrementPushedRoutes();
+    await Navigator.push(
+        context, OBSlideRightRoute(widget: OBFollowsListPage(followsList)));
     decrementPushedRoutes();
   }
 
@@ -115,8 +125,6 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
       middle: Text('Menu'),
     );
   }
-
-  Future<FollowsList> _onWantsToCreateFollowsList() {}
 }
 
 class OBMainMenuPageController extends OBBasePageStateController {}

@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/modals/create_follows_list/create_follows_list.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
@@ -115,7 +117,10 @@ class OBHomePageState extends State<OBHomePage> {
             controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
-        page = OBMainMenuPage(controller: _menuPageController);
+        page = OBMainMenuPage(
+          controller: _menuPageController,
+          onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
+        );
         break;
       default:
         throw 'Unhandled index';
@@ -259,6 +264,17 @@ class OBHomePageState extends State<OBHomePage> {
             builder: (BuildContext context) => Material(
                   child: OBEditUserProfileModal(user),
                 )));
+  }
+
+  Future<FollowsList> _onWantsToCreateFollowsList() async {
+    FollowsList createdFollowsList =
+        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBCreateFollowsListModal();
+            }));
+
+    return createdFollowsList;
   }
 
   void _bootstrap() async {

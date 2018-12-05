@@ -60,6 +60,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
                 bottom: 20.0,
                 right: 20.0,
                 child: FloatingActionButton(
+                    heroTag: Key('createPostButton'),
                     backgroundColor: Colors.white,
                     onPressed: () async {
                       Post createdPost = await widget.onWantsToCreatePost();
@@ -79,8 +80,10 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
 
   void _onWantsToSeeUserProfile(User user) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
-        OBSlideRightRoute(key: Key('obSlideProfileView'),
+    await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideProfileView'),
             widget: OBProfilePage(
               user,
               onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
@@ -88,32 +91,31 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
               onWantsToCommentPost: _onWantsToCommentPost,
               onWantsToReactToPost: widget.onWantsToReactToPost,
               onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-            )
-        ));
+            )));
     decrementPushedRoutes();
   }
 
   void _onWantsToCommentPost(Post post) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
+    await Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
             widget: OBPostPage(post,
                 autofocusCommentInput: true,
-                onWantsToReactToPost: widget.onWantsToReactToPost)
-        ));
+                onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();
   }
 
   void _onWantsToSeePostComments(Post post) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
+    await Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
             widget: OBPostPage(post,
                 autofocusCommentInput: false,
-                onWantsToReactToPost: widget.onWantsToReactToPost)
-        ));
+                onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();
   }
 }
