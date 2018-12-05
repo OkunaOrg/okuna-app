@@ -32,6 +32,7 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
 
   bool _requestInProgress;
   bool _formWasSubmitted;
+  bool _formValid;
   String _takenFollowsListName;
 
   final _formKey = GlobalKey<FormState>();
@@ -42,12 +43,11 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
   @override
   void initState() {
     super.initState();
+    _formValid = true;
     _requestInProgress = false;
     _formWasSubmitted = false;
-
     _nameController = TextEditingController();
-
-    _nameController.addListener(_validateForm);
+    _nameController.addListener(_updateFormValid);
   }
 
   @override
@@ -71,15 +71,19 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
                     controller: _nameController,
                     validator: (String followsListName) {
                       if (!_formWasSubmitted) return null;
+
                       if (_takenFollowsListName != null &&
-                          _takenFollowsListName == followsListName)
-                        return 'FollowsListName @$_takenFollowsListName is taken';
-                      //return _validationService.validateUserFollowsListName(followsListName);
+                          _takenFollowsListName == followsListName) {
+                        return 'List name $_takenFollowsListName is taken';
+                      }
+
+                      return _validationService
+                          .validateFollowsListName(followsListName);
                     },
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
-                      labelText: 'List name',
+                      labelText: 'Name',
                       prefixIcon: Icon(
                         Icons.list,
                         size: INPUT_ICONS_SIZE,
@@ -89,19 +93,18 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
                   Divider(),
                   MergeSemantics(
                     child: ListTile(
-                        title: Text('List icon'),
+                        title: Text('Icon'),
                         trailing:
                             OBFollowsListIcon(followsListIconUrl: _icon?.image),
                         onTap: _onWantsToPickIcon),
                   ),
+                  Divider()
                 ],
               )),
         ));
   }
 
   Widget _buildNavigationBar() {
-    bool newPostButtonIsEnabled = true;
-
     return CupertinoNavigationBar(
       backgroundColor: Colors.white,
       leading: GestureDetector(
@@ -112,7 +115,7 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
       ),
       middle: Text('New list'),
       trailing: OBPrimaryButton(
-        isDisabled: !newPostButtonIsEnabled,
+        isDisabled: !_formValid,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _submitForm,
@@ -125,8 +128,19 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
     return _formKey.currentState.validate();
   }
 
+  bool _updateFormValid() {
+    var formValid = _validateForm();
+    _setFormValid(formValid);
+    return formValid;
+  }
+
   void _submitForm() async {
     _formWasSubmitted = true;
+
+    var formIsValid = _updateFormValid();
+
+    if (!formIsValid) return;
+
     _setRequestInProgress(true);
     try {
       var followsListName = _nameController.text;
@@ -151,9 +165,7 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
   }
 
   Future<bool> _isFollowsListNameTaken(String followsListName) async {
-    //if (followsListName == widget.followsList.name) return false;
-    return false;
-    //return _validationService.isFollowsListNameTaken(followsListName);
+    return _validationService.isFollowsListNameTaken(followsListName);
   }
 
   void _onWantsToPickIcon() async {
@@ -179,6 +191,12 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
   void _setRequestInProgress(bool requestInProgress) {
     setState(() {
       _requestInProgress = requestInProgress;
+    });
+  }
+
+  void _setFormValid(bool formValid) {
+    setState(() {
+      _formValid = formValid;
     });
   }
 

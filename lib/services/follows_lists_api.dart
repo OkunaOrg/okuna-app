@@ -14,6 +14,7 @@ class FollowsListsApiService {
   static const CREATE_LIST_PATH = 'api/lists/';
   static const UPDATE_LIST_PATH = 'api/lists/{listId}/';
   static const DELETE_LIST_PATH = 'api/lists/{listId}/';
+  static const CHECK_NAME_PATH = 'api/lists/name-check/';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
@@ -58,6 +59,11 @@ class FollowsListsApiService {
   Future<HttpieResponse> deleteListWithId(int listId) {
     String url = _makeDeleteListPath(listId);
     return _httpService.delete(url, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> checkNameIsAvailable({@required String name}) {
+    return _httpService.postJSON('$apiURL$CHECK_NAME_PATH',
+        body: {'name': name}, appendAuthorizationToken: true);
   }
 
   String _makeUpdateListPath(int listId) {

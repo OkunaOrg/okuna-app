@@ -2,6 +2,8 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
@@ -121,9 +123,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
             Positioned(
                 bottom: 20.0,
                 right: 20.0,
-                child: FloatingActionButton(
-                    heroTag: Key('createFollowsListButton'),
-                    backgroundColor: Colors.white,
+                child: OBButton(
                     onPressed: () async {
                       FollowsList createdFollowsList =
                           await widget.onWantsToCreateFollowsList();
@@ -131,7 +131,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                         _onFollowsListCreated(createdFollowsList);
                       }
                     },
-                    child: OBIcon(OBIcons.createPost)))
+                    child: Text('Create new list')))
           ],
         ));
   }
