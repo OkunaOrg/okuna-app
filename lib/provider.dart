@@ -3,6 +3,7 @@ import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
+import 'package:Openbook/services/emoji_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
 import 'package:Openbook/services/file_cache.dart';
@@ -52,6 +53,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ThemeService themeService = ThemeService();
   ImagePickerService imagePickerService = ImagePickerService();
   DatePickerService datePickerService = DatePickerService();
+  EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
   ConnectionsCirclesApiService connectionsCirclesApiService =

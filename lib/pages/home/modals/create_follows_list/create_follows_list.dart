@@ -1,11 +1,14 @@
+import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/pages/home/modals/create_follows_list/pages/pick_follows_list_icon.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/follows_list_icon.dart';
+import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +37,7 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _nameController;
+  Emoji _icon;
 
   @override
   void initState() {
@@ -75,14 +79,21 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
                     decoration: InputDecoration(
                       contentPadding: INPUT_CONTENT_PADDING,
                       border: InputBorder.none,
-                      labelText: 'FollowsListName',
+                      labelText: 'List name',
                       prefixIcon: Icon(
-                        Icons.alternate_email,
+                        Icons.list,
                         size: INPUT_ICONS_SIZE,
                       ),
                     ),
                   ),
                   Divider(),
+                  MergeSemantics(
+                    child: ListTile(
+                        title: Text('List icon'),
+                        trailing:
+                            OBFollowsListIcon(followsListIconUrl: _icon?.image),
+                        onTap: _onWantsToPickIcon),
+                  ),
                 ],
               )),
         ));
@@ -108,26 +119,6 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
         child: Text('Save'),
       ),
     );
-  }
-
-  void _showImageBottomSheet({@required OBImageType imageType}) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          List<Widget> listTiles = [
-            new ListTile(
-              leading: new Icon(Icons.camera_alt),
-              title: new Text('Camera'),
-              onTap: () async {},
-            ),
-            new ListTile(
-              leading: new Icon(Icons.photo_library),
-              title: new Text('Gallery'),
-              onTap: () async {},
-            )
-          ];
-          return Column(mainAxisSize: MainAxisSize.min, children: listTiles);
-        });
   }
 
   bool _validateForm() {
@@ -163,6 +154,26 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
     //if (followsListName == widget.followsList.name) return false;
     return false;
     //return _validationService.isFollowsListNameTaken(followsListName);
+  }
+
+  void _onWantsToPickIcon() async {
+    Emoji pickedIcon = await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlidePickFollowsListIconPage'),
+            widget: OBPickFollowsListIconPage()));
+
+    if (pickedIcon != null) _onPickedIcon(pickedIcon);
+  }
+
+  void _onPickedIcon(Emoji pickedEmoji) {
+    _setIcon(pickedEmoji);
+  }
+
+  void _setIcon(Emoji icon) {
+    setState(() {
+      _icon = icon;
+    });
   }
 
   void _setRequestInProgress(bool requestInProgress) {

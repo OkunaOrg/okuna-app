@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBSlideRightRoute extends PageRouteBuilder {
+class OBSlideRightRoute<T> extends PageRouteBuilder<T> {
   final Widget widget;
   final Key key;
   OBSlideRightRoute({this.widget, this.key})
