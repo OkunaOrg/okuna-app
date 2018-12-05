@@ -7,6 +7,7 @@ class OBSlideRightRoute<T> extends PageRouteBuilder<T> {
   OBSlideRightRoute({this.widget, this.key})
       : super(
       opaque: false,
+      transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
         return Material(
             color: Color.fromARGB(0, 0, 0, 0),

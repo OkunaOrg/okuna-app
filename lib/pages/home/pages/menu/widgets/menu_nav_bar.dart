@@ -25,6 +25,7 @@ class OBMenuNavBar extends StatelessWidget
 
     return StreamBuilder(
       stream: themeService.themeChange,
+      initialData: themeService.getActiveTheme(),
       builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
         var theme = snapshot.data;
 
@@ -33,7 +34,7 @@ class OBMenuNavBar extends StatelessWidget
               ? Pigment.fromString(theme.menuAccentColor)
               : Colors.black,
           middle: middle,
-          transitionBetweenRoutes: false,
+          transitionBetweenRoutes: true,
           backgroundColor: Colors.white,
           trailing: trailing,
           leading: leading,
