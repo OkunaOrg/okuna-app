@@ -1,3 +1,4 @@
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
@@ -39,7 +40,10 @@ class OBMainMenuPage extends StatelessWidget {
                         context,
                         OBSlideRightRoute(
                             key: Key('obSlideViewComments'),
-                            widget: OBFollowsListsPage()));
+                            widget: OBFollowsListsPage(
+                              onWantsToCreateFollowsList:
+                                  _onWantsToCreateFollowsList,
+                            )));
                   },
                 ),
                 ListTile(
@@ -87,4 +91,6 @@ class OBMainMenuPage extends StatelessWidget {
       middle: Text('Menu'),
     );
   }
+
+  Future<FollowsList> _onWantsToCreateFollowsList() {}
 }

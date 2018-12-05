@@ -1,6 +1,7 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/follows_lists/widgets/follows_list_tile.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
@@ -13,6 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBFollowsListsPage extends StatefulWidget {
+  final OnWantsToCreateFollowsList onWantsToCreateFollowsList;
+
+  OBFollowsListsPage({this.onWantsToCreateFollowsList});
+
   @override
   State<OBFollowsListsPage> createState() {
     return OBFollowsListsPageState();
@@ -28,6 +33,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
   List<FollowsList> _followsLists = [];
   List<FollowsList> _followsListsSearchResults = [];
 
+  bool _isEditing;
   bool _needsBootstrap;
 
   @override
@@ -36,6 +42,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     _followsListsScrollController = ScrollController();
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
+    _isEditing = false;
     _followsLists = [];
   }
 
@@ -56,47 +63,73 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
           middle: Text('My lists'),
           transitionBetweenRoutes: false,
           backgroundColor: Colors.white,
-        ),
-        child: Container(
-          color: Colors.white,
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                    child: OBSearchBar(
-                  onSearch: _onSearch,
-                  hintText: 'Search for a list...',
-                )),
-                Expanded(
-                  child: RefreshIndicator(
-                      key: _refreshIndicatorKey,
-                      child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          controller: _followsListsScrollController,
-                          padding: EdgeInsets.all(0),
-                          itemCount: _followsListsSearchResults.length,
-                          itemBuilder: (context, index) {
-                            int commentIndex = index;
-
-                            var followsList =
-                                _followsListsSearchResults[commentIndex];
-
-                            var onFollowsListDeletedCallback = () {
-                              _removeFollowsList(followsList);
-                            };
-
-                            return OBFollowsListTile(
-                              followsList: followsList,
-                              onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                              onFollowsListDeletedCallback:
-                                  onFollowsListDeletedCallback,
-                            );
-                          }),
-                      onRefresh: _refreshComments),
-                ),
-              ],
+          trailing: GestureDetector(
+            onTap: _toggleEdit,
+            child: GestureDetector(
+              child: Text(_isEditing ? 'Done' : 'Edit'),
+              onTap: _toggleEdit,
             ),
           ),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              color: Colors.white,
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        child: OBSearchBar(
+                      onSearch: _onSearch,
+                      hintText: 'Search for a list...',
+                    )),
+                    Expanded(
+                      child: RefreshIndicator(
+                          key: _refreshIndicatorKey,
+                          child: ListView.builder(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              controller: _followsListsScrollController,
+                              padding: EdgeInsets.all(0),
+                              itemCount: _followsListsSearchResults.length,
+                              itemBuilder: (context, index) {
+                                int commentIndex = index;
+
+                                var followsList =
+                                    _followsListsSearchResults[commentIndex];
+
+                                var onFollowsListDeletedCallback = () {
+                                  _removeFollowsList(followsList);
+                                };
+
+                                return OBFollowsListTile(
+                                  isEditing: _isEditing,
+                                  followsList: followsList,
+                                  onWantsToSeeUserProfile:
+                                      _onWantsToSeeUserProfile,
+                                  onFollowsListDeletedCallback:
+                                      onFollowsListDeletedCallback,
+                                );
+                              }),
+                          onRefresh: _refreshComments),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+                bottom: 20.0,
+                right: 20.0,
+                child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    onPressed: () async {
+                      FollowsList createdFollowsList =
+                          await widget.onWantsToCreateFollowsList();
+                      if (createdFollowsList != null) {
+                        _onFollowsListCreated(createdFollowsList);
+                      }
+                    },
+                    child: OBIcon(OBIcons.createPost)))
+          ],
         ));
   }
 
@@ -110,6 +143,10 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
         OBSlideRightRoute(
             key: Key('obSlideProfileViewFromFollowsLists'),
             widget: OBProfilePage(user)));
+  }
+
+  void _toggleEdit() {
+    _setIsEditing(!_isEditing);
   }
 
   Future<void> _refreshComments() async {
@@ -160,6 +197,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
   void _onFollowsListCreated(FollowsList createdFollowsList) {
     setState(() {
       this._followsLists.insert(0, createdFollowsList);
+      _scrollToTop();
     });
   }
 
@@ -177,4 +215,12 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
       _resetFollowsListsSearchResults();
     });
   }
+
+  void _setIsEditing(bool isEditing) {
+    setState(() {
+      _isEditing = isEditing;
+    });
+  }
 }
+
+typedef Future<FollowsList> OnWantsToCreateFollowsList();

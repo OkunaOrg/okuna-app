@@ -3,6 +3,8 @@ import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dar
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/buttons/danger_button.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -12,11 +14,13 @@ class OBFollowsListTile extends StatefulWidget {
   final FollowsList followsList;
   final VoidCallback onFollowsListDeletedCallback;
   final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
+  final bool isEditing;
 
   OBFollowsListTile(
       {@required this.followsList,
       Key key,
       this.onFollowsListDeletedCallback,
+      this.isEditing,
       @required this.onWantsToSeeUserProfile})
       : super(key: key);
 
@@ -43,39 +47,24 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
     _userService = provider.userService;
     _toastService = provider.toastService;
 
-    Widget tile = Slidable(
-      delegate: new SlidableDrawerDelegate(),
-      actionExtentRatio: 0.25,
-      child: Container(
-        child: ListTile(
-          leading: OBFollowsListIcon(
-            size: OBFollowsListIconSize.medium,
-            followsListIconUrl: widget.followsList.getEmojiImage(),
-          ),
-          title: Text(widget.followsList.name),
-          subtitle: Text(widget.followsList.followsCount.toString() + ' users'),
-          trailing:
-              IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: null),
+    return Container(
+      child: ListTile(
+        leading: OBFollowsListIcon(
+          size: OBFollowsListIconSize.medium,
+          followsListIconUrl: widget.followsList.getEmojiImage(),
         ),
+        title: Text(widget.followsList.name),
+        subtitle: Text(widget.followsList.followsCount.toString() + ' users'),
+        trailing: widget.isEditing
+            ? OBDangerButton(
+                child: Text('Delete'),
+                isLoading: _requestInProgress,
+                size: OBButtonSize.small,
+                onPressed: _deleteFollowsList,
+              )
+            : IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: null),
       ),
-      secondaryActions: <Widget>[
-        new IconSlideAction(
-          caption: 'Delete',
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: _deleteFollowsList,
-        ),
-      ],
     );
-
-    if (_requestInProgress) {
-      tile = Opacity(
-        opacity: 0.5,
-        child: tile,
-      );
-    }
-
-    return tile;
   }
 
   void _deleteFollowsList() async {
