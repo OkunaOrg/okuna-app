@@ -26,6 +26,8 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _followsListsScrollController;
   List<FollowsList> _followsLists = [];
+  List<FollowsList> _followsListsSearchResults = [];
+
   bool _needsBootstrap;
 
   @override
@@ -67,26 +69,23 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                           physics: AlwaysScrollableScrollPhysics(),
                           controller: _followsListsScrollController,
                           padding: EdgeInsets.all(0),
-                          itemCount: _followsLists.length + 1,
+                          itemCount: _followsListsSearchResults.length + 1,
                           itemBuilder: (context, index) {
                             if (index == 0) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  OBSearchBar(
-                                    onSearch: (String newSearch) {},
-                                  ),
-                                  Divider()
-                                ],
-                              );
+                              return Container(
+                                  child: OBSearchBar(
+                                onSearch: _onSearch,
+                                hintText: 'Search for a list...',
+                              ));
                             }
 
                             int commentIndex = index - 1;
 
-                            var followsList = _followsLists[commentIndex];
+                            var followsList =
+                                _followsListsSearchResults[commentIndex];
 
                             var onFollowsListDeletedCallback = () {
-                              _removeFollowsListAtIndex(commentIndex);
+                              _removeFollowsList(followsList);
                             };
 
                             return OBFollowsListTile(
@@ -104,16 +103,16 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
         ));
   }
 
+  void _bootstrap() async {
+    await _refreshComments();
+  }
+
   void _onWantsToSeeUserProfile(User user) {
     Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSlideProfileViewFromFollowsLists'),
             widget: OBProfilePage(user)));
-  }
-
-  void _bootstrap() async {
-    await _refreshComments();
   }
 
   Future<void> _refreshComments() async {
@@ -129,14 +128,41 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     }
   }
 
-  void _removeFollowsListAtIndex(int index) {
+  void _onSearch(String query) {
+    if (query.isEmpty) {
+      _resetFollowsListsSearchResults();
+      return;
+    }
+
+    String uppercaseQuery = query.toUpperCase();
+    var searchResults = _followsLists.where((followsList) {
+      return followsList.name.toUpperCase().contains(uppercaseQuery);
+    }).toList();
+
+    _setFollowsListsSearchResults(searchResults);
+  }
+
+  void _resetFollowsListsSearchResults() {
+    _setFollowsListsSearchResults(_followsLists.toList());
+  }
+
+  void _setFollowsListsSearchResults(
+      List<FollowsList> followsListsSearchResults) {
     setState(() {
+      _followsListsSearchResults = followsListsSearchResults;
+    });
+  }
+
+  void _removeFollowsList(FollowsList followsList) {
+    setState(() {
+      var index = _followsLists.indexOf(followsList);
+      var searchIndex = _followsLists.indexOf(followsList);
       _followsLists.removeAt(index);
+      _followsListsSearchResults.remove(searchIndex);
     });
   }
 
   void _onFollowsListCreated(FollowsList createdFollowsList) {
-    _unfocusCommentInput();
     setState(() {
       this._followsLists.insert(0, createdFollowsList);
     });
@@ -150,19 +176,10 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     );
   }
 
-  void _unfocusCommentInput() {
-    FocusScope.of(context).requestFocus(new FocusNode());
-  }
-
-  void _addFollowsLists(List<FollowsList> followsLists) {
-    setState(() {
-      this._followsLists.addAll(followsLists);
-    });
-  }
-
   void _setFollowsLists(List<FollowsList> followsLists) {
     setState(() {
       this._followsLists = followsLists;
+      _resetFollowsListsSearchResults();
     });
   }
 }

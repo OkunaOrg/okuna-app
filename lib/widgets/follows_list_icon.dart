@@ -64,8 +64,7 @@ class OBFollowsListIcon extends StatelessWidget {
       finalAvatarImage = placeholderImage;
     }
 
-    var avatar = Container(
-        height: avatarSize, width: avatarSize, child: finalAvatarImage);
+    var avatar = Container(height: avatarSize, child: finalAvatarImage);
 
     if (onPressed == null) return avatar;
 

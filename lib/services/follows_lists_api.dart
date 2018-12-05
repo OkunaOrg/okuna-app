@@ -12,8 +12,8 @@ class FollowsListsApiService {
 
   static const GET_LISTS_PATH = 'api/lists/';
   static const CREATE_LIST_PATH = 'api/lists/';
-  static const UPDATE_LIST_PATH = 'api/lists/{listId}';
-  static const DELETE_LIST_PATH = 'api/lists/{listId}';
+  static const UPDATE_LIST_PATH = 'api/lists/{listId}/';
+  static const DELETE_LIST_PATH = 'api/lists/{listId}/';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
@@ -62,12 +62,12 @@ class FollowsListsApiService {
 
   String _makeUpdateListPath(int listId) {
     return _stringTemplateService
-        .parse(UPDATE_LIST_PATH, {'listId': listId});
+        .parse('$apiURL$UPDATE_LIST_PATH', {'listId': listId});
   }
 
   String _makeDeleteListPath(int listId) {
     return _stringTemplateService
-        .parse(DELETE_LIST_PATH, {'listId': listId});
+        .parse('$apiURL$DELETE_LIST_PATH', {'listId': listId});
   }
 
   String _makeApiUrl(String string) {

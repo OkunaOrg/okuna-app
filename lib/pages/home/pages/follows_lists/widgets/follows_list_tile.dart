@@ -46,21 +46,17 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
     Widget tile = Slidable(
       delegate: new SlidableDrawerDelegate(),
       actionExtentRatio: 0.25,
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: OBFollowsListIcon(
-              size: OBFollowsListIconSize.medium,
-              followsListIconUrl: widget.followsList.getEmojiImage(),
-            ),
-            title: Text(widget.followsList.name),
-            subtitle:
-                Text(widget.followsList.followsCount.toString() + ' users'),
-            trailing: IconButton(
-                icon: Icon(Icons.arrow_forward_ios), onPressed: null),
+      child: Container(
+        child: ListTile(
+          leading: OBFollowsListIcon(
+            size: OBFollowsListIconSize.medium,
+            followsListIconUrl: widget.followsList.getEmojiImage(),
           ),
-          Divider()
-        ],
+          title: Text(widget.followsList.name),
+          subtitle: Text(widget.followsList.followsCount.toString() + ' users'),
+          trailing:
+              IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: null),
+        ),
       ),
       secondaryActions: <Widget>[
         new IconSlideAction(
