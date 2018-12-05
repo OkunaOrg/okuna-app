@@ -4,12 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-enum OBFollowsListIconSize { small, medium, large }
+enum OBFollowsListEmojiSize { small, medium, large }
 
-class OBFollowsListIcon extends StatelessWidget {
-  final String followsListIconUrl;
-  final File followsListIconFile;
-  final OBFollowsListIconSize size;
+class OBFollowsListEmoji extends StatelessWidget {
+  final String followsListEmojiUrl;
+  final File followsListEmojiFile;
+  final OBFollowsListEmojiSize size;
   final VoidCallback onPressed;
   final BoxBorder avatarBorder;
 
@@ -18,27 +18,27 @@ class OBFollowsListIcon extends StatelessWidget {
   static const double AVATAR_SIZE_LARGE = 50.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
-  OBFollowsListIcon(
-      {this.followsListIconUrl,
-      this.size = OBFollowsListIconSize.medium,
+  OBFollowsListEmoji(
+      {this.followsListEmojiUrl,
+      this.size = OBFollowsListEmojiSize.medium,
       this.onPressed,
-      this.followsListIconFile,
+      this.followsListEmojiFile,
       this.avatarBorder});
 
   @override
   Widget build(BuildContext context) {
     double avatarSize;
 
-    OBFollowsListIconSize finalSize = size ?? OBFollowsListIconSize.small;
+    OBFollowsListEmojiSize finalSize = size ?? OBFollowsListEmojiSize.small;
 
     switch (finalSize) {
-      case OBFollowsListIconSize.small:
+      case OBFollowsListEmojiSize.small:
         avatarSize = AVATAR_SIZE_SMALL;
         break;
-      case OBFollowsListIconSize.medium:
+      case OBFollowsListEmojiSize.medium:
         avatarSize = AVATAR_SIZE_MEDIUM;
         break;
-      case OBFollowsListIconSize.large:
+      case OBFollowsListEmojiSize.large:
         avatarSize = AVATAR_SIZE_LARGE;
         break;
     }
@@ -47,16 +47,16 @@ class OBFollowsListIcon extends StatelessWidget {
 
     var placeholderImage = Image.asset(DEFAULT_AVATAR_ASSET);
 
-    if (followsListIconFile != null) {
+    if (followsListEmojiFile != null) {
       finalAvatarImage = FadeInImage(
         placeholder: AssetImage(DEFAULT_AVATAR_ASSET),
-        image: FileImage(followsListIconFile),
+        image: FileImage(followsListEmojiFile),
         fit: BoxFit.cover,
       );
-    } else if (followsListIconUrl != null) {
+    } else if (followsListEmojiUrl != null) {
       finalAvatarImage = CachedNetworkImage(
         fit: BoxFit.cover,
-        imageUrl: followsListIconUrl,
+        imageUrl: followsListEmojiUrl,
         placeholder: placeholderImage,
         errorWidget: placeholderImage,
       );

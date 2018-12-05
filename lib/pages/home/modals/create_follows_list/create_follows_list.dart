@@ -1,5 +1,6 @@
 import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/pages/home/modals/create_follows_list/pages/pick_follows_list_icon.dart';
+import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/pages/home/modals/create_follows_list/pages/pick_follows_list_emoji.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -22,7 +23,7 @@ class OBCreateFollowsListModal extends StatefulWidget {
 }
 
 class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
-  static const double INPUT_ICONS_SIZE = 16;
+  static const double INPUT_EMOJIS_SIZE = 16;
   static EdgeInsetsGeometry INPUT_CONTENT_PADDING =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
 
@@ -38,7 +39,7 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _nameController;
-  Emoji _icon;
+  Emoji _emoji;
 
   @override
   void initState() {
@@ -86,17 +87,18 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
                       labelText: 'Name',
                       prefixIcon: Icon(
                         Icons.list,
-                        size: INPUT_ICONS_SIZE,
+                        size: INPUT_EMOJIS_SIZE,
                       ),
                     ),
                   ),
                   Divider(),
                   MergeSemantics(
                     child: ListTile(
-                        title: Text('Icon'),
-                        trailing:
-                            OBFollowsListIcon(followsListIconUrl: _icon?.image),
-                        onTap: _onWantsToPickIcon),
+                        title: Text('Emoji'),
+                        subtitle: _buildEmojiSubtitle(),
+                        trailing: OBFollowsListEmoji(
+                            followsListEmojiUrl: _emoji?.image),
+                        onTap: _onWantsToPickEmoji),
                   ),
                   Divider()
                 ],
@@ -124,6 +126,14 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
     );
   }
 
+  Widget _buildEmojiSubtitle() {
+    if (_formWasSubmitted && _emoji == null)
+      return Text(
+        'Emoji is required',
+        style: TextStyle(color: Colors.red),
+      );
+  }
+
   bool _validateForm() {
     return _formKey.currentState.validate();
   }
@@ -146,14 +156,16 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
       var followsListName = _nameController.text;
       bool followsListNameTaken =
           await _isFollowsListNameTaken(followsListName);
+
       if (followsListNameTaken) {
         _setTakenFollowsListName(followsListName);
         _validateForm();
         return;
       }
 
-      await _userService.createFollowsList(name: _nameController.text);
-      Navigator.of(context).pop();
+      FollowsList followsList = await _userService.createFollowsList(
+          name: _nameController.text, emoji: _emoji);
+      Navigator.of(context).pop(followsList);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -168,23 +180,23 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
     return _validationService.isFollowsListNameTaken(followsListName);
   }
 
-  void _onWantsToPickIcon() async {
-    Emoji pickedIcon = await Navigator.push(
+  void _onWantsToPickEmoji() async {
+    Emoji pickedEmoji = await Navigator.push(
         context,
         OBSlideRightRoute(
-            key: Key('obSlidePickFollowsListIconPage'),
-            widget: OBPickFollowsListIconPage()));
+            key: Key('obSlidePickFollowsListEmojiPage'),
+            widget: OBPickFollowsListEmojiPage()));
 
-    if (pickedIcon != null) _onPickedIcon(pickedIcon);
+    if (pickedEmoji != null) _onPickedEmoji(pickedEmoji);
   }
 
-  void _onPickedIcon(Emoji pickedEmoji) {
-    _setIcon(pickedEmoji);
+  void _onPickedEmoji(Emoji pickedEmoji) {
+    _setEmoji(pickedEmoji);
   }
 
-  void _setIcon(Emoji icon) {
+  void _setEmoji(Emoji emoji) {
     setState(() {
-      _icon = icon;
+      _emoji = emoji;
     });
   }
 

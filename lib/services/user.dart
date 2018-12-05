@@ -430,9 +430,9 @@ class UserService {
   }
 
   Future<FollowsList> createFollowsList(
-      {@required String name, String emojiId}) async {
+      {@required String name, Emoji emoji}) async {
     HttpieResponse response =
-        await _followsListsApiService.createList(name: name, emojiId: emojiId);
+        await _followsListsApiService.createList(name: name, emojiId: emoji.id);
     _checkResponseIsCreated(response);
     return FollowsList.fromJSON(json.decode(response.body));
   }

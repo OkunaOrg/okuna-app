@@ -33,7 +33,7 @@ class FollowsListsApiService {
     return _httpService.get(url, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> createList({@required String name, String emojiId}) {
+  Future<HttpieResponse> createList({@required String name, int emojiId}) {
     String url = _makeApiUrl(CREATE_LIST_PATH);
     Map<String, dynamic> body = {'name': name};
 

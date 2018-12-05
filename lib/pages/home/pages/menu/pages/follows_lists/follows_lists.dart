@@ -200,10 +200,9 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
   }
 
   void _onFollowsListCreated(FollowsList createdFollowsList) {
-    setState(() {
-      this._followsLists.insert(0, createdFollowsList);
-      _scrollToTop();
-    });
+    this._followsLists.insert(0, createdFollowsList);
+    this._setFollowsLists(this._followsLists.toList());
+    _scrollToTop();
   }
 
   void _scrollToTop() {

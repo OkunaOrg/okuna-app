@@ -1,6 +1,5 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -55,9 +54,9 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
           widget.onWantsToSeeFollowsList(widget.followsList);
         },
         onLongPress: widget.onLongPress,
-        leading: OBFollowsListIcon(
-          size: OBFollowsListIconSize.medium,
-          followsListIconUrl: widget.followsList.getEmojiImage(),
+        leading: OBFollowsListEmoji(
+          size: OBFollowsListEmojiSize.medium,
+          followsListEmojiUrl: widget.followsList.getEmojiImage(),
         ),
         title: Text(widget.followsList.name),
         subtitle: Text(widget.followsList.followsCount.toString() + ' users'),
