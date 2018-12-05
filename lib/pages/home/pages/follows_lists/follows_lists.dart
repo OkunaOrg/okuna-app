@@ -62,6 +62,11 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
           child: Container(
             child: Column(
               children: <Widget>[
+                Container(
+                    child: OBSearchBar(
+                  onSearch: _onSearch,
+                  hintText: 'Search for a list...',
+                )),
                 Expanded(
                   child: RefreshIndicator(
                       key: _refreshIndicatorKey,
@@ -69,17 +74,9 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                           physics: AlwaysScrollableScrollPhysics(),
                           controller: _followsListsScrollController,
                           padding: EdgeInsets.all(0),
-                          itemCount: _followsListsSearchResults.length + 1,
+                          itemCount: _followsListsSearchResults.length,
                           itemBuilder: (context, index) {
-                            if (index == 0) {
-                              return Container(
-                                  child: OBSearchBar(
-                                onSearch: _onSearch,
-                                hintText: 'Search for a list...',
-                              ));
-                            }
-
-                            int commentIndex = index - 1;
+                            int commentIndex = index;
 
                             var followsList =
                                 _followsListsSearchResults[commentIndex];
@@ -155,10 +152,8 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
   void _removeFollowsList(FollowsList followsList) {
     setState(() {
-      var index = _followsLists.indexOf(followsList);
-      var searchIndex = _followsLists.indexOf(followsList);
-      _followsLists.removeAt(index);
-      _followsListsSearchResults.remove(searchIndex);
+      _followsLists.remove(followsList);
+      _followsListsSearchResults.remove(followsList);
     });
   }
 
