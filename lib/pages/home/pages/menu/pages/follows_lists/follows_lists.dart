@@ -1,6 +1,7 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/follows_lists/widgets/follows_list_tile.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
@@ -59,10 +60,8 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: CupertinoNavigationBar(
+        navigationBar: OBMenuNavBar(
           middle: Text('My lists'),
-          transitionBetweenRoutes: false,
-          backgroundColor: Colors.white,
           trailing: GestureDetector(
             onTap: _toggleEdit,
             child: GestureDetector(
@@ -106,6 +105,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                                   followsList: followsList,
                                   onWantsToSeeUserProfile:
                                       _onWantsToSeeUserProfile,
+                                  onLongPress: _toggleEdit,
                                   onFollowsListDeletedCallback:
                                       onFollowsListDeletedCallback,
                                 );
@@ -132,6 +132,8 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
           ],
         ));
   }
+
+  void scrollToTop() {}
 
   void _bootstrap() async {
     await _refreshComments();

@@ -1,12 +1,31 @@
 import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/pages/home/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/pages/home/lib/base_state.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBMainMenuPage extends StatelessWidget {
-  OBMainMenuPage();
+class OBMainMenuPage extends StatefulWidget {
+  final OBMainMenuPageController controller;
+
+  OBMainMenuPage({this.controller});
+
+  @override
+  State<StatefulWidget> createState() {
+    return OBMainMenuPageState();
+  }
+}
+
+class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
+  OBMainMenuPageState();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller != null) widget.controller.attach(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +54,7 @@ class OBMainMenuPage extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.list),
                   title: Text(localizationService.trans('DRAWER.LISTS')),
-                  onTap: () async {
-                    await Navigator.push(
-                        context,
-                        OBSlideRightRoute(
-                            key: Key('obSlideViewComments'),
-                            widget: OBFollowsListsPage(
-                              onWantsToCreateFollowsList:
-                                  _onWantsToCreateFollowsList,
-                            )));
-                  },
+                  onTap: _onWantsToSeeFollowsLists,
                 ),
                 ListTile(
                   leading: Icon(Icons.settings),
@@ -85,12 +95,28 @@ class OBMainMenuPage extends StatelessWidget {
     );
   }
 
+  @override
+  void scrollToTop() {}
+
+  void _onWantsToSeeFollowsLists() async {
+    incrementPushedRoutes();
+    await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewComments'),
+            widget: OBFollowsListsPage(
+              onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
+            )));
+    decrementPushedRoutes();
+  }
+
   Widget _buildNavigationBar() {
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
+    return OBMenuNavBar(
       middle: Text('Menu'),
     );
   }
 
   Future<FollowsList> _onWantsToCreateFollowsList() {}
 }
+
+class OBMainMenuPageController extends OBBasePageStateController {}

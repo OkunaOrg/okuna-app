@@ -40,6 +40,7 @@ class OBHomePageState extends State<OBHomePage> {
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
+  OBMainMenuPageController _menuPageController;
 
   @override
   void initState() {
@@ -50,6 +51,7 @@ class OBHomePageState extends State<OBHomePage> {
     _timelinePageController = OBTimelinePageController();
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
+    _menuPageController = OBMainMenuPageController();
   }
 
   @override
@@ -113,7 +115,7 @@ class OBHomePageState extends State<OBHomePage> {
             controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
-        page = OBMainMenuPage();
+        page = OBMainMenuPage(controller: _menuPageController);
         break;
       default:
         throw 'Unhandled index';
@@ -154,6 +156,15 @@ class OBHomePageState extends State<OBHomePage> {
             _searchPageController.popUntilFirst();
           } else {
             _searchPageController.scrollToTop();
+          }
+        }
+
+        if (tappedTab == OBHomePageTabs.menu &&
+            currentTab == OBHomePageTabs.menu) {
+          if (_menuPageController.hasPushedRoutes()) {
+            _menuPageController.popUntilFirst();
+          } else {
+            _menuPageController.scrollToTop();
           }
         }
 

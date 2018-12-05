@@ -7,12 +7,12 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/danger_button.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBFollowsListTile extends StatefulWidget {
   final FollowsList followsList;
   final VoidCallback onFollowsListDeletedCallback;
+  final VoidCallback onLongPress;
   final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
   final bool isEditing;
 
@@ -20,6 +20,7 @@ class OBFollowsListTile extends StatefulWidget {
       {@required this.followsList,
       Key key,
       this.onFollowsListDeletedCallback,
+      this.onLongPress,
       this.isEditing,
       @required this.onWantsToSeeUserProfile})
       : super(key: key);
@@ -49,6 +50,7 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
 
     return Container(
       child: ListTile(
+        onLongPress: widget.onLongPress,
         leading: OBFollowsListIcon(
           size: OBFollowsListIconSize.medium,
           followsListIconUrl: widget.followsList.getEmojiImage(),
