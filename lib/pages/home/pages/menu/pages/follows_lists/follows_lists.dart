@@ -131,7 +131,10 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                         _onFollowsListCreated(createdFollowsList);
                       }
                     },
-                    icon: Icon(Icons.add, size: 15,),
+                    icon: Icon(
+                      Icons.add,
+                      size: 15,
+                    ),
                     child: Text('Create new list')))
           ],
         ));
@@ -141,14 +144,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
   void _bootstrap() async {
     await _refreshComments();
-  }
-
-  void _onWantsToSeeUserProfile(User user) {
-    Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obSlideProfileViewFromFollowsLists'),
-            widget: OBProfilePage(user)));
   }
 
   void _toggleEdit() {
@@ -229,4 +224,5 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 }
 
 typedef Future<FollowsList> OnWantsToCreateFollowsList();
+typedef Future<FollowsList> OnWantsToEditFollowsList(FollowsList followsList);
 typedef void OnWantsToSeeFollowsList(FollowsList followsList);

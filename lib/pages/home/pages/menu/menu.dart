@@ -1,8 +1,10 @@
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
+import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +13,12 @@ import 'package:flutter/material.dart';
 class OBMainMenuPage extends StatefulWidget {
   final OBMainMenuPageController controller;
   final OnWantsToCreateFollowsList onWantsToCreateFollowsList;
+  final OnWantsToEditFollowsList onWantsToEditFollowsList;
 
-  OBMainMenuPage({this.controller, this.onWantsToCreateFollowsList});
+  OBMainMenuPage(
+      {this.controller,
+      @required this.onWantsToCreateFollowsList,
+      @required this.onWantsToEditFollowsList});
 
   @override
   State<StatefulWidget> createState() {
@@ -119,8 +125,19 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
         context,
         OBSlideRightRoute(
             key: Key('obSeeFollowsList'),
-            widget: OBFollowsListPage(followsList)));
+            widget: OBFollowsListPage(
+              followsList,
+              onWantsToEditFollowsList: widget.onWantsToEditFollowsList,
+            )));
     decrementPushedRoutes();
+  }
+
+  void _onWantsToSeeUserProfile(User user) {
+    Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideProfileViewFromFollowsLists'),
+            widget: OBProfilePage(user)));
   }
 
   Widget _buildNavigationBar() {

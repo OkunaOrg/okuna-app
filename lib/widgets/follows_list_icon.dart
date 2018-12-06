@@ -15,7 +15,7 @@ class OBFollowsListEmoji extends StatelessWidget {
 
   static const double AVATAR_SIZE_SMALL = 10.0;
   static const double AVATAR_SIZE_MEDIUM = 25.0;
-  static const double AVATAR_SIZE_LARGE = 50.0;
+  static const double AVATAR_SIZE_LARGE = 40.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.png';
 
   OBFollowsListEmoji(

@@ -120,6 +120,7 @@ class OBHomePageState extends State<OBHomePage> {
         page = OBMainMenuPage(
           controller: _menuPageController,
           onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
+          onWantsToEditFollowsList: _onWantsToEditFollowsList,
         );
         break;
       default:
@@ -276,6 +277,19 @@ class OBHomePageState extends State<OBHomePage> {
             }));
 
     return createdFollowsList;
+  }
+
+  Future<FollowsList> _onWantsToEditFollowsList(FollowsList followsList) async {
+    FollowsList editedFollowsList =
+        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBSaveFollowsListModal(
+                followsList: followsList,
+              );
+            }));
+
+    return editedFollowsList;
   }
 
   void _bootstrap() async {

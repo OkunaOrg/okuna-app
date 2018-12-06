@@ -30,6 +30,7 @@ class OBMenuNavBar extends StatelessWidget
         var theme = snapshot.data;
 
         return CupertinoNavigationBar(
+          border: null,
           actionsForegroundColor: theme != null
               ? Pigment.fromString(theme.menuAccentColor)
               : Colors.black,

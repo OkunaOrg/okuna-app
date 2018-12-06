@@ -451,9 +451,9 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
-  Future<FollowsList> getFollowsList(FollowsList list) async {
+  Future<FollowsList> getFollowsListWithId(int listId) async {
     HttpieResponse response =
-        await _followsListsApiService.getListWithId(list.id);
+        await _followsListsApiService.getListWithId(listId);
     _checkResponseIsOk(response);
     return FollowsList.fromJSON(json.decode(response.body));
   }
