@@ -28,6 +28,7 @@ class OBFollowsListUsers extends StatelessWidget {
                 var user = users[index];
                 return OBUserTile(
                   user,
+                  showFollowing: false,
                   onUserTilePressed: onWantsToSeeUserProfile,
                 );
               });

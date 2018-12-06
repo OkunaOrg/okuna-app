@@ -58,7 +58,10 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
           size: OBFollowsListEmojiSize.medium,
           followsListEmojiUrl: widget.followsList.getEmojiImage(),
         ),
-        title: Text(widget.followsList.name),
+        title: Text(
+          widget.followsList.name,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         subtitle: Text(widget.followsList.followsCount.toString() + ' users'),
         trailing: widget.isEditing
             ? OBDangerButton(
@@ -67,7 +70,7 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
                 size: OBButtonSize.small,
                 onPressed: _deleteFollowsList,
               )
-            : IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: null),
+            : SizedBox(),
       ),
     );
   }

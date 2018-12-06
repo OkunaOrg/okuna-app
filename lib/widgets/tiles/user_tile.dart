@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class OBUserTile extends StatelessWidget {
   final User user;
   final OnUserTilePressed onUserTilePressed;
+  final bool showFollowing;
 
-  OBUserTile(this.user, {this.onUserTilePressed});
+  OBUserTile(this.user, {this.onUserTilePressed, this.showFollowing = true});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class OBUserTile extends StatelessWidget {
       ),
       subtitle: Row(children: [
         Text(user.getProfileName()),
-        user.isFollowing != null && user.isFollowing
+        showFollowing && user.isFollowing != null && user.isFollowing
             ? Text(' · Following')
             : SizedBox()
       ]),
