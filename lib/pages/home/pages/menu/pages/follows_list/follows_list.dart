@@ -62,29 +62,27 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
             child: Text('Edit'),
           ),
         ),
-        child: Container(
-          color: Colors.white,
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                OBFollowsListHeader(widget.followsList),
-                Expanded(
-                  child: RefreshIndicator(
-                      key: _refreshIndicatorKey,
+        child: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            child: Container(
+              color: Colors.white,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    OBFollowsListHeader(widget.followsList),
+                    Expanded(
                       child: OBFollowsListUsers(
                         widget.followsList,
                         onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
                       ),
-                      onRefresh: _refreshFollowsList),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ));
+            onRefresh: _refreshFollowsList));
   }
-
-  void scrollToTop() {}
 
   void _bootstrap() async {
     await _refreshFollowsList();

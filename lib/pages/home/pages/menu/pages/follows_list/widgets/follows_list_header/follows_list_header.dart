@@ -24,7 +24,9 @@ class OBFollowsListHeader extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    OBFollowsListName(followsList),
+                    Flexible(
+                      child: OBFollowsListName(followsList),
+                    ),
                     OBFollowsListEmoji(
                       followsListEmojiUrl: followsList.getEmojiImage(),
                       size: OBFollowsListEmojiSize.large,

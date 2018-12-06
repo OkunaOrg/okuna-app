@@ -28,6 +28,7 @@ class OBFollowsListName extends StatelessWidget {
                     child: Text(
                       followsList.name,
                       overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                       style: TextStyle(
                           fontSize: 30.0, fontWeight: FontWeight.bold),
                     ),
