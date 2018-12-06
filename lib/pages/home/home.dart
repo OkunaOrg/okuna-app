@@ -4,10 +4,10 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/modals/create_follows_list/create_follows_list.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
+import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
@@ -272,7 +272,7 @@ class OBHomePageState extends State<OBHomePage> {
         await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
-              return OBCreateFollowsListModal();
+              return OBSaveFollowsListModal();
             }));
 
     return createdFollowsList;

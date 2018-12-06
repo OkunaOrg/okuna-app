@@ -1,6 +1,6 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/pages/home/modals/create_follows_list/pages/pick_follows_list_emoji.dart';
+import 'package:Openbook/pages/home/modals/save_follows_list/pages/pick_follows_list_emoji.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -14,18 +14,18 @@ import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCreateFollowsListModal extends StatefulWidget {
+class OBSaveFollowsListModal extends StatefulWidget {
   final FollowsList followsList;
 
-  OBCreateFollowsListModal({this.followsList});
+  OBSaveFollowsListModal({this.followsList});
 
   @override
-  OBCreateFollowsListModalState createState() {
-    return OBCreateFollowsListModalState();
+  OBSaveFollowsListModalState createState() {
+    return OBSaveFollowsListModalState();
   }
 }
 
-class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
+class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   static const double INPUT_EMOJIS_SIZE = 16;
   static EdgeInsetsGeometry INPUT_CONTENT_PADDING =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);

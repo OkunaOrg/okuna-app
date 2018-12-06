@@ -1,6 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
-import 'package:Openbook/pages/home/modals/create_follows_list/create_follows_list.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -119,7 +119,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
         context,
         OBSlideRightRoute(
             key: Key('obSeeFollowsList'),
-            widget: OBCreateFollowsListModal(followsList: followsList)));
+            widget: OBFollowsListPage(followsList)));
     decrementPushedRoutes();
   }
 
