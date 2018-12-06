@@ -1,14 +1,13 @@
 import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
-import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -53,94 +52,36 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
       _needsBootstrap = false;
     }
 
-    return StreamBuilder(
-        stream: widget.followsList.updateChange,
-        initialData: widget.followsList,
-        builder: (BuildContext context, AsyncSnapshot<FollowsList> snapshot) {
-          var followsList = snapshot.data;
-          List<User> users = followsList.users?.users ?? [];
-
-          return OBCupertinoPageScaffold(
-              backgroundColor: Color.fromARGB(0, 0, 0, 0),
-              navigationBar: OBMenuNavBar(
-                trailing: GestureDetector(
-                  onTap: () {
-                    widget.onWantsToEditFollowsList(widget.followsList);
-                  },
-                  child: Text('Edit'),
+    return OBCupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        navigationBar: OBMenuNavBar(
+          trailing: GestureDetector(
+            onTap: () {
+              widget.onWantsToEditFollowsList(widget.followsList);
+            },
+            child: Text('Edit'),
+          ),
+        ),
+        child: Container(
+          color: Colors.white,
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                OBFollowsListHeader(widget.followsList),
+                Expanded(
+                  child: RefreshIndicator(
+                      key: _refreshIndicatorKey,
+                      child: OBFollowsListUsers(
+                        widget.followsList,
+                        onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
+                      ),
+                      onRefresh: _refreshFollowsList),
                 ),
-              ),
-              child: Container(
-                color: Colors.white,
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'List',
-                                  style: TextStyle(color: Colors.black45),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Text(
-                                        followsList.name,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 30.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            OBFollowsListEmoji(
-                              followsListEmojiUrl: followsList.getEmojiImage(),
-                              size: OBFollowsListEmojiSize.large,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Text('Users',
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold)),
-                      ),
-                      Divider(),
-                      Expanded(
-                        child: RefreshIndicator(
-                            key: _refreshIndicatorKey,
-                            child: ListView.builder(
-                                physics: AlwaysScrollableScrollPhysics(),
-                                padding: EdgeInsets.all(0),
-                                itemCount: users.length,
-                                itemBuilder: (context, index) {
-                                  var user = users[index];
-                                  return OBUserTile(
-                                    user,
-                                    onUserTilePressed:
-                                        widget.onWantsToSeeUserProfile,
-                                  );
-                                }),
-                            onRefresh: _refreshFollowsList),
-                      ),
-                    ],
-                  ),
-                ),
-              ));
-        });
+              ],
+            ),
+          ),
+        ));
   }
 
   void scrollToTop() {}
