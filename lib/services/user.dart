@@ -451,6 +451,13 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
+  Future<FollowsList> getFollowsList(FollowsList list) async {
+    HttpieResponse response =
+        await _followsListsApiService.getListWithId(list.id);
+    _checkResponseIsOk(response);
+    return FollowsList.fromJSON(json.decode(response.body));
+  }
+
   Future<User> _setUserWithData(String userData) async {
     await _storeUserData(userData);
     var user = _makeLoggedInUser(userData);
