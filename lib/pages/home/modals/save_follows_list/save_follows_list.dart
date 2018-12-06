@@ -87,7 +87,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
 
                       if (_takenFollowsListName != null &&
                           _takenFollowsListName == followsListName) {
-                        return 'List name $_takenFollowsListName is taken';
+                        return 'List name "$_takenFollowsListName" is taken';
                       }
 
                       return _validationService
@@ -175,7 +175,10 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
 
       FollowsList followsList = await (_hasExistingList
           ? _userService.updateFollowsList(widget.followsList,
-              name: _nameController.text, emoji: _emoji)
+              name: _nameController.text != widget.followsList.name
+                  ? _nameController.text
+                  : null,
+              emoji: _emoji)
           : _userService.createFollowsList(
               name: _nameController.text, emoji: _emoji));
 
@@ -191,6 +194,9 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   }
 
   Future<bool> _isFollowsListNameTaken(String followsListName) async {
+    if (_hasExistingList && widget.followsList.name == _nameController.text) {
+      return false;
+    }
     return _validationService.isFollowsListNameTaken(followsListName);
   }
 
