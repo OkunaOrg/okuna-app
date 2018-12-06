@@ -1,6 +1,7 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/modals/create_follows_list/pages/pick_follows_list_emoji.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -14,7 +15,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBCreateFollowsListModal extends StatefulWidget {
-  OBCreateFollowsListModal();
+  final FollowsList followsList;
+
+  OBCreateFollowsListModal({this.followsList});
 
   @override
   OBCreateFollowsListModalState createState() {
@@ -34,9 +37,10 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
   bool _requestInProgress;
   bool _formWasSubmitted;
   bool _formValid;
+  bool _hasExistingList;
   String _takenFollowsListName;
 
-  final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey;
 
   TextEditingController _nameController;
   Emoji _emoji;
@@ -48,6 +52,14 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
     _requestInProgress = false;
     _formWasSubmitted = false;
     _nameController = TextEditingController();
+    _formKey = GlobalKey<FormState>();
+    _hasExistingList = widget.followsList != null;
+
+    if (_hasExistingList) {
+      _nameController.text = widget.followsList.name;
+      _emoji = widget.followsList.emoji;
+    }
+
     _nameController.addListener(_updateFormValid);
   }
 
@@ -107,23 +119,21 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
   }
 
   Widget _buildNavigationBar() {
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
-      leading: GestureDetector(
-        child: Icon(Icons.close, color: Colors.black87),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      middle: Text('New list'),
-      trailing: OBPrimaryButton(
-        isDisabled: !_formValid,
-        isLoading: _requestInProgress,
-        size: OBButtonSize.small,
-        onPressed: _submitForm,
-        child: Text('Save'),
-      ),
-    );
+    return OBMenuNavBar(
+        leading: GestureDetector(
+          child: Icon(Icons.close, color: Colors.black87),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        middle: Text(_hasExistingList ? 'Edit list' : 'Create list'),
+        trailing: OBPrimaryButton(
+          isDisabled: !_formValid,
+          isLoading: _requestInProgress,
+          size: OBButtonSize.small,
+          onPressed: _submitForm,
+          child: Text('Save'),
+        ));
   }
 
   Widget _buildEmojiSubtitle() {
@@ -163,8 +173,12 @@ class OBCreateFollowsListModalState extends State<OBCreateFollowsListModal> {
         return;
       }
 
-      FollowsList followsList = await _userService.createFollowsList(
-          name: _nameController.text, emoji: _emoji);
+      FollowsList followsList = await (_hasExistingList
+          ? _userService.updateFollowsList(widget.followsList,
+              name: _nameController.text, emoji: _emoji)
+          : _userService.createFollowsList(
+              name: _nameController.text, emoji: _emoji));
+
       Navigator.of(context).pop(followsList);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);

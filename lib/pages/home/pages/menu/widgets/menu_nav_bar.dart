@@ -34,7 +34,7 @@ class OBMenuNavBar extends StatelessWidget
               ? Pigment.fromString(theme.menuAccentColor)
               : Colors.black,
           middle: middle,
-          transitionBetweenRoutes: true,
+          transitionBetweenRoutes: false,
           backgroundColor: Colors.white,
           trailing: trailing,
           leading: leading,

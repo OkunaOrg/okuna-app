@@ -166,7 +166,8 @@ class OBHomePageState extends State<OBHomePage> {
 
         if (tappedTab == OBHomePageTabs.menu &&
             currentTab == OBHomePageTabs.menu) {
-          if (_menuPageController.hasPushedRoutes()) {
+          if (_menuPageController.isAttached() &&
+              _menuPageController.hasPushedRoutes()) {
             _menuPageController.popUntilFirst();
           } else {
             _menuPageController.scrollToTop();

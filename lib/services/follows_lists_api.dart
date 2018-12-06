@@ -45,7 +45,7 @@ class FollowsListsApiService {
   }
 
   Future<HttpieResponse> updateListWithId(int listId,
-      {String name, String emojiId}) {
+      {String name, int emojiId}) {
     Map<String, dynamic> body = {};
 
     if (emojiId != null) body['emoji_id'] = emojiId;

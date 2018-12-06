@@ -1,6 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
+import 'package:Openbook/pages/home/modals/create_follows_list/create_follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -105,7 +105,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
     await Navigator.push(
         context,
         OBSlideRightRoute(
-            key: Key('obSlideViewComments'),
+            key: Key('obSeeFollowsLists'),
             widget: OBFollowsListsPage(
               onWantsToSeeFollowsList: _onWantsToSeeFollowsList,
               onWantsToCreateFollowsList: widget.onWantsToCreateFollowsList,
@@ -116,7 +116,10 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
   void _onWantsToSeeFollowsList(FollowsList followsList) async {
     incrementPushedRoutes();
     await Navigator.push(
-        context, OBSlideRightRoute(widget: OBFollowsListPage(followsList)));
+        context,
+        OBSlideRightRoute(
+            key: Key('obSeeFollowsList'),
+            widget: OBCreateFollowsListModal(followsList: followsList)));
     decrementPushedRoutes();
   }
 
