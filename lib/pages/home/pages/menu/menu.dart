@@ -128,6 +128,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
             widget: OBFollowsListPage(
               followsList,
               onWantsToEditFollowsList: widget.onWantsToEditFollowsList,
+              onWantsToSeeUserProfile: _onWantsToSeeUserProfile
             )));
     decrementPushedRoutes();
   }

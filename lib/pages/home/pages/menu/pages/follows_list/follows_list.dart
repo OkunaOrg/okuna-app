@@ -2,6 +2,7 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
@@ -14,10 +15,12 @@ import 'package:Openbook/services/httpie.dart';
 
 class OBFollowsListPage extends StatefulWidget {
   final OnWantsToEditFollowsList onWantsToEditFollowsList;
+  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
   final FollowsList followsList;
 
   OBFollowsListPage(this.followsList,
-      {@required this.onWantsToEditFollowsList});
+      {@required this.onWantsToEditFollowsList,
+      @required this.onWantsToSeeUserProfile});
 
   @override
   State<OBFollowsListPage> createState() {
@@ -79,10 +82,28 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              followsList.name,
-                              style: TextStyle(
-                                  fontSize: 30.0, fontWeight: FontWeight.bold),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'List',
+                                  style: TextStyle(color: Colors.black45),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        followsList.name,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
                             OBFollowsListEmoji(
                               followsListEmojiUrl: followsList.getEmojiImage(),
@@ -93,8 +114,9 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Text('Users', style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold)),
+                        child: Text('Users',
+                            style: TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold)),
                       ),
                       Divider(),
                       Expanded(
@@ -106,7 +128,11 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
                                 itemCount: users.length,
                                 itemBuilder: (context, index) {
                                   var user = users[index];
-                                  return OBUserTile(user);
+                                  return OBUserTile(
+                                    user,
+                                    onUserTilePressed:
+                                        widget.onWantsToSeeUserProfile,
+                                  );
                                 }),
                             onRefresh: _refreshFollowsList),
                       ),

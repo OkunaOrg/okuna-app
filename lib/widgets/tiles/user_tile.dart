@@ -24,7 +24,9 @@ class OBUserTile extends StatelessWidget {
       ),
       subtitle: Row(children: [
         Text(user.getProfileName()),
-        user.isFollowing ? Text(' · Following') : SizedBox()
+        user.isFollowing != null && user.isFollowing
+            ? Text(' · Following')
+            : SizedBox()
       ]),
     );
   }
