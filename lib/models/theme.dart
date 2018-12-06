@@ -1,7 +1,7 @@
+import 'package:Openbook/models/updatable_model.dart';
 import 'package:dcache/dcache.dart';
-import 'package:rxdart/rxdart.dart';
 
-class OBTheme {
+class OBTheme extends UpdatableModel<OBTheme> {
   int id;
   String homeAccentColor;
   String searchAccentColor;
@@ -9,66 +9,40 @@ class OBTheme {
   String communitiesAccentColor;
   String menuAccentColor;
 
-  Stream<OBTheme> get updateChange => _updateChangeSubject.stream;
-  final _updateChangeSubject = ReplaySubject<OBTheme>(maxSize: 1);
+  static final factory = OBThemeFactory();
+
+  factory OBTheme.fromJson(Map<String, dynamic> json) {
+    return factory.fromJson(json);
+  }
 
   OBTheme(
       {this.homeAccentColor,
       this.searchAccentColor,
       this.notificationsAccentColor,
       this.communitiesAccentColor,
-      this.menuAccentColor}) {
-    _notifyUpdate();
+      this.menuAccentColor})
+      : super();
+
+  @override
+  void updateFromJson(json) {
+    homeAccentColor = json['home_accent_color'];
+    searchAccentColor = json['search_accent_color'];
+    notificationsAccentColor = json['notifications_accent_color'];
+    communitiesAccentColor = json['communities_accent_color'];
   }
+}
 
-  factory OBTheme.fromJson(Map<String, dynamic> json) {
-    int themeId = json['id'];
+class OBThemeFactory extends UpdatableModelFactory<OBTheme> {
+  @override
+  SimpleCache<int, OBTheme> cache = LruCache(storage: SimpleStorage(size: 10));
 
-    OBTheme theme = getThemeWithIdFromCache(themeId);
-
-    if (theme != null) {
-      theme.updateFromJson(json);
-      return theme;
-    }
-
-    theme = _makeFromJson(json);
-    addToCache(theme);
-    return theme;
-  }
-
-  static OBTheme _makeFromJson(json) {
+  @override
+  OBTheme makeFromJson(Map json) {
     return OBTheme(
         homeAccentColor: json['home_accent_color'],
         searchAccentColor: json['search_accent_color'],
         notificationsAccentColor: json['notifications_accent_color'],
         communitiesAccentColor: json['communities_accent_color'],
         menuAccentColor: json['menu_accent_color']);
-  }
-
-  static final SimpleCache<int, OBTheme> cache =
-      LruCache(storage: SimpleStorage(size: 10));
-
-  static OBTheme getThemeWithIdFromCache(int themeId) {
-    return cache.get(themeId);
-  }
-
-  static void addToCache(OBTheme theme) {
-    cache.set(theme.id, theme);
-  }
-
-  static void clearCache() {
-    cache.clear();
-  }
-
-  void updateFromJson(json) {
-    homeAccentColor = json['home_accent_color'];
-    searchAccentColor = json['search_accent_color'];
-    notificationsAccentColor = json['notifications_accent_color'];
-    communitiesAccentColor = json['communities_accent_color'];
-    _notifyUpdate();
-  }
-
-  void _notifyUpdate() {
-    _updateChangeSubject.add(this);
   }
 }
