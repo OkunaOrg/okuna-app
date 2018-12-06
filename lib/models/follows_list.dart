@@ -1,14 +1,22 @@
 import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:dcache/dcache.dart';
 
-class FollowsList {
+class FollowsList extends UpdatableModel<FollowsList> {
   final int id;
   final User creator;
-  final UsersList users;
-  final Emoji emoji;
-  final String name;
-  final int followsCount;
+  UsersList users;
+  Emoji emoji;
+  String name;
+  int followsCount;
+
+  static final factory = FollowsListFactory();
+
+  factory FollowsList.fromJSON(Map<String, dynamic> json) {
+    return factory.fromJson(json);
+  }
 
   FollowsList(
       {this.id,
@@ -18,26 +26,20 @@ class FollowsList {
       this.followsCount,
       this.users});
 
-  factory FollowsList.fromJSON(Map<String, dynamic> json) {
-    return FollowsList(
-        id: json['id'],
-        name: json['name'],
-        followsCount: json['follows_count'],
-        creator: _parseUser(json['creator']),
-        users: _parseUsers(json['users']),
-        emoji: _parseEmoji(json['emoji']));
-  }
-
-  static User _parseUser(Map userData) {
-    if (userData != null) return User.fromJson(userData);
-  }
-
-  static UsersList _parseUsers(List usersData) {
-    if (usersData != null) return UsersList.fromJson(usersData);
-  }
-
-  static Emoji _parseEmoji(Map emojiData) {
-    return Emoji.fromJson(emojiData);
+  @override
+  void updateFromJson(Map json) {
+    if (json.containsKey('users')) {
+      users = factory.parseUsers(json['users']);
+    }
+    if (json.containsKey('emoji')) {
+      emoji = factory.parseEmoji(json['emoji']);
+    }
+    if (json.containsKey('name')) {
+      name = json['name'];
+    }
+    if (json.containsKey('follows_count')) {
+      followsCount = json['follows_count'];
+    }
   }
 
   String getEmojiImage() {
@@ -47,5 +49,34 @@ class FollowsList {
   String getPrettyFollowsCount() {
     String followsCountStr = followsCount.toString();
     return followsCountStr + (followsCount > 1 ? '' : '');
+  }
+}
+
+class FollowsListFactory extends UpdatableModelFactory<FollowsList> {
+  @override
+  SimpleCache<int, FollowsList> cache =
+      SimpleCache(storage: SimpleStorage(size: 20));
+
+  @override
+  FollowsList makeFromJson(Map json) {
+    return FollowsList(
+        id: json['id'],
+        name: json['name'],
+        followsCount: json['follows_count'],
+        creator: parseUser(json['creator']),
+        users: parseUsers(json['users']),
+        emoji: parseEmoji(json['emoji']));
+  }
+
+  User parseUser(Map userData) {
+    if (userData != null) return User.fromJson(userData);
+  }
+
+  UsersList parseUsers(List usersData) {
+    if (usersData != null) return UsersList.fromJson(usersData);
+  }
+
+  Emoji parseEmoji(Map emojiData) {
+    return Emoji.fromJson(emojiData);
   }
 }

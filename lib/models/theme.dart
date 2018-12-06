@@ -24,7 +24,7 @@ class OBTheme extends UpdatableModel<OBTheme> {
       : super();
 
   @override
-  void updateFromJson(json) {
+  void updateFromJson(Map json) {
     homeAccentColor = json['home_accent_color'];
     searchAccentColor = json['search_accent_color'];
     notificationsAccentColor = json['notifications_accent_color'];
