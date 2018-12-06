@@ -1,17 +1,24 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class OBUserTile extends StatelessWidget {
   final User user;
   final OnUserTilePressed onUserTilePressed;
+  final OnUserTileDeleted onUserTileDeleted;
   final bool showFollowing;
 
-  OBUserTile(this.user, {this.onUserTilePressed, this.showFollowing = true});
+  OBUserTile(
+    this.user, {
+    this.onUserTilePressed,
+    this.onUserTileDeleted,
+    this.showFollowing = true,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    Widget tile = ListTile(
       onTap: () {
         if (onUserTilePressed != null) onUserTilePressed(user);
       },
@@ -30,7 +37,27 @@ class OBUserTile extends StatelessWidget {
             : SizedBox()
       ]),
     );
+
+    if (onUserTileDeleted != null) {
+      tile = Slidable(
+        delegate: new SlidableDrawerDelegate(),
+        actionExtentRatio: 0.25,
+        child: tile,
+        secondaryActions: <Widget>[
+          new IconSlideAction(
+            caption: 'Delete',
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              onUserTileDeleted(user);
+            },
+          ),
+        ],
+      );
+    }
+    return tile;
   }
 }
 
 typedef void OnUserTilePressed(User user);
+typedef void OnUserTileDeleted(User user);

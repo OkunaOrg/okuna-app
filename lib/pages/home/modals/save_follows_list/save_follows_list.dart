@@ -112,7 +112,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                             followsListEmojiUrl: _emoji?.image),
                         onTap: _onWantsToPickEmoji),
                   ),
-                  Divider()
+                  Divider(),
                 ],
               )),
         ));
