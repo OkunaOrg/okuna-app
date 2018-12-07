@@ -10,6 +10,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/fields/emoji_field.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
@@ -102,16 +103,14 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                         return _validationService
                             .validateFollowsListName(followsListName);
                       }),
-                  Divider(),
-                  MergeSemantics(
-                    child: ListTile(
-                        title: Text('Emoji'),
-                        subtitle: _buildEmojiSubtitle(),
-                        trailing: OBFollowsListEmoji(
-                            followsListEmojiUrl: _emoji?.image),
-                        onTap: _onWantsToPickEmoji),
-                  ),
-                  Divider(),
+                  OBEmojiField(
+                      emoji: _emoji,
+                      onEmojiFieldTapped: (Emoji emoji) =>
+                          _onWantsToPickEmoji(),
+                      labelText: 'Emoji',
+                      errorText: _formWasSubmitted && _emoji == null
+                          ? 'Emoji is required'
+                          : null),
                   Column(
                       children: _users.map((User user) {
                     return OBUserTile(
@@ -145,14 +144,6 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
           onPressed: _submitForm,
           child: Text('Save'),
         ));
-  }
-
-  Widget _buildEmojiSubtitle() {
-    if (_formWasSubmitted && _emoji == null)
-      return Text(
-        'Emoji is required',
-        style: TextStyle(color: Colors.red),
-      );
   }
 
   bool _validateForm() {
