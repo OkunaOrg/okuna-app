@@ -1,4 +1,7 @@
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 enum OBIconSize { small, medium, large }
 
@@ -6,12 +9,13 @@ class OBIcon extends StatelessWidget {
   final OBIconData iconData;
   final OBIconSize size;
   final double customSize;
+  final bool isActive;
 
   static const double LARGE_SIZE = 30.0;
-  static const double MEDIUM_SIZE = 20.0;
+  static const double MEDIUM_SIZE = 25.0;
   static const double SMALL_SIZE = 15.0;
 
-  OBIcon(this.iconData, {this.size, this.customSize});
+  OBIcon(this.iconData, {this.size, this.customSize, this.isActive = false});
 
   @override
   Widget build(BuildContext context) {
@@ -36,47 +40,74 @@ class OBIcon extends StatelessWidget {
       }
     }
 
-    String iconName = iconData.filename;
-    return Image.asset(
-      'assets/images/icons/$iconName',
-      height: iconSize,
-    );
+    var themeService = OpenbookProvider.of(context).themeService;
+
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+
+          Widget icon;
+
+          if (iconData.nativeIcon != null) {
+            icon = Icon(
+              iconData.nativeIcon,
+              size: iconSize,
+              color: Pigment.fromString(
+                  isActive ? theme.activeIconColor : theme.iconColor),
+            );
+          } else {
+            String iconName = iconData.filename;
+            icon =
+                Image.asset('assets/images/icons/$iconName', height: iconSize);
+          }
+
+          return icon;
+        });
   }
 }
 
 class OBIcons {
-  static const success = OBIconData('success-icon.png');
-  static const error = OBIconData('error-icon.png');
-  static const warning = OBIconData('warning-icon.png');
-  static const info = OBIconData('info-icon.png');
-  static const profile = OBIconData('profile-icon.png');
-  static const connections = OBIconData('connections-icon.png');
-  static const settings = OBIconData('settings-icon.png');
-  static const help = OBIconData('help-icon.png');
-  static const customize = OBIconData('customize-icon.png');
-  static const logout = OBIconData('logout-icon.png');
-  static const home = OBIconData('home-icon.png');
-  static const search = OBIconData('search-icon.png');
-  static const createPost = OBIconData('create-post-icon.png');
-  static const notifications = OBIconData('notifications-icon.png');
-  static const communities = OBIconData('communities-icon.png');
-  static const chat = OBIconData('chat-icon.png');
-  static const media = OBIconData('media-icon.png');
-  static const camera = OBIconData('camera-icon.png');
-  static const gif = OBIconData('gif-icon.png');
-  static const audience = OBIconData('audience-icon.png');
-  static const burner = OBIconData('burner-icon.png');
-  static const comment = OBIconData('comment-icon.png');
-  static const comments = OBIconData('comments-icon.png');
-  static const react = OBIconData('react-icon.png');
-  static const like = OBIconData('like-icon.png');
-  static const finish = OBIconData('finish-icon.png');
-  static const loadingMorePosts = OBIconData('load-more-posts-icon.gif');
+  static const home = OBIconData(nativeIcon: Icons.home);
+  static const search = OBIconData(nativeIcon: Icons.search);
+  static const notifications = OBIconData(nativeIcon: Icons.notifications);
+  static const menu = OBIconData(nativeIcon: Icons.menu);
+  static const communities = OBIconData(nativeIcon: Icons.people);
+  static const settings = OBIconData(nativeIcon: Icons.settings);
+  static const lists = OBIconData(nativeIcon: Icons.list);
+  static const customize = OBIconData(nativeIcon: Icons.format_paint);
+  static const logout = OBIconData(nativeIcon: Icons.exit_to_app);
+  static const help = OBIconData(nativeIcon: Icons.help);
+  static const connections = OBIconData(nativeIcon: Icons.people);
+  static const success = OBIconData(filename: 'success-icon.png');
+  static const error = OBIconData(filename: 'error-icon.png');
+  static const warning = OBIconData(filename: 'warning-icon.png');
+  static const info = OBIconData(filename: 'info-icon.png');
+  static const profile = OBIconData(filename: 'profile-icon.png');
+  static const createPost = OBIconData(filename: 'create-post-icon.png');
+  static const chat = OBIconData(filename: 'chat-icon.png');
+  static const media = OBIconData(filename: 'media-icon.png');
+  static const camera = OBIconData(filename: 'camera-icon.png');
+  static const gif = OBIconData(filename: 'gif-icon.png');
+  static const audience = OBIconData(filename: 'audience-icon.png');
+  static const burner = OBIconData(filename: 'burner-icon.png');
+  static const comment = OBIconData(filename: 'comment-icon.png');
+  static const comments = OBIconData(filename: 'comments-icon.png');
+  static const react = OBIconData(filename: 'react-icon.png');
+  static const like = OBIconData(filename: 'like-icon.png');
+  static const finish = OBIconData(filename: 'finish-icon.png');
+  static const loadingMorePosts =
+      OBIconData(filename: 'load-more-posts-icon.gif');
 }
 
 @immutable
 class OBIconData {
   final String filename;
+  final IconData nativeIcon;
 
-  const OBIconData(this.filename);
+  const OBIconData({
+    this.nativeIcon,
+    this.filename,
+  });
 }

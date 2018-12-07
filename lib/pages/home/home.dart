@@ -19,6 +19,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -181,33 +182,35 @@ class OBHomePageState extends State<OBHomePage> {
       items: [
         BottomNavigationBarItem(
           title: Container(),
-          icon: Icon(Icons.home, size: 25.0),
-          activeIcon: Icon(
-            Icons.home,
-            size: 25.0,
-            color: Pigment.fromString('#6bd509'),
+          icon: OBIcon(OBIcons.home),
+          activeIcon: OBIcon(
+            OBIcons.home,
+            isActive: true,
           ),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: Icon(Icons.search, size: 25.0),
-          activeIcon: Icon(Icons.search,
-              size: 25.0, color: Pigment.fromString('#379eff')),
-        ),
-        BottomNavigationBarItem(
-          title: Container(),
-          icon: Icon(Icons.notifications, size: 23.0),
-          activeIcon: Icon(Icons.notifications,
-              size: 25.0, color: Pigment.fromString('#f6006f')),
-        ),
-        BottomNavigationBarItem(
-          title: Container(),
-          icon: Icon(
-            Icons.people,
-            size: 25.0,
+          icon: OBIcon(OBIcons.search),
+          activeIcon: OBIcon(
+            OBIcons.search,
+            isActive: true,
           ),
-          activeIcon: Icon(Icons.people,
-              size: 25.0, color: Pigment.fromString('#980df9')),
+        ),
+        BottomNavigationBarItem(
+          title: Container(),
+          icon: OBIcon(OBIcons.notifications),
+          activeIcon: OBIcon(
+            OBIcons.notifications,
+            isActive: true,
+          ),
+        ),
+        BottomNavigationBarItem(
+          title: Container(),
+          icon: OBIcon(OBIcons.communities),
+          activeIcon: OBIcon(
+            OBIcons.communities,
+            isActive: true,
+          ),
         ),
         BottomNavigationBarItem(
             title: Container(),
@@ -227,12 +230,11 @@ class OBHomePageState extends State<OBHomePage> {
             )),
         BottomNavigationBarItem(
           title: Container(),
-          icon: Icon(
-            Icons.menu,
-            size: 25.0,
+          icon: OBIcon(OBIcons.menu),
+          activeIcon: OBIcon(
+            OBIcons.menu,
+            isActive: true,
           ),
-          activeIcon: Icon(Icons.menu,
-              size: 25.0, color: Pigment.fromString('#ff9400')),
         ),
       ],
     );

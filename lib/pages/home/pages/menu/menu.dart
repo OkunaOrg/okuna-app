@@ -3,6 +3,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
@@ -53,7 +54,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.people),
+                  leading:  OBIcon(OBIcons.connections),
                   title: Text(localizationService.trans('DRAWER.CONNECTIONS')),
                   onTap: () {
                     // Update the state of the app
@@ -61,12 +62,12 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.list),
+                  leading: OBIcon(OBIcons.lists),
                   title: Text(localizationService.trans('DRAWER.LISTS')),
                   onTap: _onWantsToSeeFollowsLists,
                 ),
                 ListTile(
-                  leading: Icon(Icons.settings),
+                  leading:OBIcon(OBIcons.settings),
                   title: Text(localizationService.trans('DRAWER.SETTINGS')),
                   onTap: () {
                     // Update the state of the app
@@ -74,7 +75,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.help),
+                  leading: OBIcon(OBIcons.help),
                   title: Text(localizationService.trans('DRAWER.HELP')),
                   onTap: () {
                     // Update the state of the app
@@ -82,7 +83,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.format_paint),
+                  leading: OBIcon(OBIcons.customize),
                   title: Text(localizationService.trans('DRAWER.CUSTOMIZE')),
                   onTap: () {
                     // Update the state of the app
@@ -90,7 +91,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.exit_to_app),
+                  leading: OBIcon(OBIcons.logout),
                   title: Text(localizationService.trans('DRAWER.LOGOUT')),
                   onTap: () {
                     userService.logout();
