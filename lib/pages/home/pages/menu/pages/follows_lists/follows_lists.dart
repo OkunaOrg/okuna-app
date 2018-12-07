@@ -1,6 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
@@ -58,7 +58,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBMenuNavBar(
-          middle: Text('My lists'),
+          title: 'My lists',
         ),
         child: Stack(
           children: <Widget>[

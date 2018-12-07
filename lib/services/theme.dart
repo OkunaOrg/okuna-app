@@ -23,11 +23,21 @@ class ThemeService {
 
   ThemeService() {
     _setActiveTheme(OBTheme(
-        homeAccentColor: '#6bd509',
-        searchAccentColor: '#379eff',
-        notificationsAccentColor: '#379eff',
-        communitiesAccentColor: '#980df9',
-        menuAccentColor: '#ff9400'));
+      primaryTextColor: '#000000',
+      secondaryTextColor: '#333333',
+      primaryColor: '#ffffff',
+      primaryColorAccent: '#ffde00',
+      navigationBarBackgroundColor: '#ffffff',
+      navigationTabsBackgroundColor: '#ffffff',
+      buttonColor: '#fafafa',
+      buttonTextColor: '#000000',
+      primaryButtonColor: '#7ED321',
+      primaryButtonTextColor: '#ffffff',
+      dangerButtonColor: '#FF3860',
+      dangerButtonTextColor: '#ffffff',
+      iconColor: '#000000',
+      activeIconColor: '#ffde00',
+    ));
   }
 
   String getRandomObLogoHexColor() {

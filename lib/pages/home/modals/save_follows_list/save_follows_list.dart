@@ -2,7 +2,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/pages/pick_follows_list_emoji.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -136,7 +136,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
             Navigator.pop(context);
           },
         ),
-        middle: Text(_hasExistingList ? 'Edit list' : 'Create list'),
+        title: _hasExistingList ? 'Edit list' : 'Create list',
         trailing: OBPrimaryButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,

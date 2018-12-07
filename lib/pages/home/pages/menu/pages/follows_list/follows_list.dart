@@ -2,7 +2,7 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';

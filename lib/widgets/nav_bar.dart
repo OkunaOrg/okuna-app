@@ -7,14 +7,14 @@ import 'package:pigment/pigment.dart';
 class OBMenuNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Widget leading;
-  final Widget middle;
+  final String title;
   final Widget trailing;
   final String previousPageTitle;
 
   OBMenuNavBar({
     this.leading,
     this.previousPageTitle,
-    this.middle,
+    this.title,
     this.trailing,
   });
 
@@ -32,9 +32,15 @@ class OBMenuNavBar extends StatelessWidget
         return CupertinoNavigationBar(
           border: null,
           actionsForegroundColor: theme != null
-              ? Pigment.fromString(theme.menuAccentColor)
+              ? Pigment.fromString(theme.primaryTextColor)
               : Colors.black,
-          middle: middle,
+          middle: title != null
+              ? Text(
+                  title,
+                  style: TextStyle(
+                      color: Pigment.fromString(theme.primaryTextColor)),
+                )
+              : SizedBox(),
           transitionBetweenRoutes: false,
           backgroundColor: Colors.white,
           trailing: trailing,
