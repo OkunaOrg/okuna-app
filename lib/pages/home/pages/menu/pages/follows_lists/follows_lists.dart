@@ -1,16 +1,11 @@
 import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +33,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
   List<FollowsList> _followsLists = [];
   List<FollowsList> _followsListsSearchResults = [];
 
-  bool _isEditing;
   bool _needsBootstrap;
 
   @override
@@ -47,7 +41,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     _followsListsScrollController = ScrollController();
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
-    _isEditing = false;
     _followsLists = [];
   }
 
@@ -66,13 +59,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBMenuNavBar(
           middle: Text('My lists'),
-          trailing: GestureDetector(
-            onTap: _toggleEdit,
-            child: GestureDetector(
-              child: Text(_isEditing ? 'Done' : 'Edit'),
-              onTap: _toggleEdit,
-            ),
-          ),
         ),
         child: Stack(
           children: <Widget>[
@@ -105,9 +91,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                                 };
 
                                 return OBFollowsListTile(
-                                  isEditing: _isEditing,
                                   followsList: followsList,
-                                  onLongPress: _toggleEdit,
                                   onWantsToSeeFollowsList:
                                       widget.onWantsToSeeFollowsList,
                                   onFollowsListDeletedCallback:
@@ -144,10 +128,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
   void _bootstrap() async {
     await _refreshComments();
-  }
-
-  void _toggleEdit() {
-    _setIsEditing(!_isEditing);
   }
 
   Future<void> _refreshComments() async {
@@ -213,12 +193,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     setState(() {
       this._followsLists = followsLists;
       _resetFollowsListsSearchResults();
-    });
-  }
-
-  void _setIsEditing(bool isEditing) {
-    setState(() {
-      _isEditing = isEditing;
     });
   }
 }

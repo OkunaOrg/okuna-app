@@ -8,20 +8,17 @@ import 'package:Openbook/widgets/buttons/danger_button.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class OBFollowsListTile extends StatefulWidget {
   final FollowsList followsList;
   final VoidCallback onFollowsListDeletedCallback;
-  final VoidCallback onLongPress;
   final OnWantsToSeeFollowsList onWantsToSeeFollowsList;
-  final bool isEditing;
 
   OBFollowsListTile(
       {@required this.followsList,
       Key key,
       this.onFollowsListDeletedCallback,
-      this.onLongPress,
-      this.isEditing,
       this.onWantsToSeeFollowsList})
       : super(key: key);
 
@@ -48,31 +45,36 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
     _userService = provider.userService;
     _toastService = provider.toastService;
 
-    return Container(
+    Widget tile = Slidable(
+      delegate: new SlidableDrawerDelegate(),
+      actionExtentRatio: 0.25,
       child: ListTile(
-        onTap: () {
-          widget.onWantsToSeeFollowsList(widget.followsList);
-        },
-        onLongPress: widget.onLongPress,
-        leading: OBFollowsListEmoji(
-          size: OBFollowsListEmojiSize.medium,
-          followsListEmojiUrl: widget.followsList.getEmojiImage(),
-        ),
-        title: Text(
-          widget.followsList.name,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(widget.followsList.followsCount.toString() + ' users'),
-        trailing: widget.isEditing
-            ? OBDangerButton(
-                child: Text('Delete'),
-                isLoading: _requestInProgress,
-                size: OBButtonSize.small,
-                onPressed: _deleteFollowsList,
-              )
-            : SizedBox(),
-      ),
+          onTap: () {
+            widget.onWantsToSeeFollowsList(widget.followsList);
+          },
+          leading: OBFollowsListEmoji(
+            size: OBFollowsListEmojiSize.medium,
+            followsListEmojiUrl: widget.followsList.getEmojiImage(),
+          ),
+          title: Text(
+            widget.followsList.name,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle:
+              Text(widget.followsList.followsCount.toString() + ' users')),
+      secondaryActions: <Widget>[
+        new IconSlideAction(
+            caption: 'Delete',
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: _deleteFollowsList),
+      ],
     );
+
+    if (_requestInProgress) {
+      tile = Opacity(opacity: 0.5, child: tile);
+    }
+    return tile;
   }
 
   void _deleteFollowsList() async {
