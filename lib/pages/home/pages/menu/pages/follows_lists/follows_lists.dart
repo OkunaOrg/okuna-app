@@ -57,7 +57,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBMenuNavBar(
+        navigationBar: OBNavigationBar(
           title: 'My lists',
         ),
         child: Stack(

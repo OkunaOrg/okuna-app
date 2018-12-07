@@ -129,7 +129,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   }
 
   Widget _buildNavigationBar() {
-    return OBMenuNavBar(
+    return OBNavigationBar(
         leading: GestureDetector(
           child: Icon(Icons.close, color: Colors.black87),
           onTap: () {

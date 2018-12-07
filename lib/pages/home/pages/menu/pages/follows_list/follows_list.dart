@@ -54,7 +54,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBMenuNavBar(
+        navigationBar: OBNavigationBar(
           trailing: GestureDetector(
             onTap: () {
               widget.onWantsToEditFollowsList(widget.followsList);

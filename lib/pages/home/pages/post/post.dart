@@ -2,6 +2,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
@@ -66,93 +67,91 @@ class OBPostPageState extends State<OBPostPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: CupertinoNavigationBar(
-          backgroundColor: Colors.white,
-          middle: Text('Post'),
+        navigationBar: OBNavigationBar(
+          title: 'Post',
         ),
         child: Container(
-        color: Colors.white,
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: RefreshIndicator(
-                    key: _refreshIndicatorKey,
-                    child: GestureDetector(
-                      onTap: _unfocusCommentInput,
-                      child: LoadMore(
-                          whenEmptyLoad: false,
-                          isFinish: _noMoreItemsToLoad,
-                          delegate: OBInfinitePostCommentsLoadMoreDelegate(),
-                          child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              controller: _postCommentsScrollController,
-                              padding: EdgeInsets.all(0),
-                              itemCount: _postComments.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index == 0) {
-                                  return Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        key: _postCommentsKey,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20.0, vertical: 10.0),
-                                        child: Text(
-                                          _postComments.length > 0
-                                              ? 'Latest comments'
-                                              : 'Be the first to comment!',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16.0,
-                                              color: Colors.black38),
+          color: Colors.white,
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: RefreshIndicator(
+                      key: _refreshIndicatorKey,
+                      child: GestureDetector(
+                        onTap: _unfocusCommentInput,
+                        child: LoadMore(
+                            whenEmptyLoad: false,
+                            isFinish: _noMoreItemsToLoad,
+                            delegate: OBInfinitePostCommentsLoadMoreDelegate(),
+                            child: ListView.builder(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                controller: _postCommentsScrollController,
+                                padding: EdgeInsets.all(0),
+                                itemCount: _postComments.length + 1,
+                                itemBuilder: (context, index) {
+                                  if (index == 0) {
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Padding(
+                                          key: _postCommentsKey,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20.0, vertical: 10.0),
+                                          child: Text(
+                                            _postComments.length > 0
+                                                ? 'Latest comments'
+                                                : 'Be the first to comment!',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16.0,
+                                                color: Colors.black38),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    );
+                                  }
+
+                                  int commentIndex = index - 1;
+
+                                  var postComment = _postComments[commentIndex];
+
+                                  var onPostCommentDeletedCallback = () {
+                                    _removePostCommentAtIndex(commentIndex);
+                                  };
+
+                                  return OBExpandedPostComment(
+                                    postComment: postComment,
+                                    post: widget.post,
+                                    onWantsToSeeUserProfile:
+                                        _onWantsToSeeUserProfile,
+                                    onPostCommentDeletedCallback:
+                                        onPostCommentDeletedCallback,
                                   );
-                                }
-
-                                int commentIndex = index - 1;
-
-                                var postComment = _postComments[commentIndex];
-
-                                var onPostCommentDeletedCallback = () {
-                                  _removePostCommentAtIndex(commentIndex);
-                                };
-
-                                return OBExpandedPostComment(
-                                  postComment: postComment,
-                                  post: widget.post,
-                                  onWantsToSeeUserProfile:
-                                  _onWantsToSeeUserProfile,
-                                  onPostCommentDeletedCallback:
-                                  onPostCommentDeletedCallback,
-                                );
-                              }),
-                          onLoadMore: _loadMoreComments),
-                    ),
-                    onRefresh: _refreshComments),
-              ),
-              OBPostCommenter(
-                widget.post,
-                autofocus: widget.autofocusCommentInput,
-                commentTextFieldFocusNode: _commentInputFocusNode,
-                onPostCommentCreated: _onPostCommentCreated,
-              )
-            ],
+                                }),
+                            onLoadMore: _loadMoreComments),
+                      ),
+                      onRefresh: _refreshComments),
+                ),
+                OBPostCommenter(
+                  widget.post,
+                  autofocus: widget.autofocusCommentInput,
+                  commentTextFieldFocusNode: _commentInputFocusNode,
+                  onPostCommentCreated: _onPostCommentCreated,
+                )
+              ],
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   void _onWantsToSeeUserProfile(User user) {
-    Navigator.push(context,
+    Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlideProfileViewFromComments'),
-            widget: OBProfilePage(user)
-        ));
+            widget: OBProfilePage(user)));
   }
 
   Widget _buildNavigationBar() {

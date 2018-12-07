@@ -4,14 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-class OBMenuNavBar extends StatelessWidget
+class OBNavigationBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Widget leading;
   final String title;
   final Widget trailing;
   final String previousPageTitle;
 
-  OBMenuNavBar({
+  OBNavigationBar({
     this.leading,
     this.previousPageTitle,
     this.title,

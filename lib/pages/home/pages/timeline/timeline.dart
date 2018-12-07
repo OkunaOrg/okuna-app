@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,12 +42,8 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          transitionBetweenRoutes: false,
-          backgroundColor: Colors.white,
-          middle: Text(
-            'Home',
-          ),
+        navigationBar: OBNavigationBar(
+          title: 'Home',
         ),
         child: Stack(
           children: <Widget>[

@@ -140,7 +140,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
   }
 
   Widget _buildNavigationBar() {
-    return OBMenuNavBar(
+    return OBNavigationBar(
       title: 'Menu',
     );
   }

@@ -16,7 +16,6 @@ import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
-import 'package:pigment/pigment.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
