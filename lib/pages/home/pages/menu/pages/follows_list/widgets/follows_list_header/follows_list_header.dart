@@ -35,12 +35,11 @@ class OBFollowsListHeader extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
                 child: Text('Users',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
               ),
-              Divider(),
             ],
           );
         });
