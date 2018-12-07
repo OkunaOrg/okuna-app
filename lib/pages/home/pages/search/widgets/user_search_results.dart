@@ -1,5 +1,5 @@
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBUserSearchResults extends StatelessWidget {
@@ -22,22 +22,9 @@ class OBUserSearchResults extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           User user = results[index];
 
-          return ListTile(
-            onTap: () {
-              onSearchUserPressed(user);
-            },
-            leading: OBUserAvatar(
-              size: OBUserAvatarSize.medium,
-              avatarUrl: user.getProfileAvatar(),
-            ),
-            title: Text(
-              user.username,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Row(children: [
-              Text(user.getProfileName()),
-              user.isFollowing ? Text(' · Following') : SizedBox()
-            ]),
+          return OBUserTile(
+            user,
+            onUserTilePressed: onSearchUserPressed,
           );
         });
   }

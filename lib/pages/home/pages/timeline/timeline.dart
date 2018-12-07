@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,12 +42,8 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          transitionBetweenRoutes: false,
-          backgroundColor: Colors.white,
-          middle: Text(
-            'Home',
-          ),
+        navigationBar: OBNavigationBar(
+          title: 'Home',
         ),
         child: Stack(
           children: <Widget>[
@@ -60,6 +57,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
                 bottom: 20.0,
                 right: 20.0,
                 child: FloatingActionButton(
+                    heroTag: Key('createPostButton'),
                     backgroundColor: Colors.white,
                     onPressed: () async {
                       Post createdPost = await widget.onWantsToCreatePost();
@@ -79,8 +77,10 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
 
   void _onWantsToSeeUserProfile(User user) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
-        OBSlideRightRoute(key: Key('obSlideProfileView'),
+    await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideProfileView'),
             widget: OBProfilePage(
               user,
               onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
@@ -88,32 +88,31 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
               onWantsToCommentPost: _onWantsToCommentPost,
               onWantsToReactToPost: widget.onWantsToReactToPost,
               onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-            )
-        ));
+            )));
     decrementPushedRoutes();
   }
 
   void _onWantsToCommentPost(Post post) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
+    await Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
             widget: OBPostPage(post,
                 autofocusCommentInput: true,
-                onWantsToReactToPost: widget.onWantsToReactToPost)
-        ));
+                onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();
   }
 
   void _onWantsToSeePostComments(Post post) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
+    await Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
             widget: OBPostPage(post,
                 autofocusCommentInput: false,
-                onWantsToReactToPost: widget.onWantsToReactToPost)
-        ));
+                onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();
   }
 }

@@ -13,6 +13,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -113,15 +114,14 @@ class CreatePostModalState extends State<CreatePostModal> {
     bool newPostButtonIsEnabled =
         (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage;
 
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
+    return OBNavigationBar(
       leading: GestureDetector(
         child: Icon(Icons.close, color: Colors.black87),
         onTap: () {
           Navigator.pop(context);
         },
       ),
-      middle: Text('New post'),
+      title: 'New post',
       trailing: OBPrimaryButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _isCreatePostInProgress,

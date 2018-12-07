@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class OBButton extends StatelessWidget {
   final Widget child;
+  final Widget icon;
   final VoidCallback onPressed;
   final bool isDisabled;
   final bool isLoading;
@@ -15,6 +16,7 @@ class OBButton extends StatelessWidget {
   const OBButton(
       {@required this.child,
       @required this.onPressed,
+      this.icon,
       this.size = OBButtonSize.medium,
       this.textColor = Colors.white,
       this.color = Colors.black,
@@ -34,6 +36,18 @@ class OBButton extends StatelessWidget {
     EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
     double buttonMinWidth = _getButtonMinWidthForSize(size);
     double minHeight = 0;
+
+    if (icon != null) {
+      buttonChild = Row(
+        children: <Widget>[
+          icon,
+          SizedBox(
+            width: 5,
+          ),
+          buttonChild
+        ],
+      );
+    }
 
     var button = isOutlined
         ? _buildOutlinedButton(
@@ -106,7 +120,7 @@ class OBButton extends StatelessWidget {
         buttonPadding = EdgeInsets.symmetric(vertical: 10, horizontal: 20.0);
         break;
       case OBButtonSize.medium:
-        buttonPadding = EdgeInsets.symmetric(vertical: 8, horizontal: 10);
+        buttonPadding = EdgeInsets.symmetric(vertical: 8, horizontal: 12);
         break;
       case OBButtonSize.small:
         buttonPadding = EdgeInsets.symmetric(vertical: 5, horizontal: 2);

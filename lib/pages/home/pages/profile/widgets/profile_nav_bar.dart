@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,38 +13,16 @@ class OBProfileNavBar extends StatelessWidget
   Widget build(BuildContext context) {
     var route = ModalRoute.of(context);
 
-    return CupertinoNavigationBar(
-      transitionBetweenRoutes: false,
-      leading: route is PageRoute && route.canPop
-          ? IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          : SizedBox(),
-      trailing: IconButton(
-        icon: Icon(Icons.more_vert),
-        onPressed: () {},
-        color: Colors.black,
-      ),
-      backgroundColor: Colors.white,
-      middle: StreamBuilder(
-          stream: user.updateSubject,
-          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-            var user = snapshot.data;
+    return StreamBuilder(
+        stream: user.updateSubject,
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          var user = snapshot.data;
 
-            if (user == null) return SizedBox();
-
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Text(
-            '@' + user.username,
-              style: TextStyle(color: Colors.black,),
-            )],
-            );
-          }),
-    );
+          if (user == null) return SizedBox();
+          return OBNavigationBar(
+            title: '@' + user.username,
+          );
+        });
   }
 
   bool get fullObstruction {

@@ -49,4 +49,8 @@ abstract class OBBasePageStateController<T extends OBBasePageState> {
   bool hasPushedRoutes() {
     return state.hasPushedRoutes();
   }
+
+  bool isAttached() {
+    return state != null;
+  }
 }

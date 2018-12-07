@@ -37,8 +37,6 @@ class OBSearchBarState extends State<OBSearchBar> {
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Color.fromARGB(10, 0, 0, 0)))),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,

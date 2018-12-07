@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
+import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
@@ -40,6 +42,7 @@ class OBHomePageState extends State<OBHomePage> {
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
+  OBMainMenuPageController _menuPageController;
 
   @override
   void initState() {
@@ -50,6 +53,7 @@ class OBHomePageState extends State<OBHomePage> {
     _timelinePageController = OBTimelinePageController();
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
+    _menuPageController = OBMainMenuPageController();
   }
 
   @override
@@ -113,7 +117,11 @@ class OBHomePageState extends State<OBHomePage> {
             controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
-        page = OBMainMenuPage();
+        page = OBMainMenuPage(
+          controller: _menuPageController,
+          onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
+          onWantsToEditFollowsList: _onWantsToEditFollowsList,
+        );
         break;
       default:
         throw 'Unhandled index';
@@ -154,6 +162,16 @@ class OBHomePageState extends State<OBHomePage> {
             _searchPageController.popUntilFirst();
           } else {
             _searchPageController.scrollToTop();
+          }
+        }
+
+        if (tappedTab == OBHomePageTabs.menu &&
+            currentTab == OBHomePageTabs.menu) {
+          if (_menuPageController.isAttached() &&
+              _menuPageController.hasPushedRoutes()) {
+            _menuPageController.popUntilFirst();
+          } else {
+            _menuPageController.scrollToTop();
           }
         }
 
@@ -248,6 +266,32 @@ class OBHomePageState extends State<OBHomePage> {
             builder: (BuildContext context) => Material(
                   child: OBEditUserProfileModal(user),
                 )));
+  }
+
+  Future<FollowsList> _onWantsToCreateFollowsList() async {
+    FollowsList createdFollowsList =
+        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBSaveFollowsListModal(
+                autofocusNameTextField: true,
+              );
+            }));
+
+    return createdFollowsList;
+  }
+
+  Future<FollowsList> _onWantsToEditFollowsList(FollowsList followsList) async {
+    FollowsList editedFollowsList =
+        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBSaveFollowsListModal(
+                followsList: followsList,
+              );
+            }));
+
+    return editedFollowsList;
   }
 
   void _bootstrap() async {

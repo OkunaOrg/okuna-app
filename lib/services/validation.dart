@@ -1,9 +1,12 @@
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:validators/validators.dart' as validators;
 
 class ValidationService {
   AuthApiService _authApiService;
+  FollowsListsApiService _followsListsApiService;
+
   static const int USERNAME_MAX_LENGTH = 30;
   static const int POST_MAX_LENGTH = 560;
   static const int POST_COMMENT_MAX_LENGTH = 280;
@@ -19,6 +22,11 @@ class ValidationService {
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
+  }
+
+  void setFollowsListsApiService(
+      FollowsListsApiService followsListsApiService) {
+    _followsListsApiService = followsListsApiService;
   }
 
   bool isQualifiedEmail(String email) {
@@ -70,6 +78,10 @@ class ValidationService {
     return username.length > 0 && username.length < USERNAME_MAX_LENGTH;
   }
 
+  bool isFollowsListNameAllowedLength(String followsList) {
+    return followsList.length > 0 && followsList.length < LIST_MAX_LENGTH;
+  }
+
   bool isUsernameAllowedCharacters(String username) {
     return isAlphanumericWithUnderscores(username);
   }
@@ -89,6 +101,18 @@ class ValidationService {
   Future<bool> isEmailTaken(String email) async {
     HttpieResponse response =
         await _authApiService.checkEmailIsAvailable(email: email);
+    if (response.isAccepted()) {
+      return false;
+    } else if (response.isBadRequest()) {
+      return true;
+    } else {
+      throw HttpieRequestError(response);
+    }
+  }
+
+  Future<bool> isFollowsListNameTaken(String name) async {
+    HttpieResponse response =
+        await _followsListsApiService.checkNameIsAvailable(name: name);
     if (response.isAccepted()) {
       return false;
     } else if (response.isBadRequest()) {
@@ -187,7 +211,18 @@ class ValidationService {
     if (bio.isEmpty) return null;
 
     if (!isBioAllowedLength(bio)) {
-      return 'Locaiton can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
+      return 'Location can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
+    }
+  }
+
+  String validateFollowsListName(String name) {
+    assert(name != null);
+    if (name.length == 0) {
+      return 'List name cannot be empty.';
+    }
+
+    if (!isFollowsListNameAllowedLength(name)) {
+      return 'List name must be no longer than $LIST_MAX_LENGTH characters.';
     }
   }
 }
