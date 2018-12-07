@@ -45,12 +45,14 @@ class FollowsListsApiService {
   }
 
   Future<HttpieResponse> updateListWithId(int listId,
-      {String name, int emojiId}) {
+      {String name, int emojiId, List<String> usernames}) {
     Map<String, dynamic> body = {};
 
     if (emojiId != null) body['emoji_id'] = emojiId;
 
     if (name != null) body['name'] = name;
+
+    if (usernames != null) body['usernames'] = usernames;
 
     String url = _makeUpdateListPath(listId);
     return _httpService.patchJSON(url,

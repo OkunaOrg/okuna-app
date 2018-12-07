@@ -1,5 +1,6 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/pages/pick_follows_list_emoji.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/menu_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -11,6 +12,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +41,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   bool _formValid;
   bool _hasExistingList;
   String _takenFollowsListName;
+  List<User> _users;
 
   GlobalKey<FormState> _formKey;
 
@@ -58,6 +61,9 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
     if (_hasExistingList) {
       _nameController.text = widget.followsList.name;
       _emoji = widget.followsList.emoji;
+      _users = widget.followsList.users.users.toList();
+    } else {
+      _users = [];
     }
 
     _nameController.addListener(_updateFormValid);
@@ -113,6 +119,18 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                         onTap: _onWantsToPickEmoji),
                   ),
                   Divider(),
+                  Column(
+                      children: _users.map((User user) {
+                    return OBUserTile(
+                      user,
+                      showFollowing: false,
+                      onUserTileDeleted: (User user) {
+                        setState(() {
+                          _users.remove(user);
+                        });
+                      },
+                    );
+                  }).toList())
                 ],
               )),
         ));
@@ -178,6 +196,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
               name: _nameController.text != widget.followsList.name
                   ? _nameController.text
                   : null,
+              users: _users,
               emoji: _emoji)
           : _userService.createFollowsList(
               name: _nameController.text, emoji: _emoji));

@@ -438,9 +438,12 @@ class UserService {
   }
 
   Future<FollowsList> updateFollowsList(FollowsList list,
-      {String name, Emoji emoji}) async {
-    HttpieResponse response = await _followsListsApiService
-        .updateListWithId(list.id, name: name, emojiId: emoji.id);
+      {String name, Emoji emoji, List<User> users}) async {
+    HttpieResponse response = await _followsListsApiService.updateListWithId(
+        list.id,
+        name: name,
+        emojiId: emoji.id,
+        usernames: users.map((user) => user.username).toList());
     _checkResponseIsOk(response);
     return FollowsList.fromJSON(json.decode(response.body));
   }
