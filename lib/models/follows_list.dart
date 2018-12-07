@@ -42,6 +42,10 @@ class FollowsList extends UpdatableModel<FollowsList> {
     }
   }
 
+  bool hasUsers() {
+    return this.users != null;
+  }
+
   String getEmojiImage() {
     return emoji.image;
   }

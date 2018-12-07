@@ -10,6 +10,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
@@ -18,8 +19,10 @@ import 'package:flutter/material.dart';
 
 class OBSaveFollowsListModal extends StatefulWidget {
   final FollowsList followsList;
+  final bool autofocusNameTextField;
 
-  OBSaveFollowsListModal({this.followsList});
+  OBSaveFollowsListModal(
+      {this.followsList, this.autofocusNameTextField = false});
 
   @override
   OBSaveFollowsListModalState createState() {
@@ -29,8 +32,6 @@ class OBSaveFollowsListModal extends StatefulWidget {
 
 class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   static const double INPUT_EMOJIS_SIZE = 16;
-  static EdgeInsetsGeometry INPUT_CONTENT_PADDING =
-      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
 
   UserService _userService;
   ToastService _toastService;
@@ -57,13 +58,13 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
     _nameController = TextEditingController();
     _formKey = GlobalKey<FormState>();
     _hasExistingList = widget.followsList != null;
+    _users = _hasExistingList && widget.followsList.hasUsers()
+        ? widget.followsList.users.users.toList()
+        : [];
 
     if (_hasExistingList) {
       _nameController.text = widget.followsList.name;
       _emoji = widget.followsList.emoji;
-      _users = widget.followsList.users.users.toList();
-    } else {
-      _users = [];
     }
 
     _nameController.addListener(_updateFormValid);
@@ -86,29 +87,21 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  TextFormField(
-                    controller: _nameController,
-                    validator: (String followsListName) {
-                      if (!_formWasSubmitted) return null;
+                  OBTextField(
+                      autofocus: widget.autofocusNameTextField,
+                      controller: _nameController,
+                      hintText: 'e.g. Travel, Photography',
+                      validator: (String followsListName) {
+                        if (!_formWasSubmitted) return null;
 
-                      if (_takenFollowsListName != null &&
-                          _takenFollowsListName == followsListName) {
-                        return 'List name "$_takenFollowsListName" is taken';
-                      }
+                        if (_takenFollowsListName != null &&
+                            _takenFollowsListName == followsListName) {
+                          return 'List name "$_takenFollowsListName" is taken';
+                        }
 
-                      return _validationService
-                          .validateFollowsListName(followsListName);
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: INPUT_CONTENT_PADDING,
-                      border: InputBorder.none,
-                      labelText: 'Name',
-                      prefixIcon: Icon(
-                        Icons.list,
-                        size: INPUT_EMOJIS_SIZE,
-                      ),
-                    ),
-                  ),
+                        return _validationService
+                            .validateFollowsListName(followsListName);
+                      }),
                   Divider(),
                   MergeSemantics(
                     child: ListTile(

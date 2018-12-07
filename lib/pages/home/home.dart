@@ -273,7 +273,9 @@ class OBHomePageState extends State<OBHomePage> {
         await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
-              return OBSaveFollowsListModal();
+              return OBSaveFollowsListModal(
+                autofocusNameTextField: true,
+              );
             }));
 
     return createdFollowsList;
