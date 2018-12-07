@@ -80,12 +80,12 @@ class OBIcons {
   static const logout = OBIconData(nativeIcon: Icons.exit_to_app);
   static const help = OBIconData(nativeIcon: Icons.help);
   static const connections = OBIconData(nativeIcon: Icons.people);
+  static const createPost = OBIconData(nativeIcon: Icons.add);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
   static const info = OBIconData(filename: 'info-icon.png');
   static const profile = OBIconData(filename: 'profile-icon.png');
-  static const createPost = OBIconData(filename: 'create-post-icon.png');
   static const chat = OBIconData(filename: 'chat-icon.png');
   static const media = OBIconData(filename: 'media-icon.png');
   static const camera = OBIconData(filename: 'camera-icon.png');
