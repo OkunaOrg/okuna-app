@@ -4,8 +4,11 @@
 
 import 'dart:ui' show ImageFilter;
 
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pigment/pigment.dart';
 
 // Standard iOS 10 tab bar height.
 const double _kTabBarHeight = 50.0;
@@ -43,7 +46,7 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
     this.activeColor = CupertinoColors.activeBlue,
     this.inactiveColor = CupertinoColors.inactiveGray,
     this.iconSize = 30.0,
-  }) : assert(items != null),
+  })  : assert(items != null),
         assert(items.length >= 2),
         assert(currentIndex != null),
         assert(0 <= currentIndex && currentIndex < items.length),
@@ -97,58 +100,69 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double bottomPadding = MediaQuery.of(context).padding.bottom;
-    Widget result = DecoratedBox(
-      decoration: BoxDecoration(
-        border: const Border(
-          top: BorderSide(
-            color: _kDefaultTabBarBorderColor,
-            width: 0.0, // One physical pixel.
-            style: BorderStyle.solid,
-          ),
-        ),
-        color: backgroundColor,
-      ),
-      // TODO(xster): allow icons-only versions of the tab bar too.
-      child: SizedBox(
-        height: _kTabBarHeight + bottomPadding,
-        child: IconTheme.merge( // Default with the inactive state.
-          data: IconThemeData(
-            color: inactiveColor,
-            size: iconSize,
-          ),
-          child: DefaultTextStyle( // Default with the inactive state.
-            style: TextStyle(
-              fontFamily: '.SF UI Text',
-              fontSize: 10.0,
-              letterSpacing: 0.1,
-              fontWeight: FontWeight.w400,
-              color: inactiveColor,
+    var themeService = OpenbookProvider.of(context).themeService;
+
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+
+          final double bottomPadding = MediaQuery.of(context).padding.bottom;
+          Widget result = DecoratedBox(
+            decoration: BoxDecoration(
+              border: const Border(
+                top: BorderSide(
+                  color: _kDefaultTabBarBorderColor,
+                  width: 0.0, // One physical pixel.
+                  style: BorderStyle.solid,
+                ),
+              ),
+              color: Pigment.fromString(theme.navigationTabsBackgroundColor),
             ),
-            child: Padding(
-              padding: EdgeInsets.only(bottom: bottomPadding),
-              child: Row(
-                // Align bottom since we want the labels to be aligned.
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: _buildTabItems(),
+            // TODO(xster): allow icons-only versions of the tab bar too.
+            child: SizedBox(
+              height: _kTabBarHeight + bottomPadding,
+              child: IconTheme.merge(
+                // Default with the inactive state.
+                data: IconThemeData(
+                  color: inactiveColor,
+                  size: iconSize,
+                ),
+                child: DefaultTextStyle(
+                  // Default with the inactive state.
+                  style: TextStyle(
+                    fontFamily: '.SF UI Text',
+                    fontSize: 10.0,
+                    letterSpacing: 0.1,
+                    fontWeight: FontWeight.w400,
+                    color: inactiveColor,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: bottomPadding),
+                    child: Row(
+                      // Align bottom since we want the labels to be aligned.
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: _buildTabItems(),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
 
-    if (!opaque) {
-      // For non-opaque backgrounds, apply a blur effect.
-      result = ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: result,
-        ),
-      );
-    }
+          if (!opaque) {
+            // For non-opaque backgrounds, apply a blur effect.
+            result = ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: result,
+              ),
+            );
+          }
 
-    return result;
+          return result;
+        });
   }
 
   List<Widget> _buildTabItems() {
@@ -165,17 +179,21 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
               hint: 'tab, ${index + 1} of ${items.length}',
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: onTap == null ? null : () { onTap(index); },
+                onTap: onTap == null
+                    ? null
+                    : () {
+                        onTap(index);
+                      },
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 4.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget> [
-                      Expanded(child:
-                      Center(child: active
-                          ? items[index].activeIcon
-                          : items[index].icon
-                      ),
+                    children: <Widget>[
+                      Expanded(
+                        child: Center(
+                            child: active
+                                ? items[index].activeIcon
+                                : items[index].icon),
                       ),
                       items[index].title,
                     ],
@@ -193,9 +211,8 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   /// Change the active tab item's icon and title colors to active.
-  Widget _wrapActiveItem(Widget item, { @required bool active }) {
-    if (!active)
-      return item;
+  Widget _wrapActiveItem(Widget item, {@required bool active}) {
+    if (!active) return item;
 
     return IconTheme.merge(
       data: IconThemeData(color: activeColor),
@@ -231,4 +248,4 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-typedef ChangeIndexAllowed <T> = bool Function(T value);
+typedef ChangeIndexAllowed<T> = bool Function(T value);

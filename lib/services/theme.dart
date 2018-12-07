@@ -26,7 +26,7 @@ class ThemeService {
       primaryTextColor: '#000000',
       secondaryTextColor: '#333333',
       primaryColor: '#ffffff',
-      primaryColorAccent: '#ffde00',
+      primaryColorAccent: '#f20061',
       navigationBarBackgroundColor: '#ffffff',
       navigationTabsBackgroundColor: '#ffffff',
       buttonColor: '#fafafa',
@@ -36,7 +36,7 @@ class ThemeService {
       dangerButtonColor: '#FF3860',
       dangerButtonTextColor: '#ffffff',
       iconColor: '#000000',
-      activeIconColor: '#ffde00',
+      activeIconColor: '#f20061',
     ));
   }
 
