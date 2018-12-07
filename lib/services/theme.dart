@@ -24,7 +24,7 @@ class ThemeService {
   ThemeService() {
     _setActiveTheme(OBTheme(
       primaryTextColor: '#000000',
-      secondaryTextColor: '#333333',
+      secondaryTextColor: '#2e2e2e',
       primaryColor: '#ffffff',
       primaryColorAccent: '#f20061',
       navigationBarBackgroundColor: '#ffffff',
