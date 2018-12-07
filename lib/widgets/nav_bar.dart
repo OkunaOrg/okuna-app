@@ -42,7 +42,7 @@ class OBNavigationBar extends StatelessWidget
                 )
               : SizedBox(),
           transitionBetweenRoutes: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Pigment.fromString(theme.navigationBarBackgroundColor),
           trailing: trailing,
           leading: leading,
         );
