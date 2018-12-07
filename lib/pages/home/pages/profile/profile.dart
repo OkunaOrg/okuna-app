@@ -13,6 +13,7 @@ import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -74,8 +75,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBProfileNavBar(_user),
-        child: Container(
-        color: Colors.white,
+        child: OBPrimaryColorContainer(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[

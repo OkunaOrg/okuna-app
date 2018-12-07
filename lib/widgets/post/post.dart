@@ -24,27 +24,23 @@ class OBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          OBPostHeader(_post,
-              onWantsToSeeUserProfile: onWantsToSeeUserProfile),
-          OBPostBody(_post),
-          OBPostReactions(_post),
-          OBPostComments(
-            _post,
-            onWantsToSeePostComments: onWantsToSeePostComments,
-          ),
-          OBPostActions(
-            _post,
-            onWantsToCommentPost: onWantsToCommentPost,
-            onWantsToReactToPost: onWantsToReactToPost,
-          ),
-          Divider()
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        OBPostHeader(_post, onWantsToSeeUserProfile: onWantsToSeeUserProfile),
+        OBPostBody(_post),
+        OBPostReactions(_post),
+        OBPostComments(
+          _post,
+          onWantsToSeePostComments: onWantsToSeePostComments,
+        ),
+        OBPostActions(
+          _post,
+          onWantsToCommentPost: onWantsToCommentPost,
+          onWantsToReactToPost: onWantsToReactToPost,
+        ),
+        Divider()
+      ],
     );
   }
 }

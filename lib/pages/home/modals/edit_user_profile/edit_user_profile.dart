@@ -288,7 +288,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         child: Stack(
           children: <Widget>[
             OBUserAvatar(
-              avatarBorder: Border.all(color: Colors.white, width: 3.0),
+              borderWidth: 3,
               avatarUrl: _avatarUrl,
               avatarFile: _avatarFile,
               size: OBUserAvatarSize.large,

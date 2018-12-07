@@ -7,6 +7,7 @@ import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
 
     return CupertinoPageScaffold(
       navigationBar: _buildNavigationBar(),
-      child: Container(
+      child: OBPrimaryColorContainer(
         child: Column(
           children: <Widget>[
             Expanded(

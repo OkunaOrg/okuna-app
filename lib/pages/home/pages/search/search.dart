@@ -16,6 +16,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,7 @@ class OBMainSearchPage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
   final OBMainSearchPageController controller;
 
-  const OBMainSearchPage(
-      {Key key,
-      this.onWantsToReactToPost,
-      this.controller})
+  const OBMainSearchPage({Key key, this.onWantsToReactToPost, this.controller})
       : super(key: key);
 
   @override
@@ -91,7 +89,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Colors.white,
-        child: Container(
+        child: OBPrimaryColorContainer(
           child: Column(
             children: <Widget>[
               SafeArea(

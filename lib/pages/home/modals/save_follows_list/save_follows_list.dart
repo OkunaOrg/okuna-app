@@ -14,6 +14,7 @@ import 'package:Openbook/widgets/fields/emoji_field.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,52 +80,53 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
     _validationService = openbookProvider.validationService;
 
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: _buildNavigationBar(),
-        body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  OBTextField(
-                      autofocus: widget.autofocusNameTextField,
-                      controller: _nameController,
-                      hintText: 'e.g. Travel, Photography',
-                      validator: (String followsListName) {
-                        if (!_formWasSubmitted) return null;
+        body: OBPrimaryColorContainer(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    OBTextField(
+                        autofocus: widget.autofocusNameTextField,
+                        controller: _nameController,
+                        hintText: 'e.g. Travel, Photography',
+                        validator: (String followsListName) {
+                          if (!_formWasSubmitted) return null;
 
-                        if (_takenFollowsListName != null &&
-                            _takenFollowsListName == followsListName) {
-                          return 'List name "$_takenFollowsListName" is taken';
-                        }
+                          if (_takenFollowsListName != null &&
+                              _takenFollowsListName == followsListName) {
+                            return 'List name "$_takenFollowsListName" is taken';
+                          }
 
-                        return _validationService
-                            .validateFollowsListName(followsListName);
-                      }),
-                  OBEmojiField(
-                      emoji: _emoji,
-                      onEmojiFieldTapped: (Emoji emoji) =>
-                          _onWantsToPickEmoji(),
-                      labelText: 'Emoji',
-                      errorText: _formWasSubmitted && _emoji == null
-                          ? 'Emoji is required'
-                          : null),
-                  Column(
-                      children: _users.map((User user) {
-                    return OBUserTile(
-                      user,
-                      showFollowing: false,
-                      onUserTileDeleted: (User user) {
-                        setState(() {
-                          _users.remove(user);
-                        });
-                      },
-                    );
-                  }).toList())
-                ],
-              )),
+                          return _validationService
+                              .validateFollowsListName(followsListName);
+                        }),
+                    OBEmojiField(
+                        emoji: _emoji,
+                        onEmojiFieldTapped: (Emoji emoji) =>
+                            _onWantsToPickEmoji(),
+                        labelText: 'Emoji',
+                        errorText: _formWasSubmitted && _emoji == null
+                            ? 'Emoji is required'
+                            : null),
+                    Column(
+                        children: _users.map((User user) {
+                      return OBUserTile(
+                        user,
+                        showFollowing: false,
+                        onUserTileDeleted: (User user) {
+                          setState(() {
+                            _users.remove(user);
+                          });
+                        },
+                      );
+                    }).toList())
+                  ],
+                )),
+          ),
         ));
   }
 

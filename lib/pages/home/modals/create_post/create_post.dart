@@ -14,6 +14,7 @@ import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -86,7 +87,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: _buildNavigationBar(),
-        body: Container(
+        body: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[_buildNewPostContent(), _buildPostActions()],
         )));
@@ -228,7 +229,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     return Container(
       height: 51.0,
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-      color: Color.fromARGB(3, 0, 0, 0),
+      color: Color.fromARGB(5, 0, 0, 0),
       child: ListView(
           scrollDirection: Axis.horizontal, children: spacedPostActions),
     );

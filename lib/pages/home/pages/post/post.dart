@@ -11,6 +11,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -70,78 +71,75 @@ class OBPostPageState extends State<OBPostPage> {
         navigationBar: OBNavigationBar(
           title: 'Post',
         ),
-        child: Container(
-          color: Colors.white,
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                      key: _refreshIndicatorKey,
-                      child: GestureDetector(
-                        onTap: _unfocusCommentInput,
-                        child: LoadMore(
-                            whenEmptyLoad: false,
-                            isFinish: _noMoreItemsToLoad,
-                            delegate: OBInfinitePostCommentsLoadMoreDelegate(),
-                            child: ListView.builder(
-                                physics: AlwaysScrollableScrollPhysics(),
-                                controller: _postCommentsScrollController,
-                                padding: EdgeInsets.all(0),
-                                itemCount: _postComments.length + 1,
-                                itemBuilder: (context, index) {
-                                  if (index == 0) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Padding(
-                                          key: _postCommentsKey,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.0, vertical: 10.0),
-                                          child: Text(
-                                            _postComments.length > 0
-                                                ? 'Latest comments'
-                                                : 'Be the first to comment!',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0,
-                                                color: Colors.black38),
-                                          ),
+        child: OBPrimaryColorContainer(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                    key: _refreshIndicatorKey,
+                    child: GestureDetector(
+                      onTap: _unfocusCommentInput,
+                      child: LoadMore(
+                          whenEmptyLoad: false,
+                          isFinish: _noMoreItemsToLoad,
+                          delegate: OBInfinitePostCommentsLoadMoreDelegate(),
+                          child: ListView.builder(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              controller: _postCommentsScrollController,
+                              padding: EdgeInsets.all(0),
+                              itemCount: _postComments.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index == 0) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                        key: _postCommentsKey,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.0, vertical: 10.0),
+                                        child: Text(
+                                          _postComments.length > 0
+                                              ? 'Latest comments'
+                                              : 'Be the first to comment!',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0,
+                                              color: Colors.black38),
                                         ),
-                                      ],
-                                    );
-                                  }
-
-                                  int commentIndex = index - 1;
-
-                                  var postComment = _postComments[commentIndex];
-
-                                  var onPostCommentDeletedCallback = () {
-                                    _removePostCommentAtIndex(commentIndex);
-                                  };
-
-                                  return OBExpandedPostComment(
-                                    postComment: postComment,
-                                    post: widget.post,
-                                    onWantsToSeeUserProfile:
-                                        _onWantsToSeeUserProfile,
-                                    onPostCommentDeletedCallback:
-                                        onPostCommentDeletedCallback,
+                                      ),
+                                    ],
                                   );
-                                }),
-                            onLoadMore: _loadMoreComments),
-                      ),
-                      onRefresh: _refreshComments),
-                ),
-                OBPostCommenter(
-                  widget.post,
-                  autofocus: widget.autofocusCommentInput,
-                  commentTextFieldFocusNode: _commentInputFocusNode,
-                  onPostCommentCreated: _onPostCommentCreated,
-                )
-              ],
-            ),
+                                }
+
+                                int commentIndex = index - 1;
+
+                                var postComment = _postComments[commentIndex];
+
+                                var onPostCommentDeletedCallback = () {
+                                  _removePostCommentAtIndex(commentIndex);
+                                };
+
+                                return OBExpandedPostComment(
+                                  postComment: postComment,
+                                  post: widget.post,
+                                  onWantsToSeeUserProfile:
+                                      _onWantsToSeeUserProfile,
+                                  onPostCommentDeletedCallback:
+                                      onPostCommentDeletedCallback,
+                                );
+                              }),
+                          onLoadMore: _loadMoreComments),
+                    ),
+                    onRefresh: _refreshComments),
+              ),
+              OBPostCommenter(
+                widget.post,
+                autofocus: widget.autofocusCommentInput,
+                commentTextFieldFocusNode: _commentInputFocusNode,
+                onPostCommentCreated: _onPostCommentCreated,
+              )
+            ],
           ),
         ));
   }

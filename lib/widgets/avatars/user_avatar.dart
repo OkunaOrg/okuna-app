@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -11,7 +13,7 @@ class OBUserAvatar extends StatelessWidget {
   final File avatarFile;
   final OBUserAvatarSize size;
   final VoidCallback onPressed;
-  final BoxBorder avatarBorder;
+  final double borderWidth;
 
   static const double AVATAR_SIZE_SMALL = 20.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
@@ -24,7 +26,7 @@ class OBUserAvatar extends StatelessWidget {
       this.size = OBUserAvatarSize.small,
       this.onPressed,
       this.avatarFile,
-      this.avatarBorder});
+      this.borderWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +72,38 @@ class OBUserAvatar extends StatelessWidget {
 
     double avatarBorderRadius = 10.0;
 
-    var avatar = Container(
-        decoration: BoxDecoration(
-            color: Pigment.fromString('#efefef'),
+    Widget avatar;
+
+    if (borderWidth != null) {
+      var themeService = OpenbookProvider.of(context).themeService;
+
+      avatar = StreamBuilder(
+          stream: themeService.themeChange,
+          initialData: themeService.getActiveTheme(),
+          builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+            var theme = snapshot.data;
+            var borderColor = Pigment.fromString(theme.primaryColor);
+            return Container(
+                decoration: BoxDecoration(
+                    color: borderColor,
+                    borderRadius: BorderRadius.circular(avatarBorderRadius),
+                    border: Border.all(color: borderColor, width: 3)),
+                height: avatarSize,
+                width: avatarSize,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(avatarBorderRadius),
+                  child: finalAvatarImage,
+                ));
+          });
+    } else {
+      avatar = Container(
+          height: avatarSize,
+          width: avatarSize,
+          child: ClipRRect(
             borderRadius: BorderRadius.circular(avatarBorderRadius),
-            border: avatarBorder),
-        height: avatarSize,
-        width: avatarSize,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(avatarBorderRadius),
-          child: finalAvatarImage,
-        ));
+            child: finalAvatarImage,
+          ));
+    }
 
     if (onPressed == null) return avatar;
 
