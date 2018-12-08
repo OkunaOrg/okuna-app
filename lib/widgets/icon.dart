@@ -55,7 +55,7 @@ class OBIcon extends StatelessWidget {
               iconData.nativeIcon,
               size: iconSize,
               color: Pigment.fromString(
-                  isActive ? theme.activeIconColor : theme.iconColor),
+                  isActive ? theme.primaryColorAccent : theme.primaryTextColor),
             );
           } else {
             String iconName = iconData.filename;
@@ -81,6 +81,13 @@ class OBIcons {
   static const help = OBIconData(nativeIcon: Icons.help);
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
+  static const moreVertical = OBIconData(nativeIcon: Icons.more_vert);
+  static const react = OBIconData(nativeIcon: Icons.sentiment_very_satisfied);
+  static const comment = OBIconData(nativeIcon: Icons.chat_bubble_outline);
+  static const close = OBIconData(nativeIcon: Icons.close);
+  static const sad = OBIconData(nativeIcon: Icons.sentiment_dissatisfied);
+  static const locations = OBIconData(nativeIcon: Icons.location_on);
+  static const link = OBIconData(nativeIcon: Icons.link);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
@@ -92,9 +99,7 @@ class OBIcons {
   static const gif = OBIconData(filename: 'gif-icon.png');
   static const audience = OBIconData(filename: 'audience-icon.png');
   static const burner = OBIconData(filename: 'burner-icon.png');
-  static const comment = OBIconData(filename: 'comment-icon.png');
   static const comments = OBIconData(filename: 'comments-icon.png');
-  static const react = OBIconData(filename: 'react-icon.png');
   static const like = OBIconData(filename: 'like-icon.png');
   static const finish = OBIconData(filename: 'finish-icon.png');
   static const loadingMorePosts =

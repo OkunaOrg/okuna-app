@@ -1,7 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
@@ -12,6 +12,8 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -98,14 +100,13 @@ class OBPostPageState extends State<OBPostPage> {
                                         key: _postCommentsKey,
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 20.0, vertical: 10.0),
-                                        child: Text(
+                                        child: OBSecondaryText(
                                           _postComments.length > 0
                                               ? 'Latest comments'
                                               : 'Be the first to comment!',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16.0,
-                                              color: Colors.black38),
+                                              fontSize: 16.0),
                                         ),
                                       ),
                                     ],

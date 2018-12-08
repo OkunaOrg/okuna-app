@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileName extends StatelessWidget {
@@ -14,9 +15,12 @@ class OBProfileName extends StatelessWidget {
         var user = snapshot.data;
         var name = user?.getProfileName();
 
-        if (name == null) return SizedBox(height: 20.0,);
+        if (name == null)
+          return SizedBox(
+            height: 20.0,
+          );
 
-        return Text(
+        return OBPrimaryText(
           name,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

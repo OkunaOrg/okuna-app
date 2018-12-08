@@ -11,6 +11,7 @@ import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBTimelinePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
@@ -60,7 +61,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
                   right: 20.0,
                   child: FloatingActionButton(
                       heroTag: Key('createPostButton'),
-                      backgroundColor: Colors.white,
+                      backgroundColor: Pigment.fromString('#ff005a'),
                       onPressed: () async {
                         Post createdPost = await widget.onWantsToCreatePost();
                         if (createdPost != null) {

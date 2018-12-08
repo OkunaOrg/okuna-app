@@ -1,4 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowsListName extends StatelessWidget {
@@ -17,15 +19,14 @@ class OBFollowsListName extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              OBSecondaryText(
                 'List',
-                style: TextStyle(color: Colors.black45),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Flexible(
-                    child: Text(
+                    child: OBPrimaryText(
                       followsList.name,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,

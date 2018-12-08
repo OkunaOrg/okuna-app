@@ -1,4 +1,6 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileLocation extends StatelessWidget {
@@ -14,26 +16,22 @@ class OBProfileLocation extends StatelessWidget {
       return SizedBox();
     }
 
-    Color color = Colors.black45;
-
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Icon(
-          Icons.location_on,
-          size: 14,
-          color: color,
+        OBIcon(
+          OBIcons.locations,
+          customSize: 14,
         ),
         SizedBox(
           width: 10,
         ),
         Flexible(
-          child: Text(
+          child: OBPrimaryText(
             location,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: color),
           ),
         )
       ],

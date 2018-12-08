@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileUsername extends StatelessWidget {
@@ -19,7 +20,7 @@ class OBProfileUsername extends StatelessWidget {
             height: 10.0,
           );
 
-        return Text(
+        return OBSecondaryText(
           '@' + username,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45),
         );

@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
 class OBPrimaryText extends StatelessWidget {
-  String text;
-  TextStyle style;
+  final String text;
+  final TextStyle style;
+  final TextAlign textAlign;
+  final TextOverflow overflow;
+  final int maxLines;
 
-  OBPrimaryText(this.text, {this.style});
+  OBPrimaryText(this.text,
+      {this.style, this.textAlign, this.overflow, this.maxLines});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +23,20 @@ class OBPrimaryText extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          TextStyle finalStyle = style;
           TextStyle themedTextStyle =
               TextStyle(color: Pigment.fromString(theme.primaryTextColor));
 
-          if (finalStyle != null) {
-            finalStyle = finalStyle.merge(themedTextStyle);
-          } else {
-            finalStyle = themedTextStyle;
+          if (style != null) {
+            themedTextStyle = themedTextStyle.merge(style);
           }
 
-          return Text(text, style: finalStyle);
+          return Text(
+            text,
+            style: themedTextStyle,
+            overflow: overflow,
+            maxLines: maxLines,
+            textAlign: textAlign,
+          );
         });
   }
 }

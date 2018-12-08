@@ -111,14 +111,7 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
           final double bottomPadding = MediaQuery.of(context).padding.bottom;
           Widget result = DecoratedBox(
             decoration: BoxDecoration(
-              border: const Border(
-                top: BorderSide(
-                  color: _kDefaultTabBarBorderColor,
-                  width: 0.0, // One physical pixel.
-                  style: BorderStyle.solid,
-                ),
-              ),
-              color: Pigment.fromString(theme.navigationTabsBackgroundColor),
+              color: Pigment.fromString(theme.primaryColor),
             ),
             // TODO(xster): allow icons-only versions of the tab bar too.
             child: SizedBox(

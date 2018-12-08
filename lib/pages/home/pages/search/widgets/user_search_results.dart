@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class OBUserSearchResults extends StatelessWidget {
               SizedBox(
                 height: 20.0,
               ),
-              Text(
+              OBPrimaryText(
                 'No user found matching \'$searchQuery\'.',
                 style: TextStyle(
                   color: Colors.black26,

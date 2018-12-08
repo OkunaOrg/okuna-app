@@ -6,6 +6,8 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/danger_button.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -56,12 +58,12 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
             size: OBFollowsListEmojiSize.medium,
             followsListEmojiUrl: widget.followsList.getEmojiImage(),
           ),
-          title: Text(
+          title: OBPrimaryText(
             widget.followsList.name,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle:
-              Text(widget.followsList.followsCount.toString() + ' users')),
+          subtitle: OBSecondaryText(
+              widget.followsList.followsCount.toString() + ' users')),
       secondaryActions: <Widget>[
         new IconSlideAction(
             caption: 'Delete',

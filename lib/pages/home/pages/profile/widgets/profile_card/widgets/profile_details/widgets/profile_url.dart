@@ -1,4 +1,6 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,28 +21,25 @@ class OBProfileUrl extends StatelessWidget {
 
     String prettyUrl = uri.host + uri.path + uri.query;
 
-    Color color = Colors.black45;
-
     return GestureDetector(
       onTap: _launchURL,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Icon(
-            Icons.link,
-            size: 14,
-            color: color,
+          OBIcon(
+            OBIcons.link,
+            customSize: 14,
           ),
           SizedBox(
             width: 10,
           ),
           Flexible(
-              child: Text(
-                prettyUrl,
+              child: OBPrimaryText(
+            prettyUrl,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: color, decoration: TextDecoration.underline),
+            style: TextStyle(decoration: TextDecoration.underline),
           ))
         ],
       ),

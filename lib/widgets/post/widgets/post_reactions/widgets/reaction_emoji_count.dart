@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -30,16 +31,15 @@ class OBEmojiReactionCount extends StatelessWidget {
               imageUrl: emoji.image,
               placeholder: SizedBox(),
               errorWidget: Container(
-                child: Center(child: Text('?')),
+                child: Center(child: OBPrimaryText('?')),
               ),
             ),
             SizedBox(
               width: 10.0,
             ),
-            Text(
+            OBPrimaryText(
               postReactionsEmojiCount.getPrettyCount(),
               style: TextStyle(
-                  color: reacted ? Colors.black87 : Colors.black38,
                   fontWeight: reacted ? FontWeight.bold : FontWeight.normal),
             )
           ],

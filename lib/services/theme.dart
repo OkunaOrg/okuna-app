@@ -23,20 +23,16 @@ class ThemeService {
 
   ThemeService() {
     _setActiveTheme(OBTheme(
-      primaryTextColor: '#000000',
-      secondaryTextColor: '#2e2e2e',
-      primaryColor: '#ffffff',
-      primaryColorAccent: '#f20061',
-      navigationBarBackgroundColor: '#ffffff',
-      navigationTabsBackgroundColor: '#ffffff',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#ffffff',
+      primaryColor: '#2e2e2e',
+      primaryColorAccent: '#ff005a',
       buttonColor: '#fafafa',
       buttonTextColor: '#000000',
       primaryButtonColor: '#7ED321',
       primaryButtonTextColor: '#ffffff',
       dangerButtonColor: '#FF3860',
       dangerButtonTextColor: '#ffffff',
-      iconColor: '#000000',
-      activeIconColor: '#f20061',
     ));
   }
 

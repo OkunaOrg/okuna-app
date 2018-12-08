@@ -2,6 +2,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/pages/pick_follows_list_emoji.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -92,6 +93,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                     OBTextField(
                         autofocus: widget.autofocusNameTextField,
                         controller: _nameController,
+                        labelText: 'Name',
                         hintText: 'e.g. Travel, Photography',
                         validator: (String followsListName) {
                           if (!_formWasSubmitted) return null;
@@ -133,7 +135,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   Widget _buildNavigationBar() {
     return OBNavigationBar(
         leading: GestureDetector(
-          child: Icon(Icons.close, color: Colors.black87),
+          child: OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },

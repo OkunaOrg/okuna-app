@@ -3,6 +3,7 @@ import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/follow_button.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
@@ -28,12 +29,12 @@ class OBProfileActions extends StatelessWidget {
 
   _buildEditButton() {
     return OutlineButton(
-      color: Colors.black,
-      child: Text(
+      color: Colors.white,
+      child: OBPrimaryText(
         'Edit profile',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      borderSide: BorderSide(color: Colors.black),
+      borderSide: BorderSide(color: Colors.white),
       onPressed: () {
         onWantsToEditUserProfile(user);
       },

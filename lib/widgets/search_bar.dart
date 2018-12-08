@@ -1,3 +1,6 @@
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/primary_text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBSearchBar extends StatefulWidget {
@@ -44,7 +47,7 @@ class OBSearchBarState extends State<OBSearchBar> {
           SizedBox(
             width: 20.0,
           ),
-          Icon(Icons.search),
+          OBIcon(OBIcons.search),
           SizedBox(
             width: 20.0,
           ),
@@ -52,16 +55,16 @@ class OBSearchBarState extends State<OBSearchBar> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: Color.fromARGB(10, 0, 0, 0),
+                color: Color.fromARGB(50, 0, 0, 0),
               ),
               child: Stack(
                 children: <Widget>[
-                  TextField(
+                  OBPrimaryTextField(
                     textInputAction: TextInputAction.go,
                     focusNode: _textFocusNode,
                     controller: _textController,
                     keyboardType: TextInputType.multiline,
-                    style: TextStyle(fontSize: 14.0, color: Colors.black87),
+                    style: TextStyle(fontSize: 14.0),
                     decoration: InputDecoration(
                         hintText: widget.hintText,
                         contentPadding: inputContentPadding,
@@ -81,7 +84,7 @@ class OBSearchBarState extends State<OBSearchBar> {
           hasText
               ? FlatButton(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  child: Text('Cancel'),
+                  child: OBPrimaryText('Cancel'),
                   onPressed: _cancelSearch,
                 )
               : SizedBox(
@@ -97,9 +100,9 @@ class OBSearchBarState extends State<OBSearchBar> {
       child: Container(
         height: 35.0,
         width: 35.0,
-        child: Icon(
-          Icons.clear,
-          size: 15.0,
+        child: OBIcon(
+          OBIcons.close,
+          customSize: 15.0,
         ),
       ),
       onTap: _clearText,
