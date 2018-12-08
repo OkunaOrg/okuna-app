@@ -155,6 +155,17 @@ class UserService {
     }
   }
 
+  Future<User> updateUserEmail(String email) async {
+    HttpieStreamedResponse response = await _authApiService.updateUserEmail(email: email);
+
+    if (response.isBadRequest()) {
+      return getLoggedInUser();
+    }
+    _checkResponseIsOk(response);
+    String userData = await response.readAsString();
+    return _makeLoggedInUser(userData);
+  }
+
   Future<User> updateUser({
     dynamic avatar,
     dynamic cover,
@@ -547,6 +558,14 @@ class CredentialsMismatchError implements Exception {
   const CredentialsMismatchError(this.msg);
 
   String toString() => 'CredentialsMismatchError: $msg';
+}
+
+class EmailAlreadyTakenError implements Exception {
+  final String msg;
+
+  const EmailAlreadyTakenError(this.msg);
+
+  String toString() => 'EmailAlreadyTakenError: $msg';
 }
 
 class AuthTokenMissingError implements Exception {
