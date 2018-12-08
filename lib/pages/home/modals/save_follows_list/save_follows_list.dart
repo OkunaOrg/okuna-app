@@ -91,6 +91,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                   OBTextField(
                       autofocus: widget.autofocusNameTextField,
                       controller: _nameController,
+                      labelText: 'Name',
                       hintText: 'e.g. Travel, Photography',
                       validator: (String followsListName) {
                         if (!_formWasSubmitted) return null;

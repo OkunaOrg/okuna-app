@@ -5,6 +5,7 @@ class OBTextField extends StatelessWidget {
   final FormFieldValidator<String> validator;
   final Widget prefixIcon;
   final String hintText;
+  final String labelText;
   final bool autofocus;
 
   OBTextField(
@@ -12,7 +13,8 @@ class OBTextField extends StatelessWidget {
       this.validator,
       this.prefixIcon,
       this.hintText,
-      this.autofocus = false});
+      this.autofocus = false,
+      this.labelText});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class OBTextField extends StatelessWidget {
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                 border: InputBorder.none,
-                labelText: 'Name',
+                labelText: labelText,
                 prefixIcon: prefixIcon,
               ),
             ),

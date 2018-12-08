@@ -3,6 +3,8 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/settings/modals/change_email/change_email.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
@@ -68,8 +70,11 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
                   leading: Icon(Icons.settings),
                   title: Text(localizationService.trans('DRAWER.SETTINGS')),
                   onTap: () {
-                    // Update the state of the app
-                    // ...
+                    Navigator.push(
+                        context,
+                        OBSlideRightRoute(
+                            key: Key('obMenuViewSettings'),
+                            widget: OBSettingsPage()));
                   },
                 ),
                 ListTile(
