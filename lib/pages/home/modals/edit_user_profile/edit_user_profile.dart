@@ -12,6 +12,9 @@ import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/cover.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -94,180 +97,183 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: _buildNavigationBar(),
-        body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Stack(
-                    overflow: Overflow.visible,
-                    children: <Widget>[
-                      _buildUserProfileCover(),
-                      Positioned(
-                        left: 20,
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: (OBCover.HEIGHT) -
-                                  (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
-                            ),
-                            _buildUserAvatar()
-                          ],
+        body: OBPrimaryColorContainer(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Stack(
+                      overflow: Overflow.visible,
+                      children: <Widget>[
+                        _buildUserProfileCover(),
+                        Positioned(
+                          left: 20,
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(
+                                height: (OBCover.HEIGHT) -
+                                    (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
+                              ),
+                              _buildUserAvatar()
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                          height: OBCover.HEIGHT +
-                              OBUserAvatar.AVATAR_SIZE_LARGE / 2)
-                    ],
-                  ),
-                  Divider(),
-                  TextFormField(
-                    controller: _usernameController,
-                    validator: (String username) {
-                      if (!_formWasSubmitted) return null;
-                      if (_takenUsername != null && _takenUsername == username)
-                        return 'Username @$_takenUsername is taken';
-                      return _validationService.validateUserUsername(username);
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: INPUT_CONTENT_PADDING,
-                      border: InputBorder.none,
-                      labelText: 'Username',
-                      prefixIcon: Icon(
-                        Icons.alternate_email,
-                        size: INPUT_ICONS_SIZE,
-                      ),
+                        SizedBox(
+                            height: OBCover.HEIGHT +
+                                OBUserAvatar.AVATAR_SIZE_LARGE / 2)
+                      ],
                     ),
-                  ),
-                  Divider(),
-                  TextFormField(
-                    controller: _nameController,
-                    validator: (String profileName) {
-                      if (!_formWasSubmitted) return null;
-                      return _validationService
-                          .validateUserProfileName(profileName);
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: INPUT_CONTENT_PADDING,
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.person, size: INPUT_ICONS_SIZE),
-                      labelText: 'Name',
-                    ),
-                  ),
-                  Divider(),
-                  TextFormField(
-                    controller: _urlController,
-                    validator: (String profileUrl) {
-                      if (!_formWasSubmitted) return null;
-                      return _validationService
-                          .validateUserProfileUrl(profileUrl);
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: INPUT_CONTENT_PADDING,
-                      border: InputBorder.none,
-                      prefixIcon: Icon(
-                        Icons.link,
-                        size: INPUT_ICONS_SIZE,
-                      ),
-                      labelText: 'Url',
-                    ),
-                  ),
-                  Divider(),
-                  TextFormField(
-                    controller: _locationController,
-                    validator: (String profileLocation) {
-                      if (!_formWasSubmitted) return null;
-                      return _validationService
-                          .validateUserProfileLocation(profileLocation);
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: INPUT_CONTENT_PADDING,
-                      border: InputBorder.none,
-                      labelText: 'Location',
-                      prefixIcon: Icon(
-                        Icons.location_on,
-                        size: INPUT_ICONS_SIZE,
-                      ),
-                    ),
-                  ),
-                  Divider(),
-                  TextFormField(
-                    controller: _bioController,
-                    validator: (String profileBio) {
-                      if (!_formWasSubmitted) return null;
-                      return _validationService
-                          .validateUserProfileBio(profileBio);
-                    },
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 3,
-                    decoration: InputDecoration(
+                    Divider(),
+                    TextFormField(
+                      controller: _usernameController,
+                      validator: (String username) {
+                        if (!_formWasSubmitted) return null;
+                        if (_takenUsername != null &&
+                            _takenUsername == username)
+                          return 'Username @$_takenUsername is taken';
+                        return _validationService
+                            .validateUserUsername(username);
+                      },
+                      decoration: InputDecoration(
                         contentPadding: INPUT_CONTENT_PADDING,
-                        labelText: 'Bio',
+                        border: InputBorder.none,
+                        labelText: 'Username',
                         prefixIcon: Icon(
-                          Icons.bookmark,
+                          Icons.alternate_email,
                           size: INPUT_ICONS_SIZE,
                         ),
-                        border: InputBorder.none),
-                  ),
-                  Divider(),
-                  MergeSemantics(
-                    child: ListTile(
-                      leading: Icon(Icons.supervisor_account),
-                      title: Text('Followers count'),
-                      trailing: CupertinoSwitch(
-                        value: _followersCountVisible,
-                        onChanged: (bool value) {
+                      ),
+                    ),
+                    Divider(),
+                    TextFormField(
+                      controller: _nameController,
+                      validator: (String profileName) {
+                        if (!_formWasSubmitted) return null;
+                        return _validationService
+                            .validateUserProfileName(profileName);
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: INPUT_CONTENT_PADDING,
+                        border: InputBorder.none,
+                        prefixIcon: Icon(Icons.person, size: INPUT_ICONS_SIZE),
+                        labelText: 'Name',
+                      ),
+                    ),
+                    Divider(),
+                    TextFormField(
+                      controller: _urlController,
+                      validator: (String profileUrl) {
+                        if (!_formWasSubmitted) return null;
+                        return _validationService
+                            .validateUserProfileUrl(profileUrl);
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: INPUT_CONTENT_PADDING,
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.link,
+                          size: INPUT_ICONS_SIZE,
+                        ),
+                        labelText: 'Url',
+                      ),
+                    ),
+                    Divider(),
+                    TextFormField(
+                      controller: _locationController,
+                      validator: (String profileLocation) {
+                        if (!_formWasSubmitted) return null;
+                        return _validationService
+                            .validateUserProfileLocation(profileLocation);
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: INPUT_CONTENT_PADDING,
+                        border: InputBorder.none,
+                        labelText: 'Location',
+                        prefixIcon: Icon(
+                          Icons.location_on,
+                          size: INPUT_ICONS_SIZE,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    TextFormField(
+                      controller: _bioController,
+                      validator: (String profileBio) {
+                        if (!_formWasSubmitted) return null;
+                        return _validationService
+                            .validateUserProfileBio(profileBio);
+                      },
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                          contentPadding: INPUT_CONTENT_PADDING,
+                          labelText: 'Bio',
+                          prefixIcon: Icon(
+                            Icons.bookmark,
+                            size: INPUT_ICONS_SIZE,
+                          ),
+                          border: InputBorder.none),
+                    ),
+                    Divider(),
+                    MergeSemantics(
+                      child: ListTile(
+                        leading: Icon(Icons.supervisor_account),
+                        title: Text('Followers count'),
+                        trailing: CupertinoSwitch(
+                          value: _followersCountVisible,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _followersCountVisible = value;
+                            });
+                          },
+                        ),
+                        onTap: () {
                           setState(() {
-                            _followersCountVisible = value;
+                            _followersCountVisible = !_followersCountVisible;
                           });
                         },
                       ),
-                      onTap: () {
-                        setState(() {
-                          _followersCountVisible = !_followersCountVisible;
-                        });
-                      },
                     ),
-                  ),
-                  Divider(),
-                  MergeSemantics(
-                    child: ListTile(
-                      leading: Icon(Icons.cake),
-                      title: Text('Birth date'),
-                      trailing: Text(DateFormat.yMMMMd().format(_birthDate)),
-                      onTap: () {
-                        var minimumDate =
-                            _validationService.getMinimumBirthDate();
-                        var maximumDate =
-                            _validationService.getMaximumBirthDate();
-                        _datePickerService.pickDate(
-                            maximumDate: maximumDate,
-                            minimumDate: minimumDate,
-                            context: context,
-                            initialDate: _birthDate,
-                            onDateChanged: _setBirthDate);
-                      },
+                    Divider(),
+                    MergeSemantics(
+                      child: ListTile(
+                        leading: Icon(Icons.cake),
+                        title: Text('Birth date'),
+                        trailing: Text(DateFormat.yMMMMd().format(_birthDate)),
+                        onTap: () {
+                          var minimumDate =
+                              _validationService.getMinimumBirthDate();
+                          var maximumDate =
+                              _validationService.getMaximumBirthDate();
+                          _datePickerService.pickDate(
+                              maximumDate: maximumDate,
+                              minimumDate: minimumDate,
+                              context: context,
+                              initialDate: _birthDate,
+                              onDateChanged: _setBirthDate);
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                )),
+          ),
         ));
   }
 
   Widget _buildNavigationBar() {
     bool newPostButtonIsEnabled = true;
 
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
+    return OBNavigationBar(
       leading: GestureDetector(
-        child: Icon(Icons.close, color: Colors.black87),
+        child: OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
       ),
-      middle: Text('Edit profile'),
+      title: 'Edit profile',
       trailing: OBPrimaryButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,

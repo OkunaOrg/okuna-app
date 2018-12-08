@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -117,7 +118,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
     return OBNavigationBar(
       leading: GestureDetector(
-        child: Icon(Icons.close, color: Colors.black87),
+        child: OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
@@ -181,19 +182,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildPostTextField() {
-    return TextField(
-      controller: _textController,
-      autofocus: true,
-      textCapitalization: TextCapitalization.sentences,
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      style: TextStyle(color: Colors.black87, fontSize: 18.0),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: 'What\'s going on?',
-      ),
-      autocorrect: true,
-    );
+    return OBCreatePostText(controller: _textController);
   }
 
   Widget _buildPostActions() {
