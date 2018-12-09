@@ -1,6 +1,6 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -43,11 +43,11 @@ class OBDateFieldState extends State<OBDateField> {
     return MergeSemantics(
       child: ListTile(
         leading: OBIcon(OBIcons.cake),
-        title: OBPrimaryText(
+        title: OBText(
           widget.title,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        trailing: OBPrimaryText(DateFormat.yMMMMd().format(_currentDate)),
+        trailing: OBText(DateFormat.yMMMMd().format(_currentDate)),
         onTap: () {
           datePickerService.pickDate(
               maximumDate: widget.maximumDate,

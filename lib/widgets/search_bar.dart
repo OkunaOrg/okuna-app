@@ -1,5 +1,5 @@
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +55,7 @@ class OBSearchBarState extends State<OBSearchBar> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: Color.fromARGB(50, 0, 0, 0),
+                color: Color.fromARGB(10, 0, 0, 0),
               ),
               child: Stack(
                 children: <Widget>[
@@ -84,7 +84,7 @@ class OBSearchBarState extends State<OBSearchBar> {
           hasText
               ? FlatButton(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  child: OBPrimaryText('Cancel'),
+                  child: OBText('Cancel'),
                   onPressed: _cancelSearch,
                 )
               : SizedBox(

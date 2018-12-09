@@ -2,7 +2,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBEmojiGroup extends StatelessWidget {
@@ -26,7 +26,7 @@ class OBEmojiGroup extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          OBPrimaryText(groupName,
+          OBText(groupName,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
           SizedBox(
             height: 10.0,

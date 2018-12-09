@@ -6,7 +6,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/danger_button.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -58,7 +58,7 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
             size: OBFollowsListEmojiSize.medium,
             followsListEmojiUrl: widget.followsList.getEmojiImage(),
           ),
-          title: OBPrimaryText(
+          title: OBText(
             widget.followsList.name,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),

@@ -4,7 +4,7 @@ import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +95,7 @@ class OBPostHeader extends StatelessWidget {
 
               if (postCreator == null) return SizedBox();
 
-              return OBPrimaryText(
+              return OBText(
                 postCreator.username,
                 style: TextStyle(fontWeight: FontWeight.bold),
               );

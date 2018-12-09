@@ -3,20 +3,20 @@ import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-class OBPrimaryText extends StatelessWidget {
+class OBText extends StatelessWidget {
   final String text;
   final TextStyle style;
   final TextAlign textAlign;
   final TextOverflow overflow;
   final int maxLines;
-  final OBPrimaryTextSize size;
+  final OBTextSize size;
 
-  OBPrimaryText(this.text,
+  OBText(this.text,
       {this.style,
       this.textAlign,
       this.overflow,
       this.maxLines,
-      this.size = OBPrimaryTextSize.medium});
+      this.size = OBTextSize.medium});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +24,16 @@ class OBPrimaryText extends StatelessWidget {
     double fontSize;
 
     switch (size) {
-      case OBPrimaryTextSize.small:
+      case OBTextSize.small:
         fontSize = 12;
         break;
-      case OBPrimaryTextSize.medium:
+      case OBTextSize.medium:
         fontSize = 16;
         break;
-      case OBPrimaryTextSize.large:
+      case OBTextSize.large:
         fontSize = 18;
         break;
-      case OBPrimaryTextSize.extraLarge:
+      case OBTextSize.extraLarge:
         fontSize = 30;
     }
 
@@ -64,4 +64,4 @@ class OBPrimaryText extends StatelessWidget {
   }
 }
 
-enum OBPrimaryTextSize { small, medium, large, extraLarge }
+enum OBTextSize { small, medium, large, extraLarge }

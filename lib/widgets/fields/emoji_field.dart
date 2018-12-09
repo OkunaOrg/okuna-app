@@ -1,7 +1,7 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBEmojiField extends StatelessWidget {
@@ -26,7 +26,7 @@ class OBEmojiField extends StatelessWidget {
       children: <Widget>[
         MergeSemantics(
           child: ListTile(
-              title: OBPrimaryText(
+              title: OBText(
                 labelText,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),

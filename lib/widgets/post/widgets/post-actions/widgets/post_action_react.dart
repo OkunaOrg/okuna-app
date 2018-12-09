@@ -2,7 +2,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -43,7 +43,7 @@ class OBPostActionReact extends StatelessWidget {
                 SizedBox(
                   width: 10.0,
                 ),
-                OBPrimaryText(
+                OBText(
                   hasReaction ? 'Reacted' : 'React',
                   style: TextStyle(
                     color: hasReaction ? Colors.white : null,

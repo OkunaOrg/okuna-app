@@ -1,4 +1,4 @@
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class OBToggleField extends StatelessWidget {
     return MergeSemantics(
       child: ListTile(
           leading: leading,
-          title: OBPrimaryText(
+          title: OBText(
             title,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),

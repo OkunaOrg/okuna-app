@@ -1,6 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +35,7 @@ class OBProfileUrl extends StatelessWidget {
             width: 10,
           ),
           Flexible(
-              child: OBPrimaryText(
+              child: OBText(
             prettyUrl,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

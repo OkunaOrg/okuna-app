@@ -1,6 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class OBPostActionComment extends StatelessWidget {
             SizedBox(
               width: 10.0,
             ),
-            OBPrimaryText('Comment'),
+            OBText('Comment'),
           ],
         ),
         color: Color.fromARGB(20, 0, 0, 0),

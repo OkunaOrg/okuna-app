@@ -4,12 +4,18 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-class OBSecondaryText extends StatelessWidget {
-  String text;
-  TextStyle style;
-  OBTextSize size;
+class OBPrimaryAccentText extends StatelessWidget {
+  final String text;
+  final TextStyle style;
+  final OBTextSize size;
+  final TextOverflow overflow;
+  final int maxLines;
 
-  OBSecondaryText(this.text, {this.style, this.size});
+  OBPrimaryAccentText(this.text,
+      {this.style,
+      this.size,
+      this.maxLines,
+      this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class OBSecondaryText extends StatelessWidget {
 
           TextStyle finalStyle = style;
           TextStyle themedTextStyle =
-              TextStyle(color: Pigment.fromString(theme.secondaryTextColor));
+              TextStyle(color: Pigment.fromString(theme.primaryAccentColor));
 
           if (finalStyle != null) {
             finalStyle = finalStyle.merge(themedTextStyle);
@@ -35,6 +41,8 @@ class OBSecondaryText extends StatelessWidget {
             text,
             style: finalStyle,
             size: size,
+            overflow: overflow,
+            maxLines: maxLines,
           );
         });
   }

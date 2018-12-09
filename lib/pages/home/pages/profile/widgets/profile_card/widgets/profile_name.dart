@@ -1,5 +1,5 @@
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileName extends StatelessWidget {
@@ -20,7 +20,7 @@ class OBProfileName extends StatelessWidget {
             height: 20.0,
           );
 
-        return OBPrimaryText(
+        return OBText(
           name,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

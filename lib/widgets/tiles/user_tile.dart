@@ -1,6 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -28,7 +28,7 @@ class OBUserTile extends StatelessWidget {
         size: OBUserAvatarSize.medium,
         avatarUrl: user.getProfileAvatar(),
       ),
-      title: OBPrimaryText(
+      title: OBText(
         user.username,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),

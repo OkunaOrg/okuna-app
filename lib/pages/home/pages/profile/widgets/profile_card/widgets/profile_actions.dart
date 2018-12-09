@@ -4,7 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/follow_button.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
@@ -30,7 +30,7 @@ class OBProfileActions extends StatelessWidget {
 
   _buildEditButton() {
     return OBButton(
-        child: OBPrimaryText(
+        child: OBText(
           'Edit profile',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),

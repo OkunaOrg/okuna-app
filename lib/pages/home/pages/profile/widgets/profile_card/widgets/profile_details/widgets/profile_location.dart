@@ -1,6 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileLocation extends StatelessWidget {
@@ -28,7 +28,7 @@ class OBProfileLocation extends StatelessWidget {
           width: 10,
         ),
         Flexible(
-          child: OBPrimaryText(
+          child: OBText(
             location,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

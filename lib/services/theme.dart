@@ -39,8 +39,8 @@ class ThemeService {
       name: 'Space Blue',
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
-      primaryColor: '#3343c2',
-      primaryAccentColor: '#fffc00',
+      primaryColor: '#19182a',
+      primaryAccentColor: '#ebdd00',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -48,11 +48,11 @@ class ThemeService {
     ),
     OBTheme(
       id: 3,
-      name: 'Nocturnal',
-      primaryTextColor: '#ffffff',
-      secondaryTextColor: '#efefef',
-      primaryColor: '#3343c2',
-      primaryAccentColor: '#fffc00',
+      name: 'Elegant',
+      primaryTextColor: '#505050',
+      secondaryTextColor: '#676767',
+      primaryColor: '#ffffff',
+      primaryAccentColor: '#000000',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -60,10 +60,10 @@ class ThemeService {
     ),
     OBTheme(
       id: 3,
-      name: 'Nocturnal',
+      name: 'Greyhound',
       primaryTextColor: '#ffffff',
-      secondaryTextColor: '#efefef',
-      primaryColor: '#3343c2',
+      secondaryTextColor: '#cecece',
+      primaryColor: '#333333',
       primaryAccentColor: '#fffc00',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
@@ -72,11 +72,11 @@ class ThemeService {
     ),
     OBTheme(
       id: 4,
-      name: 'Gold',
+      name: 'Dark Matter',
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
-      primaryColor: '#3343c2',
-      primaryAccentColor: '#fffc00',
+      primaryColor: '#000000',
+      primaryAccentColor: '#00baff',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -85,7 +85,7 @@ class ThemeService {
   ];
 
   ThemeService() {
-    _setActiveTheme(_themes[1]);
+    _setActiveTheme(_themes[4]);
   }
 
   String getRandomObLogoHexColor() {
