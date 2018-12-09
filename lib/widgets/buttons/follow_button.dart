@@ -3,7 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowButton extends StatefulWidget {
@@ -48,7 +48,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
   }
 
   Widget _buildFollowButton() {
-    return OBPrimaryButton(
+    return OBSuccessButton(
       child: Text(
         'Follow',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -59,7 +59,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
   }
 
   Widget _buildUnfollowButton() {
-    return OBPrimaryButton(
+    return OBSuccessButton(
       isOutlined: true,
       child: Text(
         'Unfollow',

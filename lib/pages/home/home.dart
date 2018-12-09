@@ -185,7 +185,7 @@ class OBHomePageState extends State<OBHomePage> {
           icon: OBIcon(OBIcons.home),
           activeIcon: OBIcon(
             OBIcons.home,
-            isActive: true,
+            themeColor: OBIconThemeColor.accent,
           ),
         ),
         BottomNavigationBarItem(
@@ -193,7 +193,7 @@ class OBHomePageState extends State<OBHomePage> {
           icon: OBIcon(OBIcons.search),
           activeIcon: OBIcon(
             OBIcons.search,
-            isActive: true,
+            themeColor: OBIconThemeColor.accent,
           ),
         ),
         BottomNavigationBarItem(
@@ -201,7 +201,7 @@ class OBHomePageState extends State<OBHomePage> {
           icon: OBIcon(OBIcons.notifications),
           activeIcon: OBIcon(
             OBIcons.notifications,
-            isActive: true,
+            themeColor: OBIconThemeColor.accent,
           ),
         ),
         BottomNavigationBarItem(
@@ -209,7 +209,7 @@ class OBHomePageState extends State<OBHomePage> {
           icon: OBIcon(OBIcons.communities),
           activeIcon: OBIcon(
             OBIcons.communities,
-            isActive: true,
+            themeColor: OBIconThemeColor.accent,
           ),
         ),
         BottomNavigationBarItem(
@@ -226,7 +226,7 @@ class OBHomePageState extends State<OBHomePage> {
           icon: OBIcon(OBIcons.menu),
           activeIcon: OBIcon(
             OBIcons.menu,
-            isActive: true,
+            themeColor: OBIconThemeColor.accent,
           ),
         ),
       ],

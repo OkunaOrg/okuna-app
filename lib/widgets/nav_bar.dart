@@ -32,7 +32,7 @@ class OBNavigationBar extends StatelessWidget
         return CupertinoNavigationBar(
           border: null,
           actionsForegroundColor: theme != null
-              ? Pigment.fromString(theme.primaryColorAccent)
+              ? Pigment.fromString(theme.primaryAccentColor)
               : Colors.black,
           middle: title != null
               ? Text(

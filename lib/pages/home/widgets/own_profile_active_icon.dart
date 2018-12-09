@@ -22,7 +22,7 @@ class OBOwnProfileActiveIcon extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
-                    color: Pigment.fromString(theme.primaryColorAccent))),
+                    color: Pigment.fromString(theme.primaryAccentColor))),
             padding: EdgeInsets.all(2.0),
             child: OBUserAvatar(
               avatarUrl: avatarUrl,

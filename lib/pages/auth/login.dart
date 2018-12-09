@@ -4,7 +4,7 @@ import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
@@ -110,7 +110,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   Widget _buildContinueButton(BuildContext context) {
     String buttonText = _localizationService.trans('AUTH.LOGIN.LOGIN');
 
-    return OBPrimaryButton(
+    return OBSuccessButton(
       isLoading: _loginInProgress,
       minWidth: double.infinity,
       size: OBButtonSize.large,

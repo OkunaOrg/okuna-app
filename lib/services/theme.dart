@@ -21,19 +21,71 @@ class ThemeService {
   Random random = new Random();
   OBTheme _activeTheme;
 
-  ThemeService() {
-    _setActiveTheme(OBTheme(
+  List<OBTheme> _themes = [
+    OBTheme(
+      id: 1,
+      name: 'Not Optional',
       primaryTextColor: '#ffffff',
-      secondaryTextColor: '#ffffff',
-      primaryColor: '#161616',
-      primaryColorAccent: '#ff005a',
-      buttonColor: '#fafafa',
-      buttonTextColor: '#000000',
-      primaryButtonColor: '#7ED321',
-      primaryButtonTextColor: '#ffffff',
-      dangerButtonColor: '#FF3860',
-      dangerButtonTextColor: '#ffffff',
-    ));
+      secondaryTextColor: '#efefef',
+      primaryColor: '#3343c2',
+      primaryAccentColor: '#fffc00',
+      successColor: '#7ED321',
+      successColorAccent: '#ffffff',
+      dangerColor: '#FF3860',
+      dangerColorAccent: '#ffffff',
+    ),
+    OBTheme(
+      id: 2,
+      name: 'Space Blue',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#efefef',
+      primaryColor: '#3343c2',
+      primaryAccentColor: '#fffc00',
+      successColor: '#7ED321',
+      successColorAccent: '#ffffff',
+      dangerColor: '#FF3860',
+      dangerColorAccent: '#ffffff',
+    ),
+    OBTheme(
+      id: 3,
+      name: 'Nocturnal',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#efefef',
+      primaryColor: '#3343c2',
+      primaryAccentColor: '#fffc00',
+      successColor: '#7ED321',
+      successColorAccent: '#ffffff',
+      dangerColor: '#FF3860',
+      dangerColorAccent: '#ffffff',
+    ),
+    OBTheme(
+      id: 3,
+      name: 'Nocturnal',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#efefef',
+      primaryColor: '#3343c2',
+      primaryAccentColor: '#fffc00',
+      successColor: '#7ED321',
+      successColorAccent: '#ffffff',
+      dangerColor: '#FF3860',
+      dangerColorAccent: '#ffffff',
+    ),
+    OBTheme(
+      id: 4,
+      name: 'Gold',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#efefef',
+      primaryColor: '#3343c2',
+      primaryAccentColor: '#fffc00',
+      successColor: '#7ED321',
+      successColorAccent: '#ffffff',
+      dangerColor: '#FF3860',
+      dangerColorAccent: '#ffffff',
+    ),
+  ];
+
+  ThemeService() {
+    _setActiveTheme(_themes[1]);
   }
 
   String getRandomObLogoHexColor() {

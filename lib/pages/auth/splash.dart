@@ -2,7 +2,7 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:Openbook/widgets/splash_logo.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +79,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   Widget _buildLoginButton({@required BuildContext context}) {
     String buttonText = localizationService.trans('AUTH.LOGIN');
 
-    return OBPrimaryButton(
+    return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Row(

@@ -59,8 +59,8 @@ class OBButton extends StatelessWidget {
         initialData: themeService.getActiveTheme(),
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
-          var buttonColor = Pigment.fromString(theme.buttonColor);
-          var buttonTextColor = Pigment.fromString(theme.buttonTextColor);
+          var buttonColor = Pigment.fromString(theme.primaryAccentColor);
+          var buttonTextColor = Pigment.fromString(theme.primaryColor);
 
           var button = isOutlined
               ? _buildOutlinedButton(

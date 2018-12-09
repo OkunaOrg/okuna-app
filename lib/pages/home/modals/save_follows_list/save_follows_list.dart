@@ -10,7 +10,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/fields/emoji_field.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
@@ -161,7 +161,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
           },
         ),
         title: _hasExistingList ? 'Edit list' : 'Create list',
-        trailing: OBPrimaryButton(
+        trailing: OBSuccessButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
           size: OBButtonSize.small,

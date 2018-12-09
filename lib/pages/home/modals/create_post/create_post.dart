@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/provider.dart';
@@ -12,7 +13,7 @@ import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -124,7 +125,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         },
       ),
       title: 'New post',
-      trailing: OBPrimaryButton(
+      trailing: OBSuccessButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _isCreatePostInProgress,
         size: OBButtonSize.small,
@@ -169,16 +170,26 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildRemainingCharacters() {
-    return Text(
-      (MAX_ALLOWED_CHARACTERS - _charactersCount).toString(),
-      style: TextStyle(
-          fontSize: 12.0,
-          color: _isPostTextAllowedLength
-              ? Colors.black26
-              : Pigment.fromString('#F13A59'),
-          fontWeight:
-              _isPostTextAllowedLength ? FontWeight.normal : FontWeight.bold),
-    );
+    var themeService = OpenbookProvider.of(context).themeService;
+
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+
+          return Text(
+            (MAX_ALLOWED_CHARACTERS - _charactersCount).toString(),
+            style: TextStyle(
+                fontSize: 12.0,
+                color: _isPostTextAllowedLength
+                    ? Pigment.fromString(theme.primaryTextColor)
+                    : Pigment.fromString(theme.dangerColor),
+                fontWeight: _isPostTextAllowedLength
+                    ? FontWeight.normal
+                    : FontWeight.bold),
+          );
+        });
   }
 
   Widget _buildPostTextField() {

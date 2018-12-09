@@ -1,6 +1,6 @@
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +71,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
 
   Widget _buildNextButton(
       {@required BuildContext context, @required String text}) {
-    return OBPrimaryButton(
+    return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Text(text, style: TextStyle(fontSize: 18.0)),

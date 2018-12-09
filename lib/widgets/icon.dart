@@ -9,13 +9,17 @@ class OBIcon extends StatelessWidget {
   final OBIconData iconData;
   final OBIconSize size;
   final double customSize;
-  final bool isActive;
+  final Color color;
+  final OBIconThemeColor themeColor;
 
   static const double LARGE_SIZE = 30.0;
   static const double MEDIUM_SIZE = 25.0;
   static const double SMALL_SIZE = 15.0;
 
-  OBIcon(this.iconData, {this.size, this.customSize, this.isActive = false});
+  OBIcon(this.iconData,
+      {this.size, this.customSize, this.color, this.themeColor}) {
+    assert(!(color != null && themeColor != null));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +55,30 @@ class OBIcon extends StatelessWidget {
           Widget icon;
 
           if (iconData.nativeIcon != null) {
+            Color iconColor;
+
+            if (color != null) {
+              iconColor = color;
+            } else {
+              switch (themeColor) {
+                case OBIconThemeColor.primary:
+                  iconColor = Pigment.fromString(theme.primaryColor);
+                  break;
+                case OBIconThemeColor.accent:
+                  iconColor = Pigment.fromString(theme.primaryAccentColor);
+                  break;
+                case OBIconThemeColor.danger:
+                  iconColor = Pigment.fromString(theme.dangerColor);
+                  break;
+                default:
+                  iconColor = Pigment.fromString(theme.primaryTextColor);
+              }
+            }
+
             icon = Icon(
               iconData.nativeIcon,
               size: iconSize,
-              color: Pigment.fromString(
-                  isActive ? theme.primaryColorAccent : theme.primaryTextColor),
+              color: iconColor,
             );
           } else {
             String iconName = iconData.filename;
@@ -121,3 +144,5 @@ class OBIconData {
     this.filename,
   });
 }
+
+enum OBIconThemeColor { primary, accent, danger }

@@ -6,7 +6,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -93,7 +93,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           ),
           Padding(
             padding: EdgeInsets.only(right: 20.0, left: 10.0),
-            child: OBPrimaryButton(
+            child: OBSuccessButton(
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
               onPressed: _commentPost,
