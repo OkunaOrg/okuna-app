@@ -86,8 +86,13 @@ class OBIcons {
   static const comment = OBIconData(nativeIcon: Icons.chat_bubble_outline);
   static const close = OBIconData(nativeIcon: Icons.close);
   static const sad = OBIconData(nativeIcon: Icons.sentiment_dissatisfied);
-  static const locations = OBIconData(nativeIcon: Icons.location_on);
+  static const location = OBIconData(nativeIcon: Icons.location_on);
   static const link = OBIconData(nativeIcon: Icons.link);
+  static const email = OBIconData(nativeIcon: Icons.alternate_email);
+  static const bio = OBIconData(nativeIcon: Icons.bookmark);
+  static const name = OBIconData(nativeIcon: Icons.person);
+  static const followers = OBIconData(nativeIcon: Icons.supervisor_account);
+  static const cake = OBIconData(nativeIcon: Icons.cake);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

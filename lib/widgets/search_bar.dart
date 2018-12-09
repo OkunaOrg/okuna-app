@@ -1,6 +1,6 @@
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_text.dart';
-import 'package:Openbook/widgets/theming/primary_text_field.dart';
+import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBSearchBar extends StatefulWidget {
@@ -59,7 +59,7 @@ class OBSearchBarState extends State<OBSearchBar> {
               ),
               child: Stack(
                 children: <Widget>[
-                  OBPrimaryTextField(
+                  OBTextField(
                     textInputAction: TextInputAction.go,
                     focusNode: _textFocusNode,
                     controller: _textController,

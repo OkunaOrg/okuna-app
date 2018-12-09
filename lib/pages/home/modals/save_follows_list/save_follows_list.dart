@@ -12,7 +12,7 @@ import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/fields/emoji_field.dart';
-import 'package:Openbook/widgets/fields/text_field.dart';
+import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -90,30 +90,39 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    OBTextField(
-                        autofocus: widget.autofocusNameTextField,
-                        controller: _nameController,
-                        labelText: 'Name',
-                        hintText: 'e.g. Travel, Photography',
-                        validator: (String followsListName) {
-                          if (!_formWasSubmitted) return null;
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          children: <Widget>[
+                            OBTextFormField(
+                                size: OBTextFormFieldSize.large,
+                                autofocus: widget.autofocusNameTextField,
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                    labelText: 'Name',
+                                    hintText: 'e.g. Travel, Photography'),
+                                validator: (String followsListName) {
+                                  if (!_formWasSubmitted) return null;
 
-                          if (_takenFollowsListName != null &&
-                              _takenFollowsListName == followsListName) {
-                            return 'List name "$_takenFollowsListName" is taken';
-                          }
+                                  if (_takenFollowsListName != null &&
+                                      _takenFollowsListName ==
+                                          followsListName) {
+                                    return 'List name "$_takenFollowsListName" is taken';
+                                  }
 
-                          return _validationService
-                              .validateFollowsListName(followsListName);
-                        }),
-                    OBEmojiField(
-                        emoji: _emoji,
-                        onEmojiFieldTapped: (Emoji emoji) =>
-                            _onWantsToPickEmoji(),
-                        labelText: 'Emoji',
-                        errorText: _formWasSubmitted && _emoji == null
-                            ? 'Emoji is required'
-                            : null),
+                                  return _validationService
+                                      .validateFollowsListName(followsListName);
+                                }),
+                            OBEmojiField(
+                                emoji: _emoji,
+                                onEmojiFieldTapped: (Emoji emoji) =>
+                                    _onWantsToPickEmoji(),
+                                labelText: 'Emoji',
+                                errorText: _formWasSubmitted && _emoji == null
+                                    ? 'Emoji is required'
+                                    : null),
+                          ],
+                        )),
                     Column(
                         children: _users.map((User user) {
                       return OBUserTile(

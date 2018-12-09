@@ -12,9 +12,14 @@ import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/cover.dart';
+import 'package:Openbook/widgets/fields/date_field.dart';
+import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/fields/text_field.dart';
+import 'package:Openbook/widgets/theming/primary_text_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -95,7 +100,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _validationService = openbookProvider.validationService;
 
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: _buildNavigationBar(),
         body: OBPrimaryColorContainer(
           child: SingleChildScrollView(
@@ -126,137 +130,107 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                                 OBUserAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),
-                    Divider(),
-                    TextFormField(
-                      controller: _usernameController,
-                      validator: (String username) {
-                        if (!_formWasSubmitted) return null;
-                        if (_takenUsername != null &&
-                            _takenUsername == username)
-                          return 'Username @$_takenUsername is taken';
-                        return _validationService
-                            .validateUserUsername(username);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: INPUT_CONTENT_PADDING,
-                        border: InputBorder.none,
-                        labelText: 'Username',
-                        prefixIcon: Icon(
-                          Icons.alternate_email,
-                          size: INPUT_ICONS_SIZE,
-                        ),
-                      ),
+                    SizedBox(
+                      height: 20,
                     ),
-                    Divider(),
-                    TextFormField(
-                      controller: _nameController,
-                      validator: (String profileName) {
-                        if (!_formWasSubmitted) return null;
-                        return _validationService
-                            .validateUserProfileName(profileName);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: INPUT_CONTENT_PADDING,
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.person, size: INPUT_ICONS_SIZE),
-                        labelText: 'Name',
-                      ),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _urlController,
-                      validator: (String profileUrl) {
-                        if (!_formWasSubmitted) return null;
-                        return _validationService
-                            .validateUserProfileUrl(profileUrl);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: INPUT_CONTENT_PADDING,
-                        border: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.link,
-                          size: INPUT_ICONS_SIZE,
-                        ),
-                        labelText: 'Url',
-                      ),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _locationController,
-                      validator: (String profileLocation) {
-                        if (!_formWasSubmitted) return null;
-                        return _validationService
-                            .validateUserProfileLocation(profileLocation);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: INPUT_CONTENT_PADDING,
-                        border: InputBorder.none,
-                        labelText: 'Location',
-                        prefixIcon: Icon(
-                          Icons.location_on,
-                          size: INPUT_ICONS_SIZE,
-                        ),
-                      ),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _bioController,
-                      validator: (String profileBio) {
-                        if (!_formWasSubmitted) return null;
-                        return _validationService
-                            .validateUserProfileBio(profileBio);
-                      },
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                          contentPadding: INPUT_CONTENT_PADDING,
-                          labelText: 'Bio',
-                          prefixIcon: Icon(
-                            Icons.bookmark,
-                            size: INPUT_ICONS_SIZE,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        children: <Widget>[
+                          OBTextFormField(
+                            controller: _usernameController,
+                            validator: (String username) {
+                              if (!_formWasSubmitted) return null;
+                              if (_takenUsername != null &&
+                                  _takenUsername == username)
+                                return 'Username @$_takenUsername is taken';
+                              return _validationService
+                                  .validateUserUsername(username);
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Username',
+                              prefixIcon: OBIcon(OBIcons.email),
+                            ),
                           ),
-                          border: InputBorder.none),
-                    ),
-                    Divider(),
-                    MergeSemantics(
-                      child: ListTile(
-                        leading: Icon(Icons.supervisor_account),
-                        title: Text('Followers count'),
-                        trailing: CupertinoSwitch(
-                          value: _followersCountVisible,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _followersCountVisible = value;
-                            });
-                          },
-                        ),
-                        onTap: () {
-                          setState(() {
-                            _followersCountVisible = !_followersCountVisible;
-                          });
-                        },
+                          OBTextFormField(
+                            controller: _nameController,
+                            validator: (String profileName) {
+                              if (!_formWasSubmitted) return null;
+                              return _validationService
+                                  .validateUserProfileName(profileName);
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Name',
+                              prefixIcon: OBIcon(OBIcons.name),
+                            ),
+                          ),
+                          OBTextFormField(
+                            controller: _urlController,
+                            validator: (String profileUrl) {
+                              if (!_formWasSubmitted) return null;
+                              return _validationService
+                                  .validateUserProfileUrl(profileUrl);
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: OBIcon(OBIcons.link),
+                              labelText: 'Url',
+                            ),
+                          ),
+                          OBTextFormField(
+                            controller: _locationController,
+                            validator: (String profileLocation) {
+                              if (!_formWasSubmitted) return null;
+                              return _validationService
+                                  .validateUserProfileLocation(profileLocation);
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Location',
+                              prefixIcon: OBIcon(OBIcons.location),
+                            ),
+                          ),
+                          OBTextFormField(
+                            controller: _bioController,
+                            validator: (String profileBio) {
+                              if (!_formWasSubmitted) return null;
+                              return _validationService
+                                  .validateUserProfileBio(profileBio);
+                            },
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              labelText: 'Bio',
+                              prefixIcon: OBIcon(OBIcons.bio),
+                            ),
+                          ),
+                          OBToggleField(
+                            value: _followersCountVisible,
+                            title: 'Followers count',
+                            leading: OBIcon(OBIcons.followers),
+                            onChanged: (bool value) {
+                              setState(() {
+                                _followersCountVisible = value;
+                              });
+                            },
+                            onTap: () {
+                              setState(() {
+                                _followersCountVisible =
+                                    !_followersCountVisible;
+                              });
+                            },
+                          ),
+                          OBPrimaryTextDivider(),
+                          OBDateField(
+                            title: 'Birth date',
+                            minimumDate:
+                                _validationService.getMinimumBirthDate(),
+                            maximumDate:
+                                _validationService.getMaximumBirthDate(),
+                            onChanged: _setBirthDate,
+                            initialDate: _birthDate,
+                          ),
+                        ],
                       ),
-                    ),
-                    Divider(),
-                    MergeSemantics(
-                      child: ListTile(
-                        leading: Icon(Icons.cake),
-                        title: Text('Birth date'),
-                        trailing: Text(DateFormat.yMMMMd().format(_birthDate)),
-                        onTap: () {
-                          var minimumDate =
-                              _validationService.getMinimumBirthDate();
-                          var maximumDate =
-                              _validationService.getMaximumBirthDate();
-                          _datePickerService.pickDate(
-                              maximumDate: maximumDate,
-                              minimumDate: minimumDate,
-                              context: context,
-                              initialDate: _birthDate,
-                              onDateChanged: _setBirthDate);
-                        },
-                      ),
-                    ),
+                    )
                   ],
                 )),
           ),

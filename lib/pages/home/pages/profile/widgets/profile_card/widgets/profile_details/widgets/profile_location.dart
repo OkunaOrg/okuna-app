@@ -21,7 +21,7 @@ class OBProfileLocation extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         OBIcon(
-          OBIcons.locations,
+          OBIcons.location,
           customSize: 14,
         ),
         SizedBox(
