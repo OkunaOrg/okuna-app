@@ -28,10 +28,10 @@ class OBFollowsListName extends StatelessWidget {
                   Flexible(
                     child: OBPrimaryText(
                       followsList.name,
+                      size: OBPrimaryTextSize.extraLarge,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style: TextStyle(
-                          fontSize: 30.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],

@@ -1,6 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/theming/primary_text_divider.dart';
+import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
@@ -79,7 +79,7 @@ class OBTextFormField extends StatelessWidget {
                   prefixIcon: decoration.prefixIcon,
                 ),
               ),
-              OBPrimaryTextDivider()
+              OBDivider()
             ],
           );
         });

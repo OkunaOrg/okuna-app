@@ -9,13 +9,33 @@ class OBPrimaryText extends StatelessWidget {
   final TextAlign textAlign;
   final TextOverflow overflow;
   final int maxLines;
+  final OBPrimaryTextSize size;
 
   OBPrimaryText(this.text,
-      {this.style, this.textAlign, this.overflow, this.maxLines});
+      {this.style,
+      this.textAlign,
+      this.overflow,
+      this.maxLines,
+      this.size = OBPrimaryTextSize.medium});
 
   @override
   Widget build(BuildContext context) {
     var themeService = OpenbookProvider.of(context).themeService;
+    double fontSize;
+
+    switch (size) {
+      case OBPrimaryTextSize.small:
+        fontSize = 12;
+        break;
+      case OBPrimaryTextSize.medium:
+        fontSize = 16;
+        break;
+      case OBPrimaryTextSize.large:
+        fontSize = 18;
+        break;
+      case OBPrimaryTextSize.extraLarge:
+        fontSize = 30;
+    }
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -23,8 +43,11 @@ class OBPrimaryText extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          TextStyle themedTextStyle =
-              TextStyle(color: Pigment.fromString(theme.primaryTextColor));
+          TextStyle themedTextStyle = TextStyle(
+              color: Pigment.fromString(theme.primaryTextColor),
+              fontSize: (style != null && style.fontSize != null)
+                  ? style.fontSize
+                  : fontSize);
 
           if (style != null) {
             themedTextStyle = themedTextStyle.merge(style);
@@ -40,3 +63,5 @@ class OBPrimaryText extends StatelessWidget {
         });
   }
 }
+
+enum OBPrimaryTextSize { small, medium, large, extraLarge }

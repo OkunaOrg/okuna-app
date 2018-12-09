@@ -3,7 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-class OBPrimaryTextDivider extends StatelessWidget {
+class OBDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeService = OpenbookProvider.of(context).themeService;

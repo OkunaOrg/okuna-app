@@ -1,5 +1,6 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
+import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:flutter/material.dart';
 
@@ -21,27 +22,24 @@ class OBEmojiField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        children: <Widget>[
-          MergeSemantics(
-            child: ListTile(
-                title: OBPrimaryText(
-                  labelText,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                subtitle: errorText != null
-                    ? Text(errorText, style: TextStyle(color: Colors.red))
-                    : null,
-                trailing: OBFollowsListEmoji(followsListEmojiUrl: emoji?.image),
-                onTap: () {
-                  if (onEmojiFieldTapped != null) onEmojiFieldTapped(emoji);
-                }),
-          ),
-          Divider(),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        MergeSemantics(
+          child: ListTile(
+              title: OBPrimaryText(
+                labelText,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              subtitle: errorText != null
+                  ? Text(errorText, style: TextStyle(color: Colors.red))
+                  : null,
+              trailing: OBFollowsListEmoji(followsListEmojiUrl: emoji?.image),
+              onTap: () {
+                if (onEmojiFieldTapped != null) onEmojiFieldTapped(emoji);
+              }),
+        ),
+        OBDivider(),
+      ],
     );
   }
 }

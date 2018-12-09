@@ -13,9 +13,9 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/fields/emoji_field.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
-import 'package:Openbook/widgets/follows_list_icon.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/primary_text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -123,6 +123,17 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                                     : null),
                           ],
                         )),
+                    _users.length > 0
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                                left: 20, top: 20, bottom: 20.0),
+                            child: OBPrimaryText(
+                              'Users',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              size: OBPrimaryTextSize.large,
+                            ),
+                          )
+                        : SizedBox(),
                     Column(
                         children: _users.map((User user) {
                       return OBUserTile(
