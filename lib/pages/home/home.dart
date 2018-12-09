@@ -14,6 +14,7 @@ import 'package:Openbook/pages/home/pages/menu/menu.dart';
 import 'package:Openbook/pages/home/pages/notifications.dart';
 import 'package:Openbook/pages/home/pages/search/search.dart';
 import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
+import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -22,7 +23,6 @@ import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBHomePage extends StatefulWidget {
   @override
@@ -218,15 +218,8 @@ class OBHomePageState extends State<OBHomePage> {
               avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
             ),
-            activeIcon: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(500),
-                  border: Border.all(color: Colors.red)),
-              padding: EdgeInsets.all(2.0),
-              child: OBUserAvatar(
-                avatarUrl: _avatarUrl,
-                size: OBUserAvatarSize.small,
-              ),
+            activeIcon: OBOwnProfileActiveIcon(
+              avatarUrl: _avatarUrl,
             )),
         BottomNavigationBarItem(
           title: Container(),
