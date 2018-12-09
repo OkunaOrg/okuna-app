@@ -4,6 +4,7 @@ import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
+import 'package:Openbook/widgets/buttons/accent_floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
@@ -59,9 +60,8 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
               Positioned(
                   bottom: 20.0,
                   right: 20.0,
-                  child: FloatingActionButton(
+                  child: OBAccentFloatingActionButton(
                       heroTag: Key('createPostButton'),
-                      backgroundColor: Pigment.fromString('#ff005a'),
                       onPressed: () async {
                         Post createdPost = await widget.onWantsToCreatePost();
                         if (createdPost != null) {
@@ -69,7 +69,10 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
                           _timelinePostsController.scrollToTop();
                         }
                       },
-                      child: OBIcon(OBIcons.createPost, size: OBIconSize.large,)))
+                      child: OBIcon(
+                        OBIcons.createPost,
+                        size: OBIconSize.large,
+                      )))
             ],
           ),
         ));

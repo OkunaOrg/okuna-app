@@ -1,4 +1,7 @@
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBButton extends StatelessWidget {
   final Widget child;
@@ -18,8 +21,8 @@ class OBButton extends StatelessWidget {
       @required this.onPressed,
       this.icon,
       this.size = OBButtonSize.medium,
-      this.textColor = Colors.white,
-      this.color = Colors.black,
+      this.textColor,
+      this.color,
       this.isDisabled = false,
       this.isOutlined = false,
       this.isLoading = false,
@@ -49,36 +52,53 @@ class OBButton extends StatelessWidget {
       );
     }
 
-    var button = isOutlined
-        ? _buildOutlinedButton(
-            child: buttonChild,
-            onPressed: finalOnPressed,
-            shape: buttonShape,
-            padding: buttonPadding)
-        : _buildNormalButton(
-            child: buttonChild,
-            onPressed: finalOnPressed,
-            shape: buttonShape,
-            padding: buttonPadding);
+    var themeService = OpenbookProvider.of(context).themeService;
 
-    return ButtonTheme(
-      minWidth: buttonMinWidth,
-      child: button,
-      height: minHeight,
-    );
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+          var buttonColor = Pigment.fromString(theme.buttonColor);
+          var buttonTextColor = Pigment.fromString(theme.buttonTextColor);
+
+          var button = isOutlined
+              ? _buildOutlinedButton(
+                  child: buttonChild,
+                  onPressed: finalOnPressed,
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  btnColor: buttonColor,
+                  btnTextColor: buttonTextColor)
+              : _buildNormalButton(
+                  child: buttonChild,
+                  onPressed: finalOnPressed,
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  btnColor: buttonColor,
+                  btnTextColor: buttonTextColor);
+
+          return ButtonTheme(
+            minWidth: buttonMinWidth,
+            child: button,
+            height: minHeight,
+          );
+        });
   }
 
   Widget _buildOutlinedButton(
       {@required child,
       @required onPressed,
       @required shape,
-      @required padding}) {
+      @required padding,
+      Color btnColor,
+      Color btnTextColor}) {
     return OutlineButton(
       padding: padding,
-      textColor: color,
+      textColor: color ?? btnColor,
       color: Colors.transparent,
       child: child,
-      borderSide: BorderSide(color: color),
+      borderSide: BorderSide(color: color ?? btnColor),
       onPressed: onPressed,
       shape: shape,
     );
@@ -88,11 +108,13 @@ class OBButton extends StatelessWidget {
       {@required child,
       @required onPressed,
       @required shape,
-      @required padding}) {
+      @required padding,
+      Color btnColor,
+      Color btnTextColor}) {
     return FlatButton(
       padding: padding,
-      textColor: textColor,
-      color: color,
+      textColor: textColor ?? btnTextColor,
+      color: color ?? btnColor,
       child: child,
       onPressed: onPressed,
       shape: shape,

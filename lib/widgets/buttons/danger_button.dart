@@ -1,5 +1,8 @@
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBDangerButton extends StatelessWidget {
   final Widget child;
@@ -8,7 +11,6 @@ class OBDangerButton extends StatelessWidget {
   final bool isDisabled;
   final bool isLoading;
   final Color textColor;
-  final Color color;
   final bool isOutlined;
   final OBButtonSize size;
   final double minWidth;
@@ -20,7 +22,6 @@ class OBDangerButton extends StatelessWidget {
       this.size = OBButtonSize.medium,
       this.textColor = Colors.white,
       this.icon,
-      this.color = const Color(0xFFFF3860),
       this.isDisabled = false,
       this.isOutlined = false,
       this.isLoading = false,
@@ -29,18 +30,27 @@ class OBDangerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OBButton(
-      child: child,
-      icon: icon,
-      onPressed: onPressed,
-      size: size,
-      textColor: textColor,
-      color: color,
-      isDisabled: isDisabled,
-      isOutlined: isOutlined,
-      isLoading: isLoading,
-      padding: padding,
-      minWidth: minWidth,
-    );
+    var themeService = OpenbookProvider.of(context).themeService;
+
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+
+          return OBButton(
+            child: child,
+            icon: icon,
+            onPressed: onPressed,
+            size: size,
+            textColor: Pigment.fromString(theme.dangerButtonTextColor),
+            color: Pigment.fromString(theme.dangerButtonColor),
+            isDisabled: isDisabled,
+            isOutlined: isOutlined,
+            isLoading: isLoading,
+            padding: padding,
+            minWidth: minWidth,
+          );
+        });
   }
 }
