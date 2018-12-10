@@ -1,24 +1,11 @@
-import 'dart:math';
-
 import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ThemeService {
-  static List OB_LOGO_COLORS = [
-    '#48d9d9',
-    '#5bc855',
-    '#c1dc00',
-    '#ffdd00',
-    '#fbba00',
-    '#f18700',
-    '#ff6699',
-    '#f93476'
-  ];
-
   Stream<OBTheme> get themeChange => _themeChangeSubject.stream;
   final _themeChangeSubject = ReplaySubject<OBTheme>(maxSize: 1);
 
-  Random random = new Random();
   OBTheme _activeTheme;
 
   List<OBTheme> _themes = [
@@ -28,7 +15,7 @@ class ThemeService {
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
       primaryColor: '#3343c2',
-      primaryAccentColor: '#f5d500',
+      primaryAccentColor: '#f7ff00,#db36a4',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -40,7 +27,7 @@ class ThemeService {
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
       primaryColor: '#19182a',
-      primaryAccentColor: '#ebdd00',
+      primaryAccentColor: '#f7ff00,#db36a4',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -48,11 +35,11 @@ class ThemeService {
     ),
     OBTheme(
       id: 3,
-      name: 'Elegant',
+      name: 'Gold',
       primaryTextColor: '#505050',
       secondaryTextColor: '#676767',
       primaryColor: '#ffffff',
-      primaryAccentColor: '#000000',
+      primaryAccentColor: '#e9a039,#f0c569',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -64,7 +51,7 @@ class ThemeService {
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#cecece',
       primaryColor: '#333333',
-      primaryAccentColor: '#00d395',
+      primaryAccentColor: '#f7ff00,#db36a4',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -72,11 +59,23 @@ class ThemeService {
     ),
     OBTheme(
       id: 4,
-      name: 'Dark Matter',
+      name: 'Deep Space',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#efefef',
+      primaryColor: '#000000,#434343',
+      primaryAccentColor: '#f7ff00,#db36a4',
+      successColor: '#7ED321',
+      successColorAccent: '#ffffff',
+      dangerColor: '#FF3860',
+      dangerColorAccent: '#ffffff',
+    ),
+    OBTheme(
+      id: 4,
+      name: 'Gold Haze',
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
       primaryColor: '#000000',
-      primaryAccentColor: '#ea004b',
+      primaryAccentColor: '#f7ff00,#db36a4',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -86,10 +85,6 @@ class ThemeService {
 
   ThemeService() {
     _setActiveTheme(_themes[2]);
-  }
-
-  String getRandomObLogoHexColor() {
-    return OB_LOGO_COLORS[random.nextInt(OB_LOGO_COLORS.length)];
   }
 
   void _setActiveTheme(OBTheme theme) {

@@ -16,6 +16,7 @@ import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:Openbook/services/string_template.dart';
 import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -59,6 +60,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ConnectionsCirclesApiService connectionsCirclesApiService =
       ConnectionsCirclesApiService();
   FollowsListsApiService followsListsApiService = FollowsListsApiService();
+  ThemeValueParserService themeValueParserService = ThemeValueParserService();
 
   LocalizationService localizationService;
 

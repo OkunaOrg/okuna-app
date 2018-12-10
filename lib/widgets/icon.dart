@@ -45,6 +45,7 @@ class OBIcon extends StatelessWidget {
     }
 
     var themeService = OpenbookProvider.of(context).themeService;
+    var themeValueParser = OpenbookProvider.of(context).themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -56,33 +57,50 @@ class OBIcon extends StatelessWidget {
 
           if (iconData.nativeIcon != null) {
             Color iconColor;
+            Gradient iconGradient;
 
             if (color != null) {
               iconColor = color;
             } else {
               switch (themeColor) {
                 case OBIconThemeColor.primary:
-                  iconColor = Pigment.fromString(theme.primaryColor);
+                  iconColor = themeValueParser.parseColor(theme.primaryColor);
                   break;
                 case OBIconThemeColor.primaryText:
-                  iconColor = Pigment.fromString(theme.primaryTextColor);
+                  iconColor =
+                      themeValueParser.parseColor(theme.primaryTextColor);
                   break;
                 case OBIconThemeColor.accent:
-                  iconColor = Pigment.fromString(theme.primaryAccentColor);
+                  iconGradient =
+                      themeValueParser.parseGradient(theme.primaryAccentColor);
                   break;
                 case OBIconThemeColor.danger:
-                  iconColor = Pigment.fromString(theme.dangerColor);
+                  iconGradient =
+                      themeValueParser.parseGradient(theme.dangerColor);
                   break;
                 default:
-                  iconColor = Pigment.fromString(theme.primaryTextColor);
+                  iconColor =
+                      themeValueParser.parseColor(theme.primaryTextColor);
               }
             }
 
-            icon = Icon(
-              iconData.nativeIcon,
-              size: iconSize,
-              color: iconColor,
-            );
+            if (iconColor != null) {
+              icon = Icon(
+                iconData.nativeIcon,
+                size: iconSize,
+                color: iconColor,
+              );
+            } else {
+              icon = ShaderMask(
+                shaderCallback: (Rect bounds) {
+                  return iconGradient.createShader(bounds);
+                },
+                child: Icon(
+                  iconData.nativeIcon,
+                  size: iconSize,
+                ),
+              );
+            }
           } else {
             String iconName = iconData.filename;
             icon =

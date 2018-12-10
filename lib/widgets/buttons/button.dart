@@ -1,7 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBButton extends StatelessWidget {
   final Widget child;
@@ -9,20 +8,20 @@ class OBButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isDisabled;
   final bool isLoading;
-  final Color textColor;
-  final Color color;
   final bool isOutlined;
   final OBButtonSize size;
   final double minWidth;
   final EdgeInsets padding;
+  final OBButtonType type;
+  final ShapeBorder shape;
 
   const OBButton(
       {@required this.child,
       @required this.onPressed,
+      this.type,
       this.icon,
       this.size = OBButtonSize.medium,
-      this.textColor,
-      this.color,
+      this.shape,
       this.isDisabled = false,
       this.isOutlined = false,
       this.isLoading = false,
@@ -31,27 +30,6 @@ class OBButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var buttonChild = isLoading ? _getLoadingIndicator() : child;
-    var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
-    var buttonShape =
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0));
-    if (isDisabled) buttonChild = Opacity(opacity: 0.5, child: buttonChild);
-    EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
-    double buttonMinWidth = _getButtonMinWidthForSize(size);
-    double minHeight = 0;
-
-    if (icon != null) {
-      buttonChild = Row(
-        children: <Widget>[
-          icon,
-          SizedBox(
-            width: 5,
-          ),
-          buttonChild
-        ],
-      );
-    }
-
     var themeService = OpenbookProvider.of(context).themeService;
 
     return StreamBuilder(
@@ -59,76 +37,66 @@ class OBButton extends StatelessWidget {
         initialData: themeService.getActiveTheme(),
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
-          var buttonColor = Pigment.fromString(theme.primaryAccentColor);
-          var buttonTextColor = Pigment.fromString(theme.primaryColor);
 
-          var button = isOutlined
-              ? _buildOutlinedButton(
-                  child: buttonChild,
-                  onPressed: finalOnPressed,
-                  shape: buttonShape,
-                  padding: buttonPadding,
-                  btnColor: buttonColor,
-                  btnTextColor: buttonTextColor)
-              : _buildNormalButton(
-                  child: buttonChild,
-                  onPressed: finalOnPressed,
-                  shape: buttonShape,
-                  padding: buttonPadding,
-                  btnColor: buttonColor,
-                  btnTextColor: buttonTextColor);
+          var buttonChild = isLoading ? _getLoadingIndicator(theme) : child;
+          var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
+          if (isDisabled)
+            buttonChild = Opacity(opacity: 0.5, child: buttonChild);
+          EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
+          double buttonMinWidth = _getButtonMinWidthForSize(size);
+          double minHeight = 0;
 
-          return ButtonTheme(
-            minWidth: buttonMinWidth,
-            child: button,
-            height: minHeight,
+          if (icon != null && !isLoading) {
+            buttonChild = Row(
+              children: <Widget>[
+                icon,
+                SizedBox(
+                  width: 5,
+                ),
+                buttonChild
+              ],
+            );
+          }
+
+          var themeValueParser =
+              OpenbookProvider.of(context).themeValueParserService;
+
+          Color buttonTextColor =
+              themeValueParser.parseColor(theme.primaryColor);
+          Gradient gradient =
+              themeValueParser.parseGradient(theme.primaryAccentColor);
+
+          return GestureDetector(
+            child: Container(
+                constraints: BoxConstraints(
+                    minWidth: buttonMinWidth, minHeight: minHeight),
+                decoration: BoxDecoration(
+                    gradient: gradient,
+                    borderRadius: BorderRadius.circular(50.0)),
+                child: Material(
+                  color: Colors.transparent,
+                  textStyle: TextStyle(color: buttonTextColor),
+                  child: Padding(
+                    padding: buttonPadding,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[child],
+                    ),
+                  ),
+                )),
+            onTap: finalOnPressed,
           );
         });
   }
 
-  Widget _buildOutlinedButton(
-      {@required child,
-      @required onPressed,
-      @required shape,
-      @required padding,
-      Color btnColor,
-      Color btnTextColor}) {
-    return OutlineButton(
-      padding: padding,
-      textColor: color ?? btnColor,
-      color: Colors.transparent,
-      child: child,
-      borderSide: BorderSide(color: color ?? btnColor),
-      onPressed: onPressed,
-      shape: shape,
-    );
-  }
-
-  Widget _buildNormalButton(
-      {@required child,
-      @required onPressed,
-      @required shape,
-      @required padding,
-      Color btnColor,
-      Color btnTextColor}) {
-    return FlatButton(
-      padding: padding,
-      textColor: textColor ?? btnTextColor,
-      color: color ?? btnColor,
-      child: child,
-      onPressed: onPressed,
-      shape: shape,
-    );
-  }
-
-  Widget _getLoadingIndicator() {
+  Widget _getLoadingIndicator(OBTheme theme) {
     return SizedBox(
       height: 20.0,
       width: 20.0,
       child: CircularProgressIndicator(
           strokeWidth: 2.0,
-          valueColor:
-              AlwaysStoppedAnimation<Color>(isOutlined ? color : textColor)),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
     );
   }
 
@@ -173,6 +141,6 @@ class OBButton extends StatelessWidget {
   }
 }
 
-enum OBButtonType { primary, success, danger }
+enum OBButtonType { primary, primaryAccent, success, danger }
 
 enum OBButtonSize { small, medium, large }

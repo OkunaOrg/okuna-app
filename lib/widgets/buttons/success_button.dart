@@ -28,27 +28,17 @@ class OBSuccessButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
-
-    return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-
-          return OBButton(
-            child: child,
-            icon: icon,
-            onPressed: onPressed,
-            size: size,
-            textColor: Pigment.fromString(theme.successColorAccent),
-            color: Pigment.fromString(theme.successColor),
-            isDisabled: isDisabled,
-            isOutlined: isOutlined,
-            isLoading: isLoading,
-            padding: padding,
-            minWidth: minWidth,
-          );
-        });
+    return OBButton(
+      child: child,
+      icon: icon,
+      onPressed: onPressed,
+      size: size,
+      isDisabled: isDisabled,
+      isOutlined: isOutlined,
+      isLoading: isLoading,
+      padding: padding,
+      minWidth: minWidth,
+      type: OBButtonType.success,
+    );
   }
 }

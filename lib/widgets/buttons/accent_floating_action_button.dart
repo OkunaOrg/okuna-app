@@ -23,7 +23,7 @@ class OBAccentFloatingActionButton extends StatelessWidget {
           var theme = snapshot.data;
           return FloatingActionButton(
               heroTag: heroTag,
-              backgroundColor: Pigment.fromString(theme.primaryAccentColor),
+              backgroundColor: Colors.black87,
               onPressed: onPressed,
               child: child);
         });
