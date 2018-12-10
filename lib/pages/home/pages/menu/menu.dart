@@ -3,6 +3,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
@@ -84,14 +85,6 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
                   },
                 ),
                 ListTile(
-                  leading: OBIcon(OBIcons.customize),
-                  title: OBText(localizationService.trans('DRAWER.CUSTOMIZE')),
-                  onTap: () {
-                    // Update the state of the app
-                    // ...
-                  },
-                ),
-                ListTile(
                   leading: OBIcon(OBIcons.logout),
                   title: OBText(localizationService.trans('DRAWER.LOGOUT')),
                   onTap: () {
@@ -99,7 +92,8 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
                   },
                 )
               ],
-            ))
+            )),
+            OBCuratedThemes()
           ],
         ),
       ),

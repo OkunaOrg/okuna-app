@@ -1,16 +1,16 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageService {
-  Storage getSecureStorage({String namespace}) {
-    return Storage(store: _SecureStore(), namespace: namespace);
+  OBStorage getSecureStorage({String namespace}) {
+    return OBStorage(store: _SecureStore(), namespace: namespace);
   }
 }
 
-class Storage {
+class OBStorage {
   _Store store;
   String namespace;
 
-  Storage({this.store, this.namespace});
+  OBStorage({this.store, this.namespace});
 
   Future<String> get(String key) {
     return this.store.get(_makeKey(key));

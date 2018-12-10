@@ -33,7 +33,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserService {
-  Storage _userStorage;
+  OBStorage _userStorage;
 
   static const STORAGE_KEY_AUTH_TOKEN = 'authToken';
   static const STORAGE_KEY_USER_DATA = 'data';

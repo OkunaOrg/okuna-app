@@ -18,6 +18,8 @@ class OBTheme extends UpdatableModel<OBTheme> {
   String dangerColor;
   String dangerColorAccent;
 
+  String themePreview;
+
   static final factory = OBThemeFactory();
 
   factory OBTheme.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class OBTheme extends UpdatableModel<OBTheme> {
       this.dangerColorAccent,
       this.successColor,
       this.successColorAccent,
+      this.themePreview,
       this.primaryTextColor,
       this.secondaryTextColor})
       : super();
