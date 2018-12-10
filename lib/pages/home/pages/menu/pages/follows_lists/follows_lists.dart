@@ -121,7 +121,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                     icon: OBIcon(
                       OBIcons.add,
                       size: OBIconSize.small,
-                      themeColor: OBIconThemeColor.primary,
+                      color: Colors.white,
                     ),
                     child: Text('Create new list')))
           ],

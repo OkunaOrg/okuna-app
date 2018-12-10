@@ -135,7 +135,7 @@ class OBButton extends StatelessWidget {
         buttonTextColor = themeValueParser.parseColor(theme.dangerColorAccent);
         break;
       case OBButtonType.primary:
-        buttonTextColor = themeValueParser.parseColor(theme.primaryColor);
+        buttonTextColor = Colors.white;
         break;
       case OBButtonType.success:
         buttonTextColor = themeValueParser.parseColor(theme.successColorAccent);

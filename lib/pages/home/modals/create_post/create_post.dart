@@ -129,6 +129,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _isCreatePostInProgress,
         size: OBButtonSize.small,
+        type: OBButtonType.primary,
         onPressed: createPost,
         child: Text('Share'),
       ),

@@ -67,11 +67,8 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
                           _timelinePostsController.scrollToTop();
                         }
                       },
-                      child: OBIcon(
-                        OBIcons.createPost,
-                        size: OBIconSize.large,
-                        themeColor: OBIconThemeColor.primary,
-                      )))
+                      child: OBIcon(OBIcons.createPost,
+                          size: OBIconSize.large, color: Colors.white)))
             ],
           ),
         ));
