@@ -70,7 +70,7 @@ class OBIcon extends StatelessWidget {
                   iconColor =
                       themeValueParser.parseColor(theme.primaryTextColor);
                   break;
-                case OBIconThemeColor.accent:
+                case OBIconThemeColor.primaryAccent:
                   iconGradient =
                       themeValueParser.parseGradient(theme.primaryAccentColor);
                   break;
@@ -92,6 +92,7 @@ class OBIcon extends StatelessWidget {
               );
             } else {
               icon = ShaderMask(
+                blendMode: BlendMode.srcIn,
                 shaderCallback: (Rect bounds) {
                   return iconGradient.createShader(bounds);
                 },
@@ -167,4 +168,4 @@ class OBIconData {
   });
 }
 
-enum OBIconThemeColor { primary, primaryText, accent, danger }
+enum OBIconThemeColor { primary, primaryText, primaryAccent, danger, success }

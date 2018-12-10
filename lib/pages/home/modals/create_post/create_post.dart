@@ -125,7 +125,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         },
       ),
       title: 'New post',
-      trailing: OBSuccessButton(
+      trailing: OBButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _isCreatePostInProgress,
         size: OBButtonSize.small,

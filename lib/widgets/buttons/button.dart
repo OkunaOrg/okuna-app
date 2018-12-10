@@ -15,19 +15,23 @@ class OBButton extends StatelessWidget {
   final EdgeInsets padding;
   final OBButtonType type;
   final ShapeBorder shape;
+  final double minHeight;
+  final List<BoxShadow> boxShadow;
 
   const OBButton(
       {@required this.child,
       @required this.onPressed,
+      this.minHeight,
+      this.minWidth,
       this.type = OBButtonType.primary,
       this.icon,
       this.size = OBButtonSize.medium,
       this.shape,
+      this.boxShadow,
       this.isDisabled = false,
       this.isOutlined = false,
       this.isLoading = false,
-      this.padding,
-      this.minWidth});
+      this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +54,8 @@ class OBButton extends StatelessWidget {
           if (isDisabled)
             buttonChild = Opacity(opacity: 0.5, child: buttonChild);
           EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
-          double buttonMinWidth = _getButtonMinWidthForSize(size);
-          double minHeight = 0;
+          double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
+          double buttonMinHeight = minHeight ?? 0;
 
           if (icon != null && !isLoading) {
             buttonChild = Row(
@@ -68,8 +72,9 @@ class OBButton extends StatelessWidget {
           return GestureDetector(
             child: Container(
                 constraints: BoxConstraints(
-                    minWidth: buttonMinWidth, minHeight: minHeight),
+                    minWidth: buttonMinWidth, minHeight: buttonMinHeight),
                 decoration: BoxDecoration(
+                    boxShadow: boxShadow ?? [],
                     gradient: gradient,
                     borderRadius: BorderRadius.circular(50.0)),
                 child: Material(
