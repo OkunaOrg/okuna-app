@@ -22,6 +22,9 @@ class ThemeValueParserService {
         gradients.map((colorValue) => parseColor(colorValue)).toList();
 
     return LinearGradient(
-        begin: _beginAlignment, end: _endAlignment, colors: colors);
+        begin: _beginAlignment,
+        end: _endAlignment,
+        colors: colors,
+        tileMode: TileMode.mirror);
   }
 }

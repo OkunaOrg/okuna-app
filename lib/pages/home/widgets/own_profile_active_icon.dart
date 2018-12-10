@@ -2,7 +2,6 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:pigment/pigment.dart';
 
 class OBOwnProfileActiveIcon extends StatelessWidget {
   final String avatarUrl;
@@ -12,6 +11,8 @@ class OBOwnProfileActiveIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeService = OpenbookProvider.of(context).themeService;
+    var themeValueParserService =
+        OpenbookProvider.of(context).themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -22,7 +23,8 @@ class OBOwnProfileActiveIcon extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
-                    color: Pigment.fromString(theme.primaryAccentColor))),
+                    color: themeValueParserService
+                        .parseGradient(theme.primaryAccentColor).colors[1])),
             padding: EdgeInsets.all(2.0),
             child: OBUserAvatar(
               avatarUrl: avatarUrl,

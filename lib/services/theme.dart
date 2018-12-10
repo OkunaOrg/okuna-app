@@ -62,7 +62,7 @@ class ThemeService {
       name: 'Deep Space',
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
-      primaryColor: '#000000,#434343',
+      primaryColor: '#000000',
       primaryAccentColor: '#f7ff00,#db36a4',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',

@@ -95,9 +95,10 @@ class OBIcon extends StatelessWidget {
                 blendMode: BlendMode.srcIn,
                 shaderCallback: (Rect bounds) {
                   return iconGradient.createShader(bounds);
-                },
+                  },
                 child: Icon(
                   iconData.nativeIcon,
+                  color: Colors.white,
                   size: iconSize,
                 ),
               );
