@@ -30,7 +30,7 @@ class OBProfileActions extends StatelessWidget {
 
   _buildEditButton() {
     return OBButton(
-        child: OBText(
+        child: Text(
           'Edit profile',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),

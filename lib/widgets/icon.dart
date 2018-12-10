@@ -137,6 +137,7 @@ class OBIcons {
   static const name = OBIconData(nativeIcon: Icons.person);
   static const followers = OBIconData(nativeIcon: Icons.supervisor_account);
   static const cake = OBIconData(nativeIcon: Icons.cake);
+  static const add = OBIconData(nativeIcon: Icons.add);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

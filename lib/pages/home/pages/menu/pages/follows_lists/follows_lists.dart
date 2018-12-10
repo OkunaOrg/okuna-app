@@ -1,6 +1,7 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
 import 'package:Openbook/widgets/buttons/accent_button.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -117,9 +118,10 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                         _onFollowsListCreated(createdFollowsList);
                       }
                     },
-                    icon: Icon(
-                      Icons.add,
-                      size: 15,
+                    icon: OBIcon(
+                      OBIcons.add,
+                      size: OBIconSize.small,
+                      themeColor: OBIconThemeColor.primary,
                     ),
                     child: Text('Create new list')))
           ],

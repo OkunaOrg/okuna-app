@@ -161,7 +161,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
           },
         ),
         title: _hasExistingList ? 'Edit list' : 'Create list',
-        trailing: OBSuccessButton(
+        trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
           size: OBButtonSize.small,

@@ -1,5 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:flutter/material.dart';
 
 class OBButton extends StatelessWidget {
@@ -18,7 +19,7 @@ class OBButton extends StatelessWidget {
   const OBButton(
       {@required this.child,
       @required this.onPressed,
-      this.type,
+      this.type = OBButtonType.primary,
       this.icon,
       this.size = OBButtonSize.medium,
       this.shape,
@@ -31,14 +32,20 @@ class OBButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeService = OpenbookProvider.of(context).themeService;
+    var themeValueParser = OpenbookProvider.of(context).themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
         initialData: themeService.getActiveTheme(),
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
+          Color buttonTextColor = _getButtonTextColorForType(type,
+              themeValueParser: themeValueParser, theme: theme);
+          Gradient gradient = _getButtonGradientForType(type,
+              themeValueParser: themeValueParser, theme: theme);
 
-          var buttonChild = isLoading ? _getLoadingIndicator(theme) : child;
+          var buttonChild =
+              isLoading ? _getLoadingIndicator(buttonTextColor) : child;
           var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
           if (isDisabled)
             buttonChild = Opacity(opacity: 0.5, child: buttonChild);
@@ -58,14 +65,6 @@ class OBButton extends StatelessWidget {
             );
           }
 
-          var themeValueParser =
-              OpenbookProvider.of(context).themeValueParserService;
-
-          Color buttonTextColor =
-              themeValueParser.parseColor(theme.primaryColor);
-          Gradient gradient =
-              themeValueParser.parseGradient(theme.primaryAccentColor);
-
           return GestureDetector(
             child: Container(
                 constraints: BoxConstraints(
@@ -81,7 +80,7 @@ class OBButton extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[child],
+                      children: <Widget>[buttonChild],
                     ),
                   ),
                 )),
@@ -90,14 +89,56 @@ class OBButton extends StatelessWidget {
         });
   }
 
-  Widget _getLoadingIndicator(OBTheme theme) {
+  Widget _getLoadingIndicator(Color color) {
     return SizedBox(
       height: 20.0,
       width: 20.0,
       child: CircularProgressIndicator(
-          strokeWidth: 2.0,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+          strokeWidth: 2.0, valueColor: AlwaysStoppedAnimation<Color>(color)),
     );
+  }
+
+  Gradient _getButtonGradientForType(OBButtonType type,
+      {@required ThemeValueParserService themeValueParser,
+      @required OBTheme theme}) {
+    Gradient buttonGradient;
+
+    switch (type) {
+      case OBButtonType.danger:
+        buttonGradient = themeValueParser.parseGradient(theme.dangerColor);
+        break;
+      case OBButtonType.primary:
+        buttonGradient =
+            themeValueParser.parseGradient(theme.primaryAccentColor);
+        break;
+      case OBButtonType.success:
+        buttonGradient = themeValueParser.parseGradient(theme.successColor);
+        break;
+      default:
+    }
+
+    return buttonGradient;
+  }
+
+  Color _getButtonTextColorForType(OBButtonType type,
+      {@required ThemeValueParserService themeValueParser,
+      @required OBTheme theme}) {
+    Color buttonTextColor;
+
+    switch (type) {
+      case OBButtonType.danger:
+        buttonTextColor = themeValueParser.parseColor(theme.dangerColorAccent);
+        break;
+      case OBButtonType.primary:
+        buttonTextColor = themeValueParser.parseColor(theme.primaryColor);
+        break;
+      case OBButtonType.success:
+        buttonTextColor = themeValueParser.parseColor(theme.successColorAccent);
+        break;
+      default:
+    }
+
+    return buttonTextColor;
   }
 
   EdgeInsets _getButtonPaddingForSize(OBButtonSize type) {
@@ -113,7 +154,7 @@ class OBButton extends StatelessWidget {
         buttonPadding = EdgeInsets.symmetric(vertical: 8, horizontal: 12);
         break;
       case OBButtonSize.small:
-        buttonPadding = EdgeInsets.symmetric(vertical: 5, horizontal: 2);
+        buttonPadding = EdgeInsets.symmetric(vertical: 6, horizontal: 2);
         break;
       default:
     }
@@ -141,6 +182,6 @@ class OBButton extends StatelessWidget {
   }
 }
 
-enum OBButtonType { primary, primaryAccent, success, danger }
+enum OBButtonType { primary, success, danger }
 
 enum OBButtonSize { small, medium, large }

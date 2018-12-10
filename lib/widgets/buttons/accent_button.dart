@@ -40,7 +40,7 @@ class OBAccentButton extends StatelessWidget {
       isLoading: isLoading,
       padding: padding,
       minWidth: minWidth,
-      type: OBButtonType.primaryAccent,
+      type: OBButtonType.primary,
     );
   }
 }
