@@ -59,7 +59,7 @@ class ThemeService {
   ];
 
   ThemeService() {
-    _setActiveTheme(_themes[1]);
+    _setActiveTheme(_themes[0]);
   }
 
   void _setActiveTheme(OBTheme theme) {

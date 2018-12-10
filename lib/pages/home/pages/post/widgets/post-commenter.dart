@@ -93,7 +93,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           ),
           Padding(
             padding: EdgeInsets.only(right: 20.0, left: 10.0),
-            child: OBSuccessButton(
+            child: OBButton(
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
               onPressed: _commentPost,
