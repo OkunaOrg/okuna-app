@@ -62,16 +62,16 @@ class OBTextFormField extends StatelessWidget {
                 maxLines: maxLines,
                 style: TextStyle(
                     fontSize: fontSize,
-                    color: Pigment.fromString(theme.secondaryTextColor)),
+                    color: Pigment.fromString(theme.primaryTextColor)),
                 decoration: InputDecoration(
                   hintText: decoration.hintText,
                   labelStyle: TextStyle(
                       height: labelHeight,
                       fontWeight: FontWeight.bold,
-                      color: Pigment.fromString(theme.primaryTextColor),
+                      color: Pigment.fromString(theme.secondaryTextColor),
                       fontSize: fontSize),
                   hintStyle: TextStyle(
-                      color: Pigment.fromString(theme.secondaryTextColor)),
+                      color: Pigment.fromString(theme.primaryTextColor)),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                   border: InputBorder.none,

@@ -71,7 +71,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
                       child: OBIcon(
                         OBIcons.createPost,
                         size: OBIconSize.large,
-                        themeColor: OBIconThemeColor.primary,
+                        color: Colors.white,
                       )))
             ],
           ),

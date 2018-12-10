@@ -55,7 +55,7 @@ class OBPostActionReact extends StatelessWidget {
             ),
             color: hasReaction
                 ? Pigment.fromString(reaction.getEmojiColor())
-                : Color.fromARGB(20, 0, 0, 0),
+                : Color.fromARGB(10, 0, 0, 0),
             onPressed: () async {
               if (hasReaction) {
                 await userService.deletePostReaction(

@@ -23,7 +23,7 @@ class OBPostActionComment extends StatelessWidget {
             OBText('Comment'),
           ],
         ),
-        color: Color.fromARGB(20, 0, 0, 0),
+        color: Color.fromARGB(10, 0, 0, 0),
         onPressed: () {
           if (onWantsToCommentPost != null) {
             onWantsToCommentPost(_post);

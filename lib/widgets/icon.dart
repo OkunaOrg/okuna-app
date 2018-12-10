@@ -64,6 +64,9 @@ class OBIcon extends StatelessWidget {
                 case OBIconThemeColor.primary:
                   iconColor = Pigment.fromString(theme.primaryColor);
                   break;
+                case OBIconThemeColor.primaryText:
+                  iconColor = Pigment.fromString(theme.primaryTextColor);
+                  break;
                 case OBIconThemeColor.accent:
                   iconColor = Pigment.fromString(theme.primaryAccentColor);
                   break;
@@ -145,4 +148,4 @@ class OBIconData {
   });
 }
 
-enum OBIconThemeColor { primary, accent, danger }
+enum OBIconThemeColor { primary, primaryText, accent, danger }

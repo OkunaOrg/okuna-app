@@ -28,7 +28,7 @@ class ThemeService {
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
       primaryColor: '#3343c2',
-      primaryAccentColor: '#fffc00',
+      primaryAccentColor: '#f5d500',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -60,11 +60,11 @@ class ThemeService {
     ),
     OBTheme(
       id: 3,
-      name: 'Greyhound',
+      name: 'Mint',
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#cecece',
       primaryColor: '#333333',
-      primaryAccentColor: '#fffc00',
+      primaryAccentColor: '#00d395',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
@@ -76,16 +76,16 @@ class ThemeService {
       primaryTextColor: '#ffffff',
       secondaryTextColor: '#efefef',
       primaryColor: '#000000',
-      primaryAccentColor: '#00baff',
+      primaryAccentColor: '#ea004b',
       successColor: '#7ED321',
       successColorAccent: '#ffffff',
       dangerColor: '#FF3860',
       dangerColorAccent: '#ffffff',
-    ),
+    )
   ];
 
   ThemeService() {
-    _setActiveTheme(_themes[4]);
+    _setActiveTheme(_themes[2]);
   }
 
   String getRandomObLogoHexColor() {

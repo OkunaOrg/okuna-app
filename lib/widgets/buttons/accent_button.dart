@@ -43,7 +43,7 @@ class OBAccentButton extends StatelessWidget {
             icon: icon,
             onPressed: onPressed,
             size: size,
-            textColor: Pigment.fromString(theme.primaryColor),
+            textColor: Colors.white,
             color: Pigment.fromString(theme.primaryAccentColor),
             isDisabled: isDisabled,
             isOutlined: isOutlined,
