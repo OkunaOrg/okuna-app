@@ -15,6 +15,7 @@ class Follow {
   }
 
   static User _parseFollowedUser(Map followedUserData) {
-    if (followedUserData != null) return User.fromJson(followedUserData);
+    if (followedUserData == null) return null;
+    return User.fromJson(followedUserData);
   }
 }

@@ -72,6 +72,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
   }
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
+    if (_isReactToPostInProgress) return null;
     _setReactToPostInProgress(true);
 
     try {

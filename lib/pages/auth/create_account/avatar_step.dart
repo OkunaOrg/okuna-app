@@ -205,7 +205,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
     );
   }
 
-  Future<File> _getUserImage(BuildContext context) async {
+  Future _getUserImage(BuildContext context) async {
     String cameraOptionText =
         localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA');
     String galleryOptionText =

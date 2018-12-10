@@ -82,34 +82,29 @@ class Post {
   }
 
   static PostImage _parseImage(Map image) {
-    if (image != null) {
-      return PostImage.fromJSON(image);
-    }
+    if (image == null) return null;
+    return PostImage.fromJSON(image);
   }
 
   static User _parseCreator(Map creator) {
-    if (creator != null) {
-      return User.fromJson(creator);
-    }
+    if (creator == null) return null;
+    return User.fromJson(creator);
   }
 
   static PostReaction _parseReaction(Map postReaction) {
-    if (postReaction != null) {
-      return PostReaction.fromJson(postReaction);
-    }
+    if (postReaction == null) return null;
+    return PostReaction.fromJson(postReaction);
   }
 
   static PostReactionsEmojiCountList _parseReactionsEmojiCounts(
       List reactionsEmojiCounts) {
-    if (reactionsEmojiCounts != null) {
-      return PostReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
-    }
+    if (reactionsEmojiCounts == null) return null;
+    return PostReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
   }
 
   static PostCommentList _parseCommentList(List commentList) {
-    if (commentList != null) {
-      return PostCommentList.fromJson(commentList);
-    }
+    if (commentList == null) return null;
+    return PostCommentList.fromJson(commentList);
   }
 
   Post(

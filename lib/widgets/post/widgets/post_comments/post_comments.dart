@@ -1,6 +1,5 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

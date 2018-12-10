@@ -10,7 +10,6 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/cover.dart';
 import 'package:Openbook/widgets/fields/date_field.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
@@ -35,13 +34,12 @@ class OBEditUserProfileModal extends StatefulWidget {
 }
 
 class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
-  static const double INPUT_ICONS_SIZE = 16;
-  static EdgeInsetsGeometry INPUT_CONTENT_PADDING =
+  static const double inputIconsSize = 16;
+  static EdgeInsetsGeometry inputContentPadding =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
 
   UserService _userService;
   ToastService _toastService;
-  DatePickerService _datePickerService;
   ImagePickerService _imagePickerService;
   ValidationService _validationService;
 
@@ -94,7 +92,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _imagePickerService = openbookProvider.imagePickerService;
-    _datePickerService = openbookProvider.datePickerService;
     _validationService = openbookProvider.validationService;
 
     return Scaffold(

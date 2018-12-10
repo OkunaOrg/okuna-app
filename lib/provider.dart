@@ -98,13 +98,13 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   void initAsyncState() async {
     Environment environment =
         await EnvironmentLoader(environmentPath: ".env.json").load();
-    authApiService.setApiURL(environment.API_URL);
-    postsApiService.setApiURL(environment.API_URL);
-    emojisApiService.setApiURL(environment.API_URL);
-    followsApiService.setApiURL(environment.API_URL);
-    connectionsApiService.setApiURL(environment.API_URL);
-    connectionsCirclesApiService.setApiURL(environment.API_URL);
-    followsListsApiService.setApiURL(environment.API_URL);
+    authApiService.setApiURL(environment.apiUrl);
+    postsApiService.setApiURL(environment.apiUrl);
+    emojisApiService.setApiURL(environment.apiUrl);
+    followsApiService.setApiURL(environment.apiUrl);
+    connectionsApiService.setApiURL(environment.apiUrl);
+    connectionsCirclesApiService.setApiURL(environment.apiUrl);
+    followsListsApiService.setApiURL(environment.apiUrl);
   }
 
   @override

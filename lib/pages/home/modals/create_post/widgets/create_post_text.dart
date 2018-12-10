@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
 class OBCreatePostText extends StatelessWidget {
-  TextEditingController controller;
+  final TextEditingController controller;
 
   OBCreatePostText({this.controller});
 

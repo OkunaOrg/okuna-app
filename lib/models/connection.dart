@@ -12,6 +12,7 @@ class Connection {
   }
 
   static User _parseTargetUser(Map targetUserData) {
-    if (targetUserData != null) return User.fromJson(targetUserData);
+    if (targetUserData == null) return null;
+    return User.fromJson(targetUserData);
   }
 }

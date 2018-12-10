@@ -11,8 +11,6 @@ class OBProfileNavBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    var route = ModalRoute.of(context);
-
     return StreamBuilder(
         stream: user.updateSubject,
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
