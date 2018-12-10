@@ -35,8 +35,13 @@ class OBButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
-    var themeValueParser = OpenbookProvider.of(context).themeValueParserService;
+    var provider = OpenbookProvider.of(context);
+    var themeService = provider.themeService;
+    var themeValueParser = provider.themeValueParserService;
+    EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
+    double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
+    double buttonMinHeight = minHeight ?? 20;
+    var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -50,12 +55,9 @@ class OBButton extends StatelessWidget {
 
           var buttonChild =
               isLoading ? _getLoadingIndicator(buttonTextColor) : child;
-          var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
+
           if (isDisabled)
             buttonChild = Opacity(opacity: 0.5, child: buttonChild);
-          EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
-          double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
-          double buttonMinHeight = minHeight ?? 20;
 
           if (icon != null && !isLoading) {
             buttonChild = Row(
