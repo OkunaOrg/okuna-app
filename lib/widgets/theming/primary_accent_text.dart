@@ -20,6 +20,8 @@ class OBPrimaryAccentText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeService = OpenbookProvider.of(context).themeService;
+    var themeValueParserService =
+        OpenbookProvider.of(context).themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -28,8 +30,10 @@ class OBPrimaryAccentText extends StatelessWidget {
           var theme = snapshot.data;
 
           TextStyle finalStyle = style;
-          TextStyle themedTextStyle =
-              TextStyle(color: Pigment.fromString(theme.primaryAccentColor));
+          TextStyle themedTextStyle = TextStyle(
+              foreground: Paint()
+                ..shader = themeValueParserService
+                    .parseGradient(theme.primaryAccentColor).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)));
 
           if (finalStyle != null) {
             finalStyle = finalStyle.merge(themedTextStyle);

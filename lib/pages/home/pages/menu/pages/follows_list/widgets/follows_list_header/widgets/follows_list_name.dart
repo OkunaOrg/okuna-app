@@ -27,7 +27,7 @@ class OBFollowsListName extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Flexible(
-                    child: OBText(
+                    child: OBPrimaryAccentText(
                       followsList.name,
                       size: OBTextSize.extraLarge,
                       overflow: TextOverflow.ellipsis,

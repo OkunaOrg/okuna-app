@@ -55,7 +55,7 @@ class OBButton extends StatelessWidget {
             buttonChild = Opacity(opacity: 0.5, child: buttonChild);
           EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
           double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
-          double buttonMinHeight = minHeight ?? 0;
+          double buttonMinHeight = minHeight ?? 20;
 
           if (icon != null && !isLoading) {
             buttonChild = Row(
@@ -96,8 +96,8 @@ class OBButton extends StatelessWidget {
 
   Widget _getLoadingIndicator(Color color) {
     return SizedBox(
-      height: 20.0,
-      width: 20.0,
+      height: 15.0,
+      width: 15.0,
       child: CircularProgressIndicator(
           strokeWidth: 2.0, valueColor: AlwaysStoppedAnimation<Color>(color)),
     );

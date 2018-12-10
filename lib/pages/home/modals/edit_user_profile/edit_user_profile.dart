@@ -18,12 +18,10 @@ import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class OBEditUserProfileModal extends StatefulWidget {
   final User user;
@@ -248,7 +246,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         },
       ),
       title: 'Edit profile',
-      trailing: OBSuccessButton(
+      trailing: OBButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
