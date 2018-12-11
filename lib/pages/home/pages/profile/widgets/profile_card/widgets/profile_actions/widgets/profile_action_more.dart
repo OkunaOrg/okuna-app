@@ -1,8 +1,10 @@
+import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/circles_picker/circles_picker.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -58,8 +60,12 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
                     ? 'Disconnect from $userName'
                     : 'Connect with $userName'),
                 onTap: () async {
-                  await user.isConnected ? _disconnectUser() : _connectUser();
-                  Navigator.pop(context);
+                  if (user.isConnected) {
+                    await _disconnectUser();
+                    Navigator.pop(context);
+                  } else {
+                    _displayConnectionOptions();
+                  }
                 },
               )
             ];
@@ -80,7 +86,19 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
     );
   }
 
-  Future _connectUser() async {
+  Future _displayConnectionOptions() async {
+    Navigator.pop(context);
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return OBPrimaryColorContainer(
+            mainAxisSize: MainAxisSize.min,
+            child: OBCirclesPicker(),
+          );
+        });
+  }
+
+  Future _connectUserInCircle() async {
     if (_requestInProgress) return;
     _setRequestInProgress(true);
     try {
