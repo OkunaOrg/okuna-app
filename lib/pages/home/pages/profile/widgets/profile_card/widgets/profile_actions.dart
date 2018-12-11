@@ -1,10 +1,8 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/follow_button.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {

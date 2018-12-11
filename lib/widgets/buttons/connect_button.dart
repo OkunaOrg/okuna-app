@@ -3,22 +3,21 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:flutter/material.dart';
 
-class OBFollowButton extends StatefulWidget {
+class OBConnectButton extends StatefulWidget {
   final User user;
 
-  OBFollowButton(this.user);
+  OBConnectButton(this.user);
 
   @override
-  OBFollowButtonState createState() {
-    return OBFollowButtonState();
+  OBConnectButtonState createState() {
+    return OBConnectButtonState();
   }
 }
 
-class OBFollowButtonState extends State<OBFollowButton> {
+class OBConnectButtonState extends State<OBConnectButton> {
   UserService _userService;
   ToastService _toastService;
   bool _requestInProgress;
@@ -41,41 +40,40 @@ class OBFollowButtonState extends State<OBFollowButton> {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
 
-        if (user?.isFollowing == null) return SizedBox();
+        if (user?.isConnected == null) return SizedBox();
 
-        return user.isFollowing ? _buildUnfollowButton() : _buildFollowButton();
+        return user.isConnected ? _buildDisconnectButton() : _buildConnectButton();
       },
     );
   }
 
-  Widget _buildFollowButton() {
-    return OBButton(
+  Widget _buildConnectButton() {
+    return OBSuccessButton(
       child: Text(
-        'Follow',
+        'Connect',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,
-      onPressed: _followUser,
+      onPressed: _connectUser,
     );
   }
 
-  Widget _buildUnfollowButton() {
-    return OBButton(
+  Widget _buildDisconnectButton() {
+    return OBSuccessButton(
       isOutlined: true,
       child: Text(
-        'Unfollow',
+        'Disconnect',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,
-      onPressed: _unFollowUser,
+      onPressed: _disconnectUser,
     );
   }
 
-  void _followUser() async {
+  void _connectUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.followUserWithUsername(widget.user.username);
-      widget.user.incrementFollowersCount();
+      await _userService.connectWithUserWithUsername(widget.user.username);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -86,11 +84,10 @@ class OBFollowButtonState extends State<OBFollowButton> {
     }
   }
 
-  void _unFollowUser() async {
+  void _disconnectUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unFollowUserWithUsername(widget.user.username);
-      widget.user.decrementFollowersCount();
+      await _userService.disconnectFromUserWithUsername(widget.user.username);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {

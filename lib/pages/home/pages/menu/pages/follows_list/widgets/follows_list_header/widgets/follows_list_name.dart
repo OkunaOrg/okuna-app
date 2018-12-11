@@ -12,7 +12,7 @@ class OBFollowsListName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: followsList.updateChange,
+        stream: followsList.updateSubject,
         initialData: followsList,
         builder: (BuildContext context, AsyncSnapshot<FollowsList> snapshot) {
           var followsList = snapshot.data;

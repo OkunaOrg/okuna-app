@@ -371,7 +371,7 @@ class UserService {
   }
 
   Future<Connection> connectWithUserWithUsername(String username,
-      {@required List<Circle> circles = const []}) async {
+      {List<Circle> circles = const []}) async {
     HttpieResponse response =
         await _connectionsApiService.connectWithUserWithUsername(username,
             circlesIds: circles.map((circle) => circle.id).toList());
@@ -379,7 +379,7 @@ class UserService {
     return Connection.fromJson(json.decode(response.body));
   }
 
-  Future<User> disconnectUserWithUsername(String username) async {
+  Future<User> disconnectFromUserWithUsername(String username) async {
     HttpieResponse response =
         await _connectionsApiService.disconnectFromUserWithUsername(username);
     _checkResponseIsOk(response);
