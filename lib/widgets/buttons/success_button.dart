@@ -7,7 +7,6 @@ class OBSuccessButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isDisabled;
   final bool isLoading;
-  final bool isOutlined;
   final OBButtonSize size;
   final double minWidth;
   final EdgeInsets padding;
@@ -18,7 +17,6 @@ class OBSuccessButton extends StatelessWidget {
       this.icon,
       this.size = OBButtonSize.medium,
       this.isDisabled = false,
-      this.isOutlined = false,
       this.isLoading = false,
       this.padding,
       this.minWidth});
@@ -31,7 +29,6 @@ class OBSuccessButton extends StatelessWidget {
       onPressed: onPressed,
       size: size,
       isDisabled: isDisabled,
-      isOutlined: isOutlined,
       isLoading: isLoading,
       padding: padding,
       minWidth: minWidth,

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/toast.dart';

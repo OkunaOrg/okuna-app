@@ -3,21 +3,23 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBConnectButton extends StatefulWidget {
+class OBProfileActionMore extends StatefulWidget {
   final User user;
 
-  OBConnectButton(this.user);
+  OBProfileActionMore(this.user);
 
   @override
-  OBConnectButtonState createState() {
-    return OBConnectButtonState();
+  OBProfileActionMoreState createState() {
+    return OBProfileActionMoreState();
   }
 }
 
-class OBConnectButtonState extends State<OBConnectButton> {
+class OBProfileActionMoreState extends State<OBProfileActionMore> {
   UserService _userService;
   ToastService _toastService;
   bool _requestInProgress;
@@ -40,37 +42,46 @@ class OBConnectButtonState extends State<OBConnectButton> {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
 
-        if (user?.isConnected == null) return SizedBox();
+        String userName = user.getProfileName();
 
-        return user.isConnected ? _buildDisconnectButton() : _buildConnectButton();
+        return IconButton(
+          icon: OBIcon(
+            OBIcons.moreVertical,
+            customSize: 30,
+          ),
+          onPressed: () {
+            List<Widget> bottomSheetTiles = [
+              ListTile(
+                leading:
+                    OBIcon(user.isConnected ? OBIcons.remove : OBIcons.add),
+                title: OBText(user.isConnected
+                    ? 'Disconnect from $userName'
+                    : 'Connect with $userName'),
+                onTap: () async {
+                  await user.isConnected ? _disconnectUser() : _connectUser();
+                  Navigator.pop(context);
+                },
+              )
+            ];
+
+            showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return OBPrimaryColorContainer(
+                    mainAxisSize: MainAxisSize.min,
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: bottomSheetTiles),
+                  );
+                });
+          },
+        );
       },
     );
   }
 
-  Widget _buildConnectButton() {
-    return OBSuccessButton(
-      child: Text(
-        'Connect',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      isLoading: _requestInProgress,
-      onPressed: _connectUser,
-    );
-  }
-
-  Widget _buildDisconnectButton() {
-    return OBSuccessButton(
-      isOutlined: true,
-      child: Text(
-        'Disconnect',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      isLoading: _requestInProgress,
-      onPressed: _disconnectUser,
-    );
-  }
-
-  void _connectUser() async {
+  Future _connectUser() async {
+    if (_requestInProgress) return;
     _setRequestInProgress(true);
     try {
       await _userService.connectWithUserWithUsername(widget.user.username);
@@ -84,7 +95,8 @@ class OBConnectButtonState extends State<OBConnectButton> {
     }
   }
 
-  void _disconnectUser() async {
+  Future _disconnectUser() async {
+    if (_requestInProgress) return;
     _setRequestInProgress(true);
     try {
       await _userService.disconnectFromUserWithUsername(widget.user.username);

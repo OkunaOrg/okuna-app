@@ -17,6 +17,7 @@ class Circle {
   }
 
   static User _parseUser(Map userData) {
+    if (userData == null) return null;
     return User.fromJson(userData);
   }
 }

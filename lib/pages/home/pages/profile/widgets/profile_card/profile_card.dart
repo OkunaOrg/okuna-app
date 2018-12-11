@@ -1,6 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_counts/profile_counts.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
@@ -21,7 +21,7 @@ class OBProfileCard extends StatelessWidget {
       overflow: Overflow.visible,
       children: <Widget>[
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          padding: EdgeInsets.only(left: 30.0, right: 20),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[

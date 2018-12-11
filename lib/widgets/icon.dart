@@ -95,7 +95,7 @@ class OBIcon extends StatelessWidget {
                 blendMode: BlendMode.srcIn,
                 shaderCallback: (Rect bounds) {
                   return iconGradient.createShader(bounds);
-                  },
+                },
                 child: Icon(
                   iconData.nativeIcon,
                   color: Colors.white,
@@ -128,6 +128,7 @@ class OBIcons {
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
   static const moreVertical = OBIconData(nativeIcon: Icons.more_vert);
+  static const moreHorizontal = OBIconData(nativeIcon: Icons.more_horiz);
   static const react = OBIconData(nativeIcon: Icons.sentiment_very_satisfied);
   static const comment = OBIconData(nativeIcon: Icons.chat_bubble_outline);
   static const close = OBIconData(nativeIcon: Icons.close);
@@ -139,7 +140,8 @@ class OBIcons {
   static const name = OBIconData(nativeIcon: Icons.person);
   static const followers = OBIconData(nativeIcon: Icons.supervisor_account);
   static const cake = OBIconData(nativeIcon: Icons.cake);
-  static const add = OBIconData(nativeIcon: Icons.add);
+  static const add = OBIconData(nativeIcon: Icons.add_circle_outline);
+  static const remove = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

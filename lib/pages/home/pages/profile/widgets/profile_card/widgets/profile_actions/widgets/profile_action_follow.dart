@@ -4,21 +4,20 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:flutter/material.dart';
 
-class OBFollowButton extends StatefulWidget {
+class OBProfileActionFollow extends StatefulWidget {
   final User user;
 
-  OBFollowButton(this.user);
+  OBProfileActionFollow(this.user);
 
   @override
-  OBFollowButtonState createState() {
-    return OBFollowButtonState();
+  OBProfileActionFollowState createState() {
+    return OBProfileActionFollowState();
   }
 }
 
-class OBFollowButtonState extends State<OBFollowButton> {
+class OBProfileActionFollowState extends State<OBProfileActionFollow> {
   UserService _userService;
   ToastService _toastService;
   bool _requestInProgress;
@@ -61,7 +60,6 @@ class OBFollowButtonState extends State<OBFollowButton> {
 
   Widget _buildUnfollowButton() {
     return OBButton(
-      isOutlined: true,
       child: Text(
         'Unfollow',
         style: TextStyle(fontWeight: FontWeight.bold),

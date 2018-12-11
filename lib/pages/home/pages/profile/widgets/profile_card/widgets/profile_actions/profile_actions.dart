@@ -1,8 +1,9 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/follow_button.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_follow.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
@@ -18,11 +19,23 @@ class OBProfileActions extends StatelessWidget {
 
     bool isLoggedInUser = userService.isLoggedInUser(user);
 
+    List<Widget> actions = [];
+
+    if (isLoggedInUser) {
+      actions.add(_buildEditButton());
+    } else {
+      actions.addAll([
+        OBProfileActionFollow(user),
+        SizedBox(
+          width: 10,
+        ),
+        OBProfileActionMore(user)
+      ]);
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        isLoggedInUser ? _buildEditButton() : OBFollowButton(user)
-      ],
+      children: actions,
     );
   }
 
@@ -34,7 +47,6 @@ class OBProfileActions extends StatelessWidget {
         ),
         onPressed: () {
           onWantsToEditUserProfile(user);
-        },
-        isOutlined: true);
+        });
   }
 }

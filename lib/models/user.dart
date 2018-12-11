@@ -55,7 +55,9 @@ class User extends UpdatableModel<User> {
       this.followingCount,
       this.postsCount,
       this.isFollowing,
-      this.isConnected});
+      this.isConnected,
+      this.connectedCircles,
+      this.followLists});
 
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
@@ -74,6 +76,14 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
+    if (json.containsKey('connected_circles')) {
+      connectedCircles =
+          navigationUsersFactory.parseCircles(json['connected_circles']);
+    }
+    if (json.containsKey('follow_lists')) {
+      followLists =
+          navigationUsersFactory.parseFollowsLists(json['follow_lists']);
+    }
   }
 
   bool hasProfileLocation() {
@@ -145,10 +155,22 @@ class UserFactory extends UpdatableModelFactory<User> {
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
-        profile: parseUserProfile(json['profile']));
+        profile: parseUserProfile(json['profile']),
+        connectedCircles: parseCircles(json['connected_circles']),
+        followLists: parseFollowsLists(json['follow_lists']));
   }
 
   UserProfile parseUserProfile(Map profile) {
     return UserProfile.fromJSON(profile);
+  }
+
+  CirclesList parseCircles(List circlesData) {
+    if (circlesData == null) return null;
+    return CirclesList.fromJson(circlesData);
+  }
+
+  FollowsListsList parseFollowsLists(List followsListsData) {
+    if (followsListsData == null) return null;
+    return FollowsListsList.fromJson(followsListsData);
   }
 }

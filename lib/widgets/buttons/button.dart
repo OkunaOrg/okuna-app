@@ -9,7 +9,6 @@ class OBButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isDisabled;
   final bool isLoading;
-  final bool isOutlined;
   final OBButtonSize size;
   final double minWidth;
   final EdgeInsets padding;
@@ -29,7 +28,6 @@ class OBButton extends StatelessWidget {
       this.shape,
       this.boxShadow,
       this.isDisabled = false,
-      this.isOutlined = false,
       this.isLoading = false,
       this.padding});
 
@@ -42,7 +40,6 @@ class OBButton extends StatelessWidget {
     double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
     double buttonMinHeight = minHeight ?? 20;
     var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
-
     return StreamBuilder(
         stream: themeService.themeChange,
         initialData: themeService.getActiveTheme(),

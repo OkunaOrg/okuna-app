@@ -7,9 +7,14 @@ class OBPrimaryColorContainer extends StatelessWidget {
   final Widget child;
   final BoxDecoration decoration;
   final EdgeInsetsGeometry padding;
+  final MainAxisSize mainAxisSize;
 
   const OBPrimaryColorContainer(
-      {Key key, this.child, this.decoration, this.padding})
+      {Key key,
+      this.child,
+      this.decoration,
+      this.padding,
+      this.mainAxisSize = MainAxisSize.max})
       : super(key: key);
 
   @override
@@ -22,18 +27,20 @@ class OBPrimaryColorContainer extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
+          Widget container = Container(
+            padding: padding,
+            decoration:
+                BoxDecoration(color: Pigment.fromString(theme.primaryColor)),
+            child: child,
+          );
+
+          if (mainAxisSize == MainAxisSize.min) {
+            return container;
+          }
+
           return Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  padding: padding,
-                  decoration: BoxDecoration(
-                      color: Pigment.fromString(theme.primaryColor)),
-                  child: child,
-                ),
-              )
-            ],
+            mainAxisSize: mainAxisSize,
+            children: <Widget>[Expanded(child: container)],
           );
         });
   }
