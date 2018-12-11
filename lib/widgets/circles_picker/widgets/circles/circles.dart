@@ -12,16 +12,18 @@ class OBCircles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: circles.length,
-        itemBuilder: (BuildContext context, index) {
-          Circle circle = circles[index];
-          bool isSelected = selectedCircles.contains(circle);
-          return OBCircle(
-            circle,
-            onCirclePressed: onCirclePressed,
-            isSelected: isSelected,
-          );
-        });
+    return Wrap(
+      runSpacing: 20.0,
+      spacing: 20.0,
+      children: circles.map((Circle circle) {
+        bool isSelected = selectedCircles.contains(circle);
+
+        return OBCircle(
+          circle,
+          onCirclePressed: onCirclePressed,
+          isSelected: isSelected,
+        );
+      }).toList(),
+    );
   }
 }

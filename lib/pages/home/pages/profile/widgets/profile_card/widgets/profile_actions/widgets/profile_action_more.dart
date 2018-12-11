@@ -65,7 +65,7 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
                     await _disconnectUser();
                     Navigator.pop(context);
                   } else {
-                    _displayConnectionOptions();
+                    widget.onWantsToPickCircles();
                   }
                 },
               )

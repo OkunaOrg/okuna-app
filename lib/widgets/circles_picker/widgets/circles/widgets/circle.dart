@@ -1,8 +1,10 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBCircle extends StatelessWidget {
   final bool isSelected;
@@ -27,7 +29,7 @@ class OBCircle extends StatelessWidget {
               .parseGradient(theme.primaryAccentColor)
               .colors[0];
 
-          double previewSize = 40;
+          double circleSize = 40;
           return GestureDetector(
             onTap: () {
               if (this.onCirclePressed != null) {
@@ -40,16 +42,17 @@ class OBCircle extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                      height: previewSize,
-                      width: previewSize,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: isSelected
-                                  ? activeColor
-                                  : Color.fromARGB(10, 0, 0, 0),
-                              width: 3),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: SizedBox()),
+                    height: circleSize,
+                    width: circleSize,
+                    decoration: BoxDecoration(
+                        color: Pigment.fromString(circle.color),
+                        border: Border.all(
+                            color: isSelected
+                                ? activeColor
+                                : Color.fromARGB(10, 0, 0, 0),
+                            width: 3),
+                        borderRadius: BorderRadius.circular(50)),
+                  ),
                   SizedBox(
                     height: 10,
                   ),

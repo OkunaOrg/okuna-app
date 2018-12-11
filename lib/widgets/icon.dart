@@ -3,7 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-enum OBIconSize { small, medium, large }
+enum OBIconSize { small, medium, large, extraLarge }
 
 class OBIcon extends StatelessWidget {
   final OBIconData iconData;
@@ -12,6 +12,7 @@ class OBIcon extends StatelessWidget {
   final Color color;
   final OBIconThemeColor themeColor;
 
+  static const double EXTRA_LARGE = 45.0;
   static const double LARGE_SIZE = 30.0;
   static const double MEDIUM_SIZE = 25.0;
   static const double SMALL_SIZE = 15.0;
@@ -30,6 +31,9 @@ class OBIcon extends StatelessWidget {
     } else {
       var finalSize = size ?? OBIconSize.medium;
       switch (finalSize) {
+        case OBIconSize.extraLarge:
+          iconSize = EXTRA_LARGE;
+          break;
         case OBIconSize.large:
           iconSize = LARGE_SIZE;
           break;
@@ -142,6 +146,8 @@ class OBIcons {
   static const cake = OBIconData(nativeIcon: Icons.cake);
   static const add = OBIconData(nativeIcon: Icons.add_circle_outline);
   static const remove = OBIconData(nativeIcon: Icons.remove_circle_outline);
+  static const circle = OBIconData(nativeIcon: Icons.panorama_fish_eye);
+  static const circleSelected = OBIconData(nativeIcon: Icons.check_circle);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

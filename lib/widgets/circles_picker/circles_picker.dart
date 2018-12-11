@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 
 class OBCirclesPicker extends StatefulWidget {
   final OnCirclesPicked onCirclesPicked;
+  final List<Circle> initialPickedCircles;
 
-  OBCirclesPicker({this.onCirclesPicked});
+  OBCirclesPicker(
+      {@required this.onCirclesPicked, @required this.initialPickedCircles});
 
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +38,9 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
   @override
   void initState() {
     super.initState();
-    _circles = [];
+    _circles = widget.initialPickedCircles != null
+        ? widget.initialPickedCircles.toList()
+        : [];
     _circleSearchResults = [];
     _selectedCircles = [];
     _circleSearchQuery = '';
