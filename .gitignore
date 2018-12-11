@@ -5,7 +5,9 @@
 .pub/
 
 build/
+android/key.properties
 
 .flutter-plugins
 /.idea
+android/.idea
 .env.json
