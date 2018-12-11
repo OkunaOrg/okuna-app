@@ -11,6 +11,7 @@ class AuthApiService {
   static const CHECK_USERNAME_PATH = 'api/auth/username-check/';
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
   static const UPDATE_EMAIL_PATH = 'api/auth/user/settings/';
+  static const VERIFY_EMAIL_TOKEN = 'api/auth/email/verify/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
   static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
@@ -41,6 +42,11 @@ class AuthApiService {
     body['email'] = email;
     return _httpService
         .patchMultiform('$apiURL$UPDATE_EMAIL_PATH', body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> verifyEmailWithToken(String token) {
+    return _httpService.get('$apiURL$VERIFY_EMAIL_TOKEN$token/',
+        appendAuthorizationToken: true);
   }
 
   Future<HttpieStreamedResponse> updateUser({

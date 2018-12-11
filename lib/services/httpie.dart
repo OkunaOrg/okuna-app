@@ -175,6 +175,7 @@ class HttpieService {
 
     try {
       var response = await http.get(url, headers: finalHeaders);
+      print('finalHeaders::::     $finalHeaders');
       return HttpieResponse(response);
     } catch (error) {
       _handleRequestError(error);
