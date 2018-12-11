@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
+import 'package:Openbook/pages/home/modals/pick_circles/pick_circles.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
@@ -94,17 +96,18 @@ class OBHomePageState extends State<OBHomePage> {
     switch (OBHomePageTabs.values[index]) {
       case OBHomePageTabs.home:
         page = OBTimelinePage(
-          controller: _timelinePageController,
-          onWantsToReactToPost: _onWantsToReactToPost,
-          onWantsToCreatePost: _onWantsToCreatePost,
-          onWantsToEditUserProfile: _onWantsToEditUserProfile,
-        );
+            controller: _timelinePageController,
+            onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToCreatePost: _onWantsToCreatePost,
+            onWantsToEditUserProfile: _onWantsToEditUserProfile,
+            onWantsToPickCircles: _onWantsToPickCircles);
         break;
       case OBHomePageTabs.search:
         page = OBMainSearchPage(
-          controller: _searchPageController,
-          onWantsToReactToPost: _onWantsToReactToPost,
-        );
+            controller: _searchPageController,
+            onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToEditUserProfile: _onWantsToEditUserProfile,
+            onWantsToPickCircles: _onWantsToPickCircles);
         break;
       case OBHomePageTabs.notifications:
         break;
@@ -115,6 +118,7 @@ class OBHomePageState extends State<OBHomePage> {
         page = OBOwnProfilePage(
             onWantsToEditUserProfile: _onWantsToEditUserProfile,
             onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToPickCircles: _onWantsToPickCircles,
             controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
@@ -254,6 +258,17 @@ class OBHomePageState extends State<OBHomePage> {
     return postReaction;
   }
 
+  Future<List<Circle>> _onWantsToPickCircles() async {
+    List<Circle> circles = await Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute<List<Circle>>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBPickCirclesModal(),
+                )));
+
+    return circles;
+  }
+
   Future<void> _onWantsToEditUserProfile(User user) async {
     Navigator.of(context, rootNavigator: true)
         .push(MaterialPageRoute<PostReaction>(
@@ -326,3 +341,5 @@ class OBHomePageState extends State<OBHomePage> {
 }
 
 enum OBHomePageTabs { home, search, notifications, communities, profile, menu }
+
+typedef Future<List<Circle>> OnWantsToPickCircles();

@@ -23,9 +23,12 @@ class OBPostPage extends StatefulWidget {
   final Post post;
   final bool autofocusCommentInput;
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBPostPage(this.post,
-      {this.autofocusCommentInput: false, @required this.onWantsToReactToPost});
+      {this.autofocusCommentInput: false,
+      @required this.onWantsToReactToPost,
+      @required this.onWantsToSeeUserProfile});
 
   @override
   State<OBPostPage> createState() {
@@ -125,7 +128,7 @@ class OBPostPageState extends State<OBPostPage> {
                                   postComment: postComment,
                                   post: widget.post,
                                   onWantsToSeeUserProfile:
-                                      _onWantsToSeeUserProfile,
+                                      widget.onWantsToSeeUserProfile,
                                   onPostCommentDeletedCallback:
                                       onPostCommentDeletedCallback,
                                 );
@@ -143,21 +146,6 @@ class OBPostPageState extends State<OBPostPage> {
             ],
           ),
         ));
-  }
-
-  void _onWantsToSeeUserProfile(User user) {
-    Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obSlideProfileViewFromComments'),
-            widget: OBProfilePage(user)));
-  }
-
-  Widget _buildNavigationBar() {
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
-      middle: Text('Post'),
-    );
   }
 
   void _bootstrap() async {

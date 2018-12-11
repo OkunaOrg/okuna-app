@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
@@ -22,9 +24,17 @@ import 'package:flutter/material.dart';
 
 class OBMainSearchPage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToEditUserProfile onWantsToEditUserProfile;
+  final OnWantsToPickCircles onWantsToPickCircles;
+
   final OBMainSearchPageController controller;
 
-  const OBMainSearchPage({Key key, this.onWantsToReactToPost, this.controller})
+  const OBMainSearchPage(
+      {Key key,
+      @required this.onWantsToReactToPost,
+      @required this.onWantsToPickCircles,
+      this.controller,
+      @required this.onWantsToEditUserProfile})
       : super(key: key);
 
   @override
@@ -179,6 +189,8 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
                 onWantsToSeePostComments: _onWantsToSeePostComments,
                 onWantsToCommentPost: _onWantsToCommentPost,
                 onWantsToReactToPost: widget.onWantsToReactToPost,
+                onWantsToPickCircles: widget.onWantsToPickCircles,
+                onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
               ),
             )));
     decrementPushedRoutes();
@@ -190,6 +202,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: true,
+                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
                   onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
     decrementPushedRoutes();
@@ -201,6 +214,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: false,
+                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
                   onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
     decrementPushedRoutes();

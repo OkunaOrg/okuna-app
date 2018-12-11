@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
@@ -17,13 +18,15 @@ class OBTimelinePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
   final OnWantsToEditUserProfile onWantsToEditUserProfile;
   final OnWantsToCreatePost onWantsToCreatePost;
+  final OnWantsToPickCircles onWantsToPickCircles;
   final OBTimelinePageController controller;
 
   OBTimelinePage(
       {this.onWantsToReactToPost,
       this.onWantsToCreatePost,
       this.controller,
-      this.onWantsToEditUserProfile});
+      this.onWantsToEditUserProfile,
+      this.onWantsToPickCircles});
 
   @override
   OBTimelinePageState createState() {
@@ -89,6 +92,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
               onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
               onWantsToSeePostComments: _onWantsToSeePostComments,
               onWantsToCommentPost: _onWantsToCommentPost,
+              onWantsToPickCircles: widget.onWantsToPickCircles,
               onWantsToReactToPost: widget.onWantsToReactToPost,
               onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
             )));
@@ -103,6 +107,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
             key: Key('obSlidePostComments'),
             widget: OBPostPage(post,
                 autofocusCommentInput: true,
+                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
                 onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();
   }
@@ -114,6 +119,7 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
             widget: OBPostPage(post,
+                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
                 autofocusCommentInput: false,
                 onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();

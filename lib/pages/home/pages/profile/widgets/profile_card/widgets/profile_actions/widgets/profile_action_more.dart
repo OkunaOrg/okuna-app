@@ -1,5 +1,5 @@
-import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 
 class OBProfileActionMore extends StatefulWidget {
   final User user;
+  final OnWantsToPickCircles onWantsToPickCircles;
 
-  OBProfileActionMore(this.user);
+  OBProfileActionMore(this.user, {@required this.onWantsToPickCircles});
 
   @override
   OBProfileActionMoreState createState() {
