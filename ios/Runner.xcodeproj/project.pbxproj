@@ -58,6 +58,7 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6C34D3821BE816E00882F1E /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +126,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				A6C34D3821BE816E00882F1E /* Runner.entitlements */,
 				37BDAB2A2170B9A900811BA5 /* development.plist */,
 				37BDAB2B2170B9AA00811BA5 /* production.plist */,
 				7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */,
@@ -185,7 +187,12 @@
 				TargetAttributes = {
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = BX63KSDAY5;
+						DevelopmentTeam = GAR7B57RXU;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -230,7 +237,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../.symlinks/flutter/ios-profile/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -395,8 +402,9 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = BX63KSDAY5;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -408,7 +416,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = social.openbook;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -475,8 +483,9 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = BX63KSDAY5;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -488,7 +497,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = social.openbook;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -549,8 +558,9 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = BX63KSDAY5;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,7 +572,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = social.openbook;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -629,8 +639,9 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = BX63KSDAY5;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -642,7 +653,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = social.openbook;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -703,8 +714,9 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = BX63KSDAY5;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -716,7 +728,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = social.openbook;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -833,8 +845,9 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = BX63KSDAY5;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -846,7 +859,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = social.openbook;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -857,8 +870,9 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = BX63KSDAY5;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -870,7 +884,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = social.openbook;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
