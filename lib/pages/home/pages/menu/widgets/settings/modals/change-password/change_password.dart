@@ -57,6 +57,7 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
               children: <Widget>[
                 OBTextField(
                   autofocus: true,
+                  obscureText: true,
                   labelText: 'Current Password',
                   controller: _currentPasswordController,
                   validator: (String password) {
@@ -73,6 +74,7 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
                 ),
                 OBTextField(
                   autofocus: false,
+                  obscureText: true,
                   labelText: 'New Password',
                   controller: _newPasswordController,
                   validator: (String newPassword) {

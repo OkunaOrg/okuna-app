@@ -104,7 +104,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-void bootstrapOpenbookProviderInContext(BuildContext context) {;
+void bootstrapOpenbookProviderInContext(BuildContext context) {
   var openbookProvider = OpenbookProvider.of(context);
   var localizationService = LocalizationService.of(context);
   openbookProvider.setLocalizationService(localizationService);

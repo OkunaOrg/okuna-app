@@ -84,7 +84,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
           Navigator.pop(context);
         },
       ),
-      middle: Text('Edit profile'),
+      middle: Text('Change Email'),
       trailing: OBPrimaryButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,

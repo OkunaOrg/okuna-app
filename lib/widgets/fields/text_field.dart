@@ -7,12 +7,14 @@ class OBTextField extends StatelessWidget {
   final String hintText;
   final String labelText;
   final bool autofocus;
+  final bool obscureText;
 
   OBTextField(
       {this.controller,
       this.validator,
       this.prefixIcon,
       this.hintText,
+      this.obscureText,
       this.autofocus = false,
       this.labelText});
 
@@ -24,6 +26,7 @@ class OBTextField extends StatelessWidget {
           children: <Widget>[
             TextFormField(
               autofocus: autofocus,
+              obscureText: obscureText,
               controller: controller,
               validator: validator,
               style: TextStyle(fontSize: 22, color: Colors.black87),

@@ -22,7 +22,6 @@ dependencies:
   cached_network_image: ^0.5.0+1
   timeago: ^2.0.9
   loadmore: ^1.0.1
-  logging: ^0.11.3+2
   pigment: ^1.0.3
   flushbar: ^1.1.2
   flutter_secure_storage: ^3.1.2
