@@ -60,13 +60,20 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
             String connectionText;
             OBIcon connectionIcon;
             Function connectionOnTap;
-
-            if (user.isPendingConnectionConfirmation) {
+            if (user.isConnected &&
+                !user.isFullyConnected &&
+                !user.isPendingConnectionConfirmation) {
+              connectionText = 'Cancel connection request';
+              connectionIcon = OBIcon(OBIcons.remove);
+              connectionOnTap = () async {
+                await _disconnectUser();
+                Navigator.pop(context);
+              };
+            } else if (user.isPendingConnectionConfirmation) {
               connectionText = 'Confirm connection with $userName';
               connectionIcon = OBIcon(OBIcons.check);
               connectionOnTap = () async {
-                await _confirmConnectionWithUser();
-                Navigator.pop(context);
+                await _displayConfirmConnectionOptions();
               };
             } else if (user.isFullyConnected) {
               connectionText = 'Disconnect from $userName';
@@ -105,6 +112,58 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
         );
       },
     );
+  }
+
+  Future _displayConfirmConnectionOptions() async {
+    Navigator.pop(context);
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return GestureDetector(
+            onTap: () {},
+            child: OBPrimaryColorContainer(
+              mainAxisSize: MainAxisSize.min,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        OBText(
+                          'Add connection to circle',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        OBButton(
+                            size: OBButtonSize.small,
+                            child: Text('Confirm'),
+                            onPressed: () async {
+                              await _confirmConnectionWithUser();
+                              Navigator.pop(context);
+                            }),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          left: 20, right: 20, top: 10, bottom: 20),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            OBText(
+                                'Circles help you restrict who can see what you share.'),
+                          ])),
+                  OBCirclesQuickPicker(
+                    onCirclesPicked: (List<Circle> pickedCirles) async {
+                      _pickedConnectionCircles = pickedCirles;
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   Future _displayConnectionOptions() async {
@@ -166,6 +225,7 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
       await _userService.confirmConnectionWithUserWithUsername(
           widget.user.username,
           circles: _pickedConnectionCircles);
+      if(!widget.user.isFollowing) widget.user.incrementFollowersCount();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -182,6 +242,7 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
     try {
       await _userService.connectWithUserWithUsername(widget.user.username,
           circles: _pickedConnectionCircles);
+      if(!widget.user.isFollowing) widget.user.incrementFollowersCount();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -197,6 +258,7 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
     _setRequestInProgress(true);
     try {
       await _userService.disconnectFromUserWithUsername(widget.user.username);
+      widget.user.decrementFollowersCount();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {

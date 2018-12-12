@@ -53,10 +53,13 @@ class OBCircleColorPreview extends StatelessWidget {
       case OBCircleColorPreviewSize.small:
         circleSize = 15;
         break;
+      case OBCircleColorPreviewSize.extraSmall:
+        circleSize = 10;
+        break;
     }
 
     return circleSize;
   }
 }
 
-enum OBCircleColorPreviewSize { small, medium }
+enum OBCircleColorPreviewSize { small, medium, extraSmall }

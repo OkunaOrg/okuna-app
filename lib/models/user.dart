@@ -146,7 +146,7 @@ class User extends UpdatableModel<User> {
   }
 
   void decrementFollowersCount() {
-    if (this.followersCount != null) {
+    if (this.followersCount != null && this.followersCount > 0) {
       this.followersCount -= 1;
       notifyUpdate();
     }
