@@ -117,6 +117,12 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    deepLinksService.clearSubscriptionStreams();
+  }
+
   setLocalizationService(LocalizationService newLocalizationService) {
     localizationService = newLocalizationService;
     createAccountBloc.setLocalizationService(localizationService);
