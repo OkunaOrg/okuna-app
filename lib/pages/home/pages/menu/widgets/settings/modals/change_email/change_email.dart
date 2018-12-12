@@ -30,12 +30,17 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   bool _requestInProgress = false;
   bool _formWasSubmitted = false;
   bool _changedEmailTaken = false;
+  bool _formValid = true;
   TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _emailController.addListener(_validateForm);
+    _requestInProgress = false;
+    _formWasSubmitted = false;
+    _changedEmailTaken = false;
+    _formValid = true;
+    _emailController.addListener(_updateFormValid);
   }
 
   @override
@@ -59,10 +64,11 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
                     controller: _emailController,
                     validator: (String email) {
                       if (!_formWasSubmitted) return null;
-                      if (_changedEmailTaken != null && _changedEmailTaken)
-                        return 'Email is already registered';
-                      if (_validationService.isQualifiedEmail(email)) {
+                      if (!_validationService.isQualifiedEmail(email)) {
                         return 'Please enter a valid email';
+                      }
+                      if (_changedEmailTaken != null && _changedEmailTaken) {
+                        return 'Email is already registered';
                       }
                     },
                     hintText: 'Enter your new email',
@@ -74,8 +80,6 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   }
 
   Widget _buildNavigationBar() {
-    bool newPostButtonIsEnabled = true;
-
     return CupertinoNavigationBar(
       backgroundColor: Colors.white,
       leading: GestureDetector(
@@ -86,7 +90,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
       ),
       middle: Text('Change Email'),
       trailing: OBPrimaryButton(
-        isDisabled: !newPostButtonIsEnabled,
+        isDisabled: !_formValid,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _submitForm,
@@ -99,7 +103,16 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     return _formKey.currentState.validate();
   }
 
+  bool _updateFormValid() {
+    var formValid = _validateForm();
+    _setFormValid(formValid);
+    _setChangedEmailTaken(false);
+    return formValid;
+  }
+
   void _submitForm() async {
+    var formIsValid = _updateFormValid();
+    if (!formIsValid) return;
     _formWasSubmitted = true;
     _setRequestInProgress(true);
     try {
@@ -132,6 +145,12 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   void _setChangedEmailTaken(bool isEmailTaken) {
     setState(() {
       _changedEmailTaken = isEmailTaken;
+    });
+  }
+
+  void _setFormValid(bool formValid) {
+    setState(() {
+      _formValid = formValid;
     });
   }
   

@@ -14,7 +14,7 @@ class OBTextField extends StatelessWidget {
       this.validator,
       this.prefixIcon,
       this.hintText,
-      this.obscureText,
+      this.obscureText = false,
       this.autofocus = false,
       this.labelText});
 

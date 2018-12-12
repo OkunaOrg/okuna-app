@@ -166,14 +166,9 @@ class UserService {
     return _makeLoggedInUser(userData);
   }
 
-  Future<bool> updateUserPassword(String currentPassword, String newPassword) async {
+  Future<void> updateUserPassword(String currentPassword, String newPassword) async {
     HttpieStreamedResponse response = await _authApiService.updateUserPassword(currentPassword: currentPassword, newPassword: newPassword);
-
-    if (response.isBadRequest()) {
-      return false;
-    }
     _checkResponseIsOk(response);
-    return true;
   }
 
   Future<User> updateUser({

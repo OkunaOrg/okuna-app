@@ -58,20 +58,24 @@ class DeepLinksService {
   }
 
   _onLoggedInUserChange(User newUser, String token) async {
-    bool result = await _isEmailVerificationValid(token);
-    if (result) _toastService.success(message: 'Awesome! Your email is now verified', context: null);
-    if (!result) _toastService.error(message: 'Oops! Your token was not valid or expired, please try again', context: null);
+    try {
+      HttpieResponse response = await _authApiService.verifyEmailWithToken(token);
+      if (response.isOk()) {
+        _toastService.success(message: 'Awesome! Your email is now verified', context: null);
+      }  else if (response.isUnauthorized()) {
+        _toastService.error(message: 'Oops! Your token was not valid or expired, please try again', context: null);
+      }
+    } on HttpieConnectionRefusedError {
+    _toastService.error(message: 'No internet connection', context: null);
+    } catch (e) {
+    _toastService.error(message: 'Unknown error.', context: null);
+    rethrow;
+    }
   }
 
   String _getEmailVerificationTokenFromLink(String link) {
     final linkParts = _getDeepLinkParts(link);
     return linkParts[linkParts.length - 1];
-  }
-
-  Future<bool> _isEmailVerificationValid(String token) async {
-    HttpieResponse response = await _authApiService.verifyEmailWithToken(token);
-    if (response.isOk()) return true;
-    if (response.isUnauthorized()) return false;
   }
 
   List<String> _getDeepLinkParts(String link) {

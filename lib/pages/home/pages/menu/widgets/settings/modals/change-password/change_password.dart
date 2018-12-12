@@ -124,16 +124,15 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
       var currentPassword = _currentPasswordController.text;
       var newPassword = _newPasswordController.text;
       if (!_validateForm()) return;
-      bool isPasswordUpdateSuccessful = await _userService.updateUserPassword(currentPassword, newPassword);
-      if (!isPasswordUpdateSuccessful) {
-        _setIsPasswordValid(isPasswordUpdateSuccessful);
-        _validateForm();
-        return;
-      }
+      await _userService.updateUserPassword(currentPassword, newPassword);
       _toastService.success(message: 'All good! Your password has been updated', context: context);
       Navigator.of(context).pop();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
+    } on HttpieRequestError {
+      _setIsPasswordValid(false);
+      _validateForm();
+      return;
     } catch (e) {
       _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
