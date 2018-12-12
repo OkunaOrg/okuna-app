@@ -62,7 +62,9 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
                 leading:
                     OBIcon(user.isConnected ? OBIcons.remove : OBIcons.add),
                 title: OBText(user.isConnected
-                    ? (user.isFullyConnected ? 'Disconnect from $userName' : 'Cancel connection request')
+                    ? (user.isFullyConnected
+                        ? 'Disconnect from $userName'
+                        : 'Cancel connection request')
                     : 'Connect with $userName'),
                 onTap: () async {
                   if (user.isConnected) {
@@ -96,45 +98,48 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return OBPrimaryColorContainer(
-            mainAxisSize: MainAxisSize.min,
-            child: Column(
+          return GestureDetector(
+            onTap: (){},
+            child: OBPrimaryColorContainer(
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      OBText(
-                        'Add connection to circle',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      OBButton(
-                          size: OBButtonSize.small,
-                          child: Text('Done'),
-                          onPressed: () async {
-                            await _connectUserInCircles();
-                            Navigator.pop(context);
-                          }),
-                    ],
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        OBText(
+                          'Add connection to circle',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        OBButton(
+                            size: OBButtonSize.small,
+                            child: Text('Done'),
+                            onPressed: () async {
+                              await _connectUserInCircles();
+                              Navigator.pop(context);
+                            }),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                    padding: EdgeInsets.only(
-                        left: 20, right: 20, top: 10, bottom: 20),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          OBText(
-                              'Circles help you restrict who can see what you share.'),
-                        ])),
-                OBCirclesQuickPicker(
-                  onCirclesPicked: (List<Circle> pickedCirles) async {
-                    _pickedConnectionCircles = pickedCirles;
-                  },
-                )
-              ],
+                  Padding(
+                      padding: EdgeInsets.only(
+                          left: 20, right: 20, top: 10, bottom: 20),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            OBText(
+                                'Circles help you restrict who can see what you share.'),
+                          ])),
+                  OBCirclesQuickPicker(
+                    onCirclesPicked: (List<Circle> pickedCirles) async {
+                      _pickedConnectionCircles = pickedCirles;
+                    },
+                  )
+                ],
+              ),
             ),
           );
         });

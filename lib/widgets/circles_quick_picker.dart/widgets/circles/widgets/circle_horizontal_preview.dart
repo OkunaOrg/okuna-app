@@ -17,7 +17,9 @@ class OBCircleHorizontalPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String usersCount = getPrettyCount(circle.usersCount);
+    int usersCount = circle.usersCount;
+    String prettyUsersCount =
+        getPrettyCount(isSelected ? usersCount + 1 : usersCount);
 
     Widget item = GestureDetector(
       onTap: () {
@@ -56,7 +58,7 @@ class OBCircleHorizontalPreview extends StatelessWidget {
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
             OBText(
-              '$usersCount People',
+              '$prettyUsersCount People',
               maxLines: 1,
               size: OBTextSize.extraSmall,
               style: TextStyle(
