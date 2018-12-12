@@ -22,4 +22,8 @@ class Circle {
     if (userData == null) return null;
     return User.fromJson(userData);
   }
+
+  String getPrettyUsersCount(){
+
+  }
 }

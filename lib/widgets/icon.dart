@@ -147,7 +147,7 @@ class OBIcons {
   static const add = OBIconData(nativeIcon: Icons.add_circle_outline);
   static const remove = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const checkCircle = OBIconData(nativeIcon: Icons.radio_button_unchecked);
-  static const checkCircleSelected = OBIconData(nativeIcon: Icons.radio_button_checked);
+  static const checkCircleSelected = OBIconData(nativeIcon: Icons.check_circle);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

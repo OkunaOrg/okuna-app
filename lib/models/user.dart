@@ -6,6 +6,7 @@ import 'package:dcache/dcache.dart';
 
 class User extends UpdatableModel<User> {
   int id;
+  int connectionsCircleId;
   String email;
   String username;
   UserProfile profile;
@@ -14,6 +15,7 @@ class User extends UpdatableModel<User> {
   int postsCount;
   bool isFollowing;
   bool isConnected;
+  bool isFullyConnected;
   CirclesList connectedCircles;
   FollowsListsList followLists;
 
@@ -48,6 +50,7 @@ class User extends UpdatableModel<User> {
 
   User(
       {this.id,
+      this.connectionsCircleId,
       this.username,
       this.email,
       this.profile,
@@ -56,6 +59,7 @@ class User extends UpdatableModel<User> {
       this.postsCount,
       this.isFollowing,
       this.isConnected,
+      this.isFullyConnected,
       this.connectedCircles,
       this.followLists});
 
@@ -76,6 +80,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
+    if (json.containsKey('connections_circle_id'))
+      connectionsCircleId = json['connections_circle_id'];
+    if (json.containsKey('is_fully_connected'))
+      isFullyConnected = json['is_fully_connected'];
     if (json.containsKey('connected_circles')) {
       connectedCircles =
           navigationUsersFactory.parseCircles(json['connected_circles']);
@@ -148,6 +156,7 @@ class UserFactory extends UpdatableModelFactory<User> {
   User makeFromJson(Map json) {
     return User(
         id: json['id'],
+        connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
         postsCount: json['posts_count'],
         email: json['email'],
@@ -155,6 +164,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
+        isFullyConnected: json['is_fully_connected'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
         followLists: parseFollowsLists(json['follow_lists']));

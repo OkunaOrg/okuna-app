@@ -1,10 +1,12 @@
+import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/circles_picker/circles_picker.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/circles_quick_picker.dart/circles_quick_picker.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -26,6 +28,7 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
   UserService _userService;
   ToastService _toastService;
   bool _requestInProgress;
+  List<Circle> _pickedConnectionCircles;
 
   @override
   void initState() {
@@ -38,6 +41,7 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _pickedConnectionCircles = [];
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -58,14 +62,14 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
                 leading:
                     OBIcon(user.isConnected ? OBIcons.remove : OBIcons.add),
                 title: OBText(user.isConnected
-                    ? 'Disconnect from $userName'
+                    ? (user.isFullyConnected ? 'Disconnect from $userName' : 'Cancel connection request')
                     : 'Connect with $userName'),
                 onTap: () async {
                   if (user.isConnected) {
                     await _disconnectUser();
                     Navigator.pop(context);
                   } else {
-                    widget.onWantsToPickCircles();
+                    _displayConnectionOptions();
                   }
                 },
               )
@@ -94,16 +98,54 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
         builder: (BuildContext context) {
           return OBPrimaryColorContainer(
             mainAxisSize: MainAxisSize.min,
-            child: OBCirclesPicker(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      OBText(
+                        'Add connection to circle',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      OBButton(
+                          size: OBButtonSize.small,
+                          child: Text('Done'),
+                          onPressed: () async {
+                            await _connectUserInCircles();
+                            Navigator.pop(context);
+                          }),
+                    ],
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, top: 10, bottom: 20),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          OBText(
+                              'Circles help you restrict who can see what you share.'),
+                        ])),
+                OBCirclesQuickPicker(
+                  onCirclesPicked: (List<Circle> pickedCirles) async {
+                    _pickedConnectionCircles = pickedCirles;
+                  },
+                )
+              ],
+            ),
           );
         });
   }
 
-  Future _connectUserInCircle() async {
+  Future _connectUserInCircles() async {
     if (_requestInProgress) return;
     _setRequestInProgress(true);
     try {
-      await _userService.connectWithUserWithUsername(widget.user.username);
+      await _userService.connectWithUserWithUsername(widget.user.username,
+          circles: _pickedConnectionCircles);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {

@@ -3,53 +3,46 @@ import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
-import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/circles.dart';
-import 'package:Openbook/widgets/search_bar.dart';
+import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/circles_horizontal_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCirclesPicker extends StatefulWidget {
+class OBCirclesQuickPicker extends StatefulWidget {
   final OnCirclesPicked onCirclesPicked;
   final List<Circle> initialPickedCircles;
   final List<Circle> initialCircles;
 
-  OBCirclesPicker(
+  OBCirclesQuickPicker(
       {@required this.onCirclesPicked,
       this.initialPickedCircles,
       this.initialCircles});
 
   @override
   State<StatefulWidget> createState() {
-    return OBCirclesPickerState();
+    return OBCirclesQuickPickerState();
   }
 }
 
-class OBCirclesPickerState extends State<OBCirclesPicker> {
+class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
   UserService _userService;
   ToastService _toastService;
 
   bool _needsBootstrap;
-  bool _hasSearch;
 
   List<Circle> _circles;
-  List<Circle> _circleSearchResults;
   List<Circle> _selectedCircles;
-
-  String _circleSearchQuery;
+  List<Circle> _disabledCircles;
 
   @override
   void initState() {
     super.initState();
     _circles =
         widget.initialCircles != null ? widget.initialCircles.toList() : [];
-    _circleSearchResults = [];
     _selectedCircles = widget.initialPickedCircles != null
         ? widget.initialPickedCircles.toList()
         : [];
-    _circleSearchQuery = '';
     _needsBootstrap = true;
-    _hasSearch = false;
+    _disabledCircles = [];
   }
 
   @override
@@ -63,21 +56,14 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
       _needsBootstrap = false;
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        OBSearchBar(
-          onSearch: _onSearch,
-          hintText: 'Search circles...',
-        ),
-        Expanded(
-            child: OBCircles(
-          _circles,
-          selectedCircles: _selectedCircles,
-          onCirclePressed: _onCirclePressed,
-        ))
-      ],
+    return Container(
+      height: 90,
+      child: OBCirclesHorizontalList(
+        _circles,
+        selectedCircles: _selectedCircles,
+        disabledCircles: _disabledCircles,
+        onCirclePressed: _onCirclePressed,
+      ),
     );
   }
 
@@ -89,24 +75,8 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
       // Add
       _addSelectedCircle(pressedCircle);
     }
-  }
 
-  void _onSearch(String searchString) {
-    if (searchString.length == 0) {
-      _setHasSearch(false);
-      return;
-    }
-
-    if (!_hasSearch) _setHasSearch(true);
-
-    String standarisedSearchStr = searchString.toLowerCase();
-
-    List<Circle> results = _circles.where((Circle circle) {
-      return circle.name.contains(standarisedSearchStr);
-    }).toList();
-
-    _setCircleSearchResults(results);
-    _setCircleSearchQuery(searchString);
+    widget.onCirclesPicked(_selectedCircles);
   }
 
   void _bootstrap() async {
@@ -117,10 +87,14 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
   }
 
   void _setCircles(List<Circle> circles) {
+    var user = _userService.getLoggedInUser();
     setState(() {
       _circles = circles;
-      _selectedCircles = [];
-      _circleSearchResults = [];
+      var connectionsCircle = _circles.firstWhere((Circle circle) {
+        return circle.id == user.connectionsCircleId;
+      });
+      _disabledCircles = [connectionsCircle];
+      _selectedCircles = [connectionsCircle];
     });
   }
 
@@ -133,24 +107,6 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
   void _removeSelectedCircle(Circle circle) {
     setState(() {
       _selectedCircles.remove(circle);
-    });
-  }
-
-  void _setCircleSearchResults(List<Circle> circleSearchResults) {
-    setState(() {
-      _circleSearchResults = circleSearchResults;
-    });
-  }
-
-  void _setCircleSearchQuery(String searchQuery) {
-    setState(() {
-      _circleSearchQuery = searchQuery;
-    });
-  }
-
-  void _setHasSearch(bool hasSearch) {
-    setState(() {
-      _hasSearch = hasSearch;
     });
   }
 }

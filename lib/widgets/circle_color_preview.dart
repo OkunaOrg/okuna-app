@@ -7,40 +7,37 @@ import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
 class OBCircleColorPreview extends StatelessWidget {
-  final bool isSelected;
   final Circle circle;
   final OBCircleColorPreviewSize size;
 
   OBCircleColorPreview(this.circle,
-      {this.isSelected = false, this.size = OBCircleColorPreviewSize.medium});
+      {this.size = OBCircleColorPreviewSize.medium});
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-          var themeService = openbookProvider.themeService;
-          var themeValueParserService = openbookProvider.themeValueParserService;
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
-          double circleSize = _getCircleSize(size);
+    double circleSize = _getCircleSize(size);
 
-          return StreamBuilder(
-              stream: themeService.themeChange,
-              initialData: themeService.getActiveTheme(),
-              builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-                var theme = snapshot.data;
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
 
-                Color activeColor = themeValueParserService
-                    .parseGradient(theme.primaryAccentColor)
-                    .colors[0];
+          Color activeColor = themeValueParserService
+              .parseGradient(theme.primaryAccentColor)
+              .colors[0];
 
           return Container(
             height: circleSize,
             width: circleSize,
             decoration: BoxDecoration(
                 color: Pigment.fromString(circle.color),
-                border: Border.all(
-                    color:
-                        isSelected ? activeColor : Color.fromARGB(10, 0, 0, 0),
-                    width: 3),
+                border:
+                    Border.all(color: Color.fromARGB(10, 0, 0, 0), width: 3),
                 borderRadius: BorderRadius.circular(50)),
           );
         });

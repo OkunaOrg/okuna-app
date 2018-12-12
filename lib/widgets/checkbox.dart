@@ -15,10 +15,10 @@ class OBCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double checkboxSize = _getCheckboxSize(size);
-
     return GestureDetector(
       child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(50)),
         child: Center(
           child: OBIcon(
             value ? OBIcons.checkCircleSelected : OBIcons.checkCircle,
@@ -27,18 +27,6 @@ class OBCheckbox extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  double _getCheckboxSize(OBCheckboxSize size) {
-    double checkboxSize;
-
-    switch (size) {
-      case OBCheckboxSize.medium:
-        checkboxSize = 20;
-        break;
-    }
-
-    return checkboxSize;
   }
 }
 
