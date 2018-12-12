@@ -1,3 +1,4 @@
+import 'package:Openbook/pages/home/pages/menu/widgets/settings/modals/change-password/change_password.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/settings/modals/change_email/change_email.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -36,8 +37,12 @@ class OBSettingsPage extends StatelessWidget {
                 leading: Icon(Icons.lock),
                 title: Text(localizationService.trans('SETTINGS.CHANGE_PASSWORD')),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
+                  Navigator.of(context)
+                      .push(MaterialPageRoute<bool>(
+                      fullscreenDialog: true,
+                      builder: (BuildContext context) => Material(
+                        child: OBChangePasswordModal(),
+                      )));
                 },
               ),
             ],
