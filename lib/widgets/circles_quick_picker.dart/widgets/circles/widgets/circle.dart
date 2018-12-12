@@ -1,7 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -69,4 +69,3 @@ class OBCircle extends StatelessWidget {
   }
 }
 
-typedef void OnCirclePressed(Circle circle);

@@ -1,4 +1,5 @@
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/widgets/tiles/circle_selectable_tile.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,9 @@ class OBCirclesSearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return results.length > 0 ? _buildSearchResults() : _buildNoResults();
+    return results.length == 0 && searchQuery.isNotEmpty
+        ? _buildNoResults()
+        : _buildSearchResults();
   }
 
   Widget _buildSearchResults() {
@@ -26,14 +29,12 @@ class OBCirclesSearchResults extends StatelessWidget {
           Circle circle = results[index];
           bool isSelected = selectedCircles.contains(circle);
 
-          return ListTile(
-            onTap: () {
+          return OBCircleSelectableTile(
+            circle,
+            isSelected: isSelected,
+            onCirclePressed: (Circle circle) {
               onCirclePressed(circle);
             },
-            leading: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 25),
-            ),
-            title: OBText(circle.name),
           );
         });
   }

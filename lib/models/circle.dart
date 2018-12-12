@@ -5,14 +5,16 @@ class Circle {
   final User creator;
   final String name;
   final String color;
+  final int usersCount;
 
-  Circle({this.id, this.creator, this.name, this.color});
+  Circle({this.id, this.creator, this.name, this.color, this.usersCount});
 
   factory Circle.fromJSON(Map<String, dynamic> json) {
     return Circle(
         id: json['id'],
         creator: _parseUser(json['creator']),
         name: json['name'],
+        usersCount: json['users_count'],
         color: json['color']);
   }
 

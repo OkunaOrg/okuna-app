@@ -45,11 +45,11 @@ class OBSearchBarState extends State<OBSearchBar> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: 20.0,
+            width: 15.0,
           ),
           OBIcon(OBIcons.search),
           SizedBox(
-            width: 20.0,
+            width: 15.0,
           ),
           Expanded(
             child: Container(
@@ -88,7 +88,7 @@ class OBSearchBarState extends State<OBSearchBar> {
                   onPressed: _cancelSearch,
                 )
               : SizedBox(
-                  width: 20.0,
+                  width: 15.0,
                 )
         ],
       ),
