@@ -30,14 +30,19 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
   bool _requestInProgress = false;
   bool _formWasSubmitted = false;
   bool _isPasswordValid = true;
+  bool _formValid = true;
   TextEditingController _currentPasswordController = TextEditingController();
   TextEditingController _newPasswordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _currentPasswordController.addListener(_validateForm);
-    _newPasswordController.addListener(_validateForm);
+    _requestInProgress = false;
+    _formWasSubmitted = false;
+    _isPasswordValid = true;
+    _formValid = true;
+    _currentPasswordController.addListener(_updateFormValid);
+    _newPasswordController.addListener(_updateFormValid);
   }
 
   @override
@@ -92,7 +97,6 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
   }
 
   Widget _buildNavigationBar() {
-    bool newPostButtonIsEnabled = true;
 
     return CupertinoNavigationBar(
       backgroundColor: Colors.white,
@@ -104,7 +108,7 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
       ),
       middle: Text('Change password'),
       trailing: OBPrimaryButton(
-        isDisabled: !newPostButtonIsEnabled,
+        isDisabled: !_formValid,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _submitForm,
@@ -117,13 +121,20 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
     return _formKey.currentState.validate();
   }
 
+  bool _updateFormValid() {
+    var formValid = _validateForm();
+    _setFormValid(formValid);
+    return formValid;
+  }
+
   void _submitForm() async {
     _formWasSubmitted = true;
+    var formIsValid = _updateFormValid();
+    if (!formIsValid) return;
     _setRequestInProgress(true);
     try {
       var currentPassword = _currentPasswordController.text;
       var newPassword = _newPasswordController.text;
-      if (!_validateForm()) return;
       await _userService.updateUserPassword(currentPassword, newPassword);
       _toastService.success(message: 'All good! Your password has been updated', context: context);
       Navigator.of(context).pop();
@@ -150,6 +161,12 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
   void _setIsPasswordValid(bool isPasswordValid) {
     setState(() {
       _isPasswordValid = isPasswordValid;
+    });
+  }
+
+  void _setFormValid(bool formValid) {
+    setState(() {
+      _formValid = formValid;
     });
   }
 

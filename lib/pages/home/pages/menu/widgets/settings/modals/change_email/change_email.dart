@@ -111,9 +111,9 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   }
 
   void _submitForm() async {
+    _formWasSubmitted = true;
     var formIsValid = _updateFormValid();
     if (!formIsValid) return;
-    _formWasSubmitted = true;
     _setRequestInProgress(true);
     try {
       var email = _emailController.text;
