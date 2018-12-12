@@ -57,23 +57,37 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
             customSize: 30,
           ),
           onPressed: () {
+            String connectionText;
+            OBIcon connectionIcon;
+            Function connectionOnTap;
+
+            if (user.isPendingConnectionConfirmation) {
+              connectionText = 'Confirm connection with $userName';
+              connectionIcon = OBIcon(OBIcons.check);
+              connectionOnTap = () async {
+                await _confirmConnectionWithUser();
+                Navigator.pop(context);
+              };
+            } else if (user.isFullyConnected) {
+              connectionText = 'Disconnect from $userName';
+              connectionIcon = OBIcon(OBIcons.remove);
+              connectionOnTap = () async {
+                await _disconnectUser();
+                Navigator.pop(context);
+              };
+            } else {
+              connectionText = 'Connect with $userName';
+              connectionIcon = OBIcon(OBIcons.add);
+              connectionOnTap = () async {
+                await _displayConnectionOptions();
+              };
+            }
+
             List<Widget> bottomSheetTiles = [
               ListTile(
-                leading:
-                    OBIcon(user.isConnected ? OBIcons.remove : OBIcons.add),
-                title: OBText(user.isConnected
-                    ? (user.isFullyConnected
-                        ? 'Disconnect from $userName'
-                        : 'Cancel connection request')
-                    : 'Connect with $userName'),
-                onTap: () async {
-                  if (user.isConnected) {
-                    await _disconnectUser();
-                    Navigator.pop(context);
-                  } else {
-                    _displayConnectionOptions();
-                  }
-                },
+                leading: connectionIcon,
+                title: OBText(connectionText),
+                onTap: connectionOnTap,
               )
             ];
 
@@ -99,7 +113,7 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
         context: context,
         builder: (BuildContext context) {
           return GestureDetector(
-            onTap: (){},
+            onTap: () {},
             child: OBPrimaryColorContainer(
               mainAxisSize: MainAxisSize.min,
               child: Column(
@@ -143,6 +157,23 @@ class OBProfileActionMoreState extends State<OBProfileActionMore> {
             ),
           );
         });
+  }
+
+  Future _confirmConnectionWithUser() async {
+    if (_requestInProgress) return;
+    _setRequestInProgress(true);
+    try {
+      await _userService.confirmConnectionWithUserWithUsername(
+          widget.user.username,
+          circles: _pickedConnectionCircles);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection', context: context);
+    } catch (e) {
+      _toastService.error(message: 'Unknown error', context: context);
+      rethrow;
+    } finally {
+      _setRequestInProgress(false);
+    }
   }
 
   Future _connectUserInCircles() async {

@@ -16,6 +16,7 @@ class User extends UpdatableModel<User> {
   bool isFollowing;
   bool isConnected;
   bool isFullyConnected;
+  bool isPendingConnectionConfirmation;
   CirclesList connectedCircles;
   FollowsListsList followLists;
 
@@ -84,6 +85,9 @@ class User extends UpdatableModel<User> {
       connectionsCircleId = json['connections_circle_id'];
     if (json.containsKey('is_fully_connected'))
       isFullyConnected = json['is_fully_connected'];
+    if (json.containsKey('is_pending_connection_confirmation'))
+      isPendingConnectionConfirmation =
+          json['is_pending_connection_confirmation'];
     if (json.containsKey('connected_circles')) {
       connectedCircles =
           navigationUsersFactory.parseCircles(json['connected_circles']);
