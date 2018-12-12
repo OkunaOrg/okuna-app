@@ -44,6 +44,14 @@ class AuthApiService {
         .patchMultiform('$apiURL$UPDATE_EMAIL_PATH', body: body, appendAuthorizationToken: true);
   }
 
+  Future<HttpieStreamedResponse> updateUserPassword({@required String currentPassword, @required String newPassword}) {
+    Map<String, dynamic> body = {};
+    body['current_password'] = currentPassword;
+    body['new_password'] = newPassword;
+    return _httpService
+        .patchMultiform('$apiURL$UPDATE_PASSWORD_PATH', body: body, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> verifyEmailWithToken(String token) {
     return _httpService.get('$apiURL$VERIFY_EMAIL_TOKEN$token/',
         appendAuthorizationToken: true);

@@ -13,10 +13,13 @@ class DeepLinksService {
   AuthApiService _authApiService;
   ToastService _toastService;
   UserService _userService;
+  bool _areAppLinksInitialised = false;
   static const String VERIFY_EMAIL_LINK = '/api/email/verify';
 
 
   Future<Null> initUniLinks() async {
+    if (_areAppLinksInitialised) return;
+    _areAppLinksInitialised = true;
     print('Initialising universal links');
 
     // Attach a listener to the stream
@@ -27,6 +30,7 @@ class DeepLinksService {
     }, onError: (err) {
       print(err);
       // Handle exception by warning the user their action did not succeed
+      _toastService.error(message: 'Oops! Something went wrong, please try again', context: null);
     });
 
     try {
@@ -38,10 +42,9 @@ class DeepLinksService {
     } on PlatformException {
       print('Platform exception occurred');
       // Handle exception by warning the user their action did not succeed
+      _toastService.error(message: 'Oops! Something went wrong, please try again', context: null);
       return;
     }
-
-    // NOTE: Don't forget to call _sub.cancel() in dispose()
   }
 
   void _handleLink(String link) async {
@@ -73,6 +76,11 @@ class DeepLinksService {
 
   List<String> _getDeepLinkParts(String link) {
     return link.split('/');
+  }
+
+  void clearSubscriptionStreams() {
+    _sub.cancel();
+    _onLoggedInUserChangeSubscription.cancel();
   }
 
   void setAuthApiService(AuthApiService authApiService) {
