@@ -18,8 +18,8 @@ class OBConnectionsCirclesPage extends StatefulWidget {
   final OnWantsToSeeConnectionsCircle onWantsToSeeConnectionsCircle;
 
   OBConnectionsCirclesPage(
-      {this.onWantsToCreateConnectionsCircle,
-      this.onWantsToSeeConnectionsCircle});
+      {@required this.onWantsToCreateConnectionsCircle,
+      @required this.onWantsToSeeConnectionsCircle});
 
   @override
   State<OBConnectionsCirclesPage> createState() {
@@ -61,7 +61,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBNavigationBar(
-          title: 'Connection circles',
+          title: 'My circles',
         ),
         child: Stack(
           children: <Widget>[

@@ -1,4 +1,5 @@
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:validators/validators.dart' as validators;
@@ -6,6 +7,7 @@ import 'package:validators/validators.dart' as validators;
 class ValidationService {
   AuthApiService _authApiService;
   FollowsListsApiService _followsListsApiService;
+  ConnectionsCirclesApiService _connectionsCirclesApiService;
 
   static const int USERNAME_MAX_LENGTH = 30;
   static const int POST_MAX_LENGTH = 560;
@@ -27,6 +29,11 @@ class ValidationService {
   void setFollowsListsApiService(
       FollowsListsApiService followsListsApiService) {
     _followsListsApiService = followsListsApiService;
+  }
+
+  void setConnectionsCirclesApiService(
+      ConnectionsCirclesApiService connectionsCirclesApiService) {
+    _connectionsCirclesApiService = connectionsCirclesApiService;
   }
 
   bool isQualifiedEmail(String email) {
@@ -82,6 +89,11 @@ class ValidationService {
     return followsList.length > 0 && followsList.length < LIST_MAX_LENGTH;
   }
 
+  bool isConnectionsCircleNameAllowedLength(String connectionsCircle) {
+    return connectionsCircle.length > 0 &&
+        connectionsCircle.length < CIRCLE_MAX_LENGTH;
+  }
+
   bool isUsernameAllowedCharacters(String username) {
     return isAlphanumericWithUnderscores(username);
   }
@@ -113,6 +125,18 @@ class ValidationService {
   Future<bool> isFollowsListNameTaken(String name) async {
     HttpieResponse response =
         await _followsListsApiService.checkNameIsAvailable(name: name);
+    if (response.isAccepted()) {
+      return false;
+    } else if (response.isBadRequest()) {
+      return true;
+    } else {
+      throw HttpieRequestError(response);
+    }
+  }
+
+  Future<bool> isConnectionsCircleNameTaken(String name) async {
+    HttpieResponse response =
+        await _connectionsCirclesApiService.checkNameIsAvailable(name: name);
     if (response.isAccepted()) {
       return false;
     } else if (response.isBadRequest()) {
@@ -222,6 +246,17 @@ class ValidationService {
     }
 
     if (!isFollowsListNameAllowedLength(name)) {
+      return 'List name must be no longer than $LIST_MAX_LENGTH characters.';
+    }
+  }
+
+  String validateConnectionsCircleName(String name) {
+    assert(name != null);
+    if (name.length == 0) {
+      return 'List name cannot be empty.';
+    }
+
+    if (!isConnectionsCircleNameAllowedLength(name)) {
       return 'List name must be no longer than $LIST_MAX_LENGTH characters.';
     }
   }

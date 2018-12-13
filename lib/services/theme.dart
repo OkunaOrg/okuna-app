@@ -1,10 +1,13 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:rxdart/rxdart.dart';
+import 'dart:math';
 
 class ThemeService {
   Stream<OBTheme> get themeChange => _themeChangeSubject.stream;
   final _themeChangeSubject = ReplaySubject<OBTheme>(maxSize: 1);
+
+  Random random = new Random();
 
   OBTheme _activeTheme;
 
@@ -115,5 +118,13 @@ class ThemeService {
 
   List<OBTheme> getCuratedThemes() {
     return _themes.toList();
+  }
+
+  String generateRandomHexColor(){
+    int length = 6;
+    String chars = '0123456789ABCDEF';
+    String hex = '#';
+    while(length-- > 0) hex += chars[(random.nextInt(16)) | 0];
+    return hex;
   }
 }

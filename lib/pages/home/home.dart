@@ -9,6 +9,7 @@ import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/pick_circles/pick_circles.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
+import 'package:Openbook/pages/home/modals/save_connections_list.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
@@ -126,6 +127,11 @@ class OBHomePageState extends State<OBHomePage> {
           controller: _menuPageController,
           onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
           onWantsToEditFollowsList: _onWantsToEditFollowsList,
+          onWantsToReactToPost: _onWantsToReactToPost,
+          onWantsToEditUserProfile: _onWantsToEditUserProfile,
+          onWantsToPickCircles: _onWantsToPickCircles,
+          onWantsToCreateConnectionsCircle: _onWantsToCreateConnectionsCircle,
+          onWantsToEditConnectionsCircle: _onWantsToEditConnectionsCircle,
         );
         break;
       default:
@@ -302,6 +308,33 @@ class OBHomePageState extends State<OBHomePage> {
             }));
 
     return editedFollowsList;
+  }
+
+  Future<Circle> _onWantsToCreateConnectionsCircle() async {
+    Circle createdConnectionsCircle =
+        await Navigator.of(context).push(MaterialPageRoute<Circle>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBSaveConnectionsCircleModal(
+                autofocusNameTextField: true,
+              );
+            }));
+
+    return createdConnectionsCircle;
+  }
+
+  Future<Circle> _onWantsToEditConnectionsCircle(
+      Circle connectionsCircle) async {
+    Circle editedConnectionsCircle =
+        await Navigator.of(context).push(MaterialPageRoute<Circle>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBSaveConnectionsCircleModal(
+                connectionsCircle: connectionsCircle,
+              );
+            }));
+
+    return editedConnectionsCircle;
   }
 
   void _bootstrap() async {

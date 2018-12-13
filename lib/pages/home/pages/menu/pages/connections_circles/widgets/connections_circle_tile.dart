@@ -55,14 +55,14 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
           onTap: () {
             widget.onWantsToSeeConnectionsCircle(widget.connectionsCircle);
           },
-          leading: OBCircleColorPreview(widget.connectionsCircle),
+          leading: OBCircleColorPreview(widget.connectionsCircle, size: OBCircleColorPreviewSize.medium,),
           title: OBText(
             widget.connectionsCircle.name,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: OBSecondaryText(prettyCount + ' people')),
       secondaryActions: <Widget>[
-        new IconSlideAction(
+        IconSlideAction(
             caption: 'Delete',
             color: Colors.red,
             icon: Icons.delete,
