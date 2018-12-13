@@ -1,6 +1,8 @@
+import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
@@ -58,16 +60,12 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
               children: <Widget>[
                 ListTile(
                   leading: OBIcon(OBIcons.connections),
-                  title:
-                      OBText(localizationService.trans('DRAWER.CONNECTIONS')),
-                  onTap: () {
-                    // Update the state of the app
-                    // ...
-                  },
+                  title: OBText('My connections circles'),
+                  onTap: _onWantsToSeeConnectionsCircles,
                 ),
                 ListTile(
                   leading: OBIcon(OBIcons.lists),
-                  title: OBText(localizationService.trans('DRAWER.LISTS')),
+                  title: OBText('My follows lists'),
                   onTap: _onWantsToSeeFollowsLists,
                 ),
                 ListTile(
@@ -121,6 +119,32 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
               onWantsToSeeFollowsList: _onWantsToSeeFollowsList,
               onWantsToCreateFollowsList: widget.onWantsToCreateFollowsList,
             )));
+    decrementPushedRoutes();
+  }
+
+  void _onWantsToSeeConnectionsCircles() async {
+    incrementPushedRoutes();
+    await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSeeConnectionsCircles'),
+            widget: OBConnectionsCirclesPage(
+              onWantsToSeeConnectionsCircle: _onWantsToSeeConnectionsCircle,
+              onWantsToCreateConnectionsCircle: null,
+            )));
+    decrementPushedRoutes();
+  }
+
+  void _onWantsToSeeConnectionsCircle(Circle connectionsCircle) async {
+    incrementPushedRoutes();
+    /*
+    await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSeeConnectionsCircle'),
+            widget: OBConnectionsCirclePage(connectionsCircle,
+                onWantsToEditConnectionsCircle: widget.onWantsToEditConnectionsCircle,
+                onWantsToSeeUserProfile: _onWantsToSeeUserProfile)));*/
     decrementPushedRoutes();
   }
 

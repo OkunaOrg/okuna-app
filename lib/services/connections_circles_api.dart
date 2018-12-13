@@ -12,8 +12,8 @@ class ConnectionsCirclesApiService {
 
   static const GET_CIRCLES_PATH = 'api/circles/';
   static const CREATE_CIRCLE_PATH = 'api/circles/';
-  static const UPDATE_CIRCLE_PATH = 'api/circles/{circleId}';
-  static const DELETE_CIRCLE_PATH = 'api/circles/{circleId}';
+  static const UPDATE_CIRCLE_PATH = 'api/circles/{circleId}/';
+  static const DELETE_CIRCLE_PATH = 'api/circles/{circleId}/';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
@@ -62,12 +62,12 @@ class ConnectionsCirclesApiService {
 
   String _makeUpdateCirclePath(int circleId) {
     return _stringTemplateService
-        .parse(UPDATE_CIRCLE_PATH, {'circleId': circleId});
+        .parse('$apiURL$UPDATE_CIRCLE_PATH', {'circleId': circleId});
   }
 
   String _makeDeleteCirclePath(int circleId) {
     return _stringTemplateService
-        .parse(DELETE_CIRCLE_PATH, {'circleId': circleId});
+        .parse('$apiURL$DELETE_CIRCLE_PATH', {'circleId': circleId});
   }
 
   String _makeApiUrl(String string) {
