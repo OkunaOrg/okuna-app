@@ -33,7 +33,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserService {
-  Storage _userStorage;
+  OBStorage _userStorage;
 
   static const STORAGE_KEY_AUTH_TOKEN = 'authToken';
   static const STORAGE_KEY_USER_DATA = 'data';
@@ -387,7 +387,7 @@ class UserService {
   }
 
   Future<Connection> connectWithUserWithUsername(String username,
-      {@required List<Circle> circles = const []}) async {
+      {List<Circle> circles = const []}) async {
     HttpieResponse response =
         await _connectionsApiService.connectWithUserWithUsername(username,
             circlesIds: circles.map((circle) => circle.id).toList());
@@ -395,7 +395,16 @@ class UserService {
     return Connection.fromJson(json.decode(response.body));
   }
 
-  Future<User> disconnectUserWithUsername(String username) async {
+  Future<Connection> confirmConnectionWithUserWithUsername(String username,
+      {List<Circle> circles = const []}) async {
+    HttpieResponse response = await _connectionsApiService
+        .confirmConnectionWithUserWithUsername(username,
+            circlesIds: circles.map((circle) => circle.id).toList());
+    _checkResponseIsOk(response);
+    return Connection.fromJson(json.decode(response.body));
+  }
+
+  Future<User> disconnectFromUserWithUsername(String username) async {
     HttpieResponse response =
         await _connectionsApiService.disconnectFromUserWithUsername(username);
     _checkResponseIsOk(response);

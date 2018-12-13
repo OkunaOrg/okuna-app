@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class OBPostComments extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.only(top: 10),
-              child: Text('View all $commentsCount comments'),
+              child: OBSecondaryText('View all $commentsCount comments'),
             ),
           )
         ],

@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
+import 'package:Openbook/pages/home/modals/pick_circles/pick_circles.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
@@ -14,14 +16,15 @@ import 'package:Openbook/pages/home/pages/menu/menu.dart';
 import 'package:Openbook/pages/home/pages/notifications.dart';
 import 'package:Openbook/pages/home/pages/search/search.dart';
 import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
+import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBHomePage extends StatefulWidget {
   @override
@@ -93,17 +96,18 @@ class OBHomePageState extends State<OBHomePage> {
     switch (OBHomePageTabs.values[index]) {
       case OBHomePageTabs.home:
         page = OBTimelinePage(
-          controller: _timelinePageController,
-          onWantsToReactToPost: _onWantsToReactToPost,
-          onWantsToCreatePost: _onWantsToCreatePost,
-          onWantsToEditUserProfile: _onWantsToEditUserProfile,
-        );
+            controller: _timelinePageController,
+            onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToCreatePost: _onWantsToCreatePost,
+            onWantsToEditUserProfile: _onWantsToEditUserProfile,
+            onWantsToPickCircles: _onWantsToPickCircles);
         break;
       case OBHomePageTabs.search:
         page = OBMainSearchPage(
-          controller: _searchPageController,
-          onWantsToReactToPost: _onWantsToReactToPost,
-        );
+            controller: _searchPageController,
+            onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToEditUserProfile: _onWantsToEditUserProfile,
+            onWantsToPickCircles: _onWantsToPickCircles);
         break;
       case OBHomePageTabs.notifications:
         break;
@@ -114,6 +118,7 @@ class OBHomePageState extends State<OBHomePage> {
         page = OBOwnProfilePage(
             onWantsToEditUserProfile: _onWantsToEditUserProfile,
             onWantsToReactToPost: _onWantsToReactToPost,
+            onWantsToPickCircles: _onWantsToPickCircles,
             controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
@@ -181,33 +186,35 @@ class OBHomePageState extends State<OBHomePage> {
       items: [
         BottomNavigationBarItem(
           title: Container(),
-          icon: Icon(Icons.home, size: 25.0),
-          activeIcon: Icon(
-            Icons.home,
-            size: 25.0,
-            color: Pigment.fromString('#6bd509'),
+          icon: OBIcon(OBIcons.home),
+          activeIcon: OBIcon(
+            OBIcons.home,
+            themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
           title: Container(),
-          icon: Icon(Icons.search, size: 25.0),
-          activeIcon: Icon(Icons.search,
-              size: 25.0, color: Pigment.fromString('#379eff')),
-        ),
-        BottomNavigationBarItem(
-          title: Container(),
-          icon: Icon(Icons.notifications, size: 23.0),
-          activeIcon: Icon(Icons.notifications,
-              size: 25.0, color: Pigment.fromString('#f6006f')),
-        ),
-        BottomNavigationBarItem(
-          title: Container(),
-          icon: Icon(
-            Icons.people,
-            size: 25.0,
+          icon: OBIcon(OBIcons.search),
+          activeIcon: OBIcon(
+            OBIcons.search,
+            themeColor: OBIconThemeColor.primaryAccent,
           ),
-          activeIcon: Icon(Icons.people,
-              size: 25.0, color: Pigment.fromString('#980df9')),
+        ),
+        BottomNavigationBarItem(
+          title: Container(),
+          icon: OBIcon(OBIcons.notifications),
+          activeIcon: OBIcon(
+            OBIcons.notifications,
+            themeColor: OBIconThemeColor.primaryAccent,
+          ),
+        ),
+        BottomNavigationBarItem(
+          title: Container(),
+          icon: OBIcon(OBIcons.communities),
+          activeIcon: OBIcon(
+            OBIcons.communities,
+            themeColor: OBIconThemeColor.primaryAccent,
+          ),
         ),
         BottomNavigationBarItem(
             title: Container(),
@@ -215,24 +222,16 @@ class OBHomePageState extends State<OBHomePage> {
               avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
             ),
-            activeIcon: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(500),
-                  border: Border.all(color: Colors.red)),
-              padding: EdgeInsets.all(2.0),
-              child: OBUserAvatar(
-                avatarUrl: _avatarUrl,
-                size: OBUserAvatarSize.small,
-              ),
+            activeIcon: OBOwnProfileActiveIcon(
+              avatarUrl: _avatarUrl,
             )),
         BottomNavigationBarItem(
           title: Container(),
-          icon: Icon(
-            Icons.menu,
-            size: 25.0,
+          icon: OBIcon(OBIcons.menu),
+          activeIcon: OBIcon(
+            OBIcons.menu,
+            themeColor: OBIconThemeColor.primaryAccent,
           ),
-          activeIcon: Icon(Icons.menu,
-              size: 25.0, color: Pigment.fromString('#ff9400')),
         ),
       ],
     );
@@ -257,6 +256,17 @@ class OBHomePageState extends State<OBHomePage> {
                 )));
 
     return postReaction;
+  }
+
+  Future<List<Circle>> _onWantsToPickCircles() async {
+    List<Circle> circles = await Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute<List<Circle>>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBPickCirclesModal(),
+                )));
+
+    return circles;
   }
 
   Future<void> _onWantsToEditUserProfile(User user) async {
@@ -331,3 +341,5 @@ class OBHomePageState extends State<OBHomePage> {
 }
 
 enum OBHomePageTabs { home, search, notifications, communities, profile, menu }
+
+typedef Future<List<Circle>> OnWantsToPickCircles();

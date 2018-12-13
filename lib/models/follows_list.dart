@@ -73,11 +73,13 @@ class FollowsListFactory extends UpdatableModelFactory<FollowsList> {
   }
 
   User parseUser(Map userData) {
-    if (userData != null) return User.fromJson(userData);
+    if (userData == null) return null;
+    return User.fromJson(userData);
   }
 
   UsersList parseUsers(List usersData) {
-    if (usersData != null) return UsersList.fromJson(usersData);
+    if (usersData == null) return null;
+    return UsersList.fromJson(usersData);
   }
 
   Emoji parseEmoji(Map emojiData) {

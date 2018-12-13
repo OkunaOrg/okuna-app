@@ -161,6 +161,27 @@ class CreateAccountBloc {
     _avatarController.stream.listen(_onAvatar);
   }
 
+  void dispose() {
+    _birthdayIsValidSubject.close();
+    _birthdayFeedbackSubject.close();
+    _validatedBirthdaySubject.close();
+    _nameIsValidSubject.close();
+    _nameFeedbackSubject.close();
+    _validatedNameSubject.close();
+    _usernameIsValidSubject.close();
+    _usernameFeedbackSubject.close();
+    _validatedUsernameSubject.close();
+    _emailIsValidSubject.close();
+    _emailFeedbackSubject.close();
+    _validatedEmailSubject.close();
+    _passwordIsValidSubject.close();
+    _passwordFeedbackSubject.close();
+    _validatedPasswordSubject.close();
+    _avatarIsValidSubject.close();
+    _avatarFeedbackSubject.close();
+    _validatedAvatarSubject.close();
+  }
+
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
   }

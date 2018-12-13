@@ -1,6 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
 
-// UGH naming
+// This f'ing NAME!!!!!
 
 class FollowsListsList {
   final List<FollowsList> lists;

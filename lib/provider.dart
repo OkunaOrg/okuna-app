@@ -17,6 +17,7 @@ import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:Openbook/services/string_template.dart';
 import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -60,6 +61,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ConnectionsCirclesApiService connectionsCirclesApiService =
       ConnectionsCirclesApiService();
   FollowsListsApiService followsListsApiService = FollowsListsApiService();
+  ThemeValueParserService themeValueParserService = ThemeValueParserService();
 
   LocalizationService localizationService;
   DeepLinksService deepLinksService = DeepLinksService();
@@ -95,18 +97,19 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     postsApiService.setStringTemplateService(stringTemplateService);
     validationService.setAuthApiService(authApiService);
     validationService.setFollowsListsApiService(followsListsApiService);
+    themeService.setStorageService(storageService);
   }
 
   void initAsyncState() async {
     Environment environment =
         await EnvironmentLoader(environmentPath: ".env.json").load();
-    authApiService.setApiURL(environment.API_URL);
-    postsApiService.setApiURL(environment.API_URL);
-    emojisApiService.setApiURL(environment.API_URL);
-    followsApiService.setApiURL(environment.API_URL);
-    connectionsApiService.setApiURL(environment.API_URL);
-    connectionsCirclesApiService.setApiURL(environment.API_URL);
-    followsListsApiService.setApiURL(environment.API_URL);
+    authApiService.setApiURL(environment.apiUrl);
+    postsApiService.setApiURL(environment.apiUrl);
+    emojisApiService.setApiURL(environment.apiUrl);
+    followsApiService.setApiURL(environment.apiUrl);
+    connectionsApiService.setApiURL(environment.apiUrl);
+    connectionsCirclesApiService.setApiURL(environment.apiUrl);
+    followsListsApiService.setApiURL(environment.apiUrl);
   }
 
   @override

@@ -1,22 +1,22 @@
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
-import 'package:Openbook/widgets/fields/text_field.dart';
+import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBChangePasswordModal extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return OBChangePasswordModalState();
   }
-
 }
 
 class OBChangePasswordModalState extends State<OBChangePasswordModal> {
@@ -25,7 +25,7 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
   UserService _userService;
   static const double INPUT_ICONS_SIZE = 16;
   static const EdgeInsetsGeometry INPUT_CONTENT_PADDING =
-  EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
+      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _requestInProgress = false;
   bool _formWasSubmitted = false;
@@ -52,61 +52,68 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
 
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _buildNavigationBar(),
-        body: Form(
-          key: _formKey,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                OBTextField(
-                  autofocus: true,
-                  obscureText: true,
-                  labelText: 'Current Password',
-                  controller: _currentPasswordController,
-                  validator: (String password) {
-                    if (!_formWasSubmitted) return null;
-                    if (_isPasswordValid != null && !_isPasswordValid) {
-                      _setIsPasswordValid(true);
-                      return 'Entered password was incorrect';
-                    }
-                    String validatePassword = _validationService.validateUserPassword(password);
-                    if (validatePassword != null) return validatePassword;
-                  },
-                  hintText: 'Enter your current password',
-                ),
-                OBTextField(
-                  autofocus: false,
-                  obscureText: true,
-                  labelText: 'New Password',
-                  controller: _newPasswordController,
-                  validator: (String newPassword) {
-                    if (!_formWasSubmitted) return null;
-                    if (!_validationService.isPasswordAllowedLength(newPassword)) {
-                      return 'Please ensure password is between 10 and 100 characters long';
-                    }
-                  },
-                  hintText: 'Enter your new password',
-                ),
-              ]
+    return OBCupertinoPageScaffold(
+        navigationBar: _buildNavigationBar(),
+        child: OBPrimaryColorContainer(
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    OBTextFormField(
+                      size: OBTextFormFieldSize.large,
+                      autofocus: true,
+                      obscureText: true,
+                      controller: _currentPasswordController,
+                      decoration: InputDecoration(
+                        labelText: 'Current Password',
+                        hintText: 'Enter your current password',
+                      ),
+                      validator: (String password) {
+                        if (!_formWasSubmitted) return null;
+                        if (_isPasswordValid != null && !_isPasswordValid) {
+                          _setIsPasswordValid(true);
+                          return 'Entered password was incorrect';
+                        }
+                        String validatePassword =
+                            _validationService.validateUserPassword(password);
+                        if (validatePassword != null) return validatePassword;
+                      },
+                    ),
+                    OBTextFormField(
+                      autofocus: false,
+                      obscureText: true,
+                      controller: _newPasswordController,
+                      size: OBTextFormFieldSize.large,
+                      decoration: InputDecoration(
+                          labelText: 'New Password',
+                          hintText: 'Enter your new password'),
+                      validator: (String newPassword) {
+                        if (!_formWasSubmitted) return null;
+                        if (!_validationService
+                            .isPasswordAllowedLength(newPassword)) {
+                          return 'Please ensure password is between 10 and 100 characters long';
+                        }
+                      },
+                    ),
+                  ]),
+            ),
           ),
-        )
-    );
+        ));
   }
 
   Widget _buildNavigationBar() {
-
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
+    return OBNavigationBar(
       leading: GestureDetector(
-        child: Icon(Icons.close, color: Colors.black87),
+        child: OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
       ),
-      middle: Text('Change password'),
-      trailing: OBPrimaryButton(
+      title: 'Change password',
+      trailing: OBButton(
         isDisabled: !_formValid,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
@@ -135,7 +142,9 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
       var currentPassword = _currentPasswordController.text;
       var newPassword = _newPasswordController.text;
       await _userService.updateUserPassword(currentPassword, newPassword);
-      _toastService.success(message: 'All good! Your password has been updated', context: context);
+      _toastService.success(
+          message: 'All good! Your password has been updated',
+          context: context);
       Navigator.of(context).pop();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
@@ -168,5 +177,4 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
       _formValid = formValid;
     });
   }
-
 }

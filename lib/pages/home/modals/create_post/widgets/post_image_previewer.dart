@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class OBPostImagePreviewer extends StatelessWidget {
-  File postImage;
+  final File postImage;
   final VoidCallback onRemove;
 
   OBPostImagePreviewer(this.postImage, {this.onRemove});

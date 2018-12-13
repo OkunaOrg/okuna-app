@@ -1,9 +1,12 @@
+import 'package:Openbook/models/circles_list.dart';
+import 'package:Openbook/models/follows_lists_list.dart';
+import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user_profile.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:dcache/dcache.dart';
 
-class User {
-  final int id;
+class User extends UpdatableModel<User> {
+  int id;
+  int connectionsCircleId;
   String email;
   String username;
   UserProfile profile;
@@ -11,85 +14,64 @@ class User {
   int followingCount;
   int postsCount;
   bool isFollowing;
+  bool isConnected;
+  bool isFullyConnected;
+  bool isPendingConnectionConfirmation;
+  CirclesList connectedCircles;
+  FollowsListsList followLists;
 
-  Stream<User> get updateSubject => _updateSubject.stream;
-  final _updateSubject = ReplaySubject<User>(maxSize: 1);
-
-  static final LfuCache<int, User> navigationCache =
-      LfuCache(storage: SimpleStorage(size: 100));
-
-  static final SimpleCache<int, User> sessionCache =
-      SimpleCache(storage: SimpleStorage(size: 10));
+  static final navigationUsersFactory = UserFactory(
+      cache: LfuCache<int, User>(storage: SimpleStorage(size: 100)));
+  static final sessionUsersFactory = UserFactory(
+      cache: SimpleCache<int, User>(storage: SimpleStorage(size: 10)));
 
   factory User.fromJson(Map<String, dynamic> json,
       {bool storeInSessionCache = false}) {
     int userId = json['id'];
 
-    User user = navigationCache.get(userId) ?? sessionCache.get(userId);
+    User user = navigationUsersFactory.getItemWithIdFromCache(userId) ??
+        sessionUsersFactory.getItemWithIdFromCache(userId);
 
     if (user != null) {
-      user.updateFromJson(json);
+      user.update(json);
       return user;
     }
-
-    user = _makeFromJson(json);
-
-    if (storeInSessionCache) {
-      sessionCache.set(userId, user);
-    } else {
-      navigationCache.set(userId, user);
-    }
-    return user;
+    return storeInSessionCache
+        ? sessionUsersFactory.fromJson(json)
+        : navigationUsersFactory.fromJson(json);
   }
 
   static void clearNavigationCache() {
-    navigationCache.clear();
+    navigationUsersFactory.clearCache();
   }
 
   static void clearSessionCache() {
-    sessionCache.clear();
-  }
-
-  static User _makeFromJson(Map<String, dynamic> json) {
-    return User(
-        id: json['id'],
-        followersCount: json['followers_count'],
-        postsCount: json['posts_count'],
-        email: json['email'],
-        username: json['username'],
-        followingCount: json['following_count'],
-        isFollowing: json['is_following'],
-        profile: _parseUserProfile(json['profile']));
-  }
-
-  static UserProfile _parseUserProfile(Map profile) {
-    return UserProfile.fromJSON(profile);
+    sessionUsersFactory.clearCache();
   }
 
   User(
-      {this.username,
-      this.id,
+      {this.id,
+      this.connectionsCircleId,
+      this.username,
       this.email,
       this.profile,
       this.followersCount,
       this.followingCount,
       this.postsCount,
-      this.isFollowing}) {
-    _notifyUpdate();
-  }
+      this.isFollowing,
+      this.isConnected,
+      this.isFullyConnected,
+      this.connectedCircles,
+      this.followLists});
 
-  void dispose() {
-    _updateSubject.close();
-  }
-
-  void updateFromJson(Map<String, dynamic> json) {
+  void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
     if (json.containsKey('email')) email = json['email'];
     if (json.containsKey('profile')) {
       if (profile != null) {
         profile.updateFromJson(json['profile']);
       } else {
-        profile = _parseUserProfile(json['profile']);
+        profile = navigationUsersFactory.parseUserProfile(json['profile']);
       }
     }
     if (json.containsKey('followers_count'))
@@ -98,7 +80,22 @@ class User {
       followingCount = json['following_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
-    _notifyUpdate();
+    if (json.containsKey('is_connected')) isConnected = json['is_connected'];
+    if (json.containsKey('connections_circle_id'))
+      connectionsCircleId = json['connections_circle_id'];
+    if (json.containsKey('is_fully_connected'))
+      isFullyConnected = json['is_fully_connected'];
+    if (json.containsKey('is_pending_connection_confirmation'))
+      isPendingConnectionConfirmation =
+          json['is_pending_connection_confirmation'];
+    if (json.containsKey('connected_circles')) {
+      connectedCircles =
+          navigationUsersFactory.parseCircles(json['connected_circles']);
+    }
+    if (json.containsKey('follow_lists')) {
+      followLists =
+          navigationUsersFactory.parseFollowsLists(json['follow_lists']);
+    }
   }
 
   String getEmail() {
@@ -148,18 +145,50 @@ class User {
   void incrementFollowersCount() {
     if (this.followersCount != null) {
       this.followersCount += 1;
-      this._notifyUpdate();
+      notifyUpdate();
     }
   }
 
   void decrementFollowersCount() {
-    if (this.followersCount != null) {
+    if (this.followersCount != null && this.followersCount > 0) {
       this.followersCount -= 1;
-      this._notifyUpdate();
+      notifyUpdate();
     }
   }
+}
 
-  void _notifyUpdate() {
-    _updateSubject.add(this);
+class UserFactory extends UpdatableModelFactory<User> {
+  UserFactory({cache}) : super(cache: cache);
+
+  @override
+  User makeFromJson(Map json) {
+    return User(
+        id: json['id'],
+        connectionsCircleId: json['connections_circle_id'],
+        followersCount: json['followers_count'],
+        postsCount: json['posts_count'],
+        email: json['email'],
+        username: json['username'],
+        followingCount: json['following_count'],
+        isFollowing: json['is_following'],
+        isConnected: json['is_connected'],
+        isFullyConnected: json['is_fully_connected'],
+        profile: parseUserProfile(json['profile']),
+        connectedCircles: parseCircles(json['connected_circles']),
+        followLists: parseFollowsLists(json['follow_lists']));
+  }
+
+  UserProfile parseUserProfile(Map profile) {
+    return UserProfile.fromJSON(profile);
+  }
+
+  CirclesList parseCircles(List circlesData) {
+    if (circlesData == null) return null;
+    return CirclesList.fromJson(circlesData);
+  }
+
+  FollowsListsList parseFollowsLists(List followsListsData) {
+    if (followsListsData == null) return null;
+    return FollowsListsList.fromJson(followsListsData);
   }
 }

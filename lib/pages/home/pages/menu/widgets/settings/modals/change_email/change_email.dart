@@ -5,18 +5,20 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
+import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBChangeEmailModal extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return OBChangeEmailModalState();
   }
-
 }
 
 class OBChangeEmailModalState extends State<OBChangeEmailModal> {
@@ -25,7 +27,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   UserService _userService;
   static const double INPUT_ICONS_SIZE = 16;
   static const EdgeInsetsGeometry INPUT_CONTENT_PADDING =
-  EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
+      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _requestInProgress = false;
   bool _formWasSubmitted = false;
@@ -50,45 +52,50 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
 
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _buildNavigationBar(),
-        body: Form(
-            key: _formKey,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  OBTextField(
-                    autofocus: true,
-                    labelText: 'Email',
-                    controller: _emailController,
-                    validator: (String email) {
-                      if (!_formWasSubmitted) return null;
-                      String validateEmail = _validationService.validateUserEmail(email);
-                      if (validateEmail != null) return validateEmail;
-                      if (_changedEmailTaken != null && _changedEmailTaken) {
-                        return 'Email is already registered';
-                      }
-                    },
-                    hintText: 'Enter your new email',
-                  ),
-                ]
+    return OBCupertinoPageScaffold(
+        navigationBar: _buildNavigationBar(),
+        child: OBPrimaryColorContainer(
+          child: Padding(
+            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    OBTextFormField(
+                      size: OBTextFormFieldSize.large,
+                      autofocus: true,
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        hintText: 'Enter your new email',
+                      ),
+                      validator: (String email) {
+                        if (!_formWasSubmitted) return null;
+                        String validateEmail =
+                            _validationService.validateUserEmail(email);
+                        if (validateEmail != null) return validateEmail;
+                        if (_changedEmailTaken != null && _changedEmailTaken) {
+                          return 'Email is already registered';
+                        }
+                      },
+                    ),
+                  ]),
             ),
-          )
-    );
+          ),
+        ));
   }
 
   Widget _buildNavigationBar() {
-    return CupertinoNavigationBar(
-      backgroundColor: Colors.white,
+    return OBNavigationBar(
       leading: GestureDetector(
-        child: Icon(Icons.close, color: Colors.black87),
+        child: OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
       ),
-      middle: Text('Change Email'),
-      trailing: OBPrimaryButton(
+      title: 'Change Email',
+      trailing: OBButton(
         isDisabled: !_formValid,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
@@ -123,7 +130,10 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
         _validateForm();
         return;
       }
-      _toastService.success(message: 'We\'ve sent a confirmation link to your new email address, click it to verify your new email', context: context);
+      _toastService.success(
+          message:
+              'We\'ve sent a confirmation link to your new email address, click it to verify your new email',
+          context: context);
       Navigator.of(context).pop();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
@@ -152,5 +162,4 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
       _formValid = formValid;
     });
   }
-  
 }

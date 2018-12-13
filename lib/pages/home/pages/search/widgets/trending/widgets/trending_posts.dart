@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/posts_list.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -10,6 +10,7 @@ import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBTrendingPosts extends StatefulWidget {
@@ -69,7 +70,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     return Column(
       children: [
         ListTile(
-            title: Text('Trending posts',
+            title: OBText('Trending posts',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
         Column(
             children: _posts.map((Post post) {

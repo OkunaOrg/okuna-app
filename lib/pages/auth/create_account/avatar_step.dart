@@ -5,7 +5,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -102,7 +102,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
   Widget _buildNextButton() {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.DONE');
 
-    return OBPrimaryButton(
+    return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Text(buttonText, style: TextStyle(fontSize: 16.0), textAlign: TextAlign.center,),
@@ -205,7 +205,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
     );
   }
 
-  Future<File> _getUserImage(BuildContext context) async {
+  Future _getUserImage(BuildContext context) async {
     String cameraOptionText =
         localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA');
     String galleryOptionText =

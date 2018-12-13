@@ -1,5 +1,7 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -34,11 +36,11 @@ class OBEmojiSearchResults extends StatelessWidget {
                 placeholder:
                     Image(image: AssetImage('assets/images/loading.gif')),
                 errorWidget: Container(
-                  child: Center(child: Text('?')),
+                  child: Center(child: OBText('?')),
                 ),
               ),
             ),
-            title: Text(emoji.keyword),
+            title: OBText(emoji.keyword),
           );
         });
   }
@@ -51,15 +53,13 @@ class OBEmojiSearchResults extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.sentiment_dissatisfied,
-                  size: 30.0, color: Colors.black26),
+              OBIcon(OBIcons.sad, customSize: 30.0),
               SizedBox(
                 height: 20.0,
               ),
-              Text(
+              OBText(
                 'No emoji found matching \'$searchQuery\'.',
                 style: TextStyle(
-                  color: Colors.black26,
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
                 ),

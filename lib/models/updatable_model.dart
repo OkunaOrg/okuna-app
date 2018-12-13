@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 abstract class UpdatableModel<T> {
   final int id;
 
-  Stream<T> get updateChange => _updateChangeSubject.stream;
+  Stream<T> get updateSubject => _updateChangeSubject.stream;
   final _updateChangeSubject = ReplaySubject<T>(maxSize: 1);
 
   UpdatableModel({this.id}) {
@@ -28,6 +28,13 @@ abstract class UpdatableModel<T> {
 }
 
 abstract class UpdatableModelFactory<T extends UpdatableModel> {
+  SimpleCache<int, T> cache;
+
+  UpdatableModelFactory({this.cache}) {
+    if (this.cache == null)
+      cache = SimpleCache(storage: SimpleStorage(size: 10));
+  }
+
   T fromJson(Map<String, dynamic> json) {
     int itemId = json['id'];
 
@@ -44,8 +51,6 @@ abstract class UpdatableModelFactory<T extends UpdatableModel> {
   }
 
   T makeFromJson(Map json);
-
-  SimpleCache<int, T> cache = SimpleCache(storage: SimpleStorage(size: 10));
 
   T getItemWithIdFromCache(int itemId) {
     return cache.get(itemId);

@@ -17,20 +17,20 @@ class EnvironmentLoader {
 }
 
 class Environment {
-  final String API_URL;
-  final String MAGIC_HEADER_NAME;
-  final String MAGIC_HEADER_VALUE;
+  final String apiUrl;
+  final String magicHeaderName;
+  final String magicHeaderValue;
 
   Environment(
-      {this.API_URL = '',
-      this.MAGIC_HEADER_NAME = '',
-      this.MAGIC_HEADER_VALUE = ''});
+      {this.apiUrl = '',
+      this.magicHeaderName = '',
+      this.magicHeaderValue = ''});
 
   factory Environment.fromJson(Map<String, dynamic> jsonMap) {
     return new Environment(
-      API_URL: jsonMap["API_URL"],
-      MAGIC_HEADER_NAME: jsonMap["MAGIC_HEADER_NAME"],
-      MAGIC_HEADER_VALUE: jsonMap["MAGIC_HEADER_VALUE"],
+      apiUrl: jsonMap["API_URL"],
+      magicHeaderName: jsonMap["MAGIC_HEADER_NAME"],
+      magicHeaderValue: jsonMap["MAGIC_HEADER_VALUE"],
     );
   }
 }

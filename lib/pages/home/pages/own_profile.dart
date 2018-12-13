@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
@@ -13,12 +14,14 @@ import 'package:flutter/material.dart';
 class OBOwnProfilePage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
   final OnWantsToEditUserProfile onWantsToEditUserProfile;
+  final OnWantsToPickCircles onWantsToPickCircles;
   final OBOwnProfilePageController controller;
 
   OBOwnProfilePage(
-      {this.onWantsToReactToPost,
+      {@required this.onWantsToReactToPost,
       this.controller,
-      this.onWantsToEditUserProfile});
+      @required this.onWantsToEditUserProfile,
+      @required this.onWantsToPickCircles});
 
   @override
   State<StatefulWidget> createState() {
@@ -47,13 +50,14 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
         var data = snapshot.data;
         if (data == null) return SizedBox();
         return OBProfilePage(
-              data,
-              controller: _profilePageController,
-              onWantsToReactToPost: widget.onWantsToReactToPost,
-              onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-              onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-              onWantsToSeePostComments: _onWantsToSeePostComments,
-              onWantsToCommentPost: _onWantsToCommentPost,
+          data,
+          controller: _profilePageController,
+          onWantsToReactToPost: widget.onWantsToReactToPost,
+          onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
+          onWantsToPickCircles: widget.onWantsToPickCircles,
+          onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
+          onWantsToSeePostComments: _onWantsToSeePostComments,
+          onWantsToCommentPost: _onWantsToCommentPost,
         );
       },
     );
@@ -65,7 +69,8 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
 
   void _onWantsToSeeUserProfile(User user) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
+    await Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlideProfileViewFromProfile'),
             widget: OBProfilePage(
@@ -75,33 +80,31 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
               onWantsToCommentPost: _onWantsToCommentPost,
               onWantsToReactToPost: widget.onWantsToReactToPost,
               onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-            )
-        ));
+            )));
     decrementPushedRoutes();
   }
 
   void _onWantsToCommentPost(Post post) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
+    await Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlidePostCommentsFromProfile'),
             widget: OBPostPage(post,
                 autofocusCommentInput: true,
-                onWantsToReactToPost: widget.onWantsToReactToPost)
-        )
-      );
+                onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();
   }
 
   void _onWantsToSeePostComments(Post post) async {
     incrementPushedRoutes();
-    await Navigator.push(context,
+    await Navigator.push(
+        context,
         OBSlideRightRoute(
             key: Key('obSlidePostCommentsFromProfile'),
             widget: OBPostPage(post,
                 autofocusCommentInput: false,
-                onWantsToReactToPost: widget.onWantsToReactToPost)
-        ));
+                onWantsToReactToPost: widget.onWantsToReactToPost)));
     decrementPushedRoutes();
   }
 }

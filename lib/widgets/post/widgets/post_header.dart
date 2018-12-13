@@ -1,8 +1,11 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,10 +41,7 @@ class OBPostHeader extends StatelessWidget {
             );
           }),
       trailing: IconButton(
-          icon: Icon(
-            Icons.more_vert,
-            color: Colors.black,
-          ),
+          icon: OBIcon(OBIcons.moreVertical),
           onPressed: () {
             showCupertinoModalPopup(
                 builder: (BuildContext context) {
@@ -95,13 +95,13 @@ class OBPostHeader extends StatelessWidget {
 
               if (postCreator == null) return SizedBox();
 
-              return Text(
+              return OBText(
                 postCreator.username,
                 style: TextStyle(fontWeight: FontWeight.bold),
               );
             }),
       ),
-      subtitle: Text(
+      subtitle: OBSecondaryText(
         _post.getRelativeCreated(),
         style: TextStyle(fontSize: 12.0),
       ),

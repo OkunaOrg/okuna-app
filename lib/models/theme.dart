@@ -3,26 +3,22 @@ import 'package:dcache/dcache.dart';
 
 class OBTheme extends UpdatableModel<OBTheme> {
   int id;
+
+  String name;
+
   String primaryTextColor;
   String secondaryTextColor;
 
   String primaryColor;
-  String primaryColorAccent;
+  String primaryAccentColor;
 
-  String navigationBarBackgroundColor;
-  String navigationTabsBackgroundColor;
+  String successColor;
+  String successColorAccent;
 
-  String buttonColor;
-  String buttonTextColor;
+  String dangerColor;
+  String dangerColorAccent;
 
-  String primaryButtonColor;
-  String primaryButtonTextColor;
-
-  String dangerButtonColor;
-  String dangerButtonTextColor;
-
-  String iconColor;
-  String activeIconColor;
+  String themePreview;
 
   static final factory = OBThemeFactory();
 
@@ -32,18 +28,14 @@ class OBTheme extends UpdatableModel<OBTheme> {
 
   OBTheme(
       {this.id,
+      this.name,
       this.primaryColor,
-      this.primaryColorAccent,
-      this.buttonColor,
-      this.activeIconColor,
-      this.buttonTextColor,
-      this.dangerButtonColor,
-      this.dangerButtonTextColor,
-      this.iconColor,
-      this.navigationBarBackgroundColor,
-      this.navigationTabsBackgroundColor,
-      this.primaryButtonColor,
-      this.primaryButtonTextColor,
+      this.primaryAccentColor,
+      this.dangerColor,
+      this.dangerColorAccent,
+      this.successColor,
+      this.successColorAccent,
+      this.themePreview,
       this.primaryTextColor,
       this.secondaryTextColor})
       : super();
@@ -53,17 +45,11 @@ class OBTheme extends UpdatableModel<OBTheme> {
     primaryTextColor = json['primary_text_color'];
     secondaryTextColor = json['secondary_text_color'];
     primaryColor = json['primary_color'];
-    primaryColorAccent = json['primary_color_accent'];
-    navigationBarBackgroundColor = json['navigation_bar_background_color'];
-    navigationTabsBackgroundColor = json['navigation_tabs_background_color'];
-    buttonColor = json['button_color'];
-    buttonTextColor = json['button_text_color'];
-    primaryButtonColor = json['primary_button_color'];
-    primaryButtonTextColor = json['primary_button_text_color'];
-    dangerButtonColor = json['danger_button_color'];
-    dangerButtonTextColor = json['danger_button_text_color'];
-    iconColor = json['icon_color'];
-    activeIconColor = json['active_icon_color'];
+    primaryAccentColor = json['accent_color'];
+    successColor = json['primary_button_color'];
+    successColorAccent = json['primary_button_text_color'];
+    dangerColor = json['danger_button_color'];
+    dangerColorAccent = json['danger_button_text_color'];
   }
 }
 
@@ -74,20 +60,13 @@ class OBThemeFactory extends UpdatableModelFactory<OBTheme> {
   @override
   OBTheme makeFromJson(Map json) {
     return OBTheme(
-      primaryTextColor: json['primary_text_color'],
-      secondaryTextColor: json['secondary_text_color'],
-      primaryColor: json['primary_color'],
-      primaryColorAccent: json['primary_color_accent'],
-      navigationBarBackgroundColor: json['navigation_bar_background_color'],
-      navigationTabsBackgroundColor: json['navigation_tabs_background_color'],
-      buttonColor: json['button_color'],
-      buttonTextColor: json['button_text_color'],
-      primaryButtonColor: json['primary_button_color'],
-      primaryButtonTextColor: json['primary_button_text_color'],
-      dangerButtonColor: json['danger_button_color'],
-      dangerButtonTextColor: json['danger_button_text_color'],
-      iconColor: json['icon_color'],
-      activeIconColor: json['active_icon_color'],
-    );
+        primaryTextColor: json['primary_text_color'],
+        secondaryTextColor: json['secondary_text_color'],
+        primaryColor: json['primary_color'],
+        primaryAccentColor: json['accent_color'],
+        successColor: json['primary_button_color'],
+        successColorAccent: json['primary_button_text_color'],
+        dangerColor: json['danger_button_color'],
+        dangerColorAccent: json['danger_button_text_color']);
   }
 }

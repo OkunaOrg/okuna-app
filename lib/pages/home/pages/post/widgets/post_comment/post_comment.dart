@@ -1,10 +1,13 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post_comment/packages/post_comment_text.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -34,13 +37,11 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
-  TapGestureRecognizer _usernameTapGestureRecognizer;
 
   @override
   void initState() {
     super.initState();
     _requestInProgress = false;
-    _usernameTapGestureRecognizer = TapGestureRecognizer();
   }
 
   @override
@@ -48,10 +49,6 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
-
-    _usernameTapGestureRecognizer.onTap = () {
-      widget.onWantsToSeeUserProfile(widget.postComment.commenter);
-    };
 
     User loggedInUser = _userService.getLoggedInUser();
 
@@ -87,7 +84,6 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
   @override
   void dispose() {
     super.dispose();
-    _usernameTapGestureRecognizer.dispose();
   }
 
   Widget _buildPostTile() {
@@ -110,24 +106,16 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              RichText(
-                  maxLines: null,
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text: widget.postComment.getCommenterUsername(),
-                        recognizer: _usernameTapGestureRecognizer,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87)),
-                    TextSpan(text: '  '),
-                    TextSpan(
-                        text: widget.postComment.text,
-                        style: TextStyle(color: Colors.black87))
-                  ])),
+              OBPostCommentText(
+                widget.postComment,
+                onUsernamePressed: () {
+                  widget.onWantsToSeeUserProfile(widget.postComment.commenter);
+                },
+              ),
               SizedBox(
                 height: 5.0,
               ),
-              Text(
+              OBSecondaryText(
                 widget.postComment.getRelativeCreated(),
                 style: TextStyle(fontSize: 12.0),
               )

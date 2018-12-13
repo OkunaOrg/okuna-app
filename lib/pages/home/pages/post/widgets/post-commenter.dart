@@ -6,7 +6,8 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
+import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
@@ -55,8 +56,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Color.fromARGB(10, 0, 0, 0)))),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,12 +75,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                 borderRadius: BorderRadius.circular(10.0),
                 color: Color.fromARGB(10, 0, 0, 0),
               ),
-              child: TextField(
+              child: OBTextField(
                 controller: _textController,
                 focusNode: focusNode,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: TextStyle(fontSize: 14.0, color: Colors.black87),
+                style: TextStyle(fontSize: 14.0),
                 decoration: InputDecoration(
                   hintText: 'Write something...',
                   contentPadding: inputContentPadding,
@@ -94,7 +93,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           ),
           Padding(
             padding: EdgeInsets.only(right: 20.0, left: 10.0),
-            child: OBPrimaryButton(
+            child: OBButton(
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
               onPressed: _commentPost,

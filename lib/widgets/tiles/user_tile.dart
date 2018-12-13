@@ -1,5 +1,7 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -26,14 +28,14 @@ class OBUserTile extends StatelessWidget {
         size: OBUserAvatarSize.medium,
         avatarUrl: user.getProfileAvatar(),
       ),
-      title: Text(
+      title: OBText(
         user.username,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Row(children: [
-        Text(user.getProfileName()),
+        OBSecondaryText(user.getProfileName()),
         showFollowing && user.isFollowing != null && user.isFollowing
-            ? Text(' · Following')
+            ? OBSecondaryText(' · Following')
             : SizedBox()
       ]),
     );

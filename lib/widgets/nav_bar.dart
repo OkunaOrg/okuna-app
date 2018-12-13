@@ -1,5 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -22,6 +23,7 @@ class OBNavigationBar extends StatelessWidget
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
       stream: themeService.themeChange,
@@ -29,20 +31,21 @@ class OBNavigationBar extends StatelessWidget
       builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
         var theme = snapshot.data;
 
+        Color actionsForegroundColor = themeValueParserService
+            .parseGradient(theme.primaryAccentColor)
+            .colors[1];
+
         return CupertinoNavigationBar(
           border: null,
-          actionsForegroundColor: theme != null
-              ? Pigment.fromString(theme.primaryTextColor)
-              : Colors.black,
+          actionsForegroundColor:
+              theme != null ? actionsForegroundColor : Colors.black,
           middle: title != null
-              ? Text(
+              ? OBText(
                   title,
-                  style: TextStyle(
-                      color: Pigment.fromString(theme.primaryTextColor)),
                 )
               : SizedBox(),
           transitionBetweenRoutes: false,
-          backgroundColor: Pigment.fromString(theme.navigationBarBackgroundColor),
+          backgroundColor: Pigment.fromString(theme.primaryColor),
           trailing: trailing,
           leading: leading,
         );

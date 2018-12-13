@@ -3,12 +3,15 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/settings/modals/change_email/change_email.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +48,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
 
     return CupertinoPageScaffold(
       navigationBar: _buildNavigationBar(),
-      child: Container(
+      child: OBPrimaryColorContainer(
         child: Column(
           children: <Widget>[
             Expanded(
@@ -54,54 +57,42 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.people),
-                  title: Text(localizationService.trans('DRAWER.CONNECTIONS')),
+                  leading: OBIcon(OBIcons.connections),
+                  title:
+                      OBText(localizationService.trans('DRAWER.CONNECTIONS')),
                   onTap: () {
                     // Update the state of the app
                     // ...
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.list),
-                  title: Text(localizationService.trans('DRAWER.LISTS')),
+                  leading: OBIcon(OBIcons.lists),
+                  title: OBText(localizationService.trans('DRAWER.LISTS')),
                   onTap: _onWantsToSeeFollowsLists,
                 ),
                 ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text(localizationService.trans('DRAWER.SETTINGS')),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        OBSlideRightRoute(
-                            key: Key('obMenuViewSettings'),
-                            widget: OBSettingsPage()));
-                  },
+                  leading: OBIcon(OBIcons.settings),
+                  title: OBText(localizationService.trans('DRAWER.SETTINGS')),
+                  onTap: _onWantsToSeeSettingsPage,
                 ),
                 ListTile(
-                  leading: Icon(Icons.help),
-                  title: Text(localizationService.trans('DRAWER.HELP')),
+                  leading: OBIcon(OBIcons.help),
+                  title: OBText(localizationService.trans('DRAWER.HELP')),
                   onTap: () {
                     // Update the state of the app
                     // ...
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.format_paint),
-                  title: Text(localizationService.trans('DRAWER.CUSTOMIZE')),
-                  onTap: () {
-                    // Update the state of the app
-                    // ...
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.exit_to_app),
-                  title: Text(localizationService.trans('DRAWER.LOGOUT')),
+                  leading: OBIcon(OBIcons.logout),
+                  title: OBText(localizationService.trans('DRAWER.LOGOUT')),
                   onTap: () {
                     userService.logout();
                   },
                 )
               ],
-            ))
+            )),
+            OBCuratedThemes()
           ],
         ),
       ),
@@ -110,6 +101,15 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
 
   @override
   void scrollToTop() {}
+
+  void _onWantsToSeeSettingsPage() async {
+    incrementPushedRoutes();
+    await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
+    decrementPushedRoutes();
+  }
 
   void _onWantsToSeeFollowsLists() async {
     incrementPushedRoutes();

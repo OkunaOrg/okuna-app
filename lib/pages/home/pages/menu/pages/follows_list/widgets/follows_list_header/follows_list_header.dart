@@ -1,6 +1,7 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/widgets/follows_list_name.dart';
 import 'package:Openbook/widgets/follows_list_icon.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowsListHeader extends StatelessWidget {
@@ -11,7 +12,7 @@ class OBFollowsListHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: followsList.updateChange,
+        stream: followsList.updateSubject,
         initialData: followsList,
         builder: (BuildContext context, AsyncSnapshot<FollowsList> snapshot) {
           var followsList = snapshot.data;
@@ -36,7 +37,7 @@ class OBFollowsListHeader extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
-                child: Text('Users',
+                child: OBText('Users',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
               ),

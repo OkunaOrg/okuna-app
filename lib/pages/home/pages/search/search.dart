@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
@@ -16,17 +18,23 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMainSearchPage extends StatefulWidget {
   final OnWantsToReactToPost onWantsToReactToPost;
+  final OnWantsToEditUserProfile onWantsToEditUserProfile;
+  final OnWantsToPickCircles onWantsToPickCircles;
+
   final OBMainSearchPageController controller;
 
   const OBMainSearchPage(
       {Key key,
-      this.onWantsToReactToPost,
-      this.controller})
+      @required this.onWantsToReactToPost,
+      @required this.onWantsToPickCircles,
+      this.controller,
+      @required this.onWantsToEditUserProfile})
       : super(key: key);
 
   @override
@@ -91,7 +99,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Colors.white,
-        child: Container(
+        child: OBPrimaryColorContainer(
           child: Column(
             children: <Widget>[
               SafeArea(
@@ -181,6 +189,8 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
                 onWantsToSeePostComments: _onWantsToSeePostComments,
                 onWantsToCommentPost: _onWantsToCommentPost,
                 onWantsToReactToPost: widget.onWantsToReactToPost,
+                onWantsToPickCircles: widget.onWantsToPickCircles,
+                onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
               ),
             )));
     decrementPushedRoutes();
@@ -192,6 +202,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: true,
+                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
                   onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
     decrementPushedRoutes();
@@ -203,6 +214,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
         builder: (BuildContext context) => Material(
               child: OBPostPage(post,
                   autofocusCommentInput: false,
+                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
                   onWantsToReactToPost: widget.onWantsToReactToPost),
             )));
     decrementPushedRoutes();

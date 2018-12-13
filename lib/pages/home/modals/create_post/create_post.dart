@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -11,9 +13,9 @@ import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -86,7 +88,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: _buildNavigationBar(),
-        body: Container(
+        body: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[_buildNewPostContent(), _buildPostActions()],
         )));
@@ -116,16 +118,17 @@ class CreatePostModalState extends State<CreatePostModal> {
 
     return OBNavigationBar(
       leading: GestureDetector(
-        child: Icon(Icons.close, color: Colors.black87),
+        child: OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
       ),
       title: 'New post',
-      trailing: OBPrimaryButton(
+      trailing: OBButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _isCreatePostInProgress,
         size: OBButtonSize.small,
+        type: OBButtonType.primary,
         onPressed: createPost,
         child: Text('Share'),
       ),
@@ -167,32 +170,30 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildRemainingCharacters() {
-    return Text(
-      (MAX_ALLOWED_CHARACTERS - _charactersCount).toString(),
-      style: TextStyle(
-          fontSize: 12.0,
-          color: _isPostTextAllowedLength
-              ? Colors.black26
-              : Pigment.fromString('#F13A59'),
-          fontWeight:
-              _isPostTextAllowedLength ? FontWeight.normal : FontWeight.bold),
-    );
+    var themeService = OpenbookProvider.of(context).themeService;
+
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+
+          return Text(
+            (MAX_ALLOWED_CHARACTERS - _charactersCount).toString(),
+            style: TextStyle(
+                fontSize: 12.0,
+                color: _isPostTextAllowedLength
+                    ? Pigment.fromString(theme.primaryTextColor)
+                    : Pigment.fromString(theme.dangerColor),
+                fontWeight: _isPostTextAllowedLength
+                    ? FontWeight.normal
+                    : FontWeight.bold),
+          );
+        });
   }
 
   Widget _buildPostTextField() {
-    return TextField(
-      controller: _textController,
-      autofocus: true,
-      textCapitalization: TextCapitalization.sentences,
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      style: TextStyle(color: Colors.black87, fontSize: 18.0),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: 'What\'s going on?',
-      ),
-      autocorrect: true,
-    );
+    return OBCreatePostText(controller: _textController);
   }
 
   Widget _buildPostActions() {
@@ -228,7 +229,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     return Container(
       height: 51.0,
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-      color: Color.fromARGB(3, 0, 0, 0),
+      color: Color.fromARGB(5, 0, 0, 0),
       child: ListView(
           scrollDirection: Axis.horizontal, children: spacedPostActions),
     );

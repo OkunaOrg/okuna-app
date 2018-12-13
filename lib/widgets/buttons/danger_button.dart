@@ -8,8 +8,6 @@ class OBDangerButton extends StatelessWidget {
   final bool isDisabled;
   final bool isLoading;
   final Color textColor;
-  final Color color;
-  final bool isOutlined;
   final OBButtonSize size;
   final double minWidth;
   final EdgeInsets padding;
@@ -20,9 +18,7 @@ class OBDangerButton extends StatelessWidget {
       this.size = OBButtonSize.medium,
       this.textColor = Colors.white,
       this.icon,
-      this.color = const Color(0xFFFF3860),
       this.isDisabled = false,
-      this.isOutlined = false,
       this.isLoading = false,
       this.padding,
       this.minWidth});
@@ -34,13 +30,11 @@ class OBDangerButton extends StatelessWidget {
       icon: icon,
       onPressed: onPressed,
       size: size,
-      textColor: textColor,
-      color: color,
       isDisabled: isDisabled,
-      isOutlined: isOutlined,
       isLoading: isLoading,
       padding: padding,
       minWidth: minWidth,
+      type: OBButtonType.danger,
     );
   }
 }

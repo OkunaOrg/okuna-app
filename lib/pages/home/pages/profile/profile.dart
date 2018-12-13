@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/expanded_post_comment.dart';
+import 'package:Openbook/pages/home/home.dart';
+import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
@@ -13,6 +14,7 @@ import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -25,14 +27,16 @@ class OBProfilePage extends StatefulWidget {
   final OnWantsToSeePostComments onWantsToSeePostComments;
   final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
   final OnWantsToEditUserProfile onWantsToEditUserProfile;
+  final OnWantsToPickCircles onWantsToPickCircles;
 
   OBProfilePage(this.user,
-      {this.onWantsToSeeUserProfile,
-      this.onWantsToSeePostComments,
-      this.onWantsToReactToPost,
-      this.onWantsToCommentPost,
-      this.onWantsToEditUserProfile,
-      this.controller});
+      {@required this.onWantsToSeeUserProfile,
+      @required this.onWantsToSeePostComments,
+      @required this.onWantsToReactToPost,
+      @required this.onWantsToCommentPost,
+      @required this.onWantsToEditUserProfile,
+      this.controller,
+      @required this.onWantsToPickCircles});
 
   @override
   OBProfilePageState createState() {
@@ -74,58 +78,58 @@ class OBProfilePageState extends State<OBProfilePage> {
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBProfileNavBar(_user),
-        child: Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: RefreshIndicator(
-                  child: LoadMore(
-                      whenEmptyLoad: false,
-                      isFinish: !_morePostsToLoad,
-                      delegate: OBHomePostsLoadMoreDelegate(),
-                      child: ListView.builder(
-                          controller: _scrollController,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          padding: EdgeInsets.all(0),
-                          itemCount: _posts.length + 1,
-                          itemBuilder: (context, index) {
-                            if (index == 0) {
-                              return Column(
-                                children: <Widget>[
-                                  OBProfileCover(_user),
-                                  OBProfileCard(_user,
-                                      onWantsToEditUserProfile:
-                                      widget.onWantsToEditUserProfile),
-                                  Divider()
-                                ],
+        child: OBPrimaryColorContainer(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                    child: LoadMore(
+                        whenEmptyLoad: false,
+                        isFinish: !_morePostsToLoad,
+                        delegate: OBHomePostsLoadMoreDelegate(),
+                        child: ListView.builder(
+                            controller: _scrollController,
+                            physics: AlwaysScrollableScrollPhysics(),
+                            padding: EdgeInsets.all(0),
+                            itemCount: _posts.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index == 0) {
+                                return Column(
+                                  children: <Widget>[
+                                    OBProfileCover(_user),
+                                    OBProfileCard(_user,
+                                        onWantsToPickCircles:
+                                            widget.onWantsToPickCircles,
+                                        onWantsToEditUserProfile:
+                                            widget.onWantsToEditUserProfile),
+                                    Divider()
+                                  ],
+                                );
+                              }
+
+                              int postIndex = index - 1;
+
+                              var post = _posts[postIndex];
+
+                              return OBPost(
+                                post,
+                                onWantsToReactToPost:
+                                    widget.onWantsToReactToPost,
+                                onWantsToCommentPost:
+                                    widget.onWantsToCommentPost,
+                                onWantsToSeePostComments:
+                                    widget.onWantsToSeePostComments,
+                                onWantsToSeeUserProfile:
+                                    widget.onWantsToSeeUserProfile,
                               );
-                            }
-
-                            int postIndex = index - 1;
-
-                            var post = _posts[postIndex];
-
-                            return OBPost(
-                              post,
-                              onWantsToReactToPost: widget
-                                  .onWantsToReactToPost,
-                              onWantsToCommentPost: widget
-                                  .onWantsToCommentPost,
-                              onWantsToSeePostComments:
-                              widget.onWantsToSeePostComments,
-                              onWantsToSeeUserProfile:
-                              widget.onWantsToSeeUserProfile,
-                            );
-                          }),
-                      onLoadMore: _loadMorePosts),
-                  onRefresh: _refresh),
-                )
-              ],
-            ),
-          )
-    );
+                            }),
+                        onLoadMore: _loadMorePosts),
+                    onRefresh: _refresh),
+              )
+            ],
+          ),
+        ));
   }
 
   void scrollToTop() {

@@ -6,6 +6,9 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/emoji_picker/emoji_picker.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,24 +47,24 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
     _toastService = openbookProvider.toastService;
 
     return Scaffold(
-        backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: _buildNavigationBar(),
-        body: OBEmojiPicker(
-          onEmojiPicked: _onEmojiPicked,
+        body: OBPrimaryColorContainer(
+          child: OBEmojiPicker(
+            onEmojiPicked: _onEmojiPicked,
+          ),
         ));
   }
 
   Widget _buildNavigationBar() {
-    return CupertinoNavigationBar(
-        backgroundColor: Colors.white,
+    return OBNavigationBar(
         leading: GestureDetector(
-          child: Icon(Icons.close, color: Colors.black87),
+          child: OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },
         ),
-        middle: Text('React to post'));
+        title: 'React to post');
   }
 
   void _onEmojiPicked(Emoji pressedEmoji) {
@@ -69,6 +72,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
   }
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
+    if (_isReactToPostInProgress) return null;
     _setReactToPostInProgress(true);
 
     try {

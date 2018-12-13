@@ -2,7 +2,7 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/primary_button.dart';
+import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthDonePage extends StatefulWidget {
@@ -96,7 +96,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     String buttonText =
         localizationService.trans('AUTH.CREATE_ACC.DONE_CONTINUE');
 
-    return OBPrimaryButton(
+    return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Row(

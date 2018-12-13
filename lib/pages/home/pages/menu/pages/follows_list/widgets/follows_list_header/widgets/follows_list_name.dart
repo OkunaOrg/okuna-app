@@ -1,4 +1,7 @@
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/widgets/theming/primary_accent_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowsListName extends StatelessWidget {
@@ -9,7 +12,7 @@ class OBFollowsListName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: followsList.updateChange,
+        stream: followsList.updateSubject,
         initialData: followsList,
         builder: (BuildContext context, AsyncSnapshot<FollowsList> snapshot) {
           var followsList = snapshot.data;
@@ -17,20 +20,19 @@ class OBFollowsListName extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              OBSecondaryText(
                 'List',
-                style: TextStyle(color: Colors.black45),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Flexible(
-                    child: Text(
+                    child: OBPrimaryAccentText(
                       followsList.name,
+                      size: OBTextSize.extraLarge,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style: TextStyle(
-                          fontSize: 30.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],

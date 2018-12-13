@@ -41,17 +41,23 @@ class OBPostReactionsState extends State<OBPostReactions> {
     return StreamBuilder(
         stream: widget.post.updateSubject,
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-          if (snapshot.data == null) return SizedBox();
+          if (snapshot.data == null)
+            return SizedBox(
+              height: 35,
+            );
 
           var post = snapshot.data;
 
           List<PostReactionsEmojiCount> emojiCounts =
               post.reactionsEmojiCounts.counts;
 
-          if (emojiCounts.length == 0) return SizedBox();
+          if (emojiCounts.length == 0)
+            return SizedBox(
+              height: 35,
+            );
 
           return Container(
-            height: 51,
+            height: 35,
             child: ListView(
                 physics: AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,

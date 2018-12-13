@@ -18,7 +18,7 @@ class OBProfileCounts extends StatelessWidget {
         if (user == null) return SizedBox();
 
         return Container(
-          padding: EdgeInsets.only(top: 20.0, bottom: 10),
+          padding: EdgeInsets.only(top: 20.0),
           child: Row(
             children: <Widget>[
               Expanded(
