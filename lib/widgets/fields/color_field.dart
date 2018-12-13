@@ -56,7 +56,8 @@ class OBColorFieldState extends State<OBColorField> {
                 widget.labelText,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              subtitle: widget.hintText != null ? Text(widget.hintText) : null,
+              subtitle:
+                  widget.hintText != null ? OBText(widget.hintText) : null,
               trailing: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),

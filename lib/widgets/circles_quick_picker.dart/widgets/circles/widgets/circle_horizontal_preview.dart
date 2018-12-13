@@ -37,6 +37,7 @@ class OBCircleHorizontalPreview extends StatelessWidget {
               children: <Widget>[
                 OBCircleColorPreview(
                   circle,
+                  size: OBCircleColorPreviewSize.large,
                 ),
                 Positioned(
                   child: OBCheckbox(
