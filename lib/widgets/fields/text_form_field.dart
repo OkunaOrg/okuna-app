@@ -13,12 +13,14 @@ class OBTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final OBTextFormFieldSize size;
+  final bool obscureText;
 
   OBTextFormField(
       {this.controller,
       this.validator,
       this.autofocus = false,
       this.keyboardType,
+      this.obscureText = false,
       this.size = OBTextFormFieldSize.medium,
       this.maxLines,
       this.textInputAction = TextInputAction.done,
@@ -60,6 +62,7 @@ class OBTextFormField extends StatelessWidget {
                 validator: validator,
                 keyboardType: keyboardType,
                 maxLines: maxLines,
+                obscureText: obscureText,
                 style: TextStyle(
                     fontSize: fontSize,
                     color: Pigment.fromString(theme.primaryTextColor)),

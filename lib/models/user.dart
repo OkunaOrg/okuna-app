@@ -98,6 +98,10 @@ class User extends UpdatableModel<User> {
     }
   }
 
+  String getEmail() {
+    return this.email;
+  }
+
   bool hasProfileLocation() {
     return profile.hasLocation();
   }

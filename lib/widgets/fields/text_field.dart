@@ -14,6 +14,7 @@ class OBTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final FormFieldValidator<String> validator;
+  final bool obscureText;
 
   OBTextField(
       {this.style,
@@ -24,6 +25,7 @@ class OBTextField extends StatelessWidget {
       this.decoration,
       this.autocorrect = false,
       this.autofocus = false,
+      this.obscureText = false,
       this.keyboardType,
       this.textInputAction = TextInputAction.done});
 
@@ -58,6 +60,7 @@ class OBTextField extends StatelessWidget {
             keyboardType: keyboardType,
             style: themedTextStyle,
             maxLines: maxLines,
+            obscureText: obscureText,
             decoration: InputDecoration(
                 hintText: decoration.hintText,
                 hintStyle: hintTextStyle,

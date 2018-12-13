@@ -63,10 +63,12 @@
   "DRAWER.PROFILE": "Profile",
   "DRAWER.CONNECTIONS": "My connections",
   "DRAWER.LISTS": "My lists",
-  "DRAWER.SETTINGS": "Settings",
+  "DRAWER.SETTINGS": "Account Settings",
   "DRAWER.HELP": "Get Help & Support",
   "DRAWER.CUSTOMIZE": "Customize",
   "DRAWER.LOGOUT": "Log out",
+  "SETTINGS.CHANGE_EMAIL": "Change Email",
+  "SETTINGS.CHANGE_PASSWORD": "Change Password",
   "EMOJI_GROUP.PRIMARY": "Primary",
   "EMOJI_GROUP.GOLD": "Gold"
 }

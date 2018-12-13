@@ -139,14 +139,16 @@ class OBIcons {
   static const sad = OBIconData(nativeIcon: Icons.sentiment_dissatisfied);
   static const location = OBIconData(nativeIcon: Icons.location_on);
   static const link = OBIconData(nativeIcon: Icons.link);
-  static const email = OBIconData(nativeIcon: Icons.alternate_email);
+  static const email = OBIconData(nativeIcon: Icons.email);
+  static const lock = OBIconData(nativeIcon: Icons.lock);
   static const bio = OBIconData(nativeIcon: Icons.bookmark);
   static const name = OBIconData(nativeIcon: Icons.person);
   static const followers = OBIconData(nativeIcon: Icons.supervisor_account);
   static const cake = OBIconData(nativeIcon: Icons.cake);
   static const add = OBIconData(nativeIcon: Icons.add_circle_outline);
   static const remove = OBIconData(nativeIcon: Icons.remove_circle_outline);
-  static const checkCircle = OBIconData(nativeIcon: Icons.radio_button_unchecked);
+  static const checkCircle =
+      OBIconData(nativeIcon: Icons.radio_button_unchecked);
   static const checkCircleSelected = OBIconData(nativeIcon: Icons.check_circle);
   static const check = OBIconData(nativeIcon: Icons.check);
   static const success = OBIconData(filename: 'success-icon.png');
