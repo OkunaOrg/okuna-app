@@ -71,9 +71,8 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
                       _setIsPasswordValid(true);
                       return 'Entered password was incorrect';
                     }
-                    if (!_validationService.isPasswordAllowedLength(password)) {
-                      return 'Passwords should be between 10 and 100 characters long';
-                    }
+                    String validatePassword = _validationService.validateUserPassword(password);
+                    if (validatePassword != null) return validatePassword;
                   },
                   hintText: 'Enter your current password',
                 ),

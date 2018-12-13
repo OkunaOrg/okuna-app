@@ -21,7 +21,6 @@ class DeepLinksService {
     if (_areAppLinksInitialised) return;
     _areAppLinksInitialised = true;
     print('Initialising universal links');
-    _handleLink('https://www.openbook.social/api/auth/email/verify/521-07ff511c062a7908e4e3');
     // Attach a listener to the stream
     _sub = getLinksStream().listen((String link) {
       print('This is the link from stream:: $link');

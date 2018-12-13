@@ -64,9 +64,8 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
                     controller: _emailController,
                     validator: (String email) {
                       if (!_formWasSubmitted) return null;
-                      if (!_validationService.isQualifiedEmail(email)) {
-                        return 'Please enter a valid email';
-                      }
+                      String validateEmail = _validationService.validateUserEmail(email);
+                      if (validateEmail != null) return validateEmail;
                       if (_changedEmailTaken != null && _changedEmailTaken) {
                         return 'Email is already registered';
                       }
