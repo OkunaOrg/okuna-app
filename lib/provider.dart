@@ -3,6 +3,7 @@ import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
+import 'package:Openbook/services/deep_links.dart';
 import 'package:Openbook/services/emoji_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
@@ -61,12 +62,15 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   FollowsListsApiService followsListsApiService = FollowsListsApiService();
 
   LocalizationService localizationService;
+  DeepLinksService deepLinksService = DeepLinksService();
 
   @override
   void initState() {
     super.initState();
     initAsyncState();
-
+    deepLinksService.setAuthApiService(authApiService);
+    deepLinksService.setToastService(toastService);
+    deepLinksService.setUserService(userService);
     createAccountBloc.setValidationService(validationService);
     connectionsCirclesApiService.setHttpService(httpService);
     connectionsCirclesApiService
@@ -113,10 +117,21 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    deepLinksService.clearSubscriptionStreams();
+  }
+
   setLocalizationService(LocalizationService newLocalizationService) {
     localizationService = newLocalizationService;
     createAccountBloc.setLocalizationService(localizationService);
     httpService.setLocalizationService(localizationService);
+    initialiseDeepLinks(); // depends on localizationService being set
+  }
+
+  initialiseDeepLinks() {
+    deepLinksService.initUniLinks();
   }
 
   setValidationService(ValidationService newValidationService) {

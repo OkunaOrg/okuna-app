@@ -101,6 +101,10 @@ class User {
     _notifyUpdate();
   }
 
+  String getEmail() {
+    return this.email;
+  }
+
   bool hasProfileLocation() {
     return profile.hasLocation();
   }

@@ -5,14 +5,18 @@ class OBTextField extends StatelessWidget {
   final FormFieldValidator<String> validator;
   final Widget prefixIcon;
   final String hintText;
+  final String labelText;
   final bool autofocus;
+  final bool obscureText;
 
   OBTextField(
       {this.controller,
       this.validator,
       this.prefixIcon,
       this.hintText,
-      this.autofocus = false});
+      this.obscureText = false,
+      this.autofocus = false,
+      this.labelText});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,7 @@ class OBTextField extends StatelessWidget {
           children: <Widget>[
             TextFormField(
               autofocus: autofocus,
+              obscureText: obscureText,
               controller: controller,
               validator: validator,
               style: TextStyle(fontSize: 22, color: Colors.black87),
@@ -35,7 +40,7 @@ class OBTextField extends StatelessWidget {
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                 border: InputBorder.none,
-                labelText: 'Name',
+                labelText: labelText,
                 prefixIcon: prefixIcon,
               ),
             ),
