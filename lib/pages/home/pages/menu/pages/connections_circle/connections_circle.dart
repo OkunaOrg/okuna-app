@@ -37,7 +37,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
   @override
   void initState() {
     super.initState();
-    _isConnectionsCircle = true;
+    _isConnectionsCircle = false;
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
   }

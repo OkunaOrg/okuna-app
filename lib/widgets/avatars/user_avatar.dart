@@ -54,6 +54,7 @@ class OBUserAvatar extends StatelessWidget {
 
     if (avatarFile != null) {
       finalAvatarImage = FadeInImage(
+        fit: BoxFit.cover,
         height: avatarSize,
         width: avatarSize,
         placeholder: AssetImage(DEFAULT_AVATAR_ASSET),
@@ -66,6 +67,7 @@ class OBUserAvatar extends StatelessWidget {
         imageUrl: avatarUrl,
         placeholder: placeholderImage,
         errorWidget: placeholderImage,
+        fit: BoxFit.cover,
       );
     } else {
       finalAvatarImage = placeholderImage;

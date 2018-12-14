@@ -18,9 +18,10 @@ class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
   final User user;
 
-  OBProfilePage(this.user,
-      {
-      this.controller,});
+  OBProfilePage(
+    this.user, {
+    this.controller,
+  });
 
   @override
   OBProfilePageState createState() {
@@ -92,9 +93,7 @@ class OBProfilePageState extends State<OBProfilePage> {
 
                               var post = _posts[postIndex];
 
-                              return OBPost(
-                                post
-                              );
+                              return OBPost(post);
                             }),
                         onLoadMore: _loadMorePosts),
                     onRefresh: _refresh),

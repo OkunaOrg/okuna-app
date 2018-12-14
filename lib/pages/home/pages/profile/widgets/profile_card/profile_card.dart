@@ -19,7 +19,7 @@ class OBProfileCard extends StatelessWidget {
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
-        Container(
+        Padding(
           padding: EdgeInsets.only(left: 30.0, right: 20),
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -27,16 +27,16 @@ class OBProfileCard extends StatelessWidget {
               Row(
                 children: <Widget>[
                   SizedBox(
-                    height: (OBUserAvatar.AVATAR_SIZE_LARGE * 0.8),
+                    height: (OBUserAvatar.AVATAR_SIZE_LARGE * 0.4),
                     width: OBUserAvatar.AVATAR_SIZE_LARGE,
                   ),
-                  Expanded(
-                      child: OBProfileActions(user)),
+                  Expanded(child: OBProfileActions(user)),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  SizedBox(height: 30,),
                   OBProfileName(user),
                   OBProfileUsername(user),
                   OBProfileBio(user),
@@ -49,7 +49,19 @@ class OBProfileCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: -((OBUserAvatar.AVATAR_SIZE_LARGE / 2) * 0.7),
+          child: Container(
+            height: 20,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50))),
+          ),
+          top: -19,
+        ),
+        Positioned(
+          top: -((OBUserAvatar.AVATAR_SIZE_LARGE / 2) * 0.7) - 10,
           left: 30,
           child: StreamBuilder(
               stream: user.updateSubject,

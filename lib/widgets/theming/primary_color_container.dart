@@ -28,7 +28,8 @@ class OBPrimaryColorContainer extends StatelessWidget {
 
           Widget container = DecoratedBox(
             decoration: BoxDecoration(
-                color: themeValueParserService.parseColor(theme.primaryColor)),
+                color: themeValueParserService.parseColor(theme.primaryColor),
+                borderRadius: decoration?.borderRadius),
             child: child,
           );
 
