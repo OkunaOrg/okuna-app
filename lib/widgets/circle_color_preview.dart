@@ -1,46 +1,30 @@
 import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
 class OBCircleColorPreview extends StatelessWidget {
   final Circle circle;
   final OBCircleColorPreviewSize size;
+  static double circleSizeLarge = 45;
+  static double circleSizeMedium = 25;
+  static double circleSizeSmall = 15;
+  static double circleSizeExtraSmall = 10;
 
   OBCircleColorPreview(this.circle,
       {this.size = OBCircleColorPreviewSize.medium});
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
-
     double circleSize = _getCircleSize(size);
 
-    return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-
-          Color activeColor = themeValueParserService
-              .parseGradient(theme.primaryAccentColor)
-              .colors[0];
-
-          return Container(
-            height: circleSize,
-            width: circleSize,
-            decoration: BoxDecoration(
-                color: Pigment.fromString(circle.color),
-                border:
-                    Border.all(color: Color.fromARGB(10, 0, 0, 0), width: 3),
-                borderRadius: BorderRadius.circular(50)),
-          );
-        });
+    return Container(
+      height: circleSize,
+      width: circleSize,
+      decoration: BoxDecoration(
+          color: Pigment.fromString(circle.color),
+          border: Border.all(color: Color.fromARGB(10, 0, 0, 0), width: 3),
+          borderRadius: BorderRadius.circular(50)),
+    );
   }
 
   double _getCircleSize(OBCircleColorPreviewSize size) {
@@ -48,16 +32,16 @@ class OBCircleColorPreview extends StatelessWidget {
 
     switch (size) {
       case OBCircleColorPreviewSize.large:
-        circleSize = 40;
+        circleSize = circleSizeLarge;
         break;
       case OBCircleColorPreviewSize.medium:
-        circleSize = 25;
+        circleSize = circleSizeMedium;
         break;
       case OBCircleColorPreviewSize.small:
-        circleSize = 15;
+        circleSize = circleSizeSmall;
         break;
       case OBCircleColorPreviewSize.extraSmall:
-        circleSize = 10;
+        circleSize = circleSizeExtraSmall;
         break;
     }
 

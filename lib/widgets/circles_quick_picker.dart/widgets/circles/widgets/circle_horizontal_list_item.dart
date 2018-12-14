@@ -54,8 +54,8 @@ class OBCircleHorizontalListItem extends StatelessWidget {
             OBText(
               circle.name,
               maxLines: 1,
-              size: OBTextSize.small,
               style: TextStyle(
+                fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
             OBText(

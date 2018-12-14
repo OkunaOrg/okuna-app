@@ -1,6 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/circles_horizontal_list.dart';
@@ -31,6 +32,7 @@ class OBCirclesQuickPicker extends StatefulWidget {
 class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
   UserService _userService;
   ToastService _toastService;
+  ModalService _modalService;
 
   bool _needsBootstrap;
 
@@ -55,58 +57,32 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _modalService = openbookProvider.modalService;
 
     if (_needsBootstrap) {
       _bootstrap();
       _needsBootstrap = false;
     }
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        _buildNewCircleButton(),
-        Expanded(
-          child: Container(
-            height: 90,
-            child: OBCirclesHorizontalList(
-              _circles,
-              selectedCircles: _selectedCircles,
-              disabledCircles: _disabledCircles,
-              onCirclePressed: _onCirclePressed,
-            ),
-          ),
-        )
-      ],
+    return Container(
+      height: 110,
+      child: OBCirclesHorizontalList(
+        _circles,
+        selectedCircles: _selectedCircles,
+        disabledCircles: _disabledCircles,
+        onCirclePressed: _onCirclePressed,
+        onWantsToCreateANewCircle: _onWantsToCreateANewCircle,
+      ),
     );
   }
 
-  Widget _buildNewCircleButton() {
-    return GestureDetector(
-        onTap: () {},
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 60),
-            child: Column(
-              children: <Widget>[
-                OBIcon(
-                  OBIcons.add,
-                  size: OBIconSize.extraLarge,
-                  themeColor: OBIconThemeColor.primaryAccent,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                OBPrimaryAccentText(
-                  'New circle',
-                  size: OBTextSize.small,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          ),
-        ));
+  void _onWantsToCreateANewCircle() async {
+    Circle createdCircle =
+        await _modalService.openCreateConnectionsCircle(context: context);
+    if (createdCircle != null) {
+      _addCircle(createdCircle);
+      _addSelectedCircle(createdCircle);
+    }
   }
 
   void _onCirclePressed(Circle pressedCircle) {
@@ -130,6 +106,12 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
     Circle connectionsCircle = connectionsCircles.removeLast();
     connectionsCircles.insert(0, connectionsCircle);
     this._setCircles(connectionsCircles);
+  }
+
+  void _addCircle(Circle circle) {
+    setState(() {
+      _circles.add(circle);
+    });
   }
 
   void _setCircles(List<Circle> circles) {
