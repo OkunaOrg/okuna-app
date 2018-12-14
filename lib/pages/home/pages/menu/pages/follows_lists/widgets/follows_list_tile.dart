@@ -15,13 +15,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class OBFollowsListTile extends StatefulWidget {
   final FollowsList followsList;
   final VoidCallback onFollowsListDeletedCallback;
-  final OnWantsToSeeFollowsList onWantsToSeeFollowsList;
 
   OBFollowsListTile(
-      {@required this.followsList,
-      Key key,
-      this.onFollowsListDeletedCallback,
-      this.onWantsToSeeFollowsList})
+      {@required this.followsList, Key key, this.onFollowsListDeletedCallback})
       : super(key: key);
 
   @override
@@ -46,13 +42,15 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    var navigationService = provider.navigationService;
 
     Widget tile = Slidable(
       delegate: new SlidableDrawerDelegate(),
       actionExtentRatio: 0.25,
       child: ListTile(
           onTap: () {
-            widget.onWantsToSeeFollowsList(widget.followsList);
+            navigationService.navigateToFollowsList(
+                followsList: widget.followsList, context: context);
           },
           leading: OBFollowsListEmoji(
             size: OBFollowsListEmojiSize.medium,

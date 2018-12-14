@@ -13,6 +13,8 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:Openbook/services/string_template.dart';
@@ -62,6 +64,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
       ConnectionsCirclesApiService();
   FollowsListsApiService followsListsApiService = FollowsListsApiService();
   ThemeValueParserService themeValueParserService = ThemeValueParserService();
+  ModalService modalService = ModalService();
+  NavigationService navigationService = NavigationService();
 
   LocalizationService localizationService;
   DeepLinksService deepLinksService = DeepLinksService();

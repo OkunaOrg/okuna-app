@@ -12,33 +12,22 @@ import 'package:flutter/material.dart';
 
 class OBPost extends StatelessWidget {
   final Post _post;
-  final OnWantsToCommentPost onWantsToCommentPost;
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToSeePostComments onWantsToSeePostComments;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
-  OBPost(this._post,
-      {this.onWantsToReactToPost,
-      this.onWantsToCommentPost,
-      this.onWantsToSeePostComments,
-      this.onWantsToSeeUserProfile});
+  OBPost(this._post);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        OBPostHeader(_post, onWantsToSeeUserProfile: onWantsToSeeUserProfile),
+        OBPostHeader(_post),
         OBPostBody(_post),
         OBPostReactions(_post),
         OBPostComments(
           _post,
-          onWantsToSeePostComments: onWantsToSeePostComments,
         ),
         OBPostActions(
           _post,
-          onWantsToCommentPost: onWantsToCommentPost,
-          onWantsToReactToPost: onWantsToReactToPost,
         ),
         SizedBox(
           height: 16,

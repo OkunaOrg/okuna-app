@@ -14,12 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBConnectionsCirclesPage extends StatefulWidget {
-  final OnWantsToCreateConnectionsCircle onWantsToCreateConnectionsCircle;
-  final OnWantsToSeeConnectionsCircle onWantsToSeeConnectionsCircle;
-
-  OBConnectionsCirclesPage(
-      {@required this.onWantsToCreateConnectionsCircle,
-      @required this.onWantsToSeeConnectionsCircle});
+  OBConnectionsCirclesPage();
 
   @override
   State<OBConnectionsCirclesPage> createState() {
@@ -52,6 +47,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    var modalService = provider.modalService;
 
     var loggedInUser = _userService.getLoggedInUser();
 
@@ -100,8 +96,6 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                                   connectionsCircle: connectionsCircle,
                                   isReadOnly: loggedInUser
                                       .isConnectionsCircle(connectionsCircle),
-                                  onWantsToSeeConnectionsCircle:
-                                      widget.onWantsToSeeConnectionsCircle,
                                   onConnectionsCircleDeletedCallback:
                                       onConnectionsCircleDeletedCallback,
                                 );
@@ -117,8 +111,8 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                 right: 20.0,
                 child: OBAccentButton(
                     onPressed: () async {
-                      Circle createdConnectionsCircle =
-                          await widget.onWantsToCreateConnectionsCircle();
+                      Circle createdConnectionsCircle = await modalService
+                          .openCreateConnectionsCircle(context: context);
                       if (createdConnectionsCircle != null) {
                         _onConnectionsCircleCreated(createdConnectionsCircle);
                       }

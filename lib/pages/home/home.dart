@@ -46,7 +46,6 @@ class OBHomePageState extends State<OBHomePage> {
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
-  OBMainMenuPageController _menuPageController;
 
   @override
   void initState() {
@@ -57,7 +56,6 @@ class OBHomePageState extends State<OBHomePage> {
     _timelinePageController = OBTimelinePageController();
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
-    _menuPageController = OBMainMenuPageController();
   }
 
   @override
@@ -97,18 +95,11 @@ class OBHomePageState extends State<OBHomePage> {
     switch (OBHomePageTabs.values[index]) {
       case OBHomePageTabs.home:
         page = OBTimelinePage(
-            controller: _timelinePageController,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToCreatePost: _onWantsToCreatePost,
-            onWantsToEditUserProfile: _onWantsToEditUserProfile,
-            onWantsToPickCircles: _onWantsToPickCircles);
+            controller: _timelinePageController,);
         break;
       case OBHomePageTabs.search:
         page = OBMainSearchPage(
-            controller: _searchPageController,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToEditUserProfile: _onWantsToEditUserProfile,
-            onWantsToPickCircles: _onWantsToPickCircles);
+            controller: _searchPageController,);
         break;
       case OBHomePageTabs.notifications:
         break;
@@ -117,22 +108,10 @@ class OBHomePageState extends State<OBHomePage> {
         break;
       case OBHomePageTabs.profile:
         page = OBOwnProfilePage(
-            onWantsToEditUserProfile: _onWantsToEditUserProfile,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToPickCircles: _onWantsToPickCircles,
             controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
-        page = OBMainMenuPage(
-          controller: _menuPageController,
-          onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
-          onWantsToEditFollowsList: _onWantsToEditFollowsList,
-          onWantsToReactToPost: _onWantsToReactToPost,
-          onWantsToEditUserProfile: _onWantsToEditUserProfile,
-          onWantsToPickCircles: _onWantsToPickCircles,
-          onWantsToCreateConnectionsCircle: _onWantsToCreateConnectionsCircle,
-          onWantsToEditConnectionsCircle: _onWantsToEditConnectionsCircle,
-        );
+        page = OBMainMenuPage();
         break;
       default:
         throw 'Unhandled index';
@@ -175,7 +154,7 @@ class OBHomePageState extends State<OBHomePage> {
             _searchPageController.scrollToTop();
           }
         }
-
+/*
         if (tappedTab == OBHomePageTabs.menu &&
             currentTab == OBHomePageTabs.menu) {
           if (_menuPageController.isAttached() &&
@@ -184,7 +163,7 @@ class OBHomePageState extends State<OBHomePage> {
           } else {
             _menuPageController.scrollToTop();
           }
-        }
+        }*/
 
         _lastIndex = index;
         return true;
@@ -241,100 +220,6 @@ class OBHomePageState extends State<OBHomePage> {
         ),
       ],
     );
-  }
-
-  Future<Post> _onWantsToCreatePost() async {
-    Post createdPost = await Navigator.of(context).push(MaterialPageRoute<Post>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return CreatePostModal();
-        }));
-
-    return createdPost;
-  }
-
-  Future<PostReaction> _onWantsToReactToPost(Post post) async {
-    PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<PostReaction>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBReactToPostModal(post),
-                )));
-
-    return postReaction;
-  }
-
-  Future<List<Circle>> _onWantsToPickCircles() async {
-    List<Circle> circles = await Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<List<Circle>>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBPickCirclesModal(),
-                )));
-
-    return circles;
-  }
-
-  Future<void> _onWantsToEditUserProfile(User user) async {
-    Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<PostReaction>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBEditUserProfileModal(user),
-                )));
-  }
-
-  Future<FollowsList> _onWantsToCreateFollowsList() async {
-    FollowsList createdFollowsList =
-        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return OBSaveFollowsListModal(
-                autofocusNameTextField: true,
-              );
-            }));
-
-    return createdFollowsList;
-  }
-
-  Future<FollowsList> _onWantsToEditFollowsList(FollowsList followsList) async {
-    FollowsList editedFollowsList =
-        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return OBSaveFollowsListModal(
-                followsList: followsList,
-              );
-            }));
-
-    return editedFollowsList;
-  }
-
-  Future<Circle> _onWantsToCreateConnectionsCircle() async {
-    Circle createdConnectionsCircle =
-        await Navigator.of(context).push(MaterialPageRoute<Circle>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return OBSaveConnectionsCircleModal(
-                autofocusNameTextField: true,
-              );
-            }));
-
-    return createdConnectionsCircle;
-  }
-
-  Future<Circle> _onWantsToEditConnectionsCircle(
-      Circle connectionsCircle) async {
-    Circle editedConnectionsCircle =
-        await Navigator.of(context).push(MaterialPageRoute<Circle>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return OBSaveConnectionsCircleModal(
-                connectionsCircle: connectionsCircle,
-              );
-            }));
-
-    return editedConnectionsCircle;
   }
 
   void _bootstrap() async {

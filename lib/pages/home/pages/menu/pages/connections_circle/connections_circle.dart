@@ -1,9 +1,8 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_header/connections_circle_header.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_users.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -14,13 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBConnectionsCirclePage extends StatefulWidget {
-  final OnWantsToEditConnectionsCircle onWantsToEditConnectionsCircle;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
   final Circle connectionsCircle;
 
-  OBConnectionsCirclePage(this.connectionsCircle,
-      {@required this.onWantsToEditConnectionsCircle,
-      @required this.onWantsToSeeUserProfile});
+  OBConnectionsCirclePage(
+    this.connectionsCircle,
+  );
 
   @override
   State<OBConnectionsCirclePage> createState() {
@@ -31,6 +28,7 @@ class OBConnectionsCirclePage extends StatefulWidget {
 class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
   UserService _userService;
   ToastService _toastService;
+  ModalService _modalService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   bool _needsBootstrap;
@@ -49,6 +47,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    _modalService = provider.modalService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -72,7 +71,6 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
                     Expanded(
                       child: OBConnectionsCircleUsers(
                         widget.connectionsCircle,
-                        onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
                       ),
                     ),
                   ],
@@ -86,7 +84,8 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
     if (_isConnectionsCircle) return SizedBox();
     return GestureDetector(
       onTap: () {
-        widget.onWantsToEditConnectionsCircle(widget.connectionsCircle);
+        _modalService.openEditConnectionsCircle(
+            connectionsCircle: widget.connectionsCircle, context: context);
       },
       child: Text('Edit'),
     );

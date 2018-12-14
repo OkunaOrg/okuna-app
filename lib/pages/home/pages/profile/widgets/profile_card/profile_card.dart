@@ -1,6 +1,4 @@
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/home.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_connected_in.dart';
@@ -13,11 +11,8 @@ import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
   final User user;
-  final OnWantsToEditUserProfile onWantsToEditUserProfile;
-  final OnWantsToPickCircles onWantsToPickCircles;
 
-  OBProfileCard(this.user,
-      {this.onWantsToEditUserProfile, this.onWantsToPickCircles});
+  OBProfileCard(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +31,7 @@ class OBProfileCard extends StatelessWidget {
                     width: OBUserAvatar.AVATAR_SIZE_LARGE,
                   ),
                   Expanded(
-                      child: OBProfileActions(user,
-                          onWantsToEditUserProfile: onWantsToEditUserProfile,
-                          onWantsToPickCircles: onWantsToPickCircles)),
+                      child: OBProfileActions(user)),
                 ],
               ),
               Column(

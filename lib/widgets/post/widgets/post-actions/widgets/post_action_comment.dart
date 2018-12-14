@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,12 +7,14 @@ import 'package:flutter/material.dart';
 
 class OBPostActionComment extends StatelessWidget {
   final Post _post;
-  final OnWantsToCommentPost onWantsToCommentPost;
 
-  OBPostActionComment(this._post, {this.onWantsToCommentPost});
+  OBPostActionComment(this._post);
 
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    var navigationService = openbookProvider.navigationService;
+
     return FlatButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -25,9 +28,8 @@ class OBPostActionComment extends StatelessWidget {
         ),
         color: Color.fromARGB(10, 0, 0, 0),
         onPressed: () {
-          if (onWantsToCommentPost != null) {
-            onWantsToCommentPost(_post);
-          }
+          navigationService.navigateToCommentPost(
+              post: _post, context: context);
         },
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(50.0)));

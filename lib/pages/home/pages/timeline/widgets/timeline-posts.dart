@@ -18,17 +18,9 @@ import 'package:loadmore/loadmore.dart';
 
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
-  final OnWantsToCommentPost onWantsToCommentPost;
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToSeePostComments onWantsToSeePostComments;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBTimelinePosts(
-      {this.controller,
-      this.onWantsToReactToPost,
-      this.onWantsToCommentPost,
-      this.onWantsToSeePostComments,
-      this.onWantsToSeeUserProfile});
+      {this.controller,});
 
   @override
   OBTimelinePostsState createState() {
@@ -96,10 +88,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                   var post = _posts[index];
                   return OBPost(
                     post,
-                    onWantsToReactToPost: widget.onWantsToReactToPost,
-                    onWantsToCommentPost: widget.onWantsToCommentPost,
-                    onWantsToSeePostComments: widget.onWantsToSeePostComments,
-                    onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
                   );
                 }),
             onLoadMore: _loadMorePosts));

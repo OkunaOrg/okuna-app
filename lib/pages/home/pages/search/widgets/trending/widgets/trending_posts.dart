@@ -1,31 +1,19 @@
 import 'dart:async';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/posts_list.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
-import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBTrendingPosts extends StatefulWidget {
   final OBTrendingPostsController controller;
-  final OnWantsToCommentPost onWantsToCommentPost;
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToSeePostComments onWantsToSeePostComments;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBTrendingPosts(
-      {this.controller,
-      this.onWantsToSeeUserProfile,
-      this.onWantsToReactToPost,
-      this.onWantsToCommentPost,
-      this.onWantsToSeePostComments});
+      {this.controller,});
 
   @override
   State<StatefulWidget> createState() {
@@ -75,11 +63,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
         Column(
             children: _posts.map((Post post) {
           return OBPost(
-            post,
-            onWantsToReactToPost: widget.onWantsToReactToPost,
-            onWantsToCommentPost: widget.onWantsToCommentPost,
-            onWantsToSeePostComments: widget.onWantsToSeePostComments,
-            onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
+            post
           );
         }).toList())
       ],

@@ -2,6 +2,7 @@ import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/circle_color_preview.dart';
@@ -14,14 +15,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class OBConnectionsCircleTile extends StatefulWidget {
   final Circle connectionsCircle;
   final VoidCallback onConnectionsCircleDeletedCallback;
-  final OnWantsToSeeConnectionsCircle onWantsToSeeConnectionsCircle;
   final bool isReadOnly;
 
   OBConnectionsCircleTile(
       {@required this.connectionsCircle,
       Key key,
       this.onConnectionsCircleDeletedCallback,
-      this.onWantsToSeeConnectionsCircle,
       this.isReadOnly = false})
       : super(key: key);
 
@@ -35,6 +34,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
 
   @override
   void initState() {
@@ -47,6 +47,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    _navigationService = provider.navigationService;
 
     Widget tile = _buildTile();
 
@@ -76,7 +77,8 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
 
     return ListTile(
         onTap: () {
-          widget.onWantsToSeeConnectionsCircle(widget.connectionsCircle);
+          _navigationService.navigateToConnectionsCircle(
+              connectionsCircle: widget.connectionsCircle, context: context);
         },
         leading: OBCircleColorPreview(
           widget.connectionsCircle,

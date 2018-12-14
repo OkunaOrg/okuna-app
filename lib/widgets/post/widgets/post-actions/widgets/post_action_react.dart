@@ -10,14 +10,14 @@ import 'package:pigment/pigment.dart';
 
 class OBPostActionReact extends StatelessWidget {
   final Post _post;
-  OnWantsToReactToPost onWantsToReactToPost;
 
-  OBPostActionReact(this._post, {this.onWantsToReactToPost});
+  OBPostActionReact(this._post);
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    var userService = provider.userService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var userService = openbookProvider.userService;
+    var modalService = openbookProvider.modalService;
 
     return StreamBuilder(
       stream: _post.updateSubject,
@@ -32,8 +32,8 @@ class OBPostActionReact extends StatelessWidget {
             await userService.deletePostReaction(
                 postReaction: reaction, post: _post);
             _post.clearReaction();
-          } else if (onWantsToReactToPost != null) {
-            onWantsToReactToPost(_post);
+          } else {
+            modalService.openReactToPost(post: _post, context: context);
           }
         };
 

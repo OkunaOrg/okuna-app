@@ -1,7 +1,5 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/home.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
@@ -11,9 +9,6 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
-import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,21 +17,10 @@ import 'package:loadmore/loadmore_widget.dart';
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
   final User user;
-  final OnWantsToCommentPost onWantsToCommentPost;
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToSeePostComments onWantsToSeePostComments;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
-  final OnWantsToEditUserProfile onWantsToEditUserProfile;
-  final OnWantsToPickCircles onWantsToPickCircles;
 
   OBProfilePage(this.user,
-      {@required this.onWantsToSeeUserProfile,
-      @required this.onWantsToSeePostComments,
-      @required this.onWantsToReactToPost,
-      @required this.onWantsToCommentPost,
-      @required this.onWantsToEditUserProfile,
-      this.controller,
-      @required this.onWantsToPickCircles});
+      {
+      this.controller,});
 
   @override
   OBProfilePageState createState() {
@@ -98,11 +82,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                                 return Column(
                                   children: <Widget>[
                                     OBProfileCover(_user),
-                                    OBProfileCard(_user,
-                                        onWantsToPickCircles:
-                                            widget.onWantsToPickCircles,
-                                        onWantsToEditUserProfile:
-                                            widget.onWantsToEditUserProfile),
+                                    OBProfileCard(_user,),
                                     Divider()
                                   ],
                                 );
@@ -113,15 +93,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                               var post = _posts[postIndex];
 
                               return OBPost(
-                                post,
-                                onWantsToReactToPost:
-                                    widget.onWantsToReactToPost,
-                                onWantsToCommentPost:
-                                    widget.onWantsToCommentPost,
-                                onWantsToSeePostComments:
-                                    widget.onWantsToSeePostComments,
-                                onWantsToSeeUserProfile:
-                                    widget.onWantsToSeeUserProfile,
+                                post
                               );
                             }),
                         onLoadMore: _loadMorePosts),

@@ -10,6 +10,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
@@ -80,9 +81,9 @@ class OBSaveConnectionsCircleModalState
 
     _color = _color ?? themeService.generateRandomHexColor();
 
-    return Scaffold(
-        appBar: _buildNavigationBar(),
-        body: OBPrimaryColorContainer(
+    return OBCupertinoPageScaffold(
+        navigationBar: _buildNavigationBar(),
+        child: OBPrimaryColorContainer(
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             child: Form(

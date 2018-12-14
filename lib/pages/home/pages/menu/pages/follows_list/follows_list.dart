@@ -1,9 +1,7 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -14,13 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBFollowsListPage extends StatefulWidget {
-  final OnWantsToEditFollowsList onWantsToEditFollowsList;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
   final FollowsList followsList;
 
-  OBFollowsListPage(this.followsList,
-      {@required this.onWantsToEditFollowsList,
-      @required this.onWantsToSeeUserProfile});
+  OBFollowsListPage(this.followsList);
 
   @override
   State<OBFollowsListPage> createState() {
@@ -44,9 +38,11 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
-    _toastService = provider.toastService;
+    var openbookProvider = OpenbookProvider.of(context);
+    _userService = openbookProvider.userService;
+    _toastService = openbookProvider.toastService;
+    var modalService = openbookProvider.modalService;
+    var navigationService = openbookProvider.navigationService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -58,7 +54,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
         navigationBar: OBNavigationBar(
           trailing: GestureDetector(
             onTap: () {
-              widget.onWantsToEditFollowsList(widget.followsList);
+              modalService.openEditFollowsList(followsList: widget.followsList, context: context);
             },
             child: Text('Edit'),
           ),
@@ -73,8 +69,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
                     OBFollowsListHeader(widget.followsList),
                     Expanded(
                       child: OBFollowsListUsers(
-                        widget.followsList,
-                        onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
+                        widget.followsList
                       ),
                     ),
                   ],

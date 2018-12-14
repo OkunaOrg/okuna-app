@@ -1,25 +1,31 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBConnectionsCircleUsers extends StatelessWidget {
   final Circle connectionsCircle;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
-  OBConnectionsCircleUsers(this.connectionsCircle,
-      {@required this.onWantsToSeeUserProfile});
+  OBConnectionsCircleUsers(this.connectionsCircle);
 
   @override
   Widget build(BuildContext context) {
+    var navigationService = OpenbookProvider.of(context).navigationService;
+
     return StreamBuilder(
         stream: connectionsCircle.updateSubject,
         initialData: connectionsCircle,
         builder: (BuildContext context, AsyncSnapshot<Circle> snapshot) {
           var connectionsCircle = snapshot.data;
           List<User> users = connectionsCircle.users?.users ?? [];
+
+          var onUserTilePressed = (User user) {
+            navigationService.navigateToUserProfile(
+                user: user, context: context);
+          };
 
           return ListView.builder(
               physics: AlwaysScrollableScrollPhysics(),
@@ -29,7 +35,7 @@ class OBConnectionsCircleUsers extends StatelessWidget {
                 var user = users[index];
 
                 Widget trailing;
-                bool isFullyConnected = user.isFullyConnected;
+                bool isFullyConnected = user.isFullyConnected ?? true;
 
                 if (!isFullyConnected) {
                   trailing = Row(
@@ -41,7 +47,7 @@ class OBConnectionsCircleUsers extends StatelessWidget {
                 return OBUserTile(
                   user,
                   showFollowing: false,
-                  onUserTilePressed: onWantsToSeeUserProfile,
+                  onUserTilePressed: onUserTilePressed,
                   trailing: trailing,
                 );
               });

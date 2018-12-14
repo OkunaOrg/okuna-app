@@ -14,12 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBFollowsListsPage extends StatefulWidget {
-  final OnWantsToCreateFollowsList onWantsToCreateFollowsList;
-  final OnWantsToSeeFollowsList onWantsToSeeFollowsList;
-
-  OBFollowsListsPage(
-      {this.onWantsToCreateFollowsList, this.onWantsToSeeFollowsList});
-
   @override
   State<OBFollowsListsPage> createState() {
     return OBFollowsListsPageState();
@@ -51,6 +45,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    var modalService = provider.modalService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -93,8 +88,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
                                 return OBFollowsListTile(
                                   followsList: followsList,
-                                  onWantsToSeeFollowsList:
-                                      widget.onWantsToSeeFollowsList,
                                   onFollowsListDeletedCallback:
                                       onFollowsListDeletedCallback,
                                 );
@@ -110,8 +103,8 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                 right: 20.0,
                 child: OBAccentButton(
                     onPressed: () async {
-                      FollowsList createdFollowsList =
-                          await widget.onWantsToCreateFollowsList();
+                      FollowsList createdFollowsList = await modalService
+                          .openCreateFollowsList(context: context);
                       if (createdFollowsList != null) {
                         _onFollowsListCreated(createdFollowsList);
                       }

@@ -1,21 +1,15 @@
 import 'dart:async';
-
-import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
-import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/lib/base_state.dart';
-import 'package:Openbook/pages/home/pages/post/post.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/trending/trending.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -23,18 +17,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMainSearchPage extends StatefulWidget {
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToEditUserProfile onWantsToEditUserProfile;
-  final OnWantsToPickCircles onWantsToPickCircles;
 
   final OBMainSearchPageController controller;
 
   const OBMainSearchPage(
       {Key key,
-      @required this.onWantsToReactToPost,
-      @required this.onWantsToPickCircles,
-      this.controller,
-      @required this.onWantsToEditUserProfile})
+      this.controller})
       : super(key: key);
 
   @override
@@ -46,6 +34,7 @@ class OBMainSearchPage extends StatefulWidget {
 class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
 
   bool _hasSearch;
   bool _requestInProgress;
@@ -70,6 +59,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _navigationService = openbookProvider.navigationService;
 
     Widget currentWidget;
 
@@ -90,10 +80,6 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
     } else {
       currentWidget = OBTrending(
         controller: _trendingController,
-        onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-        onWantsToSeePostComments: _onWantsToSeePostComments,
-        onWantsToCommentPost: _onWantsToCommentPost,
-        onWantsToReactToPost: widget.onWantsToReactToPost,
       );
     }
 
@@ -176,48 +162,7 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
 
   void _onSearchUserPressed(User user) {
     FocusScope.of(context).requestFocus(new FocusNode());
-    _onWantsToSeeUserProfile(user);
-  }
-
-  void _onWantsToSeeUserProfile(User user) async {
-    incrementPushedRoutes();
-    await Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBProfilePage(
-                user,
-                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                onWantsToSeePostComments: _onWantsToSeePostComments,
-                onWantsToCommentPost: _onWantsToCommentPost,
-                onWantsToReactToPost: widget.onWantsToReactToPost,
-                onWantsToPickCircles: widget.onWantsToPickCircles,
-                onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-              ),
-            )));
-    decrementPushedRoutes();
-  }
-
-  void _onWantsToCommentPost(Post post) async {
-    incrementPushedRoutes();
-    await Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBPostPage(post,
-                  autofocusCommentInput: true,
-                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                  onWantsToReactToPost: widget.onWantsToReactToPost),
-            )));
-    decrementPushedRoutes();
-  }
-
-  void _onWantsToSeePostComments(Post post) async {
-    incrementPushedRoutes();
-    await Navigator.of(context).push(CupertinoPageRoute<void>(
-        builder: (BuildContext context) => Material(
-              child: OBPostPage(post,
-                  autofocusCommentInput: false,
-                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                  onWantsToReactToPost: widget.onWantsToReactToPost),
-            )));
-    decrementPushedRoutes();
+    _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
   @override

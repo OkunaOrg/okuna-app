@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 
 class OBPostHeader extends StatelessWidget {
   final Post _post;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
-  OBPostHeader(this._post, {this.onWantsToSeeUserProfile});
+  OBPostHeader(this._post);
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var userService = openbookProvider.userService;
+    var navigationService = openbookProvider.navigationService;
 
     User user = userService.getLoggedInUser();
 
@@ -34,7 +34,8 @@ class OBPostHeader extends StatelessWidget {
 
             return OBUserAvatar(
               onPressed: () {
-                onWantsToSeeUserProfile(postCreator);
+                navigationService.navigateToUserProfile(
+                    user: postCreator, context: context);
               },
               size: OBUserAvatarSize.medium,
               avatarUrl: postCreator.getProfileAvatar(),
@@ -86,7 +87,8 @@ class OBPostHeader extends StatelessWidget {
           }),
       title: GestureDetector(
         onTap: () {
-          onWantsToSeeUserProfile(_post.creator);
+          navigationService.navigateToUserProfile(
+              user: _post.creator, context: context);
         },
         child: StreamBuilder(
             stream: _post.creator.updateSubject,
