@@ -30,23 +30,16 @@ class OBColorField extends StatefulWidget {
 class OBColorFieldState extends State<OBColorField> {
   String _color;
   ThemeService _themeService;
-  bool _needsBootstrap;
 
   @override
   void initState() {
     super.initState();
-    _needsBootstrap = true;
     _color = widget.initialColor;
   }
 
   @override
   Widget build(BuildContext context) {
     _themeService = OpenbookProvider.of(context).themeService;
-
-    if (_needsBootstrap) {
-      _bootstrap();
-      _needsBootstrap = false;
-    }
 
     return Column(
       children: <Widget>[
@@ -74,11 +67,6 @@ class OBColorFieldState extends State<OBColorField> {
     );
   }
 
-  void _bootstrap() {
-    if (_color == null) {
-      _refreshColor();
-    }
-  }
 
   void _refreshColor() {
     setState(() {

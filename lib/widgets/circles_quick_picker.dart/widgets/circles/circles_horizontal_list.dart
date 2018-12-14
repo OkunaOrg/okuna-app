@@ -1,6 +1,6 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
-import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/widgets/circle_horizontal_preview.dart';
+import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/widgets/circle_horizontal_list_item.dart';
 import 'package:flutter/material.dart';
 
 class OBCirclesHorizontalList extends StatelessWidget {
@@ -28,7 +28,7 @@ class OBCirclesHorizontalList extends StatelessWidget {
           padding: EdgeInsets.only(
             left: 20,
           ),
-          child: OBCircleHorizontalPreview(circle,
+          child: OBCircleHorizontalListItem(circle,
               onCirclePressed: onCirclePressed,
               isSelected: isSelected,
               isDisabled: isDisabled),

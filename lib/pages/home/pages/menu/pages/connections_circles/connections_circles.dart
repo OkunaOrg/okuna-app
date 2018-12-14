@@ -53,6 +53,8 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
     _userService = provider.userService;
     _toastService = provider.toastService;
 
+    var loggedInUser = _userService.getLoggedInUser();
+
     if (_needsBootstrap) {
       _bootstrap();
       _needsBootstrap = false;
@@ -96,6 +98,8 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
 
                                 return OBConnectionsCircleTile(
                                   connectionsCircle: connectionsCircle,
+                                  isReadOnly: loggedInUser
+                                      .isConnectionsCircle(connectionsCircle),
                                   onWantsToSeeConnectionsCircle:
                                       widget.onWantsToSeeConnectionsCircle,
                                   onConnectionsCircleDeletedCallback:
@@ -139,6 +143,9 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
     try {
       _connectionsCircles =
           (await _userService.getConnectionsCircles()).circles;
+      // This assumes the connections circle always come last
+      Circle connectionsCircle = _connectionsCircles.removeLast();
+      _connectionsCircles.insert(0, connectionsCircle);
       _setConnectionsCircles(_connectionsCircles);
       _scrollToTop();
     } on HttpieConnectionRefusedError catch (error) {
@@ -182,7 +189,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
   }
 
   void _onConnectionsCircleCreated(Circle createdConnectionsCircle) {
-    this._connectionsCircles.insert(0, createdConnectionsCircle);
+    this._connectionsCircles.insert(1, createdConnectionsCircle);
     this._setConnectionsCircles(this._connectionsCircles.toList());
     _scrollToTop();
   }

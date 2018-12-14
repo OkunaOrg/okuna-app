@@ -15,12 +15,14 @@ class OBConnectionsCircleTile extends StatefulWidget {
   final Circle connectionsCircle;
   final VoidCallback onConnectionsCircleDeletedCallback;
   final OnWantsToSeeConnectionsCircle onWantsToSeeConnectionsCircle;
+  final bool isReadOnly;
 
   OBConnectionsCircleTile(
       {@required this.connectionsCircle,
       Key key,
       this.onConnectionsCircleDeletedCallback,
-      this.onWantsToSeeConnectionsCircle})
+      this.onWantsToSeeConnectionsCircle,
+      this.isReadOnly = false})
       : super(key: key);
 
   @override
@@ -46,21 +48,14 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
     _userService = provider.userService;
     _toastService = provider.toastService;
 
-    String prettyCount = getPrettyCount(widget.connectionsCircle.usersCount);
+    Widget tile = _buildTile();
 
-    Widget tile = Slidable(
+    if (widget.isReadOnly) return tile;
+
+    tile = Slidable(
       delegate: new SlidableDrawerDelegate(),
       actionExtentRatio: 0.25,
-      child: ListTile(
-          onTap: () {
-            widget.onWantsToSeeConnectionsCircle(widget.connectionsCircle);
-          },
-          leading: OBCircleColorPreview(widget.connectionsCircle, size: OBCircleColorPreviewSize.medium,),
-          title: OBText(
-            widget.connectionsCircle.name,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: OBSecondaryText(prettyCount + ' people')),
+      child: tile,
       secondaryActions: <Widget>[
         IconSlideAction(
             caption: 'Delete',
@@ -74,6 +69,24 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
       tile = Opacity(opacity: 0.5, child: tile);
     }
     return tile;
+  }
+
+  Widget _buildTile() {
+    String prettyCount = getPrettyCount(widget.connectionsCircle.usersCount);
+
+    return ListTile(
+        onTap: () {
+          widget.onWantsToSeeConnectionsCircle(widget.connectionsCircle);
+        },
+        leading: OBCircleColorPreview(
+          widget.connectionsCircle,
+          size: OBCircleColorPreviewSize.medium,
+        ),
+        title: OBText(
+          widget.connectionsCircle.name,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: OBSecondaryText(prettyCount + ' people'));
   }
 
   void _deleteConnectionsCircle() async {

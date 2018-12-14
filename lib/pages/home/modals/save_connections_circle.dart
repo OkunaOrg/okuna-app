@@ -40,7 +40,7 @@ class OBSaveConnectionsCircleModalState
   bool _requestInProgress;
   bool _formWasSubmitted;
   bool _formValid;
-  bool _hasExistingList;
+  bool _hasExistingCircle;
   String _takenConnectionsCircleName;
   List<User> _users;
 
@@ -57,12 +57,12 @@ class OBSaveConnectionsCircleModalState
     _formWasSubmitted = false;
     _nameController = TextEditingController();
     _formKey = GlobalKey<FormState>();
-    _hasExistingList = widget.connectionsCircle != null;
-    _users = _hasExistingList && widget.connectionsCircle.hasUsers()
+    _hasExistingCircle = widget.connectionsCircle != null;
+    _users = _hasExistingCircle && widget.connectionsCircle.hasUsers()
         ? widget.connectionsCircle.users.users.toList()
         : [];
 
-    if (_hasExistingList) {
+    if (_hasExistingCircle) {
       _nameController.text = widget.connectionsCircle.name;
       _color = widget.connectionsCircle.color;
     }
@@ -76,6 +76,9 @@ class OBSaveConnectionsCircleModalState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _validationService = openbookProvider.validationService;
+    var themeService = openbookProvider.themeService;
+
+    _color = _color ?? themeService.generateRandomHexColor();
 
     return Scaffold(
         appBar: _buildNavigationBar(),
@@ -97,7 +100,7 @@ class OBSaveConnectionsCircleModalState
                                 controller: _nameController,
                                 decoration: InputDecoration(
                                     labelText: 'Name',
-                                    hintText: 'e.g. Friends, Family.'),
+                                    hintText: 'e.g. Friends, Family, Work.'),
                                 validator: (String connectionsCircleName) {
                                   if (!_formWasSubmitted) return null;
 
@@ -156,7 +159,7 @@ class OBSaveConnectionsCircleModalState
             Navigator.pop(context);
           },
         ),
-        title: _hasExistingList ? 'Edit circle' : 'Create circle',
+        title: _hasExistingCircle ? 'Edit circle' : 'Create circle',
         trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
@@ -195,7 +198,7 @@ class OBSaveConnectionsCircleModalState
         return;
       }
 
-      Circle connectionsCircle = await (_hasExistingList
+      Circle connectionsCircle = await (_hasExistingCircle
           ? _userService.updateConnectionsCircle(widget.connectionsCircle,
               name: _nameController.text != widget.connectionsCircle.name
                   ? _nameController.text
@@ -218,7 +221,7 @@ class OBSaveConnectionsCircleModalState
 
   Future<bool> _isConnectionsCircleNameTaken(
       String connectionsCircleName) async {
-    if (_hasExistingList &&
+    if (_hasExistingCircle &&
         widget.connectionsCircle.name == _nameController.text) {
       return false;
     }

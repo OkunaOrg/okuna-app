@@ -423,11 +423,11 @@ class UserService {
     return Connection.fromJson(json.decode(response.body));
   }
 
-  Future<FollowsList> getConnectionsCircleWithId(int circleId) async {
+  Future<Circle> getConnectionsCircleWithId(int circleId) async {
     HttpieResponse response =
         await _connectionsCirclesApiService.getCircleWithId(circleId);
     _checkResponseIsOk(response);
-    return FollowsList.fromJSON(json.decode(response.body));
+    return Circle.fromJSON(json.decode(response.body));
   }
 
   Future<CirclesList> getConnectionsCircles() async {

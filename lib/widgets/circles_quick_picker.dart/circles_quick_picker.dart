@@ -4,6 +4,9 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/circles_horizontal_list.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/primary_accent_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,11 +14,13 @@ class OBCirclesQuickPicker extends StatefulWidget {
   final OnCirclesPicked onCirclesPicked;
   final List<Circle> initialPickedCircles;
   final List<Circle> initialCircles;
+  final OnWantsToCreateNewCircle onWantsToCreateNewCircle;
 
   OBCirclesQuickPicker(
       {@required this.onCirclesPicked,
       this.initialPickedCircles,
-      this.initialCircles});
+      this.initialCircles,
+      @required this.onWantsToCreateNewCircle});
 
   @override
   State<StatefulWidget> createState() {
@@ -56,15 +61,52 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
       _needsBootstrap = false;
     }
 
-    return Container(
-      height: 90,
-      child: OBCirclesHorizontalList(
-        _circles,
-        selectedCircles: _selectedCircles,
-        disabledCircles: _disabledCircles,
-        onCirclePressed: _onCirclePressed,
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _buildNewCircleButton(),
+        Expanded(
+          child: Container(
+            height: 90,
+            child: OBCirclesHorizontalList(
+              _circles,
+              selectedCircles: _selectedCircles,
+              disabledCircles: _disabledCircles,
+              onCirclePressed: _onCirclePressed,
+            ),
+          ),
+        )
+      ],
     );
+  }
+
+  Widget _buildNewCircleButton() {
+    return GestureDetector(
+        onTap: () {},
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: 60),
+            child: Column(
+              children: <Widget>[
+                OBIcon(
+                  OBIcons.add,
+                  size: OBIconSize.extraLarge,
+                  themeColor: OBIconThemeColor.primaryAccent,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                OBPrimaryAccentText(
+                  'New circle',
+                  size: OBTextSize.small,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 
   void _onCirclePressed(Circle pressedCircle) {
@@ -83,7 +125,11 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
     // If we have initial circles, no reason to refetch
     if (_circles.length > 0) return;
     CirclesList circleList = await _userService.getConnectionsCircles();
-    this._setCircles(circleList.circles);
+    // We assume the connections circle will always be the last one
+    var connectionsCircles = circleList.circles;
+    Circle connectionsCircle = connectionsCircles.removeLast();
+    connectionsCircles.insert(0, connectionsCircle);
+    this._setCircles(connectionsCircles);
   }
 
   void _setCircles(List<Circle> circles) {
@@ -112,3 +158,4 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
 }
 
 typedef void OnCirclesPicked(List<Circle> selectedCircles);
+typedef Future<Circle> OnWantsToCreateNewCircle();

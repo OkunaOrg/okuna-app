@@ -34,10 +34,12 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   bool _needsBootstrap;
+  bool _isConnectionsCircle;
 
   @override
   void initState() {
     super.initState();
+    _isConnectionsCircle = true;
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
   }
@@ -56,12 +58,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBNavigationBar(
-          trailing: GestureDetector(
-            onTap: () {
-              widget.onWantsToEditConnectionsCircle(widget.connectionsCircle);
-            },
-            child: Text('Edit'),
-          ),
+          trailing: _buildNavigationBarTrailingItem(),
         ),
         child: RefreshIndicator(
             key: _refreshIndicatorKey,
@@ -70,7 +67,8 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    OBConnectionsCircleHeader(widget.connectionsCircle),
+                    OBConnectionsCircleHeader(widget.connectionsCircle,
+                        isConnectionsCircle: _isConnectionsCircle),
                     Expanded(
                       child: OBConnectionsCircleUsers(
                         widget.connectionsCircle,
@@ -84,8 +82,22 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
             onRefresh: _refreshConnectionsCircle));
   }
 
+  Widget _buildNavigationBarTrailingItem() {
+    if (_isConnectionsCircle) return SizedBox();
+    return GestureDetector(
+      onTap: () {
+        widget.onWantsToEditConnectionsCircle(widget.connectionsCircle);
+      },
+      child: Text('Edit'),
+    );
+  }
+
   void _bootstrap() async {
     await _refreshConnectionsCircle();
+    var loggedInUser = _userService.getLoggedInUser();
+    bool isConnectionsCircle =
+        loggedInUser.isConnectionsCircle(widget.connectionsCircle);
+    _setIsConnectionsCircle(isConnectionsCircle);
   }
 
   Future<void> _refreshConnectionsCircle() async {
@@ -98,5 +110,11 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
       _toastService.error(message: 'Unknown error', context: context);
       rethrow;
     }
+  }
+
+  void _setIsConnectionsCircle(bool isConnectionsCircle) {
+    setState(() {
+      _isConnectionsCircle = isConnectionsCircle;
+    });
   }
 }

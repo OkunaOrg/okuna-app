@@ -6,13 +6,13 @@ import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.d
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCircleHorizontalPreview extends StatelessWidget {
+class OBCircleHorizontalListItem extends StatelessWidget {
   final bool isSelected;
   final bool isDisabled;
   final Circle circle;
   final OnCirclePressed onCirclePressed;
 
-  OBCircleHorizontalPreview(this.circle,
+  OBCircleHorizontalListItem(this.circle,
       {@required this.onCirclePressed, this.isSelected, this.isDisabled});
 
   @override

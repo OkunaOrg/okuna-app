@@ -1,6 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +27,22 @@ class OBConnectionsCircleUsers extends StatelessWidget {
               itemCount: users.length,
               itemBuilder: (context, index) {
                 var user = users[index];
+
+                Widget trailing;
+                bool isFullyConnected = user.isFullyConnected;
+
+                if (!isFullyConnected) {
+                  trailing = Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[OBText('Pending')],
+                  );
+                }
+
                 return OBUserTile(
                   user,
                   showFollowing: false,
                   onUserTilePressed: onWantsToSeeUserProfile,
+                  trailing: trailing,
                 );
               });
         });

@@ -9,7 +9,7 @@ import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/pick_circles/pick_circles.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
-import 'package:Openbook/pages/home/modals/save_connections_list.dart';
+import 'package:Openbook/pages/home/modals/save_connections_circle.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
@@ -191,7 +191,7 @@ class OBHomePageState extends State<OBHomePage> {
       },
       items: [
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.home),
           activeIcon: OBIcon(
             OBIcons.home,
@@ -199,7 +199,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.search),
           activeIcon: OBIcon(
             OBIcons.search,
@@ -207,7 +207,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.notifications),
           activeIcon: OBIcon(
             OBIcons.notifications,
@@ -215,7 +215,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.communities),
           activeIcon: OBIcon(
             OBIcons.communities,
@@ -223,7 +223,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-            title: Container(),
+            title: SizedBox(),
             icon: OBUserAvatar(
               avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
@@ -232,7 +232,7 @@ class OBHomePageState extends State<OBHomePage> {
               avatarUrl: _avatarUrl,
             )),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.menu),
           activeIcon: OBIcon(
             OBIcons.menu,

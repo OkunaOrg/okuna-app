@@ -10,13 +10,13 @@ class OBUserTile extends StatelessWidget {
   final OnUserTilePressed onUserTilePressed;
   final OnUserTileDeleted onUserTileDeleted;
   final bool showFollowing;
+  final Widget trailing;
 
-  OBUserTile(
-    this.user, {
-    this.onUserTilePressed,
-    this.onUserTileDeleted,
-    this.showFollowing = true,
-  });
+  OBUserTile(this.user,
+      {this.onUserTilePressed,
+      this.onUserTileDeleted,
+      this.showFollowing = true,
+      this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +28,19 @@ class OBUserTile extends StatelessWidget {
         size: OBUserAvatarSize.medium,
         avatarUrl: user.getProfileAvatar(),
       ),
+      trailing: trailing,
       title: OBText(
         user.username,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      subtitle: Row(children: [
-        OBSecondaryText(user.getProfileName()),
-        showFollowing && user.isFollowing != null && user.isFollowing
-            ? OBSecondaryText(' · Following')
-            : SizedBox()
-      ]),
+      subtitle: Row(
+        children: [
+          OBSecondaryText(user.getProfileName()),
+          showFollowing && user.isFollowing != null && user.isFollowing
+              ? OBSecondaryText(' · Following')
+              : SizedBox()
+        ],
+      ),
     );
 
     if (onUserTileDeleted != null) {

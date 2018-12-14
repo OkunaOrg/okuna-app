@@ -74,7 +74,7 @@ class OBMainMenuPageState extends OBBasePageState<OBMainMenuPage> {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
-                  leading: OBIcon(OBIcons.connections),
+                  leading: OBIcon(OBIcons.circles),
                   title: OBText('My circles'),
                   onTap: _onWantsToSeeConnectionsCircles,
                 ),
