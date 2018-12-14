@@ -5,9 +5,6 @@ import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/circles_horizontal_list.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +12,11 @@ class OBCirclesQuickPicker extends StatefulWidget {
   final OnCirclesPicked onCirclesPicked;
   final List<Circle> initialPickedCircles;
   final List<Circle> initialCircles;
-  final OnWantsToCreateNewCircle onWantsToCreateNewCircle;
 
   OBCirclesQuickPicker(
       {@required this.onCirclesPicked,
       this.initialPickedCircles,
-      this.initialCircles,
-      @required this.onWantsToCreateNewCircle});
+      this.initialCircles});
 
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +26,6 @@ class OBCirclesQuickPicker extends StatefulWidget {
 
 class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
   UserService _userService;
-  ToastService _toastService;
   ModalService _modalService;
 
   bool _needsBootstrap;
@@ -56,7 +50,6 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
     _modalService = openbookProvider.modalService;
 
     if (_needsBootstrap) {

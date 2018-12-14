@@ -70,6 +70,7 @@ class OBConfirmConnectionWithUserTileState
           widget.user.username,
           circles: circles);
       if (!widget.user.isFollowing) widget.user.incrementFollowersCount();
+      _toastService.success(message: 'Connection confirmed', context: context);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {

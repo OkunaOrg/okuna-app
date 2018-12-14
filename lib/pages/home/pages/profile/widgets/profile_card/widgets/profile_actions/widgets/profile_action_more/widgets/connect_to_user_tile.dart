@@ -15,7 +15,9 @@ class OBConnectToUserTile extends StatefulWidget {
   final VoidCallback onWillShowModalBottomSheet;
 
   const OBConnectToUserTile(this.user,
-      {Key key, @required this.onConnectedToUser, this.onWillShowModalBottomSheet})
+      {Key key,
+      @required this.onConnectedToUser,
+      this.onWillShowModalBottomSheet})
       : super(key: key);
 
   @override
@@ -43,7 +45,8 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
   }
 
   void _displayAddConnectionToCirclesBottomSheet() {
-    if(widget.onWillShowModalBottomSheet != null) widget.onWillShowModalBottomSheet();
+    if (widget.onWillShowModalBottomSheet != null)
+      widget.onWillShowModalBottomSheet();
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -62,9 +65,14 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
 
   Future _connectUserInCircles(List<Circle> circles) async {
     try {
+      bool userWasFollowing = widget.user.isFollowing;
       await _userService.connectWithUserWithUsername(widget.user.username,
           circles: circles);
-      if (!widget.user.isFollowing) widget.user.incrementFollowersCount();
+      if (!userWasFollowing && widget.user.isFollowing) {
+        widget.user.incrementFollowersCount();
+      }
+      _toastService.success(
+          message: 'Connection request sent', context: context);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
