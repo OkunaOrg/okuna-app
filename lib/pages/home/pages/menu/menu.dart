@@ -23,8 +23,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMainMenuPage extends StatelessWidget {
+  OBMainMenuPageController controller;
+
+  OBMainMenuPage({this.controller});
+
   @override
   Widget build(BuildContext context) {
+    controller.attach(context);
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = openbookProvider.localizationService;
     var userService = openbookProvider.userService;
@@ -86,5 +91,17 @@ class OBMainMenuPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class OBMainMenuPageController {
+  BuildContext _context;
+
+  void attach(BuildContext context) {
+    _context = context;
+  }
+
+  void popUntilFirst() {
+    Navigator.of(_context).popUntil((Route<dynamic> r) => r.isFirst);
   }
 }

@@ -46,6 +46,7 @@ class OBHomePageState extends State<OBHomePage> {
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
+  OBMainMenuPageController _mainMenuPageController;
 
   @override
   void initState() {
@@ -56,6 +57,7 @@ class OBHomePageState extends State<OBHomePage> {
     _timelinePageController = OBTimelinePageController();
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
+    _mainMenuPageController = OBMainMenuPageController();
   }
 
   @override
@@ -95,11 +97,13 @@ class OBHomePageState extends State<OBHomePage> {
     switch (OBHomePageTabs.values[index]) {
       case OBHomePageTabs.home:
         page = OBTimelinePage(
-            controller: _timelinePageController,);
+          controller: _timelinePageController,
+        );
         break;
       case OBHomePageTabs.search:
         page = OBMainSearchPage(
-            controller: _searchPageController,);
+          controller: _searchPageController,
+        );
         break;
       case OBHomePageTabs.notifications:
         break;
@@ -107,11 +111,12 @@ class OBHomePageState extends State<OBHomePage> {
         page = OBMainNotificationsPage();
         break;
       case OBHomePageTabs.profile:
-        page = OBOwnProfilePage(
-            controller: _ownProfilePageController);
+        page = OBOwnProfilePage(controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
-        page = OBMainMenuPage();
+        page = OBMainMenuPage(
+          controller: _mainMenuPageController,
+        );
         break;
       default:
         throw 'Unhandled index';
@@ -154,16 +159,11 @@ class OBHomePageState extends State<OBHomePage> {
             _searchPageController.scrollToTop();
           }
         }
-/*
+
         if (tappedTab == OBHomePageTabs.menu &&
             currentTab == OBHomePageTabs.menu) {
-          if (_menuPageController.isAttached() &&
-              _menuPageController.hasPushedRoutes()) {
-            _menuPageController.popUntilFirst();
-          } else {
-            _menuPageController.scrollToTop();
-          }
-        }*/
+          _mainMenuPageController.popUntilFirst();
+        }
 
         _lastIndex = index;
         return true;

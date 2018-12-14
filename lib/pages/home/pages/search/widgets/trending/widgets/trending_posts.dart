@@ -6,14 +6,15 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/theming/primary_accent_text.dart';
 import 'package:flutter/material.dart';
 
 class OBTrendingPosts extends StatefulWidget {
   final OBTrendingPostsController controller;
 
-  OBTrendingPosts(
-      {this.controller,});
+  OBTrendingPosts({
+    this.controller,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -58,13 +59,11 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     return Column(
       children: [
         ListTile(
-            title: OBText('Trending posts',
+            title: OBPrimaryAccentText('Trending posts',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
         Column(
             children: _posts.map((Post post) {
-          return OBPost(
-            post
-          );
+          return OBPost(post);
         }).toList())
       ],
     );
