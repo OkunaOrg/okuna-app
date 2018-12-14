@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
-import 'package:Openbook/pages/home/lib/base_state.dart';
+import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
@@ -17,13 +17,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMainSearchPage extends StatefulWidget {
-
   final OBMainSearchPageController controller;
 
-  const OBMainSearchPage(
-      {Key key,
-      this.controller})
-      : super(key: key);
+  const OBMainSearchPage({Key key, this.controller}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +27,7 @@ class OBMainSearchPage extends StatefulWidget {
   }
 }
 
-class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
+class OBMainSearchPageState extends State<OBMainSearchPage> {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
@@ -47,7 +43,8 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.controller != null) widget.controller.attach(this);
+    if (widget.controller != null)
+      widget.controller.attach(context: context, state: this);
     _trendingController = OBTrendingController();
     _requestInProgress = false;
     _hasSearch = false;
@@ -171,5 +168,15 @@ class OBMainSearchPageState extends OBBasePageState<OBMainSearchPage> {
   }
 }
 
-class OBMainSearchPageController
-    extends OBBasePageStateController<OBMainSearchPageState> {}
+class OBMainSearchPageController extends PoppablePageController {
+  OBMainSearchPageState _state;
+
+  void attach({@required BuildContext context, OBMainSearchPageState state}) {
+    super.attach(context: context);
+    _state = state;
+  }
+
+  void scrollToTop() {
+    _state.scrollToTop();
+  }
+}

@@ -135,34 +135,34 @@ class OBHomePageState extends State<OBHomePage> {
 
         if (tappedTab == OBHomePageTabs.home &&
             currentTab == OBHomePageTabs.home) {
-          if (_timelinePageController.hasPushedRoutes()) {
-            _timelinePageController.popUntilFirst();
-          } else {
+          if (_timelinePageController.isFirstRoute()) {
             _timelinePageController.scrollToTop();
+          } else {
+            _timelinePageController.popUntilFirstRoute();
           }
         }
 
         if (tappedTab == OBHomePageTabs.profile &&
             currentTab == OBHomePageTabs.profile) {
-          if (_ownProfilePageController.hasPushedRoutes()) {
-            _ownProfilePageController.popUntilFirst();
-          } else {
+          if (_ownProfilePageController.isFirstRoute()) {
             _ownProfilePageController.scrollToTop();
+          } else {
+            _ownProfilePageController.popUntilFirstRoute();
           }
         }
 
         if (tappedTab == OBHomePageTabs.search &&
             currentTab == OBHomePageTabs.search) {
-          if (_searchPageController.hasPushedRoutes()) {
-            _searchPageController.popUntilFirst();
-          } else {
+          if (_searchPageController.isFirstRoute()) {
             _searchPageController.scrollToTop();
+          } else {
+            _searchPageController.popUntilFirstRoute();
           }
         }
 
         if (tappedTab == OBHomePageTabs.menu &&
             currentTab == OBHomePageTabs.menu) {
-          _mainMenuPageController.popUntilFirst();
+          _mainMenuPageController.popUntilFirstRoute();
         }
 
         _lastIndex = index;

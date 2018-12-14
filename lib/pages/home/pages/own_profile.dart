@@ -1,5 +1,5 @@
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/lib/base_state.dart';
+import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,14 +18,15 @@ class OBOwnProfilePage extends StatefulWidget {
   }
 }
 
-class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
+class OBOwnProfilePageState extends State<OBOwnProfilePage> {
   OBProfilePageController _profilePageController;
 
   @override
   void initState() {
     super.initState();
     _profilePageController = OBProfilePageController();
-    if (widget.controller != null) widget.controller.attach(this);
+    if (widget.controller != null)
+      widget.controller.attach(context: context, state: this);
   }
 
   @override
@@ -51,9 +52,15 @@ class OBOwnProfilePageState extends OBBasePageState<OBOwnProfilePage> {
   }
 }
 
-class OBOwnProfilePageController
-    extends OBBasePageStateController<OBOwnProfilePageState> {
+class OBOwnProfilePageController extends PoppablePageController {
+  OBOwnProfilePageState _state;
+
+  void attach({@required BuildContext context, OBOwnProfilePageState state}) {
+    super.attach(context: context);
+    _state = state;
+  }
+
   void scrollToTop() {
-    state.scrollToTop();
+    _state.scrollToTop();
   }
 }
