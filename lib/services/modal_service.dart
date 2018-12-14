@@ -9,12 +9,13 @@ import 'package:Openbook/pages/home/modals/pick_circles/pick_circles.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/modals/save_connections_circle.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ModalService {
   Future<Post> openCreatePost({@required BuildContext context}) async {
     Post createdPost = await Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<Post>(
+        .push(CupertinoPageRoute<Post>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return CreatePostModal();
@@ -26,7 +27,7 @@ class ModalService {
   Future<PostReaction> openReactToPost(
       {@required Post post, @required BuildContext context}) async {
     PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<PostReaction>(
+        .push(CupertinoPageRoute<PostReaction>(
             fullscreenDialog: true,
             builder: (BuildContext context) => Material(
                   child: OBReactToPostModal(post),
@@ -38,7 +39,7 @@ class ModalService {
   Future<List<Circle>> openCirclePicker(
       {@required BuildContext context}) async {
     List<Circle> circles = await Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<List<Circle>>(
+        .push(CupertinoPageRoute<List<Circle>>(
             fullscreenDialog: true,
             builder: (BuildContext context) => Material(
                   child: OBPickCirclesModal(),
@@ -50,7 +51,7 @@ class ModalService {
   Future<void> openEditUserProfile(
       {@required User user, @required BuildContext context}) async {
     Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<PostReaction>(
+        .push(CupertinoPageRoute<PostReaction>(
             fullscreenDialog: true,
             builder: (BuildContext context) => Material(
                   child: OBEditUserProfileModal(user),
@@ -61,7 +62,7 @@ class ModalService {
       {@required BuildContext context}) async {
     FollowsList createdFollowsList =
         await Navigator.of(context, rootNavigator: true)
-            .push(MaterialPageRoute<FollowsList>(
+            .push(CupertinoPageRoute<FollowsList>(
                 fullscreenDialog: true,
                 builder: (BuildContext context) {
                   return OBSaveFollowsListModal(
@@ -76,7 +77,7 @@ class ModalService {
       {@required FollowsList followsList,
       @required BuildContext context}) async {
     FollowsList editedFollowsList =
-        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
+        await Navigator.of(context).push(CupertinoPageRoute<FollowsList>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return OBSaveFollowsListModal(
@@ -90,7 +91,7 @@ class ModalService {
   Future<Circle> openCreateConnectionsCircle(
       {@required BuildContext context}) async {
     Circle createdConnectionsCircle =
-        await Navigator.of(context).push(MaterialPageRoute<Circle>(
+        await Navigator.of(context).push(CupertinoPageRoute<Circle>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return OBSaveConnectionsCircleModal(
@@ -105,7 +106,7 @@ class ModalService {
       {@required Circle connectionsCircle,
       @required BuildContext context}) async {
     Circle editedConnectionsCircle =
-        await Navigator.of(context).push(MaterialPageRoute<Circle>(
+        await Navigator.of(context).push(CupertinoPageRoute<Circle>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return OBSaveConnectionsCircleModal(
