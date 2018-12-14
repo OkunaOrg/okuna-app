@@ -16,13 +16,18 @@ class OBCover extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget image;
 
-    var errorImage = Container();
+    var errorImage = SizedBox(
+      height: HEIGHT,
+    );
 
     if (coverFile != null) {
       image = FadeInImage(
         placeholder: AssetImage(PLACEHOLDER_IMAGE),
         image: FileImage(coverFile),
         fit: BoxFit.cover,
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center,
       );
     } else if (coverUrl == null) {
       image = errorImage;
@@ -32,6 +37,9 @@ class OBCover extends StatelessWidget {
         imageUrl: coverUrl != null ? coverUrl : '',
         placeholder: Image.asset(PLACEHOLDER_IMAGE, fit: BoxFit.cover),
         errorWidget: errorImage,
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center,
       );
     }
 
@@ -41,7 +49,9 @@ class OBCover extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Expanded(
-            child: image,
+            child: Container(
+              child: image,
+            ),
           )
         ],
       ),
