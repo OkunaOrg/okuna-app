@@ -20,7 +20,10 @@ class OBText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
+
     double fontSize;
 
     switch (size) {
@@ -47,7 +50,7 @@ class OBText extends StatelessWidget {
           var theme = snapshot.data;
 
           TextStyle themedTextStyle = TextStyle(
-              color: Pigment.fromString(theme.primaryTextColor),
+              color: themeValueParserService.parseColor(theme.primaryTextColor),
               fontSize: (style != null && style.fontSize != null)
                   ? style.fontSize
                   : fontSize);

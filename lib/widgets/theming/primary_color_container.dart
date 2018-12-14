@@ -1,25 +1,24 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBPrimaryColorContainer extends StatelessWidget {
   final Widget child;
   final BoxDecoration decoration;
-  final EdgeInsetsGeometry padding;
   final MainAxisSize mainAxisSize;
 
   const OBPrimaryColorContainer(
       {Key key,
       this.child,
       this.decoration,
-      this.padding,
       this.mainAxisSize = MainAxisSize.max})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -27,10 +26,9 @@ class OBPrimaryColorContainer extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          Widget container = Container(
-            padding: padding,
-            decoration:
-                BoxDecoration(color: Pigment.fromString(theme.primaryColor)),
+          Widget container = DecoratedBox(
+            decoration: BoxDecoration(
+                color: themeValueParserService.parseColor(theme.primaryColor)),
             child: child,
           );
 

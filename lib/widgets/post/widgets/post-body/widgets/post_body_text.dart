@@ -11,7 +11,9 @@ class OBPostBodyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -25,7 +27,7 @@ class OBPostBodyText extends StatelessWidget {
               TextSpan(
                   text: _post.getText(),
                   style: TextStyle(
-                      color: Pigment.fromString(theme.primaryTextColor),
+                      color: themeValueParserService.parseColor(theme.primaryTextColor),
                       fontSize: 16.0))
             ])),
           );

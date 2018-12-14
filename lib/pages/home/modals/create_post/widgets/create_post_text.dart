@@ -2,7 +2,6 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBCreatePostText extends StatelessWidget {
   final TextEditingController controller;
@@ -11,7 +10,9 @@ class OBCreatePostText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -26,13 +27,14 @@ class OBCreatePostText extends StatelessWidget {
             keyboardType: TextInputType.multiline,
             maxLines: null,
             style: TextStyle(
-                color: Pigment.fromString(theme.primaryTextColor),
+                color: themeValueParserService.parseColor(theme.primaryTextColor),
                 fontSize: 18.0),
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'What\'s going on?',
                 hintStyle: TextStyle(
-                    color: Pigment.fromString(theme.secondaryTextColor),
+                    color: themeValueParserService
+                        .parseColor(theme.secondaryTextColor),
                     fontSize: 18.0)),
             autocorrect: true,
           );

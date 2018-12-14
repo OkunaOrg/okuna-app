@@ -16,9 +16,7 @@ class OBCover extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget image;
 
-    var errorImage = Container(
-      color: Pigment.fromString('#f5f5f5'),
-    );
+    var errorImage = Container();
 
     if (coverFile != null) {
       image = FadeInImage(
