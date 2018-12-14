@@ -84,7 +84,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                                   children: <Widget>[
                                     OBProfileCover(_user),
                                     OBProfileCard(_user,),
-                                    Divider()
+                                    SizedBox(height: 20,)
                                   ],
                                 );
                               }
