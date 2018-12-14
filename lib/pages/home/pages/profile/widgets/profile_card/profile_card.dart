@@ -1,3 +1,4 @@
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
@@ -6,6 +7,7 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,10 @@ class OBProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
+
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
@@ -36,7 +42,9 @@ class OBProfileCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 30,),
+                  SizedBox(
+                    height: 30,
+                  ),
                   OBProfileName(user),
                   OBProfileUsername(user),
                   OBProfileBio(user),
@@ -49,15 +57,23 @@ class OBProfileCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          child: Container(
-            height: 20,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50))),
-          ),
+          child: StreamBuilder(
+              stream: themeService.themeChange,
+              initialData: themeService.getActiveTheme(),
+              builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+                var theme = snapshot.data;
+
+                return Container(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: themeValueParserService
+                          .parseColor(theme.primaryColor),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50))),
+                );
+              }),
           top: -19,
         ),
         Positioned(

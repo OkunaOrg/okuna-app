@@ -7,7 +7,7 @@ import 'package:pigment/pigment.dart';
 class OBCover extends StatelessWidget {
   final String coverUrl;
   final File coverFile;
-  static const double HEIGHT = 200.0;
+  static const double HEIGHT = 230.0;
   static const PLACEHOLDER_IMAGE = 'assets/images/loading.gif';
 
   OBCover({this.coverUrl, this.coverFile});
