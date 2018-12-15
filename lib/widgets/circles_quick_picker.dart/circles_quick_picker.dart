@@ -60,6 +60,7 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
       height: 110,
       child: OBCirclesHorizontalList(
         _circles,
+        previouslySelectedCircles: widget.initialPickedCircles,
         selectedCircles: _selectedCircles,
         disabledCircles: _disabledCircles,
         onCirclePressed: _onCirclePressed,

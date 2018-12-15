@@ -9,13 +9,15 @@ class OBCirclesHorizontalList extends StatelessWidget {
   final List<Circle> circles;
   final List<Circle> selectedCircles;
   final List<Circle> disabledCircles;
+  final List<Circle> previouslySelectedCircles;
   final VoidCallback onWantsToCreateANewCircle;
 
   OBCirclesHorizontalList(this.circles,
       {@required this.onCirclePressed,
       @required this.selectedCircles,
       @required this.disabledCircles,
-      @required this.onWantsToCreateANewCircle});
+      @required this.onWantsToCreateANewCircle,
+      this.previouslySelectedCircles});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,10 @@ class OBCirclesHorizontalList extends StatelessWidget {
           var circle = circles[index];
           bool isSelected = selectedCircles.contains(circle);
           bool isDisabled = disabledCircles.contains(circle);
+          bool wasPreviouslySelected =
+              previouslySelectedCircles != null && previouslySelectedCircles.contains(circle);
           listItem = OBCircleHorizontalListItem(circle,
+              wasPreviouslySelected: wasPreviouslySelected,
               onCirclePressed: onCirclePressed,
               isSelected: isSelected,
               isDisabled: isDisabled);

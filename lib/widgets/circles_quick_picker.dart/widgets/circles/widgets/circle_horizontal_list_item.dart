@@ -11,15 +11,26 @@ class OBCircleHorizontalListItem extends StatelessWidget {
   final bool isDisabled;
   final Circle circle;
   final OnCirclePressed onCirclePressed;
+  final bool wasPreviouslySelected;
 
   OBCircleHorizontalListItem(this.circle,
-      {@required this.onCirclePressed, this.isSelected, this.isDisabled});
+      {@required this.onCirclePressed,
+      this.isSelected,
+      this.isDisabled,
+      this.wasPreviouslySelected = false});
 
   @override
   Widget build(BuildContext context) {
     int usersCount = circle.usersCount;
-    String prettyUsersCount =
-        getPrettyCount(isSelected ? usersCount + 1 : usersCount);
+
+    if (wasPreviouslySelected) {
+      if (!isSelected) {
+        usersCount = usersCount - 1;
+      }
+    } else if (isSelected) {
+      usersCount = usersCount + 1;
+    }
+    String prettyUsersCount = getPrettyCount(usersCount);
 
     Widget item = GestureDetector(
       onTap: () {
@@ -55,7 +66,7 @@ class OBCircleHorizontalListItem extends StatelessWidget {
               circle.name,
               maxLines: 1,
               style: TextStyle(
-                fontSize: 14,
+                  fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
             OBText(
