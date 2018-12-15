@@ -2,7 +2,6 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/circles_horizontal_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -114,8 +113,14 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
       var connectionsCircle = _circles.firstWhere((Circle circle) {
         return circle.id == user.connectionsCircleId;
       });
-      _disabledCircles = [connectionsCircle];
-      _selectedCircles = [connectionsCircle];
+      _disabledCircles.removeWhere((Circle circle){
+        return !circles.contains(circle);
+      });
+      _selectedCircles.removeWhere((Circle circle){
+        return !circles.contains(circle);
+      });
+      _disabledCircles.add(connectionsCircle);
+      _selectedCircles.add(connectionsCircle);
     });
   }
 

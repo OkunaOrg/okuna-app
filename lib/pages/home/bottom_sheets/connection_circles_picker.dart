@@ -9,9 +9,11 @@ class OBConnectionCirclesPickerBottomSheet extends StatefulWidget {
   final String title;
   final String actionLabel;
   final OnPickedCircles onPickedCircles;
+  final List<Circle> initialPickedCircles;
 
   const OBConnectionCirclesPickerBottomSheet(
       {Key key,
+      this.initialPickedCircles,
       @required this.title,
       @required this.actionLabel,
       @required this.onPickedCircles})
@@ -71,6 +73,7 @@ class OBConnectionCirclesPickerBottomSheetState
                           'Circles help you restrict who can see what you share.'),
                     ])),
             OBCirclesQuickPicker(
+              initialPickedCircles: widget.initialPickedCircles,
               onCirclesPicked: (List<Circle> pickedCirles) async {
                 _pickedConnectionCircles = pickedCirles;
               },
