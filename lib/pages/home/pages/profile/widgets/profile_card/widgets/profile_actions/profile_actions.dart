@@ -5,7 +5,7 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_follow.dart';
+import 'package:Openbook/widgets/buttons/actions/follow_button.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
@@ -27,7 +27,7 @@ class OBProfileActions extends StatelessWidget {
       actions.add(_buildEditButton(modalService, context));
     } else {
       actions.addAll([
-        OBProfileActionFollow(user),
+        OBFollowButton(user),
         SizedBox(
           width: 10,
         ),

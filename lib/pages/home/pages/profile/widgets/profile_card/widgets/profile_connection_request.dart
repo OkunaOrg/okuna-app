@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/alert.dart';
 import 'package:Openbook/widgets/buttons/actions/confirm_connection_button.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -28,11 +29,7 @@ class OBProfileConnectionRequest extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(10, 0, 0, 0),
-                  borderRadius: BorderRadius.circular(10)),
+            OBAlert(
               child: Row(
                 children: <Widget>[
                   Flexible(

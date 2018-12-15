@@ -39,14 +39,18 @@ class ThemeValueParserService {
     List<Color> colors =
         gradients.map((colorValue) => parseColor(colorValue)).toList();
 
-    Gradient gradient = LinearGradient(
-        begin: _beginAlignment,
-        end: _endAlignment,
-        colors: colors,
-        tileMode: TileMode.mirror);
+    Gradient gradient = makeGradientWithColors(colors);
 
     gradientCache.set(gradientValue, gradient);
 
     return gradient;
+  }
+
+  Gradient makeGradientWithColors(List<Color> colors){
+    return  LinearGradient(
+        begin: _beginAlignment,
+        end: _endAlignment,
+        colors: colors,
+        tileMode: TileMode.mirror);
   }
 }

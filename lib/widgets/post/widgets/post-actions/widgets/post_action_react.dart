@@ -49,7 +49,7 @@ class OBPostActionReact extends StatelessWidget {
                       child: Center(child: Text('?')),
                     ),
                   )
-                : OBIcon(OBIcons.react),
+                : OBIcon(OBIcons.react, customSize: 20.0,),
             SizedBox(
               width: 10.0,
             ),
@@ -63,19 +63,11 @@ class OBPostActionReact extends StatelessWidget {
           ],
         );
 
-        return hasReaction
-            ? OBButton(
-                child: buttonChild,
-                onPressed: onPressed,
-              )
-            : FlatButton(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(50.0)),
-                child: buttonChild,
-                color: hasReaction
-                    ? Pigment.fromString(reaction.getEmojiColor())
-                    : Color.fromARGB(10, 0, 0, 0),
-                onPressed: onPressed);
+        return OBButton(
+          child: buttonChild,
+          onPressed: onPressed,
+          type: hasReaction ? OBButtonType.primary : OBButtonType.highlight,
+        );
       },
     );
   }

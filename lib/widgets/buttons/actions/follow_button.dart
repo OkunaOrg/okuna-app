@@ -6,18 +6,18 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
-class OBProfileActionFollow extends StatefulWidget {
+class OBFollowButton extends StatefulWidget {
   final User user;
 
-  OBProfileActionFollow(this.user);
+  OBFollowButton(this.user);
 
   @override
-  OBProfileActionFollowState createState() {
-    return OBProfileActionFollowState();
+  OBFollowButtonState createState() {
+    return OBFollowButtonState();
   }
 }
 
-class OBProfileActionFollowState extends State<OBProfileActionFollow> {
+class OBFollowButtonState extends State<OBFollowButton> {
   UserService _userService;
   ToastService _toastService;
   bool _requestInProgress;
