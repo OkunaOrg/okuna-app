@@ -5,7 +5,7 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileConnectedIn extends StatelessWidget {
-  User user;
+  final User user;
 
   OBProfileConnectedIn(this.user);
 

@@ -1,7 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/add_connection_to_circle_bottom_sheet.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -12,12 +12,10 @@ import 'package:flutter/material.dart';
 class OBConfirmConnectionWithUserTile extends StatefulWidget {
   final User user;
   final VoidCallback onWillShowModalBottomSheet;
-  final VoidCallback onConnectionConfirmed;
 
   const OBConfirmConnectionWithUserTile(this.user,
       {Key key,
-      this.onWillShowModalBottomSheet,
-      @required this.onConnectionConfirmed})
+      this.onWillShowModalBottomSheet})
       : super(key: key);
 
   @override
@@ -30,12 +28,14 @@ class OBConfirmConnectionWithUserTileState
     extends State<OBConfirmConnectionWithUserTile> {
   UserService _userService;
   ToastService _toastService;
+  BottomSheetService _bottomSheetService;
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _bottomSheetService = openbookProvider.bottomSheetService;
 
     String userName = widget.user.getProfileName();
 
@@ -48,20 +48,15 @@ class OBConfirmConnectionWithUserTileState
   void _displayAddConnectionToCirclesBottomSheet() {
     if (widget.onWillShowModalBottomSheet != null)
       widget.onWillShowModalBottomSheet();
-    showModalBottomSheet(
+    _bottomSheetService.showConnectionsCirclesPicker(
         context: context,
-        builder: (BuildContext context) {
-          return OBAddConnectionToCircleBottomSheet(
-            title: 'Add connection to circle',
-            actionLabel: 'Confirm',
-            onWantsToAddConnectionToCircles: _onWantsToAddConnectionToCircles,
-          );
-        });
+        title: 'Add connection to circle',
+        actionLabel: 'Confirm',
+        onPickedCircles: _onWantsToAddConnectionToCircles);
   }
 
   Future _onWantsToAddConnectionToCircles(List<Circle> circles) async {
     await _confirmConnectionWithUser(circles);
-    widget.onConnectionConfirmed();
   }
 
   Future _confirmConnectionWithUser(List<Circle> circles) async {

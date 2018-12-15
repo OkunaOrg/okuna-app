@@ -3,6 +3,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_connected_in.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_connection_request.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_counts/profile_counts.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
@@ -50,7 +51,8 @@ class OBProfileCard extends StatelessWidget {
                   OBProfileBio(user),
                   OBProfileDetails(user),
                   OBProfileCounts(user),
-                  OBProfileConnectedIn(user)
+                  OBProfileConnectedIn(user),
+                  OBProfileConnectionRequest(user)
                 ],
               ),
             ],

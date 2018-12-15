@@ -42,7 +42,6 @@ class OBProfileActionMore extends StatelessWidget {
             } else if (user.isPendingConnectionConfirmation) {
               connectionTile = OBConfirmConnectionWithUserTile(
                 user,
-                onConnectionConfirmed: _dismissModalBottomSheet,
                 onWillShowModalBottomSheet: _dismissModalBottomSheet,
               );
             } else if (user.isFullyConnected) {
@@ -51,7 +50,6 @@ class OBProfileActionMore extends StatelessWidget {
             } else {
               connectionTile = OBConnectToUserTile(
                 user,
-                onConnectedToUser: _dismissModalBottomSheet,
                 onWillShowModalBottomSheet: _dismissModalBottomSheet,
               );
             }

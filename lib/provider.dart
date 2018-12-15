@@ -1,5 +1,6 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
@@ -26,7 +27,7 @@ import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
 
 class OpenbookProvider extends StatefulWidget {
-  Widget child;
+  final Widget child;
 
   OpenbookProvider({this.child});
 
@@ -69,6 +70,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
 
   LocalizationService localizationService;
   DeepLinksService deepLinksService = DeepLinksService();
+  BottomSheetService bottomSheetService = BottomSheetService();
 
   @override
   void initState() {
