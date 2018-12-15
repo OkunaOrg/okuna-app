@@ -35,7 +35,9 @@ class OBCover extends StatelessWidget {
       image = CachedNetworkImage(
         fit: BoxFit.cover,
         imageUrl: coverUrl != null ? coverUrl : '',
-        placeholder: Image.asset(PLACEHOLDER_IMAGE, fit: BoxFit.cover),
+        placeholder: Center(
+          child: CircularProgressIndicator(),
+        ),
         errorWidget: errorImage,
         height: double.infinity,
         width: double.infinity,
