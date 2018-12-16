@@ -40,7 +40,7 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
 
     return ListTile(
         title: OBText('Connect with $userName'),
-        leading: OBIcon(OBIcons.add),
+        leading: OBIcon(OBIcons.connect),
         onTap: _displayAddConnectionToCirclesBottomSheet);
   }
 

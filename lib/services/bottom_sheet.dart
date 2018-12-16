@@ -1,5 +1,7 @@
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/bottom_sheets/connection_circles_picker.dart';
+import 'package:Openbook/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
@@ -19,6 +21,22 @@ class BottomSheetService {
             title: title,
             actionLabel: actionLabel,
             onPickedCircles: onPickedCircles,
+          );
+        });
+  }
+
+  Future<List<FollowsList>> showFollowsListsPicker(
+      {@required BuildContext context,
+      @required String title,
+      @required String actionLabel,
+      List<FollowsList> initialPickedFollowsLists}) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBFollowsListsPickerBottomSheet(
+            initialPickedFollowsLists: initialPickedFollowsLists,
+            title: title,
+            actionLabel: actionLabel,
           );
         });
   }
