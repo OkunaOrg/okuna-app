@@ -1,7 +1,7 @@
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/widgets/circles_horizontal_list/widgets/circle_horizontal_list_item.dart';
+import 'package:Openbook/widgets/circles_horizontal_list/widgets/new_circle_horizontal_list_item.dart';
 import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
-import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/widgets/circle_horizontal_list_item.dart';
-import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/widgets/new_circle_horizontal_list_item.dart';
 import 'package:flutter/material.dart';
 
 class OBCirclesHorizontalList extends StatelessWidget {
@@ -39,8 +39,8 @@ class OBCirclesHorizontalList extends StatelessWidget {
           var circle = circles[index];
           bool isSelected = selectedCircles.contains(circle);
           bool isDisabled = disabledCircles.contains(circle);
-          bool wasPreviouslySelected =
-              previouslySelectedCircles != null && previouslySelectedCircles.contains(circle);
+          bool wasPreviouslySelected = previouslySelectedCircles != null &&
+              previouslySelectedCircles.contains(circle);
           listItem = OBCircleHorizontalListItem(circle,
               wasPreviouslySelected: wasPreviouslySelected,
               onCirclePressed: onCirclePressed,
