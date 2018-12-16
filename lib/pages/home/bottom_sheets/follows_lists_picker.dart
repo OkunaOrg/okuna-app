@@ -130,6 +130,7 @@ class OBFollowsListsPickerBottomSheetState
   void _onWantsToCreateANewFollowsList() async {
     FollowsList createdFollowsList =
         await _modalService.openCreateFollowsList(context: context);
+
     if (createdFollowsList != null) {
       _addFollowsList(createdFollowsList);
       _addSelectedFollowsList(createdFollowsList);
@@ -161,6 +162,7 @@ class OBFollowsListsPickerBottomSheetState
   void _addFollowsList(FollowsList followsList) {
     setState(() {
       _followsLists.add(followsList);
+      _followsListSearchResults.add(followsList);
     });
   }
 
