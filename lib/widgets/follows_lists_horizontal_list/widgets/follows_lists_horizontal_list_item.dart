@@ -65,7 +65,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
             OBText(
-              '$prettyUsersCount People',
+              prettyUsersCount + ' ' + (usersCount <= 1 ? 'Account' : 'Accounts'),
               maxLines: 1,
               size: OBTextSize.extraSmall,
               style: TextStyle(

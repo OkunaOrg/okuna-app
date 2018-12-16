@@ -13,15 +13,13 @@ import 'package:flutter/material.dart';
 class OBFollowsListsPickerBottomSheet extends StatefulWidget {
   final String title;
   final String actionLabel;
-  final OnPickedFollowsLists onPickedFollowsLists;
   final List<FollowsList> initialPickedFollowsLists;
 
   const OBFollowsListsPickerBottomSheet(
       {Key key,
       this.initialPickedFollowsLists,
       @required this.title,
-      @required this.actionLabel,
-      @required this.onPickedFollowsLists})
+      @required this.actionLabel})
       : super(key: key);
 
   @override
@@ -80,15 +78,14 @@ class OBFollowsListsPickerBottomSheetState
                     size: OBButtonSize.small,
                     child: Text(widget.actionLabel),
                     onPressed: () async {
-                      await widget.onPickedFollowsLists(_pickedFollowsLists);
-                      Navigator.pop(context);
+                      Navigator.pop(context, _pickedFollowsLists);
                     }),
               ],
             ),
           ),
           OBSearchBar(
             onSearch: _onSearch,
-            hintText: 'Search followsLists...',
+            hintText: 'Search lists...',
           ),
           SizedBox(
             height: 10,

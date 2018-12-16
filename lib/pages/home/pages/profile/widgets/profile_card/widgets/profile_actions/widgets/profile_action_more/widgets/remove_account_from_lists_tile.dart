@@ -1,5 +1,7 @@
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -7,22 +9,21 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBDisconnectFromUserTile extends StatefulWidget {
+class OBRemoveAccountFromLists extends StatefulWidget {
   final User user;
-  final String title;
-  final VoidCallback onDisconnectedFromUser;
+  final VoidCallback onRemovedAccountFromLists;
 
-  const OBDisconnectFromUserTile(this.user,
-      {Key key, this.title, @required this.onDisconnectedFromUser})
+  const OBRemoveAccountFromLists(this.user,
+      {Key key, this.onRemovedAccountFromLists})
       : super(key: key);
 
   @override
-  OBDisconnectFromUserTileState createState() {
-    return OBDisconnectFromUserTileState();
+  OBRemoveAccountFromListsState createState() {
+    return OBRemoveAccountFromListsState();
   }
 }
 
-class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
+class OBRemoveAccountFromListsState extends State<OBRemoveAccountFromLists> {
   UserService _userService;
   ToastService _toastService;
 
@@ -32,27 +33,24 @@ class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
 
-    String userName = widget.user.getProfileName();
-
     return ListTile(
-        title: OBText(widget.title ?? 'Disconnect from $userName'),
-        leading: OBIcon(OBIcons.disconnect),
-        onTap: () async {
-          await _disconnectFromUser();
-          widget.onDisconnectedFromUser();
-        });
+        title: OBText('Remove account from lists'),
+        leading: OBIcon(OBIcons.removeFromList),
+        onTap: _removeAccountFromLists);
   }
 
-  Future _disconnectFromUser() async {
+  Future _removeAccountFromLists() async {
     try {
-      await _userService.disconnectFromUserWithUsername(widget.user.username);
-      widget.user.decrementFollowersCount();
-      _toastService.success(
-          message: 'Disconnected successfully', context: context);
+      await _userService
+          .updateFollowWithUsername(widget.user.username, followsLists: []);
+      _toastService.success(message: 'Success', context: context);
+      if (widget.onRemovedAccountFromLists != null)
+        widget.onRemovedAccountFromLists();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
       _toastService.error(message: 'Unknown error', context: context);
+      rethrow;
     }
   }
 }

@@ -147,6 +147,10 @@ class User extends UpdatableModel<User> {
     return connectionsCircleId != null && connectionsCircleId == circle.id;
   }
 
+  bool hasFollowLists() {
+    return followLists != null && followLists.lists.length > 0;
+  }
+
   void incrementFollowersCount() {
     if (this.followersCount != null) {
       this.followersCount += 1;
