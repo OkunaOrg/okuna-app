@@ -1,18 +1,17 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowsListUsers extends StatelessWidget {
   final FollowsList followsList;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
-  OBFollowsListUsers(this.followsList,
-      {@required this.onWantsToSeeUserProfile});
+  OBFollowsListUsers(this.followsList);
 
   @override
   Widget build(BuildContext context) {
+    var navigationService = OpenbookProvider.of(context).navigationService;
     return StreamBuilder(
         stream: followsList.updateSubject,
         initialData: followsList,
@@ -29,7 +28,10 @@ class OBFollowsListUsers extends StatelessWidget {
                 return OBUserTile(
                   user,
                   showFollowing: false,
-                  onUserTilePressed: onWantsToSeeUserProfile,
+                  onUserTilePressed: (User user) {
+                    navigationService.navigateToUserProfile(
+                        user: user, context: context);
+                  },
                 );
               });
         });

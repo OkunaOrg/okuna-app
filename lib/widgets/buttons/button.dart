@@ -40,6 +40,7 @@ class OBButton extends StatelessWidget {
     double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
     double buttonMinHeight = minHeight ?? 20;
     var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
+
     return StreamBuilder(
         stream: themeService.themeChange,
         initialData: themeService.getActiveTheme(),
@@ -118,6 +119,16 @@ class OBButton extends StatelessWidget {
       case OBButtonType.success:
         buttonGradient = themeValueParser.parseGradient(theme.successColor);
         break;
+      case OBButtonType.highlight:
+        Color primaryColor = themeValueParser.parseColor(theme.primaryColor);
+        final bool isDarkPrimaryColor = primaryColor.computeLuminance() < 0.179;
+        Color gradientColor = isDarkPrimaryColor
+            ? Color.fromARGB(20, 255, 255, 255)
+            : Color.fromARGB(10, 0, 0, 0);
+
+        buttonGradient =
+            themeValueParser.makeGradientWithColors([gradientColor, gradientColor]);
+        break;
       default:
     }
 
@@ -138,6 +149,9 @@ class OBButton extends StatelessWidget {
         break;
       case OBButtonType.success:
         buttonTextColor = themeValueParser.parseColor(theme.successColorAccent);
+        break;
+      case OBButtonType.highlight:
+        buttonTextColor = themeValueParser.parseColor(theme.primaryTextColor);
         break;
       default:
     }
@@ -186,6 +200,6 @@ class OBButton extends StatelessWidget {
   }
 }
 
-enum OBButtonType { primary, success, danger }
+enum OBButtonType { primary, success, danger, highlight }
 
 enum OBButtonSize { small, medium, large }

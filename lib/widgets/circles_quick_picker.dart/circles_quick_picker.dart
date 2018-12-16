@@ -1,7 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/circles_quick_picker.dart/widgets/circles/circles_horizontal_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +25,7 @@ class OBCirclesQuickPicker extends StatefulWidget {
 
 class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
   UserService _userService;
-  ToastService _toastService;
+  ModalService _modalService;
 
   bool _needsBootstrap;
 
@@ -49,7 +49,7 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
+    _modalService = openbookProvider.modalService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -57,14 +57,25 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
     }
 
     return Container(
-      height: 90,
+      height: 110,
       child: OBCirclesHorizontalList(
         _circles,
+        previouslySelectedCircles: widget.initialPickedCircles,
         selectedCircles: _selectedCircles,
         disabledCircles: _disabledCircles,
         onCirclePressed: _onCirclePressed,
+        onWantsToCreateANewCircle: _onWantsToCreateANewCircle,
       ),
     );
+  }
+
+  void _onWantsToCreateANewCircle() async {
+    Circle createdCircle =
+        await _modalService.openCreateConnectionsCircle(context: context);
+    if (createdCircle != null) {
+      _addCircle(createdCircle);
+      _addSelectedCircle(createdCircle);
+    }
   }
 
   void _onCirclePressed(Circle pressedCircle) {
@@ -83,7 +94,17 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
     // If we have initial circles, no reason to refetch
     if (_circles.length > 0) return;
     CirclesList circleList = await _userService.getConnectionsCircles();
-    this._setCircles(circleList.circles);
+    // We assume the connections circle will always be the last one
+    var connectionsCircles = circleList.circles;
+    Circle connectionsCircle = connectionsCircles.removeLast();
+    connectionsCircles.insert(0, connectionsCircle);
+    this._setCircles(connectionsCircles);
+  }
+
+  void _addCircle(Circle circle) {
+    setState(() {
+      _circles.add(circle);
+    });
   }
 
   void _setCircles(List<Circle> circles) {
@@ -93,8 +114,14 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
       var connectionsCircle = _circles.firstWhere((Circle circle) {
         return circle.id == user.connectionsCircleId;
       });
-      _disabledCircles = [connectionsCircle];
-      _selectedCircles = [connectionsCircle];
+      _disabledCircles.removeWhere((Circle circle){
+        return !circles.contains(circle);
+      });
+      _selectedCircles.removeWhere((Circle circle){
+        return !circles.contains(circle);
+      });
+      _disabledCircles.add(connectionsCircle);
+      _selectedCircles.add(connectionsCircle);
     });
   }
 
@@ -112,3 +139,4 @@ class OBCirclesQuickPickerState extends State<OBCirclesQuickPicker> {
 }
 
 typedef void OnCirclesPicked(List<Circle> selectedCircles);
+typedef Future<Circle> OnWantsToCreateNewCircle();

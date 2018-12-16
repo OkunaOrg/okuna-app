@@ -5,26 +5,28 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBAddConnectionToCircleBottomSheet extends StatefulWidget {
+class OBConnectionCirclesPickerBottomSheet extends StatefulWidget {
   final String title;
   final String actionLabel;
-  final OnWantsToAddConnectionToCircles onWantsToAddConnectionToCircles;
+  final OnPickedCircles onPickedCircles;
+  final List<Circle> initialPickedCircles;
 
-  const OBAddConnectionToCircleBottomSheet(
+  const OBConnectionCirclesPickerBottomSheet(
       {Key key,
-        @required this.title,
-        @required this.actionLabel,
-        @required this.onWantsToAddConnectionToCircles})
+      this.initialPickedCircles,
+      @required this.title,
+      @required this.actionLabel,
+      @required this.onPickedCircles})
       : super(key: key);
 
   @override
-  OBAddConnectionToCircleBottomSheetState createState() {
-    return OBAddConnectionToCircleBottomSheetState();
+  OBConnectionCirclesPickerBottomSheetState createState() {
+    return OBConnectionCirclesPickerBottomSheetState();
   }
 }
 
-class OBAddConnectionToCircleBottomSheetState
-    extends State<OBAddConnectionToCircleBottomSheet> {
+class OBConnectionCirclesPickerBottomSheetState
+    extends State<OBConnectionCirclesPickerBottomSheet> {
   List<Circle> _pickedConnectionCircles;
 
   @override
@@ -55,15 +57,15 @@ class OBAddConnectionToCircleBottomSheetState
                       size: OBButtonSize.small,
                       child: Text(widget.actionLabel),
                       onPressed: () async {
-                        await widget.onWantsToAddConnectionToCircles(
-                            _pickedConnectionCircles);
+                        await widget.onPickedCircles(_pickedConnectionCircles);
+                        Navigator.pop(context);
                       }),
                 ],
               ),
             ),
             Padding(
                 padding:
-                EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
+                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -71,6 +73,7 @@ class OBAddConnectionToCircleBottomSheetState
                           'Circles help you restrict who can see what you share.'),
                     ])),
             OBCirclesQuickPicker(
+              initialPickedCircles: widget.initialPickedCircles,
               onCirclesPicked: (List<Circle> pickedCirles) async {
                 _pickedConnectionCircles = pickedCirles;
               },
@@ -82,4 +85,4 @@ class OBAddConnectionToCircleBottomSheetState
   }
 }
 
-typedef Future<void> OnWantsToAddConnectionToCircles(List<Circle> circles);
+typedef Future<void> OnPickedCircles(List<Circle> circles);

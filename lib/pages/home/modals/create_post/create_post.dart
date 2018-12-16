@@ -170,7 +170,9 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildRemainingCharacters() {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -183,8 +185,8 @@ class CreatePostModalState extends State<CreatePostModal> {
             style: TextStyle(
                 fontSize: 12.0,
                 color: _isPostTextAllowedLength
-                    ? Pigment.fromString(theme.primaryTextColor)
-                    : Pigment.fromString(theme.dangerColor),
+                    ? themeValueParserService.parseColor(theme.primaryTextColor)
+                    : themeValueParserService.parseColor(theme.dangerColor),
                 fontWeight: _isPostTextAllowedLength
                     ? FontWeight.normal
                     : FontWeight.bold),

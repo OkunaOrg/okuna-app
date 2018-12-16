@@ -3,38 +3,35 @@ import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_follow.dart';
+import 'package:Openbook/widgets/buttons/actions/follow_button.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
   final User user;
-  final OnWantsToEditUserProfile onWantsToEditUserProfile;
-  final OnWantsToPickCircles onWantsToPickCircles;
 
-  OBProfileActions(this.user,
-      {@required this.onWantsToEditUserProfile,
-      @required this.onWantsToPickCircles});
+  OBProfileActions(this.user);
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var userService = openbookProvider.userService;
+    var modalService = openbookProvider.modalService;
 
     bool isLoggedInUser = userService.isLoggedInUser(user);
 
     List<Widget> actions = [];
 
     if (isLoggedInUser) {
-      actions.add(_buildEditButton());
+      actions.add(_buildEditButton(modalService, context));
     } else {
       actions.addAll([
-        OBProfileActionFollow(user),
+        OBFollowButton(user),
         SizedBox(
           width: 10,
         ),
-        OBProfileActionMore(user,
-        onWantsToPickCircles: onWantsToPickCircles)
+        OBProfileActionMore(user)
       ]);
     }
 
@@ -44,14 +41,14 @@ class OBProfileActions extends StatelessWidget {
     );
   }
 
-  _buildEditButton() {
+  _buildEditButton(ModalService modalService, context) {
     return OBButton(
         child: Text(
           'Edit profile',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onPressed: () {
-          onWantsToEditUserProfile(user);
+          modalService.openEditUserProfile(user: user, context: context);
         });
   }
 }

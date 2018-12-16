@@ -156,7 +156,8 @@ class UserService {
   }
 
   Future<User> updateUserEmail(String email) async {
-    HttpieStreamedResponse response = await _authApiService.updateUserEmail(email: email);
+    HttpieStreamedResponse response =
+        await _authApiService.updateUserEmail(email: email);
 
     if (response.isBadRequest()) {
       return getLoggedInUser();
@@ -166,8 +167,10 @@ class UserService {
     return _makeLoggedInUser(userData);
   }
 
-  Future<void> updateUserPassword(String currentPassword, String newPassword) async {
-    HttpieStreamedResponse response = await _authApiService.updateUserPassword(currentPassword: currentPassword, newPassword: newPassword);
+  Future<void> updateUserPassword(
+      String currentPassword, String newPassword) async {
+    HttpieStreamedResponse response = await _authApiService.updateUserPassword(
+        currentPassword: currentPassword, newPassword: newPassword);
     _checkResponseIsOk(response);
   }
 
@@ -420,6 +423,13 @@ class UserService {
     return Connection.fromJson(json.decode(response.body));
   }
 
+  Future<Circle> getConnectionsCircleWithId(int circleId) async {
+    HttpieResponse response =
+        await _connectionsCirclesApiService.getCircleWithId(circleId);
+    _checkResponseIsOk(response);
+    return Circle.fromJSON(json.decode(response.body));
+  }
+
   Future<CirclesList> getConnectionsCircles() async {
     HttpieResponse response = await _connectionsCirclesApiService.getCircles();
     _checkResponseIsOk(response);
@@ -435,9 +445,12 @@ class UserService {
   }
 
   Future<Circle> updateConnectionsCircle(Circle circle,
-      {String name, String color}) async {
-    HttpieResponse response = await _connectionsCirclesApiService
-        .updateCircleWithId(circle.id, name: name, color: color);
+      {String name, String color, List<User> users = const []}) async {
+    HttpieResponse response =
+        await _connectionsCirclesApiService.updateCircleWithId(circle.id,
+            name: name,
+            color: color,
+            usernames: users.map((user) => user.username).toList());
     _checkResponseIsOk(response);
     return Circle.fromJSON(json.decode(response.body));
   }

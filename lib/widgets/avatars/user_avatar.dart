@@ -4,7 +4,6 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 enum OBUserAvatarSize { small, medium, large, extraLarge }
 
@@ -51,20 +50,24 @@ class OBUserAvatar extends StatelessWidget {
 
     Widget finalAvatarImage;
 
-    var placeholderImage = Image.asset(DEFAULT_AVATAR_ASSET);
+    var placeholderImage = SizedBox();
 
     if (avatarFile != null) {
       finalAvatarImage = FadeInImage(
+        fit: BoxFit.cover,
+        height: avatarSize,
+        width: avatarSize,
         placeholder: AssetImage(DEFAULT_AVATAR_ASSET),
         image: FileImage(avatarFile),
-        fit: BoxFit.cover,
       );
     } else if (avatarUrl != null) {
       finalAvatarImage = CachedNetworkImage(
-        fit: BoxFit.cover,
+        height: avatarSize,
+        width: avatarSize,
         imageUrl: avatarUrl,
         placeholder: placeholderImage,
         errorWidget: placeholderImage,
+        fit: BoxFit.cover,
       );
     } else {
       finalAvatarImage = placeholderImage;
@@ -72,38 +75,10 @@ class OBUserAvatar extends StatelessWidget {
 
     double avatarBorderRadius = 10.0;
 
-    Widget avatar;
-
-    if (borderWidth != null) {
-      var themeService = OpenbookProvider.of(context).themeService;
-
-      avatar = StreamBuilder(
-          stream: themeService.themeChange,
-          initialData: themeService.getActiveTheme(),
-          builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-            var theme = snapshot.data;
-            var borderColor = Pigment.fromString(theme.primaryColor);
-            return Container(
-                decoration: BoxDecoration(
-                    color: borderColor,
-                    borderRadius: BorderRadius.circular(avatarBorderRadius),
-                    border: Border.all(color: borderColor, width: 3)),
-                height: avatarSize,
-                width: avatarSize,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(avatarBorderRadius),
-                  child: finalAvatarImage,
-                ));
-          });
-    } else {
-      avatar = Container(
-          height: avatarSize,
-          width: avatarSize,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(avatarBorderRadius),
-            child: finalAvatarImage,
-          ));
-    }
+    Widget avatar = ClipRRect(
+      borderRadius: BorderRadius.circular(avatarBorderRadius),
+      child: finalAvatarImage,
+    );
 
     if (onPressed == null) return avatar;
 

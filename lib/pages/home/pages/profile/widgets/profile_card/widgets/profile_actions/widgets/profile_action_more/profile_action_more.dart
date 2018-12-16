@@ -3,6 +3,7 @@ import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/confirm_connection_with_user_tile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/connect_to_user_tile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/disconnect_from_user_tile.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/update_connection_with_user_tile.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ class OBProfileActionMore extends StatelessWidget {
             customSize: 30,
           ),
           onPressed: () {
-            Widget connectionTile;
+            List<Widget> moreTiles = [];
+
             var _dismissModalBottomSheet = () {
               Navigator.pop(context);
             };
@@ -36,24 +38,29 @@ class OBProfileActionMore extends StatelessWidget {
             if (user.isConnected &&
                 !user.isFullyConnected &&
                 !user.isPendingConnectionConfirmation) {
-              connectionTile = OBDisconnectFromUserTile(user,
+              moreTiles.add(OBDisconnectFromUserTile(user,
                   onDisconnectedFromUser: _dismissModalBottomSheet,
-                  title: 'Cancel connection request');
+                  title: 'Cancel connection request'));
+              moreTiles.add(OBUpdateConnectionWithUserTile(user,
+                  onWillShowModalBottomSheet: _dismissModalBottomSheet));
             } else if (user.isPendingConnectionConfirmation) {
-              connectionTile = OBConfirmConnectionWithUserTile(
+              moreTiles.add(OBConfirmConnectionWithUserTile(
                 user,
-                onConnectionConfirmed: _dismissModalBottomSheet,
                 onWillShowModalBottomSheet: _dismissModalBottomSheet,
-              );
+              ));
+              moreTiles.add(OBDisconnectFromUserTile(user,
+                  onDisconnectedFromUser: _dismissModalBottomSheet,
+                  title: 'Deny connection request'));
             } else if (user.isFullyConnected) {
-              connectionTile = OBDisconnectFromUserTile(user,
-                  onDisconnectedFromUser: _dismissModalBottomSheet);
+              moreTiles.add(OBDisconnectFromUserTile(user,
+                  onDisconnectedFromUser: _dismissModalBottomSheet));
+              moreTiles.add(OBUpdateConnectionWithUserTile(user,
+                  onWillShowModalBottomSheet: _dismissModalBottomSheet));
             } else {
-              connectionTile = OBConnectToUserTile(
+              moreTiles.add(OBConnectToUserTile(
                 user,
-                onConnectedToUser: _dismissModalBottomSheet,
                 onWillShowModalBottomSheet: _dismissModalBottomSheet,
-              );
+              ));
             }
 
             showModalBottomSheet(
@@ -63,7 +70,7 @@ class OBProfileActionMore extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [connectionTile]),
+                        children: moreTiles),
                   );
                 });
           },

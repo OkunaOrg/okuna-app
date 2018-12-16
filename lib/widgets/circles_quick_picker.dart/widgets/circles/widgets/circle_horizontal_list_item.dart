@@ -6,20 +6,31 @@ import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.d
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCircleHorizontalPreview extends StatelessWidget {
+class OBCircleHorizontalListItem extends StatelessWidget {
   final bool isSelected;
   final bool isDisabled;
   final Circle circle;
   final OnCirclePressed onCirclePressed;
+  final bool wasPreviouslySelected;
 
-  OBCircleHorizontalPreview(this.circle,
-      {@required this.onCirclePressed, this.isSelected, this.isDisabled});
+  OBCircleHorizontalListItem(this.circle,
+      {@required this.onCirclePressed,
+      this.isSelected,
+      this.isDisabled,
+      this.wasPreviouslySelected = false});
 
   @override
   Widget build(BuildContext context) {
     int usersCount = circle.usersCount;
-    String prettyUsersCount =
-        getPrettyCount(isSelected ? usersCount + 1 : usersCount);
+
+    if (wasPreviouslySelected) {
+      if (!isSelected) {
+        usersCount = usersCount - 1;
+      }
+    } else if (isSelected) {
+      usersCount = usersCount + 1;
+    }
+    String prettyUsersCount = getPrettyCount(usersCount);
 
     Widget item = GestureDetector(
       onTap: () {
@@ -37,6 +48,7 @@ class OBCircleHorizontalPreview extends StatelessWidget {
               children: <Widget>[
                 OBCircleColorPreview(
                   circle,
+                  size: OBCircleColorPreviewSize.large,
                 ),
                 Positioned(
                   child: OBCheckbox(
@@ -53,8 +65,8 @@ class OBCircleHorizontalPreview extends StatelessWidget {
             OBText(
               circle.name,
               maxLines: 1,
-              size: OBTextSize.small,
               style: TextStyle(
+                  fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
             OBText(

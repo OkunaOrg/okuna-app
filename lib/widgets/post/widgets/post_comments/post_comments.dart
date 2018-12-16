@@ -1,17 +1,19 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBPostComments extends StatelessWidget {
   final Post _post;
-  final OnWantsToSeePostComments onWantsToSeePostComments;
 
-  OBPostComments(this._post, {this.onWantsToSeePostComments});
+  OBPostComments(this._post);
 
   @override
   Widget build(BuildContext context) {
     int commentsCount = _post.commentsCount;
+    var openbookProvider = OpenbookProvider.of(context);
+    var navigationService = openbookProvider.navigationService;
 
     if (commentsCount == null || commentsCount == 0) {
       return SizedBox();
@@ -25,7 +27,8 @@ class OBPostComments extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              onWantsToSeePostComments(_post);
+              navigationService.navigateToPostComments(
+                  post: _post, context: context);
             },
             child: Padding(
               padding: EdgeInsets.only(top: 10),

@@ -3,6 +3,7 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post_comment/packages/post_comment_text.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
@@ -17,14 +18,12 @@ class OBExpandedPostComment extends StatefulWidget {
   final PostComment postComment;
   final Post post;
   final VoidCallback onPostCommentDeletedCallback;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBExpandedPostComment(
       {@required this.post,
       @required this.postComment,
       Key key,
-      this.onPostCommentDeletedCallback,
-      @required this.onWantsToSeeUserProfile})
+      this.onPostCommentDeletedCallback})
       : super(key: key);
 
   @override
@@ -37,6 +36,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
 
   @override
   void initState() {
@@ -49,6 +49,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    _navigationService = provider.navigationService;
 
     User loggedInUser = _userService.getLoggedInUser();
 
@@ -94,7 +95,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
         children: <Widget>[
           OBUserAvatar(
             onPressed: () {
-              widget.onWantsToSeeUserProfile(widget.post.creator);
+              _navigationService.navigateToUserProfile(user: widget.post.creator, context: context);
             },
             size: OBUserAvatarSize.medium,
             avatarUrl: widget.postComment.getCommenterProfileAvatar(),
@@ -109,7 +110,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
               OBPostCommentText(
                 widget.postComment,
                 onUsernamePressed: () {
-                  widget.onWantsToSeeUserProfile(widget.postComment.commenter);
+                  _navigationService.navigateToUserProfile(user: widget.post.creator, context: context);
                 },
               ),
               SizedBox(
