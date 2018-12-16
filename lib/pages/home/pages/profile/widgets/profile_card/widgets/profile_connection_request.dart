@@ -1,6 +1,7 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/alert.dart';
 import 'package:Openbook/widgets/buttons/actions/confirm_connection_button.dart';
+import 'package:Openbook/widgets/buttons/actions/deny_connection_button.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
@@ -30,20 +31,25 @@ class OBProfileConnectionRequest extends StatelessWidget {
               height: 20,
             ),
             OBAlert(
-              child: Row(
+              child: Column(
                 children: <Widget>[
-                  Flexible(
-                    child: OBText(
-                      '$userName has sent you a connection request.',
-                      maxLines: 4,
-                      size: OBTextSize.medium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  OBText(
+                    '$userName has sent you a connection request.',
+                    maxLines: 4,
+                    size: OBTextSize.medium,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(
-                    width: 30,
+                    height: 20,
                   ),
-                  OBConfirmConnectionButton(user)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      OBDenyConnectionButton(user),
+                      SizedBox(width: 20,),
+                      OBConfirmConnectionButton(user)
+                    ],
+                  )
                 ],
               ),
             )

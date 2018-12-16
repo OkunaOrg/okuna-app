@@ -48,6 +48,9 @@ class OBProfileActionMore extends StatelessWidget {
                 user,
                 onWillShowModalBottomSheet: _dismissModalBottomSheet,
               ));
+              moreTiles.add(OBDisconnectFromUserTile(user,
+                  onDisconnectedFromUser: _dismissModalBottomSheet,
+                  title: 'Deny connection request'));
             } else if (user.isFullyConnected) {
               moreTiles.add(OBDisconnectFromUserTile(user,
                   onDisconnectedFromUser: _dismissModalBottomSheet));
