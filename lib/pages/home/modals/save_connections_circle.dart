@@ -96,6 +96,7 @@ class OBSaveConnectionsCircleModalState
                         child: Column(
                           children: <Widget>[
                             OBTextFormField(
+                              textCapitalization: TextCapitalization.sentences,
                                 size: OBTextFormFieldSize.large,
                                 autofocus: widget.autofocusNameTextField,
                                 controller: _nameController,

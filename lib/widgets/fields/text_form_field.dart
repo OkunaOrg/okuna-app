@@ -13,6 +13,7 @@ class OBTextFormField extends StatelessWidget {
   final TextInputAction textInputAction;
   final OBTextFormFieldSize size;
   final bool obscureText;
+  final TextCapitalization textCapitalization;
 
   OBTextFormField(
       {this.controller,
@@ -23,7 +24,8 @@ class OBTextFormField extends StatelessWidget {
       this.size = OBTextFormFieldSize.medium,
       this.maxLines,
       this.textInputAction = TextInputAction.done,
-      this.decoration});
+      this.decoration,
+      this.textCapitalization = TextCapitalization.none});
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,7 @@ class OBTextFormField extends StatelessWidget {
           return Column(
             children: <Widget>[
               TextFormField(
+                textCapitalization: textCapitalization,
                 textInputAction: textInputAction,
                 autofocus: autofocus,
                 controller: controller,

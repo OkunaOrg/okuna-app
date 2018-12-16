@@ -167,6 +167,7 @@ class OBConnectionCirclesPickerBottomSheetState
   void _addCircle(Circle circle) {
     setState(() {
       _circles.add(circle);
+      _circleSearchResults.add(circle);
     });
   }
 
