@@ -5,6 +5,7 @@ import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/circles_horizontal_list/circles_horizontal_list.dart';
+import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class OBConnectionCirclesPickerBottomSheetState
   bool _needsBootstrap;
 
   List<Circle> _circles;
+  List<Circle> _circleSearchResults;
   List<Circle> _pickedCircles;
   List<Circle> _disabledCircles;
 
@@ -44,6 +46,7 @@ class OBConnectionCirclesPickerBottomSheetState
   void initState() {
     super.initState();
     _circles = [];
+    _circleSearchResults = [];
     _pickedCircles = widget.initialPickedCircles != null
         ? widget.initialPickedCircles.toList()
         : [];
@@ -61,56 +64,69 @@ class OBConnectionCirclesPickerBottomSheetState
       _needsBootstrap = false;
     }
 
-    return GestureDetector(
-      onTap: () {},
-      child: OBPrimaryColorContainer(
+    return OBPrimaryColorContainer(
+      mainAxisSize: MainAxisSize.min,
+      child: Column(
         mainAxisSize: MainAxisSize.min,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  OBText(
-                    widget.title,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  OBButton(
-                      size: OBButtonSize.small,
-                      child: Text(widget.actionLabel),
-                      onPressed: () async {
-                        await widget.onPickedCircles(_pickedCircles);
-                        Navigator.pop(context);
-                      }),
-                ],
-              ),
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                OBText(
+                  widget.title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                OBButton(
+                    size: OBButtonSize.small,
+                    child: Text(widget.actionLabel),
+                    onPressed: () async {
+                      await widget.onPickedCircles(_pickedCircles);
+                      Navigator.pop(context);
+                    }),
+              ],
             ),
-            Padding(
-                padding:
-                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      OBText(
-                          'Circles help you control who sees what you share.'),
-                    ])),
-            Container(
-              height: 110,
-              child: OBCirclesHorizontalList(
-                _circles,
-                previouslySelectedCircles: widget.initialPickedCircles,
-                selectedCircles: _pickedCircles,
-                disabledCircles: _disabledCircles,
-                onCirclePressed: _onCirclePressed,
-                onWantsToCreateANewCircle: _onWantsToCreateANewCircle,
-              ),
-            )
-          ],
-        ),
+          ),
+          OBSearchBar(
+            onSearch: _onSearch,
+            hintText: 'Search circles...',
+          ),
+          Container(
+            height: 110,
+            child: OBCirclesHorizontalList(
+              _circleSearchResults,
+              previouslySelectedCircles: widget.initialPickedCircles,
+              selectedCircles: _pickedCircles,
+              disabledCircles: _disabledCircles,
+              onCirclePressed: _onCirclePressed,
+              onWantsToCreateANewCircle: _onWantsToCreateANewCircle,
+            ),
+          )
+        ],
       ),
     );
+  }
+
+  void _onSearch(String searchString) {
+    if (searchString.length == 0) {
+      _resetCircleSearchResults();
+      return;
+    }
+
+    String standarisedSearchStr = searchString.toLowerCase();
+
+    List<Circle> results = _circles.where((Circle circle) {
+      return circle.name.toLowerCase().contains(standarisedSearchStr);
+    }).toList();
+
+    _setCircleSearchResults(results);
+  }
+
+  void _setCircleSearchResults(List<Circle> circleSearchResults) {
+    setState(() {
+      _circleSearchResults = circleSearchResults;
+    });
   }
 
   void _onWantsToCreateANewCircle() async {
@@ -132,6 +148,12 @@ class OBConnectionCirclesPickerBottomSheetState
     }
   }
 
+  void _resetCircleSearchResults() {
+    setState(() {
+      _circleSearchResults = _circles.toList();
+    });
+  }
+
   void _bootstrap() async {
     CirclesList circleList = await _userService.getConnectionsCircles();
     // We assume the connections circle will always be the last one
@@ -151,6 +173,7 @@ class OBConnectionCirclesPickerBottomSheetState
     var user = _userService.getLoggedInUser();
     setState(() {
       _circles = circles;
+      _circleSearchResults = circles.toList();
       var connectionsCircle = _circles.firstWhere((Circle circle) {
         return circle.id == user.connectionsCircleId;
       });
