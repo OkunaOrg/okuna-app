@@ -15,7 +15,7 @@ class OBProfileInLists extends StatelessWidget {
       stream: user.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
-        if (!user.hasFollowLists()) return SizedBox();
+        if (user == null || !user.hasFollowLists()) return SizedBox();
         var followsLists = user.followLists.lists;
 
         List<Widget> connectionItems = [

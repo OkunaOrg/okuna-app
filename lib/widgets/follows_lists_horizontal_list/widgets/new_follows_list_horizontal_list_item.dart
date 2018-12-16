@@ -19,16 +19,10 @@ class OBNewFollowsListHorizontalListItem extends StatelessWidget {
             Stack(
               overflow: Overflow.visible,
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Color.fromARGB(10, 0, 0, 0), width: 3),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: OBIcon(
-                    OBIcons.lists,
-                    customSize: 40,
-                    themeColor: OBIconThemeColor.primaryAccent,
-                  ),
+                OBIcon(
+                  OBIcons.lists,
+                  customSize: 40,
+                  themeColor: OBIconThemeColor.primaryAccent,
                 ),
                 Positioned(
                   child: DecoratedBox(
