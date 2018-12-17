@@ -1,15 +1,12 @@
 import 'dart:io';
 
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
@@ -17,7 +14,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,13 +29,9 @@ class CreatePostModal extends StatefulWidget {
 }
 
 class CreatePostModalState extends State<CreatePostModal> {
-  static const double actionIconHeight = 20.0;
-  static const double actionSpacing = 10.0;
-
-  UserService _userService;
-  ValidationService _validationService;
-  ToastService _toastService;
   ImagePickerService _imagePickerService;
+  ValidationService _validationService;
+  NavigationService _navigationService;
 
   TextEditingController _textController;
   int _charactersCount;
@@ -54,19 +47,16 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   bool _isCreatePostInProgress;
 
-  GlobalKey<ScaffoldState> _scaffoldKey;
-
   @override
   void initState() {
     super.initState();
-    _scaffoldKey = GlobalKey<ScaffoldState>();
     _textController = TextEditingController();
     _textController.addListener(_onPostTextChanged);
     _charactersCount = 0;
     _isPostTextAllowedLength = false;
     _hasImage = false;
     _isCreatePostInProgress = false;
-    _postItemsWidgets = [_buildPostTextField()];
+    _postItemsWidgets = [OBCreatePostText(controller: _textController)];
   }
 
   @override
@@ -78,37 +68,17 @@ class CreatePostModalState extends State<CreatePostModal> {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    _userService = openbookProvider.userService;
     _validationService = openbookProvider.validationService;
-    _toastService = openbookProvider.toastService;
     _imagePickerService = openbookProvider.imagePickerService;
+    _navigationService = openbookProvider.navigationService;
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
-        key: _scaffoldKey,
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[_buildNewPostContent(), _buildPostActions()],
         )));
-  }
-
-  Future<void> createPost() async {
-    _setCreatePostInProgress(true);
-
-    try {
-      Post createdPost = await _userService.createPost(
-          text: _textController.text, image: _postImage);
-      // Remove modal
-      Navigator.pop(context, createdPost);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-      _setCreatePostInProgress(false);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      _setCreatePostInProgress(false);
-      rethrow;
-    }
   }
 
   Widget _buildNavigationBar() {
@@ -123,15 +93,23 @@ class CreatePostModalState extends State<CreatePostModal> {
         },
       ),
       title: 'New post',
-      trailing: OBButton(
-        isDisabled: !newPostButtonIsEnabled,
-        isLoading: _isCreatePostInProgress,
-        size: OBButtonSize.small,
-        type: OBButtonType.primary,
-        onPressed: createPost,
-        child: Text('Share'),
+      trailing: GestureDetector(
+        onTap: _onWantsToSubmitPost,
+        child: Text('Next'),
       ),
     );
+  }
+
+  void _onWantsToSubmitPost() async {
+    OBPost sharedPost = await _navigationService.navigateToSharePost(
+        context: context,
+        createPostData:
+            SharePostData(text: _textController.text, image: _postImage));
+
+    if (sharedPost != null) {
+      // Remove modal
+      Navigator.pop(context, sharedPost);
+    }
   }
 
   Widget _buildNewPostContent() {
@@ -169,10 +147,6 @@ class CreatePostModalState extends State<CreatePostModal> {
         ],
       ),
     ));
-  }
-
-  Widget _buildPostTextField() {
-    return OBCreatePostText(controller: _textController);
   }
 
   Widget _buildPostActions() {
@@ -291,12 +265,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     };
   }
 
-  void _setCreatePostInProgress(bool createPostInProgress) {
-    setState(() {
-      _isCreatePostInProgress = createPostInProgress;
-    });
-  }
-
   void _setPostItemsWidgets(List<Widget> postItemsWidgets) {
     setState(() {
       _postItemsWidgets = postItemsWidgets;
@@ -307,5 +275,3 @@ class CreatePostModalState extends State<CreatePostModal> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
-
-typedef void OnPostCreatedCallback(Post createdPost);
