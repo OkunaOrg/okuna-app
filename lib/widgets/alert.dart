@@ -50,11 +50,4 @@ class OBAlertState extends State<OBAlert> {
           );
         });
   }
-
-  void _dismissAlert() {
-    print('DISMISS');
-    setState(() {
-      isVisible = false;
-    });
-  }
 }

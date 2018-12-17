@@ -1,3 +1,5 @@
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
@@ -38,61 +40,78 @@ class OBSearchBarState extends State<OBSearchBar> {
     EdgeInsetsGeometry inputContentPadding = EdgeInsets.only(
         top: 8.0, bottom: 8.0, left: 20, right: hasText ? 40 : 20);
 
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(
-            width: 15.0,
-          ),
-          OBIcon(OBIcons.search),
-          SizedBox(
-            width: 15.0,
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color.fromARGB(10, 0, 0, 0),
-              ),
-              child: Stack(
-                children: <Widget>[
-                  OBTextField(
-                    textInputAction: TextInputAction.go,
-                    focusNode: _textFocusNode,
-                    controller: _textController,
-                    keyboardType: TextInputType.multiline,
-                    style: TextStyle(fontSize: 14.0),
-                    decoration: InputDecoration(
-                        hintText: widget.hintText,
-                        contentPadding: inputContentPadding,
-                        border: InputBorder.none),
-                    autocorrect: true,
-                  ),
-                  hasText
-                      ? Positioned(
-                          right: 0,
-                          child: _buildClearButton(),
-                        )
-                      : SizedBox()
-                ],
-              ),
-            ),
-          ),
-          hasText
-              ? FlatButton(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  child: OBText('Cancel'),
-                  onPressed: _cancelSearch,
-                )
-              : SizedBox(
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
+
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+          Color primaryColor =
+              themeValueParserService.parseColor(theme.primaryColor);
+          final bool isDarkPrimaryColor =
+              primaryColor.computeLuminance() < 0.179;
+
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
                   width: 15.0,
-                )
-        ],
-      ),
-    );
+                ),
+                OBIcon(OBIcons.search),
+                SizedBox(
+                  width: 15.0,
+                ),
+                Expanded(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: isDarkPrimaryColor
+                          ? Color.fromARGB(20, 255, 255, 255)
+                          : Color.fromARGB(10, 0, 0, 0),
+                    ),
+                    child: Stack(
+                      children: <Widget>[
+                        OBTextField(
+                          textInputAction: TextInputAction.go,
+                          focusNode: _textFocusNode,
+                          controller: _textController,
+                          keyboardType: TextInputType.multiline,
+                          style: TextStyle(fontSize: 14.0),
+                          decoration: InputDecoration(
+                              hintText: widget.hintText,
+                              contentPadding: inputContentPadding,
+                              border: InputBorder.none),
+                          autocorrect: true,
+                        ),
+                        hasText
+                            ? Positioned(
+                                right: 0,
+                                child: _buildClearButton(),
+                              )
+                            : SizedBox()
+                      ],
+                    ),
+                  ),
+                ),
+                hasText
+                    ? FlatButton(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        child: OBText('Cancel'),
+                        onPressed: _cancelSearch,
+                      )
+                    : SizedBox(
+                        width: 15.0,
+                      )
+              ],
+            ),
+          );
+        });
   }
 
   Widget _buildClearButton() {

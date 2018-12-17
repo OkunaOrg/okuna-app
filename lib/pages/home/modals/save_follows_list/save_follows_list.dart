@@ -10,7 +10,6 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/fields/emoji_field.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
@@ -95,6 +94,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                         child: Column(
                           children: <Widget>[
                             OBTextFormField(
+                                textCapitalization: TextCapitalization.sentences,
                                 size: OBTextFormFieldSize.large,
                                 autofocus: widget.autofocusNameTextField,
                                 controller: _nameController,
