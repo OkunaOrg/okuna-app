@@ -4,6 +4,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
@@ -33,7 +34,6 @@ class CreatePostModal extends StatefulWidget {
 class CreatePostModalState extends State<CreatePostModal> {
   static const double actionIconHeight = 20.0;
   static const double actionSpacing = 10.0;
-  static const int MAX_ALLOWED_CHARACTERS = ValidationService.POST_MAX_LENGTH;
 
   UserService _userService;
   ValidationService _validationService;
@@ -149,7 +149,10 @@ class CreatePostModalState extends State<CreatePostModal> {
               SizedBox(
                 height: 12.0,
               ),
-              _buildRemainingCharacters(),
+              OBRemainingPostCharacters(
+                maxCharacters: ValidationService.POST_MAX_LENGTH,
+                currentCharacters: _charactersCount,
+              ),
             ],
           ),
           Expanded(
@@ -166,31 +169,6 @@ class CreatePostModalState extends State<CreatePostModal> {
         ],
       ),
     ));
-  }
-
-  Widget _buildRemainingCharacters() {
-    var openbookProvider = OpenbookProvider.of(context);
-    var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
-
-    return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-
-          return Text(
-            (MAX_ALLOWED_CHARACTERS - _charactersCount).toString(),
-            style: TextStyle(
-                fontSize: 12.0,
-                color: _isPostTextAllowedLength
-                    ? themeValueParserService.parseColor(theme.primaryTextColor)
-                    : themeValueParserService.parseColor(theme.dangerColor),
-                fontWeight: _isPostTextAllowedLength
-                    ? FontWeight.normal
-                    : FontWeight.bold),
-          );
-        });
   }
 
   Widget _buildPostTextField() {
