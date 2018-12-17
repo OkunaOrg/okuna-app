@@ -19,9 +19,10 @@ class ImagePickerService {
       return null;
     }
 
+    if (imageType == OBImageType.post) return image;
+
     double ratioX = IMAGE_RATIOS[imageType]['x'];
     double ratioY = IMAGE_RATIOS[imageType]['y'];
-
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: image.path,
       ratioX: ratioX,
@@ -32,4 +33,4 @@ class ImagePickerService {
   }
 }
 
-enum OBImageType { avatar, cover }
+enum OBImageType { avatar, cover, post }

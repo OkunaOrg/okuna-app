@@ -6,6 +6,7 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -15,10 +16,10 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
@@ -37,14 +38,13 @@ class CreatePostModalState extends State<CreatePostModal> {
   UserService _userService;
   ValidationService _validationService;
   ToastService _toastService;
+  ImagePickerService _imagePickerService;
 
   TextEditingController _textController;
   int _charactersCount;
 
   bool _isPostTextAllowedLength;
   bool _hasImage;
-  bool _hasAudience;
-  bool _hasBurner;
 
   File _postImage;
 
@@ -65,8 +65,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     _charactersCount = 0;
     _isPostTextAllowedLength = false;
     _hasImage = false;
-    _hasAudience = false;
-    _hasBurner = false;
     _isCreatePostInProgress = false;
     _postItemsWidgets = [_buildPostTextField()];
   }
@@ -83,12 +81,13 @@ class CreatePostModalState extends State<CreatePostModal> {
     _userService = openbookProvider.userService;
     _validationService = openbookProvider.validationService;
     _toastService = openbookProvider.toastService;
+    _imagePickerService = openbookProvider.imagePickerService;
 
-    return Scaffold(
-        backgroundColor: Colors.white,
+    return CupertinoPageScaffold(
+        backgroundColor: Colors.transparent,
         key: _scaffoldKey,
-        appBar: _buildNavigationBar(),
-        body: OBPrimaryColorContainer(
+        navigationBar: _buildNavigationBar(),
+        child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[_buildNewPostContent(), _buildPostActions()],
         )));
@@ -205,35 +204,33 @@ class CreatePostModalState extends State<CreatePostModal> {
       postActions.addAll(_getImagePostActions());
     }
 
-    if (!_hasAudience) {
-      postActions.add(_buildAudiencePostAction());
-    }
-
-    if (!_hasBurner) {
-      postActions.add(_buildBurnerPostAction());
-    }
-
-    // Add spacing
-    List<Widget> spacedPostActions = [];
-
-    int actionsCount = postActions.length;
-
-    for (int i = 0; i < actionsCount; i++) {
-      var postAction = postActions[i];
-      spacedPostActions.add(_buildPostActionHorizontalSpacing());
-      spacedPostActions.add(postAction);
-
-      if (i == actionsCount - 1) {
-        spacedPostActions.add(_buildPostActionHorizontalSpacing());
-      }
-    }
-
     return Container(
       height: 51.0,
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       color: Color.fromARGB(5, 0, 0, 0),
-      child: ListView(
-          scrollDirection: Axis.horizontal, children: spacedPostActions),
+      child: ListView.separated(
+        itemCount: postActions.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, index) {
+          var postAction = postActions[index];
+
+          return index == 0
+              ? Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 10,
+                    ),
+                    postAction
+                  ],
+                )
+              : postAction;
+        },
+        separatorBuilder: (BuildContext context, index) {
+          return SizedBox(
+            width: 10,
+          );
+        },
+      ),
     );
   }
 
@@ -245,7 +242,8 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: OBIcon(OBIcons.media),
         onPressed: () async {
           _unfocusTextField();
-          File image = await _pickImage(ImageSource.gallery);
+          File image = await _imagePickerService.pickImage(
+              imageType: OBImageType.post, source: ImageSource.gallery);
           if (image != null) _setPostImage(image);
         },
       ),
@@ -255,41 +253,12 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: OBIcon(OBIcons.camera),
         onPressed: () async {
           _unfocusTextField();
-          File image = await _pickImage(ImageSource.camera);
+          File image = await _imagePickerService.pickImage(
+              imageType: OBImageType.post, source: ImageSource.camera);
           if (image != null) _setPostImage(image);
         },
-      ),
-      OBPillButton(
-        text: 'GIF',
-        color: Pigment.fromString('#0F0F0F'),
-        icon: OBIcon(OBIcons.gif),
-        onPressed: () {},
-      ),
+      )
     ];
-  }
-
-  Widget _buildBurnerPostAction() {
-    return OBPillButton(
-      text: 'Burner',
-      color: Pigment.fromString('#F13A59'),
-      icon: OBIcon(OBIcons.burner),
-      onPressed: () {},
-    );
-  }
-
-  Widget _buildAudiencePostAction() {
-    return OBPillButton(
-      text: 'Audience',
-      color: Pigment.fromString('#80E37A'),
-      icon: OBIcon(OBIcons.audience),
-      onPressed: () {},
-    );
-  }
-
-  Widget _buildPostActionHorizontalSpacing() {
-    return SizedBox(
-      width: actionSpacing,
-    );
   }
 
   void _onPostTextChanged() {
@@ -342,23 +311,6 @@ class CreatePostModalState extends State<CreatePostModal> {
       newPostItemsWidgets.remove(widgetSpacing);
       _setPostItemsWidgets(newPostItemsWidgets);
     };
-  }
-
-  Future<File> _pickImage(ImageSource source) async {
-    var image = await ImagePicker.pickImage(source: source);
-    if (image == null) {
-      return null;
-    }
-
-    File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image.path,
-      ratioX: 1.0,
-      ratioY: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-    );
-
-    return croppedFile;
   }
 
   void _setCreatePostInProgress(bool createPostInProgress) {
