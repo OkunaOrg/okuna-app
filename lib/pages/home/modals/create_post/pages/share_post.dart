@@ -60,6 +60,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
         size: OBButtonSize.small,
         type: OBButtonType.primary,
         isLoading: _isCreatePostInProgress,
+        //isDisabled: _latestPickedCircles.length == 0,
         onPressed: createPost,
         child: Text('Share'),
       ),
@@ -68,7 +69,6 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
   void _onPickedCirclesChanged(List<Circle> pickedCircles) {
     _latestPickedCircles = pickedCircles;
-    pickedCircles.forEach((circle) => print(circle.name));
   }
 
   Future<void> createPost() async {
