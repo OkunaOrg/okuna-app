@@ -10,6 +10,7 @@ class OBCheckboxField extends StatelessWidget {
   final Widget leading;
   final String title;
   final String subtitle;
+  final bool isDisabled;
 
   OBCheckboxField(
       {@required this.value,
@@ -17,11 +18,12 @@ class OBCheckboxField extends StatelessWidget {
       this.subtitle,
       this.onTap,
       this.leading,
-      @required this.title});
+      @required this.title,
+      this.isDisabled = false});
 
   @override
   Widget build(BuildContext context) {
-    return MergeSemantics(
+    Widget field = MergeSemantics(
       child: ListTile(
           selected: value,
           leading: leading,
@@ -39,7 +41,17 @@ class OBCheckboxField extends StatelessWidget {
               )
             ],
           ),
-          onTap: onTap),
+          onTap: () {
+            if (!isDisabled) onTap();
+          }),
     );
+
+    if (isDisabled) {
+      field = Opacity(
+        opacity: 0.5,
+        child: field,
+      );
+    }
+    return field;
   }
 }

@@ -22,6 +22,7 @@ class OBCheckbox extends StatelessWidget {
         child: Center(
           child: OBIcon(
             value ? OBIcons.checkCircleSelected : OBIcons.checkCircle,
+            customSize: 30,
             themeColor: value ? OBIconThemeColor.primaryAccent : null,
           ),
         ),

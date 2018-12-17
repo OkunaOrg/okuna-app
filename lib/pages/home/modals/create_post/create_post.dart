@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
@@ -10,11 +11,9 @@ import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
-import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -82,8 +81,23 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildNavigationBar() {
-    bool newPostButtonIsEnabled =
+    bool nextButtonIsEnabled =
         (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage;
+
+    Widget nextButtonText = Text('Next');
+    Widget nextButton;
+
+    if (nextButtonIsEnabled) {
+      nextButton = GestureDetector(
+        onTap: _onWantsToSubmitPost,
+        child: nextButtonText,
+      );
+    } else {
+      nextButton = Opacity(
+        opacity: 0.5,
+        child: nextButtonText,
+      );
+    }
 
     return OBNavigationBar(
       leading: GestureDetector(
@@ -95,13 +109,13 @@ class CreatePostModalState extends State<CreatePostModal> {
       title: 'New post',
       trailing: GestureDetector(
         onTap: _onWantsToSubmitPost,
-        child: Text('Next'),
+        child: nextButton,
       ),
     );
   }
 
   void _onWantsToSubmitPost() async {
-    OBPost sharedPost = await _navigationService.navigateToSharePost(
+    Post sharedPost = await _navigationService.navigateToSharePost(
         context: context,
         createPostData:
             SharePostData(text: _textController.text, image: _postImage));

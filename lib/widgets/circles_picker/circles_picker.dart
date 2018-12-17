@@ -1,7 +1,6 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
 import 'package:Openbook/widgets/search_bar.dart';
@@ -26,13 +25,14 @@ class OBCirclesPicker extends StatefulWidget {
 
 class OBCirclesPickerState extends State<OBCirclesPicker> {
   UserService _userService;
-  ToastService _toastService;
 
   bool _needsBootstrap;
 
   List<Circle> _circles;
   List<Circle> _circleSearchResults;
   List<Circle> _selectedCircles;
+  List<Circle> _disabledCircles;
+  Circle _fakeWorldCircle = Circle(id: 1, name: 'Earth', color: '#023ca7', usersCount: 7700000000);
 
   String _circleSearchQuery;
 
@@ -46,6 +46,7 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
         ? widget.initialPickedCircles.toList()
         : [];
     _circleSearchQuery = '';
+    _disabledCircles = [];
     _needsBootstrap = true;
   }
 
@@ -53,7 +54,6 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -73,6 +73,7 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
           _circleSearchResults,
           _circleSearchQuery,
           selectedCircles: _selectedCircles,
+          disabledCircles: _disabledCircles,
           onCirclePressed: _onCirclePressed,
         ))
       ],
@@ -82,12 +83,29 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
   void _onCirclePressed(Circle pressedCircle) {
     if (_selectedCircles.contains(pressedCircle)) {
       // Remove
-      _removeSelectedCircle(pressedCircle);
+      if (pressedCircle == _fakeWorldCircle) {
+        // Enable all other circles
+        _setDisabledCircles([]);
+        _setSelectedCircles([]);
+        widget.onPickedCirclesChanged([]);
+      } else{
+        _removeSelectedCircle(pressedCircle);
+        widget.onPickedCirclesChanged(_selectedCircles);
+      }
     } else {
       // Add
-      _addSelectedCircle(pressedCircle);
+      if (pressedCircle == _fakeWorldCircle) {
+        // Add all circles
+        _setSelectedCircles(_circles.toList());
+        var disabledCircles = _circles.toList();
+        disabledCircles.remove(_fakeWorldCircle);
+        _setDisabledCircles(disabledCircles);
+        widget.onPickedCirclesChanged([]);
+      } else{
+        _addSelectedCircle(pressedCircle);
+        widget.onPickedCirclesChanged(_selectedCircles);
+      }
     }
-    widget.onPickedCirclesChanged(_circles);
   }
 
   void _onSearch(String searchString) {
@@ -107,8 +125,6 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
   }
 
   void _bootstrap() async {
-    // If we have initial circles, no reason to refetch
-    if (_circles.length > 0) return;
     CirclesList circleList = await _userService.getConnectionsCircles();
     this._setCircles(circleList.circles);
   }
@@ -120,12 +136,31 @@ class OBCirclesPickerState extends State<OBCirclesPicker> {
   }
 
   void _setCircles(List<Circle> circles) {
+    var user = _userService.getLoggedInUser();
     setState(() {
       _circles = circles;
+      var _connectionsCircle = _circles
+          .firstWhere((circle) => circle.id == user.connectionsCircleId);
+      _circles.remove(_connectionsCircle);
+      _circles.insert(0, _connectionsCircle);
+      _circles.insert(0, _fakeWorldCircle);
       _selectedCircles = [];
       _circleSearchResults = circles.toList();
     });
   }
+
+  void _setDisabledCircles(List<Circle> disabledCircles) {
+    setState(() {
+      _disabledCircles = disabledCircles;
+    });
+  }
+
+  void _setSelectedCircles(List<Circle> selectedCircles) {
+    setState(() {
+      _selectedCircles = selectedCircles;
+    });
+  }
+
 
   void _addSelectedCircle(Circle circle) {
     setState(() {

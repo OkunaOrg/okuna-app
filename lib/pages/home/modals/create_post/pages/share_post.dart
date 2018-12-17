@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/circles_picker/circles_picker.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -40,6 +40,10 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    _toastService = openbookProvider.toastService;
+    _userService = openbookProvider.userService;
+
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
@@ -64,6 +68,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
   void _onPickedCirclesChanged(List<Circle> pickedCircles) {
     _latestPickedCircles = pickedCircles;
+    pickedCircles.forEach((circle) => print(circle.name));
   }
 
   Future<void> createPost() async {
@@ -77,11 +82,11 @@ class OBSharePostPageState extends State<OBSharePostPage> {
       Navigator.pop(context, createdPost);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
-      _setCreatePostInProgress(false);
     } catch (e) {
       _toastService.error(message: 'Unknown error.', context: context);
-      _setCreatePostInProgress(false);
       rethrow;
+    } finally {
+      _setCreatePostInProgress(false);
     }
   }
 

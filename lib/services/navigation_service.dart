@@ -10,7 +10,6 @@ import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists
 import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
-import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +50,7 @@ class NavigationService {
             key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
   }
 
-  Future<OBPost> navigateToSharePost(
+  Future<Post> navigateToSharePost(
       {@required BuildContext context,
       @required SharePostData createPostData}) {
     return Navigator.push(
