@@ -1,7 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/widgets/circles_horizontal_list/widgets/circle_horizontal_list_item.dart';
 import 'package:Openbook/widgets/circles_horizontal_list/widgets/new_circle_horizontal_list_item.dart';
-import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
+import 'package:Openbook/widgets/tiles/circle_selectable_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBCirclesHorizontalList extends StatelessWidget {

@@ -19,8 +19,9 @@ import 'package:loadmore/loadmore.dart';
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
 
-  OBTimelinePosts(
-      {this.controller,});
+  OBTimelinePosts({
+    this.controller,
+  });
 
   @override
   OBTimelinePostsState createState() {
@@ -88,6 +89,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                   var post = _posts[index];
                   return OBPost(
                     post,
+                    onPostDeleted: _onPostDeleted,
+                    key: Key(
+                      post.id.toString(),
+                    ),
                   );
                 }),
             onLoadMore: _loadMorePosts));
@@ -162,6 +167,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
 
     return false;
+  }
+
+  void _onPostDeleted(Post deletedPost) {
+    setState(() {
+      _posts.remove(deletedPost);
+    });
   }
 
   void _setPosts(List<Post> posts) {

@@ -1,17 +1,21 @@
 String getPrettyCount(int value) {
   String postfix;
+  double finalValue = value.toDouble();
 
   if (value < 0) {
     throw 'Invalid value';
   } else if (value < 1000) {
-    postfix = '';
+    return value.toString();
   } else if (value < 1000000) {
     postfix = 'k';
+    finalValue = value / 1000;
   } else if (value < 1000000000) {
     postfix = 'm';
-  } else {
+    finalValue = value / 1000000;
+  } else if (value < 1000000000000) {
     postfix = 'b';
+    finalValue = value / 1000000000;
   }
 
-  return value.toString() + postfix;
+  return finalValue.toString() + postfix;
 }

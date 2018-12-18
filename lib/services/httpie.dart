@@ -9,6 +9,8 @@ import 'package:http_parser/http_parser.dart';
 class HttpieService {
   LocalizationService _localizationService;
   String authorizationToken;
+  String magicHeaderName;
+  String magicHeaderValue;
 
   void setAuthorizationToken(String token) {
     authorizationToken = token;
@@ -20,6 +22,11 @@ class HttpieService {
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
+  }
+
+  void setMagicHeader(String name, String value) {
+    magicHeaderName = name;
+    magicHeaderValue = value;
   }
 
   Future<HttpieResponse> post(url,
@@ -295,6 +302,10 @@ class HttpieService {
 
     if (appendAuthorizationToken && authorizationToken != null) {
       finalHeaders['Authorization'] = 'Token $authorizationToken';
+    }
+
+    if (magicHeaderName != null && magicHeaderValue != null) {
+      finalHeaders[magicHeaderName] = magicHeaderValue;
     }
 
     return finalHeaders;

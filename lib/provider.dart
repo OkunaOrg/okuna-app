@@ -111,6 +111,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   void initAsyncState() async {
     Environment environment =
         await EnvironmentLoader(environmentPath: ".env.json").load();
+    httpService.setMagicHeader(
+        environment.magicHeaderName, environment.magicHeaderValue);
     authApiService.setApiURL(environment.apiUrl);
     postsApiService.setApiURL(environment.apiUrl);
     emojisApiService.setApiURL(environment.apiUrl);

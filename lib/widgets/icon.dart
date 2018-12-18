@@ -158,6 +158,8 @@ class OBIcons {
   static const unfollow = OBIconData(nativeIcon: Icons.notifications_off);
   static const connect = OBIconData(nativeIcon: Icons.group_add);
   static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
+  static const deletePost = OBIconData(nativeIcon: Icons.delete);
+  static const reportPost = OBIconData(nativeIcon: Icons.report);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

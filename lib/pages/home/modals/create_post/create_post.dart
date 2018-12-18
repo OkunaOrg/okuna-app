@@ -1,24 +1,22 @@
 import 'dart:io';
 
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
@@ -30,21 +28,15 @@ class CreatePostModal extends StatefulWidget {
 }
 
 class CreatePostModalState extends State<CreatePostModal> {
-  static const double actionIconHeight = 20.0;
-  static const double actionSpacing = 10.0;
-  static const int MAX_ALLOWED_CHARACTERS = ValidationService.POST_MAX_LENGTH;
-
-  UserService _userService;
+  ImagePickerService _imagePickerService;
   ValidationService _validationService;
-  ToastService _toastService;
+  NavigationService _navigationService;
 
   TextEditingController _textController;
   int _charactersCount;
 
   bool _isPostTextAllowedLength;
   bool _hasImage;
-  bool _hasAudience;
-  bool _hasBurner;
 
   File _postImage;
 
@@ -54,21 +46,16 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   bool _isCreatePostInProgress;
 
-  GlobalKey<ScaffoldState> _scaffoldKey;
-
   @override
   void initState() {
     super.initState();
-    _scaffoldKey = GlobalKey<ScaffoldState>();
     _textController = TextEditingController();
     _textController.addListener(_onPostTextChanged);
     _charactersCount = 0;
     _isPostTextAllowedLength = false;
     _hasImage = false;
-    _hasAudience = false;
-    _hasBurner = false;
     _isCreatePostInProgress = false;
-    _postItemsWidgets = [_buildPostTextField()];
+    _postItemsWidgets = [OBCreatePostText(controller: _textController)];
   }
 
   @override
@@ -80,41 +67,37 @@ class CreatePostModalState extends State<CreatePostModal> {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    _userService = openbookProvider.userService;
     _validationService = openbookProvider.validationService;
-    _toastService = openbookProvider.toastService;
+    _imagePickerService = openbookProvider.imagePickerService;
+    _navigationService = openbookProvider.navigationService;
 
-    return Scaffold(
-        backgroundColor: Colors.white,
-        key: _scaffoldKey,
-        appBar: _buildNavigationBar(),
-        body: OBPrimaryColorContainer(
+    return CupertinoPageScaffold(
+        backgroundColor: Colors.transparent,
+        navigationBar: _buildNavigationBar(),
+        child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[_buildNewPostContent(), _buildPostActions()],
         )));
   }
 
-  Future<void> createPost() async {
-    _setCreatePostInProgress(true);
-
-    try {
-      Post createdPost = await _userService.createPost(
-          text: _textController.text, image: _postImage);
-      // Remove modal
-      Navigator.pop(context, createdPost);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-      _setCreatePostInProgress(false);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      _setCreatePostInProgress(false);
-      rethrow;
-    }
-  }
-
   Widget _buildNavigationBar() {
-    bool newPostButtonIsEnabled =
+    bool nextButtonIsEnabled =
         (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage;
+
+    Widget nextButtonText = Text('Next');
+    Widget nextButton;
+
+    if (nextButtonIsEnabled) {
+      nextButton = GestureDetector(
+        onTap: _onWantsToSubmitPost,
+        child: nextButtonText,
+      );
+    } else {
+      nextButton = Opacity(
+        opacity: 0.5,
+        child: nextButtonText,
+      );
+    }
 
     return OBNavigationBar(
       leading: GestureDetector(
@@ -124,15 +107,23 @@ class CreatePostModalState extends State<CreatePostModal> {
         },
       ),
       title: 'New post',
-      trailing: OBButton(
-        isDisabled: !newPostButtonIsEnabled,
-        isLoading: _isCreatePostInProgress,
-        size: OBButtonSize.small,
-        type: OBButtonType.primary,
-        onPressed: createPost,
-        child: Text('Share'),
+      trailing: GestureDetector(
+        onTap: _onWantsToSubmitPost,
+        child: nextButton,
       ),
     );
+  }
+
+  void _onWantsToSubmitPost() async {
+    Post sharedPost = await _navigationService.navigateToSharePost(
+        context: context,
+        createPostData:
+            SharePostData(text: _textController.text, image: _postImage));
+
+    if (sharedPost != null) {
+      // Remove modal
+      Navigator.pop(context, sharedPost);
+    }
   }
 
   Widget _buildNewPostContent() {
@@ -150,7 +141,10 @@ class CreatePostModalState extends State<CreatePostModal> {
               SizedBox(
                 height: 12.0,
               ),
-              _buildRemainingCharacters(),
+              OBRemainingPostCharacters(
+                maxCharacters: ValidationService.POST_MAX_LENGTH,
+                currentCharacters: _charactersCount,
+              ),
             ],
           ),
           Expanded(
@@ -169,35 +163,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     ));
   }
 
-  Widget _buildRemainingCharacters() {
-    var openbookProvider = OpenbookProvider.of(context);
-    var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
-
-    return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-
-          return Text(
-            (MAX_ALLOWED_CHARACTERS - _charactersCount).toString(),
-            style: TextStyle(
-                fontSize: 12.0,
-                color: _isPostTextAllowedLength
-                    ? themeValueParserService.parseColor(theme.primaryTextColor)
-                    : themeValueParserService.parseColor(theme.dangerColor),
-                fontWeight: _isPostTextAllowedLength
-                    ? FontWeight.normal
-                    : FontWeight.bold),
-          );
-        });
-  }
-
-  Widget _buildPostTextField() {
-    return OBCreatePostText(controller: _textController);
-  }
-
   Widget _buildPostActions() {
     List<Widget> postActions = [];
 
@@ -205,35 +170,33 @@ class CreatePostModalState extends State<CreatePostModal> {
       postActions.addAll(_getImagePostActions());
     }
 
-    if (!_hasAudience) {
-      postActions.add(_buildAudiencePostAction());
-    }
-
-    if (!_hasBurner) {
-      postActions.add(_buildBurnerPostAction());
-    }
-
-    // Add spacing
-    List<Widget> spacedPostActions = [];
-
-    int actionsCount = postActions.length;
-
-    for (int i = 0; i < actionsCount; i++) {
-      var postAction = postActions[i];
-      spacedPostActions.add(_buildPostActionHorizontalSpacing());
-      spacedPostActions.add(postAction);
-
-      if (i == actionsCount - 1) {
-        spacedPostActions.add(_buildPostActionHorizontalSpacing());
-      }
-    }
-
     return Container(
       height: 51.0,
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       color: Color.fromARGB(5, 0, 0, 0),
-      child: ListView(
-          scrollDirection: Axis.horizontal, children: spacedPostActions),
+      child: ListView.separated(
+        itemCount: postActions.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, index) {
+          var postAction = postActions[index];
+
+          return index == 0
+              ? Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 10,
+                    ),
+                    postAction
+                  ],
+                )
+              : postAction;
+        },
+        separatorBuilder: (BuildContext context, index) {
+          return SizedBox(
+            width: 10,
+          );
+        },
+      ),
     );
   }
 
@@ -245,7 +208,8 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: OBIcon(OBIcons.media),
         onPressed: () async {
           _unfocusTextField();
-          File image = await _pickImage(ImageSource.gallery);
+          File image = await _imagePickerService.pickImage(
+              imageType: OBImageType.post, source: ImageSource.gallery);
           if (image != null) _setPostImage(image);
         },
       ),
@@ -255,41 +219,12 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: OBIcon(OBIcons.camera),
         onPressed: () async {
           _unfocusTextField();
-          File image = await _pickImage(ImageSource.camera);
+          File image = await _imagePickerService.pickImage(
+              imageType: OBImageType.post, source: ImageSource.camera);
           if (image != null) _setPostImage(image);
         },
-      ),
-      OBPillButton(
-        text: 'GIF',
-        color: Pigment.fromString('#0F0F0F'),
-        icon: OBIcon(OBIcons.gif),
-        onPressed: () {},
-      ),
+      )
     ];
-  }
-
-  Widget _buildBurnerPostAction() {
-    return OBPillButton(
-      text: 'Burner',
-      color: Pigment.fromString('#F13A59'),
-      icon: OBIcon(OBIcons.burner),
-      onPressed: () {},
-    );
-  }
-
-  Widget _buildAudiencePostAction() {
-    return OBPillButton(
-      text: 'Audience',
-      color: Pigment.fromString('#80E37A'),
-      icon: OBIcon(OBIcons.audience),
-      onPressed: () {},
-    );
-  }
-
-  Widget _buildPostActionHorizontalSpacing() {
-    return SizedBox(
-      width: actionSpacing,
-    );
   }
 
   void _onPostTextChanged() {
@@ -344,29 +279,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     };
   }
 
-  Future<File> _pickImage(ImageSource source) async {
-    var image = await ImagePicker.pickImage(source: source);
-    if (image == null) {
-      return null;
-    }
-
-    File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image.path,
-      ratioX: 1.0,
-      ratioY: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-    );
-
-    return croppedFile;
-  }
-
-  void _setCreatePostInProgress(bool createPostInProgress) {
-    setState(() {
-      _isCreatePostInProgress = createPostInProgress;
-    });
-  }
-
   void _setPostItemsWidgets(List<Widget> postItemsWidgets) {
     setState(() {
       _postItemsWidgets = postItemsWidgets;
@@ -377,5 +289,3 @@ class CreatePostModalState extends State<CreatePostModal> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
-
-typedef void OnPostCreatedCallback(Post createdPost);

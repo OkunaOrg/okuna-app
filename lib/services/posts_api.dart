@@ -78,7 +78,7 @@ class PostsApiService {
       body['text'] = text;
     }
 
-    if (circleIds != null) {
+    if (circleIds != null && circleIds.length > 0) {
       body['circle_id'] = circleIds.join(',');
     }
 

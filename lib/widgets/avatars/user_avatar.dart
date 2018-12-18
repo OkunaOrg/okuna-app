@@ -50,7 +50,10 @@ class OBUserAvatar extends StatelessWidget {
 
     Widget finalAvatarImage;
 
-    var placeholderImage = SizedBox();
+    var placeholderImage = SizedBox(
+      height: avatarSize,
+      width: avatarSize,
+    );
 
     if (avatarFile != null) {
       finalAvatarImage = FadeInImage(

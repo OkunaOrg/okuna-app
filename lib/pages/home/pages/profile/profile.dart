@@ -18,8 +18,7 @@ class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
   final User user;
 
-  OBProfilePage(
-    this.user, {
+  OBProfilePage(this.user, {
     this.controller,
   });
 
@@ -93,7 +92,9 @@ class OBProfilePageState extends State<OBProfilePage> {
 
                               var post = _posts[postIndex];
 
-                              return OBPost(post);
+                              return OBPost(
+                                  post, onPostDeleted: _onPostDeleted,
+                                  key: Key(post.id.toString()));
                             }),
                         onLoadMore: _loadMorePosts),
                     onRefresh: _refresh),
@@ -142,7 +143,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     var lastPostId = lastPost.id;
     try {
       var morePosts = (await _userService.getTimelinePosts(
-              maxId: lastPostId, username: _user.username))
+          maxId: lastPostId, username: _user.username))
           .posts;
 
       if (morePosts.length == 0) {
@@ -161,6 +162,12 @@ class OBProfilePageState extends State<OBProfilePage> {
     }
 
     return false;
+  }
+
+  void _onPostDeleted(Post deletedPost) {
+    setState(() {
+      _posts.remove(deletedPost);
+    });
   }
 
   void _setUser(User user) {

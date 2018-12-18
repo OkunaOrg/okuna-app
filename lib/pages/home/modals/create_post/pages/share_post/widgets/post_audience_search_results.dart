@@ -4,15 +4,19 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCirclesSearchResults extends StatelessWidget {
+class OBPostAudienceSearchResults extends StatelessWidget {
   final List<Circle> results;
   final List<Circle> selectedCircles;
+  final List<Circle> disabledCircles;
 
   final String searchQuery;
   final OnCirclePressed onCirclePressed;
 
-  OBCirclesSearchResults(this.results, this.searchQuery,
-      {Key key, @required this.onCirclePressed, @required this.selectedCircles})
+  OBPostAudienceSearchResults(this.results, this.searchQuery,
+      {Key key,
+      @required this.onCirclePressed,
+      @required this.selectedCircles,
+      @required this.disabledCircles})
       : super(key: key);
 
   @override
@@ -28,13 +32,13 @@ class OBCirclesSearchResults extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           Circle circle = results[index];
           bool isSelected = selectedCircles.contains(circle);
+          bool isDisabled = disabledCircles.contains(circle);
 
           return OBCircleSelectableTile(
             circle,
             isSelected: isSelected,
-            onCirclePressed: (Circle circle) {
-              onCirclePressed(circle);
-            },
+            isDisabled: isDisabled,
+            onCirclePressed: onCirclePressed,
           );
         });
   }
@@ -66,5 +70,3 @@ class OBCirclesSearchResults extends StatelessWidget {
     );
   }
 }
-
-typedef void OnCirclePressed(Circle pressedCircle);

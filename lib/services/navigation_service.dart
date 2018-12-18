@@ -2,6 +2,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -47,6 +48,18 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
+  }
+
+  Future<Post> navigateToSharePost(
+      {@required BuildContext context,
+      @required SharePostData createPostData}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSharePostPage'),
+            widget: OBSharePostPage(
+              sharePostData: createPostData,
+            )));
   }
 
   Future navigateToFollowsLists({@required BuildContext context}) {
