@@ -61,7 +61,7 @@ class Post extends UpdatableModel<Post> {
       reactionsEmojiCounts =
           factory.parseReactionsEmojiCounts(json['reactions_emoji_counts']);
     if (json.containsKey('reaction'))
-      reaction = factory.parseReaction(json['reactipon']);
+      reaction = factory.parseReaction(json['reaction']);
 
     if (json.containsKey('reactions_count'))
       reactionsCount = json['reactions_count'];
