@@ -88,6 +88,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                   var post = _posts[index];
                   return OBPost(
                     post,
+                    key: Key(post.id.toString()),
                   );
                 }),
             onLoadMore: _loadMorePosts));

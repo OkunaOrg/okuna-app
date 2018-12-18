@@ -4,7 +4,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCirclesSearchResults extends StatelessWidget {
+class OBPostAudienceSearchResults extends StatelessWidget {
   final List<Circle> results;
   final List<Circle> selectedCircles;
   final List<Circle> disabledCircles;
@@ -12,7 +12,7 @@ class OBCirclesSearchResults extends StatelessWidget {
   final String searchQuery;
   final OnCirclePressed onCirclePressed;
 
-  OBCirclesSearchResults(this.results, this.searchQuery,
+  OBPostAudienceSearchResults(this.results, this.searchQuery,
       {Key key,
       @required this.onCirclePressed,
       @required this.selectedCircles,
@@ -70,5 +70,3 @@ class OBCirclesSearchResults extends StatelessWidget {
     );
   }
 }
-
-typedef void OnCirclePressed(Circle pressedCircle);

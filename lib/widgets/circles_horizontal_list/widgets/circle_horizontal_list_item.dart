@@ -1,8 +1,8 @@
 import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/widgets/tiles/circle_selectable_tile.dart';
 import 'package:Openbook/widgets/checkbox.dart';
 import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 

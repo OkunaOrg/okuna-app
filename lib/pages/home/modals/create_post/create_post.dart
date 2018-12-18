@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/home/modals/create_post/pages/share_post.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';

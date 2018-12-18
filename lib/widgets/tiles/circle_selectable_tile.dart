@@ -1,7 +1,6 @@
 import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/circles_picker/widgets/circles_search_results.dart';
 import 'package:Openbook/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +22,8 @@ class OBCircleSelectableTile extends StatelessWidget {
       isDisabled: isDisabled,
       value: isSelected,
       title: circle.name,
-      subtitle: usersCount != null ? getPrettyCount(usersCount) + ' people' : null,
+      subtitle:
+          usersCount != null ? getPrettyCount(usersCount) + ' people' : null,
       onTap: () {
         onCirclePressed(circle);
       },
@@ -40,3 +40,5 @@ class OBCircleSelectableTile extends StatelessWidget {
     );
   }
 }
+
+typedef void OnCirclePressed(Circle pressedCircle);
