@@ -92,7 +92,9 @@ class OBProfilePageState extends State<OBProfilePage> {
 
                               var post = _posts[postIndex];
 
-                              return OBPost(post, key: Key(post.id.toString()));
+                              return OBPost(
+                                  post, onPostDeleted: _onPostDeleted,
+                                  key: Key(post.id.toString()));
                             }),
                         onLoadMore: _loadMorePosts),
                     onRefresh: _refresh),
@@ -160,6 +162,12 @@ class OBProfilePageState extends State<OBProfilePage> {
     }
 
     return false;
+  }
+
+  void _onPostDeleted(Post deletedPost) {
+    setState(() {
+      _posts.remove(deletedPost);
+    });
   }
 
   void _setUser(User user) {
