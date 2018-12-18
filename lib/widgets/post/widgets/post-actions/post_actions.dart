@@ -10,7 +10,7 @@ class OBPostActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
         padding: EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
         child: Column(
           children: <Widget>[
