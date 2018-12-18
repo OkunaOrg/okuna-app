@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
+import 'package:Openbook/widgets/post/widgets/post_circles.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/post/widgets/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
@@ -19,6 +20,7 @@ class OBPost extends StatelessWidget {
         OBPostHeader(_post),
         OBPostBody(_post),
         OBPostReactions(_post),
+        OBPostCircles(_post),
         OBPostComments(
           _post,
         ),

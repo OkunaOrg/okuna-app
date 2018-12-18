@@ -1,3 +1,4 @@
+import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post_comment.dart';
@@ -109,12 +110,20 @@ class Post extends UpdatableModel<Post> {
     return commentsList != null && commentsList.comments.length > 0;
   }
 
+  bool hasCircles() {
+    return circles != null && circles.circles.length > 0;
+  }
+
   bool hasCommentsCount() {
     return commentsCount != null && commentsCount > 0;
   }
 
   List<PostComment> getPostComments() {
     return commentsList.comments;
+  }
+
+  List<Circle> getPostCircles() {
+    return circles.circles;
   }
 
   List<PostReactionsEmojiCount> getEmojiCounts() {
