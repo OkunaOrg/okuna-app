@@ -20,7 +20,7 @@ class OBPostComments extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
