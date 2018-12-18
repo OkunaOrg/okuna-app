@@ -230,16 +230,16 @@ class UserService {
   }
 
   Future<PostsList> getTimelinePosts(
-      {List<int> listIds,
-      List<int> circleIds,
+      {List<Circle> circles = const [],
+      List<FollowsList> followsLists = const [],
       int maxId,
       int count,
       String username,
       bool areFirstPosts = false}) async {
     try {
       HttpieResponse response = await _postsApiService.getTimelinePosts(
-          listIds: listIds,
-          circleIds: circleIds,
+          circleIds: circles.map((circle) => circle.id).toList(),
+          listIds: followsLists.map((followsList) => followsList.id).toList(),
           maxId: maxId,
           count: count,
           username: username,
