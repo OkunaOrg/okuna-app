@@ -73,14 +73,18 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   }
 
   Widget _buildFiltersButton() {
-    int filtersCount = _timelinePostsController.countFilters();
+    int filtersCount = _timelinePostsController.isAttached()
+        ? _timelinePostsController.countFilters()
+        : 0;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBBadge(
           count: filtersCount,
         ),
-        SizedBox(width: 10,),
+        SizedBox(
+          width: 10,
+        ),
         OBIconButton(
           OBIcons.filter,
           themeColor: OBIconThemeColor.primaryAccent,

@@ -95,7 +95,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                   : _buildNoResults(),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Row(
                 children: <Widget>[
                   Expanded(
