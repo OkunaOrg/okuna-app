@@ -93,9 +93,45 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                       _requestInProgress
                   ? _buildSearchResults()
                   : _buildNoResults(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: OBButton(
+                      size: OBButtonSize.large,
+                      type: OBButtonType.highlight,
+                      child: Text('Clear all'),
+                      onPressed: _onWantsToClearFilters,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: OBButton(
+                      size: OBButtonSize.large,
+                      child: _buildApplyFiltersText(),
+                      onPressed: _onWantsToApplyFilters,
+                      isLoading: _requestInProgress,
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         )));
+  }
+
+  Widget _buildApplyFiltersText() {
+    String text = 'Apply filters';
+    int filterCount = _selectedCircles.length + _selectedFollowsLists.length;
+    if (filterCount > 0) {
+      String friendlyCount = filterCount.toString();
+      text += ' ($friendlyCount)';
+    }
+    return Text(text);
   }
 
   Widget _buildSearchResults() {
@@ -189,13 +225,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
             Navigator.pop(context);
           },
         ),
-        title: 'Filter timeline',
-        trailing: OBButton(
-          size: OBButtonSize.small,
-          onPressed: _onWantsToApplyFilters,
-          isLoading: _requestInProgress,
-          child: Text('Apply'),
-        ));
+        title: 'Timeline filters');
   }
 
   void _onWantsToApplyFilters() async {
@@ -204,6 +234,13 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
         circles: _selectedCircles, followsLists: _selectedFollowsLists);
     _setRequestInProgress(false);
     Navigator.pop(context);
+  }
+
+  void _onWantsToClearFilters() async {
+    setState(() {
+      _selectedFollowsLists = [];
+      _selectedCircles = [];
+    });
   }
 
   void _onSearch(String searchString) {
