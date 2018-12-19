@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/widgets/badge.dart';
 import 'package:Openbook/widgets/buttons/floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
@@ -44,13 +45,8 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     _modalService = openbookProvider.modalService;
 
     return OBCupertinoPageScaffold(
-        navigationBar: OBNavigationBar(
-            title: 'Home',
-            trailing: OBIconButton(
-              OBIcons.filter,
-              themeColor: OBIconThemeColor.primaryAccent,
-              onPressed: _onWantsFilters,
-            )),
+        navigationBar:
+            OBNavigationBar(title: 'Home', trailing: _buildFiltersButton()),
         child: OBPrimaryColorContainer(
           child: Stack(
             children: <Widget>[
@@ -74,6 +70,24 @@ class OBTimelinePageState extends State<OBTimelinePage> {
             ],
           ),
         ));
+  }
+
+  Widget _buildFiltersButton() {
+    int filtersCount = _timelinePostsController.countFilters();
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        OBBadge(
+          count: filtersCount,
+        ),
+        SizedBox(width: 10,),
+        OBIconButton(
+          OBIcons.filter,
+          themeColor: OBIconThemeColor.primaryAccent,
+          onPressed: _onWantsFilters,
+        )
+      ],
+    );
   }
 
   void scrollToTop() {

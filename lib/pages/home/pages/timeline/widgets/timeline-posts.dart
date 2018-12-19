@@ -261,6 +261,11 @@ class OBTimelinePostsController {
   List<FollowsList> getFilteredFollowsLists() {
     return _homePostsState.getFilteredFollowsLists();
   }
+
+  int countFilters() {
+    return _homePostsState.getFilteredCircles().length +
+        _homePostsState.getFilteredFollowsLists().length;
+  }
 }
 
 class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
