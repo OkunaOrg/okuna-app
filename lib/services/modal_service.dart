@@ -111,12 +111,15 @@ class ModalService {
   Future<void> openTimelineFilters(
       {@required OBTimelinePageController timelineController,
       @required BuildContext context}) {
-    return Navigator.of(context).push(CupertinoPageRoute<Circle>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return OBTimelineFiltersModal(
-            timelinePageController: timelineController,
-          );
-        }));
+    return Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Circle>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBTimelineFiltersModal(
+                  timelinePageController: timelineController,
+                ),
+              );
+            }));
   }
 }
