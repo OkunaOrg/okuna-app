@@ -36,7 +36,7 @@ class OBFollowsListSelectableTile extends StatelessWidget {
         child: Center(
           child: OBEmojiPreview(
             followsList.emoji,
-            size: OBEmojiPreviewSize.small,
+            size: OBEmojiPreviewSize.medium,
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/widgets/fields/color_field.dart';
@@ -83,33 +84,35 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
           children: <Widget>[
             OBSearchBar(
               onSearch: _onSearch,
+              hintText: 'Search for circles and lists...',
             ),
-            _buildCirclesSearchResult(),
-            _buildFollowsListsSearchResult()
+            Expanded(
+              child: _buildSearchResults(),
+            )
           ],
         )));
   }
 
-  Widget _buildCirclesSearchResult() {
+  Widget _buildSearchResults() {
     return ListView.builder(
-        itemCount: _circlesSearchResults.length,
+        itemCount:
+            _circlesSearchResults.length + _followsListsSearchResults.length,
         itemBuilder: (BuildContext context, int index) {
-          Circle circle = _circlesSearchResults[index];
-          bool isSelected = _selectedCircles.contains(circle);
+          bool isCircle = index < _circlesSearchResults.length;
+          if (isCircle) {
+            Circle circle = _circlesSearchResults[index];
+            bool isSelected = _selectedCircles.contains(circle);
 
-          return OBCircleSelectableTile(
-            circle,
-            isSelected: isSelected,
-            onCirclePressed: _onCirclePressed,
-          );
-        });
-  }
+            return OBCircleSelectableTile(
+              circle,
+              isSelected: isSelected,
+              onCirclePressed: _onCirclePressed,
+            );
+          }
 
-  Widget _buildFollowsListsSearchResult() {
-    return ListView.builder(
-        itemCount: _followsListsSearchResults.length,
-        itemBuilder: (BuildContext context, int index) {
-          FollowsList followsList = _followsListsSearchResults[index];
+          int listsIndex = index - _circlesSearchResults.length;
+
+          FollowsList followsList = _followsListsSearchResults[listsIndex];
           bool isSelected = _selectedFollowsLists.contains(followsList);
 
           return OBFollowsListSelectableTile(
@@ -128,10 +131,11 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
             Navigator.pop(context);
           },
         ),
-        title: 'Timeline Filters',
+        title: 'Filter timeline',
         trailing: OBButton(
           size: OBButtonSize.small,
           onPressed: _onWantsToApplyFilters,
+          isLoading: _requestInProgress,
           child: Text('Apply'),
         ));
   }
@@ -139,8 +143,9 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   void _onWantsToApplyFilters() async {
     _setRequestInProgress(true);
     await widget.timelinePageController
-        .setPostFilters(circles: _selectedCircles, followsLists: _followsLists);
+        .setPostFilters(circles: _selectedCircles, followsLists: _selectedFollowsLists);
     _setRequestInProgress(false);
+    Navigator.pop(context);
   }
 
   void _onSearch(String searchString) {
@@ -173,7 +178,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   void _resetSearchResults() {
     setState(() {
       _circlesSearchResults = _circles.toList();
-      _followsLists = _followsLists.toList();
+      _followsListsSearchResults = _followsLists.toList();
     });
   }
 
@@ -263,8 +268,13 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
     var results = await Future.wait(
         [_userService.getConnectionsCircles(), _userService.getFollowsLists()]);
 
-    this._setCircles(results[0]);
-    this._setFollowsLists(results[1]);
+    CirclesList circlesList = results[0];
+    FollowsListsList followsList = results[1];
+
+    _setCircles(circlesList.circles);
+    _setCirclesSearchResults(circlesList.circles);
+    _setFollowsLists(followsList.lists);
+    _setFollowsListsSearchResults(followsList.lists);
     _setRequestInProgress(false);
   }
 }

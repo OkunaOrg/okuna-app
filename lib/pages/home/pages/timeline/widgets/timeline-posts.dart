@@ -172,8 +172,11 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      var morePosts =
-          (await _userService.getTimelinePosts(maxId: lastPostId)).posts;
+      var morePosts = (await _userService.getTimelinePosts(
+              maxId: lastPostId,
+              circles: _filteredCircles,
+              followsLists: _filteredFollowsLists))
+          .posts;
 
       if (morePosts.length == 0) {
         _setLoadingFinished(true);

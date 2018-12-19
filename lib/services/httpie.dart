@@ -336,9 +336,20 @@ class HttpieService {
   String _makeQueryString(Map<String, dynamic> queryParameters) {
     String queryString = '?';
     queryParameters.forEach((key, value) {
-      queryString += '$key=' + value.toString();
+      queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
     });
     return queryString;
+  }
+
+  String _stringifyQueryStringValue(dynamic value) {
+    if (value is String) return value;
+    if (value is bool || value is int || value is double)
+      return value.toString();
+    if (value is List)
+      return value
+          .map((valueItem) => _stringifyQueryStringValue(valueItem))
+          .join(',');
+    throw 'Unsupported query string value';
   }
 }
 
