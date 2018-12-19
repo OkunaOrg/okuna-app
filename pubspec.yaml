@@ -127,6 +127,12 @@ flutter:
       style: normal
     - asset: assets/fonts/NunitoSans-Bold.ttf
       style: italic
+  - family: VisbyRoundCF
+    fonts:
+    - asset: assets/fonts/VisbyRoundCF-Regular.otf
+      style: normal
+    - asset: assets/fonts/VisbyRoundCF-Bold.otf
+      style: italic
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

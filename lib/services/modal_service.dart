@@ -8,6 +8,8 @@ import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.d
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/modals/save_connections_circle.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
+import 'package:Openbook/pages/home/modals/timeline_filters.dart';
+import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -104,5 +106,20 @@ class ModalService {
             }));
 
     return editedConnectionsCircle;
+  }
+
+  Future<void> openTimelineFilters(
+      {@required OBTimelinePageController timelineController,
+      @required BuildContext context}) {
+    return Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Circle>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBTimelineFiltersModal(
+                  timelinePageController: timelineController,
+                ),
+              );
+            }));
   }
 }

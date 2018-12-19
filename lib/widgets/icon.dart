@@ -160,6 +160,7 @@ class OBIcons {
   static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const deletePost = OBIconData(nativeIcon: Icons.delete);
   static const reportPost = OBIconData(nativeIcon: Icons.report);
+  static const filter = OBIconData(nativeIcon: Icons.tune);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

@@ -51,9 +51,11 @@ class PostsApiService {
       bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
 
-    if (listIds != null) queryParams['lists_ids'] = listIds;
+    if (listIds != null && listIds.isNotEmpty)
+      queryParams['list_id'] = listIds;
 
-    if (circleIds != null) queryParams['circle_ids'] = circleIds;
+    if (circleIds != null && circleIds.isNotEmpty)
+      queryParams['circle_id'] = circleIds;
 
     if (count != null) queryParams['count'] = count;
 
