@@ -1,14 +1,16 @@
+import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/buttons/floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,7 @@ class OBTimelinePage extends StatefulWidget {
   final OBTimelinePageController controller;
 
   OBTimelinePage({
-    this.controller,
+    @required this.controller,
   });
 
   @override
@@ -27,25 +29,28 @@ class OBTimelinePage extends StatefulWidget {
 
 class OBTimelinePageState extends State<OBTimelinePage> {
   OBTimelinePostsController _timelinePostsController;
+  ModalService _modalService;
 
   @override
   void initState() {
     super.initState();
     _timelinePostsController = OBTimelinePostsController();
-    if (widget.controller != null)
-      widget.controller.attach(context: context, state: this);
+    widget.controller.attach(context: context, state: this);
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    var modalService = openbookProvider.modalService;
+    _modalService = openbookProvider.modalService;
 
     return OBCupertinoPageScaffold(
         navigationBar: OBNavigationBar(
-          title: 'Home',
-          trailing: OBIcon(OBIcons.filter, themeColor: OBIconThemeColor.primaryAccent,),
-        ),
+            title: 'Home',
+            trailing: OBIconButton(
+              OBIcons.filter,
+              themeColor: OBIconThemeColor.primaryAccent,
+              onPressed: _onWantsFilters,
+            )),
         child: OBPrimaryColorContainer(
           child: Stack(
             children: <Widget>[
@@ -57,8 +62,8 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                   right: 20.0,
                   child: OBFloatingActionButton(
                       onPressed: () async {
-                        Post createdPost =
-                            await modalService.openCreatePost(context: context);
+                        Post createdPost = await _modalService.openCreatePost(
+                            context: context);
                         if (createdPost != null) {
                           _timelinePostsController.addPostToTop(createdPost);
                           _timelinePostsController.scrollToTop();
@@ -74,6 +79,11 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   void scrollToTop() {
     _timelinePostsController.scrollToTop();
   }
+
+  void _onWantsFilters() {
+    _modalService.openTimelineFilters(
+        timelineController: widget.controller, context: context);
+  }
 }
 
 class OBTimelinePageController extends PoppablePageController {
@@ -82,6 +92,26 @@ class OBTimelinePageController extends PoppablePageController {
   void attach({@required BuildContext context, OBTimelinePageState state}) {
     super.attach(context: context);
     _state = state;
+  }
+
+  Future<void> setPostFilters(
+      {List<Circle> circles, List<FollowsList> followsLists}) async {
+    return _state._timelinePostsController
+        .setFilters(circles: circles, followsLists: followsLists);
+  }
+
+  Future<void> clearPostFilters(
+      {List<Circle> circles, List<FollowsList> followsLists}) async {
+    return _state._timelinePostsController
+        .setFilters(circles: circles, followsLists: followsLists);
+  }
+
+  List<Circle> getFilteredCircles() {
+    return _state._timelinePostsController.getFilteredCircles();
+  }
+
+  List<FollowsList> getFilteredFollowsLists() {
+    return _state._timelinePostsController.getFilteredFollowsLists();
   }
 
   void scrollToTop() {
