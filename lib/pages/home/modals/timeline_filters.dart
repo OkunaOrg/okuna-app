@@ -18,6 +18,7 @@ import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:Openbook/widgets/tiles/circle_selectable_tile.dart';
 import 'package:Openbook/widgets/tiles/follows_list_selectable_tile.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
@@ -87,7 +88,11 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
               hintText: 'Search for circles and lists...',
             ),
             Expanded(
-              child: _buildSearchResults(),
+              child: _circlesSearchResults.isNotEmpty ||
+                      _followsListsSearchResults.isNotEmpty ||
+                      _requestInProgress
+                  ? _buildSearchResults()
+                  : _buildNoResults(),
             )
           ],
         )));
@@ -103,11 +108,24 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
             Circle circle = _circlesSearchResults[index];
             bool isSelected = _selectedCircles.contains(circle);
 
-            return OBCircleSelectableTile(
+            Widget circleTile = OBCircleSelectableTile(
               circle,
               isSelected: isSelected,
               onCirclePressed: _onCirclePressed,
             );
+
+            if (index == 0) {
+              circleTile = Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  OBTileGroupTitle(
+                    title: 'Circles',
+                  ),
+                  circleTile
+                ],
+              );
+            }
+            return circleTile;
           }
 
           int listsIndex = index - _circlesSearchResults.length;
@@ -115,12 +133,52 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
           FollowsList followsList = _followsListsSearchResults[listsIndex];
           bool isSelected = _selectedFollowsLists.contains(followsList);
 
-          return OBFollowsListSelectableTile(
+          Widget listTile = OBFollowsListSelectableTile(
             followsList,
             isSelected: isSelected,
             onFollowsListPressed: _onFollowsListPressed,
           );
+
+          if (index == _circlesSearchResults.length) {
+            listTile = Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                OBTileGroupTitle(
+                  title: 'Lists',
+                ),
+                listTile
+              ],
+            );
+          }
+          return listTile;
         });
+  }
+
+  Widget _buildNoResults() {
+    return Container(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 200),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              OBIcon(OBIcons.sad, customSize: 30.0),
+              SizedBox(
+                height: 20.0,
+              ),
+              OBText(
+                'No match for \'$_searchQuery\'.',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                ),
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildNavigationBar() {
@@ -142,8 +200,8 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
 
   void _onWantsToApplyFilters() async {
     _setRequestInProgress(true);
-    await widget.timelinePageController
-        .setPostFilters(circles: _selectedCircles, followsLists: _selectedFollowsLists);
+    await widget.timelinePageController.setPostFilters(
+        circles: _selectedCircles, followsLists: _selectedFollowsLists);
     _setRequestInProgress(false);
     Navigator.pop(context);
   }
