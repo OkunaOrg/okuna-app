@@ -37,6 +37,7 @@ class OBEmojiGroup extends StatelessWidget {
             children: this.emojiGroup.emojis.emojis.map((Emoji emoji) {
               return OBEmoji(
                 emoji,
+                emojiGroup: emojiGroup,
                 onEmojiPressed: onEmojiPressed,
               );
             }).toList(),

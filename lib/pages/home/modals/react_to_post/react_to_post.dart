@@ -1,4 +1,5 @@
 import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
@@ -51,6 +52,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
         appBar: _buildNavigationBar(),
         body: OBPrimaryColorContainer(
           child: OBEmojiPicker(
+            isReactionsPicker: true,
             onEmojiPicked: _onEmojiPicked,
           ),
         ));
@@ -67,17 +69,17 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
         title: 'React to post');
   }
 
-  void _onEmojiPicked(Emoji pressedEmoji) {
-    _reactToPost(pressedEmoji);
+  void _onEmojiPicked(Emoji pressedEmoji, EmojiGroup emojiGroup) {
+    _reactToPost(pressedEmoji, emojiGroup);
   }
 
-  Future<PostReaction> _reactToPost(Emoji emoji) async {
+  Future<PostReaction> _reactToPost(Emoji emoji, EmojiGroup emojiGroup) async {
     if (_isReactToPostInProgress) return null;
     _setReactToPostInProgress(true);
 
     try {
-      PostReaction postReaction =
-          await _userService.reactToPost(post: widget.post, emoji: emoji);
+      PostReaction postReaction = await _userService.reactToPost(
+          post: widget.post, emoji: emoji, emojiGroup: emojiGroup);
       widget.post.setReaction(postReaction);
       // Remove modal
       Navigator.pop(context);

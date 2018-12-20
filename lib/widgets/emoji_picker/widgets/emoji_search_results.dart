@@ -1,4 +1,6 @@
 import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/models/emoji_group.dart';
+import 'package:Openbook/widgets/emoji_picker/emoji_picker.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -6,7 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class OBEmojiSearchResults extends StatelessWidget {
-  final List<Emoji> results;
+  final List<EmojiGroupSearchResults> results;
   final String searchQuery;
   final OnEmojiPressed onEmojiPressed;
 
@@ -23,24 +25,32 @@ class OBEmojiSearchResults extends StatelessWidget {
     return ListView.builder(
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
-          Emoji emoji = results[index];
+          EmojiGroupSearchResults searchResults = results[index];
+          EmojiGroup emojiGroup = searchResults.group;
+          List<Emoji> emojiSearchResults = searchResults.searchResults;
 
-          return ListTile(
-            onTap: () {
-              onEmojiPressed(emoji);
-            },
-            leading: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 25),
-              child: CachedNetworkImage(
-                imageUrl: emoji.image,
-                placeholder:
-                    Image(image: AssetImage('assets/images/loading.gif')),
-                errorWidget: Container(
-                  child: Center(child: OBText('?')),
+          List<Widget> emojiTiles = emojiSearchResults.map((Emoji emoji) {
+            return ListTile(
+              onTap: () {
+                onEmojiPressed(emoji, emojiGroup);
+              },
+              leading: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 25),
+                child: CachedNetworkImage(
+                  imageUrl: emoji.image,
+                  placeholder:
+                      Image(image: AssetImage('assets/images/loading.gif')),
+                  errorWidget: Container(
+                    child: Center(child: OBText('?')),
+                  ),
                 ),
               ),
-            ),
-            title: OBText(emoji.keyword),
+              title: OBText(emoji.keyword),
+            );
+          }).toList();
+
+          return Column(
+            children: emojiTiles,
           );
         });
   }

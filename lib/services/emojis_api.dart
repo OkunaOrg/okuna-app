@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:Openbook/services/httpie.dart';
-import 'package:meta/meta.dart';
 
 class EmojisApiService {
   HttpieService _httpService;

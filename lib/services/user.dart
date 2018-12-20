@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
@@ -285,9 +286,9 @@ class UserService {
   }
 
   Future<PostReaction> reactToPost(
-      {@required Post post, @required Emoji emoji}) async {
+      {@required Post post, @required Emoji emoji, @required EmojiGroup emojiGroup}) async {
     HttpieResponse response =
-        await _postsApiService.reactToPost(postId: post.id, emojiId: emoji.id);
+        await _postsApiService.reactToPost(postId: post.id, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
@@ -346,6 +347,15 @@ class UserService {
 
   Future<EmojiGroupList> getEmojiGroups() async {
     HttpieResponse response = await this._emojisApiService.getEmojiGroups();
+
+    _checkResponseIsOk(response);
+
+    return EmojiGroupList.fromJson(json.decode(response.body));
+  }
+
+  Future<EmojiGroupList> getReactionEmojiGroups() async {
+    HttpieResponse response =
+        await this._postsApiService.getReactionEmojiGroups();
 
     _checkResponseIsOk(response);
 
