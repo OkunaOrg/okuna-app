@@ -96,7 +96,7 @@ class OBEmojiPickerState extends State<OBEmojiPicker> {
         _emojiGroups.map((EmojiGroup emojiGroup) {
       List<Emoji> groupEmojis = emojiGroup.getEmojis();
       List<Emoji> groupSearchResults = groupEmojis.where((Emoji emoji) {
-        return emoji.keyword.contains(standarisedSearchStr);
+        return emoji.keyword.toLowerCase().contains(standarisedSearchStr);
       }).toList();
       return EmojiGroupSearchResults(
           group: emojiGroup, searchResults: groupSearchResults);
