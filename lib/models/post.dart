@@ -5,6 +5,7 @@ import 'package:Openbook/models/post_image.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/post_video.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:rxdart/rxdart.dart';
@@ -24,6 +25,7 @@ class Post {
   bool publicReactions;
   String text;
   PostImage image;
+  PostVideo video;
   PostCommentList commentsList;
 
   Stream<Post> get updateSubject => _updateSubject.stream;
@@ -71,6 +73,7 @@ class Post {
         publicReactions: json['public_reactions'],
         creator: _parseCreator(json['creator']),
         image: _parseImage(json['image']),
+        video: _parseVideo(json['video']),
         reaction: _parseReaction(json['reaction']),
         commentsList: _parseCommentList(json['comments']),
         reactionsEmojiCounts:
@@ -84,6 +87,11 @@ class Post {
   static PostImage _parseImage(Map image) {
     if (image == null) return null;
     return PostImage.fromJSON(image);
+  }
+
+  static PostVideo _parseVideo(Map video) {
+    if (video == null) return null;
+    return PostVideo.fromJSON(video);
   }
 
   static User _parseCreator(Map creator) {
@@ -113,6 +121,7 @@ class Post {
       this.text,
       this.creatorId,
       this.image,
+      this.video,
       this.creator,
       this.reactionsCount,
       this.commentsCount,
@@ -134,6 +143,7 @@ class Post {
     publicReactions = json['public_reactions'];
     text = json['text'];
     image = _parseImage(json['image']);
+    video = _parseVideo(json['video']);
     commentsList = _parseCommentList(json['comments']);
 
     _notifyUpdate();
@@ -157,6 +167,10 @@ class Post {
 
   bool hasImage() {
     return image != null;
+  }
+
+  bool hasVideo() {
+    return video != null;
   }
 
   bool hasText() {
@@ -183,6 +197,10 @@ class Post {
     return creator.username;
   }
 
+  int getId() {
+    return id;
+  }
+
   int getCreatorId() {
     return creator.id;
   }
@@ -193,6 +211,10 @@ class Post {
 
   String getImage() {
     return image.image;
+  }
+
+  String getVideo() {
+    return video.video;
   }
 
   String getText() {
