@@ -1,3 +1,4 @@
+import 'package:Openbook/widgets/video_player/play_pause_state.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -37,11 +38,11 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
       return Center(
         child: AspectRatio(
           aspectRatio: controller.value.size.width / controller.value.size.height,
-          child: VideoPlayer(controller),
+          child: VideoPlayPause(controller),
         ),
       );
     } else {
-      return Container();
+      return Image(image: AssetImage('assets/images/loading.gif'));
     }
   }
 }
