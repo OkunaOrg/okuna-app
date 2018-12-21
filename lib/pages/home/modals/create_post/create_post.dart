@@ -89,33 +89,6 @@ class CreatePostModalState extends State<CreatePostModal> {
         )));
   }
 
-  Future<void> createPost() async {
-    _setCreatePostInProgress(true);
-    Post createdPost;
-    try {
-      if (_postImage != null) {
-        createdPost = await _userService.createPost(
-            text: _textController.text, image: _postImage);
-      } else if (_postVideo != null) {
-        createdPost = await _userService.createPost(
-            text: _textController.text, video: _postVideo);
-      } else if (_textController.text != null) {
-        createdPost = await _userService.createPost(
-            text: _textController.text, video: _postVideo);
-      }
-
-      // Remove modal
-      Navigator.pop(context, createdPost);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-      _setCreatePostInProgress(false);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      _setCreatePostInProgress(false);
-      rethrow;
-    }
-  }
-
   Widget _buildNavigationBar() {
     bool nextButtonIsEnabled =
         (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage || _hasVideo;
@@ -406,12 +379,6 @@ class CreatePostModalState extends State<CreatePostModal> {
         );
       }
     );
-  }
-
-  void _setCreatePostInProgress(bool createPostInProgress) {
-    setState(() {
-      _isCreatePostInProgress = createPostInProgress;
-    });
   }
 
   void _setPostItemsWidgets(List<Widget> postItemsWidgets) {
