@@ -83,6 +83,7 @@ class FollowsListFactory extends UpdatableModelFactory<FollowsList> {
   }
 
   Emoji parseEmoji(Map emojiData) {
+    if(emojiData == null) return null;
     return Emoji.fromJson(emojiData);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/widgets/emoji_picker/emoji_picker.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -14,7 +15,7 @@ class OBPickFollowsListEmojiPage extends StatelessWidget {
       ),
       child: OBPrimaryColorContainer(
         child: OBEmojiPicker(
-          onEmojiPicked: (Emoji pickedEmoji) {
+          onEmojiPicked: (Emoji pickedEmoji, EmojiGroup emojiGroup) {
             Navigator.pop(context, pickedEmoji);
           },
         ),
