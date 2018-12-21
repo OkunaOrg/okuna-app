@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/post_video_previewer.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -18,7 +18,6 @@ import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
@@ -43,12 +42,15 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   bool _isPostTextAllowedLength;
   bool _hasImage;
+  bool _hasVideo;
   bool _hasAudience;
   bool _hasBurner;
 
   File _postImage;
+  File _postVideo;
 
   VoidCallback _postImageWidgetRemover;
+  VoidCallback _postVideoWidgetRemover;
 
   List<Widget> _postItemsWidgets;
 
@@ -65,6 +67,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     _charactersCount = 0;
     _isPostTextAllowedLength = false;
     _hasImage = false;
+    _hasVideo = false;
     _hasAudience = false;
     _hasBurner = false;
     _isCreatePostInProgress = false;
@@ -96,10 +99,19 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   Future<void> createPost() async {
     _setCreatePostInProgress(true);
-
+    Post createdPost;
     try {
-      Post createdPost = await _userService.createPost(
-          text: _textController.text, image: _postImage);
+      if (_postImage != null) {
+        createdPost = await _userService.createPost(
+            text: _textController.text, image: _postImage);
+      } else if (_postVideo != null) {
+        createdPost = await _userService.createPost(
+            text: _textController.text, video: _postVideo);
+      } else if (_textController.text != null) {
+        createdPost = await _userService.createPost(
+            text: _textController.text, video: _postVideo);
+      }
+
       // Remove modal
       Navigator.pop(context, createdPost);
     } on HttpieConnectionRefusedError {
@@ -114,7 +126,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   Widget _buildNavigationBar() {
     bool newPostButtonIsEnabled =
-        (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage;
+        (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage || _hasVideo;
 
     return OBNavigationBar(
       leading: GestureDetector(
@@ -241,10 +253,9 @@ class CreatePostModalState extends State<CreatePostModal> {
         text: 'Media',
         color: Pigment.fromString('#FCC14B'),
         icon: OBIcon(OBIcons.media),
-        onPressed: () async {
+        onPressed: () {
           _unfocusTextField();
-          File image = await _pickImage(ImageSource.gallery);
-          if (image != null) _setPostImage(image);
+          _showMediaCupertinoModalPopup();
         },
       ),
       OBPillButton(
@@ -315,11 +326,35 @@ class CreatePostModalState extends State<CreatePostModal> {
     });
   }
 
+  void _setPostVideo(File video) {
+    setState(() {
+      this._postVideo = video;
+      _hasVideo = true;
+
+      var postVideoWidget = OBPostVideoPreviewer(
+        _postVideo,
+        onRemove: () {
+          _removePostVideo();
+        },
+      );
+
+       _postVideoWidgetRemover = _addPostItemWidget(postVideoWidget);
+    });
+  }
+
   void _removePostImage() {
     setState(() {
       if (this._postImage != null) this._postImage.delete();
       _hasImage = false;
       _postImageWidgetRemover();
+    });
+  }
+
+  void _removePostVideo() {
+    setState(() {
+      if (this._postVideo != null) this._postVideo.delete();
+      _hasVideo = false;
+      _postVideoWidgetRemover();
     });
   }
 
@@ -347,16 +382,67 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (image == null) {
       return null;
     }
+      return image;
+  }
 
-    File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image.path,
-      ratioX: 1.0,
-      ratioY: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
+  Future<File> _pickVideo(ImageSource source) async {
+    var video = await ImagePicker.pickVideo(source: source);
+    if (video == null) {
+      return null;
+    }
+    return video;
+  }
+
+  void _showMediaCupertinoModalPopup() {
+    showCupertinoModalPopup(context: context, builder: (BuildContext context) {
+      return CupertinoActionSheet(
+        actions: <Widget>[
+          CupertinoActionSheetAction(
+              child: const Text('Photo from Gallery'),
+              onPressed: () async {
+                File image = await _pickImage(ImageSource.gallery);
+                if (image != null) _setPostImage(image);
+                Navigator.pop(context, 'Photo from Gallery');
+              }
+            ),
+          CupertinoActionSheetAction(
+              child: const Text('Take Photo'),
+              onPressed: () async {
+                File image = await _pickImage(ImageSource.camera);
+                if (image != null) _setPostImage(image);
+                Navigator.pop(context, 'Take Photo');
+              }
+          ),
+          CupertinoActionSheetAction(
+              child: const Text('Video from Gallery'),
+              onPressed: () async {
+                File video = await _pickVideo(ImageSource.gallery);
+                if (video != null) _setPostVideo(video);
+                Navigator.pop(context, 'Video from Gallery');
+              }
+          ),
+          CupertinoActionSheetAction(
+              child: const Text('Take Video'),
+              onPressed: () async {
+                File video = await _pickVideo(ImageSource.camera);
+                print(video);
+                if (video != null) _setPostVideo(video);
+                Navigator.pop(context, 'Take Video');
+              }
+          )
+          ],
+        cancelButton: CupertinoActionSheetAction(
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        );
+      }
     );
-
-    return croppedFile;
   }
 
   void _setCreatePostInProgress(bool createPostInProgress) {

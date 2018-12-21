@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_image.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_text.dart';
+import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_video.dart';
 import 'package:flutter/material.dart';
 
 class OBPostBody extends StatelessWidget {
@@ -16,11 +17,16 @@ class OBPostBody extends StatelessWidget {
       bodyItems.add(OBPostBodyImage(_post));
     }
 
+    if (_post.hasVideo()) {
+      bodyItems.add(OBPostBodyVideo(post:_post));
+    }
+
     if (_post.hasText()) {
       bodyItems.add(OBPostBodyText(_post));
     }
 
     return Row(
+      key: new Key(_post.getId().toString()),
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(
