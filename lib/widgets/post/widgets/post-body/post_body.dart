@@ -30,12 +30,10 @@ class OBPostBody extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(
-            child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: bodyItems,
-          ),
-        ))
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: bodyItems,
+            ))
       ],
     );
   }

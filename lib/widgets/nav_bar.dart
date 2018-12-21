@@ -3,7 +3,6 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBNavigationBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -45,7 +44,8 @@ class OBNavigationBar extends StatelessWidget
                 )
               : SizedBox(),
           transitionBetweenRoutes: false,
-          backgroundColor: Pigment.fromString(theme.primaryColor),
+          backgroundColor:
+              themeValueParserService.parseColor(theme.primaryColor),
           trailing: trailing,
           leading: leading,
         );

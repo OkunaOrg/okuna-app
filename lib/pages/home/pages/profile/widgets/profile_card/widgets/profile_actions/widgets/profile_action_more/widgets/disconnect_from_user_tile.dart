@@ -1,6 +1,4 @@
-import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/add_connection_to_circle_bottom_sheet.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -38,7 +36,7 @@ class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
 
     return ListTile(
         title: OBText(widget.title ?? 'Disconnect from $userName'),
-        leading: OBIcon(OBIcons.remove),
+        leading: OBIcon(OBIcons.disconnect),
         onTap: () async {
           await _disconnectFromUser();
           widget.onDisconnectedFromUser();
@@ -49,6 +47,8 @@ class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
     try {
       await _userService.disconnectFromUserWithUsername(widget.user.username);
       widget.user.decrementFollowersCount();
+      _toastService.success(
+          message: 'Disconnected successfully', context: context);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {

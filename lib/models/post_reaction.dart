@@ -49,6 +49,9 @@ class PostReaction {
     return this.emoji.image;
   }
 
+  String getEmojiKeyword() {
+    return this.emoji.keyword;
+  }
 
   String getEmojiColor() {
     return this.emoji.color;

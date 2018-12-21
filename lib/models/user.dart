@@ -1,3 +1,4 @@
+import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
@@ -140,6 +141,14 @@ class User extends UpdatableModel<User> {
 
   String getProfileLocation() {
     return this.profile.location;
+  }
+
+  bool isConnectionsCircle(Circle circle) {
+    return connectionsCircleId != null && connectionsCircleId == circle.id;
+  }
+
+  bool hasFollowLists() {
+    return followLists != null && followLists.lists.length > 0;
   }
 
   void incrementFollowersCount() {

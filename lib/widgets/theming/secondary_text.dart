@@ -13,7 +13,9 @@ class OBSecondaryText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -23,7 +25,7 @@ class OBSecondaryText extends StatelessWidget {
 
           TextStyle finalStyle = style;
           TextStyle themedTextStyle =
-              TextStyle(color: Pigment.fromString(theme.secondaryTextColor));
+              TextStyle(color: themeValueParserService.parseColor(theme.secondaryTextColor));
 
           if (finalStyle != null) {
             finalStyle = finalStyle.merge(themedTextStyle);

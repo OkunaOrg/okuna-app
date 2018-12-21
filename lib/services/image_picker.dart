@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:meta/meta.dart';
 
 class ImagePickerService {
   static const Map IMAGE_RATIOS = {
@@ -9,16 +10,19 @@ class ImagePickerService {
     OBImageType.cover: {'x': 16.0, 'y': 9.0}
   };
 
-  Future<File> pickImage({OBImageType imageType, ImageSource source}) async {
+  Future<File> pickImage(
+      {@required OBImageType imageType,
+      ImageSource source = ImageSource.gallery}) async {
     var image = await ImagePicker.pickImage(source: source);
 
     if (image == null) {
       return null;
     }
 
+    if (imageType == OBImageType.post) return image;
+
     double ratioX = IMAGE_RATIOS[imageType]['x'];
     double ratioY = IMAGE_RATIOS[imageType]['y'];
-
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: image.path,
       ratioX: ratioX,
@@ -29,4 +33,4 @@ class ImagePickerService {
   }
 }
 
-enum OBImageType { avatar, cover }
+enum OBImageType { avatar, cover, post }

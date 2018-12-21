@@ -7,7 +7,7 @@ import 'package:pigment/pigment.dart';
 class OBCover extends StatelessWidget {
   final String coverUrl;
   final File coverFile;
-  static const double HEIGHT = 200.0;
+  static const double HEIGHT = 230.0;
   static const PLACEHOLDER_IMAGE = 'assets/images/loading.gif';
 
   OBCover({this.coverUrl, this.coverFile});
@@ -16,8 +16,8 @@ class OBCover extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget image;
 
-    var errorImage = Container(
-      color: Pigment.fromString('#f5f5f5'),
+    var errorImage = SizedBox(
+      height: HEIGHT,
     );
 
     if (coverFile != null) {
@@ -25,6 +25,9 @@ class OBCover extends StatelessWidget {
         placeholder: AssetImage(PLACEHOLDER_IMAGE),
         image: FileImage(coverFile),
         fit: BoxFit.cover,
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center,
       );
     } else if (coverUrl == null) {
       image = errorImage;
@@ -32,8 +35,13 @@ class OBCover extends StatelessWidget {
       image = CachedNetworkImage(
         fit: BoxFit.cover,
         imageUrl: coverUrl != null ? coverUrl : '',
-        placeholder: Image.asset(PLACEHOLDER_IMAGE, fit: BoxFit.cover),
+        placeholder: Center(
+          child: CircularProgressIndicator(),
+        ),
         errorWidget: errorImage,
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center,
       );
     }
 
@@ -43,7 +51,9 @@ class OBCover extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Expanded(
-            child: image,
+            child: Container(
+              child: image,
+            ),
           )
         ],
       ),

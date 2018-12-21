@@ -1,3 +1,5 @@
+import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -5,17 +7,18 @@ import 'package:Openbook/models/post_image.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/post_video.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class Post {
+class Post extends UpdatableModel<Post> {
   final int id;
   final int creatorId;
   final DateTime created;
   final User creator;
+  CirclesList circles;
 
   PostReactionsEmojiCountList reactionsEmojiCounts;
   PostReaction reaction;
@@ -28,57 +31,33 @@ class Post {
   PostVideo video;
   PostCommentList commentsList;
 
-  Stream<Post> get updateSubject => _updateSubject.stream;
-  final _updateSubject = ReplaySubject<Post>(maxSize: 1);
+  static final factory = PostFactory();
 
   factory Post.fromJson(Map<String, dynamic> json) {
-    int postId = json['id'];
-
-    Post post = getPostWithIdFromCache(postId);
-
-    if (post != null) {
-      post.updateFromJson(json);
-      return post;
-    }
-
-    post = _makeFromJson(json);
-    addToCache(post);
-    return post;
-  }
-
-  static final SimpleCache<int, Post> cache =
-      LruCache(storage: SimpleStorage(size: 100));
-
-  static Post getPostWithIdFromCache(int postId) {
-    return cache.get(postId);
-  }
-
-  static void addToCache(Post post) {
-    cache.set(post.id, post);
+    return factory.fromJson(json);
   }
 
   static void clearCache() {
-    cache.clear();
+    factory.clearCache();
   }
 
-  static Post _makeFromJson(json) {
-    return Post(
-        id: json['id'],
-        creatorId: json['creator_id'],
-        created: _parseCreated(json['created']),
-        text: json['text'],
-        reactionsCount: json['reactions_count'],
-        commentsCount: json['comments_count'],
-        publicComments: json['public_comments'],
-        publicReactions: json['public_reactions'],
-        creator: _parseCreator(json['creator']),
-        image: _parseImage(json['image']),
-        video: _parseVideo(json['video']),
-        reaction: _parseReaction(json['reaction']),
-        commentsList: _parseCommentList(json['comments']),
-        reactionsEmojiCounts:
-            _parseReactionsEmojiCounts(json['reactions_emoji_counts']));
-  }
+  Post(
+      {this.id,
+      this.created,
+      this.text,
+      this.creatorId,
+      this.image,
+      this.video,
+      this.creator,
+      this.reactionsCount,
+      this.commentsCount,
+      this.commentsList,
+      this.reaction,
+      this.reactionsEmojiCounts,
+      this.publicComments,
+      this.circles,
+      this.publicReactions})
+      : super();
 
   static DateTime _parseCreated(String created) {
     return DateTime.parse(created).toLocal();
@@ -115,42 +94,36 @@ class Post {
     return PostCommentList.fromJson(commentList);
   }
 
-  Post(
-      {this.id,
-      this.created,
-      this.text,
-      this.creatorId,
-      this.image,
-      this.video,
-      this.creator,
-      this.reactionsCount,
-      this.commentsCount,
-      this.commentsList,
-      this.reaction,
-      this.reactionsEmojiCounts,
-      this.publicComments,
-      this.publicReactions}) {
-    _updateSubject.add(this);
-  }
+  void updateFromJson(Map json) {
+    if (json.containsKey('reactions_emoji_counts'))
+      reactionsEmojiCounts =
+          factory.parseReactionsEmojiCounts(json['reactions_emoji_counts']);
+    if (json.containsKey('reaction'))
+      reaction = factory.parseReaction(json['reaction']);
 
-  void updateFromJson(Map<String, dynamic> json) {
-    reactionsEmojiCounts =
-        _parseReactionsEmojiCounts(json['reactions_emoji_counts']);
-    reaction = _parseReaction(json['reaction']);
-    reactionsCount = json['reactions_count'];
-    commentsCount = json['comments_count'];
-    publicComments = json['public_comments'];
-    publicReactions = json['public_reactions'];
-    text = json['text'];
-    image = _parseImage(json['image']);
-    video = _parseVideo(json['video']);
-    commentsList = _parseCommentList(json['comments']);
+    if (json.containsKey('reactions_count'))
+      reactionsCount = json['reactions_count'];
 
-    _notifyUpdate();
-  }
+    if (json.containsKey('comments_count'))
+      commentsCount = json['comments_count'];
 
-  void dispose() {
-    _updateSubject.close();
+    if (json.containsKey('public_comments'))
+      publicComments = json['public_comments'];
+
+    if (json.containsKey('public_reactions'))
+      publicReactions = json['public_reactions'];
+
+    if (json.containsKey('text')) text = json['text'];
+
+    if (json.containsKey('image')) image = factory.parseImage(json['image']);
+
+    if (json.containsKey('video')) image = factory.parseImage(json['video']);
+
+    if (json.containsKey('comments'))
+      commentsList = factory.parseCommentList(json['comments']);
+
+    if (json.containsKey('circles'))
+      circles = factory.parseCircles(json['circles']);
   }
 
   bool hasReaction() {
@@ -181,12 +154,20 @@ class Post {
     return commentsList != null && commentsList.comments.length > 0;
   }
 
+  bool hasCircles() {
+    return circles != null && circles.circles.length > 0;
+  }
+
   bool hasCommentsCount() {
     return commentsCount != null && commentsCount > 0;
   }
 
   List<PostComment> getPostComments() {
     return commentsList.comments;
+  }
+
+  List<Circle> getPostCircles() {
+    return circles.circles;
   }
 
   List<PostReactionsEmojiCount> getEmojiCounts() {
@@ -227,12 +208,12 @@ class Post {
 
   void incrementCommentsCount() {
     this.commentsCount += 1;
-    this._notifyUpdate();
+    this.notifyUpdate();
   }
 
   void decreaseCommentsCount() {
     this.commentsCount -= 1;
-    this._notifyUpdate();
+    this.notifyUpdate();
   }
 
   void clearReaction() {
@@ -281,14 +262,75 @@ class Post {
     this._setReactionsEmojiCounts(
         PostReactionsEmojiCountList(counts: newEmojiCounts));
 
-    this._notifyUpdate();
+    this.notifyUpdate();
   }
 
   void _setReactionsEmojiCounts(PostReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
   }
+}
 
-  void _notifyUpdate() {
-    _updateSubject.add(this);
+class PostFactory extends UpdatableModelFactory<Post> {
+  @override
+  SimpleCache<int, Post> cache = LruCache(storage: SimpleStorage(size: 100));
+
+  @override
+  Post makeFromJson(Map json) {
+    return Post(
+        id: json['id'],
+        creatorId: json['creator_id'],
+        created: parseCreated(json['created']),
+        text: json['text'],
+        circles: parseCircles(json['circles']),
+        reactionsCount: json['reactions_count'],
+        commentsCount: json['comments_count'],
+        publicComments: json['public_comments'],
+        publicReactions: json['public_reactions'],
+        creator: parseCreator(json['creator']),
+        image: parseImage(json['image']),
+        reaction: parseReaction(json['reaction']),
+        commentsList: parseCommentList(json['comments']),
+        reactionsEmojiCounts:
+            parseReactionsEmojiCounts(json['reactions_emoji_counts']));
+  }
+
+  User parseUser(Map userData) {
+    if (userData == null) return null;
+    return User.fromJson(userData);
+  }
+
+  DateTime parseCreated(String created) {
+    return DateTime.parse(created).toLocal();
+  }
+
+  PostImage parseImage(Map image) {
+    if (image == null) return null;
+    return PostImage.fromJSON(image);
+  }
+
+  User parseCreator(Map creator) {
+    if (creator == null) return null;
+    return User.fromJson(creator);
+  }
+
+  PostReaction parseReaction(Map postReaction) {
+    if (postReaction == null) return null;
+    return PostReaction.fromJson(postReaction);
+  }
+
+  PostReactionsEmojiCountList parseReactionsEmojiCounts(
+      List reactionsEmojiCounts) {
+    if (reactionsEmojiCounts == null) return null;
+    return PostReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
+  }
+
+  PostCommentList parseCommentList(List commentList) {
+    if (commentList == null) return null;
+    return PostCommentList.fromJson(commentList);
+  }
+
+  CirclesList parseCircles(List circlesData) {
+    if (circlesData == null) return null;
+    return CirclesList.fromJson(circlesData);
   }
 }

@@ -56,7 +56,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
               height: 35,
             );
 
-          return Container(
+          return SizedBox(
             height: 35,
             child: ListView(
                 physics: AlwaysScrollableScrollPhysics(),

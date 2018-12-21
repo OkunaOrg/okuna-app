@@ -127,7 +127,9 @@ class OBIcons {
   static const menu = OBIconData(nativeIcon: Icons.menu);
   static const communities = OBIconData(nativeIcon: Icons.people);
   static const settings = OBIconData(nativeIcon: Icons.settings);
-  static const lists = OBIconData(nativeIcon: Icons.list);
+  static const lists = OBIconData(nativeIcon: Icons.library_books );
+  static const addToList = OBIconData(nativeIcon: Icons.queue);
+  static const removeFromList = OBIconData(nativeIcon: Icons.delete);
   static const customize = OBIconData(nativeIcon: Icons.format_paint);
   static const logout = OBIconData(nativeIcon: Icons.exit_to_app);
   static const help = OBIconData(nativeIcon: Icons.help);
@@ -153,6 +155,14 @@ class OBIcons {
       OBIconData(nativeIcon: Icons.radio_button_unchecked);
   static const checkCircleSelected = OBIconData(nativeIcon: Icons.check_circle);
   static const check = OBIconData(nativeIcon: Icons.check);
+  static const circles = OBIconData(nativeIcon: Icons.group_work);
+  static const follow = OBIconData(nativeIcon: Icons.notifications);
+  static const unfollow = OBIconData(nativeIcon: Icons.notifications_off);
+  static const connect = OBIconData(nativeIcon: Icons.group_add);
+  static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
+  static const deletePost = OBIconData(nativeIcon: Icons.delete);
+  static const reportPost = OBIconData(nativeIcon: Icons.report);
+  static const filter = OBIconData(nativeIcon: Icons.tune);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

@@ -2,7 +2,6 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -14,6 +13,7 @@ class OBTextFormField extends StatelessWidget {
   final TextInputAction textInputAction;
   final OBTextFormFieldSize size;
   final bool obscureText;
+  final TextCapitalization textCapitalization;
 
   OBTextFormField(
       {this.controller,
@@ -24,11 +24,14 @@ class OBTextFormField extends StatelessWidget {
       this.size = OBTextFormFieldSize.medium,
       this.maxLines,
       this.textInputAction = TextInputAction.done,
-      this.decoration});
+      this.decoration,
+      this.textCapitalization = TextCapitalization.none});
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -56,6 +59,7 @@ class OBTextFormField extends StatelessWidget {
           return Column(
             children: <Widget>[
               TextFormField(
+                textCapitalization: textCapitalization,
                 textInputAction: textInputAction,
                 autofocus: autofocus,
                 controller: controller,
@@ -65,16 +69,19 @@ class OBTextFormField extends StatelessWidget {
                 obscureText: obscureText,
                 style: TextStyle(
                     fontSize: fontSize,
-                    color: Pigment.fromString(theme.primaryTextColor)),
+                    color: themeValueParserService
+                        .parseColor(theme.primaryTextColor)),
                 decoration: InputDecoration(
                   hintText: decoration.hintText,
                   labelStyle: TextStyle(
                       height: labelHeight,
                       fontWeight: FontWeight.bold,
-                      color: Pigment.fromString(theme.secondaryTextColor),
+                      color: themeValueParserService
+                          .parseColor(theme.secondaryTextColor),
                       fontSize: fontSize),
                   hintStyle: TextStyle(
-                      color: Pigment.fromString(theme.primaryTextColor)),
+                      color: themeValueParserService
+                          .parseColor(theme.primaryTextColor)),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                   border: InputBorder.none,

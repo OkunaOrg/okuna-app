@@ -100,7 +100,9 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -111,7 +113,7 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
           final double bottomPadding = MediaQuery.of(context).padding.bottom;
           Widget result = DecoratedBox(
             decoration: BoxDecoration(
-              color: Pigment.fromString(theme.primaryColor),
+              color: themeValueParserService.parseColor(theme.primaryColor),
             ),
             // TODO(xster): allow icons-only versions of the tab bar too.
             child: SizedBox(

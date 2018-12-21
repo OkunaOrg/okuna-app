@@ -18,15 +18,13 @@ class EmojiGroup {
       this.emojis});
 
   factory EmojiGroup.fromJson(Map<String, dynamic> parsedJson) {
-    DateTime created = DateTime.parse(parsedJson['created']).toLocal();
-
     var emojisData = parsedJson['emojis'];
     EmojisList emojis = EmojisList.fromJson(emojisData);
 
     return EmojiGroup(
         id: parsedJson['id'],
         keyword: parsedJson['keyword'],
-        created: created,
+        created: _parseCreated(parsedJson['created']),
         order: parsedJson['order'],
         color: parsedJson['color'],
         emojis: emojis);
@@ -34,5 +32,10 @@ class EmojiGroup {
 
   List<Emoji> getEmojis() {
     return emojis.emojis;
+  }
+
+  static DateTime _parseCreated(String created) {
+    if (created == null) return null;
+    return DateTime.parse(created).toLocal();
   }
 }

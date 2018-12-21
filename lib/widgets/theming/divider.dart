@@ -1,12 +1,13 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -23,7 +24,7 @@ class OBDivider extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
-                    color: Pigment.fromString(theme.primaryTextColor),
+                    color: themeValueParserService.parseColor(theme.primaryTextColor),
                     width: 1,
                   )),
                 ),

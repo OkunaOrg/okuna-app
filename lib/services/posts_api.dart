@@ -24,6 +24,7 @@ class PostsApiService {
   static const GET_POST_REACTIONS_PATH = 'api/posts/{postId}/reactions/';
   static const GET_POST_REACTIONS_EMOJI_COUNT_PATH =
       'api/posts/{postId}/reactions/emoji-count/';
+  static const GET_REACTION_EMOJI_GROUPS = 'api/posts/emojis/groups/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -51,9 +52,10 @@ class PostsApiService {
       bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
 
-    if (listIds != null) queryParams['lists_ids'] = listIds;
+    if (listIds != null && listIds.isNotEmpty) queryParams['list_id'] = listIds;
 
-    if (circleIds != null) queryParams['circle_ids'] = circleIds;
+    if (circleIds != null && circleIds.isNotEmpty)
+      queryParams['circle_id'] = circleIds;
 
     if (count != null) queryParams['count'] = count;
 
@@ -82,7 +84,7 @@ class PostsApiService {
       body['text'] = text;
     }
 
-    if (circleIds != null) {
+    if (circleIds != null && circleIds.length > 0) {
       body['circle_id'] = circleIds.join(',');
     }
 
@@ -150,8 +152,10 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> reactToPost(
-      {@required int postId, @required int emojiId}) {
-    Map<String, dynamic> body = {'emoji_id': emojiId};
+      {@required int postId,
+      @required int emojiId,
+      @required int emojiGroupId}) {
+    Map<String, dynamic> body = {'emoji_id': emojiId, 'group_id': emojiGroupId};
 
     String path = _makeReactToPostPath(postId);
     return _httpService.putJSON(_makeApiUrl(path),
@@ -165,6 +169,11 @@ class PostsApiService {
 
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getReactionEmojiGroups() {
+    String url = _makeApiUrl(GET_REACTION_EMOJI_GROUPS);
+    return _httpService.get(url, appendAuthorizationToken: true);
   }
 
   String _makeDeletePostPath(int postId) {

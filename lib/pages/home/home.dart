@@ -1,15 +1,7 @@
 import 'dart:async';
 
 import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
-import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
-import 'package:Openbook/pages/home/modals/pick_circles/pick_circles.dart';
-import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
-import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
@@ -45,7 +37,7 @@ class OBHomePageState extends State<OBHomePage> {
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
-  OBMainMenuPageController _menuPageController;
+  OBMainMenuPageController _mainMenuPageController;
 
   @override
   void initState() {
@@ -56,7 +48,7 @@ class OBHomePageState extends State<OBHomePage> {
     _timelinePageController = OBTimelinePageController();
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
-    _menuPageController = OBMainMenuPageController();
+    _mainMenuPageController = OBMainMenuPageController();
   }
 
   @override
@@ -96,18 +88,13 @@ class OBHomePageState extends State<OBHomePage> {
     switch (OBHomePageTabs.values[index]) {
       case OBHomePageTabs.home:
         page = OBTimelinePage(
-            controller: _timelinePageController,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToCreatePost: _onWantsToCreatePost,
-            onWantsToEditUserProfile: _onWantsToEditUserProfile,
-            onWantsToPickCircles: _onWantsToPickCircles);
+          controller: _timelinePageController,
+        );
         break;
       case OBHomePageTabs.search:
         page = OBMainSearchPage(
-            controller: _searchPageController,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToEditUserProfile: _onWantsToEditUserProfile,
-            onWantsToPickCircles: _onWantsToPickCircles);
+          controller: _searchPageController,
+        );
         break;
       case OBHomePageTabs.notifications:
         break;
@@ -115,17 +102,11 @@ class OBHomePageState extends State<OBHomePage> {
         page = OBMainNotificationsPage();
         break;
       case OBHomePageTabs.profile:
-        page = OBOwnProfilePage(
-            onWantsToEditUserProfile: _onWantsToEditUserProfile,
-            onWantsToReactToPost: _onWantsToReactToPost,
-            onWantsToPickCircles: _onWantsToPickCircles,
-            controller: _ownProfilePageController);
+        page = OBOwnProfilePage(controller: _ownProfilePageController);
         break;
       case OBHomePageTabs.menu:
         page = OBMainMenuPage(
-          controller: _menuPageController,
-          onWantsToCreateFollowsList: _onWantsToCreateFollowsList,
-          onWantsToEditFollowsList: _onWantsToEditFollowsList,
+          controller: _mainMenuPageController,
         );
         break;
       default:
@@ -145,39 +126,34 @@ class OBHomePageState extends State<OBHomePage> {
 
         if (tappedTab == OBHomePageTabs.home &&
             currentTab == OBHomePageTabs.home) {
-          if (_timelinePageController.hasPushedRoutes()) {
-            _timelinePageController.popUntilFirst();
-          } else {
+          if (_timelinePageController.isFirstRoute()) {
             _timelinePageController.scrollToTop();
+          } else {
+            _timelinePageController.popUntilFirstRoute();
           }
         }
 
         if (tappedTab == OBHomePageTabs.profile &&
             currentTab == OBHomePageTabs.profile) {
-          if (_ownProfilePageController.hasPushedRoutes()) {
-            _ownProfilePageController.popUntilFirst();
-          } else {
+          if (_ownProfilePageController.isFirstRoute()) {
             _ownProfilePageController.scrollToTop();
+          } else {
+            _ownProfilePageController.popUntilFirstRoute();
           }
         }
 
         if (tappedTab == OBHomePageTabs.search &&
             currentTab == OBHomePageTabs.search) {
-          if (_searchPageController.hasPushedRoutes()) {
-            _searchPageController.popUntilFirst();
-          } else {
+          if (_searchPageController.isFirstRoute()) {
             _searchPageController.scrollToTop();
+          } else {
+            _searchPageController.popUntilFirstRoute();
           }
         }
 
         if (tappedTab == OBHomePageTabs.menu &&
             currentTab == OBHomePageTabs.menu) {
-          if (_menuPageController.isAttached() &&
-              _menuPageController.hasPushedRoutes()) {
-            _menuPageController.popUntilFirst();
-          } else {
-            _menuPageController.scrollToTop();
-          }
+          _mainMenuPageController.popUntilFirstRoute();
         }
 
         _lastIndex = index;
@@ -185,7 +161,7 @@ class OBHomePageState extends State<OBHomePage> {
       },
       items: [
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.home),
           activeIcon: OBIcon(
             OBIcons.home,
@@ -193,7 +169,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.search),
           activeIcon: OBIcon(
             OBIcons.search,
@@ -201,7 +177,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.notifications),
           activeIcon: OBIcon(
             OBIcons.notifications,
@@ -209,7 +185,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.communities),
           activeIcon: OBIcon(
             OBIcons.communities,
@@ -217,7 +193,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-            title: Container(),
+            title: SizedBox(),
             icon: OBUserAvatar(
               avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
@@ -226,7 +202,7 @@ class OBHomePageState extends State<OBHomePage> {
               avatarUrl: _avatarUrl,
             )),
         BottomNavigationBarItem(
-          title: Container(),
+          title: SizedBox(),
           icon: OBIcon(OBIcons.menu),
           activeIcon: OBIcon(
             OBIcons.menu,
@@ -235,73 +211,6 @@ class OBHomePageState extends State<OBHomePage> {
         ),
       ],
     );
-  }
-
-  Future<Post> _onWantsToCreatePost() async {
-    Post createdPost = await Navigator.of(context).push(MaterialPageRoute<Post>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return CreatePostModal();
-        }));
-
-    return createdPost;
-  }
-
-  Future<PostReaction> _onWantsToReactToPost(Post post) async {
-    PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<PostReaction>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBReactToPostModal(post),
-                )));
-
-    return postReaction;
-  }
-
-  Future<List<Circle>> _onWantsToPickCircles() async {
-    List<Circle> circles = await Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<List<Circle>>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBPickCirclesModal(),
-                )));
-
-    return circles;
-  }
-
-  Future<void> _onWantsToEditUserProfile(User user) async {
-    Navigator.of(context, rootNavigator: true)
-        .push(MaterialPageRoute<PostReaction>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBEditUserProfileModal(user),
-                )));
-  }
-
-  Future<FollowsList> _onWantsToCreateFollowsList() async {
-    FollowsList createdFollowsList =
-        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return OBSaveFollowsListModal(
-                autofocusNameTextField: true,
-              );
-            }));
-
-    return createdFollowsList;
-  }
-
-  Future<FollowsList> _onWantsToEditFollowsList(FollowsList followsList) async {
-    FollowsList editedFollowsList =
-        await Navigator.of(context).push(MaterialPageRoute<FollowsList>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return OBSaveFollowsListModal(
-                followsList: followsList,
-              );
-            }));
-
-    return editedFollowsList;
   }
 
   void _bootstrap() async {

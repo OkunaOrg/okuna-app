@@ -12,8 +12,10 @@ class ConnectionsCirclesApiService {
 
   static const GET_CIRCLES_PATH = 'api/circles/';
   static const CREATE_CIRCLE_PATH = 'api/circles/';
-  static const UPDATE_CIRCLE_PATH = 'api/circles/{circleId}';
-  static const DELETE_CIRCLE_PATH = 'api/circles/{circleId}';
+  static const UPDATE_CIRCLE_PATH = 'api/circles/{circleId}/';
+  static const DELETE_CIRCLE_PATH = 'api/circles/{circleId}/';
+  static const GET_CIRCLE_PATH = 'api/circles/{circleId}/';
+  static const CHECK_NAME_PATH = 'api/circles/name-check/';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
@@ -43,12 +45,14 @@ class ConnectionsCirclesApiService {
   }
 
   Future<HttpieResponse> updateCircleWithId(int circleId,
-      {String name, String color}) {
+      {String name, String color, List<String> usernames}) {
     Map<String, dynamic> body = {};
 
     if (color != null) body['color'] = color;
 
     if (name != null) body['name'] = name;
+
+    if (usernames != null) body['usernames'] = usernames;
 
     String url = _makeUpdateCirclePath(circleId);
     return _httpService.patchJSON(url,
@@ -60,14 +64,29 @@ class ConnectionsCirclesApiService {
     return _httpService.delete(url, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> getCircleWithId(int circleId) {
+    String url = _makeGetCirclePath(circleId);
+    return _httpService.get(url, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> checkNameIsAvailable({@required String name}) {
+    return _httpService.postJSON('$apiURL$CHECK_NAME_PATH',
+        body: {'name': name}, appendAuthorizationToken: true);
+  }
+
   String _makeUpdateCirclePath(int circleId) {
     return _stringTemplateService
-        .parse(UPDATE_CIRCLE_PATH, {'circleId': circleId});
+        .parse('$apiURL$UPDATE_CIRCLE_PATH', {'circleId': circleId});
   }
 
   String _makeDeleteCirclePath(int circleId) {
     return _stringTemplateService
-        .parse(DELETE_CIRCLE_PATH, {'circleId': circleId});
+        .parse('$apiURL$DELETE_CIRCLE_PATH', {'circleId': circleId});
+  }
+
+  String _makeGetCirclePath(int circleId) {
+    return _stringTemplateService
+        .parse('$apiURL$GET_CIRCLE_PATH', {'circleId': circleId});
   }
 
   String _makeApiUrl(String string) {

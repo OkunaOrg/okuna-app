@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 
 class OBEmojiPicker extends StatefulWidget {
   final OnEmojiPicked onEmojiPicked;
+  final bool isReactionsPicker;
 
-  OBEmojiPicker({this.onEmojiPicked});
+  OBEmojiPicker({this.onEmojiPicked, this.isReactionsPicker = false});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,8 +31,7 @@ class OBEmojiPickerState extends State<OBEmojiPicker> {
   bool _hasSearch;
 
   List<EmojiGroup> _emojiGroups;
-  List<Emoji> _allEmojis;
-  List<Emoji> _emojiSearchResults;
+  List<EmojiGroupSearchResults> _emojiSearchResults;
   String _emojiSearchQuery;
 
   @override
@@ -78,8 +78,8 @@ class OBEmojiPickerState extends State<OBEmojiPicker> {
     );
   }
 
-  void _onEmojiPressed(Emoji pressedEmoji) {
-    widget.onEmojiPicked(pressedEmoji);
+  void _onEmojiPressed(Emoji pressedEmoji, EmojiGroup emojiGroup) {
+    widget.onEmojiPicked(pressedEmoji, emojiGroup);
   }
 
   void _onSearch(String searchString) {
@@ -92,31 +92,35 @@ class OBEmojiPickerState extends State<OBEmojiPicker> {
 
     String standarisedSearchStr = searchString.toLowerCase();
 
-    List<Emoji> results = _allEmojis.where((Emoji emoji) {
-      return emoji.keyword.contains(standarisedSearchStr);
+    List<EmojiGroupSearchResults> searchResults =
+        _emojiGroups.map((EmojiGroup emojiGroup) {
+      List<Emoji> groupEmojis = emojiGroup.getEmojis();
+      List<Emoji> groupSearchResults = groupEmojis.where((Emoji emoji) {
+        return emoji.keyword.toLowerCase().contains(standarisedSearchStr);
+      }).toList();
+      return EmojiGroupSearchResults(
+          group: emojiGroup, searchResults: groupSearchResults);
     }).toList();
 
-    _setEmojiSearchResults(results);
+    _setEmojiSearchResults(searchResults);
     _setEmojiSearchQuery(searchString);
   }
 
   void _bootstrap() async {
-    EmojiGroupList emojiGroupList = await _userService.getEmojiGroups();
+    EmojiGroupList emojiGroupList = await (widget.isReactionsPicker
+        ? _userService.getReactionEmojiGroups()
+        : _userService.getEmojiGroups());
     this._setEmojiGroups(emojiGroupList.emojisGroups);
   }
 
   void _setEmojiGroups(List<EmojiGroup> emojiGroups) {
     setState(() {
       _emojiGroups = emojiGroups;
-      List<Emoji> newAllEmojis = [];
-      _emojiGroups.forEach((EmojiGroup emojiGroup) {
-        newAllEmojis.addAll(emojiGroup.getEmojis());
-      });
-      _allEmojis = newAllEmojis;
     });
   }
 
-  void _setEmojiSearchResults(List<Emoji> emojiSearchResults) {
+  void _setEmojiSearchResults(
+      List<EmojiGroupSearchResults> emojiSearchResults) {
     setState(() {
       _emojiSearchResults = emojiSearchResults;
     });
@@ -137,4 +141,11 @@ class OBEmojiPickerState extends State<OBEmojiPicker> {
 
 enum OBEmojiPickerStatus { searching, suggesting, overview }
 
-typedef void OnEmojiPicked(Emoji pickedEmoji);
+typedef void OnEmojiPicked(Emoji pickedEmoji, EmojiGroup emojiGroup);
+
+class EmojiGroupSearchResults {
+  final EmojiGroup group;
+  final List<Emoji> searchResults;
+
+  EmojiGroupSearchResults({@required this.group, @required this.searchResults});
+}

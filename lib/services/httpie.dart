@@ -9,6 +9,8 @@ import 'package:http_parser/http_parser.dart';
 class HttpieService {
   LocalizationService _localizationService;
   String authorizationToken;
+  String magicHeaderName;
+  String magicHeaderValue;
 
   void setAuthorizationToken(String token) {
     authorizationToken = token;
@@ -20,6 +22,11 @@ class HttpieService {
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
+  }
+
+  void setMagicHeader(String name, String value) {
+    magicHeaderName = name;
+    magicHeaderValue = value;
   }
 
   Future<HttpieResponse> post(url,
@@ -297,6 +304,10 @@ class HttpieService {
       finalHeaders['Authorization'] = 'Token $authorizationToken';
     }
 
+    if (magicHeaderName != null && magicHeaderValue != null) {
+      finalHeaders[magicHeaderName] = magicHeaderValue;
+    }
+
     return finalHeaders;
   }
 
@@ -325,9 +336,20 @@ class HttpieService {
   String _makeQueryString(Map<String, dynamic> queryParameters) {
     String queryString = '?';
     queryParameters.forEach((key, value) {
-      queryString += '$key=' + value.toString();
+      queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
     });
     return queryString;
+  }
+
+  String _stringifyQueryStringValue(dynamic value) {
+    if (value is String) return value;
+    if (value is bool || value is int || value is double)
+      return value.toString();
+    if (value is List)
+      return value
+          .map((valueItem) => _stringifyQueryStringValue(valueItem))
+          .join(',');
+    throw 'Unsupported query string value';
   }
 }
 

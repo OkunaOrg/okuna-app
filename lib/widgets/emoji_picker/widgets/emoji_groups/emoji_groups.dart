@@ -1,3 +1,4 @@
+import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/emoji_group.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';

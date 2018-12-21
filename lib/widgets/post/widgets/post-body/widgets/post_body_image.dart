@@ -10,6 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pigment/pigment.dart';
 
+
 class OBPostBodyImage extends StatelessWidget {
   final Post _post;
 
@@ -28,7 +29,9 @@ class OBPostBodyImage extends StatelessWidget {
         constraints: BoxConstraints(minHeight: screenWidth),
         child: CachedNetworkImage(
           imageUrl: imageUrl,
-          placeholder: Image(image: AssetImage('assets/images/loading.gif')),
+          placeholder: Center(
+            child: CircularProgressIndicator(),
+          ),
           errorWidget: Container(
             child: Center(child: Text('Could not load image.')),
           ),

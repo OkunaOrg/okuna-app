@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
@@ -11,18 +12,16 @@ import 'package:flutter/material.dart';
 
 class OBPostHeader extends StatelessWidget {
   final Post _post;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
+  final OnPostDeleted onPostDeleted;
 
-  OBPostHeader(this._post, {this.onWantsToSeeUserProfile});
+  const OBPostHeader(this._post, {Key key, @required this.onPostDeleted})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    var userService = openbookProvider.userService;
-
-    User user = userService.getLoggedInUser();
-
-    bool isPostOwner = user.id == _post.getCreatorId();
+    var navigationService = openbookProvider.navigationService;
+    var bottomSheetService = openbookProvider.bottomSheetService;
 
     return ListTile(
       leading: StreamBuilder(
@@ -34,7 +33,8 @@ class OBPostHeader extends StatelessWidget {
 
             return OBUserAvatar(
               onPressed: () {
-                onWantsToSeeUserProfile(postCreator);
+                navigationService.navigateToUserProfile(
+                    user: postCreator, context: context);
               },
               size: OBUserAvatarSize.medium,
               avatarUrl: postCreator.getProfileAvatar(),
@@ -43,50 +43,16 @@ class OBPostHeader extends StatelessWidget {
       trailing: IconButton(
           icon: OBIcon(OBIcons.moreVertical),
           onPressed: () {
-            showCupertinoModalPopup(
-                builder: (BuildContext context) {
-                  List<Widget> postActions = [];
-
-                  if (isPostOwner) {
-                    postActions.add(CupertinoActionSheetAction(
-                      isDestructiveAction: true,
-                      child: Text(
-                        'Delete post',
-                      ),
-                      onPressed: () {
-                        print('Wants to delete post');
-                      },
-                    ));
-                  } else {
-                    postActions.add(CupertinoActionSheetAction(
-                      isDestructiveAction: true,
-                      child: Text(
-                        'Report post',
-                      ),
-                      onPressed: () {
-                        print('Wants to report post');
-                      },
-                    ));
-                  }
-
-                  return CupertinoActionSheet(
-                    actions: postActions,
-                    cancelButton: CupertinoActionSheetAction(
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                },
-                context: context);
+            bottomSheetService.showPostActions(
+                context: context,
+                post: _post,
+                onPostDeleted: onPostDeleted,
+                onPostReported: null);
           }),
       title: GestureDetector(
         onTap: () {
-          onWantsToSeeUserProfile(_post.creator);
+          navigationService.navigateToUserProfile(
+              user: _post.creator, context: context);
         },
         child: StreamBuilder(
             stream: _post.creator.updateSubject,
@@ -107,4 +73,6 @@ class OBPostHeader extends StatelessWidget {
       ),
     );
   }
+
+  void _onWantsToSeePostActions() {}
 }

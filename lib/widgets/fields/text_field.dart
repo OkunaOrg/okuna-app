@@ -1,7 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBTextField extends StatelessWidget {
   final TextStyle style;
@@ -31,7 +30,9 @@ class OBTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -40,14 +41,14 @@ class OBTextField extends StatelessWidget {
           var theme = snapshot.data;
 
           TextStyle themedTextStyle =
-              TextStyle(color: Pigment.fromString(theme.primaryTextColor));
+              TextStyle(color: themeValueParserService.parseColor(theme.primaryTextColor));
 
           if (style != null) {
             themedTextStyle = themedTextStyle.merge(style);
           }
 
           TextStyle hintTextStyle =
-              TextStyle(color: Pigment.fromString(theme.secondaryTextColor));
+              TextStyle(color: themeValueParserService.parseColor(theme.secondaryTextColor));
 
           if (decoration != null && decoration.hintStyle != null) {
             hintTextStyle = hintTextStyle.merge(decoration.hintStyle);

@@ -3,7 +3,6 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBProfileFollowingCount extends StatelessWidget {
   final User user;
@@ -18,7 +17,9 @@ class OBProfileFollowingCount extends StatelessWidget {
 
     String count = getPrettyCount(followingCount);
 
-    var themeService = OpenbookProvider.of(context).themeService;
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -37,11 +38,11 @@ class OBProfileFollowingCount extends StatelessWidget {
                       text: count,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Pigment.fromString(theme.primaryTextColor))),
+                          color: themeValueParserService.parseColor(theme.primaryTextColor))),
                   TextSpan(
                       text: ' Following',
                       style: TextStyle(
-                          color: Pigment.fromString(theme.secondaryTextColor)))
+                          color: themeValueParserService.parseColor(theme.secondaryTextColor)))
                 ])),
               ),
               SizedBox(

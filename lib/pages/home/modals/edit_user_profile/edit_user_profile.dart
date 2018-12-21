@@ -374,6 +374,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 ));
               }
               break;
+            default:
+              throw 'Unhandled imageType';
           }
 
           return Column(mainAxisSize: MainAxisSize.min, children: listTiles);
@@ -389,6 +391,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         case OBImageType.cover:
           _setCoverFile(image);
           break;
+        default:
+          throw 'Unhandled imageType';
       }
     }
   }

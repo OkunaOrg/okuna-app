@@ -1,5 +1,6 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
@@ -13,6 +14,8 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:Openbook/services/string_template.dart';
@@ -24,7 +27,7 @@ import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
 
 class OpenbookProvider extends StatefulWidget {
-  Widget child;
+  final Widget child;
 
   OpenbookProvider({this.child});
 
@@ -62,9 +65,12 @@ class OpenbookProviderState extends State<OpenbookProvider> {
       ConnectionsCirclesApiService();
   FollowsListsApiService followsListsApiService = FollowsListsApiService();
   ThemeValueParserService themeValueParserService = ThemeValueParserService();
+  ModalService modalService = ModalService();
+  NavigationService navigationService = NavigationService();
 
   LocalizationService localizationService;
   DeepLinksService deepLinksService = DeepLinksService();
+  BottomSheetService bottomSheetService = BottomSheetService();
 
   @override
   void initState() {
@@ -97,12 +103,16 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     postsApiService.setStringTemplateService(stringTemplateService);
     validationService.setAuthApiService(authApiService);
     validationService.setFollowsListsApiService(followsListsApiService);
+    validationService
+        .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
   }
 
   void initAsyncState() async {
     Environment environment =
         await EnvironmentLoader(environmentPath: ".env.json").load();
+    httpService.setMagicHeader(
+        environment.magicHeaderName, environment.magicHeaderValue);
     authApiService.setApiURL(environment.apiUrl);
     postsApiService.setApiURL(environment.apiUrl);
     emojisApiService.setApiURL(environment.apiUrl);

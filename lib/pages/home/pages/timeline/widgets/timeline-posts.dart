@@ -1,34 +1,24 @@
 import 'dart:async';
 
+import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
-import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
-  final OnWantsToCommentPost onWantsToCommentPost;
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToSeePostComments onWantsToSeePostComments;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
-  OBTimelinePosts(
-      {this.controller,
-      this.onWantsToReactToPost,
-      this.onWantsToCommentPost,
-      this.onWantsToSeePostComments,
-      this.onWantsToSeeUserProfile});
+  OBTimelinePosts({
+    this.controller,
+  });
 
   @override
   OBTimelinePostsState createState() {
@@ -38,6 +28,8 @@ class OBTimelinePosts extends StatefulWidget {
 
 class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<Post> _posts;
+  List<Circle> _filteredCircles;
+  List<FollowsList> _filteredFollowsLists;
   bool _needsBootstrap;
   UserService _userService;
   ToastService _toastService;
@@ -54,6 +46,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _posts = [];
+    _filteredCircles = [];
+    _filteredFollowsLists = [];
     _needsBootstrap = true;
     _loadingFinished = false;
     _postsScrollController = ScrollController();
@@ -96,10 +90,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                   var post = _posts[index];
                   return OBPost(
                     post,
-                    onWantsToReactToPost: widget.onWantsToReactToPost,
-                    onWantsToCommentPost: widget.onWantsToCommentPost,
-                    onWantsToSeePostComments: widget.onWantsToSeePostComments,
-                    onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
+                    onPostDeleted: _onPostDeleted,
+                    key: Key(
+                      post.id.toString(),
+                    ),
                   );
                 }),
             onLoadMore: _loadMorePosts));
@@ -117,6 +111,27 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     setState(() {
       this._posts.insert(0, post);
     });
+  }
+
+  Future<void> setFilters(
+      {List<Circle> circles, List<FollowsList> followsLists}) async {
+    _filteredCircles = circles;
+    _filteredFollowsLists = followsLists;
+    return _refreshPosts(areFirstPosts: false);
+  }
+
+  Future<void> clearFilters() {
+    _filteredCircles = [];
+    _filteredFollowsLists = [];
+    return _refreshPosts(areFirstPosts: false);
+  }
+
+  List<Circle> getFilteredCircles() {
+    return _filteredCircles.toList();
+  }
+
+  List<FollowsList> getFilteredFollowsLists() {
+    return _filteredFollowsLists.toList();
   }
 
   void _bootstrap() async {
@@ -138,9 +153,11 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     try {
       Post.clearCache();
       User.clearNavigationCache();
-      _posts =
-          (await _userService.getTimelinePosts(areFirstPosts: areFirstPosts))
-              .posts;
+      _posts = (await _userService.getTimelinePosts(
+              areFirstPosts: areFirstPosts,
+              circles: _filteredCircles,
+              followsLists: _filteredFollowsLists))
+          .posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
     } on HttpieConnectionRefusedError catch (error) {
@@ -155,8 +172,11 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      var morePosts =
-          (await _userService.getTimelinePosts(maxId: lastPostId)).posts;
+      var morePosts = (await _userService.getTimelinePosts(
+              maxId: lastPostId,
+              circles: _filteredCircles,
+              followsLists: _filteredFollowsLists))
+          .posts;
 
       if (morePosts.length == 0) {
         _setLoadingFinished(true);
@@ -174,6 +194,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
 
     return false;
+  }
+
+  void _onPostDeleted(Post deletedPost) {
+    setState(() {
+      _posts.remove(deletedPost);
+    });
   }
 
   void _setPosts(List<Post> posts) {
@@ -216,6 +242,29 @@ class OBTimelinePostsController {
 
   bool isAttached() {
     return _homePostsState != null;
+  }
+
+  Future<void> setFilters(
+      {List<Circle> circles, List<FollowsList> followsLists}) async {
+    return _homePostsState.setFilters(
+        circles: circles, followsLists: followsLists);
+  }
+
+  Future<void> clearFilters() {
+    return _homePostsState.clearFilters();
+  }
+
+  List<Circle> getFilteredCircles() {
+    return _homePostsState.getFilteredCircles();
+  }
+
+  List<FollowsList> getFilteredFollowsLists() {
+    return _homePostsState.getFilteredFollowsLists();
+  }
+
+  int countFilters() {
+    return _homePostsState.getFilteredCircles().length +
+        _homePostsState.getFilteredFollowsLists().length;
   }
 }
 

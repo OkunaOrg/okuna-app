@@ -16,6 +16,7 @@ class OBButton extends StatelessWidget {
   final ShapeBorder shape;
   final double minHeight;
   final List<BoxShadow> boxShadow;
+  final TextStyle textStyle;
 
   const OBButton(
       {@required this.child,
@@ -29,7 +30,8 @@ class OBButton extends StatelessWidget {
       this.boxShadow,
       this.isDisabled = false,
       this.isLoading = false,
-      this.padding});
+      this.padding,
+      this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class OBButton extends StatelessWidget {
     double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
     double buttonMinHeight = minHeight ?? 20;
     var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
+
     return StreamBuilder(
         stream: themeService.themeChange,
         initialData: themeService.getActiveTheme(),
@@ -68,6 +71,13 @@ class OBButton extends StatelessWidget {
             );
           }
 
+          TextStyle defaultTextStyle =
+              _getButtonTextStyleForSize(size: size, color: buttonTextColor);
+
+          if (textStyle != null) {
+            defaultTextStyle = defaultTextStyle.merge(textStyle);
+          }
+
           return GestureDetector(
             child: Container(
                 constraints: BoxConstraints(
@@ -78,7 +88,7 @@ class OBButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50.0)),
                 child: Material(
                   color: Colors.transparent,
-                  textStyle: TextStyle(color: buttonTextColor),
+                  textStyle: defaultTextStyle,
                   child: Padding(
                     padding: buttonPadding,
                     child: Row(
@@ -118,6 +128,16 @@ class OBButton extends StatelessWidget {
       case OBButtonType.success:
         buttonGradient = themeValueParser.parseGradient(theme.successColor);
         break;
+      case OBButtonType.highlight:
+        Color primaryColor = themeValueParser.parseColor(theme.primaryColor);
+        final bool isDarkPrimaryColor = primaryColor.computeLuminance() < 0.179;
+        Color gradientColor = isDarkPrimaryColor
+            ? Color.fromARGB(20, 255, 255, 255)
+            : Color.fromARGB(10, 0, 0, 0);
+
+        buttonGradient = themeValueParser
+            .makeGradientWithColors([gradientColor, gradientColor]);
+        break;
       default:
     }
 
@@ -138,6 +158,9 @@ class OBButton extends StatelessWidget {
         break;
       case OBButtonType.success:
         buttonTextColor = themeValueParser.parseColor(theme.successColorAccent);
+        break;
+      case OBButtonType.highlight:
+        buttonTextColor = themeValueParser.parseColor(theme.primaryTextColor);
         break;
       default:
     }
@@ -166,6 +189,24 @@ class OBButton extends StatelessWidget {
     return buttonPadding;
   }
 
+  TextStyle _getButtonTextStyleForSize(
+      {OBButtonSize size, @required Color color}) {
+    TextStyle textStyle;
+
+    switch (size) {
+      case OBButtonSize.large:
+        textStyle = TextStyle(color: color, fontSize: 16);
+        break;
+      case OBButtonSize.medium:
+      case OBButtonSize.small:
+        textStyle = TextStyle(color: color);
+        break;
+      default:
+    }
+
+    return textStyle;
+  }
+
   double _getButtonMinWidthForSize(OBButtonSize type) {
     if (minWidth != null) return minWidth;
 
@@ -186,6 +227,6 @@ class OBButton extends StatelessWidget {
   }
 }
 
-enum OBButtonType { primary, success, danger }
+enum OBButtonType { primary, success, danger, highlight }
 
 enum OBButtonSize { small, medium, large }

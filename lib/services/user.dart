@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
@@ -156,7 +157,8 @@ class UserService {
   }
 
   Future<User> updateUserEmail(String email) async {
-    HttpieStreamedResponse response = await _authApiService.updateUserEmail(email: email);
+    HttpieStreamedResponse response =
+        await _authApiService.updateUserEmail(email: email);
 
     if (response.isBadRequest()) {
       return getLoggedInUser();
@@ -166,8 +168,10 @@ class UserService {
     return _makeLoggedInUser(userData);
   }
 
-  Future<void> updateUserPassword(String currentPassword, String newPassword) async {
-    HttpieStreamedResponse response = await _authApiService.updateUserPassword(currentPassword: currentPassword, newPassword: newPassword);
+  Future<void> updateUserPassword(
+      String currentPassword, String newPassword) async {
+    HttpieStreamedResponse response = await _authApiService.updateUserPassword(
+        currentPassword: currentPassword, newPassword: newPassword);
     _checkResponseIsOk(response);
   }
 
@@ -227,16 +231,16 @@ class UserService {
   }
 
   Future<PostsList> getTimelinePosts(
-      {List<int> listIds,
-      List<int> circleIds,
+      {List<Circle> circles = const [],
+      List<FollowsList> followsLists = const [],
       int maxId,
       int count,
       String username,
       bool areFirstPosts = false}) async {
     try {
       HttpieResponse response = await _postsApiService.getTimelinePosts(
-          listIds: listIds,
-          circleIds: circleIds,
+          circleIds: circles.map((circle) => circle.id).toList(),
+          listIds: followsLists.map((followsList) => followsList.id).toList(),
           maxId: maxId,
           count: count,
           username: username,
@@ -261,16 +265,16 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String text, List<int> circleIds, File image, File video}) async {
+      {String text, List<Circle> circles = const [], File image, File video}) async {
     HttpieStreamedResponse response;
     if (image != null) {
       response = await _postsApiService.createPost(
-          text: text, circleIds: circleIds, image: image);
+          text: text, circleIds: circles.map((circle) => circle.id).toList(), image: image);
     }
 
     if (video != null) {
       response = await _postsApiService.createPost(
-          text: text, circleIds: circleIds, video: video);
+          text: text, circleIds: circles.map((circle) => circle.id).toList(), video: video);
     }
 
     _checkResponseIsCreated(response);
@@ -288,9 +292,9 @@ class UserService {
   }
 
   Future<PostReaction> reactToPost(
-      {@required Post post, @required Emoji emoji}) async {
+      {@required Post post, @required Emoji emoji, @required EmojiGroup emojiGroup}) async {
     HttpieResponse response =
-        await _postsApiService.reactToPost(postId: post.id, emojiId: emoji.id);
+        await _postsApiService.reactToPost(postId: post.id, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
@@ -349,6 +353,15 @@ class UserService {
 
   Future<EmojiGroupList> getEmojiGroups() async {
     HttpieResponse response = await this._emojisApiService.getEmojiGroups();
+
+    _checkResponseIsOk(response);
+
+    return EmojiGroupList.fromJson(json.decode(response.body));
+  }
+
+  Future<EmojiGroupList> getReactionEmojiGroups() async {
+    HttpieResponse response =
+        await this._postsApiService.getReactionEmojiGroups();
 
     _checkResponseIsOk(response);
 
@@ -428,6 +441,13 @@ class UserService {
     return Connection.fromJson(json.decode(response.body));
   }
 
+  Future<Circle> getConnectionsCircleWithId(int circleId) async {
+    HttpieResponse response =
+        await _connectionsCirclesApiService.getCircleWithId(circleId);
+    _checkResponseIsOk(response);
+    return Circle.fromJSON(json.decode(response.body));
+  }
+
   Future<CirclesList> getConnectionsCircles() async {
     HttpieResponse response = await _connectionsCirclesApiService.getCircles();
     _checkResponseIsOk(response);
@@ -443,9 +463,12 @@ class UserService {
   }
 
   Future<Circle> updateConnectionsCircle(Circle circle,
-      {String name, String color}) async {
-    HttpieResponse response = await _connectionsCirclesApiService
-        .updateCircleWithId(circle.id, name: name, color: color);
+      {String name, String color, List<User> users = const []}) async {
+    HttpieResponse response =
+        await _connectionsCirclesApiService.updateCircleWithId(circle.id,
+            name: name,
+            color: color,
+            usernames: users.map((user) => user.username).toList());
     _checkResponseIsOk(response);
     return Circle.fromJSON(json.decode(response.body));
   }

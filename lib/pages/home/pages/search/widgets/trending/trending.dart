@@ -7,17 +7,9 @@ import 'package:flutter/material.dart';
 
 class OBTrending extends StatefulWidget {
   final OBTrendingController controller;
-  final OnWantsToCommentPost onWantsToCommentPost;
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToSeePostComments onWantsToSeePostComments;
-  final OnWantsToSeeUserProfile onWantsToSeeUserProfile;
 
   OBTrending(
-      {this.controller,
-      this.onWantsToSeePostComments,
-      this.onWantsToCommentPost,
-      this.onWantsToReactToPost,
-      this.onWantsToSeeUserProfile});
+      {this.controller,});
 
   @override
   State<StatefulWidget> createState() {
@@ -49,10 +41,6 @@ class OBTrendingState extends State<OBTrending> {
               if (index == 0) {
                 return OBTrendingPosts(
                   controller: _trendingPostsController,
-                  onWantsToReactToPost: widget.onWantsToReactToPost,
-                  onWantsToSeeUserProfile: widget.onWantsToSeeUserProfile,
-                  onWantsToSeePostComments: widget.onWantsToSeePostComments,
-                  onWantsToCommentPost: widget.onWantsToCommentPost,
                 );
               }
             }),

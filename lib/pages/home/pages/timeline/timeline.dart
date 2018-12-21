@@ -1,32 +1,26 @@
+import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/home.dart';
-import 'package:Openbook/pages/home/lib/base_state.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
-import 'package:Openbook/pages/home/pages/timeline//widgets/timeline-posts.dart';
-import 'package:Openbook/pages/home/pages/post/post.dart';
+import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
+import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/widgets/badge.dart';
 import 'package:Openbook/widgets/buttons/floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
-import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBTimelinePage extends StatefulWidget {
-  final OnWantsToReactToPost onWantsToReactToPost;
-  final OnWantsToEditUserProfile onWantsToEditUserProfile;
-  final OnWantsToCreatePost onWantsToCreatePost;
-  final OnWantsToPickCircles onWantsToPickCircles;
   final OBTimelinePageController controller;
 
-  OBTimelinePage(
-      {this.onWantsToReactToPost,
-      this.onWantsToCreatePost,
-      this.controller,
-      this.onWantsToEditUserProfile,
-      this.onWantsToPickCircles});
+  OBTimelinePage({
+    @required this.controller,
+  });
 
   @override
   OBTimelinePageState createState() {
@@ -34,37 +28,38 @@ class OBTimelinePage extends StatefulWidget {
   }
 }
 
-class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
+class OBTimelinePageState extends State<OBTimelinePage> {
   OBTimelinePostsController _timelinePostsController;
+  ModalService _modalService;
 
   @override
   void initState() {
     super.initState();
     _timelinePostsController = OBTimelinePostsController();
-    if (widget.controller != null) widget.controller.attach(this);
+    widget.controller.attach(context: context, state: this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: OBNavigationBar(
-          title: 'Home',
-        ),
+    var openbookProvider = OpenbookProvider.of(context);
+    _modalService = openbookProvider.modalService;
+
+    return OBCupertinoPageScaffold(
+        navigationBar:
+            OBNavigationBar(title: 'Home', trailing: _buildFiltersButton()),
         child: OBPrimaryColorContainer(
           child: Stack(
             children: <Widget>[
               OBTimelinePosts(
-                  controller: _timelinePostsController,
-                  onWantsToReactToPost: widget.onWantsToReactToPost,
-                  onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                  onWantsToCommentPost: _onWantsToCommentPost,
-                  onWantsToSeePostComments: _onWantsToSeePostComments),
+                controller: _timelinePostsController,
+              ),
               Positioned(
                   bottom: 20.0,
                   right: 20.0,
                   child: OBFloatingActionButton(
                       onPressed: () async {
-                        Post createdPost = await widget.onWantsToCreatePost();
+                        Post createdPost = await _modalService.openCreatePost(
+                            context: context);
                         if (createdPost != null) {
                           _timelinePostsController.addPostToTop(createdPost);
                           _timelinePostsController.scrollToTop();
@@ -77,60 +72,67 @@ class OBTimelinePageState extends OBBasePageState<OBTimelinePage> {
         ));
   }
 
+  Widget _buildFiltersButton() {
+    int filtersCount = _timelinePostsController.isAttached()
+        ? _timelinePostsController.countFilters()
+        : 0;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        OBBadge(
+          count: filtersCount,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        OBIconButton(
+          OBIcons.filter,
+          themeColor: OBIconThemeColor.primaryAccent,
+          onPressed: _onWantsFilters,
+        )
+      ],
+    );
+  }
+
   void scrollToTop() {
     _timelinePostsController.scrollToTop();
   }
 
-  void _onWantsToSeeUserProfile(User user) async {
-    incrementPushedRoutes();
-    await Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obSlideProfileView'),
-            widget: OBProfilePage(
-              user,
-              onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-              onWantsToSeePostComments: _onWantsToSeePostComments,
-              onWantsToCommentPost: _onWantsToCommentPost,
-              onWantsToPickCircles: widget.onWantsToPickCircles,
-              onWantsToReactToPost: widget.onWantsToReactToPost,
-              onWantsToEditUserProfile: widget.onWantsToEditUserProfile,
-            )));
-    decrementPushedRoutes();
-  }
-
-  void _onWantsToCommentPost(Post post) async {
-    incrementPushedRoutes();
-    await Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obSlidePostComments'),
-            widget: OBPostPage(post,
-                autofocusCommentInput: true,
-                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                onWantsToReactToPost: widget.onWantsToReactToPost)));
-    decrementPushedRoutes();
-  }
-
-  void _onWantsToSeePostComments(Post post) async {
-    incrementPushedRoutes();
-    await Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obSlideViewComments'),
-            widget: OBPostPage(post,
-                onWantsToSeeUserProfile: _onWantsToSeeUserProfile,
-                autofocusCommentInput: false,
-                onWantsToReactToPost: widget.onWantsToReactToPost)));
-    decrementPushedRoutes();
+  void _onWantsFilters() {
+    _modalService.openTimelineFilters(
+        timelineController: widget.controller, context: context);
   }
 }
 
-class OBTimelinePageController
-    extends OBBasePageStateController<OBTimelinePageState> {
+class OBTimelinePageController extends PoppablePageController {
+  OBTimelinePageState _state;
+
+  void attach({@required BuildContext context, OBTimelinePageState state}) {
+    super.attach(context: context);
+    _state = state;
+  }
+
+  Future<void> setPostFilters(
+      {List<Circle> circles, List<FollowsList> followsLists}) async {
+    return _state._timelinePostsController
+        .setFilters(circles: circles, followsLists: followsLists);
+  }
+
+  Future<void> clearPostFilters(
+      {List<Circle> circles, List<FollowsList> followsLists}) async {
+    return _state._timelinePostsController
+        .setFilters(circles: circles, followsLists: followsLists);
+  }
+
+  List<Circle> getFilteredCircles() {
+    return _state._timelinePostsController.getFilteredCircles();
+  }
+
+  List<FollowsList> getFilteredFollowsLists() {
+    return _state._timelinePostsController.getFilteredFollowsLists();
+  }
+
   void scrollToTop() {
-    state.scrollToTop();
+    _state.scrollToTop();
   }
 }
-
-typedef Future<Post> OnWantsToCreatePost();
