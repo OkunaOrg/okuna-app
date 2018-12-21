@@ -68,8 +68,5 @@
   "DRAWER.CUSTOMIZE": "Customize",
   "DRAWER.LOGOUT": "Log out",
   "SETTINGS.CHANGE_EMAIL": "Change Email",
-  "SETTINGS.CHANGE_PASSWORD": "Change Password",
-  "EMOJI_GROUP.PRIMARY": "Primary",
-  "EMOJI_GROUP.GOLD": "Gold",
-  "EMOJI_GROUP.OBJECTS": "Things"
+  "SETTINGS.CHANGE_PASSWORD": "Change Password"
 }

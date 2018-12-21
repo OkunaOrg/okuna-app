@@ -54,7 +54,7 @@ class OBPostActionReact extends StatelessWidget {
               width: 10.0,
             ),
             OBText(
-              hasReaction ? 'Reacted' : 'React',
+              hasReaction ? reaction.getEmojiKeyword() : 'React',
               style: TextStyle(
                 color: hasReaction ? Colors.white : null,
                 fontWeight: hasReaction ? FontWeight.bold : FontWeight.normal,
