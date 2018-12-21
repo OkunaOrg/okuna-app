@@ -67,11 +67,15 @@ class PostsApiService {
   }
 
   Future<HttpieStreamedResponse> createPost(
-      {String text, List<int> circleIds, File image}) {
+      {String text, List<int> circleIds, File image, File video}) {
     Map<String, dynamic> body = {};
 
     if (image != null) {
       body['image'] = image;
+    }
+
+    if (video != null) {
+      body['video'] = video;
     }
 
     if (text != null && text.length > 0) {

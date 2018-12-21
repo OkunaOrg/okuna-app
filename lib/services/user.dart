@@ -261,9 +261,17 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String text, List<int> circleIds, File image}) async {
-    HttpieStreamedResponse response = await _postsApiService.createPost(
-        text: text, circleIds: circleIds, image: image);
+      {String text, List<int> circleIds, File image, File video}) async {
+    HttpieStreamedResponse response;
+    if (image != null) {
+      response = await _postsApiService.createPost(
+          text: text, circleIds: circleIds, image: image);
+    }
+
+    if (video != null) {
+      response = await _postsApiService.createPost(
+          text: text, circleIds: circleIds, video: video);
+    }
 
     _checkResponseIsCreated(response);
 
