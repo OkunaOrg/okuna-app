@@ -21,6 +21,7 @@ class OBPostBodyImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String imageUrl = _post.getImage();
+    var _modalService = OpenbookProvider.of(context).modalService;
 
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -41,12 +42,7 @@ class OBPostBodyImage extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(OBFadeInMaterialPageRoute<bool>(
-            builder: (BuildContext context) => Material(
-              child: OBZoomablePhotoBox(imageUrl),
-            ),
-          fullscreenDialog: true
-          ));
+        _modalService.openZoomablePhotoBoxView(imageUrl: imageUrl, context: context);
       },
       child: _getPhotoBodyBox()
     );

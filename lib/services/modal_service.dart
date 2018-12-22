@@ -10,6 +10,7 @@ import 'package:Openbook/pages/home/modals/save_connections_circle.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/modals/timeline_filters.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
+import 'package:Openbook/widgets/post/widgets/post-body/modals/zoomable_photo.dart';
 import 'package:Openbook/widgets/routes/fadein_material_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -125,10 +126,11 @@ class ModalService {
   }
 
   Future<void> openZoomablePhotoBoxView(
-      {@required BuildContext context}) {
+      {@required String imageUrl,
+        @required BuildContext context}) {
     return Navigator.of(context).push(OBFadeInMaterialPageRoute<bool>(
         builder: (BuildContext context) => Material(
-          child: _getZoomablePhotoBox(),
+          child: OBZoomablePhotoBox(imageUrl),
         ),
         fullscreenDialog: true
     ));
