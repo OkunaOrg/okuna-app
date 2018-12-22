@@ -22,7 +22,7 @@ class OBPostBodyVideo extends StatelessWidget {
           )
         );
     }
-  }
 }
+
 
 
