@@ -59,9 +59,9 @@ abstract class _PlayerLifeCycleState extends State<PlayerLifeCycle> {
 
   @override
   void dispose() {
+    super.dispose();
     controller.pause();
     controller.dispose();
-    super.dispose();
   }
 
   @override

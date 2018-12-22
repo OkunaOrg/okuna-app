@@ -59,41 +59,6 @@ class Post extends UpdatableModel<Post> {
       this.publicReactions})
       : super();
 
-  static DateTime _parseCreated(String created) {
-    return DateTime.parse(created).toLocal();
-  }
-
-  static PostImage _parseImage(Map image) {
-    if (image == null) return null;
-    return PostImage.fromJSON(image);
-  }
-
-  static PostVideo _parseVideo(Map video) {
-    if (video == null) return null;
-    return PostVideo.fromJSON(video);
-  }
-
-  static User _parseCreator(Map creator) {
-    if (creator == null) return null;
-    return User.fromJson(creator);
-  }
-
-  static PostReaction _parseReaction(Map postReaction) {
-    if (postReaction == null) return null;
-    return PostReaction.fromJson(postReaction);
-  }
-
-  static PostReactionsEmojiCountList _parseReactionsEmojiCounts(
-      List reactionsEmojiCounts) {
-    if (reactionsEmojiCounts == null) return null;
-    return PostReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
-  }
-
-  static PostCommentList _parseCommentList(List commentList) {
-    if (commentList == null) return null;
-    return PostCommentList.fromJson(commentList);
-  }
-
   void updateFromJson(Map json) {
     if (json.containsKey('reactions_emoji_counts'))
       reactionsEmojiCounts =
@@ -288,6 +253,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
         image: parseImage(json['image']),
+        video: parseVideo(json['video']),
         reaction: parseReaction(json['reaction']),
         commentsList: parseCommentList(json['comments']),
         reactionsEmojiCounts:
@@ -306,6 +272,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   PostImage parseImage(Map image) {
     if (image == null) return null;
     return PostImage.fromJSON(image);
+  }
+
+  PostVideo parseVideo(Map video) {
+    if (video == null) return null;
+    return PostVideo.fromJSON(video);
   }
 
   User parseCreator(Map creator) {

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
@@ -39,9 +38,6 @@ class CreatePostModalState extends State<CreatePostModal> {
   bool _isPostTextAllowedLength;
   bool _hasImage;
   bool _hasVideo;
-  bool _hasAudience;
-  bool _hasBurner;
-
   File _postImage;
   File _postVideo;
 
@@ -49,8 +45,6 @@ class CreatePostModalState extends State<CreatePostModal> {
   VoidCallback _postVideoWidgetRemover;
 
   List<Widget> _postItemsWidgets;
-
-  bool _isCreatePostInProgress;
 
   @override
   void initState() {
@@ -61,9 +55,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     _isPostTextAllowedLength = false;
     _hasImage = false;
     _hasVideo = false;
-    _hasAudience = false;
-    _hasBurner = false;
-    _isCreatePostInProgress = false;
     _postItemsWidgets = [OBCreatePostText(controller: _textController)];
   }
 
