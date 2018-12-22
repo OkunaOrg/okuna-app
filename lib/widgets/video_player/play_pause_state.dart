@@ -23,8 +23,8 @@ class _VideoPlayPauseState extends State<VideoPlayPause> {
     };
   }
 
-  FadeAnimation imageFadeAnim =
-  FadeAnimation(child: const Icon(Icons.play_arrow, size: 100.0));
+  OBVideoPlayPauseFadeAnimation imageFadeAnim =
+  OBVideoPlayPauseFadeAnimation(child: const Icon(Icons.play_arrow, size: 100.0));
   VoidCallback listener;
 
   VideoPlayerController get controller => widget.controller;
@@ -55,11 +55,11 @@ class _VideoPlayPauseState extends State<VideoPlayPause> {
           }
           if (controller.value.isPlaying) {
             imageFadeAnim =
-                FadeAnimation(child: OBIcon(OBIcons.pause, customSize: 100.0));
+                OBVideoPlayPauseFadeAnimation(child: OBIcon(OBIcons.pause, customSize: 100.0));
             controller.pause();
           } else {
             imageFadeAnim =
-                FadeAnimation(child: OBIcon(OBIcons.play_arrow, customSize: 100.0));
+                OBVideoPlayPauseFadeAnimation(child: OBIcon(OBIcons.play_arrow, customSize: 100.0));
             controller.play();
           }
         },

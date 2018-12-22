@@ -15,17 +15,13 @@ class OBPostBodyVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Widget _getVideoPlayerWidget() {
       final String videoUrl = post.getVideo();
       return Center(
           child: NetworkPlayerLifeCycle(videoUrl,
-                (BuildContext context, VideoPlayerController controller) => AspectRatioVideo(controller),
+                (BuildContext context, VideoPlayerController controller) => OBAspectRatioVideo(controller),
           )
         );
     }
-
-    return _getVideoPlayerWidget();
-
   }
 }
 

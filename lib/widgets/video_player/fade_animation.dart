@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class FadeAnimation extends StatefulWidget {
-  FadeAnimation(
+class OBVideoPlayPauseFadeAnimation extends StatefulWidget {
+  OBVideoPlayPauseFadeAnimation(
       {this.child, this.duration = const Duration(milliseconds: 500)});
 
   final Widget child;
   final Duration duration;
 
   @override
-  _FadeAnimationState createState() => _FadeAnimationState();
+  _OBVideoPlayPauseFadeAnimationState createState() => _OBVideoPlayPauseFadeAnimationState();
 }
 
-class _FadeAnimationState extends State<FadeAnimation>
+class _OBVideoPlayPauseFadeAnimationState extends State<OBVideoPlayPauseFadeAnimation>
     with SingleTickerProviderStateMixin {
   AnimationController animationController;
 
@@ -35,7 +35,7 @@ class _FadeAnimationState extends State<FadeAnimation>
   }
 
   @override
-  void didUpdateWidget(FadeAnimation oldWidget) {
+  void didUpdateWidget(OBVideoPlayPauseFadeAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.child != widget.child) {
       animationController.forward(from: 0.0);

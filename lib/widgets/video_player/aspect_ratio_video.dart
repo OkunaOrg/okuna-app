@@ -2,16 +2,16 @@ import 'package:Openbook/widgets/video_player/play_pause_state.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class AspectRatioVideo extends StatefulWidget {
-  AspectRatioVideo(this.controller);
+class OBAspectRatioVideo extends StatefulWidget {
+  OBAspectRatioVideo(this.controller);
 
   final VideoPlayerController controller;
 
   @override
-  AspectRatioVideoState createState() => AspectRatioVideoState();
+  OBAspectRatioVideoState createState() => OBAspectRatioVideoState();
 }
 
-class AspectRatioVideoState extends State<AspectRatioVideo> {
+class OBAspectRatioVideoState extends State<OBAspectRatioVideo> {
   VideoPlayerController get controller => widget.controller;
   bool initialized = false;
 

@@ -143,10 +143,6 @@ class Post extends UpdatableModel<Post> {
     return creator.username;
   }
 
-  int getId() {
-    return id;
-  }
-
   int getCreatorId() {
     return creator.id;
   }

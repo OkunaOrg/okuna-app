@@ -31,7 +31,7 @@ class _OBPostVideoPreviewerState extends State<OBPostVideoPreviewer> {
   void initState() {
     super.initState();
     _assetPlayer =  AssetPlayerLifeCycle(widget.postVideo,
-            (BuildContext context, VideoPlayerController controller) => AspectRatioVideo(controller)
+            (BuildContext context, VideoPlayerController controller) => OBAspectRatioVideo(controller)
     );
   }
 

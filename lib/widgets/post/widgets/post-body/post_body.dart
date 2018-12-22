@@ -15,9 +15,7 @@ class OBPostBody extends StatelessWidget {
 
     if (_post.hasImage()) {
       bodyItems.add(OBPostBodyImage(_post));
-    }
-
-    if (_post.hasVideo()) {
+    } else if (_post.hasVideo()) {
       bodyItems.add(OBPostBodyVideo(post:_post));
     }
 
