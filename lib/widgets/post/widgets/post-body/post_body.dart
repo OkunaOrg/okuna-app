@@ -26,7 +26,6 @@ class OBPostBody extends StatelessWidget {
     }
 
     return Row(
-      key: new Key(_post.getId().toString()),
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(

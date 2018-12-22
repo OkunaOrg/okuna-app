@@ -32,7 +32,7 @@ class _VideoPlayPauseState extends State<VideoPlayPause> {
   @override
   void initState() {
     super.initState();
-    // controller.addListener(listener);
+    controller.addListener(listener);
     controller.setVolume(0.0);
     controller.play();
   }
