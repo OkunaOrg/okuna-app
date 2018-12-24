@@ -130,7 +130,7 @@ class ModalService {
         @required BuildContext context}) {
     return Navigator.of(context).push(OBFadeInMaterialPageRoute<bool>(
         builder: (BuildContext context) => Material(
-          child: OBZoomablePhotoBox(imageUrl),
+          child: OBZoomablePhotoModal(imageUrl),
         ),
         fullscreenDialog: true
     ));

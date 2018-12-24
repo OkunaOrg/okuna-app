@@ -9,10 +9,10 @@ import 'package:photo_view/photo_view.dart';
 import 'package:pigment/pigment.dart';
 
 
-class OBZoomablePhotoBox extends StatelessWidget {
+class OBZoomablePhotoModal extends StatelessWidget {
   final String imageUrl;
 
-  OBZoomablePhotoBox(this.imageUrl);
+  OBZoomablePhotoModal(this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
