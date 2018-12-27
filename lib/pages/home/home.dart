@@ -229,8 +229,9 @@ class OBHomePageState extends State<OBHomePage> {
     }
   }
 
-  void _onLoggedInUserChange(User newUser) {
-    if (newUser == null) {
+  void _onLoggedInUserChange(User newUser) async {
+    bool hasAuthToken = await _userService.hasAuthToken();
+    if (newUser == null && !hasAuthToken) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
       _loggedInUserUpdateSubscription =
