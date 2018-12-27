@@ -230,8 +230,7 @@ class OBHomePageState extends State<OBHomePage> {
   }
 
   void _onLoggedInUserChange(User newUser) async {
-    bool hasAuthToken = await _userService.hasAuthToken();
-    if (newUser == null && !hasAuthToken) {
+    if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
       _loggedInUserUpdateSubscription =

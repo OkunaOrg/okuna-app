@@ -126,6 +126,7 @@ class UserService {
   Future<void> loginWithAuthToken(String authToken) async {
     await _setAuthToken(authToken);
     await refreshUser();
+    User user = getLoggedInUser();
   }
 
   User getLoggedInUser() {
@@ -512,9 +513,9 @@ class UserService {
   }
 
   Future<User> _setUserWithData(String userData) async {
-    await _storeUserData(userData);
     var user = _makeLoggedInUser(userData);
     _setLoggedInUser(user);
+    await _storeUserData(userData);
     return user;
   }
 
