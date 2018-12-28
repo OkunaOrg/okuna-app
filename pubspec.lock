@@ -572,10 +572,12 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      name: video_player
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.0"
+      path: "packages/video_player"
+      ref: d589ee54ce405e38ebc42b1961e54273cd375726
+      resolved-ref: d589ee54ce405e38ebc42b1961e54273cd375726
+      url: "https://github.com/recastrodiaz/plugins.git"
+    source: git
+    version: "0.8.1"
   vm_service_client:
     dependency: transitive
     description:
