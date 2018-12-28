@@ -113,15 +113,23 @@ class OBSharePostPageState extends State<OBSharePostPage> {
   Future<void> createPost() async {
     _setCreatePostInProgress(true);
 
+    Post createdPost;
     try {
-      Post createdPost = await _userService.createPost(
-          text: widget.sharePostData.text,
-          image: widget.sharePostData.image,
-          circles: _selectedCircles);
-      _toastService.error(message: 'Post shared successfully', context: context);
+      if (widget.sharePostData.image != null) {
+        createdPost = await _userService.createPost(
+            text: widget.sharePostData.text, image: widget.sharePostData.image);
+      } else if (widget.sharePostData.video != null) {
+        createdPost = await _userService.createPost(
+            text: widget.sharePostData.text, video: widget.sharePostData.video);
+      } else if (widget.sharePostData.text != null) {
+        createdPost = await _userService.createPost(
+            text: widget.sharePostData.text);
+      }
+      // Remove modal
       Navigator.pop(context, createdPost);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
+      _setCreatePostInProgress(false);
     } catch (e) {
       _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
@@ -251,6 +259,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 class SharePostData {
   String text;
   File image;
+  File video;
 
-  SharePostData({@required this.text, @required this.image});
+  SharePostData({@required this.text, this.image, this.video});
 }

@@ -265,11 +265,9 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String text, List<Circle> circles = const [], File image}) async {
+      {String text, List<Circle> circles = const [], File image, File video}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
-        text: text,
-        circleIds: circles.map((circle) => circle.id).toList(),
-        image: image);
+          text: text, circleIds: circles.map((circle) => circle.id).toList(), video: video, image: image);
 
     _checkResponseIsCreated(response);
 

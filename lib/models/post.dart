@@ -8,6 +8,7 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
+import 'package:Openbook/models/post_video.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -27,6 +28,7 @@ class Post extends UpdatableModel<Post> {
   bool publicReactions;
   String text;
   PostImage image;
+  PostVideo video;
   PostCommentList commentsList;
 
   static final factory = PostFactory();
@@ -45,6 +47,7 @@ class Post extends UpdatableModel<Post> {
       this.text,
       this.creatorId,
       this.image,
+      this.video,
       this.creator,
       this.reactionsCount,
       this.commentsCount,
@@ -79,6 +82,8 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
+    if (json.containsKey('video')) image = factory.parseImage(json['video']);
+
     if (json.containsKey('comments'))
       commentsList = factory.parseCommentList(json['comments']);
 
@@ -100,6 +105,10 @@ class Post extends UpdatableModel<Post> {
 
   bool hasImage() {
     return image != null;
+  }
+
+  bool hasVideo() {
+    return video != null;
   }
 
   bool hasText() {
@@ -144,6 +153,10 @@ class Post extends UpdatableModel<Post> {
 
   String getImage() {
     return image.image;
+  }
+
+  String getVideo() {
+    return video.video;
   }
 
   String getText() {
@@ -236,6 +249,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
         image: parseImage(json['image']),
+        video: parseVideo(json['video']),
         reaction: parseReaction(json['reaction']),
         commentsList: parseCommentList(json['comments']),
         reactionsEmojiCounts:
@@ -254,6 +268,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   PostImage parseImage(Map image) {
     if (image == null) return null;
     return PostImage.fromJSON(image);
+  }
+
+  PostVideo parseVideo(Map video) {
+    if (video == null) return null;
+    return PostVideo.fromJSON(video);
   }
 
   User parseCreator(Map creator) {

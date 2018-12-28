@@ -1,27 +1,52 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/widgets/post/widgets/post-body/modals/zoomable_photo.dart';
+import 'package:Openbook/widgets/routes/fadein_material_route.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:pigment/pigment.dart';
+
 
 class OBPostBodyImage extends StatelessWidget {
   final Post _post;
 
   OBPostBodyImage(this._post);
 
+
   @override
   Widget build(BuildContext context) {
     String imageUrl = _post.getImage();
+    var _modalService = OpenbookProvider.of(context).modalService;
 
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: screenWidth),
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        placeholder: Center(
-          child: CircularProgressIndicator(),
+    Widget _getPhotoBodyBox() {
+      return ConstrainedBox(
+        constraints: BoxConstraints(minHeight: screenWidth),
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: Center(
+            child: CircularProgressIndicator(),
+          ),
+          errorWidget: Container(
+            child: Center(child: Text('Could not load image.')),
+          ),
         ),
-        errorWidget: Text('Could not load image.'),
-      ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: () {
+        _modalService.openZoomablePhotoBoxView(imageUrl: imageUrl, context: context);
+      },
+      child: _getPhotoBodyBox()
     );
   }
 }
+
+
