@@ -1,12 +1,8 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:pigment/pigment.dart';
 
 class OBZoomablePhotoModal extends StatefulWidget {
   final String imageUrl;
@@ -30,10 +26,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
 
   @override
   Widget build(BuildContext context) {
-    var themeService = OpenbookProvider.of(context).themeService;
-
     return OBCupertinoPageScaffold(
-        child: OBPrimaryColorContainer(
       child: Stack(
         children: <Widget>[
           GestureDetector(
@@ -45,16 +38,13 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
                 imageProvider: CachedNetworkImageProvider(widget.imageUrl),
                 maxScale: PhotoViewComputedScale.covered,
                 minScale: PhotoViewComputedScale.contained,
-                backgroundDecoration: BoxDecoration(
-                    color: Pigment.fromString(
-                        themeService.getActiveTheme().primaryColor)),
               ),
             ),
           ),
           _buildCloseButton()
         ],
-      ),
-    ));
+      )
+    );
   }
 
   Widget _buildCloseButton() {
@@ -64,25 +54,30 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
       right: 0,
       child: AnimatedOpacity(
         opacity: (isCloseButtonVisible ? 1 : 0),
-        duration: Duration(milliseconds: 20),
+        duration: Duration(milliseconds: 200),
         child: SafeArea(
             child: Column(
-              children: <Widget>[
-                SizedBox(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 50, minHeight: 50),
-                      child: OBButton(
-                        child: OBIcon(
-                          OBIcons.close,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        type: OBButtonType.highlight,
-                      ),
-                    ))
-              ],
-            )),
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                if (!isCloseButtonVisible) return;
+                Navigator.pop(context);
+              },
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(30, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(50)
+                ),
+                child: OBIcon(
+                  OBIcons.close,
+                  size: OBIconSize.large,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        )),
       ),
     );
   }
