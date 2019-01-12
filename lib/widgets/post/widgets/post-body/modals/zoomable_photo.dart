@@ -1,7 +1,7 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -36,16 +36,19 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
         child: OBPrimaryColorContainer(
       child: Stack(
         children: <Widget>[
-          Center(
-            child: PhotoView(
-              enableRotation: false,
-              scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
-              imageProvider: CachedNetworkImageProvider(widget.imageUrl),
-              maxScale: PhotoViewComputedScale.contained * 3,
-              minScale: PhotoViewComputedScale.contained * 0.8,
-              backgroundDecoration: BoxDecoration(
-                  color: Pigment.fromString(
-                      themeService.getActiveTheme().primaryColor)),
+          GestureDetector(
+            onTap: toggleIsCloseButtonVisible,
+            child: Center(
+              child: PhotoView(
+                enableRotation: false,
+                scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
+                imageProvider: CachedNetworkImageProvider(widget.imageUrl),
+                maxScale: PhotoViewComputedScale.covered,
+                minScale: PhotoViewComputedScale.contained,
+                backgroundDecoration: BoxDecoration(
+                    color: Pigment.fromString(
+                        themeService.getActiveTheme().primaryColor)),
+              ),
             ),
           ),
           _buildCloseButton()
@@ -55,14 +58,32 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
   }
 
   Widget _buildCloseButton() {
-    if (!this.isCloseButtonVisible) return SizedBox();
     return Positioned(
-      top: 0,
+      bottom: 50,
       left: 0,
-      child: SafeArea(
-          child: IconButton(icon: OBIcon(OBIcons.close), onPressed: () {
-            Navigator.pop(context);
-          })),
+      right: 0,
+      child: AnimatedOpacity(
+        opacity: (isCloseButtonVisible ? 1 : 0),
+        duration: Duration(milliseconds: 20),
+        child: SafeArea(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 50, minHeight: 50),
+                      child: OBButton(
+                        child: OBIcon(
+                          OBIcons.close,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        type: OBButtonType.highlight,
+                      ),
+                    ))
+              ],
+            )),
+      ),
     );
   }
 
@@ -70,6 +91,9 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
     switch (state) {
       case PhotoViewScaleState.initial:
         setIsCloseButtonVisible(true);
+        break;
+      case PhotoViewScaleState.zooming:
+        setIsCloseButtonVisible(false);
         break;
       default:
         setIsCloseButtonVisible(false);
@@ -80,5 +104,9 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
     setState(() {
       this.isCloseButtonVisible = isCloseButtonVisible;
     });
+  }
+
+  void toggleIsCloseButtonVisible() {
+    setIsCloseButtonVisible(!isCloseButtonVisible);
   }
 }
