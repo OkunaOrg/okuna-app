@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pigment/pigment.dart';
 
-
 class OBZoomablePhotoModal extends StatelessWidget {
   final String imageUrl;
 
@@ -26,19 +25,18 @@ class OBZoomablePhotoModal extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            title: ''
-        ),
+            title: ''),
         child: OBPrimaryColorContainer(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+          child: Center(
             child: PhotoView(
               imageProvider: CachedNetworkImageProvider(imageUrl),
               maxScale: PhotoViewComputedScale.contained * 3,
               minScale: PhotoViewComputedScale.contained * 0.8,
-              backgroundDecoration: BoxDecoration(color: Pigment.fromString(themeService.getActiveTheme().primaryColor)),
+              backgroundDecoration: BoxDecoration(
+                  color: Pigment.fromString(
+                      themeService.getActiveTheme().primaryColor)),
             ),
           ),
         ));
   }
 }
-
