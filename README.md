@@ -188,7 +188,7 @@ Help us keep Openbook going! Please look into our open issues. All contribution,
 
 ### Stuck in one of these steps?
 
-[Join our Slack channel](Join our Slack channel), we're happy to help you troubleshoot your issue.
+[Join our Slack channel](https://join.slack.com/t/openbookorg/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY), we're happy to help you troubleshoot your issue.
 
 <br>
 
