@@ -53,7 +53,7 @@ class OBProfileNoPosts extends StatelessWidget {
                   size: OBIconSize.small,
                 ),
                 type: OBButtonType.highlight,
-                child: Text('Refresh profile'),
+                child: Text('Refresh'),
                 onPressed: onWantsToRefreshProfile,
               )
             ],
