@@ -133,6 +133,7 @@ class OBIcons {
   static const customize = OBIconData(nativeIcon: Icons.format_paint);
   static const logout = OBIconData(nativeIcon: Icons.exit_to_app);
   static const help = OBIconData(nativeIcon: Icons.help);
+  static const refresh = OBIconData(nativeIcon: Icons.refresh);
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
   static const moreVertical = OBIconData(nativeIcon: Icons.more_vert);
@@ -176,6 +177,7 @@ class OBIcons {
   static const burner = OBIconData(filename: 'burner-icon.png');
   static const comments = OBIconData(filename: 'comments-icon.png');
   static const like = OBIconData(filename: 'like-icon.png');
+  static const thinking = OBIconData(filename: 'thinking.gif');
   static const finish = OBIconData(filename: 'finish-icon.png');
   static const loadingMorePosts =
       OBIconData(filename: 'load-more-posts-icon.gif');
