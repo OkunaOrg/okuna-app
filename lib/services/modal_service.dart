@@ -126,13 +126,12 @@ class ModalService {
   }
 
   Future<void> openZoomablePhotoBoxView(
-      {@required String imageUrl,
-        @required BuildContext context}) {
-    return Navigator.of(context).push(OBFadeInMaterialPageRoute<bool>(
-        builder: (BuildContext context) => Material(
-          child: OBZoomablePhotoModal(imageUrl),
-        ),
-        fullscreenDialog: true
-    ));
+      {@required String imageUrl, @required BuildContext context}) {
+    return Navigator.of(context, rootNavigator: true)
+        .push(OBFadeInMaterialPageRoute<bool>(
+            builder: (BuildContext context) => Material(
+                  child: OBZoomablePhotoModal(imageUrl),
+                ),
+            fullscreenDialog: true));
   }
 }
