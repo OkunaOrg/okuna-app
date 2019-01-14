@@ -3,13 +3,18 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_no_posts.dart';
 import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/alert.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore_widget.dart';
@@ -18,7 +23,8 @@ class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
   final User user;
 
-  OBProfilePage(this.user, {
+  OBProfilePage(
+    this.user, {
     this.controller,
   });
 
@@ -82,8 +88,17 @@ class OBProfilePageState extends State<OBProfilePage> {
                                 return Column(
                                   children: <Widget>[
                                     OBProfileCover(_user),
-                                    OBProfileCard(_user,),
-                                    SizedBox(height: 20,)
+                                    OBProfileCard(
+                                      _user,
+                                    ),
+                                    _posts.length == 0
+                                        ? OBProfileNoPosts(
+                                            _user,
+                                            onWantsToRefreshProfile: _refresh,
+                                          )
+                                        : SizedBox(
+                                            height: 20,
+                                          )
                                   ],
                                 );
                               }
@@ -92,8 +107,8 @@ class OBProfilePageState extends State<OBProfilePage> {
 
                               var post = _posts[postIndex];
 
-                              return OBPost(
-                                  post, onPostDeleted: _onPostDeleted,
+                              return OBPost(post,
+                                  onPostDeleted: _onPostDeleted,
                                   key: Key(post.id.toString()));
                             }),
                         onLoadMore: _loadMorePosts),
@@ -143,7 +158,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     var lastPostId = lastPost.id;
     try {
       var morePosts = (await _userService.getTimelinePosts(
-          maxId: lastPostId, username: _user.username))
+              maxId: lastPostId, username: _user.username))
           .posts;
 
       if (morePosts.length == 0) {

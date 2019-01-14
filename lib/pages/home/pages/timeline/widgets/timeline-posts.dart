@@ -117,7 +117,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OBIcon(OBIcons.sad, customSize: 30.0),
+              Image.asset(
+                'assets/images/stickers/owl-instructor.png',
+                height: 100,
+              ),
               SizedBox(
                 height: 20.0,
               ),
