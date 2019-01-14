@@ -171,7 +171,6 @@ class OBIcons {
   static const info = OBIconData(filename: 'info-icon.png');
   static const profile = OBIconData(filename: 'profile-icon.png');
   static const chat = OBIconData(filename: 'chat-icon.png');
-  static const media = OBIconData(filename: 'media-icon.png');
   static const photo = OBIconData(filename: 'photo-icon.png');
   static const video = OBIconData(filename: 'video-icon.png');
   static const gif = OBIconData(filename: 'gif-icon.png');
