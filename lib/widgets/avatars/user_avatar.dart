@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -50,11 +51,6 @@ class OBUserAvatar extends StatelessWidget {
 
     Widget finalAvatarImage;
 
-    var placeholderImage = SizedBox(
-      height: avatarSize,
-      width: avatarSize,
-    );
-
     if (avatarFile != null) {
       finalAvatarImage = FadeInImage(
         fit: BoxFit.cover,
@@ -68,12 +64,16 @@ class OBUserAvatar extends StatelessWidget {
         height: avatarSize,
         width: avatarSize,
         imageUrl: avatarUrl,
-        placeholder: placeholderImage,
-        errorWidget: placeholderImage,
+        placeholder: _getAvatarPlaceholder(avatarSize),
+        errorWidget: SizedBox(
+          child: Center(
+            child: OBIcon(OBIcons.error),
+          ),
+        ),
         fit: BoxFit.cover,
       );
     } else {
-      finalAvatarImage = placeholderImage;
+      finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }
 
     double avatarBorderRadius = 10.0;
@@ -88,6 +88,14 @@ class OBUserAvatar extends StatelessWidget {
     return GestureDetector(
       child: avatar,
       onTap: onPressed,
+    );
+  }
+
+  Widget _getAvatarPlaceholder(double avatarSize){
+    return Image.asset(
+      DEFAULT_AVATAR_ASSET,
+      height: avatarSize,
+      width: avatarSize,
     );
   }
 }
