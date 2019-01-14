@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -8,7 +9,7 @@ class OBCover extends StatelessWidget {
   final String coverUrl;
   final File coverFile;
   static const double HEIGHT = 230.0;
-  static const PLACEHOLDER_IMAGE = 'assets/images/loading.gif';
+  static const COVER_PLACEHOLDER = 'assets/images/cover.jpg';
 
   OBCover({this.coverUrl, this.coverFile});
 
@@ -16,13 +17,9 @@ class OBCover extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget image;
 
-    var errorImage = SizedBox(
-      height: HEIGHT,
-    );
-
     if (coverFile != null) {
       image = FadeInImage(
-        placeholder: AssetImage(PLACEHOLDER_IMAGE),
+        placeholder: AssetImage(COVER_PLACEHOLDER),
         image: FileImage(coverFile),
         fit: BoxFit.cover,
         height: double.infinity,
@@ -30,7 +27,7 @@ class OBCover extends StatelessWidget {
         alignment: Alignment.center,
       );
     } else if (coverUrl == null) {
-      image = errorImage;
+      image = _getCoverPlaceholder(HEIGHT);
     } else {
       image = CachedNetworkImage(
         fit: BoxFit.cover,
@@ -38,25 +35,33 @@ class OBCover extends StatelessWidget {
         placeholder: Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: errorImage,
+        errorWidget: SizedBox(
+          child: Center(
+            child: OBText('Could not load cover'),
+          ),
+        ),
         height: double.infinity,
         width: double.infinity,
         alignment: Alignment.center,
       );
     }
 
-    return Container(
+    return SizedBox(
       height: HEIGHT,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Expanded(
-            child: Container(
+            child: SizedBox(
               child: image,
             ),
           )
         ],
       ),
     );
+  }
+
+  Widget _getCoverPlaceholder(double coverHeight) {
+    return Image.asset(COVER_PLACEHOLDER, height: coverHeight, fit: BoxFit.cover,);
   }
 }
