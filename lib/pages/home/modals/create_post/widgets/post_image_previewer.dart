@@ -18,7 +18,7 @@ class OBPostImagePreviewer extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.black12,
           borderRadius: BorderRadius.circular(avatarBorderRadius)),
-      child: Container(
+      child: SizedBox(
         child: ClipRRect(
             borderRadius: BorderRadius.circular(avatarBorderRadius),
             child: Container(
