@@ -83,6 +83,7 @@ flutter:
   - assets/images/pixel-universe.jpg
   - assets/images/confetti-background.gif
   - assets/images/avatar.jpg
+  - assets/images/cover.jpg
   - assets/lang/es.json
   - assets/lang/en.json
   - assets/images/icons/gif-icon.png
