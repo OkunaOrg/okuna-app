@@ -44,7 +44,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
             Stack(
               overflow: Overflow.visible,
               children: <Widget>[
-                OBEmoji(followsList.emoji),
+                OBEmoji(followsList.emoji, size: OBEmojiSize.large,),
                 Positioned(
                   child: OBCheckbox(
                     value: isSelected,

@@ -1,6 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/widgets/follows_list_name.dart';
-import 'package:Openbook/widgets/follows_list_icon.dart';
+import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
@@ -28,10 +28,7 @@ class OBFollowsListHeader extends StatelessWidget {
                     Flexible(
                       child: OBFollowsListName(followsList),
                     ),
-                    OBFollowsListEmoji(
-                      followsListEmojiUrl: followsList.getEmojiImage(),
-                      size: OBFollowsListEmojiSize.large,
-                    ),
+                    OBEmoji(followsList.emoji, size: OBEmojiSize.large,),
                   ],
                 ),
               ),

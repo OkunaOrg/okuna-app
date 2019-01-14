@@ -1,11 +1,8 @@
 import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/danger_button.dart';
-import 'package:Openbook/widgets/follows_list_icon.dart';
+import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
@@ -52,10 +49,7 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
             navigationService.navigateToFollowsList(
                 followsList: widget.followsList, context: context);
           },
-          leading: OBFollowsListEmoji(
-            size: OBFollowsListEmojiSize.medium,
-            followsListEmojiUrl: widget.followsList.getEmojiImage(),
-          ),
+          leading: OBEmoji(widget.followsList.emoji),
           title: OBText(
             widget.followsList.name,
             style: TextStyle(fontWeight: FontWeight.bold),

@@ -1,5 +1,5 @@
 import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/widgets/follows_list_icon.dart';
+import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class OBEmojiField extends StatelessWidget {
               subtitle: errorText != null
                   ? Text(errorText, style: TextStyle(color: Colors.red))
                   : null,
-              trailing: OBFollowsListEmoji(followsListEmojiUrl: emoji?.image),
+              trailing: emoji == null ? OBText('No emoji selected') : OBEmoji(emoji),
               onTap: () {
                 if (onEmojiFieldTapped != null) onEmojiFieldTapped(emoji);
               }),
