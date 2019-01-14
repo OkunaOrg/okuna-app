@@ -169,9 +169,11 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildPostActions() {
     List<Widget> postActions = [];
 
-    if (!_hasImage) {
+    if (!_hasImage && !_hasVideo) {
       postActions.addAll(_getImagePostActions());
     }
+
+    if (postActions.isEmpty) return SizedBox();
 
     return Container(
       height: 51.0,
