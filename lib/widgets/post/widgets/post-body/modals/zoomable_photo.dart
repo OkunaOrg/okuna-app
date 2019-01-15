@@ -3,6 +3,7 @@ import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:pigment/pigment.dart';
 
 class OBZoomablePhotoModal extends StatefulWidget {
   final String imageUrl;
@@ -27,24 +28,23 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
   @override
   Widget build(BuildContext context) {
     return OBCupertinoPageScaffold(
-      child: Stack(
-        children: <Widget>[
-          GestureDetector(
-            onTap: toggleIsCloseButtonVisible,
-            child: Center(
-              child: PhotoView(
-                enableRotation: false,
-                scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
-                imageProvider: CachedNetworkImageProvider(widget.imageUrl),
-                maxScale: PhotoViewComputedScale.covered,
-                minScale: PhotoViewComputedScale.contained,
-              ),
+        child: Stack(
+      children: <Widget>[
+        GestureDetector(
+          onTap: toggleIsCloseButtonVisible,
+          child: Center(
+            child: PhotoView(
+              enableRotation: false,
+              scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
+              imageProvider: CachedNetworkImageProvider(widget.imageUrl),
+              maxScale: PhotoViewComputedScale.covered,
+              minScale: PhotoViewComputedScale.contained,
             ),
           ),
-          _buildCloseButton()
-        ],
-      )
-    );
+        ),
+        _buildCloseButton()
+      ],
+    ));
   }
 
   Widget _buildCloseButton() {
@@ -66,9 +66,8 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(30, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(50)
-                ),
+                    color: Pigment.fromString('#1d1d1d'),
+                    borderRadius: BorderRadius.circular(50)),
                 child: OBIcon(
                   OBIcons.close,
                   size: OBIconSize.large,

@@ -87,7 +87,6 @@ flutter:
     - assets/lang/es.json
     - assets/lang/en.json
     - assets/images/icons/gif-icon.png
-    - assets/images/icons/media-icon.png
     - assets/images/icons/profile-icon.png
     - assets/images/icons/connections-icon.png
     - assets/images/icons/burner-icon.png
@@ -103,7 +102,8 @@ flutter:
     - assets/images/icons/communities-icon.png
     - assets/images/icons/create-post-icon.png
     - assets/images/icons/chat-icon.png
-    - assets/images/icons/camera-icon.png
+    - assets/images/icons/photo-icon.png
+    - assets/images/icons/video-icon.png
     - assets/images/icons/warning-icon.png
     - assets/images/icons/success-icon.png
     - assets/images/icons/error-icon.png
