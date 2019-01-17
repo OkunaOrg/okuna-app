@@ -21,7 +21,7 @@ class OBPostBodyImage extends StatelessWidget {
               imageUrl: imageUrl, context: context);
         },
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: screenWidth),
+          constraints: BoxConstraints(minHeight: screenWidth / 3),
           child: CachedNetworkImage(
             imageUrl: imageUrl,
             placeholder: Center(
