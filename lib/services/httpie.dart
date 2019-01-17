@@ -5,6 +5,7 @@ import 'package:Openbook/services/localization.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+export 'package:http/http.dart';
 
 class HttpieService {
   LocalizationService _localizationService;

@@ -32,6 +32,7 @@ import 'package:Openbook/services/storage.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
+export 'package:Openbook/services/httpie.dart';
 
 class UserService {
   OBStorage _userStorage;
@@ -266,9 +267,15 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String text, List<Circle> circles = const [], File image, File video}) async {
+      {String text,
+      List<Circle> circles = const [],
+      File image,
+      File video}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
-          text: text, circleIds: circles.map((circle) => circle.id).toList(), video: video, image: image);
+        text: text,
+        circleIds: circles.map((circle) => circle.id).toList(),
+        video: video,
+        image: image);
 
     _checkResponseIsCreated(response);
 
@@ -285,9 +292,11 @@ class UserService {
   }
 
   Future<PostReaction> reactToPost(
-      {@required Post post, @required Emoji emoji, @required EmojiGroup emojiGroup}) async {
-    HttpieResponse response =
-        await _postsApiService.reactToPost(postId: post.id, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
+      {@required Post post,
+      @required Emoji emoji,
+      @required EmojiGroup emojiGroup}) async {
+    HttpieResponse response = await _postsApiService.reactToPost(
+        postId: post.id, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
