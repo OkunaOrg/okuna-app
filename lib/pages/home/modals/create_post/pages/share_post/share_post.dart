@@ -117,13 +117,17 @@ class OBSharePostPageState extends State<OBSharePostPage> {
     try {
       if (widget.sharePostData.image != null) {
         createdPost = await _userService.createPost(
-            text: widget.sharePostData.text, image: widget.sharePostData.image);
+            text: widget.sharePostData.text,
+            image: widget.sharePostData.image,
+            circles: _selectedCircles);
       } else if (widget.sharePostData.video != null) {
         createdPost = await _userService.createPost(
-            text: widget.sharePostData.text, video: widget.sharePostData.video);
+            text: widget.sharePostData.text,
+            video: widget.sharePostData.video,
+            circles: _selectedCircles);
       } else if (widget.sharePostData.text != null) {
         createdPost = await _userService.createPost(
-            text: widget.sharePostData.text);
+            text: widget.sharePostData.text, circles: _selectedCircles);
       }
       // Remove modal
       Navigator.pop(context, createdPost);
