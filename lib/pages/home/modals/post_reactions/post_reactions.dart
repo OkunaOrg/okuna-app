@@ -1,7 +1,10 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/widgets/post_reaction_list.dart';
+import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
@@ -40,6 +43,8 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
     with TickerProviderStateMixin {
   UserService _userService;
   ToastService _toastService;
+  ThemeService _themeService;
+  ThemeValueParserService _themeValueParserService;
 
   bool _requestInProgress;
   bool _needsBootstrap;
@@ -61,9 +66,17 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _themeService = openbookProvider.themeService;
+      _themeValueParserService = openbookProvider.themeValueParserService;
       _bootstrap();
       _needsBootstrap = false;
     }
+
+    OBTheme theme = _themeService.getActiveTheme();
+
+    Color tabIndicatorColor = _themeValueParserService
+        .parseGradient(theme.primaryAccentColor)
+        .colors[1];
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -74,6 +87,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
                 controller: _tabController,
                 tabs: _buildPostReactionsIcons(),
                 isScrollable: true,
+                indicatorColor: tabIndicatorColor,
               ),
               Expanded(
                 child: TabBarView(
@@ -97,7 +111,10 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
 
   List<Widget> _buildPostReactionsIcons() {
     return widget.reactionsEmojiCounts.map((reactionsEmojiCount) {
-      return Tab(icon: OBEmoji(reactionsEmojiCount.emoji));
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 5),
+        child: Tab(icon: OBEmoji(reactionsEmojiCount.emoji)),
+      );
     }).toList();
   }
 

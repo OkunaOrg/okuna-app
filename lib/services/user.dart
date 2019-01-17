@@ -310,8 +310,11 @@ class UserService {
 
   Future<PostReactionList> getReactionsForPost(Post post,
       {int count, int maxId, Emoji emoji}) async {
-    HttpieResponse response = await _postsApiService
-        .getReactionsForPostWithId(post.id, count: count, maxId: maxId);
+    HttpieResponse response = await _postsApiService.getReactionsForPostWithId(
+        post.id,
+        count: count,
+        maxId: maxId,
+        emojiId: emoji.id);
 
     _checkResponseIsOk(response);
 
