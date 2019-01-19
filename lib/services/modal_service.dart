@@ -137,21 +137,4 @@ class ModalService {
                 ),
             fullscreenDialog: true));
   }
-
-  Future<void> openPostReactions(
-      {@required Post post,
-      @required List<PostReactionsEmojiCount> reactionsEmojiCounts,
-      @required BuildContext context,
-      Emoji reactionEmoji}) {
-    return Navigator.of(context, rootNavigator: true)
-        .push(OBFadeInMaterialPageRoute<bool>(
-            builder: (BuildContext context) => Material(
-                  child: OBPostReactionsModal(
-                    post: post,
-                    reactionsEmojiCounts: reactionsEmojiCounts,
-                    reactionEmoji: reactionEmoji,
-                  ),
-                ),
-            fullscreenDialog: true));
-  }
 }

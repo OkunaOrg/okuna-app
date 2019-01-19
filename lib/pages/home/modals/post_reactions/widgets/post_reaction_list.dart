@@ -2,6 +2,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
@@ -28,6 +29,7 @@ class OBPostReactionList extends StatefulWidget {
 class OBPostReactionListState extends State<OBPostReactionList> {
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
 
   List<PostReaction> _postReactions;
 
@@ -52,6 +54,7 @@ class OBPostReactionListState extends State<OBPostReactionList> {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _navigationService = openbookProvider.navigationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -74,6 +77,7 @@ class OBPostReactionListState extends State<OBPostReactionList> {
                     key: Key(
                       postReaction.id.toString(),
                     ),
+                    onPostReactionTilePressed: _onPostReactionTilePressed,
                   );
                 }),
             onLoadMore: _loadMorePostReactions));
@@ -114,6 +118,11 @@ class OBPostReactionListState extends State<OBPostReactionList> {
     }
 
     return false;
+  }
+
+  void _onPostReactionTilePressed(PostReaction postReaction) {
+    _navigationService.navigateToUserProfile(
+        user: postReaction.reactor, context: context);
   }
 
   void _setPostReactions(List<PostReaction> reactions) {
