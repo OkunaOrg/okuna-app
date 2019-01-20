@@ -8,11 +8,22 @@ import 'package:Openbook/widgets/post/widgets/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:flutter/material.dart';
 
-class OBPost extends StatelessWidget {
-  final Post _post;
+class OBPost extends StatefulWidget {
+  final Post post;
   final OnPostDeleted onPostDeleted;
 
-  const OBPost(this._post, {Key key, @required this.onPostDeleted}) : super(key: key);
+  const OBPost(this.post, {Key key, @required this.onPostDeleted})
+      : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return OBPostState();
+  }
+}
+
+class OBPostState extends State<OBPost> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +31,17 @@ class OBPost extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         OBPostHeader(
-          _post,
-          onPostDeleted: onPostDeleted,
+          widget.post,
+          onPostDeleted: widget.onPostDeleted,
         ),
-        OBPostBody(_post),
-        OBPostReactions(_post),
-        OBPostCircles(_post),
+        OBPostBody(widget.post),
+        OBPostReactions(widget.post),
+        OBPostCircles(widget.post),
         OBPostComments(
-          _post,
+          widget.post,
         ),
         OBPostActions(
-          _post,
+          widget.post,
         ),
         SizedBox(
           height: 16,
