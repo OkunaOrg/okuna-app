@@ -11,7 +11,7 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore_widget.dart';
+import 'package:loadmore/loadmore.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBPostPage extends StatefulWidget {

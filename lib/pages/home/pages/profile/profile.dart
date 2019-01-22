@@ -15,7 +15,7 @@ import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore_widget.dart';
+import 'package:loadmore/loadmore.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
