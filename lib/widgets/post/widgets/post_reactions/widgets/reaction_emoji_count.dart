@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 class OBEmojiReactionCount extends StatelessWidget {
   PostReactionsEmojiCount postReactionsEmojiCount;
   bool reacted;
-  OnPressed onPressed;
+  ValueChanged<PostReactionsEmojiCount> onPressed;
+  ValueChanged<PostReactionsEmojiCount> onLongPressed;
 
   OBEmojiReactionCount(this.postReactionsEmojiCount,
-      {this.onPressed, this.reacted});
+      {this.onPressed, this.reacted, this.onLongPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,12 @@ class OBEmojiReactionCount extends StatelessWidget {
       constraints: BoxConstraints(
         maxWidth: 100,
       ),
-      child: FlatButton(
-        onPressed: () {
+      child: GestureDetector(
+        onTap: () {
           if (onPressed != null) onPressed(postReactionsEmojiCount);
+        },
+        onLongPress: () {
+          if (onLongPressed != null) onLongPressed(postReactionsEmojiCount);
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -48,5 +52,3 @@ class OBEmojiReactionCount extends StatelessWidget {
     );
   }
 }
-
-typedef void OnPressed(PostReactionsEmojiCount postReactionsEmojiCount);

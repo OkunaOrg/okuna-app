@@ -15,7 +15,9 @@ import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/theming/primary_accent_text.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -87,7 +89,7 @@ class CreatePostModalState extends State<CreatePostModal> {
             _hasImage ||
             _hasVideo;
 
-    Widget nextButtonText = Text('Next');
+    Widget nextButtonText = OBText('Next');
     Widget nextButton;
 
     if (nextButtonIsEnabled) {
@@ -326,3 +328,4 @@ class CreatePostModalState extends State<CreatePostModal> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
+

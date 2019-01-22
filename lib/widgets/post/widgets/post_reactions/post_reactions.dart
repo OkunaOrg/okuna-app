@@ -4,6 +4,7 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/widgets/reaction_emoji_count.dart';
@@ -23,6 +24,7 @@ class OBPostReactions extends StatefulWidget {
 class OBPostReactionsState extends State<OBPostReactions> {
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
 
   bool _requestInProgress;
 
@@ -37,6 +39,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _navigationService = openbookProvider.navigationService;
 
     return StreamBuilder(
         stream: widget.post.updateSubject,
@@ -71,6 +74,13 @@ class OBPostReactionsState extends State<OBPostReactions> {
                             _onEmojiReactionCountPressed(
                                 pressedEmojiCount, emojiCounts);
                           },
+                    onLongPressed: (pressedEmojiCount) {
+                      _navigationService.navigateToPostReactions(
+                          post: widget.post,
+                          reactionsEmojiCounts: emojiCounts,
+                          context: context,
+                          reactionEmoji: pressedEmojiCount.emoji);
+                    },
                   );
                 }).toList()),
           );

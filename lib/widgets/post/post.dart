@@ -8,11 +8,30 @@ import 'package:Openbook/widgets/post/widgets/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:flutter/material.dart';
 
-class OBPost extends StatelessWidget {
-  final Post _post;
+class OBPost extends StatefulWidget {
+  final Post post;
   final OnPostDeleted onPostDeleted;
 
-  const OBPost(this._post, {Key key, @required this.onPostDeleted}) : super(key: key);
+  const OBPost(this.post, {Key key, @required this.onPostDeleted})
+      : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return OBPostState();
+  }
+}
+
+class OBPostState extends State<OBPost> with AutomaticKeepAliveClientMixin {
+  // TODO[HIGH] How should we even use this!? If we just set it always to keep alive
+  // does that mean this will cause a memory leak? What the heck are we supposed
+  // to do instead? I assumed the Key was meant to tell Flutter the object was
+  // the same and not rebuild but wtf!
+  // https://github.com/flutter/flutter/issues/20112
+  // I've also asked on an issue here
+  // https://github.com/flutter/flutter/issues/20112#issuecomment-456228550
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +39,17 @@ class OBPost extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         OBPostHeader(
-          _post,
-          onPostDeleted: onPostDeleted,
+          widget.post,
+          onPostDeleted: widget.onPostDeleted,
         ),
-        OBPostBody(_post),
-        OBPostReactions(_post),
-        OBPostCircles(_post),
+        OBPostBody(widget.post),
+        OBPostReactions(widget.post),
+        OBPostCircles(widget.post),
         OBPostComments(
-          _post,
+          widget.post,
         ),
         OBPostActions(
-          _post,
+          widget.post,
         ),
         SizedBox(
           height: 16,

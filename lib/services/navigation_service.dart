@@ -1,8 +1,11 @@
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
+import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -95,5 +98,21 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obSeeFollowsList'),
             widget: OBFollowsListPage(followsList)));
+  }
+
+  Future<void> navigateToPostReactions(
+      {@required Post post,
+      @required List<PostReactionsEmojiCount> reactionsEmojiCounts,
+      @required BuildContext context,
+      Emoji reactionEmoji}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obPostReactionsModal'),
+            widget: OBPostReactionsModal(
+              post: post,
+              reactionsEmojiCounts: reactionsEmojiCounts,
+              reactionEmoji: reactionEmoji,
+            )));
   }
 }
