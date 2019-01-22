@@ -13,6 +13,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
@@ -39,6 +40,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   StreamSubscription _loggedInUserChangeSubscription;
   ScrollController _postsScrollController;
 
+  SimpleCache<int, Widget> _postsWidgetsCache;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -52,6 +55,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void initState() {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
+    _postsWidgetsCache = SimpleCache(storage: SimpleStorage(size: 300));
     _posts = [];
     _filteredCircles = [];
     _filteredFollowsLists = [];
@@ -69,17 +73,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
-    _toastService = provider.toastService;
-
     if (_needsBootstrap) {
+      var provider = OpenbookProvider.of(context);
+      _userService = provider.userService;
+      _toastService = provider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
-
-    if (_refreshInProgress && _posts.isEmpty) return _buildRefreshingPosts();
-
     return _posts.isEmpty ? _buildNoTimelinePosts() : _buildTimelinePosts();
   }
 
@@ -98,19 +98,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
-                  return OBPost(
-                    post,
-                    onPostDeleted: _onPostDeleted,
-                    key: Key(
-                      post.id.toString(),
-                    ),
-                  );
+                  return _getWidgetForPost(post);
                 }),
             onLoadMore: _loadMorePosts));
   }
 
   Widget _buildNoTimelinePosts() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),
@@ -159,7 +153,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Widget _buildRefreshingPosts() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: OBProgressIndicator(),
       ),
@@ -184,13 +178,14 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       {List<Circle> circles, List<FollowsList> followsLists}) async {
     _filteredCircles = circles;
     _filteredFollowsLists = followsLists;
-    return _refreshPosts(areFirstPosts: false);
+    return _refreshPosts();
   }
 
   Future<void> clearFilters() {
     _filteredCircles = [];
     _filteredFollowsLists = [];
-    return _refreshPosts(areFirstPosts: false);
+    _postsWidgetsCache.clear();
+    return _refreshPosts();
   }
 
   List<Circle> getFilteredCircles() {
@@ -207,7 +202,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Future<void> _onRefresh() {
-    return _refreshPosts(areFirstPosts: false);
+    return _refreshPosts();
   }
 
   void _onLoggedInUserChange(User newUser) async {
@@ -216,16 +211,14 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _loggedInUserChangeSubscription.cancel();
   }
 
-  Future<void> _refreshPosts({areFirstPosts = true}) async {
+  Future<void> _refreshPosts() async {
     _setRefreshInProgress(true);
     try {
       Post.clearCache();
       User.clearNavigationCache();
 
       _posts = (await _userService.getTimelinePosts(
-              areFirstPosts: areFirstPosts,
-              circles: _filteredCircles,
-              followsLists: _filteredFollowsLists))
+              circles: _filteredCircles, followsLists: _filteredFollowsLists))
           .posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
@@ -265,6 +258,28 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
 
     return false;
+  }
+
+  Widget _getWidgetForPost(Post post) {
+    int cacheKey = post.id;
+
+    Widget postWidget = _postsWidgetsCache.get(cacheKey);
+    if (postWidget != null) return postWidget;
+
+    postWidget = _buildPostWidget(post);
+    _postsWidgetsCache.set(cacheKey, postWidget);
+
+    return postWidget;
+  }
+
+  Widget _buildPostWidget(Post post) {
+    return OBPost(
+      post,
+      onPostDeleted: _onPostDeleted,
+      key: Key(
+        post.id.toString(),
+      ),
+    );
   }
 
   void _onPostDeleted(Post deletedPost) {
