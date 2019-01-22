@@ -22,6 +22,14 @@ class OBPost extends StatefulWidget {
 }
 
 class OBPostState extends State<OBPost> with AutomaticKeepAliveClientMixin {
+  // TODO[HIGH] How should we even use this!? If we just set it always to keep alive
+  // does that mean this will cause a memory leak? What the heck are we supposed
+  // to do instead? I assumed the Key was meant to tell Flutter the object was
+  // the same and not rebuild but wtf!
+  // https://github.com/flutter/flutter/issues/20112
+  // I've also asked on an issue here
+  // https://github.com/flutter/flutter/issues/20112#issuecomment-456228550
+
   @override
   bool get wantKeepAlive => true;
 
