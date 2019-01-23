@@ -11,12 +11,11 @@ class OBPostBodyImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String imageUrl = post.getImage();
-    var _modalService = OpenbookProvider.of(context).modalService;
-
     double screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
         onTap: () {
+          var _modalService = OpenbookProvider.of(context).modalService;
           _modalService.openZoomablePhotoBoxView(
               imageUrl: imageUrl, context: context);
         },

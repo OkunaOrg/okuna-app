@@ -80,7 +80,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                         delegate: OBHomePostsLoadMoreDelegate(),
                         child: ListView.builder(
                             controller: _scrollController,
-                            physics: AlwaysScrollableScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             padding: EdgeInsets.all(0),
                             itemCount: _posts.length + 1,
                             itemBuilder: (context, index) {

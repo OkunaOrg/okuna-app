@@ -14,7 +14,11 @@ class OBPostBody extends StatelessWidget {
     List<Widget> bodyItems = [];
 
     if (post.hasImage()) {
-      bodyItems.add(OBPostBodyImage(post: post,));
+      bodyItems.add(RepaintBoundary(
+        child: OBPostBodyImage(
+          post: post,
+        ),
+      ));
     } else if (post.hasVideo()) {
       bodyItems.add(OBPostBodyVideo(post: post));
     }

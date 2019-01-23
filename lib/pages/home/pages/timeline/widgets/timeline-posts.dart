@@ -90,11 +90,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         child: LoadMore(
             whenEmptyLoad: false,
             isFinish: _loadingFinished,
-            delegate: OBHomePostsLoadMoreDelegate(),
+            delegate: const OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
+                cacheExtent: 200,
+                addAutomaticKeepAlives: true,
                 controller: _postsScrollController,
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
@@ -184,7 +186,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   Future<void> clearFilters() {
     _filteredCircles = [];
     _filteredFollowsLists = [];
-    _postsWidgetsCache.clear();
     return _refreshPosts();
   }
 
@@ -216,6 +217,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     try {
       Post.clearCache();
       User.clearNavigationCache();
+      _postsWidgetsCache.clear();
 
       _posts = (await _userService.getTimelinePosts(
               circles: _filteredCircles, followsLists: _filteredFollowsLists))
@@ -239,6 +241,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       var morePosts = (await _userService.getTimelinePosts(
               maxId: lastPostId,
               circles: _filteredCircles,
+              count: 20,
               followsLists: _filteredFollowsLists))
           .posts;
 
@@ -247,6 +250,9 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       } else {
         setState(() {
           _posts.addAll(morePosts);
+          _posts.forEach((Post post) {
+            _buildAndStorePostWidget(post);
+          });
         });
       }
       return true;
@@ -265,10 +271,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
     Widget postWidget = _postsWidgetsCache.get(cacheKey);
     if (postWidget != null) return postWidget;
+    return _buildAndStorePostWidget(post);
+  }
 
-    postWidget = _buildPostWidget(post);
+  Widget _buildAndStorePostWidget(Post post) {
+    int cacheKey = post.id;
+    var postWidget = _buildPostWidget(post);
     _postsWidgetsCache.set(cacheKey, postWidget);
-
     return postWidget;
   }
 
@@ -291,6 +300,9 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void _setPosts(List<Post> posts) {
     setState(() {
       _posts = posts;
+      _posts.forEach((Post post) {
+        _buildAndStorePostWidget(post);
+      });
     });
   }
 
