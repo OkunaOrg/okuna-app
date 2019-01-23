@@ -55,7 +55,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void initState() {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
-    _postsWidgetsCache = SimpleCache(storage: SimpleStorage(size: 300));
+    _postsWidgetsCache = LruCache(storage: SimpleStorage(size: 100));
     _posts = [];
     _filteredCircles = [];
     _filteredFollowsLists = [];
@@ -93,7 +93,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             delegate: const OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
-                cacheExtent: 200,
+                cacheExtent: 30,
                 addAutomaticKeepAlives: true,
                 controller: _postsScrollController,
                 padding: const EdgeInsets.all(0),
@@ -215,10 +215,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   Future<void> _refreshPosts() async {
     _setRefreshInProgress(true);
     try {
-      Post.clearCache();
-      User.clearNavigationCache();
-      _postsWidgetsCache.clear();
-
       _posts = (await _userService.getTimelinePosts(
               circles: _filteredCircles, followsLists: _filteredFollowsLists))
           .posts;
@@ -251,7 +247,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         setState(() {
           _posts.addAll(morePosts);
           _posts.forEach((Post post) {
-            _buildAndStorePostWidget(post);
+            _getWidgetForPost(post);
           });
         });
       }
@@ -301,7 +297,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     setState(() {
       _posts = posts;
       _posts.forEach((Post post) {
-        _buildAndStorePostWidget(post);
+        _getWidgetForPost(post);
       });
     });
   }
