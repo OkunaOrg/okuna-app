@@ -1,7 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class OBPostBodyImage extends StatelessWidget {
   final Post post;
@@ -20,11 +20,14 @@ class OBPostBodyImage extends StatelessWidget {
               imageUrl: imageUrl, context: context);
         },
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: screenWidth / 2),
-          child: FadeInImage.memoryNetwork(
-            placeholder: kTransparentImage,
-            image: imageUrl,
-          ),
-        ));
+            constraints: BoxConstraints(minHeight: screenWidth / 2),
+            child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                placeholder: Center(
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: Container(
+                  child: Center(child: Text('Could not load image.')),
+                ))));
   }
 }
