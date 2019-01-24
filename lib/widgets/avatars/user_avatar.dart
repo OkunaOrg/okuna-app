@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter_image/network.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:flutter/material.dart';
 
 enum OBUserAvatarSize { small, medium, large, extraLarge }
@@ -60,7 +60,7 @@ class OBUserAvatar extends StatelessWidget {
           height: avatarSize,
           width: avatarSize,
           fit: BoxFit.cover,
-          image: NetworkImageWithRetry(avatarUrl));
+          image: AdvancedNetworkImage(avatarUrl, useDiskCache: true));
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }

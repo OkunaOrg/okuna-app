@@ -1,7 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image/network.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 
 class OBPostBodyImage extends StatelessWidget {
   final Post post;
@@ -22,7 +22,7 @@ class OBPostBodyImage extends StatelessWidget {
         child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: screenWidth / 2),
             child: Image(
-              image: NetworkImageWithRetry(imageUrl),
+              image: AdvancedNetworkImage(imageUrl, useDiskCache: true),
             )));
   }
 }
