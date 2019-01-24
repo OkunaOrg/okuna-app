@@ -33,8 +33,8 @@ class OBTrendingState extends State<OBTrending> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
         child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
             controller: _scrollController,
-            physics: AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.all(0),
             itemCount: 1,
             itemBuilder: (context, index) {

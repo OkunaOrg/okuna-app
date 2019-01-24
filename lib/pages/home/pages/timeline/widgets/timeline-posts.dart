@@ -17,7 +17,6 @@ import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
-
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
 
@@ -41,8 +40,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   StreamSubscription _loggedInUserChangeSubscription;
   ScrollController _postsScrollController;
 
-  SimpleCache<int, Widget> _postsWidgetsCache;
-
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -56,7 +53,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void initState() {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
-    _postsWidgetsCache = LruCache(storage: SimpleStorage(size: 100));
     _posts = [];
     _filteredCircles = [];
     _filteredFollowsLists = [];
@@ -93,6 +89,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             isFinish: _loadingFinished,
             delegate: const OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
+                controller: _postsScrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
                 cacheExtent: 30,
                 addAutomaticKeepAlives: true,

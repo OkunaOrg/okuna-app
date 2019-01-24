@@ -19,6 +19,7 @@ class OBSettingsPage extends StatelessWidget {
       navigationBar: OBNavigationBar(title: 'Settings'),
       child: OBPrimaryColorContainer(
         child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[

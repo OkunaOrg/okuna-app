@@ -19,6 +19,7 @@ class OBUserSearchResults extends StatelessWidget {
 
   Widget _buildSearchResults() {
     return ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
           User user = results[index];

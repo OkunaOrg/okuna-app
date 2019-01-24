@@ -182,6 +182,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       color: Color.fromARGB(5, 0, 0, 0),
       child: ListView.separated(
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount: postActions.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, index) {

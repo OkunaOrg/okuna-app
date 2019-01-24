@@ -29,6 +29,7 @@ class OBCuratedThemes extends StatelessWidget {
           Container(
             height: 70,
             child: ListView.separated(
+              physics: const AlwaysScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: themes.length,
               itemBuilder: (BuildContext context, int index) {

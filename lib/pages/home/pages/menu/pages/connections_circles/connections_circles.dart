@@ -76,7 +76,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                       child: RefreshIndicator(
                           key: _refreshIndicatorKey,
                           child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
+                              physics: const AlwaysScrollableScrollPhysics(),
                               controller: _connectionsCirclesScrollController,
                               padding: EdgeInsets.all(0),
                               itemCount:
