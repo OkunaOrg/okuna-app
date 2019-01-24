@@ -17,6 +17,7 @@ import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
+
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
 
@@ -95,12 +96,17 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 cacheExtent: 30,
                 addAutomaticKeepAlives: true,
-                controller: _postsScrollController,
                 padding: const EdgeInsets.all(0),
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
-                  return _getWidgetForPost(post);
+                  return OBPost(
+                    post,
+                    onPostDeleted: _onPostDeleted,
+                    key: Key(
+                      post.id.toString(),
+                    ),
+                  );
                 }),
             onLoadMore: _loadMorePosts));
   }
@@ -246,9 +252,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       } else {
         setState(() {
           _posts.addAll(morePosts);
-          _posts.forEach((Post post) {
-            _getWidgetForPost(post);
-          });
         });
       }
       return true;
@@ -262,31 +265,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     return false;
   }
 
-  Widget _getWidgetForPost(Post post) {
-    int cacheKey = post.id;
-
-    Widget postWidget = _postsWidgetsCache.get(cacheKey);
-    if (postWidget != null) return postWidget;
-    return _buildAndStorePostWidget(post);
-  }
-
-  Widget _buildAndStorePostWidget(Post post) {
-    int cacheKey = post.id;
-    var postWidget = _buildPostWidget(post);
-    _postsWidgetsCache.set(cacheKey, postWidget);
-    return postWidget;
-  }
-
-  Widget _buildPostWidget(Post post) {
-    return OBPost(
-      post,
-      onPostDeleted: _onPostDeleted,
-      key: Key(
-        post.id.toString(),
-      ),
-    );
-  }
-
   void _onPostDeleted(Post deletedPost) {
     setState(() {
       _posts.remove(deletedPost);
@@ -296,9 +274,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void _setPosts(List<Post> posts) {
     setState(() {
       _posts = posts;
-      _posts.forEach((Post post) {
-        _getWidgetForPost(post);
-      });
     });
   }
 
