@@ -1,7 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class OBPostBodyImage extends StatelessWidget {
   final Post post;
@@ -21,12 +21,8 @@ class OBPostBodyImage extends StatelessWidget {
         },
         child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: screenWidth / 2),
-            child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                placeholder: Center(
-                  child: CircularProgressIndicator(),
-                ),
-                errorWidget:
-                    Center(child: const Text('Could not load image.')))));
+            child: Image(
+              image: NetworkImageWithRetry(imageUrl),
+            )));
   }
 }

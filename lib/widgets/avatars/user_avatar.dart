@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_image/network.dart';
 import 'package:flutter/material.dart';
 
 enum OBUserAvatarSize { small, medium, large, extraLarge }
@@ -57,14 +56,11 @@ class OBUserAvatar extends StatelessWidget {
         image: FileImage(avatarFile),
       );
     } else if (avatarUrl != null) {
-      finalAvatarImage = CachedNetworkImage(
+      finalAvatarImage = Image(
           height: avatarSize,
           width: avatarSize,
           fit: BoxFit.cover,
-          imageUrl: avatarUrl,
-          errorWidget: SizedBox(
-            child: Center(child: Text('X')),
-          ));
+          image: NetworkImageWithRetry(avatarUrl));
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }

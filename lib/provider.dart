@@ -25,6 +25,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OpenbookProvider extends StatefulWidget {
   final Widget child;
@@ -76,6 +77,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   void initState() {
     super.initState();
     initAsyncState();
+    imageCache.maximumSize = 200 << 20; // 200MB
     deepLinksService.setAuthApiService(authApiService);
     deepLinksService.setToastService(toastService);
     deepLinksService.setUserService(userService);
