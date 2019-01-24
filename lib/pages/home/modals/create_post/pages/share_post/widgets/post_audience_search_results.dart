@@ -45,7 +45,7 @@ class OBPostAudienceSearchResults extends StatelessWidget {
   }
 
   Widget _buildNoResults() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),

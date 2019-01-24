@@ -39,7 +39,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
@@ -59,7 +59,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -83,10 +83,10 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
       builder: (context, snapshot) {
         String feedback = snapshot.data;
         if (feedback == null || !isSubmitted) {
-          return Container();
+          return const SizedBox();
         }
 
-        return Container(
+        return SizedBox(
           child: Text(
             feedback,
             style: TextStyle(color: Colors.white, fontSize: 18.0),

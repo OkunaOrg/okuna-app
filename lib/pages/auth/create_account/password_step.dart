@@ -41,7 +41,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
@@ -61,8 +61,8 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,10 +85,10 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
       builder: (context, snapshot) {
         String feedback = snapshot.data;
         if (feedback == null || !isSubmitted) {
-          return Container();
+          return const SizedBox();
         }
 
-        return Container(
+        return SizedBox(
           child: Text(
             feedback,
             style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -195,7 +195,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
 
     return Column(
       children: <Widget>[
-        Container(
+        SizedBox(
           child: Row(children: <Widget>[
             new Expanded(
               child: Container(

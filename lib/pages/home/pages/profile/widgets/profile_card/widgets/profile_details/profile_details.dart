@@ -22,7 +22,7 @@ class OBProfileDetails extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     child: Wrap(
                       spacing: 10.0,
                       runSpacing: 10.0,

@@ -44,7 +44,7 @@ class OBPostActionReact extends StatelessWidget {
                     height: 18.0,
                     imageUrl: reaction.getEmojiImage(),
                     placeholder: const SizedBox(),
-                    errorWidget: Container(
+                    errorWidget: SizedBox(
                       child: Center(child: Text('?')),
                     ),
                   )

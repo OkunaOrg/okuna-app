@@ -116,7 +116,7 @@ class OBSearchBarState extends State<OBSearchBar> {
 
   Widget _buildClearButton() {
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         height: 35.0,
         width: 35.0,
         child: const OBIcon(

@@ -12,7 +12,7 @@ class OBCuratedThemes extends StatelessWidget {
     var themeService = OpenbookProvider.of(context).themeService;
     var themes = themeService.getCuratedThemes();
 
-    return Container(
+    return Padding(
       padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +26,7 @@ class OBCuratedThemes extends StatelessWidget {
               size: OBTextSize.large,
             ),
           ),
-          Container(
+          SizedBox(
             height: 70,
             child: ListView.separated(
               physics: const AlwaysScrollableScrollPhysics(),

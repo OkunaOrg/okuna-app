@@ -17,12 +17,12 @@ class OBProfileCounts extends StatelessWidget {
         var user = snapshot.data;
         if (user == null) return const SizedBox();
 
-        return Container(
+        return Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Row(
             children: <Widget>[
               Expanded(
-                child: Container(
+                child: SizedBox(
                   child: Wrap(
                     runSpacing: 10.0,
                     children: <Widget>[

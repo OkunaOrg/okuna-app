@@ -15,7 +15,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(0xFF151726),
-      body: Container(
+      body: DecoratedBox(
         decoration: _buildGetStartedDecoration(),
         child: Center(
             child: SingleChildScrollView(
@@ -24,7 +24,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,

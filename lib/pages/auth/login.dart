@@ -59,7 +59,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
@@ -78,7 +78,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -96,9 +96,9 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildLoginFeedback() {
-    if (_loginFeedback == null) return Container();
+    if (_loginFeedback == null) return const SizedBox();
 
-    return Container(
+    return SizedBox(
       child: Text(
         _loginFeedback,
         style: TextStyle(fontSize: 16.0, color: Colors.deepOrange),
@@ -211,11 +211,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Container(
+            SizedBox(
               child: Row(children: <Widget>[
                 new Expanded(
-                  child: Container(
-                      color: Colors.transparent,
+                  child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                      ),
                       child: Column(
                         children: <Widget>[
                           TextFormField(

@@ -32,7 +32,7 @@ class _OBPostVideoPreviewerState extends State<OBPostVideoPreviewer> {
   Widget build(BuildContext context) {
     double avatarBorderRadius = 10.0;
 
-    var videoPreview = Container(
+    var videoPreview = DecoratedBox(
       decoration: BoxDecoration(
           color: Colors.black12,
           borderRadius: BorderRadius.circular(avatarBorderRadius)),

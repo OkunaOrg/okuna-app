@@ -130,7 +130,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   Widget _buildNewPostContent() {
     return Expanded(
-        child: Container(
+        child: Padding(
       padding: EdgeInsets.only(left: 20.0, top: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

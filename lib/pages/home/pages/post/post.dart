@@ -244,7 +244,7 @@ class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
     String text = builder(status);
 
     if (status == LoadMoreStatus.fail) {
-      return Container(
+      return SizedBox(
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -263,7 +263,7 @@ class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
       return const SizedBox();
     }
     if (status == LoadMoreStatus.loading) {
-      return Container(
+      return SizedBox(
           child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(

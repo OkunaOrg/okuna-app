@@ -60,10 +60,10 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
         child: Stack(
           children: <Widget>[
             OBPrimaryColorContainer(
-              child: Container(
+              child: SizedBox(
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                         child: OBSearchBar(
                       onSearch: _onSearch,
                       hintText: 'Search for a list...',

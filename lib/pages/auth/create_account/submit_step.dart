@@ -35,7 +35,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
     }
 
     return Scaffold(
-      body: Container(
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Center(child: SingleChildScrollView(child: _buildStatus())),
       ),
@@ -54,13 +54,13 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
             var createAccountErrorFeedback = snapshot.data;
 
             if (createAccountErrorFeedback == null) {
-              return Container(
+              return SizedBox(
                   child: Column(
                 mainAxisSize: MainAxisSize.min,
               ));
             }
 
-            return Container(
+            return Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,

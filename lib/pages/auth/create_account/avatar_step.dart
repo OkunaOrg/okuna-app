@@ -41,8 +41,8 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourAvatar(context: context),
@@ -61,8 +61,8 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,10 +85,10 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
       builder: (context, snapshot) {
         String feedback = snapshot.data;
         if (feedback == null || !isSubmitted) {
-          return Container();
+          return SizedBox();
         }
 
-        return Container(
+        return SizedBox(
           child: Text(
             feedback,
             style: TextStyle(color: Colors.white, fontSize: 18.0),

@@ -62,7 +62,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
         child: RefreshIndicator(
             key: _refreshIndicatorKey,
             child: OBPrimaryColorContainer(
-              child: Container(
+              child: SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

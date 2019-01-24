@@ -64,10 +64,10 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
         child: Stack(
           children: <Widget>[
             OBPrimaryColorContainer(
-              child: Container(
+              child: SizedBox(
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                         child: OBSearchBar(
                       onSearch: _onSearch,
                       hintText: 'Search for a circle...',

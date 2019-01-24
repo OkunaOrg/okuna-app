@@ -61,7 +61,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     Widget currentWidget;
 
     if (_requestInProgress) {
-      currentWidget = Container(
+      currentWidget = Padding(
         padding: EdgeInsets.only(top: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
