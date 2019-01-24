@@ -155,7 +155,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   Widget _buildNavigationBar() {
     return OBNavigationBar(
         leading: GestureDetector(
-          child: OBIcon(OBIcons.close),
+          child: const OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },

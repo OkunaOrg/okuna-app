@@ -48,7 +48,7 @@ class OBProfileNoPosts extends StatelessWidget {
                 height: 20,
               ),
               OBButton(
-                icon: OBIcon(
+                icon: const OBIcon(
                   OBIcons.refresh,
                   size: OBIconSize.small,
                 ),

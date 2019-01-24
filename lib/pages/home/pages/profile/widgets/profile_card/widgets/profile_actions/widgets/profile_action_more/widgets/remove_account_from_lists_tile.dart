@@ -33,7 +33,7 @@ class OBRemoveAccountFromListsState extends State<OBRemoveAccountFromLists> {
 
     return ListTile(
         title: const OBText('Remove account from lists'),
-        leading: OBIcon(OBIcons.removeFromList),
+        leading: const OBIcon(OBIcons.removeFromList),
         onTap: _removeAccountFromLists);
   }
 

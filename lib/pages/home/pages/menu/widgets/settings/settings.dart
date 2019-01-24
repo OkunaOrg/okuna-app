@@ -24,7 +24,7 @@ class OBSettingsPage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             ListTile(
-              leading: OBIcon(OBIcons.email),
+              leading: const OBIcon(OBIcons.email),
               title: OBText(localizationService.trans('SETTINGS.CHANGE_EMAIL')),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
@@ -35,7 +35,7 @@ class OBSettingsPage extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: OBIcon(OBIcons.lock),
+              leading: const OBIcon(OBIcons.lock),
               title:
                   OBText(localizationService.trans('SETTINGS.CHANGE_PASSWORD')),
               onTap: () {

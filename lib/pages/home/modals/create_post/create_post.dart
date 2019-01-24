@@ -103,7 +103,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
     return OBNavigationBar(
       leading: GestureDetector(
-        child: OBIcon(OBIcons.close),
+        child: const OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
@@ -210,7 +210,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       OBPillButton(
         text: 'Photo',
         color: Pigment.fromString('#FCC14B'),
-        icon: OBIcon(OBIcons.photo),
+        icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
           _unfocusTextField();
           File pickedPhoto =
@@ -221,7 +221,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       OBPillButton(
         text: 'Video',
         color: Pigment.fromString('#00B7FF'),
-        icon: OBIcon(OBIcons.video),
+        icon: const OBIcon(OBIcons.video),
         onPressed: () async {
           _unfocusTextField();
           File pickedVideo =

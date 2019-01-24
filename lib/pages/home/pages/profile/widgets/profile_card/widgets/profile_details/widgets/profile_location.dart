@@ -20,7 +20,7 @@ class OBProfileLocation extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        OBIcon(
+        const OBIcon(
           OBIcons.location,
           customSize: 14,
         ),

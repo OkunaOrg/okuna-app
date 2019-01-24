@@ -38,7 +38,7 @@ class OBUpdateConnectionWithUserTileState
 
     return ListTile(
         title: const OBText('Update connection circles'),
-        leading: OBIcon(OBIcons.circles),
+        leading: const OBIcon(OBIcons.circles),
         onTap: _displayAddConnectionToCirclesBottomSheet);
   }
 

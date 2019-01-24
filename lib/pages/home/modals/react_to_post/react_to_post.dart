@@ -61,7 +61,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
   Widget _buildNavigationBar() {
     return OBNavigationBar(
         leading: GestureDetector(
-          child: OBIcon(OBIcons.close),
+          child: const OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },

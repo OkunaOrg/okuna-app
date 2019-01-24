@@ -21,7 +21,7 @@ class OBPostActionComment extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBIcon(
+            const OBIcon(
               OBIcons.comment,
               customSize: 20.0,
             ),

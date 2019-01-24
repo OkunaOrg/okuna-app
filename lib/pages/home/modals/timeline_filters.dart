@@ -190,7 +190,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OBIcon(OBIcons.sad, customSize: 30.0),
+              const OBIcon(OBIcons.sad, customSize: 30.0),
               const SizedBox(
                 height: 20.0,
               ),
@@ -212,7 +212,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   Widget _buildNavigationBar() {
     return OBNavigationBar(
         leading: GestureDetector(
-          child: OBIcon(OBIcons.close),
+          child: const OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },

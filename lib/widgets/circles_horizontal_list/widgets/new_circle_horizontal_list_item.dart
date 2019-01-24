@@ -39,7 +39,7 @@ class OBNewCircleHorizontalListItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(50)),
-                    child: OBIcon(
+                    child: const OBIcon(
                       OBIcons.add,
                       themeColor: OBIconThemeColor.primaryAccent,
                     ),

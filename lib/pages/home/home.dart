@@ -160,32 +160,32 @@ class OBHomePageState extends State<OBHomePage> {
       items: [
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: OBIcon(OBIcons.home),
-          activeIcon: OBIcon(
+          icon: const OBIcon(OBIcons.home),
+          activeIcon: const OBIcon(
             OBIcons.home,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: OBIcon(OBIcons.search),
-          activeIcon: OBIcon(
+          icon: const OBIcon(OBIcons.search),
+          activeIcon: const OBIcon(
             OBIcons.search,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: OBIcon(OBIcons.notifications),
-          activeIcon: OBIcon(
+          icon: const OBIcon(OBIcons.notifications),
+          activeIcon: const OBIcon(
             OBIcons.notifications,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: OBIcon(OBIcons.communities),
-          activeIcon: OBIcon(
+          icon: const OBIcon(OBIcons.communities),
+          activeIcon: const OBIcon(
             OBIcons.communities,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
@@ -201,8 +201,8 @@ class OBHomePageState extends State<OBHomePage> {
             )),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: OBIcon(OBIcons.menu),
-          activeIcon: OBIcon(
+          icon: const OBIcon(OBIcons.menu),
+          activeIcon: const OBIcon(
             OBIcons.menu,
             themeColor: OBIconThemeColor.primaryAccent,
           ),

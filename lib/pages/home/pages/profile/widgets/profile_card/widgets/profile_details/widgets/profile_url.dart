@@ -27,7 +27,7 @@ class OBProfileUrl extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          OBIcon(
+          const OBIcon(
             OBIcons.link,
             customSize: 14,
           ),

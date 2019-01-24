@@ -48,7 +48,7 @@ class OBPostActionReact extends StatelessWidget {
                       child: Center(child: Text('?')),
                     ),
                   )
-                : OBIcon(OBIcons.react, customSize: 20.0,),
+                : const OBIcon(OBIcons.react, customSize: 20.0,),
             const SizedBox(
               width: 10.0,
             ),

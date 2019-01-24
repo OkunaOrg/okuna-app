@@ -63,7 +63,7 @@ class OBSearchBarState extends State<OBSearchBar> {
                 const SizedBox(
                   width: 15.0,
                 ),
-                OBIcon(OBIcons.search),
+                const OBIcon(OBIcons.search),
                 const SizedBox(
                   width: 15.0,
                 ),
@@ -119,7 +119,7 @@ class OBSearchBarState extends State<OBSearchBar> {
       child: Container(
         height: 35.0,
         width: 35.0,
-        child: OBIcon(
+        child: const OBIcon(
           OBIcons.close,
           customSize: 15.0,
         ),

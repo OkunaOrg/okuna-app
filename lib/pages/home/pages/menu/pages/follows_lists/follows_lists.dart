@@ -109,7 +109,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                         _onFollowsListCreated(createdFollowsList);
                       }
                     },
-                    icon: OBIcon(
+                    icon: const OBIcon(
                       OBIcons.add,
                       size: OBIconSize.small,
                       color: Colors.white,

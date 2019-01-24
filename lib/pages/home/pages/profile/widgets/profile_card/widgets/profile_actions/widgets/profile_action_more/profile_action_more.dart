@@ -23,7 +23,7 @@ class OBProfileActionMore extends StatelessWidget {
         var user = snapshot.data;
 
         return IconButton(
-          icon: OBIcon(
+          icon: const OBIcon(
             OBIcons.moreVertical,
             customSize: 30,
           ),

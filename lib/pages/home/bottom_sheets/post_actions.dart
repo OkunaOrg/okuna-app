@@ -46,7 +46,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
 
     if (isPostOwner) {
       postActions.add(ListTile(
-        leading: OBIcon(OBIcons.deletePost),
+        leading: const OBIcon(OBIcons.deletePost),
         title: const OBText(
           'Delete post',
         ),
@@ -54,7 +54,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       ));
     } else {
       postActions.add(ListTile(
-        leading: OBIcon(OBIcons.reportPost),
+        leading: const OBIcon(OBIcons.reportPost),
         title: const OBText(
           'Report post',
         ),

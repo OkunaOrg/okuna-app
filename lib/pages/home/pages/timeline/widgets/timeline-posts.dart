@@ -137,7 +137,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 height: 30,
               ),
               OBButton(
-                icon: OBIcon(
+                icon: const OBIcon(
                   OBIcons.refresh,
                   size: OBIconSize.small,
                 ),

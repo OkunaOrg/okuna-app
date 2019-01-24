@@ -117,7 +117,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                         _onConnectionsCircleCreated(createdConnectionsCircle);
                       }
                     },
-                    icon: OBIcon(
+                    icon: const OBIcon(
                       OBIcons.add,
                       size: OBIconSize.small,
                       color: Colors.white,
