@@ -10,7 +10,7 @@ class OBLoggedInUserAvatar extends StatefulWidget {
   final OBUserAvatarSize size;
   final VoidCallback onPressed;
 
-  OBLoggedInUserAvatar({this.size, this.onPressed});
+  const OBLoggedInUserAvatar({this.size, this.onPressed});
 
   @override
   OBLoggedInUserAvatarState createState() {
