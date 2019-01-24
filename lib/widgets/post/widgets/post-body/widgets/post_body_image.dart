@@ -26,8 +26,7 @@ class OBPostBodyImage extends StatelessWidget {
                 placeholder: Center(
                   child: CircularProgressIndicator(),
                 ),
-                errorWidget: Container(
-                  child: Center(child: Text('Could not load image.')),
-                ))));
+                errorWidget:
+                    Center(child: const Text('Could not load image.')))));
   }
 }
