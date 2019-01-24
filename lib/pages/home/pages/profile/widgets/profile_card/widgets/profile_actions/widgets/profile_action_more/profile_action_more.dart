@@ -1,5 +1,4 @@
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/confirm_connection_with_user_tile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/connect_to_user_tile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/disconnect_from_user_tile.dart';
@@ -12,9 +11,8 @@ import 'package:flutter/material.dart';
 
 class OBProfileActionMore extends StatelessWidget {
   final User user;
-  final OnWantsToPickCircles onWantsToPickCircles;
 
-  OBProfileActionMore(this.user, {@required this.onWantsToPickCircles});
+  const OBProfileActionMore(this.user);
 
   @override
   Widget build(BuildContext context) {

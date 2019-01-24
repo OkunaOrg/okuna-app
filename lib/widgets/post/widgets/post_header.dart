@@ -40,7 +40,7 @@ class OBPostHeader extends StatelessWidget {
             );
           }),
       trailing: IconButton(
-          icon: OBIcon(OBIcons.moreVertical),
+          icon: const OBIcon(OBIcons.moreVertical),
           onPressed: () {
             bottomSheetService.showPostActions(
                 context: context,
@@ -72,6 +72,4 @@ class OBPostHeader extends StatelessWidget {
       ),
     );
   }
-
-  void _onWantsToSeePostActions() {}
 }

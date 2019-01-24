@@ -16,10 +16,9 @@ class OBIcon extends StatelessWidget {
   static const double MEDIUM_SIZE = 25.0;
   static const double SMALL_SIZE = 15.0;
 
-  OBIcon(this.iconData,
-      {this.size, this.customSize, this.color, this.themeColor}) {
-    assert(!(color != null && themeColor != null));
-  }
+  const OBIcon(this.iconData,
+      {this.size, this.customSize, this.color, this.themeColor})
+      : assert(!(color != null && themeColor != null));
 
   @override
   Widget build(BuildContext context) {

@@ -4,9 +4,9 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:flutter/material.dart';
 
 class OBProfileDetails extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileDetails(this.user);
+  const OBProfileDetails(this.user);
 
   @override
   Widget build(BuildContext context) {

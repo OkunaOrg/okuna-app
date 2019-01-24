@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBPillButton extends StatelessWidget {
   final String text;

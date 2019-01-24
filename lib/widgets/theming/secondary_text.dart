@@ -2,14 +2,13 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBSecondaryText extends StatelessWidget {
-  String text;
-  TextStyle style;
-  OBTextSize size;
+  final String text;
+  final TextStyle style;
+  final OBTextSize size;
 
-  OBSecondaryText(this.text, {this.style, this.size});
+  const OBSecondaryText(this.text, {this.style, this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +23,9 @@ class OBSecondaryText extends StatelessWidget {
           var theme = snapshot.data;
 
           TextStyle finalStyle = style;
-          TextStyle themedTextStyle =
-              TextStyle(color: themeValueParserService.parseColor(theme.secondaryTextColor));
+          TextStyle themedTextStyle = TextStyle(
+              color:
+                  themeValueParserService.parseColor(theme.secondaryTextColor));
 
           if (finalStyle != null) {
             finalStyle = finalStyle.merge(themedTextStyle);

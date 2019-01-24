@@ -1,7 +1,5 @@
-import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';

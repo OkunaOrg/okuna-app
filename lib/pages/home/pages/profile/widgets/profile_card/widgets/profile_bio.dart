@@ -3,9 +3,9 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileBio extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileBio(this.user);
+  const OBProfileBio(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class OBProfileBio extends StatelessWidget {
         if (bio == null) return SizedBox();
 
         return Padding(
-          padding: EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[

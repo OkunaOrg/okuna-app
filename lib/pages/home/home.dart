@@ -26,7 +26,6 @@ class OBHomePage extends StatefulWidget {
 }
 
 class OBHomePageState extends State<OBHomePage> {
-  @override
   UserService _userService;
   int _currentIndex;
   int _lastIndex;

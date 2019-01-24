@@ -103,7 +103,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
     try {
       await _userService
           .getConnectionsCircleWithId(widget.connectionsCircle.id);
-    } on HttpieConnectionRefusedError catch (error) {
+    } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
       _toastService.error(message: 'Unknown error', context: context);

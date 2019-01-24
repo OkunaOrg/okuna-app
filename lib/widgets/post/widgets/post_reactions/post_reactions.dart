@@ -104,8 +104,11 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
     _setRequestInProgress(true);
+
+    PostReaction postReaction;
     try {
-      return await _userService.reactToPost(post: widget.post, emoji: emoji);
+      postReaction =
+          await _userService.reactToPost(post: widget.post, emoji: emoji);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -114,6 +117,8 @@ class OBPostReactionsState extends State<OBPostReactions> {
     } finally {
       _setRequestInProgress(false);
     }
+
+    return postReaction;
   }
 
   Future<void> _deleteReaction() async {

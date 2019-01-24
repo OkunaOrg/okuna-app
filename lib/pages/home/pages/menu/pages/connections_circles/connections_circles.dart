@@ -142,7 +142,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
       _connectionsCircles.insert(0, connectionsCircle);
       _setConnectionsCircles(_connectionsCircles);
       _scrollToTop();
-    } on HttpieConnectionRefusedError catch (error) {
+    } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
       _toastService.error(message: 'Unknown error', context: context);

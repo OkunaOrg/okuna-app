@@ -6,7 +6,6 @@ import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -33,7 +32,6 @@ class OBTimelineFiltersModal extends StatefulWidget {
 
 class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   UserService _userService;
-  ToastService _toastService;
 
   bool _requestInProgress;
   bool _needsBootstrap;
@@ -67,7 +65,6 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
-      _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }

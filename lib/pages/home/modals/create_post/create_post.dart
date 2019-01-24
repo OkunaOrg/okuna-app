@@ -7,7 +7,6 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/post_video_previe
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
-import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
@@ -15,12 +14,10 @@ import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
@@ -309,14 +306,6 @@ class CreatePostModalState extends State<CreatePostModal> {
       newPostItemsWidgets.remove(widgetSpacing);
       _setPostItemsWidgets(newPostItemsWidgets);
     };
-  }
-
-  Future<File> _pickImage(ImageSource source) async {
-    var image = await ImagePicker.pickImage(source: source);
-    if (image == null) {
-      return null;
-    }
-    return image;
   }
 
   void _setPostItemsWidgets(List<Widget> postItemsWidgets) {

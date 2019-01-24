@@ -5,9 +5,9 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:flutter/material.dart';
 
 class OBProfileCounts extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileCounts(this.user);
+  const OBProfileCounts(this.user);
 
   @override
   Widget build(BuildContext context) {

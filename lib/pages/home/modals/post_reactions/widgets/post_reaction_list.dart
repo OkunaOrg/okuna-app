@@ -34,7 +34,6 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   List<PostReaction> _postReactions;
 
   bool _needsBootstrap;
-  bool _refreshInProgress;
   bool _loadMoreFinished;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -43,7 +42,6 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   void initState() {
     super.initState();
     _needsBootstrap = true;
-    _refreshInProgress = false;
     _loadMoreFinished = false;
     _postReactions = [];
   }
@@ -88,12 +86,10 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   }
 
   Future<void> _refreshPostReactions() async {
-    _setRefreshInProgress(true);
     var reactionsList = await _userService.getReactionsForPost(widget.post,
         emoji: widget.emoji);
 
     _setPostReactions(reactionsList.reactions);
-    _setRefreshInProgress(false);
   }
 
   Future<bool> _loadMorePostReactions() async {
@@ -140,12 +136,6 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   void _setLoadMoreFinished(bool loadMoreFinished) {
     setState(() {
       _loadMoreFinished = loadMoreFinished;
-    });
-  }
-
-  void _setRefreshInProgress(bool refreshInProgress) {
-    setState(() {
-      _refreshInProgress = refreshInProgress;
     });
   }
 

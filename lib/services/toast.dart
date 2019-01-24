@@ -1,7 +1,4 @@
-import 'package:Openbook/widgets/icon.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 enum ToastType { info, warning, success, error }
 
@@ -71,30 +68,6 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
-    Widget icon;
-    Color backgroundColor;
-
-    switch (type) {
-      case ToastType.warning:
-        icon = OBIcon(OBIcons.warning);
-        backgroundColor = Pigment.fromString('#EFB500');
-        break;
-      case ToastType.info:
-        icon = OBIcon(OBIcons.info);
-        backgroundColor = Pigment.fromString('#008BEF');
-        break;
-      case ToastType.success:
-        icon = OBIcon(OBIcons.success);
-        backgroundColor = Pigment.fromString('#7FD421');
-        break;
-      case ToastType.error:
-        icon = OBIcon(OBIcons.error);
-        backgroundColor = Pigment.fromString('#D42140');
-        break;
-      default:
-        throw 'Unsupported ToastType';
-    }
-
     print(message);
   }
 }

@@ -1,4 +1,3 @@
-import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/widgets/circle_color_preview.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';

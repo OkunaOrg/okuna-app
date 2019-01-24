@@ -4,9 +4,9 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileLocation extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileLocation(this.user);
+  const OBProfileLocation(this.user);
 
   @override
   Widget build(BuildContext context) {

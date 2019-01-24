@@ -1,6 +1,4 @@
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/home.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';

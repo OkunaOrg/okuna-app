@@ -1,6 +1,5 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';

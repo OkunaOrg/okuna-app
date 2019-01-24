@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBCover extends StatelessWidget {
   final String coverUrl;

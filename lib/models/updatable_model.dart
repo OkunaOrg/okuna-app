@@ -5,7 +5,7 @@ abstract class UpdatableModel<T> {
   final int id;
 
   Stream<T> get updateSubject => _updateChangeSubject.stream;
-  final _updateChangeSubject = ReplaySubject<T>(maxSize: 1);
+  final _updateChangeSubject = BehaviorSubject<T>();
 
   UpdatableModel({this.id}) {
     notifyUpdate();

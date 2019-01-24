@@ -13,7 +13,6 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/text.dart';
-import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
@@ -46,9 +45,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   // Whether we have loaded all posts infinite-scroll wise
   bool _loadingFinished;
 
-  // Whether there's a request in progress
-  bool _refreshInProgress;
-
   @override
   void initState() {
     super.initState();
@@ -58,7 +54,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _filteredFollowsLists = [];
     _needsBootstrap = true;
     _loadingFinished = false;
-    _refreshInProgress = false;
     _postsScrollController = ScrollController();
   }
 
@@ -157,14 +152,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     );
   }
 
-  Widget _buildRefreshingPosts() {
-    return SizedBox(
-      child: Center(
-        child: OBProgressIndicator(),
-      ),
-    );
-  }
-
   void scrollToTop() {
     _postsScrollController.animateTo(
       0.0,
@@ -216,7 +203,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Future<void> _refreshPosts() async {
-    _setRefreshInProgress(true);
     try {
       _posts = (await _userService.getTimelinePosts(
               circles: _filteredCircles, followsLists: _filteredFollowsLists))
@@ -228,8 +214,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     } catch (error) {
       _onUnknownError(error);
       rethrow;
-    } finally {
-      _setRefreshInProgress(false);
     }
   }
 
@@ -277,12 +261,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void _setLoadingFinished(bool loadingFinished) {
     setState(() {
       _loadingFinished = loadingFinished;
-    });
-  }
-
-  void _setRefreshInProgress(bool refreshInProgress) {
-    setState(() {
-      _refreshInProgress = refreshInProgress;
     });
   }
 

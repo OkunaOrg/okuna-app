@@ -2,7 +2,6 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/alert.dart';
 import 'package:Openbook/widgets/buttons/actions/confirm_connection_button.dart';
 import 'package:Openbook/widgets/buttons/actions/deny_connection_button.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 

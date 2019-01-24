@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OBProfileUrl extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileUrl(this.user);
+  const OBProfileUrl(this.user);
 
   @override
   Widget build(BuildContext context) {
