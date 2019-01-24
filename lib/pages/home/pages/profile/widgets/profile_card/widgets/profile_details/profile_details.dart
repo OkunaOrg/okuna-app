@@ -15,7 +15,7 @@ class OBProfileDetails extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
         if (user == null || !user.hasProfileLocation() || !user.hasProfileUrl())
-          return SizedBox();
+          return const SizedBox();
 
         return Padding(
             padding: EdgeInsets.only(top: 20),

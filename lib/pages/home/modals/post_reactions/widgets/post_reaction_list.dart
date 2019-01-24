@@ -159,7 +159,7 @@ class OBPostReactionListLoadMoreDelegate extends LoadMoreDelegate {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.refresh),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Text('Tap to retry loading reactions.')
@@ -169,7 +169,7 @@ class OBPostReactionListLoadMoreDelegate extends LoadMoreDelegate {
     }
     if (status == LoadMoreStatus.idle) {
       // No clue why is this even a state.
-      return SizedBox();
+      return const SizedBox();
     }
     if (status == LoadMoreStatus.loading) {
       return Container(
@@ -178,7 +178,7 @@ class OBPostReactionListLoadMoreDelegate extends LoadMoreDelegate {
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Text(text);

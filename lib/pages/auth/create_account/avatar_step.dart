@@ -46,11 +46,11 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourAvatar(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildAvatarPicker(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildAvatarError()
@@ -124,7 +124,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -195,7 +195,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
                   }),
             ),
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           Text(
             'Tap to change',
             style: TextStyle(color: Colors.white, fontSize: 18.0),

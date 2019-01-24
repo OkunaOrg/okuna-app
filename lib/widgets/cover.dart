@@ -34,9 +34,9 @@ class OBCover extends StatelessWidget {
         placeholder: Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: SizedBox(
+        errorWidget: const SizedBox(
           child: Center(
-            child: OBText('Could not load cover'),
+            child: const OBText('Could not load cover'),
           ),
         ),
         height: double.infinity,

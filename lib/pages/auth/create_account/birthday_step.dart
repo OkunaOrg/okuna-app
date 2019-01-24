@@ -38,7 +38,7 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
                 child: Column(
                   children: <Widget>[
                     _buildWhensYourBirthday(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildBirthdayForm(),
@@ -129,7 +129,7 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -155,7 +155,7 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
           style: TextStyle(fontSize: 45.0, color: Colors.white),
           textAlign: TextAlign.center,
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(

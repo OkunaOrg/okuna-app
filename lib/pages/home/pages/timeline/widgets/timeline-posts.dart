@@ -19,7 +19,7 @@ import 'package:loadmore/loadmore.dart';
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
 
-  OBTimelinePosts({
+  const OBTimelinePosts({
     this.controller,
   });
 
@@ -115,10 +115,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 'assets/images/stickers/owl-instructor.png',
                 height: 100,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
-              OBText(
+              const OBText(
                 'Your timeline is empty.',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -126,14 +126,14 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
-              OBText(
+              const OBText(
                 'Follow users or join a community to get started!',
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               OBButton(
@@ -142,7 +142,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                   size: OBIconSize.small,
                 ),
                 type: OBButtonType.highlight,
-                child: Text('Refresh posts'),
+                child: const OBText('Refresh posts'),
                 onPressed: _onRefresh,
               )
             ],
@@ -333,7 +333,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.refresh),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Text('Tap to retry loading posts.')
@@ -343,7 +343,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
     }
     if (status == LoadMoreStatus.idle) {
       // No clue why is this even a state.
-      return SizedBox();
+      return const SizedBox();
     }
     if (status == LoadMoreStatus.loading) {
       return Container(
@@ -352,7 +352,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Text(text);

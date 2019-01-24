@@ -16,7 +16,7 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
     List<Widget> videoPickerActions = [
       ListTile(
         leading: OBIcon(OBIcons.gallery),
-        title: OBText(
+        title: const OBText(
           'From gallery',
         ),
         onTap: () async {
@@ -27,7 +27,7 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
       ),
       ListTile(
         leading: OBIcon(OBIcons.camera),
-        title: OBText(
+        title: const OBText(
           'From camera',
         ),
         onTap: () async {

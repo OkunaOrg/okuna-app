@@ -97,7 +97,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                       onPressed: _onWantsToClearFilters,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Expanded(
@@ -191,7 +191,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               OBIcon(OBIcons.sad, customSize: 30.0),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(

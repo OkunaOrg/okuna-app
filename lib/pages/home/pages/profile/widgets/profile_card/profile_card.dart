@@ -34,7 +34,7 @@ class OBProfileCard extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: (OBUserAvatar.AVATAR_SIZE_LARGE * 0.4),
                     width: OBUserAvatar.AVATAR_SIZE_LARGE,
                   ),
@@ -44,7 +44,7 @@ class OBProfileCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   OBProfileName(user),

@@ -82,7 +82,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
         OBBadge(
           count: filtersCount,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         OBIconButton(

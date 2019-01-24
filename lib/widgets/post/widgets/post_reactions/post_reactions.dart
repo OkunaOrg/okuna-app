@@ -45,7 +45,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
         stream: widget.post.updateSubject,
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
           if (snapshot.data == null)
-            return SizedBox(
+            return const SizedBox(
               height: 35,
             );
 
@@ -55,7 +55,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
               post.reactionsEmojiCounts.counts;
 
           if (emojiCounts.length == 0)
-            return SizedBox(
+            return const SizedBox(
               height: 35,
             );
 

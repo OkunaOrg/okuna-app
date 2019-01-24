@@ -26,7 +26,7 @@ class OBProfileActions extends StatelessWidget {
     } else {
       actions.addAll([
         OBFollowButton(user),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         OBProfileActionMore(user)

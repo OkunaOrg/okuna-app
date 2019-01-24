@@ -19,7 +19,7 @@ class OBPostActions extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                     child: OBPostActionReact(_post)),
-                SizedBox(
+                const SizedBox(
                   width: 20.0,
                 ),
                 Expanded(

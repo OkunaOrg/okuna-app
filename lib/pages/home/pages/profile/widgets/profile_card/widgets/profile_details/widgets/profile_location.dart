@@ -13,7 +13,7 @@ class OBProfileLocation extends StatelessWidget {
     String location = user.getProfileLocation();
 
     if (location == null) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Row(
@@ -24,7 +24,7 @@ class OBProfileLocation extends StatelessWidget {
           OBIcons.location,
           customSize: 14,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Flexible(

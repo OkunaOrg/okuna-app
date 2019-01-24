@@ -39,7 +39,7 @@ class _OBPostVideoPreviewerState extends State<OBPostVideoPreviewer> {
       child: SizedBox(
         child: ClipRRect(
             borderRadius: BorderRadius.circular(avatarBorderRadius),
-            child: Container(
+            child: SizedBox(
               child: _assetPlayer,
             )),
       ),

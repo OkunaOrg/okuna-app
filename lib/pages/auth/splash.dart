@@ -63,7 +63,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
     return Column(
       children: <Widget>[
         OBSplashLogo(),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(headlineText,

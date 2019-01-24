@@ -41,7 +41,7 @@ class OBDenyConnectionButtonState extends State<OBDenyConnectionButton> {
         var user = snapshot.data;
 
         if (user?.isPendingConnectionConfirmation == null || !user.isConnected || !user.isPendingConnectionConfirmation)
-          return SizedBox();
+          return const SizedBox();
 
         return _buildDenyConnectionButton();
       },

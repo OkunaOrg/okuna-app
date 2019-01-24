@@ -49,7 +49,7 @@ class OBNewCircleHorizontalListItem extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             OBText(

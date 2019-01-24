@@ -98,7 +98,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
             size: OBUserAvatarSize.medium,
             avatarUrl: widget.postComment.getCommenterProfileAvatar(),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20.0,
           ),
           Expanded(
@@ -111,7 +111,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
                   _navigationService.navigateToUserProfile(user: widget.post.creator, context: context);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5.0,
               ),
               OBSecondaryText(

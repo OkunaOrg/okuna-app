@@ -81,7 +81,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
   }
 
   Widget _buildNavigationBarTrailingItem() {
-    if (_isConnectionsCircle) return SizedBox();
+    if (_isConnectionsCircle) return const SizedBox();
     return GestureDetector(
       onTap: () {
         _modalService.openEditConnectionsCircle(

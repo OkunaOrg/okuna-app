@@ -20,7 +20,7 @@ class OBCuratedThemes extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 15.0),
-            child: OBText(
+            child: const OBText(
               'Curated themes',
               style: TextStyle(fontWeight: FontWeight.bold),
               size: OBTextSize.large,
@@ -41,7 +41,7 @@ class OBCuratedThemes extends StatelessWidget {
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
+                return const SizedBox(
                   width: 20,
                 );
               },

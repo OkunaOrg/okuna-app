@@ -41,7 +41,7 @@ class OBUserSearchResults extends StatelessWidget {
             children: <Widget>[
               Icon(Icons.sentiment_dissatisfied,
                   size: 30.0, color: Colors.black26),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(

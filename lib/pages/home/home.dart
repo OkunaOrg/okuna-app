@@ -159,7 +159,7 @@ class OBHomePageState extends State<OBHomePage> {
       },
       items: [
         BottomNavigationBarItem(
-          title: SizedBox(),
+          title: const SizedBox(),
           icon: OBIcon(OBIcons.home),
           activeIcon: OBIcon(
             OBIcons.home,
@@ -167,7 +167,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
+          title: const SizedBox(),
           icon: OBIcon(OBIcons.search),
           activeIcon: OBIcon(
             OBIcons.search,
@@ -175,7 +175,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
+          title: const SizedBox(),
           icon: OBIcon(OBIcons.notifications),
           activeIcon: OBIcon(
             OBIcons.notifications,
@@ -183,7 +183,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
+          title: const SizedBox(),
           icon: OBIcon(OBIcons.communities),
           activeIcon: OBIcon(
             OBIcons.communities,
@@ -191,7 +191,7 @@ class OBHomePageState extends State<OBHomePage> {
           ),
         ),
         BottomNavigationBarItem(
-            title: SizedBox(),
+            title: const SizedBox(),
             icon: OBUserAvatar(
               avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
@@ -200,7 +200,7 @@ class OBHomePageState extends State<OBHomePage> {
               avatarUrl: _avatarUrl,
             )),
         BottomNavigationBarItem(
-          title: SizedBox(),
+          title: const SizedBox(),
           icon: OBIcon(OBIcons.menu),
           activeIcon: OBIcon(
             OBIcons.menu,

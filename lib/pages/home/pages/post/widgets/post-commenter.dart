@@ -59,13 +59,13 @@ class OBPostCommenterState extends State<OBPostCommenter> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             width: 20.0,
           ),
           OBLoggedInUserAvatar(
             size: OBUserAvatarSize.medium,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Expanded(

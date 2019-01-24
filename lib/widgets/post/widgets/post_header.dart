@@ -28,7 +28,7 @@ class OBPostHeader extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             var postCreator = snapshot.data;
 
-            if (postCreator == null) return SizedBox();
+            if (postCreator == null) return const SizedBox();
 
             return OBUserAvatar(
               onPressed: () {
@@ -58,7 +58,7 @@ class OBPostHeader extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
               var postCreator = snapshot.data;
 
-              if (postCreator == null) return SizedBox();
+              if (postCreator == null) return const SizedBox();
 
               return OBText(
                 postCreator.username,

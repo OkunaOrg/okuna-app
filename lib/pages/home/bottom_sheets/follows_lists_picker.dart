@@ -87,7 +87,7 @@ class OBFollowsListsPickerBottomSheetState
             onSearch: _onSearch,
             hintText: 'Search lists...',
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(

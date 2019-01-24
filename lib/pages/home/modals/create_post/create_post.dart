@@ -86,7 +86,7 @@ class CreatePostModalState extends State<CreatePostModal> {
             _hasImage ||
             _hasVideo;
 
-    Widget nextButtonText = OBText('Next');
+    Widget nextButtonText = const OBText('Next');
     Widget nextButton;
 
     if (nextButtonIsEnabled) {
@@ -140,7 +140,7 @@ class CreatePostModalState extends State<CreatePostModal> {
               OBLoggedInUserAvatar(
                 size: OBUserAvatarSize.medium,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12.0,
               ),
               OBRemainingPostCharacters(
@@ -172,7 +172,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       postActions.addAll(_getImagePostActions());
     }
 
-    if (postActions.isEmpty) return SizedBox();
+    if (postActions.isEmpty) return const SizedBox();
 
     return Container(
       height: 51.0,
@@ -188,7 +188,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           return index == 0
               ? Row(
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     postAction
@@ -197,7 +197,7 @@ class CreatePostModalState extends State<CreatePostModal> {
               : postAction;
         },
         separatorBuilder: (BuildContext context, index) {
-          return SizedBox(
+          return const SizedBox(
             width: 10,
           );
         },
@@ -290,7 +290,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   VoidCallback _addPostItemWidget(Widget postItemWidget) {
-    var widgetSpacing = SizedBox(
+    var widgetSpacing = const SizedBox(
       height: 20.0,
     );
 

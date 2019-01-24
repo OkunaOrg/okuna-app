@@ -44,7 +44,7 @@ class OBProfileNoPosts extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               OBButton(

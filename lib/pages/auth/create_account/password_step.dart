@@ -46,11 +46,11 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourPassword(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildPasswordForm(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildPasswordError()
@@ -145,7 +145,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -170,7 +170,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
           '🔒',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(whatPasswordText,

@@ -15,7 +15,7 @@ class OBProfileBio extends StatelessWidget {
         var user = snapshot.data;
         var bio = user?.getProfileBio();
 
-        if (bio == null) return SizedBox();
+        if (bio == null) return const SizedBox();
 
         return Padding(
           padding: const EdgeInsets.only(top: 20),

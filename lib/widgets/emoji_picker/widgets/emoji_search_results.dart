@@ -41,8 +41,8 @@ class OBEmojiSearchResults extends StatelessWidget {
                   imageUrl: emoji.image,
                   placeholder:
                       Image(image: AssetImage('assets/images/loading.gif')),
-                  errorWidget: Container(
-                    child: Center(child: OBText('?')),
+                  errorWidget: const SizedBox(
+                    child: Center(child: const OBText('?')),
                   ),
                 ),
               ),
@@ -65,7 +65,7 @@ class OBEmojiSearchResults extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               OBIcon(OBIcons.sad, customSize: 30.0),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(

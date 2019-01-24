@@ -60,11 +60,11 @@ class OBSearchBarState extends State<OBSearchBar> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   width: 15.0,
                 ),
                 OBIcon(OBIcons.search),
-                SizedBox(
+                const SizedBox(
                   width: 15.0,
                 ),
                 Expanded(
@@ -94,7 +94,7 @@ class OBSearchBarState extends State<OBSearchBar> {
                                 right: 0,
                                 child: _buildClearButton(),
                               )
-                            : SizedBox()
+                            : const SizedBox()
                       ],
                     ),
                   ),
@@ -102,10 +102,10 @@ class OBSearchBarState extends State<OBSearchBar> {
                 hasText
                     ? FlatButton(
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        child: OBText('Cancel'),
+                        child: const OBText('Cancel'),
                         onPressed: _cancelSearch,
                       )
-                    : SizedBox(
+                    : const SizedBox(
                         width: 15.0,
                       )
               ],

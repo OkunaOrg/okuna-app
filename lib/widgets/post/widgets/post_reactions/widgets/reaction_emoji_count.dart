@@ -34,7 +34,7 @@ class OBEmojiReactionCount extends StatelessWidget {
               height: 18.0,
               image: AdvancedNetworkImage(emoji.image, useDiskCache: true),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             OBText(

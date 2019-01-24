@@ -128,13 +128,13 @@ class OBSaveConnectionsCircleModalState
                         ? Padding(
                             padding: EdgeInsets.only(
                                 left: 20, top: 20, bottom: 20.0),
-                            child: OBText(
+                            child: const OBText(
                               'Users',
                               style: TextStyle(fontWeight: FontWeight.bold),
                               size: OBTextSize.large,
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                     Column(
                         children: _users.map((User user) {
                       return OBUserTile(

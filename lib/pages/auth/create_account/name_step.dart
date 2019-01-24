@@ -44,11 +44,11 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourName(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildNameForm(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildNameError()
@@ -143,7 +143,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -168,7 +168,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
           '📛',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(whatNameText,

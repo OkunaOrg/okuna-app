@@ -16,7 +16,7 @@ class OBProfileUsername extends StatelessWidget {
         var username = user?.username;
 
         if (username == null)
-          return SizedBox(
+          return const SizedBox(
             height: 10.0,
           );
 

@@ -111,7 +111,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                           left: 20,
                           child: Column(
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 height: (OBCover.HEIGHT) -
                                     (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
@@ -119,12 +119,12 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                             height: OBCover.HEIGHT +
                                 OBUserAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Padding(

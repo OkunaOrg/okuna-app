@@ -50,7 +50,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
           '🚀',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(text,
@@ -92,7 +92,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(

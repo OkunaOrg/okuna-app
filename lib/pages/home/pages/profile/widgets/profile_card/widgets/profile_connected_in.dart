@@ -20,13 +20,13 @@ class OBProfileConnectedIn extends StatelessWidget {
 
         if (connectedCircles == null ||
             connectedCircles.length == 0 ||
-            !isFullyConnected) return SizedBox();
+            !isFullyConnected) return const SizedBox();
 
         return Padding(
             padding: EdgeInsets.only(top: 20),
             child: OBCirclesWrap(
               circles: connectedCircles,
-              leading: OBText(
+              leading: const OBText(
                 'In circles',
                 size: OBTextSize.small,
               ),

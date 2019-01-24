@@ -64,11 +64,11 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                 child: Column(
                   children: <Widget>[
                     _buildHeading(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     _buildLoginForm(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildLoginFeedback()
@@ -153,7 +153,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       child: Row(
         children: <Widget>[
           Icon(Icons.arrow_back_ios),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -178,13 +178,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
           '👋',
           style: TextStyle(fontSize: 45.0, color: Colors.black),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(titleText,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         Text(subtitleText,
@@ -228,7 +228,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                             ),
                             autocorrect: false,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           TextFormField(

@@ -39,7 +39,7 @@ class OBConnectionsCircleUsers extends StatelessWidget {
                 if (!isFullyConnected) {
                   trailing = Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[OBText('Pending')],
+                    children: <Widget>[const OBText('Pending')],
                   );
                 }
 

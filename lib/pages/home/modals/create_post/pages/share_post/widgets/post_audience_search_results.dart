@@ -53,7 +53,7 @@ class OBPostAudienceSearchResults extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               OBIcon(OBIcons.sad, customSize: 30.0),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(

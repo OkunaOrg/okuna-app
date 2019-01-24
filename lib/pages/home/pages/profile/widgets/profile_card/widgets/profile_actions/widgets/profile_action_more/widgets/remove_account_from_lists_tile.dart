@@ -32,7 +32,7 @@ class OBRemoveAccountFromListsState extends State<OBRemoveAccountFromLists> {
     _toastService = openbookProvider.toastService;
 
     return ListTile(
-        title: OBText('Remove account from lists'),
+        title: const OBText('Remove account from lists'),
         leading: OBIcon(OBIcons.removeFromList),
         onTap: _removeAccountFromLists);
   }

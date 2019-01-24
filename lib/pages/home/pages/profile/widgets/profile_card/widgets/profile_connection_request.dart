@@ -20,13 +20,13 @@ class OBProfileConnectionRequest extends StatelessWidget {
             user?.isPendingConnectionConfirmation;
 
         if (isPendingConnectionConfirmation == null ||
-            !isPendingConnectionConfirmation) return SizedBox();
+            !isPendingConnectionConfirmation) return const SizedBox();
 
         String userName = user.getProfileName();
 
         return Column(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             OBAlert(
@@ -38,14 +38,14 @@ class OBProfileConnectionRequest extends StatelessWidget {
                     size: OBTextSize.medium,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       OBDenyConnectionButton(user),
-                      SizedBox(width: 20,),
+                      const SizedBox(width: 20,),
                       OBConfirmConnectionButton(user)
                     ],
                   )

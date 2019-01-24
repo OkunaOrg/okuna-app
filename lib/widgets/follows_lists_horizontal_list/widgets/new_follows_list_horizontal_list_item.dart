@@ -39,14 +39,14 @@ class OBNewFollowsListHorizontalListItem extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            OBText(
+            const OBText(
               'Create new',
               style: TextStyle(fontSize: 14),
             ),
-            OBText(
+            const OBText(
               'list',
               style: TextStyle(fontSize: 14),
             ),

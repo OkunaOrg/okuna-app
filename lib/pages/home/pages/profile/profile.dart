@@ -102,7 +102,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                                     onWantsToRefreshProfile: _refresh,
                                   );
                                 } else {
-                                  postsItem = SizedBox(
+                                  postsItem = const SizedBox(
                                     height: 20,
                                   );
                                 }

@@ -14,7 +14,7 @@ class OBProfileUrl extends StatelessWidget {
     String url = user.getProfileUrl();
 
     if (url == null) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     Uri uri = Uri.parse(url);
@@ -31,7 +31,7 @@ class OBProfileUrl extends StatelessWidget {
             OBIcons.link,
             customSize: 14,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Flexible(
