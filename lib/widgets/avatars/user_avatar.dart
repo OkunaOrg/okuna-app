@@ -62,9 +62,6 @@ class OBUserAvatar extends StatelessWidget {
           width: avatarSize,
           fit: BoxFit.cover,
           imageUrl: avatarUrl,
-          placeholder: Center(
-            child: CircularProgressIndicator(),
-          ),
           errorWidget: SizedBox(
             child: Center(child: Text('X')),
           ));

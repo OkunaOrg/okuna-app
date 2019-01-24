@@ -11,7 +11,7 @@ class OBText extends StatelessWidget {
   final int maxLines;
   final OBTextSize size;
 
-  OBText(this.text,
+  const OBText(this.text,
       {this.style,
       this.textAlign,
       this.overflow,

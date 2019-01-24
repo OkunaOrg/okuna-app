@@ -44,9 +44,7 @@ class OBPostState extends State<OBPost> with AutomaticKeepAliveClientMixin {
         ),
         OBPostBody(widget.post),
         OBPostReactions(widget.post),
-        RepaintBoundary(
-          child: OBPostCircles(widget.post),
-        ),
+        OBPostCircles(widget.post),
         OBPostComments(
           widget.post,
         ),

@@ -61,10 +61,9 @@ class OBHomePageState extends State<OBHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _userService = openbookProvider.userService;
-
     if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _userService = openbookProvider.userService;
       _bootstrap();
       _needsBootstrap = false;
     }
