@@ -229,7 +229,7 @@ class OBHomePageState extends State<OBHomePage> {
     }
   }
 
-  void _onLoggedInUserChange(User newUser) {
+  void _onLoggedInUserChange(User newUser) async {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {

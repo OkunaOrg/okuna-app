@@ -1,7 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 enum OBIconSize { small, medium, large, extraLarge }
 
@@ -127,12 +126,13 @@ class OBIcons {
   static const menu = OBIconData(nativeIcon: Icons.menu);
   static const communities = OBIconData(nativeIcon: Icons.people);
   static const settings = OBIconData(nativeIcon: Icons.settings);
-  static const lists = OBIconData(nativeIcon: Icons.library_books );
+  static const lists = OBIconData(nativeIcon: Icons.library_books);
   static const addToList = OBIconData(nativeIcon: Icons.queue);
   static const removeFromList = OBIconData(nativeIcon: Icons.delete);
   static const customize = OBIconData(nativeIcon: Icons.format_paint);
   static const logout = OBIconData(nativeIcon: Icons.exit_to_app);
   static const help = OBIconData(nativeIcon: Icons.help);
+  static const refresh = OBIconData(nativeIcon: Icons.refresh);
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
   static const moreVertical = OBIconData(nativeIcon: Icons.more_vert);
@@ -163,19 +163,22 @@ class OBIcons {
   static const deletePost = OBIconData(nativeIcon: Icons.delete);
   static const reportPost = OBIconData(nativeIcon: Icons.report);
   static const filter = OBIconData(nativeIcon: Icons.tune);
+  static const gallery = OBIconData(nativeIcon: Icons.apps);
+  static const camera = OBIconData(nativeIcon: Icons.camera_alt);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
   static const info = OBIconData(filename: 'info-icon.png');
   static const profile = OBIconData(filename: 'profile-icon.png');
   static const chat = OBIconData(filename: 'chat-icon.png');
-  static const media = OBIconData(filename: 'media-icon.png');
-  static const camera = OBIconData(filename: 'camera-icon.png');
+  static const photo = OBIconData(filename: 'photo-icon.png');
+  static const video = OBIconData(filename: 'video-icon.png');
   static const gif = OBIconData(filename: 'gif-icon.png');
   static const audience = OBIconData(filename: 'audience-icon.png');
   static const burner = OBIconData(filename: 'burner-icon.png');
   static const comments = OBIconData(filename: 'comments-icon.png');
   static const like = OBIconData(filename: 'like-icon.png');
+  static const thinking = OBIconData(filename: 'thinking.gif');
   static const finish = OBIconData(filename: 'finish-icon.png');
   static const loadingMorePosts =
       OBIconData(filename: 'load-more-posts-icon.gif');

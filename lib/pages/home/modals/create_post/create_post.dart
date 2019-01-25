@@ -6,6 +6,7 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previe
 import 'package:Openbook/pages/home/modals/create_post/widgets/post_video_previewer.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
@@ -28,9 +29,9 @@ class CreatePostModal extends StatefulWidget {
 }
 
 class CreatePostModalState extends State<CreatePostModal> {
-  ImagePickerService _imagePickerService;
   ValidationService _validationService;
   NavigationService _navigationService;
+  BottomSheetService _bottomSheetService;
 
   TextEditingController _textController;
   int _charactersCount;
@@ -68,8 +69,8 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _validationService = openbookProvider.validationService;
-    _imagePickerService = openbookProvider.imagePickerService;
     _navigationService = openbookProvider.navigationService;
+    _bottomSheetService = openbookProvider.bottomSheetService;
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
@@ -82,7 +83,9 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   Widget _buildNavigationBar() {
     bool nextButtonIsEnabled =
-        (_isPostTextAllowedLength && _charactersCount > 0) || _hasImage || _hasVideo;
+        (_isPostTextAllowedLength && _charactersCount > 0) ||
+            _hasImage ||
+            _hasVideo;
 
     Widget nextButtonText = Text('Next');
     Widget nextButton;
@@ -166,9 +169,11 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildPostActions() {
     List<Widget> postActions = [];
 
-    if (!_hasImage) {
+    if (!_hasImage && !_hasVideo) {
       postActions.addAll(_getImagePostActions());
     }
+
+    if (postActions.isEmpty) return SizedBox();
 
     return Container(
       height: 51.0,
@@ -203,26 +208,25 @@ class CreatePostModalState extends State<CreatePostModal> {
   List<Widget> _getImagePostActions() {
     return [
       OBPillButton(
-        text: 'Media',
+        text: 'Photo',
         color: Pigment.fromString('#FCC14B'),
-        icon: OBIcon(OBIcons.media),
+        icon: OBIcon(OBIcons.photo),
         onPressed: () async {
           _unfocusTextField();
-          _showMediaCupertinoModalPopup();
-          File image = await _imagePickerService.pickImage(
-              imageType: OBImageType.post, source: ImageSource.gallery);
-          if (image != null) _setPostImage(image);
+          File pickedPhoto =
+              await _bottomSheetService.showPhotoPicker(context: context);
+          if (pickedPhoto != null) _setPostImage(pickedPhoto);
         },
       ),
       OBPillButton(
-        text: 'Camera',
+        text: 'Video',
         color: Pigment.fromString('#00B7FF'),
-        icon: OBIcon(OBIcons.camera),
+        icon: OBIcon(OBIcons.video),
         onPressed: () async {
           _unfocusTextField();
-          File image = await _imagePickerService.pickImage(
-              imageType: OBImageType.post, source: ImageSource.camera);
-          if (image != null) _setPostImage(image);
+          File pickedVideo =
+              await _bottomSheetService.showVideoPicker(context: context);
+          if (pickedVideo != null) _setPostVideo(pickedVideo);
         },
       )
     ];
@@ -265,7 +269,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         },
       );
 
-       _postVideoWidgetRemover = _addPostItemWidget(postVideoWidget);
+      _postVideoWidgetRemover = _addPostItemWidget(postVideoWidget);
     });
   }
 
@@ -309,67 +313,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (image == null) {
       return null;
     }
-      return image;
-  }
-
-  Future<File> _pickVideo(ImageSource source) async {
-    var video = await ImagePicker.pickVideo(source: source);
-    if (video == null) {
-      return null;
-    }
-    return video;
-  }
-
-  void _showMediaCupertinoModalPopup() {
-    showCupertinoModalPopup(context: context, builder: (BuildContext context) {
-      return CupertinoActionSheet(
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-              child: const Text('Photo from Gallery'),
-              onPressed: () async {
-                File image = await _pickImage(ImageSource.gallery);
-                if (image != null) _setPostImage(image);
-                Navigator.pop(context, 'Photo from Gallery');
-              }
-            ),
-          CupertinoActionSheetAction(
-              child: const Text('Take Photo'),
-              onPressed: () async {
-                File image = await _pickImage(ImageSource.camera);
-                if (image != null) _setPostImage(image);
-                Navigator.pop(context, 'Take Photo');
-              }
-          ),
-          CupertinoActionSheetAction(
-              child: const Text('Video from Gallery'),
-              onPressed: () async {
-                File video = await _pickVideo(ImageSource.gallery);
-                if (video != null) _setPostVideo(video);
-                Navigator.pop(context, 'Video from Gallery');
-              }
-          ),
-          CupertinoActionSheetAction(
-              child: const Text('Take Video'),
-              onPressed: () async {
-                File video = await _pickVideo(ImageSource.camera);
-                print(video);
-                if (video != null) _setPostVideo(video);
-                Navigator.pop(context, 'Take Video');
-              }
-          )
-          ],
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: Colors.red),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        );
-      }
-    );
+    return image;
   }
 
   void _setPostItemsWidgets(List<Widget> postItemsWidgets) {

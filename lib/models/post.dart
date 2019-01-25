@@ -82,7 +82,7 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
-    if (json.containsKey('video')) image = factory.parseImage(json['video']);
+    if (json.containsKey('video')) video = factory.parseVideo(json['video']);
 
     if (json.containsKey('comments'))
       commentsList = factory.parseCommentList(json['comments']);

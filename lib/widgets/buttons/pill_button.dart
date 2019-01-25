@@ -26,7 +26,10 @@ class OBPillButton extends StatelessWidget {
             SizedBox(
               width: 10.0,
             ),
-            Text(text),
+            Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ],
         ),
         color: color,

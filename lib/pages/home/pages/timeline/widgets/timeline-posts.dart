@@ -8,8 +8,11 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
@@ -39,7 +42,11 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
+  // Whether we have loaded all posts infinite-scroll wise
   bool _loadingFinished;
+
+  // Whether there's a request in progress
+  bool _refreshInProgress;
 
   @override
   void initState() {
@@ -50,6 +57,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _filteredFollowsLists = [];
     _needsBootstrap = true;
     _loadingFinished = false;
+    _refreshInProgress = false;
     _postsScrollController = ScrollController();
   }
 
@@ -70,10 +78,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       _needsBootstrap = false;
     }
 
-    return _buildTimeline();
+    if (_refreshInProgress && _posts.isEmpty) return _buildRefreshingPosts();
+
+    return _posts.isEmpty ? _buildNoTimelinePosts() : _buildTimelinePosts();
   }
 
-  Widget _buildTimeline() {
+  Widget _buildTimelinePosts() {
     return RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _onRefresh,
@@ -97,6 +107,63 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                   );
                 }),
             onLoadMore: _loadMorePosts));
+  }
+
+  Widget _buildNoTimelinePosts() {
+    return Container(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 200),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'assets/images/stickers/owl-instructor.png',
+                height: 100,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              OBText(
+                'Your timeline is empty.',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              OBText(
+                'Follow users or join a community to get started!',
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              OBButton(
+                icon: OBIcon(
+                  OBIcons.refresh,
+                  size: OBIconSize.small,
+                ),
+                type: OBButtonType.highlight,
+                child: Text('Refresh posts'),
+                onPressed: _onRefresh,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRefreshingPosts() {
+    return Container(
+      child: Center(
+        child: OBProgressIndicator(),
+      ),
+    );
   }
 
   void scrollToTop() {
@@ -150,9 +217,11 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Future<void> _refreshPosts({areFirstPosts = true}) async {
+    _setRefreshInProgress(true);
     try {
       Post.clearCache();
       User.clearNavigationCache();
+
       _posts = (await _userService.getTimelinePosts(
               areFirstPosts: areFirstPosts,
               circles: _filteredCircles,
@@ -165,6 +234,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     } catch (error) {
       _onUnknownError(error);
       rethrow;
+    } finally {
+      _setRefreshInProgress(false);
     }
   }
 
@@ -211,6 +282,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void _setLoadingFinished(bool loadingFinished) {
     setState(() {
       _loadingFinished = loadingFinished;
+    });
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
     });
   }
 

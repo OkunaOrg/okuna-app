@@ -188,7 +188,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
                     var data = snapshot.data;
 
                     if (data == null) {
-                      return Image.asset('assets/images/avatar.png');
+                      return Image.asset('assets/images/avatar.jpg');
                     }
 
                     return Image.file(snapshot.data, fit: BoxFit.fill);

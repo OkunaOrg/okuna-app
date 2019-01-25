@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:Openbook/widgets/video_player/aspect_ratio_video.dart';
 import 'package:Openbook/widgets/video_player/network_player_lifecycle.dart';
-import 'package:Openbook/widgets/video_player/play_pause_state.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -20,12 +19,6 @@ class OBPostVideoPreviewer extends StatefulWidget {
 class _OBPostVideoPreviewerState extends State<OBPostVideoPreviewer> {
 
   Widget _assetPlayer;
-  Widget _getVideoPlayerWidget() {
-
-   return Center(
-        child: _assetPlayer
-    );
-  }
 
   @override
   void initState() {
@@ -40,12 +33,15 @@ class _OBPostVideoPreviewerState extends State<OBPostVideoPreviewer> {
     double avatarBorderRadius = 10.0;
 
     var videoPreview = Container(
-      padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
           color: Colors.black12,
           borderRadius: BorderRadius.circular(avatarBorderRadius)),
-      child: Container(
-        child: _getVideoPlayerWidget(),
+      child: SizedBox(
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(avatarBorderRadius),
+            child: Container(
+              child: _assetPlayer,
+            )),
       ),
     );
 
