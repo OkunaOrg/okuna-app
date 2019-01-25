@@ -1,15 +1,15 @@
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/widgets/theming/text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 
 class OBEmojiReactionCount extends StatelessWidget {
-  PostReactionsEmojiCount postReactionsEmojiCount;
-  bool reacted;
-  ValueChanged<PostReactionsEmojiCount> onPressed;
-  ValueChanged<PostReactionsEmojiCount> onLongPressed;
+  final PostReactionsEmojiCount postReactionsEmojiCount;
+  final bool reacted;
+  final ValueChanged<PostReactionsEmojiCount> onPressed;
+  final ValueChanged<PostReactionsEmojiCount> onLongPressed;
 
-  OBEmojiReactionCount(this.postReactionsEmojiCount,
+  const OBEmojiReactionCount(this.postReactionsEmojiCount,
       {this.onPressed, this.reacted, this.onLongPressed});
 
   @override
@@ -30,15 +30,11 @@ class OBEmojiReactionCount extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CachedNetworkImage(
+            Image(
               height: 18.0,
-              imageUrl: emoji.image,
-              placeholder: SizedBox(),
-              errorWidget: Container(
-                child: Center(child: OBText('?')),
-              ),
+              image: AdvancedNetworkImage(emoji.image, useDiskCache: true),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             OBText(

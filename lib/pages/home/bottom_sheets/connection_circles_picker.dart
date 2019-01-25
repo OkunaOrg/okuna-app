@@ -92,8 +92,8 @@ class OBConnectionCirclesPickerBottomSheetState
             onSearch: _onSearch,
             hintText: 'Search circles...',
           ),
-          SizedBox(height: 10,),
-          Container(
+          const SizedBox(height: 10,),
+          SizedBox(
             height: 110,
             child: OBCirclesHorizontalList(
               _circleSearchResults,

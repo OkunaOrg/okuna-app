@@ -11,7 +11,7 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore_widget.dart';
+import 'package:loadmore/loadmore.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBPostPage extends StatefulWidget {
@@ -80,7 +80,7 @@ class OBPostPageState extends State<OBPostPage> {
                           isFinish: _noMoreItemsToLoad,
                           delegate: OBInfinitePostCommentsLoadMoreDelegate(),
                           child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
+                              physics: const AlwaysScrollableScrollPhysics(),
                               controller: _postCommentsScrollController,
                               padding: EdgeInsets.all(0),
                               itemCount: _postComments.length + 1,
@@ -244,13 +244,13 @@ class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
     String text = builder(status);
 
     if (status == LoadMoreStatus.fail) {
-      return Container(
+      return SizedBox(
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.refresh),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Text('Tap to retry loading comments.')
@@ -260,10 +260,10 @@ class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
     }
     if (status == LoadMoreStatus.idle) {
       // No clue why is this even a state.
-      return SizedBox();
+      return const SizedBox();
     }
     if (status == LoadMoreStatus.loading) {
-      return Container(
+      return SizedBox(
           child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -277,7 +277,7 @@ class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Text(text);

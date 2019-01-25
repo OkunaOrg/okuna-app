@@ -4,9 +4,9 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:flutter/material.dart';
 
 class OBProfileDetails extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileDetails(this.user);
+  const OBProfileDetails(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +15,14 @@ class OBProfileDetails extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
         if (user == null || !user.hasProfileLocation() || !user.hasProfileUrl())
-          return SizedBox();
+          return const SizedBox();
 
         return Padding(
             padding: EdgeInsets.only(top: 20),
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     child: Wrap(
                       spacing: 10.0,
                       runSpacing: 10.0,

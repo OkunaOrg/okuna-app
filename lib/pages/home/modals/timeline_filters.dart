@@ -6,7 +6,6 @@ import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -33,7 +32,6 @@ class OBTimelineFiltersModal extends StatefulWidget {
 
 class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   UserService _userService;
-  ToastService _toastService;
 
   bool _requestInProgress;
   bool _needsBootstrap;
@@ -67,7 +65,6 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
-      _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -100,7 +97,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                       onPressed: _onWantsToClearFilters,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Expanded(
@@ -130,6 +127,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
 
   Widget _buildSearchResults() {
     return ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount:
             _circlesSearchResults.length + _followsListsSearchResults.length,
         itemBuilder: (BuildContext context, int index) {
@@ -185,15 +183,15 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   }
 
   Widget _buildNoResults() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OBIcon(OBIcons.sad, customSize: 30.0),
-              SizedBox(
+              const OBIcon(OBIcons.sad, customSize: 30.0),
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(
@@ -214,7 +212,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   Widget _buildNavigationBar() {
     return OBNavigationBar(
         leading: GestureDetector(
-          child: OBIcon(OBIcons.close),
+          child: const OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },

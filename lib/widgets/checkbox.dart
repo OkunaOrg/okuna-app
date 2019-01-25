@@ -16,7 +16,7 @@ class OBCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(50)),
         child: Center(

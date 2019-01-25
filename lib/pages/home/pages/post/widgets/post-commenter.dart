@@ -53,23 +53,23 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     bool autofocus = widget.autofocus;
     FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
 
-    return Container(
+    return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             width: 20.0,
           ),
           OBLoggedInUserAvatar(
             size: OBUserAvatarSize.medium,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Expanded(
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Color.fromARGB(10, 0, 0, 0),

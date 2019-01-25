@@ -19,6 +19,7 @@ class OBUserSearchResults extends StatelessWidget {
 
   Widget _buildSearchResults() {
     return ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
           User user = results[index];
@@ -31,7 +32,7 @@ class OBUserSearchResults extends StatelessWidget {
   }
 
   Widget _buildNoResults() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),
@@ -40,7 +41,7 @@ class OBUserSearchResults extends StatelessWidget {
             children: <Widget>[
               Icon(Icons.sentiment_dissatisfied,
                   size: 30.0, color: Colors.black26),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(

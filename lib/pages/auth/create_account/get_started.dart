@@ -15,7 +15,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(0xFF151726),
-      body: Container(
+      body: DecoratedBox(
         decoration: _buildGetStartedDecoration(),
         child: Center(
             child: SingleChildScrollView(
@@ -24,7 +24,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -50,7 +50,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
           '🚀',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(text,
@@ -92,7 +92,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(

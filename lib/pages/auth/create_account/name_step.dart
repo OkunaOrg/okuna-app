@@ -39,16 +39,16 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourName(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildNameForm(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildNameError()
@@ -59,7 +59,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -83,10 +83,10 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
       builder: (context, snapshot) {
         String feedback = snapshot.data;
         if (feedback == null || !isSubmitted) {
-          return Container();
+          return const SizedBox();
         }
 
-        return Container(
+        return SizedBox(
           child: Text(
             feedback,
             style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -143,7 +143,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -168,7 +168,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
           '📛',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(whatNameText,

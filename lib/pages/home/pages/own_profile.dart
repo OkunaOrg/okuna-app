@@ -38,7 +38,7 @@ class OBOwnProfilePageState extends State<OBOwnProfilePage> {
       stream: userService.loggedInUserChange,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var data = snapshot.data;
-        if (data == null) return SizedBox();
+        if (data == null) return const SizedBox();
         return OBProfilePage(
           data,
           controller: _profilePageController,

@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OBProfileUrl extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileUrl(this.user);
+  const OBProfileUrl(this.user);
 
   @override
   Widget build(BuildContext context) {
     String url = user.getProfileUrl();
 
     if (url == null) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     Uri uri = Uri.parse(url);
@@ -27,11 +27,11 @@ class OBProfileUrl extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          OBIcon(
+          const OBIcon(
             OBIcons.link,
             customSize: 14,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Flexible(

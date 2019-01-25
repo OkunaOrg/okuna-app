@@ -15,7 +15,7 @@ import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore_widget.dart';
+import 'package:loadmore/loadmore.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
@@ -80,7 +80,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                         delegate: OBHomePostsLoadMoreDelegate(),
                         child: ListView.builder(
                             controller: _scrollController,
-                            physics: AlwaysScrollableScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             padding: EdgeInsets.all(0),
                             itemCount: _posts.length + 1,
                             itemBuilder: (context, index) {
@@ -102,7 +102,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                                     onWantsToRefreshProfile: _refresh,
                                   );
                                 } else {
-                                  postsItem = SizedBox(
+                                  postsItem = const SizedBox(
                                     height: 20,
                                   );
                                 }
@@ -187,7 +187,7 @@ class OBProfilePageState extends State<OBProfilePage> {
         });
       }
       return true;
-    } on HttpieConnectionRefusedError catch (error) {
+    } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
       _toastService.error(message: 'Unknown error.', context: context);

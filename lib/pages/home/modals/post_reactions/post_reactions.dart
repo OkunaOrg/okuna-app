@@ -8,8 +8,6 @@ import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,12 +38,8 @@ class OBPostReactionsModal extends StatefulWidget {
 
 class OBPostReactionsModalState extends State<OBPostReactionsModal>
     with TickerProviderStateMixin {
-  UserService _userService;
-  ToastService _toastService;
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
-
-  bool _requestInProgress;
   bool _needsBootstrap;
 
   TabController _tabController;
@@ -53,7 +47,6 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
   @override
   void initState() {
     super.initState();
-    _requestInProgress = false;
     _needsBootstrap = true;
     _tabController =
         TabController(length: widget.reactionsEmojiCounts.length, vsync: this);
@@ -63,8 +56,6 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
-      _userService = openbookProvider.userService;
-      _toastService = openbookProvider.toastService;
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
       _bootstrap();
@@ -122,15 +113,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
         title: 'Post reactions');
   }
 
-  void _setRequestInProgress(bool requestInProgress) {
-    setState(() {
-      _requestInProgress = requestInProgress;
-    });
-  }
-
   void _bootstrap() async {
-    _setRequestInProgress(true);
-
     int tabIndex = 0;
 
     if (widget.reactionEmoji != null) {
@@ -140,7 +123,5 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
     }
 
     _tabController.index = tabIndex;
-
-    _setRequestInProgress(false);
   }
 }

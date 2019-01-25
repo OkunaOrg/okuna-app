@@ -13,7 +13,7 @@ class OBProfilePostsCount extends StatelessWidget {
   Widget build(BuildContext context) {
     int postsCount = user.postsCount;
 
-    if (postsCount == null || postsCount == 0) return SizedBox();
+    if (postsCount == null || postsCount == 0) return const SizedBox();
 
     String count = getPrettyCount(postsCount);
 
@@ -45,7 +45,7 @@ class OBProfilePostsCount extends StatelessWidget {
                           color: themeValueParserService.parseColor(theme.secondaryTextColor)))
                 ])),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               )
             ],

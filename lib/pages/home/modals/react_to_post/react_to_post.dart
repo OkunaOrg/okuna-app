@@ -16,9 +16,9 @@ import 'package:flutter/material.dart';
 enum OBReactToPostModalStatus { searching, suggesting, overview }
 
 class OBReactToPostModal extends StatefulWidget {
-  Post post;
+  final Post post;
 
-  OBReactToPostModal(this.post);
+  const OBReactToPostModal(this.post);
 
   @override
   State<StatefulWidget> createState() {
@@ -61,7 +61,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
   Widget _buildNavigationBar() {
     return OBNavigationBar(
         leading: GestureDetector(
-          child: OBIcon(OBIcons.close),
+          child: const OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },
@@ -73,7 +73,7 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
     _reactToPost(pressedEmoji, emojiGroup);
   }
 
-  Future<PostReaction> _reactToPost(Emoji emoji, EmojiGroup emojiGroup) async {
+  Future<void> _reactToPost(Emoji emoji, EmojiGroup emojiGroup) async {
     if (_isReactToPostInProgress) return null;
     _setReactToPostInProgress(true);
 

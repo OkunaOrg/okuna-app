@@ -55,6 +55,6 @@ class _OBVideoPlayPauseFadeAnimationState extends State<OBVideoPlayPauseFadeAnim
       opacity: 1.0 - animationController.value,
       child: widget.child,
     )
-        : Container();
+        : SizedBox();
   }
 }

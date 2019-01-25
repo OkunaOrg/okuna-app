@@ -28,6 +28,7 @@ class OBPostAudienceSearchResults extends StatelessWidget {
 
   Widget _buildSearchResults() {
     return ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
           Circle circle = results[index];
@@ -44,15 +45,15 @@ class OBPostAudienceSearchResults extends StatelessWidget {
   }
 
   Widget _buildNoResults() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OBIcon(OBIcons.sad, customSize: 30.0),
-              SizedBox(
+              const OBIcon(OBIcons.sad, customSize: 30.0),
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(

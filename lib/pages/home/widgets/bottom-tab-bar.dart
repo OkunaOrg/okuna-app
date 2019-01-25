@@ -8,13 +8,11 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pigment/pigment.dart';
 
 // Standard iOS 10 tab bar height.
 const double _kTabBarHeight = 50.0;
 
 const Color _kDefaultTabBarBackgroundColor = Color(0xCCF8F8F8);
-const Color _kDefaultTabBarBorderColor = Color(0x4C000000);
 
 /// An iOS-styled bottom navigation tab bar.
 ///

@@ -65,7 +65,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                           _timelinePostsController.scrollToTop();
                         }
                       },
-                      child: OBIcon(OBIcons.createPost,
+                      child: const OBIcon(OBIcons.createPost,
                           size: OBIconSize.large, color: Colors.white)))
             ],
           ),
@@ -82,7 +82,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
         OBBadge(
           count: filtersCount,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         OBIconButton(

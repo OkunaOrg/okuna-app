@@ -111,7 +111,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                           left: 20,
                           child: Column(
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 height: (OBCover.HEIGHT) -
                                     (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
@@ -119,12 +119,12 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                             height: OBCover.HEIGHT +
                                 OBUserAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Padding(
@@ -143,7 +143,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Username',
-                              prefixIcon: OBIcon(OBIcons.email),
+                              prefixIcon: const OBIcon(OBIcons.email),
                             ),
                           ),
                           OBTextFormField(
@@ -155,7 +155,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Name',
-                              prefixIcon: OBIcon(OBIcons.name),
+                              prefixIcon: const OBIcon(OBIcons.name),
                             ),
                           ),
                           OBTextFormField(
@@ -166,7 +166,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                                   .validateUserProfileUrl(profileUrl);
                             },
                             decoration: InputDecoration(
-                              prefixIcon: OBIcon(OBIcons.link),
+                              prefixIcon: const OBIcon(OBIcons.link),
                               labelText: 'Url',
                             ),
                           ),
@@ -179,7 +179,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Location',
-                              prefixIcon: OBIcon(OBIcons.location),
+                              prefixIcon: const OBIcon(OBIcons.location),
                             ),
                           ),
                           OBTextFormField(
@@ -193,13 +193,13 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             maxLines: 3,
                             decoration: InputDecoration(
                               labelText: 'Bio',
-                              prefixIcon: OBIcon(OBIcons.bio),
+                              prefixIcon: const OBIcon(OBIcons.bio),
                             ),
                           ),
                           OBToggleField(
                             value: _followersCountVisible,
                             title: 'Followers count',
-                            leading: OBIcon(OBIcons.followers),
+                            leading: const OBIcon(OBIcons.followers),
                             onChanged: (bool value) {
                               setState(() {
                                 _followersCountVisible = value;
@@ -236,7 +236,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
     return OBNavigationBar(
       leading: GestureDetector(
-        child: OBIcon(OBIcons.close),
+        child: const OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },

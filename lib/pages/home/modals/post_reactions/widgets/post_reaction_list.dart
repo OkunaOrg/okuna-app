@@ -9,7 +9,7 @@ import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/tiles/post_reaction_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore_widget.dart';
+import 'package:loadmore/loadmore.dart';
 
 class OBPostReactionList extends StatefulWidget {
   // The emoji to show reactions of
@@ -34,7 +34,6 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   List<PostReaction> _postReactions;
 
   bool _needsBootstrap;
-  bool _refreshInProgress;
   bool _loadMoreFinished;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -43,7 +42,6 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   void initState() {
     super.initState();
     _needsBootstrap = true;
-    _refreshInProgress = false;
     _loadMoreFinished = false;
     _postReactions = [];
   }
@@ -88,12 +86,10 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   }
 
   Future<void> _refreshPostReactions() async {
-    _setRefreshInProgress(true);
     var reactionsList = await _userService.getReactionsForPost(widget.post,
         emoji: widget.emoji);
 
     _setPostReactions(reactionsList.reactions);
-    _setRefreshInProgress(false);
   }
 
   Future<bool> _loadMorePostReactions() async {
@@ -143,12 +139,6 @@ class OBPostReactionListState extends State<OBPostReactionList> {
     });
   }
 
-  void _setRefreshInProgress(bool refreshInProgress) {
-    setState(() {
-      _refreshInProgress = refreshInProgress;
-    });
-  }
-
   void _bootstrap() {
     _refreshPostReactions();
   }
@@ -163,13 +153,13 @@ class OBPostReactionListLoadMoreDelegate extends LoadMoreDelegate {
     String text = builder(status);
 
     if (status == LoadMoreStatus.fail) {
-      return Container(
+      return SizedBox(
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.refresh),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Text('Tap to retry loading reactions.')
@@ -179,16 +169,16 @@ class OBPostReactionListLoadMoreDelegate extends LoadMoreDelegate {
     }
     if (status == LoadMoreStatus.idle) {
       // No clue why is this even a state.
-      return SizedBox();
+      return const SizedBox();
     }
     if (status == LoadMoreStatus.loading) {
-      return Container(
+      return SizedBox(
           child: Center(
         child: OBProgressIndicator(),
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Text(text);

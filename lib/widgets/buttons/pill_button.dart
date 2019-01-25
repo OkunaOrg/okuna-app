@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBPillButton extends StatelessWidget {
   final String text;
@@ -23,7 +22,7 @@ class OBPillButton extends StatelessWidget {
         child: Row(
           children: <Widget>[
             icon,
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Text(

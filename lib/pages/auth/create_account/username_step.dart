@@ -41,16 +41,16 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourUsername(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildUsernameForm(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildUsernameError()
@@ -85,10 +85,10 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
       builder: (context, snapshot) {
         String feedback = snapshot.data;
         if (feedback == null || !isSubmitted) {
-          return Container();
+          return SizedBox();
         }
 
-        return Container(
+        return SizedBox(
           child: Text(feedback,
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 18.0)),
@@ -136,7 +136,7 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -161,7 +161,7 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
           '🧙',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(whatUsernameText,
@@ -189,9 +189,9 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
 
     return Column(
       children: <Widget>[
-        Container(
+        SizedBox(
           child: Row(children: <Widget>[
-            new Expanded(
+            Expanded(
               child: Container(
                   color: Colors.transparent,
                   child: OBAuthTextField(

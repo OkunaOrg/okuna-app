@@ -46,16 +46,16 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
 
     if (isPostOwner) {
       postActions.add(ListTile(
-        leading: OBIcon(OBIcons.deletePost),
-        title: OBText(
+        leading: const OBIcon(OBIcons.deletePost),
+        title: const OBText(
           'Delete post',
         ),
         onTap: _onWantsToDeletePost,
       ));
     } else {
       postActions.add(ListTile(
-        leading: OBIcon(OBIcons.reportPost),
-        title: OBText(
+        leading: const OBIcon(OBIcons.reportPost),
+        title: const OBText(
           'Report post',
         ),
         onTap: _onWantsToReportPost,

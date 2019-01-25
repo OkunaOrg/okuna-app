@@ -1,7 +1,5 @@
-import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -34,8 +32,8 @@ class OBRemoveAccountFromListsState extends State<OBRemoveAccountFromLists> {
     _toastService = openbookProvider.toastService;
 
     return ListTile(
-        title: OBText('Remove account from lists'),
-        leading: OBIcon(OBIcons.removeFromList),
+        title: const OBText('Remove account from lists'),
+        leading: const OBIcon(OBIcons.removeFromList),
         onTap: _removeAccountFromLists);
   }
 

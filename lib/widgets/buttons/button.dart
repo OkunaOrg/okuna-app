@@ -63,7 +63,7 @@ class OBButton extends StatelessWidget {
             buttonChild = Row(
               children: <Widget>[
                 icon,
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 buttonChild

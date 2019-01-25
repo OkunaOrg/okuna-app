@@ -45,7 +45,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
         stream: widget.post.updateSubject,
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
           if (snapshot.data == null)
-            return SizedBox(
+            return const SizedBox(
               height: 35,
             );
 
@@ -55,14 +55,14 @@ class OBPostReactionsState extends State<OBPostReactions> {
               post.reactionsEmojiCounts.counts;
 
           if (emojiCounts.length == 0)
-            return SizedBox(
+            return const SizedBox(
               height: 35,
             );
 
           return SizedBox(
             height: 35,
             child: ListView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 children: emojiCounts.map((emojiCount) {
                   return OBEmojiReactionCount(
@@ -104,8 +104,11 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
     _setRequestInProgress(true);
+
+    PostReaction postReaction;
     try {
-      return await _userService.reactToPost(post: widget.post, emoji: emoji);
+      postReaction =
+          await _userService.reactToPost(post: widget.post, emoji: emoji);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -114,6 +117,8 @@ class OBPostReactionsState extends State<OBPostReactions> {
     } finally {
       _setRequestInProgress(false);
     }
+
+    return postReaction;
   }
 
   Future<void> _deleteReaction() async {

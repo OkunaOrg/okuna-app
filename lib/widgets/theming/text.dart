@@ -1,7 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBText extends StatelessWidget {
   final String text;
@@ -11,7 +10,7 @@ class OBText extends StatelessWidget {
   final int maxLines;
   final OBTextSize size;
 
-  OBText(this.text,
+  const OBText(this.text,
       {this.style,
       this.textAlign,
       this.overflow,

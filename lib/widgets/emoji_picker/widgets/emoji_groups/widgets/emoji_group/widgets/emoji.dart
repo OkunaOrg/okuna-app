@@ -1,7 +1,7 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 
 enum OBEmojiSize { small, medium, large }
 
@@ -19,11 +19,9 @@ class OBEmoji extends StatelessWidget {
     double dimensions = getIconDimensions(size);
 
     return IconButton(
-        icon: CachedNetworkImage(
+        icon: Image(
           height: dimensions,
-          imageUrl: emoji.image,
-          placeholder: SizedBox(),
-          errorWidget: Text('?'),
+          image: AdvancedNetworkImage(emoji.image, useDiskCache: true),
         ),
         onPressed: onEmojiPressed != null
             ? () {

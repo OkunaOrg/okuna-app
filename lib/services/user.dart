@@ -127,7 +127,6 @@ class UserService {
   Future<void> loginWithAuthToken(String authToken) async {
     await _setAuthToken(authToken);
     await refreshUser();
-    User user = getLoggedInUser();
   }
 
   User getLoggedInUser() {
@@ -207,7 +206,7 @@ class UserService {
     return _makeLoggedInUser(userData);
   }
 
-  Future<bool> loginWithStoredAuthToken() async {
+  Future<void> loginWithStoredAuthToken() async {
     var token = await _getStoredAuthToken();
     if (token == null) throw AuthTokenMissingError();
 

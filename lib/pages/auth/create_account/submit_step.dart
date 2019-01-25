@@ -35,7 +35,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
     }
 
     return Scaffold(
-      body: Container(
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Center(child: SingleChildScrollView(child: _buildStatus())),
       ),
@@ -54,13 +54,13 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
             var createAccountErrorFeedback = snapshot.data;
 
             if (createAccountErrorFeedback == null) {
-              return Container(
+              return SizedBox(
                   child: Column(
                 mainAxisSize: MainAxisSize.min,
               ));
             }
 
-            return Container(
+            return Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
@@ -104,7 +104,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
           '😥‍',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(errorTitle,
@@ -114,7 +114,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
               fontWeight: FontWeight.bold,
               //color: Colors.white
             )),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(errorDescription,
@@ -140,7 +140,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
           '🥚‍',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(loadingTitle,
@@ -150,7 +150,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
               fontWeight: FontWeight.bold,
               //color: Colors.white
             )),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(loadingDescription,
@@ -174,7 +174,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
           Icon(
             Icons.arrow_back_ios,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(

@@ -23,7 +23,7 @@ class OBEmojiPreview extends StatelessWidget {
       width: emojiSize,
       imageUrl: emoji.image,
       placeholder: CircularProgressIndicator(),
-      errorWidget: OBIcon(OBIcons.error),
+      errorWidget: const OBIcon(OBIcons.error),
     );
   }
 
