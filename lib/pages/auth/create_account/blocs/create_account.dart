@@ -32,43 +32,8 @@ class CreateAccountBloc {
   // Serves as a snapshot to the data
   final userRegistrationData = UserRegistrationData();
 
-  // Birthday begins
-
-  Sink<DateTime> get birthday => _birthdayController.sink;
-  final _birthdayController = StreamController<DateTime>();
-
-  Stream<bool> get birthdayIsValid => _birthdayIsValidSubject.stream;
-
-  final _birthdayIsValidSubject = ReplaySubject<bool>(maxSize: 1);
-
-  Stream<String> get birthdayFeedback => _birthdayFeedbackSubject.stream;
-
-  final _birthdayFeedbackSubject = ReplaySubject<String>(maxSize: 1);
-
-  Stream<String> get validatedBirthday => _validatedBirthdaySubject.stream;
-
-  final _validatedBirthdaySubject = ReplaySubject<String>(maxSize: 1);
-
-  // Birthday ends
-
-  // Name begins
-
-  Sink<String> get name => _nameController.sink;
-  final _nameController = StreamController<String>();
-
-  Stream<bool> get nameIsValid => _nameIsValidSubject.stream;
-
-  final _nameIsValidSubject = ReplaySubject<bool>(maxSize: 1);
-
-  Stream<String> get nameFeedback => _nameFeedbackSubject.stream;
-
-  final _nameFeedbackSubject = ReplaySubject<String>(maxSize: 1);
-
-  Stream<String> get validatedName => _validatedNameSubject.stream;
-
-  final _validatedNameSubject = ReplaySubject<String>(maxSize: 1);
-
-  // Name ends
+  final _isOfLegalAgeSubject = ReplaySubject<bool>(maxSize: 1);
+  final _nameSubject = ReplaySubject<String>(maxSize: 1);
 
   // Username begins
 
@@ -86,38 +51,8 @@ class CreateAccountBloc {
 
   // Username ends
 
-  // Email begins
-
-  Stream<bool> get emailIsValid => _emailIsValidSubject.stream;
-
-  final _emailIsValidSubject = ReplaySubject<bool>(maxSize: 1);
-
-  Stream<String> get emailFeedback => _emailFeedbackSubject.stream;
-
-  final _emailFeedbackSubject = ReplaySubject<String>(maxSize: 1);
-
-  Stream<String> get validatedEmail => _validatedEmailSubject.stream;
-
-  final _validatedEmailSubject = ReplaySubject<String>(maxSize: 1);
-
-  // Email ends
-
-  // Password begins
-
-  Sink<String> get password => _passwordController.sink;
-  final _passwordController = StreamController<String>();
-
-  Stream<bool> get passwordIsValid => _passwordIsValidSubject.stream;
-
-  final _passwordIsValidSubject = ReplaySubject<bool>(maxSize: 1);
-
-  Stream<String> get passwordFeedback => _passwordFeedbackSubject.stream;
-
-  final _passwordFeedbackSubject = ReplaySubject<String>(maxSize: 1);
-
-  Stream<String> get validatedPassword => _validatedPasswordSubject.stream;
-
-  final _validatedPasswordSubject = ReplaySubject<String>(maxSize: 1);
+  final _emailSubject = ReplaySubject<String>(maxSize: 1);
+  final _passwordSubject = ReplaySubject<String>(maxSize: 1);
 
   // Password ends
 
@@ -155,28 +90,21 @@ class CreateAccountBloc {
   // Create account ends
 
   CreateAccountBloc() {
-    _nameController.stream.listen(_onName);
-    _passwordController.stream.listen(_onPassword);
-    _birthdayController.stream.listen(_onBirthday);
+    _isOfLegalAgeSubject.stream.listen(_onLegalAgeConfirmationChange);
+    _nameSubject.stream.listen(_onNameChange);
+    _emailSubject.stream.listen(_onEmailChange);
+    _passwordSubject.listen(_onPasswordChange);
     _avatarController.stream.listen(_onAvatar);
   }
 
   void dispose() {
-    _birthdayIsValidSubject.close();
-    _birthdayFeedbackSubject.close();
-    _validatedBirthdaySubject.close();
-    _nameIsValidSubject.close();
-    _nameFeedbackSubject.close();
-    _validatedNameSubject.close();
+    _isOfLegalAgeSubject.close();
+    _nameSubject.close();
     _usernameIsValidSubject.close();
     _usernameFeedbackSubject.close();
     _validatedUsernameSubject.close();
-    _emailIsValidSubject.close();
-    _emailFeedbackSubject.close();
-    _validatedEmailSubject.close();
-    _passwordIsValidSubject.close();
-    _passwordFeedbackSubject.close();
-    _validatedPasswordSubject.close();
+    _emailSubject.close();
+    _passwordSubject.close();
     _avatarIsValidSubject.close();
     _avatarFeedbackSubject.close();
     _validatedAvatarSubject.close();
@@ -194,60 +122,19 @@ class CreateAccountBloc {
     _authApiService = authApiService;
   }
 
-  // Birthday begins
+  // Legal Age Confirmation
 
-  bool hasBirthday() {
-    return userRegistrationData.birthday != null;
+  bool isOfLegalAge() {
+    return userRegistrationData.isOfLegalAge;
   }
 
-  String getBirthday() {
-    return userRegistrationData.birthday;
+  void _onLegalAgeConfirmationChange(bool isOfLegalAge) {
+    userRegistrationData.isOfLegalAge = isOfLegalAge;
   }
 
-  void _onBirthday(DateTime birthday) {
-    _clearBirthday();
-
-    if (birthday == null) {
-      _onBirthdayIsEmpty();
-      return;
-    }
-
-    if (!_validationService.isValidBirthday(birthday)) {
-      _onBirthdayIsInvalid();
-      return;
-    }
-
-    _onBirthdayIsValid(birthday);
+  void setLegalAgeConfirmation(bool isOfLegalAge) {
+    _isOfLegalAgeSubject.add(isOfLegalAge);
   }
-
-  void _onBirthdayIsEmpty() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_EMPTY_ERROR');
-    _birthdayFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onBirthdayIsInvalid() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.BIRTHDAY_INVALID_ERROR');
-    _birthdayFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onBirthdayIsValid(DateTime birthday) {
-    String parsedDate = DateFormat('dd-MM-yyyy').format(birthday);
-
-    _birthdayFeedbackSubject.add(null);
-    userRegistrationData.birthday = parsedDate;
-    _validatedBirthdaySubject.add(parsedDate);
-    _birthdayIsValidSubject.add(true);
-  }
-
-  void _clearBirthday() {
-    _birthdayIsValidSubject.add(false);
-    _validatedBirthdaySubject.add(null);
-    userRegistrationData.birthday = null;
-  }
-
-  // Birthday ends
 
   // Name begins
 
@@ -259,32 +146,16 @@ class CreateAccountBloc {
     return userRegistrationData.name;
   }
 
-  void _onName(String name) {
-    _clearName();
-
-    if (name == null) return;
-
-    String validationError = _validationService.validateUserProfileName(name);
-
-    if (validationError != null) {
-      _nameFeedbackSubject.add(validationError);
-      return;
-    }
-
-    _onNameIsValid(name);
+  void setName(String name) {
+    _nameSubject.add(name);
   }
 
-  void _onNameIsValid(String name) {
-    _nameFeedbackSubject.add(null);
-
+  void _onNameChange(String name) {
+    if (name == null) return;
     userRegistrationData.name = name;
-    _validatedNameSubject.add(name);
-    _nameIsValidSubject.add(true);
   }
 
   void _clearName() {
-    _nameIsValidSubject.add(false);
-    _validatedNameSubject.add(null);
     userRegistrationData.name = null;
   }
 
@@ -375,64 +246,16 @@ class CreateAccountBloc {
     return userRegistrationData.email;
   }
 
-  Future<bool> setEmail(String email) async {
-    clearEmail();
-
-    if (email == null) return Future.value(false);
-
-    String emailFeedback = _validationService.validateUserEmail(email);
-    if (emailFeedback != null) {
-      _emailFeedbackSubject.add(emailFeedback);
-      return Future.value(false);
-    }
-
-    var emailSet = false;
-
-    try {
-      var isEmailTaken = await _validationService.isEmailTaken(email);
-
-      if (!isEmailTaken) {
-        _onEmailIsAvailable(email);
-        return true;
-      } else {
-        _onEmailIsNotAvailable(email);
-      }
-    } catch (error) {
-      _onEmailCheckServerError();
-      rethrow;
-    }
-
-    return emailSet;
+  void setEmail(String email) async {
+    _emailSubject.add(email);
   }
 
-  void _onEmailIsNotAvailable(String email) {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
-
-    String parsedFeedback = sprintf(errorFeedback, [email]);
-    _emailFeedbackSubject.add(parsedFeedback);
-  }
-
-  void _onEmailIsAvailable(String email) {
-    _onEmailIsValid(email);
-  }
-
-  void _onEmailIsValid(String email) {
+  void _onEmailChange(String email) {
+    if (email == null) return;
     userRegistrationData.email = email;
-    _validatedEmailSubject.add(email);
-    _emailIsValidSubject.add(true);
   }
 
-  void _onEmailCheckServerError() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
-    _emailFeedbackSubject.add(errorFeedback);
-  }
-
-  void clearEmail() {
-    _emailFeedbackSubject.add(null);
-    _emailIsValidSubject.add(false);
-    _validatedEmailSubject.add(null);
+  void _clearEmail() {
     userRegistrationData.email = null;
   }
 
@@ -448,31 +271,16 @@ class CreateAccountBloc {
     return userRegistrationData.password;
   }
 
-  void _onPassword(String password) {
-    _clearPassword();
-
+  void _onPasswordChange(String password) {
     if (password == null) return;
-
-    String passwordFeedback = _validationService.validateUserPassword(password);
-    if (passwordFeedback != null) {
-      _passwordFeedbackSubject.add(passwordFeedback);
-      return;
-    }
-
-    _onPasswordIsValid(password);
+    userRegistrationData.password = password;
   }
 
-  void _onPasswordIsValid(String password) {
-    _passwordFeedbackSubject.add(null);
-
-    userRegistrationData.password = password;
-    _validatedPasswordSubject.add(password);
-    _passwordIsValidSubject.add(true);
+  void setPassword(String password) {
+    _passwordSubject.add(password);
   }
 
   void _clearPassword() {
-    _passwordIsValidSubject.add(false);
-    _validatedPasswordSubject.add(null);
     userRegistrationData.password = null;
   }
 
@@ -569,16 +377,17 @@ class CreateAccountBloc {
 
   void clearAll() {
     _clearCreateAccount();
-    _clearBirthday();
     _clearName();
-    clearEmail();
+    _clearEmail();
     _clearAvatar();
+    _clearPassword();
     clearUsername();
   }
 }
 
 class UserRegistrationData {
   String name;
+  bool isOfLegalAge;
   String birthday;
   String username;
   String email;
