@@ -1,6 +1,8 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
@@ -15,20 +17,21 @@ class OBAuthEmailStepPage extends StatefulWidget {
 }
 
 class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
-  bool isSubmitted;
-  bool isBootstrapped;
   bool emailCheckInProgress;
+  bool emailTaken;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
+  ValidationService validationService;
+  ToastService toastService;
 
   TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
-    isBootstrapped = false;
-    isSubmitted = false;
     emailCheckInProgress = false;
+    emailTaken = false;
     super.initState();
   }
 
@@ -36,7 +39,9 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     localizationService = openbookProvider.localizationService;
+    validationService = openbookProvider.validationService;
     createAccountBloc = openbookProvider.createAccountBloc;
+    toastService = openbookProvider.toastService;
 
     return Scaffold(
       body: Center(
@@ -50,10 +55,6 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
                       height: 20.0,
                     ),
                     _buildEmailForm(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildEmailError()
                   ],
                 ))),
       ),
@@ -70,7 +71,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
               Expanded(
                 child: _buildPreviousButton(context: context),
               ),
-              Expanded(child: _buildNextButton()),
+              Expanded(child: _buildNextButton(context)),
             ],
           ),
         ),
@@ -78,26 +79,45 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     );
   }
 
-  Widget _buildEmailError() {
-    return StreamBuilder(
-      stream: createAccountBloc.emailFeedback,
-      initialData: null,
-      builder: (context, snapshot) {
-        String feedback = snapshot.data;
-        if (feedback == null || !isSubmitted) {
-          return Container();
-        }
 
-        return Container(
-          child: Text(feedback,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 18.0)),
-        );
-      },
-    );
+  bool _validateForm() {
+    return _formKey.currentState.validate();
   }
 
-  Widget _buildNextButton() {
+  void _setEmailTaken(bool isEmailTaken) {
+    setState(() {
+      emailTaken = isEmailTaken;
+    });
+  }
+
+  void _checkEmailAvailable(String email, BuildContext context) async {
+    _setEmailCheckInProgress(true);
+    try {
+      var isEmailTaken = await validationService.isEmailTaken(email);
+
+      if (isEmailTaken) {
+        _setEmailTaken(true);
+      }
+    } catch (error) {
+      String errorFeedback = localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
+      toastService.error(message: errorFeedback, context: context);
+    } finally {
+      _setEmailCheckInProgress(false);
+    }
+  }
+
+  void onPressedNextStep(BuildContext context) {
+    bool isEmailValid = _validateForm();
+    _checkEmailAvailable(_emailController.text, context);
+    if (isEmailValid && !emailTaken) {
+      setState(() {
+        createAccountBloc.setEmail(_emailController.text);
+        Navigator.pushNamed(context, '/auth/password_step');
+      });
+    }
+  }
+
+  Widget _buildNextButton(BuildContext context) {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return OBSuccessButton(
@@ -106,20 +126,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
       isLoading: emailCheckInProgress,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
-        setState(() {
-          emailCheckInProgress = true;
-          isSubmitted = true;
-          createAccountBloc
-              .setEmail(_emailController.text)
-              .then((bool emailWasSet) {
-            _setEmailCheckInProgress(false);
-            if (emailWasSet) {
-              Navigator.pushNamed(context, '/auth/password_step');
-            }
-          }).catchError((error) {
-            _setEmailCheckInProgress(false);
-          });
-        });
+        onPressedNextStep(context);
       },
     );
   }
@@ -175,37 +182,33 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   }
 
   Widget _buildEmailForm() {
-    // If we use StreamBuilder to build the TexField it has a weird
-    // bug which places the cursor at the beginning of the label everytime
-    // the stream changes. Therefore a flag is used to bootstrap initial value
-
-    if (!isBootstrapped && createAccountBloc.hasEmail()) {
-      _emailController.text = createAccountBloc.getEmail();
-      isBootstrapped = true;
-    }
 
     String emailInputPlaceholder =
         localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
+    String errorEmailTaken =
+    localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
 
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(children: <Widget>[
-            new Expanded(
-              child: Container(
-                  color: Colors.transparent,
-                  child: OBAuthTextField(
-                    hintText: emailInputPlaceholder,
-                    autocorrect: false,
-                    onChanged: (String value) {
-                      createAccountBloc.clearEmail();
-                    },
-                    controller: _emailController,
-                  )),
-            ),
-          ]),
+    return Form(
+      key: _formKey,
+      child: Row(children: <Widget>[
+        new Expanded(
+          child: Container(
+              color: Colors.transparent,
+              child: OBAuthTextField(
+                autocorrect: false,
+                hintText: emailInputPlaceholder,
+                validator: (String email) {
+                  String validateEMail = validationService.validateUserEmail(email);
+                  if (validateEMail != null) return validateEMail;
+                  if (emailTaken != null && emailTaken) {
+                    return errorEmailTaken;
+                  }
+                },
+                controller: _emailController,
+              )
+          ),
         ),
-      ],
+      ]),
     );
   }
 

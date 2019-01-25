@@ -196,9 +196,9 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
                   color: Colors.transparent,
                   child: OBAuthTextField(
                     autocorrect: false,
-                    onChanged: (String value) {
-                      createAccountBloc.clearUsername();
-                    },
+//                    onChanged: (String value) {
+//                      createAccountBloc.clearUsername();
+//                    },
                     prefixIcon: Icon(Icons.alternate_email),
                     hintText: usernameInputPlaceholder,
                     controller: _usernameController,

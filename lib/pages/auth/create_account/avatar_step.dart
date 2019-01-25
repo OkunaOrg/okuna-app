@@ -107,7 +107,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
       size: OBButtonSize.large,
       child: Text(buttonText, style: TextStyle(fontSize: 16.0), textAlign: TextAlign.center,),
       onPressed: () {
-        Navigator.pushNamed(context, '/auth/submit_step');
+        Navigator.pushNamed(context, '/auth/legal_age_step');
       },
     );
   }
