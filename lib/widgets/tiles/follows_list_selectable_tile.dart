@@ -30,7 +30,7 @@ class OBFollowsListSelectableTile extends StatelessWidget {
       onTap: () {
         onFollowsListPressed(followsList);
       },
-      leading: Container(
+      leading: SizedBox(
         height: 40,
         width: 40,
         child: Center(

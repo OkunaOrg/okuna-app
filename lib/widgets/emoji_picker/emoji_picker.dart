@@ -2,7 +2,6 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/emoji_groups.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_search_results.dart';
@@ -24,8 +23,6 @@ class OBEmojiPicker extends StatefulWidget {
 
 class OBEmojiPickerState extends State<OBEmojiPicker> {
   UserService _userService;
-  ToastService _toastService;
-  OBEmojiPickerStatus _status;
 
   bool _needsBootstrap;
   bool _hasSearch;
@@ -42,14 +39,12 @@ class OBEmojiPickerState extends State<OBEmojiPicker> {
     _emojiSearchQuery = '';
     _needsBootstrap = true;
     _hasSearch = false;
-    _status = OBEmojiPickerStatus.overview;
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
 
     if (_needsBootstrap) {
       _bootstrap();

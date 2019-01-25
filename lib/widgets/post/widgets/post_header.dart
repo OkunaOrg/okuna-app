@@ -1,7 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -29,7 +28,7 @@ class OBPostHeader extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             var postCreator = snapshot.data;
 
-            if (postCreator == null) return SizedBox();
+            if (postCreator == null) return const SizedBox();
 
             return OBUserAvatar(
               onPressed: () {
@@ -41,7 +40,7 @@ class OBPostHeader extends StatelessWidget {
             );
           }),
       trailing: IconButton(
-          icon: OBIcon(OBIcons.moreVertical),
+          icon: const OBIcon(OBIcons.moreVertical),
           onPressed: () {
             bottomSheetService.showPostActions(
                 context: context,
@@ -59,7 +58,7 @@ class OBPostHeader extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
               var postCreator = snapshot.data;
 
-              if (postCreator == null) return SizedBox();
+              if (postCreator == null) return const SizedBox();
 
               return OBText(
                 postCreator.username,
@@ -73,6 +72,4 @@ class OBPostHeader extends StatelessWidget {
       ),
     );
   }
-
-  void _onWantsToSeePostActions() {}
 }

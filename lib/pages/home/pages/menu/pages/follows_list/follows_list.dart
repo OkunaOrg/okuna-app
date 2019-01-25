@@ -42,7 +42,6 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     var modalService = openbookProvider.modalService;
-    var navigationService = openbookProvider.navigationService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -62,7 +61,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
         child: RefreshIndicator(
             key: _refreshIndicatorKey,
             child: OBPrimaryColorContainer(
-              child: Container(
+              child: SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -86,7 +85,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
   Future<void> _refreshFollowsList() async {
     try {
       await _userService.getFollowsListWithId(widget.followsList.id);
-    } on HttpieConnectionRefusedError catch (error) {
+    } on HttpieConnectionRefusedError{
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
       _toastService.error(message: 'Unknown error', context: context);

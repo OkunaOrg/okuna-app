@@ -64,10 +64,10 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
         child: Stack(
           children: <Widget>[
             OBPrimaryColorContainer(
-              child: Container(
+              child: SizedBox(
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                         child: OBSearchBar(
                       onSearch: _onSearch,
                       hintText: 'Search for a circle...',
@@ -76,7 +76,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                       child: RefreshIndicator(
                           key: _refreshIndicatorKey,
                           child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
+                              physics: const AlwaysScrollableScrollPhysics(),
                               controller: _connectionsCirclesScrollController,
                               padding: EdgeInsets.all(0),
                               itemCount:
@@ -117,7 +117,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                         _onConnectionsCircleCreated(createdConnectionsCircle);
                       }
                     },
-                    icon: OBIcon(
+                    icon: const OBIcon(
                       OBIcons.add,
                       size: OBIconSize.small,
                       color: Colors.white,
@@ -142,7 +142,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
       _connectionsCircles.insert(0, connectionsCircle);
       _setConnectionsCircles(_connectionsCircles);
       _scrollToTop();
-    } on HttpieConnectionRefusedError catch (error) {
+    } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
       _toastService.error(message: 'Unknown error', context: context);

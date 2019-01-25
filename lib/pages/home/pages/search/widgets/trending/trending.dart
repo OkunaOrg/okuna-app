@@ -1,8 +1,4 @@
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/trending/widgets/trending_posts.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
-import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:flutter/material.dart';
 
 class OBTrending extends StatefulWidget {
@@ -33,8 +29,8 @@ class OBTrendingState extends State<OBTrending> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
         child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
             controller: _scrollController,
-            physics: AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.all(0),
             itemCount: 1,
             itemBuilder: (context, index) {

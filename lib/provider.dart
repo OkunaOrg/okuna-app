@@ -76,6 +76,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   void initState() {
     super.initState();
     initAsyncState();
+    imageCache.maximumSize = 200 << 20; // 200MB
     deepLinksService.setAuthApiService(authApiService);
     deepLinksService.setToastService(toastService);
     deepLinksService.setUserService(userService);

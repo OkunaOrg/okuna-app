@@ -19,11 +19,12 @@ class OBSettingsPage extends StatelessWidget {
       navigationBar: OBNavigationBar(title: 'Settings'),
       child: OBPrimaryColorContainer(
         child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
             ListTile(
-              leading: OBIcon(OBIcons.email),
+              leading: const OBIcon(OBIcons.email),
               title: OBText(localizationService.trans('SETTINGS.CHANGE_EMAIL')),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
@@ -34,7 +35,7 @@ class OBSettingsPage extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: OBIcon(OBIcons.lock),
+              leading: const OBIcon(OBIcons.lock),
               title:
                   OBText(localizationService.trans('SETTINGS.CHANGE_PASSWORD')),
               onTap: () {

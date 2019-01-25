@@ -26,7 +26,6 @@ class OBHomePage extends StatefulWidget {
 }
 
 class OBHomePageState extends State<OBHomePage> {
-  @override
   UserService _userService;
   int _currentIndex;
   int _lastIndex;
@@ -61,10 +60,9 @@ class OBHomePageState extends State<OBHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _userService = openbookProvider.userService;
-
     if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _userService = openbookProvider.userService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -161,39 +159,39 @@ class OBHomePageState extends State<OBHomePage> {
       },
       items: [
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.home),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.home),
+          activeIcon: const OBIcon(
             OBIcons.home,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.search),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.search),
+          activeIcon: const OBIcon(
             OBIcons.search,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.notifications),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.notifications),
+          activeIcon: const OBIcon(
             OBIcons.notifications,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.communities),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.communities),
+          activeIcon: const OBIcon(
             OBIcons.communities,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-            title: SizedBox(),
+            title: const SizedBox(),
             icon: OBUserAvatar(
               avatarUrl: _avatarUrl,
               size: OBUserAvatarSize.small,
@@ -202,9 +200,9 @@ class OBHomePageState extends State<OBHomePage> {
               avatarUrl: _avatarUrl,
             )),
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.menu),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.menu),
+          activeIcon: const OBIcon(
             OBIcons.menu,
             themeColor: OBIconThemeColor.primaryAccent,
           ),

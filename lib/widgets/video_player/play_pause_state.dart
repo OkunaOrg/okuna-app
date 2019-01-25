@@ -55,11 +55,11 @@ class _VideoPlayPauseState extends State<VideoPlayPause> {
           }
           if (controller.value.isPlaying) {
             imageFadeAnim =
-                OBVideoPlayPauseFadeAnimation(child: OBIcon(OBIcons.pause, customSize: 100.0));
+                OBVideoPlayPauseFadeAnimation(child: const OBIcon(OBIcons.pause, customSize: 100.0));
             controller.pause();
           } else {
             imageFadeAnim =
-                OBVideoPlayPauseFadeAnimation(child: OBIcon(OBIcons.play_arrow, customSize: 100.0));
+                OBVideoPlayPauseFadeAnimation(child: const OBIcon(OBIcons.play_arrow, customSize: 100.0));
             controller.play();
           }
         },

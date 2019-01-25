@@ -5,22 +5,24 @@ import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_video.
 import 'package:flutter/material.dart';
 
 class OBPostBody extends StatelessWidget {
-  final Post _post;
+  final Post post;
 
-  OBPostBody(this._post);
+  const OBPostBody(this.post, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     List<Widget> bodyItems = [];
 
-    if (_post.hasImage()) {
-      bodyItems.add(OBPostBodyImage(_post));
-    } else if (_post.hasVideo()) {
-      bodyItems.add(OBPostBodyVideo(post:_post));
+    if (post.hasImage()) {
+      bodyItems.add(OBPostBodyImage(
+        post: post,
+      ));
+    } else if (post.hasVideo()) {
+      bodyItems.add(OBPostBodyVideo(post: post));
     }
 
-    if (_post.hasText()) {
-      bodyItems.add(OBPostBodyText(_post));
+    if (post.hasText()) {
+      bodyItems.add(OBPostBodyText(post));
     }
 
     return Row(
@@ -28,9 +30,9 @@ class OBPostBody extends StatelessWidget {
       children: <Widget>[
         Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: bodyItems,
-            ))
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: bodyItems,
+        ))
       ],
     );
   }

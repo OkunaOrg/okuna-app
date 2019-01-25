@@ -5,7 +5,6 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
@@ -89,7 +88,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   Widget _buildNavigationBar() {
     return OBNavigationBar(
       leading: GestureDetector(
-        child: OBIcon(OBIcons.close),
+        child: const OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },

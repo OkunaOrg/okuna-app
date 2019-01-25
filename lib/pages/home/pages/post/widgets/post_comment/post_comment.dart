@@ -7,9 +7,7 @@ import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -100,7 +98,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
             size: OBUserAvatarSize.medium,
             avatarUrl: widget.postComment.getCommenterProfileAvatar(),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20.0,
           ),
           Expanded(
@@ -113,7 +111,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
                   _navigationService.navigateToUserProfile(user: widget.post.creator, context: context);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5.0,
               ),
               OBSecondaryText(

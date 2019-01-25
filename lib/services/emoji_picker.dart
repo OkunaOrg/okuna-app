@@ -12,7 +12,7 @@ class EmojiPickerService {
           return FractionallySizedBox(
             heightFactor: 50,
             widthFactor: 100,
-            child: Container(
+            child: SizedBox(
               child: OBEmojiPicker(
                 onEmojiPicked: onEmojiPicked,
               ),

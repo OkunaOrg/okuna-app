@@ -16,7 +16,7 @@ class OBPostComments extends StatelessWidget {
     var navigationService = openbookProvider.navigationService;
 
     if (commentsCount == null || commentsCount == 0) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Padding(

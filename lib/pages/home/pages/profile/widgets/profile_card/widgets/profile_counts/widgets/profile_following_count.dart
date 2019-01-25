@@ -13,7 +13,7 @@ class OBProfileFollowingCount extends StatelessWidget {
   Widget build(BuildContext context) {
     int followingCount = user.followingCount;
 
-    if (followingCount == null || followingCount == 0) return SizedBox();
+    if (followingCount == null || followingCount == 0) return const SizedBox();
 
     String count = getPrettyCount(followingCount);
 
@@ -45,7 +45,7 @@ class OBProfileFollowingCount extends StatelessWidget {
                           color: themeValueParserService.parseColor(theme.secondaryTextColor)))
                 ])),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               )
             ],

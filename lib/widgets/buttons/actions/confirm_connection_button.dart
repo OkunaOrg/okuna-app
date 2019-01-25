@@ -45,7 +45,7 @@ class OBConfirmConnectionButtonState extends State<OBConfirmConnectionButton> {
         var user = snapshot.data;
 
         if (user?.isPendingConnectionConfirmation == null || !user.isConnected)
-          return SizedBox();
+          return const SizedBox();
 
         return user.isPendingConnectionConfirmation
             ? _buildConfirmConnectionButton()

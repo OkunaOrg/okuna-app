@@ -4,6 +4,7 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/widgets/reaction_emoji_count.dart';
@@ -23,6 +24,7 @@ class OBPostReactions extends StatefulWidget {
 class OBPostReactionsState extends State<OBPostReactions> {
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
 
   bool _requestInProgress;
 
@@ -37,12 +39,13 @@ class OBPostReactionsState extends State<OBPostReactions> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _navigationService = openbookProvider.navigationService;
 
     return StreamBuilder(
         stream: widget.post.updateSubject,
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
           if (snapshot.data == null)
-            return SizedBox(
+            return const SizedBox(
               height: 35,
             );
 
@@ -52,14 +55,14 @@ class OBPostReactionsState extends State<OBPostReactions> {
               post.reactionsEmojiCounts.counts;
 
           if (emojiCounts.length == 0)
-            return SizedBox(
+            return const SizedBox(
               height: 35,
             );
 
           return SizedBox(
             height: 35,
             child: ListView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 children: emojiCounts.map((emojiCount) {
                   return OBEmojiReactionCount(
@@ -71,6 +74,13 @@ class OBPostReactionsState extends State<OBPostReactions> {
                             _onEmojiReactionCountPressed(
                                 pressedEmojiCount, emojiCounts);
                           },
+                    onLongPressed: (pressedEmojiCount) {
+                      _navigationService.navigateToPostReactions(
+                          post: widget.post,
+                          reactionsEmojiCounts: emojiCounts,
+                          context: context,
+                          reactionEmoji: pressedEmojiCount.emoji);
+                    },
                   );
                 }).toList()),
           );
@@ -94,8 +104,11 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
     _setRequestInProgress(true);
+
+    PostReaction postReaction;
     try {
-      return await _userService.reactToPost(post: widget.post, emoji: emoji);
+      postReaction =
+          await _userService.reactToPost(post: widget.post, emoji: emoji);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -104,6 +117,8 @@ class OBPostReactionsState extends State<OBPostReactions> {
     } finally {
       _setRequestInProgress(false);
     }
+
+    return postReaction;
   }
 
   Future<void> _deleteReaction() async {

@@ -26,7 +26,7 @@ class OBCirclesWrap extends StatelessWidget{
             circle,
             size: OBCircleColorPreviewSize.extraSmall,
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           OBText(

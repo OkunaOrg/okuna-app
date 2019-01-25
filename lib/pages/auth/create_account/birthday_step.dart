@@ -33,12 +33,12 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildWhensYourBirthday(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildBirthdayForm(),
@@ -50,8 +50,8 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,10 +74,10 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
       builder: (context, snapshot) {
         var feedback = snapshot.data;
         if (feedback == null) {
-          return Container();
+          return SizedBox();
         }
 
-        return Container(
+        return Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Text(feedback,
               style: TextStyle(color: Colors.white, fontSize: 18.0)),
@@ -129,7 +129,7 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -155,7 +155,7 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
           style: TextStyle(fontSize: 45.0, color: Colors.white),
           textAlign: TextAlign.center,
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(
@@ -176,7 +176,7 @@ class OBAuthBirthdayStepPageState extends State<OBAuthBirthdayStepPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Container(
+            SizedBox(
               child: Row(children: <Widget>[
                 new Expanded(
                     child: GestureDetector(

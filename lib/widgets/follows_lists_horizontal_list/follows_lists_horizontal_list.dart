@@ -21,6 +21,7 @@ class OBFollowsListsHorizontalList extends StatelessWidget {
     int itemCount = followsLists.length + 1;
 
     return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemCount: itemCount,
       itemBuilder: (BuildContext context, int index) {

@@ -36,7 +36,7 @@ class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
 
     return ListTile(
         title: OBText(widget.title ?? 'Disconnect from $userName'),
-        leading: OBIcon(OBIcons.disconnect),
+        leading: const OBIcon(OBIcons.disconnect),
         onTap: () async {
           await _disconnectFromUser();
           widget.onDisconnectedFromUser();

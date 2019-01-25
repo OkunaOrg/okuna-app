@@ -1,6 +1,5 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class OBAlert extends StatefulWidget {

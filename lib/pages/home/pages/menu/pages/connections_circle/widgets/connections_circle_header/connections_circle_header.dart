@@ -57,7 +57,7 @@ class OBConnectionsCircleHeader extends StatelessWidget {
       padding: EdgeInsets.only(left: 20.0, right: 20, top: 10.0, bottom: 20),
       child: Column(
         children: <Widget>[
-          OBText('The circle all of your connections get added to.'),
+          const OBText('The circle all of your connections get added to.'),
         ],
       ),
     );
@@ -65,8 +65,8 @@ class OBConnectionsCircleHeader extends StatelessWidget {
 
   Widget _buildUsersHeader() {
     return Padding(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
-      child: OBText('Users',
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
+      child: const OBText('Users',
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
     );
   }

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBCover extends StatelessWidget {
   final String coverUrl;
@@ -35,9 +34,9 @@ class OBCover extends StatelessWidget {
         placeholder: Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: SizedBox(
+        errorWidget: const SizedBox(
           child: Center(
-            child: OBText('Could not load cover'),
+            child: const OBText('Could not load cover'),
           ),
         ),
         height: double.infinity,

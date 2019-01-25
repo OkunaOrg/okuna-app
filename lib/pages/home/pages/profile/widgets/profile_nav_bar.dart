@@ -16,7 +16,7 @@ class OBProfileNavBar extends StatelessWidget
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           var user = snapshot.data;
 
-          if (user == null) return SizedBox();
+          if (user == null) return const SizedBox();
           return OBNavigationBar(
             title: '@' + user.username,
           );

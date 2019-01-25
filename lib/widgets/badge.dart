@@ -15,7 +15,7 @@ class OBBadge extends StatelessWidget {
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
 
-    if (count == 0) return SizedBox();
+    if (count == 0) return const SizedBox();
 
     return StreamBuilder(
         stream: themeService.themeChange,

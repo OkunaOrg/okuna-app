@@ -61,7 +61,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     Widget currentWidget;
 
     if (_requestInProgress) {
-      currentWidget = Container(
+      currentWidget = Padding(
         padding: EdgeInsets.only(top: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -108,7 +108,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     }
   }
 
-  Future<List<User>> _searchForUsersWithQuery(String query) async {
+  Future<void> _searchForUsersWithQuery(String query) async {
     if (_getUsersWithQuerySubscription != null)
       _getUsersWithQuerySubscription.cancel();
 
@@ -162,7 +162,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
-  @override
   void scrollToTop() {
     _trendingController.scrollToTop();
   }

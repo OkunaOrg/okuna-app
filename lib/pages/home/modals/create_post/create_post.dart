@@ -7,7 +7,6 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/post_video_previe
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
-import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
@@ -16,9 +15,9 @@ import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
@@ -87,7 +86,7 @@ class CreatePostModalState extends State<CreatePostModal> {
             _hasImage ||
             _hasVideo;
 
-    Widget nextButtonText = Text('Next');
+    Widget nextButtonText = const OBText('Next');
     Widget nextButton;
 
     if (nextButtonIsEnabled) {
@@ -104,7 +103,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
     return OBNavigationBar(
       leading: GestureDetector(
-        child: OBIcon(OBIcons.close),
+        child: const OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
@@ -131,7 +130,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   Widget _buildNewPostContent() {
     return Expanded(
-        child: Container(
+        child: Padding(
       padding: EdgeInsets.only(left: 20.0, top: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +140,7 @@ class CreatePostModalState extends State<CreatePostModal> {
               OBLoggedInUserAvatar(
                 size: OBUserAvatarSize.medium,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12.0,
               ),
               OBRemainingPostCharacters(
@@ -152,8 +151,8 @@ class CreatePostModalState extends State<CreatePostModal> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Container(
+              physics: const ClampingScrollPhysics(),
+              child: Padding(
                   padding:
                       EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                   child: Column(
@@ -173,13 +172,14 @@ class CreatePostModalState extends State<CreatePostModal> {
       postActions.addAll(_getImagePostActions());
     }
 
-    if (postActions.isEmpty) return SizedBox();
+    if (postActions.isEmpty) return const SizedBox();
 
     return Container(
       height: 51.0,
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       color: Color.fromARGB(5, 0, 0, 0),
       child: ListView.separated(
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount: postActions.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, index) {
@@ -188,7 +188,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           return index == 0
               ? Row(
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     postAction
@@ -197,7 +197,7 @@ class CreatePostModalState extends State<CreatePostModal> {
               : postAction;
         },
         separatorBuilder: (BuildContext context, index) {
-          return SizedBox(
+          return const SizedBox(
             width: 10,
           );
         },
@@ -210,7 +210,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       OBPillButton(
         text: 'Photo',
         color: Pigment.fromString('#FCC14B'),
-        icon: OBIcon(OBIcons.photo),
+        icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
           _unfocusTextField();
           File pickedPhoto =
@@ -221,7 +221,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       OBPillButton(
         text: 'Video',
         color: Pigment.fromString('#00B7FF'),
-        icon: OBIcon(OBIcons.video),
+        icon: const OBIcon(OBIcons.video),
         onPressed: () async {
           _unfocusTextField();
           File pickedVideo =
@@ -290,7 +290,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   VoidCallback _addPostItemWidget(Widget postItemWidget) {
-    var widgetSpacing = SizedBox(
+    var widgetSpacing = const SizedBox(
       height: 20.0,
     );
 
@@ -308,14 +308,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     };
   }
 
-  Future<File> _pickImage(ImageSource source) async {
-    var image = await ImagePicker.pickImage(source: source);
-    if (image == null) {
-      return null;
-    }
-    return image;
-  }
-
   void _setPostItemsWidgets(List<Widget> postItemsWidgets) {
     setState(() {
       _postItemsWidgets = postItemsWidgets;
@@ -326,3 +318,4 @@ class CreatePostModalState extends State<CreatePostModal> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
+

@@ -55,7 +55,7 @@ class OBColorFieldState extends State<OBColorField> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color:
-                      _color == null ? SizedBox() : Pigment.fromString(_color),
+                      _color == null ? const SizedBox() : Pigment.fromString(_color),
                 ),
                 height: 30,
                 width: 30,

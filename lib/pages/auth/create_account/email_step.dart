@@ -46,15 +46,15 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourEmail(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
-                    _buildEmailForm(),
+                    _buildEmailForm()
                   ],
                 ))),
       ),
@@ -62,7 +62,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -143,7 +143,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -168,7 +168,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
           '💌',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(whatEmailText,

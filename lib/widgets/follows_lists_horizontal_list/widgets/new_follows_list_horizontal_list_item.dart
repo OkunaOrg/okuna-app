@@ -19,7 +19,7 @@ class OBNewFollowsListHorizontalListItem extends StatelessWidget {
             Stack(
               overflow: Overflow.visible,
               children: <Widget>[
-                OBIcon(
+                const OBIcon(
                   OBIcons.lists,
                   customSize: 40,
                   themeColor: OBIconThemeColor.primaryAccent,
@@ -29,7 +29,7 @@ class OBNewFollowsListHorizontalListItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(50)),
-                    child: OBIcon(
+                    child: const OBIcon(
                       OBIcons.add,
                       themeColor: OBIconThemeColor.primaryAccent,
                     ),
@@ -39,14 +39,14 @@ class OBNewFollowsListHorizontalListItem extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            OBText(
+            const OBText(
               'Create new',
               style: TextStyle(fontSize: 14),
             ),
-            OBText(
+            const OBText(
               'list',
               style: TextStyle(fontSize: 14),
             ),

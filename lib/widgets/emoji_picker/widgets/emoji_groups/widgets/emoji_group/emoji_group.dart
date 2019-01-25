@@ -19,7 +19,7 @@ class OBEmojiGroup extends StatelessWidget {
         children: <Widget>[
           OBText(emojiGroup.keyword,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Wrap(

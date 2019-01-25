@@ -1,9 +1,5 @@
 import 'dart:io';
-
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:flutter/material.dart';
 
 enum OBUserAvatarSize { small, medium, large, extraLarge }
@@ -60,18 +56,11 @@ class OBUserAvatar extends StatelessWidget {
         image: FileImage(avatarFile),
       );
     } else if (avatarUrl != null) {
-      finalAvatarImage = CachedNetworkImage(
-        height: avatarSize,
-        width: avatarSize,
-        imageUrl: avatarUrl,
-        placeholder: _getAvatarPlaceholder(avatarSize),
-        errorWidget: SizedBox(
-          child: Center(
-            child: OBIcon(OBIcons.error),
-          ),
-        ),
-        fit: BoxFit.cover,
-      );
+      finalAvatarImage = Image(
+          height: avatarSize,
+          width: avatarSize,
+          fit: BoxFit.cover,
+          image: AdvancedNetworkImage(avatarUrl, useDiskCache: true));
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }
@@ -91,7 +80,7 @@ class OBUserAvatar extends StatelessWidget {
     );
   }
 
-  Widget _getAvatarPlaceholder(double avatarSize){
+  Widget _getAvatarPlaceholder(double avatarSize) {
     return Image.asset(
       DEFAULT_AVATAR_ASSET,
       height: avatarSize,

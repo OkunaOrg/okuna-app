@@ -9,10 +9,11 @@ import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart
 import 'package:flutter/material.dart';
 
 class OBPost extends StatelessWidget {
-  final Post _post;
+  final Post post;
   final OnPostDeleted onPostDeleted;
 
-  const OBPost(this._post, {Key key, @required this.onPostDeleted}) : super(key: key);
+  const OBPost(this.post, {Key key, @required this.onPostDeleted})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +21,19 @@ class OBPost extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         OBPostHeader(
-          _post,
+          post,
           onPostDeleted: onPostDeleted,
         ),
-        OBPostBody(_post),
-        OBPostReactions(_post),
-        OBPostCircles(_post),
+        OBPostBody(post),
+        OBPostReactions(post),
+        OBPostCircles(post),
         OBPostComments(
-          _post,
+          post,
         ),
         OBPostActions(
-          _post,
+          post,
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         )
       ],

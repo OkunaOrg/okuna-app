@@ -9,9 +9,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMainMenuPage extends StatelessWidget {
-  OBMainMenuPageController controller;
+  final OBMainMenuPageController controller;
 
-  OBMainMenuPage({this.controller});
+  const OBMainMenuPage({this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -30,33 +30,34 @@ class OBMainMenuPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: ListView(
-              // Important: Remove any padding from the ListView.
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
-                  leading: OBIcon(OBIcons.circles),
-                  title: OBText('My circles'),
+                  leading: const OBIcon(OBIcons.circles),
+                  title: const OBText('My circles'),
                   onTap: () {
                     navigationService.navigateToConnectionsCircles(
                         context: context);
                   },
                 ),
                 ListTile(
-                  leading: OBIcon(OBIcons.lists),
-                  title: OBText('My lists'),
+                  leading: const OBIcon(OBIcons.lists),
+                  title: const OBText('My lists'),
                   onTap: () {
                     navigationService.navigateToFollowsLists(context: context);
                   },
                 ),
                 ListTile(
-                  leading: OBIcon(OBIcons.settings),
+                  leading: const OBIcon(OBIcons.settings),
                   title: OBText(localizationService.trans('DRAWER.SETTINGS')),
                   onTap: () {
                     navigationService.navigateToSettingsPage(context: context);
                   },
                 ),
                 ListTile(
-                  leading: OBIcon(OBIcons.help),
+                  leading: const OBIcon(OBIcons.help),
                   title: OBText(localizationService.trans('DRAWER.HELP')),
                   onTap: () {
                     // Update the state of the app
@@ -64,7 +65,7 @@ class OBMainMenuPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: OBIcon(OBIcons.logout),
+                  leading: const OBIcon(OBIcons.logout),
                   title: OBText(localizationService.trans('DRAWER.LOGOUT')),
                   onTap: () {
                     userService.logout();

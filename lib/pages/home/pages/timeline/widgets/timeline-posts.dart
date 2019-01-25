@@ -19,7 +19,7 @@ import 'package:loadmore/loadmore.dart';
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
 
-  OBTimelinePosts({
+  const OBTimelinePosts({
     this.controller,
   });
 
@@ -45,9 +45,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   // Whether we have loaded all posts infinite-scroll wise
   bool _loadingFinished;
 
-  // Whether there's a request in progress
-  bool _refreshInProgress;
-
   @override
   void initState() {
     super.initState();
@@ -57,7 +54,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _filteredFollowsLists = [];
     _needsBootstrap = true;
     _loadingFinished = false;
-    _refreshInProgress = false;
     _postsScrollController = ScrollController();
   }
 
@@ -69,17 +65,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
-    _toastService = provider.toastService;
-
     if (_needsBootstrap) {
+      var provider = OpenbookProvider.of(context);
+      _userService = provider.userService;
+      _toastService = provider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
-
-    if (_refreshInProgress && _posts.isEmpty) return _buildRefreshingPosts();
-
     return _posts.isEmpty ? _buildNoTimelinePosts() : _buildTimelinePosts();
   }
 
@@ -90,11 +82,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         child: LoadMore(
             whenEmptyLoad: false,
             isFinish: _loadingFinished,
-            delegate: OBHomePostsLoadMoreDelegate(),
+            delegate: const OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
-                physics: AlwaysScrollableScrollPhysics(),
                 controller: _postsScrollController,
-                padding: EdgeInsets.all(0),
+                physics: const AlwaysScrollableScrollPhysics(),
+                cacheExtent: 30,
+                addAutomaticKeepAlives: true,
+                padding: const EdgeInsets.all(0),
                 itemCount: _posts.length,
                 itemBuilder: (context, index) {
                   var post = _posts[index];
@@ -110,7 +104,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Widget _buildNoTimelinePosts() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),
@@ -121,10 +115,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 'assets/images/stickers/owl-instructor.png',
                 height: 100,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
-              OBText(
+              const OBText(
                 'Your timeline is empty.',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -132,36 +126,28 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
-              OBText(
+              const OBText(
                 'Follow users or join a community to get started!',
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               OBButton(
-                icon: OBIcon(
+                icon: const OBIcon(
                   OBIcons.refresh,
                   size: OBIconSize.small,
                 ),
                 type: OBButtonType.highlight,
-                child: Text('Refresh posts'),
+                child: const OBText('Refresh posts'),
                 onPressed: _onRefresh,
               )
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildRefreshingPosts() {
-    return Container(
-      child: Center(
-        child: OBProgressIndicator(),
       ),
     );
   }
@@ -184,13 +170,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       {List<Circle> circles, List<FollowsList> followsLists}) async {
     _filteredCircles = circles;
     _filteredFollowsLists = followsLists;
-    return _refreshPosts(areFirstPosts: false);
+    return _refreshPosts();
   }
 
   Future<void> clearFilters() {
     _filteredCircles = [];
     _filteredFollowsLists = [];
-    return _refreshPosts(areFirstPosts: false);
+    return _refreshPosts();
   }
 
   List<Circle> getFilteredCircles() {
@@ -207,7 +193,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Future<void> _onRefresh() {
-    return _refreshPosts(areFirstPosts: false);
+    return _refreshPosts();
   }
 
   void _onLoggedInUserChange(User newUser) async {
@@ -216,16 +202,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _loggedInUserChangeSubscription.cancel();
   }
 
-  Future<void> _refreshPosts({areFirstPosts = true}) async {
-    _setRefreshInProgress(true);
+  Future<void> _refreshPosts() async {
     try {
-      Post.clearCache();
-      User.clearNavigationCache();
-
       _posts = (await _userService.getTimelinePosts(
-              areFirstPosts: areFirstPosts,
-              circles: _filteredCircles,
-              followsLists: _filteredFollowsLists))
+              circles: _filteredCircles, followsLists: _filteredFollowsLists))
           .posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
@@ -234,8 +214,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     } catch (error) {
       _onUnknownError(error);
       rethrow;
-    } finally {
-      _setRefreshInProgress(false);
     }
   }
 
@@ -246,6 +224,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       var morePosts = (await _userService.getTimelinePosts(
               maxId: lastPostId,
               circles: _filteredCircles,
+              count: 20,
               followsLists: _filteredFollowsLists))
           .posts;
 
@@ -282,12 +261,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void _setLoadingFinished(bool loadingFinished) {
     setState(() {
       _loadingFinished = loadingFinished;
-    });
-  }
-
-  void _setRefreshInProgress(bool refreshInProgress) {
-    setState(() {
-      _refreshInProgress = refreshInProgress;
     });
   }
 
@@ -354,13 +327,13 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
     String text = builder(status);
 
     if (status == LoadMoreStatus.fail) {
-      return Container(
+      return SizedBox(
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.refresh),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Text('Tap to retry loading posts.')
@@ -370,16 +343,16 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
     }
     if (status == LoadMoreStatus.idle) {
       // No clue why is this even a state.
-      return SizedBox();
+      return const SizedBox();
     }
     if (status == LoadMoreStatus.loading) {
-      return Container(
+      return SizedBox(
           child: Center(
         child: OBProgressIndicator(),
       ));
     }
     if (status == LoadMoreStatus.nomore) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Text(text);

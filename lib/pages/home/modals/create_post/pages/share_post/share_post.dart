@@ -114,16 +114,23 @@ class OBSharePostPageState extends State<OBSharePostPage> {
     _setCreatePostInProgress(true);
 
     Post createdPost;
+
+    List<Circle> selectedCircles = _fakeWorldCircleSelected ? [] : _selectedCircles;
+
     try {
       if (widget.sharePostData.image != null) {
         createdPost = await _userService.createPost(
-            text: widget.sharePostData.text, image: widget.sharePostData.image);
+            text: widget.sharePostData.text,
+            image: widget.sharePostData.image,
+            circles: selectedCircles);
       } else if (widget.sharePostData.video != null) {
         createdPost = await _userService.createPost(
-            text: widget.sharePostData.text, video: widget.sharePostData.video);
+            text: widget.sharePostData.text,
+            video: widget.sharePostData.video,
+            circles: selectedCircles);
       } else if (widget.sharePostData.text != null) {
         createdPost = await _userService.createPost(
-            text: widget.sharePostData.text);
+            text: widget.sharePostData.text, circles: selectedCircles);
       }
       // Remove modal
       Navigator.pop(context, createdPost);

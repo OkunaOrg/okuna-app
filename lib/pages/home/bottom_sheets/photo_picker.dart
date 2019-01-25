@@ -15,8 +15,8 @@ class OBPhotoPickerBottomSheet extends StatelessWidget {
 
     List<Widget> photoPickerActions = [
       ListTile(
-        leading: OBIcon(OBIcons.gallery),
-        title: OBText(
+        leading: const OBIcon(OBIcons.gallery),
+        title: const OBText(
           'From gallery',
         ),
         onTap: () async {
@@ -26,8 +26,8 @@ class OBPhotoPickerBottomSheet extends StatelessWidget {
         },
       ),
       ListTile(
-        leading: OBIcon(OBIcons.camera),
-        title: OBText(
+        leading: const OBIcon(OBIcons.camera),
+        title: const OBText(
           'From camera',
         ),
         onTap: () async {

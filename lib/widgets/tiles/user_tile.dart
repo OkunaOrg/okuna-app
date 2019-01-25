@@ -38,7 +38,7 @@ class OBUserTile extends StatelessWidget {
           OBSecondaryText(user.getProfileName()),
           showFollowing && user.isFollowing != null && user.isFollowing
               ? OBSecondaryText(' · Following')
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     );

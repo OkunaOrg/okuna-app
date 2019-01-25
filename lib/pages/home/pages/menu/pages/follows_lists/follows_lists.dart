@@ -60,10 +60,10 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
         child: Stack(
           children: <Widget>[
             OBPrimaryColorContainer(
-              child: Container(
+              child: SizedBox(
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                         child: OBSearchBar(
                       onSearch: _onSearch,
                       hintText: 'Search for a list...',
@@ -72,7 +72,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                       child: RefreshIndicator(
                           key: _refreshIndicatorKey,
                           child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
+                              physics: const AlwaysScrollableScrollPhysics(),
                               controller: _followsListsScrollController,
                               padding: EdgeInsets.all(0),
                               itemCount: _followsListsSearchResults.length,
@@ -109,7 +109,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                         _onFollowsListCreated(createdFollowsList);
                       }
                     },
-                    icon: OBIcon(
+                    icon: const OBIcon(
                       OBIcons.add,
                       size: OBIconSize.small,
                       color: Colors.white,
@@ -130,7 +130,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
       _followsLists = (await _userService.getFollowsLists()).lists;
       _setFollowsLists(_followsLists);
       _scrollToTop();
-    } on HttpieConnectionRefusedError catch (error) {
+    } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
       _toastService.error(message: 'Unknown error', context: context);

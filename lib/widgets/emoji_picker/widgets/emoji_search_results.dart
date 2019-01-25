@@ -23,6 +23,7 @@ class OBEmojiSearchResults extends StatelessWidget {
 
   Widget _buildSearchResults() {
     return ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
           EmojiGroupSearchResults searchResults = results[index];
@@ -40,8 +41,8 @@ class OBEmojiSearchResults extends StatelessWidget {
                   imageUrl: emoji.image,
                   placeholder:
                       Image(image: AssetImage('assets/images/loading.gif')),
-                  errorWidget: Container(
-                    child: Center(child: OBText('?')),
+                  errorWidget: const SizedBox(
+                    child: Center(child: const OBText('?')),
                   ),
                 ),
               ),
@@ -56,15 +57,15 @@ class OBEmojiSearchResults extends StatelessWidget {
   }
 
   Widget _buildNoResults() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OBIcon(OBIcons.sad, customSize: 30.0),
-              SizedBox(
+              const OBIcon(OBIcons.sad, customSize: 30.0),
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(

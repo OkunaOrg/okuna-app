@@ -5,9 +5,9 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:flutter/material.dart';
 
 class OBProfileCounts extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileCounts(this.user);
+  const OBProfileCounts(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +15,14 @@ class OBProfileCounts extends StatelessWidget {
       stream: user.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
-        if (user == null) return SizedBox();
+        if (user == null) return const SizedBox();
 
-        return Container(
+        return Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Row(
             children: <Widget>[
               Expanded(
-                child: Container(
+                child: SizedBox(
                   child: Wrap(
                     runSpacing: 10.0,
                     children: <Widget>[

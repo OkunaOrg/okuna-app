@@ -4,27 +4,27 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileLocation extends StatelessWidget {
-  User user;
+  final User user;
 
-  OBProfileLocation(this.user);
+  const OBProfileLocation(this.user);
 
   @override
   Widget build(BuildContext context) {
     String location = user.getProfileLocation();
 
     if (location == null) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        OBIcon(
+        const OBIcon(
           OBIcons.location,
           customSize: 14,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Flexible(

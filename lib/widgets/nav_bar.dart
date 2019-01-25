@@ -42,7 +42,7 @@ class OBNavigationBar extends StatelessWidget
               ? OBText(
                   title,
                 )
-              : SizedBox(),
+              : const SizedBox(),
           transitionBetweenRoutes: false,
           backgroundColor:
               themeValueParserService.parseColor(theme.primaryColor),

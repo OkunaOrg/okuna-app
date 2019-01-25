@@ -50,7 +50,7 @@ class OBThemePreview extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50.0),
                         child: Image.asset(theme.themePreview),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   OBText(

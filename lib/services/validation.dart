@@ -162,51 +162,62 @@ class ValidationService {
   String validateUserUsername(String username) {
     assert(username != null);
 
+    String errorMsg;
+
     if (username.length == 0) {
-      return 'Username cannot be empty.';
+      errorMsg = 'Username cannot be empty.';
+    } else if (!isUsernameAllowedLength(username)) {
+      errorMsg =
+          'A username can\'t be longer than $USERNAME_MAX_LENGTH characters.';
+    } else if (!isUsernameAllowedCharacters(username)) {
+      errorMsg =
+          'A username can only contain alphanumeric characters and underscores.';
     }
 
-    if (!isUsernameAllowedLength(username)) {
-      return 'A username can\'t be longer than $USERNAME_MAX_LENGTH characters.';
-    }
-
-    if (!isUsernameAllowedCharacters(username)) {
-      return 'A username can only contain alphanumeric characters and underscores.';
-    }
+    return errorMsg;
   }
 
   String validateUserEmail(String email) {
     assert(email != null);
+
+    String errorMsg;
+
     if (email.length == 0) {
-      return 'Email cannot be empty.';
+      errorMsg = 'Email cannot be empty.';
+    } else if (!isQualifiedEmail(email)) {
+      errorMsg = 'Please provide a valid email.';
     }
 
-    if (!isQualifiedEmail(email)) {
-      return 'Please provide a valid email.';
-    }
+    return errorMsg;
   }
 
   String validateUserPassword(String password) {
     assert(password != null);
+
+    String errorMsg;
+
     if (password.length == 0) {
-      return 'Password can\'t be empty.';
+      errorMsg = 'Password can\'t be empty.';
+    } else if (!isPasswordAllowedLength(password)) {
+      errorMsg =
+          'Password must be between $PASSWORD_MIN_LENGTH and $PASSWORD_MAX_LENGTH characters.';
     }
 
-    if (!isPasswordAllowedLength(password)) {
-      return 'Password must be between $PASSWORD_MIN_LENGTH and $PASSWORD_MAX_LENGTH characters.';
-    }
+    return errorMsg;
   }
 
   String validateUserProfileName(String name) {
     assert(name != null);
 
-    if (name.isEmpty) {
-      return 'Name can\'t be empty.';
-    }
+    String errorMsg;
 
-    if (!isNameAllowedLength(name)) {
-      return 'Name must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
+    if (name.isEmpty) {
+      errorMsg = 'Name can\'t be empty.';
+    } else if (!isNameAllowedLength(name)) {
+      errorMsg =
+          'Name must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
     }
+    return errorMsg;
   }
 
   String validateUserProfileUrl(String url) {
@@ -214,9 +225,13 @@ class ValidationService {
 
     if (url.isEmpty) return null;
 
+    String errorMsg;
+
     if (!isUrl(url)) {
-      return 'Please provide a valid url.';
+      errorMsg = 'Please provide a valid url.';
     }
+
+    return errorMsg;
   }
 
   String validateUserProfileLocation(String location) {
@@ -224,9 +239,14 @@ class ValidationService {
 
     if (location.isEmpty) return null;
 
+    String errorMsg;
+
     if (!isLocationAllowedLength(location)) {
-      return 'Location can\'t be longer than $PROFILE_LOCATION_MAX_LENGTH characters.';
+      errorMsg =
+          'Location can\'t be longer than $PROFILE_LOCATION_MAX_LENGTH characters.';
     }
+
+    return errorMsg;
   }
 
   String validateUserProfileBio(String bio) {
@@ -234,30 +254,43 @@ class ValidationService {
 
     if (bio.isEmpty) return null;
 
+    String errorMsg;
+
     if (!isBioAllowedLength(bio)) {
-      return 'Location can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
+      errorMsg =
+          'Location can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
     }
+
+    return errorMsg;
   }
 
   String validateFollowsListName(String name) {
     assert(name != null);
+
+    String errorMsg;
+
     if (name.length == 0) {
-      return 'List name cannot be empty.';
+      errorMsg = 'List name cannot be empty.';
+    } else if (!isFollowsListNameAllowedLength(name)) {
+      errorMsg =
+          'List name must be no longer than $LIST_MAX_LENGTH characters.';
     }
 
-    if (!isFollowsListNameAllowedLength(name)) {
-      return 'List name must be no longer than $LIST_MAX_LENGTH characters.';
-    }
+    return errorMsg;
   }
 
   String validateConnectionsCircleName(String name) {
     assert(name != null);
+
+    String errorMsg;
+
     if (name.length == 0) {
-      return 'List name cannot be empty.';
+      errorMsg = 'List name cannot be empty.';
+    } else if (!isConnectionsCircleNameAllowedLength(name)) {
+      errorMsg =
+          'List name must be no longer than $LIST_MAX_LENGTH characters.';
     }
 
-    if (!isConnectionsCircleNameAllowedLength(name)) {
-      return 'List name must be no longer than $LIST_MAX_LENGTH characters.';
-    }
+    return errorMsg;
   }
 }
