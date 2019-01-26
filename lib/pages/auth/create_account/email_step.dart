@@ -17,31 +17,31 @@ class OBAuthEmailStepPage extends StatefulWidget {
 }
 
 class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
-  bool emailCheckInProgress;
-  bool emailTaken;
+  bool _emailCheckInProgress;
+  bool _emailTaken;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  CreateAccountBloc createAccountBloc;
-  LocalizationService localizationService;
-  ValidationService validationService;
-  ToastService toastService;
+  CreateAccountBloc _createAccountBloc;
+  LocalizationService _localizationService;
+  ValidationService _validationService;
+  ToastService _toastService;
 
   TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
-    emailCheckInProgress = false;
-    emailTaken = false;
+    _emailCheckInProgress = false;
+    _emailTaken = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    localizationService = openbookProvider.localizationService;
-    validationService = openbookProvider.validationService;
-    createAccountBloc = openbookProvider.createAccountBloc;
-    toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
+    _validationService = openbookProvider.validationService;
+    _createAccountBloc = openbookProvider.createAccountBloc;
+    _toastService = openbookProvider.toastService;
 
     return Scaffold(
       body: Center(
@@ -86,21 +86,21 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
 
   void _setEmailTaken(bool isEmailTaken) {
     setState(() {
-      emailTaken = isEmailTaken;
+      _emailTaken = isEmailTaken;
     });
   }
 
   void _checkEmailAvailable(String email, BuildContext context) async {
     _setEmailCheckInProgress(true);
     try {
-      var isEmailTaken = await validationService.isEmailTaken(email);
+      var isEmailTaken = await _validationService.isEmailTaken(email);
 
       if (isEmailTaken) {
         _setEmailTaken(true);
       }
     } catch (error) {
-      String errorFeedback = localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
-      toastService.error(message: errorFeedback, context: context);
+      String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
+      _toastService.error(message: errorFeedback, context: context);
     } finally {
       _setEmailCheckInProgress(false);
     }
@@ -109,21 +109,21 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   void onPressedNextStep(BuildContext context) {
     bool isEmailValid = _validateForm();
     _checkEmailAvailable(_emailController.text, context);
-    if (isEmailValid && !emailTaken) {
+    if (isEmailValid && !_emailTaken) {
       setState(() {
-        createAccountBloc.setEmail(_emailController.text);
+        _createAccountBloc.setEmail(_emailController.text);
         Navigator.pushNamed(context, '/auth/password_step');
       });
     }
   }
 
   Widget _buildNextButton(BuildContext context) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      isLoading: emailCheckInProgress,
+      isLoading: _emailCheckInProgress,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
         onPressedNextStep(context);
@@ -132,7 +132,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -160,7 +160,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
 
   Widget _buildWhatYourEmail({@required BuildContext context}) {
     String whatEmailText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_EMAIL');
+        _localizationService.trans('AUTH.CREATE_ACC.WHAT_EMAIL');
 
     return Column(
       children: <Widget>[
@@ -184,9 +184,9 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   Widget _buildEmailForm() {
 
     String emailInputPlaceholder =
-        localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
     String errorEmailTaken =
-    localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
+    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
 
     return Form(
       key: _formKey,
@@ -198,9 +198,9 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
                 autocorrect: false,
                 hintText: emailInputPlaceholder,
                 validator: (String email) {
-                  String validateEMail = validationService.validateUserEmail(email);
+                  String validateEMail = _validationService.validateUserEmail(email);
                   if (validateEMail != null) return validateEMail;
-                  if (emailTaken != null && emailTaken) {
+                  if (_emailTaken != null && _emailTaken) {
                     return errorEmailTaken;
                   }
                 },
@@ -214,7 +214,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
 
   void _setEmailCheckInProgress(bool newEmailCheckInProgress) {
     setState(() {
-      emailCheckInProgress = newEmailCheckInProgress;
+      _emailCheckInProgress = newEmailCheckInProgress;
     });
   }
 }

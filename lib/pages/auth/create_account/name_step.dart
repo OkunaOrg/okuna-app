@@ -16,28 +16,24 @@ class OBAuthNameStepPage extends StatefulWidget {
 }
 
 class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
-  bool isSubmitted;
-  bool isBootstrapped;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  CreateAccountBloc createAccountBloc;
-  LocalizationService localizationService;
-  ValidationService validationService;
+  CreateAccountBloc _createAccountBloc;
+  LocalizationService _localizationService;
+  ValidationService _validationService;
 
   TextEditingController _nameController = TextEditingController();
 
   @override
   void initState() {
-    isBootstrapped = false;
-    isSubmitted = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    localizationService = openbookProvider.localizationService;
-    createAccountBloc = openbookProvider.createAccountBloc;
-    validationService = openbookProvider.validationService;
+    _localizationService = openbookProvider.localizationService;
+    _createAccountBloc = openbookProvider.createAccountBloc;
+    _validationService = openbookProvider.validationService;
 
     return Scaffold(
       body: Center(
@@ -76,7 +72,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
@@ -94,14 +90,14 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
     bool isNameValid = _validateForm();
     if (isNameValid) {
       setState(() {
-        createAccountBloc.setName(_nameController.text);
+        _createAccountBloc.setName(_nameController.text);
         Navigator.pushNamed(context, '/auth/email_step');
       });
     }
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -129,7 +125,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
 
   Widget _buildWhatYourName({@required BuildContext context}) {
     String whatNameText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
+        _localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
 
     return Column(
       children: <Widget>[
@@ -153,7 +149,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   Widget _buildNameForm() {
 
     String nameInputPlaceholder =
-        localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
+        _localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
 
     return Form(
       key: _formKey,
@@ -165,7 +161,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
                 autocorrect: false,
                 hintText: nameInputPlaceholder,
                 validator: (String name) {
-                  String validateName = validationService
+                  String validateName = _validationService
                       .validateUserProfileName(name);
                   if (validateName != null) return validateName;
                 },

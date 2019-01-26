@@ -19,21 +19,21 @@ class OBAuthLegalAgeStepPage extends StatefulWidget {
 
 class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  bool isAgeConfirmed;
-  CreateAccountBloc createAccountBloc;
-  LocalizationService localizationService;
+  bool _isAgeConfirmed;
+  CreateAccountBloc _createAccountBloc;
+  LocalizationService _localizationService;
 
   @override
   void initState() {
-    isAgeConfirmed = false;
+    _isAgeConfirmed = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    localizationService = openbookProvider.localizationService;
-    createAccountBloc = openbookProvider.createAccountBloc;
+    _localizationService = openbookProvider.localizationService;
+    _createAccountBloc = openbookProvider.createAccountBloc;
 
     return Scaffold(
       body: Center(
@@ -72,7 +72,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   }
 
   Widget _buildConfirmLegalAgeText() {
-    String almostThereText = localizationService.trans('AUTH.CREATE_ACC.ALMOST_THERE');
+    String almostThereText = _localizationService.trans('AUTH.CREATE_ACC.ALMOST_THERE');
 
     return Column(
       children: <Widget>[
@@ -101,12 +101,12 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             OBCheckboxField(
-              value: isAgeConfirmed,
+              value: _isAgeConfirmed,
               title: '',
               onTap: () {
                 setState(() {
-                  createAccountBloc.setLegalAgeConfirmation(isAgeConfirmed);
-                  isAgeConfirmed = !isAgeConfirmed;
+                  _createAccountBloc.setLegalAgeConfirmation(_isAgeConfirmed);
+                  _isAgeConfirmed = !_isAgeConfirmed;
                 });
               },
               leading: Container(
@@ -118,13 +118,13 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return OBSuccessButton(
             minWidth: double.infinity,
             size: OBButtonSize.large,
             child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-            isDisabled: !isAgeConfirmed,
+            isDisabled: !_isAgeConfirmed,
             onPressed: () {
               Navigator.pushNamed(context, '/auth/submit_step');
             },
@@ -132,7 +132,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
 
     return OBSecondaryButton(
       isFullWidth: true,

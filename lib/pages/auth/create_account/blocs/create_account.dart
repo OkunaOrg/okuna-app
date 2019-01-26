@@ -53,8 +53,8 @@ class CreateAccountBloc {
 
   final _emailSubject = ReplaySubject<String>(maxSize: 1);
   final _passwordSubject = ReplaySubject<String>(maxSize: 1);
+  final _avatarSubject = ReplaySubject<File>(maxSize: 1);
 
-  // Password ends
 
   // Avatar begins
 
@@ -94,7 +94,7 @@ class CreateAccountBloc {
     _nameSubject.stream.listen(_onNameChange);
     _emailSubject.stream.listen(_onEmailChange);
     _passwordSubject.listen(_onPasswordChange);
-    _avatarController.stream.listen(_onAvatar);
+    _avatarSubject.listen(_onAvatarChange);
   }
 
   void dispose() {
@@ -296,33 +296,23 @@ class CreateAccountBloc {
     return userRegistrationData.avatar;
   }
 
-  void _onAvatar(File avatar) {
-    _clearAvatar();
+  void setAvatar(File avatar) {
+    _avatarSubject.add(avatar);
+  }
 
+  void _onAvatarChange(File avatar) {
     if (avatar == null) {
       // Avatar is optional, therefore no feedback to user.
       return;
     }
-
-    _onAvatarIsValid(avatar);
-  }
-
-  void _onAvatarIsValid(File avatar) {
     userRegistrationData.avatar = avatar;
-    _validatedAvatarSubject.add(avatar);
-    _avatarIsValidSubject.add(true);
   }
 
   void _clearAvatar() {
-    _avatarIsValidSubject.add(false);
-    _validatedAvatarSubject.add(null);
-    if (userRegistrationData.avatar != null) {
-      userRegistrationData.avatar.deleteSync();
-    }
     userRegistrationData.avatar = null;
   }
 
-// Email ends
+  // Avatar ends
 
   Future<bool> createAccount() async {
     _clearCreateAccount();
