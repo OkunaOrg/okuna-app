@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
@@ -19,24 +20,25 @@ class OBAuthAvatarStepPage extends StatefulWidget {
 }
 
 class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
-  bool isSubmitted;
-  bool isBootstrapped;
+  File _postImage;
 
-  CreateAccountBloc createAccountBloc;
-  LocalizationService localizationService;
+  CreateAccountBloc _createAccountBloc;
+  LocalizationService _localizationService;
+  BottomSheetService _bottomSheetService;
+
 
   @override
   void initState() {
-    isBootstrapped = false;
-    isSubmitted = false;
+    _postImage = null;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    localizationService = openbookProvider.localizationService;
-    createAccountBloc = openbookProvider.createAccountBloc;
+    _localizationService = openbookProvider.localizationService;
+    _createAccountBloc = openbookProvider.createAccountBloc;
+    _bottomSheetService = openbookProvider.bottomSheetService;
 
     return Scaffold(
       body: Center(
@@ -49,11 +51,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    _buildAvatarPicker(),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildAvatarError()
+                    _buildAvatarPicker(context),
                   ],
                 ))),
       ),
@@ -78,29 +76,8 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
     );
   }
 
-  Widget _buildAvatarError() {
-    return StreamBuilder(
-      stream: createAccountBloc.avatarFeedback,
-      initialData: null,
-      builder: (context, snapshot) {
-        String feedback = snapshot.data;
-        if (feedback == null || !isSubmitted) {
-          return SizedBox();
-        }
-
-        return SizedBox(
-          child: Text(
-            feedback,
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.DONE');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.DONE');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -113,7 +90,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -141,7 +118,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
 
   Widget _buildWhatYourAvatar({@required BuildContext context}) {
     String whatAvatarText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_AVATAR');
+        _localizationService.trans('AUTH.CREATE_ACC.WHAT_AVATAR');
 
     return Column(
       children: <Widget>[
@@ -155,19 +132,22 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
     );
   }
 
-  Widget _buildAvatarPicker() {
-    // If we use StreamBuilder to build the TexField it has a weird
-    // bug which places the cursor at the beginning of the label everytime
-    // the stream changes. Therefore a flag is used to bootstrap initial value
+  void _setPostImage(File image) {
 
-    if (!isBootstrapped && createAccountBloc.hasAvatar()) {
-      //_avatarController.text = createAccountBloc.getAvatar();
-      //isBootstrapped = true;
-    }
+    setState(() {
+      _postImage = image;
+      _createAccountBloc.setAvatar(image);
+    });
+  }
+
+  Widget _buildAvatarPicker(BuildContext context) {
 
     return GestureDetector(
       onTap: () async {
-        _getUserImage(context);
+        // _getUserImage(context);
+        File pickedPhoto =
+        await _getUserCroppedImage(await _bottomSheetService.showPhotoPicker(context: context));
+        if (pickedPhoto != null) _setPostImage(pickedPhoto);
       },
       child: Column(
         children: <Widget>[
@@ -181,18 +161,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
             /// the asset one doesnt. ClipRRect fixes this.
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: StreamBuilder(
-                  stream: createAccountBloc.validatedAvatar,
-                  initialData: null,
-                  builder: (context, snapshot) {
-                    var data = snapshot.data;
-
-                    if (data == null) {
-                      return Image.asset('assets/images/avatar.jpg');
-                    }
-
-                    return Image.file(snapshot.data, fit: BoxFit.fill);
-                  }),
+              child: _getUserImage()
             ),
           ),
           const SizedBox(height: 20.0),
@@ -205,64 +174,15 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
     );
   }
 
-  Future _getUserImage(BuildContext context) async {
-    String cameraOptionText =
-        localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_CAMERA');
-    String galleryOptionText =
-        localizationService.trans('AUTH.CREATE_ACC.AVATAR_CHOOSE_GALLERY');
-    String removeOptionText =
-        localizationService.trans('AUTH.CREATE_ACC.AVATAR_REMOVE_PHOTO');
+  Image _getUserImage() {
+    if (_postImage == null) {
+      return Image.asset('assets/images/avatar.jpg');
+    }
 
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: new Icon(Icons.camera_alt),
-                title: new Text(cameraOptionText),
-                onTap: () async {
-                  var image = await _getUserImageWithSource(ImageSource.camera);
-                  Navigator.pop(context);
-                  if (image != null) createAccountBloc.avatar.add(image);
-                },
-              ),
-              new ListTile(
-                leading: new Icon(Icons.photo_library),
-                title: new Text(galleryOptionText),
-                onTap: () async {
-                  var image =
-                      await _getUserImageWithSource(ImageSource.gallery);
-                  Navigator.pop(context);
-                  if (image != null) createAccountBloc.avatar.add(image);
-                },
-              ),
-              StreamBuilder(
-                stream: createAccountBloc.validatedAvatar,
-                builder: (context, snapshot) {
-                  var data = snapshot.data;
-                  if (data == null) {
-                    return Container();
-                  }
-
-                  return new ListTile(
-                    leading: new Icon(Icons.delete),
-                    title: new Text(removeOptionText),
-                    onTap: () async {
-                      createAccountBloc.avatar.add(null);
-                      Navigator.pop(context);
-                    },
-                  );
-                },
-              )
-            ],
-          );
-        });
+    return Image.file(_postImage, fit: BoxFit.fill);
   }
 
-  Future<File> _getUserImageWithSource(ImageSource source) async {
-    var image = await ImagePicker.pickImage(source: source);
+  Future<File> _getUserCroppedImage(File image) async {
     if (image == null) {
       return null;
     }
