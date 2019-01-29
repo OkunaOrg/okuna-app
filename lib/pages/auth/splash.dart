@@ -47,7 +47,6 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(child: _buildCreateAccountButton(context: context)),
             Expanded(
               child: _buildLoginButton(context: context),
             ),
