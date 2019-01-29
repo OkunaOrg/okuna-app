@@ -77,7 +77,7 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.DONE');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -144,7 +144,6 @@ class OBAuthAvatarStepPageState extends State<OBAuthAvatarStepPage> {
 
     return GestureDetector(
       onTap: () async {
-        // _getUserImage(context);
         File pickedPhoto =
         await _getUserCroppedImage(await _bottomSheetService.showPhotoPicker(context: context));
         if (pickedPhoto != null) _setPostImage(pickedPhoto);

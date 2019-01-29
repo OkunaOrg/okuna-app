@@ -105,8 +105,8 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
               title: '',
               onTap: () {
                 setState(() {
-                  _createAccountBloc.setLegalAgeConfirmation(_isAgeConfirmed);
                   _isAgeConfirmed = !_isAgeConfirmed;
+                  _createAccountBloc.setLegalAgeConfirmation(_isAgeConfirmed);
                 });
               },
               leading: Container(
@@ -118,7 +118,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.DONE');
 
     return OBSuccessButton(
             minWidth: double.infinity,

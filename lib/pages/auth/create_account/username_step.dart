@@ -49,11 +49,7 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    _buildUsernameForm(),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildUsernameError()
+                    _buildUsernameForm()
                   ],
                 ))),
       ),
@@ -78,25 +74,6 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
     );
   }
 
-  Widget _buildUsernameError() {
-    return StreamBuilder(
-      stream: createAccountBloc.usernameFeedback,
-      initialData: null,
-      builder: (context, snapshot) {
-        String feedback = snapshot.data;
-        if (feedback == null || !isSubmitted) {
-          return SizedBox();
-        }
-
-        return SizedBox(
-          child: Text(feedback,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 18.0)),
-        );
-      },
-    );
-  }
-
   Widget _buildNextButton() {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
@@ -109,16 +86,7 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
         setState(() {
           usernameCheckInProgress = true;
           isSubmitted = true;
-          createAccountBloc
-              .setUsername(_usernameController.text)
-              .then((bool usernameWasSet) {
-            _setUsernameCheckInProgress(false);
-            if (usernameWasSet) {
-              Navigator.pushNamed(context, '/auth/email_step');
-            }
-          }).catchError((error) {
-            _setUsernameCheckInProgress(false);
-          });
+          // setusername here
         });
       },
     );
@@ -196,9 +164,6 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
                   color: Colors.transparent,
                   child: OBAuthTextField(
                     autocorrect: false,
-//                    onChanged: (String value) {
-//                      createAccountBloc.clearUsername();
-//                    },
                     prefixIcon: Icon(Icons.alternate_email),
                     hintText: usernameInputPlaceholder,
                     controller: _usernameController,
