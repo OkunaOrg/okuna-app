@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -13,8 +14,10 @@ class DeepLinksService {
   AuthApiService _authApiService;
   ToastService _toastService;
   UserService _userService;
+  CreateAccountBloc _createAccountBloc;
   bool _areAppLinksInitialised = false;
-  static const String VERIFY_EMAIL_LINK = '/api/email/verify';
+  static const String VERIFY_EMAIL_LINK = '/api/auth/email/verify';
+  static const String CREATE_ACCOUNT_LINK = '/api/auth/invite';
 
 
   Future<Null> initUniLinks() async {
@@ -48,11 +51,14 @@ class DeepLinksService {
 
   void _handleLink(String link) async {
     if (link == null) return;
-    if (link.indexOf(VERIFY_EMAIL_LINK) != null) {
+    if (link.indexOf(VERIFY_EMAIL_LINK) != -1) {
       final token = _getEmailVerificationTokenFromLink(link);
       _onLoggedInUserChangeSubscription = _userService.loggedInUserChange.listen((User newUser){
         _onLoggedInUserChange(newUser, token);
       });
+    } else if (link.indexOf(CREATE_ACCOUNT_LINK) != -1) {
+      final String token = _getAccountCreationTokenFromLink(link);
+      _createAccountBloc.setToken(token);
     }
   }
 
@@ -70,6 +76,15 @@ class DeepLinksService {
     _toastService.error(message: 'Unknown error.', context: null);
     rethrow;
     }
+  }
+
+  String _getAccountCreationTokenFromLink(String link) {
+    final params = Uri.parse(link).queryParametersAll;
+    var token = '';
+    if (params.containsKey('token')) {
+      token = params['token'][0];
+    }
+    return token;
   }
 
   String _getEmailVerificationTokenFromLink(String link) {
@@ -97,5 +112,9 @@ class DeepLinksService {
 
   void setUserService(UserService userService) {
     _userService = userService;
+  }
+
+  void setCreateAccountBloc(CreateAccountBloc createAccountBloc) {
+    _createAccountBloc = createAccountBloc;
   }
 }
