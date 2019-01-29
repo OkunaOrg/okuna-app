@@ -18,6 +18,7 @@ import 'package:flutter\_localizations/flutter\_localizations.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  bool _isRegistrationTokenConsumed = false;
   @override
   Widget build(BuildContext context) {
     return OpenbookProvider(
@@ -102,12 +103,26 @@ class MyApp extends StatelessWidget {
           }),
     );
   }
-}
 
-void bootstrapOpenbookProviderInContext(BuildContext context) {
-  var openbookProvider = OpenbookProvider.of(context);
-  var localizationService = LocalizationService.of(context);
-  openbookProvider.setLocalizationService(localizationService);
+  void checkRegistrationTokenIsPresent(OpenbookProviderState openbookProvider, BuildContext context) {
+    var registrationTokenSubscription;
+    if (!_isRegistrationTokenConsumed) {
+      registrationTokenSubscription = openbookProvider.createAccountBloc.registrationTokenSubject.stream.listen((String token) {
+        if (openbookProvider.createAccountBloc.hasToken()) {
+          registrationTokenSubscription.cancel();
+          _isRegistrationTokenConsumed = true;
+          Navigator.pushNamed(context, '/auth/get-started');
+        }
+      });
+    }
+  }
+
+  void bootstrapOpenbookProviderInContext(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    var localizationService = LocalizationService.of(context);
+    openbookProvider.setLocalizationService(localizationService);
+    checkRegistrationTokenIsPresent(openbookProvider, context);
+  }
 }
 
 void main() {

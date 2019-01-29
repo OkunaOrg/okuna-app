@@ -80,7 +80,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     deepLinksService.setAuthApiService(authApiService);
     deepLinksService.setToastService(toastService);
     deepLinksService.setUserService(userService);
-    createAccountBloc.setValidationService(validationService);
+    deepLinksService.setCreateAccountBloc(createAccountBloc);
     connectionsCirclesApiService.setHttpService(httpService);
     connectionsCirclesApiService
         .setStringTemplateService(stringTemplateService);
@@ -90,6 +90,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     authApiService.setHttpService(httpService);
     followsApiService.setHttpService(httpService);
     createAccountBloc.setAuthApiService(authApiService);
+    createAccountBloc.setUserService(userService);
     userService.setAuthApiService(authApiService);
     userService.setPostsApiService(postsApiService);
     userService.setEmojisApiService(emojisApiService);
@@ -150,7 +151,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
 
   setValidationService(ValidationService newValidationService) {
     validationService = newValidationService;
-    createAccountBloc.setValidationService(validationService);
   }
 }
 
