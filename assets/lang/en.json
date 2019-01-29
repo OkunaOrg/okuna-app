@@ -48,6 +48,8 @@
   "AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_VALIDATION": "😅 It looks like some of the information was not right, please check and try again.",
   "AUTH.CREATE_ACC.DONE_TITLE": "Hooray!",
   "AUTH.CREATE_ACC.DONE_DESCRIPTION": "Your account has been created.",
+  "AUTH.CREATE_ACC.YOUR_USERNAME_IS": "Your user name is ",
+  "AUTH.CREATE_ACC.CAN_CHANGE_USERNAME": "If you wish, you can change it anytime via your profile page.",
   "AUTH.CREATE_ACC.DONE_CONTINUE": "Login",
   "AUTH.LOGIN.LOGIN": "Continue",
   "AUTH.LOGIN.PREVIOUS": "Previous",
