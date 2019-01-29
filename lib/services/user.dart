@@ -194,7 +194,6 @@ class UserService {
         name: name,
         username: username,
         url: url,
-        password: password,
         birthDate: DateFormat('dd-MM-yyyy').format(birthDate),
         followersCountVisible: followersCountVisible,
         bio: bio,

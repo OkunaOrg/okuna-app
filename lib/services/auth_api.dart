@@ -63,7 +63,6 @@ class AuthApiService {
     String name,
     String username,
     String url,
-    String password,
     String birthDate,
     bool followersCountVisible,
     String bio,
@@ -91,8 +90,6 @@ class AuthApiService {
 
     if (url != null) body['url'] = url;
 
-    if (password != null) body['password'] = password;
-
     if (birthDate != null) body['birth_date'] = birthDate;
 
     if (bio != null) body['bio'] = bio;
@@ -108,16 +105,16 @@ class AuthApiService {
 
   Future<HttpieStreamedResponse> createUser(
       {@required String email,
-      @required String username,
+      @required String token,
       @required String name,
-      @required String birthDate,
+      @required bool isOfLegalAge,
       @required String password,
       File avatar}) {
     Map<String, dynamic> body = {
       'email': email,
-      'username': username,
+      'token': token,
       'name': name,
-      'birth_date': birthDate,
+      'is_of_legal_age': isOfLegalAge,
       'password': password
     };
 
