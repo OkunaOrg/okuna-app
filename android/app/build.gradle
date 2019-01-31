@@ -43,8 +43,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "social.openbook"
+        applicationId "social.openbook.app"
         minSdkVersion 18
         targetSdkVersion 27
         versionCode flutterVersionCode.toInteger()
@@ -52,11 +51,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 
@@ -71,21 +77,6 @@ android {
 
         production {
             dimension "flavor-type"
-
-            signingConfigs {
-                release {
-                    keyAlias keystoreProperties['keyAlias']
-                    keyPassword keystoreProperties['keyPassword']
-                    storeFile file(keystoreProperties['storeFile'])
-                    storePassword keystoreProperties['storePassword']
-                }
-            }
-
-            buildTypes {
-                release {
-                    signingConfig signingConfigs.release
-                }
-            }
         }
     }
 }

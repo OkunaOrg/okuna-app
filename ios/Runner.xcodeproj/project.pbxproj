@@ -418,6 +418,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -499,6 +500,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "Debug-development";
@@ -574,6 +576,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "Release-development";
@@ -655,6 +658,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "Debug-production";
@@ -730,6 +734,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "Release-production";
@@ -861,6 +866,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -886,6 +892,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
