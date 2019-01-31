@@ -35,6 +35,10 @@
 	<string>We use this permissions to allow you to share photos taken within the application.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We use this permission to record audio when you take a video within the application.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
