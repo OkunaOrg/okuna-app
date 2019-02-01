@@ -24,11 +24,11 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios-release`)
+  - Flutter (from `.symlinks/flutter/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
-  - OneSignal (< 3.0, >= 2.9.3)
+  - OneSignal (< 3.0, >= 2.9.5)
   - onesignal (from `.symlinks/plugins/onesignal/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -43,7 +43,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios-release"
+    :path: ".symlinks/flutter/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   image_cropper:
@@ -77,6 +77,6 @@ SPEC CHECKSUMS:
   url_launcher: 92b89c1029a0373879933c21642958c874539095
   video_player: 906796a841943c8d370ac7c13b18039aa9b56498
 
-PODFILE CHECKSUM: bf485d42180cf3557a0519043df94b8e9a976557
+PODFILE CHECKSUM: b2f44acb7a20707271369f210a9508c2ed01de94
 
 COCOAPODS: 1.5.3
