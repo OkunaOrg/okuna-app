@@ -7,12 +7,13 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+1
+version: 0.0.1
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  onesignal: ^1.0.5
   flutter_advanced_networkimage: ^0.3.13
   dcache: ^0.1.0
   validators: ^1.0.0+1
@@ -31,12 +32,7 @@ dependencies:
   http: ^0.12.0
   intl: ^0.15.7
   rxdart: ^0.18.1
-  video_player:
-    git:
-      url: https://github.com/recastrodiaz/plugins.git
-      path: packages/video_player
-      ref: d589ee54ce405e38ebc42b1961e54273cd375726
-    version: ^0.8.0
+  video_player: ^0.10.0
   sprintf: "^4.0.0"
   image_picker: ^0.4.10
   image_cropper: ^0.0.6
