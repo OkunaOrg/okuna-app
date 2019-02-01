@@ -186,7 +186,26 @@ flutter run --profile
 
 Help us keep Openbook going! Please look into our open issues. All contribution, no matter how small, makes a big difference.
 
-### Stuck in one of these steps?
+## Official work-around's list
+
+Unfourtunately, Flutter is still in it's early steps as a framework and ecosystem.
+
+Work-arounds to get the app to work are something we see frequently.
+
+This is the section where we'll be documenting the work-arounds to avoid confusion in the future.
+
+### OneSignal iOS Build Failing
+
+The [OneSignal Flutter SDK](https://github.com/OneSignal/OneSignal-Flutter-SDK) does not work out of the box.
+
+In Android, the SDK Setup Guide contains wrong instructions which were adressed on [this Github Issue](https://github.com/OneSignal/OneSignal-Flutter-SDK/issues/56).
+
+In iOS, there was no official solution to it and the fix was an absolute "hack".
+
+The original issue for the build error is [this one](https://github.com/OneSignal/OneSignal-Flutter-SDK/issues/57) and the "hack" we implemented is found in [this issue](https://github.com/OneSignal/OneSignal-Flutter-SDK/issues/42#issuecomment-459476383) plus [disabling bitcode](https://stackoverflow.com/questions/50553443/xcode-ios-build-linker-command-failed-with-exit-code) in the service extension. 
+
+
+## Questions/stuck?
 
 [Join our Slack channel](https://join.slack.com/t/openbookorg/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY), we're happy to help you troubleshoot your issue.
 
