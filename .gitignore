@@ -11,3 +11,6 @@ android/key.properties
 /.idea
 android/.idea
 .env.json
+/codesigndoc_exports
+Appfile
+report.xml

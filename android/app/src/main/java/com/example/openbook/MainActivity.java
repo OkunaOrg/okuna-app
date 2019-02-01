@@ -1,4 +1,4 @@
-package com.example.openbook;
+package social.openbook.app;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
