@@ -95,7 +95,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     if (isPasswordValid) {
       setState(() {
         createAccountBloc.setPassword(_passwordController.text);
-        Navigator.pushNamed(context, '/auth/avatar_step');
+        Navigator.pushNamed(context, '/auth/legal_age_step');
       });
     }
   }

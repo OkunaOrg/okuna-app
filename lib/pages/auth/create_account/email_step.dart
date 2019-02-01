@@ -94,10 +94,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     _setEmailCheckInProgress(true);
     try {
       var isEmailTaken = await _validationService.isEmailTaken(email);
-
-      if (isEmailTaken) {
-        _setEmailTaken(true);
-      }
+      _setEmailTaken(isEmailTaken);
     } catch (error) {
       String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
       _toastService.error(message: errorFeedback, context: context);
