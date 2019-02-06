@@ -125,7 +125,16 @@ class OBUserBadge extends StatelessWidget {
       width: badgeSize,
       height: badgeSize,
       decoration: BoxDecoration(
-          gradient: primaryAccentColor,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.2, 0.6, 0.8],
+            colors: [
+              Colors.yellowAccent[400],
+              Colors.yellow[700],
+              Colors.yellow[700],
+            ],
+          ),
           borderRadius: BorderRadius.circular(50)
       ),
       child: Center(
