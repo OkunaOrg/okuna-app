@@ -63,7 +63,6 @@ class AuthApiService {
     String name,
     String username,
     String url,
-    String birthDate,
     bool followersCountVisible,
     String bio,
     String location,
@@ -89,8 +88,6 @@ class AuthApiService {
     if (username != null) body['username'] = username;
 
     if (url != null) body['url'] = url;
-
-    if (birthDate != null) body['birth_date'] = birthDate;
 
     if (bio != null) body['bio'] = bio;
 
