@@ -1,5 +1,6 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/user_profile_badge.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_connected_in.dart';
@@ -11,6 +12,7 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
@@ -48,7 +50,11 @@ class OBProfileCard extends StatelessWidget {
                     height: 30,
                   ),
                   OBProfileName(user),
-                  OBProfileUsername(user),
+                  Row(
+                  children: <Widget>[
+                    OBProfileUsername(user),
+                  _getUserBadge(user)
+                  ]),
                   OBProfileBio(user),
                   OBProfileDetails(user),
                   OBProfileCounts(user),
@@ -97,5 +103,13 @@ class OBProfileCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _getUserBadge(User creator) {
+    if (creator.getProfileBadges().length > 0) {
+      UserProfileBadge badge = creator.getProfileBadges()[0];
+      return OBUserBadge(badge: badge, size: OBUserBadgeSize.extraSmall);
+    }
+    return const SizedBox();
   }
 }

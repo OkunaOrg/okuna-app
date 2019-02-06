@@ -1,11 +1,13 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/user_profile_badge.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -60,10 +62,14 @@ class OBPostHeader extends StatelessWidget {
 
               if (postCreator == null) return const SizedBox();
 
-              return OBText(
-                postCreator.username,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              );
+              return Row(
+                  children: <Widget>[
+                  OBText(
+                    postCreator.username,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  _getUserBadge(_post.creator)
+                ]);
             }),
       ),
       subtitle: OBSecondaryText(
@@ -71,5 +77,13 @@ class OBPostHeader extends StatelessWidget {
         style: TextStyle(fontSize: 12.0),
       ),
     );
+  }
+
+  Widget _getUserBadge(User creator) {
+    if (creator.getProfileBadges().length > 0) {
+      UserProfileBadge badge = creator.getProfileBadges()[0];
+      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+    }
+    return const SizedBox();
   }
 }
