@@ -10,7 +10,6 @@ import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/cover.dart';
-import 'package:Openbook/widgets/fields/date_field.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -58,7 +57,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   File _avatarFile;
   File _coverFile;
   bool _followersCountVisible;
-  DateTime _birthDate;
 
   @override
   void initState() {
@@ -76,7 +74,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _bioController = TextEditingController(text: widget.user.getProfileBio());
     _avatarUrl = widget.user.getProfileAvatar();
     _coverUrl = widget.user.getProfileCover();
-    _birthDate = widget.user.getProfileBirthDate();
 
     _usernameController.addListener(_validateForm);
     _nameController.addListener(_validateForm);
@@ -212,16 +209,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                               });
                             },
                           ),
-                          OBDivider(),
-                          OBDateField(
-                            title: 'Birth date',
-                            minimumDate:
-                                _validationService.getMinimumBirthDate(),
-                            maximumDate:
-                                _validationService.getMaximumBirthDate(),
-                            onChanged: _setBirthDate,
-                            initialDate: _birthDate,
-                          ),
+                          OBDivider()
                         ],
                       ),
                     )
@@ -419,7 +407,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         name: _nameController.text,
         username: _usernameController.text,
         url: _urlController.text,
-        birthDate: _birthDate,
         followersCountVisible: _followersCountVisible,
         bio: _bioController.text,
         location: _locationController.text,
@@ -477,12 +464,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   void _setCoverFile(File coverFile) {
     setState(() {
       _coverFile = coverFile;
-    });
-  }
-
-  void _setBirthDate(DateTime birthDate) {
-    setState(() {
-      _birthDate = birthDate;
     });
   }
 

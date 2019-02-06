@@ -1,9 +1,8 @@
 import 'package:Openbook/delegates/localization_delegate.dart';
-import 'package:Openbook/pages/auth/create_account/avatar_step.dart';
-import 'package:Openbook/pages/auth/create_account/birthday_step.dart';
 import 'package:Openbook/pages/auth/create_account/done_step.dart';
 import 'package:Openbook/pages/auth/create_account/email_step.dart';
 import 'package:Openbook/pages/auth/create_account/get_started.dart';
+import 'package:Openbook/pages/auth/create_account/legal_age_step.dart';
 import 'package:Openbook/pages/auth/create_account/submit_step.dart';
 import 'package:Openbook/pages/auth/create_account/password_step.dart';
 import 'package:Openbook/pages/auth/login.dart';
@@ -11,13 +10,12 @@ import 'package:Openbook/pages/auth/splash.dart';
 import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
-import 'package:Openbook/pages/auth/create_account/username_step.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return OpenbookProvider(
@@ -63,17 +61,13 @@ class MyApp extends StatelessWidget {
               bootstrapOpenbookProviderInContext(context);
               return OBAuthGetStartedPage();
             },
-            '/auth/birthday_step': (BuildContext context) {
+            '/auth/legal_age_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
-              return OBAuthBirthdayStepPage();
+              return OBAuthLegalAgeStepPage();
             },
             '/auth/name_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
               return OBAuthNameStepPage();
-            },
-            '/auth/username_step': (BuildContext context) {
-              bootstrapOpenbookProviderInContext(context);
-              return OBAuthUsernameStepPage();
             },
             '/auth/email_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
@@ -82,10 +76,6 @@ class MyApp extends StatelessWidget {
             '/auth/password_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
               return OBAuthPasswordStepPage();
-            },
-            '/auth/avatar_step': (BuildContext context) {
-              bootstrapOpenbookProviderInContext(context);
-              return OBAuthAvatarStepPage();
             },
             '/auth/submit_step': (BuildContext context) {
               bootstrapOpenbookProviderInContext(context);
@@ -102,12 +92,15 @@ class MyApp extends StatelessWidget {
           }),
     );
   }
-}
 
-void bootstrapOpenbookProviderInContext(BuildContext context) {
-  var openbookProvider = OpenbookProvider.of(context);
-  var localizationService = LocalizationService.of(context);
-  openbookProvider.setLocalizationService(localizationService);
+  void bootstrapOpenbookProviderInContext(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    var localizationService = LocalizationService.of(context);
+    openbookProvider.setLocalizationService(localizationService);
+    UniversalLinksService universalLinksService =
+        openbookProvider.universalLinksService;
+    universalLinksService.digestLinksWithContext(context);
+  }
 }
 
 void main() {

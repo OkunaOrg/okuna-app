@@ -41,7 +41,7 @@
                 <data
                         android:scheme="https"
                         android:host="www.openbook.social"
-                        android:pathPrefix="/api/auth/email/verify/"/>
+                        android:pathPrefix="/api/auth/"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

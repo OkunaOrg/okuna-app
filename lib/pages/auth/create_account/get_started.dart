@@ -10,6 +10,9 @@ class OBAuthGetStartedPage extends StatelessWidget {
     var localizationService = LocalizationService.of(context);
     String letsGetStartedText =
         localizationService.trans('AUTH.CREATE_ACC.LETS_GET_STARTED');
+    String welcomeToAlphaText =
+        localizationService.trans('AUTH.CREATE_ACC.WELCOME_TO_ALPHA');
+
     String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
     String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
@@ -19,7 +22,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
         decoration: _buildGetStartedDecoration(),
         child: Center(
             child: SingleChildScrollView(
-                child: _buildLetsGetStarted(text: letsGetStartedText))),
+                child: _buildLetsGetStarted(getStartedText: letsGetStartedText, welcomeText: welcomeToAlphaText))),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
@@ -43,7 +46,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLetsGetStarted({@required String text}) {
+  Widget _buildLetsGetStarted({@required String getStartedText, @required String welcomeText}) {
     return Column(
       children: <Widget>[
         Text(
@@ -53,7 +56,15 @@ class OBAuthGetStartedPage extends StatelessWidget {
         const SizedBox(
           height: 20.0,
         ),
-        Text(text,
+        Text(welcomeText,
+            style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
+        SizedBox(
+          height: 20.0,
+        ),
+        Text(getStartedText,
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -76,7 +87,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
       size: OBButtonSize.large,
       child: Text(text, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
-        Navigator.pushNamed(context, '/auth/birthday_step');
+        Navigator.pushNamed(context, '/auth/name_step');
       },
     );
   }

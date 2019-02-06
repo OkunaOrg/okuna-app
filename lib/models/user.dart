@@ -127,10 +127,6 @@ class User extends UpdatableModel<User> {
     return this.profile.bio;
   }
 
-  DateTime getProfileBirthDate() {
-    return profile.birthDate;
-  }
-
   bool getProfileFollowersCountVisible() {
     return this.profile.followersCountVisible;
   }
