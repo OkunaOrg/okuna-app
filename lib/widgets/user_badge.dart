@@ -72,7 +72,7 @@ class OBUserBadge extends StatelessWidget {
             colors: [
               Colors.blue[300],
               Colors.blueAccent[200],
-              Colors.blue[300],
+              Colors.blue[800],
             ],
           ),
           borderRadius: BorderRadius.circular(50)
@@ -128,11 +128,11 @@ class OBUserBadge extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            stops: [0.2, 0.6, 0.8],
+            stops: [0.1, 0.3, 0.8],
             colors: [
               Colors.yellowAccent[400],
               Colors.yellow[700],
-              Colors.yellow[700],
+              Colors.yellow[800],
             ],
           ),
           borderRadius: BorderRadius.circular(50)
@@ -154,7 +154,16 @@ class OBUserBadge extends StatelessWidget {
       width: badgeSize,
       height: badgeSize,
       decoration: BoxDecoration(
-          gradient: primaryAccentColor,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.2, 0.6, 0.8],
+            colors: [
+              Colors.red[100],
+              Colors.redAccent[100],
+              Colors.red[300],
+            ],
+          ),
           borderRadius: BorderRadius.circular(50)
       ),
       child: Center(
@@ -174,7 +183,16 @@ class OBUserBadge extends StatelessWidget {
       width: badgeSize,
       height: badgeSize,
       decoration: BoxDecoration(
-          gradient: primaryAccentColor,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.1, 0.5, 0.8],
+            colors: [
+              Colors.deepPurple[200],
+              Colors.deepPurple[100],
+              Colors.blue[200],
+            ],
+          ),
           borderRadius: BorderRadius.circular(50)
       ),
       child: Center(
