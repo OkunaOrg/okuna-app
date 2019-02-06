@@ -29,9 +29,7 @@ class UserProfile {
     var birthDate;
     if (birthDateData != null) birthDate = DateTime.parse(birthDateData);
     List<dynamic> badges = parsedJson['badges'];
-
     var badgesList = badges.map((badgeJson) => UserProfileBadge.fromJson(badgeJson)).toList();
-    print(badgesList);
 
     return UserProfile(
         id: parsedJson['id'],
