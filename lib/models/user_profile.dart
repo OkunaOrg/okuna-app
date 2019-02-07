@@ -1,7 +1,6 @@
 class UserProfile {
   final int id;
   String name;
-  DateTime birthDate;
   String avatar;
   String cover;
   String bio;
@@ -12,7 +11,6 @@ class UserProfile {
   UserProfile(
       {this.id,
       this.name,
-      this.birthDate,
       this.avatar,
       this.cover,
       this.bio,
@@ -21,14 +19,10 @@ class UserProfile {
       this.followersCountVisible});
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
-    var birthDateData = parsedJson['birth_date'];
-    var birthDate;
-    if (birthDateData != null) birthDate = DateTime.parse(birthDateData);
 
     return UserProfile(
         id: parsedJson['id'],
         name: parsedJson['name'],
-        birthDate: birthDate,
         avatar: parsedJson['avatar'],
         cover: parsedJson['cover'],
         bio: parsedJson['bio'],
@@ -46,9 +40,6 @@ class UserProfile {
     if (json.containsKey('location')) location = json['location'];
     if (json.containsKey('followers_count_visible'))
       followersCountVisible = json['followers_count_visible'];
-    if (json.containsKey('birth_date')) {
-      birthDate = DateTime.parse(json['birth_date']);
-    }
   }
 
   bool hasLocation() {

@@ -44,10 +44,6 @@ class ValidationService {
     return validators.isURL(url);
   }
 
-  bool isValidBirthday(DateTime birthday) {
-    return true;
-  }
-
   bool isAlphanumericWithSpaces(String str) {
     String p = r'^[a-z0-9\s]+$';
 
@@ -149,14 +145,6 @@ class ValidationService {
   bool isNameAllowedLength(String name) {
     return name.length >= PROFILE_NAME_MIN_LENGTH &&
         name.length <= PROFILE_NAME_MAX_LENGTH;
-  }
-
-  DateTime getMaximumBirthDate() {
-    return DateTime.now().subtract(Duration(days: 365 * 16));
-  }
-
-  DateTime getMinimumBirthDate() {
-    return DateTime.now().subtract(Duration(days: 365 * 120));
   }
 
   String validateUserUsername(String username) {
