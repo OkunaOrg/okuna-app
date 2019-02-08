@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
   final User user;
+  GlobalKey _keyUsername = GlobalKey();
 
   OBProfileCard(this.user);
 
@@ -24,6 +25,7 @@ class OBProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
+    var toastService = openbookProvider.toastService;
     var themeValueParserService = openbookProvider.themeValueParserService;
 
     return Stack(
@@ -49,12 +51,8 @@ class OBProfileCard extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  OBProfileName(user),
-                  Row(
-                  children: <Widget>[
-                    OBProfileUsername(user),
-                  _getUserBadge(user)
-                  ]),
+                  _buildNameRow(user),
+                  OBProfileUsername(user),
                   OBProfileBio(user),
                   OBProfileDetails(user),
                   OBProfileCounts(user),
@@ -105,11 +103,25 @@ class OBProfileCard extends StatelessWidget {
     );
   }
 
-  Widget _getUserBadge(User creator) {
-    if (creator.getProfileBadges().length > 0) {
-      UserProfileBadge badge = creator.getProfileBadges()[0];
-      return OBUserBadge(badge: badge, size: OBUserBadgeSize.extraSmall);
-    }
-    return const SizedBox();
+  Widget _getUserBadge(User user) {
+      UserProfileBadge badge = user.getProfileBadges()[0];
+      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+  }
+
+  Widget _buildNameRow(User user) {
+     if (user.getProfileBadges().length > 0) {
+       return Row(
+               key: _keyUsername,
+               children: <Widget>[
+                 OBProfileName(user),
+                 _getUserBadge(user)
+               ]);
+     }
+     return OBProfileName(user);
+  }
+
+  String _getUserBadgeDescription(User user) {
+    UserProfileBadge badge = user.getProfileBadges()[0];
+    return '${user.getProfileName()} is an ${badge.getKeywordDescription()}';
   }
 }
