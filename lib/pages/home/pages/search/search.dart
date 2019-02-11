@@ -3,7 +3,6 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/trending/trending.dart';
 import 'package:Openbook/provider.dart';
@@ -73,14 +72,16 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
         _userSearchResults,
         _searchQuery,
         onSearchUserPressed: _onSearchUserPressed,
+        onScroll: _onScroll,
       );
     } else {
       currentWidget = OBTrending(
         controller: _trendingController,
+        onScroll: _onScroll,
       );
     }
 
-    return OBCupertinoPageScaffold(
+    return CupertinoPageScaffold(
         backgroundColor: Colors.white,
         child: OBPrimaryColorContainer(
           child: Column(
@@ -106,6 +107,10 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
       _setHasSearch(true);
       _searchForUsersWithQuery(query);
     }
+  }
+
+  void _onScroll() {
+    FocusScope.of(context).requestFocus(new FocusNode());
   }
 
   Future<void> _searchForUsersWithQuery(String query) async {

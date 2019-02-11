@@ -1,3 +1,4 @@
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/video_player/play_pause_state.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -37,12 +38,13 @@ class OBAspectRatioVideoState extends State<OBAspectRatioVideo> {
     if (initialized) {
       return Center(
         child: AspectRatio(
-          aspectRatio: controller.value.size.width / controller.value.size.height,
+          aspectRatio:
+              controller.value.size.width / controller.value.size.height,
           child: VideoPlayPause(controller),
         ),
       );
     } else {
-      return Image(image: AssetImage('assets/images/loading.gif'));
+      return OBProgressIndicator();
     }
   }
 }

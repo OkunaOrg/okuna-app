@@ -7,9 +7,10 @@ class OBUserSearchResults extends StatelessWidget {
   final List<User> results;
   final String searchQuery;
   final OnSearchUserPressed onSearchUserPressed;
+  final VoidCallback onScroll;
 
-  OBUserSearchResults(this.results, this.searchQuery,
-      {Key key, @required this.onSearchUserPressed})
+  const OBUserSearchResults(this.results, this.searchQuery,
+      {Key key, @required this.onSearchUserPressed, @required this.onScroll})
       : super(key: key);
 
   @override
@@ -18,43 +19,47 @@ class OBUserSearchResults extends StatelessWidget {
   }
 
   Widget _buildSearchResults() {
-    return ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        itemCount: results.length,
-        itemBuilder: (BuildContext context, int index) {
-          User user = results[index];
+    return NotificationListener(
+      onNotification: (ScrollNotification notification) {
+        onScroll();
+        return true;
+      },
+      child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemCount: results.length,
+          itemBuilder: (BuildContext context, int index) {
+            User user = results[index];
 
-          return OBUserTile(
-            user,
-            onUserTilePressed: onSearchUserPressed,
-          );
-        });
+            return OBUserTile(
+              user,
+              onUserTilePressed: onSearchUserPressed,
+            );
+          }),
+    );
   }
 
   Widget _buildNoResults() {
-    return SizedBox(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 200),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.sentiment_dissatisfied,
-                  size: 30.0, color: Colors.black26),
-              const SizedBox(
-                height: 20.0,
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 200),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.sentiment_dissatisfied,
+                size: 30.0, color: Colors.black26),
+            const SizedBox(
+              height: 20.0,
+            ),
+            OBText(
+              'No user found matching \'$searchQuery\'.',
+              style: TextStyle(
+                color: Colors.black26,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
               ),
-              OBText(
-                'No user found matching \'$searchQuery\'.',
-                style: TextStyle(
-                  color: Colors.black26,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
-                textAlign: TextAlign.center,
-              )
-            ],
-          ),
+              textAlign: TextAlign.center,
+            )
+          ],
         ),
       ),
     );
