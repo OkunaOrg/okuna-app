@@ -1,5 +1,6 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -30,6 +31,7 @@ class Post extends UpdatableModel<Post> {
   PostImage image;
   PostVideo video;
   PostCommentList commentsList;
+  Community community;
 
   static final factory = PostFactory();
 
@@ -56,6 +58,7 @@ class Post extends UpdatableModel<Post> {
       this.reactionsEmojiCounts,
       this.publicComments,
       this.circles,
+      this.community,
       this.publicReactions})
       : super();
 
@@ -83,6 +86,9 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
     if (json.containsKey('video')) video = factory.parseVideo(json['video']);
+
+    if (json.containsKey('community'))
+      community = factory.parseCommunity(json['community']);
 
     if (json.containsKey('comments'))
       commentsList = factory.parseCommentList(json['comments']);
@@ -251,6 +257,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         image: parseImage(json['image']),
         video: parseVideo(json['video']),
         reaction: parseReaction(json['reaction']),
+        community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
@@ -283,6 +290,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   PostReaction parseReaction(Map postReaction) {
     if (postReaction == null) return null;
     return PostReaction.fromJson(postReaction);
+  }
+
+  Community parseCommunity(Map communityData) {
+    if (communityData == null) return null;
+    return Community.fromJSON(communityData);
   }
 
   PostReactionsEmojiCountList parseReactionsEmojiCounts(

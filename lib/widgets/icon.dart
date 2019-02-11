@@ -123,7 +123,7 @@ class OBIcons {
   static const search = OBIconData(nativeIcon: Icons.search);
   static const notifications = OBIconData(nativeIcon: Icons.notifications);
   static const menu = OBIconData(nativeIcon: Icons.menu);
-  static const communities = OBIconData(nativeIcon: Icons.people);
+  static const communities = OBIconData(nativeIcon: Icons.public);
   static const settings = OBIconData(nativeIcon: Icons.settings);
   static const lists = OBIconData(nativeIcon: Icons.library_books);
   static const addToList = OBIconData(nativeIcon: Icons.queue);

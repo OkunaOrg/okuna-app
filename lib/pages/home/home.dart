@@ -177,17 +177,17 @@ class OBHomePageState extends State<OBHomePage> {
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: const OBIcon(OBIcons.notifications),
+          icon: const OBIcon(OBIcons.communities),
           activeIcon: const OBIcon(
-            OBIcons.notifications,
+            OBIcons.communities,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: const OBIcon(OBIcons.communities),
+          icon: const OBIcon(OBIcons.notifications),
           activeIcon: const OBIcon(
-            OBIcons.communities,
+            OBIcons.notifications,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),

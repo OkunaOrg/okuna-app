@@ -33,6 +33,7 @@ class CommunitiesApiService {
   static const GET_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/';
   static const GET_COMMUNITY_POSTS_PATH =
       'api/communities/{communityId}/posts/';
+  static const CREATE_COMMUNITY_POST_PATH = 'api/communities/posts/';
   static const GET_COMMUNITY_MEMBERS_PATH =
       'api/communities/{communityId}/members/';
   static const GET_COMMUNITY_BANNED_USERS_PATH =
@@ -75,6 +76,26 @@ class CommunitiesApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
+  Future<HttpieStreamedResponse> createPostForCommunityWithId(int communityId,
+      {String text, File image, File video}) {
+    Map<String, dynamic> body = {};
+
+    if (image != null) {
+      body['image'] = image;
+    }
+
+    if (video != null) {
+      body['video'] = video;
+    }
+
+    if (text != null && text.length > 0) {
+      body['text'] = text;
+    }
+
+    return _httpService.putMultiform(_makeApiUrl(CREATE_COMMUNITY_POST_PATH),
+        body: body, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> getPostsForCommunityWithId(int communityId,
       {int maxId, int count, bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
@@ -91,7 +112,7 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getCommunitiesWithQuery(
-      {bool authenticatedRequest = true, String query}) {
+      {bool authenticatedRequest = true, @required String query}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     return _httpService.get('$apiURL$SEARCH_COMMUNITIES_PATH',
@@ -178,13 +199,13 @@ class CommunitiesApiService {
         body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> joinCommunity({@required int communityId}) {
+  Future<HttpieResponse> joinCommunityWithId(int communityId) {
     String path = _makeJoinCommunityPath(communityId);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> leaveCommunity({@required int communityId}) {
+  Future<HttpieResponse> leaveCommunityWithId(int communityId) {
     String path = _makeLeaveCommunityPath(communityId);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
