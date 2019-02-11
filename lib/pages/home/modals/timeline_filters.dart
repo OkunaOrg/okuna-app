@@ -8,7 +8,6 @@ import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -69,7 +68,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
       _needsBootstrap = false;
     }
 
-    return OBCupertinoPageScaffold(
+    return CupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
