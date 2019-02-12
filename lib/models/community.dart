@@ -9,7 +9,6 @@ class Community extends UpdatableModel<Community> {
   String name;
   String title;
   String description;
-  String type;
   String rules;
   String color;
   String avatar;
@@ -17,6 +16,7 @@ class Community extends UpdatableModel<Community> {
   String userAdjective;
   String usersAdjective;
   int membersCount;
+  CommunityType type;
 
   // Whether the user has been invited to the community
   bool isInvited;
@@ -57,7 +57,7 @@ class Community extends UpdatableModel<Community> {
     }
 
     if (json.containsKey('type')) {
-      type = json['type'];
+      type = factory.parseType(json['type']);
     }
 
     if (json.containsKey('is_invited')) {
@@ -74,6 +74,14 @@ class Community extends UpdatableModel<Community> {
 
     if (json.containsKey('description')) {
       description = json['description'];
+    }
+
+    if (json.containsKey('user_adjective')) {
+      userAdjective = json['user_adjective'];
+    }
+
+    if (json.containsKey('users_adjective')) {
+      usersAdjective = json['users_adjective'];
     }
 
     if (json.containsKey('color')) {
@@ -119,6 +127,9 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         cover: json['cover'],
         color: json['color'],
         membersCount: json['members_count'],
+        userAdjective: json['user_adjective'],
+        usersAdjective: json['users_adjective'],
+        type: parseType(json['type']),
         creator: parseUser(json['creator']),
         categories: parseCategories(json['categories']));
   }
@@ -132,4 +143,19 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
     if (categoriesData == null) return null;
     return CategoriesList.fromJson(categoriesData);
   }
+
+  CommunityType parseType(String strType) {
+    CommunityType type;
+    if (strType == 'P') {
+      type = CommunityType.public;
+    } else if (strType == 'T') {
+      type = CommunityType.private;
+    } else {
+      throw 'Unsupported community type';
+    }
+
+    return type;
+  }
 }
+
+enum CommunityType { public, private }

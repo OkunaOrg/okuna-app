@@ -10,7 +10,7 @@ class OBCommunityType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String type = community.type;
+    CommunityType type = community.type;
 
     if (type == null) {
       return const SizedBox();
@@ -18,18 +18,18 @@ class OBCommunityType extends StatelessWidget {
 
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const OBIcon(
-          OBIcons.info,
-          customSize: 14,
+        OBIcon(
+          type == CommunityType.private ? OBIcons.privateCommunity : OBIcons.publicCommunity,
+          customSize: 16,
         ),
         const SizedBox(
           width: 10,
         ),
         Flexible(
           child: OBText(
-            type,
+            type == CommunityType.private ? 'Private' : 'Public',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

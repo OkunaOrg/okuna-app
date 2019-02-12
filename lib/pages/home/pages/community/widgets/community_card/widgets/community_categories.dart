@@ -1,6 +1,6 @@
 import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/category_badge.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityCategories extends StatelessWidget {
@@ -17,20 +17,14 @@ class OBCommunityCategories extends StatelessWidget {
         if (community == null) return const SizedBox();
         List<Category> categories = community.categories.categories;
 
-        List<Widget> connectionItems = [
-          const OBText(
-            'In lists',
-            size: OBTextSize.small,
-          )
-        ];
+        List<Widget> connectionItems = [];
 
         categories.forEach((Category category) {
           connectionItems.add(Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              OBText(
-                category.name,
-                size: OBTextSize.small,
+              CategoryBadge(
+                category: category,
               )
             ],
           ));

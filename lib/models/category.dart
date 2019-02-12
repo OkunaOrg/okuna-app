@@ -9,11 +9,13 @@ class Category extends UpdatableModel<Category> {
   String title;
   String description;
   String avatar;
+  String color;
 
   Category({
     this.id,
     this.creator,
     this.avatar,
+    this.color,
     this.title,
     this.description,
     this.name,
@@ -29,6 +31,10 @@ class Category extends UpdatableModel<Category> {
   void updateFromJson(Map json) {
     if (json.containsKey('name')) {
       name = json['name'];
+    }
+
+    if (json.containsKey('color')) {
+      color = json['color'];
     }
 
     if (json.containsKey('title')) {
@@ -58,6 +64,7 @@ class CategoryFactory extends UpdatableModelFactory<Category> {
       title: json['title'],
       description: json['description'],
       avatar: json['avatar'],
+      color: json['color'],
       creator: parseUser(json['creator']),
     );
   }

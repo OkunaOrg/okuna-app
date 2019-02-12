@@ -164,6 +164,8 @@ class OBIcons {
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
   static const camera = OBIconData(nativeIcon: Icons.camera_alt);
+  static const privateCommunity = OBIconData(nativeIcon: Icons.lock);
+  static const publicCommunity = OBIconData(nativeIcon: Icons.public);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

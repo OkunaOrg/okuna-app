@@ -13,10 +13,12 @@ class OBCommunityMembersCount extends StatelessWidget {
   Widget build(BuildContext context) {
     int membersCount = community.membersCount;
 
-    if (membersCount == null ||
-        membersCount == 0) return const SizedBox();
+    if (membersCount == null || membersCount == 0) return const SizedBox();
 
     String count = getPrettyCount(membersCount);
+
+    String userAdjective = community.userAdjective ?? 'Member';
+    String usersAdjective = community.usersAdjective ?? 'Members';
 
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
@@ -30,7 +32,6 @@ class OBCommunityMembersCount extends StatelessWidget {
 
           return Row(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Flexible(
                 child: RichText(
@@ -38,19 +39,19 @@ class OBCommunityMembersCount extends StatelessWidget {
                   TextSpan(
                       text: count,
                       style: TextStyle(
+                        fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: themeValueParserService
                               .parseColor(theme.primaryTextColor))),
+                  TextSpan(text: ' '),
                   TextSpan(
-                      text: membersCount == 1 ? ' Follower' : ' Followers',
+                      text: membersCount == 1 ? userAdjective : usersAdjective,
                       style: TextStyle(
+                          fontSize: 16,
                           color: themeValueParserService
                               .parseColor(theme.secondaryTextColor)))
                 ])),
               ),
-              const SizedBox(
-                width: 10,
-              )
             ],
           );
         });
