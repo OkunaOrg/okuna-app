@@ -183,7 +183,6 @@ class UserService {
     String username,
     String url,
     String password,
-    DateTime birthDate,
     bool followersCountVisible,
     String bio,
     String location,
@@ -194,7 +193,6 @@ class UserService {
         name: name,
         username: username,
         url: url,
-        birthDate: DateFormat('dd-MM-yyyy').format(birthDate),
         followersCountVisible: followersCountVisible,
         bio: bio,
         location: location);

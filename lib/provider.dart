@@ -4,7 +4,7 @@ import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
-import 'package:Openbook/services/deep_links.dart';
+import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/emoji_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
@@ -69,7 +69,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   NavigationService navigationService = NavigationService();
 
   LocalizationService localizationService;
-  DeepLinksService deepLinksService = DeepLinksService();
+  UniversalLinksService universalLinksService = UniversalLinksService();
   BottomSheetService bottomSheetService = BottomSheetService();
 
   @override
@@ -77,10 +77,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     super.initState();
     initAsyncState();
     imageCache.maximumSize = 200 << 20; // 200MB
-    deepLinksService.setAuthApiService(authApiService);
-    deepLinksService.setToastService(toastService);
-    deepLinksService.setUserService(userService);
-    deepLinksService.setCreateAccountBloc(createAccountBloc);
     connectionsCirclesApiService.setHttpService(httpService);
     connectionsCirclesApiService
         .setStringTemplateService(stringTemplateService);
@@ -135,18 +131,13 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   @override
   void dispose() {
     super.dispose();
-    deepLinksService.clearSubscriptionStreams();
+    universalLinksService.dispose();
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {
     localizationService = newLocalizationService;
     createAccountBloc.setLocalizationService(localizationService);
     httpService.setLocalizationService(localizationService);
-    initialiseDeepLinks(); // depends on localizationService being set
-  }
-
-  initialiseDeepLinks() {
-    deepLinksService.initUniLinks();
   }
 
   setValidationService(ValidationService newValidationService) {

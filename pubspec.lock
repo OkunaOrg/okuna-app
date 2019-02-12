@@ -21,7 +21,7 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.8"
   args:
     dependency: transitive
     description:
@@ -213,7 +213,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.6"
   image_cropper:
     dependency: "direct main"
     description:
@@ -312,6 +312,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.4"
+  onesignal:
+    dependency: "direct main"
+    description:
+      name: onesignal
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   package_config:
     dependency: transitive
     description:
@@ -353,7 +360,7 @@ packages:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   photo_view:
     dependency: "direct main"
     description:
@@ -554,7 +561,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.3"
+    version: "4.2.0+3"
   utf:
     dependency: transitive
     description:
@@ -586,12 +593,10 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      path: "packages/video_player"
-      ref: d589ee54ce405e38ebc42b1961e54273cd375726
-      resolved-ref: d589ee54ce405e38ebc42b1961e54273cd375726
-      url: "https://github.com/recastrodiaz/plugins.git"
-    source: git
-    version: "0.8.1"
+      name: video_player
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.0"
   vm_service_client:
     dependency: transitive
     description:
@@ -619,7 +624,7 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.5"
+    version: "3.3.1"
   yaml:
     dependency: transitive
     description:

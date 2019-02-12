@@ -11,12 +11,11 @@ import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  bool _isRegistrationTokenConsumed = false;
   @override
   Widget build(BuildContext context) {
     return OpenbookProvider(
@@ -94,24 +93,13 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  void checkRegistrationTokenIsPresent(OpenbookProviderState openbookProvider, BuildContext context) {
-    var registrationTokenSubscription;
-    if (!_isRegistrationTokenConsumed) {
-      registrationTokenSubscription = openbookProvider.createAccountBloc.registrationTokenSubject.stream.listen((String token) {
-        if (openbookProvider.createAccountBloc.hasToken()) {
-          registrationTokenSubscription.cancel();
-          _isRegistrationTokenConsumed = true;
-          Navigator.pushNamed(context, '/auth/get-started');
-        }
-      });
-    }
-  }
-
   void bootstrapOpenbookProviderInContext(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = LocalizationService.of(context);
     openbookProvider.setLocalizationService(localizationService);
-    checkRegistrationTokenIsPresent(openbookProvider, context);
+    UniversalLinksService universalLinksService =
+        openbookProvider.universalLinksService;
+    universalLinksService.digestLinksWithContext(context);
   }
 }
 
