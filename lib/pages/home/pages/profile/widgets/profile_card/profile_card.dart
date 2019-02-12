@@ -1,6 +1,6 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/user_profile_badge.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_connected_in.dart';
@@ -104,7 +104,7 @@ class OBProfileCard extends StatelessWidget {
   }
 
   Widget _getUserBadge(User user) {
-      UserProfileBadge badge = user.getProfileBadges()[0];
+      Badge badge = user.getProfileBadges()[0];
       return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
   }
 
@@ -121,7 +121,7 @@ class OBProfileCard extends StatelessWidget {
   }
 
   String _getUserBadgeDescription(User user) {
-    UserProfileBadge badge = user.getProfileBadges()[0];
+    Badge badge = user.getProfileBadges()[0];
     return '${user.getProfileName()} is an ${badge.getKeywordDescription()}';
   }
 }

@@ -1,6 +1,6 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/user_profile_badge.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
@@ -81,7 +81,7 @@ class OBPostHeader extends StatelessWidget {
 
   Widget _getUserBadge(User creator) {
     if (creator.getProfileBadges().length > 0) {
-      UserProfileBadge badge = creator.getProfileBadges()[0];
+      Badge badge = creator.getProfileBadges()[0];
       return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
     }
     return const SizedBox();

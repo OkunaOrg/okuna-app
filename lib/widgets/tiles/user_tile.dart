@@ -1,5 +1,5 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/user_profile_badge.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -71,7 +71,7 @@ class OBUserTile extends StatelessWidget {
 
   Widget _getUserBadge(User creator) {
     if (creator.getProfileBadges().length > 0) {
-      UserProfileBadge badge = creator.getProfileBadges()[0];
+      Badge badge = creator.getProfileBadges()[0];
       return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
     }
     return const SizedBox();

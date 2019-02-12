@@ -1,14 +1,12 @@
 import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/models/user_profile_badge.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBUserBadge extends StatelessWidget {
-  final UserProfileBadge badge;
+  final Badge badge;
   final OBUserBadgeSize size;
   static double badgeSizeLarge = 45;
   static double badgeSizeMedium = 25;
@@ -30,7 +28,6 @@ class OBUserBadge extends StatelessWidget {
     var themeValueParserService = openbookProvider.themeValueParserService;
 
     if (badge == null) return const SizedBox();
-    double badgeSize = _getUserBadgeSize(size);
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -39,25 +36,22 @@ class OBUserBadge extends StatelessWidget {
 
           switch(badge.getKeyword()) {
             case BadgeKeyword.verified:
-              return _getVerifiedBadge(badge, snapshot, themeValueParserService); break;
+              return _getVerifiedBadge(badge); break;
             case BadgeKeyword.founder:
-              return _getFounderBadge(badge, snapshot, themeValueParserService); break;
+              return _getFounderBadge(badge); break;
             case BadgeKeyword.golden_founder:
-              return _getGoldenFounderBadge(badge, snapshot, themeValueParserService); break;
+              return _getGoldenFounderBadge(badge); break;
             case BadgeKeyword.diamond_founder:
-              return _getDiamondFounderBadge(badge, snapshot, themeValueParserService); break;
+              return _getDiamondFounderBadge(badge); break;
             case BadgeKeyword.super_founder:
-              return _getSuperFounderBadge(badge, snapshot, themeValueParserService); break;
+              return _getSuperFounderBadge(badge); break;
             case BadgeKeyword.none:
               return const SizedBox(); break;
           }
         });
   }
 
-  Widget _getVerifiedBadge(UserProfileBadge badge, AsyncSnapshot<OBTheme> snapshot, ThemeValueParserService themeValueParserService) {
-    var theme = snapshot.data;
-    var secondaryTextColor =
-    themeValueParserService.parseGradient(theme.secondaryTextColor);
+  Widget _getVerifiedBadge(Badge badge) {
     double badgeSize = _getUserBadgeSize(size);
 
     return Container(
@@ -83,10 +77,7 @@ class OBUserBadge extends StatelessWidget {
     );
   }
 
-  Widget _getFounderBadge(UserProfileBadge badge, AsyncSnapshot<OBTheme> snapshot, ThemeValueParserService themeValueParserService) {
-    var theme = snapshot.data;
-    var primaryAccentColor =
-    themeValueParserService.parseGradient(theme.primaryAccentColor);
+  Widget _getFounderBadge(Badge badge) {
     double badgeSize = _getUserBadgeSize(size);
 
     return Container(
@@ -97,14 +88,14 @@ class OBUserBadge extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            stops: [0.1, 0.2, 0.5, 0.7, 0.9],
+            stops: [0.1, 0.2, 0.5, 0.8, 0.9],
             colors: [
               Colors.green[300],
-              Colors.lightGreenAccent[200],
+              Colors.lightGreenAccent[700],
+              Colors.yellow[400],
               Colors.yellow[700],
               Colors.orange[400],
-              Colors.orangeAccent[400],
-            ],
+            ]
           ),
           borderRadius: BorderRadius.circular(50)
       ),
@@ -114,10 +105,7 @@ class OBUserBadge extends StatelessWidget {
     );
   }
 
-  Widget _getGoldenFounderBadge(UserProfileBadge badge, AsyncSnapshot<OBTheme> snapshot, ThemeValueParserService themeValueParserService) {
-    var theme = snapshot.data;
-    var primaryAccentColor =
-    themeValueParserService.parseGradient(theme.primaryAccentColor);
+  Widget _getGoldenFounderBadge(Badge badge) {
     double badgeSize = _getUserBadgeSize(size);
 
     return Container(
@@ -143,10 +131,7 @@ class OBUserBadge extends StatelessWidget {
     );
   }
 
-  Widget _getDiamondFounderBadge(UserProfileBadge badge, AsyncSnapshot<OBTheme> snapshot, ThemeValueParserService themeValueParserService) {
-    var theme = snapshot.data;
-    var primaryAccentColor =
-    themeValueParserService.parseGradient(theme.primaryAccentColor);
+  Widget _getDiamondFounderBadge(Badge badge) {
     double badgeSize = _getUserBadgeSize(size);
 
     return Container(
@@ -172,10 +157,7 @@ class OBUserBadge extends StatelessWidget {
     );
   }
 
-  Widget _getSuperFounderBadge(UserProfileBadge badge, AsyncSnapshot<OBTheme> snapshot, ThemeValueParserService themeValueParserService) {
-    var theme = snapshot.data;
-    var primaryAccentColor =
-    themeValueParserService.parseGradient(theme.primaryAccentColor);
+  Widget _getSuperFounderBadge(Badge badge) {
     double badgeSize = _getUserBadgeSize(size);
 
     return Container(
