@@ -1,3 +1,5 @@
+import 'package:Openbook/models/badge.dart';
+
 class UserProfile {
   final int id;
   String name;
@@ -7,6 +9,7 @@ class UserProfile {
   String url;
   String location;
   bool followersCountVisible;
+  List<Badge> badges;
 
   UserProfile(
       {this.id,
@@ -16,9 +19,12 @@ class UserProfile {
       this.bio,
       this.url,
       this.location,
+      this.badges,
       this.followersCountVisible});
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
+    List<dynamic> badges = parsedJson['badges'];
+    var badgesList = badges.map((badgeJson) => Badge.fromJson(badgeJson)).toList();
 
     return UserProfile(
         id: parsedJson['id'],
@@ -28,6 +34,7 @@ class UserProfile {
         bio: parsedJson['bio'],
         url: parsedJson['url'],
         location: parsedJson['location'],
+        badges: badgesList,
         followersCountVisible: parsedJson['followers_count_visible']);
   }
 
