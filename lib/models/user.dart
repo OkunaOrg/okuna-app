@@ -1,9 +1,9 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user_profile.dart';
-import 'package:Openbook/models/user_profile_badge.dart';
 import 'package:dcache/dcache.dart';
 
 class User extends UpdatableModel<User> {
@@ -140,7 +140,7 @@ class User extends UpdatableModel<User> {
     return this.profile.location;
   }
 
-  List<UserProfileBadge> getProfileBadges() {
+  List<Badge> getProfileBadges() {
     return this.profile.badges;
   }
 

@@ -1,4 +1,4 @@
-import 'package:Openbook/models/user_profile_badge.dart';
+import 'package:Openbook/models/badge.dart';
 
 class UserProfile {
   final int id;
@@ -10,7 +10,7 @@ class UserProfile {
   String url;
   String location;
   bool followersCountVisible;
-  List<UserProfileBadge> badges;
+  List<Badge> badges;
 
   UserProfile(
       {this.id,
@@ -29,7 +29,7 @@ class UserProfile {
     var birthDate;
     if (birthDateData != null) birthDate = DateTime.parse(birthDateData);
     List<dynamic> badges = parsedJson['badges'];
-    var badgesList = badges.map((badgeJson) => UserProfileBadge.fromJson(badgeJson)).toList();
+    var badgesList = badges.map((badgeJson) => Badge.fromJson(badgeJson)).toList();
 
     return UserProfile(
         id: parsedJson['id'],
