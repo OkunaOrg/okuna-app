@@ -1,3 +1,4 @@
+import 'package:Openbook/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -70,5 +71,10 @@ class ToastService {
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
     print(message);
+    if (context != null) {
+      OpenbookToast.of(context).showToast(message);
+    } else {
+      print('Context was null, cannot show toast');
+    }
   }
 }
