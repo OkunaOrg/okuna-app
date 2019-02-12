@@ -50,7 +50,7 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
   Widget _buildJoinButton() {
     return OBButton(
       child: Text(
-        'Follow',
+        'Join',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,
@@ -61,7 +61,7 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
   Widget _buildLeaveButton() {
     return OBButton(
       child: Text(
-        'Unfollow',
+        'Leave',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,

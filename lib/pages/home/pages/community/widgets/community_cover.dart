@@ -17,6 +17,7 @@ class OBCommunityCover extends StatelessWidget {
 
         return OBCover(
           coverUrl: communityCover,
+          size: OBCoverSize.small
         );
       },
     );

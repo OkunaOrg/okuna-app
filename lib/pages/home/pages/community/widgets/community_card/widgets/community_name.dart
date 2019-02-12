@@ -21,7 +21,7 @@ class OBCommunityName extends StatelessWidget {
           );
 
         return OBSecondaryText(
-          communityName,
+          'c/travel',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45),
         );
       },

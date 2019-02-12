@@ -35,8 +35,8 @@ class OBProfileCard extends StatelessWidget {
               Row(
                 children: <Widget>[
                   const SizedBox(
-                    height: (OBAvatar.AVATAR_SIZE_LARGE * 0.4),
-                    width: OBAvatar.AVATAR_SIZE_LARGE,
+                    height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.4),
+                    width: OBAvatar.AVATAR_SIZE_EXTRA_LARGE,
                   ),
                   Expanded(child: OBProfileActions(user)),
                 ],
@@ -81,7 +81,7 @@ class OBProfileCard extends StatelessWidget {
           top: -19,
         ),
         Positioned(
-          top: -((OBAvatar.AVATAR_SIZE_LARGE / 2) * 0.7) - 10,
+          top: -((OBAvatar.AVATAR_SIZE_EXTRA_LARGE / 2) * 0.7) - 10,
           left: 30,
           child: StreamBuilder(
               stream: user.updateSubject,
@@ -91,7 +91,7 @@ class OBProfileCard extends StatelessWidget {
                 return OBAvatar(
                   borderWidth: 3,
                   avatarUrl: user?.getProfileAvatar(),
-                  size: OBAvatarSize.large,
+                  size: OBAvatarSize.extraLarge,
                 );
               }),
         ),

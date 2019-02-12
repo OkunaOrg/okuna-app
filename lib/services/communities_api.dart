@@ -124,7 +124,6 @@ class CommunitiesApiService {
   Future<HttpieResponse> getCommunityWithName(String name,
       {bool authenticatedRequest = true}) {
     String url = _makeGetCommunityPath(name);
-    print(url);
     return _httpService.get(_makeApiUrl(url),
         appendAuthorizationToken: authenticatedRequest);
   }

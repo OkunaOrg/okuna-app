@@ -13,7 +13,7 @@ class OBAvatar extends StatelessWidget {
 
   static const double AVATAR_SIZE_SMALL = 20.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
-  static const double AVATAR_SIZE_LARGE = 100.0;
+  static const double AVATAR_SIZE_LARGE = 80.0;
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.jpg';
 

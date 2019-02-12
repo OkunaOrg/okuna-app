@@ -18,13 +18,14 @@ class OBCommunityDescription extends StatelessWidget {
         if (description == null) return const SizedBox();
 
         return Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 10),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Flexible(
                 child: OBText(
                   description,
+                  style: TextStyle(fontSize: 14),
                 ),
               )
             ],
