@@ -53,9 +53,9 @@ class OBProfileCard extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      toastService.info(message: 'showing toast', context:context);
+                      toastService.info(message: _getUserBadgeDescription(user), context:context);
                     },
-                    child:  _buildNameRow(user),,
+                    child:  _buildNameRow(user),
                   ),
                   OBProfileUsername(user),
                   OBProfileBio(user),
