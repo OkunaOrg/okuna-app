@@ -1,7 +1,9 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -29,10 +31,14 @@ class OBUserTile extends StatelessWidget {
         avatarUrl: user.getProfileAvatar(),
       ),
       trailing: trailing,
-      title: OBText(
-        user.username,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
+      title: Row(
+          children: <Widget>[
+            OBText(
+              user.username,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            _getUserBadge(user)
+          ]),
       subtitle: Row(
         children: [
           OBSecondaryText(user.getProfileName()),
@@ -61,6 +67,14 @@ class OBUserTile extends StatelessWidget {
       );
     }
     return tile;
+  }
+
+  Widget _getUserBadge(User creator) {
+    if (creator.getProfileBadges().length > 0) {
+      Badge badge = creator.getProfileBadges()[0];
+      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+    }
+    return const SizedBox();
   }
 }
 

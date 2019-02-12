@@ -1,3 +1,4 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
@@ -11,48 +12,14 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
   final User user;
-  OverlayEntry _overlayEntry;
+  GlobalKey _keyUsername = GlobalKey();
 
   OBProfileCard(this.user);
-
-  OverlayEntry _createOverlayEntry(BuildContext context) {
-
-    RenderBox renderBox = context.findRenderObject();
-    var size = renderBox.size;
-    var offset = renderBox.localToGlobal(Offset.zero);
-
-    return OverlayEntry(
-        builder: (context) => Positioned(
-          left: offset.dx,
-          top: offset.dy + size.height + 5.0,
-          width: size.width,
-          child: Material(
-            elevation: 4.0,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              children: <Widget>[
-                ListTile(
-                  title: Text('Apples'),
-                ),
-                ListTile(
-                  title: Text('Oranges'),
-                )
-              ],
-            ),
-          ),
-        )
-    );
-  }
-
-  void showToast(BuildContext context) {
-    this._overlayEntry = this._createOverlayEntry(context);
-    Overlay.of(context).insert(this._overlayEntry);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +51,13 @@ class OBProfileCard extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  OBProfileName(user),
                   GestureDetector(
                     onTap: () {
                       toastService.info(message: 'showing toast', context:context);
                     },
-                    child: OBProfileUsername(user),
+                    child:  _buildNameRow(user),,
                   ),
+                  OBProfileUsername(user),
                   OBProfileBio(user),
                   OBProfileDetails(user),
                   OBProfileCounts(user),
@@ -139,5 +106,27 @@ class OBProfileCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _getUserBadge(User user) {
+      Badge badge = user.getProfileBadges()[0];
+      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+  }
+
+  Widget _buildNameRow(User user) {
+     if (user.getProfileBadges().length > 0) {
+       return Row(
+               key: _keyUsername,
+               children: <Widget>[
+                 OBProfileName(user),
+                 _getUserBadge(user)
+               ]);
+     }
+     return OBProfileName(user);
+  }
+
+  String _getUserBadgeDescription(User user) {
+    Badge badge = user.getProfileBadges()[0];
+    return '${user.getProfileName()} is an ${badge.getKeywordDescription()}';
   }
 }
