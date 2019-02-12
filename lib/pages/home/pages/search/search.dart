@@ -84,7 +84,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     } else {
       currentWidget = OBTrending(
         controller: _trendingController,
-        onScroll: _onScroll,
       );
     }
 

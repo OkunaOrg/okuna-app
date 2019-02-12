@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 class OBTrending extends StatefulWidget {
   final OBTrendingController controller;
-  final VoidCallback onScroll;
 
   const OBTrending({
     this.controller,
-    this.onScroll,
   });
 
   @override
@@ -31,23 +29,18 @@ class OBTrendingState extends State<OBTrending> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        child: NotificationListener(
-            onNotification: (ScrollNotification notification) {
-              if (widget.onScroll != null) widget.onScroll();
-              return true;
-            },
-            child: ListView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                controller: _scrollController,
-                padding: EdgeInsets.all(0),
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return OBTrendingPosts(
-                      controller: _trendingPostsController,
-                    );
-                  }
-                })),
+        child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            controller: _scrollController,
+            padding: EdgeInsets.all(0),
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return OBTrendingPosts(
+                  controller: _trendingPostsController,
+                );
+              }
+            }),
         onRefresh: _refresh);
   }
 
