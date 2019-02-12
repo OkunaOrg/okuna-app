@@ -4,6 +4,8 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
@@ -18,12 +20,16 @@ class OBUserSearchResults extends StatefulWidget {
   final ValueChanged<OBUserSearchResultsTab> onTabSelectionChanged;
   final VoidCallback onScroll;
   final OBUserSearchResultsTab selectedTab;
+  final bool userSearchInProgress;
+  final bool communitySearchInProgress;
 
   const OBUserSearchResults(
       {Key key,
       @required this.userResults,
       this.selectedTab = OBUserSearchResultsTab.users,
       @required this.communityResults,
+      this.userSearchInProgress = false,
+      this.communitySearchInProgress = false,
       @required this.searchQuery,
       @required this.onUserPressed,
       @required this.onScroll,
@@ -111,8 +117,25 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
       },
       child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: widget.userResults.length,
+          itemCount: widget.userResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
+            if (index == widget.userResults.length) {
+              String searchQuery = widget.searchQuery;
+              if (widget.userSearchInProgress) {
+                // Search in progress
+                return ListTile(
+                    leading: OBProgressIndicator(),
+                    title: OBText('Searching for $searchQuery'));
+              } else if (widget.userResults.isEmpty) {
+                // Results were empty
+                return ListTile(
+                    leading: OBIcon(OBIcons.sad),
+                    title: OBText('No users found for $searchQuery.'));
+              } else {
+                return SizedBox();
+              }
+            }
+
             User user = widget.userResults[index];
 
             return OBUserTile(
@@ -131,8 +154,25 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
       },
       child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: widget.communityResults.length,
+          itemCount: widget.communityResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
+            if (index == widget.communityResults.length) {
+              String searchQuery = widget.searchQuery;
+              if (widget.communitySearchInProgress) {
+                // Search in progress
+                return ListTile(
+                    leading: OBProgressIndicator(),
+                    title: OBText('Searching for $searchQuery'));
+              } else if (widget.communityResults.isEmpty) {
+                // Results were empty
+                return ListTile(
+                    leading: OBIcon(OBIcons.sad),
+                    title: OBText('No communities found for $searchQuery.'));
+              } else {
+                return SizedBox();
+              }
+            }
+
             Community community = widget.communityResults[index];
 
             return OBCommunityTile(

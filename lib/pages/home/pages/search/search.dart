@@ -73,7 +73,9 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
       currentWidget = OBUserSearchResults(
         searchQuery: _searchQuery,
         userResults: _userSearchResults,
+        userSearchInProgress: _userSearchRequestInProgress,
         communityResults: _communitySearchResults,
+        communitySearchInProgress: _communitySearchRequestInProgress,
         onUserPressed: _onSearchUserPressed,
         selectedTab: _selectedSearchResultsTab,
         onScroll: _onScroll,
