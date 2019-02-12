@@ -21,6 +21,15 @@ class Community extends UpdatableModel<Community> {
   // Whether the user has been invited to the community
   bool isInvited;
 
+  // Whether the user is member of the community
+  bool isMember;
+
+  // Whether the user is admin of the community
+  bool isAdmin;
+
+  // Whether the user is mod of the community
+  bool isMod;
+
   CategoriesList categories;
 
   Community(
@@ -37,6 +46,9 @@ class Community extends UpdatableModel<Community> {
       this.color,
       this.cover,
       this.isInvited,
+      this.isMember,
+      this.isAdmin,
+      this.isMod,
       this.membersCount,
       this.categories});
 
@@ -62,6 +74,18 @@ class Community extends UpdatableModel<Community> {
 
     if (json.containsKey('is_invited')) {
       isInvited = json['is_invited'];
+    }
+
+    if (json.containsKey('is_member')) {
+      isMember = json['is_member'];
+    }
+
+    if (json.containsKey('is_admin')) {
+      isAdmin = json['is_admin'];
+    }
+
+    if (json.containsKey('is_mod')) {
+      isMod = json['is_mod'];
     }
 
     if (json.containsKey('title')) {
@@ -124,6 +148,9 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         rules: json['rules'],
         avatar: json['avatar'],
         isInvited: json['is_invited'],
+        isMember: json['is_member'],
+        isAdmin: json['is_admin'],
+        isMod: json['is_moderator'],
         cover: json['cover'],
         color: json['color'],
         membersCount: json['members_count'],

@@ -1,6 +1,7 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -40,32 +41,25 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
 
-        //if (community?.isFollowing == null) return const SizedBox();
+        bool isAdmin = community.isAdmin ?? true;
 
-        return _buildJoinButton();
+        if (community == null || isAdmin) return SizedBox();
+
+        bool isInvited = community.isInvited ?? false;
+        bool isMember = community.isMember ?? false;
+
+        if (community.type == CommunityType.private && !isMember && !isInvited)
+          return SizedBox();
+
+        return OBButton(
+          child: Text(
+            isMember ? 'Leave' : 'Join',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          isLoading: _requestInProgress,
+          onPressed: isMember ? _leaveCommunity : _joinCommunity,
+        );
       },
-    );
-  }
-
-  Widget _buildJoinButton() {
-    return OBButton(
-      child: Text(
-        'Join',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      isLoading: _requestInProgress,
-      onPressed: _joinCommunity,
-    );
-  }
-
-  Widget _buildLeaveButton() {
-    return OBButton(
-      child: Text(
-        'Leave',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      isLoading: _requestInProgress,
-      onPressed: _leaveCommunity,
     );
   }
 

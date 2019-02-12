@@ -1,4 +1,6 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ class OBCommunityNavBar extends StatelessWidget
           var community = snapshot.data;
 
           if (community == null) return const SizedBox();
+
           return OBNavigationBar(
             title: community.name,
           );
