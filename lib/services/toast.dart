@@ -6,6 +6,10 @@ enum ToastType { info, warning, success, error }
 
 class ToastService {
   static const Duration toastDuration = Duration(seconds: 3);
+  static Color colorError = Colors.redAccent;
+  static Color colorSuccess = Colors.greenAccent[700];
+  static Color colorInfo = Colors.blueGrey;
+  static Color colorWarning = Colors.yellow[800];
 
   void warning({
     String title,
@@ -72,9 +76,41 @@ class ToastService {
   }) {
     print(message);
     if (context != null) {
-      OpenbookToast.of(context).showToast(message);
+      OpenbookToast.of(context).showToast(ToastConfig(color: _getToastColor(type), message: message));
     } else {
       print('Context was null, cannot show toast');
     }
   }
+
+  Color _getToastColor(ToastType type) {
+    var color;
+
+    switch (type) {
+      case ToastType.error:
+        color = colorError;
+        break;
+      case ToastType.info:
+        color = colorInfo;
+        break;
+      case ToastType.success:
+        color = colorSuccess;
+        break;
+      case ToastType.warning:
+        color = colorWarning;
+        break;
+    }
+
+    return color;
+  }
+}
+
+class ToastConfig {
+  final Color color;
+  final String message;
+
+  ToastConfig({
+    this.color,
+    this.message
+  });
+
 }

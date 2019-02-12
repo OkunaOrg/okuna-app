@@ -1,3 +1,4 @@
+import 'package:Openbook/services/toast.dart';
 import 'package:flutter/material.dart';
 
 class OpenbookToast extends StatefulWidget {
@@ -20,13 +21,12 @@ class OpenbookToast extends StatefulWidget {
 
 class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderStateMixin {
   OverlayEntry _overlayEntry;
-  String _message;
   BuildContext _currentContext;
   AnimationController controller;
   Animation<Offset> offset;
   Animation<Offset> offsetBottom;
 
-  static const double TOAST_CONTAINER_HEIGHT = 70.0;
+  static const double TOAST_CONTAINER_HEIGHT = 75.0;
 
   @override
   void initState() {
@@ -40,10 +40,18 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
         .animate(controller);
   }
 
-  void showToast(String message) async {
-    // if (this._overlayEntry != null) this._overlayEntry.remove();
-    this._message = message;
-    this._overlayEntry = this._createOverlayEntryFromTop();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return _OpenbookToast(
+      child: widget.child,
+    );
+  }
+
+  void showToast(ToastConfig config) async {
+    if (this._overlayEntry != null) this._overlayEntry.remove();
+    this._overlayEntry = this._createOverlayEntryFromTop(config);
     final overlay = Overlay.of(_currentContext);
     WidgetsBinding.instance.addPostFrameCallback((_) => overlay.insert(_overlayEntry));
     controller.forward();
@@ -55,27 +63,33 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
     controller.reverse();
   }
 
-  OverlayEntry _createOverlayEntryFromTop() {
+  OverlayEntry _createOverlayEntryFromTop(ToastConfig config) {
 
     return OverlayEntry(
         builder: (context) {
-          return Positioned(
-          left: 0,
-          top:  TOAST_CONTAINER_HEIGHT * -1.0,
-          width: MediaQuery.of(_currentContext).size.width,
-          child: SlideTransition(
-            position: offset,
-            child: Material(
-              elevation: 4.0,
-              child: _getToastToBeDisplayed(),
+          return SafeArea(
+            child: Stack(
+              children: [
+                Positioned(
+              left: 0,
+              top:  TOAST_CONTAINER_HEIGHT * -1.1,
+              width: MediaQuery.of(_currentContext).size.width,
+              child: SlideTransition(
+                position: offset,
+                child: Material(
+                  elevation: 4.0,
+                  child: _getToastToBeDisplayed(config),
+                  )
+                )
               )
-          )
-        );
-      }
+              ]
+            )
+          );
+        }
     );
   }
 
-  OverlayEntry _createOverlayEntryFromBottom() {
+  OverlayEntry _createOverlayEntryFromBottom(ToastConfig config) {
 
     RenderBox renderBox = _currentContext.findRenderObject();
     var size = renderBox.size;
@@ -94,7 +108,7 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
                       position: offsetBottom,
                       child: Material(
                         elevation: 4.0,
-                        child: _getToastToBeDisplayed(),
+                        child: _getToastToBeDisplayed(config),
                       )
                   )
               )
@@ -104,13 +118,16 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
     );
   }
 
-  Widget _getToastToBeDisplayed() {
-    if (_message != null) {
+  Widget _getToastToBeDisplayed(ToastConfig config) {
+    if (config != null) {
       return Container(
-        color: Colors.redAccent,
+        color: config.color,
         height: TOAST_CONTAINER_HEIGHT,
         padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
-        child: Text(_message, style: TextStyle(color: Colors.white)),
+        child: Center(
+          child: Text(config.message, style: TextStyle(color: Colors.white)
+          )
+        ),
       );
     }
 
@@ -122,14 +139,6 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
     setState(() {
       _currentContext = context;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return _OpenbookToast(
-      child: widget.child,
-    );
   }
 }
 
