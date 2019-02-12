@@ -15,14 +15,51 @@ import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
   final User user;
+  OverlayEntry _overlayEntry;
 
   OBProfileCard(this.user);
+
+  OverlayEntry _createOverlayEntry(BuildContext context) {
+
+    RenderBox renderBox = context.findRenderObject();
+    var size = renderBox.size;
+    var offset = renderBox.localToGlobal(Offset.zero);
+
+    return OverlayEntry(
+        builder: (context) => Positioned(
+          left: offset.dx,
+          top: offset.dy + size.height + 5.0,
+          width: size.width,
+          child: Material(
+            elevation: 4.0,
+            child: ListView(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              children: <Widget>[
+                ListTile(
+                  title: Text('Apples'),
+                ),
+                ListTile(
+                  title: Text('Oranges'),
+                )
+              ],
+            ),
+          ),
+        )
+    );
+  }
+
+  void showToast(BuildContext context) {
+    this._overlayEntry = this._createOverlayEntry(context);
+    Overlay.of(context).insert(this._overlayEntry);
+  }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+    var toastService = openbookProvider.toastService;
 
     return Stack(
       overflow: Overflow.visible,
@@ -48,7 +85,12 @@ class OBProfileCard extends StatelessWidget {
                     height: 30,
                   ),
                   OBProfileName(user),
-                  OBProfileUsername(user),
+                  GestureDetector(
+                    onTap: () {
+                      toastService.info(message: 'showing toast', context:context);
+                    },
+                    child: OBProfileUsername(user),
+                  ),
                   OBProfileBio(user),
                   OBProfileDetails(user),
                   OBProfileCounts(user),
