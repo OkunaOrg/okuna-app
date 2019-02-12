@@ -93,6 +93,10 @@ class UserService {
     _connectionsCirclesApiService = circlesApiService;
   }
 
+  void setCommunitiesApiService(CommunitiesApiService communitiesApiService) {
+    _communitiesApiService = communitiesApiService;
+  }
+
   void setEmojisApiService(EmojisApiService emojisApiService) {
     _emojisApiService = emojisApiService;
   }
@@ -553,8 +557,7 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getCommunitiesWithQuery(
-      {@required String query}) async {
+  Future<CommunitiesList> getCommunitiesWithQuery(String query) async {
     HttpieResponse response =
         await _communitiesApiService.getCommunitiesWithQuery(query: query);
     _checkResponseIsOk(response);

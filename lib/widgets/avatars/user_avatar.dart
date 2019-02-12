@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:flutter/material.dart';
 
-enum OBUserAvatarSize { small, medium, large, extraLarge }
+enum OBAvatarSize { small, medium, large, extraLarge }
 
-class OBUserAvatar extends StatelessWidget {
+class OBAvatar extends StatelessWidget {
   final String avatarUrl;
   final File avatarFile;
-  final OBUserAvatarSize size;
+  final OBAvatarSize size;
   final VoidCallback onPressed;
   final double borderWidth;
 
@@ -17,9 +17,9 @@ class OBUserAvatar extends StatelessWidget {
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.jpg';
 
-  OBUserAvatar(
+  OBAvatar(
       {this.avatarUrl,
-      this.size = OBUserAvatarSize.small,
+      this.size = OBAvatarSize.small,
       this.onPressed,
       this.avatarFile,
       this.borderWidth});
@@ -28,19 +28,19 @@ class OBUserAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     double avatarSize;
 
-    OBUserAvatarSize finalSize = size ?? OBUserAvatarSize.small;
+    OBAvatarSize finalSize = size ?? OBAvatarSize.small;
 
     switch (finalSize) {
-      case OBUserAvatarSize.small:
+      case OBAvatarSize.small:
         avatarSize = AVATAR_SIZE_SMALL;
         break;
-      case OBUserAvatarSize.medium:
+      case OBAvatarSize.medium:
         avatarSize = AVATAR_SIZE_MEDIUM;
         break;
-      case OBUserAvatarSize.large:
+      case OBAvatarSize.large:
         avatarSize = AVATAR_SIZE_LARGE;
         break;
-      case OBUserAvatarSize.extraLarge:
+      case OBAvatarSize.extraLarge:
         avatarSize = AVATAR_SIZE_EXTRA_LARGE;
         break;
     }

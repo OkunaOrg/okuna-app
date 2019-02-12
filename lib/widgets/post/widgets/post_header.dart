@@ -30,12 +30,12 @@ class OBPostHeader extends StatelessWidget {
 
             if (postCreator == null) return const SizedBox();
 
-            return OBUserAvatar(
+            return OBAvatar(
               onPressed: () {
                 navigationService.navigateToUserProfile(
                     user: postCreator, context: context);
               },
-              size: OBUserAvatarSize.medium,
+              size: OBAvatarSize.medium,
               avatarUrl: postCreator.getProfileAvatar(),
             );
           }),

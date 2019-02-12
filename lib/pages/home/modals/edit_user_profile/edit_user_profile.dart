@@ -110,7 +110,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             children: <Widget>[
                               const SizedBox(
                                 height: (OBCover.HEIGHT) -
-                                    (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
+                                    (OBAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
                               _buildUserAvatar()
                             ],
@@ -118,7 +118,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                         ),
                         const SizedBox(
                             height: OBCover.HEIGHT +
-                                OBUserAvatar.AVATAR_SIZE_LARGE / 2)
+                                OBAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),
                     const SizedBox(
@@ -249,11 +249,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         onTap: _onPressed,
         child: Stack(
           children: <Widget>[
-            OBUserAvatar(
+            OBAvatar(
               borderWidth: 3,
               avatarUrl: _avatarUrl,
               avatarFile: _avatarFile,
-              size: OBUserAvatarSize.large,
+              size: OBAvatarSize.large,
             ),
             Positioned(
               bottom: 10,

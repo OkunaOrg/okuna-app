@@ -193,9 +193,9 @@ class OBHomePageState extends State<OBHomePage> {
         ),
         BottomNavigationBarItem(
             title: const SizedBox(),
-            icon: OBUserAvatar(
+            icon: OBAvatar(
               avatarUrl: _avatarUrl,
-              size: OBUserAvatarSize.small,
+              size: OBAvatarSize.small,
             ),
             activeIcon: OBOwnProfileActiveIcon(
               avatarUrl: _avatarUrl,

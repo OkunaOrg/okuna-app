@@ -63,7 +63,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             width: 20.0,
           ),
           OBLoggedInUserAvatar(
-            size: OBUserAvatarSize.medium,
+            size: OBAvatarSize.medium,
           ),
           const SizedBox(
             width: 10.0,

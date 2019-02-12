@@ -7,7 +7,7 @@ import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class OBLoggedInUserAvatar extends StatefulWidget {
-  final OBUserAvatarSize size;
+  final OBAvatarSize size;
   final VoidCallback onPressed;
 
   const OBLoggedInUserAvatar({this.size, this.onPressed});
@@ -50,7 +50,7 @@ class OBLoggedInUserAvatarState extends State<OBLoggedInUserAvatar> {
       _needsBootstrap = false;
     }
 
-    return OBUserAvatar(
+    return OBAvatar(
       avatarUrl: _avatarUrl,
       size: widget.size,
       onPressed: widget.onPressed,

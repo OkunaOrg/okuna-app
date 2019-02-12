@@ -26,9 +26,9 @@ class OBOwnProfileActiveIcon extends StatelessWidget {
                     color: themeValueParserService
                         .parseGradient(theme.primaryAccentColor).colors[1])),
             padding: EdgeInsets.all(2.0),
-            child: OBUserAvatar(
+            child: OBAvatar(
               avatarUrl: avatarUrl,
-              size: OBUserAvatarSize.small,
+              size: OBAvatarSize.small,
             ),
           );
         });

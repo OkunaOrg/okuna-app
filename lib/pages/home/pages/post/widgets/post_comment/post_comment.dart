@@ -91,11 +91,11 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          OBUserAvatar(
+          OBAvatar(
             onPressed: () {
               _navigationService.navigateToUserProfile(user: widget.post.creator, context: context);
             },
-            size: OBUserAvatarSize.medium,
+            size: OBAvatarSize.medium,
             avatarUrl: widget.postComment.getCommenterProfileAvatar(),
           ),
           const SizedBox(

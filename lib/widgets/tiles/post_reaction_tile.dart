@@ -20,8 +20,8 @@ class OBPostReactionTile extends StatelessWidget {
         if (onPostReactionTilePressed != null)
           onPostReactionTilePressed(postReaction);
       },
-      leading: OBUserAvatar(
-        size: OBUserAvatarSize.medium,
+      leading: OBAvatar(
+        size: OBAvatarSize.medium,
         avatarUrl: reactor.getProfileAvatar(),
       ),
       title: OBText(

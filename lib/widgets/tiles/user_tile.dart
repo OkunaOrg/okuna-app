@@ -24,8 +24,8 @@ class OBUserTile extends StatelessWidget {
       onTap: () {
         if (onUserTilePressed != null) onUserTilePressed(user);
       },
-      leading: OBUserAvatar(
-        size: OBUserAvatarSize.medium,
+      leading: OBAvatar(
+        size: OBAvatarSize.medium,
         avatarUrl: user.getProfileAvatar(),
       ),
       trailing: trailing,

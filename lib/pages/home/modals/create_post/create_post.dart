@@ -138,7 +138,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           Column(
             children: <Widget>[
               OBLoggedInUserAvatar(
-                size: OBUserAvatarSize.medium,
+                size: OBAvatarSize.medium,
               ),
               const SizedBox(
                 height: 12.0,

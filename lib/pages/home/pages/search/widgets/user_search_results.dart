@@ -1,44 +1,156 @@
+import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBUserSearchResults extends StatelessWidget {
-  final List<User> results;
+class OBUserSearchResults extends StatefulWidget {
+  final List<User> userResults;
+  final List<Community> communityResults;
   final String searchQuery;
-  final OnSearchUserPressed onSearchUserPressed;
+  final ValueChanged<User> onUserPressed;
+  final ValueChanged<Community> onCommuityPressed;
+  final ValueChanged<OBUserSearchResultsTab> onTabSelectionChanged;
   final VoidCallback onScroll;
+  final OBUserSearchResultsTab selectedTab;
 
-  const OBUserSearchResults(this.results, this.searchQuery,
-      {Key key, @required this.onSearchUserPressed, @required this.onScroll})
+  const OBUserSearchResults(
+      {Key key,
+      @required this.userResults,
+      this.selectedTab = OBUserSearchResultsTab.users,
+      @required this.communityResults,
+      @required this.searchQuery,
+      @required this.onUserPressed,
+      @required this.onScroll,
+      @required this.onCommuityPressed,
+      @required this.onTabSelectionChanged})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return results.length > 0 ? _buildSearchResults() : _buildNoResults();
+  OBUserSearchResultsState createState() {
+    return OBUserSearchResultsState();
+  }
+}
+
+class OBUserSearchResultsState extends State<OBUserSearchResults>
+    with TickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    switch (widget.selectedTab) {
+      case OBUserSearchResultsTab.users:
+        _tabController.index = 0;
+        break;
+      case OBUserSearchResultsTab.communities:
+        _tabController.index = 1;
+        break;
+      default:
+        throw 'Unhandled tab index';
+    }
+
+    _tabController.addListener(_onTabSelectionChanged);
   }
 
-  Widget _buildSearchResults() {
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.removeListener(_onTabSelectionChanged);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    ThemeService _themeService = openbookProvider.themeService;
+    ThemeValueParserService _themeValueParser =
+        openbookProvider.themeValueParserService;
+    OBTheme theme = _themeService.getActiveTheme();
+
+    Color tabIndicatorColor =
+        _themeValueParser.parseGradient(theme.primaryAccentColor).colors[1];
+
+    return Column(
+      children: <Widget>[
+        TabBar(
+          controller: _tabController,
+          tabs: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Tab(text: 'Users'),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Tab(text: 'Communities'),
+            )
+          ],
+          isScrollable: false,
+          indicatorColor: tabIndicatorColor,
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: [_buildUserResults(), _buildCommunityResults()],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildUserResults() {
     return NotificationListener(
       onNotification: (ScrollNotification notification) {
-        onScroll();
+        widget.onScroll();
         return true;
       },
       child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: results.length,
+          itemCount: widget.userResults.length,
           itemBuilder: (BuildContext context, int index) {
-            User user = results[index];
+            User user = widget.userResults[index];
 
             return OBUserTile(
               user,
-              onUserTilePressed: onSearchUserPressed,
+              onUserTilePressed: widget.onUserPressed,
             );
           }),
     );
   }
 
+  Widget _buildCommunityResults() {
+    return NotificationListener(
+      onNotification: (ScrollNotification notification) {
+        widget.onScroll();
+        return true;
+      },
+      child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemCount: widget.communityResults.length,
+          itemBuilder: (BuildContext context, int index) {
+            Community community = widget.communityResults[index];
+
+            return OBCommunityTile(
+              community,
+              onCommunityTilePressed: widget.onCommuityPressed,
+            );
+          }),
+    );
+  }
+
+  void _onTabSelectionChanged() {
+    OBUserSearchResultsTab newSelection =
+        OBUserSearchResultsTab.values[_tabController.previousIndex];
+    widget.onTabSelectionChanged(newSelection);
+  }
+
   Widget _buildNoResults() {
+    String searchQuery = '';
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 200),
@@ -66,4 +178,4 @@ class OBUserSearchResults extends StatelessWidget {
   }
 }
 
-typedef void OnSearchUserPressed(User user);
+enum OBUserSearchResultsTab { communities, users }
