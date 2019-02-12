@@ -13,9 +13,13 @@ class Community extends UpdatableModel<Community> {
   String rules;
   String color;
   String avatar;
+  String cover;
   String userAdjective;
   String usersAdjective;
   int membersCount;
+
+  // Whether the user has been invited to the community
+  bool isInvited;
 
   CategoriesList categories;
 
@@ -31,8 +35,14 @@ class Community extends UpdatableModel<Community> {
       this.description,
       this.name,
       this.color,
+      this.cover,
+      this.isInvited,
       this.membersCount,
       this.categories});
+
+  bool hasDescription() {
+    return description != null;
+  }
 
   static final factory = CommunityFactory();
 
@@ -48,6 +58,10 @@ class Community extends UpdatableModel<Community> {
 
     if (json.containsKey('type')) {
       type = json['type'];
+    }
+
+    if (json.containsKey('is_invited')) {
+      isInvited = json['is_invited'];
     }
 
     if (json.containsKey('title')) {
@@ -69,6 +83,11 @@ class Community extends UpdatableModel<Community> {
     if (json.containsKey('avatar')) {
       avatar = json['avatar'];
     }
+
+    if (json.containsKey('cover')) {
+      cover = json['cover'];
+    }
+
     if (json.containsKey('members_count')) {
       membersCount = json['members_count'];
     }
@@ -96,6 +115,8 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         description: json['description'],
         rules: json['rules'],
         avatar: json['avatar'],
+        isInvited: json['is_invited'],
+        cover: json['cover'],
         color: json['color'],
         membersCount: json['members_count'],
         creator: parseUser(json['creator']),

@@ -77,6 +77,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
         communityResults: _communitySearchResults,
         communitySearchInProgress: _communitySearchRequestInProgress,
         onUserPressed: _onSearchUserPressed,
+        onCommuityPressed: _onSearchCommunityPressed,
         selectedTab: _selectedSearchResultsTab,
         onScroll: _onScroll,
         onTabSelectionChanged: _onSearchTabSelectionChanged,
@@ -116,6 +117,10 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   }
 
   void _onScroll() {
+    _hideKeyboard();
+  }
+
+  void _hideKeyboard() {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
@@ -211,8 +216,14 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   }
 
   void _onSearchUserPressed(User user) {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    _hideKeyboard();
     _navigationService.navigateToUserProfile(user: user, context: context);
+  }
+
+  void _onSearchCommunityPressed(Community community) {
+    _hideKeyboard();
+    _navigationService.navigateToCommunity(
+        community: community, context: context);
   }
 
   void scrollToTop() {

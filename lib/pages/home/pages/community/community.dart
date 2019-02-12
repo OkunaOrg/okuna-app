@@ -1,0 +1,226 @@
+import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/posts_list.dart';
+import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_card/community_card.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_nav_bar.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_no_posts.dart';
+import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/post/post.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:loadmore/loadmore.dart';
+
+class OBCommunityPage extends StatefulWidget {
+  final Community community;
+
+  OBCommunityPage(this.community);
+
+  @override
+  OBCommunityPageState createState() {
+    return OBCommunityPageState();
+  }
+}
+
+class OBCommunityPageState extends State<OBCommunityPage> {
+  Community _community;
+  bool _needsBootstrap;
+  bool _morePostsToLoad;
+  List<Post> _posts;
+  UserService _userService;
+  ToastService _toastService;
+  ScrollController _scrollController;
+  bool _refreshPostsInProgress;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _needsBootstrap = true;
+    _morePostsToLoad = false;
+    _community = widget.community;
+    _posts = [];
+    _refreshPostsInProgress = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    _userService = openbookProvider.userService;
+    _toastService = openbookProvider.toastService;
+
+    if (_needsBootstrap) {
+      _bootstrap();
+      _needsBootstrap = false;
+    }
+
+    return CupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        navigationBar: OBCommunityNavBar(_community),
+        child: OBPrimaryColorContainer(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                    child: LoadMore(
+                        whenEmptyLoad: false,
+                        isFinish: !_morePostsToLoad,
+                        delegate: OBHomePostsLoadMoreDelegate(),
+                        child: ListView.builder(
+                            controller: _scrollController,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            padding: EdgeInsets.all(0),
+                            itemCount: _posts.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index == 0) {
+                                Widget postsItem;
+
+                                if (_refreshPostsInProgress && _posts.isEmpty) {
+                                  postsItem = SizedBox(
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(top: 20),
+                                        child: OBProgressIndicator(),
+                                      ),
+                                    ),
+                                  );
+                                } else if (_posts.length == 0) {
+                                  postsItem = OBCommunityNoPosts(
+                                    _community,
+                                    onWantsToRefreshCommunity: _refresh,
+                                  );
+                                } else {
+                                  postsItem = const SizedBox(
+                                    height: 20,
+                                  );
+                                }
+
+                                return Column(
+                                  children: <Widget>[
+                                    OBCommunityCover(_community),
+                                    OBCommunityCard(
+                                      _community,
+                                    ),
+                                    postsItem
+                                  ],
+                                );
+                              }
+
+                              int postIndex = index - 1;
+
+                              var post = _posts[postIndex];
+
+                              return OBPost(post,
+                                  onPostDeleted: _onPostDeleted,
+                                  key: Key(post.id.toString()));
+                            }),
+                        onLoadMore: _loadMorePosts),
+                    onRefresh: _refresh),
+              )
+            ],
+          ),
+        ));
+  }
+
+  void scrollToTop() {
+    _scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  void _bootstrap() async {
+    await _refresh();
+  }
+
+  Future<void> _refresh() async {
+    try {
+      await Future.wait([_refreshCommunity(), _refreshPosts()]);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection', context: context);
+    } catch (e) {
+      _toastService.error(message: 'Unknown error.', context: context);
+      rethrow;
+    } finally {}
+  }
+
+  Future<void> _refreshCommunity() async {
+    var community = await _userService.getCommunityWithName(_community.name);
+    _setCommunity(community);
+  }
+
+  Future<void> _refreshPosts() async {
+    _setRefreshPostsInProgress(true);
+    PostsList postsList = await _userService.getPostsForCommunity(_community);
+    _posts = postsList.posts;
+    _setPosts(_posts);
+    _setRefreshPostsInProgress(false);
+  }
+
+  Future<bool> _loadMorePosts() async {
+    var lastPost = _posts.last;
+    var lastPostId = lastPost.id;
+    try {
+      var morePosts = (await _userService.getPostsForCommunity(_community,
+              maxId: lastPostId))
+          .posts;
+
+      if (morePosts.length == 0) {
+        _setMorePostsToLoad(false);
+      } else {
+        setState(() {
+          _posts.addAll(morePosts);
+        });
+      }
+      return true;
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection', context: context);
+    } catch (error) {
+      _toastService.error(message: 'Unknown error.', context: context);
+      rethrow;
+    }
+
+    return false;
+  }
+
+  void _onPostDeleted(Post deletedPost) {
+    setState(() {
+      _posts.remove(deletedPost);
+    });
+  }
+
+  void _setCommunity(Community community) {
+    setState(() {
+      _community = community;
+    });
+  }
+
+  void _setPosts(List<Post> posts) {
+    setState(() {
+      _posts = posts;
+    });
+  }
+
+  void _setMorePostsToLoad(bool morePostsToLoad) {
+    setState(() {
+      _morePostsToLoad = morePostsToLoad;
+    });
+  }
+
+  void _setRefreshPostsInProgress(bool refreshPostsInProgress) {
+    setState(() {
+      _refreshPostsInProgress = refreshPostsInProgress;
+    });
+  }
+}
+
+typedef void OnWantsToEditUserCommunity(User user);

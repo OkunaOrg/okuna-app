@@ -540,7 +540,7 @@ class UserService {
   Future<Post> createPostForCommunity(Community community,
       {String text, File image, File video}) async {
     HttpieStreamedResponse response =
-        await _communitiesApiService.createPostForCommunityWithId(community.id,
+        await _communitiesApiService.createPostForCommunityWithId(community.name,
             text: text, image: image, video: video);
     _checkResponseIsCreated(response);
 
@@ -552,7 +552,7 @@ class UserService {
   Future<PostsList> getPostsForCommunity(Community community,
       {int maxId, int count}) async {
     HttpieResponse response = await _communitiesApiService
-        .getPostsForCommunityWithId(community.id, count: count, maxId: maxId);
+        .getPostsForCommunityWithName(community.name, count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return PostsList.fromJson(json.decode(response.body));
   }
@@ -597,16 +597,23 @@ class UserService {
     return Community.fromJSON(json.decode(responseBody));
   }
 
-  Future<void> deleteCommunityWithId(Community community) async {
+  Future<Community> getCommunityWithName(String name) async {
     HttpieResponse response =
-        await _communitiesApiService.deleteCommunityWithId(community.id);
+        await _communitiesApiService.getCommunityWithName(name);
+    _checkResponseIsOk(response);
+    return Community.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> deleteCommunity(Community community) async {
+    HttpieResponse response =
+        await _communitiesApiService.deleteCommunityWithName(community.name);
     _checkResponseIsOk(response);
   }
 
   Future<UsersList> getMembersForCommunity(Community community,
       {int count, int maxId}) async {
     HttpieResponse response = await _communitiesApiService
-        .getMembersForCommunityWithId(community.id, count: count, maxId: maxId);
+        .getMembersForCommunityWithId(community.name, count: count, maxId: maxId);
 
     _checkResponseIsOk(response);
 
@@ -616,26 +623,26 @@ class UserService {
   Future<void> inviteUserToCommunity(
       {@required Community community, @required String username}) async {
     HttpieResponse response = await _communitiesApiService
-        .inviteUserToCommunity(communityId: community.id, username: username);
+        .inviteUserToCommunity(communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
   Future<void> joinCommunity(Community community) async {
     HttpieResponse response =
-        await _communitiesApiService.joinCommunityWithId(community.id);
+        await _communitiesApiService.joinCommunityWithId(community.name);
     _checkResponseIsOk(response);
   }
 
   Future<void> leaveCommunity(Community community) async {
     HttpieResponse response =
-        await _communitiesApiService.leaveCommunityWithId(community.id);
+        await _communitiesApiService.leaveCommunityWithId(community.name);
     _checkResponseIsOk(response);
   }
 
   Future<UsersList> getModeratorsForCommunity(Community community,
       {int count, int maxId}) async {
     HttpieResponse response = await _communitiesApiService
-        .getModeratorsForCommunityWithId(community.id,
+        .getModeratorsForCommunityWithId(community.name,
             count: count, maxId: maxId);
 
     _checkResponseIsOk(response);
@@ -646,7 +653,7 @@ class UserService {
   Future<void> addCommunityModerator(
       {@required Community community, @required String username}) async {
     HttpieResponse response = await _communitiesApiService
-        .addCommunityModerator(communityId: community.id, username: username);
+        .addCommunityModerator(communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
@@ -654,14 +661,14 @@ class UserService {
       {@required Community community, @required String username}) async {
     HttpieResponse response =
         await _communitiesApiService.removeCommunityModerator(
-            communityId: community.id, username: username);
+            communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
   Future<UsersList> getAdministratorsForCommunity(Community community,
       {int count, int maxId}) async {
     HttpieResponse response = await _communitiesApiService
-        .getAdministratorsForCommunityWithId(community.id,
+        .getAdministratorsForCommunityWithId(community.name,
             count: count, maxId: maxId);
 
     _checkResponseIsOk(response);
@@ -673,7 +680,7 @@ class UserService {
       {@required Community community, @required String username}) async {
     HttpieResponse response =
         await _communitiesApiService.addCommunityAdministrator(
-            communityId: community.id, username: username);
+            communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
@@ -681,14 +688,14 @@ class UserService {
       {@required Community community, @required String username}) async {
     HttpieResponse response =
         await _communitiesApiService.removeCommunityAdministrator(
-            communityId: community.id, username: username);
+            communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
   Future<UsersList> getBannedUsersForCommunity(Community community,
       {int count, int maxId}) async {
     HttpieResponse response = await _communitiesApiService
-        .getBannedUsersForCommunityWithId(community.id,
+        .getBannedUsersForCommunityWithId(community.name,
             count: count, maxId: maxId);
 
     _checkResponseIsOk(response);
@@ -699,14 +706,14 @@ class UserService {
   Future<void> banCommunityUser(
       {@required Community community, @required String username}) async {
     HttpieResponse response = await _communitiesApiService.banCommunityUser(
-        communityId: community.id, username: username);
+        communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
   Future<void> unbanCommunityUser(
       {@required Community community, @required String username}) async {
     HttpieResponse response = await _communitiesApiService.unbanCommunityUser(
-        communityId: community.id, username: username);
+        communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
@@ -721,13 +728,13 @@ class UserService {
 
   Future<void> favoriteCommunity(Community community) async {
     HttpieResponse response = await _communitiesApiService.favoriteCommunity(
-        communityId: community.id);
+        communityName: community.name);
     _checkResponseIsOk(response);
   }
 
   Future<void> unfavoriteCommunity(Community community) async {
     HttpieResponse response = await _communitiesApiService.unfavoriteCommunity(
-        communityId: community.id);
+        communityName: community.name);
     _checkResponseIsOk(response);
   }
 
