@@ -41,9 +41,9 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
 
-        bool isAdmin = community.isAdmin ?? true;
+        bool isCreator = community.isCreator ?? true;
 
-        if (community == null || isAdmin) return SizedBox();
+        if (community == null || isCreator) return SizedBox();
 
         bool isInvited = community.isInvited ?? false;
         bool isMember = community.isMember ?? false;

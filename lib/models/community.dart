@@ -30,6 +30,9 @@ class Community extends UpdatableModel<Community> {
   // Whether the user is mod of the community
   bool isMod;
 
+  // Whether the user is the creator of the community
+  bool isCreator;
+
   CategoriesList categories;
 
   Community(
@@ -48,6 +51,7 @@ class Community extends UpdatableModel<Community> {
       this.isInvited,
       this.isMember,
       this.isAdmin,
+      this.isCreator,
       this.isMod,
       this.membersCount,
       this.categories});
@@ -86,6 +90,10 @@ class Community extends UpdatableModel<Community> {
 
     if (json.containsKey('is_mod')) {
       isMod = json['is_mod'];
+    }
+
+    if (json.containsKey('is_creator')) {
+      isCreator = json['is_creator'];
     }
 
     if (json.containsKey('title')) {
@@ -151,6 +159,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         isMember: json['is_member'],
         isAdmin: json['is_admin'],
         isMod: json['is_moderator'],
+        isCreator: json['is_creator'],
         cover: json['cover'],
         color: json['color'],
         membersCount: json['members_count'],
