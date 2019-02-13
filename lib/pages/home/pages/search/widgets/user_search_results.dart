@@ -82,8 +82,7 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
     Color tabIndicatorColor =
         _themeValueParser.parseGradient(theme.primaryAccentColor).colors[1];
 
-    Color tabLabelColor =
-    _themeValueParser.parseColor(theme.primaryTextColor);
+    Color tabLabelColor = _themeValueParser.parseColor(theme.primaryTextColor);
 
     return Column(
       children: <Widget>[
@@ -120,7 +119,8 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
         return true;
       },
       child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.all(0),
+          physics: const ClampingScrollPhysics(),
           itemCount: widget.userResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
             if (index == widget.userResults.length) {
@@ -157,7 +157,8 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
         return true;
       },
       child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.all(0),
+          physics: const ClampingScrollPhysics(),
           itemCount: widget.communityResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
             if (index == widget.communityResults.length) {
