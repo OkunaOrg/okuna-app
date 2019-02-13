@@ -98,35 +98,6 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
     );
   }
 
-  OverlayEntry _createOverlayEntryFromBottom(ToastConfig config) {
-
-    RenderBox renderBox = _currentContext.findRenderObject();
-    var size = renderBox.size;
-    var _boxOffset = renderBox.localToGlobal(Offset.zero);
-
-    return OverlayEntry(
-        builder: (context) {
-          return new Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Positioned(
-                  left: 0,
-                  bottom: -1.0 * TOAST_CONTAINER_HEIGHT,
-                  width: size.width,
-                  child: SlideTransition(
-                      position: offsetBottom,
-                      child: Material(
-                        elevation: 4.0,
-                        child: _getToastToBeDisplayed(config),
-                      )
-                  )
-              )
-            ],
-          );
-        }
-    );
-  }
-
   Widget _getToastToBeDisplayed(ToastConfig config) {
     if (config != null) {
       return Container(
