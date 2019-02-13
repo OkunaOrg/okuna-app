@@ -29,7 +29,8 @@ class OBCommunityPage extends StatefulWidget {
   }
 }
 
-class OBCommunityPageState extends State<OBCommunityPage> {
+class OBCommunityPageState extends State<OBCommunityPage>
+    with TickerProviderStateMixin {
   Community _community;
   bool _needsBootstrap;
   bool _morePostsToLoad;
@@ -37,6 +38,7 @@ class OBCommunityPageState extends State<OBCommunityPage> {
   UserService _userService;
   ToastService _toastService;
   ScrollController _scrollController;
+  TabController _tabController;
   bool _refreshPostsInProgress;
 
   @override
@@ -48,6 +50,7 @@ class OBCommunityPageState extends State<OBCommunityPage> {
     _community = widget.community;
     _posts = [];
     _refreshPostsInProgress = false;
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -69,65 +72,201 @@ class OBCommunityPageState extends State<OBCommunityPage> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Expanded(
-                child: RefreshIndicator(
-                    child: LoadMore(
-                        whenEmptyLoad: false,
-                        isFinish: !_morePostsToLoad,
-                        delegate: OBHomePostsLoadMoreDelegate(),
-                        child: ListView.builder(
-                            controller: _scrollController,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            padding: EdgeInsets.all(0),
-                            itemCount: _posts.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index == 0) {
-                                Widget postsItem;
-
-                                if (_refreshPostsInProgress && _posts.isEmpty) {
-                                  postsItem = SizedBox(
-                                    child: Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 20),
-                                        child: OBProgressIndicator(),
-                                      ),
-                                    ),
-                                  );
-                                } else if (_posts.length == 0) {
-                                  postsItem = OBCommunityNoPosts(
+                child: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) {
+                    // These are the slivers that show up in the "outer" scroll view.
+                    return <Widget>[
+                      SliverOverlapAbsorber(
+                        // This widget takes the overlapping behavior of the SliverAppBar,
+                        // and redirects it to the SliverOverlapInjector below. If it is
+                        // missing, then it is possible for the nested "inner" scroll view
+                        // below to end up under the SliverAppBar even when the inner
+                        // scroll view thinks it has not been scrolled.
+                        // This is not necessary if the "headerSliverBuilder" only builds
+                        // widgets that do not overlap the next sliver.
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context),
+                        child: SliverList(
+                          delegate: new SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              switch (index) {
+                                case 0:
+                                  return OBCommunityCover(_community);
+                                  break;
+                                case 1:
+                                  return OBCommunityCard(
                                     _community,
-                                    onWantsToRefreshCommunity: _refresh,
                                   );
-                                } else {
-                                  postsItem = const SizedBox(
-                                    height: 20,
-                                  );
-                                }
-
-                                return Column(
-                                  children: <Widget>[
-                                    OBCommunityCover(_community),
-                                    OBCommunityCard(
-                                      _community,
-                                    ),
-                                    postsItem
-                                  ],
-                                );
+                                  break;
                               }
+                            },
+                            childCount: 2,
+                          ),
+                        ),
+                      ),
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: new CommunityTabBarDelegate(
+                            controller: _tabController),
+                      ),
+                    ];
+                  },
+                  body: TabBarView(
+                    // These are the contents of the tab views, below the tabs.
+                    controller: _tabController,
+                    children: [
+                      SafeArea(
+                        top: false,
+                        bottom: false,
+                        child: Builder(
+                          // This Builder is needed to provide a BuildContext that is "inside"
+                          // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
+                          // find the NestedScrollView.
+                          builder: (BuildContext context) {
+                            return CustomScrollView(
+                              // The "controller" and "primary" members should be left
+                              // unset, so that the NestedScrollView can control this
+                              // inner scroll view.
+                              // If the "controller" property is set, then this scroll
+                              // view will not be associated with the NestedScrollView.
+                              // The PageStorageKey should be unique to this ScrollView;
+                              // it allows the list to remember its scroll position when
+                              // the tab view is not on the screen.
+                              key: PageStorageKey<String>('communityPosts'),
+                              slivers: <Widget>[
+                                SliverOverlapInjector(
+                                  // This is the flip side of the SliverOverlapAbsorber above.
+                                  handle: NestedScrollView
+                                      .sliverOverlapAbsorberHandleFor(context),
+                                ),
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                        (context, index) {
+                                      if (index == 0) {
+                                        Widget postsItem;
 
-                              int postIndex = index - 1;
+                                        if (_refreshPostsInProgress &&
+                                            _posts.isEmpty) {
+                                          postsItem = SizedBox(
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                EdgeInsets.only(top: 20),
+                                                child: OBProgressIndicator(),
+                                              ),
+                                            ),
+                                          );
+                                        } else if (_posts.length == 0) {
+                                          postsItem = OBCommunityNoPosts(
+                                            _community,
+                                            onWantsToRefreshCommunity:
+                                            _refresh,
+                                          );
+                                        } else {
+                                          postsItem = const SizedBox(
+                                            height: 20,
+                                          );
+                                        }
 
-                              var post = _posts[postIndex];
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[postsItem],
+                                        );
+                                      }
 
-                              return OBPost(post,
-                                  onPostDeleted: _onPostDeleted,
-                                  key: Key(post.id.toString()));
-                            }),
-                        onLoadMore: _loadMorePosts),
-                    onRefresh: _refresh),
+                                      int postIndex = index - 1;
+
+                                      var post = _posts[postIndex];
+
+                                      return OBPost(post,
+                                          onPostDeleted: _onPostDeleted,
+                                          key: Key(post.id.toString()));
+                                    },
+                                    // The childCount of the SliverChildBuilderDelegate
+                                    // specifies how many children this inner list
+                                    // has. In this example, each tab has a list of
+                                    // exactly 30 items, but this is arbitrary.
+                                    childCount: _posts.length + 1,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               )
             ],
           ),
         ));
+  }
+
+  Widget _buildContent() {
+    return RefreshIndicator(
+        child: ListView(
+          children: <Widget>[
+            OBCommunityCover(_community),
+            OBCommunityCard(
+              _community,
+            ),
+            _buildCommunityPosts()
+          ],
+        ),
+        onRefresh: _refresh);
+  }
+
+  Widget _buildCommunityPosts() {
+    return LoadMore(
+        whenEmptyLoad: false,
+        isFinish: !_morePostsToLoad,
+        delegate: OBHomePostsLoadMoreDelegate(),
+        child: ListView.builder(
+            shrinkWrap: true,
+            controller: _scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.all(0),
+            itemCount: _posts.length + 1,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                Widget postsItem;
+
+                if (_refreshPostsInProgress && _posts.isEmpty) {
+                  postsItem = SizedBox(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: OBProgressIndicator(),
+                      ),
+                    ),
+                  );
+                } else if (_posts.length == 0) {
+                  postsItem = OBCommunityNoPosts(
+                    _community,
+                    onWantsToRefreshCommunity: _refresh,
+                  );
+                } else {
+                  postsItem = const SizedBox(
+                    height: 20,
+                  );
+                }
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[postsItem],
+                );
+              }
+
+              int postIndex = index - 1;
+
+              var post = _posts[postIndex];
+
+              return OBPost(post,
+                  onPostDeleted: _onPostDeleted, key: Key(post.id.toString()));
+            }),
+        onLoadMore: _loadMorePosts);
   }
 
   void scrollToTop() {
@@ -220,6 +359,41 @@ class OBCommunityPageState extends State<OBCommunityPage> {
     setState(() {
       _refreshPostsInProgress = refreshPostsInProgress;
     });
+  }
+}
+
+class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
+  CommunityTabBarDelegate({this.controller});
+
+  final TabController controller;
+
+  @override
+  double get minExtent => kToolbarHeight;
+
+  @override
+  double get maxExtent => kToolbarHeight;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new Container(
+      color: Theme.of(context).cardColor,
+      height: kToolbarHeight,
+      child: new TabBar(
+        controller: controller,
+        key: new PageStorageKey<Type>(TabBar),
+        indicatorColor: Theme.of(context).primaryColor,
+        tabs: <Widget>[
+          Tab(text: 'Posts'),
+          Tab(text: 'About'),
+        ],
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(covariant CommunityTabBarDelegate oldDelegate) {
+    return oldDelegate.controller != controller;
   }
 }
 
