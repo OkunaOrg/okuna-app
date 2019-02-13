@@ -22,6 +22,7 @@ class OpenbookToast extends StatefulWidget {
 class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderStateMixin {
   OverlayEntry _overlayEntry;
   BuildContext _currentContext;
+  double _cachedWidth;
   AnimationController controller;
   Animation<Offset> offset;
   Animation<Offset> offsetBottom;
@@ -63,7 +64,15 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
     controller.reverse();
   }
 
+  void _setWidthOfCurrentOverlay(BuildContext context) {
+    setState(() {
+      _cachedWidth = MediaQuery.of(_currentContext).size.width;
+    });
+  }
+
   OverlayEntry _createOverlayEntryFromTop(ToastConfig config) {
+
+    _setWidthOfCurrentOverlay(_currentContext);
 
     return OverlayEntry(
         builder: (context) {
@@ -73,7 +82,7 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
                 Positioned(
               left: 0,
               top:  TOAST_CONTAINER_HEIGHT * -1.1,
-              width: MediaQuery.of(_currentContext).size.width,
+              width: _cachedWidth,
               child: SlideTransition(
                 position: offset,
                 child: Material(
