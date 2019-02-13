@@ -67,6 +67,14 @@ class Community extends UpdatableModel<Community> {
     return description != null;
   }
 
+  bool hasCover() {
+    return cover != null;
+  }
+
+  bool hasAvatar() {
+    return avatar != null;
+  }
+
   static final factory = CommunityFactory();
 
   factory Community.fromJSON(Map<String, dynamic> json) {

@@ -156,8 +156,13 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
         widget.onScroll();
         return true;
       },
-      child: ListView.builder(
-          padding: EdgeInsets.all(0),
+      child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              height: 10,
+            );
+          },
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           physics: const ClampingScrollPhysics(),
           itemCount: widget.communityResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
