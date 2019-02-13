@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 enum OBAvatarSize { small, medium, large, extraLarge }
 
+enum OBAvatarType { user, community }
+
 class OBAvatar extends StatelessWidget {
   final String avatarUrl;
   final File avatarFile;

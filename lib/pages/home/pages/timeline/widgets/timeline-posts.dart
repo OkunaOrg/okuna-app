@@ -212,6 +212,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     } on HttpieConnectionRefusedError catch (error) {
       _onConnectionRefusedError(error);
     } catch (error) {
+      print(error);
       _onUnknownError(error);
       rethrow;
     }

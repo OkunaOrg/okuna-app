@@ -113,6 +113,10 @@ class Post extends UpdatableModel<Post> {
     return image != null;
   }
 
+  bool isCommunityPost() {
+    return community != null;
+  }
+
   bool hasVideo() {
     return video != null;
   }

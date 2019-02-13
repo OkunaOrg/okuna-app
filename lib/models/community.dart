@@ -203,6 +203,8 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
   }
 
   CommunityType parseType(String strType) {
+    if (strType == null) return null;
+
     CommunityType type;
     if (strType == 'P') {
       type = CommunityType.public;

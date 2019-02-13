@@ -38,7 +38,6 @@ class OBCommunityCard extends StatelessWidget {
                         Community community = snapshot.data;
 
                         return OBAvatar(
-                          borderWidth: 3,
                           avatarUrl: community?.avatar,
                           size: OBAvatarSize.large,
                         );

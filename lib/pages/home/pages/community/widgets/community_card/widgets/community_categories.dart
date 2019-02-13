@@ -14,7 +14,7 @@ class OBCommunityCategories extends StatelessWidget {
       stream: community.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community community = snapshot.data;
-        if (community == null) return const SizedBox();
+        if (community == null || community.categories == null) return const SizedBox();
         List<Category> categories = community.categories.categories;
 
         List<Widget> connectionItems = [];
