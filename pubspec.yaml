@@ -14,6 +14,7 @@ environment:
 
 dependencies:
   flutter_pagewise: ^1.2.2
+  tinycolor: ^1.0.2
   onesignal: ^1.0.5
   flutter_advanced_networkimage: ^0.3.13
   dcache: ^0.1.0

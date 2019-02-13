@@ -5,6 +5,8 @@ import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:Openbook/libs/pretty_count.dart';
+import 'package:tinycolor/tinycolor.dart';
+
 
 class OBCommunityTile extends StatelessWidget {
   final Community community;
@@ -37,9 +39,10 @@ class OBCommunityTile extends StatelessWidget {
                   AdvancedNetworkImage(community.cover, useDiskCache: true)));
     } else {
       textColor = isCommunityColorDark ? Colors.white : Colors.black;
+      bool communityColorIsNearWhite = color.computeLuminance() > 0.9;
 
       containerDecoration = BoxDecoration(
-        color: color,
+        color: communityColorIsNearWhite ? TinyColor(color).darken(2).color : color,
         borderRadius: containerBorderRadius,
       );
     }
@@ -94,7 +97,7 @@ class OBCommunityTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(community.name,
+                  Text('c/' + community.name,
                       style: TextStyle(
                           color: textColor,
                           fontSize: 16,
