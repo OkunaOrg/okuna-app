@@ -12,14 +12,15 @@ class OpenbookToast extends StatefulWidget {
   }
 
   static OpenbookToastState of(BuildContext context) {
-    final OpenbookToastState toastState =
-    context.rootAncestorStateOfType(const TypeMatcher<OpenbookToastState>());
+    final OpenbookToastState toastState = context
+        .rootAncestorStateOfType(const TypeMatcher<OpenbookToastState>());
     toastState._setCurrentContext(context);
     return toastState;
   }
 }
 
-class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderStateMixin {
+class OpenbookToastState extends State<OpenbookToast>
+    with SingleTickerProviderStateMixin {
   OverlayEntry _overlayEntry;
   BuildContext _currentContext;
   double _cachedWidth;
@@ -32,7 +33,8 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
 
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
         .animate(controller);
@@ -41,10 +43,8 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
         .animate(controller);
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return _OpenbookToast(
       child: widget.child,
     );
@@ -54,7 +54,8 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
     if (this._overlayEntry != null) this._overlayEntry.remove();
     this._overlayEntry = this._createOverlayEntryFromTop(config);
     final overlay = Overlay.of(_currentContext);
-    WidgetsBinding.instance.addPostFrameCallback((_) => overlay.insert(_overlayEntry));
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => overlay.insert(_overlayEntry));
     controller.forward();
     _dismissToastAfterDelay();
   }
@@ -71,31 +72,23 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
   }
 
   OverlayEntry _createOverlayEntryFromTop(ToastConfig config) {
-
     _setWidthOfCurrentOverlay(_currentContext);
 
-    return OverlayEntry(
-        builder: (context) {
-          return SafeArea(
-            child: Stack(
-              children: [
-                Positioned(
-              left: 0,
-              top:  TOAST_CONTAINER_HEIGHT * -1.1,
-              width: _cachedWidth,
-              child: SlideTransition(
+    return OverlayEntry(builder: (context) {
+      return SafeArea(
+          child: Stack(children: [
+        Positioned(
+            left: 0,
+            top: TOAST_CONTAINER_HEIGHT * -1.1,
+            width: _cachedWidth,
+            child: SlideTransition(
                 position: offset,
                 child: Material(
                   elevation: 4.0,
                   child: _getToastToBeDisplayed(config),
-                  )
-                )
-              )
-              ]
-            )
-          );
-        }
-    );
+                )))
+      ]));
+    });
   }
 
   Widget _getToastToBeDisplayed(ToastConfig config) {
@@ -105,14 +98,11 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
         height: TOAST_CONTAINER_HEIGHT,
         padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
         child: Center(
-          child: Text(config.message, style: TextStyle(color: Colors.white)
-          )
-        ),
+            child: Text(config.message, style: TextStyle(color: Colors.white))),
       );
     }
 
     return const SizedBox();
-
   }
 
   void _setCurrentContext(BuildContext context) {
@@ -123,9 +113,7 @@ class OpenbookToastState extends State<OpenbookToast> with SingleTickerProviderS
 }
 
 class _OpenbookToast extends InheritedWidget {
-
-  _OpenbookToast({Key key, Widget child})
-      : super(key: key, child: child);
+  _OpenbookToast({Key key, Widget child}) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(_OpenbookToast old) {

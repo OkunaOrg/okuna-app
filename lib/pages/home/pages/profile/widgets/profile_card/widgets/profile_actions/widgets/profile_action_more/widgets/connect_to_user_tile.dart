@@ -41,8 +41,6 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
     _toastService = openbookProvider.toastService;
     _bottomSheetService = openbookProvider.bottomSheetService;
 
-    context.ancestorWidgetOfExactType(OBProfileActionMore);
-
     String userName = widget.user.getProfileName();
 
     return ListTile(
