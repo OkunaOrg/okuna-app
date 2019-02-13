@@ -7,7 +7,6 @@ import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart
 import 'package:Openbook/libs/pretty_count.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-
 class OBCommunityTile extends StatelessWidget {
   final Community community;
   final OnCommunityTilePressed onCommunityTilePressed;
@@ -42,7 +41,9 @@ class OBCommunityTile extends StatelessWidget {
       bool communityColorIsNearWhite = color.computeLuminance() > 0.9;
 
       containerDecoration = BoxDecoration(
-        color: communityColorIsNearWhite ? TinyColor(color).darken(2).color : color,
+        color: communityColorIsNearWhite
+            ? TinyColor(color).darken(2).color
+            : color,
         borderRadius: containerBorderRadius,
       );
     }
@@ -99,9 +100,9 @@ class OBCommunityTile extends StatelessWidget {
                 children: <Widget>[
                   Text('c/' + community.name,
                       style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                        color: textColor,
+                        fontSize: 16,
+                      ),
                       overflow: TextOverflow.ellipsis),
                   Text(
                     community.title,
