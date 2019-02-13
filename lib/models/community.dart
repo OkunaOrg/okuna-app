@@ -1,6 +1,7 @@
 import 'package:Openbook/models/categories_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/users_list.dart';
 import 'package:dcache/dcache.dart';
 
 class Community extends UpdatableModel<Community> {
@@ -35,6 +36,10 @@ class Community extends UpdatableModel<Community> {
 
   CategoriesList categories;
 
+  UsersList moderators;
+
+  UsersList administrators;
+
   Community(
       {this.id,
       this.creator,
@@ -52,6 +57,8 @@ class Community extends UpdatableModel<Community> {
       this.isMember,
       this.isAdmin,
       this.isCreator,
+      this.moderators,
+      this.administrators,
       this.isMod,
       this.membersCount,
       this.categories});
@@ -138,6 +145,14 @@ class Community extends UpdatableModel<Community> {
     if (json.containsKey('categories')) {
       categories = factory.parseCategories(json['categories']);
     }
+
+    if (json.containsKey('moderators')) {
+      moderators = factory.parseUsers(json['moderators']);
+    }
+
+    if (json.containsKey('administrators')) {
+      administrators = factory.parseUsers(json['administrators']);
+    }
   }
 }
 
@@ -167,12 +182,19 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         usersAdjective: json['users_adjective'],
         type: parseType(json['type']),
         creator: parseUser(json['creator']),
+        moderators: parseUsers(json['moderators']),
+        administrators: parseUsers(json['administrators']),
         categories: parseCategories(json['categories']));
   }
 
   User parseUser(Map userData) {
     if (userData == null) return null;
     return User.fromJson(userData);
+  }
+
+  UsersList parseUsers(List usersData) {
+    if (usersData == null) return null;
+    return UsersList.fromJson(usersData);
   }
 
   CategoriesList parseCategories(List categoriesData) {

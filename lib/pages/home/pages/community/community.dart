@@ -1,22 +1,19 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_moderators.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_nav_bar.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_no_posts.dart';
-import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_rules.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 
 class OBCommunityPage extends StatefulWidget {
@@ -34,17 +31,17 @@ class OBCommunityPageState extends State<OBCommunityPage>
     with TickerProviderStateMixin {
   Community _community;
   bool _needsBootstrap;
-  bool _morePostsToLoad;
   List<Post> _posts;
   UserService _userService;
   ToastService _toastService;
   ScrollController _scrollController;
   TabController _tabController;
-  bool _refreshPostsInProgress;
   PagewiseLoadController _pageWiseController;
 
   // This is also the max of items retrieved from the backend
   static const pageWiseSize = 10;
+
+  PageStorageKey _pageStorageKey;
 
   @override
   void initState() {
@@ -53,11 +50,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _pageWiseController = PagewiseLoadController(
         pageFuture: _loadMorePosts, pageSize: pageWiseSize);
     _needsBootstrap = true;
-    _morePostsToLoad = false;
     _community = widget.community;
     _posts = [];
-    _refreshPostsInProgress = false;
     _tabController = TabController(length: 2, vsync: this);
+    _pageStorageKey = PageStorageKey<Type>(TabBar);
   }
 
   @override
@@ -113,15 +109,17 @@ class OBCommunityPageState extends State<OBCommunityPage>
                         ),
                       ),
                       SliverPersistentHeader(
-                        pinned: true,
+                        pinned: false,
                         delegate: new CommunityTabBarDelegate(
+                            pageStorageKey: _pageStorageKey,
                             controller: _tabController),
                       ),
                     ];
                   },
                   body: TabBarView(
-                    // These are the contents of the tab views, below the tabs.
+                    key: _pageStorageKey,
                     controller: _tabController,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       SafeArea(
                         top: false,
@@ -142,7 +140,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
                                 // The PageStorageKey should be unique to this ScrollView;
                                 // it allows the list to remember its scroll position when
                                 // the tab view is not on the screen.
-                                key: PageStorageKey<String>('communityPosts'),
+                                key: PageStorageKey<int>(0),
                                 slivers: <Widget>[
                                   SliverOverlapInjector(
                                     // This is the flip side of the SliverOverlapAbsorber above.
@@ -167,7 +165,44 @@ class OBCommunityPageState extends State<OBCommunityPage>
                             );
                           },
                         ),
-                      )
+                      ),
+                      SafeArea(
+                        top: false,
+                        bottom: false,
+                        child: Builder(
+                          // This Builder is needed to provide a BuildContext that is "inside"
+                          // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
+                          // find the NestedScrollView.
+                          builder: (BuildContext context) {
+                            return CustomScrollView(
+                              physics: const ClampingScrollPhysics(),
+                              key: PageStorageKey<int>(1),
+                              slivers: <Widget>[
+                                SliverOverlapInjector(
+                                  // This is the flip side of the SliverOverlapAbsorber above.
+                                  handle: NestedScrollView
+                                      .sliverOverlapAbsorberHandleFor(context),
+                                ),
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      (BuildContext context, int index) {
+                                    switch (index) {
+                                      case 0:
+                                        return OBCommunityRules(_community);
+                                        break;
+                                      case 1:
+                                        return OBCommunityModerators(
+                                          _community,
+                                        );
+                                        break;
+                                    }
+                                  }, childCount: 2),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -213,7 +248,12 @@ class OBCommunityPageState extends State<OBCommunityPage>
   Future<List<Post>> _loadMorePosts(int pageIndex) async {
     List<Post> morePosts = [];
     int lastPostId;
-    if (_posts.isNotEmpty) {
+
+    // TODO There is a bug where when switching tabs, this function gets executed
+    // again, although the state is preserved. Probably something to do with the
+    // PageWise library.
+
+    if (_posts.isNotEmpty && pageIndex != 0) {
       Post lastPost = _posts.last;
       lastPostId = lastPost.id;
     }
@@ -222,7 +262,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
       morePosts = (await _userService.getPostsForCommunity(_community,
               maxId: lastPostId))
           .posts;
-      _setPosts(morePosts);
+      _addPosts(morePosts);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
@@ -251,23 +291,18 @@ class OBCommunityPageState extends State<OBCommunityPage>
     });
   }
 
-  void _setMorePostsToLoad(bool morePostsToLoad) {
+  void _addPosts(List<Post> posts) {
     setState(() {
-      _morePostsToLoad = morePostsToLoad;
-    });
-  }
-
-  void _setRefreshPostsInProgress(bool refreshPostsInProgress) {
-    setState(() {
-      _refreshPostsInProgress = refreshPostsInProgress;
+      _posts.addAll(posts);
     });
   }
 }
 
 class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
-  CommunityTabBarDelegate({this.controller});
+  CommunityTabBarDelegate({this.controller, this.pageStorageKey});
 
   final TabController controller;
+  final PageStorageKey pageStorageKey;
 
   @override
   double get minExtent => kToolbarHeight;
@@ -283,7 +318,7 @@ class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
       height: kToolbarHeight,
       child: new TabBar(
         controller: controller,
-        key: new PageStorageKey<Type>(TabBar),
+        key: pageStorageKey,
         indicatorColor: Theme.of(context).primaryColor,
         tabs: <Widget>[
           Tab(text: 'Posts'),
