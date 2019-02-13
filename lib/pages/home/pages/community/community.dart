@@ -124,73 +124,78 @@ class OBCommunityPageState extends State<OBCommunityPage>
                           // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
                           // find the NestedScrollView.
                           builder: (BuildContext context) {
-                            return CustomScrollView(
-                              // The "controller" and "primary" members should be left
-                              // unset, so that the NestedScrollView can control this
-                              // inner scroll view.
-                              // If the "controller" property is set, then this scroll
-                              // view will not be associated with the NestedScrollView.
-                              // The PageStorageKey should be unique to this ScrollView;
-                              // it allows the list to remember its scroll position when
-                              // the tab view is not on the screen.
-                              key: PageStorageKey<String>('communityPosts'),
-                              slivers: <Widget>[
-                                SliverOverlapInjector(
-                                  // This is the flip side of the SliverOverlapAbsorber above.
-                                  handle: NestedScrollView
-                                      .sliverOverlapAbsorberHandleFor(context),
-                                ),
-                                SliverList(
-                                  delegate: SliverChildBuilderDelegate(
-                                        (context, index) {
-                                      if (index == 0) {
-                                        Widget postsItem;
+                            return RefreshIndicator(
+                              child: CustomScrollView(
+                                // The "controller" and "primary" members should be left
+                                // unset, so that the NestedScrollView can control this
+                                // inner scroll view.
+                                // If the "controller" property is set, then this scroll
+                                // view will not be associated with the NestedScrollView.
+                                // The PageStorageKey should be unique to this ScrollView;
+                                // it allows the list to remember its scroll position when
+                                // the tab view is not on the screen.
+                                key: PageStorageKey<String>('communityPosts'),
+                                slivers: <Widget>[
+                                  SliverOverlapInjector(
+                                    // This is the flip side of the SliverOverlapAbsorber above.
+                                    handle: NestedScrollView
+                                        .sliverOverlapAbsorberHandleFor(
+                                            context),
+                                  ),
+                                  SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                      (context, index) {
+                                        if (index == 0) {
+                                          Widget postsItem;
 
-                                        if (_refreshPostsInProgress &&
-                                            _posts.isEmpty) {
-                                          postsItem = SizedBox(
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                EdgeInsets.only(top: 20),
-                                                child: OBProgressIndicator(),
+                                          if (_refreshPostsInProgress &&
+                                              _posts.isEmpty) {
+                                            postsItem = SizedBox(
+                                              child: Center(
+                                                child: Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 20),
+                                                  child: OBProgressIndicator(),
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        } else if (_posts.length == 0) {
-                                          postsItem = OBCommunityNoPosts(
-                                            _community,
-                                            onWantsToRefreshCommunity:
-                                            _refresh,
-                                          );
-                                        } else {
-                                          postsItem = const SizedBox(
-                                            height: 20,
+                                            );
+                                          } else if (_posts.length == 0) {
+                                            postsItem = OBCommunityNoPosts(
+                                              _community,
+                                              onWantsToRefreshCommunity:
+                                                  _refresh,
+                                            );
+                                          } else {
+                                            postsItem = const SizedBox(
+                                              height: 20,
+                                            );
+                                          }
+
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[postsItem],
                                           );
                                         }
 
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[postsItem],
-                                        );
-                                      }
+                                        int postIndex = index - 1;
 
-                                      int postIndex = index - 1;
+                                        var post = _posts[postIndex];
 
-                                      var post = _posts[postIndex];
-
-                                      return OBPost(post,
-                                          onPostDeleted: _onPostDeleted,
-                                          key: Key(post.id.toString()));
-                                    },
-                                    // The childCount of the SliverChildBuilderDelegate
-                                    // specifies how many children this inner list
-                                    // has. In this example, each tab has a list of
-                                    // exactly 30 items, but this is arbitrary.
-                                    childCount: _posts.length + 1,
+                                        return OBPost(post,
+                                            onPostDeleted: _onPostDeleted,
+                                            key: Key(post.id.toString()));
+                                      },
+                                      // The childCount of the SliverChildBuilderDelegate
+                                      // specifies how many children this inner list
+                                      // has. In this example, each tab has a list of
+                                      // exactly 30 items, but this is arbitrary.
+                                      childCount: _posts.length + 1,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+                              onRefresh: _refresh,
+                              displacement: 20,
                             );
                           },
                         ),
