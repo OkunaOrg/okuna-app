@@ -17,6 +17,7 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
+import 'package:flutter_pagewise/flutter_pagewise.dart';
 
 class OBCommunityPage extends StatefulWidget {
   final Community community;
@@ -40,11 +41,17 @@ class OBCommunityPageState extends State<OBCommunityPage>
   ScrollController _scrollController;
   TabController _tabController;
   bool _refreshPostsInProgress;
+  PagewiseLoadController _pageWiseController;
+
+  // This is also the max of items retrieved from the backend
+  static const pageWiseSize = 10;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _pageWiseController = PagewiseLoadController(
+        pageFuture: _loadMorePosts, pageSize: pageWiseSize);
     _needsBootstrap = true;
     _morePostsToLoad = false;
     _community = widget.community;
@@ -142,56 +149,16 @@ class OBCommunityPageState extends State<OBCommunityPage>
                                         .sliverOverlapAbsorberHandleFor(
                                             context),
                                   ),
-                                  SliverList(
-                                    delegate: SliverChildBuilderDelegate(
-                                      (context, index) {
-                                        if (index == 0) {
-                                          Widget postsItem;
-
-                                          if (_refreshPostsInProgress &&
-                                              _posts.isEmpty) {
-                                            postsItem = SizedBox(
-                                              child: Center(
-                                                child: Padding(
-                                                  padding:
-                                                      EdgeInsets.only(top: 20),
-                                                  child: OBProgressIndicator(),
-                                                ),
-                                              ),
-                                            );
-                                          } else if (_posts.length == 0) {
-                                            postsItem = OBCommunityNoPosts(
-                                              _community,
-                                              onWantsToRefreshCommunity:
-                                                  _refresh,
-                                            );
-                                          } else {
-                                            postsItem = const SizedBox(
-                                              height: 20,
-                                            );
-                                          }
-
-                                          return Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[postsItem],
-                                          );
-                                        }
-
-                                        int postIndex = index - 1;
-
-                                        var post = _posts[postIndex];
-
-                                        return OBPost(post,
-                                            onPostDeleted: _onPostDeleted,
-                                            key: Key(post.id.toString()));
-                                      },
-                                      // The childCount of the SliverChildBuilderDelegate
-                                      // specifies how many children this inner list
-                                      // has. In this example, each tab has a list of
-                                      // exactly 30 items, but this is arbitrary.
-                                      childCount: _posts.length + 1,
-                                    ),
-                                  ),
+                                  PagewiseSliverList(
+                                    pageLoadController:
+                                        this._pageWiseController,
+                                    itemBuilder: (BuildContext context,
+                                        dynamic post, int index) {
+                                      return OBPost(post,
+                                          onPostDeleted: _onPostDeleted,
+                                          key: Key(post.id.toString()));
+                                    },
+                                  )
                                 ],
                               ),
                               onRefresh: _refresh,
@@ -207,71 +174,6 @@ class OBCommunityPageState extends State<OBCommunityPage>
             ],
           ),
         ));
-  }
-
-  Widget _buildContent() {
-    return RefreshIndicator(
-        child: ListView(
-          children: <Widget>[
-            OBCommunityCover(_community),
-            OBCommunityCard(
-              _community,
-            ),
-            _buildCommunityPosts()
-          ],
-        ),
-        onRefresh: _refresh);
-  }
-
-  Widget _buildCommunityPosts() {
-    return LoadMore(
-        whenEmptyLoad: false,
-        isFinish: !_morePostsToLoad,
-        delegate: OBHomePostsLoadMoreDelegate(),
-        child: ListView.builder(
-            shrinkWrap: true,
-            controller: _scrollController,
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.all(0),
-            itemCount: _posts.length + 1,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                Widget postsItem;
-
-                if (_refreshPostsInProgress && _posts.isEmpty) {
-                  postsItem = SizedBox(
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: OBProgressIndicator(),
-                      ),
-                    ),
-                  );
-                } else if (_posts.length == 0) {
-                  postsItem = OBCommunityNoPosts(
-                    _community,
-                    onWantsToRefreshCommunity: _refresh,
-                  );
-                } else {
-                  postsItem = const SizedBox(
-                    height: 20,
-                  );
-                }
-
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[postsItem],
-                );
-              }
-
-              int postIndex = index - 1;
-
-              var post = _posts[postIndex];
-
-              return OBPost(post,
-                  onPostDeleted: _onPostDeleted, key: Key(post.id.toString()));
-            }),
-        onLoadMore: _loadMorePosts);
   }
 
   void scrollToTop() {
@@ -303,29 +205,29 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Future<void> _refreshPosts() async {
-    _setRefreshPostsInProgress(true);
+    _setPosts([]);
+    this._pageWiseController.reset();
+
+/*    _setRefreshPostsInProgress(true);
     PostsList postsList = await _userService.getPostsForCommunity(_community);
     _posts = postsList.posts;
     _setPosts(_posts);
-    _setRefreshPostsInProgress(false);
+    _setRefreshPostsInProgress(false);*/
   }
 
-  Future<bool> _loadMorePosts() async {
-    var lastPost = _posts.last;
-    var lastPostId = lastPost.id;
+  Future<List<Post>> _loadMorePosts(int pageIndex) async {
+    List<Post> morePosts = [];
+    int lastPostId;
+    if (_posts.isNotEmpty) {
+      Post lastPost = _posts.last;
+      lastPostId = lastPost.id;
+    }
+
     try {
-      var morePosts = (await _userService.getPostsForCommunity(_community,
+      morePosts = (await _userService.getPostsForCommunity(_community,
               maxId: lastPostId))
           .posts;
-
-      if (morePosts.length == 0) {
-        _setMorePostsToLoad(false);
-      } else {
-        setState(() {
-          _posts.addAll(morePosts);
-        });
-      }
-      return true;
+      _setPosts(morePosts);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
@@ -333,7 +235,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
       rethrow;
     }
 
-    return false;
+    return morePosts;
   }
 
   void _onPostDeleted(Post deletedPost) {
