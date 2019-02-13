@@ -133,6 +133,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
                           builder: (BuildContext context) {
                             return RefreshIndicator(
                               child: CustomScrollView(
+                                physics: const ClampingScrollPhysics(),
                                 // The "controller" and "primary" members should be left
                                 // unset, so that the NestedScrollView can control this
                                 // inner scroll view.
@@ -207,12 +208,6 @@ class OBCommunityPageState extends State<OBCommunityPage>
   Future<void> _refreshPosts() async {
     _setPosts([]);
     this._pageWiseController.reset();
-
-/*    _setRefreshPostsInProgress(true);
-    PostsList postsList = await _userService.getPostsForCommunity(_community);
-    _posts = postsList.posts;
-    _setPosts(_posts);
-    _setRefreshPostsInProgress(false);*/
   }
 
   Future<List<Post>> _loadMorePosts(int pageIndex) async {
