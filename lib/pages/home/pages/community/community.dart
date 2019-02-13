@@ -1,5 +1,6 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
@@ -9,6 +10,7 @@ import 'package:Openbook/pages/home/pages/community/widgets/community_no_posts.d
 import 'package:Openbook/pages/home/pages/community/widgets/community_rules.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
@@ -60,11 +62,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
-
     if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _userService = openbookProvider.userService;
+      _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -113,6 +114,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
                       SliverPersistentHeader(
                         pinned: false,
                         delegate: new CommunityTabBarDelegate(
+                            community: widget.community,
                             pageStorageKey: _pageStorageKey,
                             controller: _tabController),
                       ),
@@ -200,19 +202,19 @@ class OBCommunityPageState extends State<OBCommunityPage>
                                 ),
                                 SliverList(
                                   delegate: SliverChildBuilderDelegate(
-                                      (BuildContext context, int index) {
-                                    switch (index) {
-                                      case 0:
-                                        return OBCommunityRules(_community);
-                                        break;
-                                      case 1:
-                                        return OBCommunityModerators(
-                                          _community,
-                                        );
-                                        break;
-                                    }
-                                  }, childCount: 2),
-                                )
+                                          (BuildContext context, int index) {
+                                        switch (index) {
+                                          case 0:
+                                            return OBCommunityRules(_community);
+                                            break;
+                                          case 1:
+                                            return OBCommunityModerators(
+                                              _community,
+                                            );
+                                            break;
+                                        }
+                                      }, childCount: 2),
+                                ),
                               ],
                             );
                           },
@@ -314,9 +316,14 @@ class OBCommunityPageState extends State<OBCommunityPage>
 }
 
 class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
-  CommunityTabBarDelegate({this.controller, this.pageStorageKey});
+  CommunityTabBarDelegate({
+    this.controller,
+    this.pageStorageKey,
+    this.community,
+  });
 
   final TabController controller;
+  final Community community;
   final PageStorageKey pageStorageKey;
 
   @override
@@ -328,19 +335,33 @@ class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new Container(
-      color: Theme.of(context).cardColor,
-      height: kToolbarHeight,
-      child: new TabBar(
-        controller: controller,
-        key: pageStorageKey,
-        indicatorColor: Theme.of(context).primaryColor,
-        tabs: <Widget>[
-          Tab(text: 'Posts'),
-          Tab(text: 'About'),
-        ],
-      ),
-    );
+
+    var openbookProvider = OpenbookProvider.of(context);
+    var themeService = openbookProvider.themeService;
+    var themeValueParserService = openbookProvider.themeValueParserService;
+
+    return StreamBuilder(
+        stream: themeService.themeChange,
+        initialData: themeService.getActiveTheme(),
+        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+          var theme = snapshot.data;
+
+          Color themePrimaryTextColor = themeValueParserService.parseColor(theme.primaryTextColor);
+
+          return new SizedBox(
+            height: kToolbarHeight,
+            child: TabBar(
+              controller: controller,
+              key: pageStorageKey,
+              indicatorColor: themePrimaryTextColor,
+              labelColor: themePrimaryTextColor,
+              tabs: <Widget>[
+                const Tab(text: 'Posts'),
+                const Tab(text: 'About'),
+              ],
+            ),
+          );
+        });
   }
 
   @override

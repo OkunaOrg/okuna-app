@@ -82,6 +82,9 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
     Color tabIndicatorColor =
         _themeValueParser.parseGradient(theme.primaryAccentColor).colors[1];
 
+    Color tabLabelColor =
+    _themeValueParser.parseColor(theme.primaryTextColor);
+
     return Column(
       children: <Widget>[
         TabBar(
@@ -98,6 +101,7 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
           ],
           isScrollable: false,
           indicatorColor: tabIndicatorColor,
+          labelColor: tabLabelColor,
         ),
         Expanded(
           child: TabBarView(

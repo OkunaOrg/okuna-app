@@ -1,7 +1,6 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +19,19 @@ class OBCommunityNavBar extends StatelessWidget
 
           if (community == null) return const SizedBox();
 
-          return OBNavigationBar(
-            title: community.name,
+          String communityColor = community.color;
+          ThemeValueParserService themeValueParserService =
+              OpenbookProvider.of(context).themeValueParserService;
+          Color color = themeValueParserService.parseColor(communityColor);
+          bool isDarkColor = themeValueParserService.isDarkColor(color);
+          Color actionsColor = isDarkColor ? Colors.white : Colors.black;
+
+          return CupertinoNavigationBar(
+            border: null,
+            actionsForegroundColor: actionsColor,
+            middle: Text(community.name, style: TextStyle(color: actionsColor),),
+            transitionBetweenRoutes: false,
+            backgroundColor: color,
           );
         });
   }
