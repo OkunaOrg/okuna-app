@@ -33,7 +33,7 @@ class OBCommunityNoPosts extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Expanded(
-                    child: OBText('There are no posts yet.'),
+                    child: OBText('There are no posts yet.', textAlign: TextAlign.center,),
                   )
                 ],
               ),

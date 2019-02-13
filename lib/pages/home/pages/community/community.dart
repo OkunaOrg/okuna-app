@@ -5,12 +5,14 @@ import 'package:Openbook/pages/home/pages/community/widgets/community_card/commu
 import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_moderators.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_nav_bar.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_no_posts.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_rules.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -149,6 +151,19 @@ class OBCommunityPageState extends State<OBCommunityPage>
                                             context),
                                   ),
                                   PagewiseSliverList(
+                                    noItemsFoundBuilder: (context) {
+                                      return OBCommunityNoPosts(
+                                        _community,
+                                        onWantsToRefreshCommunity:
+                                            _refreshPosts,
+                                      );
+                                    },
+                                    loadingBuilder: (context) {
+                                      return Padding(
+                                        padding: EdgeInsets.all(20),
+                                        child: OBProgressIndicator(),
+                                      );
+                                    },
                                     pageLoadController:
                                         this._pageWiseController,
                                     itemBuilder: (BuildContext context,

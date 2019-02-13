@@ -15,13 +15,7 @@ class OBCommunityRules extends StatelessWidget {
         var community = snapshot.data;
         String communityRules = community?.rules;
 
-
-        print(communityRules);
-
-        if (communityRules == null)
-          return const SizedBox(
-            height: 10.0,
-          );
+        if (communityRules == null) return const SizedBox();
 
         return Column(
           mainAxisSize: MainAxisSize.min,
