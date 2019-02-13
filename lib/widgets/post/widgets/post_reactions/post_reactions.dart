@@ -62,7 +62,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
           return SizedBox(
             height: 35,
             child: ListView(
-                physics: const AlwaysScrollableScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 children: emojiCounts.map((emojiCount) {
                   return OBEmojiReactionCount(

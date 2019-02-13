@@ -16,9 +16,9 @@ class OBCommunityActions extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var modalService = openbookProvider.modalService;
 
-    List<Widget> actions = [];
+    bool isCommunityAdmin = community?.isAdmin ?? false;
 
-    bool isCommunityAdmin = false;
+    List<Widget> actions = [];
 
     if (isCommunityAdmin) {
       actions.add(_buildEditButton(modalService, context));

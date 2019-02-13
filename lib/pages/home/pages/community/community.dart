@@ -10,7 +10,6 @@ import 'package:Openbook/pages/home/pages/community/widgets/community_no_posts.d
 import 'package:Openbook/pages/home/pages/community/widgets/community_rules.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
@@ -45,6 +44,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
   // This is also the max of items retrieved from the backend
   static const pageWiseSize = 10;
 
+  bool _refreshInProgress;
+
   PageStorageKey _pageStorageKey;
 
   @override
@@ -54,6 +55,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _pageWiseController = PagewiseLoadController(
         pageFuture: _loadMorePosts, pageSize: pageWiseSize);
     _needsBootstrap = true;
+    _refreshInProgress = false;
     _community = widget.community;
     _posts = [];
     _tabController = TabController(length: 2, vsync: this);
@@ -72,7 +74,11 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBCommunityNavBar(_community),
+        navigationBar: OBCommunityNavBar(
+          _community,
+          refreshInProgress: _refreshInProgress,
+          onWantsRefresh: _refresh,
+        ),
         child: OBPrimaryColorContainer(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -133,52 +139,45 @@ class OBCommunityPageState extends State<OBCommunityPage>
                           // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
                           // find the NestedScrollView.
                           builder: (BuildContext context) {
-                            return RefreshIndicator(
-                              child: CustomScrollView(
-                                physics: const ClampingScrollPhysics(),
-                                // The "controller" and "primary" members should be left
-                                // unset, so that the NestedScrollView can control this
-                                // inner scroll view.
-                                // If the "controller" property is set, then this scroll
-                                // view will not be associated with the NestedScrollView.
-                                // The PageStorageKey should be unique to this ScrollView;
-                                // it allows the list to remember its scroll position when
-                                // the tab view is not on the screen.
-                                key: PageStorageKey<int>(0),
-                                slivers: <Widget>[
-                                  SliverOverlapInjector(
-                                    // This is the flip side of the SliverOverlapAbsorber above.
-                                    handle: NestedScrollView
-                                        .sliverOverlapAbsorberHandleFor(
-                                            context),
-                                  ),
-                                  PagewiseSliverList(
-                                    noItemsFoundBuilder: (context) {
-                                      return OBCommunityNoPosts(
-                                        _community,
-                                        onWantsToRefreshCommunity:
-                                            _refreshPosts,
-                                      );
-                                    },
-                                    loadingBuilder: (context) {
-                                      return Padding(
-                                        padding: EdgeInsets.all(20),
-                                        child: OBProgressIndicator(),
-                                      );
-                                    },
-                                    pageLoadController:
-                                        this._pageWiseController,
-                                    itemBuilder: (BuildContext context,
-                                        dynamic post, int index) {
-                                      return OBPost(post,
-                                          onPostDeleted: _onPostDeleted,
-                                          key: Key(post.id.toString()));
-                                    },
-                                  )
-                                ],
-                              ),
-                              onRefresh: _refresh,
-                              displacement: 20,
+                            return CustomScrollView(
+                              physics: const ClampingScrollPhysics(),
+                              // The "controller" and "primary" members should be left
+                              // unset, so that the NestedScrollView can control this
+                              // inner scroll view.
+                              // If the "controller" property is set, then this scroll
+                              // view will not be associated with the NestedScrollView.
+                              // The PageStorageKey should be unique to this ScrollView;
+                              // it allows the list to remember its scroll position when
+                              // the tab view is not on the screen.
+                              key: PageStorageKey<int>(0),
+                              slivers: <Widget>[
+                                SliverOverlapInjector(
+                                  // This is the flip side of the SliverOverlapAbsorber above.
+                                  handle: NestedScrollView
+                                      .sliverOverlapAbsorberHandleFor(context),
+                                ),
+                                PagewiseSliverList(
+                                  noItemsFoundBuilder: (context) {
+                                    return OBCommunityNoPosts(
+                                      _community,
+                                      onWantsToRefreshCommunity: _refreshPosts,
+                                    );
+                                  },
+                                  loadingBuilder: (context) {
+                                    return Padding(
+                                      padding: EdgeInsets.all(20),
+                                      child: OBProgressIndicator(),
+                                    );
+                                  },
+                                  pageLoadController: this._pageWiseController,
+                                  itemBuilder: (BuildContext context,
+                                      dynamic post, int index) {
+                                    return OBPost(post,
+                                        onPostDeleted: _onPostDeleted,
+                                        key: Key(post.id.toString()));
+                                  },
+                                )
+                              ],
                             );
                           },
                         ),
@@ -202,18 +201,18 @@ class OBCommunityPageState extends State<OBCommunityPage>
                                 ),
                                 SliverList(
                                   delegate: SliverChildBuilderDelegate(
-                                          (BuildContext context, int index) {
-                                        switch (index) {
-                                          case 0:
-                                            return OBCommunityRules(_community);
-                                            break;
-                                          case 1:
-                                            return OBCommunityModerators(
-                                              _community,
-                                            );
-                                            break;
-                                        }
-                                      }, childCount: 2),
+                                      (BuildContext context, int index) {
+                                    switch (index) {
+                                      case 0:
+                                        return OBCommunityRules(_community);
+                                        break;
+                                      case 1:
+                                        return OBCommunityModerators(
+                                          _community,
+                                        );
+                                        break;
+                                    }
+                                  }, childCount: 2),
                                 ),
                               ],
                             );
@@ -242,6 +241,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Future<void> _refresh() async {
+    _setRefreshInProgress(true);
     try {
       await Future.wait([_refreshCommunity(), _refreshPosts()]);
     } on HttpieConnectionRefusedError {
@@ -249,7 +249,9 @@ class OBCommunityPageState extends State<OBCommunityPage>
     } catch (e) {
       _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
-    } finally {}
+    } finally {
+      _setRefreshInProgress(false);
+    }
   }
 
   Future<void> _refreshCommunity() async {
@@ -302,6 +304,12 @@ class OBCommunityPageState extends State<OBCommunityPage>
     });
   }
 
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
+    });
+  }
+
   void _setPosts(List<Post> posts) {
     setState(() {
       _posts = posts;
@@ -335,7 +343,6 @@ class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
@@ -346,7 +353,8 @@ class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          Color themePrimaryTextColor = themeValueParserService.parseColor(theme.primaryTextColor);
+          Color themePrimaryTextColor =
+              themeValueParserService.parseColor(theme.primaryTextColor);
 
           return new SizedBox(
             height: kToolbarHeight,
