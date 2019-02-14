@@ -38,9 +38,6 @@ class OpenbookToastState extends State<OpenbookToast>
 
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
         .animate(controller);
-
-    offsetBottom = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
-        .animate(controller);
   }
 
   @override
