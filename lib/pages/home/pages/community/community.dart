@@ -12,9 +12,11 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -98,13 +100,36 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Widget _buildUserCannotSeePostsPage() {
+    bool communityHasInvitesEnabled = widget.community.invitesEnabled;
     return ListView(
       padding: EdgeInsets.all(0),
       children: <Widget>[
         OBCommunityCover(_community),
         OBCommunityCard(
           _community,
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: OBAlert(
+            child: Column(
+              children: <Widget>[
+                OBText('This community is private.',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    textAlign: TextAlign.center),
+                SizedBox(
+                  height: 10,
+                ),
+                OBText(
+                  communityHasInvitesEnabled
+                      ? 'You must be invited by a member.'
+                      : 'You must be invited by a moderator.',
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          ),
+        ),
+        OBCommunityModerators(widget.community)
       ],
     );
   }
