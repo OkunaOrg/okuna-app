@@ -18,21 +18,12 @@ class OBAvatar extends StatelessWidget {
   static const double AVATAR_SIZE_LARGE = 80.0;
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.jpg';
+  static const double avatarBorderRadius = 10.0;
 
-  OBAvatar(
-      {this.avatarUrl,
-      this.size = OBAvatarSize.small,
-      this.onPressed,
-      this.avatarFile,
-      this.borderWidth});
-
-  @override
-  Widget build(BuildContext context) {
+  static double getAvatarSize(OBAvatarSize size){
     double avatarSize;
 
-    OBAvatarSize finalSize = size ?? OBAvatarSize.small;
-
-    switch (finalSize) {
+    switch (size) {
       case OBAvatarSize.small:
         avatarSize = AVATAR_SIZE_SMALL;
         break;
@@ -46,6 +37,24 @@ class OBAvatar extends StatelessWidget {
         avatarSize = AVATAR_SIZE_EXTRA_LARGE;
         break;
     }
+
+    return avatarSize;
+  }
+
+  const OBAvatar(
+      {this.avatarUrl,
+      this.size = OBAvatarSize.small,
+      this.onPressed,
+      this.avatarFile,
+      this.borderWidth});
+
+  @override
+  Widget build(BuildContext context) {
+
+    OBAvatarSize finalSize = size ?? OBAvatarSize.small;
+    double avatarSize = getAvatarSize(finalSize);
+
+
 
     Widget finalAvatarImage;
 
@@ -66,8 +75,6 @@ class OBAvatar extends StatelessWidget {
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }
-
-    double avatarBorderRadius = 10.0;
 
     Widget avatar = ClipRRect(
       borderRadius: BorderRadius.circular(avatarBorderRadius),

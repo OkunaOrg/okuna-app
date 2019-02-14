@@ -1,6 +1,7 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:Openbook/widgets/avatars/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
@@ -25,8 +26,9 @@ class OBCommunityTile extends StatelessWidget {
     BoxDecoration containerDecoration;
     BorderRadius containerBorderRadius = BorderRadius.circular(10);
     bool isCommunityColorDark = themeValueParserService.isDarkColor(color);
+    bool communityHasCover = community.hasCover();
 
-    if (community.hasCover()) {
+    if (communityHasCover) {
       textColor = Colors.white;
       containerDecoration = BoxDecoration(
           borderRadius: containerBorderRadius,
@@ -55,21 +57,15 @@ class OBCommunityTile extends StatelessWidget {
         size: OBAvatarSize.medium,
       );
     } else {
-      communityAvatar = Container(
-        height: 40.0,
-        width: 40.0,
-        decoration: BoxDecoration(
-            color: isCommunityColorDark
-                ? Color.fromARGB(20, 255, 255, 255)
-                : Color.fromARGB(10, 0, 0, 0),
-            borderRadius: containerBorderRadius),
-        child: Center(
-          child: Text(
-            community.name[0].toUpperCase(),
-            style: TextStyle(
-                color: textColor, fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-        ),
+      Color avatarColor = communityHasCover
+          ? color
+          : (isCommunityColorDark
+              ? TinyColor(color).lighten(5).color
+              : TinyColor(color).darken(5).color);
+      communityAvatar = OBLetterAvatar(
+        letter: community.name[0],
+        color: avatarColor,
+        labelColor: textColor,
       );
     }
 
