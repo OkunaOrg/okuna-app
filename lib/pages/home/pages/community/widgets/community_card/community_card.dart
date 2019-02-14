@@ -1,5 +1,4 @@
 import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_actions/community_actions.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_categories.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_description.dart';
@@ -7,7 +6,9 @@ import 'package:Openbook/pages/home/pages/community/widgets/community_card/widge
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_name.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_title.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/widgets/avatars/letter_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityCard extends StatelessWidget {
@@ -30,10 +31,35 @@ class OBCommunityCard extends StatelessWidget {
                       AsyncSnapshot<Community> snapshot) {
                     Community community = snapshot.data;
 
-                    return OBAvatar(
-                      avatarUrl: community?.avatar,
-                      size: OBAvatarSize.large,
-                    );
+                    if (community == null) return SizedBox();
+
+                    bool communityHasAvatar = community.hasAvatar();
+
+                    Widget avatar;
+
+                    if (communityHasAvatar) {
+                      avatar = OBAvatar(
+                        avatarUrl: community?.avatar,
+                        size: OBAvatarSize.large,
+                      );
+                    } else {
+                      String communityHexColor = community.color;
+                      ThemeValueParserService themeValueParserService =
+                          OpenbookProvider.of(context).themeValueParserService;
+                      Color communityColor =
+                          themeValueParserService.parseColor(communityHexColor);
+                      Color textColor =
+                          themeValueParserService.isDarkColor(communityColor)
+                              ? Colors.white
+                              : Colors.black;
+                      avatar = OBLetterAvatar(
+                          letter: community.name[0],
+                          color: communityColor,
+                          size: OBAvatarSize.large,
+                          labelColor: textColor);
+                    }
+
+                    return avatar;
                   }),
               Expanded(child: OBCommunityActions(community)),
             ],

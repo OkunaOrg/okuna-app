@@ -2,7 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:Openbook/libs/pretty_count.dart';
@@ -17,15 +17,15 @@ class OBCommunityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String communityColor = community.color;
+    String communityHexColor = community.color;
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
-    Color color = themeValueParserService.parseColor(communityColor);
+    Color communityColor = themeValueParserService.parseColor(communityHexColor);
     Color textColor;
 
     BoxDecoration containerDecoration;
     BorderRadius containerBorderRadius = BorderRadius.circular(10);
-    bool isCommunityColorDark = themeValueParserService.isDarkColor(color);
+    bool isCommunityColorDark = themeValueParserService.isDarkColor(communityColor);
     bool communityHasCover = community.hasCover();
 
     if (communityHasCover) {
@@ -40,12 +40,12 @@ class OBCommunityTile extends StatelessWidget {
                   AdvancedNetworkImage(community.cover, useDiskCache: true)));
     } else {
       textColor = isCommunityColorDark ? Colors.white : Colors.black;
-      bool communityColorIsNearWhite = color.computeLuminance() > 0.9;
+      bool communityColorIsNearWhite = communityColor.computeLuminance() > 0.9;
 
       containerDecoration = BoxDecoration(
         color: communityColorIsNearWhite
-            ? TinyColor(color).darken(2).color
-            : color,
+            ? TinyColor(communityColor).darken(2).color
+            : communityColor,
         borderRadius: containerBorderRadius,
       );
     }
@@ -58,10 +58,10 @@ class OBCommunityTile extends StatelessWidget {
       );
     } else {
       Color avatarColor = communityHasCover
-          ? color
+          ? communityColor
           : (isCommunityColorDark
-              ? TinyColor(color).lighten(5).color
-              : TinyColor(color).darken(5).color);
+              ? TinyColor(communityColor).lighten(5).color
+              : communityColor);
       communityAvatar = OBLetterAvatar(
         letter: community.name[0],
         color: avatarColor,
