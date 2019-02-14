@@ -12,6 +12,7 @@ class OBPostBodyImage extends StatelessWidget {
   Widget build(BuildContext context) {
     String imageUrl = post.getImage();
     double screenWidth = MediaQuery.of(context).size.width;
+    double aspectRatio = post.getImageWidth()/post.getImageHeight();
 
     return GestureDetector(
         onTap: () {
@@ -22,6 +23,8 @@ class OBPostBodyImage extends StatelessWidget {
         child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: screenWidth / 2),
             child: Image(
+              width: screenWidth,
+              height: screenWidth/aspectRatio,
               image: AdvancedNetworkImage(imageUrl, useDiskCache: true),
             )));
   }
