@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_actions/community_actions.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_categories.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_description.dart';
@@ -6,10 +7,13 @@ import 'package:Openbook/pages/home/pages/community/widgets/community_card/widge
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_name.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_title.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/widgets/avatars/community_avatar.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityCard extends StatelessWidget {
   final Community community;
@@ -22,45 +26,13 @@ class OBCommunityCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 20, left: 30.0, right: 20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
-              StreamBuilder(
-                  stream: community.updateSubject,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<Community> snapshot) {
-                    Community community = snapshot.data;
-
-                    if (community == null) return SizedBox();
-
-                    bool communityHasAvatar = community.hasAvatar();
-
-                    Widget avatar;
-
-                    if (communityHasAvatar) {
-                      avatar = OBAvatar(
-                        avatarUrl: community?.avatar,
-                        size: OBAvatarSize.large,
-                      );
-                    } else {
-                      String communityHexColor = community.color;
-                      ThemeValueParserService themeValueParserService =
-                          OpenbookProvider.of(context).themeValueParserService;
-                      Color communityColor =
-                          themeValueParserService.parseColor(communityHexColor);
-                      Color textColor =
-                          themeValueParserService.isDarkColor(communityColor)
-                              ? Colors.white
-                              : Colors.black;
-                      avatar = OBLetterAvatar(
-                          letter: community.name[0],
-                          color: communityColor,
-                          size: OBAvatarSize.large,
-                          labelColor: textColor);
-                    }
-
-                    return avatar;
-                  }),
+              OBCommunityAvatar(
+                community: community,
+              ),
               Expanded(child: OBCommunityActions(community)),
             ],
           ),

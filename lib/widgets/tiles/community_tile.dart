@@ -44,8 +44,8 @@ class OBCommunityTile extends StatelessWidget {
 
       containerDecoration = BoxDecoration(
         color: communityColorIsNearWhite
-            ? TinyColor(communityColor).darken(2).color
-            : communityColor,
+            ? TinyColor(communityColor).darken(5).color
+            : TinyColor(communityColor).lighten(10).color,
         borderRadius: containerBorderRadius,
       );
     }

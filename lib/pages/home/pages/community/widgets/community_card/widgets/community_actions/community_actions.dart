@@ -4,6 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/buttons/actions/join_community_button.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityActions extends StatelessWidget {
@@ -39,11 +40,10 @@ class OBCommunityActions extends StatelessWidget {
   }
 
   _buildEditButton(ModalService modalService, context) {
-    return OBButton(
-        child: Text(
-          'Edit community',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+    return OBCommunityButton(
+        community: community,
+        isLoading: false,
+        text: 'Edit',
         onPressed: () {
           //modalService.openEditCommunityCommunity(community: community, context: context);
         });

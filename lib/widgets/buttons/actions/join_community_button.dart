@@ -3,7 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
 class OBJoinCommunityButton extends StatefulWidget {
@@ -50,11 +50,9 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
         if (community.type == CommunityType.private && !isMember && !isInvited)
           return SizedBox();
 
-        return OBButton(
-          child: Text(
-            isMember ? 'Leave' : 'Join',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+        return OBCommunityButton(
+          community: community,
+          text: isMember ? 'Leave' : 'Join',
           isLoading: _requestInProgress,
           onPressed: isMember ? _leaveCommunity : _joinCommunity,
         );

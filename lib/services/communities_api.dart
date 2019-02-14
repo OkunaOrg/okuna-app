@@ -209,13 +209,13 @@ class CommunitiesApiService {
 
   Future<HttpieResponse> joinCommunityWithId(String communityName) {
     String path = _makeJoinCommunityPath(communityName);
-    return _httpService.putJSON(_makeApiUrl(path),
+    return _httpService.post(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> leaveCommunityWithId(String communityName) {
     String path = _makeLeaveCommunityPath(communityName);
-    return _httpService.putJSON(_makeApiUrl(path),
+    return _httpService.post(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 

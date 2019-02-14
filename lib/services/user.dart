@@ -630,7 +630,7 @@ class UserService {
   Future<void> joinCommunity(Community community) async {
     HttpieResponse response =
         await _communitiesApiService.joinCommunityWithId(community.name);
-    _checkResponseIsOk(response);
+    _checkResponseIsCreated(response);
   }
 
   Future<void> leaveCommunity(Community community) async {
