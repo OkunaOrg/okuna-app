@@ -539,8 +539,8 @@ class UserService {
 
   Future<Post> createPostForCommunity(Community community,
       {String text, File image, File video}) async {
-    HttpieStreamedResponse response =
-        await _communitiesApiService.createPostForCommunityWithId(community.name,
+    HttpieStreamedResponse response = await _communitiesApiService
+        .createPostForCommunityWithId(community.name,
             text: text, image: image, video: video);
     _checkResponseIsCreated(response);
 
@@ -552,7 +552,8 @@ class UserService {
   Future<PostsList> getPostsForCommunity(Community community,
       {int maxId, int count}) async {
     HttpieResponse response = await _communitiesApiService
-        .getPostsForCommunityWithName(community.name, count: count, maxId: maxId);
+        .getPostsForCommunityWithName(community.name,
+            count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return PostsList.fromJson(json.decode(response.body));
   }
@@ -613,7 +614,8 @@ class UserService {
   Future<UsersList> getMembersForCommunity(Community community,
       {int count, int maxId}) async {
     HttpieResponse response = await _communitiesApiService
-        .getMembersForCommunityWithId(community.name, count: count, maxId: maxId);
+        .getMembersForCommunityWithId(community.name,
+            count: count, maxId: maxId);
 
     _checkResponseIsOk(response);
 
@@ -622,21 +624,24 @@ class UserService {
 
   Future<void> inviteUserToCommunity(
       {@required Community community, @required String username}) async {
-    HttpieResponse response = await _communitiesApiService
-        .inviteUserToCommunity(communityName: community.name, username: username);
+    HttpieResponse response =
+        await _communitiesApiService.inviteUserToCommunity(
+            communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
-  Future<void> joinCommunity(Community community) async {
+  Future<Community> joinCommunity(Community community) async {
     HttpieResponse response =
         await _communitiesApiService.joinCommunityWithId(community.name);
     _checkResponseIsCreated(response);
+    return Community.fromJSON(json.decode(response.body));
   }
 
-  Future<void> leaveCommunity(Community community) async {
+  Future<Community> leaveCommunity(Community community) async {
     HttpieResponse response =
         await _communitiesApiService.leaveCommunityWithId(community.name);
     _checkResponseIsOk(response);
+    return Community.fromJSON(json.decode(response.body));
   }
 
   Future<UsersList> getModeratorsForCommunity(Community community,
@@ -652,8 +657,9 @@ class UserService {
 
   Future<void> addCommunityModerator(
       {@required Community community, @required String username}) async {
-    HttpieResponse response = await _communitiesApiService
-        .addCommunityModerator(communityName: community.name, username: username);
+    HttpieResponse response =
+        await _communitiesApiService.addCommunityModerator(
+            communityName: community.name, username: username);
     _checkResponseIsOk(response);
   }
 
