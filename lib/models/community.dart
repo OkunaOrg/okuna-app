@@ -75,6 +75,10 @@ class Community extends UpdatableModel<Community> {
     return avatar != null;
   }
 
+  bool isPrivate() {
+    return type == CommunityType.private;
+  }
+
   static final factory = CommunityFactory();
 
   factory Community.fromJSON(Map<String, dynamic> json) {
@@ -160,6 +164,20 @@ class Community extends UpdatableModel<Community> {
 
     if (json.containsKey('administrators')) {
       administrators = factory.parseUsers(json['administrators']);
+    }
+  }
+
+  void incrementMembersCount() {
+    if (this.membersCount != null) {
+      this.membersCount += 1;
+      notifyUpdate();
+    }
+  }
+
+  void decrementMembersCount() {
+    if (this.membersCount != null && this.membersCount > 0) {
+      this.membersCount -= 1;
+      notifyUpdate();
     }
   }
 }

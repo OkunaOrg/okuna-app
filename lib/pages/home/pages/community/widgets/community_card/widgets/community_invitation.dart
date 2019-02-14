@@ -1,5 +1,5 @@
 import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/alert.dart';
+import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/buttons/actions/confirm_connection_button.dart';
 import 'package:Openbook/widgets/buttons/actions/deny_connection_button.dart';
 import 'package:Openbook/widgets/buttons/actions/join_community_button.dart';

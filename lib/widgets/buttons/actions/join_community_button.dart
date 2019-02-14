@@ -64,7 +64,7 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
     _setRequestInProgress(true);
     try {
       await _userService.joinCommunity(widget.community);
-      //widget.community.incrementFollowersCount();
+      widget.community.incrementMembersCount();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -79,7 +79,7 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
     _setRequestInProgress(true);
     try {
       await _userService.leaveCommunity(widget.community);
-      //widget.community.decrementFollowersCount();
+      widget.community.decrementMembersCount();
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {

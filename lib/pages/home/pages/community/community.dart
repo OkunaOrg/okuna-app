@@ -72,6 +72,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
       _needsBootstrap = false;
     }
 
+    bool communityIsPrivate = widget.community.isPrivate();
+    bool userIsMember = widget.community.isMember;
+    bool userCanSeePosts = !communityIsPrivate || userIsMember;
+
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBCommunityNavBar(
@@ -84,148 +88,164 @@ class OBCommunityPageState extends State<OBCommunityPage>
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Expanded(
-                child: NestedScrollView(
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxIsScrolled) {
-                    // These are the slivers that show up in the "outer" scroll view.
-                    return <Widget>[
-                      SliverOverlapAbsorber(
-                        // This widget takes the overlapping behavior of the SliverAppBar,
-                        // and redirects it to the SliverOverlapInjector below. If it is
-                        // missing, then it is possible for the nested "inner" scroll view
-                        // below to end up under the SliverAppBar even when the inner
-                        // scroll view thinks it has not been scrolled.
-                        // This is not necessary if the "headerSliverBuilder" only builds
-                        // widgets that do not overlap the next sliver.
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                        child: SliverList(
-                          delegate: new SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              switch (index) {
-                                case 0:
-                                  return OBCommunityCover(_community);
-                                  break;
-                                case 1:
-                                  return OBCommunityCard(
-                                    _community,
-                                  );
-                                  break;
-                              }
-                            },
-                            childCount: 2,
-                          ),
-                        ),
-                      ),
-                      SliverPersistentHeader(
-                        pinned: false,
-                        delegate: new CommunityTabBarDelegate(
-                            community: widget.community,
-                            pageStorageKey: _pageStorageKey,
-                            controller: _tabController),
-                      ),
-                    ];
-                  },
-                  body: TabBarView(
-                    key: _pageStorageKey,
-                    controller: _tabController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      SafeArea(
-                        top: false,
-                        bottom: false,
-                        child: Builder(
-                          // This Builder is needed to provide a BuildContext that is "inside"
-                          // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
-                          // find the NestedScrollView.
-                          builder: (BuildContext context) {
-                            return CustomScrollView(
-                              physics: const ClampingScrollPhysics(),
-                              // The "controller" and "primary" members should be left
-                              // unset, so that the NestedScrollView can control this
-                              // inner scroll view.
-                              // If the "controller" property is set, then this scroll
-                              // view will not be associated with the NestedScrollView.
-                              // The PageStorageKey should be unique to this ScrollView;
-                              // it allows the list to remember its scroll position when
-                              // the tab view is not on the screen.
-                              key: PageStorageKey<int>(0),
-                              slivers: <Widget>[
-                                SliverOverlapInjector(
-                                  // This is the flip side of the SliverOverlapAbsorber above.
-                                  handle: NestedScrollView
-                                      .sliverOverlapAbsorberHandleFor(context),
-                                ),
-                                PagewiseSliverList(
-                                  noItemsFoundBuilder: (context) {
-                                    return OBCommunityNoPosts(
-                                      _community,
-                                      onWantsToRefreshCommunity: _refreshPosts,
-                                    );
-                                  },
-                                  loadingBuilder: (context) {
-                                    return Padding(
-                                      padding: EdgeInsets.all(20),
-                                      child: OBProgressIndicator(),
-                                    );
-                                  },
-                                  pageLoadController: this._pageWiseController,
-                                  itemBuilder: (BuildContext context,
-                                      dynamic post, int index) {
-                                    return OBPost(post,
-                                        onPostDeleted: _onPostDeleted,
-                                        key: Key(post.id.toString()));
-                                  },
-                                )
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      SafeArea(
-                        top: false,
-                        bottom: false,
-                        child: Builder(
-                          // This Builder is needed to provide a BuildContext that is "inside"
-                          // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
-                          // find the NestedScrollView.
-                          builder: (BuildContext context) {
-                            return CustomScrollView(
-                              physics: const ClampingScrollPhysics(),
-                              key: PageStorageKey<int>(1),
-                              slivers: <Widget>[
-                                SliverOverlapInjector(
-                                  // This is the flip side of the SliverOverlapAbsorber above.
-                                  handle: NestedScrollView
-                                      .sliverOverlapAbsorberHandleFor(context),
-                                ),
-                                SliverList(
-                                  delegate: SliverChildBuilderDelegate(
-                                      (BuildContext context, int index) {
-                                    switch (index) {
-                                      case 0:
-                                        return OBCommunityRules(_community);
-                                        break;
-                                      case 1:
-                                        return OBCommunityModerators(
-                                          _community,
-                                        );
-                                        break;
-                                    }
-                                  }, childCount: 2),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: userCanSeePosts
+                    ? _buildUserCanSeePostsPage()
+                    : _buildUserCannotSeePostsPage(),
               )
             ],
           ),
         ));
+  }
+
+  Widget _buildUserCannotSeePostsPage() {
+    return ListView(
+      padding: EdgeInsets.all(0),
+      children: <Widget>[
+        OBCommunityCover(_community),
+        OBCommunityCard(
+          _community,
+        )
+      ],
+    );
+  }
+
+  Widget _buildUserCanSeePostsPage() {
+    return NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        // These are the slivers that show up in the "outer" scroll view.
+        return <Widget>[
+          SliverOverlapAbsorber(
+            // This widget takes the overlapping behavior of the SliverAppBar,
+            // and redirects it to the SliverOverlapInjector below. If it is
+            // missing, then it is possible for the nested "inner" scroll view
+            // below to end up under the SliverAppBar even when the inner
+            // scroll view thinks it has not been scrolled.
+            // This is not necessary if the "headerSliverBuilder" only builds
+            // widgets that do not overlap the next sliver.
+            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+            child: SliverList(
+              delegate: new SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  switch (index) {
+                    case 0:
+                      return OBCommunityCover(_community);
+                      break;
+                    case 1:
+                      return OBCommunityCard(
+                        _community,
+                      );
+                      break;
+                  }
+                },
+                childCount: 2,
+              ),
+            ),
+          ),
+          SliverPersistentHeader(
+            pinned: false,
+            delegate: new CommunityTabBarDelegate(
+                community: widget.community,
+                pageStorageKey: _pageStorageKey,
+                controller: _tabController),
+          ),
+        ];
+      },
+      body: TabBarView(
+        key: _pageStorageKey,
+        controller: _tabController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          SafeArea(
+            top: false,
+            bottom: false,
+            child: Builder(
+              // This Builder is needed to provide a BuildContext that is "inside"
+              // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
+              // find the NestedScrollView.
+              builder: (BuildContext context) {
+                return CustomScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  // The "controller" and "primary" members should be left
+                  // unset, so that the NestedScrollView can control this
+                  // inner scroll view.
+                  // If the "controller" property is set, then this scroll
+                  // view will not be associated with the NestedScrollView.
+                  // The PageStorageKey should be unique to this ScrollView;
+                  // it allows the list to remember its scroll position when
+                  // the tab view is not on the screen.
+                  key: PageStorageKey<int>(0),
+                  slivers: <Widget>[
+                    SliverOverlapInjector(
+                      // This is the flip side of the SliverOverlapAbsorber above.
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                          context),
+                    ),
+                    PagewiseSliverList(
+                      noItemsFoundBuilder: (context) {
+                        return OBCommunityNoPosts(
+                          _community,
+                          onWantsToRefreshCommunity: _refreshPosts,
+                        );
+                      },
+                      loadingBuilder: (context) {
+                        return Padding(
+                          padding: EdgeInsets.all(20),
+                          child: OBProgressIndicator(),
+                        );
+                      },
+                      pageLoadController: this._pageWiseController,
+                      itemBuilder:
+                          (BuildContext context, dynamic post, int index) {
+                        return OBPost(post,
+                            onPostDeleted: _onPostDeleted,
+                            key: Key(post.id.toString()));
+                      },
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+          SafeArea(
+            top: false,
+            bottom: false,
+            child: Builder(
+              // This Builder is needed to provide a BuildContext that is "inside"
+              // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
+              // find the NestedScrollView.
+              builder: (BuildContext context) {
+                return CustomScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  key: PageStorageKey<int>(1),
+                  slivers: <Widget>[
+                    SliverOverlapInjector(
+                      // This is the flip side of the SliverOverlapAbsorber above.
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                          context),
+                    ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        switch (index) {
+                          case 0:
+                            return OBCommunityRules(_community);
+                            break;
+                          case 1:
+                            return OBCommunityModerators(
+                              _community,
+                            );
+                            break;
+                        }
+                      }, childCount: 2),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void scrollToTop() {

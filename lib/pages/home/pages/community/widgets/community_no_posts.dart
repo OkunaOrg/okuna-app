@@ -1,5 +1,5 @@
 import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/alert.dart';
+import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
