@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 
 class OBOwnProfileActiveIcon extends StatelessWidget {
   final String avatarUrl;
+  final OBAvatarSize size;
 
-  const OBOwnProfileActiveIcon({Key key, this.avatarUrl}) : super(key: key);
+  const OBOwnProfileActiveIcon({Key key, this.avatarUrl, this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class OBOwnProfileActiveIcon extends StatelessWidget {
             padding: EdgeInsets.all(2.0),
             child: OBAvatar(
               avatarUrl: avatarUrl,
-              size: OBAvatarSize.small,
+              size: size,
             ),
           );
         });

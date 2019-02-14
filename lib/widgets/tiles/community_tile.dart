@@ -9,23 +9,30 @@ import 'package:Openbook/libs/pretty_count.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityTile extends StatelessWidget {
-  final Community community;
-  final OnCommunityTilePressed onCommunityTilePressed;
-  final Widget trailing;
+  static const double smallSizeHeight = 60;
+  static const double normalSizeHeight = 80;
 
-  OBCommunityTile(this.community, {this.onCommunityTilePressed, this.trailing});
+  final Community community;
+  final ValueChanged<Community> onCommunityTilePressed;
+  final OBCommunityTileSize size;
+
+  const OBCommunityTile(this.community,
+      {@required this.onCommunityTilePressed,
+      this.size = OBCommunityTileSize.normal});
 
   @override
   Widget build(BuildContext context) {
     String communityHexColor = community.color;
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
-    Color communityColor = themeValueParserService.parseColor(communityHexColor);
+    Color communityColor =
+        themeValueParserService.parseColor(communityHexColor);
     Color textColor;
 
     BoxDecoration containerDecoration;
     BorderRadius containerBorderRadius = BorderRadius.circular(10);
-    bool isCommunityColorDark = themeValueParserService.isDarkColor(communityColor);
+    bool isCommunityColorDark =
+        themeValueParserService.isDarkColor(communityColor);
     bool communityHasCover = community.hasCover();
 
     if (communityHasCover) {
@@ -50,11 +57,13 @@ class OBCommunityTile extends StatelessWidget {
       );
     }
 
+    bool isNormalSize = size == OBCommunityTileSize.normal;
+
     Widget communityAvatar;
     if (community.hasAvatar()) {
       communityAvatar = OBAvatar(
         avatarUrl: community.avatar,
-        size: OBAvatarSize.medium,
+        size: isNormalSize ? OBAvatarSize.medium : OBAvatarSize.small,
       );
     } else {
       Color avatarColor = communityHasCover
@@ -66,6 +75,7 @@ class OBCommunityTile extends StatelessWidget {
         letter: community.name[0],
         color: avatarColor,
         labelColor: textColor,
+        size: isNormalSize ? OBAvatarSize.medium : OBAvatarSize.small,
       );
     }
 
@@ -80,7 +90,7 @@ class OBCommunityTile extends StatelessWidget {
         onCommunityTilePressed(community);
       },
       child: Container(
-        height: 80,
+        height: isNormalSize ? normalSizeHeight : smallSizeHeight,
         decoration: containerDecoration,
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -108,11 +118,13 @@ class OBCommunityTile extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    '$membersPrettyCount $finalAdjective',
-                    style: TextStyle(color: textColor, fontSize: 14),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  isNormalSize
+                      ? Text(
+                          '$membersPrettyCount $finalAdjective',
+                          style: TextStyle(color: textColor, fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : SizedBox()
                 ],
               ),
             ),
@@ -126,4 +138,4 @@ class OBCommunityTile extends StatelessWidget {
   }
 }
 
-typedef void OnCommunityTilePressed(Community community);
+enum OBCommunityTileSize { normal, small }

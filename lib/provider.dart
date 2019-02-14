@@ -1,6 +1,7 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
+import 'package:Openbook/services/categories_api.dart';
 import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
@@ -62,6 +63,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
   CommunitiesApiService communitiesApiService = CommunitiesApiService();
+  CategoriesApiService categoriesApiService = CategoriesApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
   ConnectionsCirclesApiService connectionsCirclesApiService =
       ConnectionsCirclesApiService();
@@ -101,7 +103,9 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setConnectionsApiService(connectionsApiService);
     userService.setConnectionsCirclesApiService(connectionsCirclesApiService);
     userService.setCommunitiesApiService(communitiesApiService);
+    userService.setCategoriesApiService(categoriesApiService);
     emojisApiService.setHttpService(httpService);
+    categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);
     validationService.setAuthApiService(authApiService);
@@ -124,6 +128,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     connectionsCirclesApiService.setApiURL(environment.apiUrl);
     followsListsApiService.setApiURL(environment.apiUrl);
     communitiesApiService.setApiURL(environment.apiUrl);
+    categoriesApiService.setApiURL(environment.apiUrl);
   }
 
   @override

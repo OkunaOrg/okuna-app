@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:flutter/material.dart';
 
-enum OBAvatarSize { small, medium, large, extraLarge }
+enum OBAvatarSize { extraSmall, small, medium, large, extraLarge }
 
 enum OBAvatarType { user, community }
 
@@ -13,17 +13,21 @@ class OBAvatar extends StatelessWidget {
   final VoidCallback onPressed;
   final double borderWidth;
 
-  static const double AVATAR_SIZE_SMALL = 20.0;
+  static const double AVATAR_SIZE_EXTRA_SMALL = 20.0;
+  static const double AVATAR_SIZE_SMALL = 30.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
   static const double AVATAR_SIZE_LARGE = 80.0;
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.jpg';
   static const double avatarBorderRadius = 10.0;
 
-  static double getAvatarSize(OBAvatarSize size){
+  static double getAvatarSize(OBAvatarSize size) {
     double avatarSize;
 
     switch (size) {
+      case OBAvatarSize.extraSmall:
+        avatarSize = AVATAR_SIZE_EXTRA_SMALL;
+        break;
       case OBAvatarSize.small:
         avatarSize = AVATAR_SIZE_SMALL;
         break;
@@ -50,11 +54,8 @@ class OBAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     OBAvatarSize finalSize = size ?? OBAvatarSize.small;
     double avatarSize = getAvatarSize(finalSize);
-
-
 
     Widget finalAvatarImage;
 

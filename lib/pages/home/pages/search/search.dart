@@ -11,7 +11,6 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -77,7 +76,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
         communityResults: _communitySearchResults,
         communitySearchInProgress: _communitySearchRequestInProgress,
         onUserPressed: _onSearchUserPressed,
-        onCommuityPressed: _onSearchCommunityPressed,
+        onCommunityPressed: _onSearchCommunityPressed,
         selectedTab: _selectedSearchResultsTab,
         onScroll: _onScroll,
         onTabSelectionChanged: _onSearchTabSelectionChanged,

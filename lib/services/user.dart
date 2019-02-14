@@ -97,6 +97,10 @@ class UserService {
     _communitiesApiService = communitiesApiService;
   }
 
+  void setCategoriesApiService(CategoriesApiService categoriesApiService) {
+    _categoriesApiService = categoriesApiService;
+  }
+
   void setEmojisApiService(EmojisApiService emojisApiService) {
     _emojisApiService = emojisApiService;
   }
@@ -628,6 +632,15 @@ class UserService {
         await _communitiesApiService.inviteUserToCommunity(
             communityName: community.name, username: username);
     _checkResponseIsOk(response);
+  }
+
+  Future<CommunitiesList> getJoinedCommunities() async {
+    HttpieResponse response =
+    await _communitiesApiService.getJoinedCommunities();
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
   }
 
   Future<Community> joinCommunity(Community community) async {

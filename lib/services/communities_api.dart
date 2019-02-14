@@ -207,6 +207,12 @@ class CommunitiesApiService {
         body: body, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> getJoinedCommunities(
+      {bool authenticatedRequest = true}) {
+    return _httpService.get('$apiURL$GET_JOINED_COMMUNITIES_PATH',
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
   Future<HttpieResponse> joinCommunityWithId(String communityName) {
     String path = _makeJoinCommunityPath(communityName);
     return _httpService.post(_makeApiUrl(path),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/communities/communities.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
@@ -12,7 +13,6 @@ import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -96,9 +96,10 @@ class OBHomePageState extends State<OBHomePage> {
         );
         break;
       case OBHomePageTabs.notifications:
+        page = OBMainNotificationsPage();
         break;
       case OBHomePageTabs.communities:
-        page = OBMainNotificationsPage();
+        page = OBMainCommunitiesPage();
         break;
       case OBHomePageTabs.profile:
         page = OBOwnProfilePage(controller: _ownProfilePageController);
@@ -195,10 +196,11 @@ class OBHomePageState extends State<OBHomePage> {
             title: const SizedBox(),
             icon: OBAvatar(
               avatarUrl: _avatarUrl,
-              size: OBAvatarSize.small,
+              size: OBAvatarSize.extraSmall,
             ),
             activeIcon: OBOwnProfileActiveIcon(
               avatarUrl: _avatarUrl,
+              size: OBAvatarSize.extraSmall,
             )),
         BottomNavigationBarItem(
           title: const SizedBox(),
@@ -248,6 +250,6 @@ class OBHomePageState extends State<OBHomePage> {
   }
 }
 
-enum OBHomePageTabs { home, search, notifications, communities, profile, menu }
+enum OBHomePageTabs { home, search, communities, notifications, profile, menu }
 
 typedef Future<List<Circle>> OnWantsToPickCircles();

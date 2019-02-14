@@ -8,6 +8,7 @@ class OBLetterAvatar extends StatelessWidget {
   final Color labelColor;
   final String letter;
 
+  static const double fontSizeExtraSmall = 10.0;
   static const double fontSizeSmall = 14.0;
   static const double fontSizeMedium = 24.0;
   static const double fontSizeLarge = 40.0;
@@ -48,6 +49,9 @@ class OBLetterAvatar extends StatelessWidget {
     double fontSize;
 
     switch (size) {
+      case OBAvatarSize.extraSmall:
+        fontSize = fontSizeExtraSmall;
+        break;
       case OBAvatarSize.small:
         fontSize = fontSizeSmall;
         break;

@@ -23,7 +23,7 @@ class OBCommunityRules extends StatelessWidget {
           return const SizedBox();
 
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Row(
             children: <Widget>[
               Flexible(

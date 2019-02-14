@@ -16,7 +16,7 @@ class OBUserSearchResults extends StatefulWidget {
   final List<Community> communityResults;
   final String searchQuery;
   final ValueChanged<User> onUserPressed;
-  final ValueChanged<Community> onCommuityPressed;
+  final ValueChanged<Community> onCommunityPressed;
   final ValueChanged<OBUserSearchResultsTab> onTabSelectionChanged;
   final VoidCallback onScroll;
   final OBUserSearchResultsTab selectedTab;
@@ -33,7 +33,7 @@ class OBUserSearchResults extends StatefulWidget {
       @required this.searchQuery,
       @required this.onUserPressed,
       @required this.onScroll,
-      @required this.onCommuityPressed,
+      @required this.onCommunityPressed,
       @required this.onTabSelectionChanged})
       : super(key: key);
 
@@ -162,7 +162,7 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
               height: 10,
             );
           },
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           physics: const ClampingScrollPhysics(),
           itemCount: widget.communityResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
@@ -187,7 +187,7 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
 
             return OBCommunityTile(
               community,
-              onCommunityTilePressed: widget.onCommuityPressed,
+              onCommunityTilePressed: widget.onCommunityPressed,
             );
           }),
     );
