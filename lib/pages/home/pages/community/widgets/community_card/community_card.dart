@@ -21,7 +21,7 @@ class OBCommunityCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 20, left: 30.0, right: 20),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Row(
             children: <Widget>[
@@ -67,21 +67,17 @@ class OBCommunityCard extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  OBCommunityTitle(community),
-                  OBCommunityName(community),
-                  OBCommunityDescription(community),
-                  OBCommunityDetails(community),
-                  OBCommunityCategories(community),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
+              OBCommunityTitle(community),
+              OBCommunityName(community),
+              OBCommunityDescription(community),
+              OBCommunityDetails(community),
+              OBCommunityCategories(community),
+              const SizedBox(
+                height: 20,
               ),
             ],
           ),
