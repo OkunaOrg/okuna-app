@@ -103,6 +103,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     bool communityHasInvitesEnabled = widget.community.invitesEnabled;
     return ListView(
       padding: EdgeInsets.all(0),
+      physics: const ClampingScrollPhysics(),
       children: <Widget>[
         OBCommunityCover(_community),
         OBCommunityCard(
