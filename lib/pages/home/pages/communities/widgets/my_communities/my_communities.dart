@@ -7,9 +7,12 @@ class OBMyCommunities extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const ClampingScrollPhysics(),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[OBFavoriteCommunities(), OBJoinedCommunities()],
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[OBFavoriteCommunities(), OBJoinedCommunities()],
+        ),
       ),
     );
   }

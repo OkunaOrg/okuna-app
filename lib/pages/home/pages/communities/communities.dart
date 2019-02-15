@@ -14,6 +14,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -108,26 +109,26 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     tabBarViews.addAll(categoriesTabBarViews);
 
     return CupertinoPageScaffold(
+        navigationBar:
+        OBNavigationBar(title: 'Communities'),
         child: OBPrimaryColorContainer(
-            child: SafeArea(
-                bottom: false,
-                child: Column(
-                  children: <Widget>[
-                    TabBar(
-                      controller: _tabController,
-                      tabs: tabs,
-                      labelPadding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      isScrollable: true,
-                      indicatorColor: tabIndicatorColor,
-                      labelColor: tabLabelColor,
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                          controller: _tabController, children: tabBarViews),
-                    )
-                  ],
-                ))));
+            child: Column(
+              children: <Widget>[
+                TabBar(
+                  controller: _tabController,
+                  tabs: tabs,
+                  labelPadding:
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  isScrollable: true,
+                  indicatorColor: tabIndicatorColor,
+                  labelColor: tabLabelColor,
+                ),
+                Expanded(
+                  child: TabBarView(
+                      controller: _tabController, children: tabBarViews),
+                )
+              ],
+            )));
   }
 
   void _bootstrap() {

@@ -49,6 +49,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
     bool hasCategory = widget.category != null;
 
     return SingleChildScrollView(
+      physics: const ClampingScrollPhysics(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

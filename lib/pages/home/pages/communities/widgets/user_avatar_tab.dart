@@ -27,7 +27,7 @@ class OBUserAvatarTab extends StatelessWidget {
 
     return OBAlert(
         borderRadius: BorderRadius.circular(OBImageTab.borderRadius),
-        padding: EdgeInsets.only(bottom: 3),
+        padding: EdgeInsets.all(0),
         height: OBImageTab.height,
         width: OBImageTab.width * 0.8,
         child: Align(
