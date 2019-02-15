@@ -63,8 +63,6 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       _needsBootstrap = false;
     }
 
-    Widget currentWidget;
-
     ThemeService _themeService = openbookProvider.themeService;
     var _themeValueParser = openbookProvider.themeValueParserService;
     OBTheme theme = _themeService.getActiveTheme();
@@ -73,13 +71,10 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         _themeValueParser.parseGradient(theme.primaryAccentColor);
 
     Color tabIndicatorColor = themeGradient.colors[0];
-    Color themePrimaryColor = _themeValueParser.parseColor(theme.primaryColor);
-    Color themeTextColor = _themeValueParser.parseColor(theme.primaryTextColor);
 
     Color tabLabelColor = _themeValueParser.parseColor(theme.primaryTextColor);
 
     User loggedInUser = _userService.getLoggedInUser();
-    bool userHasAvatar = loggedInUser.hasProfileAvatar();
 
     List<Widget> tabs = [
       OBUserAvatarTab(

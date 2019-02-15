@@ -5,9 +5,12 @@ import 'package:flutter/cupertino.dart';
 class OBMyCommunities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[OBFavoriteCommunities(), OBJoinedCommunities()],
+    return SingleChildScrollView(
+      physics: const ClampingScrollPhysics(),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[OBFavoriteCommunities(), OBJoinedCommunities()],
+      ),
     );
   }
 }
