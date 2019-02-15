@@ -82,7 +82,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     bool userHasAvatar = loggedInUser.hasProfileAvatar();
 
     List<Widget> tabs = [
-      ObUserAvatarTab(
+      OBUserAvatarTab(
         user: loggedInUser,
       ),
       OBImageTab(

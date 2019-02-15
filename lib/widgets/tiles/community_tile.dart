@@ -18,7 +18,9 @@ class OBCommunityTile extends StatelessWidget {
 
   const OBCommunityTile(this.community,
       {@required this.onCommunityTilePressed,
-      this.size = OBCommunityTileSize.normal});
+      Key key,
+      this.size = OBCommunityTileSize.normal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

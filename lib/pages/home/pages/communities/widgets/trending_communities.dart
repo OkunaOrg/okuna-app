@@ -48,32 +48,37 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
 
     bool hasCategory = widget.category != null;
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: OBText(
-            hasCategory
-                ? 'Trending in ' + widget.category.title
-                : 'Trending in all categories',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: OBText(
+              hasCategory
+                  ? 'Trending in ' + widget.category.title
+                  : 'Trending in all categories',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
           ),
-        ),
-        ListView.separated(
-            separatorBuilder: _buildCommunitySeparator,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-            shrinkWrap: true,
-            itemCount: _trendingCommunities.length,
-            itemBuilder: _buildCommunity)
-      ],
+          ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: _buildCommunitySeparator,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              shrinkWrap: true,
+              itemCount: _trendingCommunities.length,
+              itemBuilder: _buildCommunity)
+        ],
+      ),
     );
   }
 
   Widget _buildCommunity(BuildContext context, index) {
+    Community community = _trendingCommunities[index];
     return OBCommunityTile(
-      _trendingCommunities[index],
+      community,
+      key: Key(community.name),
       onCommunityTilePressed: _onTrendingCommunityPressed,
     );
   }
