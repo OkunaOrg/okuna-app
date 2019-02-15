@@ -7,6 +7,7 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
+import 'package:Openbook/pages/home/pages/communities/widgets/communities_tab.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/my_communities.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/trending_communities.dart';
 import 'package:Openbook/services/navigation_service.dart';
@@ -90,9 +91,14 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     ];
 
     List<Widget> categoriesTabs = _categories.map((Category category) {
-      return Padding(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        child: Tab(text: category.title),
+      Color categoryColor = _themeValueParser.parseColor(category.color);
+      bool categoryColorIsDark = _themeValueParser.isDarkColor(categoryColor);
+
+      return OBCommunitiesTab(
+        text: category.title,
+        color: categoryColor,
+        textColor: categoryColorIsDark ? Colors.white : Colors.black,
+        backgroundImageUrl: category.avatar,
       );
     }).toList();
 
@@ -117,6 +123,8 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
                     TabBar(
                       controller: _tabController,
                       tabs: tabs,
+                      labelPadding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       isScrollable: true,
                       indicatorColor: tabIndicatorColor,
                       labelColor: tabLabelColor,
