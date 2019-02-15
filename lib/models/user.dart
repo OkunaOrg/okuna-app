@@ -111,6 +111,14 @@ class User extends UpdatableModel<User> {
     return profile.hasUrl();
   }
 
+  bool hasProfileAvatar() {
+    return this.profile.avatar != null;
+  }
+
+  bool hasProfileCover() {
+    return this.profile.cover != null;
+  }
+
   String getProfileAvatar() {
     return this.profile.avatar;
   }

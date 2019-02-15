@@ -118,6 +118,7 @@ flutter:
     - assets/images/stickers/got-it.png
     - assets/images/stickers/owl-instructor.png
     - assets/images/stickers/perplexed-owl.png
+    - assets/images/categories/category_all-min.png
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

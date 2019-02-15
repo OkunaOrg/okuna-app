@@ -74,7 +74,6 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
   Widget _buildCommunity(BuildContext context, index) {
     return OBCommunityTile(
       _trendingCommunities[index],
-      size: OBCommunityTileSize.small,
       onCommunityTilePressed: _onTrendingCommunityPressed,
     );
   }

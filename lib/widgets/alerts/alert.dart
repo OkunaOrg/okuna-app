@@ -4,8 +4,19 @@ import 'package:flutter/material.dart';
 
 class OBAlert extends StatefulWidget {
   final Widget child;
+  final double height;
+  final double width;
+  final EdgeInsets padding;
+  final BorderRadiusGeometry borderRadius;
 
-  const OBAlert({Key key, this.child}) : super(key: key);
+  const OBAlert(
+      {Key key,
+      this.child,
+      this.height,
+      this.width,
+      this.padding,
+      this.borderRadius})
+      : super(key: key);
 
   @override
   OBAlertState createState() {
@@ -39,12 +50,14 @@ class OBAlertState extends State<OBAlert> {
               primaryColor.computeLuminance() < 0.179;
 
           return Container(
-            padding: EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 15),
+            padding: widget.padding ?? EdgeInsets.all(15),
+            height: widget.height,
+            width: widget.width,
             decoration: BoxDecoration(
                 color: isDarkPrimaryColor
                     ? Color.fromARGB(20, 255, 255, 255)
                     : Color.fromARGB(10, 0, 0, 0),
-                borderRadius: BorderRadius.circular(10)),
+                borderRadius: widget.borderRadius ?? BorderRadius.circular(10)),
             child: widget.child,
           );
         });

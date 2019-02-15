@@ -1,29 +1,24 @@
 import 'dart:async';
 import 'package:Openbook/models/categories_list.dart';
 import 'package:Openbook/models/category.dart';
-import 'package:Openbook/models/communities_list.dart';
-import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
-import 'package:Openbook/pages/home/pages/communities/widgets/communities_tab.dart';
+import 'package:Openbook/pages/home/pages/communities/widgets/category_tab.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/my_communities.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/trending_communities.dart';
+import 'package:Openbook/pages/home/pages/communities/widgets/user_avatar_tab.dart';
 import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
-import 'package:Openbook/pages/home/pages/search/widgets/trending/trending.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
+import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBMainCommunitiesPage extends StatefulWidget {
   final OBCommunitiesPageController controller;
@@ -74,31 +69,34 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     var _themeValueParser = openbookProvider.themeValueParserService;
     OBTheme theme = _themeService.getActiveTheme();
 
-    Color tabIndicatorColor =
-        _themeValueParser.parseGradient(theme.primaryAccentColor).colors[1];
+    Gradient themeGradient =
+        _themeValueParser.parseGradient(theme.primaryAccentColor);
+
+    Color tabIndicatorColor = themeGradient.colors[0];
+    Color themePrimaryColor = _themeValueParser.parseColor(theme.primaryColor);
+    Color themeTextColor = _themeValueParser.parseColor(theme.primaryTextColor);
 
     Color tabLabelColor = _themeValueParser.parseColor(theme.primaryTextColor);
 
+    User loggedInUser = _userService.getLoggedInUser();
+    bool userHasAvatar = loggedInUser.hasProfileAvatar();
+
     List<Widget> tabs = [
-      Padding(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        child: Tab(text: 'My communities'),
+      ObUserAvatarTab(
+        user: loggedInUser,
       ),
-      Padding(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        child: Tab(text: 'Trending'),
-      )
+      OBImageTab(
+        text: 'All',
+        color: Pigment.fromString('#2d2d2d'),
+        textColor: Pigment.fromString('#ffffff'),
+        imageProvider:
+            AssetImage('assets/images/categories/category_all-min.png'),
+      ),
     ];
 
     List<Widget> categoriesTabs = _categories.map((Category category) {
-      Color categoryColor = _themeValueParser.parseColor(category.color);
-      bool categoryColorIsDark = _themeValueParser.isDarkColor(categoryColor);
-
-      return OBCommunitiesTab(
-        text: category.title,
-        color: categoryColor,
-        textColor: categoryColorIsDark ? Colors.white : Colors.black,
-        backgroundImageUrl: category.avatar,
+      return OBCategoryTab(
+        category: category,
       );
     }).toList();
 
