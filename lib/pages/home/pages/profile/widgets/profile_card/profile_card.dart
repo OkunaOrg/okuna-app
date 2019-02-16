@@ -25,8 +25,8 @@ class OBProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
-    var toastService = openbookProvider.toastService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+    var toastService = openbookProvider.toastService;
 
     return Stack(
       overflow: Overflow.visible,
@@ -51,7 +51,12 @@ class OBProfileCard extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  _buildNameRow(user),
+                  GestureDetector(
+                    onTap: () {
+                      toastService.info(message: _getUserBadgeDescription(user), context:context);
+                    },
+                    child:  _buildNameRow(user),
+                  ),
                   OBProfileUsername(user),
                   OBProfileBio(user),
                   OBProfileDetails(user),
