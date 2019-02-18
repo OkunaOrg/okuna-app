@@ -4,6 +4,7 @@ import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:Openbook/widgets/cover.dart';
@@ -18,6 +19,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +41,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   ToastService _toastService;
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
+  ThemeValueParserService _themeValueParserService;
 
   bool _requestInProgress;
   bool _formWasSubmitted;
@@ -110,6 +113,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _toastService = openbookProvider.toastService;
     _validationService = openbookProvider.validationService;
     _bottomSheetService = openbookProvider.bottomSheetService;
+    _themeValueParserService = openbookProvider.themeValueParserService;
     var themeService = openbookProvider.themeService;
 
     _color = _color ?? themeService.generateRandomHexColor();
@@ -276,22 +280,39 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    Color color = _themeValueParserService.parseColor(_color);
+    bool isDarkColor = _themeValueParserService.isDarkColor(color);
+    Color actionsColor = isDarkColor ? Colors.white : Colors.black;
+
+    // TODO Make this nav bar an OBColoredNavBar header which is then used by the OBCommunityNavBar
+
+    return CupertinoNavigationBar(
+        border: null,
         leading: GestureDetector(
-          child: const OBIcon(OBIcons.close),
+          child: OBIcon(
+            OBIcons.close,
+            color: actionsColor,
+          ),
           onTap: () {
             Navigator.pop(context);
           },
         ),
-        title:
-            _isEditingExistingCommunity ? 'Edit community' : 'Create community',
-        trailing: OBButton(
-          isDisabled: !_formValid,
-          isLoading: _requestInProgress,
-          size: OBButtonSize.small,
-          onPressed: _submitForm,
-          child: Text(_isEditingExistingCommunity ? 'Save' : 'Create'),
-        ));
+        actionsForegroundColor: actionsColor,
+        middle: Text(
+          _isEditingExistingCommunity ? 'Edit community' : 'Create community',
+          style: TextStyle(color: actionsColor),
+        ),
+        transitionBetweenRoutes: false,
+        backgroundColor: color,
+        trailing: _requestInProgress
+            ? OBProgressIndicator(color: actionsColor)
+            : OBButton(
+                isDisabled: !_formValid,
+                isLoading: _requestInProgress,
+                size: OBButtonSize.small,
+                onPressed: _submitForm,
+                child: Text(_isEditingExistingCommunity ? 'Save' : 'Create'),
+              ));
   }
 
   Widget _buildAvatar() {
