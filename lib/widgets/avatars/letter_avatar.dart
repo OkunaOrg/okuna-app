@@ -1,3 +1,5 @@
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
 export 'package:Openbook/widgets/avatars/avatar.dart';
@@ -18,14 +20,20 @@ class OBLetterAvatar extends StatelessWidget {
       {Key key,
       this.size = OBAvatarSize.medium,
       @required this.color,
-      @required this.labelColor,
+      this.labelColor,
       @required this.letter})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ThemeValueParserService themeValueParserService =
+        OpenbookProvider.of(context).themeValueParserService;
     double avatarSize = OBAvatar.getAvatarSize(size);
     double fontSize = getAvatarFontSize(size);
+    Color finalLabelColor =
+        labelColor ?? themeValueParserService.isDarkColor(color)
+            ? Colors.white
+            : Colors.black;
 
     return Container(
       height: avatarSize,
@@ -37,7 +45,7 @@ class OBLetterAvatar extends StatelessWidget {
         child: Text(
           letter.toUpperCase(),
           style: TextStyle(
-              color: labelColor,
+              color: finalLabelColor,
               fontWeight: FontWeight.bold,
               fontSize: fontSize),
         ),

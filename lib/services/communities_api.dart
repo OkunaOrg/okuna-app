@@ -72,7 +72,7 @@ class CommunitiesApiService {
 
   Future<HttpieResponse> checkNameIsAvailable({@required String name}) {
     return _httpService.postJSON('$apiURL$CHECK_COMMUNITY_NAME_PATH',
-        body: {'name': name});
+        body: {'name': name}, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> getTrendingCommunities(

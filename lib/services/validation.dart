@@ -378,6 +378,8 @@ class ValidationService {
   String validateCommunityRules(String rules) {
     assert(rules != null);
 
+    if (rules.isEmpty) return null;
+
     String errorMsg;
 
     if (rules.length == 0) {
@@ -392,11 +394,11 @@ class ValidationService {
   String validateCommunityDescription(String description) {
     assert(description != null);
 
+    if (description.isEmpty) return null;
+
     String errorMsg;
 
-    if (description.length == 0) {
-      errorMsg = 'Description cannot be empty.';
-    } else if (!isCommunityDescriptionAllowedLength(description)) {
+    if (!isCommunityDescriptionAllowedLength(description)) {
       errorMsg =
           'Description can\'t be longer than $COMMUNITY_DESCRIPTION_MAX_LENGTH characters.';
     }
@@ -406,16 +408,15 @@ class ValidationService {
   String validateCommunityUserAdjective(String userAdjective) {
     assert(userAdjective != null);
 
+    if (userAdjective.isEmpty) return null;
+
     String errorMsg;
 
-    if (userAdjective.length == 0) {
-      errorMsg = 'Adjectives cannot be empty.';
-    } else if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
+    if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
       errorMsg =
           'Adjectives can\'t be longer than $COMMUNITY_USER_ADJECTIVE_MAX_LENGTH characters.';
     } else if (!isCommunityUserAdjectiveAllowedCharacters(userAdjective)) {
-      errorMsg =
-          'Adjectives can only contain alphabetical characters.';
+      errorMsg = 'Adjectives can only contain alphabetical characters.';
     }
 
     return errorMsg;
