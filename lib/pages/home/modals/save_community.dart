@@ -1,6 +1,7 @@
 import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/widgets/fields/color_field.dart';
+import 'package:Openbook/widgets/fields/community_type_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -61,7 +62,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _userAdjectiveController = TextEditingController();
     _usersAdjectiveController = TextEditingController();
     _rulesController = TextEditingController();
-    _type = CommunityType.private;
+    _type = CommunityType.public;
     _categories = [];
 
     _formKey = GlobalKey<FormState>();
@@ -117,11 +118,10 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 size: OBTextFormFieldSize.medium,
                                 controller: _titleController,
                                 decoration: InputDecoration(
-                                    labelText: 'Title',
-                                    hintText:
-                                        'e.g. Travel, Photography, Gaming.',
-                                  prefixIcon: const OBIcon(
-                                      OBIcons.communities),),
+                                  labelText: 'Title',
+                                  hintText: 'e.g. Travel, Photography, Gaming.',
+                                  prefixIcon: const OBIcon(OBIcons.communities),
+                                ),
                                 validator: (String communityTitle) {
                                   return _validationService
                                       .validateCommunityTitle(communityTitle);
@@ -132,8 +132,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 size: OBTextFormFieldSize.medium,
                                 controller: _nameController,
                                 decoration: InputDecoration(
-                                    prefixIcon: const OBIcon(
-                                        OBIcons.shortText),
+                                    prefixIcon: const OBIcon(OBIcons.shortText),
                                     labelText: 'Name',
                                     prefixText: '/c/',
                                     hintText:
@@ -152,6 +151,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                     TextCapitalization.sentences,
                                 size: OBTextFormFieldSize.medium,
                                 controller: _descriptionController,
+                                maxLines: 3,
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(
                                         OBIcons.communityDescription),
@@ -186,7 +186,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 controller: _userAdjectiveController,
                                 decoration: InputDecoration(
                                     prefixIcon:
-                                    const OBIcon(OBIcons.communityMember),
+                                        const OBIcon(OBIcons.communityMember),
                                     labelText: 'Member adjective',
                                     hintText:
                                         'e.g. traveler, photographer, gamer.'),
@@ -202,7 +202,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 controller: _usersAdjectiveController,
                                 decoration: InputDecoration(
                                     prefixIcon:
-                                    const OBIcon(OBIcons.communityMembers),
+                                        const OBIcon(OBIcons.communityMembers),
                                     labelText: 'Members adjective',
                                     hintText:
                                         'e.g. travelers, photographers, gamers.'),
@@ -216,6 +216,16 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                               onNewColor: _onNewColor,
                               labelText: 'Color',
                               hintText: '(Tap to change)',
+                            ),
+                            OBCommunityTypeField(
+                              value: _type,
+                              title: 'Type',
+                              hintText: '(Tap to change)',
+                              onChanged: (CommunityType type) {
+                                setState(() {
+                                  _type = type;
+                                });
+                              },
                             ),
                           ],
                         )),
