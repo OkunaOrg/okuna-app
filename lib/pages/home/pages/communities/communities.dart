@@ -8,10 +8,10 @@ import 'package:Openbook/pages/home/pages/communities/widgets/category_tab.dart'
 import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/my_communities.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/trending_communities.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/user_avatar_tab.dart';
-import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
@@ -36,10 +36,17 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     with TickerProviderStateMixin {
   UserService _userService;
   ToastService _toastService;
-  NavigationService _navigationService;
+  ThemeService _themeService;
+  ThemeValueParserService _themeValueParserService;
 
   List<Category> _categories;
   TabController _tabController;
+
+  ScrollController _myCommunitiesScrollController;
+  ScrollController _allTrendingCommnunitiesScrollController;
+
+  List<ScrollController> _categoriesScrollControllers;
+
   bool _needsBootstrap;
 
   @override
@@ -49,32 +56,61 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
     _categories = [];
-    _tabController = TabController(length: 2, vsync: this);
+    _categoriesScrollControllers = [];
+    _tabController = _makeTabController();
+    _myCommunitiesScrollController = ScrollController();
+    _allTrendingCommnunitiesScrollController = ScrollController();
   }
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-
     if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
-      _navigationService = openbookProvider.navigationService;
+      _themeService = openbookProvider.themeService;
+      _themeValueParserService = openbookProvider.themeValueParserService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
-    ThemeService _themeService = openbookProvider.themeService;
-    var _themeValueParser = openbookProvider.themeValueParserService;
+    return CupertinoPageScaffold(
+        navigationBar: OBNavigationBar(title: 'Communities'),
+        child: OBPrimaryColorContainer(
+            child: Column(
+              children: <Widget>[
+                _buildTabBar(),
+                Expanded(
+                  child: TabBarView(
+                      controller: _tabController,
+                      children: _buildTabBarViews()),
+                )
+              ],
+            )));
+  }
+
+  Widget _buildTabBar() {
     OBTheme theme = _themeService.getActiveTheme();
 
     Gradient themeGradient =
-        _themeValueParser.parseGradient(theme.primaryAccentColor);
+    _themeValueParserService.parseGradient(theme.primaryAccentColor);
 
     Color tabIndicatorColor = themeGradient.colors[0];
 
-    Color tabLabelColor = _themeValueParser.parseColor(theme.primaryTextColor);
+    Color tabLabelColor =
+    _themeValueParserService.parseColor(theme.primaryTextColor);
 
+    return TabBar(
+      controller: _tabController,
+      tabs: _buildTabs(),
+      labelPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      isScrollable: true,
+      indicatorColor: tabIndicatorColor,
+      labelColor: tabLabelColor,
+    );
+  }
+
+  List<Widget> _buildTabs() {
     User loggedInUser = _userService.getLoggedInUser();
 
     List<Widget> tabs = [
@@ -86,7 +122,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         color: Pigment.fromString('#2d2d2d'),
         textColor: Pigment.fromString('#ffffff'),
         imageProvider:
-            AssetImage('assets/images/categories/category_all-min.png'),
+        const AssetImage('assets/images/categories/category_all-min.png'),
       ),
     ];
 
@@ -98,37 +134,30 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
     tabs.addAll(categoriesTabs);
 
-    List<Widget> tabBarViews = [OBMyCommunities(), OBTrendingCommunities()];
+    return tabs;
+  }
+
+  List<Widget> _buildTabBarViews() {
+    List<Widget> tabBarViews = [OBMyCommunities(
+      scrollController: _myCommunitiesScrollController,
+    ), OBTrendingCommunities(
+      scrollController: _allTrendingCommnunitiesScrollController,
+    )
+    ];
+
+    _categoriesScrollControllers = [];
 
     List<Widget> categoriesTabBarViews = _categories.map((Category category) {
+      ScrollController scrollController = ScrollController();
+      _categoriesScrollControllers.add(scrollController);
       return OBTrendingCommunities(
         category: category,
+        scrollController: scrollController,
       );
     }).toList();
 
     tabBarViews.addAll(categoriesTabBarViews);
-
-    return CupertinoPageScaffold(
-        navigationBar:
-        OBNavigationBar(title: 'Communities'),
-        child: OBPrimaryColorContainer(
-            child: Column(
-              children: <Widget>[
-                TabBar(
-                  controller: _tabController,
-                  tabs: tabs,
-                  labelPadding:
-                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  isScrollable: true,
-                  indicatorColor: tabIndicatorColor,
-                  labelColor: tabLabelColor,
-                ),
-                Expanded(
-                  child: TabBarView(
-                      controller: _tabController, children: tabBarViews),
-                )
-              ],
-            )));
+    return tabBarViews;
   }
 
   void _bootstrap() {
@@ -136,29 +165,49 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   }
 
   Future<void> _refreshCategories() async {
-    CategoriesList categoriesList = await _userService.getCategories();
-    _setCategories(categoriesList.categories);
-  }
-
-  void _setCategories(List<Category> categories) {
-    setState(() {
-      _categories = categories;
-      _tabController =
-          TabController(length: _categories.length + 2, vsync: this);
-    });
-  }
-
-  void _onRequestError(error) {
-    if (error is HttpieConnectionRefusedError) {
+    try {
+      CategoriesList categoriesList = await _userService.getCategories();
+      _setCategories(categoriesList.categories);
+    } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
-    } else {
+    } catch (error) {
       _toastService.error(message: 'Unknown error.', context: context);
       throw error;
     }
   }
 
+  void _setCategories(List<Category> categories) {
+    setState(() {
+      _categories = categories;
+      _tabController = _makeTabController();
+    });
+  }
+
   void scrollToTop() {
-    //_trendingController.scrollToTop();
+    int currentIndex = _tabController.index;
+    ScrollController currentTabScrollController;
+
+    if (currentIndex == 0) {
+      currentTabScrollController = _myCommunitiesScrollController;
+    } else if (currentIndex == 1) {
+      currentTabScrollController = _allTrendingCommnunitiesScrollController;
+    } else {
+      // It's a category scroll controller
+      currentTabScrollController =
+      _categoriesScrollControllers[currentIndex - 2];
+    }
+
+    currentTabScrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  TabController _makeTabController() {
+    TabController controller =
+    TabController(length: _categories.length + 2, vsync: this);
+    return controller;
   }
 }
 

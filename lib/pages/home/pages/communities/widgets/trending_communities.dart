@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 
 class OBTrendingCommunities extends StatefulWidget {
   final Category category;
+  final ScrollController scrollController;
 
-  const OBTrendingCommunities({Key key, this.category}) : super(key: key);
+  const OBTrendingCommunities({Key key, this.category, this.scrollController}) : super(key: key);
 
   @override
   OBTrendingCommunitiesState createState() {
@@ -50,6 +51,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
 
     return SingleChildScrollView(
       physics: const ClampingScrollPhysics(),
+      controller: widget.scrollController,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

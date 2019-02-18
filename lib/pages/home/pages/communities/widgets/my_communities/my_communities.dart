@@ -3,9 +3,15 @@ import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/wid
 import 'package:flutter/cupertino.dart';
 
 class OBMyCommunities extends StatelessWidget {
+
+  final ScrollController scrollController;
+
+  const OBMyCommunities({Key key, this.scrollController}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: scrollController,
       physics: const ClampingScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),

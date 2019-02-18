@@ -38,6 +38,7 @@ class OBHomePageState extends State<OBHomePage> {
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
   OBMainMenuPageController _mainMenuPageController;
+  OBCommunitiesPageController _communitiesPageController;
 
   @override
   void initState() {
@@ -49,6 +50,7 @@ class OBHomePageState extends State<OBHomePage> {
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
     _mainMenuPageController = OBMainMenuPageController();
+    _communitiesPageController = OBCommunitiesPageController();
   }
 
   @override
@@ -99,7 +101,9 @@ class OBHomePageState extends State<OBHomePage> {
         page = OBMainNotificationsPage();
         break;
       case OBHomePageTabs.communities:
-        page = OBMainCommunitiesPage();
+        page = OBMainCommunitiesPage(
+          controller: _communitiesPageController,
+        );
         break;
       case OBHomePageTabs.profile:
         page = OBOwnProfilePage(controller: _ownProfilePageController);
@@ -139,6 +143,15 @@ class OBHomePageState extends State<OBHomePage> {
             _ownProfilePageController.scrollToTop();
           } else {
             _ownProfilePageController.popUntilFirstRoute();
+          }
+        }
+
+        if (tappedTab == OBHomePageTabs.communities &&
+            currentTab == OBHomePageTabs.communities) {
+          if (_communitiesPageController.isFirstRoute()) {
+            _communitiesPageController.scrollToTop();
+          } else {
+            _communitiesPageController.popUntilFirstRoute();
           }
         }
 
