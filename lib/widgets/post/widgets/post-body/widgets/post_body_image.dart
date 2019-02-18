@@ -3,7 +3,6 @@ import 'package:Openbook/provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class OBPostBodyImage extends StatelessWidget {
   final Post post;

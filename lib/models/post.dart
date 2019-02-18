@@ -162,7 +162,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   String getImage() {
-    return image.url;
+    return image.image;
   }
 
   double getImageHeight() {
