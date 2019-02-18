@@ -5,6 +5,21 @@ import 'package:Openbook/models/users_list.dart';
 import 'package:dcache/dcache.dart';
 
 class Community extends UpdatableModel<Community> {
+  static convertTypeToString(CommunityType type) {
+    String result;
+    switch (type) {
+      case CommunityType.private:
+        result = 'T';
+        break;
+      case CommunityType.public:
+        result = 'P';
+        break;
+      default:
+        throw 'Unsupported community type';
+    }
+    return result;
+  }
+
   final int id;
   final User creator;
   String name;

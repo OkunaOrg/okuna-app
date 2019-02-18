@@ -13,8 +13,10 @@ class CommunitiesApiService {
   static const SEARCH_COMMUNITIES_PATH = 'api/communities/search/';
   static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
   static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
+  static const CHECK_COMMUNITY_NAME_PATH = 'api/communities/name-check/';
   static const CREATE_COMMUNITY_PATH = 'api/communities/';
   static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
+  static const UPDATE_COMMUNITY_PATH = 'api/communities/{communityName}/';
   static const GET_COMMUNITY_PATH = 'api/communities/{communityName}/';
   static const JOIN_COMMUNITY_PATH =
       'api/communities/{communityName}/members/join/';
@@ -26,9 +28,11 @@ class CommunitiesApiService {
       'api/communities/{communityName}/banned-users/ban/';
   static const UNBAN_COMMUNITY_USER_PATH =
       'api/communities/{communityName}/banned-users/unban/';
-  static const COMMUNITY_AVATAR_PATH = 'api/communities/{communityName}/avatar/';
+  static const COMMUNITY_AVATAR_PATH =
+      'api/communities/{communityName}/avatar/';
   static const COMMUNITY_COVER_PATH = 'api/communities/{communityName}/cover/';
-  static const SEARCH_COMMUNITY_PATH = 'api/communities/{communityName}/search/';
+  static const SEARCH_COMMUNITY_PATH =
+      'api/communities/{communityName}/search/';
   static const FAVORITE_COMMUNITY_PATH =
       'api/communities/{communityName}/favorite/';
   static const GET_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/';
@@ -66,6 +70,11 @@ class CommunitiesApiService {
     apiURL = newApiURL;
   }
 
+  Future<HttpieResponse> checkNameIsAvailable({@required String name}) {
+    return _httpService.postJSON('$apiURL$CHECK_COMMUNITY_NAME_PATH',
+        body: {'name': name});
+  }
+
   Future<HttpieResponse> getTrendingCommunities(
       {bool authenticatedRequest = true, String category}) {
     Map<String, dynamic> queryParams = {};
@@ -77,8 +86,11 @@ class CommunitiesApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieStreamedResponse> createPostForCommunityWithId(String communityName,
-      {String text, File image, File video}) {
+  Future<HttpieStreamedResponse> createPostForCommunityWithId(
+      String communityName,
+      {String text,
+      File image,
+      File video}) {
     Map<String, dynamic> body = {};
 
     if (image != null) {
@@ -179,6 +191,70 @@ class CommunitiesApiService {
         body: body, appendAuthorizationToken: true);
   }
 
+  Future<HttpieStreamedResponse> updateCommunityWithName(String communityName,
+      {String name,
+      String title,
+      List<String> categories,
+      String type,
+      String color,
+      String userAdjective,
+      String usersAdjective,
+      String description,
+      String rules,
+      File cover,
+      File avatar}) {
+    Map<String, dynamic> body = {};
+
+    if (name != null) {
+      body['name'] = name;
+    }
+
+    if (title != null) {
+      body['title'] = title;
+    }
+
+    if (categories != null) {
+      body['categories'] = categories;
+    }
+
+    if (type != null) {
+      body['type'] = type;
+    }
+
+    if (avatar != null) {
+      body['avatar'] = avatar;
+    }
+
+    if (cover != null) {
+      body['cover'] = cover;
+    }
+
+    if (color != null) {
+      body['color'] = color;
+    }
+
+    if (rules != null) {
+      body['rules'] = rules;
+    }
+
+    if (description != null) {
+      body['description'] = description;
+    }
+
+    if (userAdjective != null) {
+      body['user_adjective'] = userAdjective;
+    }
+
+    if (usersAdjective != null) {
+      body['users_adjective'] = usersAdjective;
+    }
+
+    return _httpService.putMultiform(
+        _makeApiUrl(_makeUpdateCommunityPath(communityName)),
+        body: body,
+        appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> deleteCommunityWithName(String communityName) {
     String path = _makeDeleteCommunityPath(communityName);
 
@@ -215,14 +291,12 @@ class CommunitiesApiService {
 
   Future<HttpieResponse> joinCommunityWithId(String communityName) {
     String path = _makeJoinCommunityPath(communityName);
-    return _httpService.post(_makeApiUrl(path),
-        appendAuthorizationToken: true);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> leaveCommunityWithId(String communityName) {
     String path = _makeLeaveCommunityPath(communityName);
-    return _httpService.post(_makeApiUrl(path),
-        appendAuthorizationToken: true);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> getModeratorsForCommunityWithId(String communityName,
@@ -254,8 +328,10 @@ class CommunitiesApiService {
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getAdministratorsForCommunityWithId(String communityName,
-      {int count, int maxId}) {
+  Future<HttpieResponse> getAdministratorsForCommunityWithId(
+      String communityName,
+      {int count,
+      int maxId}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
@@ -278,7 +354,8 @@ class CommunitiesApiService {
 
   Future<HttpieResponse> removeCommunityAdministrator(
       {@required String communityName, @required String username}) {
-    String path = _makeRemoveCommunityAdministratorPath(communityName, username);
+    String path =
+        _makeRemoveCommunityAdministratorPath(communityName, username);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
@@ -356,8 +433,8 @@ class CommunitiesApiService {
   }
 
   String _makeAddCommunityAdministratorPath(String communityName) {
-    return _stringTemplateService
-        .parse(ADD_COMMUNITY_ADMINISTRATOR_PATH, {'communityName': communityName});
+    return _stringTemplateService.parse(
+        ADD_COMMUNITY_ADMINISTRATOR_PATH, {'communityName': communityName});
   }
 
   String _makeRemoveCommunityAdministratorPath(
@@ -371,7 +448,8 @@ class CommunitiesApiService {
         .parse(ADD_COMMUNITY_MODERATOR_PATH, {'communityName': communityName});
   }
 
-  String _makeRemoveCommunityModeratorPath(String communityName, String username) {
+  String _makeRemoveCommunityModeratorPath(
+      String communityName, String username) {
     return _stringTemplateService.parse(ADD_COMMUNITY_MODERATOR_PATH,
         {'communityName': communityName, 'username': username});
   }
@@ -396,19 +474,24 @@ class CommunitiesApiService {
         .parse(LEAVE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
+  String _makeUpdateCommunityPath(String communityName) {
+    return _stringTemplateService
+        .parse(UPDATE_COMMUNITY_PATH, {'communityName': communityName});
+  }
+
   String _makeGetCommunityMembersPath(String communityName) {
     return _stringTemplateService
         .parse(GET_COMMUNITY_MEMBERS_PATH, {'communityName': communityName});
   }
 
   String _makeGetCommunityBannedUsersPath(String communityName) {
-    return _stringTemplateService
-        .parse(GET_COMMUNITY_BANNED_USERS_PATH, {'communityName': communityName});
+    return _stringTemplateService.parse(
+        GET_COMMUNITY_BANNED_USERS_PATH, {'communityName': communityName});
   }
 
   String _makeGetCommunityAdministratorsPath(String communityName) {
-    return _stringTemplateService
-        .parse(GET_COMMUNITY_ADMINISTRATORS_PATH, {'communityName': communityName});
+    return _stringTemplateService.parse(
+        GET_COMMUNITY_ADMINISTRATORS_PATH, {'communityName': communityName});
   }
 
   String _makeGetCommunityModeratorsPath(String communityName) {

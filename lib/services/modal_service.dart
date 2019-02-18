@@ -1,4 +1,5 @@
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
@@ -6,6 +7,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
+import 'package:Openbook/pages/home/modals/save_community.dart';
 import 'package:Openbook/pages/home/modals/save_connections_circle.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/modals/timeline_filters.dart';
@@ -99,15 +101,47 @@ class ModalService {
       {@required Circle connectionsCircle,
       @required BuildContext context}) async {
     Circle editedConnectionsCircle =
-        await Navigator.of(context).push(CupertinoPageRoute<Circle>(
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<Circle>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return OBSaveConnectionsCircleModal(
+                    connectionsCircle: connectionsCircle,
+                  );
+                }));
+
+    return editedConnectionsCircle;
+  }
+
+  Future<Community> openEditCommunity(
+      {@required BuildContext context, @required Community community}) async {
+    Community editedCommunity = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Community>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
-              return OBSaveConnectionsCircleModal(
-                connectionsCircle: connectionsCircle,
+              return Material(
+                child: OBSaveCommunityModal(
+                  community: community,
+                ),
               );
             }));
 
-    return editedConnectionsCircle;
+    return editedCommunity;
+  }
+
+  Future<Community> openCreateCommunity(
+      {@required BuildContext context}) async {
+    Community createdCommunity =
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<Community>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBSaveCommunityModal(),
+                  );
+                }));
+
+    return createdCommunity;
   }
 
   Future<void> openTimelineFilters(

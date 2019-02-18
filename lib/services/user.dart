@@ -572,8 +572,8 @@ class UserService {
   Future<Community> createCommunity(
       {@required String name,
       @required String title,
-      @required List<String> categories,
-      @required String type,
+      @required List<Category> categories,
+      @required CommunityType type,
       String color,
       String userAdjective,
       String usersAdjective,
@@ -585,8 +585,8 @@ class UserService {
         await _communitiesApiService.createCommunity(
             name: name,
             title: title,
-            categories: categories,
-            type: type,
+            categories: categories.map((category) => category.name).toList(),
+            type: Community.convertTypeToString(type),
             color: color,
             userAdjective: userAdjective,
             usersAdjective: usersAdjective,
@@ -596,6 +596,39 @@ class UserService {
             avatar: avatar);
 
     _checkResponseIsCreated(response);
+
+    String responseBody = await response.readAsString();
+
+    return Community.fromJSON(json.decode(responseBody));
+  }
+
+  Future<Community> updateCommunity(Community community,
+      {String name,
+      String title,
+      List<Category> categories,
+      String type,
+      String color,
+      String userAdjective,
+      String usersAdjective,
+      String description,
+      String rules,
+      File cover,
+      File avatar}) async {
+    HttpieStreamedResponse response =
+        await _communitiesApiService.updateCommunityWithName(community.name,
+            name: name,
+            title: title,
+            categories: categories.map((category) => category.name).toList(),
+            type: type,
+            color: color,
+            userAdjective: userAdjective,
+            usersAdjective: usersAdjective,
+            description: description,
+            rules: rules,
+            cover: cover,
+            avatar: avatar);
+
+    _checkResponseIsOk(response);
 
     String responseBody = await response.readAsString();
 
@@ -636,7 +669,7 @@ class UserService {
 
   Future<CommunitiesList> getJoinedCommunities() async {
     HttpieResponse response =
-    await _communitiesApiService.getJoinedCommunities();
+        await _communitiesApiService.getJoinedCommunities();
 
     _checkResponseIsOk(response);
 

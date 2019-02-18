@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:Openbook/models/categories_list.dart';
 import 'package:Openbook/models/category.dart';
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
@@ -10,10 +11,14 @@ import 'package:Openbook/pages/home/pages/communities/widgets/trending_communiti
 import 'package:Openbook/pages/home/pages/communities/widgets/user_avatar_tab.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bar.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -38,6 +43,8 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   ToastService _toastService;
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
+  ModalService _modalService;
+  NavigationService _navigationService;
 
   List<Category> _categories;
   TabController _tabController;
@@ -70,35 +77,41 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       _toastService = openbookProvider.toastService;
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
+      _modalService = openbookProvider.modalService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBNavigationBar(title: 'Communities'),
+        navigationBar: OBNavigationBar(
+            title: 'Communities',
+            trailing: OBIconButton(
+              OBIcons.add,
+              themeColor: OBIconThemeColor.primaryAccent,
+              onPressed: _onWantsToCreateCommunity,
+            )),
         child: OBPrimaryColorContainer(
             child: Column(
-              children: <Widget>[
-                _buildTabBar(),
-                Expanded(
-                  child: TabBarView(
-                      controller: _tabController,
-                      children: _buildTabBarViews()),
-                )
-              ],
-            )));
+          children: <Widget>[
+            _buildTabBar(),
+            Expanded(
+              child: TabBarView(
+                  controller: _tabController, children: _buildTabBarViews()),
+            )
+          ],
+        )));
   }
 
   Widget _buildTabBar() {
     OBTheme theme = _themeService.getActiveTheme();
 
     Gradient themeGradient =
-    _themeValueParserService.parseGradient(theme.primaryAccentColor);
+        _themeValueParserService.parseGradient(theme.primaryAccentColor);
 
     Color tabIndicatorColor = themeGradient.colors[0];
 
     Color tabLabelColor =
-    _themeValueParserService.parseColor(theme.primaryTextColor);
+        _themeValueParserService.parseColor(theme.primaryTextColor);
 
     return TabBar(
       controller: _tabController,
@@ -122,7 +135,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         color: Pigment.fromString('#2d2d2d'),
         textColor: Pigment.fromString('#ffffff'),
         imageProvider:
-        const AssetImage('assets/images/categories/category_all-min.png'),
+            const AssetImage('assets/images/categories/category_all-min.png'),
       ),
     ];
 
@@ -138,11 +151,13 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   }
 
   List<Widget> _buildTabBarViews() {
-    List<Widget> tabBarViews = [OBMyCommunities(
-      scrollController: _myCommunitiesScrollController,
-    ), OBTrendingCommunities(
-      scrollController: _allTrendingCommnunitiesScrollController,
-    )
+    List<Widget> tabBarViews = [
+      OBMyCommunities(
+        scrollController: _myCommunitiesScrollController,
+      ),
+      OBTrendingCommunities(
+        scrollController: _allTrendingCommnunitiesScrollController,
+      )
     ];
 
     _categoriesScrollControllers = [];
@@ -194,7 +209,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     } else {
       // It's a category scroll controller
       currentTabScrollController =
-      _categoriesScrollControllers[currentIndex - 2];
+          _categoriesScrollControllers[currentIndex - 2];
     }
 
     currentTabScrollController.animateTo(
@@ -206,8 +221,17 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
   TabController _makeTabController() {
     TabController controller =
-    TabController(length: _categories.length + 2, vsync: this);
+        TabController(length: _categories.length + 2, vsync: this);
     return controller;
+  }
+
+  void _onWantsToCreateCommunity() async {
+    Community createdCommunity =
+        await _modalService.openCreateCommunity(context: context);
+    if (createdCommunity != null) {
+      _navigationService.navigateToCommunity(
+          community: createdCommunity, context: context);
+    }
   }
 }
 
