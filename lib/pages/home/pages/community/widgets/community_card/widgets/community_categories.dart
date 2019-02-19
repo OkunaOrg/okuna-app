@@ -23,7 +23,7 @@ class OBCommunityCategories extends StatelessWidget {
           connectionItems.add(Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              CategoryBadge(
+              OBCategoryBadge(
                 category: category,
               )
             ],

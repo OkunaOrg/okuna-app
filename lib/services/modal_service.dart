@@ -1,9 +1,11 @@
+import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/categories_picker.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';

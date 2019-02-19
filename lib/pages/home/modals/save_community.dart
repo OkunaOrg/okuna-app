@@ -8,6 +8,7 @@ import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:Openbook/widgets/cover.dart';
+import 'package:Openbook/widgets/fields/categories_field.dart';
 import 'package:Openbook/widgets/fields/color_field.dart';
 import 'package:Openbook/widgets/fields/community_type_field.dart';
 import 'package:Openbook/widgets/fields/toggle_field.dart';
@@ -159,7 +160,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                       height: 20,
                     ),
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 40),
                         child: Column(
                           children: <Widget>[
                             OBTextFormField(
@@ -294,7 +295,15 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                       });
                                     },
                                   )
-                                : SizedBox(),
+                                : const SizedBox(),
+                            OBCategoriesField(
+                              title: 'Category',
+                              min: 1,
+                              max: 3,
+                              onChanged: (List<Category> newCategores) {
+                                print(newCategores);
+                              },
+                            )
                           ],
                         )),
                   ],
