@@ -284,7 +284,6 @@ class HttpieService {
 
         fileFields.add(fileFuture);
       } else {
-        print(value);
         throw HttpieArgumentsError('Unsupported multiform value type');
       }
     });
