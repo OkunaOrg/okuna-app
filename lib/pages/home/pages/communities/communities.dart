@@ -78,6 +78,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
       _modalService = openbookProvider.modalService;
+      _navigationService = openbookProvider.navigationService;
       _bootstrap();
       _needsBootstrap = false;
     }

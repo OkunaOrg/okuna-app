@@ -30,10 +30,11 @@ class OBLetterAvatar extends StatelessWidget {
         OpenbookProvider.of(context).themeValueParserService;
     double avatarSize = OBAvatar.getAvatarSize(size);
     double fontSize = getAvatarFontSize(size);
-    Color finalLabelColor =
-        labelColor ?? themeValueParserService.isDarkColor(color)
+    Color finalLabelColor = labelColor != null
+        ? labelColor
+        : (themeValueParserService.isDarkColor(color)
             ? Colors.white
-            : Colors.black;
+            : Colors.black);
 
     return Container(
       height: avatarSize,

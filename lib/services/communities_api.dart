@@ -145,6 +145,7 @@ class CommunitiesApiService {
       @required String title,
       @required List<String> categories,
       @required String type,
+      bool invitesEnabled,
       String color,
       String userAdjective,
       String usersAdjective,
@@ -179,12 +180,16 @@ class CommunitiesApiService {
       body['description'] = description;
     }
 
-    if (userAdjective != null) {
+    if (userAdjective != null && userAdjective.isNotEmpty) {
       body['user_adjective'] = userAdjective;
     }
 
-    if (usersAdjective != null) {
+    if (usersAdjective != null && usersAdjective.isNotEmpty) {
       body['users_adjective'] = usersAdjective;
+    }
+
+    if (invitesEnabled != null) {
+      body['invites_enabled'] = invitesEnabled;
     }
 
     return _httpService.putMultiform(_makeApiUrl(CREATE_COMMUNITY_PATH),
@@ -195,6 +200,7 @@ class CommunitiesApiService {
       {String name,
       String title,
       List<String> categories,
+      bool invitesEnabled,
       String type,
       String color,
       String userAdjective,
@@ -225,6 +231,10 @@ class CommunitiesApiService {
       body['avatar'] = avatar;
     }
 
+    if (invitesEnabled != null) {
+      body['invites_enabled'] = invitesEnabled;
+    }
+
     if (cover != null) {
       body['cover'] = cover;
     }
@@ -241,11 +251,11 @@ class CommunitiesApiService {
       body['description'] = description;
     }
 
-    if (userAdjective != null) {
+    if (userAdjective != null && userAdjective.isNotEmpty) {
       body['user_adjective'] = userAdjective;
     }
 
-    if (usersAdjective != null) {
+    if (usersAdjective != null && usersAdjective.isNotEmpty) {
       body['users_adjective'] = usersAdjective;
     }
 

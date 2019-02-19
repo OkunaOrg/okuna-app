@@ -69,7 +69,6 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   File _avatarFile;
   File _coverFile;
   bool _invitesEnabled;
-  bool _categoriesAreValid;
 
   List<Category> _categories;
 
@@ -88,7 +87,6 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _categoriesFieldController = OBCategoriesFieldController();
     _type = CommunityType.public;
     _invitesEnabled = true;
-    _categoriesAreValid = false;
     _categories = [];
 
     _formKey = GlobalKey<FormState>();
@@ -447,8 +445,6 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _setCategories(categories);
     // TODO Couldnt find a way to make it work without doing this
     // Perhaps move the entire state of the CategoriesField into here
-    _setCategoriesAreValid(_categoriesFieldController.isValid());
-    print(_categoriesAreValid);
     _updateFormValid();
   }
 
@@ -478,7 +474,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
   bool _updateFormValid() {
     if (!_formWasSubmitted) return true;
-    var formValid = _validateForm() && _categoriesAreValid;
+    var formValid = _validateForm() && _categoriesFieldController.isValid();
     _setFormValid(formValid);
     return formValid;
   }
@@ -512,6 +508,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
               userAdjective: _userAdjectiveController.text,
               usersAdjective: _usersAdjectiveController.text,
               categories: _categories,
+              type: _type,
+              invitesEnabled: _invitesEnabled,
               color: _color)
           : _userService.createCommunity(
               type: _type,
@@ -522,6 +520,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
               userAdjective: _userAdjectiveController.text,
               usersAdjective: _usersAdjectiveController.text,
               categories: _categories,
+              invitesEnabled: _invitesEnabled,
               color: _color));
 
       Navigator.of(context).pop(community);
@@ -562,12 +561,6 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   void _setRequestInProgress(bool requestInProgress) {
     setState(() {
       _requestInProgress = requestInProgress;
-    });
-  }
-
-  void _setCategoriesAreValid(bool categoriesAreValid) {
-    setState(() {
-      _categoriesAreValid = categoriesAreValid;
     });
   }
 

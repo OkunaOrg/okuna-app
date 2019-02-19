@@ -270,6 +270,9 @@ class HttpieService {
     body.forEach((String key, dynamic value) {
       if (value is String || value is bool) {
         request.fields[key] = value.toString();
+      } else if (value is List) {
+        request.fields[key] =
+            value.map((item) => item.toString()).toList().join(',');
       } else if (value is File) {
         var fileMimeType = lookupMimeType(value.path);
         // The silly multipart API requires media type to be in type & subtype.
@@ -281,6 +284,7 @@ class HttpieService {
 
         fileFields.add(fileFuture);
       } else {
+        print(value);
         throw HttpieArgumentsError('Unsupported multiform value type');
       }
     });
