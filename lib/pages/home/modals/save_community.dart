@@ -22,7 +22,6 @@ import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,6 +60,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   TextEditingController _userAdjectiveController;
   TextEditingController _usersAdjectiveController;
   TextEditingController _rulesController;
+  OBCategoriesFieldController _categoriesFieldController;
+
   String _color;
   CommunityType _type;
   String _avatarUrl;
@@ -68,6 +69,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   File _avatarFile;
   File _coverFile;
   bool _invitesEnabled;
+  bool _categoriesAreValid;
 
   List<Category> _categories;
 
@@ -83,8 +85,10 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _userAdjectiveController = TextEditingController();
     _usersAdjectiveController = TextEditingController();
     _rulesController = TextEditingController();
+    _categoriesFieldController = OBCategoriesFieldController();
     _type = CommunityType.public;
     _invitesEnabled = true;
+    _categoriesAreValid = false;
     _categories = [];
 
     _formKey = GlobalKey<FormState>();
@@ -236,9 +240,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                               title: 'Category',
                               min: 1,
                               max: 3,
-                              onChanged: (List<Category> newCategores) {
-                                print(newCategores);
-                              },
+                              controller: _categoriesFieldController,
+                              displayErrors: _formWasSubmitted,
+                              onChanged: _onCategoriesChanged,
                             ),
                             OBTextFormField(
                                 textCapitalization:
@@ -439,6 +443,15 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     if (newCover != null) _setCoverFile(newCover);
   }
 
+  void _onCategoriesChanged(List<Category> categories) {
+    _setCategories(categories);
+    // TODO Couldnt find a way to make it work without doing this
+    // Perhaps move the entire state of the CategoriesField into here
+    _setCategoriesAreValid(_categoriesFieldController.isValid());
+    print(_categoriesAreValid);
+    _updateFormValid();
+  }
+
   void _clearAvatarFile() {
     _setAvatarFile(null);
   }
@@ -465,7 +478,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
   bool _updateFormValid() {
     if (!_formWasSubmitted) return true;
-    var formValid = _validateForm();
+    var formValid = _validateForm() && _categoriesAreValid;
     _setFormValid(formValid);
     return formValid;
   }
@@ -540,9 +553,21 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     });
   }
 
+  void _setCategories(List<Category> categories) {
+    setState(() {
+      _categories = categories;
+    });
+  }
+
   void _setRequestInProgress(bool requestInProgress) {
     setState(() {
       _requestInProgress = requestInProgress;
+    });
+  }
+
+  void _setCategoriesAreValid(bool categoriesAreValid) {
+    setState(() {
+      _categoriesAreValid = categoriesAreValid;
     });
   }
 
