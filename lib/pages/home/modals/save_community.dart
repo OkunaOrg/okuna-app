@@ -10,9 +10,9 @@ import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:Openbook/widgets/cover.dart';
 import 'package:Openbook/widgets/fields/color_field.dart';
 import 'package:Openbook/widgets/fields/community_type_field.dart';
+import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/colored_nav_bar.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -21,7 +21,9 @@ import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -64,6 +66,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   String _coverUrl;
   File _avatarFile;
   File _coverFile;
+  bool _invitesEnabled;
 
   List<Category> _categories;
 
@@ -80,6 +83,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _usersAdjectiveController = TextEditingController();
     _rulesController = TextEditingController();
     _type = CommunityType.public;
+    _invitesEnabled = true;
     _categories = [];
 
     _formKey = GlobalKey<FormState>();
@@ -97,6 +101,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
       _type = widget.community.type;
       _avatarUrl = widget.community.avatar;
       _coverUrl = widget.community.cover;
+      _invitesEnabled = widget.community.invitesEnabled;
     }
 
     _nameController.addListener(_updateFormValid);
@@ -272,6 +277,24 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 });
                               },
                             ),
+                            _type == CommunityType.private
+                                ? OBToggleField(
+                                    value: _invitesEnabled,
+                                    title: 'Member Invites',
+                                    subtitle: OBText(
+                                        'Members can invite people to the community'),
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        _invitesEnabled = value;
+                                      });
+                                    },
+                                    onTap: () {
+                                      setState(() {
+                                        _invitesEnabled = !_invitesEnabled;
+                                      });
+                                    },
+                                  )
+                                : SizedBox(),
                           ],
                         )),
                   ],
@@ -284,8 +307,6 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     Color color = _themeValueParserService.parseColor(_color);
     bool isDarkColor = _themeValueParserService.isDarkColor(color);
     Color actionsColor = isDarkColor ? Colors.white : Colors.black;
-
-    // TODO Make this nav bar an OBColoredNavBar header which is then used by the OBCommunityNavBar
 
     return OBColoredNavBar(
         color: color,

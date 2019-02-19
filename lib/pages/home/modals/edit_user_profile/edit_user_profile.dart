@@ -209,7 +209,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                               });
                             },
                           ),
-                          OBDivider()
                         ],
                       ),
                     )

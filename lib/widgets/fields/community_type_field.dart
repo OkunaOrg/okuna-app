@@ -2,6 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/primary_accent_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,34 +44,40 @@ class OBCommunityTypeField extends StatelessWidget {
     }
 
     return MergeSemantics(
-      child: ListTile(
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              OBText(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              )
-            ],
-          ),
-          subtitle: hintText != null ? OBText(hintText) : null,
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              OBPrimaryAccentText(
-                typeName,
-                style: TextStyle(fontSize: 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+              title: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  OBText(
+                    title,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  )
+                ],
               ),
-              const SizedBox(
-                width: 20,
+              subtitle: hintText != null ? OBText(hintText) : null,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  OBPrimaryAccentText(
+                    typeName,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  typeIcon,
+                ],
               ),
-              typeIcon,
-            ],
-          ),
-          onTap: () {
-            bottomSheetService.showCommunityTypePicker(
-                initialType: value, context: context, onChanged: onChanged);
-          }),
+              onTap: () {
+                bottomSheetService.showCommunityTypePicker(
+                    initialType: value, context: context, onChanged: onChanged);
+              }),
+          OBDivider()
+        ],
+      ),
     );
   }
 }
