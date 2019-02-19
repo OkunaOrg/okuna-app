@@ -6,6 +6,7 @@ import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/theming/primary_accent_text.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
             onTap: () {
               modalService.openEditFollowsList(followsList: widget.followsList, context: context);
             },
-            child: Text('Edit'),
+            child: OBPrimaryAccentText('Edit'),
           ),
         ),
         child: RefreshIndicator(

@@ -35,10 +35,11 @@ class OBThemedNavigationBar extends StatelessWidget
             .parseGradient(theme.primaryAccentColor)
             .colors[1];
 
+
         return CupertinoNavigationBar(
           border: null,
           actionsForegroundColor:
-              theme != null ? actionsForegroundColor : Colors.black,
+          actionsForegroundColor != null ? actionsForegroundColor : Colors.black,
           middle: title != null
               ? OBText(
                   title,
