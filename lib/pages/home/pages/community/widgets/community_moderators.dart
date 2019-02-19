@@ -42,6 +42,7 @@ class OBCommunityModerators extends StatelessWidget {
                     height: 10,
                   ),
                   ListView(
+                    physics: const ClampingScrollPhysics(),
                     padding: EdgeInsets.all(0),
                     shrinkWrap: true,
                     children:

@@ -126,7 +126,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
 
   Widget _buildSearchResults() {
     return ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount:
             _circlesSearchResults.length + _followsListsSearchResults.length,
         itemBuilder: (BuildContext context, int index) {

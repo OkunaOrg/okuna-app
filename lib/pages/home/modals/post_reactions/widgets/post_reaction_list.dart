@@ -65,7 +65,7 @@ class OBPostReactionListState extends State<OBPostReactionList> {
             isFinish: _loadMoreFinished,
             delegate: OBPostReactionListLoadMoreDelegate(),
             child: ListView.builder(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 padding: EdgeInsets.all(0),
                 itemCount: _postReactions.length,
                 itemBuilder: (context, index) {
