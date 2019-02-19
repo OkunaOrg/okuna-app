@@ -160,7 +160,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                       height: 20,
                     ),
                     Padding(
-                        padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 40),
+                        padding: EdgeInsets.only(
+                            left: 20.0, right: 20.0, bottom: 40),
                         child: Column(
                           children: <Widget>[
                             OBTextFormField(
@@ -196,71 +197,6 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
                                   return _validationService
                                       .validateCommunityName(communityName);
-                                }),
-                            OBTextFormField(
-                                textCapitalization:
-                                    TextCapitalization.sentences,
-                                size: OBTextFormFieldSize.medium,
-                                controller: _descriptionController,
-                                maxLines: 3,
-                                decoration: InputDecoration(
-                                    prefixIcon: const OBIcon(
-                                        OBIcons.communityDescription),
-                                    labelText: 'Description',
-                                    hintText: 'What is your community about?'),
-                                validator: (String communityDescription) {
-                                  return _validationService
-                                      .validateCommunityDescription(
-                                          communityDescription);
-                                }),
-                            OBTextFormField(
-                              textCapitalization: TextCapitalization.sentences,
-                              size: OBTextFormFieldSize.medium,
-                              controller: _rulesController,
-                              decoration: InputDecoration(
-                                  prefixIcon:
-                                      const OBIcon(OBIcons.communityRules),
-                                  labelText: 'Rules',
-                                  hintText:
-                                      'Is there something you would like your users to know?'),
-                              validator: (String communityRules) {
-                                return _validationService
-                                    .validateCommunityRules(communityRules);
-                              },
-                              keyboardType: TextInputType.multiline,
-                              maxLines: 3,
-                            ),
-                            OBTextFormField(
-                                textCapitalization:
-                                    TextCapitalization.sentences,
-                                size: OBTextFormFieldSize.medium,
-                                controller: _userAdjectiveController,
-                                decoration: InputDecoration(
-                                    prefixIcon:
-                                        const OBIcon(OBIcons.communityMember),
-                                    labelText: 'Member adjective',
-                                    hintText:
-                                        'e.g. traveler, photographer, gamer.'),
-                                validator: (String communityUserAdjective) {
-                                  return _validationService
-                                      .validateCommunityUserAdjective(
-                                          communityUserAdjective);
-                                }),
-                            OBTextFormField(
-                                textCapitalization:
-                                    TextCapitalization.sentences,
-                                size: OBTextFormFieldSize.medium,
-                                controller: _usersAdjectiveController,
-                                decoration: InputDecoration(
-                                    prefixIcon:
-                                        const OBIcon(OBIcons.communityMembers),
-                                    labelText: 'Members adjective',
-                                    hintText:
-                                        'e.g. travelers, photographers, gamers.'),
-                                validator: (String communityUsersAdjective) {
-                                  return _validationService
-                                      .validateCommunityUserAdjective(
-                                          communityUsersAdjective);
                                 }),
                             OBColorField(
                               initialColor: _color,
@@ -303,7 +239,72 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                               onChanged: (List<Category> newCategores) {
                                 print(newCategores);
                               },
-                            )
+                            ),
+                            OBTextFormField(
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                size: OBTextFormFieldSize.medium,
+                                controller: _descriptionController,
+                                maxLines: 3,
+                                decoration: InputDecoration(
+                                    prefixIcon: const OBIcon(
+                                        OBIcons.communityDescription),
+                                    labelText: 'Description · Optional',
+                                    hintText: 'What is your community about?'),
+                                validator: (String communityDescription) {
+                                  return _validationService
+                                      .validateCommunityDescription(
+                                          communityDescription);
+                                }),
+                            OBTextFormField(
+                              textCapitalization: TextCapitalization.sentences,
+                              size: OBTextFormFieldSize.medium,
+                              controller: _rulesController,
+                              decoration: InputDecoration(
+                                  prefixIcon:
+                                      const OBIcon(OBIcons.communityRules),
+                                  labelText: 'Rules · Optional',
+                                  hintText:
+                                      'Is there something you would like your users to know?'),
+                              validator: (String communityRules) {
+                                return _validationService
+                                    .validateCommunityRules(communityRules);
+                              },
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 3,
+                            ),
+                            OBTextFormField(
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                size: OBTextFormFieldSize.medium,
+                                controller: _userAdjectiveController,
+                                decoration: InputDecoration(
+                                    prefixIcon:
+                                        const OBIcon(OBIcons.communityMember),
+                                    labelText: 'Member adjective · Optional',
+                                    hintText:
+                                        'e.g. traveler, photographer, gamer.'),
+                                validator: (String communityUserAdjective) {
+                                  return _validationService
+                                      .validateCommunityUserAdjective(
+                                          communityUserAdjective);
+                                }),
+                            OBTextFormField(
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                size: OBTextFormFieldSize.medium,
+                                controller: _usersAdjectiveController,
+                                decoration: InputDecoration(
+                                    prefixIcon:
+                                        const OBIcon(OBIcons.communityMembers),
+                                    labelText: 'Members adjective · Optional',
+                                    hintText:
+                                        'e.g. travelers, photographers, gamers.'),
+                                validator: (String communityUsersAdjective) {
+                                  return _validationService
+                                      .validateCommunityUserAdjective(
+                                          communityUsersAdjective);
+                                }),
                           ],
                         )),
                   ],

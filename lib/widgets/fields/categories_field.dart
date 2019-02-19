@@ -5,7 +5,7 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCategoriesField extends FormField<List<Category>> {
+class OBCategoriesField extends StatelessWidget {
   final List<Category> initialCategories;
   final ValueChanged<List<Category>> onChanged;
   final String title;
@@ -46,6 +46,9 @@ class OBCategoriesField extends FormField<List<Category>> {
             maxSelections: max,
             initialCategories: initialCategories,
             onChanged: onChanged,
+          ),
+          SizedBox(
+            height: 20,
           ),
           OBDivider()
         ]);
