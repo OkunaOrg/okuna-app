@@ -13,7 +13,7 @@ import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -101,7 +101,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       );
     }
 
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
       leading: GestureDetector(
         child: const OBIcon(OBIcons.close),
         onTap: () {

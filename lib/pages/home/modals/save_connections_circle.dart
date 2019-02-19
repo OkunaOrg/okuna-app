@@ -2,7 +2,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/widgets/fields/color_field.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -154,7 +154,7 @@ class OBSaveConnectionsCircleModalState
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
         leading: GestureDetector(
           child: const OBIcon(OBIcons.close),
           onTap: () {

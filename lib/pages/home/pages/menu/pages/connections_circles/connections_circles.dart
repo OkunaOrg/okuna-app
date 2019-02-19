@@ -2,7 +2,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/widgets/connections_circle_tile.dart';
 import 'package:Openbook/widgets/buttons/accent_button.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -58,7 +58,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBNavigationBar(
+        navigationBar: OBThemedNavigationBar(
           title: 'My circles',
         ),
         child: Stack(

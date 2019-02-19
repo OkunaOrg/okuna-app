@@ -19,7 +19,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,7 +83,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBNavigationBar(
+        navigationBar: OBThemedNavigationBar(
             title: 'Communities',
             trailing: OBIconButton(
               OBIcons.add,

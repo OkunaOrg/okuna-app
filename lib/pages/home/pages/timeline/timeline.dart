@@ -9,7 +9,7 @@ import 'package:Openbook/widgets/badge.dart';
 import 'package:Openbook/widgets/buttons/floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,7 +46,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
 
     return OBCupertinoPageScaffold(
         navigationBar:
-            OBNavigationBar(title: 'Home', trailing: _buildFiltersButton()),
+            OBThemedNavigationBar(title: 'Home', trailing: _buildFiltersButton()),
         child: OBPrimaryColorContainer(
           child: Stack(
             children: <Widget>[

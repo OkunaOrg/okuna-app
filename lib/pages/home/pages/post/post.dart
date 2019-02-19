@@ -1,7 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/provider.dart';
@@ -64,7 +64,7 @@ class OBPostPageState extends State<OBPostPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBNavigationBar(
+        navigationBar: OBThemedNavigationBar(
           title: 'Post',
         ),
         child: OBPrimaryColorContainer(

@@ -13,7 +13,7 @@ import 'package:Openbook/widgets/cover.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/cupertino.dart';
@@ -222,7 +222,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   Widget _buildNavigationBar() {
     bool newPostButtonIsEnabled = true;
 
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
       leading: GestureDetector(
         child: const OBIcon(OBIcons.close),
         onTap: () {

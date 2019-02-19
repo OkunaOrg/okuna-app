@@ -1,7 +1,7 @@
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -22,7 +22,7 @@ class OBMainMenuPage extends StatelessWidget {
     var navigationService = openbookProvider.navigationService;
 
     return CupertinoPageScaffold(
-      navigationBar: OBNavigationBar(
+      navigationBar: OBThemedNavigationBar(
         title: 'Menu',
       ),
       child: OBPrimaryColorContainer(

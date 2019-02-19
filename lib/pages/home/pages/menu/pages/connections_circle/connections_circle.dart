@@ -2,7 +2,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_header/connections_circle_header.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_users.dart';
 import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -56,7 +56,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBNavigationBar(
+        navigationBar: OBThemedNavigationBar(
           trailing: _buildNavigationBarTrailingItem(),
         ),
         child: RefreshIndicator(

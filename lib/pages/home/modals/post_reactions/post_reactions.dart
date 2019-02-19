@@ -6,7 +6,7 @@ import 'package:Openbook/pages/home/modals/post_reactions/widgets/post_reaction_
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -109,7 +109,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
         title: 'Post reactions');
   }
 

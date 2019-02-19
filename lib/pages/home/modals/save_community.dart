@@ -11,7 +11,8 @@ import 'package:Openbook/widgets/cover.dart';
 import 'package:Openbook/widgets/fields/color_field.dart';
 import 'package:Openbook/widgets/fields/community_type_field.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/colored_nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -286,8 +287,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
     // TODO Make this nav bar an OBColoredNavBar header which is then used by the OBCommunityNavBar
 
-    return CupertinoNavigationBar(
-        border: null,
+    return OBColoredNavBar(
+        color: color,
         leading: GestureDetector(
           child: OBIcon(
             OBIcons.close,
@@ -297,13 +298,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
             Navigator.pop(context);
           },
         ),
-        actionsForegroundColor: actionsColor,
-        middle: Text(
-          _isEditingExistingCommunity ? 'Edit community' : 'Create community',
-          style: TextStyle(color: actionsColor),
-        ),
-        transitionBetweenRoutes: false,
-        backgroundColor: color,
+        title:
+            _isEditingExistingCommunity ? 'Edit community' : 'Create community',
         trailing: _requestInProgress
             ? OBProgressIndicator(color: actionsColor)
             : OBButton(

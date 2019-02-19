@@ -4,14 +4,15 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBNavigationBar extends StatelessWidget
+/// A navigation bar that uses the current theme colours
+class OBThemedNavigationBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Widget leading;
   final String title;
   final Widget trailing;
   final String previousPageTitle;
 
-  OBNavigationBar({
+  OBThemedNavigationBar({
     this.leading,
     this.previousPageTitle,
     this.title,
