@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
   final User user;
-  GlobalKey _keyUsername = GlobalKey();
 
   OBProfileCard(this.user);
 
@@ -116,7 +115,6 @@ class OBProfileCard extends StatelessWidget {
   Widget _buildNameRow(User user) {
      if (user.getProfileBadges().length > 0) {
        return Row(
-               key: _keyUsername,
                children: <Widget>[
                  OBProfileName(user),
                  _getUserBadge(user)
