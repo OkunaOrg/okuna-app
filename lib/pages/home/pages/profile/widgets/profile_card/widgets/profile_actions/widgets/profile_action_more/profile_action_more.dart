@@ -72,6 +72,7 @@ class OBProfileActionMore extends StatelessWidget {
             } else {
               moreTiles.add(OBConnectToUserTile(
                 user,
+                context,
                 onWillShowModalBottomSheet: _dismissModalBottomSheet,
               ));
             }

@@ -1,5 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -11,9 +13,12 @@ import 'package:flutter/material.dart';
 
 class OBConnectToUserTile extends StatefulWidget {
   final User user;
+  final BuildContext parentContext;
   final VoidCallback onWillShowModalBottomSheet;
 
-  const OBConnectToUserTile(this.user,
+  const OBConnectToUserTile(
+      this.user,
+      this.parentContext,
       {Key key,
       this.onWillShowModalBottomSheet})
       : super(key: key);
@@ -52,7 +57,7 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
         context: context,
         title: 'Add connection to circle',
         actionLabel: 'Done',
-        onPickedCircles: _onWantsToAddConnectionToCircles);
+        onPickedCircles:_onWantsToAddConnectionToCircles);
   }
 
   Future _onWantsToAddConnectionToCircles(List<Circle> circles) async {
@@ -68,11 +73,11 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
         widget.user.incrementFollowersCount();
       }
       _toastService.success(
-          message: 'Connection request sent', context: context);
+          message: 'Connection request sent', context: widget.parentContext);
     } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
+      _toastService.error(message: 'No internet connection', context: widget.parentContext);
     } catch (e) {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: 'Unknown error', context: widget.parentContext);
       rethrow;
     }
   }

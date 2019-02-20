@@ -1,3 +1,4 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
@@ -145,6 +146,10 @@ class User extends UpdatableModel<User> {
 
   String getProfileLocation() {
     return this.profile.location;
+  }
+
+  List<Badge> getProfileBadges() {
+    return this.profile.badges;
   }
 
   bool isConnectionsCircle(Circle circle) {

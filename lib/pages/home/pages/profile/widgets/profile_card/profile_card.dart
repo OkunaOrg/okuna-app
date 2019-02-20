@@ -1,3 +1,4 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
@@ -11,10 +12,12 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
   final User user;
+  GlobalKey _keyUsername = GlobalKey();
 
   OBProfileCard(this.user);
 
@@ -23,6 +26,7 @@ class OBProfileCard extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+    var toastService = openbookProvider.toastService;
 
     return Stack(
       overflow: Overflow.visible,
@@ -47,7 +51,12 @@ class OBProfileCard extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  OBProfileName(user),
+                  GestureDetector(
+                    onTap: () {
+                      toastService.info(message: _getUserBadgeDescription(user), context:context);
+                    },
+                    child:  _buildNameRow(user),
+                  ),
                   OBProfileUsername(user),
                   OBProfileBio(user),
                   OBProfileDetails(user),
@@ -97,5 +106,27 @@ class OBProfileCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _getUserBadge(User user) {
+      Badge badge = user.getProfileBadges()[0];
+      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+  }
+
+  Widget _buildNameRow(User user) {
+     if (user.getProfileBadges().length > 0) {
+       return Row(
+               key: _keyUsername,
+               children: <Widget>[
+                 OBProfileName(user),
+                 _getUserBadge(user)
+               ]);
+     }
+     return OBProfileName(user);
+  }
+
+  String _getUserBadgeDescription(User user) {
+    Badge badge = user.getProfileBadges()[0];
+    return '${user.getProfileName()} is an ${badge.getKeywordDescription()}';
   }
 }
