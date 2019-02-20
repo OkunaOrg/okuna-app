@@ -1,7 +1,9 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/widgets/connections_circle_tile.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/buttons/accent_button.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
@@ -9,6 +11,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -25,11 +28,14 @@ class OBConnectionsCirclesPage extends StatefulWidget {
 class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
   UserService _userService;
   ToastService _toastService;
+  ModalService _modalService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _connectionsCirclesScrollController;
   List<Circle> _connectionsCircles = [];
   List<Circle> _connectionsCirclesSearchResults = [];
+
+  String _searchQuery;
 
   bool _needsBootstrap;
 
@@ -44,90 +50,83 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
-    _toastService = provider.toastService;
-    var modalService = provider.modalService;
-
-    var loggedInUser = _userService.getLoggedInUser();
-
     if (_needsBootstrap) {
+      var provider = OpenbookProvider.of(context);
+      _userService = provider.userService;
+      _toastService = provider.toastService;
+      _modalService = provider.modalService;
       _bootstrap();
       _needsBootstrap = false;
     }
+
+    var loggedInUser = _userService.getLoggedInUser();
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
           title: 'My circles',
+          trailing: OBIconButton(
+            OBIcons.add,
+            themeColor: OBIconThemeColor.primaryAccent,
+            onPressed: _onWantsToCreateCircle,
+          ),
         ),
         child: Stack(
           children: <Widget>[
             OBPrimaryColorContainer(
-              child: SizedBox(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                        child: OBSearchBar(
-                      onSearch: _onSearch,
-                      hintText: 'Search for a circle...',
-                    )),
-                    Expanded(
-                      child: RefreshIndicator(
-                          key: _refreshIndicatorKey,
-                          child: ListView.builder(
-                              physics: const ClampingScrollPhysics(),
-                              controller: _connectionsCirclesScrollController,
-                              padding: EdgeInsets.all(0),
-                              itemCount:
-                                  _connectionsCirclesSearchResults.length,
-                              itemBuilder: (context, index) {
-                                int commentIndex = index;
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                      child: OBSearchBar(
+                    onSearch: _onSearch,
+                    hintText: 'Search for a circle...',
+                  )),
+                  Expanded(
+                    child: RefreshIndicator(
+                        key: _refreshIndicatorKey,
+                        child: ListView.builder(
+                            physics: const ClampingScrollPhysics(),
+                            controller: _connectionsCirclesScrollController,
+                            padding: EdgeInsets.all(0),
+                            itemCount:
+                                _connectionsCirclesSearchResults.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index ==
+                                  _connectionsCirclesSearchResults.length) {
+                                if (_connectionsCirclesSearchResults.isEmpty) {
+                                  // Results were empty
+                                  return ListTile(
+                                      leading: OBIcon(OBIcons.sad),
+                                      title: OBText(
+                                          'No circle found for "$_searchQuery"'));
+                                } else {
+                                  return const SizedBox();
+                                }
+                              }
 
-                                var connectionsCircle =
-                                    _connectionsCirclesSearchResults[
-                                        commentIndex];
+                              var connectionsCircle =
+                                  _connectionsCirclesSearchResults[index];
 
-                                var onConnectionsCircleDeletedCallback = () {
-                                  _removeConnectionsCircle(connectionsCircle);
-                                };
+                              var onConnectionsCircleDeletedCallback = () {
+                                _removeConnectionsCircle(connectionsCircle);
+                              };
 
-                                return OBConnectionsCircleTile(
-                                  connectionsCircle: connectionsCircle,
-                                  isReadOnly: loggedInUser
-                                      .isConnectionsCircle(connectionsCircle),
-                                  onConnectionsCircleDeletedCallback:
-                                      onConnectionsCircleDeletedCallback,
-                                );
-                              }),
-                          onRefresh: _refreshComments),
-                    ),
-                  ],
-                ),
+                              return OBConnectionsCircleTile(
+                                connectionsCircle: connectionsCircle,
+                                isReadOnly: loggedInUser
+                                    .isConnectionsCircle(connectionsCircle),
+                                onConnectionsCircleDeletedCallback:
+                                    onConnectionsCircleDeletedCallback,
+                              );
+                            }),
+                        onRefresh: _refreshComments),
+                  ),
+                ],
               ),
             ),
-            Positioned(
-                bottom: 20.0,
-                right: 20.0,
-                child: OBAccentButton(
-                    onPressed: () async {
-                      Circle createdConnectionsCircle = await modalService
-                          .openCreateConnectionsCircle(context: context);
-                      if (createdConnectionsCircle != null) {
-                        _onConnectionsCircleCreated(createdConnectionsCircle);
-                      }
-                    },
-                    icon: const OBIcon(
-                      OBIcons.add,
-                      size: OBIconSize.small,
-                      color: Colors.white,
-                    ),
-                    child: Text('Create new circle')))
           ],
         ));
   }
-
-  void scrollToTop() {}
 
   void _bootstrap() async {
     await _refreshComments();
@@ -150,12 +149,21 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
     }
   }
 
+  void _onWantsToCreateCircle() async {
+    Circle createdConnectionsCircle =
+        await _modalService.openCreateConnectionsCircle(context: context);
+    if (createdConnectionsCircle != null) {
+      _onConnectionsCircleCreated(createdConnectionsCircle);
+    }
+  }
+
   void _onSearch(String query) {
     if (query.isEmpty) {
       _resetConnectionsCirclesSearchResults();
+      _setSearchQuery(null);
       return;
     }
-
+    _setSearchQuery(query);
     String uppercaseQuery = query.toUpperCase();
     var searchResults = _connectionsCircles.where((connectionsCircle) {
       return connectionsCircle.name.toUpperCase().contains(uppercaseQuery);
@@ -200,6 +208,12 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
     setState(() {
       this._connectionsCircles = connectionsCircles;
       _resetConnectionsCirclesSearchResults();
+    });
+  }
+
+  void _setSearchQuery(String searchQuery) {
+    setState(() {
+      _searchQuery = searchQuery;
     });
   }
 }
