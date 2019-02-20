@@ -175,6 +175,11 @@ class OBIcons {
   static const communityMembers = OBIconData(nativeIcon: Icons.people);
   static const color = OBIconData(nativeIcon: Icons.format_paint);
   static const shortText = OBIconData(nativeIcon: Icons.short_text);
+  static const communityAdministrators = OBIconData(nativeIcon: Icons.star);
+  static const communityModerators = OBIconData(nativeIcon: Icons.gavel);
+  static const communityBannedUsers = OBIconData(nativeIcon: Icons.block);
+  static const deleteCommunity = OBIconData(nativeIcon: Icons.delete_forever);
+
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
