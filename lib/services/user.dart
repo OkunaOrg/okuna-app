@@ -709,6 +709,20 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
+  Future<UsersList> searchCommunityMembers({
+    @required Community community,
+    @required String query,
+  }) async {
+    HttpieResponse response = await _communitiesApiService.searchMembers(
+      communityName: community.name,
+      query: query,
+    );
+
+    _checkResponseIsOk(response);
+
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
   Future<void> inviteUserToCommunity(
       {@required Community community, @required String username}) async {
     HttpieResponse response =
@@ -751,6 +765,20 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
+  Future<UsersList> searchCommunityModerators({
+    @required Community community,
+    @required String query,
+  }) async {
+    HttpieResponse response = await _communitiesApiService.searchModerators(
+      communityName: community.name,
+      query: query,
+    );
+
+    _checkResponseIsOk(response);
+
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
   Future<void> addCommunityModerator(
       {@required Community community, @required String username}) async {
     HttpieResponse response =
@@ -770,8 +798,22 @@ class UserService {
   Future<UsersList> getAdministratorsForCommunity(Community community,
       {int count, int maxId}) async {
     HttpieResponse response = await _communitiesApiService
-        .getAdministratorsForCommunityWithId(community.name,
+        .getAdministratorsForCommunityWithName(community.name,
             count: count, maxId: maxId);
+
+    _checkResponseIsOk(response);
+
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> searchCommunityAdministrators({
+    @required Community community,
+    @required String query,
+  }) async {
+    HttpieResponse response = await _communitiesApiService.searchAdministrators(
+      communityName: community.name,
+      query: query,
+    );
 
     _checkResponseIsOk(response);
 

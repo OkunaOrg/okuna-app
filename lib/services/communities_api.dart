@@ -41,16 +41,22 @@ class CommunitiesApiService {
   static const CREATE_COMMUNITY_POST_PATH = 'api/communities/posts/';
   static const GET_COMMUNITY_MEMBERS_PATH =
       'api/communities/{communityName}/members/';
+  static const SEARCH_COMMUNITY_MEMBERS_PATH =
+      'api/communities/{communityName}/members/search/';
   static const GET_COMMUNITY_BANNED_USERS_PATH =
       'api/communities/{communityName}/banned-users/';
   static const GET_COMMUNITY_ADMINISTRATORS_PATH =
       'api/communities/{communityName}/administrators/';
+  static const SEARCH_COMMUNITY_ADMINISTRATORS_PATH =
+      'api/communities/{communityName}/administrators/search/';
   static const ADD_COMMUNITY_ADMINISTRATOR_PATH =
       'api/communities/{communityName}/administrators/';
   static const REMOVE_COMMUNITY_ADMINISTRATORS_PATH =
       'api/communities/{communityName}/administrators/{username}/';
   static const GET_COMMUNITY_MODERATORS_PATH =
       'api/communities/{communityName}/moderators/';
+  static const SEARCH_COMMUNITY_MODERATORS_PATH =
+      'api/communities/{communityName}/moderators/search/';
   static const ADD_COMMUNITY_MODERATOR_PATH =
       'api/communities/{communityName}/moderators/';
   static const REMOVE_COMMUNITY_MODERATORS_PATH =
@@ -310,6 +316,18 @@ class CommunitiesApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> searchMembers({
+    @required String communityName,
+    @required String query,
+  }) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    String path = _makeSearchCommunityMembersPath(communityName);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> inviteUserToCommunity(
       {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
@@ -347,6 +365,18 @@ class CommunitiesApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> searchModerators({
+    @required String communityName,
+    @required String query,
+  }) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    String path = _makeSearchCommunityModeratorsPath(communityName);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> addCommunityModerator(
       {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
@@ -363,7 +393,7 @@ class CommunitiesApiService {
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getAdministratorsForCommunityWithId(
+  Future<HttpieResponse> getAdministratorsForCommunityWithName(
       String communityName,
       {int count,
       int maxId}) {
@@ -373,6 +403,18 @@ class CommunitiesApiService {
     if (maxId != null) queryParams['max_id'] = maxId;
 
     String path = _makeGetCommunityAdministratorsPath(communityName);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> searchAdministrators({
+    @required String communityName,
+    @required String query,
+  }) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    String path = _makeSearchCommunityAdministratorsPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
@@ -529,6 +571,11 @@ class CommunitiesApiService {
         .parse(GET_COMMUNITY_MEMBERS_PATH, {'communityName': communityName});
   }
 
+  String _makeSearchCommunityMembersPath(String communityName) {
+    return _stringTemplateService
+        .parse(SEARCH_COMMUNITY_MEMBERS_PATH, {'communityName': communityName});
+  }
+
   String _makeGetCommunityBannedUsersPath(String communityName) {
     return _stringTemplateService.parse(
         GET_COMMUNITY_BANNED_USERS_PATH, {'communityName': communityName});
@@ -539,9 +586,19 @@ class CommunitiesApiService {
         GET_COMMUNITY_ADMINISTRATORS_PATH, {'communityName': communityName});
   }
 
+  String _makeSearchCommunityAdministratorsPath(String communityName) {
+    return _stringTemplateService.parse(
+        SEARCH_COMMUNITY_ADMINISTRATORS_PATH, {'communityName': communityName});
+  }
+
   String _makeGetCommunityModeratorsPath(String communityName) {
     return _stringTemplateService
         .parse(GET_COMMUNITY_MODERATORS_PATH, {'communityName': communityName});
+  }
+
+  String _makeSearchCommunityModeratorsPath(String communityName) {
+    return _stringTemplateService.parse(
+        SEARCH_COMMUNITY_MODERATORS_PATH, {'communityName': communityName});
   }
 
   String _makeApiUrl(String string) {
