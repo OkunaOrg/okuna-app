@@ -527,57 +527,69 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     }
   }
 
-  Future<Community> _updateCommunity() {
-    List<Future> updatePromises = [
-      _userService.updateCommunity(widget.community,
-          name: _nameController.text != widget.community.name
-              ? _nameController.text
-              : null,
-          title: _titleController.text,
-          description: _descriptionController.text,
-          rules: _rulesController.text,
-          userAdjective: _userAdjectiveController.text,
-          usersAdjective: _usersAdjectiveController.text,
-          categories: _categories,
-          type: _type,
-          invitesEnabled: _invitesEnabled,
-          color: _color)
-    ];
+  Future<Community> _updateCommunity() async {
+    await _updateCommunityAvatar();
+    await _updateCommunityCover();
 
+    return _userService.updateCommunity(widget.community,
+        name: _nameController.text != widget.community.name
+            ? _nameController.text
+            : null,
+        title: _titleController.text,
+        description: _descriptionController.text,
+        rules: _rulesController.text,
+        userAdjective: _userAdjectiveController.text,
+        usersAdjective: _usersAdjectiveController.text,
+        categories: _categories,
+        type: _type,
+        invitesEnabled: _invitesEnabled,
+        color: _color);
+  }
+
+  Future<void> _updateCommunityCover() {
     bool hasCoverFile = _coverFile != null;
     bool hasCoverUrl = _coverUrl != null;
     bool hasCover = hasCoverFile || hasCoverUrl;
 
+    Future<void> updateFuture;
+
     if (!hasCover) {
-      if(widget.community.cover != null){
+      if (widget.community.cover != null) {
         // Remove cover!
-        updatePromises
-            .add(_userService.deleteCoverForCommunity(widget.community));
+        updateFuture = _userService.deleteCoverForCommunity(widget.community);
       }
     } else if (hasCoverFile) {
       // New cover
-      updatePromises.add(_userService.updateCoverForCommunity(widget.community,
-          cover: _coverFile));
+      updateFuture = _userService.updateCoverForCommunity(widget.community,
+          cover: _coverFile);
+    } else {
+      updateFuture = Future.value();
     }
 
+    return updateFuture;
+  }
+
+  Future<void> _updateCommunityAvatar() {
     bool hasAvatarFile = _avatarFile != null;
     bool hasAvatarUrl = _avatarUrl != null;
     bool hasAvatar = hasAvatarFile || hasAvatarUrl;
 
+    Future<void> updateFuture;
+
     if (!hasAvatar) {
-      if(widget.community.avatar != null){
+      if (widget.community.avatar != null) {
         // Remove avatar!
-        updatePromises
-            .add(_userService.deleteAvatarForCommunity(widget.community));
+        updateFuture = _userService.deleteAvatarForCommunity(widget.community);
       }
     } else if (hasAvatarFile) {
       // New avatar
-      updatePromises.add(_userService.updateAvatarForCommunity(widget.community,
-          avatar: _avatarFile));
+      updateFuture = _userService.updateAvatarForCommunity(widget.community,
+          avatar: _avatarFile);
+    } else {
+      updateFuture = Future.value();
     }
 
-    return Future.wait(updatePromises)
-        .then((List<dynamic> results) => results.first);
+    return updateFuture;
   }
 
   Future<Community> _createCommunity() {
