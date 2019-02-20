@@ -8,6 +8,11 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBPhotoPickerBottomSheet extends StatelessWidget {
+  final OBImageType imageType;
+
+  const OBPhotoPickerBottomSheet({Key key, this.imageType = OBImageType.post})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     ImagePickerService imagePickerService =
@@ -21,7 +26,7 @@ class OBPhotoPickerBottomSheet extends StatelessWidget {
         ),
         onTap: () async {
           File image = await imagePickerService.pickImage(
-              imageType: OBImageType.post, source: ImageSource.gallery);
+              imageType: imageType, source: ImageSource.gallery);
           Navigator.pop(context, image);
         },
       ),
@@ -32,7 +37,7 @@ class OBPhotoPickerBottomSheet extends StatelessWidget {
         ),
         onTap: () async {
           File image = await imagePickerService.pickImage(
-              imageType: OBImageType.post, source: ImageSource.camera);
+              imageType: imageType, source: ImageSource.camera);
           Navigator.pop(context, image);
         },
       )

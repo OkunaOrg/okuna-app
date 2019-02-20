@@ -2,7 +2,7 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
 import 'package:Openbook/widgets/buttons/accent_button.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -54,7 +54,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBNavigationBar(
+        navigationBar: OBThemedNavigationBar(
           title: 'My lists',
         ),
         child: Stack(
@@ -72,7 +72,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                       child: RefreshIndicator(
                           key: _refreshIndicatorKey,
                           child: ListView.builder(
-                              physics: const AlwaysScrollableScrollPhysics(),
+                              physics: const ClampingScrollPhysics(),
                               controller: _followsListsScrollController,
                               padding: EdgeInsets.all(0),
                               itemCount: _followsListsSearchResults.length,

@@ -20,7 +20,7 @@ class OBFollowsListUsers extends StatelessWidget {
           List<User> users = followsList.users?.users ?? [];
 
           return ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.all(0),
               itemCount: users.length,
               itemBuilder: (context, index) {

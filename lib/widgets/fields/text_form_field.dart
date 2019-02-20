@@ -87,6 +87,7 @@ class OBTextFormField extends StatelessWidget {
                   border: InputBorder.none,
                   labelText: decoration.labelText,
                   prefixIcon: decoration.prefixIcon,
+                  prefixText: decoration.prefixText,
                 ),
               ),
               OBDivider()

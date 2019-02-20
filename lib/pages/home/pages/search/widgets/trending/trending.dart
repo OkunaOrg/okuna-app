@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class OBTrending extends StatefulWidget {
   final OBTrendingController controller;
 
-  OBTrending(
-      {this.controller,});
+  const OBTrending({
+    this.controller,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -29,7 +30,7 @@ class OBTrendingState extends State<OBTrending> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
         child: ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             controller: _scrollController,
             padding: EdgeInsets.all(0),
             itemCount: 1,

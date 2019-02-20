@@ -14,7 +14,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.34.2"
+    version: "0.35.1"
   archive:
     dependency: transitive
     description:
@@ -126,7 +126,7 @@ packages:
       name: flutter_advanced_networkimage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.13"
+    version: "0.3.14"
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -146,13 +146,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_pagewise:
+    dependency: "direct main"
+    description:
+      name: flutter_pagewise
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   flutter_secure_storage:
     dependency: "direct main"
     description:
       name: flutter_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.3"
+    version: "3.2.0"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -171,7 +178,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.9"
+    version: "0.1.11"
   glob:
     dependency: transitive
     description:
@@ -213,7 +220,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
   image_cropper:
     dependency: "direct main"
     description:
@@ -262,14 +269,14 @@ packages:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.9"
+    version: "0.3.11"
   loadmore:
     dependency: "direct main"
     description:
       name: loadmore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   logging:
     dependency: transitive
     description:
@@ -541,6 +548,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.10"
+  tinycolor:
+    dependency: "direct main"
+    description:
+      name: tinycolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -596,7 +610,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0"
+    version: "0.10.0+2"
   vm_service_client:
     dependency: transitive
     description:

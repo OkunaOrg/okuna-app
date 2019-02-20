@@ -85,7 +85,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             delegate: const OBHomePostsLoadMoreDelegate(),
             child: ListView.builder(
                 controller: _postsScrollController,
-                physics: const AlwaysScrollableScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 cacheExtent: 30,
                 addAutomaticKeepAlives: true,
                 padding: const EdgeInsets.all(0),

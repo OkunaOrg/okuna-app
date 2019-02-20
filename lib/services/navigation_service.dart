@@ -1,4 +1,5 @@
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
@@ -6,6 +7,7 @@ import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
+import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -25,6 +27,17 @@ class NavigationService {
             key: Key('obSlideProfileView'),
             widget: OBProfilePage(
               user,
+            )));
+  }
+
+  Future navigateToCommunity(
+      {@required Community community, @required BuildContext context}) async {
+    await Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideCommunityPage'),
+            widget: OBCommunityPage(
+              community,
             )));
   }
 

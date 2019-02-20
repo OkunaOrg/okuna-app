@@ -7,13 +7,13 @@ import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/cover.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/cupertino.dart';
@@ -109,16 +109,16 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                           child: Column(
                             children: <Widget>[
                               const SizedBox(
-                                height: (OBCover.HEIGHT) -
-                                    (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
+                                height: (OBCover.normalSizeHeight) -
+                                    (OBAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
                               _buildUserAvatar()
                             ],
                           ),
                         ),
                         const SizedBox(
-                            height: OBCover.HEIGHT +
-                                OBUserAvatar.AVATAR_SIZE_LARGE / 2)
+                            height: OBCover.normalSizeHeight +
+                                OBAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),
                     const SizedBox(
@@ -209,7 +209,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                               });
                             },
                           ),
-                          OBDivider()
                         ],
                       ),
                     )
@@ -222,7 +221,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   Widget _buildNavigationBar() {
     bool newPostButtonIsEnabled = true;
 
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
       leading: GestureDetector(
         child: const OBIcon(OBIcons.close),
         onTap: () {
@@ -249,11 +248,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         onTap: _onPressed,
         child: Stack(
           children: <Widget>[
-            OBUserAvatar(
+            OBAvatar(
               borderWidth: 3,
               avatarUrl: _avatarUrl,
               avatarFile: _avatarFile,
-              size: OBUserAvatarSize.large,
+              size: OBAvatarSize.large,
             ),
             Positioned(
               bottom: 10,

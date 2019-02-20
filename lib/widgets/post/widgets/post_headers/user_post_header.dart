@@ -3,7 +3,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -11,11 +11,11 @@ import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBPostHeader extends StatelessWidget {
+class OBUserPostHeader extends StatelessWidget {
   final Post _post;
   final OnPostDeleted onPostDeleted;
 
-  const OBPostHeader(this._post, {Key key, @required this.onPostDeleted})
+  const OBUserPostHeader(this._post, {Key key, @required this.onPostDeleted})
       : super(key: key);
 
   @override
@@ -28,16 +28,16 @@ class OBPostHeader extends StatelessWidget {
       leading: StreamBuilder(
           stream: _post.creator.updateSubject,
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-            var postCreator = snapshot.data;
+            User postCreator = snapshot.data;
 
             if (postCreator == null) return const SizedBox();
 
-            return OBUserAvatar(
+            return OBAvatar(
               onPressed: () {
                 navigationService.navigateToUserProfile(
                     user: postCreator, context: context);
               },
-              size: OBUserAvatarSize.medium,
+              size: OBAvatarSize.medium,
               avatarUrl: postCreator.getProfileAvatar(),
             );
           }),

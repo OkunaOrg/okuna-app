@@ -2,48 +2,60 @@ import 'dart:io';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:flutter/material.dart';
 
-enum OBUserAvatarSize { small, medium, large, extraLarge }
+enum OBAvatarSize { extraSmall, small, medium, large, extraLarge }
 
-class OBUserAvatar extends StatelessWidget {
+enum OBAvatarType { user, community }
+
+class OBAvatar extends StatelessWidget {
   final String avatarUrl;
   final File avatarFile;
-  final OBUserAvatarSize size;
+  final OBAvatarSize size;
   final VoidCallback onPressed;
   final double borderWidth;
 
-  static const double AVATAR_SIZE_SMALL = 20.0;
+  static const double AVATAR_SIZE_EXTRA_SMALL = 20.0;
+  static const double AVATAR_SIZE_SMALL = 30.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
-  static const double AVATAR_SIZE_LARGE = 100.0;
+  static const double AVATAR_SIZE_LARGE = 80.0;
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.jpg';
+  static const double avatarBorderRadius = 10.0;
 
-  OBUserAvatar(
+  static double getAvatarSize(OBAvatarSize size) {
+    double avatarSize;
+
+    switch (size) {
+      case OBAvatarSize.extraSmall:
+        avatarSize = AVATAR_SIZE_EXTRA_SMALL;
+        break;
+      case OBAvatarSize.small:
+        avatarSize = AVATAR_SIZE_SMALL;
+        break;
+      case OBAvatarSize.medium:
+        avatarSize = AVATAR_SIZE_MEDIUM;
+        break;
+      case OBAvatarSize.large:
+        avatarSize = AVATAR_SIZE_LARGE;
+        break;
+      case OBAvatarSize.extraLarge:
+        avatarSize = AVATAR_SIZE_EXTRA_LARGE;
+        break;
+    }
+
+    return avatarSize;
+  }
+
+  const OBAvatar(
       {this.avatarUrl,
-      this.size = OBUserAvatarSize.small,
+      this.size = OBAvatarSize.small,
       this.onPressed,
       this.avatarFile,
       this.borderWidth});
 
   @override
   Widget build(BuildContext context) {
-    double avatarSize;
-
-    OBUserAvatarSize finalSize = size ?? OBUserAvatarSize.small;
-
-    switch (finalSize) {
-      case OBUserAvatarSize.small:
-        avatarSize = AVATAR_SIZE_SMALL;
-        break;
-      case OBUserAvatarSize.medium:
-        avatarSize = AVATAR_SIZE_MEDIUM;
-        break;
-      case OBUserAvatarSize.large:
-        avatarSize = AVATAR_SIZE_LARGE;
-        break;
-      case OBUserAvatarSize.extraLarge:
-        avatarSize = AVATAR_SIZE_EXTRA_LARGE;
-        break;
-    }
+    OBAvatarSize finalSize = size ?? OBAvatarSize.small;
+    double avatarSize = getAvatarSize(finalSize);
 
     Widget finalAvatarImage;
 
@@ -64,8 +76,6 @@ class OBUserAvatar extends StatelessWidget {
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }
-
-    double avatarBorderRadius = 10.0;
 
     Widget avatar = ClipRRect(
       borderRadius: BorderRadius.circular(avatarBorderRadius),

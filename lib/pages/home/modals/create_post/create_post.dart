@@ -10,10 +10,10 @@ import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/pill_button.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -101,7 +101,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       );
     }
 
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
       leading: GestureDetector(
         child: const OBIcon(OBIcons.close),
         onTap: () {
@@ -138,7 +138,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           Column(
             children: <Widget>[
               OBLoggedInUserAvatar(
-                size: OBUserAvatarSize.medium,
+                size: OBAvatarSize.medium,
               ),
               const SizedBox(
                 height: 12.0,
@@ -179,7 +179,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       color: Color.fromARGB(5, 0, 0, 0),
       child: ListView.separated(
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: postActions.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, index) {

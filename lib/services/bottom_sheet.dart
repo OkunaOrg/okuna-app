@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/connection_circles_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/photo_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/video_picker.dart';
+import 'package:Openbook/services/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
@@ -28,6 +31,18 @@ class BottomSheetService {
             actionLabel: actionLabel,
             onPickedCircles: onPickedCircles,
           );
+        });
+  }
+
+  Future<void> showCommunityTypePicker(
+      {@required BuildContext context,
+      ValueChanged<CommunityType> onChanged,
+      CommunityType initialType}) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBCommunityTypePickerBottomSheet(
+              onTypeChanged: onChanged, initialType: initialType);
         });
   }
 
@@ -64,11 +79,14 @@ class BottomSheetService {
         });
   }
 
-  Future<File> showPhotoPicker({@required BuildContext context}) {
+  Future<File> showPhotoPicker(
+      {@required BuildContext context, OBImageType imageType}) {
     return showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
-          return OBPhotoPickerBottomSheet();
+          return OBPhotoPickerBottomSheet(
+            imageType: imageType,
+          );
         });
   }
 

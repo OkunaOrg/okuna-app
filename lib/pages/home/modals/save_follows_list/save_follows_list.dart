@@ -3,7 +3,7 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/pages/pick_follows_list_emoji.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -153,7 +153,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
         leading: GestureDetector(
           child: const OBIcon(OBIcons.close),
           onTap: () {

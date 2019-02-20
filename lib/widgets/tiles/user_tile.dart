@@ -1,6 +1,6 @@
 import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/user_badge.dart';
@@ -26,8 +26,8 @@ class OBUserTile extends StatelessWidget {
       onTap: () {
         if (onUserTilePressed != null) onUserTilePressed(user);
       },
-      leading: OBUserAvatar(
-        size: OBUserAvatarSize.medium,
+      leading: OBAvatar(
+        size: OBAvatarSize.medium,
         avatarUrl: user.getProfileAvatar(),
       ),
       trailing: trailing,

@@ -18,6 +18,10 @@ class ThemeValueParserService {
     return colorCache.get(value) ?? _parseAndStoreColor(value);
   }
 
+  bool isDarkColor(Color color){
+    return color.computeLuminance() < 0.25;
+  }
+
   Gradient parseGradient(String gradientValue) {
     return gradientCache.get(gradientValue) ??
         _parseAndStoreGradient(gradientValue);

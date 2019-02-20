@@ -4,7 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +63,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             width: 20.0,
           ),
           OBLoggedInUserAvatar(
-            size: OBUserAvatarSize.medium,
+            size: OBAvatarSize.medium,
           ),
           const SizedBox(
             width: 10.0,

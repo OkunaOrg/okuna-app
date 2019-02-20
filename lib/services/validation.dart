@@ -1,4 +1,5 @@
 import 'package:Openbook/services/auth_api.dart';
+import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -6,10 +7,16 @@ import 'package:validators/validators.dart' as validators;
 
 class ValidationService {
   AuthApiService _authApiService;
+  CommunitiesApiService _communitiesApiService;
   FollowsListsApiService _followsListsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
 
   static const int USERNAME_MAX_LENGTH = 30;
+  static const int COMMUNITY_NAME_MAX_LENGTH = 32;
+  static const int COMMUNITY_TITLE_MAX_LENGTH = 32;
+  static const int COMMUNITY_DESCRIPTION_MAX_LENGTH = 500;
+  static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
+  static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
   static const int POST_MAX_LENGTH = 560;
   static const int POST_COMMENT_MAX_LENGTH = 280;
   static const int PASSWORD_MIN_LENGTH = 10;
@@ -24,6 +31,10 @@ class ValidationService {
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
+  }
+
+  void setCommunitiesApiService(CommunitiesApiService communitiesApiService) {
+    _communitiesApiService = communitiesApiService;
   }
 
   void setFollowsListsApiService(
@@ -81,6 +92,28 @@ class ValidationService {
     return username.length > 0 && username.length < USERNAME_MAX_LENGTH;
   }
 
+  bool isCommunityNameAllowedLength(String name) {
+    return name.length > 0 && name.length < COMMUNITY_NAME_MAX_LENGTH;
+  }
+
+  bool isCommunityDescriptionAllowedLength(String description) {
+    return description.length > 0 &&
+        description.length < COMMUNITY_DESCRIPTION_MAX_LENGTH;
+  }
+
+  bool isCommunityTitleAllowedLength(String title) {
+    return title.length > 0 && title.length < COMMUNITY_TITLE_MAX_LENGTH;
+  }
+
+  bool isCommunityRulesAllowedLength(String rules) {
+    return rules.length > 0 && rules.length < COMMUNITY_RULES_MAX_LENGTH;
+  }
+
+  bool isCommunityUserAdjectiveAllowedLength(String userAdjective) {
+    return userAdjective.length > 0 &&
+        userAdjective.length < COMMUNITY_USER_ADJECTIVE_MAX_LENGTH;
+  }
+
   bool isFollowsListNameAllowedLength(String followsList) {
     return followsList.length > 0 && followsList.length < LIST_MAX_LENGTH;
   }
@@ -94,9 +127,37 @@ class ValidationService {
     return isAlphanumericWithUnderscores(username);
   }
 
+  bool isCommunityNameAllowedCharacters(String name) {
+    String p = r'^[a-zA-Z0-9_]+$';
+
+    RegExp regExp = new RegExp(p, caseSensitive: false);
+
+    return regExp.hasMatch(name);
+  }
+
+  bool isCommunityUserAdjectiveAllowedCharacters(String name) {
+    String p = r'^[a-zA-Z]+$';
+
+    RegExp regExp = new RegExp(p, caseSensitive: false);
+
+    return regExp.hasMatch(name);
+  }
+
   Future<bool> isUsernameTaken(String username) async {
     HttpieResponse response =
         await _authApiService.checkUsernameIsAvailable(username: username);
+    if (response.isAccepted()) {
+      return false;
+    } else if (response.isBadRequest()) {
+      return true;
+    } else {
+      throw HttpieRequestError(response);
+    }
+  }
+
+  Future<bool> isCommunityNameTaken(String name) async {
+    HttpieResponse response =
+        await _communitiesApiService.checkNameIsAvailable(name: name);
     if (response.isAccepted()) {
       return false;
     } else if (response.isBadRequest()) {
@@ -277,6 +338,85 @@ class ValidationService {
     } else if (!isConnectionsCircleNameAllowedLength(name)) {
       errorMsg =
           'List name must be no longer than $LIST_MAX_LENGTH characters.';
+    }
+
+    return errorMsg;
+  }
+
+  String validateCommunityName(String name) {
+    assert(name != null);
+
+    String errorMsg;
+
+    if (name.length == 0) {
+      errorMsg = 'Name cannot be empty.';
+    } else if (!isCommunityNameAllowedLength(name)) {
+      errorMsg =
+          'Name can\'t be longer than $COMMUNITY_NAME_MAX_LENGTH characters.';
+    } else if (!isCommunityNameAllowedCharacters(name)) {
+      errorMsg =
+          'Name can only contain alphanumeric characters and underscores.';
+    }
+
+    return errorMsg;
+  }
+
+  String validateCommunityTitle(String title) {
+    assert(title != null);
+
+    String errorMsg;
+
+    if (title.length == 0) {
+      errorMsg = 'Title cannot be empty.';
+    } else if (!isCommunityTitleAllowedLength(title)) {
+      errorMsg =
+          'Title can\'t be longer than $COMMUNITY_TITLE_MAX_LENGTH characters.';
+    }
+    return errorMsg;
+  }
+
+  String validateCommunityRules(String rules) {
+    assert(rules != null);
+
+    if (rules.isEmpty) return null;
+
+    String errorMsg;
+
+    if (rules.length == 0) {
+      errorMsg = 'Rules cannot be empty.';
+    } else if (!isCommunityRulesAllowedLength(rules)) {
+      errorMsg =
+          'Rules can\'t be longer than $COMMUNITY_RULES_MAX_LENGTH characters.';
+    }
+    return errorMsg;
+  }
+
+  String validateCommunityDescription(String description) {
+    assert(description != null);
+
+    if (description.isEmpty) return null;
+
+    String errorMsg;
+
+    if (!isCommunityDescriptionAllowedLength(description)) {
+      errorMsg =
+          'Description can\'t be longer than $COMMUNITY_DESCRIPTION_MAX_LENGTH characters.';
+    }
+    return errorMsg;
+  }
+
+  String validateCommunityUserAdjective(String userAdjective) {
+    assert(userAdjective != null);
+
+    if (userAdjective.isEmpty) return null;
+
+    String errorMsg;
+
+    if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
+      errorMsg =
+          'Adjectives can\'t be longer than $COMMUNITY_USER_ADJECTIVE_MAX_LENGTH characters.';
+    } else if (!isCommunityUserAdjectiveAllowedCharacters(userAdjective)) {
+      errorMsg = 'Adjectives can only contain alphabetical characters.';
     }
 
     return errorMsg;

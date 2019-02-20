@@ -7,8 +7,9 @@ class OBSecondaryText extends StatelessWidget {
   final String text;
   final TextStyle style;
   final OBTextSize size;
+  final TextOverflow overflow;
 
-  const OBSecondaryText(this.text, {this.style, this.size});
+  const OBSecondaryText(this.text, {this.style, this.size, this.overflow});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class OBSecondaryText extends StatelessWidget {
             text,
             style: finalStyle,
             size: size,
+            overflow: overflow,
           );
         });
   }

@@ -23,7 +23,7 @@ class OBEmojiSearchResults extends StatelessWidget {
 
   Widget _buildSearchResults() {
     return ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
           EmojiGroupSearchResults searchResults = results[index];
@@ -39,8 +39,7 @@ class OBEmojiSearchResults extends StatelessWidget {
                 constraints: BoxConstraints(maxHeight: 25),
                 child: CachedNetworkImage(
                   imageUrl: emoji.image,
-                  placeholder:
-                      Image(image: AssetImage('assets/images/loading.gif')),
+                  placeholder: SizedBox(),
                   errorWidget: const SizedBox(
                     child: Center(child: const OBText('?')),
                   ),

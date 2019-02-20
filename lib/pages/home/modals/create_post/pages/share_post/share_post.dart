@@ -8,7 +8,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -97,7 +97,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
       title: 'Audience',
       trailing: OBButton(
         size: OBButtonSize.small,

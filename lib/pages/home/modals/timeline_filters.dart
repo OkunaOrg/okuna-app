@@ -4,11 +4,10 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -69,7 +68,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
       _needsBootstrap = false;
     }
 
-    return OBCupertinoPageScaffold(
+    return CupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
@@ -127,7 +126,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
 
   Widget _buildSearchResults() {
     return ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount:
             _circlesSearchResults.length + _followsListsSearchResults.length,
         itemBuilder: (BuildContext context, int index) {
@@ -210,7 +209,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
         leading: GestureDetector(
           child: const OBIcon(OBIcons.close),
           onTap: () {
