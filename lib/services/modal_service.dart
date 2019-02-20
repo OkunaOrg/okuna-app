@@ -107,8 +107,10 @@ class ModalService {
             .push(CupertinoPageRoute<Circle>(
                 fullscreenDialog: true,
                 builder: (BuildContext context) {
-                  return OBSaveConnectionsCircleModal(
-                    connectionsCircle: connectionsCircle,
+                  return Material(
+                    child: OBSaveConnectionsCircleModal(
+                      connectionsCircle: connectionsCircle,
+                    ),
                   );
                 }));
 

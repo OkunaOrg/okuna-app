@@ -8,7 +8,8 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
-import 'package:Openbook/pages/home/pages/community/pages/manage_community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -39,6 +40,28 @@ class NavigationService {
             key: Key('obSlideCommunityPage'),
             widget: OBCommunityPage(
               community,
+            )));
+  }
+
+  Future<void> navigateToManageCommunity(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obEditCommunityPage'),
+            widget: OBManageCommunityPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityAdministrators(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityAdministratorsPage'),
+            widget: OBCommunityAdministratorsPage(
+              community: community,
             )));
   }
 
@@ -127,17 +150,6 @@ class NavigationService {
               post: post,
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
-            )));
-  }
-
-  Future<void> navigateToManageCommunity(
-      {@required Community community, @required BuildContext context}) {
-    return Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obEditCommunityPage'),
-            widget: OBManageCommunityPage(
-              community: community,
             )));
   }
 }

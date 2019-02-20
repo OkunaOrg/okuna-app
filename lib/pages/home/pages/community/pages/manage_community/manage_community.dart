@@ -54,7 +54,7 @@ class OBManageCommunityPage extends StatelessWidget {
                     style: listItemSubtitleStyle,
                   ),
                   onTap: () {
-                    navigationService.navigateToFollowsLists(context: context);
+                    navigationService.navigateToCommunityAdministrators(context: context, community: community);
                   },
                 ),
                 ListTile(
