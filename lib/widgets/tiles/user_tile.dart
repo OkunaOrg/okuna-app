@@ -70,7 +70,7 @@ class OBUserTile extends StatelessWidget {
   }
 
   Widget _getUserBadge(User creator) {
-    if (creator.getProfileBadges().length > 0) {
+    if (creator.hasProfileBadges()) {
       Badge badge = creator.getProfileBadges()[0];
       return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
     }
