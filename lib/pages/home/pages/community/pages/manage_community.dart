@@ -1,5 +1,6 @@
 import 'package:Openbook/models/community.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
+import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -16,7 +17,8 @@ class OBManageCommunityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    var navigationService = openbookProvider.navigationService;
+    NavigationService navigationService = openbookProvider.navigationService;
+    ModalService modalService = openbookProvider.modalService;
 
     const TextStyle listItemSubtitleStyle = TextStyle(fontSize: 14);
 
@@ -36,17 +38,21 @@ class OBManageCommunityPage extends StatelessWidget {
                   leading: const OBIcon(OBIcons.communities),
                   title: const OBText('Details'),
                   subtitle: const OBText(
-                      'Change the title, name, avatar, cover photo and more.',
-                  style: listItemSubtitleStyle,),
+                    'Change the title, name, avatar, cover photo and more.',
+                    style: listItemSubtitleStyle,
+                  ),
                   onTap: () {
-                    navigationService.navigateToConnectionsCircles(
-                        context: context);
+                    modalService.openEditCommunity(
+                        context: context, community: community);
                   },
                 ),
                 ListTile(
                   leading: const OBIcon(OBIcons.communityAdministrators),
                   title: const OBText('Administrators'),
-                  subtitle: const OBText('See, add and remove administrators.', style: listItemSubtitleStyle,),
+                  subtitle: const OBText(
+                    'See, add and remove administrators.',
+                    style: listItemSubtitleStyle,
+                  ),
                   onTap: () {
                     navigationService.navigateToFollowsLists(context: context);
                   },
@@ -54,7 +60,10 @@ class OBManageCommunityPage extends StatelessWidget {
                 ListTile(
                   leading: const OBIcon(OBIcons.communityModerators),
                   title: const OBText('Moderators'),
-                  subtitle: const OBText('See, add and remove moderators.', style: listItemSubtitleStyle,),
+                  subtitle: const OBText(
+                    'See, add and remove moderators.',
+                    style: listItemSubtitleStyle,
+                  ),
                   onTap: () {
                     navigationService.navigateToFollowsLists(context: context);
                   },
@@ -62,7 +71,10 @@ class OBManageCommunityPage extends StatelessWidget {
                 ListTile(
                   leading: const OBIcon(OBIcons.communityBannedUsers),
                   title: const OBText('Banned users'),
-                  subtitle: const OBText('See, add and remove banned users.', style: listItemSubtitleStyle,),
+                  subtitle: const OBText(
+                    'See, add and remove banned users.',
+                    style: listItemSubtitleStyle,
+                  ),
                   onTap: () {
                     navigationService.navigateToFollowsLists(context: context);
                   },
@@ -70,7 +82,10 @@ class OBManageCommunityPage extends StatelessWidget {
                 ListTile(
                   leading: const OBIcon(OBIcons.deleteCommunity),
                   title: const OBText('Delete community'),
-                  subtitle: const OBText('Delete the community, forever.', style: listItemSubtitleStyle,),
+                  subtitle: const OBText(
+                    'Delete the community, forever.',
+                    style: listItemSubtitleStyle,
+                  ),
                   onTap: () {
                     navigationService.navigateToFollowsLists(context: context);
                   },

@@ -206,9 +206,7 @@ class CommunitiesApiService {
       String userAdjective,
       String usersAdjective,
       String description,
-      String rules,
-      File cover,
-      File avatar}) {
+      String rules}) {
     Map<String, dynamic> body = {};
 
     if (name != null) {
@@ -227,16 +225,8 @@ class CommunitiesApiService {
       body['type'] = type;
     }
 
-    if (avatar != null) {
-      body['avatar'] = avatar;
-    }
-
     if (invitesEnabled != null) {
       body['invites_enabled'] = invitesEnabled;
-    }
-
-    if (cover != null) {
-      body['cover'] = cover;
     }
 
     if (color != null) {
@@ -259,9 +249,44 @@ class CommunitiesApiService {
       body['users_adjective'] = usersAdjective;
     }
 
-    return _httpService.putMultiform(
+    return _httpService.patchMultiform(
         _makeApiUrl(_makeUpdateCommunityPath(communityName)),
         body: body,
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieStreamedResponse> updateAvatarForCommunityWithName(
+      String communityName,
+      {File avatar}) {
+    Map<String, dynamic> body = {'avatar': avatar};
+
+    return _httpService.putMultiform(
+        _makeApiUrl(_makeCommunityAvatarPath(communityName)),
+        body: body,
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> deleteAvatarForCommunityWithName(
+      String communityName) {
+    return _httpService.delete(
+        _makeApiUrl(_makeCommunityAvatarPath(communityName)),
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieStreamedResponse> updateCoverForCommunityWithName(
+      String communityName,
+      {File cover}) {
+    Map<String, dynamic> body = {'cover': cover};
+
+    return _httpService.putMultiform(
+        _makeApiUrl(_makeCommunityCoverPath(communityName)),
+        body: body,
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> deleteCoverForCommunityWithName(String communityName) {
+    return _httpService.delete(
+        _makeApiUrl(_makeCommunityCoverPath(communityName)),
         appendAuthorizationToken: true);
   }
 
@@ -487,6 +512,16 @@ class CommunitiesApiService {
   String _makeUpdateCommunityPath(String communityName) {
     return _stringTemplateService
         .parse(UPDATE_COMMUNITY_PATH, {'communityName': communityName});
+  }
+
+  String _makeCommunityAvatarPath(String communityName) {
+    return _stringTemplateService
+        .parse(COMMUNITY_AVATAR_PATH, {'communityName': communityName});
+  }
+
+  String _makeCommunityCoverPath(String communityName) {
+    return _stringTemplateService
+        .parse(COMMUNITY_COVER_PATH, {'communityName': communityName});
   }
 
   String _makeGetCommunityMembersPath(String communityName) {

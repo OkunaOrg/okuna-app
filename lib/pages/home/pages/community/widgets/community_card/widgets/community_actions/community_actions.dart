@@ -44,7 +44,7 @@ class OBCommunityActions extends StatelessWidget {
         isLoading: false,
         text: 'Manage',
         onPressed: () {
-          navigationService.navigateToEditCommunity(
+          navigationService.navigateToManageCommunity(
               community: community, context: context);
         });
   }

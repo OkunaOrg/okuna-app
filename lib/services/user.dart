@@ -618,23 +618,69 @@ class UserService {
       File cover,
       File avatar}) async {
     HttpieStreamedResponse response =
-        await _communitiesApiService.updateCommunityWithName(community.name,
-            name: name,
-            title: title,
-            categories: categories.map((category) => category.name).toList(),
-            type: Community.convertTypeToString(type),
-            color: color,
-            invitesEnabled: invitesEnabled,
-            userAdjective: userAdjective,
-            usersAdjective: usersAdjective,
-            description: description,
-            rules: rules,
-            cover: cover,
-            avatar: avatar);
+        await _communitiesApiService.updateCommunityWithName(
+      community.name,
+      name: name,
+      title: title,
+      categories: categories.map((category) => category.name).toList(),
+      type: Community.convertTypeToString(type),
+      color: color,
+      invitesEnabled: invitesEnabled,
+      userAdjective: userAdjective,
+      usersAdjective: usersAdjective,
+      description: description,
+      rules: rules,
+    );
 
     _checkResponseIsOk(response);
 
     String responseBody = await response.readAsString();
+
+    return Community.fromJSON(json.decode(responseBody));
+  }
+
+  Future<Community> updateAvatarForCommunity(Community community,
+      {@required File avatar}) async {
+    HttpieStreamedResponse response = await _communitiesApiService
+        .updateAvatarForCommunityWithName(community.name, avatar: avatar);
+
+    _checkResponseIsOk(response);
+
+    String responseBody = await response.readAsString();
+
+    return Community.fromJSON(json.decode(responseBody));
+  }
+
+  Future<Community> deleteAvatarForCommunity(Community community) async {
+    HttpieResponse response = await _communitiesApiService
+        .deleteAvatarForCommunityWithName(community.name);
+
+    _checkResponseIsOk(response);
+
+    String responseBody = response.body;
+
+    return Community.fromJSON(json.decode(responseBody));
+  }
+
+  Future<Community> updateCoverForCommunity(Community community,
+      {@required File cover}) async {
+    HttpieStreamedResponse response = await _communitiesApiService
+        .updateCoverForCommunityWithName(community.name, cover: cover);
+
+    _checkResponseIsOk(response);
+
+    String responseBody = await response.readAsString();
+
+    return Community.fromJSON(json.decode(responseBody));
+  }
+
+  Future<Community> deleteCoverForCommunity(Community community) async {
+    HttpieResponse response = await _communitiesApiService
+        .deleteCoverForCommunityWithName(community.name);
+
+    _checkResponseIsOk(response);
+
+    String responseBody = response.body;
 
     return Community.fromJSON(json.decode(responseBody));
   }

@@ -130,7 +130,7 @@ class NavigationService {
             )));
   }
 
-  Future<void> navigateToEditCommunity(
+  Future<void> navigateToManageCommunity(
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
         context,
