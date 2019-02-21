@@ -14,8 +14,8 @@ import 'package:loadmore/loadmore.dart';
 class OBHttpList<T> extends StatefulWidget {
   final OBHttpListSearcherItemBuilder<T> itemBuilder;
   final OBHttpListSearcher<T> listSearcher;
-  final OBHttpListBootstrapper<T> listBootstrapper;
-  final OBHttpListMoreLoader<T> listMoreLoader;
+  final OBHttpListRefresher<T> listRefresher;
+  final OBHttpListOnScrollLoader<T> listOnScrollLoader;
   final OBHttpListController controller;
   final String searchBarPlaceholder;
 
@@ -23,8 +23,8 @@ class OBHttpList<T> extends StatefulWidget {
       {Key key,
       @required this.itemBuilder,
       @required this.listSearcher,
-      @required this.listBootstrapper,
-      @required this.listMoreLoader,
+      @required this.listRefresher,
+      @required this.listOnScrollLoader,
       this.searchBarPlaceholder = 'Search..',
       this.controller})
       : super(key: key);
@@ -35,7 +35,7 @@ class OBHttpList<T> extends StatefulWidget {
   }
 }
 
-class OBHttpListState<T> extends State<OBHttpList> {
+class OBHttpListState<T> extends State<OBHttpList<T>> {
   ToastService _toastService;
 
   GlobalKey<RefreshIndicatorState> _listRefreshIndicatorKey;
@@ -179,7 +179,7 @@ class OBHttpListState<T> extends State<OBHttpList> {
   Future<void> _refreshList() async {
     _setRefreshInProgress(true);
     try {
-      _list = await widget.listBootstrapper();
+      _list = await widget.listRefresher();
       _setList(_list);
       scrollToTop();
     } catch (error) {
@@ -191,7 +191,7 @@ class OBHttpListState<T> extends State<OBHttpList> {
 
   Future<bool> _loadMoreListItems() async {
     try {
-      List<T> moreListItems = await widget.listMoreLoader(_list);
+      List<T> moreListItems = await widget.listOnScrollLoader(_list);
 
       if (moreListItems.length == 0) {
         _setLoadingFinished(true);
@@ -223,7 +223,7 @@ class OBHttpListState<T> extends State<OBHttpList> {
 
     _searchRequestSubscription =
         widget.listSearcher(_searchQuery).asStream().listen(
-            (List listSearchResults) {
+            (List<T> listSearchResults) {
               _searchRequestSubscription = null;
               _setListSearchResults(listSearchResults);
             },
@@ -326,8 +326,8 @@ class OBHttpListController<T> {
 typedef Widget OBHttpListSearcherItemBuilder<T>(
     BuildContext context, T listItem);
 typedef Future<List<T>> OBHttpListSearcher<T>(String searchQuery);
-typedef Future<List<T>> OBHttpListBootstrapper<T>();
-typedef Future<List<T>> OBHttpListMoreLoader<T>(List<T> currentList);
+typedef Future<List<T>> OBHttpListRefresher<T>();
+typedef Future<List<T>> OBHttpListOnScrollLoader<T>(List<T> currentList);
 
 class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {
   const OBHttpListLoadMoreDelegate();
