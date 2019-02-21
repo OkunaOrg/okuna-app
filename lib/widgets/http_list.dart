@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
@@ -18,7 +19,8 @@ class OBHttpList<T> extends StatefulWidget {
   final OBHttpListRefresher<T> listRefresher;
   final OBHttpListOnScrollLoader<T> listOnScrollLoader;
   final OBHttpListController controller;
-  final String searchBarPlaceholder;
+  final String resourceSingularName;
+  final String resourcePluralName;
 
   const OBHttpList(
       {Key key,
@@ -27,7 +29,8 @@ class OBHttpList<T> extends StatefulWidget {
       @required this.listRefresher,
       @required this.listOnScrollLoader,
       @required this.searchResultListItemBuilder,
-      this.searchBarPlaceholder = 'Search..',
+      @required this.resourceSingularName,
+      @required this.resourcePluralName,
       this.controller})
       : super(key: key);
 
@@ -104,7 +107,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
         SizedBox(
             child: OBSearchBar(
           onSearch: _onSearch,
-          hintText: widget.searchBarPlaceholder,
+          hintText: 'Search ' + widget.resourcePluralName + '...',
         )),
         Expanded(child: _hasSearch ? _buildSearchResultsList() : _buildList()),
       ],
@@ -150,22 +153,39 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Widget _buildList() {
-    return RefreshIndicator(
-        key: _listRefreshIndicatorKey,
-        child: LoadMore(
-            whenEmptyLoad: false,
-            isFinish: _loadingFinished,
-            delegate: const OBHttpListLoadMoreDelegate(),
-            child: ListView.builder(
-                controller: _listScrollController,
-                physics: const ClampingScrollPhysics(),
-                cacheExtent: 30,
-                addAutomaticKeepAlives: true,
-                padding: const EdgeInsets.all(0),
-                itemCount: _list.length,
-                itemBuilder: _buildListItem),
-            onLoadMore: _loadMoreListItems),
-        onRefresh: _refreshList);
+    return _list.isEmpty && !_refreshInProgress
+        ? _buildNoList()
+        : RefreshIndicator(
+            key: _listRefreshIndicatorKey,
+            child: LoadMore(
+                whenEmptyLoad: false,
+                isFinish: _loadingFinished,
+                delegate: const OBHttpListLoadMoreDelegate(),
+                child: ListView.builder(
+                    controller: _listScrollController,
+                    physics: const ClampingScrollPhysics(),
+                    cacheExtent: 30,
+                    addAutomaticKeepAlives: true,
+                    padding: const EdgeInsets.all(0),
+                    itemCount: _list.length,
+                    itemBuilder: _buildListItem),
+                onLoadMore: _loadMoreListItems),
+            onRefresh: _refreshList);
+  }
+
+  Widget _buildNoList() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        OBButtonAlert(
+          text: 'No ' + widget.resourcePluralName + ' found.',
+          onPressed: _refreshList,
+          buttonText: 'Refresh',
+          buttonIcon: OBIcons.refresh,
+          assetImage: 'assets/images/stickers/perplexed-owl.png',
+        )
+      ],
+    );
   }
 
   Widget _buildListItem(BuildContext context, int index) {

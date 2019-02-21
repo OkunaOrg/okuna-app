@@ -69,7 +69,8 @@ class OBCommunityAdministratorsPageState
           listRefresher: _refreshCommunityAdministrators,
           listOnScrollLoader: _loadMoreCommunityAdministrators,
           listSearcher: _searchCommunityAdministrators,
-          searchBarPlaceholder: 'Search administrators...',
+          resourceSingularName: 'administrator',
+          resourcePluralName: 'administrators',
         ),
       ),
     );

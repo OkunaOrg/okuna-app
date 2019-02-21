@@ -59,7 +59,8 @@ class OBAddCommunityAdministratorModalState
           listRefresher: _refreshCommunityMembers,
           listOnScrollLoader: _loadMoreCommunityMembers,
           listSearcher: _searchCommunityMembers,
-          searchBarPlaceholder: 'Search members...',
+          resourceSingularName: 'member',
+          resourcePluralName: 'members',
         ),
       ),
     );
