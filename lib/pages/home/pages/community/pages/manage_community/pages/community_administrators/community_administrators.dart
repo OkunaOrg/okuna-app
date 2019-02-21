@@ -4,6 +4,8 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/navigation_service.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
@@ -12,6 +14,7 @@ import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +35,8 @@ class OBCommunityAdministratorsPageState
     extends State<OBCommunityAdministratorsPage> {
   UserService _userService;
   ModalService _modalService;
+  NavigationService _navigationService;
+  ToastService _toastService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -49,6 +54,8 @@ class OBCommunityAdministratorsPageState
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _modalService = provider.modalService;
+      _navigationService = provider.navigationService;
+      _toastService = provider.toastService;
       _needsBootstrap = false;
     }
 
@@ -77,9 +84,34 @@ class OBCommunityAdministratorsPageState
   }
 
   Widget _buildCommunityAdministratorListItem(BuildContext context, User user) {
+    bool isLoggedInUser = _userService.isLoggedInUser(user);
+
     return OBUserTile(
       user,
+      onUserTilePressed: _onCommunityAdministratorListItemPressed,
+      onUserTileDeleted:
+          isLoggedInUser ? null : _onCommunityAdministratorListItemDeleted,
+      trailing: isLoggedInUser ? OBText('You', style: TextStyle(fontWeight: FontWeight.bold),) : null,
     );
+  }
+
+  void _onCommunityAdministratorListItemPressed(User communityAdministrator) {
+    _navigationService.navigateToUserProfile(
+        user: communityAdministrator, context: context);
+  }
+
+  void _onCommunityAdministratorListItemDeleted(
+      User communityAdministrator) async {
+    try {
+      await _userService.removeCommunityAdministrator(
+          community: widget.community, user: communityAdministrator);
+      _httpListController.removeListItem(communityAdministrator);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection', context: context);
+    } catch (error) {
+      _toastService.error(message: 'Unknown error.', context: context);
+      rethrow;
+    }
   }
 
   Future<List<User>> _refreshCommunityAdministrators() async {

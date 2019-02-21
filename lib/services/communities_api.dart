@@ -520,7 +520,7 @@ class CommunitiesApiService {
 
   String _makeRemoveCommunityAdministratorPath(
       String communityName, String username) {
-    return _stringTemplateService.parse(ADD_COMMUNITY_ADMINISTRATOR_PATH,
+    return _stringTemplateService.parse(REMOVE_COMMUNITY_ADMINISTRATORS_PATH,
         {'communityName': communityName, 'username': username});
   }
 
@@ -531,7 +531,7 @@ class CommunitiesApiService {
 
   String _makeRemoveCommunityModeratorPath(
       String communityName, String username) {
-    return _stringTemplateService.parse(ADD_COMMUNITY_MODERATOR_PATH,
+    return _stringTemplateService.parse(REMOVE_COMMUNITY_MODERATORS_PATH,
         {'communityName': communityName, 'username': username});
   }
 

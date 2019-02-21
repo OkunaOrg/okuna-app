@@ -46,17 +46,20 @@ class OBManageCommunityPage extends StatelessWidget {
                         context: context, community: community);
                   },
                 ),
-                ListTile(
-                  leading: const OBIcon(OBIcons.communityAdministrators),
-                  title: const OBText('Administrators'),
-                  subtitle: const OBText(
-                    'See, add and remove administrators.',
-                    style: listItemSubtitleStyle,
-                  ),
-                  onTap: () {
-                    navigationService.navigateToCommunityAdministrators(context: context, community: community);
-                  },
-                ),
+                community.isCreator
+                    ? ListTile(
+                        leading: const OBIcon(OBIcons.communityAdministrators),
+                        title: const OBText('Administrators'),
+                        subtitle: const OBText(
+                          'See, add and remove administrators.',
+                          style: listItemSubtitleStyle,
+                        ),
+                        onTap: () {
+                          navigationService.navigateToCommunityAdministrators(
+                              context: context, community: community);
+                        },
+                      )
+                    : const SizedBox(),
                 ListTile(
                   leading: const OBIcon(OBIcons.communityModerators),
                   title: const OBText('Moderators'),

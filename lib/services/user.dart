@@ -700,7 +700,6 @@ class UserService {
 
   Future<UsersList> getMembersForCommunity(Community community,
       {int count, int maxId, CommunityMembersExclusion exclude}) async {
-
     HttpieResponse response = await _communitiesApiService
         .getMembersForCommunityWithId(community.name,
             count: count,
@@ -837,10 +836,10 @@ class UserService {
   }
 
   Future<void> removeCommunityAdministrator(
-      {@required Community community, @required String username}) async {
+      {@required Community community, @required User user}) async {
     HttpieResponse response =
         await _communitiesApiService.removeCommunityAdministrator(
-            communityName: community.name, username: username);
+            communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
