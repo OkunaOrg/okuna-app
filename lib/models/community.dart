@@ -20,6 +20,21 @@ class Community extends UpdatableModel<Community> {
     return result;
   }
 
+  static convertExclusionToString(CommunityMembersExclusion exclusion) {
+    String result;
+    switch (exclusion) {
+      case CommunityMembersExclusion.administrators:
+        result = 'administrators';
+        break;
+      case CommunityMembersExclusion.moderators:
+        result = 'moderators';
+        break;
+      default:
+        throw 'Unsupported community members exclusion';
+    }
+    return result;
+  }
+
   final int id;
   final User creator;
   String name;
@@ -268,3 +283,5 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
 }
 
 enum CommunityType { public, private }
+
+enum CommunityMembersExclusion { administrators, moderators }

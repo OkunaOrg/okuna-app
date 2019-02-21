@@ -699,23 +699,30 @@ class UserService {
   }
 
   Future<UsersList> getMembersForCommunity(Community community,
-      {int count, int maxId}) async {
+      {int count, int maxId, CommunityMembersExclusion exclude}) async {
+
     HttpieResponse response = await _communitiesApiService
         .getMembersForCommunityWithId(community.name,
-            count: count, maxId: maxId);
+            count: count,
+            maxId: maxId,
+            exclude: exclude != null
+                ? Community.convertExclusionToString(exclude)
+                : null);
 
     _checkResponseIsOk(response);
 
     return UsersList.fromJson(json.decode(response.body));
   }
 
-  Future<UsersList> searchCommunityMembers({
-    @required Community community,
-    @required String query,
-  }) async {
+  Future<UsersList> searchCommunityMembers(
+      {@required Community community,
+      @required String query,
+      CommunityMembersExclusion exclude}) async {
     HttpieResponse response = await _communitiesApiService.searchMembers(
       communityName: community.name,
       query: query,
+      exclude:
+          exclude != null ? Community.convertExclusionToString(exclude) : null,
     );
 
     _checkResponseIsOk(response);

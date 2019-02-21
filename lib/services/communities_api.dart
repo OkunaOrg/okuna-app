@@ -304,11 +304,13 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getMembersForCommunityWithId(String communityName,
-      {int count, int maxId}) {
+      {int count, int maxId, String exclude}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
     if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (exclude != null && exclude.isNotEmpty) queryParams['exclude'] = exclude;
 
     String path = _makeGetCommunityMembersPath(communityName);
 
@@ -316,11 +318,13 @@ class CommunitiesApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> searchMembers({
-    @required String communityName,
-    @required String query,
-  }) {
+  Future<HttpieResponse> searchMembers(
+      {@required String communityName,
+      @required String query,
+      String exclude}) {
     Map<String, dynamic> queryParams = {'query': query};
+
+    if (exclude != null && exclude.isNotEmpty) queryParams['exclude'] = exclude;
 
     String path = _makeSearchCommunityMembersPath(communityName);
 

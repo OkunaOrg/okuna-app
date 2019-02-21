@@ -73,8 +73,9 @@ class OBAddCommunityAdministratorModalState
   }
 
   Future<List<User>> _refreshCommunityMembers() async {
-    UsersList communityMembers =
-        await _userService.getMembersForCommunity(widget.community);
+    UsersList communityMembers = await _userService.getMembersForCommunity(
+        widget.community,
+        exclude: CommunityMembersExclusion.administrators);
     return communityMembers.users;
   }
 
@@ -83,17 +84,19 @@ class OBAddCommunityAdministratorModalState
     var lastCommunityMember = communityMembersList.last;
     var lastCommunityMemberId = lastCommunityMember.id;
     var moreCommunityMembers = (await _userService.getMembersForCommunity(
-      widget.community,
-      maxId: lastCommunityMemberId,
-      count: 20,
-    ))
+            widget.community,
+            maxId: lastCommunityMemberId,
+            count: 20,
+            exclude: CommunityMembersExclusion.administrators))
         .users;
     return moreCommunityMembers;
   }
 
   Future<List<User>> _searchCommunityMembers(String query) async {
     UsersList results = await _userService.searchCommunityMembers(
-        query: query, community: widget.community);
+        query: query,
+        community: widget.community,
+        exclude: CommunityMembersExclusion.administrators);
 
     return results.users;
   }
