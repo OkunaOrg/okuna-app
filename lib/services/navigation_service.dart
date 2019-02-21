@@ -9,7 +9,8 @@ import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_po
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
-import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -40,6 +41,20 @@ class NavigationService {
             key: Key('obSlideCommunityPage'),
             widget: OBCommunityPage(
               community,
+            )));
+  }
+
+  Future<bool> navigateToConfirmAddCommunityAdministrator(
+      {@required Community community,
+      @required User user,
+      @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideCommunityPage'),
+            widget: OBConfirmAddCommunityAdministrator(
+              community: community,
+              user: user,
             )));
   }
 

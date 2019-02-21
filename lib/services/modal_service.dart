@@ -1,11 +1,10 @@
-import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/categories_picker.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
@@ -146,6 +145,23 @@ class ModalService {
                 }));
 
     return createdCommunity;
+  }
+
+  Future<User> openAddCommunityAdministrator(
+      {@required BuildContext context, @required Community community}) async {
+    User addedCommunityAdministrator =
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<User>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBAddCommunityAdministratorModal(
+                      community: community,
+                    ),
+                  );
+                }));
+
+    return addedCommunityAdministrator;
   }
 
   Future<void> openTimelineFilters(

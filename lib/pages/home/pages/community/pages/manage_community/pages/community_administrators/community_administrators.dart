@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
@@ -30,6 +31,7 @@ class OBCommunityAdministratorsPage extends StatefulWidget {
 class OBCommunityAdministratorsPageState
     extends State<OBCommunityAdministratorsPage> {
   UserService _userService;
+  ModalService _modalService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -46,6 +48,7 @@ class OBCommunityAdministratorsPageState
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
+      _modalService = provider.modalService;
       _needsBootstrap = false;
     }
 
@@ -61,10 +64,12 @@ class OBCommunityAdministratorsPageState
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
           controller: _httpListController,
-          itemBuilder: _buildCommunityAdministratorListItem,
+          listItemBuilder: _buildCommunityAdministratorListItem,
+          searchResultListItemBuilder: _buildCommunityAdministratorListItem,
           listRefresher: _refreshCommunityAdministrators,
           listOnScrollLoader: _loadMoreCommunityAdministrators,
           listSearcher: _searchCommunityAdministrators,
+          searchBarPlaceholder: 'Search administrators...',
         ),
       ),
     );
@@ -103,13 +108,14 @@ class OBCommunityAdministratorsPageState
     return results.users;
   }
 
-  void _onWantsToAddNewAdministrator() {
-    /*  User createdCommunityAdministrator = await modalService
-                          .openCreateCommunityAdministrator(context: context);
-                      if (createdCommunityAdministrator != null) {
-                        _onCommunityAdministratorCreated(
-                            createdCommunityAdministrator);
-                      }*/
+  void _onWantsToAddNewAdministrator() async {
+    User addedCommunityAdministrator =
+        await _modalService.openAddCommunityAdministrator(
+            context: context, community: widget.community);
+
+    if (addedCommunityAdministrator != null) {
+      _httpListController.insertListItem(addedCommunityAdministrator);
+    }
   }
 }
 

@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
 class OBHttpList<T> extends StatefulWidget {
-  final OBHttpListSearcherItemBuilder<T> itemBuilder;
+  final OBHttpListSearcherItemBuilder<T> listItemBuilder;
+  final OBHttpListSearcherItemBuilder<T> searchResultListItemBuilder;
   final OBHttpListSearcher<T> listSearcher;
   final OBHttpListRefresher<T> listRefresher;
   final OBHttpListOnScrollLoader<T> listOnScrollLoader;
@@ -21,10 +22,11 @@ class OBHttpList<T> extends StatefulWidget {
 
   const OBHttpList(
       {Key key,
-      @required this.itemBuilder,
+      @required this.listItemBuilder,
       @required this.listSearcher,
       @required this.listRefresher,
       @required this.listOnScrollLoader,
+      @required this.searchResultListItemBuilder,
       this.searchBarPlaceholder = 'Search..',
       this.controller})
       : super(key: key);
@@ -144,7 +146,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
     T listItem = _listSearchResults[index];
 
-    return widget.itemBuilder(context, listItem);
+    return widget.searchResultListItemBuilder(context, listItem);
   }
 
   Widget _buildList() {
@@ -169,7 +171,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   Widget _buildListItem(BuildContext context, int index) {
     T listItem = _list[index];
 
-    return widget.itemBuilder(context, listItem);
+    return widget.listItemBuilder(context, listItem);
   }
 
   void _bootstrap() async {
