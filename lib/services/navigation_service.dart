@@ -11,6 +11,8 @@ import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/community_moderators.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -58,6 +60,20 @@ class NavigationService {
             )));
   }
 
+  Future<bool> navigateToConfirmAddCommunityModerator(
+      {@required Community community,
+      @required User user,
+      @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideCommunityPage'),
+            widget: OBConfirmAddCommunityModerator(
+              community: community,
+              user: user,
+            )));
+  }
+
   Future<void> navigateToManageCommunity(
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
@@ -76,6 +92,17 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obCommunityAdministratorsPage'),
             widget: OBCommunityAdministratorsPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityModerators(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityModeratorsPage'),
+            widget: OBCommunityModeratorsPage(
               community: community,
             )));
   }

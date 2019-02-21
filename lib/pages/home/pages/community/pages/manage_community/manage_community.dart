@@ -60,17 +60,20 @@ class OBManageCommunityPage extends StatelessWidget {
                         },
                       )
                     : const SizedBox(),
-                ListTile(
-                  leading: const OBIcon(OBIcons.communityModerators),
-                  title: const OBText('Moderators'),
-                  subtitle: const OBText(
-                    'See, add and remove moderators.',
-                    style: listItemSubtitleStyle,
-                  ),
-                  onTap: () {
-                    navigationService.navigateToFollowsLists(context: context);
-                  },
-                ),
+                community.isAdmin
+                    ? ListTile(
+                        leading: const OBIcon(OBIcons.communityModerators),
+                        title: const OBText('Moderators'),
+                        subtitle: const OBText(
+                          'See, add and remove moderators.',
+                          style: listItemSubtitleStyle,
+                        ),
+                        onTap: () {
+                          navigationService.navigateToCommunityModerators(
+                              context: context, community: community);
+                        },
+                      )
+                    : const SizedBox(),
                 ListTile(
                   leading: const OBIcon(OBIcons.communityBannedUsers),
                   title: const OBText('Banned users'),

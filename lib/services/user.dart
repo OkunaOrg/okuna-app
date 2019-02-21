@@ -786,18 +786,18 @@ class UserService {
   }
 
   Future<void> addCommunityModerator(
-      {@required Community community, @required String username}) async {
+      {@required Community community, @required User user}) async {
     HttpieResponse response =
         await _communitiesApiService.addCommunityModerator(
-            communityName: community.name, username: username);
+            communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
   Future<void> removeCommunityModerator(
-      {@required Community community, @required String username}) async {
+      {@required Community community, @required User user}) async {
     HttpieResponse response =
         await _communitiesApiService.removeCommunityModerator(
-            communityName: community.name, username: username);
+            communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
