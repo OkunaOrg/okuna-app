@@ -28,44 +28,28 @@ class OBPostCommentText extends StatelessWidget {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              GestureDetector(
-                onTap: onUsernamePressed,
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      postComment.getCommenterName(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: themeValueParserService
-                              .parseColor(theme.primaryTextColor),
-                          fontSize: 16),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Flexible(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          badge == null
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: const EdgeInsets.only(left: 5),
-                                  child: badge,
-                                ),
-                          Flexible(
-                            child: Text(
-                              ' @' + postComment.getCommenterUsername(),
-                              style: TextStyle(
-                                  color: themeValueParserService
-                                      .parseColor(theme.secondaryTextColor),
-                                  fontSize: 14),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              Row(
+                children: <Widget>[
+                  Flexible(
+                    child: GestureDetector(
+                        onTap: onUsernamePressed,
+                        child: Text(
+                          postComment.getCommenterUsername(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: themeValueParserService
+                                  .parseColor(theme.primaryTextColor),
+                              fontSize: 16),
+                          overflow: TextOverflow.ellipsis,
+                        )),
+                  ),
+                  badge == null
+                      ? const SizedBox()
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: badge,
+                        ),
+                ],
               ),
               Row(
                 children: <Widget>[

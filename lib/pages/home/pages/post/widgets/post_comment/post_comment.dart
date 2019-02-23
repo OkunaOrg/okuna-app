@@ -133,7 +133,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
   Widget _getCommunityBadge() {
     Post post = widget.post;
     User postCommenter = widget.postComment.commenter;
-    
+
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
 
