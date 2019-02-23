@@ -790,7 +790,7 @@ class UserService {
     HttpieResponse response =
         await _communitiesApiService.addCommunityModerator(
             communityName: community.name, username: user.username);
-    _checkResponseIsOk(response);
+    _checkResponseIsCreated(response);
   }
 
   Future<void> removeCommunityModerator(

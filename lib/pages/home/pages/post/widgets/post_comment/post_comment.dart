@@ -53,7 +53,33 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
 
     User loggedInUser = _userService.getLoggedInUser();
 
-    Widget postTile = _buildPostTile();
+    User postCommenter = widget.postComment.commenter;
+    bool isCommunityAdministrator = false;
+    bool isCommunityModerator = false;
+
+    Post post = widget.post;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      isCommunityAdministrator =
+          postCommenter.isAdministratorOfCommunity(postCommunity);
+
+      isCommunityModerator =
+          postCommenter.isModeratorOfCommunity(postCommunity);
+    }
+
+    Widget userBadge;
+
+    if (isCommunityAdministrator) {
+      userBadge = _buildCommunityAdministratorBadge();
+    } else if (isCommunityModerator) {
+      userBadge = _buildCommunityModeratorBadge();
+    } else {
+      userBadge = const SizedBox();
+    }
+
+    Widget postTile = _buildPostTile(userBadge: userBadge);
 
     if (_requestInProgress) {
       postTile = Opacity(
@@ -62,7 +88,9 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
       );
     }
 
-    if (widget.postComment.getCommenterId() == loggedInUser.id) {
+    if (widget.postComment.getCommenterId() == loggedInUser.id ||
+        isCommunityAdministrator ||
+        isCommunityModerator) {
       // Its our own comment
       postTile = Slidable(
         delegate: new SlidableDrawerDelegate(),
@@ -87,7 +115,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     super.dispose();
   }
 
-  Widget _buildPostTile() {
+  Widget _buildPostTile({@required userBadge}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
@@ -110,7 +138,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
             children: <Widget>[
               OBPostCommentText(
                 widget.postComment,
-                badge: _getCommunityBadge(),
+                badge: userBadge,
                 onUsernamePressed: () {
                   _navigationService.navigateToUserProfile(
                       user: widget.post.creator, context: context);
@@ -130,37 +158,20 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     );
   }
 
-  Widget _getCommunityBadge() {
-    Post post = widget.post;
-    User postCommenter = widget.postComment.commenter;
+  Widget _buildCommunityAdministratorBadge() {
+    return const OBIcon(
+      OBIcons.communityAdministrators,
+      size: OBIconSize.small,
+      themeColor: OBIconThemeColor.primaryAccent,
+    );
+  }
 
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
-
-      bool isCommunityAdministrator =
-          postCommenter.isAdministratorOfCommunity(postCommunity);
-
-      if (isCommunityAdministrator) {
-        return const OBIcon(
-          OBIcons.communityAdministrators,
-          size: OBIconSize.small,
-          themeColor: OBIconThemeColor.primaryAccent,
-        );
-      }
-
-      bool isCommunityModerator =
-          postCommenter.isModeratorOfCommunity(postCommunity);
-
-      if (isCommunityModerator) {
-        return const OBIcon(
-          OBIcons.communityModerators,
-          size: OBIconSize.small,
-          themeColor: OBIconThemeColor.primaryAccent,
-        );
-      }
-    }
-
-    return const SizedBox();
+  Widget _buildCommunityModeratorBadge() {
+    return const OBIcon(
+      OBIcons.communityModerators,
+      size: OBIconSize.small,
+      themeColor: OBIconThemeColor.primaryAccent,
+    );
   }
 
   void _deletePostComment() async {
