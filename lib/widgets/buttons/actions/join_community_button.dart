@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -45,7 +46,10 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
         if (community == null || isCreator) return SizedBox();
 
         bool isInvited = community.isInvited ?? false;
-        bool isMember = community.isMember ?? false;
+
+        User loggedInUser = _userService.getLoggedInUser();
+
+        bool isMember = community.isMember(loggedInUser) ?? false;
 
         if (community.type == CommunityType.private && !isMember && !isInvited)
           return SizedBox();

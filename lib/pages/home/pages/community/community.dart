@@ -75,7 +75,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
     }
 
     bool communityIsPrivate = widget.community.isPrivate();
-    bool userIsMember = widget.community.isMember;
+
+    User loggedInUser = _userService.getLoggedInUser();
+    bool userIsMember = widget.community.isMember(loggedInUser);
+    
     bool userCanSeePosts = !communityIsPrivate || userIsMember;
 
     return CupertinoPageScaffold(

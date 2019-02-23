@@ -1,6 +1,9 @@
 import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
+import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/community_membership.dart';
+import 'package:Openbook/models/community_membership_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user_profile.dart';
@@ -21,6 +24,7 @@ class User extends UpdatableModel<User> {
   bool isPendingConnectionConfirmation;
   CirclesList connectedCircles;
   FollowsListsList followLists;
+  CommunityMembershipList communitiesMemberships;
 
   static final navigationUsersFactory = UserFactory(
       cache: LfuCache<int, User>(storage: SimpleStorage(size: 100)));
@@ -64,7 +68,8 @@ class User extends UpdatableModel<User> {
       this.isConnected,
       this.isFullyConnected,
       this.connectedCircles,
-      this.followLists});
+      this.followLists,
+      this.communitiesMemberships});
 
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
@@ -97,6 +102,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('follow_lists')) {
       followLists =
           navigationUsersFactory.parseFollowsLists(json['follow_lists']);
+    }
+    if (json.containsKey('communities_memberships')) {
+      communitiesMemberships = navigationUsersFactory
+          .parseMemberships(json['communities_memberships']);
     }
   }
 
@@ -164,6 +173,36 @@ class User extends UpdatableModel<User> {
     return followLists != null && followLists.lists.length > 0;
   }
 
+  bool isAdministratorOfCommunity(Community community) {
+    CommunityMembership membership = getMembershipForCommunity(community);
+    if (membership == null) return false;
+    return membership.isAdministrator;
+  }
+
+  bool isModeratorOfCommunity(Community community) {
+    CommunityMembership membership = getMembershipForCommunity(community);
+    if (membership == null) return false;
+    return membership.isModerator;
+  }
+
+  bool isMemberOfCommunity(Community community) {
+    return getMembershipForCommunity(community) != null;
+  }
+
+  CommunityMembership getMembershipForCommunity(Community community) {
+    if (communitiesMemberships == null) return null;
+
+    int membershipIndex = communitiesMemberships.communityMemberships
+        .indexWhere((CommunityMembership communityMembership) {
+      return communityMembership.userId == this.id &&
+          communityMembership.communityId == community.id;
+    });
+
+    if (membershipIndex < 0) return null;
+
+    return communitiesMemberships.communityMemberships[membershipIndex];
+  }
+
   void incrementFollowersCount() {
     if (this.followersCount != null) {
       this.followersCount += 1;
@@ -197,7 +236,14 @@ class UserFactory extends UpdatableModelFactory<User> {
         isFullyConnected: json['is_fully_connected'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
+        communitiesMemberships:
+            parseMemberships(json['communities_memberships']),
         followLists: parseFollowsLists(json['follow_lists']));
+  }
+
+  CommunityMembershipList parseMemberships(List membershipsData) {
+    if (membershipsData == null) return null;
+    return CommunityMembershipList.fromJson(membershipsData);
   }
 
   UserProfile parseUserProfile(Map profile) {

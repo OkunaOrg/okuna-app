@@ -1,6 +1,8 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -19,6 +21,9 @@ class OBManageCommunityPage extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     NavigationService navigationService = openbookProvider.navigationService;
     ModalService modalService = openbookProvider.modalService;
+    UserService userService = openbookProvider.userService;
+
+    User loggedInUser = userService.getLoggedInUser();
 
     const TextStyle listItemSubtitleStyle = TextStyle(fontSize: 14);
 
@@ -60,7 +65,7 @@ class OBManageCommunityPage extends StatelessWidget {
                         },
                       )
                     : const SizedBox(),
-                community.isAdmin
+                community.isAdministrator(loggedInUser)
                     ? ListTile(
                         leading: const OBIcon(OBIcons.communityModerators),
                         title: const OBText('Moderators'),

@@ -62,14 +62,13 @@ class OBUserPostHeader extends StatelessWidget {
 
               if (postCreator == null) return const SizedBox();
 
-              return Row(
-                  children: <Widget>[
-                  OBText(
-                    postCreator.username,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  _getUserBadge(_post.creator)
-                ]);
+              return Row(children: <Widget>[
+                OBText(
+                  postCreator.username,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                _getUserBadge(_post.creator)
+              ]);
             }),
       ),
       subtitle: OBSecondaryText(
@@ -80,7 +79,7 @@ class OBUserPostHeader extends StatelessWidget {
   }
 
   Widget _getUserBadge(User creator) {
-    if (creator.getProfileBadges().length > 0) {
+    if (creator.hasProfileBadges() && creator.getProfileBadges().length > 0) {
       Badge badge = creator.getProfileBadges()[0];
       return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
     }

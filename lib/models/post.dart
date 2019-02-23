@@ -101,6 +101,10 @@ class Post extends UpdatableModel<Post> {
     return reaction != null;
   }
 
+  bool hasCommunity() {
+    return community != null;
+  }
+
   bool isReactionEmoji(Emoji emoji) {
     return hasReaction() && reaction.getEmojiId() == emoji.id;
   }
