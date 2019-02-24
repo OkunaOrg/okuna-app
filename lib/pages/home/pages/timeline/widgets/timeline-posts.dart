@@ -8,6 +8,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
@@ -38,6 +39,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   ToastService _toastService;
   StreamSubscription _loggedInUserChangeSubscription;
   ScrollController _postsScrollController;
+  bool _refreshInProgress;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -49,6 +51,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void initState() {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
+    _refreshInProgress = false;
     _posts = [];
     _filteredCircles = [];
     _filteredFollowsLists = [];
@@ -144,6 +147,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                 type: OBButtonType.highlight,
                 child: const OBText('Refresh posts'),
                 onPressed: _onRefresh,
+                isLoading: _refreshInProgress,
               )
             ],
           ),
@@ -203,6 +207,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Future<void> _refreshPosts() async {
+    _setRefreshInProgress(true);
     try {
       _posts = (await _userService.getTimelinePosts(
               circles: _filteredCircles, followsLists: _filteredFollowsLists))
@@ -214,6 +219,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     } catch (error) {
       _onUnknownError(error);
       rethrow;
+    } finally {
+      _setRefreshInProgress(false);
     }
   }
 
@@ -261,6 +268,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void _setLoadingFinished(bool loadingFinished) {
     setState(() {
       _loadingFinished = loadingFinished;
+    });
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
     });
   }
 

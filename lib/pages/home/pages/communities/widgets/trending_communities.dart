@@ -5,6 +5,8 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/alerts/button_alert.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,7 +16,8 @@ class OBTrendingCommunities extends StatefulWidget {
   final Category category;
   final ScrollController scrollController;
 
-  const OBTrendingCommunities({Key key, this.category, this.scrollController}) : super(key: key);
+  const OBTrendingCommunities({Key key, this.category, this.scrollController})
+      : super(key: key);
 
   @override
   OBTrendingCommunitiesState createState() {
@@ -28,12 +31,14 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
   ToastService _toastService;
   NavigationService _navigationService;
   List<Community> _trendingCommunities;
+  bool _refreshInProgress;
 
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
     _trendingCommunities = [];
+    _refreshInProgress = false;
   }
 
   @override
@@ -47,33 +52,50 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
       _needsBootstrap = false;
     }
 
-    bool hasCategory = widget.category != null;
-
     return SingleChildScrollView(
       physics: const ClampingScrollPhysics(),
       controller: widget.scrollController,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: OBText(
-              hasCategory
-                  ? 'Trending in ' + widget.category.title
-                  : 'Trending in all categories',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-            ),
+      child: _trendingCommunities.isEmpty
+          ? _buildNoTrendingCommunities()
+          : _buildTrendingCommunities(),
+    );
+  }
+
+  Widget _buildNoTrendingCommunities() {
+    return OBButtonAlert(
+      text: 'No trending communities found. Try again in a few minutes.',
+      onPressed: _refreshTrendingCommunities,
+      buttonText: 'Refresh',
+      buttonIcon: OBIcons.refresh,
+      assetImage: 'assets/images/stickers/perplexed-owl.png',
+      isLoading: _refreshInProgress,
+    );
+  }
+
+  Widget _buildTrendingCommunities() {
+    bool hasCategory = widget.category != null;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: OBText(
+            hasCategory
+                ? 'Trending in ' + widget.category.title
+                : 'Trending in all categories',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
-          ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              separatorBuilder: _buildCommunitySeparator,
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              shrinkWrap: true,
-              itemCount: _trendingCommunities.length,
-              itemBuilder: _buildCommunity)
-        ],
-      ),
+        ),
+        ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: _buildCommunitySeparator,
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            shrinkWrap: true,
+            itemCount: _trendingCommunities.length,
+            itemBuilder: _buildCommunity)
+      ],
     );
   }
 
@@ -97,6 +119,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
   }
 
   Future<void> _refreshTrendingCommunities() async {
+    _setRefreshInProgress(true);
     try {
       CommunitiesList trendingCommunitiesList =
           await _userService.getTrendingCommunities(category: widget.category);
@@ -106,6 +129,8 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
     } catch (error) {
       _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
+    } finally {
+      _setRefreshInProgress(false);
     }
   }
 
@@ -117,6 +142,12 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
   void _setTrendingCommunities(List<Community> communities) {
     setState(() {
       _trendingCommunities = communities;
+    });
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
     });
   }
 }

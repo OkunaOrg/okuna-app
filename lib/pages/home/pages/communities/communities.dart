@@ -17,6 +17,7 @@ import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -56,12 +57,15 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
   bool _needsBootstrap;
 
+  bool _refreshInProgress;
+
   @override
   void initState() {
     super.initState();
     if (widget.controller != null)
       widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
+    _refreshInProgress = false;
     _categories = [];
     _categoriesScrollControllers = [];
     _tabController = _makeTabController();
@@ -92,15 +96,32 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
               onPressed: _onWantsToCreateCommunity,
             )),
         child: OBPrimaryColorContainer(
-            child: Column(
-          children: <Widget>[
-            _buildTabBar(),
-            Expanded(
-              child: TabBarView(
-                  controller: _tabController, children: _buildTabBarViews()),
-            )
-          ],
-        )));
+            child: _categories.isEmpty
+                ? _buildNoCommunities()
+                : _buildCommunities()));
+  }
+
+  Widget _buildNoCommunities() {
+    return OBButtonAlert(
+      text: 'No communities found. Please try again in a few minutes.',
+      onPressed: _refreshCategories,
+      buttonText: 'Refresh',
+      buttonIcon: OBIcons.refresh,
+      assetImage: 'assets/images/stickers/perplexed-owl.png',
+      isLoading: _refreshInProgress,
+    );
+  }
+
+  Widget _buildCommunities() {
+    return Column(
+      children: <Widget>[
+        _buildTabBar(),
+        Expanded(
+          child: TabBarView(
+              controller: _tabController, children: _buildTabBarViews()),
+        )
+      ],
+    );
   }
 
   Widget _buildTabBar() {
@@ -181,6 +202,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   }
 
   Future<void> _refreshCategories() async {
+    _setRefreshInProgress(true);
     try {
       CategoriesList categoriesList = await _userService.getCategories();
       _setCategories(categoriesList.categories);
@@ -189,6 +211,8 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     } catch (error) {
       _toastService.error(message: 'Unknown error.', context: context);
       throw error;
+    } finally {
+      _setRefreshInProgress(false);
     }
   }
 
@@ -233,6 +257,12 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       _navigationService.navigateToCommunity(
           community: createdCommunity, context: context);
     }
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
+    });
   }
 }
 
