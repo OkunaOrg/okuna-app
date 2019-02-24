@@ -12,6 +12,7 @@ import 'package:Openbook/pages/home/modals/save_community.dart';
 import 'package:Openbook/pages/home/modals/save_connections_circle.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
 import 'package:Openbook/pages/home/modals/timeline_filters.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/ban_community_user.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/modals/zoomable_photo.dart';
@@ -180,6 +181,23 @@ class ModalService {
                 }));
 
     return addedCommunityModerator;
+  }
+
+  Future<User> openBanCommunityUser(
+      {@required BuildContext context, @required Community community}) async {
+    User addedCommunityBannedUser =
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<User>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBBanCommunityUserModal(
+                      community: community,
+                    ),
+                  );
+                }));
+
+    return addedCommunityBannedUser;
   }
 
   Future<void> openTimelineFilters(

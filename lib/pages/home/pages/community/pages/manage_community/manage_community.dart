@@ -24,8 +24,87 @@ class OBManageCommunityPage extends StatelessWidget {
     UserService userService = openbookProvider.userService;
 
     User loggedInUser = userService.getLoggedInUser();
+    List<Widget> menuListTiles = [];
 
     const TextStyle listItemSubtitleStyle = TextStyle(fontSize: 14);
+
+    bool loggedInUserIsAdministrator = community.isAdministrator(loggedInUser);
+    bool loggedInUserIsModerator = community.isModerator(loggedInUser);
+    bool loggedInUserIsCreator = community.isCreator;
+
+    if (loggedInUserIsAdministrator) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.communities),
+        title: const OBText('Details'),
+        subtitle: const OBText(
+          'Change the title, name, avatar, cover photo and more.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          modalService.openEditCommunity(
+              context: context, community: community);
+        },
+      ));
+    }
+
+    if (loggedInUserIsCreator) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.communityAdministrators),
+        title: const OBText('Administrators'),
+        subtitle: const OBText(
+          'See, add and remove administrators.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToCommunityAdministrators(
+              context: context, community: community);
+        },
+      ));
+    }
+
+    if (loggedInUserIsAdministrator) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.communityModerators),
+        title: const OBText('Moderators'),
+        subtitle: const OBText(
+          'See, add and remove moderators.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToCommunityModerators(
+              context: context, community: community);
+        },
+      ));
+    }
+
+    if (loggedInUserIsAdministrator || loggedInUserIsModerator) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.communityBannedUsers),
+        title: const OBText('Banned users'),
+        subtitle: const OBText(
+          'See, add and remove banned users.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToCommunityBannedUsers(
+              context: context, community: community);
+        },
+      ));
+    }
+
+    if (loggedInUserIsCreator) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.deleteCommunity),
+        title: const OBText('Delete community'),
+        subtitle: const OBText(
+          'Delete the community, forever.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToFollowsLists(context: context);
+        },
+      ));
+    }
 
     return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
@@ -36,73 +115,9 @@ class OBManageCommunityPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: ListView(
-              physics: const ClampingScrollPhysics(),
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                ListTile(
-                  leading: const OBIcon(OBIcons.communities),
-                  title: const OBText('Details'),
-                  subtitle: const OBText(
-                    'Change the title, name, avatar, cover photo and more.',
-                    style: listItemSubtitleStyle,
-                  ),
-                  onTap: () {
-                    modalService.openEditCommunity(
-                        context: context, community: community);
-                  },
-                ),
-                community.isCreator
-                    ? ListTile(
-                        leading: const OBIcon(OBIcons.communityAdministrators),
-                        title: const OBText('Administrators'),
-                        subtitle: const OBText(
-                          'See, add and remove administrators.',
-                          style: listItemSubtitleStyle,
-                        ),
-                        onTap: () {
-                          navigationService.navigateToCommunityAdministrators(
-                              context: context, community: community);
-                        },
-                      )
-                    : const SizedBox(),
-                community.isAdministrator(loggedInUser)
-                    ? ListTile(
-                        leading: const OBIcon(OBIcons.communityModerators),
-                        title: const OBText('Moderators'),
-                        subtitle: const OBText(
-                          'See, add and remove moderators.',
-                          style: listItemSubtitleStyle,
-                        ),
-                        onTap: () {
-                          navigationService.navigateToCommunityModerators(
-                              context: context, community: community);
-                        },
-                      )
-                    : const SizedBox(),
-                ListTile(
-                  leading: const OBIcon(OBIcons.communityBannedUsers),
-                  title: const OBText('Banned users'),
-                  subtitle: const OBText(
-                    'See, add and remove banned users.',
-                    style: listItemSubtitleStyle,
-                  ),
-                  onTap: () {
-                    navigationService.navigateToFollowsLists(context: context);
-                  },
-                ),
-                ListTile(
-                  leading: const OBIcon(OBIcons.deleteCommunity),
-                  title: const OBText('Delete community'),
-                  subtitle: const OBText(
-                    'Delete the community, forever.',
-                    style: listItemSubtitleStyle,
-                  ),
-                  onTap: () {
-                    navigationService.navigateToFollowsLists(context: context);
-                  },
-                ),
-              ],
-            )),
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    children: menuListTiles)),
           ],
         ),
       ),

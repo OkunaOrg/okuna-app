@@ -860,17 +860,31 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
+  Future<UsersList> searchCommunityBannedUsers({
+    @required Community community,
+    @required String query,
+  }) async {
+    HttpieResponse response = await _communitiesApiService.searchBannedUsers(
+      communityName: community.name,
+      query: query,
+    );
+
+    _checkResponseIsOk(response);
+
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
   Future<void> banCommunityUser(
-      {@required Community community, @required String username}) async {
+      {@required Community community, @required User user}) async {
     HttpieResponse response = await _communitiesApiService.banCommunityUser(
-        communityName: community.name, username: username);
+        communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
   Future<void> unbanCommunityUser(
-      {@required Community community, @required String username}) async {
+      {@required Community community, @required User user}) async {
     HttpieResponse response = await _communitiesApiService.unbanCommunityUser(
-        communityName: community.name, username: username);
+        communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
   }
 

@@ -11,6 +11,8 @@ import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/community_banned_users.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/pages/confirm_ban_community_user.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/community_moderators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
@@ -53,7 +55,7 @@ class NavigationService {
     return Navigator.push(
         context,
         OBSlideRightRoute(
-            key: Key('obSlideCommunityPage'),
+            key: Key('obSlideConfirmAddCommunityAdministratorPage'),
             widget: OBConfirmAddCommunityAdministrator(
               community: community,
               user: user,
@@ -67,8 +69,22 @@ class NavigationService {
     return Navigator.push(
         context,
         OBSlideRightRoute(
-            key: Key('obSlideCommunityPage'),
+            key: Key('obSlideConfirmAddCommunityModeratorPage'),
             widget: OBConfirmAddCommunityModerator(
+              community: community,
+              user: user,
+            )));
+  }
+
+  Future<bool> navigateToConfirmBanCommunityUser(
+      {@required Community community,
+      @required User user,
+      @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideConfirmBanCommunityMemberPage'),
+            widget: OBConfirmBanCommunityUser(
               community: community,
               user: user,
             )));
@@ -103,6 +119,17 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obCommunityModeratorsPage'),
             widget: OBCommunityModeratorsPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityBannedUsers(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityBannedUsersPage'),
+            widget: OBCommunityBannedUsersPage(
               community: community,
             )));
   }

@@ -22,10 +22,11 @@ class OBCommunityActions extends StatelessWidget {
     User loggedInUser = userService.getLoggedInUser();
 
     bool isCommunityAdmin = community?.isAdministrator(loggedInUser) ?? false;
+    bool isCommunityModerator = community?.isModerator(loggedInUser) ?? false;
 
     List<Widget> actions = [];
 
-    if (isCommunityAdmin) {
+    if (isCommunityAdmin || isCommunityModerator) {
       actions.add(_buildManageButton(navigationService, context));
     } else {
       actions.addAll([

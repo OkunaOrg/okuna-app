@@ -28,6 +28,8 @@ class CommunitiesApiService {
       'api/communities/{communityName}/banned-users/ban/';
   static const UNBAN_COMMUNITY_USER_PATH =
       'api/communities/{communityName}/banned-users/unban/';
+  static const SEARCH_COMMUNITY_BANNED_USERS_PATH =
+      'api/communities/{communityName}/banned-users/search/';
   static const COMMUNITY_AVATAR_PATH =
       'api/communities/{communityName}/avatar/';
   static const COMMUNITY_COVER_PATH = 'api/communities/{communityName}/cover/';
@@ -454,6 +456,18 @@ class CommunitiesApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> searchBannedUsers({
+    @required String communityName,
+    @required String query,
+  }) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    String path = _makeSearchCommunityBannedUsersPath(communityName);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> banCommunityUser(
       {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
@@ -501,6 +515,11 @@ class CommunitiesApiService {
   String _makeBanCommunityUserPath(String communityName) {
     return _stringTemplateService
         .parse(BAN_COMMUNITY_USER_PATH, {'communityName': communityName});
+  }
+
+  String _makeSearchCommunityBannedUsersPath(String communityName) {
+    return _stringTemplateService.parse(
+        SEARCH_COMMUNITY_BANNED_USERS_PATH, {'communityName': communityName});
   }
 
   String _makeDeleteCommunityPath(String communityName) {
