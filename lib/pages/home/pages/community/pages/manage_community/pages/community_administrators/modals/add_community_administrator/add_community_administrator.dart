@@ -76,7 +76,7 @@ class OBAddCommunityAdministratorModalState
   Future<List<User>> _refreshCommunityMembers() async {
     UsersList communityMembers = await _userService.getMembersForCommunity(
         widget.community,
-        exclude: CommunityMembersExclusion.administrators);
+        exclude: [CommunityMembersExclusion.administrators]);
     return communityMembers.users;
   }
 
@@ -88,7 +88,7 @@ class OBAddCommunityAdministratorModalState
             widget.community,
             maxId: lastCommunityMemberId,
             count: 20,
-            exclude: CommunityMembersExclusion.administrators))
+            exclude: [CommunityMembersExclusion.administrators]))
         .users;
     return moreCommunityMembers;
   }
@@ -97,7 +97,7 @@ class OBAddCommunityAdministratorModalState
     UsersList results = await _userService.searchCommunityMembers(
         query: query,
         community: widget.community,
-        exclude: CommunityMembersExclusion.administrators);
+        exclude: [CommunityMembersExclusion.administrators]);
 
     return results.users;
   }

@@ -304,7 +304,7 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getMembersForCommunityWithId(String communityName,
-      {int count, int maxId, String exclude}) {
+      {int count, int maxId, List<String> exclude}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
@@ -321,7 +321,7 @@ class CommunitiesApiService {
   Future<HttpieResponse> searchMembers(
       {@required String communityName,
       @required String query,
-      String exclude}) {
+      List<String> exclude}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (exclude != null && exclude.isNotEmpty) queryParams['exclude'] = exclude;

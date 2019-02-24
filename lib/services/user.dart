@@ -699,13 +699,16 @@ class UserService {
   }
 
   Future<UsersList> getMembersForCommunity(Community community,
-      {int count, int maxId, CommunityMembersExclusion exclude}) async {
+      {int count, int maxId, List<CommunityMembersExclusion> exclude}) async {
     HttpieResponse response = await _communitiesApiService
         .getMembersForCommunityWithId(community.name,
             count: count,
             maxId: maxId,
             exclude: exclude != null
-                ? Community.convertExclusionToString(exclude)
+                ? exclude
+                    .map((exclude) =>
+                        Community.convertExclusionToString(exclude))
+                    .toList()
                 : null);
 
     _checkResponseIsOk(response);
@@ -716,12 +719,15 @@ class UserService {
   Future<UsersList> searchCommunityMembers(
       {@required Community community,
       @required String query,
-      CommunityMembersExclusion exclude}) async {
+      List<CommunityMembersExclusion> exclude}) async {
     HttpieResponse response = await _communitiesApiService.searchMembers(
       communityName: community.name,
       query: query,
-      exclude:
-          exclude != null ? Community.convertExclusionToString(exclude) : null,
+      exclude: exclude != null
+          ? exclude
+              .map((exclude) => Community.convertExclusionToString(exclude))
+              .toList()
+          : null,
     );
 
     _checkResponseIsOk(response);

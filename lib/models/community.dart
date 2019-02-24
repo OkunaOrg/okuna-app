@@ -22,7 +22,7 @@ class Community extends UpdatableModel<Community> {
     return result;
   }
 
-  static convertExclusionToString(CommunityMembersExclusion exclusion) {
+  static String convertExclusionToString(CommunityMembersExclusion exclusion) {
     String result;
     switch (exclusion) {
       case CommunityMembersExclusion.administrators:
