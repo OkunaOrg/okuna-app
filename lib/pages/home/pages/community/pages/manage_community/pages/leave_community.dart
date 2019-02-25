@@ -113,7 +113,10 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
     _setConfirmationInProgress(true);
     try {
       await _userService.leaveCommunity(widget.community);
-      Navigator.of(context).pop(true);
+      // Pop back to manage community
+      Navigator.of(context).pop();
+      // Pop back to community
+      Navigator.of(context).pop();
     } catch (error) {
       _onError(error);
     } finally {
