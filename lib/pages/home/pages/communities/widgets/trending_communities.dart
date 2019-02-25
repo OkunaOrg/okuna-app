@@ -33,6 +33,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
   NavigationService _navigationService;
   List<Community> _trendingCommunities;
   bool _refreshInProgress;
+  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
     _needsBootstrap = true;
     _trendingCommunities = [];
     _refreshInProgress = false;
+    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   }
 
   @override
@@ -53,14 +55,19 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
       _needsBootstrap = false;
     }
 
-    // Refresh indicator flutter doesnt work in this case
-    // https://github.com/flutter/flutter/issues/22180
-    return SingleChildScrollView(
-      physics: const ClampingScrollPhysics(),
-      controller: widget.scrollController,
-      child: _trendingCommunities.isEmpty
-          ? _buildNoTrendingCommunities()
-          : _buildTrendingCommunities(),
+    return RefreshIndicator(
+      onRefresh: _refreshTrendingCommunities,
+      key: _refreshIndicatorKey,
+      child: ListView(
+        // BUG https://github.com/flutter/flutter/issues/22180
+        //controller: widget.scrollController,
+        padding: EdgeInsets.all(0),
+        children: <Widget>[
+          _trendingCommunities.isEmpty
+              ? _buildNoTrendingCommunities()
+              : _buildTrendingCommunities()
+        ],
+      ),
     );
   }
 
@@ -93,6 +100,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
         ),
         ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
+            controller: widget.scrollController,
             separatorBuilder: _buildCommunitySeparator,
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
             shrinkWrap: true,

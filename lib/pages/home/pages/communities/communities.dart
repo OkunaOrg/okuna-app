@@ -24,6 +24,7 @@ import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -122,7 +123,9 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         _buildTabBar(),
         Expanded(
           child: TabBarView(
-              controller: _tabController, children: _buildTabBarViews()),
+              physics: const ClampingScrollPhysics(),
+              controller: _tabController,
+              children: _buildTabBarViews()),
         )
       ],
     );
@@ -241,11 +244,13 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
           _categoriesScrollControllers[currentIndex - 2];
     }
 
-    currentTabScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    if (currentTabScrollController.hasClients) {
+      currentTabScrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 
   TabController _makeTabController() {
