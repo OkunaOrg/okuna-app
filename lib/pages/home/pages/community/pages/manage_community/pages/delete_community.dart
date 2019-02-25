@@ -113,7 +113,12 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
     _setConfirmationInProgress(true);
     try {
       await _userService.deleteCommunity(widget.community);
-      Navigator.of(context).pop(true);
+      // Pop back to manage community
+      Navigator.of(context).pop();
+      // Pop back to deleted community
+      Navigator.of(context).pop();
+      // Pop out of deleted community
+      Navigator.of(context).pop();
     } catch (error) {
       _onError(error);
     } finally {

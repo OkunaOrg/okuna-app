@@ -108,7 +108,6 @@ class UpdatableModelSimpleStorage<K, V extends UpdatableModel>
   @override
   void remove(K key) {
     CacheEntry<K, UpdatableModel> item = get(key);
-    print('Disposing');
     item.value.dispose();
     this._internalMap.remove(key);
   }
