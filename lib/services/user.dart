@@ -743,9 +743,9 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
-  Future<CommunitiesList> getJoinedCommunities() async {
+  Future<CommunitiesList> getJoinedCommunities({int offset}) async {
     HttpieResponse response =
-        await _communitiesApiService.getJoinedCommunities();
+        await _communitiesApiService.getJoinedCommunities(offset: offset);
 
     _checkResponseIsOk(response);
 
@@ -888,9 +888,9 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
-  Future<CommunitiesList> getFavoriteCommunities() async {
+  Future<CommunitiesList> getFavoriteCommunities({int offset}) async {
     HttpieResponse response =
-        await _communitiesApiService.getFavoriteCommunities();
+        await _communitiesApiService.getFavoriteCommunities(offset: offset);
 
     _checkResponseIsOk(response);
 
@@ -908,6 +908,25 @@ class UserService {
         communityName: community.name);
     _checkResponseIsOk(response);
   }
+
+  Future<CommunitiesList> getAdministratedCommunities({int offset}) async {
+    HttpieResponse response =
+    await _communitiesApiService.getAdministratedCommunities(offset: offset);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> getModeratedCommunities({int offset}) async {
+    HttpieResponse response =
+    await _communitiesApiService.getModeratedCommunities(offset: offset);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
 
   Future<CategoriesList> getCategories() async {
     HttpieResponse response = await _categoriesApiService.getCategories();

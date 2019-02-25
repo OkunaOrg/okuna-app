@@ -22,7 +22,10 @@ import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists
 import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NavigationService {
@@ -219,6 +222,25 @@ class NavigationService {
               post: post,
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
+            )));
+  }
+
+  Future<void> navigateToBlankPageWithWidget(
+      {@required BuildContext context,
+      @required String navBarTitle,
+      @required Key key,
+      @required Widget widget}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: key,
+            widget: CupertinoPageScaffold(
+              navigationBar: OBThemedNavigationBar(
+                title: navBarTitle,
+              ),
+              child: OBPrimaryColorContainer(
+                child: widget,
+              ),
             )));
   }
 }

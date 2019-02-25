@@ -38,6 +38,9 @@ class CommunitiesApiService {
   static const FAVORITE_COMMUNITY_PATH =
       'api/communities/{communityName}/favorite/';
   static const GET_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/';
+  static const GET_ADMINISTRATED_COMMUNITIES_PATH =
+      'api/communities/administrated/';
+  static const GET_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/';
   static const GET_COMMUNITY_POSTS_PATH =
       'api/communities/{communityName}/posts/';
   static const CREATE_COMMUNITY_POST_PATH = 'api/communities/posts/';
@@ -343,9 +346,10 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getJoinedCommunities(
-      {bool authenticatedRequest = true}) {
+      {bool authenticatedRequest = true, int offset}) {
     return _httpService.get('$apiURL$GET_JOINED_COMMUNITIES_PATH',
-        appendAuthorizationToken: authenticatedRequest);
+        appendAuthorizationToken: authenticatedRequest,
+        queryParameters: {'offset': offset});
   }
 
   Future<HttpieResponse> joinCommunityWithId(String communityName) {
@@ -485,9 +489,10 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getFavoriteCommunities(
-      {bool authenticatedRequest = true}) {
+      {bool authenticatedRequest = true, int offset}) {
     return _httpService.get('$apiURL$GET_FAVORITE_COMMUNITIES_PATH',
-        appendAuthorizationToken: authenticatedRequest);
+        appendAuthorizationToken: authenticatedRequest,
+        queryParameters: {'offset': offset});
   }
 
   Future<HttpieResponse> favoriteCommunity({@required String communityName}) {
@@ -500,6 +505,20 @@ class CommunitiesApiService {
     String path = _makeFavoriteCommunityPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getAdministratedCommunities(
+      {bool authenticatedRequest = true, int offset}) {
+    return _httpService.get('$apiURL$GET_ADMINISTRATED_COMMUNITIES_PATH',
+        appendAuthorizationToken: authenticatedRequest,
+        queryParameters: {'offset': offset});
+  }
+
+  Future<HttpieResponse> getModeratedCommunities(
+      {bool authenticatedRequest = true, int offset}) {
+    return _httpService.get('$apiURL$GET_MODERATED_COMMUNITIES_PATH',
+        appendAuthorizationToken: authenticatedRequest,
+        queryParameters: {'offset': offset});
   }
 
   String _makeInviteUserToCommunityPath(String communityName) {

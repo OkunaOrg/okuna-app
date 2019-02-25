@@ -72,6 +72,10 @@ class OBIcon extends StatelessWidget {
                   iconColor =
                       themeValueParser.parseColor(theme.primaryTextColor);
                   break;
+                case OBIconThemeColor.secondaryText:
+                  iconColor =
+                      themeValueParser.parseColor(theme.secondaryTextColor);
+                  break;
                 case OBIconThemeColor.primaryAccent:
                   iconGradient =
                       themeValueParser.parseGradient(theme.primaryAccentColor);
@@ -179,6 +183,7 @@ class OBIcons {
   static const communityModerators = OBIconData(nativeIcon: Icons.gavel);
   static const communityBannedUsers = OBIconData(nativeIcon: Icons.block);
   static const deleteCommunity = OBIconData(nativeIcon: Icons.delete_forever);
+  static const seeMore = OBIconData(nativeIcon: Icons.arrow_right);
 
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
@@ -210,4 +215,11 @@ class OBIconData {
   });
 }
 
-enum OBIconThemeColor { primary, primaryText, primaryAccent, danger, success }
+enum OBIconThemeColor {
+  primary,
+  primaryText,
+  primaryAccent,
+  danger,
+  success,
+  secondaryText
+}

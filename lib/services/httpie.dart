@@ -355,7 +355,9 @@ class HttpieService {
   String _makeQueryString(Map<String, dynamic> queryParameters) {
     String queryString = '?';
     queryParameters.forEach((key, value) {
-      queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
+      if (value != null) {
+        queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
+      }
     });
     return queryString;
   }

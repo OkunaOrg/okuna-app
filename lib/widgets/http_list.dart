@@ -25,12 +25,12 @@ class OBHttpList<T> extends StatefulWidget {
   const OBHttpList(
       {Key key,
       @required this.listItemBuilder,
-      @required this.listSearcher,
       @required this.listRefresher,
       @required this.listOnScrollLoader,
-      @required this.searchResultListItemBuilder,
       @required this.resourceSingularName,
       @required this.resourcePluralName,
+      this.listSearcher,
+      this.searchResultListItemBuilder,
       this.controller})
       : super(key: key);
 
@@ -102,16 +102,20 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       _needsBootstrap = false;
     }
 
-    return Column(
-      children: <Widget>[
-        SizedBox(
-            child: OBSearchBar(
-          onSearch: _onSearch,
-          hintText: 'Search ' + widget.resourcePluralName + '...',
-        )),
-        Expanded(child: _hasSearch ? _buildSearchResultsList() : _buildList()),
-      ],
-    );
+    List<Widget> columnItems = [];
+
+    if (widget.listSearcher != null) {
+      columnItems.add(SizedBox(
+          child: OBSearchBar(
+        onSearch: _onSearch,
+        hintText: 'Search ' + widget.resourcePluralName + '...',
+      )));
+    }
+
+    columnItems.add(
+        Expanded(child: _hasSearch ? _buildSearchResultsList() : _buildList()));
+
+    return Column(children: columnItems);
   }
 
   Widget _buildSearchResultsList() {
