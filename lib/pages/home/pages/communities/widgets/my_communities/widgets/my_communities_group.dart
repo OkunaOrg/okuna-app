@@ -86,7 +86,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
         ),
       ),
       ListView.separated(
-          physics: const ClampingScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           separatorBuilder: _buildCommunitySeparator,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           shrinkWrap: true,

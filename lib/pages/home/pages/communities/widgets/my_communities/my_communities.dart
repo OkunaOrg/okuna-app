@@ -7,8 +7,10 @@ import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class OBMyCommunities extends StatefulWidget {
   final ScrollController scrollController;
@@ -31,6 +33,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
   UserService _userService;
   bool _needsBootstrap;
   bool _refreshInProgress;
+  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
 
   @override
   void initState() {
@@ -39,6 +42,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     _joinedCommunitiesGroupController = OBMyCommunitiesGroupController();
     _moderatedCommunitiesGroupController = OBMyCommunitiesGroupController();
     _administratedCommunitiesGroupController = OBMyCommunitiesGroupController();
+    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _refreshInProgress = false;
     _needsBootstrap = true;
   }
@@ -52,13 +56,13 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       _needsBootstrap = false;
     }
 
-    return SingleChildScrollView(
-      controller: widget.scrollController,
-      physics: const ClampingScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: _refreshAllGroups,
+      child: ListView(
+          // Need always scrollable for pull to refresh to work
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.all(0),
           children: <Widget>[
             OBMyCommunitiesGroup(
               controller: _favoriteCommunitiesGroupController,
@@ -98,9 +102,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
               communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
               noGroupItemsFallbackBuilder: _buildNoJoinedCommunitiesFallback,
             )
-          ],
-        ),
-      ),
+          ]),
     );
   }
 
@@ -258,7 +260,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
         context: context, community: community);
   }
 
-  void _refreshAllGroups() async {
+  Future<void> _refreshAllGroups() async {
     _setRefreshInProgress(true);
     try {
       await Future.wait([
