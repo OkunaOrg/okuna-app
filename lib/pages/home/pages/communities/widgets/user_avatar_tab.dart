@@ -6,7 +6,6 @@ import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBUserAvatarTab extends StatelessWidget {

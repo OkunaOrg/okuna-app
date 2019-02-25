@@ -21,7 +21,8 @@ class OBMyCommunities extends StatefulWidget {
   }
 }
 
-class OBMyCommunitiesState extends State<OBMyCommunities> {
+class OBMyCommunitiesState extends State<OBMyCommunities>
+    with AutomaticKeepAliveClientMixin {
   OBMyCommunitiesGroupController _favoriteCommunitiesGroupController;
   OBMyCommunitiesGroupController _joinedCommunitiesGroupController;
   OBMyCommunitiesGroupController _moderatedCommunitiesGroupController;
@@ -73,7 +74,8 @@ class OBMyCommunitiesState extends State<OBMyCommunities> {
                 groupName: 'administrated communities',
                 groupItemName: 'administrated community',
                 maxGroupListPreviewItems: 5,
-                communityGroupListItemBuilder: _buildAdministratedCommunityListItem,
+                communityGroupListItemBuilder:
+                    _buildAdministratedCommunityListItem,
                 communityGroupListRefresher: _refreshAdministratedCommunities,
                 communityGroupListOnScrollLoader:
                     _loadMoreAdministratedCommunities),
@@ -275,4 +277,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities> {
       _refreshInProgress = refreshInProgress;
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

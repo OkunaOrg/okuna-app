@@ -25,7 +25,8 @@ class OBTrendingCommunities extends StatefulWidget {
   }
 }
 
-class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
+class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
+    with AutomaticKeepAliveClientMixin {
   bool _needsBootstrap;
   UserService _userService;
   ToastService _toastService;
@@ -152,4 +153,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
       _refreshInProgress = refreshInProgress;
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
