@@ -21,6 +21,7 @@ import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,6 +59,9 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   bool _needsBootstrap;
 
   bool _refreshInProgress;
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -245,8 +249,12 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   }
 
   TabController _makeTabController() {
-    TabController controller =
-        TabController(length: _categories.length + 2, vsync: this);
+    int initialIndex = _tabController != null ? _tabController.index : 0;
+
+    TabController controller = TabController(
+        length: _categories.length + 2,
+        vsync: this,
+        initialIndex: initialIndex);
     return controller;
   }
 

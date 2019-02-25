@@ -101,7 +101,21 @@ class OBManageCommunityPage extends StatelessWidget {
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToFollowsLists(context: context);
+          navigationService.navigateToDeleteCommunity(
+              context: context, community: community);
+        },
+      ));
+    } else {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.leaveCommunity),
+        title: const OBText('Leave community'),
+        subtitle: const OBText(
+          'Leave the community.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToLeaveCommunity(
+              context: context, community: community);
         },
       ));
     }

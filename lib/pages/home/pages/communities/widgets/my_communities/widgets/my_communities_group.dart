@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 class OBMyCommunitiesGroup extends StatefulWidget {
   final OBHttpListRefresher<Community> communityGroupListRefresher;
   final OBHttpListOnScrollLoader<Community> communityGroupListOnScrollLoader;
+  final OBMyCommunitiesGroupFallbackBuilder noGroupItemsFallbackBuilder;
+  final OBMyCommunitiesGroupController controller;
   final String groupItemName;
   final String groupName;
   final int maxGroupListPreviewItems;
@@ -25,7 +27,9 @@ class OBMyCommunitiesGroup extends StatefulWidget {
       @required this.communityGroupListOnScrollLoader,
       @required this.groupItemName,
       @required this.groupName,
-      @required this.maxGroupListPreviewItems})
+      @required this.maxGroupListPreviewItems,
+      this.noGroupItemsFallbackBuilder,
+      this.controller})
       : super(key: key);
 
   @override
@@ -43,6 +47,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   @override
   void initState() {
     super.initState();
+    if (widget.controller != null) widget.controller.attach(this);
     _needsBootstrap = true;
     _communityGroupList = [];
   }
@@ -63,7 +68,13 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
             ? _communityGroupList.length
             : widget.maxGroupListPreviewItems;
 
-    if (listItemCount == 0) return const SizedBox();
+    if (listItemCount == 0) {
+      if (widget.noGroupItemsFallbackBuilder != null) {
+        return widget.noGroupItemsFallbackBuilder(
+            context, _refreshJoinedCommunities);
+      }
+      return const SizedBox();
+    }
 
     List<Widget> columnItems = [
       Padding(
@@ -190,3 +201,20 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
     });
   }
 }
+
+class OBMyCommunitiesGroupController {
+  OBMyCommunitiesGroupState _state;
+
+  void attach(OBMyCommunitiesGroupState state) {
+    this._state = state;
+  }
+
+  Future<void> refresh() {
+    return _state._refreshJoinedCommunities();
+  }
+}
+
+typedef Future<void> OBMyCommunitiesGroupRetry();
+
+typedef Widget OBMyCommunitiesGroupFallbackBuilder(
+    BuildContext context, OBMyCommunitiesGroupRetry retry);

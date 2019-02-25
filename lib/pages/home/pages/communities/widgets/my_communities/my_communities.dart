@@ -3,12 +3,37 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/widgets/my_communities_group.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/alerts/button_alert.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBMyCommunities extends StatelessWidget {
+class OBMyCommunities extends StatefulWidget {
   final ScrollController scrollController;
 
   const OBMyCommunities({Key key, this.scrollController}) : super(key: key);
+
+  @override
+  OBMyCommunitiesState createState() {
+    return OBMyCommunitiesState();
+  }
+}
+
+class OBMyCommunitiesState extends State<OBMyCommunities> {
+  OBMyCommunitiesGroupController _favoriteCommunitiesGroupController;
+  OBMyCommunitiesGroupController _joinedCommunitiesGroupController;
+  OBMyCommunitiesGroupController _moderatedCommunitiesGroupController;
+  OBMyCommunitiesGroupController _administratedCommunitiesGroupController;
+  bool _refreshInProgress;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoriteCommunitiesGroupController = OBMyCommunitiesGroupController();
+    _joinedCommunitiesGroupController = OBMyCommunitiesGroupController();
+    _moderatedCommunitiesGroupController = OBMyCommunitiesGroupController();
+    _administratedCommunitiesGroupController = OBMyCommunitiesGroupController();
+    _refreshInProgress = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +41,7 @@ class OBMyCommunities extends StatelessWidget {
     UserService userService = openbookProvider.userService;
 
     return SingleChildScrollView(
-      controller: scrollController,
+      controller: widget.scrollController,
       physics: const ClampingScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -24,6 +49,7 @@ class OBMyCommunities extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             OBMyCommunitiesGroup(
+              controller: _favoriteCommunitiesGroupController,
               groupName: 'favorite communities',
               groupItemName: 'favorite community',
               maxGroupListPreviewItems: 5,
@@ -34,6 +60,7 @@ class OBMyCommunities extends StatelessWidget {
                   _loadMoreFavoriteCommunities(currentCommunities, userService),
             ),
             OBMyCommunitiesGroup(
+              controller: _administratedCommunitiesGroupController,
               groupName: 'administrated communities',
               groupItemName: 'administrated community',
               maxGroupListPreviewItems: 5,
@@ -45,6 +72,7 @@ class OBMyCommunities extends StatelessWidget {
                           currentCommunities, userService),
             ),
             OBMyCommunitiesGroup(
+              controller: _moderatedCommunitiesGroupController,
               groupName: 'moderated communities',
               groupItemName: 'moderated community',
               maxGroupListPreviewItems: 5,
@@ -56,6 +84,7 @@ class OBMyCommunities extends StatelessWidget {
                           currentCommunities, userService),
             ),
             OBMyCommunitiesGroup(
+              controller: _joinedCommunitiesGroupController,
               groupName: 'joined communities',
               groupItemName: 'joined community',
               maxGroupListPreviewItems: 5,
@@ -64,6 +93,7 @@ class OBMyCommunities extends StatelessWidget {
               communityGroupListOnScrollLoader: (List<Community>
                       currentCommunities) =>
                   _loadMoreJoinedCommunities(currentCommunities, userService),
+              noGroupItemsFallbackBuilder: _buildNoJoinedCommunitiesFallback,
             )
           ],
         ),
@@ -136,5 +166,38 @@ class OBMyCommunities extends StatelessWidget {
     CommunitiesList moreModeratedCommunitiesList =
         await userService.getModeratedCommunities(offset: offset);
     return moreModeratedCommunitiesList.communities;
+  }
+
+  Widget _buildNoJoinedCommunitiesFallback(
+      BuildContext context, OBMyCommunitiesGroupRetry retry) {
+    return OBButtonAlert(
+      text: 'Join communities to see this tab come to life!',
+      onPressed: _refreshAllGroups,
+      buttonText: 'Refresh',
+      buttonIcon: OBIcons.refresh,
+      isLoading: _refreshInProgress,
+      assetImage: 'assets/images/stickers/got-it.png',
+      //isLoading: _refreshInProgress,
+    );
+  }
+
+  void _refreshAllGroups() async {
+    _setRefreshInProgress(true);
+    try {
+      await Future.wait([
+        _favoriteCommunitiesGroupController.refresh(),
+        _administratedCommunitiesGroupController.refresh(),
+        _moderatedCommunitiesGroupController.refresh(),
+        _joinedCommunitiesGroupController.refresh(),
+      ]);
+    } finally {
+      _setRefreshInProgress(false);
+    }
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
+    });
   }
 }

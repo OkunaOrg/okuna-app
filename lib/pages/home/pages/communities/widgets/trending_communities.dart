@@ -52,6 +52,8 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities> {
       _needsBootstrap = false;
     }
 
+    // Refresh indicator flutter doesnt work in this case
+    // https://github.com/flutter/flutter/issues/22180
     return SingleChildScrollView(
       physics: const ClampingScrollPhysics(),
       controller: widget.scrollController,

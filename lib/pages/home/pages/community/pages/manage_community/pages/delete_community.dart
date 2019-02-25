@@ -1,5 +1,4 @@
 import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -10,22 +9,19 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBConfirmAddCommunityAdministrator<T> extends StatefulWidget {
-  final User user;
+class OBDeleteCommunityPage<T> extends StatefulWidget {
   final Community community;
 
-  const OBConfirmAddCommunityAdministrator(
-      {Key key, @required this.user, @required this.community})
+  const OBDeleteCommunityPage({Key key, @required this.community})
       : super(key: key);
 
   @override
-  OBConfirmAddCommunityAdministratorState createState() {
-    return OBConfirmAddCommunityAdministratorState();
+  OBDeleteCommunityPageState createState() {
+    return OBDeleteCommunityPageState();
   }
 }
 
-class OBConfirmAddCommunityAdministratorState
-    extends State<OBConfirmAddCommunityAdministrator> {
+class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
@@ -40,8 +36,6 @@ class OBConfirmAddCommunityAdministratorState
 
   @override
   Widget build(BuildContext context) {
-    String username = widget.user.username;
-
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
@@ -56,29 +50,31 @@ class OBConfirmAddCommunityAdministratorState
           children: <Widget>[
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 40
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
                 child: Column(
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    OBIcon(OBIcons.communityAdministrators, themeColor: OBIconThemeColor.primaryAccent, size: OBIconSize.extraLarge,),
+                    OBIcon(
+                      OBIcons.deleteCommunity,
+                      themeColor: OBIconThemeColor.primaryAccent,
+                      size: OBIconSize.extraLarge,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     OBText(
-                      'Are you sure you want to add @$username as a community administrator?',
+                      'Are you sure you want to delete the community?',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 40,
                     ),
                     const OBText(
-                        'This will allow the member to edit the community details, administrators, moderators and banned users.')
+                        'You won\'t see it\'s posts in your timeline nor will be able to post to it anymore.')
                   ],
                 ),
               ),
@@ -116,8 +112,7 @@ class OBConfirmAddCommunityAdministratorState
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.addCommunityAdministrator(
-          community: widget.community, user: widget.user);
+      await _userService.deleteCommunity(widget.community);
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);

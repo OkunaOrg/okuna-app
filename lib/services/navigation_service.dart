@@ -15,6 +15,8 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/pages/confirm_ban_community_user.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/community_moderators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -100,6 +102,28 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obEditCommunityPage'),
             widget: OBManageCommunityPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToLeaveCommunity(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obLeaveCommunityPage'),
+            widget: OBLeaveCommunityPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToDeleteCommunity(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obDeleteCommunityPage'),
+            widget: OBDeleteCommunityPage(
               community: community,
             )));
   }
