@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
 class OBHttpList<T> extends StatefulWidget {
-  final OBHttpListSearcherItemBuilder<T> listItemBuilder;
-  final OBHttpListSearcherItemBuilder<T> searchResultListItemBuilder;
+  final OBHttpListItemBuilder<T> listItemBuilder;
+  final OBHttpListItemBuilder<T> searchResultListItemBuilder;
   final OBHttpListSearcher<T> listSearcher;
   final OBHttpListRefresher<T> listRefresher;
   final OBHttpListOnScrollLoader<T> listOnScrollLoader;
@@ -349,7 +349,7 @@ class OBHttpListController<T> {
   }
 }
 
-typedef Widget OBHttpListSearcherItemBuilder<T>(
+typedef Widget OBHttpListItemBuilder<T>(
     BuildContext context, T listItem);
 typedef Future<List<T>> OBHttpListSearcher<T>(String searchQuery);
 typedef Future<List<T>> OBHttpListRefresher<T>();

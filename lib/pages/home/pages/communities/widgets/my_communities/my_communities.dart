@@ -1,10 +1,13 @@
 import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/widgets/my_communities_group.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBMyCommunities extends StatefulWidget {
@@ -23,6 +26,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities> {
   OBMyCommunitiesGroupController _joinedCommunitiesGroupController;
   OBMyCommunitiesGroupController _moderatedCommunitiesGroupController;
   OBMyCommunitiesGroupController _administratedCommunitiesGroupController;
+  NavigationService _navigationService;
+  UserService _userService;
+  bool _needsBootstrap;
   bool _refreshInProgress;
 
   @override
@@ -33,12 +39,17 @@ class OBMyCommunitiesState extends State<OBMyCommunities> {
     _moderatedCommunitiesGroupController = OBMyCommunitiesGroupController();
     _administratedCommunitiesGroupController = OBMyCommunitiesGroupController();
     _refreshInProgress = false;
+    _needsBootstrap = true;
   }
 
   @override
   Widget build(BuildContext context) {
-    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    UserService userService = openbookProvider.userService;
+    if (_needsBootstrap) {
+      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+      _navigationService = openbookProvider.navigationService;
+      _userService = openbookProvider.userService;
+      _needsBootstrap = false;
+    }
 
     return SingleChildScrollView(
       controller: widget.scrollController,
@@ -53,46 +64,36 @@ class OBMyCommunitiesState extends State<OBMyCommunities> {
               groupName: 'favorite communities',
               groupItemName: 'favorite community',
               maxGroupListPreviewItems: 5,
-              communityGroupListRefresher: () =>
-                  _refreshFavoriteCommunities(userService),
-              communityGroupListOnScrollLoader: (List<Community>
-                      currentCommunities) =>
-                  _loadMoreFavoriteCommunities(currentCommunities, userService),
+              communityGroupListItemBuilder: _buildFavoriteCommunityListItem,
+              communityGroupListRefresher: _refreshFavoriteCommunities,
+              communityGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
             ),
             OBMyCommunitiesGroup(
-              controller: _administratedCommunitiesGroupController,
-              groupName: 'administrated communities',
-              groupItemName: 'administrated community',
-              maxGroupListPreviewItems: 5,
-              communityGroupListRefresher: () =>
-                  _refreshAdministratedCommunities(userService),
-              communityGroupListOnScrollLoader:
-                  (List<Community> currentCommunities) =>
-                      _loadMoreAdministratedCommunities(
-                          currentCommunities, userService),
-            ),
+                controller: _administratedCommunitiesGroupController,
+                groupName: 'administrated communities',
+                groupItemName: 'administrated community',
+                maxGroupListPreviewItems: 5,
+                communityGroupListItemBuilder: _buildAdministratedCommunityListItem,
+                communityGroupListRefresher: _refreshAdministratedCommunities,
+                communityGroupListOnScrollLoader:
+                    _loadMoreAdministratedCommunities),
             OBMyCommunitiesGroup(
               controller: _moderatedCommunitiesGroupController,
               groupName: 'moderated communities',
               groupItemName: 'moderated community',
               maxGroupListPreviewItems: 5,
-              communityGroupListRefresher: () =>
-                  _refreshModeratedCommunities(userService),
-              communityGroupListOnScrollLoader:
-                  (List<Community> currentCommunities) =>
-                      _loadMoreModeratedCommunities(
-                          currentCommunities, userService),
+              communityGroupListItemBuilder: _buildModeratedCommunityListItem,
+              communityGroupListRefresher: _refreshModeratedCommunities,
+              communityGroupListOnScrollLoader: _loadMoreModeratedCommunities,
             ),
             OBMyCommunitiesGroup(
               controller: _joinedCommunitiesGroupController,
               groupName: 'joined communities',
               groupItemName: 'joined community',
               maxGroupListPreviewItems: 5,
-              communityGroupListRefresher: () =>
-                  _refreshJoinedCommunities(userService),
-              communityGroupListOnScrollLoader: (List<Community>
-                      currentCommunities) =>
-                  _loadMoreJoinedCommunities(currentCommunities, userService),
+              communityGroupListItemBuilder: _buildJoinedCommunityListItem,
+              communityGroupListRefresher: _refreshJoinedCommunities,
+              communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
               noGroupItemsFallbackBuilder: _buildNoJoinedCommunitiesFallback,
             )
           ],
@@ -101,70 +102,63 @@ class OBMyCommunitiesState extends State<OBMyCommunities> {
     );
   }
 
-  Future<List<Community>> _refreshJoinedCommunities(
-      UserService userService) async {
+  Future<List<Community>> _refreshJoinedCommunities() async {
     CommunitiesList joinedCommunitiesList =
-        await userService.getJoinedCommunities();
+        await _userService.getJoinedCommunities();
     return joinedCommunitiesList.communities;
   }
 
   Future<List<Community>> _loadMoreJoinedCommunities(
-      List<Community> currentJoinedCommunities, UserService userService) async {
+      List<Community> currentJoinedCommunities) async {
     int offset = currentJoinedCommunities.length;
 
     CommunitiesList moreJoinedCommunitiesList =
-        await userService.getJoinedCommunities(offset: offset);
+        await _userService.getJoinedCommunities(offset: offset);
     return moreJoinedCommunitiesList.communities;
   }
 
-  Future<List<Community>> _refreshFavoriteCommunities(
-      UserService userService) async {
+  Future<List<Community>> _refreshFavoriteCommunities() async {
     CommunitiesList favoriteCommunitiesList =
-        await userService.getFavoriteCommunities();
+        await _userService.getFavoriteCommunities();
     return favoriteCommunitiesList.communities;
   }
 
   Future<List<Community>> _loadMoreFavoriteCommunities(
-      List<Community> currentFavoriteCommunities,
-      UserService userService) async {
+      List<Community> currentFavoriteCommunities) async {
     int offset = currentFavoriteCommunities.length;
 
     CommunitiesList moreFavoriteCommunitiesList =
-        await userService.getFavoriteCommunities(offset: offset);
+        await _userService.getFavoriteCommunities(offset: offset);
     return moreFavoriteCommunitiesList.communities;
   }
 
-  Future<List<Community>> _refreshAdministratedCommunities(
-      UserService userService) async {
+  Future<List<Community>> _refreshAdministratedCommunities() async {
     CommunitiesList administratedCommunitiesList =
-        await userService.getAdministratedCommunities();
+        await _userService.getAdministratedCommunities();
     return administratedCommunitiesList.communities;
   }
 
   Future<List<Community>> _loadMoreAdministratedCommunities(
-      List<Community> currentAdministratedCommunities,
-      UserService userService) async {
+      List<Community> currentAdministratedCommunities) async {
     int offset = currentAdministratedCommunities.length;
 
     CommunitiesList moreAdministratedCommunitiesList =
-        await userService.getAdministratedCommunities(offset: offset);
+        await _userService.getAdministratedCommunities(offset: offset);
     return moreAdministratedCommunitiesList.communities;
   }
 
-  Future<List<Community>> _refreshModeratedCommunities(
-      UserService userService) async {
+  Future<List<Community>> _refreshModeratedCommunities() async {
     CommunitiesList moderatedCommunitiesList =
-        await userService.getModeratedCommunities();
+        await _userService.getModeratedCommunities();
     return moderatedCommunitiesList.communities;
   }
 
   Future<List<Community>> _loadMoreModeratedCommunities(
-      List<Community> currentModeratedCommunities,
-      UserService userService) async {
+      List<Community> currentModeratedCommunities) async {
     int offset = currentModeratedCommunities.length;
 
     CommunitiesList moreModeratedCommunitiesList =
-        await userService.getModeratedCommunities(offset: offset);
+        await _userService.getModeratedCommunities(offset: offset);
     return moreModeratedCommunitiesList.communities;
   }
 
@@ -179,6 +173,87 @@ class OBMyCommunitiesState extends State<OBMyCommunities> {
       assetImage: 'assets/images/stickers/got-it.png',
       //isLoading: _refreshInProgress,
     );
+  }
+
+  Widget _buildJoinedCommunityListItem(
+      BuildContext context, Community community) {
+    return StreamBuilder(
+      stream: community.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
+        Community latestCommunity = snapshot.data;
+
+        if (latestCommunity == null) return const SizedBox();
+
+        User loggedInUser = _userService.getLoggedInUser();
+        return latestCommunity.isMember(loggedInUser)
+            ? _buildCommunityListItem(community)
+            : const SizedBox();
+      },
+    );
+  }
+
+  Widget _buildModeratedCommunityListItem(
+      BuildContext context, Community community) {
+    return StreamBuilder(
+      stream: community.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
+        Community latestCommunity = snapshot.data;
+
+        if (latestCommunity == null) return const SizedBox();
+
+        User loggedInUser = _userService.getLoggedInUser();
+        return latestCommunity.isModerator(loggedInUser)
+            ? _buildCommunityListItem(community)
+            : const SizedBox();
+      },
+    );
+  }
+
+  Widget _buildAdministratedCommunityListItem(
+      BuildContext context, Community community) {
+    return StreamBuilder(
+      stream: community.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
+        Community latestCommunity = snapshot.data;
+
+        if (latestCommunity == null) return const SizedBox();
+
+        User loggedInUser = _userService.getLoggedInUser();
+        return latestCommunity.isAdministrator(loggedInUser)
+            ? _buildCommunityListItem(community)
+            : const SizedBox();
+      },
+    );
+  }
+
+  Widget _buildFavoriteCommunityListItem(
+      BuildContext context, Community community) {
+    return StreamBuilder(
+      stream: community.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
+        Community latestCommunity = snapshot.data;
+
+        if (latestCommunity == null) return const SizedBox();
+
+        User loggedInUser = _userService.getLoggedInUser();
+        return latestCommunity.isFavorite
+            ? _buildCommunityListItem(community)
+            : const SizedBox();
+      },
+    );
+  }
+
+  Widget _buildCommunityListItem(Community community) {
+    return OBCommunityTile(
+      community,
+      size: OBCommunityTileSize.small,
+      onCommunityTilePressed: _onCommunityPressed,
+    );
+  }
+
+  void _onCommunityPressed(Community community) {
+    _navigationService.navigateToCommunity(
+        context: context, community: community);
   }
 
   void _refreshAllGroups() async {

@@ -8,12 +8,12 @@ import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMyCommunitiesGroup extends StatefulWidget {
   final OBHttpListRefresher<Community> communityGroupListRefresher;
+  final OBHttpListItemBuilder<Community> communityGroupListItemBuilder;
   final OBHttpListOnScrollLoader<Community> communityGroupListOnScrollLoader;
   final OBMyCommunitiesGroupFallbackBuilder noGroupItemsFallbackBuilder;
   final OBMyCommunitiesGroupController controller;
@@ -21,16 +21,17 @@ class OBMyCommunitiesGroup extends StatefulWidget {
   final String groupName;
   final int maxGroupListPreviewItems;
 
-  const OBMyCommunitiesGroup(
-      {Key key,
-      @required this.communityGroupListRefresher,
-      @required this.communityGroupListOnScrollLoader,
-      @required this.groupItemName,
-      @required this.groupName,
-      @required this.maxGroupListPreviewItems,
-      this.noGroupItemsFallbackBuilder,
-      this.controller})
-      : super(key: key);
+  const OBMyCommunitiesGroup({
+    Key key,
+    @required this.communityGroupListRefresher,
+    @required this.communityGroupListOnScrollLoader,
+    @required this.groupItemName,
+    @required this.groupName,
+    @required this.maxGroupListPreviewItems,
+    @required this.communityGroupListItemBuilder,
+    this.noGroupItemsFallbackBuilder,
+    this.controller,
+  }) : super(key: key);
 
   @override
   OBMyCommunitiesGroupState createState() {
@@ -127,19 +128,8 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   }
 
   Widget _buildGroupListPreviewItem(BuildContext context, index) {
-    return OBCommunityTile(
-      _communityGroupList[index],
-      size: OBCommunityTileSize.small,
-      onCommunityTilePressed: _onCommunityPressed,
-    );
-  }
-
-  Widget _buildGroupListItem(BuildContext context, Community community) {
-    return OBCommunityTile(
-      community,
-      size: OBCommunityTileSize.small,
-      onCommunityTilePressed: _onCommunityPressed,
-    );
+    Community community = _communityGroupList[index];
+    return widget.communityGroupListItemBuilder(context, community);
   }
 
   Widget _buildCommunitySeparator(BuildContext context, int index) {
@@ -165,11 +155,6 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
     }
   }
 
-  void _onCommunityPressed(Community community) {
-    _navigationService.navigateToCommunity(
-        context: context, community: community);
-  }
-
   void _onWantsToSeeAll() {
     _navigationService.navigateToBlankPageWithWidget(
         context: context,
@@ -185,7 +170,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: OBHttpList<Community>(
-              listItemBuilder: _buildGroupListItem,
+              listItemBuilder: widget.communityGroupListItemBuilder,
               listRefresher: widget.communityGroupListRefresher,
               listOnScrollLoader: widget.communityGroupListOnScrollLoader,
               resourcePluralName: widget.groupName,
