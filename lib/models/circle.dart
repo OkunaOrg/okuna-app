@@ -50,7 +50,7 @@ class Circle extends UpdatableModel<Circle> {
 class CircleFactory extends UpdatableModelFactory<Circle> {
   @override
   SimpleCache<int, Circle> cache =
-      SimpleCache(storage: SimpleStorage(size: 20));
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
 
   @override
   Circle makeFromJson(Map json) {

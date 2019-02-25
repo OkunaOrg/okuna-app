@@ -27,9 +27,9 @@ class User extends UpdatableModel<User> {
   CommunityMembershipList communitiesMemberships;
 
   static final navigationUsersFactory = UserFactory(
-      cache: LfuCache<int, User>(storage: SimpleStorage(size: 100)));
+      cache: LfuCache<int, User>(storage: UpdatableModelSimpleStorage(size: 100)));
   static final sessionUsersFactory = UserFactory(
-      cache: SimpleCache<int, User>(storage: SimpleStorage(size: 10)));
+      cache: SimpleCache<int, User>(storage: UpdatableModelSimpleStorage(size: 10)));
 
   factory User.fromJson(Map<String, dynamic> json,
       {bool storeInSessionCache = false}) {

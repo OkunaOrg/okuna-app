@@ -55,7 +55,7 @@ class OBTheme extends UpdatableModel<OBTheme> {
 
 class OBThemeFactory extends UpdatableModelFactory<OBTheme> {
   @override
-  SimpleCache<int, OBTheme> cache = LruCache(storage: SimpleStorage(size: 10));
+  SimpleCache<int, OBTheme> cache = LruCache(storage: UpdatableModelSimpleStorage(size: 10));
 
   @override
   OBTheme makeFromJson(Map json) {

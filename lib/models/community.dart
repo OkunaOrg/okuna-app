@@ -240,7 +240,7 @@ class Community extends UpdatableModel<Community> {
 class CommunityFactory extends UpdatableModelFactory<Community> {
   @override
   SimpleCache<int, Community> cache =
-      SimpleCache(storage: SimpleStorage(size: 20));
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
 
   @override
   Community makeFromJson(Map json) {
