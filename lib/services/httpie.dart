@@ -335,6 +335,8 @@ class HttpieService {
       var errorCode = error.osError.errorCode;
       if (errorCode == 61 ||
           errorCode == 111 ||
+          // Network is unreachable
+          errorCode == 101 ||
           errorCode == 51 ||
           errorCode == 64) {
         // Connection refused.
