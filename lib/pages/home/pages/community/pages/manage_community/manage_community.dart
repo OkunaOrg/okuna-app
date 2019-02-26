@@ -92,6 +92,19 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
+    menuListTiles.add(ListTile(
+      leading: const OBIcon(OBIcons.communityInvites),
+      title: const OBText('Invite people'),
+      subtitle: const OBText(
+        'Invite your connections and followers to join the community.',
+        style: listItemSubtitleStyle,
+      ),
+      onTap: () {
+        modalService.openInviteToCommunity(
+            context: context, community: community);
+      },
+    ));
+
     if (loggedInUserIsCreator) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.deleteCommunity),
