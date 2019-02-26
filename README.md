@@ -209,6 +209,45 @@ The original issue for the build error is [this one](https://github.com/OneSigna
 
 [Join our Slack channel](https://join.slack.com/t/openbookorg/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY), we're happy to help you troubleshoot your issue.
 
+
+# Glossary
+
+Have a term we use you would like an explanation for? [Let us know by opening an issue](https://github.com/OpenbookOrg/openbook-api/issues)!
+
+#### Circle
+
+An audience composed of multiple people created with the purpose of sharing content exclusively with it.
+
+For example, Friends, Family, Work, BFFs.
+
+#### World Circle
+
+The audience composed of the entire internet! Everyone can post to it.
+
+#### Connection
+
+A connection between two users, initiated by any of the two. It's linked to an specific circle.
+
+#### Connections Circle
+
+The audience composed by all of the people you're connected with
+
+#### Linked users
+
+Users that are either connected to us or are following us.
+
+#### Community administrators
+
+Members of a community that have the power to modify the community details + moderator powers.
+
+#### Community moderators
+
+Members of a community that have the power to ban, unban, review community post/comments reports and act on them.
+
+#### Community member
+
+A member of a community with the power to post to it and receive it's content in it's timeline.
+
 <br>
 
 #### Happy coding 🎉!
