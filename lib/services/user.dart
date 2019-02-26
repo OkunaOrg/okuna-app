@@ -162,7 +162,6 @@ class UserService {
       var userData = response.body;
       _setUserWithData(userData);
     } on HttpieConnectionRefusedError {
-      print('BITCH');
       // Response failed. Use stored user.
       String userData = await this._getStoredUserData();
       if (userData != null) {
@@ -395,6 +394,25 @@ class UserService {
   Future<UsersList> getUsersWithQuery(String query) async {
     HttpieResponse response = await _authApiService.getUsersWithQuery(query,
         authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> searchLinkedUsers(
+      {@required String query, int count, Community withCommunity}) async {
+    HttpieResponse response = await _authApiService.searchLinkedUsers(
+        query: query, count: count, withCommunity: withCommunity.name);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> getLinkedUsers(
+      {bool authenticatedRequest = true,
+      int maxId,
+      int count,
+      Community withCommunity}) async {
+    HttpieResponse response = await _authApiService.getLinkedUsers(
+        count: count, withCommunity: withCommunity.name, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }
@@ -736,11 +754,21 @@ class UserService {
   }
 
   Future<void> inviteUserToCommunity(
-      {@required Community community, @required String username}) async {
+      {@required Community community, @required User user}) async {
     HttpieResponse response =
         await _communitiesApiService.inviteUserToCommunity(
-            communityName: community.name, username: username);
+            communityName: community.name, username: user.username);
+    _checkResponseIsCreated(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<void> uninviteUserFromCommunity(
+      {@required Community community, @required User user}) async {
+    HttpieResponse response =
+        await _communitiesApiService.uninviteUserFromCommunity(
+            communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
   }
 
   Future<CommunitiesList> getJoinedCommunities({int offset}) async {
@@ -910,8 +938,8 @@ class UserService {
   }
 
   Future<CommunitiesList> getAdministratedCommunities({int offset}) async {
-    HttpieResponse response =
-    await _communitiesApiService.getAdministratedCommunities(offset: offset);
+    HttpieResponse response = await _communitiesApiService
+        .getAdministratedCommunities(offset: offset);
 
     _checkResponseIsOk(response);
 
@@ -920,13 +948,12 @@ class UserService {
 
   Future<CommunitiesList> getModeratedCommunities({int offset}) async {
     HttpieResponse response =
-    await _communitiesApiService.getModeratedCommunities(offset: offset);
+        await _communitiesApiService.getModeratedCommunities(offset: offset);
 
     _checkResponseIsOk(response);
 
     return CommunitiesList.fromJson(json.decode(response.body));
   }
-
 
   Future<CategoriesList> getCategories() async {
     HttpieResponse response = await _categoriesApiService.getCategories();

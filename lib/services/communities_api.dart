@@ -24,6 +24,8 @@ class CommunitiesApiService {
       'api/communities/{communityName}/members/leave/';
   static const INVITE_USER_TO_COMMUNITY_PATH =
       'api/communities/{communityName}/members/invite/';
+  static const UNINVITE_USER_TO_COMMUNITY_PATH =
+      'api/communities/{communityName}/members/uninvite/';
   static const BAN_COMMUNITY_USER_PATH =
       'api/communities/{communityName}/banned-users/ban/';
   static const UNBAN_COMMUNITY_USER_PATH =
@@ -345,6 +347,14 @@ class CommunitiesApiService {
         body: body, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> uninviteUserFromCommunity(
+      {@required String communityName, @required String username}) {
+    Map<String, dynamic> body = {'username': username};
+    String path = _makeUninviteUserToCommunityPath(communityName);
+    return _httpService.post(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> getJoinedCommunities(
       {bool authenticatedRequest = true, int offset}) {
     return _httpService.get('$apiURL$GET_JOINED_COMMUNITIES_PATH',
@@ -524,6 +534,11 @@ class CommunitiesApiService {
   String _makeInviteUserToCommunityPath(String communityName) {
     return _stringTemplateService
         .parse(INVITE_USER_TO_COMMUNITY_PATH, {'communityName': communityName});
+  }
+
+  String _makeUninviteUserToCommunityPath(String communityName) {
+    return _stringTemplateService.parse(
+        UNINVITE_USER_TO_COMMUNITY_PATH, {'communityName': communityName});
   }
 
   String _makeUnbanCommunityUserPath(String communityName) {

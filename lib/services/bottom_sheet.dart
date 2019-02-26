@@ -4,6 +4,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/connection_circles_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/follows_lists_picker.dart';
@@ -75,6 +76,20 @@ class BottomSheetService {
             post: post,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
+          );
+        });
+  }
+
+  Future<void> showCommunityActions(
+      {@required BuildContext context,
+      @required Community community,
+      OnCommunityReported onCommunityReported}) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBCommunityActionsBottomSheet(
+            community: community,
+            onCommunityReported: onCommunityReported,
           );
         });
   }

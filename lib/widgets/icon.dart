@@ -185,6 +185,8 @@ class OBIcons {
   static const deleteCommunity = OBIconData(nativeIcon: Icons.delete_forever);
   static const seeMore = OBIconData(nativeIcon: Icons.arrow_right);
   static const leaveCommunity = OBIconData(nativeIcon: Icons.exit_to_app);
+  static const reportCommunity = OBIconData(nativeIcon: Icons.report);
+  static const communityInvites = OBIconData(nativeIcon: Icons.email);
 
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
