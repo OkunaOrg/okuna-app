@@ -20,6 +20,7 @@ class OBMyCommunitiesGroup extends StatefulWidget {
   final String groupItemName;
   final String groupName;
   final int maxGroupListPreviewItems;
+  final String title;
 
   const OBMyCommunitiesGroup({
     Key key,
@@ -27,6 +28,7 @@ class OBMyCommunitiesGroup extends StatefulWidget {
     @required this.communityGroupListOnScrollLoader,
     @required this.groupItemName,
     @required this.groupName,
+    @required this.title,
     @required this.maxGroupListPreviewItems,
     @required this.communityGroupListItemBuilder,
     this.noGroupItemsFallbackBuilder,
@@ -44,6 +46,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   ToastService _toastService;
   NavigationService _navigationService;
   List<Community> _communityGroupList;
+  bool _refreshInProgress;
 
   @override
   void initState() {
@@ -51,6 +54,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
     if (widget.controller != null) widget.controller.attach(this);
     _needsBootstrap = true;
     _communityGroupList = [];
+    _refreshInProgress = false;
   }
 
   @override
@@ -63,14 +67,13 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       _needsBootstrap = false;
     }
 
-    String capitalizedGroupName = capitalize(widget.groupName);
     int listItemCount =
         _communityGroupList.length < widget.maxGroupListPreviewItems
             ? _communityGroupList.length
             : widget.maxGroupListPreviewItems;
 
     if (listItemCount == 0) {
-      if (widget.noGroupItemsFallbackBuilder != null) {
+      if (widget.noGroupItemsFallbackBuilder != null && !_refreshInProgress) {
         return widget.noGroupItemsFallbackBuilder(
             context, _refreshJoinedCommunities);
       }
@@ -81,7 +84,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: OBText(
-          capitalizedGroupName,
+          widget.title,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
       ),
@@ -143,6 +146,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   }
 
   Future<void> _refreshJoinedCommunities() async {
+    _setRefreshInProgress(true);
     try {
       List<Community> groupCommunities =
           await widget.communityGroupListRefresher();
@@ -152,6 +156,8 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
     } catch (error) {
       _toastService.error(message: 'Unknown error.', context: context);
       rethrow;
+    } finally {
+      _setRefreshInProgress(false);
     }
   }
 
@@ -183,6 +189,12 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   void _setCommunityGroupList(List<Community> communities) {
     setState(() {
       _communityGroupList = communities;
+    });
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
     });
   }
 }

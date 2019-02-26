@@ -101,19 +101,24 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
               onPressed: _onWantsToCreateCommunity,
             )),
         child: OBPrimaryColorContainer(
-            child: _categories.isEmpty
+            child: _categories.isEmpty && !_refreshInProgress
                 ? _buildNoCommunities()
                 : _buildCommunities()));
   }
 
   Widget _buildNoCommunities() {
-    return OBButtonAlert(
-      text: 'No communities found. Please try again in a few minutes.',
-      onPressed: _refreshCategories,
-      buttonText: 'Refresh',
-      buttonIcon: OBIcons.refresh,
-      assetImage: 'assets/images/stickers/perplexed-owl.png',
-      isLoading: _refreshInProgress,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        OBButtonAlert(
+          text: 'No categories found. Please try again in a few minutes.',
+          onPressed: _refreshCategories,
+          buttonText: 'Refresh',
+          buttonIcon: OBIcons.refresh,
+          assetImage: 'assets/images/stickers/perplexed-owl.png',
+          isLoading: _refreshInProgress,
+        )
+      ],
     );
   }
 

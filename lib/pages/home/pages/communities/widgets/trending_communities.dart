@@ -63,7 +63,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
         //controller: widget.scrollController,
         padding: EdgeInsets.all(0),
         children: <Widget>[
-          _trendingCommunities.isEmpty
+          _trendingCommunities.isEmpty && !_refreshInProgress
               ? _buildNoTrendingCommunities()
               : _buildTrendingCommunities()
         ],

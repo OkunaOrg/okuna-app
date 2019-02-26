@@ -35,7 +35,6 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
-import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Openbook/services/httpie.dart';
@@ -163,6 +162,7 @@ class UserService {
       var userData = response.body;
       _setUserWithData(userData);
     } on HttpieConnectionRefusedError {
+      print('BITCH');
       // Response failed. Use stored user.
       String userData = await this._getStoredUserData();
       if (userData != null) {

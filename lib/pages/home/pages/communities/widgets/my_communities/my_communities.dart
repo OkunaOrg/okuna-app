@@ -66,6 +66,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
           children: <Widget>[
             OBMyCommunitiesGroup(
               controller: _favoriteCommunitiesGroupController,
+              title: 'Favorites',
               groupName: 'favorite communities',
               groupItemName: 'favorite community',
               maxGroupListPreviewItems: 5,
@@ -75,6 +76,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
             ),
             OBMyCommunitiesGroup(
                 controller: _administratedCommunitiesGroupController,
+                title: 'Administrated',
                 groupName: 'administrated communities',
                 groupItemName: 'administrated community',
                 maxGroupListPreviewItems: 5,
@@ -85,6 +87,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                     _loadMoreAdministratedCommunities),
             OBMyCommunitiesGroup(
               controller: _moderatedCommunitiesGroupController,
+              title: 'Moderated',
               groupName: 'moderated communities',
               groupItemName: 'moderated community',
               maxGroupListPreviewItems: 5,
@@ -94,8 +97,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
             ),
             OBMyCommunitiesGroup(
               controller: _joinedCommunitiesGroupController,
-              groupName: 'joined communities',
-              groupItemName: 'joined community',
+              title: 'All',
+              groupName: 'all communities',
+              groupItemName: 'community',
               maxGroupListPreviewItems: 5,
               communityGroupListItemBuilder: _buildJoinedCommunityListItem,
               communityGroupListRefresher: _refreshJoinedCommunities,
