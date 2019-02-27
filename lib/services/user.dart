@@ -152,7 +152,7 @@ class UserService {
     return user.id == _loggedInUser.id;
   }
 
-  Future<void> refreshUser() async {
+  Future<User> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
     try {
@@ -160,7 +160,7 @@ class UserService {
           await _authApiService.getUserWithAuthToken(_authToken);
       _checkResponseIsOk(response);
       var userData = response.body;
-      _setUserWithData(userData);
+      return _setUserWithData(userData);
     } on HttpieConnectionRefusedError {
       // Response failed. Use stored user.
       String userData = await this._getStoredUserData();
