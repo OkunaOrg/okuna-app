@@ -1,3 +1,4 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
@@ -10,7 +11,8 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
@@ -23,6 +25,7 @@ class OBProfileCard extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+    var toastService = openbookProvider.toastService;
 
     return Stack(
       overflow: Overflow.visible,
@@ -34,9 +37,9 @@ class OBProfileCard extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  SizedBox(
-                    height: (OBUserAvatar.AVATAR_SIZE_LARGE * 0.4),
-                    width: OBUserAvatar.AVATAR_SIZE_LARGE,
+                  const SizedBox(
+                    height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
+                    width: OBAvatar.AVATAR_SIZE_EXTRA_LARGE,
                   ),
                   Expanded(child: OBProfileActions(user)),
                 ],
@@ -44,10 +47,17 @@ class OBProfileCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  OBProfileName(user),
+                  GestureDetector(
+                    onTap: () {
+                      toastService.info(
+                          message: _getUserBadgeDescription(user),
+                          context: context);
+                    },
+                    child: _buildNameRow(user),
+                  ),
                   OBProfileUsername(user),
                   OBProfileBio(user),
                   OBProfileDetails(user),
@@ -81,21 +91,38 @@ class OBProfileCard extends StatelessWidget {
           top: -19,
         ),
         Positioned(
-          top: -((OBUserAvatar.AVATAR_SIZE_LARGE / 2) * 0.7) - 10,
+          top: -((OBAvatar.AVATAR_SIZE_EXTRA_LARGE / 2)) - 10,
           left: 30,
           child: StreamBuilder(
               stream: user.updateSubject,
               builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
                 var user = snapshot.data;
 
-                return OBUserAvatar(
+                return OBAvatar(
                   borderWidth: 3,
                   avatarUrl: user?.getProfileAvatar(),
-                  size: OBUserAvatarSize.large,
+                  size: OBAvatarSize.extraLarge,
                 );
               }),
         ),
       ],
     );
+  }
+
+  Widget _getUserBadge(User user) {
+    Badge badge = user.getProfileBadges()[0];
+    return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+  }
+
+  Widget _buildNameRow(User user) {
+    if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
+      return Row(children: <Widget>[OBProfileName(user), _getUserBadge(user)]);
+    }
+    return OBProfileName(user);
+  }
+
+  String _getUserBadgeDescription(User user) {
+    Badge badge = user.getProfileBadges()[0];
+    return '${user.getProfileName()} is an ${badge.getKeywordDescription()}';
   }
 }

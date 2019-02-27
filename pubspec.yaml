@@ -7,12 +7,16 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+1
+version: 0.0.1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_pagewise: ^1.2.2
+  tinycolor: ^1.0.2
+  onesignal: ^1.0.5
+  flutter_advanced_networkimage: ^0.3.13
   dcache: ^0.1.0
   validators: ^1.0.0+1
   url_launcher: ^4.0.1
@@ -21,7 +25,7 @@ dependencies:
   flutter_cache_manager: ^0.2.0+1
   cached_network_image: ^0.5.0+1
   timeago: ^2.0.9
-  loadmore: ^1.0.1
+  loadmore: ^1.0.2
   pigment: ^1.0.3
   photo_view: ^0.1.0
   flushbar: ^1.1.2
@@ -30,12 +34,7 @@ dependencies:
   http: ^0.12.0
   intl: ^0.15.7
   rxdart: ^0.18.1
-  video_player:
-    git:
-      url: https://github.com/recastrodiaz/plugins.git
-      path: packages/video_player
-      ref: d589ee54ce405e38ebc42b1961e54273cd375726
-    version: ^0.8.0
+  video_player: ^0.10.0
   sprintf: "^4.0.0"
   image_picker: ^0.4.10
   image_cropper: ^0.0.6
@@ -115,11 +114,11 @@ flutter:
     - assets/images/icons/finish-icon.png
     - assets/images/icons/finish-icon.png
     - assets/images/icons/load-more-posts-icon.gif
-    - assets/images/loading.gif
     - assets/images/stickers/female-instructor.png
     - assets/images/stickers/got-it.png
     - assets/images/stickers/owl-instructor.png
     - assets/images/stickers/perplexed-owl.png
+    - assets/images/categories/category_all-min.png
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

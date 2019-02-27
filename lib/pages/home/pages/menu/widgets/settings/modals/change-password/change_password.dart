@@ -6,7 +6,7 @@ import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -105,9 +105,9 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
       leading: GestureDetector(
-        child: OBIcon(OBIcons.close),
+        child: const OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },

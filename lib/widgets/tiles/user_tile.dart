@@ -1,7 +1,9 @@
+import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -12,11 +14,13 @@ class OBUserTile extends StatelessWidget {
   final bool showFollowing;
   final Widget trailing;
 
-  OBUserTile(this.user,
-      {this.onUserTilePressed,
+  const OBUserTile(this.user,
+      {Key key,
+      this.onUserTilePressed,
       this.onUserTileDeleted,
-      this.showFollowing = true,
-      this.trailing});
+      this.showFollowing = false,
+      this.trailing})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +28,24 @@ class OBUserTile extends StatelessWidget {
       onTap: () {
         if (onUserTilePressed != null) onUserTilePressed(user);
       },
-      leading: OBUserAvatar(
-        size: OBUserAvatarSize.medium,
+      leading: OBAvatar(
+        size: OBAvatarSize.medium,
         avatarUrl: user.getProfileAvatar(),
       ),
       trailing: trailing,
-      title: OBText(
-        user.username,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
+      title: Row(children: <Widget>[
+        OBText(
+          user.username,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        _getUserBadge(user)
+      ]),
       subtitle: Row(
         children: [
           OBSecondaryText(user.getProfileName()),
           showFollowing && user.isFollowing != null && user.isFollowing
               ? OBSecondaryText(' · Following')
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     );
@@ -61,6 +68,14 @@ class OBUserTile extends StatelessWidget {
       );
     }
     return tile;
+  }
+
+  Widget _getUserBadge(User creator) {
+    if (creator.hasProfileBadges()) {
+      Badge badge = creator.getProfileBadges()[0];
+      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+    }
+    return const SizedBox();
   }
 }
 

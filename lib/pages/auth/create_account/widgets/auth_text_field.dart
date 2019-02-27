@@ -22,13 +22,11 @@ class OBAuthTextField extends StatelessWidget {
 
   final bool maxLengthEnforced;
 
-  final ValueChanged<String> onChanged;
-
   final VoidCallback onEditingComplete;
 
-  final ValueChanged<String> onSubmitted;
-
   final List<TextInputFormatter> inputFormatters;
+
+  final FormFieldValidator<String> validator;
 
   final bool enabled;
 
@@ -62,9 +60,8 @@ class OBAuthTextField extends StatelessWidget {
     this.maxLines = 1,
     this.maxLength,
     this.maxLengthEnforced = true,
-    this.onChanged,
     this.onEditingComplete,
-    this.onSubmitted,
+    this.validator,
     this.inputFormatters,
     this.enabled,
     this.keyboardAppearance,
@@ -74,7 +71,7 @@ class OBAuthTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       key: key,
       controller: controller,
       focusNode: focusNode,
@@ -85,9 +82,8 @@ class OBAuthTextField extends StatelessWidget {
       maxLines: maxLines,
       maxLength: maxLength,
       maxLengthEnforced: maxLengthEnforced,
-      onChanged: onChanged,
+      validator: validator,
       onEditingComplete: onEditingComplete,
-      onSubmitted: onSubmitted,
       inputFormatters: inputFormatters,
       enabled: enabled,
       keyboardAppearance: keyboardAppearance,
@@ -101,6 +97,7 @@ class OBAuthTextField extends StatelessWidget {
         border: OutlineInputBorder(),
         filled: true,
         fillColor: Colors.white,
+        errorStyle: TextStyle(color: Colors.white)
       ),
       autofocus: autofocus,
     );

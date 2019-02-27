@@ -42,7 +42,7 @@ class OBDateFieldState extends State<OBDateField> {
 
     return MergeSemantics(
       child: ListTile(
-        leading: OBIcon(OBIcons.cake),
+        leading: const OBIcon(OBIcons.cake),
         title: OBText(
           widget.title,
           style: TextStyle(fontWeight: FontWeight.bold),

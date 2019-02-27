@@ -3,19 +3,33 @@ import 'dart:io';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBCover extends StatelessWidget {
   final String coverUrl;
   final File coverFile;
-  static const double HEIGHT = 230.0;
+  static const double normalSizeHeight = 230.0;
+  static const double smallSizeHeight = 160.0;
   static const COVER_PLACEHOLDER = 'assets/images/cover.jpg';
+  final OBCoverSize size;
 
-  OBCover({this.coverUrl, this.coverFile});
+  OBCover({this.coverUrl, this.coverFile, this.size=OBCoverSize.normal});
 
   @override
   Widget build(BuildContext context) {
     Widget image;
+
+    double coverHeight;
+
+    switch(size){
+      case OBCoverSize.normal:
+        coverHeight = normalSizeHeight;
+        break;
+      case OBCoverSize.small:
+        coverHeight = smallSizeHeight;
+        break;
+      default:
+        break;
+    }
 
     if (coverFile != null) {
       image = FadeInImage(
@@ -27,7 +41,7 @@ class OBCover extends StatelessWidget {
         alignment: Alignment.center,
       );
     } else if (coverUrl == null) {
-      image = _getCoverPlaceholder(HEIGHT);
+      image = _getCoverPlaceholder(coverHeight);
     } else {
       image = CachedNetworkImage(
         fit: BoxFit.cover,
@@ -35,9 +49,9 @@ class OBCover extends StatelessWidget {
         placeholder: Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: SizedBox(
+        errorWidget: const SizedBox(
           child: Center(
-            child: OBText('Could not load cover'),
+            child: const OBText('Could not load cover'),
           ),
         ),
         height: double.infinity,
@@ -47,7 +61,7 @@ class OBCover extends StatelessWidget {
     }
 
     return SizedBox(
-      height: HEIGHT,
+      height: coverHeight,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -64,4 +78,9 @@ class OBCover extends StatelessWidget {
   Widget _getCoverPlaceholder(double coverHeight) {
     return Image.asset(COVER_PLACEHOLDER, height: coverHeight, fit: BoxFit.cover,);
   }
+}
+
+enum OBCoverSize {
+  normal,
+  small
 }

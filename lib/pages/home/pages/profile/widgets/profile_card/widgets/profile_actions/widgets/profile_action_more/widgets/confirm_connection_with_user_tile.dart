@@ -41,7 +41,7 @@ class OBConfirmConnectionWithUserTileState
 
     return ListTile(
         title: OBText('Confirm connection with $userName'),
-        leading: OBIcon(OBIcons.check),
+        leading: const OBIcon(OBIcons.check),
         onTap: _displayAddConnectionToCirclesBottomSheet);
   }
 

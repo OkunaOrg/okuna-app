@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/communities/communities.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
@@ -13,7 +14,7 @@ import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,6 @@ class OBHomePage extends StatefulWidget {
 }
 
 class OBHomePageState extends State<OBHomePage> {
-  @override
   UserService _userService;
   int _currentIndex;
   int _lastIndex;
@@ -38,6 +38,7 @@ class OBHomePageState extends State<OBHomePage> {
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
   OBMainMenuPageController _mainMenuPageController;
+  OBCommunitiesPageController _communitiesPageController;
 
   @override
   void initState() {
@@ -49,6 +50,7 @@ class OBHomePageState extends State<OBHomePage> {
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
     _mainMenuPageController = OBMainMenuPageController();
+    _communitiesPageController = OBCommunitiesPageController();
   }
 
   @override
@@ -61,10 +63,9 @@ class OBHomePageState extends State<OBHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _userService = openbookProvider.userService;
-
     if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _userService = openbookProvider.userService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -97,9 +98,12 @@ class OBHomePageState extends State<OBHomePage> {
         );
         break;
       case OBHomePageTabs.notifications:
+        page = OBMainNotificationsPage();
         break;
       case OBHomePageTabs.communities:
-        page = OBMainNotificationsPage();
+        page = OBMainCommunitiesPage(
+          controller: _communitiesPageController,
+        );
         break;
       case OBHomePageTabs.profile:
         page = OBOwnProfilePage(controller: _ownProfilePageController);
@@ -142,6 +146,15 @@ class OBHomePageState extends State<OBHomePage> {
           }
         }
 
+        if (tappedTab == OBHomePageTabs.communities &&
+            currentTab == OBHomePageTabs.communities) {
+          if (_communitiesPageController.isFirstRoute()) {
+            _communitiesPageController.scrollToTop();
+          } else {
+            _communitiesPageController.popUntilFirstRoute();
+          }
+        }
+
         if (tappedTab == OBHomePageTabs.search &&
             currentTab == OBHomePageTabs.search) {
           if (_searchPageController.isFirstRoute()) {
@@ -161,50 +174,51 @@ class OBHomePageState extends State<OBHomePage> {
       },
       items: [
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.home),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.home),
+          activeIcon: const OBIcon(
             OBIcons.home,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.search),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.search),
+          activeIcon: const OBIcon(
             OBIcons.search,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.notifications),
-          activeIcon: OBIcon(
-            OBIcons.notifications,
-            themeColor: OBIconThemeColor.primaryAccent,
-          ),
-        ),
-        BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.communities),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.communities),
+          activeIcon: const OBIcon(
             OBIcons.communities,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-            title: SizedBox(),
-            icon: OBUserAvatar(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.notifications),
+          activeIcon: const OBIcon(
+            OBIcons.notifications,
+            themeColor: OBIconThemeColor.primaryAccent,
+          ),
+        ),
+        BottomNavigationBarItem(
+            title: const SizedBox(),
+            icon: OBAvatar(
               avatarUrl: _avatarUrl,
-              size: OBUserAvatarSize.small,
+              size: OBAvatarSize.extraSmall,
             ),
             activeIcon: OBOwnProfileActiveIcon(
               avatarUrl: _avatarUrl,
+              size: OBAvatarSize.extraSmall,
             )),
         BottomNavigationBarItem(
-          title: SizedBox(),
-          icon: OBIcon(OBIcons.menu),
-          activeIcon: OBIcon(
+          title: const SizedBox(),
+          icon: const OBIcon(OBIcons.menu),
+          activeIcon: const OBIcon(
             OBIcons.menu,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
@@ -249,6 +263,6 @@ class OBHomePageState extends State<OBHomePage> {
   }
 }
 
-enum OBHomePageTabs { home, search, notifications, communities, profile, menu }
+enum OBHomePageTabs { home, search, communities, notifications, profile, menu }
 
 typedef Future<List<Circle>> OnWantsToPickCircles();

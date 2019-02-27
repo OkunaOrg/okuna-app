@@ -62,6 +62,10 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
 
     var description =
         localizationService.trans('AUTH.CREATE_ACC.DONE_DESCRIPTION');
+    var usernameText = localizationService.trans('AUTH.CREATE_ACC.YOUR_USERNAME_IS');
+    var canChangeUsernameText =
+    localizationService.trans('AUTH.CREATE_ACC.CAN_CHANGE_USERNAME');
+
 
     return Column(
       children: <Widget>[
@@ -69,7 +73,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
           '🐣‍',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(title,
@@ -79,10 +83,25 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
               fontWeight: FontWeight.bold,
               //color: Colors.white
             )),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(description,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18.0,
+              //color: Colors.white
+            )),
+        const SizedBox(
+          height: 20.0,
+        ),
+        Text(usernameText + createAccountBloc.getUsername(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18.0,
+              //color: Colors.white
+            )),
+        Text(canChangeUsernameText,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18.0,
@@ -110,7 +129,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
       ),
       onPressed: () {
         Navigator.popUntil(context, ModalRoute.withName('/auth'));
-        Navigator.pushNamed(context, '/auth/login');
+        Navigator.pushNamed(context, '/');
       },
     );
   }

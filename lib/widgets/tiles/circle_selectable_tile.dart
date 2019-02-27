@@ -27,7 +27,7 @@ class OBCircleSelectableTile extends StatelessWidget {
       onTap: () {
         onCirclePressed(circle);
       },
-      leading: Container(
+      leading: SizedBox(
         height: 40,
         width: 40,
         child: Center(

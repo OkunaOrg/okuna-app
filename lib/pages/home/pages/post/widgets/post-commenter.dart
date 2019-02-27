@@ -4,7 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
@@ -53,23 +53,23 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     bool autofocus = widget.autofocus;
     FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
 
-    return Container(
+    return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             width: 20.0,
           ),
           OBLoggedInUserAvatar(
-            size: OBUserAvatarSize.medium,
+            size: OBAvatarSize.medium,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Expanded(
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Color.fromARGB(10, 0, 0, 0),

@@ -1,39 +1,44 @@
+import 'package:Openbook/models/badge.dart';
+
 class UserProfile {
   final int id;
   String name;
-  DateTime birthDate;
   String avatar;
   String cover;
   String bio;
   String url;
   String location;
   bool followersCountVisible;
+  List<Badge> badges;
 
   UserProfile(
       {this.id,
       this.name,
-      this.birthDate,
       this.avatar,
       this.cover,
       this.bio,
       this.url,
       this.location,
+      this.badges,
       this.followersCountVisible});
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
-    var birthDateData = parsedJson['birth_date'];
-    var birthDate;
-    if (birthDateData != null) birthDate = DateTime.parse(birthDateData);
+    List badgesList;
+    List<dynamic> badges = parsedJson['badges'];
+    if (badges != null) {
+      badgesList =
+          badges.map((badgeJson) => Badge.fromJson(badgeJson)).toList();
+    }
 
     return UserProfile(
         id: parsedJson['id'],
         name: parsedJson['name'],
-        birthDate: birthDate,
         avatar: parsedJson['avatar'],
         cover: parsedJson['cover'],
         bio: parsedJson['bio'],
         url: parsedJson['url'],
         location: parsedJson['location'],
+        badges: badgesList,
         followersCountVisible: parsedJson['followers_count_visible']);
   }
 
@@ -46,9 +51,6 @@ class UserProfile {
     if (json.containsKey('location')) location = json['location'];
     if (json.containsKey('followers_count_visible'))
       followersCountVisible = json['followers_count_visible'];
-    if (json.containsKey('birth_date')) {
-      birthDate = DateTime.parse(json['birth_date']);
-    }
   }
 
   bool hasLocation() {

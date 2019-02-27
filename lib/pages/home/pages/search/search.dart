@@ -1,16 +1,16 @@
 import 'dart:async';
+import 'package:Openbook/models/communities_list.dart';
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/trending/trending.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,12 +33,17 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   NavigationService _navigationService;
 
   bool _hasSearch;
-  bool _requestInProgress;
+  bool _userSearchRequestInProgress;
+  bool _communitySearchRequestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
+  List<Community> _communitySearchResults;
   OBTrendingController _trendingController;
 
+  OBUserSearchResultsTab _selectedSearchResultsTab;
+
   StreamSubscription<UsersList> _getUsersWithQuerySubscription;
+  StreamSubscription<CommunitiesList> _getCommunitiesWithQuerySubscription;
 
   @override
   void initState() {
@@ -46,9 +51,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     if (widget.controller != null)
       widget.controller.attach(context: context, state: this);
     _trendingController = OBTrendingController();
-    _requestInProgress = false;
+    _userSearchRequestInProgress = false;
+    _communitySearchRequestInProgress = false;
     _hasSearch = false;
     _userSearchResults = [];
+    _communitySearchResults = [];
+    _selectedSearchResultsTab = OBUserSearchResultsTab.users;
   }
 
   @override
@@ -60,19 +68,18 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
 
     Widget currentWidget;
 
-    if (_requestInProgress) {
-      currentWidget = Container(
-        padding: EdgeInsets.only(top: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[OBProgressIndicator()],
-        ),
-      );
-    } else if (_hasSearch) {
+    if (_hasSearch) {
       currentWidget = OBUserSearchResults(
-        _userSearchResults,
-        _searchQuery,
-        onSearchUserPressed: _onSearchUserPressed,
+        searchQuery: _searchQuery,
+        userResults: _userSearchResults,
+        userSearchInProgress: _userSearchRequestInProgress,
+        communityResults: _communitySearchResults,
+        communitySearchInProgress: _communitySearchRequestInProgress,
+        onUserPressed: _onSearchUserPressed,
+        onCommunityPressed: _onSearchCommunityPressed,
+        selectedTab: _selectedSearchResultsTab,
+        onScroll: _onScroll,
+        onTabSelectionChanged: _onSearchTabSelectionChanged,
       );
     } else {
       currentWidget = OBTrending(
@@ -80,7 +87,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
       );
     }
 
-    return OBCupertinoPageScaffold(
+    return CupertinoPageScaffold(
         backgroundColor: Colors.white,
         child: OBPrimaryColorContainer(
           child: Column(
@@ -104,38 +111,82 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
       _setHasSearch(false);
     } else {
       _setHasSearch(true);
-      _searchForUsersWithQuery(query);
+      _searchWithQuery(query);
     }
   }
 
-  Future<List<User>> _searchForUsersWithQuery(String query) async {
+  void _onScroll() {
+    _hideKeyboard();
+  }
+
+  void _hideKeyboard() {
+    FocusScope.of(context).requestFocus(new FocusNode());
+  }
+
+  Future<void> _searchWithQuery(String query) {
+    return Future.wait([
+      _searchForUsersWithQuery(query),
+      _searchForCommunitiesWithQuery(query)
+    ]);
+  }
+
+  Future<void> _searchForUsersWithQuery(String query) async {
     if (_getUsersWithQuerySubscription != null)
       _getUsersWithQuerySubscription.cancel();
 
-    _setRequestInProgress(true);
+    _setUserSearchRequestInProgress(true);
 
-    _getUsersWithQuerySubscription = _userService
-        .getUsersWithQuery(query)
-        .asStream()
-        .listen((UsersList usersList) {
-      _getUsersWithQuerySubscription = null;
-      _setUserSearchResults(usersList.users);
-    }, onError: (error) {
-      if (error is HttpieConnectionRefusedError) {
-        _toastService.error(
-            message: 'No internet connection', context: context);
-      } else {
-        _toastService.error(message: 'Unknown error.', context: context);
-        throw error;
-      }
-    }, onDone: () {
-      _setRequestInProgress(false);
+    _getUsersWithQuerySubscription =
+        _userService.getUsersWithQuery(query).asStream().listen(
+            (UsersList usersList) {
+              _getUsersWithQuerySubscription = null;
+              _setUserSearchResults(usersList.users);
+            },
+            onError: _onRequestError,
+            onDone: () {
+              _setUserSearchRequestInProgress(false);
+            });
+  }
+
+  Future<void> _searchForCommunitiesWithQuery(String query) async {
+    if (_getCommunitiesWithQuerySubscription != null)
+      _getCommunitiesWithQuerySubscription.cancel();
+
+    _setCommunitySearchRequestInProgress(true);
+
+    _getCommunitiesWithQuerySubscription =
+        _userService.getCommunitiesWithQuery(query).asStream().listen(
+            (CommunitiesList communitiesList) {
+              _setCommunitySearchResults(communitiesList.communities);
+            },
+            onError: _onRequestError,
+            onDone: () {
+              _setCommunitySearchRequestInProgress(false);
+            });
+  }
+
+  void _onRequestError(error) {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(message: 'No internet connection', context: context);
+    } else {
+      _toastService.error(message: 'Unknown error.', context: context);
+      throw error;
+    }
+  }
+
+  void _onSearchTabSelectionChanged(OBUserSearchResultsTab newSelection) {
+    _selectedSearchResultsTab = newSelection;
+  }
+
+  void _setUserSearchRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _userSearchRequestInProgress = requestInProgress;
     });
   }
 
-  void _setRequestInProgress(bool requestInProgress) {
+  void _setCommunitySearchRequestInProgress(bool requestInProgress) {
     setState(() {
-      _requestInProgress = requestInProgress;
+      _communitySearchRequestInProgress = requestInProgress;
     });
   }
 
@@ -157,12 +208,23 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     });
   }
 
+  void _setCommunitySearchResults(List<Community> searchResults) {
+    setState(() {
+      _communitySearchResults = searchResults;
+    });
+  }
+
   void _onSearchUserPressed(User user) {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    _hideKeyboard();
     _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
-  @override
+  void _onSearchCommunityPressed(Community community) {
+    _hideKeyboard();
+    _navigationService.navigateToCommunity(
+        community: community, context: context);
+  }
+
   void scrollToTop() {
     _trendingController.scrollToTop();
   }

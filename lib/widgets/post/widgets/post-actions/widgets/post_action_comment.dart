@@ -21,14 +21,14 @@ class OBPostActionComment extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBIcon(
+            const OBIcon(
               OBIcons.comment,
               customSize: 20.0,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
-            OBText('Comment'),
+            const OBText('Comment'),
           ],
         ),
         onPressed: () {

@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'package:Openbook/services/localization.dart';
+import 'package:http/http.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+export 'package:http/http.dart';
 
 class HttpieService {
   LocalizationService _localizationService;
@@ -40,13 +42,16 @@ class HttpieService {
         appendLanguageHeader: appendLanguageHeader,
         appendAuthorizationToken: appendAuthorizationToken);
 
+    Response response;
+
     try {
-      var response = await http.post(url,
+      response = await http.post(url,
           headers: finalHeaders, body: body, encoding: encoding);
-      return HttpieResponse(response);
     } catch (error) {
       _handleRequestError(error);
     }
+
+    return HttpieResponse(response);
   }
 
   Future<HttpieResponse> put(url,
@@ -60,13 +65,15 @@ class HttpieService {
         appendLanguageHeader: appendLanguageHeader,
         appendAuthorizationToken: appendAuthorizationToken);
 
+    Response response;
+
     try {
-      var response = await http.put(url,
+      response = await http.put(url,
           headers: finalHeaders, body: body, encoding: encoding);
-      return HttpieResponse(response);
     } catch (error) {
       _handleRequestError(error);
     }
+    return HttpieResponse(response);
   }
 
   Future<HttpieResponse> patch(url,
@@ -80,13 +87,16 @@ class HttpieService {
         appendLanguageHeader: appendLanguageHeader,
         appendAuthorizationToken: appendAuthorizationToken);
 
+    Response response;
+
     try {
-      var response = await http.patch(url,
+      response = await http.patch(url,
           headers: finalHeaders, body: body, encoding: encoding);
-      return HttpieResponse(response);
     } catch (error) {
       _handleRequestError(error);
     }
+
+    return HttpieResponse(response);
   }
 
   Future<HttpieResponse> delete(url,
@@ -98,12 +108,15 @@ class HttpieService {
         appendLanguageHeader: appendLanguageHeader,
         appendAuthorizationToken: appendAuthorizationToken);
 
+    Response response;
+
     try {
-      var response = await http.delete(url, headers: finalHeaders);
-      return HttpieResponse(response);
+      response = await http.delete(url, headers: finalHeaders);
     } catch (error) {
       _handleRequestError(error);
     }
+
+    return HttpieResponse(response);
   }
 
   Future<HttpieResponse> postJSON(url,
@@ -180,12 +193,15 @@ class HttpieService {
       url = url + _makeQueryString(queryParameters);
     }
 
+    Response response;
+
     try {
-      var response = await http.get(url, headers: finalHeaders);
-      return HttpieResponse(response);
+      response = await http.get(url, headers: finalHeaders);
     } catch (error) {
       _handleRequestError(error);
     }
+
+    return HttpieResponse(response);
   }
 
   Future<HttpieStreamedResponse> postMultiform(String url,
@@ -254,6 +270,9 @@ class HttpieService {
     body.forEach((String key, dynamic value) {
       if (value is String || value is bool) {
         request.fields[key] = value.toString();
+      } else if (value is List) {
+        request.fields[key] =
+            value.map((item) => item.toString()).toList().join(',');
       } else if (value is File) {
         var fileMimeType = lookupMimeType(value.path);
         // The silly multipart API requires media type to be in type & subtype.
@@ -316,6 +335,8 @@ class HttpieService {
       var errorCode = error.osError.errorCode;
       if (errorCode == 61 ||
           errorCode == 111 ||
+          // Network is unreachable
+          errorCode == 101 ||
           errorCode == 51 ||
           errorCode == 64) {
         // Connection refused.
@@ -336,7 +357,9 @@ class HttpieService {
   String _makeQueryString(Map<String, dynamic> queryParameters) {
     String queryString = '?';
     queryParameters.forEach((key, value) {
-      queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
+      if (value != null) {
+        queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
+      }
     });
     return queryString;
   }
@@ -432,13 +455,17 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
   }
 
   Future<String> body() async {
+    String body;
+
     if (response is HttpieResponse) {
-      var castedResponse = this.response as HttpieResponse;
-      return castedResponse.body;
+      HttpieResponse castedResponse = this.response as HttpieResponse;
+      body = castedResponse.body;
     } else if (response is HttpieStreamedResponse) {
-      var castedResponse = this.response as HttpieStreamedResponse;
-      return await castedResponse.readAsString();
+      HttpieStreamedResponse castedResponse =
+          this.response as HttpieStreamedResponse;
+      body = await castedResponse.readAsString();
     }
+    return body;
   }
 }
 

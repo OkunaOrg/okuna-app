@@ -7,14 +7,13 @@ import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/cover.dart';
-import 'package:Openbook/widgets/fields/date_field.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,7 +57,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   File _avatarFile;
   File _coverFile;
   bool _followersCountVisible;
-  DateTime _birthDate;
 
   @override
   void initState() {
@@ -76,7 +74,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _bioController = TextEditingController(text: widget.user.getProfileBio());
     _avatarUrl = widget.user.getProfileAvatar();
     _coverUrl = widget.user.getProfileCover();
-    _birthDate = widget.user.getProfileBirthDate();
 
     _usernameController.addListener(_validateForm);
     _nameController.addListener(_validateForm);
@@ -111,20 +108,20 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                           left: 20,
                           child: Column(
                             children: <Widget>[
-                              SizedBox(
-                                height: (OBCover.HEIGHT) -
-                                    (OBUserAvatar.AVATAR_SIZE_LARGE / 2),
+                              const SizedBox(
+                                height: (OBCover.normalSizeHeight) -
+                                    (OBAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
                               _buildUserAvatar()
                             ],
                           ),
                         ),
-                        SizedBox(
-                            height: OBCover.HEIGHT +
-                                OBUserAvatar.AVATAR_SIZE_LARGE / 2)
+                        const SizedBox(
+                            height: OBCover.normalSizeHeight +
+                                OBAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Padding(
@@ -143,7 +140,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Username',
-                              prefixIcon: OBIcon(OBIcons.email),
+                              prefixIcon: const OBIcon(OBIcons.email),
                             ),
                           ),
                           OBTextFormField(
@@ -155,7 +152,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Name',
-                              prefixIcon: OBIcon(OBIcons.name),
+                              prefixIcon: const OBIcon(OBIcons.name),
                             ),
                           ),
                           OBTextFormField(
@@ -166,7 +163,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                                   .validateUserProfileUrl(profileUrl);
                             },
                             decoration: InputDecoration(
-                              prefixIcon: OBIcon(OBIcons.link),
+                              prefixIcon: const OBIcon(OBIcons.link),
                               labelText: 'Url',
                             ),
                           ),
@@ -179,7 +176,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Location',
-                              prefixIcon: OBIcon(OBIcons.location),
+                              prefixIcon: const OBIcon(OBIcons.location),
                             ),
                           ),
                           OBTextFormField(
@@ -193,13 +190,13 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             maxLines: 3,
                             decoration: InputDecoration(
                               labelText: 'Bio',
-                              prefixIcon: OBIcon(OBIcons.bio),
+                              prefixIcon: const OBIcon(OBIcons.bio),
                             ),
                           ),
                           OBToggleField(
                             value: _followersCountVisible,
                             title: 'Followers count',
-                            leading: OBIcon(OBIcons.followers),
+                            leading: const OBIcon(OBIcons.followers),
                             onChanged: (bool value) {
                               setState(() {
                                 _followersCountVisible = value;
@@ -211,16 +208,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                                     !_followersCountVisible;
                               });
                             },
-                          ),
-                          OBDivider(),
-                          OBDateField(
-                            title: 'Birth date',
-                            minimumDate:
-                                _validationService.getMinimumBirthDate(),
-                            maximumDate:
-                                _validationService.getMaximumBirthDate(),
-                            onChanged: _setBirthDate,
-                            initialDate: _birthDate,
                           ),
                         ],
                       ),
@@ -234,9 +221,9 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   Widget _buildNavigationBar() {
     bool newPostButtonIsEnabled = true;
 
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
       leading: GestureDetector(
-        child: OBIcon(OBIcons.close),
+        child: const OBIcon(OBIcons.close),
         onTap: () {
           Navigator.pop(context);
         },
@@ -261,11 +248,11 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         onTap: _onPressed,
         child: Stack(
           children: <Widget>[
-            OBUserAvatar(
+            OBAvatar(
               borderWidth: 3,
               avatarUrl: _avatarUrl,
               avatarFile: _avatarFile,
-              size: OBUserAvatarSize.large,
+              size: OBAvatarSize.large,
             ),
             Positioned(
               bottom: 10,
@@ -419,7 +406,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         name: _nameController.text,
         username: _usernameController.text,
         url: _urlController.text,
-        birthDate: _birthDate,
         followersCountVisible: _followersCountVisible,
         bio: _bioController.text,
         location: _locationController.text,
@@ -477,12 +463,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   void _setCoverFile(File coverFile) {
     setState(() {
       _coverFile = coverFile;
-    });
-  }
-
-  void _setBirthDate(DateTime birthDate) {
-    setState(() {
-      _birthDate = birthDate;
     });
   }
 

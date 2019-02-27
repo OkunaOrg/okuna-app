@@ -1,10 +1,12 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
+import 'package:Openbook/services/categories_api.dart';
+import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
-import 'package:Openbook/services/deep_links.dart';
+import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/emoji_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
@@ -60,6 +62,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
+  CommunitiesApiService communitiesApiService = CommunitiesApiService();
+  CategoriesApiService categoriesApiService = CategoriesApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
   ConnectionsCirclesApiService connectionsCirclesApiService =
       ConnectionsCirclesApiService();
@@ -69,26 +73,26 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   NavigationService navigationService = NavigationService();
 
   LocalizationService localizationService;
-  DeepLinksService deepLinksService = DeepLinksService();
+  UniversalLinksService universalLinksService = UniversalLinksService();
   BottomSheetService bottomSheetService = BottomSheetService();
 
   @override
   void initState() {
     super.initState();
     initAsyncState();
-    deepLinksService.setAuthApiService(authApiService);
-    deepLinksService.setToastService(toastService);
-    deepLinksService.setUserService(userService);
-    createAccountBloc.setValidationService(validationService);
+    imageCache.maximumSize = 200 << 20; // 200MB
     connectionsCirclesApiService.setHttpService(httpService);
     connectionsCirclesApiService
         .setStringTemplateService(stringTemplateService);
+    communitiesApiService.setHttpieService(httpService);
+    communitiesApiService.setStringTemplateService(stringTemplateService);
     followsListsApiService.setHttpService(httpService);
     followsListsApiService.setStringTemplateService(stringTemplateService);
     connectionsApiService.setHttpService(httpService);
     authApiService.setHttpService(httpService);
     followsApiService.setHttpService(httpService);
     createAccountBloc.setAuthApiService(authApiService);
+    createAccountBloc.setUserService(userService);
     userService.setAuthApiService(authApiService);
     userService.setPostsApiService(postsApiService);
     userService.setEmojisApiService(emojisApiService);
@@ -98,11 +102,15 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setFollowsListsApiService(followsListsApiService);
     userService.setConnectionsApiService(connectionsApiService);
     userService.setConnectionsCirclesApiService(connectionsCirclesApiService);
+    userService.setCommunitiesApiService(communitiesApiService);
+    userService.setCategoriesApiService(categoriesApiService);
     emojisApiService.setHttpService(httpService);
+    categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);
     validationService.setAuthApiService(authApiService);
     validationService.setFollowsListsApiService(followsListsApiService);
+    validationService.setCommunitiesApiService(communitiesApiService);
     validationService
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
@@ -120,6 +128,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     connectionsApiService.setApiURL(environment.apiUrl);
     connectionsCirclesApiService.setApiURL(environment.apiUrl);
     followsListsApiService.setApiURL(environment.apiUrl);
+    communitiesApiService.setApiURL(environment.apiUrl);
+    categoriesApiService.setApiURL(environment.apiUrl);
   }
 
   @override
@@ -133,23 +143,17 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   @override
   void dispose() {
     super.dispose();
-    deepLinksService.clearSubscriptionStreams();
+    universalLinksService.dispose();
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {
     localizationService = newLocalizationService;
     createAccountBloc.setLocalizationService(localizationService);
     httpService.setLocalizationService(localizationService);
-    initialiseDeepLinks(); // depends on localizationService being set
-  }
-
-  initialiseDeepLinks() {
-    deepLinksService.initUniLinks();
   }
 
   setValidationService(ValidationService newValidationService) {
     validationService = newValidationService;
-    createAccountBloc.setValidationService(validationService);
   }
 }
 

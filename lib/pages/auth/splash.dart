@@ -1,6 +1,7 @@
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
@@ -41,13 +42,12 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
     return BottomAppBar(
       color: Colors.white,
       elevation: 0.0,
-      child: Container(
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(child: _buildCreateAccountButton(context: context)),
             Expanded(
               child: _buildLoginButton(context: context),
             ),
@@ -63,7 +63,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
     return Column(
       children: <Widget>[
         OBSplashLogo(),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(headlineText,

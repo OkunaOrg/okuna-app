@@ -16,10 +16,9 @@ class OBIcon extends StatelessWidget {
   static const double MEDIUM_SIZE = 25.0;
   static const double SMALL_SIZE = 15.0;
 
-  OBIcon(this.iconData,
-      {this.size, this.customSize, this.color, this.themeColor}) {
-    assert(!(color != null && themeColor != null));
-  }
+  const OBIcon(this.iconData,
+      {this.size, this.customSize, this.color, this.themeColor})
+      : assert(!(color != null && themeColor != null));
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +72,10 @@ class OBIcon extends StatelessWidget {
                   iconColor =
                       themeValueParser.parseColor(theme.primaryTextColor);
                   break;
+                case OBIconThemeColor.secondaryText:
+                  iconColor =
+                      themeValueParser.parseColor(theme.secondaryTextColor);
+                  break;
                 case OBIconThemeColor.primaryAccent:
                   iconGradient =
                       themeValueParser.parseGradient(theme.primaryAccentColor);
@@ -124,7 +127,7 @@ class OBIcons {
   static const search = OBIconData(nativeIcon: Icons.search);
   static const notifications = OBIconData(nativeIcon: Icons.notifications);
   static const menu = OBIconData(nativeIcon: Icons.menu);
-  static const communities = OBIconData(nativeIcon: Icons.people);
+  static const communities = OBIconData(nativeIcon: Icons.bubble_chart);
   static const settings = OBIconData(nativeIcon: Icons.settings);
   static const lists = OBIconData(nativeIcon: Icons.library_books);
   static const addToList = OBIconData(nativeIcon: Icons.queue);
@@ -135,6 +138,7 @@ class OBIcons {
   static const refresh = OBIconData(nativeIcon: Icons.refresh);
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
+  static const add = OBIconData(nativeIcon: Icons.add);
   static const moreVertical = OBIconData(nativeIcon: Icons.more_vert);
   static const moreHorizontal = OBIconData(nativeIcon: Icons.more_horiz);
   static const react = OBIconData(nativeIcon: Icons.sentiment_very_satisfied);
@@ -149,7 +153,6 @@ class OBIcons {
   static const name = OBIconData(nativeIcon: Icons.person);
   static const followers = OBIconData(nativeIcon: Icons.supervisor_account);
   static const cake = OBIconData(nativeIcon: Icons.cake);
-  static const add = OBIconData(nativeIcon: Icons.add_circle_outline);
   static const remove = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const checkCircle =
       OBIconData(nativeIcon: Icons.radio_button_unchecked);
@@ -165,6 +168,28 @@ class OBIcons {
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
   static const camera = OBIconData(nativeIcon: Icons.camera_alt);
+  static const privateCommunity = OBIconData(nativeIcon: Icons.lock);
+  static const publicCommunity = OBIconData(nativeIcon: Icons.public);
+  static const communityDescription = OBIconData(nativeIcon: Icons.book);
+  static const communityTitle = OBIconData(nativeIcon: Icons.public);
+  static const communityName = OBIconData(nativeIcon: Icons.public);
+  static const communityRules = OBIconData(nativeIcon: Icons.straighten);
+  static const category = OBIconData(nativeIcon: Icons.category);
+  static const communityMember = OBIconData(nativeIcon: Icons.person);
+  static const communityMembers = OBIconData(nativeIcon: Icons.people);
+  static const color = OBIconData(nativeIcon: Icons.format_paint);
+  static const shortText = OBIconData(nativeIcon: Icons.short_text);
+  static const communityAdministrators = OBIconData(nativeIcon: Icons.star);
+  static const communityModerators = OBIconData(nativeIcon: Icons.gavel);
+  static const communityBannedUsers = OBIconData(nativeIcon: Icons.block);
+  static const deleteCommunity = OBIconData(nativeIcon: Icons.delete_forever);
+  static const seeMore = OBIconData(nativeIcon: Icons.arrow_right);
+  static const leaveCommunity = OBIconData(nativeIcon: Icons.exit_to_app);
+  static const reportCommunity = OBIconData(nativeIcon: Icons.report);
+  static const communityInvites = OBIconData(nativeIcon: Icons.email);
+  static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
+  static const unfavoriteCommunity = OBIconData(nativeIcon: Icons.remove_circle);
+
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
@@ -195,4 +220,11 @@ class OBIconData {
   });
 }
 
-enum OBIconThemeColor { primary, primaryText, primaryAccent, danger, success }
+enum OBIconThemeColor {
+  primary,
+  primaryText,
+  primaryAccent,
+  danger,
+  success,
+  secondaryText
+}

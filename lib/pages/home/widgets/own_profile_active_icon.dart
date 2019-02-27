@@ -1,12 +1,13 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBOwnProfileActiveIcon extends StatelessWidget {
   final String avatarUrl;
+  final OBAvatarSize size;
 
-  const OBOwnProfileActiveIcon({Key key, this.avatarUrl}) : super(key: key);
+  const OBOwnProfileActiveIcon({Key key, this.avatarUrl, this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,9 @@ class OBOwnProfileActiveIcon extends StatelessWidget {
                     color: themeValueParserService
                         .parseGradient(theme.primaryAccentColor).colors[1])),
             padding: EdgeInsets.all(2.0),
-            child: OBUserAvatar(
+            child: OBAvatar(
               avatarUrl: avatarUrl,
-              size: OBUserAvatarSize.small,
+              size: size,
             ),
           );
         });

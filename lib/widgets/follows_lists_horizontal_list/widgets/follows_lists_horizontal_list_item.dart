@@ -54,7 +54,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             OBText(

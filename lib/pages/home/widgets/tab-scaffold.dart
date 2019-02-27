@@ -306,7 +306,7 @@ class _TabSwitchingViewState extends State<_TabSwitchingView> {
             enabled: active,
             child: FocusScope(
               node: tabFocusNodes[index],
-              child: tabs[index] ?? Container(),
+              child: tabs[index] ?? SizedBox(),
             ),
           ),
         );

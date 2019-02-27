@@ -1,6 +1,7 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -59,16 +60,16 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildHeading(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     _buildLoginForm(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildLoginFeedback()
@@ -78,7 +79,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -96,9 +97,9 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildLoginFeedback() {
-    if (_loginFeedback == null) return Container();
+    if (_loginFeedback == null) return const SizedBox();
 
-    return Container(
+    return SizedBox(
       child: Text(
         _loginFeedback,
         style: TextStyle(fontSize: 16.0, color: Colors.deepOrange),
@@ -153,7 +154,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       child: Row(
         children: <Widget>[
           Icon(Icons.arrow_back_ios),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -178,13 +179,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
           '👋',
           style: TextStyle(fontSize: 45.0, color: Colors.black),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(titleText,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         Text(subtitleText,
@@ -211,11 +212,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Container(
+            SizedBox(
               child: Row(children: <Widget>[
                 new Expanded(
-                  child: Container(
-                      color: Colors.transparent,
+                  child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                      ),
                       child: Column(
                         children: <Widget>[
                           TextFormField(
@@ -228,7 +231,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                             ),
                             autocorrect: false,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           TextFormField(

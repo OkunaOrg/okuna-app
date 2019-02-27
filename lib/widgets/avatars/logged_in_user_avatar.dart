@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/avatars/user_avatar.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
 
 class OBLoggedInUserAvatar extends StatefulWidget {
-  final OBUserAvatarSize size;
+  final OBAvatarSize size;
   final VoidCallback onPressed;
 
-  OBLoggedInUserAvatar({this.size, this.onPressed});
+  const OBLoggedInUserAvatar({this.size, this.onPressed});
 
   @override
   OBLoggedInUserAvatarState createState() {
@@ -50,7 +50,7 @@ class OBLoggedInUserAvatarState extends State<OBLoggedInUserAvatar> {
       _needsBootstrap = false;
     }
 
-    return OBUserAvatar(
+    return OBAvatar(
       avatarUrl: _avatarUrl,
       size: widget.size,
       onPressed: widget.onPressed,

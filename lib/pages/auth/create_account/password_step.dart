@@ -1,6 +1,7 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
@@ -15,19 +16,17 @@ class OBAuthPasswordStepPage extends StatefulWidget {
 }
 
 class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
-  bool isSubmitted;
   bool passwordIsVisible;
-  bool isBootstrapped;
-
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
+  ValidationService validationService;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
   TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
-    isBootstrapped = false;
-    isSubmitted = false;
     passwordIsVisible = false;
     super.initState();
   }
@@ -36,24 +35,22 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     localizationService = openbookProvider.localizationService;
+    validationService = openbookProvider.validationService;
     createAccountBloc = openbookProvider.createAccountBloc;
+
 
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourPassword(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildPasswordForm(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildPasswordError()
                   ],
                 ))),
       ),
@@ -61,8 +58,8 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,59 +75,29 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     );
   }
 
-  Widget _buildPasswordError() {
-    return StreamBuilder(
-      stream: createAccountBloc.passwordFeedback,
-      initialData: null,
-      builder: (context, snapshot) {
-        String feedback = snapshot.data;
-        if (feedback == null || !isSubmitted) {
-          return Container();
-        }
-
-        return Container(
-          child: Text(
-            feedback,
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildNextButton() {
     String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
-    return StreamBuilder(
-      stream: createAccountBloc.passwordIsValid,
-      initialData: false,
-      builder: (context, snapshot) {
-        bool passwordIsValid = snapshot.data;
-
-        Function onPressed;
-
-        if (passwordIsValid) {
-          onPressed = () {
-            Navigator.pushNamed(context, '/auth/avatar_step');
-          };
-        } else {
-          onPressed = () {
-            setState(() {
-              createAccountBloc.password.add(_passwordController.text);
-              isSubmitted = true;
-            });
-          };
-        }
-
-        return OBSuccessButton(
-          minWidth: double.infinity,
-          size: OBButtonSize.large,
-          child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-          onPressed: onPressed,
-        );
-      },
+    return OBSuccessButton(
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
+      child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
+      onPressed: onPressedNextStep,
     );
+  }
+
+  bool _validateForm() {
+    return _formKey.currentState.validate();
+  }
+
+  void onPressedNextStep() {
+    bool isPasswordValid = _validateForm();
+    if (isPasswordValid) {
+      setState(() {
+        createAccountBloc.setPassword(_passwordController.text);
+        Navigator.pushNamed(context, '/auth/legal_age_step');
+      });
+    }
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
@@ -145,7 +112,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -164,13 +131,16 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     String whatPasswordText =
         localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
 
+    String minCharsText =
+    localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD_SUBTEXT');
+
     return Column(
       children: <Widget>[
         Text(
           '🔒',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(whatPasswordText,
@@ -179,47 +149,47 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white)),
+        SizedBox(
+          height: 10.0,
+        ),
+        Text(minCharsText,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
       ],
     );
   }
 
   Widget _buildPasswordForm() {
-    // If we use StreamBuilder to build the TexField it has a weird
-    // bug which places the cursor at the beginning of the label everytime
-    // the stream changes. Therefore a flag is used to bootstrap initial value
 
-    if (!isBootstrapped && createAccountBloc.hasPassword()) {
-      _passwordController.text = createAccountBloc.getPassword();
-      isBootstrapped = true;
-    }
-
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(children: <Widget>[
-            new Expanded(
-              child: Container(
-                  color: Colors.transparent,
-                  child: OBAuthTextField(
-                    obscureText: !passwordIsVisible,
-                    autocorrect: false,
-                    onChanged: (String value) {
-                      createAccountBloc.password.add(value);
-                    },
-                    suffixIcon: GestureDetector(
-                      child: Icon(passwordIsVisible
-                          ? Icons.visibility_off
-                          : Icons.visibility),
-                      onTap: () {
-                        _togglePasswordVisibility();
-                      },
-                    ),
-                    controller: _passwordController,
-                  )),
-            ),
-          ]),
+    return Form(
+      key: _formKey,
+      child: Row(children: <Widget>[
+        new Expanded(
+          child: Container(
+              color: Colors.transparent,
+              child: OBAuthTextField(
+                autocorrect: false,
+                obscureText: !passwordIsVisible,
+                validator: (String password) {
+                  String validatePassword = validationService.validateUserPassword(password);
+                  if (validatePassword != null) return validatePassword;
+                },
+                suffixIcon: GestureDetector(
+                  child: Icon(passwordIsVisible
+                      ? Icons.visibility_off
+                      : Icons.visibility),
+                  onTap: () {
+                    _togglePasswordVisibility();
+                  },
+                ),
+                controller: _passwordController,
+              )
+          ),
         ),
-      ],
+      ]),
     );
   }
 

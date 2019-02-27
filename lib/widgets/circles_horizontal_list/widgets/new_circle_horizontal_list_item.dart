@@ -1,4 +1,3 @@
-import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/widgets/circle_color_preview.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -40,7 +39,7 @@ class OBNewCircleHorizontalListItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(50)),
-                    child: OBIcon(
+                    child: const OBIcon(
                       OBIcons.add,
                       themeColor: OBIconThemeColor.primaryAccent,
                     ),
@@ -50,7 +49,7 @@ class OBNewCircleHorizontalListItem extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             OBText(

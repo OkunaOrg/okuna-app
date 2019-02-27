@@ -68,7 +68,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
                 decoration: BoxDecoration(
                     color: Pigment.fromString('#1d1d1d'),
                     borderRadius: BorderRadius.circular(50)),
-                child: OBIcon(
+                child: const OBIcon(
                   OBIcons.close,
                   size: OBIconSize.large,
                   color: Colors.white,

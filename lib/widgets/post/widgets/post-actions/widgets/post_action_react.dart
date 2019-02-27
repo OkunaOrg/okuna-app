@@ -6,7 +6,6 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBPostActionReact extends StatelessWidget {
   final Post _post;
@@ -23,7 +22,7 @@ class OBPostActionReact extends StatelessWidget {
       stream: _post.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
         Post post = snapshot.data;
-        if (post == null) return SizedBox();
+        if (post == null) return const SizedBox();
         PostReaction reaction = post.reaction;
         bool hasReaction = reaction != null;
 
@@ -44,13 +43,13 @@ class OBPostActionReact extends StatelessWidget {
                 ? CachedNetworkImage(
                     height: 18.0,
                     imageUrl: reaction.getEmojiImage(),
-                    placeholder: SizedBox(),
-                    errorWidget: Container(
+                    placeholder: const SizedBox(),
+                    errorWidget: SizedBox(
                       child: Center(child: Text('?')),
                     ),
                   )
-                : OBIcon(OBIcons.react, customSize: 20.0,),
-            SizedBox(
+                : const OBIcon(OBIcons.react, customSize: 20.0,),
+            const SizedBox(
               width: 10.0,
             ),
             OBText(

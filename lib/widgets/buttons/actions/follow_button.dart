@@ -40,7 +40,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
 
-        if (user?.isFollowing == null) return SizedBox();
+        if (user?.isFollowing == null) return const SizedBox();
 
         return user.isFollowing ? _buildUnfollowButton() : _buildFollowButton();
       },

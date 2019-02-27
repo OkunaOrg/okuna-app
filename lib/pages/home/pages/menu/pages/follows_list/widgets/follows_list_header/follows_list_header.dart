@@ -34,7 +34,7 @@ class OBFollowsListHeader extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
-                child: OBText('Users',
+                child: const OBText('Users',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
               ),

@@ -7,7 +7,6 @@ import 'package:pigment/pigment.dart';
 
 class OBColorField extends StatefulWidget {
   final String initialColor;
-  final String subtitle;
   final String labelText;
   final String hintText;
   final OnNewColor onNewColor;
@@ -15,7 +14,6 @@ class OBColorField extends StatefulWidget {
   const OBColorField(
       {Key key,
       this.initialColor,
-      this.subtitle,
       this.labelText,
       @required this.onNewColor,
       this.hintText})
@@ -55,7 +53,7 @@ class OBColorFieldState extends State<OBColorField> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color:
-                      _color == null ? SizedBox() : Pigment.fromString(_color),
+                      _color == null ? const SizedBox() : Pigment.fromString(_color),
                 ),
                 height: 30,
                 width: 30,

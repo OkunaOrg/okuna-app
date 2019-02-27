@@ -1,6 +1,5 @@
 import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';

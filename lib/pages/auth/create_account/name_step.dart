@@ -1,6 +1,7 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
@@ -15,43 +16,37 @@ class OBAuthNameStepPage extends StatefulWidget {
 }
 
 class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
-  bool isSubmitted;
-  bool isBootstrapped;
-
-  CreateAccountBloc createAccountBloc;
-  LocalizationService localizationService;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  CreateAccountBloc _createAccountBloc;
+  LocalizationService _localizationService;
+  ValidationService _validationService;
 
   TextEditingController _nameController = TextEditingController();
 
   @override
   void initState() {
-    isBootstrapped = false;
-    isSubmitted = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    localizationService = openbookProvider.localizationService;
-    createAccountBloc = openbookProvider.createAccountBloc;
+    _localizationService = openbookProvider.localizationService;
+    _createAccountBloc = openbookProvider.createAccountBloc;
+    _validationService = openbookProvider.validationService;
 
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-            child: Container(
+            child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
                     _buildWhatYourName(context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _buildNameForm(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildNameError()
                   ],
                 ))),
       ),
@@ -59,7 +54,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -76,63 +71,33 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
     );
   }
 
-  Widget _buildNameError() {
-    return StreamBuilder(
-      stream: createAccountBloc.nameFeedback,
-      initialData: null,
-      builder: (context, snapshot) {
-        String feedback = snapshot.data;
-        if (feedback == null || !isSubmitted) {
-          return Container();
-        }
-
-        return Container(
-          child: Text(
-            feedback,
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
+  Widget _buildNextButton() {
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    return OBSuccessButton(
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
+      child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
+      onPressed: onPressedNextStep,
     );
   }
 
-  Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
 
-    return StreamBuilder(
-      stream: createAccountBloc.nameIsValid,
-      initialData: false,
-      builder: (context, snapshot) {
-        bool nameIsValid = snapshot.data;
+  bool _validateForm() {
+    return _formKey.currentState.validate();
+  }
 
-        Function onPressed;
-
-        if (nameIsValid) {
-          onPressed = () {
-            Navigator.pushNamed(context, '/auth/username_step');
-          };
-        } else {
-          onPressed = () {
-            setState(() {
-              createAccountBloc.name.add(_nameController.text);
-              isSubmitted = true;
-            });
-          };
-        }
-
-        return OBSuccessButton(
-          minWidth: double.infinity,
-          size: OBButtonSize.large,
-          child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-          onPressed: onPressed,
-        );
-      },
-    );
+  void onPressedNextStep() {
+    bool isNameValid = _validateForm();
+    if (isNameValid) {
+      setState(() {
+        _createAccountBloc.setName(_nameController.text);
+        Navigator.pushNamed(context, '/auth/email_step');
+      });
+    }
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -143,7 +108,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Text(
@@ -160,7 +125,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
 
   Widget _buildWhatYourName({@required BuildContext context}) {
     String whatNameText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
+        _localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
 
     return Column(
       children: <Widget>[
@@ -168,7 +133,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
           '📛',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
         Text(whatNameText,
@@ -182,37 +147,29 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   }
 
   Widget _buildNameForm() {
-    // If we use StreamBuilder to build the TexField it has a weird
-    // bug which places the cursor at the beginning of the label everytime
-    // the stream changes. Therefore a flag is used to bootstrap initial value
-
-    if (!isBootstrapped && createAccountBloc.hasName()) {
-      _nameController.text = createAccountBloc.getName();
-      isBootstrapped = true;
-    }
 
     String nameInputPlaceholder =
-        localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
+        _localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
 
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(children: <Widget>[
-            new Expanded(
-              child: Container(
-                  color: Colors.transparent,
-                  child: OBAuthTextField(
-                    autocorrect: false,
-                    onChanged: (String value) {
-                      createAccountBloc.name.add(value);
-                    },
-                    hintText: nameInputPlaceholder,
-                    controller: _nameController,
-                  )),
-            ),
-          ]),
+    return Form(
+      key: _formKey,
+      child: Row(children: <Widget>[
+        new Expanded(
+          child: Container(
+              color: Colors.transparent,
+              child: OBAuthTextField(
+                autocorrect: false,
+                hintText: nameInputPlaceholder,
+                validator: (String name) {
+                  String validateName = _validationService
+                      .validateUserProfileName(name);
+                  if (validateName != null) return validateName;
+                },
+                controller: _nameController,
+              )
+          ),
         ),
-      ],
+      ]),
     );
   }
 }

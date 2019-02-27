@@ -1,14 +1,17 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/buttons/accent_button.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/icon_button.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -23,11 +26,14 @@ class OBFollowsListsPage extends StatefulWidget {
 class OBFollowsListsPageState extends State<OBFollowsListsPage> {
   UserService _userService;
   ToastService _toastService;
+  ModalService _modalService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _followsListsScrollController;
   List<FollowsList> _followsLists = [];
   List<FollowsList> _followsListsSearchResults = [];
+
+  String _searchQuery;
 
   bool _needsBootstrap;
 
@@ -42,84 +48,78 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
-    _toastService = provider.toastService;
-    var modalService = provider.modalService;
-
     if (_needsBootstrap) {
+      var provider = OpenbookProvider.of(context);
+      _userService = provider.userService;
+      _toastService = provider.toastService;
+      _modalService = provider.modalService;
+
       _bootstrap();
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBNavigationBar(
+        navigationBar: OBThemedNavigationBar(
           title: 'My lists',
+          trailing: OBIconButton(
+            OBIcons.add,
+            themeColor: OBIconThemeColor.primaryAccent,
+            onPressed: _onWantsToCreateList,
+          ),
         ),
         child: Stack(
           children: <Widget>[
             OBPrimaryColorContainer(
-              child: Container(
                 child: Column(
-                  children: <Widget>[
-                    Container(
-                        child: OBSearchBar(
-                      onSearch: _onSearch,
-                      hintText: 'Search for a list...',
-                    )),
-                    Expanded(
-                      child: RefreshIndicator(
-                          key: _refreshIndicatorKey,
-                          child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              controller: _followsListsScrollController,
-                              padding: EdgeInsets.all(0),
-                              itemCount: _followsListsSearchResults.length,
-                              itemBuilder: (context, index) {
-                                int commentIndex = index;
+              children: <Widget>[
+                SizedBox(
+                    child: OBSearchBar(
+                  onSearch: _onSearch,
+                  hintText: 'Search for a list...',
+                )),
+                Expanded(
+                  child: RefreshIndicator(
+                      key: _refreshIndicatorKey,
+                      child: ListView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          controller: _followsListsScrollController,
+                          padding: EdgeInsets.all(0),
+                          itemCount: _followsListsSearchResults.length + 1,
+                          itemBuilder: (context, index) {
 
-                                var followsList =
-                                    _followsListsSearchResults[commentIndex];
+                            if (index ==
+                                _followsListsSearchResults.length) {
+                              if (_followsListsSearchResults.isEmpty) {
+                                // Results were empty
+                                return ListTile(
+                                    leading: OBIcon(OBIcons.sad),
+                                    title: OBText(
+                                        'No list found for "$_searchQuery"'));
+                              } else {
+                                return const SizedBox();
+                              }
+                            }
 
-                                var onFollowsListDeletedCallback = () {
-                                  _removeFollowsList(followsList);
-                                };
+                            var followsList = _followsListsSearchResults[index];
 
-                                return OBFollowsListTile(
-                                  followsList: followsList,
-                                  onFollowsListDeletedCallback:
-                                      onFollowsListDeletedCallback,
-                                );
-                              }),
-                          onRefresh: _refreshComments),
-                    ),
-                  ],
+                            var onFollowsListDeletedCallback = () {
+                              _removeFollowsList(followsList);
+                            };
+
+                            return OBFollowsListTile(
+                              followsList: followsList,
+                              onFollowsListDeletedCallback:
+                                  onFollowsListDeletedCallback,
+                            );
+                          }),
+                      onRefresh: _refreshComments),
                 ),
-              ),
-            ),
-            Positioned(
-                bottom: 20.0,
-                right: 20.0,
-                child: OBAccentButton(
-                    onPressed: () async {
-                      FollowsList createdFollowsList = await modalService
-                          .openCreateFollowsList(context: context);
-                      if (createdFollowsList != null) {
-                        _onFollowsListCreated(createdFollowsList);
-                      }
-                    },
-                    icon: OBIcon(
-                      OBIcons.add,
-                      size: OBIconSize.small,
-                      color: Colors.white,
-                    ),
-                    child: Text('Create new list')))
+              ],
+            )),
           ],
         ));
   }
-
-  void scrollToTop() {}
 
   void _bootstrap() async {
     await _refreshComments();
@@ -130,7 +130,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
       _followsLists = (await _userService.getFollowsLists()).lists;
       _setFollowsLists(_followsLists);
       _scrollToTop();
-    } on HttpieConnectionRefusedError catch (error) {
+    } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
       _toastService.error(message: 'Unknown error', context: context);
@@ -138,12 +138,22 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     }
   }
 
+  void _onWantsToCreateList() async {
+    FollowsList createdFollowsList =
+        await _modalService.openCreateFollowsList(context: context);
+    if (createdFollowsList != null) {
+      _onFollowsListCreated(createdFollowsList);
+    }
+  }
+
   void _onSearch(String query) {
     if (query.isEmpty) {
       _resetFollowsListsSearchResults();
+      _setSearchQuery(null);
       return;
     }
 
+    _setSearchQuery(query);
     String uppercaseQuery = query.toUpperCase();
     var searchResults = _followsLists.where((followsList) {
       return followsList.name.toUpperCase().contains(uppercaseQuery);
@@ -188,6 +198,12 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     setState(() {
       this._followsLists = followsLists;
       _resetFollowsListsSearchResults();
+    });
+  }
+
+  void _setSearchQuery(String searchQuery) {
+    setState(() {
+      _searchQuery = searchQuery;
     });
   }
 }

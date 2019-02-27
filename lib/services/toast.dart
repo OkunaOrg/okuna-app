@@ -1,12 +1,15 @@
-import 'package:Openbook/widgets/icon.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:Openbook/toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 enum ToastType { info, warning, success, error }
 
 class ToastService {
   static const Duration toastDuration = Duration(seconds: 3);
+  static Color colorError = Colors.redAccent;
+  static Color colorSuccess = Colors.greenAccent[700];
+  static Color colorInfo = Colors.blueGrey;
+  static Color colorWarning = Colors.yellow[800];
 
   void warning({
     String title,
@@ -71,30 +74,43 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
-    Widget icon;
-    Color backgroundColor;
+    print(message);
+    if (context != null) {
+      OpenbookToast.of(context).showToast(ToastConfig(color: _getToastColor(type), message: message));
+    } else {
+      print('Context was null, cannot show toast');
+    }
+  }
+
+  Color _getToastColor(ToastType type) {
+    var color;
 
     switch (type) {
-      case ToastType.warning:
-        icon = OBIcon(OBIcons.warning);
-        backgroundColor = Pigment.fromString('#EFB500');
+      case ToastType.error:
+        color = colorError;
         break;
       case ToastType.info:
-        icon = OBIcon(OBIcons.info);
-        backgroundColor = Pigment.fromString('#008BEF');
+        color = colorInfo;
         break;
       case ToastType.success:
-        icon = OBIcon(OBIcons.success);
-        backgroundColor = Pigment.fromString('#7FD421');
+        color = colorSuccess;
         break;
-      case ToastType.error:
-        icon = OBIcon(OBIcons.error);
-        backgroundColor = Pigment.fromString('#D42140');
+      case ToastType.warning:
+        color = colorWarning;
         break;
-      default:
-        throw 'Unsupported ToastType';
     }
 
-    print(message);
+    return color;
   }
+}
+
+class ToastConfig {
+  final Color color;
+  final String message;
+
+  ToastConfig({
+    this.color,
+    this.message
+  });
+
 }

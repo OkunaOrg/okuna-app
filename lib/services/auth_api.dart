@@ -17,6 +17,8 @@ class AuthApiService {
   static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const UPDATE_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const GET_USERS_PATH = 'api/auth/users/';
+  static const GET_LINKED_USERS_PATH = 'api/auth/linked-users/';
+  static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const LOGIN_PATH = 'api/auth/login/';
 
   void setHttpService(HttpieService httpService) {
@@ -40,16 +42,17 @@ class AuthApiService {
   Future<HttpieStreamedResponse> updateUserEmail({@required String email}) {
     Map<String, dynamic> body = {};
     body['email'] = email;
-    return _httpService
-        .patchMultiform('$apiURL$UPDATE_EMAIL_PATH', body: body, appendAuthorizationToken: true);
+    return _httpService.patchMultiform('$apiURL$UPDATE_EMAIL_PATH',
+        body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieStreamedResponse> updateUserPassword({@required String currentPassword, @required String newPassword}) {
+  Future<HttpieStreamedResponse> updateUserPassword(
+      {@required String currentPassword, @required String newPassword}) {
     Map<String, dynamic> body = {};
     body['current_password'] = currentPassword;
     body['new_password'] = newPassword;
-    return _httpService
-        .patchMultiform('$apiURL$UPDATE_PASSWORD_PATH', body: body, appendAuthorizationToken: true);
+    return _httpService.patchMultiform('$apiURL$UPDATE_PASSWORD_PATH',
+        body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> verifyEmailWithToken(String token) {
@@ -63,8 +66,6 @@ class AuthApiService {
     String name,
     String username,
     String url,
-    String password,
-    String birthDate,
     bool followersCountVisible,
     String bio,
     String location,
@@ -91,10 +92,6 @@ class AuthApiService {
 
     if (url != null) body['url'] = url;
 
-    if (password != null) body['password'] = password;
-
-    if (birthDate != null) body['birth_date'] = birthDate;
-
     if (bio != null) body['bio'] = bio;
 
     if (followersCountVisible != null)
@@ -108,16 +105,16 @@ class AuthApiService {
 
   Future<HttpieStreamedResponse> createUser(
       {@required String email,
-      @required String username,
+      @required String token,
       @required String name,
-      @required String birthDate,
+      @required bool isOfLegalAge,
       @required String password,
       File avatar}) {
     Map<String, dynamic> body = {
       'email': email,
-      'username': username,
+      'token': token,
       'name': name,
-      'birth_date': birthDate,
+      'is_of_legal_age': isOfLegalAge,
       'password': password
     };
 
@@ -146,6 +143,36 @@ class AuthApiService {
       {bool authenticatedRequest = true}) {
     return _httpService.get('$apiURL$GET_USERS_PATH',
         queryParameters: {'query': query},
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
+  Future<HttpieResponse> searchLinkedUsers(
+      {@required String query, int count, String withCommunity}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    if (withCommunity != null) queryParams['with_community'] = withCommunity;
+
+    return _httpService.get('$apiURL$SEARCH_LINKED_USERS_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getLinkedUsers(
+      {bool authenticatedRequest = true,
+      int maxId,
+      int count,
+      String withCommunity}) {
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (withCommunity != null) queryParams['with_community'] = withCommunity;
+
+    return _httpService.get('$apiURL$GET_LINKED_USERS_PATH',
+        queryParameters: queryParams,
         appendAuthorizationToken: authenticatedRequest);
   }
 

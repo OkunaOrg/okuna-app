@@ -37,8 +37,8 @@ class OBUpdateConnectionWithUserTileState
     _bottomSheetService = openbookProvider.bottomSheetService;
 
     return ListTile(
-        title: OBText('Update connection circles'),
-        leading: OBIcon(OBIcons.circles),
+        title: const OBText('Update connection circles'),
+        leading: const OBIcon(OBIcons.circles),
         onTap: _displayAddConnectionToCirclesBottomSheet);
   }
 

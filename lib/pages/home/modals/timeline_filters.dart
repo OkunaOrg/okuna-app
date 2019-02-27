@@ -2,26 +2,18 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
-import 'package:Openbook/widgets/fields/color_field.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bar.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:Openbook/widgets/tiles/circle_selectable_tile.dart';
 import 'package:Openbook/widgets/tiles/follows_list_selectable_tile.dart';
-import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +31,6 @@ class OBTimelineFiltersModal extends StatefulWidget {
 
 class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   UserService _userService;
-  ToastService _toastService;
 
   bool _requestInProgress;
   bool _needsBootstrap;
@@ -73,12 +64,11 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
-      _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
-    return OBCupertinoPageScaffold(
+    return CupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
@@ -106,7 +96,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                       onPressed: _onWantsToClearFilters,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Expanded(
@@ -136,6 +126,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
 
   Widget _buildSearchResults() {
     return ListView.builder(
+        physics: const ClampingScrollPhysics(),
         itemCount:
             _circlesSearchResults.length + _followsListsSearchResults.length,
         itemBuilder: (BuildContext context, int index) {
@@ -191,15 +182,15 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   }
 
   Widget _buildNoResults() {
-    return Container(
+    return SizedBox(
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 200),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OBIcon(OBIcons.sad, customSize: 30.0),
-              SizedBox(
+              const OBIcon(OBIcons.sad, customSize: 30.0),
+              const SizedBox(
                 height: 20.0,
               ),
               OBText(
@@ -218,9 +209,9 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   }
 
   Widget _buildNavigationBar() {
-    return OBNavigationBar(
+    return OBThemedNavigationBar(
         leading: GestureDetector(
-          child: OBIcon(OBIcons.close),
+          child: const OBIcon(OBIcons.close),
           onTap: () {
             Navigator.pop(context);
           },
