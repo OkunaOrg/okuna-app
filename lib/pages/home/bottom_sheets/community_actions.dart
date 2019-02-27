@@ -9,6 +9,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/favorite_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,13 @@ class OBCommunityActionsBottomSheetState
     _toastService = openbookProvider.toastService;
     _modalService = openbookProvider.modalService;
 
-    List<Widget> communityActions = [];
+    List<Widget> communityActions = [
+      OBFavoriteCommunityTile(
+        community: widget.community,
+        onFavoritedCommunity: _dismiss,
+        onUnfavoritedCommunity: _dismiss,
+      )
+    ];
 
     User loggedInUser = _userService.getLoggedInUser();
     Community community = widget.community;
@@ -79,14 +86,17 @@ class OBCommunityActionsBottomSheetState
   }
 
   Future _onWantsToInvitePeople() async {
-    // Dismiss current bottom sheet
-    Navigator.pop(context);
+    _dismiss();
     _modalService.openInviteToCommunity(
         context: context, community: widget.community);
   }
 
   void _onWantsToReportCommunity() async {
     _toastService.error(message: 'Not implemented yet', context: context);
+    _dismiss();
+  }
+
+  void _dismiss() {
     Navigator.pop(context);
   }
 }

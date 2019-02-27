@@ -928,13 +928,15 @@ class UserService {
   Future<void> favoriteCommunity(Community community) async {
     HttpieResponse response = await _communitiesApiService.favoriteCommunity(
         communityName: community.name);
-    _checkResponseIsOk(response);
+    _checkResponseIsCreated(response);
+    return Community.fromJSON(json.decode(response.body));
   }
 
   Future<void> unfavoriteCommunity(Community community) async {
     HttpieResponse response = await _communitiesApiService.unfavoriteCommunity(
         communityName: community.name);
     _checkResponseIsOk(response);
+    return Community.fromJSON(json.decode(response.body));
   }
 
   Future<CommunitiesList> getAdministratedCommunities({int offset}) async {

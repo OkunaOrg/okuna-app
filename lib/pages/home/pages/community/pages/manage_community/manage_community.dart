@@ -8,6 +8,7 @@ import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/favorite_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -104,6 +105,17 @@ class OBManageCommunityPage extends StatelessWidget {
             context: context, community: community);
       },
     ));
+
+    menuListTiles.add(OBFavoriteCommunityTile(
+        community: community,
+        favoriteSubtitle: const OBText(
+          'Add the community to your favorites',
+          style: listItemSubtitleStyle,
+        ),
+        unfavoriteSubtitle: const OBText(
+          'Remove the community to your favorites',
+          style: listItemSubtitleStyle,
+        )));
 
     if (loggedInUserIsCreator) {
       menuListTiles.add(ListTile(
