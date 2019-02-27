@@ -28,7 +28,6 @@ class OBProfileConnectedIn extends StatelessWidget {
               circles: connectedCircles,
               leading: const OBText(
                 'In circles',
-                size: OBTextSize.small,
               ),
             ));
       },
