@@ -1,6 +1,7 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -8,6 +9,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/checkbox.dart';
+import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -37,21 +39,12 @@ class OBSharePostWithCommunityPageState
   ToastService _toastService;
   bool _isCreatePostInProgress;
 
-  bool _needsBootstrap;
-
-  List<Community> _communities;
-  List<Community> _communitiesSearchResults;
   Community _chosenCommunity;
-  String _communitieSearchQuery;
 
   @override
   void initState() {
     super.initState();
     _isCreatePostInProgress = false;
-    _communities = [];
-    _communitiesSearchResults = _communities.toList();
-    _communitieSearchQuery = '';
-    _needsBootstrap = true;
   }
 
   @override
@@ -59,11 +52,6 @@ class OBSharePostWithCommunityPageState
     var openbookProvider = OpenbookProvider.of(context);
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
-
-    if (_needsBootstrap) {
-      _bootstrap();
-      _needsBootstrap = false;
-    }
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -77,15 +65,18 @@ class OBSharePostWithCommunityPageState
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        OBSearchBar(
-          onSearch: _onSearch,
-          hintText: 'Search communities...',
-        ),
         Expanded(
-            child: _communitiesSearchResults.length == 0 &&
-                    _communitieSearchQuery.isNotEmpty
-                ? _buildNoResults()
-                : _buildSearchResults())
+            child: OBHttpList<Community>(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          separatorBuilder: _buildCommunitySeparator,
+          listItemBuilder: _buildCommunityItem,
+          searchResultListItemBuilder: _buildCommunityItem,
+          listRefresher: _refreshCommunities,
+          listOnScrollLoader: _loadMoreCommunities,
+          listSearcher: _searchCommunities,
+          resourceSingularName: 'community',
+          resourcePluralName: 'communities',
+        ))
       ],
     );
   }
@@ -104,19 +95,7 @@ class OBSharePostWithCommunityPageState
     );
   }
 
-  Widget _buildSearchResults() {
-    return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      physics: const ClampingScrollPhysics(),
-      itemCount: _communitiesSearchResults.length,
-      itemBuilder: _buildCommunityItem,
-      separatorBuilder: _buildCommunitySeparator,
-    );
-  }
-
-  Widget _buildCommunityItem(BuildContext context, int index) {
-    Community community = _communitiesSearchResults[index];
-
+  Widget _buildCommunityItem(BuildContext context, Community community) {
     return OBCommunitySelectableTile(
       community: community,
       onCommunityPressed: _onCommunityPressed,
@@ -127,33 +106,6 @@ class OBSharePostWithCommunityPageState
   Widget _buildCommunitySeparator(BuildContext context, int index) {
     return const SizedBox(
       height: 10,
-    );
-  }
-
-  Widget _buildNoResults() {
-    return SizedBox(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 200),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const OBIcon(OBIcons.sad, customSize: 30.0),
-              const SizedBox(
-                height: 20.0,
-              ),
-              OBText(
-                'No community found matching \'$_communitieSearchQuery\'.',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
-                textAlign: TextAlign.center,
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 
@@ -179,6 +131,29 @@ class OBSharePostWithCommunityPageState
     }
   }
 
+  Future<List<Community>> _refreshCommunities() async {
+    CommunitiesList communities = await _userService.getJoinedCommunities();
+    return communities.communities;
+  }
+
+  Future<List<Community>> _loadMoreCommunities(
+      List<Community> communitiesList) async {
+    int offset = communitiesList.length;
+
+    List<Community> moreCommunities = (await _userService.getJoinedCommunities(
+      offset: offset,
+    ))
+        .communities;
+    return moreCommunities;
+  }
+
+  Future<List<Community>> _searchCommunities(String query) async {
+    CommunitiesList results =
+        await _userService.searchJoinedCommunities(query: query);
+
+    return results.communities;
+  }
+
   void _setCreatePostInProgress(bool createPostInProgress) {
     setState(() {
       _isCreatePostInProgress = createPostInProgress;
@@ -191,51 +166,6 @@ class OBSharePostWithCommunityPageState
     } else {
       _setChosenCommunity(pressedCommunity);
     }
-  }
-
-  void _onSearch(String searchString) {
-    if (searchString.length == 0) {
-      _resetCommunitieSearchResults();
-      return;
-    }
-
-    String standarisedSearchStr = searchString.toLowerCase();
-
-    List<Community> results = _communities.where((Community community) {
-      return community.name.toLowerCase().contains(standarisedSearchStr);
-    }).toList();
-
-    _setCommunitiesSearchResults(results);
-    _setCommunitiesSearchQuery(searchString);
-  }
-
-  void _bootstrap() async {
-    CommunitiesList communityList = await _userService.getJoinedCommunities();
-    this._setCommunities(communityList.communities);
-  }
-
-  void _resetCommunitieSearchResults() {
-    setState(() {
-      _communitiesSearchResults = _communities.toList();
-    });
-  }
-
-  void _setCommunities(List<Community> communities) {
-    setState(() {
-      _communities = communities;
-    });
-  }
-
-  void _setCommunitiesSearchResults(List<Community> communitiesearchResults) {
-    setState(() {
-      _communitiesSearchResults = communitiesearchResults;
-    });
-  }
-
-  void _setCommunitiesSearchQuery(String searchQuery) {
-    setState(() {
-      _communitieSearchQuery = searchQuery;
-    });
   }
 
   void _clearChosenCommunity() {

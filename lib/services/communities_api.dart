@@ -13,6 +13,8 @@ class CommunitiesApiService {
   static const SEARCH_COMMUNITIES_PATH = 'api/communities/search/';
   static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
   static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
+  static const SEARCH_JOINED_COMMUNITIES_PATH =
+      'api/communities/joined/search/';
   static const CHECK_COMMUNITY_NAME_PATH = 'api/communities/name-check/';
   static const CREATE_COMMUNITY_PATH = 'api/communities/';
   static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
@@ -360,6 +362,18 @@ class CommunitiesApiService {
     return _httpService.get('$apiURL$GET_JOINED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest,
         queryParameters: {'offset': offset});
+  }
+
+  Future<HttpieResponse> searchJoinedCommunities({
+    @required String query,
+    int count,
+  }) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get(_makeApiUrl('$SEARCH_JOINED_COMMUNITIES_PATH'),
+        queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> joinCommunityWithId(String communityName) {
