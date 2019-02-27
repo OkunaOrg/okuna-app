@@ -16,6 +16,8 @@ class OBPostCircles extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: OBCirclesWrap(
+        textSize: OBTextSize.small,
+          circlePreviewSize: OBCircleColorPreviewSize.extraSmall,
           leading: const OBText(
             'You shared with',
             size: OBTextSize.small,

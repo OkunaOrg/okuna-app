@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:dcache/dcache.dart';
+import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class UpdatableModel<T> {
@@ -12,7 +15,7 @@ abstract class UpdatableModel<T> {
   }
 
   void notifyUpdate() {
-    this._updateChangeSubject.add(this as T);
+    _updateChangeSubject.add(this as T);
   }
 
   void update(Map json) {
@@ -23,7 +26,7 @@ abstract class UpdatableModel<T> {
   void updateFromJson(Map json);
 
   void dispose() {
-    this._updateChangeSubject.close();
+    _updateChangeSubject.close();
   }
 }
 
@@ -32,7 +35,7 @@ abstract class UpdatableModelFactory<T extends UpdatableModel> {
 
   UpdatableModelFactory({this.cache}) {
     if (this.cache == null)
-      cache = SimpleCache(storage: SimpleStorage(size: 10));
+      cache = SimpleCache(storage: UpdatableModelSimpleStorage(size: 10));
   }
 
   T fromJson(Map<String, dynamic> json) {
@@ -63,4 +66,67 @@ abstract class UpdatableModelFactory<T extends UpdatableModel> {
   void clearCache() {
     cache.clear();
   }
+}
+
+class UpdatableModelSimpleStorage<K, V extends UpdatableModel>
+    implements Storage<K, V> {
+  Map<K, CacheEntry<K, V>> _internalMap;
+  int _size;
+
+  UpdatableModelSimpleStorage({@required int size}) {
+    this._size = size;
+    this._internalMap = new LinkedHashMap();
+  }
+
+  @override
+  CacheEntry<K, V> operator [](K key) {
+    var ce = this._internalMap[key];
+    return ce;
+  }
+
+  @override
+  void operator []=(K key, CacheEntry<K, V> value) {
+    this._internalMap[key] = value;
+  }
+
+  @override
+  void clear() {
+    this._internalMap.clear();
+  }
+
+  @override
+  CacheEntry<K, V> get(K key) {
+    return this[key];
+  }
+
+  @override
+  Storage set(K key, CacheEntry<K, V> value) {
+    this[key] = value;
+    return this;
+  }
+
+  @override
+  void remove(K key) {
+    CacheEntry<K, UpdatableModel> item = get(key);
+    item.value.dispose();
+    this._internalMap.remove(key);
+  }
+
+  @override
+  int get length => this._internalMap.length;
+
+  @override
+  bool containsKey(K key) {
+    return this._internalMap.containsKey(key);
+  }
+
+  @override
+  List<K> get keys => this._internalMap.keys.toList(growable: true);
+
+  @override
+  List<CacheEntry<K, V>> get values =>
+      this._internalMap.values.toList(growable: true);
+
+  @override
+  int get capacity => this._size;
 }

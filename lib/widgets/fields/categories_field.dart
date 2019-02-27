@@ -12,6 +12,7 @@ class OBCategoriesField extends StatefulWidget {
   final int min;
   final bool displayErrors;
   final ValueChanged<List<Category>> onChanged;
+  final List<Category> initialCategories;
 
   const OBCategoriesField(
       {Key key,
@@ -20,7 +21,8 @@ class OBCategoriesField extends StatefulWidget {
       @required this.max,
       @required this.min,
       @required this.onChanged,
-      this.displayErrors = false})
+      this.displayErrors = false,
+      this.initialCategories})
       : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class OBCategoriesField extends StatefulWidget {
 }
 
 class OBCategoriesFieldState extends State<OBCategoriesField> {
-  bool _isValid = false;
+  bool _isValid;
 
   @override
   void initState() {
@@ -38,6 +40,9 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
     if (widget.controller != null) {
       widget.controller.attach(this);
     }
+    _isValid = widget.initialCategories == null
+        ? false
+        : _categoriesLengthIsValid(widget.initialCategories);
   }
 
   @override
@@ -64,6 +69,7 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
           OBCategoriesPicker(
             maxSelections: widget.max,
             onChanged: _onCategoriesChanged,
+            initialCategories: widget.initialCategories,
           ),
           widget.displayErrors && !_isValid
               ? _buildErrorMsg()
@@ -89,12 +95,7 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
   }
 
   void _onCategoriesChanged(List<Category> categories) {
-    int min = widget.min;
-    if (categories.length < min) {
-      _setIsValid(false);
-    } else {
-      _setIsValid(true);
-    }
+    _setIsValid(_categoriesLengthIsValid(categories));
     widget.onChanged(categories);
   }
 
@@ -102,6 +103,11 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
     setState(() {
       this._isValid = isValid;
     });
+  }
+
+  bool _categoriesLengthIsValid(List<Category> categories) {
+    int min = widget.min;
+    return categories.length >= min;
   }
 }
 

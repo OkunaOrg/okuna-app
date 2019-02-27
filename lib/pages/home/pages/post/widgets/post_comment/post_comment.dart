@@ -1,3 +1,4 @@
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
@@ -7,6 +8,7 @@ import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -60,7 +62,25 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
       );
     }
 
-    if (widget.postComment.getCommenterId() == loggedInUser.id) {
+    User postCommenter = widget.postComment.commenter;
+    bool loggedInUserIsCommunityAdministrator = false;
+    bool loggedInUserIsCommunityModerator = false;
+
+    Post post = widget.post;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      loggedInUserIsCommunityAdministrator =
+          postCommunity.isAdministrator(loggedInUser);
+
+      loggedInUserIsCommunityModerator =
+          postCommunity.isModerator(loggedInUser);
+    }
+
+    if (widget.postComment.getCommenterId() == loggedInUser.id ||
+        loggedInUserIsCommunityAdministrator ||
+        loggedInUserIsCommunityModerator) {
       // Its our own comment
       postTile = Slidable(
         delegate: new SlidableDrawerDelegate(),
@@ -87,15 +107,16 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
 
   Widget _buildPostTile() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           OBAvatar(
             onPressed: () {
-              _navigationService.navigateToUserProfile(user: widget.post.creator, context: context);
+              _navigationService.navigateToUserProfile(
+                  user: widget.post.creator, context: context);
             },
-            size: OBAvatarSize.medium,
+            size: OBAvatarSize.small,
             avatarUrl: widget.postComment.getCommenterProfileAvatar(),
           ),
           const SizedBox(
@@ -107,8 +128,10 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
             children: <Widget>[
               OBPostCommentText(
                 widget.postComment,
+                badge: _getCommunityBadge(),
                 onUsernamePressed: () {
-                  _navigationService.navigateToUserProfile(user: widget.post.creator, context: context);
+                  _navigationService.navigateToUserProfile(
+                      user: widget.post.creator, context: context);
                 },
               ),
               const SizedBox(
@@ -122,6 +145,47 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
           ))
         ],
       ),
+    );
+  }
+
+  Widget _getCommunityBadge() {
+    Post post = widget.post;
+    User postCommenter = widget.postComment.commenter;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      bool isCommunityAdministrator =
+          postCommenter.isAdministratorOfCommunity(postCommunity);
+
+      if (isCommunityAdministrator) {
+        return _buildCommunityAdministratorBadge();
+      }
+
+      bool isCommunityModerator =
+          postCommenter.isModeratorOfCommunity(postCommunity);
+
+      if (isCommunityModerator) {
+        return _buildCommunityModeratorBadge();
+      }
+    }
+
+    return const SizedBox();
+  }
+
+  Widget _buildCommunityAdministratorBadge() {
+    return const OBIcon(
+      OBIcons.communityAdministrators,
+      size: OBIconSize.small,
+      themeColor: OBIconThemeColor.primaryAccent,
+    );
+  }
+
+  Widget _buildCommunityModeratorBadge() {
+    return const OBIcon(
+      OBIcons.communityModerators,
+      size: OBIconSize.small,
+      themeColor: OBIconThemeColor.primaryAccent,
     );
   }
 

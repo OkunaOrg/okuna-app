@@ -335,6 +335,8 @@ class HttpieService {
       var errorCode = error.osError.errorCode;
       if (errorCode == 61 ||
           errorCode == 111 ||
+          // Network is unreachable
+          errorCode == 101 ||
           errorCode == 51 ||
           errorCode == 64) {
         // Connection refused.
@@ -355,7 +357,9 @@ class HttpieService {
   String _makeQueryString(Map<String, dynamic> queryParameters) {
     String queryString = '?';
     queryParameters.forEach((key, value) {
-      queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
+      if (value != null) {
+        queryString += '$key=' + _stringifyQueryStringValue(value) + '&';
+      }
     });
     return queryString;
   }

@@ -72,6 +72,10 @@ class OBIcon extends StatelessWidget {
                   iconColor =
                       themeValueParser.parseColor(theme.primaryTextColor);
                   break;
+                case OBIconThemeColor.secondaryText:
+                  iconColor =
+                      themeValueParser.parseColor(theme.secondaryTextColor);
+                  break;
                 case OBIconThemeColor.primaryAccent:
                   iconGradient =
                       themeValueParser.parseGradient(theme.primaryAccentColor);
@@ -175,6 +179,17 @@ class OBIcons {
   static const communityMembers = OBIconData(nativeIcon: Icons.people);
   static const color = OBIconData(nativeIcon: Icons.format_paint);
   static const shortText = OBIconData(nativeIcon: Icons.short_text);
+  static const communityAdministrators = OBIconData(nativeIcon: Icons.star);
+  static const communityModerators = OBIconData(nativeIcon: Icons.gavel);
+  static const communityBannedUsers = OBIconData(nativeIcon: Icons.block);
+  static const deleteCommunity = OBIconData(nativeIcon: Icons.delete_forever);
+  static const seeMore = OBIconData(nativeIcon: Icons.arrow_right);
+  static const leaveCommunity = OBIconData(nativeIcon: Icons.exit_to_app);
+  static const reportCommunity = OBIconData(nativeIcon: Icons.report);
+  static const communityInvites = OBIconData(nativeIcon: Icons.email);
+  static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
+  static const unfavoriteCommunity = OBIconData(nativeIcon: Icons.remove_circle);
+
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
@@ -205,4 +220,11 @@ class OBIconData {
   });
 }
 
-enum OBIconThemeColor { primary, primaryText, primaryAccent, danger, success }
+enum OBIconThemeColor {
+  primary,
+  primaryText,
+  primaryAccent,
+  danger,
+  success,
+  secondaryText
+}

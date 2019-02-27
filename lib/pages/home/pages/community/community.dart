@@ -74,10 +74,6 @@ class OBCommunityPageState extends State<OBCommunityPage>
       _needsBootstrap = false;
     }
 
-    bool communityIsPrivate = widget.community.isPrivate();
-    bool userIsMember = widget.community.isMember;
-    bool userCanSeePosts = !communityIsPrivate || userIsMember;
-
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBCommunityNavBar(
@@ -90,9 +86,27 @@ class OBCommunityPageState extends State<OBCommunityPage>
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Expanded(
-                child: userCanSeePosts
-                    ? _buildUserCanSeePostsPage()
-                    : _buildUserCannotSeePostsPage(),
+                child: StreamBuilder(
+                    stream: widget.community.updateSubject,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Community> snapshot) {
+                      Community latestCommunity = snapshot.data;
+
+                      if (latestCommunity == null) return const SizedBox();
+
+                      bool communityIsPrivate = latestCommunity.isPrivate();
+
+                      User loggedInUser = _userService.getLoggedInUser();
+                      bool userIsMember =
+                          latestCommunity.isMember(loggedInUser);
+
+                      bool userCanSeePosts =
+                          !communityIsPrivate || userIsMember;
+
+                      return userCanSeePosts
+                          ? _buildUserCanSeePostsPage()
+                          : _buildUserCannotSeePostsPage();
+                    }),
               )
             ],
           ),
@@ -117,7 +131,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
                 OBText('This community is private.',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     textAlign: TextAlign.center),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 OBText(

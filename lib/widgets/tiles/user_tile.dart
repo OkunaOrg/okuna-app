@@ -14,11 +14,13 @@ class OBUserTile extends StatelessWidget {
   final bool showFollowing;
   final Widget trailing;
 
-  OBUserTile(this.user,
-      {this.onUserTilePressed,
+  const OBUserTile(this.user,
+      {Key key,
+      this.onUserTilePressed,
       this.onUserTileDeleted,
-      this.showFollowing = true,
-      this.trailing});
+      this.showFollowing = false,
+      this.trailing})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +33,13 @@ class OBUserTile extends StatelessWidget {
         avatarUrl: user.getProfileAvatar(),
       ),
       trailing: trailing,
-      title: Row(
-          children: <Widget>[
-            OBText(
-              user.username,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            _getUserBadge(user)
-          ]),
+      title: Row(children: <Widget>[
+        OBText(
+          user.username,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        _getUserBadge(user)
+      ]),
       subtitle: Row(
         children: [
           OBSecondaryText(user.getProfileName()),
@@ -70,7 +71,7 @@ class OBUserTile extends StatelessWidget {
   }
 
   Widget _getUserBadge(User creator) {
-    if (creator.getProfileBadges().length > 0) {
+    if (creator.hasProfileBadges()) {
       Badge badge = creator.getProfileBadges()[0];
       return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
     }

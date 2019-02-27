@@ -1,22 +1,28 @@
-
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/widgets/circle_color_preview.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+export 'package:Openbook/widgets/circle_color_preview.dart';
 
-class OBCirclesWrap extends StatelessWidget{
-
+class OBCirclesWrap extends StatelessWidget {
   final List<Circle> circles;
   final Widget leading;
+  final OBTextSize textSize;
+  final OBCircleColorPreviewSize circlePreviewSize;
 
-  const OBCirclesWrap({Key key, this.circles, this.leading}) : super(key: key);
+  const OBCirclesWrap(
+      {Key key,
+      this.circles,
+      this.leading,
+      this.textSize = OBTextSize.medium,
+      this.circlePreviewSize = OBCircleColorPreviewSize.small})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> connectionItems = [];
 
-    if(leading != null) connectionItems.add(leading);
+    if (leading != null) connectionItems.add(leading);
 
     circles.forEach((Circle circle) {
       connectionItems.add(Row(
@@ -24,14 +30,14 @@ class OBCirclesWrap extends StatelessWidget{
         children: <Widget>[
           OBCircleColorPreview(
             circle,
-            size: OBCircleColorPreviewSize.extraSmall,
+            size: circlePreviewSize,
           ),
           const SizedBox(
             width: 5,
           ),
           OBText(
             circle.name,
-            size: OBTextSize.small,
+            size: textSize,
           )
         ],
       ));

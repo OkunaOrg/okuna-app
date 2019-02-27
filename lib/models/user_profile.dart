@@ -23,8 +23,12 @@ class UserProfile {
       this.followersCountVisible});
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
+    List badgesList;
     List<dynamic> badges = parsedJson['badges'];
-    var badgesList = badges.map((badgeJson) => Badge.fromJson(badgeJson)).toList();
+    if (badges != null) {
+      badgesList =
+          badges.map((badgeJson) => Badge.fromJson(badgeJson)).toList();
+    }
 
     return UserProfile(
         id: parsedJson['id'],

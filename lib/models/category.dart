@@ -54,7 +54,7 @@ class Category extends UpdatableModel<Category> {
 class CategoryFactory extends UpdatableModelFactory<Category> {
   @override
   SimpleCache<int, Category> cache =
-      SimpleCache(storage: SimpleStorage(size: 20));
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
 
   @override
   Category makeFromJson(Map json) {

@@ -52,9 +52,11 @@ class OBProfileCard extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      toastService.info(message: _getUserBadgeDescription(user), context:context);
+                      toastService.info(
+                          message: _getUserBadgeDescription(user),
+                          context: context);
                     },
-                    child:  _buildNameRow(user),
+                    child: _buildNameRow(user),
                   ),
                   OBProfileUsername(user),
                   OBProfileBio(user),
@@ -108,19 +110,15 @@ class OBProfileCard extends StatelessWidget {
   }
 
   Widget _getUserBadge(User user) {
-      Badge badge = user.getProfileBadges()[0];
-      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
+    Badge badge = user.getProfileBadges()[0];
+    return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
   }
 
   Widget _buildNameRow(User user) {
-     if (user.getProfileBadges().length > 0) {
-       return Row(
-               children: <Widget>[
-                 OBProfileName(user),
-                 _getUserBadge(user)
-               ]);
-     }
-     return OBProfileName(user);
+    if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
+      return Row(children: <Widget>[OBProfileName(user), _getUserBadge(user)]);
+    }
+    return OBProfileName(user);
   }
 
   String _getUserBadgeDescription(User user) {

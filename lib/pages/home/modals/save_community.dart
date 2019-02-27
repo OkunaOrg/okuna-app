@@ -100,7 +100,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
       _usersAdjectiveController.text = widget.community.usersAdjective;
       _rulesController.text = widget.community.rules;
       _color = widget.community.color;
-      _categories = widget.community.categories.categories;
+      _categories = widget.community.categories.categories.toList();
       _type = widget.community.type;
       _avatarUrl = widget.community.avatar;
       _coverUrl = widget.community.cover;
@@ -241,6 +241,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                               controller: _categoriesFieldController,
                               displayErrors: _formWasSubmitted,
                               onChanged: _onCategoriesChanged,
+                              initialCategories: _categories,
                             ),
                             OBTextFormField(
                                 textCapitalization:
@@ -348,16 +349,18 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     bool hasAvatarFile = _avatarFile != null;
     bool hasAvatarUrl = _avatarUrl != null;
 
-    Function _onPressed = hasAvatarFile ? _clearAvatarFile : _pickNewAvatar;
+    bool hasAvatar = hasAvatarFile || hasAvatarUrl;
+
+    Function _onPressed = hasAvatar ? _clearAvatar : _pickNewAvatar;
 
     Widget icon = Icon(
-      hasAvatarFile ? Icons.clear : Icons.edit,
+      hasAvatar ? Icons.clear : Icons.edit,
       size: 15,
     );
 
     Widget avatar;
 
-    if (hasAvatarFile || hasAvatarUrl) {
+    if (hasAvatar) {
       avatar = OBAvatar(
         borderWidth: 3,
         avatarUrl: _avatarUrl,
@@ -401,11 +404,13 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
   Widget _buildCover() {
     bool hasCoverFile = _coverFile != null;
+    bool hasCoverUrl = _coverUrl != null;
+    bool hasCover = hasCoverFile || hasCoverUrl;
 
-    Function _onPressed = hasCoverFile ? _clearCoverFile : _pickNewCover;
+    Function _onPressed = hasCover ? _clearCover : _pickNewCover;
 
     Widget icon = Icon(
-      hasCoverFile ? Icons.clear : Icons.edit,
+      hasCover ? Icons.clear : Icons.edit,
       size: 15,
     );
 
@@ -448,6 +453,11 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _updateFormValid();
   }
 
+  void _clearAvatar() {
+    _avatarUrl = null;
+    _clearAvatarFile();
+  }
+
   void _clearAvatarFile() {
     _setAvatarFile(null);
   }
@@ -456,6 +466,11 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     setState(() {
       _avatarFile = avatarFile;
     });
+  }
+
+  void _clearCover() {
+    _coverUrl = null;
+    _clearCoverFile();
   }
 
   void _clearCoverFile() {
@@ -498,30 +513,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
       }
 
       Community community = await (_isEditingExistingCommunity
-          ? _userService.updateCommunity(widget.community,
-              name: _nameController.text != widget.community.name
-                  ? _nameController.text
-                  : null,
-              title: _titleController.text,
-              description: _descriptionController.text,
-              rules: _rulesController.text,
-              userAdjective: _userAdjectiveController.text,
-              usersAdjective: _usersAdjectiveController.text,
-              categories: _categories,
-              type: _type,
-              invitesEnabled: _invitesEnabled,
-              color: _color)
-          : _userService.createCommunity(
-              type: _type,
-              name: _nameController.text,
-              title: _titleController.text,
-              description: _descriptionController.text,
-              rules: _rulesController.text,
-              userAdjective: _userAdjectiveController.text,
-              usersAdjective: _usersAdjectiveController.text,
-              categories: _categories,
-              invitesEnabled: _invitesEnabled,
-              color: _color));
+          ? _updateCommunity()
+          : _createCommunity());
 
       Navigator.of(context).pop(community);
     } on HttpieConnectionRefusedError {
@@ -532,6 +525,85 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     } finally {
       _setRequestInProgress(false);
     }
+  }
+
+  Future<Community> _updateCommunity() async {
+    await _updateCommunityAvatar();
+    await _updateCommunityCover();
+
+    return _userService.updateCommunity(widget.community,
+        name: _nameController.text != widget.community.name
+            ? _nameController.text
+            : null,
+        title: _titleController.text,
+        description: _descriptionController.text,
+        rules: _rulesController.text,
+        userAdjective: _userAdjectiveController.text,
+        usersAdjective: _usersAdjectiveController.text,
+        categories: _categories,
+        type: _type,
+        invitesEnabled: _invitesEnabled,
+        color: _color);
+  }
+
+  Future<void> _updateCommunityCover() {
+    bool hasCoverFile = _coverFile != null;
+    bool hasCoverUrl = _coverUrl != null;
+    bool hasCover = hasCoverFile || hasCoverUrl;
+
+    Future<void> updateFuture;
+
+    if (!hasCover) {
+      if (widget.community.cover != null) {
+        // Remove cover!
+        updateFuture = _userService.deleteCoverForCommunity(widget.community);
+      }
+    } else if (hasCoverFile) {
+      // New cover
+      updateFuture = _userService.updateCoverForCommunity(widget.community,
+          cover: _coverFile);
+    } else {
+      updateFuture = Future.value();
+    }
+
+    return updateFuture;
+  }
+
+  Future<void> _updateCommunityAvatar() {
+    bool hasAvatarFile = _avatarFile != null;
+    bool hasAvatarUrl = _avatarUrl != null;
+    bool hasAvatar = hasAvatarFile || hasAvatarUrl;
+
+    Future<void> updateFuture;
+
+    if (!hasAvatar) {
+      if (widget.community.avatar != null) {
+        // Remove avatar!
+        updateFuture = _userService.deleteAvatarForCommunity(widget.community);
+      }
+    } else if (hasAvatarFile) {
+      // New avatar
+      updateFuture = _userService.updateAvatarForCommunity(widget.community,
+          avatar: _avatarFile);
+    } else {
+      updateFuture = Future.value();
+    }
+
+    return updateFuture;
+  }
+
+  Future<Community> _createCommunity() {
+    return _userService.createCommunity(
+        type: _type,
+        name: _nameController.text,
+        title: _titleController.text,
+        description: _descriptionController.text,
+        rules: _rulesController.text,
+        userAdjective: _userAdjectiveController.text,
+        usersAdjective: _usersAdjectiveController.text,
+        categories: _categories,
+        invitesEnabled: _invitesEnabled,
+        color: _color);
   }
 
   Future<bool> _isNameTaken(String communityName) async {

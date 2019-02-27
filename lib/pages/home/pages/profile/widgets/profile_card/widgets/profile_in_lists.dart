@@ -21,7 +21,6 @@ class OBProfileInLists extends StatelessWidget {
         List<Widget> connectionItems = [
           const OBText(
             'In lists',
-            size: OBTextSize.small,
           )
         ];
 
@@ -31,14 +30,13 @@ class OBProfileInLists extends StatelessWidget {
             children: <Widget>[
               OBEmojiPreview(
                 followsList.emoji,
-                size: OBEmojiPreviewSize.extraSmall,
+                size: OBEmojiPreviewSize.small,
               ),
               const SizedBox(
                 width: 5,
               ),
               OBText(
                 followsList.name,
-                size: OBTextSize.small,
               )
             ],
           ));

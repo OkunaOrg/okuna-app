@@ -8,6 +8,15 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/community_banned_users.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/pages/confirm_ban_community_user.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/community_moderators.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
@@ -15,7 +24,10 @@ import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists
 import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NavigationService {
@@ -38,6 +50,114 @@ class NavigationService {
             key: Key('obSlideCommunityPage'),
             widget: OBCommunityPage(
               community,
+            )));
+  }
+
+  Future<bool> navigateToConfirmAddCommunityAdministrator(
+      {@required Community community,
+      @required User user,
+      @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideConfirmAddCommunityAdministratorPage'),
+            widget: OBConfirmAddCommunityAdministrator(
+              community: community,
+              user: user,
+            )));
+  }
+
+  Future<bool> navigateToConfirmAddCommunityModerator(
+      {@required Community community,
+      @required User user,
+      @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideConfirmAddCommunityModeratorPage'),
+            widget: OBConfirmAddCommunityModerator(
+              community: community,
+              user: user,
+            )));
+  }
+
+  Future<bool> navigateToConfirmBanCommunityUser(
+      {@required Community community,
+      @required User user,
+      @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideConfirmBanCommunityMemberPage'),
+            widget: OBConfirmBanCommunityUser(
+              community: community,
+              user: user,
+            )));
+  }
+
+  Future<void> navigateToManageCommunity(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obEditCommunityPage'),
+            widget: OBManageCommunityPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToLeaveCommunity(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obLeaveCommunityPage'),
+            widget: OBLeaveCommunityPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToDeleteCommunity(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obDeleteCommunityPage'),
+            widget: OBDeleteCommunityPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityAdministrators(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityAdministratorsPage'),
+            widget: OBCommunityAdministratorsPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityModerators(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityModeratorsPage'),
+            widget: OBCommunityModeratorsPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityBannedUsers(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityBannedUsersPage'),
+            widget: OBCommunityBannedUsersPage(
+              community: community,
             )));
   }
 
@@ -126,6 +246,25 @@ class NavigationService {
               post: post,
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
+            )));
+  }
+
+  Future<void> navigateToBlankPageWithWidget(
+      {@required BuildContext context,
+      @required String navBarTitle,
+      @required Key key,
+      @required Widget widget}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: key,
+            widget: CupertinoPageScaffold(
+              navigationBar: OBThemedNavigationBar(
+                title: navBarTitle,
+              ),
+              child: OBPrimaryColorContainer(
+                child: widget,
+              ),
             )));
   }
 }

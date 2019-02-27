@@ -1,3 +1,4 @@
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
@@ -40,11 +41,28 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
 
     List<Widget> postActions = [];
 
-    User user = _userService.getLoggedInUser();
+    User loggedInUser = _userService.getLoggedInUser();
 
-    bool isPostOwner = user.id == widget.post.getCreatorId();
+    bool loggedInUserIsPostCreator =
+        loggedInUser.id == widget.post.getCreatorId();
+    bool loggedInUserIsCommunityAdministrator = false;
+    bool loggedInUserIsCommunityModerator = false;
 
-    if (isPostOwner) {
+    Post post = widget.post;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      loggedInUserIsCommunityAdministrator =
+          postCommunity.isAdministrator(loggedInUser);
+
+      loggedInUserIsCommunityModerator =
+          postCommunity.isModerator(loggedInUser);
+    }
+
+    if (loggedInUserIsPostCreator ||
+        loggedInUserIsCommunityAdministrator ||
+        loggedInUserIsCommunityModerator) {
       postActions.add(ListTile(
         leading: const OBIcon(OBIcons.deletePost),
         title: const OBText(

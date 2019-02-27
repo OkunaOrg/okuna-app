@@ -17,11 +17,14 @@ import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -56,12 +59,18 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
   bool _needsBootstrap;
 
+  bool _refreshInProgress;
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
   @override
   void initState() {
     super.initState();
     if (widget.controller != null)
       widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
+    _refreshInProgress = false;
     _categories = [];
     _categoriesScrollControllers = [];
     _tabController = _makeTabController();
@@ -92,15 +101,39 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
               onPressed: _onWantsToCreateCommunity,
             )),
         child: OBPrimaryColorContainer(
-            child: Column(
-          children: <Widget>[
-            _buildTabBar(),
-            Expanded(
-              child: TabBarView(
-                  controller: _tabController, children: _buildTabBarViews()),
-            )
-          ],
-        )));
+            child: _categories.isEmpty && !_refreshInProgress
+                ? _buildNoCommunities()
+                : _buildCommunities()));
+  }
+
+  Widget _buildNoCommunities() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        OBButtonAlert(
+          text: 'No categories found. Please try again in a few minutes.',
+          onPressed: _refreshCategories,
+          buttonText: 'Refresh',
+          buttonIcon: OBIcons.refresh,
+          assetImage: 'assets/images/stickers/perplexed-owl.png',
+          isLoading: _refreshInProgress,
+        )
+      ],
+    );
+  }
+
+  Widget _buildCommunities() {
+    return Column(
+      children: <Widget>[
+        _buildTabBar(),
+        Expanded(
+          child: TabBarView(
+              physics: const ClampingScrollPhysics(),
+              controller: _tabController,
+              children: _buildTabBarViews()),
+        )
+      ],
+    );
   }
 
   Widget _buildTabBar() {
@@ -181,6 +214,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   }
 
   Future<void> _refreshCategories() async {
+    _setRefreshInProgress(true);
     try {
       CategoriesList categoriesList = await _userService.getCategories();
       _setCategories(categoriesList.categories);
@@ -189,6 +223,8 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     } catch (error) {
       _toastService.error(message: 'Unknown error.', context: context);
       throw error;
+    } finally {
+      _setRefreshInProgress(false);
     }
   }
 
@@ -213,16 +249,22 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
           _categoriesScrollControllers[currentIndex - 2];
     }
 
-    currentTabScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    if (currentTabScrollController.hasClients) {
+      currentTabScrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 
   TabController _makeTabController() {
-    TabController controller =
-        TabController(length: _categories.length + 2, vsync: this);
+    int initialIndex = _tabController != null ? _tabController.index : 0;
+
+    TabController controller = TabController(
+        length: _categories.length + 2,
+        vsync: this,
+        initialIndex: initialIndex);
     return controller;
   }
 
@@ -233,6 +275,12 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       _navigationService.navigateToCommunity(
           community: createdCommunity, context: context);
     }
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
+    });
   }
 }
 

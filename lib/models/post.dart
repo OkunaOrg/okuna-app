@@ -101,6 +101,10 @@ class Post extends UpdatableModel<Post> {
     return reaction != null;
   }
 
+  bool hasCommunity() {
+    return community != null;
+  }
+
   bool isReactionEmoji(Emoji emoji) {
     return hasReaction() && reaction.getEmojiId() == emoji.id;
   }
@@ -251,7 +255,7 @@ class Post extends UpdatableModel<Post> {
 
 class PostFactory extends UpdatableModelFactory<Post> {
   @override
-  SimpleCache<int, Post> cache = SimpleCache(storage: SimpleStorage(size: 100));
+  SimpleCache<int, Post> cache = SimpleCache(storage: UpdatableModelSimpleStorage(size: 100));
 
   @override
   Post makeFromJson(Map json) {

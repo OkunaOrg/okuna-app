@@ -59,7 +59,7 @@ class FollowsList extends UpdatableModel<FollowsList> {
 class FollowsListFactory extends UpdatableModelFactory<FollowsList> {
   @override
   SimpleCache<int, FollowsList> cache =
-      SimpleCache(storage: SimpleStorage(size: 20));
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
 
   @override
   FollowsList makeFromJson(Map json) {

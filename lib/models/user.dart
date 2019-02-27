@@ -1,10 +1,16 @@
 import 'package:Openbook/models/badge.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/circles_list.dart';
+import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/community_invite.dart';
+import 'package:Openbook/models/community_invite_list.dart';
+import 'package:Openbook/models/community_membership.dart';
+import 'package:Openbook/models/community_membership_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
+import 'package:meta/meta.dart';
 
 class User extends UpdatableModel<User> {
   int id;
@@ -21,11 +27,16 @@ class User extends UpdatableModel<User> {
   bool isPendingConnectionConfirmation;
   CirclesList connectedCircles;
   FollowsListsList followLists;
+  CommunityMembershipList communitiesMemberships;
+  CommunityInviteList communitiesInvites;
+  CommunityInviteList createdCommunitiesInvites;
 
   static final navigationUsersFactory = UserFactory(
-      cache: LfuCache<int, User>(storage: SimpleStorage(size: 100)));
+      cache:
+          LfuCache<int, User>(storage: UpdatableModelSimpleStorage(size: 100)));
   static final sessionUsersFactory = UserFactory(
-      cache: SimpleCache<int, User>(storage: SimpleStorage(size: 10)));
+      cache: SimpleCache<int, User>(
+          storage: UpdatableModelSimpleStorage(size: 10)));
 
   factory User.fromJson(Map<String, dynamic> json,
       {bool storeInSessionCache = false}) {
@@ -51,20 +62,24 @@ class User extends UpdatableModel<User> {
     sessionUsersFactory.clearCache();
   }
 
-  User(
-      {this.id,
-      this.connectionsCircleId,
-      this.username,
-      this.email,
-      this.profile,
-      this.followersCount,
-      this.followingCount,
-      this.postsCount,
-      this.isFollowing,
-      this.isConnected,
-      this.isFullyConnected,
-      this.connectedCircles,
-      this.followLists});
+  User({
+    this.id,
+    this.connectionsCircleId,
+    this.username,
+    this.email,
+    this.profile,
+    this.followersCount,
+    this.followingCount,
+    this.postsCount,
+    this.isFollowing,
+    this.isConnected,
+    this.isFullyConnected,
+    this.connectedCircles,
+    this.followLists,
+    this.communitiesMemberships,
+    this.communitiesInvites,
+    this.createdCommunitiesInvites,
+  });
 
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
@@ -97,6 +112,19 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('follow_lists')) {
       followLists =
           navigationUsersFactory.parseFollowsLists(json['follow_lists']);
+    }
+    if (json.containsKey('communities_memberships')) {
+      communitiesMemberships = navigationUsersFactory
+          .parseMemberships(json['communities_memberships']);
+    }
+    if (json.containsKey('communities_invites')) {
+      communitiesInvites =
+          navigationUsersFactory.parseInvites(json['communities_invites']);
+    }
+
+    if (json.containsKey('created_communities_invites')) {
+      createdCommunitiesInvites = navigationUsersFactory
+          .parseInvites(json['created_communities_invites']);
     }
   }
 
@@ -152,12 +180,87 @@ class User extends UpdatableModel<User> {
     return this.profile.badges;
   }
 
+  bool hasProfileBadges() {
+    return this.profile.badges != null && this.profile.badges.length > 0;
+  }
+
   bool isConnectionsCircle(Circle circle) {
     return connectionsCircleId != null && connectionsCircleId == circle.id;
   }
 
   bool hasFollowLists() {
     return followLists != null && followLists.lists.length > 0;
+  }
+
+  bool isAdministratorOfCommunity(Community community) {
+    CommunityMembership membership = getMembershipForCommunity(community);
+    if (membership == null) return false;
+    return membership.isAdministrator;
+  }
+
+  bool isModeratorOfCommunity(Community community) {
+    CommunityMembership membership = getMembershipForCommunity(community);
+    if (membership == null) return false;
+    return membership.isModerator;
+  }
+
+  bool isMemberOfCommunity(Community community) {
+    return getMembershipForCommunity(community) != null;
+  }
+
+  CommunityMembership getMembershipForCommunity(Community community) {
+    if (communitiesMemberships == null) return null;
+
+    int membershipIndex = communitiesMemberships.communityMemberships
+        .indexWhere((CommunityMembership communityMembership) {
+      return communityMembership.userId == this.id &&
+          communityMembership.communityId == community.id;
+    });
+
+    if (membershipIndex < 0) return null;
+
+    return communitiesMemberships.communityMemberships[membershipIndex];
+  }
+
+  bool hasInvitedUserToCommunity(
+      {@required User user, @required Community community}) {
+    CommunityInvite createdInvite =
+
+    getCreatedInviteForUserAndCommunity(user: user, community: community);
+    return createdInvite != null;
+  }
+
+  CommunityInvite getCreatedInviteForUserAndCommunity(
+      {@required User user, @required Community community}) {
+    if (createdCommunitiesInvites == null) return null;
+
+    int inviteIndex = createdCommunitiesInvites.communityInvites
+        .indexWhere((CommunityInvite communityInvite) {
+      return communityInvite.communityId == community.id &&
+          communityInvite.invitedUserId == user.id;
+    });
+
+    if (inviteIndex < 0) return null;
+
+    return createdCommunitiesInvites.communityInvites[inviteIndex];
+  }
+
+  bool isInvitedToCommunity(Community community) {
+    CommunityInvite invite = getInviteForCommunity(community);
+    return invite != null;
+  }
+
+  CommunityInvite getInviteForCommunity(Community community) {
+    if (communitiesInvites == null) return null;
+
+    int inviteIndex = communitiesInvites.communityInvites
+        .indexWhere((CommunityInvite communityInvite) {
+      return communityInvite.communityId == community.id;
+    });
+
+    if (inviteIndex < 0) return null;
+
+    return communitiesInvites.communityInvites[inviteIndex];
   }
 
   void incrementFollowersCount() {
@@ -193,7 +296,19 @@ class UserFactory extends UpdatableModelFactory<User> {
         isFullyConnected: json['is_fully_connected'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
+        communitiesMemberships:
+            parseMemberships(json['communities_memberships']),
         followLists: parseFollowsLists(json['follow_lists']));
+  }
+
+  CommunityMembershipList parseMemberships(List membershipsData) {
+    if (membershipsData == null) return null;
+    return CommunityMembershipList.fromJson(membershipsData);
+  }
+
+  CommunityInviteList parseInvites(List invitesData) {
+    if (invitesData == null) return null;
+    return CommunityInviteList.fromJson(invitesData);
   }
 
   UserProfile parseUserProfile(Map profile) {

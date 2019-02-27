@@ -1,4 +1,6 @@
 import 'package:Openbook/models/categories_list.dart';
+import 'package:Openbook/models/community_membership.dart';
+import 'package:Openbook/models/community_membership_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
@@ -20,6 +22,21 @@ class Community extends UpdatableModel<Community> {
     return result;
   }
 
+  static String convertExclusionToString(CommunityMembersExclusion exclusion) {
+    String result;
+    switch (exclusion) {
+      case CommunityMembersExclusion.administrators:
+        result = 'administrators';
+        break;
+      case CommunityMembersExclusion.moderators:
+        result = 'moderators';
+        break;
+      default:
+        throw 'Unsupported community members exclusion';
+    }
+    return result;
+  }
+
   final int id;
   final User creator;
   String name;
@@ -37,17 +54,10 @@ class Community extends UpdatableModel<Community> {
   // Whether the user has been invited to the community
   bool isInvited;
 
-  // Whether the user is member of the community
-  bool isMember;
-
-  // Whether the user is admin of the community
-  bool isAdmin;
-
-  // Whether the user is mod of the community
-  bool isMod;
-
   // Whether the user is the creator of the community
   bool isCreator;
+
+  bool isFavorite;
 
   bool invitesEnabled;
 
@@ -56,6 +66,8 @@ class Community extends UpdatableModel<Community> {
   UsersList moderators;
 
   UsersList administrators;
+
+  CommunityMembershipList memberships;
 
   Community(
       {this.id,
@@ -71,12 +83,11 @@ class Community extends UpdatableModel<Community> {
       this.color,
       this.cover,
       this.isInvited,
-      this.isMember,
-      this.isAdmin,
       this.isCreator,
       this.moderators,
+      this.memberships,
       this.administrators,
-      this.isMod,
+      this.isFavorite,
       this.invitesEnabled,
       this.membersCount,
       this.categories});
@@ -95,6 +106,36 @@ class Community extends UpdatableModel<Community> {
 
   bool isPrivate() {
     return type == CommunityType.private;
+  }
+
+  bool isAdministrator(User user) {
+    CommunityMembership membership = getMembershipForUser(user);
+    if (membership == null) return false;
+    return membership.isAdministrator;
+  }
+
+  bool isModerator(User user) {
+    CommunityMembership membership = getMembershipForUser(user);
+    if (membership == null) return false;
+    return membership.isModerator;
+  }
+
+  bool isMember(User user) {
+    return getMembershipForUser(user) != null;
+  }
+
+  CommunityMembership getMembershipForUser(User user) {
+    if (memberships == null) return null;
+
+    int membershipIndex = memberships.communityMemberships
+        .indexWhere((CommunityMembership communityMembership) {
+      return communityMembership.userId == user.id &&
+          communityMembership.communityId == this.id;
+    });
+
+    if (membershipIndex < 0) return null;
+
+    return memberships.communityMemberships[membershipIndex];
   }
 
   static final factory = CommunityFactory();
@@ -117,16 +158,12 @@ class Community extends UpdatableModel<Community> {
       isInvited = json['is_invited'];
     }
 
-    if (json.containsKey('is_member')) {
-      isMember = json['is_member'];
+    if (json.containsKey('is_favorite')) {
+      isFavorite = json['is_favorite'];
     }
 
-    if (json.containsKey('is_admin')) {
-      isAdmin = json['is_admin'];
-    }
-
-    if (json.containsKey('is_mod')) {
-      isMod = json['is_mod'];
+    if (json.containsKey('memberships')) {
+      memberships = factory.parseMemberships(json['memberships']);
     }
 
     if (json.containsKey('is_creator')) {
@@ -183,10 +220,6 @@ class Community extends UpdatableModel<Community> {
     if (json.containsKey('moderators')) {
       moderators = factory.parseUsers(json['moderators']);
     }
-
-    if (json.containsKey('administrators')) {
-      administrators = factory.parseUsers(json['administrators']);
-    }
   }
 
   void incrementMembersCount() {
@@ -207,7 +240,7 @@ class Community extends UpdatableModel<Community> {
 class CommunityFactory extends UpdatableModelFactory<Community> {
   @override
   SimpleCache<int, Community> cache =
-      SimpleCache(storage: SimpleStorage(size: 20));
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
 
   @override
   Community makeFromJson(Map json) {
@@ -219,20 +252,18 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         rules: json['rules'],
         avatar: json['avatar'],
         isInvited: json['is_invited'],
-        isMember: json['is_member'],
-        isAdmin: json['is_admin'],
-        isMod: json['is_moderator'],
         isCreator: json['is_creator'],
+        isFavorite: json['is_favorite'],
         invitesEnabled: json['invites_enabled'],
         cover: json['cover'],
         color: json['color'],
+        memberships: parseMemberships(json['memberships']),
         membersCount: json['members_count'],
         userAdjective: json['user_adjective'],
         usersAdjective: json['users_adjective'],
         type: parseType(json['type']),
         creator: parseUser(json['creator']),
         moderators: parseUsers(json['moderators']),
-        administrators: parseUsers(json['administrators']),
         categories: parseCategories(json['categories']));
   }
 
@@ -244,6 +275,11 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
   UsersList parseUsers(List usersData) {
     if (usersData == null) return null;
     return UsersList.fromJson(usersData);
+  }
+
+  CommunityMembershipList parseMemberships(List membershipsData) {
+    if (membershipsData == null) return null;
+    return CommunityMembershipList.fromJson(membershipsData);
   }
 
   CategoriesList parseCategories(List categoriesData) {
@@ -268,3 +304,5 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
 }
 
 enum CommunityType { public, private }
+
+enum CommunityMembersExclusion { administrators, moderators }
