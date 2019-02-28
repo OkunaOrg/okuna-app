@@ -243,7 +243,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
 
         if (latestCommunity == null) return const SizedBox();
 
-        User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isFavorite
             ? _buildCommunityListItem(community)
             : const SizedBox();

@@ -53,16 +53,18 @@ class OBPostCommentText extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
-                  RichText(
-                      maxLines: null,
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: postComment.text,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                color: themeValueParserService
-                                    .parseColor(theme.primaryTextColor)))
-                      ]))
+                  Flexible(
+                    child: RichText(
+                        maxLines: null,
+                        text: TextSpan(children: [
+                          TextSpan(
+                              text: postComment.text,
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: themeValueParserService
+                                      .parseColor(theme.primaryTextColor)))
+                        ])),
+                  )
                 ],
               )
             ],

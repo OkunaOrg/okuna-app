@@ -119,7 +119,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   void _onWantsToSubmitPost() async {
     Post sharedPost = await _navigationService.navigateToSharePost(
         context: context,
-        createPostData:
+        sharePostData:
             SharePostData(text: _textController.text, image: _postImage));
 
     if (sharedPost != null) {
@@ -318,4 +318,3 @@ class CreatePostModalState extends State<CreatePostModal> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
-

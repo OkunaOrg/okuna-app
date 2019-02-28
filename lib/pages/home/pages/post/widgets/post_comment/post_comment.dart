@@ -62,7 +62,6 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
       );
     }
 
-    User postCommenter = widget.postComment.commenter;
     bool loggedInUserIsCommunityAdministrator = false;
     bool loggedInUserIsCommunityModerator = false;
 

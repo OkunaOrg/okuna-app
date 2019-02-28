@@ -17,7 +17,7 @@ class OBCommunityTile extends StatelessWidget {
   final OBCommunityTileSize size;
 
   const OBCommunityTile(this.community,
-      {@required this.onCommunityTilePressed,
+      {this.onCommunityTilePressed,
       Key key,
       this.size = OBCommunityTileSize.normal})
       : super(key: key);
@@ -87,56 +87,61 @@ class OBCommunityTile extends StatelessWidget {
     String finalAdjective =
         community.membersCount == 1 ? userAdjective : usersAdjective;
 
-    return GestureDetector(
-      onTap: () {
-        onCommunityTilePressed(community);
-      },
-      child: Container(
-        height: isNormalSize ? normalSizeHeight : smallSizeHeight,
-        decoration: containerDecoration,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: communityAvatar,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text('c/' + community.name,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 16,
-                      ),
-                      overflow: TextOverflow.ellipsis),
-                  Text(
-                    community.title,
+    Widget communityTile = Container(
+      height: isNormalSize ? normalSizeHeight : smallSizeHeight,
+      decoration: containerDecoration,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: communityAvatar,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('c/' + community.name,
                     style: TextStyle(
-                        color: textColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  isNormalSize
-                      ? Text(
-                          '$membersPrettyCount $finalAdjective',
-                          style: TextStyle(color: textColor, fontSize: 14),
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : SizedBox()
-                ],
-              ),
+                      color: textColor,
+                      fontSize: 16,
+                    ),
+                    overflow: TextOverflow.ellipsis),
+                Text(
+                  community.title,
+                  style: TextStyle(
+                      color: textColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                isNormalSize
+                    ? Text(
+                        '$membersPrettyCount $finalAdjective',
+                        style: TextStyle(color: textColor, fontSize: 14),
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : SizedBox()
+              ],
             ),
-            SizedBox(
-              width: 20,
-            )
-          ],
-        ),
+          ),
+          SizedBox(
+            width: 20,
+          )
+        ],
       ),
     );
+
+    if (onCommunityTilePressed != null)
+      communityTile = GestureDetector(
+        onTap: () {
+          onCommunityTilePressed(community);
+        },
+        child: communityTile,
+      );
+
+    return communityTile;
   }
 }
 

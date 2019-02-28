@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 
 class OBCheckbox extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool> onChanged;
   final OBCheckboxSize size;
 
   const OBCheckbox({
     Key key,
     this.value,
-    this.onChanged,
     this.size = OBCheckboxSize.medium,
   }) : super(key: key);
 

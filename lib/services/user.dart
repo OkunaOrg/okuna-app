@@ -152,7 +152,7 @@ class UserService {
     return user.id == _loggedInUser.id;
   }
 
-  Future<void> refreshUser() async {
+  Future<User> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
     try {
@@ -160,7 +160,7 @@ class UserService {
           await _authApiService.getUserWithAuthToken(_authToken);
       _checkResponseIsOk(response);
       var userData = response.body;
-      _setUserWithData(userData);
+      return _setUserWithData(userData);
     } on HttpieConnectionRefusedError {
       // Response failed. Use stored user.
       String userData = await this._getStoredUserData();
@@ -777,6 +777,14 @@ class UserService {
 
     _checkResponseIsOk(response);
 
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> searchJoinedCommunities(
+      {@required String query, int count, Community withCommunity}) async {
+    HttpieResponse response = await _communitiesApiService
+        .searchJoinedCommunities(query: query, count: count);
+    _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 

@@ -21,6 +21,9 @@ class OBHttpList<T> extends StatefulWidget {
   final OBHttpListController controller;
   final String resourceSingularName;
   final String resourcePluralName;
+  final EdgeInsets padding;
+  final IndexedWidgetBuilder separatorBuilder;
+  final ScrollPhysics physics;
 
   const OBHttpList(
       {Key key,
@@ -29,9 +32,12 @@ class OBHttpList<T> extends StatefulWidget {
       @required this.listOnScrollLoader,
       @required this.resourceSingularName,
       @required this.resourcePluralName,
+      this.physics = const ClampingScrollPhysics(),
+      this.padding = const EdgeInsets.all(0),
       this.listSearcher,
       this.searchResultListItemBuilder,
-      this.controller})
+      this.controller,
+      this.separatorBuilder})
       : super(key: key);
 
   @override
@@ -119,16 +125,26 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Widget _buildSearchResultsList() {
+    int listItemCount = _listSearchResults.length + 1;
+
     return NotificationListener(
       onNotification: (ScrollNotification notification) {
         // Hide keyboard
+        FocusScope.of(context).requestFocus(new FocusNode());
         return true;
       },
-      child: ListView.builder(
-          padding: EdgeInsets.all(0),
-          physics: const ClampingScrollPhysics(),
-          itemCount: _listSearchResults.length + 1,
-          itemBuilder: _buildSearchResultsListItem),
+      child: widget.separatorBuilder != null
+          ? ListView.separated(
+              separatorBuilder: widget.separatorBuilder,
+              padding: widget.padding,
+              physics: widget.physics,
+              itemCount: listItemCount,
+              itemBuilder: _buildSearchResultsListItem)
+          : ListView.builder(
+              padding: widget.padding,
+              physics: widget.physics,
+              itemCount: listItemCount,
+              itemBuilder: _buildSearchResultsListItem),
     );
   }
 
@@ -165,14 +181,20 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
                 whenEmptyLoad: false,
                 isFinish: _loadingFinished,
                 delegate: const OBHttpListLoadMoreDelegate(),
-                child: ListView.builder(
-                    controller: _listScrollController,
-                    physics: const ClampingScrollPhysics(),
-                    cacheExtent: 30,
-                    addAutomaticKeepAlives: true,
-                    padding: const EdgeInsets.all(0),
-                    itemCount: _list.length,
-                    itemBuilder: _buildListItem),
+                child: widget.separatorBuilder != null
+                    ? ListView.separated(
+                        separatorBuilder: widget.separatorBuilder,
+                        controller: _listScrollController,
+                        physics: widget.physics,
+                        padding: widget.padding,
+                        itemCount: _list.length,
+                        itemBuilder: _buildListItem)
+                    : ListView.builder(
+                        controller: _listScrollController,
+                        physics: widget.physics,
+                        padding: widget.padding,
+                        itemCount: _list.length,
+                        itemBuilder: _buildListItem),
                 onLoadMore: _loadMoreListItems),
             onRefresh: _refreshList);
   }
@@ -349,8 +371,7 @@ class OBHttpListController<T> {
   }
 }
 
-typedef Widget OBHttpListItemBuilder<T>(
-    BuildContext context, T listItem);
+typedef Widget OBHttpListItemBuilder<T>(BuildContext context, T listItem);
 typedef Future<List<T>> OBHttpListSearcher<T>(String searchQuery);
 typedef Future<List<T>> OBHttpListRefresher<T>();
 typedef Future<List<T>> OBHttpListOnScrollLoader<T>(List<T> currentList);

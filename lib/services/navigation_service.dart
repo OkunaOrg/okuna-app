@@ -5,6 +5,8 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
@@ -187,14 +189,35 @@ class NavigationService {
   }
 
   Future<Post> navigateToSharePost(
-      {@required BuildContext context,
-      @required SharePostData createPostData}) {
+      {@required BuildContext context, @required SharePostData sharePostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostPage'),
             widget: OBSharePostPage(
-              sharePostData: createPostData,
+              sharePostData: sharePostData,
+            )));
+  }
+
+  Future<Post> navigateToSharePostWithCircles(
+      {@required BuildContext context, @required SharePostData sharePostData}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSharePostWithCirclesPage'),
+            widget: OBSharePostWithCirclesPage(
+              sharePostData: sharePostData,
+            )));
+  }
+
+  Future<Post> navigateToSharePostWithCommunity(
+      {@required BuildContext context, @required SharePostData sharePostData}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSharePostWithCommunityPage'),
+            widget: OBSharePostWithCommunityPage(
+              sharePostData: sharePostData,
             )));
   }
 

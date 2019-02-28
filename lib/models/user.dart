@@ -25,6 +25,7 @@ class User extends UpdatableModel<User> {
   bool isConnected;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
+  bool isMemberOfCommunities;
   CirclesList connectedCircles;
   FollowsListsList followLists;
   CommunityMembershipList communitiesMemberships;
@@ -74,6 +75,7 @@ class User extends UpdatableModel<User> {
     this.isFollowing,
     this.isConnected,
     this.isFullyConnected,
+    this.isMemberOfCommunities,
     this.connectedCircles,
     this.followLists,
     this.communitiesMemberships,
@@ -108,6 +110,9 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('connected_circles')) {
       connectedCircles =
           navigationUsersFactory.parseCircles(json['connected_circles']);
+    }
+    if (json.containsKey('is_member_of_communities')) {
+      isMemberOfCommunities = json['is_member_of_communities'];
     }
     if (json.containsKey('follow_lists')) {
       followLists =
@@ -225,8 +230,7 @@ class User extends UpdatableModel<User> {
   bool hasInvitedUserToCommunity(
       {@required User user, @required Community community}) {
     CommunityInvite createdInvite =
-
-    getCreatedInviteForUserAndCommunity(user: user, community: community);
+        getCreatedInviteForUserAndCommunity(user: user, community: community);
     return createdInvite != null;
   }
 
@@ -294,6 +298,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
         isFullyConnected: json['is_fully_connected'],
+        isMemberOfCommunities: json['is_member_of_communities'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
         communitiesMemberships:
