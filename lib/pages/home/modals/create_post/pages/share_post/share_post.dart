@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
@@ -109,7 +110,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Share with',
+      title: 'Share to',
     );
   }
 
@@ -125,14 +126,16 @@ class OBSharePostPageState extends State<OBSharePostPage> {
     }
   }
 
-  void _onWantsToSharePostToCircles() {
-    _navigationService.navigateToSharePostWithCircles(
+  void _onWantsToSharePostToCircles() async {
+    Post sharedPost = await _navigationService.navigateToSharePostWithCircles(
         context: context, sharePostData: widget.sharePostData);
+    if (sharedPost != null) Navigator.pop(context, sharedPost);
   }
 
-  void _onWantsToSharePostToCommunity() {
-    _navigationService.navigateToSharePostWithCommunity(
+  void _onWantsToSharePostToCommunity() async {
+    Post sharedPost = await _navigationService.navigateToSharePostWithCommunity(
         context: context, sharePostData: widget.sharePostData);
+    if (sharedPost != null) Navigator.pop(context, sharedPost);
   }
 }
 
