@@ -47,7 +47,8 @@ class CommunitiesApiService {
   static const GET_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/';
   static const GET_COMMUNITY_POSTS_PATH =
       'api/communities/{communityName}/posts/';
-  static const CREATE_COMMUNITY_POST_PATH = 'api/communities/posts/';
+  static const CREATE_COMMUNITY_POST_PATH =
+      'api/communities/{communityName}/posts/';
   static const GET_COMMUNITY_MEMBERS_PATH =
       'api/communities/{communityName}/members/';
   static const SEARCH_COMMUNITY_MEMBERS_PATH =
@@ -120,7 +121,9 @@ class CommunitiesApiService {
       body['text'] = text;
     }
 
-    return _httpService.putMultiform(_makeApiUrl(CREATE_COMMUNITY_POST_PATH),
+    String url = _makeCreateCommunityPost(communityName);
+
+    return _httpService.putMultiform(_makeApiUrl(url),
         body: body, appendAuthorizationToken: true);
   }
 
@@ -543,6 +546,11 @@ class CommunitiesApiService {
     return _httpService.get('$apiURL$GET_MODERATED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest,
         queryParameters: {'offset': offset});
+  }
+
+  String _makeCreateCommunityPost(String communityName) {
+    return _stringTemplateService
+        .parse(CREATE_COMMUNITY_POST_PATH, {'communityName': communityName});
   }
 
   String _makeInviteUserToCommunityPath(String communityName) {

@@ -97,7 +97,7 @@ class OBSharePostWithCirclesPageState extends State<OBSharePostWithCirclesPage> 
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Audience',
+      title: 'Share to circles',
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,

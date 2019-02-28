@@ -83,7 +83,7 @@ class OBSharePostWithCommunityPageState
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Audience',
+      title: 'Share to community',
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,
