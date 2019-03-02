@@ -6,6 +6,8 @@ import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
+import 'package:Openbook/services/devices_api.dart';
+import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/emoji_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
@@ -64,6 +66,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   FollowsApiService followsApiService = FollowsApiService();
   CommunitiesApiService communitiesApiService = CommunitiesApiService();
   CategoriesApiService categoriesApiService = CategoriesApiService();
+  NotificationsApiService notificationsApiService = NotificationsApiService();
+  DevicesApiService devicesApiService = DevicesApiService();
   ConnectionsApiService connectionsApiService = ConnectionsApiService();
   ConnectionsCirclesApiService connectionsCirclesApiService =
       ConnectionsCirclesApiService();
@@ -108,6 +112,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);
+    notificationsApiService.setHttpService(httpService);
+    devicesApiService.setHttpService(httpService);
     validationService.setAuthApiService(authApiService);
     validationService.setFollowsListsApiService(followsListsApiService);
     validationService.setCommunitiesApiService(communitiesApiService);
@@ -130,6 +136,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     followsListsApiService.setApiURL(environment.apiUrl);
     communitiesApiService.setApiURL(environment.apiUrl);
     categoriesApiService.setApiURL(environment.apiUrl);
+    notificationsApiService.setApiURL(environment.apiUrl);
+    devicesApiService.setApiURL(environment.apiUrl);
   }
 
   @override
