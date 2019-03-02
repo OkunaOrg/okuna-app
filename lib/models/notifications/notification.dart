@@ -1,0 +1,140 @@
+import 'package:Openbook/models/notifications/connection_confirmed_notification.dart';
+import 'package:Openbook/models/notifications/connection_request_notification.dart';
+import 'package:Openbook/models/notifications/follow_notification.dart';
+import 'package:Openbook/models/notifications/post_comment_notification.dart';
+import 'package:Openbook/models/notifications/post_reaction_notification.dart';
+import 'package:Openbook/models/updatable_model.dart';
+import 'package:Openbook/models/user.dart';
+import 'package:dcache/dcache.dart';
+import 'package:meta/meta.dart';
+
+class Notification extends UpdatableModel<Notification> {
+  final int id;
+  User owner;
+  NotificationType type;
+  dynamic contentObject;
+  DateTime created;
+
+  bool read;
+
+  Notification(
+      {this.id, this.owner, this.type, this.contentObject, this.created});
+
+  static final factory = NotificationFactory();
+  static final postReaction = 'PR';
+  static final postComment = 'PC';
+  static final connectionRequest = 'CR';
+  static final connectionConfirmed = 'CC';
+  static final follow = 'F';
+
+  factory Notification.fromJSON(Map<String, dynamic> json) {
+    return factory.fromJson(json);
+  }
+
+  @override
+  void updateFromJson(Map json) {
+    if (json.containsKey('owner')) {
+      owner = factory.parseUser(json['owner']);
+    }
+
+    if (json.containsKey('notification_type')) {
+      type = factory.parseType(json['notification_type']);
+    }
+
+    if (json.containsKey('content_object')) {
+      contentObject = factory.parseContentObject(
+          contentObjectData: json['content_object'], type: type);
+    }
+
+    if (json.containsKey('read')) {
+      read = json['read'];
+    }
+
+    if (json.containsKey('created')) {
+      created = factory.parseCreated(json['created']);
+    }
+  }
+}
+
+class NotificationFactory extends UpdatableModelFactory<Notification> {
+  @override
+  SimpleCache<int, Notification> cache =
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
+
+  @override
+  Notification makeFromJson(Map json) {
+    NotificationType type = parseType(json['notification_type']);
+
+    return Notification(
+        id: json['id'],
+        owner: parseUser(json['owner']),
+        type: type,
+        contentObject: parseContentObject(
+            contentObjectData: json['content_object'], type: type),
+        created: parseCreated(json['created']));
+  }
+
+  User parseUser(Map userData) {
+    if (userData == null) return null;
+    return User.fromJson(userData);
+  }
+
+  NotificationType parseType(String notificationTypeStr) {
+    if (notificationTypeStr == null) return null;
+
+    NotificationType notificationType;
+    if (notificationTypeStr == Notification.postReaction) {
+      notificationType = NotificationType.postReaction;
+    } else if (notificationTypeStr == Notification.postComment) {
+      notificationType = NotificationType.postComment;
+    } else if (notificationTypeStr == Notification.connectionRequest) {
+      notificationType = NotificationType.connectionRequest;
+    } else if (notificationTypeStr == Notification.connectionConfirmed) {
+      notificationType = NotificationType.connectionConfirmed;
+    } else if (notificationTypeStr == Notification.follow) {
+      notificationType = NotificationType.follow;
+    } else {
+      throw 'Unsupported notification type';
+    }
+
+    return notificationType;
+  }
+
+  dynamic parseContentObject(
+      {@required Map contentObjectData, @required NotificationType type}) {
+    dynamic contentObject;
+    switch (type) {
+      case NotificationType.connectionConfirmed:
+        contentObject =
+            ConnectionConfirmedNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.connectionRequest:
+        contentObject =
+            ConnectionRequestNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.follow:
+        contentObject = FollowNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.postComment:
+        contentObject = PostCommentNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.postReaction:
+        contentObject = PostReactionNotification.fromJson(contentObjectData);
+        break;
+      default:
+    }
+    return contentObject;
+  }
+
+  DateTime parseCreated(String created) {
+    return DateTime.parse(created).toLocal();
+  }
+}
+
+enum NotificationType {
+  postReaction,
+  postComment,
+  connectionRequest,
+  connectionConfirmed,
+  follow
+}
