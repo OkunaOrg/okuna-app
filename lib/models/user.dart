@@ -8,6 +8,7 @@ import 'package:Openbook/models/community_membership.dart';
 import 'package:Openbook/models/community_membership_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
+import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
 import 'package:meta/meta.dart';
@@ -18,6 +19,7 @@ class User extends UpdatableModel<User> {
   String email;
   String username;
   UserProfile profile;
+  UserNotificationsSettings notificationsSettings;
   int followersCount;
   int followingCount;
   int postsCount;
@@ -69,6 +71,7 @@ class User extends UpdatableModel<User> {
     this.username,
     this.email,
     this.profile,
+    this.notificationsSettings,
     this.followersCount,
     this.followingCount,
     this.postsCount,
@@ -91,6 +94,13 @@ class User extends UpdatableModel<User> {
         profile.updateFromJson(json['profile']);
       } else {
         profile = navigationUsersFactory.parseUserProfile(json['profile']);
+      }
+    }
+    if (json.containsKey('notifications_settings')) {
+      if (notificationsSettings != null) {
+        notificationsSettings.updateFromJson(json['notifications_settings']);
+      } else {
+        notificationsSettings = navigationUsersFactory.parseUserNotificationsSettings(json['notifications_settings']);
       }
     }
     if (json.containsKey('followers_count'))
@@ -318,6 +328,10 @@ class UserFactory extends UpdatableModelFactory<User> {
 
   UserProfile parseUserProfile(Map profile) {
     return UserProfile.fromJSON(profile);
+  }
+
+  UserNotificationsSettings parseUserNotificationsSettings(Map notificationsSettings) {
+    return UserNotificationsSettings.fromJSON(notificationsSettings);
   }
 
   CirclesList parseCircles(List circlesData) {
