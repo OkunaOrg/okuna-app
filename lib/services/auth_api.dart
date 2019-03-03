@@ -190,7 +190,7 @@ class AuthApiService {
         .get('$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH');
   }
 
-  Future<HttpieStreamedResponse> updateAuthenticatedUserNotificationsSettings({
+  Future<HttpieResponse> updateAuthenticatedUserNotificationsSettings({
     bool postCommentNotifications,
     bool postReactionNotifications,
     bool followNotifications,
@@ -215,7 +215,9 @@ class AuthApiService {
       body['connection_confirmed_notifications'] =
           connectionConfirmedNotifications;
 
-    return _httpService.patchMultiform('$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
-        body: body, appendAuthorizationToken: true);
+    return _httpService.patchJSON(
+        '$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
+        body: body,
+        appendAuthorizationToken: true);
   }
 }

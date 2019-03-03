@@ -1,15 +1,15 @@
 import 'package:Openbook/models/notifications/notification.dart';
 
 class NotificationsList {
-  final List<Notification> notifications;
+  final List<OBNotification> notifications;
 
   NotificationsList({
     this.notifications,
   });
 
   factory NotificationsList.fromJson(List<dynamic> parsedJson) {
-    List<Notification> notifications = parsedJson
-        .map((notificationJson) => Notification.fromJSON(notificationJson))
+    List<OBNotification> notifications = parsedJson
+        .map((notificationJson) => OBNotification.fromJSON(notificationJson))
         .toList();
 
     return new NotificationsList(

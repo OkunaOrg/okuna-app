@@ -36,8 +36,7 @@ class DevicesApiService {
   Future<HttpieResponse> createDevice(
       {@required String uuid,
       String name,
-      String oneSignalPlayerId,
-      bool notificationsEnabled}) {
+      String oneSignalPlayerId}) {
     String url = _makeApiUrl(DEVICE_PATH);
     Map<String, dynamic> body = {'uuid': uuid};
 
@@ -46,15 +45,12 @@ class DevicesApiService {
     if (oneSignalPlayerId != null)
       body['one_signal_player_id'] = oneSignalPlayerId;
 
-    if (notificationsEnabled != null)
-      body['notifications_enabled'] = notificationsEnabled;
-
     return _httpService.putJSON(url,
         appendAuthorizationToken: true, body: body);
   }
 
   Future<HttpieResponse> updateDeviceWithId(int deviceId,
-      {String name, String oneSignalPlayerId, bool notificationsEnabled}) {
+      {String name, String oneSignalPlayerId}) {
     String url = _makeApiUrl(DEVICE_PATH);
     Map<String, dynamic> body = {};
 
@@ -62,9 +58,6 @@ class DevicesApiService {
 
     if (oneSignalPlayerId != null)
       body['one_signal_player_id'] = oneSignalPlayerId;
-
-    if (notificationsEnabled != null)
-      body['notifications_enabled'] = notificationsEnabled;
 
     return _httpService.patchJSON(url,
         appendAuthorizationToken: true, body: body);

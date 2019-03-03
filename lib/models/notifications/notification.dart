@@ -8,7 +8,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:meta/meta.dart';
 
-class Notification extends UpdatableModel<Notification> {
+class OBNotification extends UpdatableModel<OBNotification> {
   final int id;
   User owner;
   NotificationType type;
@@ -17,7 +17,7 @@ class Notification extends UpdatableModel<Notification> {
 
   bool read;
 
-  Notification(
+  OBNotification(
       {this.id, this.owner, this.type, this.contentObject, this.created});
 
   static final factory = NotificationFactory();
@@ -27,7 +27,7 @@ class Notification extends UpdatableModel<Notification> {
   static final connectionConfirmed = 'CC';
   static final follow = 'F';
 
-  factory Notification.fromJSON(Map<String, dynamic> json) {
+  factory OBNotification.fromJSON(Map<String, dynamic> json) {
     return factory.fromJson(json);
   }
 
@@ -56,16 +56,16 @@ class Notification extends UpdatableModel<Notification> {
   }
 }
 
-class NotificationFactory extends UpdatableModelFactory<Notification> {
+class NotificationFactory extends UpdatableModelFactory<OBNotification> {
   @override
-  SimpleCache<int, Notification> cache =
+  SimpleCache<int, OBNotification> cache =
       SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
 
   @override
-  Notification makeFromJson(Map json) {
+  OBNotification makeFromJson(Map json) {
     NotificationType type = parseType(json['notification_type']);
 
-    return Notification(
+    return OBNotification(
         id: json['id'],
         owner: parseUser(json['owner']),
         type: type,
@@ -83,15 +83,15 @@ class NotificationFactory extends UpdatableModelFactory<Notification> {
     if (notificationTypeStr == null) return null;
 
     NotificationType notificationType;
-    if (notificationTypeStr == Notification.postReaction) {
+    if (notificationTypeStr == OBNotification.postReaction) {
       notificationType = NotificationType.postReaction;
-    } else if (notificationTypeStr == Notification.postComment) {
+    } else if (notificationTypeStr == OBNotification.postComment) {
       notificationType = NotificationType.postComment;
-    } else if (notificationTypeStr == Notification.connectionRequest) {
+    } else if (notificationTypeStr == OBNotification.connectionRequest) {
       notificationType = NotificationType.connectionRequest;
-    } else if (notificationTypeStr == Notification.connectionConfirmed) {
+    } else if (notificationTypeStr == OBNotification.connectionConfirmed) {
       notificationType = NotificationType.connectionConfirmed;
-    } else if (notificationTypeStr == Notification.follow) {
+    } else if (notificationTypeStr == OBNotification.follow) {
       notificationType = NotificationType.follow;
     } else {
       throw 'Unsupported notification type';

@@ -7,6 +7,8 @@ import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/device.dart';
+import 'package:Openbook/models/devices_list.dart';
 import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
@@ -15,6 +17,8 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/notifications/notification.dart';
+import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -23,16 +27,19 @@ import 'package:Openbook/models/post_reaction_list.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/categories_api.dart';
 import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
+import 'package:Openbook/services/devices_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:meta/meta.dart';
@@ -56,6 +63,8 @@ class UserService {
   ConnectionsApiService _connectionsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
   FollowsListsApiService _followsListsApiService;
+  NotificationsApiService _notificationsApiService;
+  DevicesApiService _devicesApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -98,6 +107,15 @@ class UserService {
 
   void setCategoriesApiService(CategoriesApiService categoriesApiService) {
     _categoriesApiService = categoriesApiService;
+  }
+
+  void setNotificationsApiService(
+      NotificationsApiService notificationsApiService) {
+    _notificationsApiService = notificationsApiService;
+  }
+
+  void setDevicesApiService(DevicesApiService devicesApiService) {
+    _devicesApiService = devicesApiService;
   }
 
   void setEmojisApiService(EmojisApiService emojisApiService) {
@@ -971,6 +989,107 @@ class UserService {
     return CategoriesList.fromJson(json.decode(response.body));
   }
 
+  Future<NotificationsList> getNotifications() async {
+    HttpieResponse response = await _notificationsApiService.getNotifications();
+    _checkResponseIsOk(response);
+    return NotificationsList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> readNotifications() async {
+    HttpieResponse response =
+        await _notificationsApiService.readNotifications();
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> deleteNotifications() async {
+    HttpieResponse response =
+        await _notificationsApiService.deleteNotifications();
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> deleteNotification(OBNotification notification) async {
+    HttpieResponse response = await _notificationsApiService
+        .deleteNotificationWithId(notification.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> readNotification(OBNotification notification) async {
+    HttpieResponse response = await _notificationsApiService
+        .deleteNotificationWithId(notification.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<DevicesList> getDevices() async {
+    HttpieResponse response = await _devicesApiService.getDevices();
+    _checkResponseIsOk(response);
+    return DevicesList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deleteDevices() async {
+    HttpieResponse response = await _devicesApiService.deleteDevices();
+    _checkResponseIsOk(response);
+  }
+
+  Future<Device> createDevice(
+      {@required String uuid, String name, String oneSignalPlayerId}) async {
+    HttpieResponse response = await _devicesApiService.createDevice(
+        uuid: uuid, name: name, oneSignalPlayerId: oneSignalPlayerId);
+    _checkResponseIsCreated(response);
+    return Device.fromJSON(json.decode(response.body));
+  }
+
+  Future<Device> updateDevice(Device device,
+      {String name,
+      String oneSignalPlayerId,
+      bool notificationsEnabled}) async {
+    HttpieResponse response = await _devicesApiService.updateDeviceWithId(
+        device.id,
+        name: name,
+        oneSignalPlayerId: oneSignalPlayerId);
+    _checkResponseIsCreated(response);
+    return Device.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> deleteDevice(Device device) async {
+    HttpieResponse response =
+        await _devicesApiService.deleteDeviceWithId(device.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<Device> getDeviceWithId(int deviceId) async {
+    HttpieResponse response =
+        await _devicesApiService.getDeviceWithId(deviceId);
+    _checkResponseIsOk(response);
+    return Device.fromJSON(json.decode(response.body));
+  }
+
+  Future<UserNotificationsSettings>
+      getAuthenticatedUserNotificationsSettings() async {
+    HttpieResponse response =
+        await _authApiService.getAuthenticatedUserNotificationsSettings();
+    _checkResponseIsOk(response);
+    return UserNotificationsSettings.fromJSON(json.decode(response.body));
+  }
+
+  Future<UserNotificationsSettings>
+      updateAuthenticatedUserNotificationsSettings({
+    bool postCommentNotifications,
+    bool postReactionNotifications,
+    bool followNotifications,
+    bool connectionRequestNotifications,
+    bool connectionConfirmedNotifications,
+  }) async {
+    HttpieResponse response =
+        await _authApiService.updateAuthenticatedUserNotificationsSettings(
+            postCommentNotifications: postCommentNotifications,
+            postReactionNotifications: postReactionNotifications,
+            followNotifications: followNotifications,
+            connectionConfirmedNotifications: connectionConfirmedNotifications,
+            connectionRequestNotifications: connectionRequestNotifications);
+    _checkResponseIsOk(response);
+    return UserNotificationsSettings.fromJSON(json.decode(response.body));
+  }
+
   Future<User> _setUserWithData(String userData) async {
     var user = _makeLoggedInUser(userData);
     _setLoggedInUser(user);
@@ -1057,14 +1176,6 @@ class CredentialsMismatchError implements Exception {
   const CredentialsMismatchError(this.msg);
 
   String toString() => 'CredentialsMismatchError: $msg';
-}
-
-class EmailAlreadyTakenError implements Exception {
-  final String msg;
-
-  const EmailAlreadyTakenError(this.msg);
-
-  String toString() => 'EmailAlreadyTakenError: $msg';
 }
 
 class AuthTokenMissingError implements Exception {
