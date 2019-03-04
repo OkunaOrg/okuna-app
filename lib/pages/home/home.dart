@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/communities.dart';
+import 'package:Openbook/pages/home/pages/notifications/notifications.dart';
 import 'package:Openbook/pages/home/pages/own_profile.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:Openbook/pages/home/pages/menu/menu.dart';
-import 'package:Openbook/pages/home/pages/notifications.dart';
 import 'package:Openbook/pages/home/pages/search/search.dart';
 import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
@@ -39,6 +39,7 @@ class OBHomePageState extends State<OBHomePage> {
   OBMainSearchPageController _searchPageController;
   OBMainMenuPageController _mainMenuPageController;
   OBCommunitiesPageController _communitiesPageController;
+  OBNotificationsPageController _notificationsPageController;
 
   @override
   void initState() {
@@ -98,7 +99,9 @@ class OBHomePageState extends State<OBHomePage> {
         );
         break;
       case OBHomePageTabs.notifications:
-        page = OBMainNotificationsPage();
+        page = OBNotificationsPage(
+          controller: _notificationsPageController,
+        );
         break;
       case OBHomePageTabs.communities:
         page = OBMainCommunitiesPage(
@@ -161,6 +164,15 @@ class OBHomePageState extends State<OBHomePage> {
             _searchPageController.scrollToTop();
           } else {
             _searchPageController.popUntilFirstRoute();
+          }
+        }
+
+        if (tappedTab == OBHomePageTabs.notifications &&
+            currentTab == OBHomePageTabs.notifications) {
+          if (_notificationsPageController.isFirstRoute()) {
+            _notificationsPageController.scrollToTop();
+          } else {
+            _notificationsPageController.popUntilFirstRoute();
           }
         }
 

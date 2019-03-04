@@ -108,6 +108,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setConnectionsCirclesApiService(connectionsCirclesApiService);
     userService.setCommunitiesApiService(communitiesApiService);
     userService.setCategoriesApiService(categoriesApiService);
+    userService.setNotificationsApiService(notificationsApiService);
+    userService.setDevicesApiService(devicesApiService);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);

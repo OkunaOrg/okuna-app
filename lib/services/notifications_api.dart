@@ -26,9 +26,16 @@ class NotificationsApiService {
     apiURL = newApiURL;
   }
 
-  Future<HttpieResponse> getNotifications() {
+  Future<HttpieResponse> getNotifications({int maxId, int count}) {
+    Map<String, dynamic> queryParams = {};
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (count != null) queryParams['count'] = count;
+
     String url = _makeApiUrl(NOTIFICATIONS_PATH);
-    return _httpService.get(url, appendAuthorizationToken: true);
+    return _httpService.get(url,
+        appendAuthorizationToken: true, queryParameters: queryParams);
   }
 
   Future<HttpieResponse> readNotifications() {
