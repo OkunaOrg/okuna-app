@@ -16,6 +16,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class Post extends UpdatableModel<Post> {
   final int id;
+  final String uuid;
   final int creatorId;
   final DateTime created;
   final User creator;
@@ -45,6 +46,7 @@ class Post extends UpdatableModel<Post> {
 
   Post(
       {this.id,
+      this.uuid,
       this.created,
       this.text,
       this.creatorId,
@@ -255,12 +257,14 @@ class Post extends UpdatableModel<Post> {
 
 class PostFactory extends UpdatableModelFactory<Post> {
   @override
-  SimpleCache<int, Post> cache = SimpleCache(storage: UpdatableModelSimpleStorage(size: 100));
+  SimpleCache<int, Post> cache =
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 100));
 
   @override
   Post makeFromJson(Map json) {
     return Post(
         id: json['id'],
+        uuid: json['uuid'],
         creatorId: json['creator_id'],
         created: parseCreated(json['created']),
         text: json['text'],

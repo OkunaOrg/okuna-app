@@ -316,7 +316,7 @@ class UserService {
   }
 
   Future<void> deletePost(Post post) async {
-    HttpieResponse response = await _postsApiService.deletePostWithId(post.id);
+    HttpieResponse response = await _postsApiService.deletePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
   }
 
@@ -325,7 +325,7 @@ class UserService {
       @required Emoji emoji,
       @required EmojiGroup emojiGroup}) async {
     HttpieResponse response = await _postsApiService.reactToPost(
-        postId: post.id, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
+        postUuid: post.uuid, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
@@ -333,14 +333,14 @@ class UserService {
   Future<void> deletePostReaction(
       {@required PostReaction postReaction, @required Post post}) async {
     HttpieResponse response = await _postsApiService.deletePostReaction(
-        postReactionId: postReaction.id, postId: post.id);
+        postReactionId: postReaction.id, postUuid: post.uuid);
     _checkResponseIsOk(response);
   }
 
   Future<PostReactionList> getReactionsForPost(Post post,
       {int count, int maxId, Emoji emoji}) async {
-    HttpieResponse response = await _postsApiService.getReactionsForPostWithId(
-        post.id,
+    HttpieResponse response = await _postsApiService.getReactionsForPostWithUuid(
+        post.uuid,
         count: count,
         maxId: maxId,
         emojiId: emoji.id);
@@ -353,7 +353,7 @@ class UserService {
   Future<PostReactionsEmojiCountList> getReactionsEmojiCountForPost(
       Post post) async {
     HttpieResponse response =
-        await _postsApiService.getReactionsEmojiCountForPostWithId(post.id);
+        await _postsApiService.getReactionsEmojiCountForPostWithUuid(post.uuid);
 
     _checkResponseIsOk(response);
 
@@ -363,7 +363,7 @@ class UserService {
   Future<PostComment> commentPost(
       {@required Post post, @required String text}) async {
     HttpieResponse response =
-        await _postsApiService.commentPost(postId: post.id, text: text);
+        await _postsApiService.commentPost(postUuid: post.uuid, text: text);
     _checkResponseIsCreated(response);
     return PostComment.fromJson(json.decode(response.body));
   }
@@ -371,14 +371,14 @@ class UserService {
   Future<void> deletePostComment(
       {@required PostComment postComment, @required Post post}) async {
     HttpieResponse response = await _postsApiService.deletePostComment(
-        postCommentId: postComment.id, postId: post.id);
+        postCommentId: postComment.id, postUuid: post.uuid);
     _checkResponseIsOk(response);
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
       {int count, int maxId}) async {
     HttpieResponse response = await _postsApiService
-        .getCommentsForPostWithId(post.id, count: count, maxId: maxId);
+        .getCommentsForPostWithUuid(post.uuid, count: count, maxId: maxId);
 
     _checkResponseIsOk(response);
 

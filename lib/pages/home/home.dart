@@ -52,6 +52,7 @@ class OBHomePageState extends State<OBHomePage> {
     _searchPageController = OBMainSearchPageController();
     _mainMenuPageController = OBMainMenuPageController();
     _communitiesPageController = OBCommunitiesPageController();
+    _notificationsPageController = OBNotificationsPageController();
   }
 
   @override

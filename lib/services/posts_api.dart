@@ -13,17 +13,17 @@ class PostsApiService {
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
-  static const DELETE_POST_PATH = 'api/posts/{postId}/';
-  static const COMMENT_POST_PATH = 'api/posts/{postId}/comments/';
+  static const DELETE_POST_PATH = 'api/posts/{postUuid}/';
+  static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
   static const DELETE_POST_COMMENT_PATH =
-      'api/posts/{postId}/comments/{postCommentId}/';
-  static const GET_POST_COMMENTS_PATH = 'api/posts/{postId}/comments/';
-  static const REACT_TO_POST_PATH = 'api/posts/{postId}/reactions/';
+      'api/posts/{postUuid}/comments/{postCommentId}/';
+  static const GET_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/';
+  static const REACT_TO_POST_PATH = 'api/posts/{postUuid}/reactions/';
   static const DELETE_POST_REACTION_PATH =
-      'api/posts/{postId}/reactions/{postReactionId}/';
-  static const GET_POST_REACTIONS_PATH = 'api/posts/{postId}/reactions/';
+      'api/posts/{postUuid}/reactions/{postReactionId}/';
+  static const GET_POST_REACTIONS_PATH = 'api/posts/{postUuid}/reactions/';
   static const GET_POST_REACTIONS_EMOJI_COUNT_PATH =
-      'api/posts/{postId}/reactions/emoji-count/';
+      'api/posts/{postUuid}/reactions/emoji-count/';
   static const GET_REACTION_EMOJI_GROUPS = 'api/posts/emojis/groups/';
 
   void setHttpieService(HttpieService httpService) {
@@ -92,45 +92,45 @@ class PostsApiService {
         body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> deletePostWithId(int postId) {
-    String path = _makeDeletePostPath(postId);
+  Future<HttpieResponse> deletePostWithUuid(String postUuid) {
+    String path = _makeDeletePostPath(postUuid);
 
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getCommentsForPostWithId(int postId,
+  Future<HttpieResponse> getCommentsForPostWithUuid(String postUuid,
       {int count, int maxId}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    String path = _makeGetPostCommentsPath(postId);
+    String path = _makeGetPostCommentsPath(postUuid);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> commentPost(
-      {@required int postId, @required String text}) {
+      {@required String postUuid, @required String text}) {
     Map<String, dynamic> body = {'text': text};
 
-    String path = _makeCommentPostPath(postId);
+    String path = _makeCommentPostPath(postUuid);
     return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> deletePostComment(
-      {@required postCommentId, @required postId}) {
+      {@required postCommentId, @required postUuid}) {
     String path = _makeDeletePostCommentPath(
-        postCommentId: postCommentId, postId: postId);
+        postCommentId: postCommentId, postUuid: postUuid);
 
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getReactionsForPostWithId(int postId,
+  Future<HttpieResponse> getReactionsForPostWithUuid(String postUuid,
       {int count, int maxId, int emojiId}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
@@ -139,33 +139,33 @@ class PostsApiService {
 
     if (emojiId != null) queryParams['emoji_id'] = emojiId;
 
-    String path = _makeGetPostReactionsPath(postId);
+    String path = _makeGetPostReactionsPath(postUuid);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getReactionsEmojiCountForPostWithId(int postId) {
-    String path = _makeGetPostReactionsEmojiCountPath(postId);
+  Future<HttpieResponse> getReactionsEmojiCountForPostWithUuid(String postUuid) {
+    String path = _makeGetPostReactionsEmojiCountPath(postUuid);
 
     return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> reactToPost(
-      {@required int postId,
+      {@required String postUuid,
       @required int emojiId,
       @required int emojiGroupId}) {
     Map<String, dynamic> body = {'emoji_id': emojiId, 'group_id': emojiGroupId};
 
-    String path = _makeReactToPostPath(postId);
+    String path = _makeReactToPostPath(postUuid);
     return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> deletePostReaction(
-      {@required postReactionId, @required postId}) {
+      {@required postReactionId, @required postUuid}) {
     String path = _makeDeletePostReactionPath(
-        postReactionId: postReactionId, postId: postId);
+        postReactionId: postReactionId, postUuid: postUuid);
 
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
@@ -176,43 +176,46 @@ class PostsApiService {
     return _httpService.get(url, appendAuthorizationToken: true);
   }
 
-  String _makeDeletePostPath(int postId) {
-    return _stringTemplateService.parse(DELETE_POST_PATH, {'postId': postId});
-  }
-
-  String _makeCommentPostPath(int postId) {
-    return _stringTemplateService.parse(COMMENT_POST_PATH, {'postId': postId});
-  }
-
-  String _makeGetPostCommentsPath(int postId) {
+  String _makeDeletePostPath(String postUuid) {
     return _stringTemplateService
-        .parse(GET_POST_COMMENTS_PATH, {'postId': postId});
+        .parse(DELETE_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeCommentPostPath(String postUuid) {
+    return _stringTemplateService
+        .parse(COMMENT_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeGetPostCommentsPath(String postUuid) {
+    return _stringTemplateService
+        .parse(GET_POST_COMMENTS_PATH, {'postUuid': postUuid});
   }
 
   String _makeDeletePostCommentPath(
-      {@required postCommentId, @required postId}) {
+      {@required postCommentId, @required postUuid}) {
     return _stringTemplateService.parse(DELETE_POST_COMMENT_PATH,
-        {'postCommentId': postCommentId, 'postId': postId});
+        {'postCommentId': postCommentId, 'postUuid': postUuid});
   }
 
-  String _makeReactToPostPath(int postId) {
-    return _stringTemplateService.parse(REACT_TO_POST_PATH, {'postId': postId});
-  }
-
-  String _makeGetPostReactionsPath(int postId) {
+  String _makeReactToPostPath(String postUuid) {
     return _stringTemplateService
-        .parse(GET_POST_REACTIONS_PATH, {'postId': postId});
+        .parse(REACT_TO_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeGetPostReactionsPath(String postUuid) {
+    return _stringTemplateService
+        .parse(GET_POST_REACTIONS_PATH, {'postUuid': postUuid});
   }
 
   String _makeDeletePostReactionPath(
-      {@required postReactionId, @required postId}) {
+      {@required postReactionId, @required postUuid}) {
     return _stringTemplateService.parse(DELETE_POST_REACTION_PATH,
-        {'postReactionId': postReactionId, 'postId': postId});
+        {'postReactionId': postReactionId, 'postUuid': postUuid});
   }
 
-  String _makeGetPostReactionsEmojiCountPath(int postId) {
+  String _makeGetPostReactionsEmojiCountPath(String postUuid) {
     return _stringTemplateService
-        .parse(GET_POST_REACTIONS_EMOJI_COUNT_PATH, {'postId': postId});
+        .parse(GET_POST_REACTIONS_EMOJI_COUNT_PATH, {'postUuid': postUuid});
   }
 
   String _makeApiUrl(String string) {
