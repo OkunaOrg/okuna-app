@@ -11,9 +11,13 @@ import 'package:tinycolor/tinycolor.dart';
 class OBCommunityAvatar extends StatelessWidget {
   final Community community;
   final OBAvatarSize size;
+  final VoidCallback onPressed;
 
   const OBCommunityAvatar(
-      {Key key, @required this.community, this.size = OBAvatarSize.small})
+      {Key key,
+      @required this.community,
+      this.size = OBAvatarSize.small,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -32,7 +36,8 @@ class OBCommunityAvatar extends StatelessWidget {
           if (communityHasAvatar) {
             avatar = OBAvatar(
               avatarUrl: community?.avatar,
-              size: OBAvatarSize.large,
+              size: size,
+              onPressed: onPressed,
             );
           } else {
             String communityHexColor = community.color;
@@ -69,7 +74,8 @@ class OBCommunityAvatar extends StatelessWidget {
             avatar = OBLetterAvatar(
                 letter: community.name[0],
                 color: communityColor,
-                size: OBAvatarSize.large,
+                size: size,
+                onPressed: onPressed,
                 labelColor: textColor);
           }
 
