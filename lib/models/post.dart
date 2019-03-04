@@ -285,6 +285,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
   }
 
   DateTime parseCreated(String created) {
+    if (created == null) return null;
     return DateTime.parse(created).toLocal();
   }
 
