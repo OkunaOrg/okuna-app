@@ -1,4 +1,5 @@
 import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -7,8 +8,9 @@ class PostReaction {
   final DateTime created;
   final Emoji emoji;
   final User reactor;
+  final Post post;
 
-  PostReaction({this.id, this.created, this.emoji, this.reactor});
+  PostReaction({this.id, this.created, this.emoji, this.reactor, this.post});
 
   factory PostReaction.fromJson(Map<String, dynamic> parsedJson) {
     DateTime created;
@@ -19,10 +21,19 @@ class PostReaction {
     var reactorData = parsedJson['reactor'];
     if (reactorData != null) reactor = User.fromJson(reactorData);
 
+    Post post;
+    if (parsedJson.containsKey('post')) {
+      post = Post.fromJson(parsedJson['post']);
+    }
+
     Emoji emoji = Emoji.fromJson(parsedJson['emoji']);
 
     return PostReaction(
-        id: parsedJson['id'], created: created, reactor: reactor, emoji: emoji);
+        id: parsedJson['id'],
+        created: created,
+        reactor: reactor,
+        emoji: emoji,
+        post: post);
   }
 
   String getRelativeCreated() {

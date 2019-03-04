@@ -1,10 +1,19 @@
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/post_reaction_notification.dart';
+import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_reaction.dart';
+import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Openbook/widgets/theming/rich_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 
 class OBPostReactionNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostReactionNotification postReactionNotification;
+  static final double postImagePreviewSize = 40;
 
   const OBPostReactionNotificationTile(
       {Key key,
@@ -14,6 +23,59 @@ class OBPostReactionNotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('PostReaction notification');
+    PostReaction postReaction = postReactionNotification.postReaction;
+    Post post = postReaction.post;
+    String postReactorUsername = postReaction.getReactorUsername();
+
+    Widget postImagePreview;
+    if (post.hasImage()) {
+      postImagePreview = ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: Image(
+          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
+          height: postImagePreviewSize,
+          width: postImagePreviewSize,
+          fit: BoxFit.fill,
+        ),
+      );
+    }
+
+    Function navigateToReactorProfile = () {
+      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+
+      openbookProvider.navigationService
+          .navigateToUserProfile(user: postReaction.reactor, context: context);
+    };
+
+    return ListTile(
+      onTap: () {
+        OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+/*        openbookProvider.navigationService
+            .navigateToPost(post: postReaction.post, context: context);*/
+      },
+      leading: OBAvatar(
+        onPressed: navigateToReactorProfile,
+        size: OBAvatarSize.medium,
+        avatarUrl: postReaction.reactor.getProfileAvatar(),
+      ),
+      title: Row(
+        children: <Widget>[
+          OBRichText(
+            children: [
+              TextSpan(
+                  text: '@$postReactorUsername',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = navigateToReactorProfile),
+              TextSpan(text: ' reacted:'),
+            ],
+          ),
+          OBEmoji(
+            postReaction.emoji,
+          ),
+        ],
+      ),
+      trailing: postImagePreview,
+    );
   }
 }
