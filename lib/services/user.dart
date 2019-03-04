@@ -321,7 +321,7 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
-  Future<void> getPostWithUuid(String uuid) async {
+  Future<Post> getPostWithUuid(String uuid) async {
     HttpieResponse response = await _postsApiService.getPostWithUuid(uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));

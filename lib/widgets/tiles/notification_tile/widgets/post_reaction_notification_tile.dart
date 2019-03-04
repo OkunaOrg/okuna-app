@@ -50,8 +50,8 @@ class OBPostReactionNotificationTile extends StatelessWidget {
     return ListTile(
       onTap: () {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-/*        openbookProvider.navigationService
-            .navigateToPost(post: postReaction.post, context: context);*/
+        openbookProvider.navigationService
+            .navigateToPost(post: postReaction.post, context: context);
       },
       leading: OBAvatar(
         onPressed: navigateToReactorProfile,

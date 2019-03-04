@@ -25,6 +25,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.d
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
@@ -169,7 +170,7 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
-            widget: OBPostPage(post, autofocusCommentInput: true)));
+            widget: OBPostCommentsPage(post, autofocusCommentInput: true)));
   }
 
   Future navigateToPostComments(
@@ -178,7 +179,12 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
-            widget: OBPostPage(post, autofocusCommentInput: false)));
+            widget: OBPostCommentsPage(post, autofocusCommentInput: false)));
+  }
+
+  Future navigateToPost({@required Post post, @required BuildContext context}) {
+    return Navigator.push(context,
+        OBSlideRightRoute(key: Key('obSlidePost'), widget: OBPostPage(post)));
   }
 
   Future navigateToSettingsPage({@required BuildContext context}) {
