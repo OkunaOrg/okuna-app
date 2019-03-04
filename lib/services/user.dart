@@ -316,8 +316,15 @@ class UserService {
   }
 
   Future<void> deletePost(Post post) async {
-    HttpieResponse response = await _postsApiService.deletePostWithUuid(post.uuid);
+    HttpieResponse response =
+        await _postsApiService.deletePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
+  }
+
+  Future<void> getPostWithUuid(String uuid) async {
+    HttpieResponse response = await _postsApiService.getPostWithUuid(uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
   }
 
   Future<PostReaction> reactToPost(
@@ -339,11 +346,9 @@ class UserService {
 
   Future<PostReactionList> getReactionsForPost(Post post,
       {int count, int maxId, Emoji emoji}) async {
-    HttpieResponse response = await _postsApiService.getReactionsForPostWithUuid(
-        post.uuid,
-        count: count,
-        maxId: maxId,
-        emojiId: emoji.id);
+    HttpieResponse response =
+        await _postsApiService.getReactionsForPostWithUuid(post.uuid,
+            count: count, maxId: maxId, emojiId: emoji.id);
 
     _checkResponseIsOk(response);
 

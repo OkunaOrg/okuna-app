@@ -13,7 +13,7 @@ class PostsApiService {
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
-  static const DELETE_POST_PATH = 'api/posts/{postUuid}/';
+  static const POST_PATH = 'api/posts/{postUuid}/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
   static const DELETE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
@@ -92,8 +92,14 @@ class PostsApiService {
         body: body, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> getPostWithUuid(String postUuid) {
+    String path = _makePostPath(postUuid);
+
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> deletePostWithUuid(String postUuid) {
-    String path = _makeDeletePostPath(postUuid);
+    String path = _makePostPath(postUuid);
 
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
@@ -145,7 +151,8 @@ class PostsApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getReactionsEmojiCountForPostWithUuid(String postUuid) {
+  Future<HttpieResponse> getReactionsEmojiCountForPostWithUuid(
+      String postUuid) {
     String path = _makeGetPostReactionsEmojiCountPath(postUuid);
 
     return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
@@ -176,9 +183,8 @@ class PostsApiService {
     return _httpService.get(url, appendAuthorizationToken: true);
   }
 
-  String _makeDeletePostPath(String postUuid) {
-    return _stringTemplateService
-        .parse(DELETE_POST_PATH, {'postUuid': postUuid});
+  String _makePostPath(String postUuid) {
+    return _stringTemplateService.parse(POST_PATH, {'postUuid': postUuid});
   }
 
   String _makeCommentPostPath(String postUuid) {
