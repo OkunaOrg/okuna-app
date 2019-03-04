@@ -70,6 +70,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
   Widget _buildNotification(BuildContext context, OBNotification notification) {
     return OBNotificationTile(
       notification: notification,
+      onNotificationTileDeleted: _onNotificationTileDeleted,
     );
   }
 
@@ -87,7 +88,21 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
     return moreNotifications.notifications;
   }
 
-  void _onPostDeleted(Post deletedPost) {}
+  void _onNotificationTileDeleted(OBNotification notification) async {
+    await _deleteNotification(notification);
+    _notificationsListController.removeListItem(notification);
+  }
+
+  Future _deleteNotification(OBNotification notification) async {
+    try {
+      await _userService.deleteNotification(notification);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection', context: context);
+    } catch (error) {
+      _toastService.error(message: 'Unknown error', context: context);
+      rethrow;
+    }
+  }
 }
 
 class OBNotificationsPageController extends PoppablePageController {

@@ -10,10 +10,11 @@ import 'package:Openbook/widgets/tiles/notification_tile/widgets/follow_notifica
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/post_comment_notification_tile.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/post_reaction_notification_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class OBNotificationTile extends StatelessWidget {
   final OBNotification notification;
-  final VoidCallback onNotificationTileDeleted;
+  final ValueChanged<OBNotification> onNotificationTileDeleted;
 
   const OBNotificationTile(
       {Key key, @required this.notification, this.onNotificationTileDeleted})
@@ -59,6 +60,21 @@ class OBNotificationTile extends StatelessWidget {
       default:
         throw 'Unsupported notification content object type';
     }
-    return notificationTile;
+
+    return Slidable(
+      delegate: const SlidableDrawerDelegate(),
+      actionExtentRatio: 0.25,
+      child: notificationTile,
+      secondaryActions: <Widget>[
+        new IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {
+            onNotificationTileDeleted(notification);
+          },
+        ),
+      ],
+    );
   }
 }
