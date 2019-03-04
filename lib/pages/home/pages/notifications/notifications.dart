@@ -51,20 +51,14 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
           title: 'Notifications',
         ),
         child: OBPrimaryColorContainer(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: OBHttpList(
-                  controller: _notificationsListController,
-                  listRefresher: _refreshNotifications,
-                  listOnScrollLoader: _loadMoreNotifications,
-                  listItemBuilder: _buildNotification,
-                  resourceSingularName: 'notification',
-                  resourcePluralName: 'notifications',
-                ),
-              )
-            ],
+          child: OBHttpList(
+            controller: _notificationsListController,
+            listRefresher: _refreshNotifications,
+            listOnScrollLoader: _loadMoreNotifications,
+            listItemBuilder: _buildNotification,
+            resourceSingularName: 'notification',
+            resourcePluralName: 'notifications',
+            physics: const AlwaysScrollableScrollPhysics(),
           ),
         ));
   }

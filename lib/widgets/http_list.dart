@@ -121,7 +121,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     columnItems.add(
         Expanded(child: _hasSearch ? _buildSearchResultsList() : _buildList()));
 
-    return Column(children: columnItems);
+    return Column(
+      children: columnItems,
+      mainAxisSize: MainAxisSize.max,
+    );
   }
 
   Widget _buildSearchResultsList() {
