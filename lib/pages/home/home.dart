@@ -1,6 +1,6 @@
 import 'dart:async';
-
-import 'package:Openbook/models/circle.dart';
+import 'package:Openbook/services/push_notifications/push_notifications.dart';
+import 'package:onesignal/onesignal.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/communities.dart';
 import 'package:Openbook/pages/home/pages/notifications/notifications.dart';
@@ -27,11 +27,14 @@ class OBHomePage extends StatefulWidget {
 }
 
 class OBHomePageState extends State<OBHomePage> {
+  static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
+  PushNotificationsService _pushNotificationsService;
+
   int _currentIndex;
   int _lastIndex;
   bool _needsBootstrap;
-  String _avatarUrl;
+  String _loggedInUserAvatarUrl;
   StreamSubscription _loggedInUserChangeSubscription;
   StreamSubscription _loggedInUserUpdateSubscription;
   OBTimelinePageController _timelinePageController;
@@ -68,6 +71,7 @@ class OBHomePageState extends State<OBHomePage> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      _pushNotificationsService = openbookProvider.pushNotificationsService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -221,11 +225,11 @@ class OBHomePageState extends State<OBHomePage> {
         BottomNavigationBarItem(
             title: const SizedBox(),
             icon: OBAvatar(
-              avatarUrl: _avatarUrl,
+              avatarUrl: _loggedInUserAvatarUrl,
               size: OBAvatarSize.extraSmall,
             ),
             activeIcon: OBOwnProfileActiveIcon(
-              avatarUrl: _avatarUrl,
+              avatarUrl: _loggedInUserAvatarUrl,
               size: OBAvatarSize.extraSmall,
             )),
         BottomNavigationBarItem(
@@ -250,6 +254,7 @@ class OBHomePageState extends State<OBHomePage> {
       await _userService.loginWithStoredAuthToken();
     } catch (error) {
       if (error is AuthTokenMissingError || error is HttpieRequestError) {
+        await _pushNotificationsService.disablePushNotifications();
         await _userService.logout();
       }
       rethrow;
@@ -260,6 +265,7 @@ class OBHomePageState extends State<OBHomePage> {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
+      _pushNotificationsService.bootstrap();
       _loggedInUserUpdateSubscription =
           newUser.updateSubject.listen(_onLoggedInUserUpdate);
     }
@@ -271,11 +277,9 @@ class OBHomePageState extends State<OBHomePage> {
 
   void _setAvatarUrl(String avatarUrl) {
     setState(() {
-      _avatarUrl = avatarUrl;
+      _loggedInUserAvatarUrl = avatarUrl;
     });
   }
 }
 
 enum OBHomePageTabs { home, search, communities, notifications, profile, menu }
-
-typedef Future<List<Circle>> OnWantsToPickCircles();

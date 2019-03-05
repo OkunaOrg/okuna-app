@@ -25,7 +25,10 @@ class PostComment {
       created = DateTime.parse(parsedJson['created']).toLocal();
     }
 
-    User commenter = User.fromJson(parsedJson['commenter']);
+    User commenter;
+    if (parsedJson.containsKey('commenter')) {
+      commenter = User.fromJson(parsedJson['commenter']);
+    }
 
     Post post;
     if (parsedJson.containsKey('post')) {

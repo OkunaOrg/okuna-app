@@ -8,11 +8,11 @@ import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/devices_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
+import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/emoji_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/environment_loader.dart';
-import 'package:Openbook/services/file_cache.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
@@ -29,6 +29,9 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
+
+// TODO Waiting for dependency injection support
+// https://github.com/flutter/flutter/issues/21980
 
 class OpenbookProvider extends StatefulWidget {
   final Widget child;
@@ -56,7 +59,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StorageService storageService = StorageService();
   UserService userService = UserService();
   ToastService toastService = ToastService();
-  FileCacheService fileCacheService = FileCacheService();
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
@@ -79,6 +81,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   LocalizationService localizationService;
   UniversalLinksService universalLinksService = UniversalLinksService();
   BottomSheetService bottomSheetService = BottomSheetService();
+  PushNotificationsService pushNotificationsService =
+      PushNotificationsService();
 
   @override
   void initState() {
@@ -124,6 +128,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     validationService
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
+    pushNotificationsService.setUserService(userService);
   }
 
   void initAsyncState() async {
@@ -156,6 +161,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   void dispose() {
     super.dispose();
     universalLinksService.dispose();
+    pushNotificationsService.dispose();
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {

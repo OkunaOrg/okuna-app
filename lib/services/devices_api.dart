@@ -9,7 +9,7 @@ class DevicesApiService {
   String apiURL;
 
   static const DEVICES_PATH = 'api/devices/';
-  static const DEVICE_PATH = 'api/devices/{deviceId}/';
+  static const DEVICE_PATH = 'api/devices/{deviceUuid}/';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
@@ -34,53 +34,41 @@ class DevicesApiService {
   }
 
   Future<HttpieResponse> createDevice(
-      {@required String uuid,
-      String name,
-      String oneSignalPlayerId}) {
-    String url = _makeApiUrl(DEVICE_PATH);
+      {@required String uuid, String name}) {
+    String url = _makeApiUrl(DEVICES_PATH);
     Map<String, dynamic> body = {'uuid': uuid};
 
     if (name != null) body['name'] = name;
-
-    if (oneSignalPlayerId != null)
-      body['one_signal_player_id'] = oneSignalPlayerId;
 
     return _httpService.putJSON(url,
         appendAuthorizationToken: true, body: body);
   }
 
-  Future<HttpieResponse> updateDeviceWithId(int deviceId,
-      {String name, String oneSignalPlayerId}) {
-    String url = _makeApiUrl(DEVICE_PATH);
+  Future<HttpieResponse> updateDeviceWithUuid(String deviceUuid,
+      {String name}) {
+    String url = _makeDevicePath(deviceUuid);
+
     Map<String, dynamic> body = {};
 
     if (name != null) body['name'] = name;
-
-    if (oneSignalPlayerId != null)
-      body['one_signal_player_id'] = oneSignalPlayerId;
 
     return _httpService.patchJSON(url,
         appendAuthorizationToken: true, body: body);
   }
 
-  Future<HttpieResponse> deleteDeviceWithId(int deviceId) {
-    String url = _makeDeleteDevicePath(deviceId);
+  Future<HttpieResponse> deleteDeviceWithUuid(String deviceUuid) {
+    String url = _makeDevicePath(deviceUuid);
     return _httpService.delete(url, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getDeviceWithId(int deviceId) {
-    String url = _makeGetDevicePath(deviceId);
+  Future<HttpieResponse> getDeviceWithUuid(String deviceUuid) {
+    String url = _makeDevicePath(deviceUuid);
     return _httpService.get(url, appendAuthorizationToken: true);
   }
 
-  String _makeDeleteDevicePath(int deviceId) {
+  String _makeDevicePath(String deviceUuid) {
     return _stringTemplateService
-        .parse('$apiURL$DEVICE_PATH', {'deviceId': deviceId});
-  }
-
-  String _makeGetDevicePath(int deviceId) {
-    return _stringTemplateService
-        .parse('$apiURL$DEVICE_PATH', {'deviceId': deviceId});
+        .parse('$apiURL$DEVICE_PATH', {'deviceUuid': deviceUuid});
   }
 
   String _makeApiUrl(String string) {

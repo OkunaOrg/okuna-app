@@ -327,10 +327,12 @@ class UserFactory extends UpdatableModelFactory<User> {
   }
 
   UserProfile parseUserProfile(Map profile) {
+    if (profile == null) return null;
     return UserProfile.fromJSON(profile);
   }
 
   UserNotificationsSettings parseUserNotificationsSettings(Map notificationsSettings) {
+    if (notificationsSettings == null) return null;
     return UserNotificationsSettings.fromJSON(notificationsSettings);
   }
 

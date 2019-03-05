@@ -397,12 +397,20 @@ abstract class HttpieBaseResponse<T extends http.BaseResponse> {
     return _httpResponse.statusCode == HttpStatus.unauthorized;
   }
 
+  bool isForbidden() {
+    return _httpResponse.statusCode == HttpStatus.forbidden;
+  }
+
   bool isAccepted() {
     return _httpResponse.statusCode == HttpStatus.accepted;
   }
 
   bool isCreated() {
     return _httpResponse.statusCode == HttpStatus.created;
+  }
+
+  bool isNotFound(){
+    return _httpResponse.statusCode == HttpStatus.notFound;
   }
 
   int get statusCode => _httpResponse.statusCode;

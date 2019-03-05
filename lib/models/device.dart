@@ -9,7 +9,6 @@ class Device extends UpdatableModel<Device> {
 
   User owner;
   String uuid;
-  String oneSignalPlayerId;
   String name;
   DateTime created;
 
@@ -19,20 +18,10 @@ class Device extends UpdatableModel<Device> {
     return factory.fromJson(json);
   }
 
-  Device(
-      {this.id,
-      this.owner,
-      this.name,
-      this.uuid,
-      this.oneSignalPlayerId,
-      this.created});
+  Device({this.id, this.owner, this.name, this.uuid, this.created});
 
   @override
   void updateFromJson(Map json) {
-    if (json.containsKey('one_signal_player_id')) {
-      oneSignalPlayerId = json['one_signal_player_id'];
-    }
-
     if (json.containsKey('name')) {
       name = json['name'];
     }
@@ -67,7 +56,6 @@ class DeviceFactory extends UpdatableModelFactory<Device> {
         name: json['name'],
         created: parseCreated(json['created']),
         owner: parseUser(json['creator']),
-        oneSignalPlayerId: json['one_signal_player_id'],
         uuid: json['uuid']);
   }
 
@@ -87,6 +75,7 @@ class DeviceFactory extends UpdatableModelFactory<Device> {
   }
 
   DateTime parseCreated(String created) {
+    if (created == null) return null;
     return DateTime.parse(created).toLocal();
   }
 }
