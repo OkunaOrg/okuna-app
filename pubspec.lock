@@ -179,13 +179,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_udid:
-    dependency: "direct main"
-    description:
-      name: flutter_udid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   front_end:
     dependency: transitive
     description:
