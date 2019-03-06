@@ -32,6 +32,7 @@ class OBTextFormField extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+    EdgeInsets contentPadding;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -54,6 +55,12 @@ class OBTextFormField extends StatelessWidget {
               fontSize = 22;
               labelHeight = 0.60;
               break;
+          }
+          //@todo: better way to set this default?
+          if (decoration.contentPadding == null) {
+              contentPadding = EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
+          } else {
+            contentPadding = decoration.contentPadding;
           }
 
           return Column(
@@ -82,8 +89,7 @@ class OBTextFormField extends StatelessWidget {
                   hintStyle: TextStyle(
                       color: themeValueParserService
                           .parseColor(theme.primaryTextColor)),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                  contentPadding: contentPadding,
                   border: InputBorder.none,
                   labelText: decoration.labelText,
                   prefixIcon: decoration.prefixIcon,

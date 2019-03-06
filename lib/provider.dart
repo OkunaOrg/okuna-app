@@ -6,6 +6,7 @@ import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
+import 'package:Openbook/services/post_reports_api.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/emoji_picker.dart';
 import 'package:Openbook/services/emojis_api.dart';
@@ -51,6 +52,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   HttpieService httpService = HttpieService();
   AuthApiService authApiService = AuthApiService();
   PostsApiService postsApiService = PostsApiService();
+  PostReportsApiService postReportsApiService = PostReportsApiService();
   StorageService storageService = StorageService();
   UserService userService = UserService();
   ToastService toastService = ToastService();
@@ -104,10 +106,13 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setConnectionsCirclesApiService(connectionsCirclesApiService);
     userService.setCommunitiesApiService(communitiesApiService);
     userService.setCategoriesApiService(categoriesApiService);
+    userService.setPostReportsApiService(postReportsApiService);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
+    postReportsApiService.setHttpieService(httpService);
     postsApiService.setStringTemplateService(stringTemplateService);
+    postReportsApiService.setStringTemplateService(stringTemplateService);
     validationService.setAuthApiService(authApiService);
     validationService.setFollowsListsApiService(followsListsApiService);
     validationService.setCommunitiesApiService(communitiesApiService);
@@ -123,6 +128,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         environment.magicHeaderName, environment.magicHeaderValue);
     authApiService.setApiURL(environment.apiUrl);
     postsApiService.setApiURL(environment.apiUrl);
+    postReportsApiService.setApiURL(environment.apiUrl);
     emojisApiService.setApiURL(environment.apiUrl);
     followsApiService.setApiURL(environment.apiUrl);
     connectionsApiService.setApiURL(environment.apiUrl);

@@ -98,6 +98,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
                   return OBPost(
                     post,
                     onPostDeleted: _onPostDeleted,
+                    onPostReported: _onPostReported,
                     key: Key(
                       post.id.toString(),
                     ),
@@ -257,6 +258,11 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     setState(() {
       _posts.remove(deletedPost);
     });
+  }
+
+  void _onPostReported(Post reportedPost) {
+    _onPostDeleted(reportedPost);
+    _toastService.success(message: 'Post reported successfully', context: context);
   }
 
   void _setPosts(List<Post> posts) {

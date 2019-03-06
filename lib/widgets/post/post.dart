@@ -11,9 +11,10 @@ import 'package:flutter/material.dart';
 
 class OBPost extends StatelessWidget {
   final Post post;
+  final OnPostReported onPostReported;
   final OnPostDeleted onPostDeleted;
 
-  const OBPost(this.post, {Key key, @required this.onPostDeleted})
+  const OBPost(this.post, {Key key, @required this.onPostDeleted, @required this.onPostReported})
       : super(key: key);
 
   @override
@@ -25,10 +26,12 @@ class OBPost extends StatelessWidget {
             ? OBCommunityPostHeader(
                 post,
                 onPostDeleted: onPostDeleted,
+                onPostReported: onPostReported
               )
             : OBUserPostHeader(
                 post,
                 onPostDeleted: onPostDeleted,
+                onPostReported: onPostReported,
               ),
         OBPostBody(post),
         OBPostReactions(post),

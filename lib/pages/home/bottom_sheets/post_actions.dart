@@ -2,6 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -32,12 +33,14 @@ class OBPostActionsBottomSheet extends StatefulWidget {
 class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   UserService _userService;
   ToastService _toastService;
+  ModalService _modalService;
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _modalService = openbookProvider.modalService;
 
     List<Widget> postActions = [];
 
@@ -104,7 +107,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   }
 
   void _onWantsToReportPost() async {
-    _toastService.error(message: 'Not implemented yet', context: context);
+    await _modalService.openReportPost(reportedPost: widget.post, onPostReported: widget.onPostReported, context: context);
     Navigator.pop(context);
   }
 }

@@ -67,7 +67,9 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
             ? _buildNoTrendingPostsAlert()
             : Column(
                 children: _posts.map((Post post) {
-                return OBPost(post);
+                return OBPost(post,
+                onPostDeleted: _onPostDeleted,
+                onPostReported: _onPostReported,);
               }).toList())
       ],
     );
@@ -85,6 +87,17 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
 
   void _bootstrap() {
     refresh();
+  }
+
+  void _onPostDeleted(Post deletedPost) {
+    setState(() {
+      _posts.remove(deletedPost);
+    });
+  }
+
+  void _onPostReported(Post reportedPost) {
+    _onPostDeleted(reportedPost);
+    _toastService.success(message: 'Post reported successfully', context: context);
   }
 
   Future<void> refresh() async {

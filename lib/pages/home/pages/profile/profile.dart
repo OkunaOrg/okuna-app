@@ -124,6 +124,7 @@ class OBProfilePageState extends State<OBProfilePage> {
 
                               return OBPost(post,
                                   onPostDeleted: _onPostDeleted,
+                                  onPostReported: _onPostReported,
                                   key: Key(post.id.toString()));
                             }),
                         onLoadMore: _loadMorePosts),
@@ -201,6 +202,11 @@ class OBProfilePageState extends State<OBProfilePage> {
     setState(() {
       _posts.remove(deletedPost);
     });
+  }
+
+  void _onPostReported(Post reportedPost) {
+      _onPostDeleted(reportedPost);
+      _toastService.success(message: 'Post reported successfully', context: context);
   }
 
   void _setUser(User user) {

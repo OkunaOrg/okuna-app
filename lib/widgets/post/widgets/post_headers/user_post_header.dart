@@ -14,8 +14,9 @@ import 'package:flutter/material.dart';
 class OBUserPostHeader extends StatelessWidget {
   final Post _post;
   final OnPostDeleted onPostDeleted;
+  final OnPostReported onPostReported;
 
-  const OBUserPostHeader(this._post, {Key key, @required this.onPostDeleted})
+  const OBUserPostHeader(this._post, {Key key, @required this.onPostDeleted, @required this.onPostReported})
       : super(key: key);
 
   @override
@@ -48,7 +49,7 @@ class OBUserPostHeader extends StatelessWidget {
                 context: context,
                 post: _post,
                 onPostDeleted: onPostDeleted,
-                onPostReported: null);
+                onPostReported: onPostReported);
           }),
       title: GestureDetector(
         onTap: () {

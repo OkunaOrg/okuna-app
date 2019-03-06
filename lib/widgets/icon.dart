@@ -189,6 +189,7 @@ class OBIcons {
   static const communityInvites = OBIconData(nativeIcon: Icons.email);
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity = OBIconData(nativeIcon: Icons.remove_circle);
+  static const menuForward = OBIconData(nativeIcon: Icons.arrow_forward_ios);
 
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
