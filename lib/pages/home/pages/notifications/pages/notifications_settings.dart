@@ -83,7 +83,7 @@ class OBNotificationsSettingsPageState
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
-          title: 'Notifications Settings',
+          title: 'Notifications settings',
         ),
         child: OBPrimaryColorContainer(
           child: SingleChildScrollView(
