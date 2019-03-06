@@ -1,3 +1,4 @@
+import 'package:Openbook/models/community_invite.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reaction.dart';
@@ -18,6 +19,8 @@ class PushNotification {
       pushNotificationType = PushNotificationType.connectionRequest;
     } else if (pushNotificationTypeStr == OBNotification.follow) {
       pushNotificationType = PushNotificationType.follow;
+    } else if (pushNotificationTypeStr == OBNotification.communityInvite) {
+      pushNotificationType = PushNotificationType.communityInvite;
     } else {
       throw 'Unsupported push notification type';
     }
@@ -43,6 +46,9 @@ class PushNotification {
       case PushNotificationType.postReaction:
         payload = PostReaction.fromJson(payloadData);
         break;
+      case PushNotificationType.communityInvite:
+        payload = CommunityInvite.fromJSON(payloadData);
+        break;
       default:
         throw 'Unhandled push notification type';
     }
@@ -56,7 +62,8 @@ class PushNotification {
 
   factory PushNotification.fromJson(Map<String, dynamic> parsedJson) {
     PushNotificationType type = parseType(parsedJson['type']);
-    dynamic payload = parsePayload(payloadData: parsedJson['payload'], type: type);
+    dynamic payload =
+        parsePayload(payloadData: parsedJson['payload'], type: type);
 
     return PushNotification(payload: payload, type: type);
   }
@@ -66,5 +73,6 @@ enum PushNotificationType {
   postReaction,
   postComment,
   connectionRequest,
-  follow
+  follow,
+  communityInvite
 }

@@ -1,9 +1,11 @@
+import 'package:Openbook/models/notifications/community_invite_notification.dart';
 import 'package:Openbook/models/notifications/connection_confirmed_notification.dart';
 import 'package:Openbook/models/notifications/connection_request_notification.dart';
 import 'package:Openbook/models/notifications/follow_notification.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/post_comment_notification.dart';
 import 'package:Openbook/models/notifications/post_reaction_notification.dart';
+import 'package:Openbook/widgets/tiles/notification_tile/widgets/community_invite_notification_tile.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/connection_confirmed_notification_tile.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/connection_request_notification_tile.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/follow_notification_tile.dart';
@@ -27,6 +29,12 @@ class OBNotificationTile extends StatelessWidget {
     dynamic notificationContentObject = this.notification.contentObject;
 
     switch (notificationContentObject.runtimeType) {
+      case CommunityInviteNotification:
+        notificationTile = OBCommunityInviteNotificationTile(
+          notification: notification,
+          communityInviteNotification: notificationContentObject,
+        );
+        break;
       case FollowNotification:
         notificationTile = OBFollowNotificationTile(
           notification: notification,

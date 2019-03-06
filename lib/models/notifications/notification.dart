@@ -1,3 +1,4 @@
+import 'package:Openbook/models/notifications/community_invite_notification.dart';
 import 'package:Openbook/models/notifications/connection_confirmed_notification.dart';
 import 'package:Openbook/models/notifications/connection_request_notification.dart';
 import 'package:Openbook/models/notifications/follow_notification.dart';
@@ -27,6 +28,7 @@ class OBNotification extends UpdatableModel<OBNotification> {
   static final connectionRequest = 'CR';
   static final connectionConfirmed = 'CC';
   static final follow = 'F';
+  static final communityInvite = 'CI';
 
   factory OBNotification.fromJSON(Map<String, dynamic> json) {
     return factory.fromJson(json);
@@ -98,6 +100,8 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       notificationType = NotificationType.connectionConfirmed;
     } else if (notificationTypeStr == OBNotification.follow) {
       notificationType = NotificationType.follow;
+    } else if (notificationTypeStr == OBNotification.communityInvite) {
+      notificationType = NotificationType.communityInvite;
     } else {
       throw 'Unsupported notification type';
     }
@@ -126,6 +130,9 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       case NotificationType.postReaction:
         contentObject = PostReactionNotification.fromJson(contentObjectData);
         break;
+      case NotificationType.communityInvite:
+        contentObject = CommunityInviteNotification.fromJson(contentObjectData);
+        break;
       default:
     }
     return contentObject;
@@ -141,5 +148,6 @@ enum NotificationType {
   postComment,
   connectionRequest,
   connectionConfirmed,
-  follow
+  follow,
+  communityInvite
 }
