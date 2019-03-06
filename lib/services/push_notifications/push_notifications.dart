@@ -30,7 +30,17 @@ class PushNotificationsService {
     OneSignal.shared.setSubscriptionObserver(_onSubscriptionChanged);
   }
 
-  void bootstrap() async {
+  Future<bool> isSubscribedToPushNotifications() async {
+    OSPermissionSubscriptionState osPermissionSubscriptionState =
+        await OneSignal.shared.getPermissionSubscriptionState();
+
+    OSSubscriptionState subscriptionState =
+        osPermissionSubscriptionState.subscriptionStatus;
+
+    return subscriptionState.subscribed;
+  }
+
+  Future enablePushNotifications() async {
     OSPermissionSubscriptionState osPermissionSubscriptionState =
         await OneSignal.shared.getPermissionSubscriptionState();
     OSPermissionState permissionStatus =
@@ -44,16 +54,18 @@ class PushNotificationsService {
     } else if (!permissionStatus.hasPrompted) {
       promptUserForPushNotificationPermission();
     }
-  }
 
-  void promptUserForPushNotificationPermission() async {
-    OneSignal.shared
-        .promptUserForPushNotificationPermission(fallbackToSettings: true);
+    return OneSignal.shared.setSubscription(true);
   }
 
   Future disablePushNotifications() async {
     // This will trigger the _onUnsubscribedFromPushNotifications
     return OneSignal.shared.setSubscription(false);
+  }
+
+  void promptUserForPushNotificationPermission() async {
+    OneSignal.shared
+        .promptUserForPushNotificationPermission(fallbackToSettings: true);
   }
 
   void setUserService(UserService userService) {

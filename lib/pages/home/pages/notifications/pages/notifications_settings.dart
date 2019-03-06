@@ -5,6 +5,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
@@ -41,13 +42,15 @@ class OBNotificationsSettingsPage extends StatefulWidget {
 class OBNotificationsSettingsPageState
     extends State<OBNotificationsSettingsPage> {
   UserService _userService;
+  PushNotificationsService _pushNotificationsService;
   ToastService _toastService;
 
   bool _needsBootstrap;
+  bool _bootstrapInProgress;
 
   UserNotificationsSettings currentNotificationsSettings;
 
-  bool _notifications;
+  bool _pushNotifications;
 
   bool _postCommentNotifications;
   bool _postReactionNotifications;
@@ -57,8 +60,10 @@ class OBNotificationsSettingsPageState
   @override
   void initState() {
     super.initState();
+    _pushNotifications = true;
     _needsBootstrap = true;
-    _notifications = true;
+    _bootstrapInProgress = true;
+    _pushNotifications = true;
     _postCommentNotifications = true;
     _postReactionNotifications = true;
     _followNotifications = true;
@@ -71,13 +76,10 @@ class OBNotificationsSettingsPageState
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _pushNotificationsService = openbookProvider.pushNotificationsService;
       _bootstrap();
       _needsBootstrap = false;
     }
-
-    const Widget listItemSeparator = SizedBox(
-      height: 10,
-    );
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
@@ -85,86 +87,111 @@ class OBNotificationsSettingsPageState
         ),
         child: OBPrimaryColorContainer(
           child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                    padding:
-                        EdgeInsets.only(left: 20.0, right: 20.0, bottom: 40),
-                    child: Column(
-                      children: <Widget>[
-                        OBToggleField(
-                          value: _notifications,
-                          title: 'Notifications',
-                          subtitle:
-                              OBText('Be notified when something happens'),
-                          onChanged: _setNotifications,
-                          onTap: _toggleNotifications,
-                          hasDivider: false,
-                        ),
-                        OBDivider(),
-                        OBToggleField(
-                          value: _followNotifications,
-                          title: 'Follow',
-                          subtitle: OBText(
-                              'Be notified when someone starts following you'),
-                          onChanged: _setFollowNotifications,
-                          onTap: _toggleFollowNotifications,
-                          hasDivider: false,
-                        ),
-                        listItemSeparator,
-                        OBToggleField(
-                          value: _connectionRequestNotifications,
-                          title: 'Connection request',
-                          subtitle: OBText(
-                              'Be notified when someone wants to connect with you'),
-                          onChanged: _setConnectionRequestNotifications,
-                          onTap: _toggleConnectionRequestNotifications,
-                          hasDivider: false,
-                        ),
-                        listItemSeparator,
-                        OBToggleField(
-                          value: _postCommentNotifications,
-                          title: 'Post comment',
-                          subtitle: OBText(
-                              'Be notified when someone comments on one of your posts'),
-                          onChanged: _setPostCommentNotifications,
-                          onTap: _togglePostCommentNotifications,
-                          hasDivider: false,
-                        ),
-                        listItemSeparator,
-                        OBToggleField(
-                          value: _postReactionNotifications,
-                          title: 'Post reaction',
-                          subtitle: OBText(
-                              'Be notified when someone reactions on one of your posts'),
-                          onChanged: _setPostReactionNotifications,
-                          onTap: _togglePostReactionNotifications,
-                          hasDivider: false,
-                        )
-                      ],
-                    )),
-              ],
-            ),
-          ),
+              physics: const ClampingScrollPhysics(),
+              child: _bootstrapInProgress
+                  ? _buildBootstrapInProgressIndicator()
+                  : _buildToggles()),
         ));
   }
 
-  void _toggleNotifications() {
-    _setNotifications(!_notifications);
+  Widget _buildBootstrapInProgressIndicator() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Padding(
+              padding: const EdgeInsets.all(20),
+              child: const OBProgressIndicator(),
+            )
+          ],
+        )
+      ],
+    );
   }
 
-  void _setNotifications(bool notifications) {
+  Widget _buildToggles() {
+    const Widget listItemSeparator = SizedBox(
+      height: 10,
+    );
+
+    List<Widget> toggles = [
+      OBToggleField(
+        value: _pushNotifications,
+        title: 'Notifications',
+        subtitle: OBText('Be notified when something happens'),
+        onChanged: _setPushNotifications,
+        onTap: _togglePushNotifications,
+        hasDivider: false,
+      ),
+    ];
+
+    if (_pushNotifications) {
+      toggles.addAll([
+        OBDivider(),
+        OBToggleField(
+          value: _followNotifications,
+          title: 'Follow',
+          subtitle: OBText('Be notified when someone starts following you'),
+          onChanged: _setFollowNotifications,
+          onTap: _toggleFollowNotifications,
+          hasDivider: false,
+        ),
+        listItemSeparator,
+        OBToggleField(
+          value: _connectionRequestNotifications,
+          title: 'Connection request',
+          subtitle:
+              OBText('Be notified when someone wants to connect with you'),
+          onChanged: _setConnectionRequestNotifications,
+          onTap: _toggleConnectionRequestNotifications,
+          hasDivider: false,
+        ),
+        listItemSeparator,
+        OBToggleField(
+          value: _postCommentNotifications,
+          title: 'Post comment',
+          subtitle:
+              OBText('Be notified when someone comments on one of your posts'),
+          onChanged: _setPostCommentNotifications,
+          onTap: _togglePostCommentNotifications,
+          hasDivider: false,
+        ),
+        listItemSeparator,
+        OBToggleField(
+          value: _postReactionNotifications,
+          title: 'Post reaction',
+          subtitle:
+              OBText('Be notified when someone reactions on one of your posts'),
+          onChanged: _setPostReactionNotifications,
+          onTap: _togglePostReactionNotifications,
+          hasDivider: false,
+        )
+      ]);
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 40),
+            child: Column(children: toggles)),
+      ],
+    );
+  }
+
+  void _togglePushNotifications() {
+    _setPushNotifications(!_pushNotifications);
+  }
+
+  Future _setPushNotifications(bool pushNotifications) async {
     setState(() {
-      _notifications = notifications;
-      _connectionRequestNotifications = notifications;
-      _postCommentNotifications = notifications;
-      _postReactionNotifications = notifications;
-      _followNotifications = notifications;
+      _pushNotifications = pushNotifications;
     });
 
-    _submitNotificationsSettings();
+    return pushNotifications
+        ? _pushNotificationsService.enablePushNotifications()
+        : _pushNotificationsService.disablePushNotifications();
   }
 
   void _toggleConnectionRequestNotifications() {
@@ -174,7 +201,6 @@ class OBNotificationsSettingsPageState
   void _setConnectionRequestNotifications(bool newValue) {
     setState(() {
       _connectionRequestNotifications = newValue;
-      if (newValue) _notifications = true;
     });
 
     _submitNotificationsSettings();
@@ -187,7 +213,6 @@ class OBNotificationsSettingsPageState
   void _setFollowNotifications(bool newValue) {
     setState(() {
       _followNotifications = newValue;
-      if (newValue) _notifications = true;
     });
 
     _submitNotificationsSettings();
@@ -200,7 +225,6 @@ class OBNotificationsSettingsPageState
   void _setPostCommentNotifications(bool newValue) {
     setState(() {
       _postCommentNotifications = newValue;
-      if (newValue) _notifications = true;
     });
 
     _submitNotificationsSettings();
@@ -213,10 +237,40 @@ class OBNotificationsSettingsPageState
   void _setPostReactionNotifications(bool newValue) {
     setState(() {
       _postReactionNotifications = newValue;
-      if (newValue) _notifications = true;
     });
 
     _submitNotificationsSettings();
+  }
+
+  void _bootstrap() async {
+    await Future.wait([
+      _refreshNotificationsSettings(),
+      _refreshPushNotifications(),
+    ]);
+    _setBootstrapInProgress(false);
+  }
+
+  Future _refreshPushNotifications() async {
+    bool isSubscribedToPushNotifications =
+        await _pushNotificationsService.isSubscribedToPushNotifications();
+
+    setState(() {
+      _pushNotifications = isSubscribedToPushNotifications;
+    });
+  }
+
+  Future _refreshNotificationsSettings() async {
+    try {
+      UserNotificationsSettings notificationsSettings =
+          await _userService.getAuthenticatedUserNotificationsSettings();
+
+      _setNotificationsSettings(notificationsSettings);
+    } on HttpieConnectionRefusedError {
+      _toastService.error(message: 'No internet connection', context: context);
+    } catch (e) {
+      _toastService.error(message: 'Unknown error.', context: context);
+      rethrow;
+    }
   }
 
   void _submitNotificationsSettings() {
@@ -235,33 +289,21 @@ class OBNotificationsSettingsPageState
     }
   }
 
-  void _bootstrap() {
-    _refreshNotificationsSettings();
-  }
-
-  Future _refreshNotificationsSettings() async {
-    try {
-      UserNotificationsSettings notificationsSettings =
-          await _userService.getAuthenticatedUserNotificationsSettings();
-
-      _setNotificationsSettings(notificationsSettings);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
-    }
-  }
-
   void _setNotificationsSettings(
       UserNotificationsSettings notificationSettings) {
-
     setState(() {
-      _connectionRequestNotifications = notificationSettings.connectionRequestNotifications;
+      _connectionRequestNotifications =
+          notificationSettings.connectionRequestNotifications;
       _postCommentNotifications = notificationSettings.postCommentNotifications;
-      _postReactionNotifications = notificationSettings.postReactionNotifications;
+      _postReactionNotifications =
+          notificationSettings.postReactionNotifications;
       _followNotifications = notificationSettings.followNotifications;
-      _notifications = _connectionRequestNotifications || _postCommentNotifications || _postReactionNotifications || _followNotifications;
+    });
+  }
+
+  void _setBootstrapInProgress(bool bootstrapInProgress) {
+    setState(() {
+      _bootstrapInProgress = bootstrapInProgress;
     });
   }
 }
