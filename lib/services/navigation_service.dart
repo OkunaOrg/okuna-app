@@ -24,6 +24,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connect
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
+import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
@@ -276,6 +277,16 @@ class NavigationService {
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
             )));
+  }
+
+  Future<void> navigateToNotificationsSettings({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obNotificationsSettingsPage'),
+            widget: OBNotificationsSettingsPage()));
   }
 
   Future<void> navigateToBlankPageWithWidget(

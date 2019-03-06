@@ -1,12 +1,14 @@
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
-import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/http_list.dart';
+import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/notification_tile.dart';
@@ -27,9 +29,9 @@ class OBNotificationsPage extends StatefulWidget {
 }
 
 class OBNotificationsPageState extends State<OBNotificationsPage> {
-  User _user;
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
   OBHttpListController<OBNotification> _notificationsListController;
 
   @override
@@ -45,10 +47,16 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _navigationService = openbookProvider.navigationService;
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
           title: 'Notifications',
+          trailing: OBIconButton(
+            OBIcons.settings,
+            themeColor: OBIconThemeColor.primaryAccent,
+            onPressed: _onWantsToConfigureNotifications,
+          ),
         ),
         child: OBPrimaryColorContainer(
           child: OBHttpList(
@@ -102,6 +110,10 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
       _toastService.error(message: 'Unknown error', context: context);
       rethrow;
     }
+  }
+
+  void _onWantsToConfigureNotifications() {
+    _navigationService.navigateToNotificationsSettings(context: context);
   }
 }
 

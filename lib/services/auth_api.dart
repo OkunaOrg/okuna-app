@@ -185,9 +185,9 @@ class AuthApiService {
   }
 
   Future<HttpieResponse> getAuthenticatedUserNotificationsSettings() {
-    return this
-        ._httpService
-        .get('$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH');
+    return this._httpService.get(
+        '$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
+        appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> updateAuthenticatedUserNotificationsSettings({
