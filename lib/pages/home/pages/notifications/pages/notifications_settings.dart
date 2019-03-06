@@ -56,6 +56,7 @@ class OBNotificationsSettingsPageState
   bool _postReactionNotifications;
   bool _followNotifications;
   bool _connectionRequestNotifications;
+  bool _communityInviteNotifications;
 
   @override
   void initState() {
@@ -68,6 +69,7 @@ class OBNotificationsSettingsPageState
     _postReactionNotifications = true;
     _followNotifications = true;
     _connectionRequestNotifications = true;
+    _communityInviteNotifications = true;
   }
 
   @override
@@ -166,6 +168,15 @@ class OBNotificationsSettingsPageState
           onChanged: _setPostReactionNotifications,
           onTap: _togglePostReactionNotifications,
           hasDivider: false,
+        ),
+        OBToggleField(
+          value: _communityInviteNotifications,
+          title: 'Community invite',
+          subtitle: OBText(
+              'Be notified when someone invites you to join a community'),
+          onChanged: _setCommunityInviteNotifications,
+          onTap: _toggleCommunityInviteNotifications,
+          hasDivider: false,
         )
       ]);
     }
@@ -213,6 +224,18 @@ class OBNotificationsSettingsPageState
   void _setFollowNotifications(bool newValue) {
     setState(() {
       _followNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
+  void _toggleCommunityInviteNotifications() {
+    _setCommunityInviteNotifications(!_communityInviteNotifications);
+  }
+
+  void _setCommunityInviteNotifications(bool newValue) {
+    setState(() {
+      _communityInviteNotifications = newValue;
     });
 
     _submitNotificationsSettings();
@@ -276,11 +299,11 @@ class OBNotificationsSettingsPageState
   void _submitNotificationsSettings() {
     try {
       _userService.updateAuthenticatedUserNotificationsSettings(
-        followNotifications: _followNotifications,
-        postCommentNotifications: _postCommentNotifications,
-        postReactionNotifications: _postReactionNotifications,
-        connectionRequestNotifications: _connectionRequestNotifications,
-      );
+          followNotifications: _followNotifications,
+          postCommentNotifications: _postCommentNotifications,
+          postReactionNotifications: _postReactionNotifications,
+          connectionRequestNotifications: _connectionRequestNotifications,
+          communityInviteNotifications: _communityInviteNotifications);
     } on HttpieConnectionRefusedError {
       _toastService.error(message: 'No internet connection', context: context);
     } catch (e) {
@@ -298,6 +321,8 @@ class OBNotificationsSettingsPageState
       _postReactionNotifications =
           notificationSettings.postReactionNotifications;
       _followNotifications = notificationSettings.followNotifications;
+      _communityInviteNotifications =
+          notificationSettings.communityInviteNotifications;
     });
   }
 

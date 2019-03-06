@@ -5,6 +5,7 @@ class UserNotificationsSettings {
   bool followNotifications;
   bool connectionRequestNotifications;
   bool connectionConfirmedNotifications;
+  bool communityInviteNotifications;
 
   UserNotificationsSettings(
       {this.id,
@@ -12,7 +13,8 @@ class UserNotificationsSettings {
       this.connectionRequestNotifications,
       this.followNotifications,
       this.postCommentNotifications,
-      this.postReactionNotifications});
+      this.postReactionNotifications,
+      this.communityInviteNotifications});
 
   factory UserNotificationsSettings.fromJSON(Map<String, dynamic> parsedJson) {
     return UserNotificationsSettings(
@@ -24,6 +26,8 @@ class UserNotificationsSettings {
       followNotifications: parsedJson['follow_notifications'],
       postCommentNotifications: parsedJson['post_comment_notifications'],
       postReactionNotifications: parsedJson['post_reaction_notifications'],
+      communityInviteNotifications:
+          parsedJson['community_invite_notifications'],
     );
   }
 
@@ -39,5 +43,7 @@ class UserNotificationsSettings {
       postCommentNotifications = json['post_comment_notifications'];
     if (json.containsKey('post_reaction_notifications'))
       postReactionNotifications = json['post_reaction_notifications'];
+    if (json.containsKey('community_invite_notifications'))
+      communityInviteNotifications = json['community_invite_notifications'];
   }
 }

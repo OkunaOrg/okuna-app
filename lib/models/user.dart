@@ -32,7 +32,6 @@ class User extends UpdatableModel<User> {
   FollowsListsList followLists;
   CommunityMembershipList communitiesMemberships;
   CommunityInviteList communitiesInvites;
-  CommunityInviteList createdCommunitiesInvites;
 
   static final navigationUsersFactory = UserFactory(
       cache:
@@ -83,7 +82,6 @@ class User extends UpdatableModel<User> {
     this.followLists,
     this.communitiesMemberships,
     this.communitiesInvites,
-    this.createdCommunitiesInvites,
   });
 
   void updateFromJson(Map json) {
@@ -135,11 +133,6 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('communities_invites')) {
       communitiesInvites =
           navigationUsersFactory.parseInvites(json['communities_invites']);
-    }
-
-    if (json.containsKey('created_communities_invites')) {
-      createdCommunitiesInvites = navigationUsersFactory
-          .parseInvites(json['created_communities_invites']);
     }
   }
 
@@ -237,28 +230,6 @@ class User extends UpdatableModel<User> {
     return communitiesMemberships.communityMemberships[membershipIndex];
   }
 
-  bool hasInvitedUserToCommunity(
-      {@required User user, @required Community community}) {
-    CommunityInvite createdInvite =
-        getCreatedInviteForUserAndCommunity(user: user, community: community);
-    return createdInvite != null;
-  }
-
-  CommunityInvite getCreatedInviteForUserAndCommunity(
-      {@required User user, @required Community community}) {
-    if (createdCommunitiesInvites == null) return null;
-
-    int inviteIndex = createdCommunitiesInvites.communityInvites
-        .indexWhere((CommunityInvite communityInvite) {
-      return communityInvite.communityId == community.id &&
-          communityInvite.invitedUserId == user.id;
-    });
-
-    if (inviteIndex < 0) return null;
-
-    return createdCommunitiesInvites.communityInvites[inviteIndex];
-  }
-
   bool isInvitedToCommunity(Community community) {
     CommunityInvite invite = getInviteForCommunity(community);
     return invite != null;
@@ -317,11 +288,15 @@ class UserFactory extends UpdatableModelFactory<User> {
   }
 
   CommunityMembershipList parseMemberships(List membershipsData) {
+    print('Got memberships');
+    print(membershipsData);
     if (membershipsData == null) return null;
     return CommunityMembershipList.fromJson(membershipsData);
   }
 
   CommunityInviteList parseInvites(List invitesData) {
+    print('Got invites');
+    print(invitesData);
     if (invitesData == null) return null;
     return CommunityInviteList.fromJson(invitesData);
   }

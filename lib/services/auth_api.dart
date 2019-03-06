@@ -196,6 +196,7 @@ class AuthApiService {
     bool followNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
+    bool communityInviteNotifications,
   }) {
     Map<String, dynamic> body = {};
 
@@ -210,6 +211,9 @@ class AuthApiService {
 
     if (connectionRequestNotifications != null)
       body['connection_request_notifications'] = connectionRequestNotifications;
+
+    if (communityInviteNotifications != null)
+      body['community_invite_notifications'] = communityInviteNotifications;
 
     if (connectionConfirmedNotifications != null)
       body['connection_confirmed_notifications'] =
