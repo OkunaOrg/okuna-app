@@ -7,6 +7,7 @@ import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:meta/meta.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class OBNotification extends UpdatableModel<OBNotification> {
   final int id;
@@ -29,6 +30,10 @@ class OBNotification extends UpdatableModel<OBNotification> {
 
   factory OBNotification.fromJSON(Map<String, dynamic> json) {
     return factory.fromJson(json);
+  }
+
+  String getRelativeCreated() {
+    return timeago.format(created);
   }
 
   @override

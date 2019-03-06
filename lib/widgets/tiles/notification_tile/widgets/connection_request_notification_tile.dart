@@ -3,6 +3,7 @@ import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/rich_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBConnectionRequestNotificationTile extends StatelessWidget {
@@ -29,7 +30,8 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
       },
       leading: OBAvatar(
         size: OBAvatarSize.medium,
-        avatarUrl: connectionRequestNotification.connectionRequester.getProfileAvatar(),
+        avatarUrl: connectionRequestNotification.connectionRequester
+            .getProfileAvatar(),
       ),
       title: OBRichText(
         children: [
@@ -40,6 +42,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
           TextSpan(text: ' wants to connect with you.')
         ],
       ),
+      subtitle: OBSecondaryText(notification.getRelativeCreated()),
     );
   }
 }

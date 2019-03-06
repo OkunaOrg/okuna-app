@@ -3,6 +3,7 @@ import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/rich_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowNotificationTile extends StatelessWidget {
@@ -36,6 +37,7 @@ class OBFollowNotificationTile extends StatelessWidget {
           TextSpan(text: ' is now following you.')
         ],
       ),
+      subtitle: OBSecondaryText(notification.getRelativeCreated()),
     );
   }
 }

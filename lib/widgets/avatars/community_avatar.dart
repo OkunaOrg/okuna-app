@@ -4,6 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+export 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';

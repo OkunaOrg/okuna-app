@@ -1091,8 +1091,10 @@ class UserService {
     HttpieResponse response =
         await _devicesApiService.deleteDeviceWithUuid(deviceUuid);
 
-    if (!response.isOk() || !response.isNotFound()) {
+    if (!response.isOk() && !response.isNotFound()) {
       print('Could not delete current device');
+    } else {
+      print('Deleted current device successfully');
     }
   }
 
