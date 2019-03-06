@@ -4,6 +4,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/report_category.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
@@ -27,6 +28,7 @@ import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Openbook/widgets/post/pages/report_post_page.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -289,5 +291,18 @@ class NavigationService {
                 child: widget,
               ),
             )));
+  }
+
+  Future navigateToReportPostForm(
+        {@required Post post,
+         @required ReportCategory category,
+         @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideReportPostFormPage'),
+            widget: OBReportPostPage(reportedPost: post, reportedCategory: category,)
+        )
+    );
   }
 }

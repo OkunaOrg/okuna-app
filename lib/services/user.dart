@@ -21,7 +21,10 @@ import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reaction_list.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/post_report.dart';
 import 'package:Openbook/models/posts_list.dart';
+import 'package:Openbook/models/report_categories_list.dart';
+import 'package:Openbook/models/report_category.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
@@ -33,6 +36,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/post_reports_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:meta/meta.dart';
@@ -56,6 +60,7 @@ class UserService {
   ConnectionsApiService _connectionsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
   FollowsListsApiService _followsListsApiService;
+  PostReportsApiService _postReportsApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -110,6 +115,10 @@ class UserService {
 
   void setStorageService(StorageService storageService) {
     _userStorage = storageService.getSecureStorage(namespace: 'user');
+  }
+
+  void setPostReportsApiService(PostReportsApiService postReportsApiService) {
+    _postReportsApiService = postReportsApiService;
   }
 
   Future<void> logout() async {
@@ -965,10 +974,34 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<ReportCategoriesList> getReportCategories() async {
+    HttpieResponse response = await _postReportsApiService.getReportCategories();
+
+    _checkResponseIsOk(response);
+
+    return ReportCategoriesList.fromJson(json.decode(response.body));
+  }
+
   Future<CategoriesList> getCategories() async {
     HttpieResponse response = await _categoriesApiService.getCategories();
     _checkResponseIsOk(response);
     return CategoriesList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostReport> createPostReport(
+      {@required int postId,
+        @required String categoryName,
+        String comment,
+      }) async {
+
+    HttpieStreamedResponse response = await _postReportsApiService.createPostReport(
+        postId: postId,
+        categoryName: categoryName,
+        comment: comment);
+
+    _checkResponseIsCreated(response);
+    String responseBody = await response.readAsString();
+    return PostReport.fromJson(json.decode(responseBody));
   }
 
   Future<User> _setUserWithData(String userData) async {

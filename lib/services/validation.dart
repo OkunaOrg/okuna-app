@@ -28,6 +28,7 @@ class ValidationService {
   static const int PROFILE_NAME_MIN_LENGTH = 1;
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
   static const int PROFILE_BIO_MAX_LENGTH = 150;
+  static const int POST_REPORT_COMMENT_MAX_LENGTH = 560;
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
@@ -112,6 +113,10 @@ class ValidationService {
   bool isCommunityUserAdjectiveAllowedLength(String userAdjective) {
     return userAdjective.length > 0 &&
         userAdjective.length < COMMUNITY_USER_ADJECTIVE_MAX_LENGTH;
+  }
+
+  bool isPostReportCommentAllowedLength(String commentText) {
+    return commentText.length < POST_REPORT_COMMENT_MAX_LENGTH;
   }
 
   bool isFollowsListNameAllowedLength(String followsList) {
@@ -419,6 +424,15 @@ class ValidationService {
       errorMsg = 'Adjectives can only contain alphabetical characters.';
     }
 
+    return errorMsg;
+  }
+
+  String validatePostReportComment(String commentText) {
+    String errorMsg;
+    if (!isPostReportCommentAllowedLength(commentText)) {
+      errorMsg =
+      'Comment cannot be longer than $POST_REPORT_COMMENT_MAX_LENGTH characters.';
+    }
     return errorMsg;
   }
 }

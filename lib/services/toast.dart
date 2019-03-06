@@ -74,7 +74,6 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
   }) {
-    print(message);
     if (context != null) {
       OpenbookToast.of(context).showToast(ToastConfig(color: _getToastColor(type), message: message));
     } else {
