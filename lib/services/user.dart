@@ -383,6 +383,20 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
+  Future<Post> mutePost(Post post) async {
+    HttpieResponse response =
+        await _postsApiService.mutePostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> unmutePost(Post post) async {
+    HttpieResponse response =
+        await _postsApiService.unmutePostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
   Future<PostCommentList> getCommentsForPost(Post post,
       {int count, int maxId}) async {
     HttpieResponse response = await _postsApiService

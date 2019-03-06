@@ -8,6 +8,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -60,6 +61,14 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           postCommunity.isModerator(loggedInUser);
     }
 
+    if (loggedInUserIsPostCreator) {
+      postActions.add(OBMutePostTile(
+        post: post,
+        onMutedPost: _dismiss,
+        onUnmutedPost: _dismiss,
+      ));
+    }
+
     if (loggedInUserIsPostCreator ||
         loggedInUserIsCommunityAdministrator ||
         loggedInUserIsCommunityModerator) {
@@ -105,6 +114,10 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
 
   void _onWantsToReportPost() async {
     _toastService.error(message: 'Not implemented yet', context: context);
+    _dismiss();
+  }
+
+  void _dismiss() {
     Navigator.pop(context);
   }
 }

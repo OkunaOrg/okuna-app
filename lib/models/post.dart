@@ -34,6 +34,8 @@ class Post extends UpdatableModel<Post> {
   PostCommentList commentsList;
   Community community;
 
+  bool isMuted;
+
   static final factory = PostFactory();
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -61,7 +63,8 @@ class Post extends UpdatableModel<Post> {
       this.publicComments,
       this.circles,
       this.community,
-      this.publicReactions})
+      this.publicReactions,
+      this.isMuted})
       : super();
 
   void updateFromJson(Map json) {
@@ -84,6 +87,8 @@ class Post extends UpdatableModel<Post> {
       publicReactions = json['public_reactions'];
 
     if (json.containsKey('text')) text = json['text'];
+
+    if (json.containsKey('is_muted')) isMuted = json['is_muted'];
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
@@ -271,6 +276,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         circles: parseCircles(json['circles']),
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
+        isMuted: json['is_muted'],
         publicComments: json['public_comments'],
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),

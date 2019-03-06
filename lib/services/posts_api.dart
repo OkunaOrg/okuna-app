@@ -15,6 +15,8 @@ class PostsApiService {
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_PATH = 'api/posts/{postUuid}/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
+  static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
+  static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
   static const DELETE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
   static const GET_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/';
@@ -178,6 +180,16 @@ class PostsApiService {
         appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> mutePostWithUuid(String postUuid) {
+    String path = _makeMutePostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> unmutePostWithUuid(String postUuid) {
+    String path = _makeUnmutePostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> getReactionEmojiGroups() {
     String url = _makeApiUrl(GET_REACTION_EMOJI_GROUPS);
     return _httpService.get(url, appendAuthorizationToken: true);
@@ -185,6 +197,14 @@ class PostsApiService {
 
   String _makePostPath(String postUuid) {
     return _stringTemplateService.parse(POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeMutePostPath(String postUuid) {
+    return _stringTemplateService.parse(MUTE_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeUnmutePostPath(String postUuid) {
+    return _stringTemplateService.parse(UNMUTE_POST_PATH, {'postUuid': postUuid});
   }
 
   String _makeCommentPostPath(String postUuid) {
