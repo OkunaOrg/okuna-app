@@ -288,15 +288,11 @@ class UserFactory extends UpdatableModelFactory<User> {
   }
 
   CommunityMembershipList parseMemberships(List membershipsData) {
-    print('Got memberships');
-    print(membershipsData);
     if (membershipsData == null) return null;
     return CommunityMembershipList.fromJson(membershipsData);
   }
 
   CommunityInviteList parseInvites(List invitesData) {
-    print('Got invites');
-    print(invitesData);
     if (invitesData == null) return null;
     return CommunityInviteList.fromJson(invitesData);
   }
