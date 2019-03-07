@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
-import 'package:onesignal/onesignal.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/communities.dart';
 import 'package:Openbook/pages/home/pages/notifications/notifications.dart';
@@ -35,8 +34,11 @@ class OBHomePageState extends State<OBHomePage> {
   int _lastIndex;
   bool _needsBootstrap;
   String _loggedInUserAvatarUrl;
+
   StreamSubscription _loggedInUserChangeSubscription;
   StreamSubscription _loggedInUserUpdateSubscription;
+  StreamSubscription _pushNotificationOpenedSubscription;
+
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
@@ -64,6 +66,9 @@ class OBHomePageState extends State<OBHomePage> {
     _loggedInUserChangeSubscription.cancel();
     if (_loggedInUserUpdateSubscription != null)
       _loggedInUserUpdateSubscription.cancel();
+    if (_pushNotificationOpenedSubscription != null) {
+      _pushNotificationOpenedSubscription.cancel();
+    }
   }
 
   @override
@@ -268,7 +273,19 @@ class OBHomePageState extends State<OBHomePage> {
       _pushNotificationsService.enablePushNotifications();
       _loggedInUserUpdateSubscription =
           newUser.updateSubject.listen(_onLoggedInUserUpdate);
+
+      _pushNotificationOpenedSubscription = _pushNotificationsService
+          .pushNotificationOpened
+          .listen(_onPushNotificationOpened);
     }
+  }
+
+  void _onPushNotificationOpened(
+      PushNotificationOpenedResult pushNotificationOpenedResult) {
+    int newIndex = OBHomePageTabs.values.indexOf(OBHomePageTabs.notifications);
+    // This only works once... bug with flutter.
+    // Reported it here https://github.com/flutter/flutter/issues/28992
+    _setCurrentIndex(newIndex);
   }
 
   void _onLoggedInUserUpdate(User user) {
@@ -278,6 +295,12 @@ class OBHomePageState extends State<OBHomePage> {
   void _setAvatarUrl(String avatarUrl) {
     setState(() {
       _loggedInUserAvatarUrl = avatarUrl;
+    });
+  }
+
+  void _setCurrentIndex(int index) {
+    setState(() {
+      _currentIndex = index;
     });
   }
 }
