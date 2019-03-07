@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Openbook/models/push_notifications/push_notification.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/communities.dart';
@@ -14,6 +15,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/badges/badge.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +35,11 @@ class OBHomePageState extends State<OBHomePage> {
   int _currentIndex;
   int _lastIndex;
   bool _needsBootstrap;
-  String _loggedInUserAvatarUrl;
 
   StreamSubscription _loggedInUserChangeSubscription;
   StreamSubscription _loggedInUserUpdateSubscription;
   StreamSubscription _pushNotificationOpenedSubscription;
+  StreamSubscription _pushNotificationSubscription;
 
   OBTimelinePageController _timelinePageController;
   OBOwnProfilePageController _ownProfilePageController;
@@ -46,13 +48,14 @@ class OBHomePageState extends State<OBHomePage> {
   OBCommunitiesPageController _communitiesPageController;
   OBNotificationsPageController _notificationsPageController;
 
-  bool _hasNewNotifications;
+  int _loggedInUserUnreadNotifications;
+  String _loggedInUserAvatarUrl;
 
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
-    _hasNewNotifications = false;
+    _loggedInUserUnreadNotifications = 0;
     _lastIndex = 0;
     _currentIndex = 0;
     _timelinePageController = OBTimelinePageController();
@@ -71,6 +74,9 @@ class OBHomePageState extends State<OBHomePage> {
       _loggedInUserUpdateSubscription.cancel();
     if (_pushNotificationOpenedSubscription != null) {
       _pushNotificationOpenedSubscription.cancel();
+    }
+    if (_pushNotificationSubscription != null) {
+      _pushNotificationSubscription.cancel();
     }
   }
 
@@ -181,8 +187,13 @@ class OBHomePageState extends State<OBHomePage> {
         }
 
         if (tappedTab == OBHomePageTabs.notifications) {
+          // Allow notifications page to mark as read
           _notificationsPageController.setShouldMarkNotificationsAsRead(true);
           // Disable notifications badge
+          User _loggedInUser = _userService.getLoggedInUser();
+          if (_loggedInUser != null)
+            _loggedInUser.resetUnreadNotificationsCount();
+
           if (currentTab == OBHomePageTabs.notifications) {
             if (_notificationsPageController.isFirstRoute()) {
               _notificationsPageController.scrollToTop();
@@ -229,7 +240,20 @@ class OBHomePageState extends State<OBHomePage> {
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: const OBIcon(OBIcons.notifications),
+          icon: Stack(
+            overflow: Overflow.visible,
+            children: <Widget>[
+              const OBIcon(OBIcons.notifications),
+              _loggedInUserUnreadNotifications > 0
+                  ? Positioned(
+                      right: -8,
+                      child: OBBadge(
+                        size: 10,
+                      ),
+                    )
+                  : const SizedBox()
+            ],
+          ),
           activeIcon: const OBIcon(
             OBIcons.notifications,
             themeColor: OBIconThemeColor.primaryAccent,
@@ -285,6 +309,16 @@ class OBHomePageState extends State<OBHomePage> {
       _pushNotificationOpenedSubscription = _pushNotificationsService
           .pushNotificationOpened
           .listen(_onPushNotificationOpened);
+
+      _pushNotificationSubscription = _pushNotificationsService.pushNotification
+          .listen(_onPushNotification);
+    }
+  }
+
+  void _onPushNotification(PushNotification pushNotification) {
+    User loggedInUser = _userService.getLoggedInUser();
+    if (loggedInUser != null) {
+      loggedInUser.incrementUnreadNotificationsCount();
     }
   }
 
@@ -298,11 +332,18 @@ class OBHomePageState extends State<OBHomePage> {
 
   void _onLoggedInUserUpdate(User user) {
     _setAvatarUrl(user.getProfileAvatar());
+    _setUnreadNotifications(user.unreadNotificationsCount);
   }
 
   void _setAvatarUrl(String avatarUrl) {
     setState(() {
       _loggedInUserAvatarUrl = avatarUrl;
+    });
+  }
+
+  void _setUnreadNotifications(int unreadNotifications) {
+    setState(() {
+      _loggedInUserUnreadNotifications = unreadNotifications;
     });
   }
 

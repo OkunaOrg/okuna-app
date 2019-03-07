@@ -11,7 +11,6 @@ import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
-import 'package:meta/meta.dart';
 
 class User extends UpdatableModel<User> {
   int id;
@@ -260,6 +259,13 @@ class User extends UpdatableModel<User> {
   void resetUnreadNotificationsCount() {
     this.unreadNotificationsCount = 0;
     notifyUpdate();
+  }
+
+  void incrementUnreadNotificationsCount() {
+    if (this.unreadNotificationsCount != null) {
+      this.unreadNotificationsCount += 1;
+      notifyUpdate();
+    }
   }
 
   void incrementFollowersCount() {
