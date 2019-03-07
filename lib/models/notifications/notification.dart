@@ -20,7 +20,12 @@ class OBNotification extends UpdatableModel<OBNotification> {
   bool read;
 
   OBNotification(
-      {this.id, this.owner, this.type, this.contentObject, this.created});
+      {this.id,
+      this.owner,
+      this.type,
+      this.contentObject,
+      this.created,
+      this.read});
 
   static final factory = NotificationFactory();
   static final postReaction = 'PR';
@@ -78,7 +83,8 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
         type: type,
         contentObject: parseContentObject(
             contentObjectData: json['content_object'], type: type),
-        created: parseCreated(json['created']));
+        created: parseCreated(json['created']),
+        read: json['read']);
   }
 
   User parseUser(Map userData) {

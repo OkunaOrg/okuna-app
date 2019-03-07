@@ -41,6 +41,9 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
 
   bool _needsBootstrap;
 
+  // Should be the case when the page is visible to the user
+  bool _shouldMarkNotificationsAsRead;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +52,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
       widget.controller.attach(state: this, context: context);
 
     _needsBootstrap = true;
+    _shouldMarkNotificationsAsRead = true;
   }
 
   @override
@@ -95,6 +99,9 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
   }
 
   Widget _buildNotification(BuildContext context, OBNotification notification) {
+    if (_shouldMarkNotificationsAsRead && !notification.read) {
+      _markNotificationAsRead(notification);
+    }
     return OBNotificationTile(
       notification: notification,
       onNotificationTileDeleted: _onNotificationTileDeleted,
@@ -143,18 +150,41 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
   void _onPushNotification(PushNotification pushNotification) {
     _notificationsListController.refresh();
   }
+
+  void _setShouldMarkNotificationsAsRead(bool shouldMarkNotificationsAsRead) {
+    setState(() {
+      _shouldMarkNotificationsAsRead = shouldMarkNotificationsAsRead;
+    });
+  }
+
+  void _markNotificationAsRead(OBNotification notification) {
+    try {
+      _userService.readNotification(notification);
+    } on HttpieRequestError {
+      // Nothing
+    }
+  }
 }
 
 class OBNotificationsPageController extends PoppablePageController {
   OBNotificationsPageState _state;
+  bool _markNotificationsAsRead;
 
   void attach(
       {@required BuildContext context, OBNotificationsPageState state}) {
     super.attach(context: context);
     _state = state;
+    if(_markNotificationsAsRead != null) _state._setShouldMarkNotificationsAsRead(_markNotificationsAsRead);
   }
 
   void scrollToTop() {
     _state.scrollToTop();
+  }
+
+  void setShouldMarkNotificationsAsRead(bool markNotificationsAsRead) {
+    if (_state != null)
+      _state._setShouldMarkNotificationsAsRead(markNotificationsAsRead);
+
+    _markNotificationsAsRead = markNotificationsAsRead;
   }
 }

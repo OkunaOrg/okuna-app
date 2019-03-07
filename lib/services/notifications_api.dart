@@ -55,7 +55,7 @@ class NotificationsApiService {
 
   Future<HttpieResponse> readNotificationWithId(int notificationId) {
     String url = _makeReadNotificationPath(notificationId);
-    return _httpService.delete(url, appendAuthorizationToken: true);
+    return _httpService.post(url, appendAuthorizationToken: true);
   }
 
   String _makeNotificationPath(int notificationId) {

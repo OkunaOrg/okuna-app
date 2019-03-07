@@ -1038,7 +1038,7 @@ class UserService {
 
   Future<void> readNotification(OBNotification notification) async {
     HttpieResponse response = await _notificationsApiService
-        .deleteNotificationWithId(notification.id);
+        .readNotificationWithId(notification.id);
     _checkResponseIsOk(response);
   }
 

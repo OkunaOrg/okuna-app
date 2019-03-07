@@ -46,10 +46,13 @@ class OBHomePageState extends State<OBHomePage> {
   OBCommunitiesPageController _communitiesPageController;
   OBNotificationsPageController _notificationsPageController;
 
+  bool _hasNewNotifications;
+
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
+    _hasNewNotifications = false;
     _lastIndex = 0;
     _currentIndex = 0;
     _timelinePageController = OBTimelinePageController();
@@ -177,13 +180,18 @@ class OBHomePageState extends State<OBHomePage> {
           }
         }
 
-        if (tappedTab == OBHomePageTabs.notifications &&
-            currentTab == OBHomePageTabs.notifications) {
-          if (_notificationsPageController.isFirstRoute()) {
-            _notificationsPageController.scrollToTop();
-          } else {
-            _notificationsPageController.popUntilFirstRoute();
+        if (tappedTab == OBHomePageTabs.notifications) {
+          _notificationsPageController.setShouldMarkNotificationsAsRead(true);
+          // Disable notifications badge
+          if (currentTab == OBHomePageTabs.notifications) {
+            if (_notificationsPageController.isFirstRoute()) {
+              _notificationsPageController.scrollToTop();
+            } else {
+              _notificationsPageController.popUntilFirstRoute();
+            }
           }
+        } else {
+          _notificationsPageController.setShouldMarkNotificationsAsRead(false);
         }
 
         if (tappedTab == OBHomePageTabs.menu &&

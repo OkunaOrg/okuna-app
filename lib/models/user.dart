@@ -22,6 +22,7 @@ class User extends UpdatableModel<User> {
   UserNotificationsSettings notificationsSettings;
   int followersCount;
   int followingCount;
+  int unreadNotificationsCount;
   int postsCount;
   bool isFollowing;
   bool isConnected;
@@ -73,6 +74,7 @@ class User extends UpdatableModel<User> {
     this.notificationsSettings,
     this.followersCount,
     this.followingCount,
+    this.unreadNotificationsCount,
     this.postsCount,
     this.isFollowing,
     this.isConnected,
@@ -98,13 +100,16 @@ class User extends UpdatableModel<User> {
       if (notificationsSettings != null) {
         notificationsSettings.updateFromJson(json['notifications_settings']);
       } else {
-        notificationsSettings = navigationUsersFactory.parseUserNotificationsSettings(json['notifications_settings']);
+        notificationsSettings = navigationUsersFactory
+            .parseUserNotificationsSettings(json['notifications_settings']);
       }
     }
     if (json.containsKey('followers_count'))
       followersCount = json['followers_count'];
     if (json.containsKey('following_count'))
       followingCount = json['following_count'];
+    if (json.containsKey('unread_notifications_count'))
+      unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
@@ -248,6 +253,15 @@ class User extends UpdatableModel<User> {
     return communitiesInvites.communityInvites[inviteIndex];
   }
 
+  bool hasUnreadNotifications() {
+    return unreadNotificationsCount != null && unreadNotificationsCount > 0;
+  }
+
+  void resetUnreadNotificationsCount() {
+    this.unreadNotificationsCount = 0;
+    notifyUpdate();
+  }
+
   void incrementFollowersCount() {
     if (this.followersCount != null) {
       this.followersCount += 1;
@@ -273,6 +287,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
         postsCount: json['posts_count'],
+        unreadNotificationsCount: json['unread_notifications_count'],
         email: json['email'],
         username: json['username'],
         followingCount: json['following_count'],
@@ -302,7 +317,8 @@ class UserFactory extends UpdatableModelFactory<User> {
     return UserProfile.fromJSON(profile);
   }
 
-  UserNotificationsSettings parseUserNotificationsSettings(Map notificationsSettings) {
+  UserNotificationsSettings parseUserNotificationsSettings(
+      Map notificationsSettings) {
     if (notificationsSettings == null) return null;
     return UserNotificationsSettings.fromJSON(notificationsSettings);
   }
