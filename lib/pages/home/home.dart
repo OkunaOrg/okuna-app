@@ -316,9 +316,15 @@ class OBHomePageState extends State<OBHomePage> {
   }
 
   void _onPushNotification(PushNotification pushNotification) {
-    User loggedInUser = _userService.getLoggedInUser();
-    if (loggedInUser != null) {
-      loggedInUser.incrementUnreadNotificationsCount();
+    OBHomePageTabs currentTab = OBHomePageTabs.values[_lastIndex];
+
+    if (currentTab != OBHomePageTabs.notifications) {
+      // When a user taps in notifications, notifications count should be removed
+      // Therefore if the user is already there, dont increment.
+      User loggedInUser = _userService.getLoggedInUser();
+      if (loggedInUser != null) {
+        loggedInUser.incrementUnreadNotificationsCount();
+      }
     }
   }
 
