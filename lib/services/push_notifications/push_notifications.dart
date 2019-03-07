@@ -16,6 +16,11 @@ class PushNotificationsService {
       _pushNotificationSubject.stream;
   final _pushNotificationSubject = PublishSubject<PushNotification>();
 
+  Stream<PushNotificationOpenedResult> get pushNotificationOpened =>
+      _pushNotificationOpenedSubject.stream;
+  final _pushNotificationOpenedSubject =
+      PublishSubject<PushNotificationOpenedResult>();
+
   PushNotificationsService() {
     OneSignal.shared.init(oneSignalAppId, iOSSettings: {
       OSiOSSettings.autoPrompt: false,
@@ -81,7 +86,10 @@ class PushNotificationsService {
   }
 
   void _onNotificationOpened(OSNotificationOpenedResult result) {
-    print('Notification opened');
+    OSNotification notification = result.notification;
+    PushNotification pushNotification = _makePushNotification(notification);
+    _pushNotificationOpenedSubject.add(PushNotificationOpenedResult(
+        pushNotification: pushNotification, action: result.action));
   }
 
   void _onSubscriptionChanged(OSSubscriptionStateChanges changes) {
@@ -123,6 +131,13 @@ class PushNotificationsService {
 
   void dispose() {
     _pushNotificationSubject.close();
+    _pushNotificationOpenedSubject.close();
+  }
+
+  PushNotification _makePushNotification(OSNotification notification) {
+    Map<String, dynamic> notificationData =
+        _parseAdditionalData(notification.payload.additionalData);
+    return PushNotification.fromJson(notificationData);
   }
 
   Map<String, dynamic> _parseAdditionalData(
@@ -130,4 +145,11 @@ class PushNotificationsService {
     String jsonAdditionalData = json.encode(additionalData);
     return json.decode(jsonAdditionalData);
   }
+}
+
+class PushNotificationOpenedResult {
+  final PushNotification pushNotification;
+  final OSNotificationAction action;
+
+  const PushNotificationOpenedResult({this.pushNotification, this.action});
 }

@@ -355,18 +355,23 @@ class OBHttpListController<T> {
   }
 
   void insertListItem(T listItem) {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.insertListItem(listItem);
   }
 
   void removeListItem(T listItem) {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.removeListItem(listItem);
   }
 
   void scrollToTop() {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.scrollToTop();
+  }
+
+  Future refresh() async {
+    if (!_state.mounted) return;
+    _state._refreshList();
   }
 
   bool _isAttached() {

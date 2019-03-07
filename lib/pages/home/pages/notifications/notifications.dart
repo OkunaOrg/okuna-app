@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/push_notifications/push_notification.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
+import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/http_list.dart';
@@ -32,7 +35,11 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
+  PushNotificationsService _pushNotificationsService;
   OBHttpListController<OBNotification> _notificationsListController;
+  StreamSubscription _pushNotificationSubscription;
+
+  bool _needsBootstrap;
 
   @override
   void initState() {
@@ -40,14 +47,21 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
     _notificationsListController = OBHttpListController();
     if (widget.controller != null)
       widget.controller.attach(state: this, context: context);
+
+    _needsBootstrap = true;
   }
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
-    _navigationService = openbookProvider.navigationService;
+    if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _userService = openbookProvider.userService;
+      _toastService = openbookProvider.toastService;
+      _navigationService = openbookProvider.navigationService;
+      _pushNotificationsService = openbookProvider.pushNotificationsService;
+      _bootstrap();
+      _needsBootstrap = false;
+    }
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
@@ -69,6 +83,11 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
             physics: const AlwaysScrollableScrollPhysics(),
           ),
         ));
+  }
+
+  void dispose() {
+    super.dispose();
+    _pushNotificationSubscription.cancel();
   }
 
   void scrollToTop() {
@@ -114,6 +133,15 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
 
   void _onWantsToConfigureNotifications() {
     _navigationService.navigateToNotificationsSettings(context: context);
+  }
+
+  void _bootstrap() {
+    _pushNotificationSubscription =
+        _pushNotificationsService.pushNotification.listen(_onPushNotification);
+  }
+
+  void _onPushNotification(PushNotification pushNotification) {
+    _notificationsListController.refresh();
   }
 }
 
