@@ -18,8 +18,8 @@ class Post extends UpdatableModel<Post> {
   final int id;
   final String uuid;
   final int creatorId;
-  final DateTime created;
-  final User creator;
+  DateTime created;
+  User creator;
   CirclesList circles;
 
   PostReactionsEmojiCountList reactionsEmojiCounts;
@@ -96,6 +96,12 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('community'))
       community = factory.parseCommunity(json['community']);
+
+    if (json.containsKey('creator'))
+      creator = factory.parseUser(json['creator']);
+
+    if (json.containsKey('created'))
+      created = factory.parseCreated(json['created']);
 
     if (json.containsKey('comments'))
       commentsList = factory.parseCommentList(json['comments']);

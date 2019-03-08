@@ -24,6 +24,8 @@ class OBUserPostHeader extends StatelessWidget {
     var navigationService = openbookProvider.navigationService;
     var bottomSheetService = openbookProvider.bottomSheetService;
 
+    if (_post.creator == null) return const SizedBox();
+
     return ListTile(
       leading: StreamBuilder(
           stream: _post.creator.updateSubject,

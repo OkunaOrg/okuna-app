@@ -302,6 +302,7 @@ class OBHomePageState extends State<OBHomePage> {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
+      _pushNotificationsService.bootstrap();
       _pushNotificationsService.enablePushNotifications();
       _loggedInUserUpdateSubscription =
           newUser.updateSubject.listen(_onLoggedInUserUpdate);

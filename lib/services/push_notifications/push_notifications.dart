@@ -21,7 +21,7 @@ class PushNotificationsService {
   final _pushNotificationOpenedSubject =
       PublishSubject<PushNotificationOpenedResult>();
 
-  PushNotificationsService() {
+  void bootstrap() {
     OneSignal.shared.init(oneSignalAppId, iOSSettings: {
       OSiOSSettings.autoPrompt: false,
       OSiOSSettings.inAppLaunchUrl: true
