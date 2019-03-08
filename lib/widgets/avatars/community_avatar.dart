@@ -4,6 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+export 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -11,9 +12,13 @@ import 'package:tinycolor/tinycolor.dart';
 class OBCommunityAvatar extends StatelessWidget {
   final Community community;
   final OBAvatarSize size;
+  final VoidCallback onPressed;
 
   const OBCommunityAvatar(
-      {Key key, @required this.community, this.size = OBAvatarSize.small})
+      {Key key,
+      @required this.community,
+      this.size = OBAvatarSize.small,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -32,7 +37,8 @@ class OBCommunityAvatar extends StatelessWidget {
           if (communityHasAvatar) {
             avatar = OBAvatar(
               avatarUrl: community?.avatar,
-              size: OBAvatarSize.large,
+              size: size,
+              onPressed: onPressed,
             );
           } else {
             String communityHexColor = community.color;
@@ -69,7 +75,8 @@ class OBCommunityAvatar extends StatelessWidget {
             avatar = OBLetterAvatar(
                 letter: community.name[0],
                 color: communityColor,
-                size: OBAvatarSize.large,
+                size: size,
+                onPressed: onPressed,
                 labelColor: textColor);
           }
 

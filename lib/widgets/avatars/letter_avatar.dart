@@ -9,6 +9,7 @@ class OBLetterAvatar extends StatelessWidget {
   final Color color;
   final Color labelColor;
   final String letter;
+  final VoidCallback onPressed;
 
   static const double fontSizeExtraSmall = 10.0;
   static const double fontSizeSmall = 14.0;
@@ -21,7 +22,8 @@ class OBLetterAvatar extends StatelessWidget {
       this.size = OBAvatarSize.medium,
       @required this.color,
       this.labelColor,
-      @required this.letter})
+      @required this.letter,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class OBLetterAvatar extends StatelessWidget {
             ? Colors.white
             : Colors.black);
 
-    return Container(
+    Widget avatar = Container(
       height: avatarSize,
       width: avatarSize,
       decoration: BoxDecoration(
@@ -52,6 +54,15 @@ class OBLetterAvatar extends StatelessWidget {
         ),
       ),
     );
+
+    if (onPressed != null) {
+      avatar = GestureDetector(
+        child: avatar,
+        onTap: onPressed,
+      );
+    }
+
+    return avatar;
   }
 
   double getAvatarFontSize(OBAvatarSize size) {

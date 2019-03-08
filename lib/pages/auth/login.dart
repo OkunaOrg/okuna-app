@@ -1,7 +1,6 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -132,7 +131,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     try {
       await _userService.loginWithCredentials(
           username: username, password: password);
-      Navigator.pushNamed(context, '/');
+      Navigator.pushReplacementNamed(context, '/');
     } on CredentialsMismatchError {
       _setLoginFeedback(
           _localizationService.trans('AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR'));

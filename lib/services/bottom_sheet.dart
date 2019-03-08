@@ -95,7 +95,7 @@ class BottomSheetService {
   }
 
   Future<File> showPhotoPicker(
-      {@required BuildContext context, OBImageType imageType}) {
+      {@required BuildContext context, OBImageType imageType=OBImageType.post}) {
     return showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {

@@ -54,19 +54,17 @@ class OBInviteUserToCommunityButtonState
             User latestUser = latestUserSnapshot.data;
             if (latestUser == null) return const SizedBox();
 
-            bool loggedInUserInvitedUserToCommunity =
-                latestLoggedInUser.hasInvitedUserToCommunity(
-                    user: latestUser, community: widget.community);
             bool isCommunityMember =
                 latestUser.isMemberOfCommunity(widget.community);
             bool isInvitedToCommunity =
                 latestUser.isInvitedToCommunity(widget.community);
 
+
             if (isCommunityMember) {
               return _buildAlreadyMemberButton();
             }
 
-            return loggedInUserInvitedUserToCommunity || isInvitedToCommunity
+            return isInvitedToCommunity
                 ? _buildUninviteUserToCommunityButton()
                 : _buildInviteUserToCommunityButton();
           },

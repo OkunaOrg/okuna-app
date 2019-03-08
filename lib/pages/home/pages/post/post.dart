@@ -1,25 +1,19 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/pages/home/pages/post/widgets/post-commenter.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBPostPage extends StatefulWidget {
   final Post post;
-  final bool autofocusCommentInput;
 
-  OBPostPage(this.post,
-      {this.autofocusCommentInput: false,});
+  OBPostPage(this.post);
 
   @override
   State<OBPostPage> createState() {
@@ -31,24 +25,14 @@ class OBPostPageState extends State<OBPostPage> {
   UserService _userService;
   ToastService _toastService;
 
-  GlobalKey _postCommentsKey;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  ScrollController _postCommentsScrollController;
-  List<PostComment> _postComments = [];
-  bool _noMoreItemsToLoad;
   bool _needsBootstrap;
-  FocusNode _commentInputFocusNode;
 
   @override
   void initState() {
     super.initState();
-    _postCommentsScrollController = ScrollController();
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
-    _postComments = [];
-    _noMoreItemsToLoad = true;
-    _commentInputFocusNode = FocusNode();
-    _postCommentsKey = new GlobalKey();
   }
 
   @override
@@ -73,157 +57,50 @@ class OBPostPageState extends State<OBPostPage> {
               Expanded(
                 child: RefreshIndicator(
                     key: _refreshIndicatorKey,
-                    child: GestureDetector(
-                      onTap: _unfocusCommentInput,
-                      child: LoadMore(
-                          whenEmptyLoad: false,
-                          isFinish: _noMoreItemsToLoad,
-                          delegate: OBInfinitePostCommentsLoadMoreDelegate(),
-                          child: ListView.builder(
-                              physics: const ClampingScrollPhysics(),
-                              controller: _postCommentsScrollController,
-                              padding: EdgeInsets.all(0),
-                              itemCount: _postComments.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index == 0) {
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        key: _postCommentsKey,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20.0, vertical: 10.0),
-                                        child: OBSecondaryText(
-                                          _postComments.length > 0
-                                              ? 'Latest comments'
-                                              : 'Be the first to comment!',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16.0),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                }
-
-                                int commentIndex = index - 1;
-
-                                var postComment = _postComments[commentIndex];
-
-                                var onPostCommentDeletedCallback = () {
-                                  _removePostCommentAtIndex(commentIndex);
-                                };
-
-                                return OBExpandedPostComment(
-                                  postComment: postComment,
-                                  post: widget.post,
-                                  onPostCommentDeletedCallback:
-                                      onPostCommentDeletedCallback,
-                                );
-                              }),
-                          onLoadMore: _loadMoreComments),
+                    child: ListView(
+                      padding: const EdgeInsets.all(0),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: <Widget>[
+                        StreamBuilder(
+                            stream: widget.post.updateSubject,
+                            builder: _buildPost)
+                      ],
                     ),
-                    onRefresh: _refreshComments),
+                    onRefresh: _refreshPost),
               ),
-              OBPostCommenter(
-                widget.post,
-                autofocus: widget.autofocusCommentInput,
-                commentTextFieldFocusNode: _commentInputFocusNode,
-                onPostCommentCreated: _onPostCommentCreated,
-              )
             ],
           ),
         ));
   }
 
-  void _bootstrap() async {
-    await _refreshComments();
-  }
+  Widget _buildPost(BuildContext context, AsyncSnapshot<Post> snapshot) {
+    Post latestPost = snapshot.data;
+    if (latestPost == null) return const SizedBox();
 
-  Future<void> _refreshComments() async {
-    try {
-      _postComments =
-          (await _userService.getCommentsForPost(widget.post)).comments;
-      _setPostComments(_postComments);
-      _scrollToTop();
-      _setNoMoreItemsToLoad(false);
-    } on HttpieConnectionRefusedError catch (error) {
-      _onConnectionRefusedError(error);
-    } catch (error) {
-      _onUnknownError(error);
-      rethrow;
-    }
-  }
-
-  Future<bool> _loadMoreComments() async {
-    if (_postComments.length == 0) return true;
-
-    var lastPost = _postComments.last;
-    var lastPostId = lastPost.id;
-
-    try {
-      var moreComments = (await _userService.getCommentsForPost(widget.post,
-              maxId: lastPostId))
-          .comments;
-
-      if (moreComments.length == 0) {
-        _setNoMoreItemsToLoad(true);
-      } else {
-        _addPostComments(moreComments);
-      }
-      return true;
-    } on HttpieConnectionRefusedError catch (error) {
-      _onConnectionRefusedError(error);
-    } catch (error) {
-      _onUnknownError(error);
-      rethrow;
-    }
-
-    return false;
-  }
-
-  void _removePostCommentAtIndex(int index) {
-    setState(() {
-      _postComments.removeAt(index);
-    });
-  }
-
-  void _onPostCommentCreated(PostComment createdPostComment) {
-    _unfocusCommentInput();
-    setState(() {
-      this._postComments.insert(0, createdPostComment);
-    });
-  }
-
-  void _scrollToTop() {
-    _postCommentsScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
+    return OBPost(
+      latestPost,
+      onPostDeleted: _onPostDeleted,
     );
   }
 
-  void _unfocusCommentInput() {
-    FocusScope.of(context).requestFocus(new FocusNode());
+  void _onPostDeleted(Post post) {
+    Navigator.pop(context);
   }
 
-  void _addPostComments(List<PostComment> postComments) {
-    setState(() {
-      this._postComments.addAll(postComments);
-    });
+  void _bootstrap() async {
+    await _refreshPost();
   }
 
-  void _setPostComments(List<PostComment> postComments) {
-    setState(() {
-      this._postComments = postComments;
-    });
-  }
-
-  void _setNoMoreItemsToLoad(bool noMoreItemsToLoad) {
-    setState(() {
-      _noMoreItemsToLoad = noMoreItemsToLoad;
-    });
+  Future<void> _refreshPost() async {
+    try {
+      // This will trigger the updateSubject of the post
+      await _userService.getPostWithUuid(widget.post.uuid);
+    } on HttpieConnectionRefusedError catch (error) {
+      _onConnectionRefusedError(error);
+    } catch (error) {
+      _onUnknownError(error);
+      rethrow;
+    }
   }
 
   void _onConnectionRefusedError(HttpieConnectionRefusedError error) {
@@ -232,54 +109,5 @@ class OBPostPageState extends State<OBPostPage> {
 
   void _onUnknownError(Error error) {
     _toastService.error(message: 'Unknown error', context: context);
-  }
-}
-
-class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
-  const OBInfinitePostCommentsLoadMoreDelegate();
-
-  @override
-  Widget buildChild(LoadMoreStatus status,
-      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.english}) {
-    String text = builder(status);
-
-    if (status == LoadMoreStatus.fail) {
-      return SizedBox(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.refresh),
-            const SizedBox(
-              width: 10.0,
-            ),
-            Text('Tap to retry loading comments.')
-          ],
-        ),
-      );
-    }
-    if (status == LoadMoreStatus.idle) {
-      // No clue why is this even a state.
-      return const SizedBox();
-    }
-    if (status == LoadMoreStatus.loading) {
-      return SizedBox(
-          child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: 20.0,
-            maxWidth: 20.0,
-          ),
-          child: CircularProgressIndicator(
-            strokeWidth: 2.0,
-          ),
-        ),
-      ));
-    }
-    if (status == LoadMoreStatus.nomore) {
-      return const SizedBox();
-    }
-
-    return Text(text);
   }
 }

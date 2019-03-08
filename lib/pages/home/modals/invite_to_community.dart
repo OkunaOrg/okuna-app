@@ -103,14 +103,4 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
 
     return results.users;
   }
-
-  void _onWantsToInviteToCommunity(User user) async {
-    var addedCommunityAdministrator =
-        await _navigationService.navigateToConfirmAddCommunityAdministrator(
-            context: context, community: widget.community, user: user);
-
-    if (addedCommunityAdministrator != null && addedCommunityAdministrator) {
-      Navigator.of(context).pop(user);
-    }
-  }
 }

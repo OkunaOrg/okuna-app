@@ -24,8 +24,8 @@ class UserProfile {
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
     List badgesList;
-    List<dynamic> badges = parsedJson['badges'];
-    if (badges != null) {
+    if (parsedJson.containsKey('badges')) {
+      List<dynamic> badges = parsedJson['badges'];
       badgesList =
           badges.map((badgeJson) => Badge.fromJson(badgeJson)).toList();
     }

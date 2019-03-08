@@ -61,28 +61,27 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
           return SizedBox(
             height: 35,
-            child: ListView(
-                physics: const ClampingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: emojiCounts.map((emojiCount) {
-                  return OBEmojiReactionCount(
-                    emojiCount,
-                    reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                    onPressed: _requestInProgress
-                        ? null
-                        : (pressedEmojiCount) {
-                            _onEmojiReactionCountPressed(
-                                pressedEmojiCount, emojiCounts);
-                          },
-                    onLongPressed: (pressedEmojiCount) {
-                      _navigationService.navigateToPostReactions(
-                          post: widget.post,
-                          reactionsEmojiCounts: emojiCounts,
-                          context: context,
-                          reactionEmoji: pressedEmojiCount.emoji);
-                    },
-                  );
-                }).toList()),
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              physics: const ClampingScrollPhysics(),
+              itemCount: emojiCounts.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                PostReactionsEmojiCount emojiCount = emojiCounts[index];
+
+                return OBEmojiReactionCount(
+                  emojiCount,
+                  reacted: widget.post.isReactionEmoji(emojiCount.emoji),
+                  onLongPressed: (pressedEmojiCount) {
+                    _navigationService.navigateToPostReactions(
+                        post: widget.post,
+                        reactionsEmojiCounts: emojiCounts,
+                        context: context,
+                        reactionEmoji: pressedEmojiCount.emoji);
+                  },
+                );
+              },
+            ),
           );
         });
   }
