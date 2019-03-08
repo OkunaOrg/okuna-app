@@ -78,6 +78,7 @@ class PushNotificationsService {
   }
 
   void _onNotificationReceived(OSNotification notification) {
+    print('Notification received');
     Map<String, dynamic> notificationData =
         _parseAdditionalData(notification.payload.additionalData);
     PushNotification pushNotification =
@@ -86,6 +87,7 @@ class PushNotificationsService {
   }
 
   void _onNotificationOpened(OSNotificationOpenedResult result) {
+    print('Notification opened');
     OSNotification notification = result.notification;
     PushNotification pushNotification = _makePushNotification(notification);
     _pushNotificationOpenedSubject.add(PushNotificationOpenedResult(

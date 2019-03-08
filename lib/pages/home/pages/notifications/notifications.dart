@@ -31,7 +31,7 @@ class OBNotificationsPage extends StatefulWidget {
   }
 }
 
-class OBNotificationsPageState extends State<OBNotificationsPage> {
+class OBNotificationsPageState extends State<OBNotificationsPage> with WidgetsBindingObserver{
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
@@ -47,6 +47,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _notificationsListController = OBHttpListController();
     if (widget.controller != null)
       widget.controller.attach(state: this, context: context);
@@ -91,6 +92,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
 
   void dispose() {
     super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     _pushNotificationSubscription.cancel();
   }
 
@@ -151,6 +153,13 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
     _notificationsListController.refresh();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      _notificationsListController.refresh();
+    }
+  }
+
   void _setShouldMarkNotificationsAsRead(bool shouldMarkNotificationsAsRead) {
     setState(() {
       _shouldMarkNotificationsAsRead = shouldMarkNotificationsAsRead;
@@ -162,6 +171,9 @@ class OBNotificationsPageState extends State<OBNotificationsPage> {
       _userService.readNotification(notification);
     } on HttpieRequestError {
       // Nothing
+    } catch (error) {
+      print(
+          'Couldnt mark notification as read with error: ' + error.toString());
     }
   }
 }
@@ -174,7 +186,8 @@ class OBNotificationsPageController extends PoppablePageController {
       {@required BuildContext context, OBNotificationsPageState state}) {
     super.attach(context: context);
     _state = state;
-    if(_markNotificationsAsRead != null) _state._setShouldMarkNotificationsAsRead(_markNotificationsAsRead);
+    if (_markNotificationsAsRead != null)
+      _state._setShouldMarkNotificationsAsRead(_markNotificationsAsRead);
   }
 
   void scrollToTop() {

@@ -27,7 +27,7 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends State<OBHomePage> {
+class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
   PushNotificationsService _pushNotificationsService;
@@ -54,6 +54,7 @@ class OBHomePageState extends State<OBHomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
     _loggedInUserUnreadNotifications = 0;
     _lastIndex = 0;
@@ -69,6 +70,7 @@ class OBHomePageState extends State<OBHomePage> {
   @override
   void dispose() {
     super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     _loggedInUserChangeSubscription.cancel();
     if (_loggedInUserUpdateSubscription != null)
       _loggedInUserUpdateSubscription.cancel();
@@ -186,13 +188,14 @@ class OBHomePageState extends State<OBHomePage> {
           }
         }
 
+        if(currentTab == OBHomePageTabs.notifications){
+          // If we're coming from the notifications page, make sure to clear!
+          _resetLoggedInUserUnreadNotificationsCount();
+        }
+
         if (tappedTab == OBHomePageTabs.notifications) {
           // Allow notifications page to mark as read
           _notificationsPageController.setShouldMarkNotificationsAsRead(true);
-          // Disable notifications badge
-          User _loggedInUser = _userService.getLoggedInUser();
-          if (_loggedInUser != null)
-            _loggedInUser.resetUnreadNotificationsCount();
 
           if (currentTab == OBHomePageTabs.notifications) {
             if (_notificationsPageController.isFirstRoute()) {
@@ -331,15 +334,26 @@ class OBHomePageState extends State<OBHomePage> {
 
   void _onPushNotificationOpened(
       PushNotificationOpenedResult pushNotificationOpenedResult) {
-    int newIndex = OBHomePageTabs.values.indexOf(OBHomePageTabs.notifications);
+    // int newIndex = OBHomePageTabs.values.indexOf(OBHomePageTabs.notifications);
     // This only works once... bug with flutter.
     // Reported it here https://github.com/flutter/flutter/issues/28992
-    _setCurrentIndex(newIndex);
+    //_setCurrentIndex(newIndex);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      bool hasAuthToken = await _userService.hasAuthToken();
+      if (hasAuthToken) _userService.refreshUser();
+    }
   }
 
   void _onLoggedInUserUpdate(User user) {
     _setAvatarUrl(user.getProfileAvatar());
-    _setUnreadNotifications(user.unreadNotificationsCount);
+    OBHomePageTabs currentTab = _getCurrentTab();
+    if (currentTab != OBHomePageTabs.notifications) {
+      _setUnreadNotifications(user.unreadNotificationsCount);
+    }
   }
 
   void _setAvatarUrl(String avatarUrl) {
@@ -358,6 +372,17 @@ class OBHomePageState extends State<OBHomePage> {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  OBHomePageTabs _getCurrentTab() {
+    return OBHomePageTabs.values[_lastIndex];
+  }
+
+  void _resetLoggedInUserUnreadNotificationsCount() {
+    User loggedInUser = _userService.getLoggedInUser();
+    if (loggedInUser != null) {
+      loggedInUser.resetUnreadNotificationsCount();
+    }
   }
 }
 
