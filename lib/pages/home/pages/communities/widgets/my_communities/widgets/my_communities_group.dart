@@ -176,6 +176,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: OBHttpList<Community>(
+              separatorBuilder: _buildCommunitySeparator,
               listItemBuilder: widget.communityGroupListItemBuilder,
               listRefresher: widget.communityGroupListRefresher,
               listOnScrollLoader: widget.communityGroupListOnScrollLoader,
