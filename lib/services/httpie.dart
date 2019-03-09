@@ -409,7 +409,7 @@ abstract class HttpieBaseResponse<T extends http.BaseResponse> {
     return _httpResponse.statusCode == HttpStatus.created;
   }
 
-  bool isNotFound(){
+  bool isNotFound() {
     return _httpResponse.statusCode == HttpStatus.notFound;
   }
 

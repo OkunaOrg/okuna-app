@@ -294,7 +294,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       await _userService.loginWithStoredAuthToken();
     } catch (error) {
       if (error is AuthTokenMissingError || error is HttpieRequestError) {
-        await _pushNotificationsService.disablePushNotifications();
+        _pushNotificationsService.disablePushNotifications();
         await _userService.logout();
       }
       rethrow;

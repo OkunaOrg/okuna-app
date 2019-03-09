@@ -281,7 +281,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _toastService.error(message: 'No internet connection', context: context);
   }
 
-  void _onUnknownError(Error error) {
+  void _onUnknownError(error) {
     _toastService.error(message: 'Unknown error', context: context);
   }
 }
