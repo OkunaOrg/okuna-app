@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
@@ -23,8 +24,8 @@ class OBProfileBio extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Flexible(
-                child: OBText(
-                  bio,
+                child: OBSmartText(
+                  text: bio,
                 ),
               )
             ],

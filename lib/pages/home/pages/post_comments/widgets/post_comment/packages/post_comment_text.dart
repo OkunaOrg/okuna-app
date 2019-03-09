@@ -2,6 +2,7 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -54,16 +55,9 @@ class OBPostCommentText extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Flexible(
-                    child: RichText(
-                        maxLines: null,
-                        text: TextSpan(children: [
-                          TextSpan(
-                              text: postComment.text,
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: themeValueParserService
-                                      .parseColor(theme.primaryTextColor)))
-                        ])),
+                    child: OBSmartText(
+                      text: postComment.text,
+                    ),
                   )
                 ],
               )

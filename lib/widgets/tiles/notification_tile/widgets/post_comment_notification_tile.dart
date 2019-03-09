@@ -4,9 +4,8 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/rich_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:flutter/gestures.dart';
+import 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -26,6 +25,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     PostComment postComment = postCommentNotification.postComment;
     Post post = postComment.post;
     String postCommenterUsername = postComment.getCommenterUsername();
+    String postCommentText = postComment.text;
 
     Widget postImagePreview;
     if (post.hasImage()) {
@@ -59,16 +59,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
-      title: OBRichText(
-        children: [
-          TextSpan(
-              text: '@$postCommenterUsername',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              recognizer: TapGestureRecognizer()
-                ..onTap = navigateToCommenterProfile),
-          TextSpan(text: ' commented: '),
-          TextSpan(text: postComment.text)
-        ],
+      title: OBSmartText(
+        text: '@$postCommenterUsername commented: $postCommentText',
       ),
       trailing: postImagePreview,
       subtitle: OBSecondaryText(notification.getRelativeCreated()),
