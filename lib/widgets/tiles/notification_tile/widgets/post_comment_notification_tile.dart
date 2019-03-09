@@ -8,7 +8,7 @@ import 'package:Openbook/widgets/theming/rich_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBPostCommentNotificationTile extends StatelessWidget {
   final OBNotification notification;

@@ -1,7 +1,7 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 enum OBEmojiSize { small, medium, large }
 

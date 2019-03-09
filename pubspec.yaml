@@ -17,14 +17,14 @@ dependencies:
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
   onesignal: ^1.0.5
-  flutter_advanced_networkimage: ^0.3.13
+  flutter_advanced_networkimage: ^0.4.13
   dcache: ^0.1.0
   validators: ^1.0.0+1
   url_launcher: ^4.0.1
   uni_links: ^0.1.4
   flutter_slidable: "^0.4.9"
-  flutter_cache_manager: ^0.2.0+1
-  cached_network_image: ^0.5.0+1
+  flutter_cache_manager: ^0.3.2
+  cached_network_image: ^0.7.0
   timeago: ^2.0.9
   loadmore: ^1.0.2
   pigment: ^1.0.3
@@ -82,8 +82,6 @@ flutter:
     - assets/images/openbook-o-logo.png
     - assets/images/pixel-universe.jpg
     - assets/images/confetti-background.gif
-    - assets/images/avatar.jpg
-    - assets/images/cover.jpg
     - assets/lang/es.json
     - assets/lang/en.json
     - assets/images/icons/gif-icon.png
@@ -120,6 +118,9 @@ flutter:
     - assets/images/stickers/owl-instructor.png
     - assets/images/stickers/perplexed-owl.png
     - assets/images/categories/category_all-min.png
+    - assets/images/fallbacks/post-fallback.png
+    - assets/images/fallbacks/cover-fallback.jpg
+    - assets/images/fallbacks/avatar-fallback.jpg
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
