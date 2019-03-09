@@ -79,7 +79,8 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
 
     if (widget.postComment.getCommenterId() == loggedInUser.id ||
         loggedInUserIsCommunityAdministrator ||
-        loggedInUserIsCommunityModerator) {
+        loggedInUserIsCommunityModerator ||
+        widget.post.creator.id == loggedInUser.id) {
       // Its our own comment
       postTile = Slidable(
         delegate: new SlidableDrawerDelegate(),
