@@ -5,11 +5,10 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/theming/rich_text.dart';
+import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBPostReactionNotificationTile extends StatelessWidget {
   final OBNotification notification;
@@ -61,15 +60,8 @@ class OBPostReactionNotificationTile extends StatelessWidget {
       ),
       title: Row(
         children: <Widget>[
-          OBRichText(
-            children: [
-              TextSpan(
-                  text: '@$postReactorUsername',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = navigateToReactorProfile),
-              TextSpan(text: ' reacted:'),
-            ],
+          OBActionableSmartText(
+            text: '@$postReactorUsername reacted:',
           ),
           OBEmoji(
             postReaction.emoji,

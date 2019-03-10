@@ -2,7 +2,7 @@ import 'package:Openbook/models/notifications/follow_notification.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/rich_text.dart';
+import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
@@ -28,14 +28,8 @@ class OBFollowNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: followNotification.follower.getProfileAvatar(),
       ),
-      title: OBRichText(
-        children: [
-          TextSpan(
-            text: '@$followerUsername',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          TextSpan(text: ' is now following you.')
-        ],
+      title: OBActionableSmartText(
+        text: '@$followerUsername is now following you.',
       ),
       subtitle: OBSecondaryText(notification.getRelativeCreated()),
     );

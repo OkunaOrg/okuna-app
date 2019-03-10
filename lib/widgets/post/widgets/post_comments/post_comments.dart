@@ -11,32 +11,38 @@ class OBPostComments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int commentsCount = _post.commentsCount;
-    var openbookProvider = OpenbookProvider.of(context);
-    var navigationService = openbookProvider.navigationService;
+    return StreamBuilder(
+      stream: _post.updateSubject,
+      initialData: _post,
+      builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
+        int commentsCount = _post.commentsCount;
+        var openbookProvider = OpenbookProvider.of(context);
+        var navigationService = openbookProvider.navigationService;
 
-    if (commentsCount == null || commentsCount == 0) {
-      return const SizedBox();
-    }
+        if (commentsCount == null || commentsCount == 0) {
+          return const SizedBox();
+        }
 
-    return Padding(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: () {
-              navigationService.navigateToPostComments(
-                  post: _post, context: context);
-            },
-            child: Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: OBSecondaryText('View all $commentsCount comments'),
-            ),
-          )
-        ],
-      ),
+        return Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  navigationService.navigateToPostComments(
+                      post: _post, context: context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: OBSecondaryText('View all $commentsCount comments'),
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

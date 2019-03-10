@@ -176,21 +176,11 @@ class UserService {
   Future<User> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
-    try {
-      HttpieResponse response =
-          await _authApiService.getUserWithAuthToken(_authToken);
-      _checkResponseIsOk(response);
-      var userData = response.body;
-      return _setUserWithData(userData);
-    } on HttpieConnectionRefusedError {
-      // Response failed. Use stored user.
-      String userData = await this._getStoredUserData();
-      if (userData != null) {
-        var user = _makeLoggedInUser(userData);
-        _setLoggedInUser(user);
-      }
-      rethrow;
-    }
+    HttpieResponse response =
+        await _authApiService.getUserWithAuthToken(_authToken);
+    _checkResponseIsOk(response);
+    var userData = response.body;
+    return _setUserWithData(userData);
   }
 
   Future<User> updateUserEmail(String email) async {
@@ -239,9 +229,15 @@ class UserService {
     return _makeLoggedInUser(userData);
   }
 
-  Future<void> loginWithStoredAuthToken() async {
+  Future<void> loginWithStoredUserData() async {
     var token = await _getStoredAuthToken();
     if (token == null) throw AuthTokenMissingError();
+    
+    String userData = await this._getStoredUserData();
+    if (userData != null) {
+      var user = _makeLoggedInUser(userData);
+      _setLoggedInUser(user);
+    }
 
     await loginWithAuthToken(token);
   }
@@ -1037,8 +1033,8 @@ class UserService {
   }
 
   Future<void> readNotification(OBNotification notification) async {
-    HttpieResponse response = await _notificationsApiService
-        .readNotificationWithId(notification.id);
+    HttpieResponse response =
+        await _notificationsApiService.readNotificationWithId(notification.id);
     _checkResponseIsOk(response);
   }
 

@@ -26,6 +26,7 @@ import 'package:Openbook/services/string_template.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/url_launcher.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   BottomSheetService bottomSheetService = BottomSheetService();
   PushNotificationsService pushNotificationsService =
       PushNotificationsService();
+  UrlLauncherService urlLauncherService = UrlLauncherService();
 
   @override
   void initState() {
