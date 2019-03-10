@@ -77,10 +77,10 @@ final _linkRegex = RegExp(
     caseSensitive: false);
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
-final _usernameRegex = RegExp(r"\B@\w*[a-zA-Z_]+\w*", caseSensitive: false);
+final _usernameRegex = RegExp(r"^@[A-Za-z0-9_]{1,30}$", caseSensitive: false);
 
 final _communityNameRegex =
-    RegExp(r"\B/c/\w*[a-zA-Z_]+\w*", caseSensitive: false);
+    RegExp(r"^/c/[A-Za-z0-9_]{1,30}$", caseSensitive: false);
 
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
@@ -181,8 +181,7 @@ class OBSmartText extends StatelessWidget {
     void _onTagTapped(String tag) {
       if (onTagTapped != null) {
         // Remove #
-        String cleanedTag =
-        tag.substring(1, tag.length).toLowerCase();
+        String cleanedTag = tag.substring(1, tag.length).toLowerCase();
         onTagTapped(cleanedTag);
       }
     }
@@ -257,17 +256,21 @@ class OBSmartText extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
         OBTheme theme = snapshot.data;
 
-        TextStyle textStyle = TextStyle(
-            color: themeValueParserService.parseColor(theme.primaryTextColor),
-            fontSize: fontSize);
+        Color primaryTextColor =
+            themeValueParserService.parseColor(theme.primaryTextColor);
+
+        TextStyle textStyle =
+            TextStyle(color: primaryTextColor, fontSize: fontSize);
+
+        Color actionsForegroundColor = themeValueParserService
+            .parseGradient(theme.primaryAccentColor)
+            .colors[1];
 
         TextStyle smartItemsStyle = TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            foreground: Paint()
-              ..shader = themeValueParserService
-                  .parseGradient(theme.primaryAccentColor)
-                  .createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)));
+          color: actionsForegroundColor,
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+        );
 
         return RichText(
           softWrap: true,

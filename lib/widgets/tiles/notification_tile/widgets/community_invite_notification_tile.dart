@@ -51,7 +51,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         avatarUrl: inviteCreator.getProfileAvatar(),
       ),
       title: OBActionableSmartText(
-        text: '@$inviteCreatorUsername has invited you to join community /c/$communityName.',
+        text: '@$inviteCreatorUsername has invited you to join community /c/$communityName .',
       ),
       trailing: OBCommunityAvatar(
         community: community,
