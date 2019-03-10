@@ -6,8 +6,8 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/community_avatar.dart';
+import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityInviteNotificationTile extends StatelessWidget {
@@ -50,7 +50,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: inviteCreator.getProfileAvatar(),
       ),
-      title: OBSmartText(
+      title: OBActionableSmartText(
         text: '@$inviteCreatorUsername has invited you to join community /c/$communityName.',
       ),
       trailing: OBCommunityAvatar(

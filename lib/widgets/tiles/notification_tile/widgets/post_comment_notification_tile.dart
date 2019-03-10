@@ -4,8 +4,8 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -59,7 +59,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
-      title: OBSmartText(
+      title: OBActionableSmartText(
         text: '@$postCommenterUsername commented: $postCommentText',
       ),
       trailing: postImagePreview,

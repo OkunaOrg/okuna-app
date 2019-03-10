@@ -132,16 +132,16 @@ class OBSmartText extends StatelessWidget {
   final TextStyle tagStyle;
 
   /// Callback for tapping a link
-  final StringCallback onOpen;
+  final StringCallback onLinkTapped;
 
   /// Callback for tapping a link
-  final StringCallback onTagClick;
+  final StringCallback onTagTapped;
 
   /// Callback for tapping a link
-  final StringCallback onUsernameClick;
+  final StringCallback onUsernameTapped;
 
   /// Callback for tapping a link
-  final StringCallback onCommunityNameClick;
+  final StringCallback onCommunityNameTapped;
 
   final OBTextSize size;
 
@@ -151,10 +151,10 @@ class OBSmartText extends StatelessWidget {
     this.style,
     this.linkStyle,
     this.tagStyle,
-    this.onOpen,
-    this.onTagClick,
-    this.onUsernameClick,
-    this.onCommunityNameClick,
+    this.onLinkTapped,
+    this.onTagTapped,
+    this.onUsernameTapped,
+    this.onCommunityNameTapped,
     this.size = OBTextSize.medium,
   }) : super(key: key);
 
@@ -166,32 +166,41 @@ class OBSmartText extends StatelessWidget {
     TextStyle tagStyle,
     TextStyle usernameStyle,
     TextStyle communityNameStyle,
-    StringCallback onOpen,
-    StringCallback onTagClick,
-    StringCallback onUsernameClick,
-    StringCallback onCommunityNameClick,
+    StringCallback onLinkTapped,
+    StringCallback onTagTapped,
+    StringCallback onUsernameTapped,
+    StringCallback onCommunityNameTapped,
   }) {
     void _onOpen(String url) {
-      if (onOpen != null) {
-        onOpen(url);
+      if (onLinkTapped != null) {
+        onLinkTapped(url);
       }
     }
 
-    void _onTagClick(String url) {
-      if (onTagClick != null) {
-        onTagClick(url);
+    void _onTagTapped(String tag) {
+      if (onTagTapped != null) {
+        // Remove #
+        String cleanedTag =
+        tag.substring(1, tag.length).toLowerCase();
+        onTagTapped(cleanedTag);
       }
     }
 
-    void _onUsernameClick(String url) {
-      if (onUsernameClick != null) {
-        onUsernameClick(url);
+    void _onUsernameTapped(String username) {
+      if (onUsernameTapped != null) {
+        // Remove @
+        String cleanedUsername =
+            username.substring(1, username.length).toLowerCase();
+        onUsernameTapped(cleanedUsername);
       }
     }
 
-    void _onCommunityNameClick(String url) {
-      if (onCommunityNameClick != null) {
-        onCommunityNameClick(url);
+    void _onCommunityNameTapped(String communityName) {
+      if (onCommunityNameTapped != null) {
+        // Remove /c/
+        String cleanedCommunityName =
+            communityName.substring(3, communityName.length).toLowerCase();
+        onCommunityNameTapped(cleanedCommunityName);
       }
     }
 
@@ -214,19 +223,19 @@ class OBSmartText extends StatelessWidget {
         return LinkTextSpan(
           text: element.tag,
           style: tagStyle,
-          onPressed: () => _onTagClick(element.tag),
+          onPressed: () => _onTagTapped(element.tag),
         );
       } else if (element is UsernameElement) {
         return LinkTextSpan(
           text: element.username,
           style: usernameStyle,
-          onPressed: () => _onUsernameClick(element.username),
+          onPressed: () => _onUsernameTapped(element.username),
         );
       } else if (element is CommunityNameElement) {
         return LinkTextSpan(
           text: element.communityName,
           style: communityNameStyle,
-          onPressed: () => _onCommunityNameClick(element.communityName),
+          onPressed: () => _onCommunityNameTapped(element.communityName),
         );
       }
     }).toList());
@@ -268,10 +277,10 @@ class OBSmartText extends StatelessWidget {
               tagStyle: smartItemsStyle,
               communityNameStyle: smartItemsStyle,
               usernameStyle: smartItemsStyle,
-              onOpen: onOpen,
-              onTagClick: onTagClick,
-              onCommunityNameClick: onCommunityNameClick,
-              onUsernameClick: onUsernameClick),
+              onLinkTapped: onLinkTapped,
+              onTagTapped: onTagTapped,
+              onCommunityNameTapped: onCommunityNameTapped,
+              onUsernameTapped: onUsernameTapped),
         );
       },
     );

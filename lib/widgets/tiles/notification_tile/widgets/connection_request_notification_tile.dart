@@ -2,8 +2,8 @@ import 'package:Openbook/models/notifications/connection_request_notification.da
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 
 class OBConnectionRequestNotificationTile extends StatelessWidget {
@@ -33,7 +33,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
         avatarUrl: connectionRequestNotification.connectionRequester
             .getProfileAvatar(),
       ),
-      title: OBSmartText(
+      title: OBActionableSmartText(
         text: '@$connectionRequesterUsername wants to connect with you.',
       ),
       subtitle: OBSecondaryText(notification.getRelativeCreated()),
