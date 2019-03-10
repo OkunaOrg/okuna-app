@@ -228,9 +228,9 @@ class OBCommunityPageState extends State<OBCommunityPage>
                         );
                       },
                       loadingBuilder: (context) {
-                        return Padding(
-                          padding: EdgeInsets.all(20),
-                          child: OBProgressIndicator(),
+                        return const Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: const OBProgressIndicator(),
                         );
                       },
                       pageLoadController: this._pageWiseController,

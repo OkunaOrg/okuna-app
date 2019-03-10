@@ -1,6 +1,5 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -21,7 +20,7 @@ class OBCommunityModerators extends StatelessWidget {
 
         List<User> communityModerators = community?.moderators?.users;
 
-        if (communityModerators == null) return const SizedBox();
+        if (communityModerators == null || communityModerators.isEmpty) return const SizedBox();
 
         return Row(
           children: <Widget>[
