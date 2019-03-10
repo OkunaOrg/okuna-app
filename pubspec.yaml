@@ -51,7 +51,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.6.1"
+  flutter_launcher_icons: ^0.7.0
 
 flutter_icons:
   android: true
