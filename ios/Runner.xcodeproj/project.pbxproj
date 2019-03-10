@@ -13,18 +13,17 @@
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		542BD8834B6D6BE2F3E671A0 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4BA49A905C89E90E88FD37 /* libPods-OneSignalNotificationServiceExtension.a */; };
-		8925094F222F0E0900455D87 /* device_info.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8925094A222F0E0900455D87 /* device_info.framework */; };
-		898053B722047AD000E47AD9 /* flutter_secure_storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* flutter_secure_storage.framework */; };
-		898053B822047AD000E47AD9 /* image_cropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A022047AAF00E47AD9 /* image_cropper.framework */; };
-		898053B922047AD000E47AD9 /* image_picker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A222047AAF00E47AD9 /* image_picker.framework */; };
-		898053BA22047AD000E47AD9 /* onesignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A422047AAF00E47AD9 /* onesignal.framework */; };
-		898053BB22047AD000E47AD9 /* path_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A622047AAF00E47AD9 /* path_provider.framework */; };
-		898053BC22047AD000E47AD9 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AA22047AAF00E47AD9 /* Pods_Runner.framework */; };
-		898053BD22047AD000E47AD9 /* shared_preferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AC22047AAF00E47AD9 /* shared_preferences.framework */; };
-		898053BE22047AD000E47AD9 /* TOCropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* TOCropViewController.framework */; };
-		898053BF22047AD000E47AD9 /* uni_links.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B222047AAF00E47AD9 /* uni_links.framework */; };
-		898053C022047AD000E47AD9 /* url_launcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B422047AAF00E47AD9 /* url_launcher.framework */; };
-		898053C122047AD000E47AD9 /* video_player.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B622047AAF00E47AD9 /* video_player.framework */; };
+		8925094F222F0E0900455D87 /* libdevice_info.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8925094A222F0E0900455D87 /* libdevice_info.a */; };
+		898053B722047AD000E47AD9 /* libflutter_secure_storage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */; };
+		898053B822047AD000E47AD9 /* libimage_cropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A022047AAF00E47AD9 /* libimage_cropper.a */; };
+		898053B922047AD000E47AD9 /* libimage_picker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A222047AAF00E47AD9 /* libimage_picker.a */; };
+		898053BA22047AD000E47AD9 /* libonesignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A422047AAF00E47AD9 /* libonesignal.a */; };
+		898053BB22047AD000E47AD9 /* libpath_provider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A622047AAF00E47AD9 /* libpath_provider.a */; };
+		898053BC22047AD000E47AD9 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AA22047AAF00E47AD9 /* libPods-Runner.a */; };
+		898053BE22047AD000E47AD9 /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* libTOCropViewController.a */; };
+		898053BF22047AD000E47AD9 /* libuni_links.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B222047AAF00E47AD9 /* libuni_links.a */; };
+		898053C022047AD000E47AD9 /* liburl_launcher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B422047AAF00E47AD9 /* liburl_launcher.a */; };
+		898053C122047AD000E47AD9 /* libvideo_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B622047AAF00E47AD9 /* libvideo_player.a */; };
 		898053C322047AF100E47AD9 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053C222047AF100E47AD9 /* UserNotifications.framework */; };
 		898053C522047AF800E47AD9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053C422047AF700E47AD9 /* SystemConfiguration.framework */; };
 		898053C622047B3B00E47AD9 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
@@ -48,19 +47,19 @@
 			remoteGlobalIDString = DABDD36AC592D6B7AA0BB92AEDB0EDC9;
 			remoteInfo = device_info;
 		};
-		8925094B222F0E0900455D87 /* PBXContainerItemProxy */ = {
+		8928E31D22356450001DB32A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1BFC0209EB532A7E7D105273944FDDF4;
-			remoteInfo = flutter_udid;
+			remoteGlobalIDString = D787D7B50E4F784696B3E10B9F167868;
+			remoteInfo = FMDB;
 		};
-		8925094D222F0E0900455D87 /* PBXContainerItemProxy */ = {
+		8928E31F22356450001DB32A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 6F3271D4BA86D571B3E1035C51BE1EE2;
-			remoteInfo = SAMKeychain;
+			remoteGlobalIDString = 603FA97A9EAECDA6694299BF06D80C42;
+			remoteInfo = sqflite;
 		};
 		8980539D22047AAF00E47AD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -110,13 +109,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3788EAF1A1890565CE077CC270B46AC8;
 			remoteInfo = "Pods-Runner";
-		};
-		898053AB22047AAF00E47AD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B5000E617FBB085D0E142E5F91514B3A;
-			remoteInfo = shared_preferences;
 		};
 		898053AD22047AAF00E47AD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -237,22 +229,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8925094F222F0E0900455D87 /* device_info.framework in Frameworks */,
+				8925094F222F0E0900455D87 /* libdevice_info.a in Frameworks */,
 				898053C722047B4200E47AD9 /* App.framework in Frameworks */,
 				898053C622047B3B00E47AD9 /* Flutter.framework in Frameworks */,
 				898053C522047AF800E47AD9 /* SystemConfiguration.framework in Frameworks */,
 				898053C322047AF100E47AD9 /* UserNotifications.framework in Frameworks */,
-				898053B722047AD000E47AD9 /* flutter_secure_storage.framework in Frameworks */,
-				898053B822047AD000E47AD9 /* image_cropper.framework in Frameworks */,
-				898053B922047AD000E47AD9 /* image_picker.framework in Frameworks */,
-				898053BA22047AD000E47AD9 /* onesignal.framework in Frameworks */,
-				898053BB22047AD000E47AD9 /* path_provider.framework in Frameworks */,
-				898053BC22047AD000E47AD9 /* Pods_Runner.framework in Frameworks */,
-				898053BD22047AD000E47AD9 /* shared_preferences.framework in Frameworks */,
-				898053BE22047AD000E47AD9 /* TOCropViewController.framework in Frameworks */,
-				898053BF22047AD000E47AD9 /* uni_links.framework in Frameworks */,
-				898053C022047AD000E47AD9 /* url_launcher.framework in Frameworks */,
-				898053C122047AD000E47AD9 /* video_player.framework in Frameworks */,
+				898053B722047AD000E47AD9 /* libflutter_secure_storage.a in Frameworks */,
+				898053B822047AD000E47AD9 /* libimage_cropper.a in Frameworks */,
+				898053B922047AD000E47AD9 /* libimage_picker.a in Frameworks */,
+				898053BA22047AD000E47AD9 /* libonesignal.a in Frameworks */,
+				898053BB22047AD000E47AD9 /* libpath_provider.a in Frameworks */,
+				898053BC22047AD000E47AD9 /* libPods-Runner.a in Frameworks */,
+				898053BE22047AD000E47AD9 /* libTOCropViewController.a in Frameworks */,
+				898053BF22047AD000E47AD9 /* libuni_links.a in Frameworks */,
+				898053C022047AD000E47AD9 /* liburl_launcher.a in Frameworks */,
+				898053C122047AD000E47AD9 /* libvideo_player.a in Frameworks */,
 				542BD8834B6D6BE2F3E671A0 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,22 +302,21 @@
 		8980538E22047AAE00E47AD9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8925094A222F0E0900455D87 /* device_info.framework */,
-				8980539E22047AAF00E47AD9 /* flutter_secure_storage.framework */,
-				8925094C222F0E0900455D87 /* flutter_udid.framework */,
-				898053A022047AAF00E47AD9 /* image_cropper.framework */,
-				898053A222047AAF00E47AD9 /* image_picker.framework */,
-				898053A422047AAF00E47AD9 /* onesignal.framework */,
-				898053A622047AAF00E47AD9 /* path_provider.framework */,
+				8925094A222F0E0900455D87 /* libdevice_info.a */,
+				8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */,
+				8928E31E22356450001DB32A /* libFMDB.a */,
+				898053A022047AAF00E47AD9 /* libimage_cropper.a */,
+				898053A222047AAF00E47AD9 /* libimage_picker.a */,
+				898053A422047AAF00E47AD9 /* libonesignal.a */,
+				898053A622047AAF00E47AD9 /* libpath_provider.a */,
 				898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */,
-				898053AA22047AAF00E47AD9 /* Pods_Runner.framework */,
-				8925094E222F0E0900455D87 /* SAMKeychain.framework */,
-				898053AC22047AAF00E47AD9 /* shared_preferences.framework */,
-				898053AE22047AAF00E47AD9 /* TOCropViewController.framework */,
+				898053AA22047AAF00E47AD9 /* libPods-Runner.a */,
+				8928E32022356450001DB32A /* libsqflite.a */,
+				898053AE22047AAF00E47AD9 /* libTOCropViewController.a */,
 				898053B022047AAF00E47AD9 /* TOCropViewControllerBundle.bundle */,
-				898053B222047AAF00E47AD9 /* uni_links.framework */,
-				898053B422047AAF00E47AD9 /* url_launcher.framework */,
-				898053B622047AAF00E47AD9 /* video_player.framework */,
+				898053B222047AAF00E47AD9 /* libuni_links.a */,
+				898053B422047AAF00E47AD9 /* liburl_launcher.a */,
+				898053B622047AAF00E47AD9 /* libvideo_player.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -519,87 +509,80 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		8925094A222F0E0900455D87 /* device_info.framework */ = {
+		8925094A222F0E0900455D87 /* libdevice_info.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = device_info.framework;
+			fileType = archive.ar;
+			path = libdevice_info.a;
 			remoteRef = 89250949222F0E0900455D87 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8925094C222F0E0900455D87 /* flutter_udid.framework */ = {
+		8928E31E22356450001DB32A /* libFMDB.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = flutter_udid.framework;
-			remoteRef = 8925094B222F0E0900455D87 /* PBXContainerItemProxy */;
+			fileType = archive.ar;
+			path = libFMDB.a;
+			remoteRef = 8928E31D22356450001DB32A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8925094E222F0E0900455D87 /* SAMKeychain.framework */ = {
+		8928E32022356450001DB32A /* libsqflite.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SAMKeychain.framework;
-			remoteRef = 8925094D222F0E0900455D87 /* PBXContainerItemProxy */;
+			fileType = archive.ar;
+			path = libsqflite.a;
+			remoteRef = 8928E31F22356450001DB32A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8980539E22047AAF00E47AD9 /* flutter_secure_storage.framework */ = {
+		8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = flutter_secure_storage.framework;
+			fileType = archive.ar;
+			path = libflutter_secure_storage.a;
 			remoteRef = 8980539D22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A022047AAF00E47AD9 /* image_cropper.framework */ = {
+		898053A022047AAF00E47AD9 /* libimage_cropper.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = image_cropper.framework;
+			fileType = archive.ar;
+			path = libimage_cropper.a;
 			remoteRef = 8980539F22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A222047AAF00E47AD9 /* image_picker.framework */ = {
+		898053A222047AAF00E47AD9 /* libimage_picker.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = image_picker.framework;
+			fileType = archive.ar;
+			path = libimage_picker.a;
 			remoteRef = 898053A122047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A422047AAF00E47AD9 /* onesignal.framework */ = {
+		898053A422047AAF00E47AD9 /* libonesignal.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = onesignal.framework;
+			fileType = archive.ar;
+			path = libonesignal.a;
 			remoteRef = 898053A322047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A622047AAF00E47AD9 /* path_provider.framework */ = {
+		898053A622047AAF00E47AD9 /* libpath_provider.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = path_provider.framework;
+			fileType = archive.ar;
+			path = libpath_provider.a;
 			remoteRef = 898053A522047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pods_OneSignalNotificationServiceExtension.framework;
+			fileType = archive.ar;
+			path = "libPods-OneSignalNotificationServiceExtension.a";
 			remoteRef = 898053A722047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053AA22047AAF00E47AD9 /* Pods_Runner.framework */ = {
+		898053AA22047AAF00E47AD9 /* libPods-Runner.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pods_Runner.framework;
+			fileType = archive.ar;
+			path = "libPods-Runner.a";
 			remoteRef = 898053A922047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053AC22047AAF00E47AD9 /* shared_preferences.framework */ = {
+		898053AE22047AAF00E47AD9 /* libTOCropViewController.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = shared_preferences.framework;
-			remoteRef = 898053AB22047AAF00E47AD9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		898053AE22047AAF00E47AD9 /* TOCropViewController.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = TOCropViewController.framework;
+			fileType = archive.ar;
+			path = libTOCropViewController.a;
 			remoteRef = 898053AD22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -610,24 +593,24 @@
 			remoteRef = 898053AF22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053B222047AAF00E47AD9 /* uni_links.framework */ = {
+		898053B222047AAF00E47AD9 /* libuni_links.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = uni_links.framework;
+			fileType = archive.ar;
+			path = libuni_links.a;
 			remoteRef = 898053B122047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053B422047AAF00E47AD9 /* url_launcher.framework */ = {
+		898053B422047AAF00E47AD9 /* liburl_launcher.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = url_launcher.framework;
+			fileType = archive.ar;
+			path = liburl_launcher.a;
 			remoteRef = 898053B322047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053B622047AAF00E47AD9 /* video_player.framework */ = {
+		898053B622047AAF00E47AD9 /* libvideo_player.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = video_player.framework;
+			fileType = archive.ar;
+			path = libvideo_player.a;
 			remoteRef = 898053B522047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
