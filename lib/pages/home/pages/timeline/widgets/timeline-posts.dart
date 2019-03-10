@@ -157,11 +157,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   void scrollToTop() {
-    _postsScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    if(_postsScrollController.hasClients){
+      _postsScrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 
   void addPostToTop(Post post) {

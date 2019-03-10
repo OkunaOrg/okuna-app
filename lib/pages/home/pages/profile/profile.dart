@@ -237,7 +237,7 @@ class OBProfilePageController {
   }
 
   void scrollToTop() {
-    _timelinePageState.scrollToTop();
+    if (_timelinePageState != null) _timelinePageState.scrollToTop();
   }
 }
 

@@ -61,6 +61,6 @@ class OBOwnProfilePageController extends PoppablePageController {
   }
 
   void scrollToTop() {
-    _state.scrollToTop();
+    if (_state != null) _state.scrollToTop();
   }
 }
