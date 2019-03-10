@@ -12,8 +12,11 @@ import 'package:flutter/material.dart';
 
 class OBActionableSmartText extends StatefulWidget {
   final String text;
+  final OBTextSize size;
 
-  const OBActionableSmartText({Key key, this.text}) : super(key: key);
+  const OBActionableSmartText(
+      {Key key, this.text, this.size = OBTextSize.medium})
+      : super(key: key);
 
   @override
   OBActionableTextState createState() {
