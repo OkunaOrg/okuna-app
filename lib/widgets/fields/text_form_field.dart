@@ -14,13 +14,15 @@ class OBTextFormField extends StatelessWidget {
   final OBTextFormFieldSize size;
   final bool obscureText;
   final TextCapitalization textCapitalization;
+  final bool autocorrect;
 
-  OBTextFormField(
+  const OBTextFormField(
       {this.controller,
       this.validator,
       this.autofocus = false,
       this.keyboardType,
       this.obscureText = false,
+      this.autocorrect = true,
       this.size = OBTextFormFieldSize.medium,
       this.maxLines,
       this.textInputAction = TextInputAction.done,
@@ -65,6 +67,7 @@ class OBTextFormField extends StatelessWidget {
                 controller: controller,
                 validator: validator,
                 keyboardType: keyboardType,
+                autocorrect: autocorrect,
                 maxLines: maxLines,
                 obscureText: obscureText,
                 style: TextStyle(

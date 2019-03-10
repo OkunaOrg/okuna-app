@@ -185,6 +185,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                     TextCapitalization.sentences,
                                 size: OBTextFormFieldSize.medium,
                                 controller: _nameController,
+                                autocorrect: false,
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(OBIcons.shortText),
                                     labelText: 'Name',
