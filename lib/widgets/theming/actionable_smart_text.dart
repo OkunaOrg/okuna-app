@@ -60,36 +60,34 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     );
   }
 
-  void _onCommunityNameTapped(String communityName) async {
+  void _onCommunityNameTapped(String communityName) {
     _clearRequestSubscription();
 
-    try {
-      Community community =
-      await _userService.getCommunityWithName(communityName);
-      _navigationService.navigateToCommunity(
-          community: community, context: context);
-    } on HttpieRequestError catch (error) {
-      _onHttpieRequestError(error);
-    } on HttpieConnectionRefusedError catch (error) {
-      _onHttpieConnectionRefusedError(error);
-    } catch (error) {
-      _onUnkwnownError(error);
-    }
+    StreamSubscription requestSubscription = _userService
+        .getCommunityWithName(communityName)
+        .asStream()
+        .listen(_onCommunityNameCommunityRetrieved,
+            onError: _onRequestError, onDone: _onRequestDone);
+    _setRequestSubscription(requestSubscription);
   }
 
-  void _onUsernameTapped(String username) async {
-    _clearRequestSubscription();
+  void _onCommunityNameCommunityRetrieved(Community community) {
+    _navigationService.navigateToCommunity(
+        community: community, context: context);
+  }
 
-    try {
-      User user = await _userService.getUserWithUsername(username);
-      _navigationService.navigateToUserProfile(user: user, context: context);
-    } on HttpieRequestError catch (error) {
-      _onHttpieRequestError(error);
-    } on HttpieConnectionRefusedError catch (error) {
-      _onHttpieConnectionRefusedError(error);
-    } catch (error) {
-      _onUnkwnownError(error);
-    }
+  void _onUsernameTapped(String username) {
+    _clearRequestSubscription();
+    StreamSubscription requestSubscription = _userService
+        .getUserWithUsername(username)
+        .asStream()
+        .listen(_onUsernameUserRetrieved,
+            onError: _onRequestError, onDone: _onRequestDone);
+    _setRequestSubscription(requestSubscription);
+  }
+
+  void _onUsernameUserRetrieved(User user) {
+    _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
   void _onLinkTapped(String link) {
@@ -102,8 +100,23 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     }
   }
 
-  void _onHttpieRequestError(HttpieRequestError error) {
-    _toastService.error(message: 'Request error', context: context);
+  void _onRequestDone() {
+    _clearRequestSubscription();
+  }
+
+  void _onRequestError(error) {
+    if (error is HttpieRequestError) {
+      _onHttpieRequestError(error);
+    } else if (error is HttpieConnectionRefusedError) {
+      _onHttpieConnectionRefusedError(error);
+    } else {
+      _onUnkwnownError(error);
+    }
+  }
+
+  void _onHttpieRequestError(HttpieRequestError error) async {
+    String humanReadableError = await error.toHumanReadableMessage();
+    _toastService.error(message: humanReadableError, context: context);
   }
 
   void _onHttpieConnectionRefusedError(HttpieConnectionRefusedError error) {
@@ -118,7 +131,11 @@ class OBActionableTextState extends State<OBActionableSmartText> {
   void _clearRequestSubscription() {
     if (_requestSubscription != null) {
       _requestSubscription.cancel();
-      _requestSubscription = null;
+      _setRequestSubscription(null);
     }
+  }
+
+  void _setRequestSubscription(StreamSubscription requestSubscription) {
+    _requestSubscription = requestSubscription;
   }
 }
