@@ -2,6 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_moderators.dart';
@@ -144,6 +145,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
             ),
           ),
         ),
+        OBCommunityAdministrators(widget.community),
         OBCommunityModerators(widget.community)
       ],
     );
@@ -271,12 +273,16 @@ class OBCommunityPageState extends State<OBCommunityPage>
                             return OBCommunityRules(_community);
                             break;
                           case 1:
-                            return OBCommunityModerators(
+                            return OBCommunityAdministrators(
                               _community,
                             );
                             break;
+                          case 2:
+                            return OBCommunityModerators(_community);
+                            break;
+                          default:
                         }
-                      }, childCount: 2),
+                      }, childCount: 3),
                     ),
                   ],
                 );
