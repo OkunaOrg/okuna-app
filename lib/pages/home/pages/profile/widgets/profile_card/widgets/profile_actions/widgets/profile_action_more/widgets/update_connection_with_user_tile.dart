@@ -66,11 +66,21 @@ class OBUpdateConnectionWithUserTileState
           circles: circles);
       if (!widget.user.isFollowing) widget.user.incrementFollowersCount();
       _toastService.success(message: 'Connection updated', context: context);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
+    } catch (error) {
+      _onError(error);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
       _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+      throw error;
     }
   }
 }

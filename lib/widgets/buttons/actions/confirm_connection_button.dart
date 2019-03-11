@@ -95,13 +95,23 @@ class OBConfirmConnectionButtonState extends State<OBConfirmConnectionButton> {
           circles: circles);
       if (!widget.user.isFollowing) widget.user.incrementFollowersCount();
       _toastService.success(message: 'Connection confirmed', context: context);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 
@@ -113,10 +123,8 @@ class OBConfirmConnectionButtonState extends State<OBConfirmConnectionButton> {
       widget.user.decrementFollowersCount();
       _toastService.success(
           message: 'Disconnected successfully', context: context);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error', context: context);
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
     }

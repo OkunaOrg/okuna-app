@@ -124,11 +124,15 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
     }
   }
 
-  void _onError(error) {
+  void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
-      _toastService.error(message: 'No internet connection', context: context);
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error.', context: context);
+      _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
   }

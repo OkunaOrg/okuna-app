@@ -70,7 +70,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
         .getCommunityWithName(communityName)
         .asStream()
         .listen(_onCommunityNameCommunityRetrieved,
-            onError: _onRequestError, onDone: _onRequestDone);
+            onError: _onError, onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
   }
 
@@ -85,7 +85,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
         .getUserWithUsername(username)
         .asStream()
         .listen(_onUsernameUserRetrieved,
-            onError: _onRequestError, onDone: _onRequestDone);
+            onError: _onError, onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
   }
 
@@ -99,7 +99,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     } on UrlLauncherUnsupportedUrlException {
       _toastService.info(message: 'Unsupported link', context: context);
     } catch (error) {
-      _onUnkwnownError(error);
+      _onError(error);
     }
   }
 
@@ -107,28 +107,17 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     _clearRequestSubscription();
   }
 
-  void _onRequestError(error) {
-    if (error is HttpieRequestError) {
-      _onHttpieRequestError(error);
-    } else if (error is HttpieConnectionRefusedError) {
-      _onHttpieConnectionRefusedError(error);
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
     } else {
-      _onUnkwnownError(error);
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
-  }
-
-  void _onHttpieRequestError(HttpieRequestError error) async {
-    String humanReadableError = await error.toHumanReadableMessage();
-    _toastService.error(message: humanReadableError, context: context);
-  }
-
-  void _onHttpieConnectionRefusedError(HttpieConnectionRefusedError error) {
-    _toastService.error(message: 'No internet connection', context: context);
-  }
-
-  void _onUnkwnownError(error) {
-    _toastService.error(message: 'Unknown error', context: context);
-    throw error;
   }
 
   void _clearRequestSubscription() {

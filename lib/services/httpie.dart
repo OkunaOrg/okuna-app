@@ -513,7 +513,7 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
       } else if (parsedError is List && parsedError.isNotEmpty) {
         return parsedError.first;
       }
-    } on JsonUnsupportedObjectError {
+    } catch (error) {
       return convertStatusCodeToHumanReadableMessage(response.statusCode);
     }
   }
@@ -528,6 +528,10 @@ class HttpieConnectionRefusedError implements Exception {
     String address = socketException.address.toString();
     String port = socketException.port.toString();
     return 'HttpieConnectionRefusedError: Connection refused on $address and port $port';
+  }
+
+  String toHumanReadableMessage() {
+    return 'No internet connection.';
   }
 }
 

@@ -68,7 +68,7 @@ class OBMutePostTileState extends State<OBMutePostTile> {
       await _userService.mutePost(widget.post);
       if (widget.onMutedPost != null) widget.onMutedPost();
     } catch (e) {
-      _onRequestError(e);
+      _onError(e);
     } finally {
       _setRequestInProgress(false);
     }
@@ -80,19 +80,23 @@ class OBMutePostTileState extends State<OBMutePostTile> {
       await _userService.unmutePost(widget.post);
       if (widget.onUnmutedPost != null) widget.onUnmutedPost();
     } catch (e) {
-      _onRequestError(e);
+      _onError(e);
     } finally {
       _setRequestInProgress(false);
     }
   }
 
-  void _onRequestError(e) {
-    if (e is HttpieConnectionRefusedError) {
-      _toastService.error(message: 'No internet connection', context: context);
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
     } else {
       _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
-    throw e;
   }
 
   void _setRequestInProgress(bool requestInProgress) {

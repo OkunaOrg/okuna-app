@@ -106,14 +106,24 @@ class OBPostReactionListState extends State<OBPostReactionList> {
         _addPostReactions(moreReactions);
       }
       return true;
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+      _onError(error);
     }
 
     return false;
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
   }
 
   void _onPostReactionTilePressed(PostReaction postReaction) {
