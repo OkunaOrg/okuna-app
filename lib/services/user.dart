@@ -1207,13 +1207,13 @@ class UserService {
   }
 
   Future<PostReport> createPostReport(
-      {@required int postId,
+      {@required String postUuid,
         @required String categoryName,
         String comment,
       }) async {
 
     HttpieStreamedResponse response = await _postReportsApiService.createPostReport(
-        postId: postId,
+        postUuid: postUuid,
         categoryName: categoryName,
         comment: comment);
 
@@ -1227,7 +1227,7 @@ class UserService {
        @required PostReport report,
       }) async {
     HttpieResponse response =
-    await _postReportsApiService.confirmPostReport(post.id, report.id);
+    await _postReportsApiService.confirmPostReport(post.uuid, report.id);
 
     _checkResponseIsOk(response);
     String responseBody = response.body;
@@ -1239,7 +1239,7 @@ class UserService {
         @required PostReport report,
       }) async {
     HttpieResponse response =
-    await _postReportsApiService.rejectPostReport(post.id, report.id);
+    await _postReportsApiService.rejectPostReport(post.uuid, report.id);
 
     _checkResponseIsOk(response);
     String responseBody = response.body;

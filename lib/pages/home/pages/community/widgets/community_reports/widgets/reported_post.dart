@@ -3,7 +3,7 @@ import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_circles.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
-import 'package:Openbook/widgets/post/widgets/post_headers/community_post_header.dart';
+import 'package:Openbook/widgets/post/widgets/post_header/widgets/community_post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:flutter/material.dart';
 

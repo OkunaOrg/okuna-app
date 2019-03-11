@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_report.dart';
 import 'package:Openbook/models/report_category.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/post_reports_api.dart';
@@ -180,7 +178,7 @@ class OBReportPostPageState extends State<OBReportPostPage> {
     _setConfirmationInProgress(true);
     try {
       await _userService.createPostReport(
-          postId: widget.reportedPost.id,
+          postUuid: widget.reportedPost.uuid,
           categoryName: widget.reportedCategory.name,
           comment: _commentController.text);
       Navigator.of(context).pop(true);
