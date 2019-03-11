@@ -31,7 +31,8 @@ class OBNotificationsPage extends StatefulWidget {
   }
 }
 
-class OBNotificationsPageState extends State<OBNotificationsPage> with WidgetsBindingObserver{
+class OBNotificationsPageState extends State<OBNotificationsPage>
+    with WidgetsBindingObserver {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
@@ -132,11 +133,21 @@ class OBNotificationsPageState extends State<OBNotificationsPage> with WidgetsBi
   Future _deleteNotification(OBNotification notification) async {
     try {
       await _userService.deleteNotification(notification);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
+      _onError(error);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
       _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+      throw error;
     }
   }
 

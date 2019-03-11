@@ -317,11 +317,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _setRefreshInProgress(true);
     try {
       await Future.wait([_refreshCommunity(), _refreshPosts()]);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
     }
@@ -355,14 +352,24 @@ class OBCommunityPageState extends State<OBCommunityPage>
               maxId: lastPostId))
           .posts;
       _addPosts(morePosts);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+      _onError(error);
     }
 
     return morePosts;
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
   }
 
   void _onPostDeleted(Post deletedPost) {

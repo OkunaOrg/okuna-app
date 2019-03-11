@@ -216,13 +216,23 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     try {
       CategoriesList categoriesList = await _userService.getCategories();
       _setCategories(categoriesList.categories);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      throw error;
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 

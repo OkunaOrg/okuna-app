@@ -150,11 +150,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       _setPostComments(_postComments);
       _scrollToTop();
       _setNoMoreItemsToLoad(false);
-    } on HttpieConnectionRefusedError catch (error) {
-      _onConnectionRefusedError(error);
     } catch (error) {
-      _onUnknownError(error);
-      rethrow;
+      _onError(error);
     }
   }
 
@@ -175,11 +172,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
         _addPostComments(moreComments);
       }
       return true;
-    } on HttpieConnectionRefusedError catch (error) {
-      _onConnectionRefusedError(error);
     } catch (error) {
-      _onUnknownError(error);
-      rethrow;
+      _onError(error);
     }
 
     return false;
@@ -228,12 +222,17 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     });
   }
 
-  void _onConnectionRefusedError(HttpieConnectionRefusedError error) {
-    _toastService.error(message: 'No internet connection', context: context);
-  }
-
-  void _onUnknownError(Error error) {
-    _toastService.error(message: 'Unknown error', context: context);
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
   }
 }
 

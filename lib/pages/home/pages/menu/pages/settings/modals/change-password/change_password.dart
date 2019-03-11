@@ -146,17 +146,29 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
           message: 'All good! Your password has been updated',
           context: context);
       Navigator.of(context).pop();
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } on HttpieRequestError {
-      _setIsPasswordValid(false);
-      _validateForm();
-      return;
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      HttpieResponse response = error.response;
+      if (response.isUnauthorized()) {
+        // Meaning password didnt match
+        _setIsPasswordValid(false);
+        _validateForm();
+      }
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 

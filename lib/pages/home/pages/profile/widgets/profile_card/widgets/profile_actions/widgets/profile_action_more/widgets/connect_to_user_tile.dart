@@ -16,11 +16,8 @@ class OBConnectToUserTile extends StatefulWidget {
   final BuildContext parentContext;
   final VoidCallback onWillShowModalBottomSheet;
 
-  const OBConnectToUserTile(
-      this.user,
-      this.parentContext,
-      {Key key,
-      this.onWillShowModalBottomSheet})
+  const OBConnectToUserTile(this.user, this.parentContext,
+      {Key key, this.onWillShowModalBottomSheet})
       : super(key: key);
 
   @override
@@ -57,7 +54,7 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
         context: context,
         title: 'Add connection to circle',
         actionLabel: 'Done',
-        onPickedCircles:_onWantsToAddConnectionToCircles);
+        onPickedCircles: _onWantsToAddConnectionToCircles);
   }
 
   Future _onWantsToAddConnectionToCircles(List<Circle> circles) async {
@@ -74,11 +71,21 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
       }
       _toastService.success(
           message: 'Connection request sent', context: widget.parentContext);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: widget.parentContext);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error', context: widget.parentContext);
-      rethrow;
+    } catch (error) {
+      _onError(error);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 }

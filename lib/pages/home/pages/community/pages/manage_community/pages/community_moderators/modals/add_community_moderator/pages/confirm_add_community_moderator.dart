@@ -56,23 +56,25 @@ class OBConfirmAddCommunityModeratorState
           children: <Widget>[
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 40
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
                 child: Column(
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    OBIcon(OBIcons.communityModerators, themeColor: OBIconThemeColor.primaryAccent, size: OBIconSize.extraLarge,),
+                    OBIcon(
+                      OBIcons.communityModerators,
+                      themeColor: OBIconThemeColor.primaryAccent,
+                      size: OBIconSize.extraLarge,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     OBText(
                       'Are you sure you want to add @$username as a community moderator?',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 40,
@@ -126,11 +128,15 @@ class OBConfirmAddCommunityModeratorState
     }
   }
 
-  void _onError(error) {
+  void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
-      _toastService.error(message: 'No internet connection', context: context);
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error.', context: context);
+      _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
   }

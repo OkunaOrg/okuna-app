@@ -69,11 +69,8 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
     try {
       await _userService.joinCommunity(widget.community);
       widget.community.incrementMembersCount();
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
     }
@@ -84,12 +81,23 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
     try {
       await _userService.leaveCommunity(widget.community);
       widget.community.decrementMembersCount();
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error', context: context);
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 
