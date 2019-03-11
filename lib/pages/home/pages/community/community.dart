@@ -38,6 +38,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
   Community _community;
   bool _needsBootstrap;
   List<Post> _posts;
+
+  // Workaround to delete posts given PageWise has no way to remove items
+  // https://github.com/AbdulRahmanAlHamali/flutter_pagewise/issues/55
+  List<Post> _removedPosts;
   UserService _userService;
   ToastService _toastService;
   ScrollController _scrollController;
@@ -61,6 +65,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _refreshInProgress = false;
     _community = widget.community;
     _posts = [];
+    _removedPosts = [];
     _tabController = TabController(length: 2, vsync: this);
     _pageStorageKey = PageStorageKey<Type>(TabBar);
   }
@@ -238,6 +243,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
                       pageLoadController: this._pageWiseController,
                       itemBuilder:
                           (BuildContext context, dynamic post, int index) {
+                        if (_removedPosts.contains(post))
+                          return const SizedBox();
                         return OBPost(post,
                             onPostDeleted: _onPostDeleted,
                             key: Key(post.id.toString()));
@@ -359,6 +366,15 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   void _onPostDeleted(Post deletedPost) {
+    if(_posts.length == 1){
+      _refreshPosts();
+    } else{
+      _removePost(deletedPost);
+      _addRemovedPost(deletedPost);
+    }
+  }
+
+  void _removePost(Post deletedPost) {
     setState(() {
       _posts.remove(deletedPost);
     });
@@ -385,6 +401,12 @@ class OBCommunityPageState extends State<OBCommunityPage>
   void _addPosts(List<Post> posts) {
     setState(() {
       _posts.addAll(posts);
+    });
+  }
+
+  void _addRemovedPost(Post post) {
+    setState(() {
+      _removedPosts.add(post);
     });
   }
 }
