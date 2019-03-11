@@ -8,6 +8,7 @@ import 'package:Openbook/models/post_image.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/post_reports_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/post_video.dart';
 import 'package:Openbook/models/user.dart';
@@ -32,6 +33,7 @@ class Post extends UpdatableModel<Post> {
   PostVideo video;
   PostCommentList commentsList;
   Community community;
+  PostReportsList reportsList;
 
   static final factory = PostFactory();
 
@@ -59,6 +61,7 @@ class Post extends UpdatableModel<Post> {
       this.publicComments,
       this.circles,
       this.community,
+      this.reportsList,
       this.publicReactions})
       : super();
 
@@ -80,6 +83,9 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('public_reactions'))
       publicReactions = json['public_reactions'];
+
+    if (json.containsKey('reports'))
+      reportsList = factory.parseReportsList(json['reports']);
 
     if (json.containsKey('text')) text = json['text'];
 
@@ -275,6 +281,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         reaction: parseReaction(json['reaction']),
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
+        reportsList: parseReportsList(json['reports']),
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }
@@ -322,6 +329,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   PostCommentList parseCommentList(List commentList) {
     if (commentList == null) return null;
     return PostCommentList.fromJson(commentList);
+  }
+
+  PostReportsList parseReportsList(List reportsList) {
+    if (reportsList == null) return null;
+    return PostReportsList.fromJson(reportsList);
   }
 
   CirclesList parseCircles(List circlesData) {

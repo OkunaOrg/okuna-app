@@ -3,6 +3,7 @@ import 'package:Openbook/models/report_category.dart';
 import 'package:Openbook/models/user.dart';
 
 class PostReport {
+  final int id;
   final Post post;
   final User reporter;
   final String comment;
@@ -11,7 +12,8 @@ class PostReport {
   final DateTime created;
 
   PostReport(
-      { this.post,
+      { this.id,
+        this.post,
         this.reporter,
         this.comment,
         this.status,
@@ -38,6 +40,7 @@ class PostReport {
 
     return PostReport(
         post: post,
+        id: parsedJson['id'],
         reporter: reporter,
         status: parsedJson['status'],
         comment: parsedJson['comment'],
