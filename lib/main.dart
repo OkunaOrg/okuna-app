@@ -12,7 +12,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
-import 'package:Openbook/toast.dart';
+import 'package:Openbook/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
 

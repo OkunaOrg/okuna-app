@@ -309,7 +309,7 @@
 				898053A222047AAF00E47AD9 /* libimage_picker.a */,
 				898053A422047AAF00E47AD9 /* libonesignal.a */,
 				898053A622047AAF00E47AD9 /* libpath_provider.a */,
-				898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */,
+				898053A822047AAF00E47AD9 /* libPods-OneSignalNotificationServiceExtension.a */,
 				898053AA22047AAF00E47AD9 /* libPods-Runner.a */,
 				8928E32022356450001DB32A /* libsqflite.a */,
 				898053AE22047AAF00E47AD9 /* libTOCropViewController.a */,
@@ -565,7 +565,7 @@
 			remoteRef = 898053A522047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */ = {
+		898053A822047AAF00E47AD9 /* libPods-OneSignalNotificationServiceExtension.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libPods-OneSignalNotificationServiceExtension.a";
@@ -667,7 +667,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
