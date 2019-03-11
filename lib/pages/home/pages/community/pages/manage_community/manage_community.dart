@@ -117,6 +117,21 @@ class OBManageCommunityPage extends StatelessWidget {
           style: listItemSubtitleStyle,
         )));
 
+    if (loggedInUserIsAdministrator || loggedInUserIsModerator) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.reportCommunity),
+        title: const OBText('Reported Posts'),
+        subtitle: const OBText(
+          'View reported posts by members and reject or confirm them.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToReportedCommunityContent(
+              context: context, community: community);
+        },
+      ));
+    }
+
     if (loggedInUserIsCreator) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.deleteCommunity),

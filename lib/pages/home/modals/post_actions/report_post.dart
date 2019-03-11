@@ -68,8 +68,6 @@ class OBReportPostModalState extends State<OBReportPostModal>
         .parseGradient(theme.primaryAccentColor)
         .colors[1];
 
-    Color textColorCategoryText = _themeValueParserService.parseColor(theme.primaryTextColor);
-
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
@@ -78,6 +76,7 @@ class OBReportPostModalState extends State<OBReportPostModal>
               ListTile(
                 title: Text('Please select a reason', style: TextStyle(color: textColor),)
               ),
+              _getProgressIndicator(),
               Expanded(
                 child:  ListView.separated(
                   padding: EdgeInsets.all(0.0),
@@ -90,7 +89,6 @@ class OBReportPostModalState extends State<OBReportPostModal>
                   itemCount: _reportCategories.length,
                 ),
               ),
-              _getProgressIndicator()
             ],
           ),
         ));
