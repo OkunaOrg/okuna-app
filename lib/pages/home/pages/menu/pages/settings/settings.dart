@@ -55,6 +55,13 @@ class OBSettingsPage extends StatelessWidget {
                     context: context);
               },
             ),
+            ListTile(
+              leading: const OBIcon(OBIcons.deleteCommunity),
+              title: OBText('Delete account'),
+              onTap: () {
+                navigationService.navigateToDeleteAccount(context: context);
+              },
+            )
           ],
         ),
       ),

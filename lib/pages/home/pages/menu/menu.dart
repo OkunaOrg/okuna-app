@@ -30,8 +30,8 @@ class OBMainMenuPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: ListView(
-                  physics: const ClampingScrollPhysics(),
-                  // Important: Remove any padding from the ListView.
+              physics: const ClampingScrollPhysics(),
+              // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
@@ -51,7 +51,7 @@ class OBMainMenuPage extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const OBIcon(OBIcons.settings),
-                  title: OBText(localizationService.trans('DRAWER.SETTINGS')),
+                  title: OBText('Account'),
                   onTap: () {
                     navigationService.navigateToSettingsPage(context: context);
                   },

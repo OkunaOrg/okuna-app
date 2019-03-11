@@ -132,8 +132,14 @@ class UserService {
     _userStorage = storageService.getSecureStorage(namespace: 'user');
   }
 
+  Future<void> deleteAccountWithPassword(String password) async {
+    HttpieResponse response =
+        await _authApiService.deleteUser(password: password);
+    _checkResponseIsOk(response);
+  }
+
   Future<void> logout() async {
-    await _deleteCurrentDevice();
+    _deleteCurrentDevice();
     await _removeStoredFirstPostsData();
     await _removeStoredUserData();
     await _removeStoredAuthToken();
@@ -232,7 +238,7 @@ class UserService {
   Future<void> loginWithStoredUserData() async {
     var token = await _getStoredAuthToken();
     if (token == null) throw AuthTokenMissingError();
-    
+
     String userData = await this._getStoredUserData();
     if (userData != null) {
       var user = _makeLoggedInUser(userData);
