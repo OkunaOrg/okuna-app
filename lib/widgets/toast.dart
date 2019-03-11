@@ -45,7 +45,8 @@ class OpenbookToastState extends State<OpenbookToast>
     );
   }
 
-  void showToast(ToastConfig config) async {
+  Future showToast(ToastConfig config) async {
+    await _dismissToast();
     this._overlayEntry = this._createOverlayEntryFromTop(config);
     final overlay = Overlay.of(_currentContext);
     WidgetsBinding.instance
@@ -60,7 +61,8 @@ class OpenbookToastState extends State<OpenbookToast>
     if (_overlayEntry != null) _dismissToast();
   }
 
-  void _dismissToast() async {
+  Future _dismissToast() async {
+    if (this._overlayEntry == null) return;
     await controller.reverse();
     this._overlayEntry.remove();
     this._overlayEntry = null;
