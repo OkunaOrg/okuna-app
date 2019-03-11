@@ -218,17 +218,6 @@ class CreatePostModalState extends State<CreatePostModal> {
           if (pickedPhoto != null) _setPostImage(pickedPhoto);
         },
       ),
-      OBPillButton(
-        text: 'Video',
-        color: Pigment.fromString('#00B7FF'),
-        icon: const OBIcon(OBIcons.video),
-        onPressed: () async {
-          _unfocusTextField();
-          File pickedVideo =
-              await _bottomSheetService.showVideoPicker(context: context);
-          if (pickedVideo != null) _setPostVideo(pickedVideo);
-        },
-      )
     ];
   }
 

@@ -141,8 +141,14 @@ class UserService {
     _postReportsApiService = postReportsApiService;
   }
 
+  Future<void> deleteAccountWithPassword(String password) async {
+    HttpieResponse response =
+        await _authApiService.deleteUser(password: password);
+    _checkResponseIsOk(response);
+  }
+
   Future<void> logout() async {
-    await _deleteCurrentDevice();
+    _deleteCurrentDevice();
     await _removeStoredFirstPostsData();
     await _removeStoredUserData();
     await _removeStoredAuthToken();

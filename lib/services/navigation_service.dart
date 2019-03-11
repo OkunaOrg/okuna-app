@@ -23,6 +23,8 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/delete_account/delete_account.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/delete_account/pages/confirm_delete_account.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
@@ -72,6 +74,24 @@ class NavigationService {
               community: community,
               user: user,
             )));
+  }
+
+  Future<bool> navigateToConfirmDeleteAccount(
+      {@required String userPassword, @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideConfirmDeleteAccount'),
+            widget: OBConfirmDeleteAccount(
+              userPassword: userPassword,
+            )));
+  }
+
+  Future<bool> navigateToDeleteAccount({@required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideDeleteAccount'), widget: OBDeleteAccountPage()));
   }
 
   Future<bool> navigateToConfirmAddCommunityModerator(

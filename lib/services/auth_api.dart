@@ -14,6 +14,7 @@ class AuthApiService {
   static const VERIFY_EMAIL_TOKEN = 'api/auth/email/verify/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
+  static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
   static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const UPDATE_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const GET_USERS_PATH = 'api/auth/users/';
@@ -29,6 +30,12 @@ class AuthApiService {
 
   void setApiURL(String newApiURL) {
     apiURL = newApiURL;
+  }
+
+  Future<HttpieResponse> deleteUser({@required String password}) {
+    Map<String, dynamic> body = {'password': password};
+    return _httpService.post('$apiURL$DELETE_ACCOUNT_PATH',
+        body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> checkUsernameIsAvailable({@required String username}) {
