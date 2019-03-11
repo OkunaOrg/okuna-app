@@ -14,6 +14,7 @@ import 'package:dcache/dcache.dart';
 
 class User extends UpdatableModel<User> {
   int id;
+  String uuid;
   int connectionsCircleId;
   String email;
   String username;
@@ -66,6 +67,7 @@ class User extends UpdatableModel<User> {
 
   User({
     this.id,
+    this.uuid,
     this.connectionsCircleId,
     this.username,
     this.email,
@@ -87,6 +89,7 @@ class User extends UpdatableModel<User> {
 
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
+    if (json.containsKey('uuid')) uuid = json['uuid'];
     if (json.containsKey('email')) email = json['email'];
     if (json.containsKey('profile')) {
       if (profile != null) {
@@ -290,6 +293,7 @@ class UserFactory extends UpdatableModelFactory<User> {
   User makeFromJson(Map json) {
     return User(
         id: json['id'],
+        uuid: json['uuid'],
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
         postsCount: json['posts_count'],

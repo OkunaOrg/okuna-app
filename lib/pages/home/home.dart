@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:Openbook/models/push_notifications/push_notification.dart';
+import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/communities.dart';
@@ -31,6 +32,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
   PushNotificationsService _pushNotificationsService;
+  IntercomService _intercomService;
 
   int _currentIndex;
   int _lastIndex;
@@ -88,6 +90,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _pushNotificationsService = openbookProvider.pushNotificationsService;
+      _intercomService = openbookProvider.intercomService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -295,6 +298,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     } catch (error) {
       if (error is AuthTokenMissingError || error is HttpieRequestError) {
         _pushNotificationsService.disablePushNotifications();
+        _intercomService.disableIntercom();
         await _userService.logout();
       }
       rethrow;
@@ -307,6 +311,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     } else {
       _pushNotificationsService.bootstrap();
       _pushNotificationsService.enablePushNotifications();
+      _intercomService.enableIntercom();
+
       _loggedInUserUpdateSubscription =
           newUser.updateSubject.listen(_onLoggedInUserUpdate);
 

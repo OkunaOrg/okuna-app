@@ -1,3 +1,4 @@
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -7,6 +8,7 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intercom_flutter/intercom_flutter.dart';
 
 class OBMainMenuPage extends StatelessWidget {
   final OBMainMenuPageController controller;
@@ -18,6 +20,7 @@ class OBMainMenuPage extends StatelessWidget {
     controller.attach(context: context);
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = openbookProvider.localizationService;
+    var intercomService = openbookProvider.intercomService;
     var userService = openbookProvider.userService;
     var navigationService = openbookProvider.navigationService;
 
@@ -56,12 +59,22 @@ class OBMainMenuPage extends StatelessWidget {
                     navigationService.navigateToSettingsPage(context: context);
                   },
                 ),
-                ListTile(
-                  leading: const OBIcon(OBIcons.help),
-                  title: OBText(localizationService.trans('DRAWER.HELP')),
-                  onTap: () {
-                    // Update the state of the app
-                    // ...
+                StreamBuilder(
+                  stream: userService.loggedInUserChange,
+                  initialData: userService.getLoggedInUser(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<User> snapshot) {
+                    User loggedInUser = snapshot.data;
+
+                    if (loggedInUser == null) return const SizedBox();
+
+                    return ListTile(
+                      leading: const OBIcon(OBIcons.help),
+                      title: OBText(localizationService.trans('DRAWER.HELP')),
+                      onTap: () async {
+                        intercomService.displayMessenger();
+                      },
+                    );
                   },
                 ),
                 ListTile(

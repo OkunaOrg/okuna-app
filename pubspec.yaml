@@ -13,6 +13,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  intercom_flutter: ^1.0.10
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
