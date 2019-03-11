@@ -596,6 +596,13 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<PostsList> getReportedPostsForCommunity(Community community) async {
+    HttpieResponse response = await _postReportsApiService
+        .getReportedPostsForCommunityWithName(community.name);
+    _checkResponseIsOk(response);
+    return PostsList.fromJson(json.decode(response.body));
+  }
+
   Future<Community> createCommunity(
       {@required String name,
       @required String title,
@@ -1001,6 +1008,30 @@ class UserService {
 
     _checkResponseIsCreated(response);
     String responseBody = await response.readAsString();
+    return PostReport.fromJson(json.decode(responseBody));
+  }
+
+  Future<PostReport> confirmPostReport(
+      {@required Post post,
+       @required PostReport report,
+      }) async {
+    HttpieResponse response =
+    await _postReportsApiService.confirmPostReport(post.id, report.id);
+
+    _checkResponseIsOk(response);
+    String responseBody = response.body;
+    return PostReport.fromJson(json.decode(responseBody));
+  }
+
+  Future<PostReport> rejectPostReport(
+      {@required Post post,
+        @required PostReport report,
+      }) async {
+    HttpieResponse response =
+    await _postReportsApiService.rejectPostReport(post.id, report.id);
+
+    _checkResponseIsOk(response);
+    String responseBody = response.body;
     return PostReport.fromJson(json.decode(responseBody));
   }
 

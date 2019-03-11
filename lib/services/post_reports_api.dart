@@ -10,6 +10,7 @@ class PostReportsApiService {
 
   static const CREATE_POST_REPORT_PATH = 'api/posts/{postId}/reports/';
   static const GET_REPORTS_FOR_POST_PATH = 'api/posts/{postId}/reports/';
+  static const GET_REPORTED_POSTS_FOR_COMMUNITY_PATH = 'api/communities/{communityName}/posts/reports/';
   static const CONFIRM_POST_REPORT_PATH = 'api/posts/{postId}/reports/{reportId}/confirm/';
   static const REJECT_POST_REPORT_PATH = 'api/posts/{postId}/reports/{reportId}/reject/';
   static const GET_REPORT_CATEGORIES = 'api/reports/categories/';
@@ -67,6 +68,18 @@ class PostReportsApiService {
 
     return _httpService.post(_makeApiUrl(path),
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getReportedPostsForCommunityWithName(String communityName) {
+    String url = _makeGetCommunityReportedPostsPath(communityName);
+
+    return _httpService.get(_makeApiUrl(url),
+        appendAuthorizationToken: true);
+  }
+
+  String _makeGetCommunityReportedPostsPath(String communityName) {
+    return _stringTemplateService
+        .parse(GET_REPORTED_POSTS_FOR_COMMUNITY_PATH, {'communityName': communityName});
   }
 
   String _makeConfirmPostReportPath(int postId, int reportId) {

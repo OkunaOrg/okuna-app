@@ -18,6 +18,7 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/pages/confirm_ban_community_user.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/community_moderators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_reports/community_reports.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
@@ -302,6 +303,18 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obSlideReportPostFormPage'),
             widget: OBReportPostPage(reportedPost: post, reportedCategory: category,)
+        )
+    );
+  }
+
+  Future navigateToReportedCommunityContent(
+      {@required Community community,
+        @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideReportedCommunityContent'),
+            widget: OBCommunityReportsPage(community: community)
         )
     );
   }
