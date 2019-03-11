@@ -192,6 +192,7 @@ class OBIcons {
       OBIconData(nativeIcon: Icons.remove_circle);
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
+  static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
