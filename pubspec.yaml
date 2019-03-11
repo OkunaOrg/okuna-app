@@ -38,6 +38,7 @@ dependencies:
   sprintf: "^4.0.0"
   image_picker: ^0.4.10
   image_cropper: ^0.0.6
+  queries: ^0.1.10
   flutter:
     sdk: flutter
   flutter_localizations:

@@ -179,6 +179,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.12"
+  function_types:
+    dependency: transitive
+    description:
+      name: function_types
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   glob:
     dependency: transitive
     description:
@@ -403,6 +410,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.2"
+  queries:
+    dependency: "direct main"
+    description:
+      name: queries
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.10"
   quiver:
     dependency: transitive
     description:
