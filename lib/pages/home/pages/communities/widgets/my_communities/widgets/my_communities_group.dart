@@ -151,13 +151,23 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       List<Community> groupCommunities =
           await widget.communityGroupListRefresher();
       _setCommunityGroupList(groupCommunities);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 
@@ -176,6 +186,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: OBHttpList<Community>(
+              separatorBuilder: _buildCommunitySeparator,
               listItemBuilder: widget.communityGroupListItemBuilder,
               listRefresher: widget.communityGroupListRefresher,
               listOnScrollLoader: widget.communityGroupListOnScrollLoader,

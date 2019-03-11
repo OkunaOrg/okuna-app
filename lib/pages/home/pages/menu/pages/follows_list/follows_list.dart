@@ -54,7 +54,8 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
         navigationBar: OBThemedNavigationBar(
           trailing: GestureDetector(
             onTap: () {
-              modalService.openEditFollowsList(followsList: widget.followsList, context: context);
+              modalService.openEditFollowsList(
+                  followsList: widget.followsList, context: context);
             },
             child: OBPrimaryAccentText('Edit'),
           ),
@@ -68,9 +69,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
                   children: <Widget>[
                     OBFollowsListHeader(widget.followsList),
                     Expanded(
-                      child: OBFollowsListUsers(
-                        widget.followsList
-                      ),
+                      child: OBFollowsListUsers(widget.followsList),
                     ),
                   ],
                 ),
@@ -86,11 +85,21 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
   Future<void> _refreshFollowsList() async {
     try {
       await _userService.getFollowsListWithId(widget.followsList.id);
-    } on HttpieConnectionRefusedError{
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
+      _onError(error);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
       _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+      throw error;
     }
   }
 }

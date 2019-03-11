@@ -21,10 +21,8 @@ import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -218,13 +216,23 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     try {
       CategoriesList categoriesList = await _userService.getCategories();
       _setCategories(categoriesList.categories);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      throw error;
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 

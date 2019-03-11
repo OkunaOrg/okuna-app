@@ -21,6 +21,9 @@ class OBHttpList<T> extends StatefulWidget {
   final OBHttpListController controller;
   final String resourceSingularName;
   final String resourcePluralName;
+  final EdgeInsets padding;
+  final IndexedWidgetBuilder separatorBuilder;
+  final ScrollPhysics physics;
 
   const OBHttpList(
       {Key key,
@@ -29,9 +32,12 @@ class OBHttpList<T> extends StatefulWidget {
       @required this.listOnScrollLoader,
       @required this.resourceSingularName,
       @required this.resourcePluralName,
+      this.physics = const ClampingScrollPhysics(),
+      this.padding = const EdgeInsets.all(0),
       this.listSearcher,
       this.searchResultListItemBuilder,
-      this.controller})
+      this.controller,
+      this.separatorBuilder})
       : super(key: key);
 
   @override
@@ -115,20 +121,33 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     columnItems.add(
         Expanded(child: _hasSearch ? _buildSearchResultsList() : _buildList()));
 
-    return Column(children: columnItems);
+    return Column(
+      children: columnItems,
+      mainAxisSize: MainAxisSize.max,
+    );
   }
 
   Widget _buildSearchResultsList() {
+    int listItemCount = _listSearchResults.length + 1;
+
     return NotificationListener(
       onNotification: (ScrollNotification notification) {
         // Hide keyboard
+        FocusScope.of(context).requestFocus(new FocusNode());
         return true;
       },
-      child: ListView.builder(
-          padding: EdgeInsets.all(0),
-          physics: const ClampingScrollPhysics(),
-          itemCount: _listSearchResults.length + 1,
-          itemBuilder: _buildSearchResultsListItem),
+      child: widget.separatorBuilder != null
+          ? ListView.separated(
+              separatorBuilder: widget.separatorBuilder,
+              padding: widget.padding,
+              physics: widget.physics,
+              itemCount: listItemCount,
+              itemBuilder: _buildSearchResultsListItem)
+          : ListView.builder(
+              padding: widget.padding,
+              physics: widget.physics,
+              itemCount: listItemCount,
+              itemBuilder: _buildSearchResultsListItem),
     );
   }
 
@@ -165,14 +184,20 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
                 whenEmptyLoad: false,
                 isFinish: _loadingFinished,
                 delegate: const OBHttpListLoadMoreDelegate(),
-                child: ListView.builder(
-                    controller: _listScrollController,
-                    physics: const ClampingScrollPhysics(),
-                    cacheExtent: 30,
-                    addAutomaticKeepAlives: true,
-                    padding: const EdgeInsets.all(0),
-                    itemCount: _list.length,
-                    itemBuilder: _buildListItem),
+                child: widget.separatorBuilder != null
+                    ? ListView.separated(
+                        separatorBuilder: widget.separatorBuilder,
+                        controller: _listScrollController,
+                        physics: widget.physics,
+                        padding: widget.padding,
+                        itemCount: _list.length,
+                        itemBuilder: _buildListItem)
+                    : ListView.builder(
+                        controller: _listScrollController,
+                        physics: widget.physics,
+                        padding: widget.padding,
+                        itemCount: _list.length,
+                        itemBuilder: _buildListItem),
                 onLoadMore: _loadMoreListItems),
             onRefresh: _refreshList);
   }
@@ -209,7 +234,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       _setList(_list);
       scrollToTop();
     } catch (error) {
-      _onRequestError(error);
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
     }
@@ -226,7 +251,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       }
       return true;
     } catch (error) {
-      _onRequestError(error);
+      _onError(error);
     }
 
     return false;
@@ -253,7 +278,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
               _searchRequestSubscription = null;
               _setListSearchResults(listSearchResults);
             },
-            onError: _onRequestError,
+            onError: _onError,
             onDone: () {
               _setSearchRequestInProgress(false);
             });
@@ -312,11 +337,15 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     });
   }
 
-  void _onRequestError(error) {
+  void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
-      _toastService.error(message: 'No internet connection', context: context);
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error.', context: context);
+      _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
   }
@@ -330,18 +359,23 @@ class OBHttpListController<T> {
   }
 
   void insertListItem(T listItem) {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.insertListItem(listItem);
   }
 
   void removeListItem(T listItem) {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.removeListItem(listItem);
   }
 
   void scrollToTop() {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.scrollToTop();
+  }
+
+  Future refresh() async {
+    if (!_state.mounted) return;
+    _state._refreshList();
   }
 
   bool _isAttached() {
@@ -349,8 +383,7 @@ class OBHttpListController<T> {
   }
 }
 
-typedef Widget OBHttpListItemBuilder<T>(
-    BuildContext context, T listItem);
+typedef Widget OBHttpListItemBuilder<T>(BuildContext context, T listItem);
 typedef Future<List<T>> OBHttpListSearcher<T>(String searchQuery);
 typedef Future<List<T>> OBHttpListRefresher<T>();
 typedef Future<List<T>> OBHttpListOnScrollLoader<T>(List<T> currentList);

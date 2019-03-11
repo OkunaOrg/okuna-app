@@ -5,6 +5,8 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
+import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
@@ -19,10 +21,14 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/delete_account/delete_account.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/delete_account/pages/confirm_delete_account.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/settings/settings.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
+import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
@@ -65,6 +71,24 @@ class NavigationService {
               community: community,
               user: user,
             )));
+  }
+
+  Future<bool> navigateToConfirmDeleteAccount(
+      {@required String userPassword, @required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideConfirmDeleteAccount'),
+            widget: OBConfirmDeleteAccount(
+              userPassword: userPassword,
+            )));
+  }
+
+  Future<bool> navigateToDeleteAccount({@required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideDeleteAccount'), widget: OBDeleteAccountPage()));
   }
 
   Future<bool> navigateToConfirmAddCommunityModerator(
@@ -167,7 +191,7 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
-            widget: OBPostPage(post, autofocusCommentInput: true)));
+            widget: OBPostCommentsPage(post, autofocusCommentInput: true)));
   }
 
   Future navigateToPostComments(
@@ -176,7 +200,12 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
-            widget: OBPostPage(post, autofocusCommentInput: false)));
+            widget: OBPostCommentsPage(post, autofocusCommentInput: false)));
+  }
+
+  Future navigateToPost({@required Post post, @required BuildContext context}) {
+    return Navigator.push(context,
+        OBSlideRightRoute(key: Key('obSlidePost'), widget: OBPostPage(post)));
   }
 
   Future navigateToSettingsPage({@required BuildContext context}) {
@@ -187,14 +216,35 @@ class NavigationService {
   }
 
   Future<Post> navigateToSharePost(
-      {@required BuildContext context,
-      @required SharePostData createPostData}) {
+      {@required BuildContext context, @required SharePostData sharePostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostPage'),
             widget: OBSharePostPage(
-              sharePostData: createPostData,
+              sharePostData: sharePostData,
+            )));
+  }
+
+  Future<Post> navigateToSharePostWithCircles(
+      {@required BuildContext context, @required SharePostData sharePostData}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSharePostWithCirclesPage'),
+            widget: OBSharePostWithCirclesPage(
+              sharePostData: sharePostData,
+            )));
+  }
+
+  Future<Post> navigateToSharePostWithCommunity(
+      {@required BuildContext context, @required SharePostData sharePostData}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSharePostWithCommunityPage'),
+            widget: OBSharePostWithCommunityPage(
+              sharePostData: sharePostData,
             )));
   }
 
@@ -247,6 +297,16 @@ class NavigationService {
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
             )));
+  }
+
+  Future<void> navigateToNotificationsSettings({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obNotificationsSettingsPage'),
+            widget: OBNotificationsSettingsPage()));
   }
 
   Future<void> navigateToBlankPageWithWidget(

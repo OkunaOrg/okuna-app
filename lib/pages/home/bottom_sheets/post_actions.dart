@@ -8,6 +8,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -60,6 +61,14 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           postCommunity.isModerator(loggedInUser);
     }
 
+    if (loggedInUserIsPostCreator) {
+      postActions.add(OBMutePostTile(
+        post: post,
+        onMutedPost: _dismiss,
+        onUnmutedPost: _dismiss,
+      ));
+    }
+
     if (loggedInUserIsPostCreator ||
         loggedInUserIsCommunityAdministrator ||
         loggedInUserIsCommunityModerator) {
@@ -95,16 +104,30 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       _toastService.success(message: 'Post deleted', context: context);
       widget.onPostDeleted(widget.post);
       Navigator.pop(context);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
+    } catch (error) {
+      _onError(error);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
       _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+      throw error;
     }
   }
 
   void _onWantsToReportPost() async {
     _toastService.error(message: 'Not implemented yet', context: context);
+    _dismiss();
+  }
+
+  void _dismiss() {
     Navigator.pop(context);
   }
 }

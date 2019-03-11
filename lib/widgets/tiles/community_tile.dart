@@ -4,11 +4,13 @@ import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:Openbook/libs/pretty_count.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityTile extends StatelessWidget {
+  static const COVER_PLACEHOLDER = 'assets/images/fallbacks/cover-fallback.jpg';
+
   static const double smallSizeHeight = 60;
   static const double normalSizeHeight = 80;
 
@@ -17,7 +19,7 @@ class OBCommunityTile extends StatelessWidget {
   final OBCommunityTileSize size;
 
   const OBCommunityTile(this.community,
-      {@required this.onCommunityTilePressed,
+      {this.onCommunityTilePressed,
       Key key,
       this.size = OBCommunityTileSize.normal})
       : super(key: key);
@@ -45,8 +47,8 @@ class OBCommunityTile extends StatelessWidget {
               fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.60), BlendMode.darken),
-              image:
-                  AdvancedNetworkImage(community.cover, useDiskCache: true)));
+              image: AdvancedNetworkImage(community.cover,
+                  useDiskCache: true, fallbackAssetImage: COVER_PLACEHOLDER, retryLimit: 0)));
     } else {
       textColor = isCommunityColorDark ? Colors.white : Colors.black;
       bool communityColorIsNearWhite = communityColor.computeLuminance() > 0.9;
@@ -87,56 +89,61 @@ class OBCommunityTile extends StatelessWidget {
     String finalAdjective =
         community.membersCount == 1 ? userAdjective : usersAdjective;
 
-    return GestureDetector(
-      onTap: () {
-        onCommunityTilePressed(community);
-      },
-      child: Container(
-        height: isNormalSize ? normalSizeHeight : smallSizeHeight,
-        decoration: containerDecoration,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: communityAvatar,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text('c/' + community.name,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 16,
-                      ),
-                      overflow: TextOverflow.ellipsis),
-                  Text(
-                    community.title,
+    Widget communityTile = Container(
+      height: isNormalSize ? normalSizeHeight : smallSizeHeight,
+      decoration: containerDecoration,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: communityAvatar,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('c/' + community.name,
                     style: TextStyle(
-                        color: textColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  isNormalSize
-                      ? Text(
-                          '$membersPrettyCount $finalAdjective',
-                          style: TextStyle(color: textColor, fontSize: 14),
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : SizedBox()
-                ],
-              ),
+                      color: textColor,
+                      fontSize: 16,
+                    ),
+                    overflow: TextOverflow.ellipsis),
+                Text(
+                  community.title,
+                  style: TextStyle(
+                      color: textColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                isNormalSize
+                    ? Text(
+                        '$membersPrettyCount $finalAdjective',
+                        style: TextStyle(color: textColor, fontSize: 14),
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : SizedBox()
+              ],
             ),
-            SizedBox(
-              width: 20,
-            )
-          ],
-        ),
+          ),
+          SizedBox(
+            width: 20,
+          )
+        ],
       ),
     );
+
+    if (onCommunityTilePressed != null)
+      communityTile = GestureDetector(
+        onTap: () {
+          onCommunityTilePressed(community);
+        },
+        child: communityTile,
+      );
+
+    return communityTile;
   }
 }
 

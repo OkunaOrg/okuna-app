@@ -9,10 +9,10 @@ class OBCover extends StatelessWidget {
   final File coverFile;
   static const double normalSizeHeight = 230.0;
   static const double smallSizeHeight = 160.0;
-  static const COVER_PLACEHOLDER = 'assets/images/cover.jpg';
+  static const COVER_PLACEHOLDER = 'assets/images/fallbacks/cover-fallback.jpg';
   final OBCoverSize size;
 
-  OBCover({this.coverUrl, this.coverFile, this.size=OBCoverSize.normal});
+  OBCover({this.coverUrl, this.coverFile, this.size = OBCoverSize.normal});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class OBCover extends StatelessWidget {
 
     double coverHeight;
 
-    switch(size){
+    switch (size) {
       case OBCoverSize.normal:
         coverHeight = normalSizeHeight;
         break;
@@ -46,14 +46,18 @@ class OBCover extends StatelessWidget {
       image = CachedNetworkImage(
         fit: BoxFit.cover,
         imageUrl: coverUrl != null ? coverUrl : '',
-        placeholder: Center(
-          child: CircularProgressIndicator(),
-        ),
-        errorWidget: const SizedBox(
-          child: Center(
-            child: const OBText('Could not load cover'),
-          ),
-        ),
+        placeholder: (BuildContext context, String url) {
+          return const Center(
+            child: const CircularProgressIndicator(),
+          );
+        },
+        errorWidget: (BuildContext context, String url, Object error) {
+          return const SizedBox(
+            child: const Center(
+              child: const OBText('Could not load cover'),
+            ),
+          );
+        },
         height: double.infinity,
         width: double.infinity,
         alignment: Alignment.center,
@@ -76,11 +80,12 @@ class OBCover extends StatelessWidget {
   }
 
   Widget _getCoverPlaceholder(double coverHeight) {
-    return Image.asset(COVER_PLACEHOLDER, height: coverHeight, fit: BoxFit.cover,);
+    return Image.asset(
+      COVER_PLACEHOLDER,
+      height: coverHeight,
+      fit: BoxFit.cover,
+    );
   }
 }
 
-enum OBCoverSize {
-  normal,
-  small
-}
+enum OBCoverSize { normal, small }

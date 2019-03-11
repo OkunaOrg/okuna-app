@@ -7,6 +7,8 @@ import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/device.dart';
+import 'package:Openbook/models/devices_list.dart';
 import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
@@ -15,6 +17,8 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/notifications/notification.dart';
+import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
@@ -23,18 +27,23 @@ import 'package:Openbook/models/post_reaction_list.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/categories_api.dart';
 import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
+import 'package:Openbook/services/devices_api.dart';
 import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
+import 'package:crypto/crypto.dart';
+import 'package:device_info/device_info.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Openbook/services/httpie.dart';
@@ -56,6 +65,8 @@ class UserService {
   ConnectionsApiService _connectionsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
   FollowsListsApiService _followsListsApiService;
+  NotificationsApiService _notificationsApiService;
+  DevicesApiService _devicesApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -100,6 +111,15 @@ class UserService {
     _categoriesApiService = categoriesApiService;
   }
 
+  void setNotificationsApiService(
+      NotificationsApiService notificationsApiService) {
+    _notificationsApiService = notificationsApiService;
+  }
+
+  void setDevicesApiService(DevicesApiService devicesApiService) {
+    _devicesApiService = devicesApiService;
+  }
+
   void setEmojisApiService(EmojisApiService emojisApiService) {
     _emojisApiService = emojisApiService;
   }
@@ -112,7 +132,14 @@ class UserService {
     _userStorage = storageService.getSecureStorage(namespace: 'user');
   }
 
+  Future<void> deleteAccountWithPassword(String password) async {
+    HttpieResponse response =
+        await _authApiService.deleteUser(password: password);
+    _checkResponseIsOk(response);
+  }
+
   Future<void> logout() async {
+    _deleteCurrentDevice();
     await _removeStoredFirstPostsData();
     await _removeStoredUserData();
     await _removeStoredAuthToken();
@@ -152,24 +179,14 @@ class UserService {
     return user.id == _loggedInUser.id;
   }
 
-  Future<void> refreshUser() async {
+  Future<User> refreshUser() async {
     if (_authToken == null) throw AuthTokenMissingError();
 
-    try {
-      HttpieResponse response =
-          await _authApiService.getUserWithAuthToken(_authToken);
-      _checkResponseIsOk(response);
-      var userData = response.body;
-      _setUserWithData(userData);
-    } on HttpieConnectionRefusedError {
-      // Response failed. Use stored user.
-      String userData = await this._getStoredUserData();
-      if (userData != null) {
-        var user = _makeLoggedInUser(userData);
-        _setLoggedInUser(user);
-      }
-      rethrow;
-    }
+    HttpieResponse response =
+        await _authApiService.getUserWithAuthToken(_authToken);
+    _checkResponseIsOk(response);
+    var userData = response.body;
+    return _setUserWithData(userData);
   }
 
   Future<User> updateUserEmail(String email) async {
@@ -218,9 +235,15 @@ class UserService {
     return _makeLoggedInUser(userData);
   }
 
-  Future<void> loginWithStoredAuthToken() async {
+  Future<void> loginWithStoredUserData() async {
     var token = await _getStoredAuthToken();
     if (token == null) throw AuthTokenMissingError();
+
+    String userData = await this._getStoredUserData();
+    if (userData != null) {
+      var user = _makeLoggedInUser(userData);
+      _setLoggedInUser(user);
+    }
 
     await loginWithAuthToken(token);
   }
@@ -298,8 +321,15 @@ class UserService {
   }
 
   Future<void> deletePost(Post post) async {
-    HttpieResponse response = await _postsApiService.deletePostWithId(post.id);
+    HttpieResponse response =
+        await _postsApiService.deletePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
+  }
+
+  Future<Post> getPostWithUuid(String uuid) async {
+    HttpieResponse response = await _postsApiService.getPostWithUuid(uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
   }
 
   Future<PostReaction> reactToPost(
@@ -307,7 +337,7 @@ class UserService {
       @required Emoji emoji,
       @required EmojiGroup emojiGroup}) async {
     HttpieResponse response = await _postsApiService.reactToPost(
-        postId: post.id, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
+        postUuid: post.uuid, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
@@ -315,17 +345,15 @@ class UserService {
   Future<void> deletePostReaction(
       {@required PostReaction postReaction, @required Post post}) async {
     HttpieResponse response = await _postsApiService.deletePostReaction(
-        postReactionId: postReaction.id, postId: post.id);
+        postReactionId: postReaction.id, postUuid: post.uuid);
     _checkResponseIsOk(response);
   }
 
   Future<PostReactionList> getReactionsForPost(Post post,
       {int count, int maxId, Emoji emoji}) async {
-    HttpieResponse response = await _postsApiService.getReactionsForPostWithId(
-        post.id,
-        count: count,
-        maxId: maxId,
-        emojiId: emoji.id);
+    HttpieResponse response =
+        await _postsApiService.getReactionsForPostWithUuid(post.uuid,
+            count: count, maxId: maxId, emojiId: emoji.id);
 
     _checkResponseIsOk(response);
 
@@ -335,7 +363,7 @@ class UserService {
   Future<PostReactionsEmojiCountList> getReactionsEmojiCountForPost(
       Post post) async {
     HttpieResponse response =
-        await _postsApiService.getReactionsEmojiCountForPostWithId(post.id);
+        await _postsApiService.getReactionsEmojiCountForPostWithUuid(post.uuid);
 
     _checkResponseIsOk(response);
 
@@ -345,7 +373,7 @@ class UserService {
   Future<PostComment> commentPost(
       {@required Post post, @required String text}) async {
     HttpieResponse response =
-        await _postsApiService.commentPost(postId: post.id, text: text);
+        await _postsApiService.commentPost(postUuid: post.uuid, text: text);
     _checkResponseIsCreated(response);
     return PostComment.fromJson(json.decode(response.body));
   }
@@ -353,14 +381,28 @@ class UserService {
   Future<void> deletePostComment(
       {@required PostComment postComment, @required Post post}) async {
     HttpieResponse response = await _postsApiService.deletePostComment(
-        postCommentId: postComment.id, postId: post.id);
+        postCommentId: postComment.id, postUuid: post.uuid);
     _checkResponseIsOk(response);
+  }
+
+  Future<Post> mutePost(Post post) async {
+    HttpieResponse response =
+        await _postsApiService.mutePostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> unmutePost(Post post) async {
+    HttpieResponse response =
+        await _postsApiService.unmutePostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
       {int count, int maxId}) async {
     HttpieResponse response = await _postsApiService
-        .getCommentsForPostWithId(post.id, count: count, maxId: maxId);
+        .getCommentsForPostWithUuid(post.uuid, count: count, maxId: maxId);
 
     _checkResponseIsOk(response);
 
@@ -780,6 +822,14 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> searchJoinedCommunities(
+      {@required String query, int count, Community withCommunity}) async {
+    HttpieResponse response = await _communitiesApiService
+        .searchJoinedCommunities(query: query, count: count);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<Community> joinCommunity(Community community) async {
     HttpieResponse response =
         await _communitiesApiService.joinCommunityWithId(community.name);
@@ -963,6 +1013,175 @@ class UserService {
     return CategoriesList.fromJson(json.decode(response.body));
   }
 
+  Future<NotificationsList> getNotifications({int maxId, int count}) async {
+    HttpieResponse response = await _notificationsApiService.getNotifications(
+        maxId: maxId, count: count);
+    _checkResponseIsOk(response);
+    return NotificationsList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> readNotifications() async {
+    HttpieResponse response =
+        await _notificationsApiService.readNotifications();
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> deleteNotifications() async {
+    HttpieResponse response =
+        await _notificationsApiService.deleteNotifications();
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> deleteNotification(OBNotification notification) async {
+    HttpieResponse response = await _notificationsApiService
+        .deleteNotificationWithId(notification.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> readNotification(OBNotification notification) async {
+    HttpieResponse response =
+        await _notificationsApiService.readNotificationWithId(notification.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<DevicesList> getDevices() async {
+    HttpieResponse response = await _devicesApiService.getDevices();
+    _checkResponseIsOk(response);
+    return DevicesList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deleteDevices() async {
+    HttpieResponse response = await _devicesApiService.deleteDevices();
+    _checkResponseIsOk(response);
+  }
+
+  Future<Device> createDevice({@required String uuid, String name}) async {
+    HttpieResponse response =
+        await _devicesApiService.createDevice(uuid: uuid, name: name);
+    _checkResponseIsCreated(response);
+    return Device.fromJSON(json.decode(response.body));
+  }
+
+  Future<Device> updateDevice(Device device, {String name}) async {
+    HttpieResponse response = await _devicesApiService.updateDeviceWithUuid(
+      device.uuid,
+      name: name,
+    );
+    _checkResponseIsCreated(response);
+    return Device.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> deleteDevice(Device device) async {
+    HttpieResponse response =
+        await _devicesApiService.deleteDeviceWithUuid(device.uuid);
+    _checkResponseIsOk(response);
+  }
+
+  Future<Device> getDeviceWithUuid(String deviceUuid) async {
+    HttpieResponse response =
+        await _devicesApiService.getDeviceWithUuid(deviceUuid);
+    _checkResponseIsOk(response);
+    return Device.fromJSON(json.decode(response.body));
+  }
+
+  Future<Device> getOrCreateCurrentDevice() async {
+    String deviceUuid = await _getDeviceUuid();
+    HttpieResponse response =
+        await _devicesApiService.getDeviceWithUuid(deviceUuid);
+
+    if (response.isNotFound()) {
+      // Device does not exists, create one.
+      String deviceName = await _getDeviceName();
+      return createDevice(uuid: deviceUuid, name: deviceName);
+    } else if (response.isOk()) {
+      // Device exists
+      return Device.fromJSON(json.decode(response.body));
+    } else {
+      throw HttpieRequestError(response);
+    }
+  }
+
+  Future<void> _deleteCurrentDevice() async {
+    String deviceUuid = await _getDeviceUuid();
+
+    HttpieResponse response =
+        await _devicesApiService.deleteDeviceWithUuid(deviceUuid);
+
+    if (!response.isOk() && !response.isNotFound()) {
+      print('Could not delete current device');
+    } else {
+      print('Deleted current device successfully');
+    }
+  }
+
+  Future<UserNotificationsSettings>
+      getAuthenticatedUserNotificationsSettings() async {
+    HttpieResponse response =
+        await _authApiService.getAuthenticatedUserNotificationsSettings();
+    _checkResponseIsOk(response);
+    return UserNotificationsSettings.fromJSON(json.decode(response.body));
+  }
+
+  Future<UserNotificationsSettings>
+      updateAuthenticatedUserNotificationsSettings({
+    bool postCommentNotifications,
+    bool postReactionNotifications,
+    bool followNotifications,
+    bool connectionRequestNotifications,
+    bool connectionConfirmedNotifications,
+    bool communityInviteNotifications,
+  }) async {
+    HttpieResponse response =
+        await _authApiService.updateAuthenticatedUserNotificationsSettings(
+            postCommentNotifications: postCommentNotifications,
+            postReactionNotifications: postReactionNotifications,
+            followNotifications: followNotifications,
+            connectionConfirmedNotifications: connectionConfirmedNotifications,
+            communityInviteNotifications: communityInviteNotifications,
+            connectionRequestNotifications: connectionRequestNotifications);
+    _checkResponseIsOk(response);
+    return UserNotificationsSettings.fromJSON(json.decode(response.body));
+  }
+
+  Future<String> _getDeviceName() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    String deviceName;
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      deviceName = androidInfo.model;
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+      deviceName = iosDeviceInfo.utsname.machine;
+    } else {
+      deviceName = 'Unknown';
+    }
+
+    return deviceName;
+  }
+
+  Future<String> _getDeviceUuid() async {
+    String identifier;
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isAndroid) {
+      var build = await deviceInfo.androidInfo;
+      identifier = build.androidId;
+    } else if (Platform.isIOS) {
+      var data = await deviceInfo.iosInfo;
+      identifier = data.identifierForVendor;
+    } else {
+      throw 'Unsupported platform';
+    }
+
+    var bytes = utf8.encode(identifier);
+    var digest = sha256.convert(bytes);
+
+    return digest.toString();
+  }
+
   Future<User> _setUserWithData(String userData) async {
     var user = _makeLoggedInUser(userData);
     _setLoggedInUser(user);
@@ -1049,14 +1268,6 @@ class CredentialsMismatchError implements Exception {
   const CredentialsMismatchError(this.msg);
 
   String toString() => 'CredentialsMismatchError: $msg';
-}
-
-class EmailAlreadyTakenError implements Exception {
-  final String msg;
-
-  const EmailAlreadyTakenError(this.msg);
-
-  String toString() => 'EmailAlreadyTakenError: $msg';
 }
 
 class AuthTokenMissingError implements Exception {

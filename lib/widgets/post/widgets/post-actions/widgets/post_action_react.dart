@@ -43,12 +43,17 @@ class OBPostActionReact extends StatelessWidget {
                 ? CachedNetworkImage(
                     height: 18.0,
                     imageUrl: reaction.getEmojiImage(),
-                    placeholder: const SizedBox(),
-                    errorWidget: SizedBox(
-                      child: Center(child: Text('?')),
-                    ),
+                    errorWidget:
+                        (BuildContext context, String url, Object error) {
+                      return SizedBox(
+                        child: Center(child: Text('?')),
+                      );
+                    },
                   )
-                : const OBIcon(OBIcons.react, customSize: 20.0,),
+                : const OBIcon(
+                    OBIcons.react,
+                    customSize: 20.0,
+                  ),
             const SizedBox(
               width: 10.0,
             ),

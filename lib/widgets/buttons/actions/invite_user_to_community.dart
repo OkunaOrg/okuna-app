@@ -54,9 +54,6 @@ class OBInviteUserToCommunityButtonState
             User latestUser = latestUserSnapshot.data;
             if (latestUser == null) return const SizedBox();
 
-            bool loggedInUserInvitedUserToCommunity =
-                latestLoggedInUser.hasInvitedUserToCommunity(
-                    user: latestUser, community: widget.community);
             bool isCommunityMember =
                 latestUser.isMemberOfCommunity(widget.community);
             bool isInvitedToCommunity =
@@ -66,7 +63,7 @@ class OBInviteUserToCommunityButtonState
               return _buildAlreadyMemberButton();
             }
 
-            return loggedInUserInvitedUserToCommunity || isInvitedToCommunity
+            return isInvitedToCommunity
                 ? _buildUninviteUserToCommunityButton()
                 : _buildInviteUserToCommunityButton();
           },
@@ -112,7 +109,7 @@ class OBInviteUserToCommunityButtonState
       await _userService.inviteUserToCommunity(
           user: widget.user, community: widget.community);
     } catch (e) {
-      _onRequestError(e);
+      _onError(e);
     } finally {
       _setRequestInProgress(false);
     }
@@ -124,19 +121,23 @@ class OBInviteUserToCommunityButtonState
       await _userService.uninviteUserFromCommunity(
           user: widget.user, community: widget.community);
     } catch (e) {
-      _onRequestError(e);
+      _onError(e);
     } finally {
       _setRequestInProgress(false);
     }
   }
 
-  void _onRequestError(error) {
+  void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
-      _toastService.error(message: 'No internet connection', context: context);
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
     } else {
       _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
-    throw error;
   }
 
   void _setRequestInProgress(bool requestInProgress) {

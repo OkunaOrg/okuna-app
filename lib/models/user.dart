@@ -8,9 +8,9 @@ import 'package:Openbook/models/community_membership.dart';
 import 'package:Openbook/models/community_membership_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
+import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
-import 'package:meta/meta.dart';
 
 class User extends UpdatableModel<User> {
   int id;
@@ -18,18 +18,20 @@ class User extends UpdatableModel<User> {
   String email;
   String username;
   UserProfile profile;
+  UserNotificationsSettings notificationsSettings;
   int followersCount;
   int followingCount;
+  int unreadNotificationsCount;
   int postsCount;
   bool isFollowing;
   bool isConnected;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
+  bool isMemberOfCommunities;
   CirclesList connectedCircles;
   FollowsListsList followLists;
   CommunityMembershipList communitiesMemberships;
   CommunityInviteList communitiesInvites;
-  CommunityInviteList createdCommunitiesInvites;
 
   static final navigationUsersFactory = UserFactory(
       cache:
@@ -68,17 +70,19 @@ class User extends UpdatableModel<User> {
     this.username,
     this.email,
     this.profile,
+    this.notificationsSettings,
     this.followersCount,
     this.followingCount,
+    this.unreadNotificationsCount,
     this.postsCount,
     this.isFollowing,
     this.isConnected,
     this.isFullyConnected,
+    this.isMemberOfCommunities,
     this.connectedCircles,
     this.followLists,
     this.communitiesMemberships,
     this.communitiesInvites,
-    this.createdCommunitiesInvites,
   });
 
   void updateFromJson(Map json) {
@@ -91,10 +95,20 @@ class User extends UpdatableModel<User> {
         profile = navigationUsersFactory.parseUserProfile(json['profile']);
       }
     }
+    if (json.containsKey('notifications_settings')) {
+      if (notificationsSettings != null) {
+        notificationsSettings.updateFromJson(json['notifications_settings']);
+      } else {
+        notificationsSettings = navigationUsersFactory
+            .parseUserNotificationsSettings(json['notifications_settings']);
+      }
+    }
     if (json.containsKey('followers_count'))
       followersCount = json['followers_count'];
     if (json.containsKey('following_count'))
       followingCount = json['following_count'];
+    if (json.containsKey('unread_notifications_count'))
+      unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
@@ -109,6 +123,9 @@ class User extends UpdatableModel<User> {
       connectedCircles =
           navigationUsersFactory.parseCircles(json['connected_circles']);
     }
+    if (json.containsKey('is_member_of_communities')) {
+      isMemberOfCommunities = json['is_member_of_communities'];
+    }
     if (json.containsKey('follow_lists')) {
       followLists =
           navigationUsersFactory.parseFollowsLists(json['follow_lists']);
@@ -120,11 +137,6 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('communities_invites')) {
       communitiesInvites =
           navigationUsersFactory.parseInvites(json['communities_invites']);
-    }
-
-    if (json.containsKey('created_communities_invites')) {
-      createdCommunitiesInvites = navigationUsersFactory
-          .parseInvites(json['created_communities_invites']);
     }
   }
 
@@ -222,29 +234,6 @@ class User extends UpdatableModel<User> {
     return communitiesMemberships.communityMemberships[membershipIndex];
   }
 
-  bool hasInvitedUserToCommunity(
-      {@required User user, @required Community community}) {
-    CommunityInvite createdInvite =
-
-    getCreatedInviteForUserAndCommunity(user: user, community: community);
-    return createdInvite != null;
-  }
-
-  CommunityInvite getCreatedInviteForUserAndCommunity(
-      {@required User user, @required Community community}) {
-    if (createdCommunitiesInvites == null) return null;
-
-    int inviteIndex = createdCommunitiesInvites.communityInvites
-        .indexWhere((CommunityInvite communityInvite) {
-      return communityInvite.communityId == community.id &&
-          communityInvite.invitedUserId == user.id;
-    });
-
-    if (inviteIndex < 0) return null;
-
-    return createdCommunitiesInvites.communityInvites[inviteIndex];
-  }
-
   bool isInvitedToCommunity(Community community) {
     CommunityInvite invite = getInviteForCommunity(community);
     return invite != null;
@@ -261,6 +250,22 @@ class User extends UpdatableModel<User> {
     if (inviteIndex < 0) return null;
 
     return communitiesInvites.communityInvites[inviteIndex];
+  }
+
+  bool hasUnreadNotifications() {
+    return unreadNotificationsCount != null && unreadNotificationsCount > 0;
+  }
+
+  void resetUnreadNotificationsCount() {
+    this.unreadNotificationsCount = 0;
+    notifyUpdate();
+  }
+
+  void incrementUnreadNotificationsCount() {
+    if (this.unreadNotificationsCount != null) {
+      this.unreadNotificationsCount += 1;
+      notifyUpdate();
+    }
   }
 
   void incrementFollowersCount() {
@@ -288,12 +293,14 @@ class UserFactory extends UpdatableModelFactory<User> {
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
         postsCount: json['posts_count'],
+        unreadNotificationsCount: json['unread_notifications_count'],
         email: json['email'],
         username: json['username'],
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
         isFullyConnected: json['is_fully_connected'],
+        isMemberOfCommunities: json['is_member_of_communities'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
         communitiesMemberships:
@@ -312,7 +319,14 @@ class UserFactory extends UpdatableModelFactory<User> {
   }
 
   UserProfile parseUserProfile(Map profile) {
+    if (profile == null) return null;
     return UserProfile.fromJSON(profile);
+  }
+
+  UserNotificationsSettings parseUserNotificationsSettings(
+      Map notificationsSettings) {
+    if (notificationsSettings == null) return null;
+    return UserNotificationsSettings.fromJSON(notificationsSettings);
   }
 
   CirclesList parseCircles(List circlesData) {

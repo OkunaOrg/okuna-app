@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class OBCheckboxField extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool> onChanged;
   final VoidCallback onTap;
   final Widget leading;
   final String title;
@@ -14,7 +13,6 @@ class OBCheckboxField extends StatelessWidget {
 
   OBCheckboxField(
       {@required this.value,
-      this.onChanged,
       this.subtitle,
       this.onTap,
       this.leading,
@@ -37,7 +35,6 @@ class OBCheckboxField extends StatelessWidget {
             children: <Widget>[
               OBCheckbox(
                 value: value,
-                onChanged: onChanged,
               )
             ],
           ),

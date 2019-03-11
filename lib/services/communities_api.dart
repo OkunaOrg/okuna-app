@@ -13,6 +13,8 @@ class CommunitiesApiService {
   static const SEARCH_COMMUNITIES_PATH = 'api/communities/search/';
   static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
   static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
+  static const SEARCH_JOINED_COMMUNITIES_PATH =
+      'api/communities/joined/search/';
   static const CHECK_COMMUNITY_NAME_PATH = 'api/communities/name-check/';
   static const CREATE_COMMUNITY_PATH = 'api/communities/';
   static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
@@ -45,7 +47,8 @@ class CommunitiesApiService {
   static const GET_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/';
   static const GET_COMMUNITY_POSTS_PATH =
       'api/communities/{communityName}/posts/';
-  static const CREATE_COMMUNITY_POST_PATH = 'api/communities/posts/';
+  static const CREATE_COMMUNITY_POST_PATH =
+      'api/communities/{communityName}/posts/';
   static const GET_COMMUNITY_MEMBERS_PATH =
       'api/communities/{communityName}/members/';
   static const SEARCH_COMMUNITY_MEMBERS_PATH =
@@ -118,7 +121,9 @@ class CommunitiesApiService {
       body['text'] = text;
     }
 
-    return _httpService.putMultiform(_makeApiUrl(CREATE_COMMUNITY_POST_PATH),
+    String url = _makeCreateCommunityPost(communityName);
+
+    return _httpService.putMultiform(_makeApiUrl(url),
         body: body, appendAuthorizationToken: true);
   }
 
@@ -362,6 +367,18 @@ class CommunitiesApiService {
         queryParameters: {'offset': offset});
   }
 
+  Future<HttpieResponse> searchJoinedCommunities({
+    @required String query,
+    int count,
+  }) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get(_makeApiUrl('$SEARCH_JOINED_COMMUNITIES_PATH'),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> joinCommunityWithId(String communityName) {
     String path = _makeJoinCommunityPath(communityName);
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
@@ -529,6 +546,11 @@ class CommunitiesApiService {
     return _httpService.get('$apiURL$GET_MODERATED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest,
         queryParameters: {'offset': offset});
+  }
+
+  String _makeCreateCommunityPost(String communityName) {
+    return _stringTemplateService
+        .parse(CREATE_COMMUNITY_POST_PATH, {'communityName': communityName});
   }
 
   String _makeInviteUserToCommunityPath(String communityName) {
