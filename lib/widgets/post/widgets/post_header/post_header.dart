@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 class OBPostHeader extends StatelessWidget {
   final Post post;
   final OnPostDeleted onPostDeleted;
+  final OnPostReported onPostReported;
 
-  const OBPostHeader({Key key, this.onPostDeleted, this.post})
+  const OBPostHeader({Key key, this.onPostDeleted, this.onPostReported, this.post})
       : super(key: key);
 
   @override
@@ -17,10 +18,12 @@ class OBPostHeader extends StatelessWidget {
         ? OBCommunityPostHeader(
             post,
             onPostDeleted: onPostDeleted,
+            onPostReported: onPostReported
           )
         : OBUserPostHeader(
             post,
             onPostDeleted: onPostDeleted,
+            onPostReported: onPostReported
           );
   }
 }
