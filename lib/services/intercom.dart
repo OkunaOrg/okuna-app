@@ -32,7 +32,8 @@ class IntercomService {
     return Intercom.displayMessenger();
   }
 
-  Future enableIntercom() {
+  Future enableIntercom() async {
+    await disableIntercom();
     User loggedInUser = _userService.getLoggedInUser();
     if (loggedInUser == null) throw 'Cannot enable intercom. Not logged in.';
 
