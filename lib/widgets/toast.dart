@@ -56,7 +56,8 @@ class OpenbookToastState extends State<OpenbookToast>
 
   void _dismissToastAfterDelay() async {
     await new Future.delayed(const Duration(seconds: 3));
-    _dismissToast();
+    // Might have been already dismissed
+    if (_overlayEntry != null) _dismissToast();
   }
 
   void _dismissToast() async {
@@ -93,20 +94,18 @@ class OpenbookToastState extends State<OpenbookToast>
                                   position: offset,
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Flexible(
                                         child: Container(
                                           margin: EdgeInsets.symmetric(
-                                            vertical: 20,
-                                              horizontal: 20),
+                                              vertical: 20, horizontal: 20),
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 15, vertical: 10),
                                           decoration: BoxDecoration(
                                               color: config.color,
                                               borderRadius:
-                                              BorderRadius.circular(50)),
+                                                  BorderRadius.circular(50)),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
