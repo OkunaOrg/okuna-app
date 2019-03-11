@@ -51,7 +51,7 @@ class OpenbookToastState extends State<OpenbookToast>
     WidgetsBinding.instance
         .addPostFrameCallback((_) => overlay.insert(_overlayEntry));
     controller.forward();
-    //_dismissToastAfterDelay();
+    _dismissToastAfterDelay();
   }
 
   void _dismissToastAfterDelay() async {
@@ -71,81 +71,74 @@ class OpenbookToastState extends State<OpenbookToast>
       // 44 is header height
       double paddingTop = existingMediaQuery.padding.top + 44;
 
-      print(paddingTop);
-
       return Stack(children: [
         Positioned(
             left: 0,
             width: existingMediaQuery.size.width,
-            height: existingMediaQuery.size.height,
             child: GestureDetector(
               onTap: _dismissToast,
               child: Material(
                 color: Colors.transparent,
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Expanded(
-                      child: Row(
-                        children: <Widget>[
-                          Flexible(
-                            child: Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(top: paddingTop),
-                                  child: SlideTransition(
-                                    position: offset,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Flexible(
-                                          child: Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 5),
-                                            decoration: BoxDecoration(
-                                                color: config.color,
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                Flexible(
-                                                  child: Text(
-                                                    config.message,
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                    Row(
+                      children: <Widget>[
+                        Flexible(
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: paddingTop),
+                                child: SlideTransition(
+                                  position: offset,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: Container(
+                                          margin: EdgeInsets.symmetric(
+                                            vertical: 20,
+                                              horizontal: 20),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 10),
+                                          decoration: BoxDecoration(
+                                              color: config.color,
+                                              borderRadius:
+                                              BorderRadius.circular(50)),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Flexible(
+                                                child: Text(
+                                                  config.message,
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                        )
-                                      ],
-                                    ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                        mainAxisSize: MainAxisSize.max,
-                      ),
-                    )
+                                ),
+                              )
+                            ],
+                            mainAxisSize: MainAxisSize.min,
+                          ),
+                        )
+                      ],
+                      mainAxisSize: MainAxisSize.max,
+                    ),
                   ],
                 ),
               ),
             ))
       ]);
     });
-  }
-
-  void _onOverlayTapped() {
-    _dismissToast();
   }
 
   void _setCurrentContext(BuildContext context) {

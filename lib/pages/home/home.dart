@@ -188,7 +188,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
           }
         }
 
-        if(currentTab == OBHomePageTabs.notifications){
+        if (currentTab == OBHomePageTabs.notifications) {
           // If we're coming from the notifications page, make sure to clear!
           _resetLoggedInUserUnreadNotificationsCount();
         }
