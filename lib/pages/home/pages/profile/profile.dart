@@ -150,12 +150,9 @@ class OBProfilePageState extends State<OBProfilePage> {
   Future<void> _refresh() async {
     try {
       await Future.wait([_refreshUser(), _refreshPosts()]);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
-    } finally {}
+    } catch (error) {
+      _onError(error);
+    }
   }
 
   Future<void> _refreshUser() async {
@@ -188,11 +185,8 @@ class OBProfilePageState extends State<OBProfilePage> {
         });
       }
       return true;
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+      _onError(error);
     }
 
     return false;
@@ -207,6 +201,19 @@ class OBProfilePageState extends State<OBProfilePage> {
   void _onPostReported(Post reportedPost) {
       _onPostDeleted(reportedPost);
       _toastService.success(message: 'Post reported successfully', context: context);
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
   }
 
   void _setUser(User user) {
@@ -243,7 +250,7 @@ class OBProfilePageController {
   }
 
   void scrollToTop() {
-    _timelinePageState.scrollToTop();
+    if (_timelinePageState != null) _timelinePageState.scrollToTop();
   }
 }
 

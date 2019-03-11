@@ -13,7 +13,8 @@ class OBAddAccountToList extends StatefulWidget {
   final User user;
   final VoidCallback onWillShowModalBottomSheet;
 
-  const OBAddAccountToList(this.user, {Key key, this.onWillShowModalBottomSheet})
+  const OBAddAccountToList(this.user,
+      {Key key, this.onWillShowModalBottomSheet})
       : super(key: key);
 
   @override
@@ -37,9 +38,8 @@ class OBAddAccountToListState extends State<OBAddAccountToList> {
     bool hasFollowLists = widget.user.hasFollowLists();
 
     return ListTile(
-        title: OBText(hasFollowLists
-            ? 'Update account lists'
-            : 'Add account to list'),
+        title: OBText(
+            hasFollowLists ? 'Update account lists' : 'Add account to list'),
         leading: OBIcon(hasFollowLists ? OBIcons.lists : OBIcons.addToList),
         onTap: _displayAddConnectionToFollowsListsBottomSheet);
   }
@@ -54,8 +54,8 @@ class OBAddAccountToListState extends State<OBAddAccountToList> {
 
     var pickedFollowsLists = await _bottomSheetService.showFollowsListsPicker(
         context: context,
-        title: hasFollowLists ? 'Update lists': 'Add account to list',
-        actionLabel: hasFollowLists ? 'Save': 'Done',
+        title: hasFollowLists ? 'Update lists' : 'Add account to list',
+        actionLabel: hasFollowLists ? 'Save' : 'Done',
         initialPickedFollowsLists: initialPickedLists);
 
     if (pickedFollowsLists != null)
@@ -79,11 +79,21 @@ class OBAddAccountToListState extends State<OBAddAccountToList> {
         widget.user.incrementFollowersCount();
       }
       _toastService.success(message: 'Success', context: context);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
+    } catch (error) {
+      _onError(error);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
       _toastService.error(message: 'Unknown error', context: context);
-      rethrow;
+      throw error;
     }
   }
 }

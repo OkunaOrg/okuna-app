@@ -121,7 +121,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     columnItems.add(
         Expanded(child: _hasSearch ? _buildSearchResultsList() : _buildList()));
 
-    return Column(children: columnItems);
+    return Column(
+      children: columnItems,
+      mainAxisSize: MainAxisSize.max,
+    );
   }
 
   Widget _buildSearchResultsList() {
@@ -231,7 +234,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       _setList(_list);
       scrollToTop();
     } catch (error) {
-      _onRequestError(error);
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
     }
@@ -248,7 +251,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       }
       return true;
     } catch (error) {
-      _onRequestError(error);
+      _onError(error);
     }
 
     return false;
@@ -275,7 +278,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
               _searchRequestSubscription = null;
               _setListSearchResults(listSearchResults);
             },
-            onError: _onRequestError,
+            onError: _onError,
             onDone: () {
               _setSearchRequestInProgress(false);
             });
@@ -334,11 +337,15 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     });
   }
 
-  void _onRequestError(error) {
+  void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
-      _toastService.error(message: 'No internet connection', context: context);
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error.', context: context);
+      _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
   }
@@ -352,18 +359,23 @@ class OBHttpListController<T> {
   }
 
   void insertListItem(T listItem) {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.insertListItem(listItem);
   }
 
   void removeListItem(T listItem) {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.removeListItem(listItem);
   }
 
   void scrollToTop() {
-    if (!_isAttached()) return;
+    if (!_isAttached() || !_state.mounted) return;
     _state.scrollToTop();
+  }
+
+  Future refresh() async {
+    if (!_state.mounted) return;
+    _state._refreshList();
   }
 
   bool _isAttached() {

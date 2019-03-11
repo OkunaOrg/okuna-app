@@ -2,6 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_moderators.dart';
@@ -37,6 +38,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
   Community _community;
   bool _needsBootstrap;
   List<Post> _posts;
+
+  // Workaround to delete posts given PageWise has no way to remove items
+  // https://github.com/AbdulRahmanAlHamali/flutter_pagewise/issues/55
+  List<Post> _removedPosts;
   UserService _userService;
   ToastService _toastService;
   ScrollController _scrollController;
@@ -60,6 +65,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _refreshInProgress = false;
     _community = widget.community;
     _posts = [];
+    _removedPosts = [];
     _tabController = TabController(length: 2, vsync: this);
     _pageStorageKey = PageStorageKey<Type>(TabBar);
   }
@@ -144,6 +150,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
             ),
           ),
         ),
+        OBCommunityAdministrators(widget.community),
         OBCommunityModerators(widget.community)
       ],
     );
@@ -228,14 +235,16 @@ class OBCommunityPageState extends State<OBCommunityPage>
                         );
                       },
                       loadingBuilder: (context) {
-                        return Padding(
-                          padding: EdgeInsets.all(20),
-                          child: OBProgressIndicator(),
+                        return const Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: const OBProgressIndicator(),
                         );
                       },
                       pageLoadController: this._pageWiseController,
                       itemBuilder:
                           (BuildContext context, dynamic post, int index) {
+                        if (_removedPosts.contains(post))
+                          return const SizedBox();
                         return OBPost(post,
                             onPostDeleted: _onPostDeleted,
                             key: Key(post.id.toString()));
@@ -271,12 +280,16 @@ class OBCommunityPageState extends State<OBCommunityPage>
                             return OBCommunityRules(_community);
                             break;
                           case 1:
-                            return OBCommunityModerators(
+                            return OBCommunityAdministrators(
                               _community,
                             );
                             break;
+                          case 2:
+                            return OBCommunityModerators(_community);
+                            break;
+                          default:
                         }
-                      }, childCount: 2),
+                      }, childCount: 3),
                     ),
                   ],
                 );
@@ -304,11 +317,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _setRefreshInProgress(true);
     try {
       await Future.wait([_refreshCommunity(), _refreshPosts()]);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
     }
@@ -342,17 +352,36 @@ class OBCommunityPageState extends State<OBCommunityPage>
               maxId: lastPostId))
           .posts;
       _addPosts(morePosts);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
     } catch (error) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+      _onError(error);
     }
 
     return morePosts;
   }
 
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
+  }
+
   void _onPostDeleted(Post deletedPost) {
+    if(_posts.length == 1){
+      _refreshPosts();
+    } else{
+      _removePost(deletedPost);
+      _addRemovedPost(deletedPost);
+    }
+  }
+
+  void _removePost(Post deletedPost) {
     setState(() {
       _posts.remove(deletedPost);
     });
@@ -379,6 +408,12 @@ class OBCommunityPageState extends State<OBCommunityPage>
   void _addPosts(List<Post> posts) {
     setState(() {
       _posts.addAll(posts);
+    });
+  }
+
+  void _addRemovedPost(Post post) {
+    setState(() {
+      _removedPosts.add(post);
     });
   }
 }

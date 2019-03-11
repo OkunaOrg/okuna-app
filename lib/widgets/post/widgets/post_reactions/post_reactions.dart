@@ -61,28 +61,27 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
           return SizedBox(
             height: 35,
-            child: ListView(
-                physics: const ClampingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: emojiCounts.map((emojiCount) {
-                  return OBEmojiReactionCount(
-                    emojiCount,
-                    reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                    onPressed: _requestInProgress
-                        ? null
-                        : (pressedEmojiCount) {
-                            _onEmojiReactionCountPressed(
-                                pressedEmojiCount, emojiCounts);
-                          },
-                    onLongPressed: (pressedEmojiCount) {
-                      _navigationService.navigateToPostReactions(
-                          post: widget.post,
-                          reactionsEmojiCounts: emojiCounts,
-                          context: context,
-                          reactionEmoji: pressedEmojiCount.emoji);
-                    },
-                  );
-                }).toList()),
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              physics: const ClampingScrollPhysics(),
+              itemCount: emojiCounts.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                PostReactionsEmojiCount emojiCount = emojiCounts[index];
+
+                return OBEmojiReactionCount(
+                  emojiCount,
+                  reacted: widget.post.isReactionEmoji(emojiCount.emoji),
+                  onLongPressed: (pressedEmojiCount) {
+                    _navigationService.navigateToPostReactions(
+                        post: widget.post,
+                        reactionsEmojiCounts: emojiCounts,
+                        context: context,
+                        reactionEmoji: pressedEmojiCount.emoji);
+                  },
+                );
+              },
+            ),
           );
         });
   }
@@ -109,11 +108,8 @@ class OBPostReactionsState extends State<OBPostReactions> {
     try {
       postReaction =
           await _userService.reactToPost(post: widget.post, emoji: emoji);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
     }
@@ -126,13 +122,23 @@ class OBPostReactionsState extends State<OBPostReactions> {
     try {
       await _userService.deletePostReaction(
           postReaction: widget.post.reaction, post: widget.post);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 

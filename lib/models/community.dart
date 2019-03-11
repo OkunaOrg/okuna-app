@@ -220,6 +220,10 @@ class Community extends UpdatableModel<Community> {
     if (json.containsKey('moderators')) {
       moderators = factory.parseUsers(json['moderators']);
     }
+
+    if (json.containsKey('administrators')) {
+      administrators = factory.parseUsers(json['administrators']);
+    }
   }
 
   void incrementMembersCount() {
@@ -264,6 +268,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         type: parseType(json['type']),
         creator: parseUser(json['creator']),
         moderators: parseUsers(json['moderators']),
+        administrators: parseUsers(json['administrators']),
         categories: parseCategories(json['categories']));
   }
 

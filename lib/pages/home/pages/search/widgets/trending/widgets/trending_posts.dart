@@ -110,16 +110,22 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
         .listen((PostsList postsList) {
       _setPosts(postsList.posts);
       _getTrendingPostsSubscription = null;
-    }, onError: (error) {
-      if (error is HttpieConnectionRefusedError) {
-        _toastService.error(
-            message: 'No internet connection', context: context);
-      } else {
-        _toastService.error(message: 'Unknown error.', context: context);
-        throw error;
-      }
-      _getTrendingPostsSubscription = null;
-    });
+    }, onError: _onError);
+  }
+
+  void _onError(error) async {
+    _getTrendingPostsSubscription = null;
+
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
   }
 
   void _setPosts(List<Post> posts) {

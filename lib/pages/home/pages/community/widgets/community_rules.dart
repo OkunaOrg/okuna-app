@@ -1,6 +1,4 @@
 import 'package:Openbook/models/community.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +17,9 @@ class OBCommunityRules extends StatelessWidget {
         String communityRules = community?.rules;
         String communityColor = community?.color;
 
-        if (communityRules == null || communityColor == null)
+        if (communityRules == null || communityRules.isEmpty || communityColor == null)
           return const SizedBox();
+
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

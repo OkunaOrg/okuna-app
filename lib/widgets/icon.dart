@@ -190,7 +190,8 @@ class OBIcons {
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity = OBIconData(nativeIcon: Icons.remove_circle);
   static const menuForward = OBIconData(nativeIcon: Icons.arrow_forward_ios);
-
+  static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
+  static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

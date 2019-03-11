@@ -158,11 +158,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   void scrollToTop() {
-    _postsScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    if (_postsScrollController.hasClients) {
+      _postsScrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 
   void addPostToTop(Post post) {
@@ -215,11 +217,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
           .posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
-    } on HttpieConnectionRefusedError catch (error) {
-      _onConnectionRefusedError(error);
     } catch (error) {
-      _onUnknownError(error);
-      rethrow;
+      _onError(error);
     } finally {
       _setRefreshInProgress(false);
     }
@@ -244,11 +243,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         });
       }
       return true;
-    } on HttpieConnectionRefusedError catch (error) {
-      _onConnectionRefusedError(error);
     } catch (error) {
-      _onUnknownError(error);
-      rethrow;
+      _onError(error);
     }
 
     return false;
@@ -283,12 +279,17 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     });
   }
 
-  void _onConnectionRefusedError(HttpieConnectionRefusedError error) {
-    _toastService.error(message: 'No internet connection', context: context);
-  }
-
-  void _onUnknownError(Error error) {
-    _toastService.error(message: 'Unknown error', context: context);
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
   }
 }
 

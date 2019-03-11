@@ -17,9 +17,10 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class Post extends UpdatableModel<Post> {
   final int id;
+  final String uuid;
   final int creatorId;
-  final DateTime created;
-  final User creator;
+  DateTime created;
+  User creator;
   CirclesList circles;
 
   PostReactionsEmojiCountList reactionsEmojiCounts;
@@ -35,6 +36,8 @@ class Post extends UpdatableModel<Post> {
   Community community;
   PostReportsList reportsList;
 
+  bool isMuted;
+
   static final factory = PostFactory();
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -47,6 +50,7 @@ class Post extends UpdatableModel<Post> {
 
   Post(
       {this.id,
+      this.uuid,
       this.created,
       this.text,
       this.creatorId,
@@ -62,7 +66,8 @@ class Post extends UpdatableModel<Post> {
       this.circles,
       this.community,
       this.reportsList,
-      this.publicReactions})
+      this.publicReactions,
+      this.isMuted})
       : super();
 
   void updateFromJson(Map json) {
@@ -89,12 +94,20 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('text')) text = json['text'];
 
+    if (json.containsKey('is_muted')) isMuted = json['is_muted'];
+
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
     if (json.containsKey('video')) video = factory.parseVideo(json['video']);
 
     if (json.containsKey('community'))
       community = factory.parseCommunity(json['community']);
+
+    if (json.containsKey('creator'))
+      creator = factory.parseUser(json['creator']);
+
+    if (json.containsKey('created'))
+      created = factory.parseCreated(json['created']);
 
     if (json.containsKey('comments'))
       commentsList = factory.parseCommentList(json['comments']);
@@ -261,18 +274,21 @@ class Post extends UpdatableModel<Post> {
 
 class PostFactory extends UpdatableModelFactory<Post> {
   @override
-  SimpleCache<int, Post> cache = SimpleCache(storage: UpdatableModelSimpleStorage(size: 100));
+  SimpleCache<int, Post> cache =
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 100));
 
   @override
   Post makeFromJson(Map json) {
     return Post(
         id: json['id'],
+        uuid: json['uuid'],
         creatorId: json['creator_id'],
         created: parseCreated(json['created']),
         text: json['text'],
         circles: parseCircles(json['circles']),
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
+        isMuted: json['is_muted'],
         publicComments: json['public_comments'],
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
@@ -292,6 +308,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
   }
 
   DateTime parseCreated(String created) {
+    if (created == null) return null;
     return DateTime.parse(created).toLocal();
   }
 

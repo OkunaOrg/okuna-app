@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F38E44C21592BEBC1BDB23D /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE435558BE15546FFD1597E8 /* libPods-OneSignalNotificationServiceExtension.a */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		26B90459017411DF809A7507 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 970D6175355421F353EA64C9 /* libPods-Runner.a */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		75EEFA0D079329EAA30DCE11 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3877FF780D9E687181072175 /* libPods-Runner.a */; };
+		542BD8834B6D6BE2F3E671A0 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4BA49A905C89E90E88FD37 /* libPods-OneSignalNotificationServiceExtension.a */; };
+		8925094F222F0E0900455D87 /* libdevice_info.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8925094A222F0E0900455D87 /* libdevice_info.a */; };
 		898053B722047AD000E47AD9 /* libflutter_secure_storage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */; };
 		898053B822047AD000E47AD9 /* libimage_cropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A022047AAF00E47AD9 /* libimage_cropper.a */; };
 		898053B922047AD000E47AD9 /* libimage_picker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A222047AAF00E47AD9 /* libimage_picker.a */; };
 		898053BA22047AD000E47AD9 /* libonesignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A422047AAF00E47AD9 /* libonesignal.a */; };
 		898053BB22047AD000E47AD9 /* libpath_provider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A622047AAF00E47AD9 /* libpath_provider.a */; };
 		898053BC22047AD000E47AD9 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AA22047AAF00E47AD9 /* libPods-Runner.a */; };
-		898053BD22047AD000E47AD9 /* libshared_preferences.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AC22047AAF00E47AD9 /* libshared_preferences.a */; };
 		898053BE22047AD000E47AD9 /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* libTOCropViewController.a */; };
 		898053BF22047AD000E47AD9 /* libuni_links.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B222047AAF00E47AD9 /* libuni_links.a */; };
 		898053C022047AD000E47AD9 /* liburl_launcher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B422047AAF00E47AD9 /* liburl_launcher.a */; };
@@ -40,6 +40,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		89250949222F0E0900455D87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DABDD36AC592D6B7AA0BB92AEDB0EDC9;
+			remoteInfo = device_info;
+		};
+		8928E31D22356450001DB32A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D787D7B50E4F784696B3E10B9F167868;
+			remoteInfo = FMDB;
+		};
+		8928E31F22356450001DB32A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 603FA97A9EAECDA6694299BF06D80C42;
+			remoteInfo = sqflite;
+		};
 		8980539D22047AAF00E47AD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
@@ -88,13 +109,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3788EAF1A1890565CE077CC270B46AC8;
 			remoteInfo = "Pods-Runner";
-		};
-		898053AB22047AAF00E47AD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B5000E617FBB085D0E142E5F91514B3A;
-			remoteInfo = shared_preferences;
 		};
 		898053AD22047AAF00E47AD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -171,11 +185,11 @@
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		37BDAB2A2170B9A900811BA5 /* development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = development.plist; sourceTree = "<group>"; };
 		37BDAB2B2170B9AA00811BA5 /* production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = production.plist; sourceTree = "<group>"; };
-		3877FF780D9E687181072175 /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		4130CBCE97AB39E4070E45EF /* Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig"; sourceTree = "<group>"; };
 		4E993998490EDCE06AC2B3F0 /* Pods-OneSignalNotificationServiceExtension.debug-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug-production.xcconfig"; sourceTree = "<group>"; };
+		7A4BA49A905C89E90E88FD37 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -192,6 +206,7 @@
 		89ABAE512203425900049DFB /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
 		89ABAE532203425900049DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89DBC2DD2203430700F80685 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		970D6175355421F353EA64C9 /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		9740EEBA1CF902C7004384FC /* Flutter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Flutter.framework; path = Flutter/Flutter.framework; sourceTree = "<group>"; };
@@ -205,7 +220,6 @@
 		AAF4B8238CF43C30122544EF /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; sourceTree = "<group>"; };
 		B23196F4E53E7786037AC8B5 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; sourceTree = "<group>"; };
 		CBD573B1F3D19BD6C5F5624A /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		CE435558BE15546FFD1597E8 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C0DC9AEB28225FDDAABF70 /* Pods-OneSignalNotificationServiceExtension.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.profile.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.profile.xcconfig"; sourceTree = "<group>"; };
 		E73A042BEC81027B2EBB8967 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8925094F222F0E0900455D87 /* libdevice_info.a in Frameworks */,
 				898053C722047B4200E47AD9 /* App.framework in Frameworks */,
 				898053C622047B3B00E47AD9 /* Flutter.framework in Frameworks */,
 				898053C522047AF800E47AD9 /* SystemConfiguration.framework in Frameworks */,
@@ -225,12 +240,11 @@
 				898053BA22047AD000E47AD9 /* libonesignal.a in Frameworks */,
 				898053BB22047AD000E47AD9 /* libpath_provider.a in Frameworks */,
 				898053BC22047AD000E47AD9 /* libPods-Runner.a in Frameworks */,
-				898053BD22047AD000E47AD9 /* libshared_preferences.a in Frameworks */,
 				898053BE22047AD000E47AD9 /* libTOCropViewController.a in Frameworks */,
 				898053BF22047AD000E47AD9 /* libuni_links.a in Frameworks */,
 				898053C022047AD000E47AD9 /* liburl_launcher.a in Frameworks */,
 				898053C122047AD000E47AD9 /* libvideo_player.a in Frameworks */,
-				0F38E44C21592BEBC1BDB23D /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
+				542BD8834B6D6BE2F3E671A0 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +254,7 @@
 			files = (
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
-				75EEFA0D079329EAA30DCE11 /* libPods-Runner.a in Frameworks */,
+				26B90459017411DF809A7507 /* libPods-Runner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,8 +286,8 @@
 				8980538622047A2300E47AD9 /* Runner */,
 				89805384220479C200E47AD9 /* video_player */,
 				898053822204791900E47AD9 /* VideoPlayerPlugin.h */,
-				3877FF780D9E687181072175 /* libPods-Runner.a */,
-				CE435558BE15546FFD1597E8 /* libPods-OneSignalNotificationServiceExtension.a */,
+				7A4BA49A905C89E90E88FD37 /* libPods-OneSignalNotificationServiceExtension.a */,
+				970D6175355421F353EA64C9 /* libPods-Runner.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -288,14 +302,16 @@
 		8980538E22047AAE00E47AD9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				8925094A222F0E0900455D87 /* libdevice_info.a */,
 				8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */,
+				8928E31E22356450001DB32A /* libFMDB.a */,
 				898053A022047AAF00E47AD9 /* libimage_cropper.a */,
 				898053A222047AAF00E47AD9 /* libimage_picker.a */,
 				898053A422047AAF00E47AD9 /* libonesignal.a */,
 				898053A622047AAF00E47AD9 /* libpath_provider.a */,
 				898053A822047AAF00E47AD9 /* libPods-OneSignalNotificationServiceExtension.a */,
 				898053AA22047AAF00E47AD9 /* libPods-Runner.a */,
-				898053AC22047AAF00E47AD9 /* libshared_preferences.a */,
+				8928E32022356450001DB32A /* libsqflite.a */,
 				898053AE22047AAF00E47AD9 /* libTOCropViewController.a */,
 				898053B022047AAF00E47AD9 /* TOCropViewControllerBundle.bundle */,
 				898053B222047AAF00E47AD9 /* libuni_links.a */,
@@ -410,8 +426,8 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				25CDB21DD2B3224AD5F9C831 /* [CP] Embed Pods Frameworks */,
-				67BE4474A8A664BFE7B88062 /* [CP] Copy Pods Resources */,
 				89ABAE5F2203425900049DFB /* Embed App Extensions */,
+				0EF651270ED3A0C9B30B399A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -493,6 +509,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		8925094A222F0E0900455D87 /* libdevice_info.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libdevice_info.a;
+			remoteRef = 89250949222F0E0900455D87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8928E31E22356450001DB32A /* libFMDB.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libFMDB.a;
+			remoteRef = 8928E31D22356450001DB32A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8928E32022356450001DB32A /* libsqflite.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsqflite.a;
+			remoteRef = 8928E31F22356450001DB32A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -540,13 +577,6 @@
 			fileType = archive.ar;
 			path = "libPods-Runner.a";
 			remoteRef = 898053A922047AAF00E47AD9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		898053AC22047AAF00E47AD9 /* libshared_preferences.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libshared_preferences.a;
-			remoteRef = 898053AB22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		898053AE22047AAF00E47AD9 /* libTOCropViewController.a */ = {
@@ -608,6 +638,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0EF651270ED3A0C9B30B399A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		25CDB21DD2B3224AD5F9C831 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -656,24 +708,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		67BE4474A8A664BFE7B88062 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8614A00078062C58F9149142 /* [CP] Check Pods Manifest.lock */ = {

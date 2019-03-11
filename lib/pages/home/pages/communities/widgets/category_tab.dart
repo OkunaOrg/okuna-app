@@ -3,7 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/tabs/image_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBCategoryTab extends StatelessWidget {
   final Category category;
