@@ -25,7 +25,6 @@ class OBUserBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
 
     if (badge == null) return const SizedBox();
 

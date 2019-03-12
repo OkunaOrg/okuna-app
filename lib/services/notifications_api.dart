@@ -1,6 +1,5 @@
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/string_template.dart';
-import 'package:meta/meta.dart';
 
 class NotificationsApiService {
   HttpieService _httpService;

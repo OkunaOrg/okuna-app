@@ -8,7 +8,6 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
@@ -337,7 +336,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
 
   @override
   Widget buildChild(LoadMoreStatus status,
-      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.english}) {
+      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.chinese}){
     String text = builder(status);
 
     if (status == LoadMoreStatus.fail) {

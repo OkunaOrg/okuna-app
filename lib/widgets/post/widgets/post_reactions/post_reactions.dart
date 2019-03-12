@@ -26,12 +26,10 @@ class OBPostReactionsState extends State<OBPostReactions> {
   ToastService _toastService;
   NavigationService _navigationService;
 
-  bool _requestInProgress;
 
   @override
   void initState() {
     super.initState();
-    _requestInProgress = false;
   }
 
   @override
@@ -102,30 +100,23 @@ class OBPostReactionsState extends State<OBPostReactions> {
   }
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
-    _setRequestInProgress(true);
-
     PostReaction postReaction;
     try {
       postReaction =
           await _userService.reactToPost(post: widget.post, emoji: emoji);
     } catch (error) {
       _onError(error);
-    } finally {
-      _setRequestInProgress(false);
     }
 
     return postReaction;
   }
 
   Future<void> _deleteReaction() async {
-    _setRequestInProgress(true);
     try {
       await _userService.deletePostReaction(
           postReaction: widget.post.reaction, post: widget.post);
     } catch (error) {
       _onError(error);
-    } finally {
-      _setRequestInProgress(false);
     }
   }
 
@@ -140,11 +131,5 @@ class OBPostReactionsState extends State<OBPostReactions> {
       _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
-  }
-
-  void _setRequestInProgress(bool requestInProgress) {
-    setState(() {
-      _requestInProgress = requestInProgress;
-    });
   }
 }
