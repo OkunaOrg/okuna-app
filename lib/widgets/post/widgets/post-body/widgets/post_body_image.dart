@@ -28,6 +28,9 @@ class OBPostBodyImage extends StatelessWidget {
         width: screenWidth,
         height: screenWidth / aspectRatio,
         child: TransitionToImage(
+          width: screenWidth,
+          height: screenWidth / aspectRatio,
+          fit: BoxFit.none,
           image: AdvancedNetworkImage(imageUrl,
               useDiskCache: true,
               fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
