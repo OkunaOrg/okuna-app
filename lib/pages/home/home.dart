@@ -374,12 +374,6 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     });
   }
 
-  void _setCurrentIndex(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
   OBHomePageTabs _getCurrentTab() {
     return OBHomePageTabs.values[_lastIndex];
   }

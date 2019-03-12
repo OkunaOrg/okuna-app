@@ -7,7 +7,6 @@ import 'package:Openbook/services/user.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:io';
 
-
 class CreateAccountBloc {
   LocalizationService _localizationService;
   AuthApiService _authApiService;
@@ -53,6 +52,7 @@ class CreateAccountBloc {
     _emailSubject.close();
     _passwordSubject.close();
     _avatarSubject.close();
+    _usernameSubject.close();
     registrationTokenSubject.close();
   }
 
@@ -125,6 +125,7 @@ class CreateAccountBloc {
   void clearUsername() {
     userRegistrationData.username = null;
   }
+
   // Username ends
 
   // Email begins
@@ -246,7 +247,8 @@ class CreateAccountBloc {
           avatar: userRegistrationData.avatar);
       if (response.isCreated()) {
         accountWasCreated = true;
-        Map<String, dynamic> responseData = jsonDecode(await response.readAsString());
+        Map<String, dynamic> responseData =
+            jsonDecode(await response.readAsString());
         setUsername(responseData['username']);
         _userService.loginWithAuthToken(responseData['token']);
       } else if (response.isBadRequest()) {

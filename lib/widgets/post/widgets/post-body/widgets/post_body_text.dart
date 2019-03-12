@@ -1,6 +1,4 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:flutter/material.dart';
 

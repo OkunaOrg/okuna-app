@@ -1,28 +1,10 @@
-import 'dart:io';
-
-import 'package:Openbook/models/category.dart';
-import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user_notifications_settings.dart';
-import 'package:Openbook/services/bottom_sheet.dart';
-import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/avatars/letter_avatar.dart';
-import 'package:Openbook/widgets/cover.dart';
-import 'package:Openbook/widgets/fields/categories_field.dart';
-import 'package:Openbook/widgets/fields/color_field.dart';
-import 'package:Openbook/widgets/fields/community_type_field.dart';
 import 'package:Openbook/widgets/fields/toggle_field.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/colored_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
@@ -30,7 +12,6 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBNotificationsSettingsPage extends StatefulWidget {
   @override

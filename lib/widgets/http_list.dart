@@ -393,7 +393,7 @@ class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {
 
   @override
   Widget buildChild(LoadMoreStatus status,
-      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.english}) {
+      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.chinese}){
     if (status == LoadMoreStatus.fail) {
       return SizedBox(
         child: Row(

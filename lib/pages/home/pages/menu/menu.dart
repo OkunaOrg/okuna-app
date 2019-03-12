@@ -8,7 +8,6 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intercom_flutter/intercom_flutter.dart';
 
 class OBMainMenuPage extends StatelessWidget {
   final OBMainMenuPageController controller;

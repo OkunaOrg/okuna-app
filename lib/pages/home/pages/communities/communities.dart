@@ -59,9 +59,6 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
   bool _refreshInProgress;
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
-
   @override
   void initState() {
     super.initState();
