@@ -3,6 +3,29 @@ import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 
 class OBText extends StatelessWidget {
+  static double getTextSize(OBTextSize size) {
+    double fontSize;
+
+    switch (size) {
+      case OBTextSize.extraSmall:
+        fontSize = 10;
+        break;
+      case OBTextSize.small:
+        fontSize = 12;
+        break;
+      case OBTextSize.medium:
+        fontSize = 16;
+        break;
+      case OBTextSize.large:
+        fontSize = 18;
+        break;
+      case OBTextSize.extraLarge:
+        fontSize = 30;
+    }
+
+    return fontSize;
+  }
+
   final String text;
   final TextStyle style;
   final TextAlign textAlign;
@@ -23,24 +46,7 @@ class OBText extends StatelessWidget {
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
 
-    double fontSize;
-
-    switch (size) {
-      case OBTextSize.extraSmall:
-        fontSize = 10;
-        break;
-      case OBTextSize.small:
-        fontSize = 12;
-        break;
-      case OBTextSize.medium:
-        fontSize = 16;
-        break;
-      case OBTextSize.large:
-        fontSize = 18;
-        break;
-      case OBTextSize.extraLarge:
-        fontSize = 30;
-    }
+    double fontSize = getTextSize(size);
 
     return StreamBuilder(
         stream: themeService.themeChange,

@@ -119,7 +119,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   void _onWantsToSubmitPost() async {
     Post sharedPost = await _navigationService.navigateToSharePost(
         context: context,
-        createPostData:
+        sharePostData:
             SharePostData(text: _textController.text, image: _postImage));
 
     if (sharedPost != null) {
@@ -218,17 +218,6 @@ class CreatePostModalState extends State<CreatePostModal> {
           if (pickedPhoto != null) _setPostImage(pickedPhoto);
         },
       ),
-      OBPillButton(
-        text: 'Video',
-        color: Pigment.fromString('#00B7FF'),
-        icon: const OBIcon(OBIcons.video),
-        onPressed: () async {
-          _unfocusTextField();
-          File pickedVideo =
-              await _bottomSheetService.showVideoPicker(context: context);
-          if (pickedVideo != null) _setPostVideo(pickedVideo);
-        },
-      )
     ];
   }
 
@@ -318,4 +307,3 @@ class CreatePostModalState extends State<CreatePostModal> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
-

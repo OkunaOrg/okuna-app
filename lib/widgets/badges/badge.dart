@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBBadge extends StatelessWidget {
-  static final double size = 19;
   final int count;
+  final double size;
 
-  const OBBadge({Key key, this.count}) : super(key: key);
+  const OBBadge({Key key, this.count, this.size=19}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +31,13 @@ class OBBadge extends StatelessWidget {
                 gradient: primaryAccentColor,
                 borderRadius: BorderRadius.circular(50)),
             child: Center(
-              child: Text(
+              child: count != null ? Text(
                 count.toString(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: count < 10 ? 12 : 10,
                     fontWeight: FontWeight.bold),
-              ),
+              ) : const SizedBox()
             ),
           );
         });

@@ -40,8 +40,9 @@ class OBDenyConnectionButtonState extends State<OBDenyConnectionButton> {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
 
-        if (user?.isPendingConnectionConfirmation == null || !user.isConnected || !user.isPendingConnectionConfirmation)
-          return const SizedBox();
+        if (user?.isPendingConnectionConfirmation == null ||
+            !user.isConnected ||
+            !user.isPendingConnectionConfirmation) return const SizedBox();
 
         return _buildDenyConnectionButton();
       },
@@ -68,12 +69,23 @@ class OBDenyConnectionButtonState extends State<OBDenyConnectionButton> {
       widget.user.decrementFollowersCount();
       _toastService.success(
           message: 'Disconnected successfully', context: context);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error', context: context);
+    } catch (error) {
+      _onError(error);
     } finally {
       _setRequestInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 

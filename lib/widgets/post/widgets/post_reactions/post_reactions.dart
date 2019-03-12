@@ -26,12 +26,10 @@ class OBPostReactionsState extends State<OBPostReactions> {
   ToastService _toastService;
   NavigationService _navigationService;
 
-  bool _requestInProgress;
 
   @override
   void initState() {
     super.initState();
-    _requestInProgress = false;
   }
 
   @override
@@ -61,28 +59,27 @@ class OBPostReactionsState extends State<OBPostReactions> {
 
           return SizedBox(
             height: 35,
-            child: ListView(
-                physics: const ClampingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: emojiCounts.map((emojiCount) {
-                  return OBEmojiReactionCount(
-                    emojiCount,
-                    reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                    onPressed: _requestInProgress
-                        ? null
-                        : (pressedEmojiCount) {
-                            _onEmojiReactionCountPressed(
-                                pressedEmojiCount, emojiCounts);
-                          },
-                    onLongPressed: (pressedEmojiCount) {
-                      _navigationService.navigateToPostReactions(
-                          post: widget.post,
-                          reactionsEmojiCounts: emojiCounts,
-                          context: context,
-                          reactionEmoji: pressedEmojiCount.emoji);
-                    },
-                  );
-                }).toList()),
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              physics: const ClampingScrollPhysics(),
+              itemCount: emojiCounts.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                PostReactionsEmojiCount emojiCount = emojiCounts[index];
+
+                return OBEmojiReactionCount(
+                  emojiCount,
+                  reacted: widget.post.isReactionEmoji(emojiCount.emoji),
+                  onLongPressed: (pressedEmojiCount) {
+                    _navigationService.navigateToPostReactions(
+                        post: widget.post,
+                        reactionsEmojiCounts: emojiCounts,
+                        context: context,
+                        reactionEmoji: pressedEmojiCount.emoji);
+                  },
+                );
+              },
+            ),
           );
         });
   }
@@ -103,42 +100,36 @@ class OBPostReactionsState extends State<OBPostReactions> {
   }
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
-    _setRequestInProgress(true);
-
     PostReaction postReaction;
     try {
       postReaction =
           await _userService.reactToPost(post: widget.post, emoji: emoji);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
-    } finally {
-      _setRequestInProgress(false);
+    } catch (error) {
+      _onError(error);
     }
 
     return postReaction;
   }
 
   Future<void> _deleteReaction() async {
-    _setRequestInProgress(true);
     try {
       await _userService.deletePostReaction(
           postReaction: widget.post.reaction, post: widget.post);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
-    } finally {
-      _setRequestInProgress(false);
+    } catch (error) {
+      _onError(error);
     }
   }
 
-  void _setRequestInProgress(bool requestInProgress) {
-    setState(() {
-      _requestInProgress = requestInProgress;
-    });
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
   }
 }

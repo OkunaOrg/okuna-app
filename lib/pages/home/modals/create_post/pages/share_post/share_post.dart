@@ -1,18 +1,16 @@
 import 'dart:io';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/circles_list.dart';
+
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/home/modals/create_post/pages/share_post/widgets/post_audience_search_results.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/search_bar.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBSharePostPage extends StatefulWidget {
@@ -22,244 +20,122 @@ class OBSharePostPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
+  OBSharePostPageState createState() {
     return OBSharePostPageState();
   }
 }
 
 class OBSharePostPageState extends State<OBSharePostPage> {
-  UserService _userService;
-  ToastService _toastService;
-  bool _isCreatePostInProgress;
-
+  bool _loggedInUserRefreshInProgress;
   bool _needsBootstrap;
-
-  List<Circle> _circles;
-  List<Circle> _circleSearchResults;
-  List<Circle> _selectedCircles;
-  List<Circle> _disabledCircles;
-  Circle _fakeWorldCircle =
-      Circle(id: 1, name: 'Earth', color: '#023ca7', usersCount: 7700000000);
-  bool _fakeWorldCircleSelected;
-
-  String _circleSearchQuery;
+  UserService _userService;
+  NavigationService _navigationService;
 
   @override
   void initState() {
     super.initState();
-    _fakeWorldCircleSelected = false;
-    _isCreatePostInProgress = false;
-    _circles = [];
-    _circleSearchResults = _circles.toList();
-    _selectedCircles = [];
-    _circleSearchQuery = '';
-    _disabledCircles = [];
     _needsBootstrap = true;
+    _loggedInUserRefreshInProgress = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _toastService = openbookProvider.toastService;
-    _userService = openbookProvider.userService;
-
     if (_needsBootstrap) {
+      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+      _userService = openbookProvider.userService;
+      _navigationService = openbookProvider.navigationService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
+    User loggedInUser = _userService.getLoggedInUser();
+
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
-          child: _buildAvailableAudience(),
-        ));
-  }
+          child: StreamBuilder(
+            stream: loggedInUser.updateSubject,
+            builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+              User latestUser = snapshot.data;
+              if (latestUser == null) return const SizedBox();
 
-  Widget _buildAvailableAudience() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        OBSearchBar(
-          onSearch: _onSearch,
-          hintText: 'Search circles...',
-        ),
-        Expanded(
-            child: OBPostAudienceSearchResults(
-          _circleSearchResults,
-          _circleSearchQuery,
-          selectedCircles: _selectedCircles,
-          disabledCircles: _disabledCircles,
-          onCirclePressed: _onCirclePressed,
-        ))
-      ],
-    );
+              if (_loggedInUserRefreshInProgress)
+                return const Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: const OBProgressIndicator(),
+                  ),
+                );
+
+              const TextStyle shareToTilesSubtitleStyle =
+                  TextStyle(fontSize: 14);
+
+              List<Widget> shareToTiles = [
+                ListTile(
+                  leading: const OBIcon(OBIcons.circles),
+                  title: const OBText('My circles'),
+                  subtitle: const OBText(
+                    'Share the post to one or multiple of your circles.',
+                    style: shareToTilesSubtitleStyle,
+                  ),
+                  onTap: _onWantsToSharePostToCircles,
+                )
+              ];
+
+              if (latestUser.isMemberOfCommunities) {
+                shareToTiles.add(ListTile(
+                  leading: const OBIcon(OBIcons.communities),
+                  title: const OBText('A community'),
+                  subtitle: const OBText(
+                    'Share the post to a community you\'re part of.',
+                    style: shareToTilesSubtitleStyle,
+                  ),
+                  onTap: _onWantsToSharePostToCommunity,
+                ));
+              }
+
+              return Column(
+                children: <Widget>[
+                  Expanded(
+                      child: ListView(
+                          physics: const ClampingScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          children: shareToTiles)),
+                ],
+              );
+            },
+          ),
+        ));
   }
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Audience',
-      trailing: OBButton(
-        size: OBButtonSize.small,
-        type: OBButtonType.primary,
-        isLoading: _isCreatePostInProgress,
-        isDisabled: _selectedCircles.length == 0 && !_fakeWorldCircleSelected,
-        onPressed: createPost,
-        child: Text('Share'),
-      ),
+      title: 'Share to',
     );
   }
 
-  Future<void> createPost() async {
-    _setCreatePostInProgress(true);
+  void _bootstrap() {
+    _refreshLoggedInUser();
+  }
 
-    Post createdPost;
-
-    List<Circle> selectedCircles = _fakeWorldCircleSelected ? [] : _selectedCircles;
-
-    try {
-      if (widget.sharePostData.image != null) {
-        createdPost = await _userService.createPost(
-            text: widget.sharePostData.text,
-            image: widget.sharePostData.image,
-            circles: selectedCircles);
-      } else if (widget.sharePostData.video != null) {
-        createdPost = await _userService.createPost(
-            text: widget.sharePostData.text,
-            video: widget.sharePostData.video,
-            circles: selectedCircles);
-      } else if (widget.sharePostData.text != null) {
-        createdPost = await _userService.createPost(
-            text: widget.sharePostData.text, circles: selectedCircles);
-      }
-      // Remove modal
-      Navigator.pop(context, createdPost);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: context);
-      _setCreatePostInProgress(false);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error.', context: context);
-      rethrow;
-    } finally {
-      _setCreatePostInProgress(false);
+  Future<void> _refreshLoggedInUser() async {
+    User refreshedUser = await _userService.refreshUser();
+    if (!refreshedUser.isMemberOfCommunities) {
+      // Only possibility
+      _onWantsToSharePostToCircles();
     }
   }
 
-  void _setCreatePostInProgress(bool createPostInProgress) {
-    setState(() {
-      _isCreatePostInProgress = createPostInProgress;
-    });
+  void _onWantsToSharePostToCircles() async {
+    Post sharedPost = await _navigationService.navigateToSharePostWithCircles(
+        context: context, sharePostData: widget.sharePostData);
+    if (sharedPost != null) Navigator.pop(context, sharedPost);
   }
 
-  void _onCirclePressed(Circle pressedCircle) {
-    if (_selectedCircles.contains(pressedCircle)) {
-      // Remove
-      if (pressedCircle == _fakeWorldCircle) {
-        // Enable all other circles
-        _setDisabledCircles([]);
-        _setSelectedCircles([]);
-        _setFakeWorlCircleSelected(false);
-      } else {
-        _removeSelectedCircle(pressedCircle);
-      }
-    } else {
-      // Add
-      if (pressedCircle == _fakeWorldCircle) {
-        // Add all circles
-        _setSelectedCircles(_circles.toList());
-        var disabledCircles = _circles.toList();
-        disabledCircles.remove(_fakeWorldCircle);
-        _setDisabledCircles(disabledCircles);
-        _setFakeWorlCircleSelected(true);
-      } else {
-        _addSelectedCircle(pressedCircle);
-      }
-    }
-  }
-
-  void _onSearch(String searchString) {
-    if (searchString.length == 0) {
-      _resetCircleSearchResults();
-      return;
-    }
-
-    String standarisedSearchStr = searchString.toLowerCase();
-
-    List<Circle> results = _circles.where((Circle circle) {
-      return circle.name.toLowerCase().contains(standarisedSearchStr);
-    }).toList();
-
-    _setCircleSearchResults(results);
-    _setCircleSearchQuery(searchString);
-  }
-
-  void _bootstrap() async {
-    CirclesList circleList = await _userService.getConnectionsCircles();
-    this._setCircles(circleList.circles);
-  }
-
-  void _resetCircleSearchResults() {
-    setState(() {
-      _circleSearchResults = _circles.toList();
-    });
-  }
-
-  void _setCircles(List<Circle> circles) {
-    var user = _userService.getLoggedInUser();
-    setState(() {
-      _circles = circles;
-      // Move connections circle to top
-      var _connectionsCircle = _circles
-          .firstWhere((circle) => circle.id == user.connectionsCircleId);
-      _circles.remove(_connectionsCircle);
-      _circles.insert(0, _connectionsCircle);
-      // Add fake world circle
-      _circles.insert(0, _fakeWorldCircle);
-      _selectedCircles = [];
-      _circleSearchResults = circles.toList();
-    });
-  }
-
-  void _setDisabledCircles(List<Circle> disabledCircles) {
-    setState(() {
-      _disabledCircles = disabledCircles;
-    });
-  }
-
-  void _setSelectedCircles(List<Circle> selectedCircles) {
-    setState(() {
-      _selectedCircles = selectedCircles;
-    });
-  }
-
-  void _addSelectedCircle(Circle circle) {
-    setState(() {
-      _selectedCircles.add(circle);
-    });
-  }
-
-  void _removeSelectedCircle(Circle circle) {
-    setState(() {
-      _selectedCircles.remove(circle);
-    });
-  }
-
-  void _setCircleSearchResults(List<Circle> circleSearchResults) {
-    setState(() {
-      _circleSearchResults = circleSearchResults;
-    });
-  }
-
-  void _setCircleSearchQuery(String searchQuery) {
-    setState(() {
-      _circleSearchQuery = searchQuery;
-    });
-  }
-
-  void _setFakeWorlCircleSelected(bool fakeWorldCircleSelected) {
-    setState(() {
-      _fakeWorldCircleSelected = fakeWorldCircleSelected;
-    });
+  void _onWantsToSharePostToCommunity() async {
+    Post sharedPost = await _navigationService.navigateToSharePostWithCommunity(
+        context: context, sharePostData: widget.sharePostData);
+    if (sharedPost != null) Navigator.pop(context, sharedPost);
   }
 }
 

@@ -198,34 +198,6 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
         OBUserSearchResultsTab.values[_tabController.previousIndex];
     widget.onTabSelectionChanged(newSelection);
   }
-
-  Widget _buildNoResults() {
-    String searchQuery = '';
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 200),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.sentiment_dissatisfied,
-                size: 30.0, color: Colors.black26),
-            const SizedBox(
-              height: 20.0,
-            ),
-            OBText(
-              'No user found matching \'$searchQuery\'.',
-              style: TextStyle(
-                color: Colors.black26,
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-              ),
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 enum OBUserSearchResultsTab { communities, users }

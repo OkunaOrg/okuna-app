@@ -7,7 +7,6 @@ import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -243,7 +242,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
 
         if (latestCommunity == null) return const SizedBox();
 
-        User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isFavorite
             ? _buildCommunityListItem(community)
             : const SizedBox();

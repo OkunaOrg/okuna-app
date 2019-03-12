@@ -14,12 +14,15 @@ class AuthApiService {
   static const VERIFY_EMAIL_TOKEN = 'api/auth/email/verify/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
+  static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
   static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const UPDATE_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const GET_USERS_PATH = 'api/auth/users/';
   static const GET_LINKED_USERS_PATH = 'api/auth/linked-users/';
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const LOGIN_PATH = 'api/auth/login/';
+  static const AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH =
+      'api/auth/user/notifications-settings/';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
@@ -27,6 +30,12 @@ class AuthApiService {
 
   void setApiURL(String newApiURL) {
     apiURL = newApiURL;
+  }
+
+  Future<HttpieResponse> deleteUser({@required String password}) {
+    Map<String, dynamic> body = {'password': password};
+    return _httpService.post('$apiURL$DELETE_ACCOUNT_PATH',
+        body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> checkUsernameIsAvailable({@required String username}) {
@@ -180,5 +189,46 @@ class AuthApiService {
       {@required String username, @required String password}) {
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
+  }
+
+  Future<HttpieResponse> getAuthenticatedUserNotificationsSettings() {
+    return this._httpService.get(
+        '$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> updateAuthenticatedUserNotificationsSettings({
+    bool postCommentNotifications,
+    bool postReactionNotifications,
+    bool followNotifications,
+    bool connectionRequestNotifications,
+    bool connectionConfirmedNotifications,
+    bool communityInviteNotifications,
+  }) {
+    Map<String, dynamic> body = {};
+
+    if (postCommentNotifications != null)
+      body['post_comment_notifications'] = postCommentNotifications;
+
+    if (postReactionNotifications != null)
+      body['post_reaction_notifications'] = postReactionNotifications;
+
+    if (followNotifications != null)
+      body['follow_notifications'] = followNotifications;
+
+    if (connectionRequestNotifications != null)
+      body['connection_request_notifications'] = connectionRequestNotifications;
+
+    if (communityInviteNotifications != null)
+      body['community_invite_notifications'] = communityInviteNotifications;
+
+    if (connectionConfirmedNotifications != null)
+      body['connection_confirmed_notifications'] =
+          connectionConfirmedNotifications;
+
+    return _httpService.patchJSON(
+        '$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
+        body: body,
+        appendAuthorizationToken: true);
   }
 }

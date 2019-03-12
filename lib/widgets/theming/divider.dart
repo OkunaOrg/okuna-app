@@ -24,8 +24,9 @@ class OBDivider extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
-                    color: themeValueParserService.parseColor(theme.primaryTextColor),
-                    width: 1,
+                    color: themeValueParserService
+                        .parseColor(theme.primaryTextColor),
+                    width: 0.5,
                   )),
                 ),
               ),

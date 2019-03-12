@@ -27,7 +27,6 @@ class OBCategoriesPicker extends StatefulWidget {
 class OBCategoriesPickerState extends State<OBCategoriesPicker> {
   UserService _userService;
 
-  bool _requestInProgress;
   bool _needsBootstrap;
 
   List<Category> _categories;
@@ -36,7 +35,6 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
   @override
   void initState() {
     super.initState();
-    _requestInProgress = false;
     _categories = [];
     _pickedCategories = widget.initialCategories == null
         ? []
@@ -101,16 +99,8 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
     });
   }
 
-  void _setRequestInProgress(bool requestInProgress) {
-    setState(() {
-      _requestInProgress = requestInProgress;
-    });
-  }
-
   void _bootstrap() async {
-    _setRequestInProgress(true);
     CategoriesList categoriesList = await _userService.getCategories();
     _setCategories(categoriesList.categories);
-    _setRequestInProgress(false);
   }
 }

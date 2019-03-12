@@ -39,10 +39,12 @@ class OBEmojiSearchResults extends StatelessWidget {
                 constraints: BoxConstraints(maxHeight: 25),
                 child: CachedNetworkImage(
                   imageUrl: emoji.image,
-                  placeholder: SizedBox(),
-                  errorWidget: const SizedBox(
-                    child: Center(child: const OBText('?')),
-                  ),
+                  errorWidget:
+                      (BuildContext context, String url, Object error) {
+                    return const SizedBox(
+                      child: Center(child: const OBText('?')),
+                    );
+                  },
                 ),
               ),
               title: OBText(emoji.keyword),

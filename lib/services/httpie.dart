@@ -397,12 +397,20 @@ abstract class HttpieBaseResponse<T extends http.BaseResponse> {
     return _httpResponse.statusCode == HttpStatus.unauthorized;
   }
 
+  bool isForbidden() {
+    return _httpResponse.statusCode == HttpStatus.forbidden;
+  }
+
   bool isAccepted() {
     return _httpResponse.statusCode == HttpStatus.accepted;
   }
 
   bool isCreated() {
     return _httpResponse.statusCode == HttpStatus.created;
+  }
+
+  bool isNotFound() {
+    return _httpResponse.statusCode == HttpStatus.notFound;
   }
 
   int get statusCode => _httpResponse.statusCode;
@@ -438,6 +446,29 @@ class HttpieStreamedResponse extends HttpieBaseResponse<http.StreamedResponse> {
 }
 
 class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
+  static String convertStatusCodeToHumanReadableMessage(int statusCode) {
+    String readableMessage;
+
+    if (statusCode == HttpStatus.notFound) {
+      readableMessage = 'Not found';
+    } else if (statusCode == HttpStatus.forbidden) {
+      readableMessage = 'You are not allowed to do this';
+    } else if (statusCode == HttpStatus.badRequest) {
+      readableMessage = 'Bad request';
+    } else if (statusCode == HttpStatus.internalServerError) {
+      readableMessage =
+          'We\'re experiencing server errors. Please try again later.';
+    } else if (statusCode == HttpStatus.serviceUnavailable ||
+        statusCode == HttpStatus.serviceUnavailable) {
+      readableMessage =
+          'We\'re experiencing server errors. Please try again later.';
+    } else {
+      readableMessage = 'Server error';
+    }
+
+    return readableMessage;
+  }
+
   final T response;
 
   const HttpieRequestError(this.response);
@@ -467,6 +498,25 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
     }
     return body;
   }
+
+  Future<String> toHumanReadableMessage() async {
+    String errorBody = await body();
+
+    try {
+      dynamic parsedError = json.decode(errorBody);
+      if (parsedError is Map) {
+        if (parsedError.containsKey('detail')) {
+          return parsedError['detail'];
+        } else {
+          return convertStatusCodeToHumanReadableMessage(response.statusCode);
+        }
+      } else if (parsedError is List && parsedError.isNotEmpty) {
+        return parsedError.first;
+      }
+    } catch (error) {
+      return convertStatusCodeToHumanReadableMessage(response.statusCode);
+    }
+  }
 }
 
 class HttpieConnectionRefusedError implements Exception {
@@ -478,6 +528,10 @@ class HttpieConnectionRefusedError implements Exception {
     String address = socketException.address.toString();
     String port = socketException.port.toString();
     return 'HttpieConnectionRefusedError: Connection refused on $address and port $port';
+  }
+
+  String toHumanReadableMessage() {
+    return 'No internet connection.';
   }
 }
 

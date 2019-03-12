@@ -11,8 +11,7 @@ class OBEmojiPreview extends StatelessWidget {
   static double emojiSizeSmall = 15;
   static double emojiSizeExtraSmall = 10;
 
-  OBEmojiPreview(this.emoji,
-      {this.size = OBEmojiPreviewSize.medium});
+  OBEmojiPreview(this.emoji, {this.size = OBEmojiPreviewSize.medium});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,12 @@ class OBEmojiPreview extends StatelessWidget {
       height: emojiSize,
       width: emojiSize,
       imageUrl: emoji.image,
-      placeholder: CircularProgressIndicator(),
-      errorWidget: const OBIcon(OBIcons.error),
+      placeholder: (BuildContext context, String url) {
+        return const CircularProgressIndicator();
+      },
+      errorWidget: (BuildContext context, String url, Object error) {
+        return const OBIcon(OBIcons.error);
+      },
     );
   }
 

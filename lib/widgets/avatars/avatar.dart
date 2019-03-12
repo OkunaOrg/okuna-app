@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 enum OBAvatarSize { extraSmall, small, medium, large, extraLarge }
 
@@ -18,7 +18,7 @@ class OBAvatar extends StatelessWidget {
   static const double AVATAR_SIZE_MEDIUM = 40.0;
   static const double AVATAR_SIZE_LARGE = 80.0;
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
-  static const String DEFAULT_AVATAR_ASSET = 'assets/images/avatar.jpg';
+  static const String DEFAULT_AVATAR_ASSET = 'assets/images/fallbacks/avatar-fallback.jpg';
   static const double avatarBorderRadius = 10.0;
 
   static double getAvatarSize(OBAvatarSize size) {
@@ -72,7 +72,7 @@ class OBAvatar extends StatelessWidget {
           height: avatarSize,
           width: avatarSize,
           fit: BoxFit.cover,
-          image: AdvancedNetworkImage(avatarUrl, useDiskCache: true));
+          image: AdvancedNetworkImage(avatarUrl, useDiskCache: true, fallbackAssetImage: DEFAULT_AVATAR_ASSET, retryLimit: 0));
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }

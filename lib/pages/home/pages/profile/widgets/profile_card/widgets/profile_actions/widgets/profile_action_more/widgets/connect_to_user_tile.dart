@@ -1,7 +1,5 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -16,11 +14,8 @@ class OBConnectToUserTile extends StatefulWidget {
   final BuildContext parentContext;
   final VoidCallback onWillShowModalBottomSheet;
 
-  const OBConnectToUserTile(
-      this.user,
-      this.parentContext,
-      {Key key,
-      this.onWillShowModalBottomSheet})
+  const OBConnectToUserTile(this.user, this.parentContext,
+      {Key key, this.onWillShowModalBottomSheet})
       : super(key: key);
 
   @override
@@ -57,7 +52,7 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
         context: context,
         title: 'Add connection to circle',
         actionLabel: 'Done',
-        onPickedCircles:_onWantsToAddConnectionToCircles);
+        onPickedCircles: _onWantsToAddConnectionToCircles);
   }
 
   Future _onWantsToAddConnectionToCircles(List<Circle> circles) async {
@@ -74,11 +69,21 @@ class OBConnectToUserTileState extends State<OBConnectToUserTile> {
       }
       _toastService.success(
           message: 'Connection request sent', context: widget.parentContext);
-    } on HttpieConnectionRefusedError {
-      _toastService.error(message: 'No internet connection', context: widget.parentContext);
-    } catch (e) {
-      _toastService.error(message: 'Unknown error', context: widget.parentContext);
-      rethrow;
+    } catch (error) {
+      _onError(error);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 }

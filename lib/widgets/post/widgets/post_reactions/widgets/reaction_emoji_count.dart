@@ -1,7 +1,7 @@
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBEmojiReactionCount extends StatelessWidget {
   final PostReactionsEmojiCount postReactionsEmojiCount;
@@ -16,19 +16,18 @@ class OBEmojiReactionCount extends StatelessWidget {
   Widget build(BuildContext context) {
     var emoji = postReactionsEmojiCount.emoji;
 
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: 100,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          if (onPressed != null) onPressed(postReactionsEmojiCount);
-        },
-        onLongPress: () {
-          if (onLongPressed != null) onLongPressed(postReactionsEmojiCount);
-        },
+    return GestureDetector(
+      onTap: () {
+        if (onPressed != null) onPressed(postReactionsEmojiCount);
+      },
+      onLongPress: () {
+        if (onLongPressed != null) onLongPressed(postReactionsEmojiCount);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Image(
               height: 18.0,

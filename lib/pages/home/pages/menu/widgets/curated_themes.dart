@@ -1,5 +1,5 @@
 import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/widgets/theme_preview.dart';
+import 'package:Openbook/pages/home/pages/menu/widgets/theme_preview.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
