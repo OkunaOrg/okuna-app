@@ -1200,8 +1200,8 @@ class UserService {
   }
 
   void _setLoggedInUser(User user) {
+    if (_loggedInUser == null || _loggedInUser.id != user.id) _loggedInUserChangeSubject.add(user);
     _loggedInUser = user;
-    _loggedInUserChangeSubject.add(user);
   }
 
   void _removeLoggedInUser() {
