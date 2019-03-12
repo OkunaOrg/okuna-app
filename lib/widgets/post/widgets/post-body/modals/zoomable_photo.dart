@@ -2,6 +2,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pigment/pigment.dart';
 
@@ -36,7 +37,11 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
             child: PhotoView(
               enableRotation: false,
               scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
-              imageProvider: CachedNetworkImageProvider(widget.imageUrl),
+              imageProvider: AdvancedNetworkImage(widget.imageUrl,
+                  retryLimit: 0,
+                  useDiskCache: true,
+                  fallbackAssetImage:
+                      'assets/images/fallbacks/post-fallback.png'),
               maxScale: PhotoViewComputedScale.covered,
               minScale: PhotoViewComputedScale.contained,
             ),
