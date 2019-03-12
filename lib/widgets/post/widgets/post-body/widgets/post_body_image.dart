@@ -29,6 +29,9 @@ class OBPostBodyImage extends StatelessWidget {
         height: screenWidth / aspectRatio,
         child: TransitionToImage(
           image: AdvancedNetworkImage(imageUrl,
+              useDiskCache: true,
+              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+              retryLimit: 0,
               timeoutDuration: const Duration(minutes: 1)),
           // This is the default placeholder widget at loading status,
           // you can write your own widget with CustomPainter.
