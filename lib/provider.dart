@@ -7,6 +7,7 @@ import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/devices_api.dart';
+import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
@@ -85,6 +86,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   PushNotificationsService pushNotificationsService =
       PushNotificationsService();
   UrlLauncherService urlLauncherService = UrlLauncherService();
+  IntercomService intercomService = IntercomService();
 
   @override
   void initState() {
@@ -131,6 +133,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
     pushNotificationsService.setUserService(userService);
+    intercomService.setUserService(userService);
   }
 
   void initAsyncState() async {
@@ -149,6 +152,10 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
+    intercomService.bootstrap(
+        iosApiKey: environment.intercomIosKey,
+        androidApiKey: environment.intercomAndroidKey,
+        appId: environment.intercomAppId);
   }
 
   @override
