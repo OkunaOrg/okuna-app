@@ -131,9 +131,6 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     String whatPasswordText =
         localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
 
-    String minCharsText =
-    localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD_SUBTEXT');
-
     return Column(
       children: <Widget>[
         Text(
@@ -152,7 +149,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
         SizedBox(
           height: 10.0,
         ),
-        Text(minCharsText,
+        Text('(10-100 characters)',
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20.0,

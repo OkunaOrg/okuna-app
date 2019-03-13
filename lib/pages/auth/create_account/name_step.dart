@@ -158,6 +158,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
           child: Container(
               color: Colors.transparent,
               child: OBAuthTextField(
+                textCapitalization: TextCapitalization.words,
                 autocorrect: false,
                 hintText: nameInputPlaceholder,
                 validator: (String name) {
