@@ -123,6 +123,6 @@ class OBProfileCard extends StatelessWidget {
 
   String _getUserBadgeDescription(User user) {
     Badge badge = user.getProfileBadges()[0];
-    return '${user.getProfileName()} is an ${badge.getKeywordDescription()}';
+    return badge.getKeywordDescription();
   }
 }
