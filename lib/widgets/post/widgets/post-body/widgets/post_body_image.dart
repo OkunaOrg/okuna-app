@@ -1,7 +1,10 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
-
+import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
+import 'package:flutter_advanced_networkimage/zoomable.dart';
 import 'package:flutter/material.dart';
 
 class OBPostBodyImage extends StatelessWidget {
@@ -16,22 +19,32 @@ class OBPostBodyImage extends StatelessWidget {
     double aspectRatio = post.getImageWidth() / post.getImageHeight();
 
     return GestureDetector(
-        onTap: () {
-          var _modalService = OpenbookProvider.of(context).modalService;
-          _modalService.openZoomablePhotoBoxView(
-              imageUrl: imageUrl, context: context);
-        },
-        child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: screenWidth / 2),
-            child: Image(
-              width: screenWidth,
-              height: screenWidth / aspectRatio,
-              fit: BoxFit.contain,
-              image: AdvancedNetworkImage(imageUrl,
-                  retryLimit: 0,
-                  useDiskCache: true,
-                  fallbackAssetImage:
-                      'assets/images/fallbacks/post-fallback.png'),
-            )));
+      onTap: () {
+        var _modalService = OpenbookProvider.of(context).modalService;
+        _modalService.openZoomablePhotoBoxView(
+            imageUrl: imageUrl, context: context);
+      },
+      child: SizedBox(
+        width: screenWidth,
+        height: screenWidth / aspectRatio,
+        child: TransitionToImage(
+          width: screenWidth,
+          height: screenWidth / aspectRatio,
+          fit: BoxFit.contain,
+          image: AdvancedNetworkImage(imageUrl,
+              useDiskCache: true,
+              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+              retryLimit: 0,
+              timeoutDuration: const Duration(minutes: 1)),
+          // This is the default placeholder widget at loading status,
+          // you can write your own widget with CustomPainter.
+          placeholder: Center(
+            child: const OBProgressIndicator(),
+          ),
+          // This is default duration
+          duration: const Duration(milliseconds: 300),
+        ),
+      ),
+    );
   }
 }

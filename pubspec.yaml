@@ -7,13 +7,13 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.1
+version: 0.0.8+8
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  intercom_flutter: ^1.0.10
+  intercom_flutter: ^1.0.11
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
