@@ -16,7 +16,7 @@ class OBPostActionReact extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var userService = openbookProvider.userService;
-    var modalService = openbookProvider.modalService;
+    var bottomSheetService = openbookProvider.bottomSheetService;
 
     return StreamBuilder(
       stream: _post.updateSubject,
@@ -32,7 +32,7 @@ class OBPostActionReact extends StatelessWidget {
                 postReaction: reaction, post: _post);
             _post.clearReaction();
           } else {
-            modalService.openReactToPost(post: _post, context: context);
+            bottomSheetService.showReactToPost(post: _post, context: context);
           }
         };
 
