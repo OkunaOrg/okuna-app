@@ -131,7 +131,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     try {
       await _userService.loginWithCredentials(
           username: username, password: password);
-      Navigator.pushReplacementNamed(context, '/');
+      Navigator.pop(context);  //pop the login form screen
+      Navigator.pushReplacementNamed(context, '/'); //replace the underlying login splash screen too
     } on CredentialsMismatchError {
       _setLoginFeedback(
           _localizationService.trans('AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR'));
