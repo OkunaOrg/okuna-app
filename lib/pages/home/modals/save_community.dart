@@ -182,7 +182,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 }),
                             OBTextFormField(
                                 textCapitalization:
-                                    TextCapitalization.sentences,
+                                    TextCapitalization.none,
                                 size: OBTextFormFieldSize.medium,
                                 controller: _nameController,
                                 autocorrect: false,
