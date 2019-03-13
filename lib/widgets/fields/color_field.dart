@@ -1,5 +1,7 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/dialog.dart';
 import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
@@ -28,16 +30,21 @@ class OBColorField extends StatefulWidget {
 class OBColorFieldState extends State<OBColorField> {
   String _color;
   ThemeService _themeService;
+  DialogService _dialogService;
 
   @override
   void initState() {
     super.initState();
-    _color = widget.initialColor;
+    _color = widget.initialColor != null
+        ? widget.initialColor
+        : generateRandomHexColor();
   }
 
   @override
   Widget build(BuildContext context) {
-    _themeService = OpenbookProvider.of(context).themeService;
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    _themeService = openbookProvider.themeService;
+    _dialogService = openbookProvider.dialogService;
 
     return Column(
       children: <Widget>[
@@ -52,28 +59,46 @@ class OBColorFieldState extends State<OBColorField> {
               trailing: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color:
-                      _color == null ? const SizedBox() : Pigment.fromString(_color),
+                  color: _color == null
+                      ? const SizedBox()
+                      : Pigment.fromString(_color),
                 ),
                 height: 30,
                 width: 30,
               ),
-              onTap: _refreshColor),
+              onTap: _pickColor),
         ),
         OBDivider(),
       ],
     );
   }
 
+  void _pickColor() {
+    _dialogService.showColorPicker(
+        initialColor: Pigment.fromString(_color),
+        onColorChanged: _onPickerColor,
+        context: context);
+  }
 
-  void _refreshColor() {
+  void _onPickerColor(Color color) {
+    String hexString = color.value.toRadixString(16);
+    hexString = '#' + hexString.substring(2, hexString.length);
+    widget.onNewColor('#' + hexString);
+    _setColor(hexString);
+  }
+
+  void _setColor(String color) {
     setState(() {
-      _color = generateRandomColor();
+      _color = color;
       widget.onNewColor(_color);
     });
   }
 
-  String generateRandomColor() {
+  Color generateRandomColor() {
+    return Pigment.fromString(generateRandomHexColor());
+  }
+
+  String generateRandomHexColor() {
     return _themeService.generateRandomHexColor();
   }
 }

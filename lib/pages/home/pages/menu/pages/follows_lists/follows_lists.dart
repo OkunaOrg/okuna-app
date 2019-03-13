@@ -89,10 +89,17 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                             if (index == _followsListsSearchResults.length) {
                               if (_followsListsSearchResults.isEmpty) {
                                 // Results were empty
-                                return ListTile(
-                                    leading: OBIcon(OBIcons.sad),
-                                    title: OBText(
-                                        'No list found for "$_searchQuery"'));
+                                if(_searchQuery != null){
+                                  return ListTile(
+                                      leading: OBIcon(OBIcons.sad),
+                                      title: OBText(
+                                          'No list found for "$_searchQuery"'));
+                                }else{
+                                  return ListTile(
+                                      leading: OBIcon(OBIcons.sad),
+                                      title: OBText(
+                                          'No lists found.'));
+                                }
                               } else {
                                 return const SizedBox();
                               }

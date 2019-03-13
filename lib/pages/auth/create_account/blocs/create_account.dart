@@ -246,39 +246,30 @@ class CreateAccountBloc {
           token: userRegistrationData.token,
           password: userRegistrationData.password,
           avatar: userRegistrationData.avatar);
-      if (response.isCreated()) {
-        accountWasCreated = true;
-        Map<String, dynamic> responseData =
-            jsonDecode(await response.readAsString());
-        setUsername(responseData['username']);
-        _userService.loginWithAuthToken(responseData['token']);
-      } else if (response.isBadRequest()) {
-        _onCreateAccountValidationError(response);
-      } else {
-        _onCreateAccountServerError();
-      }
+
+      if (!response.isCreated()) throw HttpieRequestError(response);
+      accountWasCreated = true;
+      Map<String, dynamic> responseData =
+          jsonDecode(await response.readAsString());
+      setUsername(responseData['username']);
+      _userService.loginWithAuthToken(responseData['token']);
     } catch (error) {
-      _onCreateAccountServerError();
-      rethrow;
+      if (error is HttpieConnectionRefusedError) {
+        _onCreateAccountValidationError(error.toHumanReadableMessage());
+      } else if (error is HttpieRequestError) {
+        String errorMessage = await error.toHumanReadableMessage();
+        _onCreateAccountValidationError(errorMessage);
+      } else {
+        _onCreateAccountValidationError('Unknown error');
+        rethrow;
+      }
     }
 
     return accountWasCreated;
   }
 
-  void _onCreateAccountServerError() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_SERVER');
-
-    _createAccountErrorFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onCreateAccountValidationError(HttpieStreamedResponse response) {
-    // Validation errors.
-    // TODO Display specific validation errors.
-    String errorFeedback = _localizationService
-        .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_VALIDATION');
-
-    _createAccountErrorFeedbackSubject.add(errorFeedback);
+  void _onCreateAccountValidationError(String errorMessage) {
+    _createAccountErrorFeedbackSubject.add(errorMessage);
   }
 
   void _clearCreateAccount() {

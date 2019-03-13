@@ -35,18 +35,6 @@ class ModalService {
     return createdPost;
   }
 
-  Future<PostReaction> openReactToPost(
-      {@required Post post, @required BuildContext context}) async {
-    PostReaction postReaction = await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<PostReaction>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => Material(
-                  child: OBReactToPostModal(post),
-                )));
-
-    return postReaction;
-  }
-
   Future<void> openEditUserProfile(
       {@required User user, @required BuildContext context}) async {
     Navigator.of(context, rootNavigator: true)

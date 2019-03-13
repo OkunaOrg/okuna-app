@@ -12,8 +12,12 @@ import 'package:flutter/material.dart';
 class OBEmojiPicker extends StatefulWidget {
   final OnEmojiPicked onEmojiPicked;
   final bool isReactionsPicker;
+  final bool hasSearch;
 
-  OBEmojiPicker({this.onEmojiPicked, this.isReactionsPicker = false});
+  OBEmojiPicker(
+      {this.onEmojiPicked,
+      this.isReactionsPicker = false,
+      this.hasSearch = true});
 
   @override
   State<StatefulWidget> createState() {
@@ -54,10 +58,12 @@ class OBEmojiPickerState extends State<OBEmojiPicker> {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        OBSearchBar(
-          onSearch: _onSearch,
-          hintText: 'Search emojis...',
-        ),
+        _hasSearch
+            ? OBSearchBar(
+                onSearch: _onSearch,
+                hintText: 'Search emojis...',
+              )
+            : const SizedBox(),
         Expanded(
             child: _hasSearch
                 ? OBEmojiSearchResults(

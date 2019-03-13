@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -12,13 +13,15 @@ class OBAvatar extends StatelessWidget {
   final OBAvatarSize size;
   final VoidCallback onPressed;
   final double borderWidth;
+  final bool isZoomable;
 
   static const double AVATAR_SIZE_EXTRA_SMALL = 20.0;
   static const double AVATAR_SIZE_SMALL = 30.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
   static const double AVATAR_SIZE_LARGE = 80.0;
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
-  static const String DEFAULT_AVATAR_ASSET = 'assets/images/fallbacks/avatar-fallback.jpg';
+  static const String DEFAULT_AVATAR_ASSET =
+      'assets/images/fallbacks/avatar-fallback.jpg';
   static const double avatarBorderRadius = 10.0;
 
   static double getAvatarSize(OBAvatarSize size) {
@@ -50,7 +53,8 @@ class OBAvatar extends StatelessWidget {
       this.size = OBAvatarSize.small,
       this.onPressed,
       this.avatarFile,
-      this.borderWidth});
+      this.borderWidth,
+      this.isZoomable = false});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +76,22 @@ class OBAvatar extends StatelessWidget {
           height: avatarSize,
           width: avatarSize,
           fit: BoxFit.cover,
-          image: AdvancedNetworkImage(avatarUrl, useDiskCache: true, fallbackAssetImage: DEFAULT_AVATAR_ASSET, retryLimit: 0));
+          image: AdvancedNetworkImage(avatarUrl,
+              useDiskCache: true,
+              fallbackAssetImage: DEFAULT_AVATAR_ASSET,
+              retryLimit: 0));
+
+      if (isZoomable) {
+        finalAvatarImage = GestureDetector(
+          child: finalAvatarImage,
+          onTap: () {
+            OpenbookProviderState openbookProvider =
+                OpenbookProvider.of(context);
+            openbookProvider.modalService.openZoomablePhotoBoxView(
+                imageUrl: avatarUrl, context: context);
+          },
+        );
+      }
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }

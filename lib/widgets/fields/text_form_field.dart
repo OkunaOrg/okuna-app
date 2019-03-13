@@ -2,6 +2,7 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OBTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -15,12 +16,14 @@ class OBTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextCapitalization textCapitalization;
   final bool autocorrect;
+  final List<TextInputFormatter> inputFormatters;
 
   const OBTextFormField(
       {this.controller,
       this.validator,
       this.autofocus = false,
       this.keyboardType,
+      this.inputFormatters,
       this.obscureText = false,
       this.autocorrect = true,
       this.size = OBTextFormFieldSize.medium,
@@ -61,6 +64,7 @@ class OBTextFormField extends StatelessWidget {
           return Column(
             children: <Widget>[
               TextFormField(
+                inputFormatters: inputFormatters,
                 textCapitalization: textCapitalization,
                 textInputAction: textInputAction,
                 autofocus: autofocus,

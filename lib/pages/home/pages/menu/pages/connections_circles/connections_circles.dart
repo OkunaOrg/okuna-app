@@ -94,10 +94,17 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                                   _connectionsCirclesSearchResults.length) {
                                 if (_connectionsCirclesSearchResults.isEmpty) {
                                   // Results were empty
-                                  return ListTile(
-                                      leading: OBIcon(OBIcons.sad),
-                                      title: OBText(
-                                          'No circle found for "$_searchQuery"'));
+                                  if(_searchQuery != null){
+                                    return ListTile(
+                                        leading: OBIcon(OBIcons.sad),
+                                        title: OBText(
+                                            'No circles found for "$_searchQuery"'));
+                                  }else{
+                                    return ListTile(
+                                        leading: OBIcon(OBIcons.sad),
+                                        title: OBText(
+                                            'No circles found.'));
+                                  }
                                 } else {
                                   return const SizedBox();
                                 }

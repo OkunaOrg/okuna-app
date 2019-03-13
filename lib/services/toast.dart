@@ -8,7 +8,7 @@ class ToastService {
   static const Duration toastDuration = Duration(seconds: 3);
   static Color colorError = Colors.redAccent;
   static Color colorSuccess = Colors.greenAccent[700];
-  static Color colorInfo = Colors.blueGrey;
+  static Color colorInfo = Colors.blue;
   static Color colorWarning = Colors.yellow[800];
 
   void warning({

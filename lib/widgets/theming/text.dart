@@ -13,6 +13,9 @@ class OBText extends StatelessWidget {
       case OBTextSize.small:
         fontSize = 12;
         break;
+      case OBTextSize.mediumSecondary:
+        fontSize = 14;
+        break;
       case OBTextSize.medium:
         fontSize = 16;
         break;
@@ -75,4 +78,11 @@ class OBText extends StatelessWidget {
   }
 }
 
-enum OBTextSize { extraSmall, small, medium, large, extraLarge }
+enum OBTextSize {
+  extraSmall,
+  small,
+  mediumSecondary,
+  medium,
+  large,
+  extraLarge
+}

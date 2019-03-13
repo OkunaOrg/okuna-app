@@ -59,12 +59,12 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
       right: 0,
       child: AnimatedOpacity(
         opacity: (isCloseButtonVisible ? 1 : 0),
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 50),
         child: SafeArea(
             child: Column(
           children: <Widget>[
             GestureDetector(
-              onTap: () {
+              onTapDown: (tap) {
                 if (!isCloseButtonVisible) return;
                 Navigator.pop(context);
               },
