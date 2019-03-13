@@ -125,6 +125,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         ],
       ),
       onPressed: () {
+        Navigator.popUntil(context, ModalRoute.withName('/auth/get-started'));
         Navigator.pushReplacementNamed(context, '/');
       },
     );
