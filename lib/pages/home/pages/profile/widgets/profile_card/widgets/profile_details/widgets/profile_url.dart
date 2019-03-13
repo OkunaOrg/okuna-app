@@ -17,10 +17,6 @@ class OBProfileUrl extends StatelessWidget {
       return const SizedBox();
     }
 
-    Uri uri = Uri.parse(url);
-
-    String prettyUrl = uri.host + uri.path + uri.query;
-
     return GestureDetector(
       onTap: () async {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -39,7 +35,7 @@ class OBProfileUrl extends StatelessWidget {
           ),
           Flexible(
               child: OBText(
-                prettyUrl,
+                url,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(decoration: TextDecoration.underline),
