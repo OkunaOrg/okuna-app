@@ -8,6 +8,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/url_launcher.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/smart_text.dart';
+export 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 
 class OBActionableSmartText extends StatefulWidget {
@@ -60,6 +61,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       onCommunityNameTapped: _onCommunityNameTapped,
       onUsernameTapped: _onUsernameTapped,
       onLinkTapped: _onLinkTapped,
+      size: widget.size,
     );
   }
 

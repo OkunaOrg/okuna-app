@@ -48,7 +48,7 @@ class OBProfileCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   GestureDetector(
                     onTap: () {
