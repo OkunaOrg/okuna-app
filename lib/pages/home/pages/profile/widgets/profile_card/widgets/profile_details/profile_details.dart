@@ -14,7 +14,8 @@ class OBProfileDetails extends StatelessWidget {
       stream: user.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
-        if (user == null || !user.hasProfileLocation() || !user.hasProfileUrl())
+        if (user == null ||
+            (!user.hasProfileLocation() && !user.hasProfileUrl()))
           return const SizedBox();
 
         return Padding(
