@@ -59,7 +59,7 @@ class DialogService {
     OBTheme theme = _themeService.getActiveTheme();
     Color primaryColor =
         _themeValueParserService.parseColor(theme.primaryColor);
-    return TinyColor(primaryColor).lighten(20).color;
+    return TinyColor(primaryColor).lighten(10).color;
   }
 
   ShapeBorder _getDialogShapeBorder() {
