@@ -13,7 +13,7 @@ class OBEmojiGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 10),
+      padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -23,7 +23,6 @@ class OBEmojiGroup extends StatelessWidget {
             height: 10.0,
           ),
           Wrap(
-            runSpacing: 20.0,
             spacing: 20.0,
             children: this.emojiGroup.emojis.emojis.map((Emoji emoji) {
               return OBEmoji(

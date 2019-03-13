@@ -48,7 +48,7 @@ class OBProfileCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -102,6 +102,7 @@ class OBProfileCard extends StatelessWidget {
                   borderWidth: 3,
                   avatarUrl: user?.getProfileAvatar(),
                   size: OBAvatarSize.extraLarge,
+                  isZoomable: true,
                 );
               }),
         ),
@@ -123,6 +124,6 @@ class OBProfileCard extends StatelessWidget {
 
   String _getUserBadgeDescription(User user) {
     Badge badge = user.getProfileBadges()[0];
-    return '${user.getProfileName()} is an ${badge.getKeywordDescription()}';
+    return badge.getKeywordDescription();
   }
 }

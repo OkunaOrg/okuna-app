@@ -7,37 +7,33 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/emoji_picker/emoji_picker.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum OBReactToPostModalStatus { searching, suggesting, overview }
 
-class OBReactToPostModal extends StatefulWidget {
+class OBReactToPostBottomSheet extends StatefulWidget {
   final Post post;
 
-  const OBReactToPostModal(this.post);
+  const OBReactToPostBottomSheet(this.post);
 
   @override
   State<StatefulWidget> createState() {
-    return OBReactToPostModalState();
+    return OBReactToPostBottomSheetState();
   }
 }
 
-class OBReactToPostModalState extends State<OBReactToPostModal> {
+class OBReactToPostBottomSheetState extends State<OBReactToPostBottomSheet> {
   UserService _userService;
   ToastService _toastService;
 
   bool _isReactToPostInProgress;
 
-  GlobalKey<ScaffoldState> _scaffoldKey;
-
   @override
   void initState() {
     super.initState();
-    _scaffoldKey = GlobalKey<ScaffoldState>();
     _isReactToPostInProgress = false;
   }
 
@@ -47,26 +43,24 @@ class OBReactToPostModalState extends State<OBReactToPostModal> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
 
-    return Scaffold(
-        key: _scaffoldKey,
-        appBar: _buildNavigationBar(),
-        body: OBPrimaryColorContainer(
-          child: OBEmojiPicker(
-            isReactionsPicker: true,
-            onEmojiPicked: _onEmojiPicked,
-          ),
-        ));
-  }
+    double screenHeight = MediaQuery.of(context).size.height;
 
-  Widget _buildNavigationBar() {
-    return OBThemedNavigationBar(
-        leading: GestureDetector(
-          child: const OBIcon(OBIcons.close),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: 'React to post');
+    return OBPrimaryColorContainer(
+      mainAxisSize: MainAxisSize.min,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SizedBox(
+            height: screenHeight / 3,
+            child: OBEmojiPicker(
+              hasSearch: false,
+              isReactionsPicker: true,
+              onEmojiPicked: _onEmojiPicked,
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   void _onEmojiPicked(Emoji pressedEmoji, EmojiGroup emojiGroup) {

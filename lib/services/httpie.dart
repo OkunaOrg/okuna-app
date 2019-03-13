@@ -505,8 +505,19 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
     try {
       dynamic parsedError = json.decode(errorBody);
       if (parsedError is Map) {
-        if (parsedError.containsKey('detail')) {
-          return parsedError['detail'];
+        if (parsedError.isNotEmpty) {
+          if (parsedError.containsKey('detail')) {
+            return parsedError['detail'];
+          } else {
+            dynamic mapFirstValue = parsedError.values.toList().first;
+            dynamic value = mapFirstValue is List ? mapFirstValue[0] : null;
+            if (value != null && value is String) {
+              return value;
+            } else {
+              return convertStatusCodeToHumanReadableMessage(
+                  response.statusCode);
+            }
+          }
         } else {
           return convertStatusCodeToHumanReadableMessage(response.statusCode);
         }

@@ -18,13 +18,14 @@ class OBProfileBio extends StatelessWidget {
         if (bio == null) return const SizedBox();
 
         return Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 10),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Flexible(
                 child: OBActionableSmartText(
                   text: bio,
+                  size: OBTextSize.mediumSecondary,
                 ),
               )
             ],
