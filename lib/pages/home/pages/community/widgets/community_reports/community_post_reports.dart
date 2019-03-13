@@ -65,6 +65,7 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
     }
 
     double screenHeight = MediaQuery.of(context).size.height;
+    print(screenHeight);
 
     return Column(
           mainAxisSize: MainAxisSize.max,
@@ -85,7 +86,7 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
     var theme = _themeService.getActiveTheme();
     return Container(
       color: _themeValueParserService.parseColor(theme.primaryColor),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         children: <Widget>[
           Expanded(
