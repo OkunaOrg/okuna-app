@@ -102,6 +102,7 @@ class OBProfileCard extends StatelessWidget {
                   borderWidth: 3,
                   avatarUrl: user?.getProfileAvatar(),
                   size: OBAvatarSize.extraLarge,
+                  isZoomable: true,
                 );
               }),
         ),
