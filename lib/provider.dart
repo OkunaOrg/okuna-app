@@ -7,6 +7,7 @@ import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/devices_api.dart';
+import 'package:Openbook/services/dialog.dart';
 import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
@@ -87,6 +88,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
       PushNotificationsService();
   UrlLauncherService urlLauncherService = UrlLauncherService();
   IntercomService intercomService = IntercomService();
+  DialogService dialogService = DialogService();
 
   @override
   void initState() {
@@ -134,6 +136,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     themeService.setStorageService(storageService);
     pushNotificationsService.setUserService(userService);
     intercomService.setUserService(userService);
+    dialogService.setThemeService(themeService);
+    dialogService.setThemeValueParserService(themeValueParserService);
   }
 
   void initAsyncState() async {
