@@ -60,14 +60,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
   Widget _buildHooray() {
     var title = localizationService.trans('AUTH.CREATE_ACC.DONE_TITLE');
 
-    var description =
-        localizationService.trans('AUTH.CREATE_ACC.DONE_DESCRIPTION');
-    var usernameText =
-        localizationService.trans('AUTH.CREATE_ACC.YOUR_USERNAME_IS');
-    var canChangeUsernameText =
-        localizationService.trans('AUTH.CREATE_ACC.CAN_CHANGE_USERNAME');
-
-    String username = 'joel';
+    String username = createAccountBloc.getUsername();
 
     return Column(
       children: <Widget>[

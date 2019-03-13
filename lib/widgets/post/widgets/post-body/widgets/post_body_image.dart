@@ -30,7 +30,7 @@ class OBPostBodyImage extends StatelessWidget {
         child: TransitionToImage(
           width: screenWidth,
           height: screenWidth / aspectRatio,
-          fit: BoxFit.none,
+          fit: BoxFit.contain,
           image: AdvancedNetworkImage(imageUrl,
               useDiskCache: true,
               fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',

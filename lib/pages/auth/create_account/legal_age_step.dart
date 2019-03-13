@@ -121,7 +121,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
       child: Text('Register', style: TextStyle(fontSize: 18.0)),
       isDisabled: !_isAgeConfirmed,
       onPressed: () {
-        Navigator.pushNamed(context, '/auth/done_step');
+        Navigator.pushNamed(context, '/auth/submit_step');
       },
     );
   }
