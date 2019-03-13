@@ -60,12 +60,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
   Widget _buildHooray() {
     var title = localizationService.trans('AUTH.CREATE_ACC.DONE_TITLE');
 
-    var description =
-        localizationService.trans('AUTH.CREATE_ACC.DONE_DESCRIPTION');
-    var usernameText = localizationService.trans('AUTH.CREATE_ACC.YOUR_USERNAME_IS');
-    var canChangeUsernameText =
-    localizationService.trans('AUTH.CREATE_ACC.CAN_CHANGE_USERNAME');
-
+    String username = createAccountBloc.getUsername();
 
     return Column(
       children: <Widget>[
@@ -86,27 +81,29 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         const SizedBox(
           height: 20.0,
         ),
-        Text(description,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18.0,
-              //color: Colors.white
-            )),
+        RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.black,
+              ),
+              children: [
+                TextSpan(text: 'Your account has been created with username '),
+                TextSpan(
+                    text: '@$username',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: '.')
+              ]),
+        ),
         const SizedBox(
           height: 20.0,
         ),
-        Text(usernameText + createAccountBloc.getUsername(),
+        Text('You can change this in your profile settings.',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18.0,
-              //color: Colors.white
-            )),
-        Text(canChangeUsernameText,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18.0,
-              //color: Colors.white
-            ))
+            style: TextStyle(fontSize: 16
+                //color: Colors.white
+                )),
       ],
     );
   }
@@ -128,8 +125,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         ],
       ),
       onPressed: () {
-        Navigator.popUntil(context, ModalRoute.withName('/auth'));
-        Navigator.pushNamed(context, '/');
+        Navigator.pushReplacementNamed(context, '/');
       },
     );
   }

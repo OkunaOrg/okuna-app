@@ -7,9 +7,8 @@ import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
 
-
 class OBAuthLegalAgeStepPage extends StatefulWidget {
-   @override
+  @override
   State<StatefulWidget> createState() {
     return OBAuthLegalAgeStepPageState();
   }
@@ -70,20 +69,19 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   }
 
   Widget _buildConfirmLegalAgeText() {
-    String almostThereText = _localizationService.trans('AUTH.CREATE_ACC.ALMOST_THERE');
-
     return Column(
       children: <Widget>[
-        SizedBox(
-          width: 10.0
-        ),
+        SizedBox(width: 10.0),
         Text(
           '🏁',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
           textAlign: TextAlign.center,
         ),
+        const SizedBox(
+          height: 20.0,
+        ),
         Text(
-          almostThereText,
+          'One last thing...',
           style: TextStyle(
               fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
           textAlign: TextAlign.center,
@@ -108,7 +106,8 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
                 });
               },
               leading: Container(
-                child: Text('Are you older than 16 years', style: TextStyle(fontSize: 16.0, color: Colors.white)),
+                child: Text('Are you older than 16 years?',
+                    style: TextStyle(fontSize: 16.0, color: Colors.white)),
               ),
             )
           ]),
@@ -116,17 +115,15 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.DONE');
-
     return OBSuccessButton(
-            minWidth: double.infinity,
-            size: OBButtonSize.large,
-            child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-            isDisabled: !_isAgeConfirmed,
-            onPressed: () {
-              Navigator.pushNamed(context, '/auth/submit_step');
-            },
-          );
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
+      child: Text('Register', style: TextStyle(fontSize: 18.0)),
+      isDisabled: !_isAgeConfirmed,
+      onPressed: () {
+        Navigator.pushNamed(context, '/auth/submit_step');
+      },
+    );
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
