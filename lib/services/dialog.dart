@@ -1,7 +1,7 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/pages/home/modals/zoomable_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -36,6 +36,44 @@ class DialogService {
           ),
         ),
         context: context);
+  }
+
+  Future<void> showZoomablePhotoBoxView(
+      {@required String imageUrl, @required BuildContext context}) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext buildContext, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+        final Widget pageChild = OBZoomablePhotoModal(imageUrl);
+        return Builder(
+            builder: (BuildContext context) {
+              return theme != null
+                  ? Theme(data: theme, child: pageChild)
+                  : pageChild;
+            }
+        );
+      },
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations
+          .of(context)
+          .modalBarrierDismissLabel,
+      barrierColor: Colors.black87,
+      transitionDuration: const Duration(milliseconds: 100),
+      transitionBuilder: _buildMaterialDialogTransitions,
+    );
+  }
+
+  Widget _buildMaterialDialogTransitions(BuildContext context,
+      Animation<double> animation, Animation<double> secondaryAnimation,
+      Widget child) {
+    return FadeTransition(
+      opacity: CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOut,
+      ),
+      child: child,
+    );
   }
 
   Future<dynamic> showAlert(

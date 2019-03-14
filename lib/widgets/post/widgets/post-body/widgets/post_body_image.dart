@@ -2,9 +2,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
-import 'package:flutter_advanced_networkimage/zoomable.dart';
 import 'package:flutter/material.dart';
 
 class OBPostBodyImage extends StatelessWidget {
@@ -20,8 +18,8 @@ class OBPostBodyImage extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        var _modalService = OpenbookProvider.of(context).modalService;
-        _modalService.openZoomablePhotoBoxView(
+        var dialogService = OpenbookProvider.of(context).dialogService;
+        dialogService.showZoomablePhotoBoxView(
             imageUrl: imageUrl, context: context);
       },
       child: SizedBox(

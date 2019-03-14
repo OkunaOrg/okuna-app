@@ -87,7 +87,7 @@ class OBAvatar extends StatelessWidget {
           onTap: () {
             OpenbookProviderState openbookProvider =
                 OpenbookProvider.of(context);
-            openbookProvider.modalService.openZoomablePhotoBoxView(
+            openbookProvider.dialogService.showZoomablePhotoBoxView(
                 imageUrl: avatarUrl, context: context);
           },
         );

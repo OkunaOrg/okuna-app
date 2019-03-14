@@ -8,7 +8,6 @@ import 'package:Openbook/pages/home/modals/invite_to_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/add_community_administrator.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
-import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
 import 'package:Openbook/pages/home/modals/save_community.dart';
 import 'package:Openbook/pages/home/modals/save_connections_circle.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.dart';
@@ -16,22 +15,19 @@ import 'package:Openbook/pages/home/modals/timeline_filters.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/ban_community_user.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/modals/zoomable_photo.dart';
-import 'package:Openbook/widgets/routes/fadein_material_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tinycolor/tinycolor.dart';
 
 class ModalService {
   Future<Post> openCreatePost({@required BuildContext context}) async {
     Post createdPost = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Post>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: CreatePostModal(),
-          );
-        }));
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: CreatePostModal(),
+              );
+            }));
 
     return createdPost;
   }
@@ -40,38 +36,38 @@ class ModalService {
       {@required User user, @required BuildContext context}) async {
     Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<PostReaction>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) =>
-            Material(
-              child: OBEditUserProfileModal(user),
-            )));
+            fullscreenDialog: true,
+            builder: (BuildContext context) => Material(
+                  child: OBEditUserProfileModal(user),
+                )));
   }
 
   Future<FollowsList> openCreateFollowsList(
       {@required BuildContext context}) async {
     FollowsList createdFollowsList =
-    await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<FollowsList>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return OBSaveFollowsListModal(
-            autofocusNameTextField: true,
-          );
-        }));
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<FollowsList>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return OBSaveFollowsListModal(
+                    autofocusNameTextField: true,
+                  );
+                }));
 
     return createdFollowsList;
   }
 
-  Future<FollowsList> openEditFollowsList({@required FollowsList followsList,
-    @required BuildContext context}) async {
+  Future<FollowsList> openEditFollowsList(
+      {@required FollowsList followsList,
+      @required BuildContext context}) async {
     FollowsList editedFollowsList =
-    await Navigator.of(context).push(CupertinoPageRoute<FollowsList>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return OBSaveFollowsListModal(
-            followsList: followsList,
-          );
-        }));
+        await Navigator.of(context).push(CupertinoPageRoute<FollowsList>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBSaveFollowsListModal(
+                followsList: followsList,
+              );
+            }));
 
     return editedFollowsList;
   }
@@ -79,30 +75,31 @@ class ModalService {
   Future<Circle> openCreateConnectionsCircle(
       {@required BuildContext context}) async {
     Circle createdConnectionsCircle =
-    await Navigator.of(context).push(CupertinoPageRoute<Circle>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return OBSaveConnectionsCircleModal(
-            autofocusNameTextField: true,
-          );
-        }));
+        await Navigator.of(context).push(CupertinoPageRoute<Circle>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBSaveConnectionsCircleModal(
+                autofocusNameTextField: true,
+              );
+            }));
 
     return createdConnectionsCircle;
   }
 
-  Future<Circle> openEditConnectionsCircle({@required Circle connectionsCircle,
-    @required BuildContext context}) async {
+  Future<Circle> openEditConnectionsCircle(
+      {@required Circle connectionsCircle,
+      @required BuildContext context}) async {
     Circle editedConnectionsCircle =
-    await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<Circle>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBSaveConnectionsCircleModal(
-              connectionsCircle: connectionsCircle,
-            ),
-          );
-        }));
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<Circle>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBSaveConnectionsCircleModal(
+                      connectionsCircle: connectionsCircle,
+                    ),
+                  );
+                }));
 
     return editedConnectionsCircle;
   }
@@ -111,14 +108,14 @@ class ModalService {
       {@required BuildContext context, @required Community community}) async {
     Community editedCommunity = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Community>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBSaveCommunityModal(
-              community: community,
-            ),
-          );
-        }));
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBSaveCommunityModal(
+                  community: community,
+                ),
+              );
+            }));
 
     return editedCommunity;
   }
@@ -127,27 +124,27 @@ class ModalService {
       {@required BuildContext context, @required Community community}) async {
     return Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Community>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBInviteToCommunityModal(
-              community: community,
-            ),
-          );
-        }));
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBInviteToCommunityModal(
+                  community: community,
+                ),
+              );
+            }));
   }
 
   Future<Community> openCreateCommunity(
       {@required BuildContext context}) async {
     Community createdCommunity =
-    await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<Community>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBSaveCommunityModal(),
-          );
-        }));
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<Community>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBSaveCommunityModal(),
+                  );
+                }));
 
     return createdCommunity;
   }
@@ -155,16 +152,16 @@ class ModalService {
   Future<User> openAddCommunityAdministrator(
       {@required BuildContext context, @required Community community}) async {
     User addedCommunityAdministrator =
-    await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<User>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBAddCommunityAdministratorModal(
-              community: community,
-            ),
-          );
-        }));
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<User>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBAddCommunityAdministratorModal(
+                      community: community,
+                    ),
+                  );
+                }));
 
     return addedCommunityAdministrator;
   }
@@ -172,16 +169,16 @@ class ModalService {
   Future<User> openAddCommunityModerator(
       {@required BuildContext context, @required Community community}) async {
     User addedCommunityModerator =
-    await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<User>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBAddCommunityModeratorModal(
-              community: community,
-            ),
-          );
-        }));
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<User>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBAddCommunityModeratorModal(
+                      community: community,
+                    ),
+                  );
+                }));
 
     return addedCommunityModerator;
   }
@@ -189,70 +186,32 @@ class ModalService {
   Future<User> openBanCommunityUser(
       {@required BuildContext context, @required Community community}) async {
     User addedCommunityBannedUser =
-    await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<User>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBBanCommunityUserModal(
-              community: community,
-            ),
-          );
-        }));
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<User>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: OBBanCommunityUserModal(
+                      community: community,
+                    ),
+                  );
+                }));
 
     return addedCommunityBannedUser;
   }
 
   Future<void> openTimelineFilters(
       {@required OBTimelinePageController timelineController,
-        @required BuildContext context}) {
+      @required BuildContext context}) {
     return Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Circle>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBTimelineFiltersModal(
-              timelinePageController: timelineController,
-            ),
-          );
-        }));
-  }
-
-  Future<void> openZoomablePhotoBoxView(
-      {@required String imageUrl, @required BuildContext context}) {
-    return showGeneralDialog(
-      context: context,
-      pageBuilder: (BuildContext buildContext, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
-        final Widget pageChild = OBZoomablePhotoModal(imageUrl);
-        return Builder(
+            fullscreenDialog: true,
             builder: (BuildContext context) {
-              return theme != null
-                  ? Theme(data: theme, child: pageChild)
-                  : pageChild;
-            }
-        );
-      },
-      barrierDismissible: false,
-      barrierLabel: MaterialLocalizations
-          .of(context)
-          .modalBarrierDismissLabel,
-      barrierColor: Color.fromARGB(0, 0, 0, 1),
-      transitionDuration: const Duration(milliseconds: 10),
-      transitionBuilder: _buildMaterialDialogTransitions,
-    );
-  }
-
-  Widget _buildMaterialDialogTransitions(BuildContext context,
-      Animation<double> animation, Animation<double> secondaryAnimation,
-      Widget child) {
-    return FadeTransition(
-      opacity: CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeOut,
-      ),
-      child: child,
-    );
+              return Material(
+                child: OBTimelineFiltersModal(
+                  timelinePageController: timelineController,
+                ),
+              );
+            }));
   }
 }
