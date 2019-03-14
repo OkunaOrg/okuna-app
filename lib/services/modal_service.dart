@@ -16,7 +16,7 @@ import 'package:Openbook/pages/home/modals/timeline_filters.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/ban_community_user.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/modals/zoomable_photo.dart';
+import 'package:Openbook/pages/home/modals/zoomable_photo.dart';
 import 'package:Openbook/widgets/routes/fadein_material_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -216,15 +216,5 @@ class ModalService {
                 ),
               );
             }));
-  }
-
-  Future<void> openZoomablePhotoBoxView(
-      {@required String imageUrl, @required BuildContext context}) {
-    return Navigator.of(context, rootNavigator: true)
-        .push(OBFadeInMaterialPageRoute<bool>(
-            builder: (BuildContext context) => Material(
-                  child: OBZoomablePhotoModal(imageUrl),
-                ),
-            fullscreenDialog: true));
   }
 }

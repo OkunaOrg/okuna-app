@@ -75,8 +75,8 @@ class OBCover extends StatelessWidget {
           onTap: () {
             OpenbookProviderState openbookProvider =
                 OpenbookProvider.of(context);
-            openbookProvider.modalService
-                .openZoomablePhotoBoxView(imageUrl: coverUrl, context: context);
+            openbookProvider.dialogService
+                .showZoomablePhotoBoxView(imageUrl: coverUrl, context: context);
           },
         );
       }
