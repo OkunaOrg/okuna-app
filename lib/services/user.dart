@@ -29,6 +29,7 @@ import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/categories_api.dart';
 import 'package:Openbook/services/communities_api.dart';
@@ -67,6 +68,7 @@ class UserService {
   FollowsListsApiService _followsListsApiService;
   NotificationsApiService _notificationsApiService;
   DevicesApiService _devicesApiService;
+  CreateAccountBloc _createAccountBlocService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -130,6 +132,10 @@ class UserService {
 
   void setStorageService(StorageService storageService) {
     _userStorage = storageService.getSecureStorage(namespace: 'user');
+  }
+
+  void setCreateAccountBlocService(CreateAccountBloc createAccountBloc) {
+    _createAccountBlocService = createAccountBloc;
   }
 
   Future<void> deleteAccountWithPassword(String password) async {
@@ -237,7 +243,11 @@ class UserService {
 
   Future<void> loginWithStoredUserData() async {
     var token = await _getStoredAuthToken();
-    if (token == null) throw AuthTokenMissingError();
+    if (token == null && !_createAccountBlocService.hasToken()) throw AuthTokenMissingError();
+    if (token == null && _createAccountBlocService.hasToken()) {
+      print('User is in register via link flow, dont throw error as it will break the flow');
+      return;
+    }
 
     String userData = await this._getStoredUserData();
     if (userData != null) {

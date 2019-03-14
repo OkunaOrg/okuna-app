@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:io';
 
 class CreateAccountBloc {
+  // @todo: rename to CreateAccountService?
   LocalizationService _localizationService;
   AuthApiService _authApiService;
   UserService _userService;
