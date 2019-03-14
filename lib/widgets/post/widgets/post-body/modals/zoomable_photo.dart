@@ -29,27 +29,39 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
   @override
   Widget build(BuildContext context) {
     return OBCupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
         child: Stack(
-      children: <Widget>[
-        GestureDetector(
-          onTap: toggleIsCloseButtonVisible,
-          child: Center(
-            child: PhotoView(
-              enableRotation: false,
-              scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
-              imageProvider: AdvancedNetworkImage(widget.imageUrl,
-                  retryLimit: 0,
-                  useDiskCache: true,
-                  fallbackAssetImage:
-                      'assets/images/fallbacks/post-fallback.png'),
-              maxScale: PhotoViewComputedScale.covered,
-              minScale: PhotoViewComputedScale.contained,
+          children: <Widget>[
+            Dismissible(
+              movementDuration: Duration(milliseconds: 100),
+              background: const DecoratedBox(
+                decoration:
+                    const BoxDecoration(color: Color.fromARGB(0, 0, 0, 0)),
+              ),
+              direction: DismissDirection.up,
+              // Each Dismissible must contain a Key. Keys allow Flutter to
+              // uniquely identify Widgets.
+              key: Key('obPhotoView'),
+              // We also need to provide a function that will tell our app
+              // what to do after an item has been swiped away.
+              onDismissed: (direction) {
+                // Show a snackbar! This snackbar could also contain "Undo" actions.
+                Navigator.pop(context);
+              },
+              child: PhotoView(
+                enableRotation: false,
+                scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
+                imageProvider: AdvancedNetworkImage(widget.imageUrl,
+                    retryLimit: 0,
+                    useDiskCache: true,
+                    fallbackAssetImage:
+                        'assets/images/fallbacks/post-fallback.png'),
+                maxScale: PhotoViewComputedScale.covered,
+                minScale: PhotoViewComputedScale.contained,
+              ),
             ),
-          ),
-        ),
-        _buildCloseButton()
-      ],
-    ));
+          ],
+        ));
   }
 
   Widget _buildCloseButton() {
