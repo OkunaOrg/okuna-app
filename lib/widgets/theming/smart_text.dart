@@ -146,9 +146,12 @@ class OBSmartText extends StatelessWidget {
 
   final OBTextSize size;
 
+  final TextOverflow overflow;
+
   const OBSmartText({
     Key key,
     this.text,
+    this.overflow = TextOverflow.clip,
     this.style,
     this.linkStyle,
     this.tagStyle,
@@ -273,6 +276,7 @@ class OBSmartText extends StatelessWidget {
         );
 
         return RichText(
+          overflow: overflow,
           softWrap: true,
           text: _buildTextSpan(
               text: text,

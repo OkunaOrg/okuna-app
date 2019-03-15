@@ -45,6 +45,7 @@ import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Openbook/services/httpie.dart';
@@ -149,6 +150,7 @@ class UserService {
     await _removeStoredFirstPostsData();
     await _removeStoredUserData();
     await _removeStoredAuthToken();
+    DiskCache().clear();
     _httpieService.removeAuthorizationToken();
     _removeLoggedInUser();
     Post.clearCache();

@@ -80,7 +80,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
     if (widget.postComment.getCommenterId() == loggedInUser.id ||
         loggedInUserIsCommunityAdministrator ||
         loggedInUserIsCommunityModerator ||
-        widget.post.creator.id == loggedInUser.id) {
+        post.creator.id == loggedInUser.id) {
       // Its our own comment
       postTile = Slidable(
         delegate: new SlidableDrawerDelegate(),
@@ -114,7 +114,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
           OBAvatar(
             onPressed: () {
               _navigationService.navigateToUserProfile(
-                  user: widget.post.creator, context: context);
+                  user: widget.postComment.commenter, context: context);
             },
             size: OBAvatarSize.small,
             avatarUrl: widget.postComment.getCommenterProfileAvatar(),
@@ -131,7 +131,7 @@ class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
                 badge: _getCommunityBadge(),
                 onUsernamePressed: () {
                   _navigationService.navigateToUserProfile(
-                      user: widget.post.creator, context: context);
+                      user: widget.postComment.commenter, context: context);
                 },
               ),
               const SizedBox(

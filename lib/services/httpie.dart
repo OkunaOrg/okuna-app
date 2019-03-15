@@ -334,6 +334,7 @@ class HttpieService {
     if (error is SocketException) {
       var errorCode = error.osError.errorCode;
       if (errorCode == 61 ||
+          errorCode == 60 ||
           errorCode == 111 ||
           // Network is unreachable
           errorCode == 101 ||

@@ -26,7 +26,6 @@ class OBPostReactionsState extends State<OBPostReactions> {
   ToastService _toastService;
   NavigationService _navigationService;
 
-
   @override
   void initState() {
     super.initState();
@@ -70,7 +69,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
                 return OBEmojiReactionCount(
                   emojiCount,
                   reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                  onLongPressed: (pressedEmojiCount) {
+                  onPressed: (pressedEmojiCount) {
                     _navigationService.navigateToPostReactions(
                         post: widget.post,
                         reactionsEmojiCounts: emojiCounts,
