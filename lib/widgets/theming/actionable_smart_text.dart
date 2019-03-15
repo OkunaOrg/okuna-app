@@ -16,12 +16,12 @@ class OBActionableSmartText extends StatefulWidget {
   final OBTextSize size;
   final TextOverflow overflow;
 
-  const OBActionableSmartText(
-      {Key key,
-      this.text,
-      this.size = OBTextSize.medium,
-      this.overflow = TextOverflow.ellipsis})
-      : super(key: key);
+  const OBActionableSmartText({
+    Key key,
+    this.text,
+    this.size = OBTextSize.medium,
+    this.overflow = TextOverflow.clip,
+  }) : super(key: key);
 
   @override
   OBActionableTextState createState() {

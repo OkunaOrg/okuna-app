@@ -151,7 +151,7 @@ class OBSmartText extends StatelessWidget {
   const OBSmartText({
     Key key,
     this.text,
-    this.overflow = TextOverflow.ellipsis,
+    this.overflow = TextOverflow.clip,
     this.style,
     this.linkStyle,
     this.tagStyle,
