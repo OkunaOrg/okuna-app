@@ -80,6 +80,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 style: TextStyle(fontSize: 14.0),
+                textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   hintText: 'Write something...',
                   contentPadding: inputContentPadding,
