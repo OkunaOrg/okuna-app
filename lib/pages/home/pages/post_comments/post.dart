@@ -140,6 +140,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   }
 
   void _bootstrap() async {
+    await _refreshPost();
     await _refreshComments();
   }
 
@@ -150,6 +151,15 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       _setPostComments(_postComments);
       _scrollToTop();
       _setNoMoreItemsToLoad(false);
+    } catch (error) {
+      _onError(error);
+    }
+  }
+
+  Future<void> _refreshPost() async {
+    try {
+      // This will trigger the updateSubject of the post
+      await _userService.getPostWithUuid(widget.post.uuid);
     } catch (error) {
       _onError(error);
     }
