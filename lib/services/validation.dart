@@ -124,7 +124,11 @@ class ValidationService {
   }
 
   bool isUsernameAllowedCharacters(String username) {
-    return isAlphanumericWithUnderscores(username);
+    String p = r'^[a-zA-Z0-9_.]+$';
+
+    RegExp regExp = new RegExp(p, caseSensitive: false);
+
+    return regExp.hasMatch(username);
   }
 
   bool isCommunityNameAllowedCharacters(String name) {
