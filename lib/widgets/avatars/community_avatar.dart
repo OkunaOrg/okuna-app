@@ -13,11 +13,13 @@ class OBCommunityAvatar extends StatelessWidget {
   final Community community;
   final OBAvatarSize size;
   final VoidCallback onPressed;
+  final bool isZoomable;
 
   const OBCommunityAvatar(
       {Key key,
       @required this.community,
       this.size = OBAvatarSize.small,
+      this.isZoomable = false,
       this.onPressed})
       : super(key: key);
 
@@ -39,6 +41,7 @@ class OBCommunityAvatar extends StatelessWidget {
               avatarUrl: community?.avatar,
               size: size,
               onPressed: onPressed,
+              isZoomable: isZoomable,
             );
           } else {
             String communityHexColor = community.color;
