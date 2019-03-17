@@ -17,8 +17,8 @@ class ValidationService {
   static const int COMMUNITY_DESCRIPTION_MAX_LENGTH = 500;
   static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
-  static const int POST_MAX_LENGTH = 560;
-  static const int POST_COMMENT_MAX_LENGTH = 280;
+  static const int POST_MAX_LENGTH = 1120;
+  static const int POST_COMMENT_MAX_LENGTH = 560;
   static const int PASSWORD_MIN_LENGTH = 10;
   static const int PASSWORD_MAX_LENGTH = 100;
   static const int CIRCLE_MAX_LENGTH = 100;
@@ -90,6 +90,11 @@ class ValidationService {
 
   bool isUsernameAllowedLength(String username) {
     return username.length > 0 && username.length < USERNAME_MAX_LENGTH;
+  }
+
+  bool isPostCommentAllowedLength(String postComment) {
+    return postComment.length > 0 &&
+        postComment.length < POST_COMMENT_MAX_LENGTH;
   }
 
   bool isCommunityNameAllowedLength(String name) {
@@ -225,6 +230,21 @@ class ValidationService {
     } else if (!isUsernameAllowedCharacters(username)) {
       errorMsg =
           'A username can only contain alphanumeric characters and underscores.';
+    }
+
+    return errorMsg;
+  }
+
+  String validatePostComment(String postComment) {
+    assert(postComment != null);
+
+    String errorMsg;
+
+    if (postComment.length == 0) {
+      errorMsg = 'Comment cannot be empty.';
+    } else if (!isPostCommentAllowedLength(postComment)) {
+      errorMsg =
+          'A comment can\'t be longer than $POST_COMMENT_MAX_LENGTH characters.';
     }
 
     return errorMsg;

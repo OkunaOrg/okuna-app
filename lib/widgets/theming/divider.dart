@@ -3,6 +3,9 @@ import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 
 class OBDivider extends StatelessWidget {
+
+  const OBDivider();
+
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
