@@ -15,6 +15,7 @@ import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/badges/badge.dart';
@@ -33,6 +34,7 @@ class OBHomePage extends StatefulWidget {
 class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
+  ToastService _toastService;
   PushNotificationsService _pushNotificationsService;
   IntercomService _intercomService;
 
@@ -95,6 +97,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       _userService = openbookProvider.userService;
       _pushNotificationsService = openbookProvider.pushNotificationsService;
       _intercomService = openbookProvider.intercomService;
+      _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -300,13 +303,25 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     try {
       await _userService.loginWithStoredUserData();
     } catch (error) {
-      if (error is AuthTokenMissingError || error is HttpieRequestError) {
-        _pushNotificationsService.disablePushNotifications();
-        _intercomService.disableIntercom();
-        await _userService.logout();
+      if (error is AuthTokenMissingError) {
+        _logout();
+      } else if (error is HttpieRequestError) {
+        HttpieResponse response = error.response;
+        if (response.isForbidden() || response.isUnauthorized()) {
+          _logout();
+        } else {
+          _onError(error);
+        }
+      } else {
+        _onError(error);
       }
-      rethrow;
     }
+  }
+
+  Future _logout() async {
+    _pushNotificationsService.disablePushNotifications();
+    _intercomService.disableIntercom();
+    await _userService.logout();
   }
 
   bool _backButtonInterceptor(bool stopDefaultButtonEvent) {
@@ -422,6 +437,19 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     User loggedInUser = _userService.getLoggedInUser();
     if (loggedInUser != null) {
       loggedInUser.resetUnreadNotificationsCount();
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
     }
   }
 }
