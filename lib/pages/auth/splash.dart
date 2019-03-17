@@ -46,7 +46,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-          _buildUseTokenLinkButton(context: context),
+            _buildCreateAccountButton(context: context),
           SizedBox(
             height: 20,
           ),
@@ -97,7 +97,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
     );
   }
 
-  Widget _buildUseTokenLinkButton({@required BuildContext context}) {
+  Widget _buildCreateAccountButton({@required BuildContext context}) {
     String buttonText = localizationService.trans('AUTH.CREATE_ACCOUNT');
 
     return OBSuccessButton(
