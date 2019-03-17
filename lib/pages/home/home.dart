@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:Openbook/models/push_notifications/push_notification.dart';
+import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/models/user.dart';
@@ -18,6 +19,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/badges/badge.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +58,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
     _loggedInUserUnreadNotifications = 0;
@@ -72,6 +75,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     super.dispose();
+    BackButtonInterceptor.remove(_backButtonInterceptor);
     WidgetsBinding.instance.removeObserver(this);
     _loggedInUserChangeSubscription.cancel();
     if (_loggedInUserUpdateSubscription != null)
@@ -112,7 +116,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   Widget _getPageForTabIndex(int index) {
     Widget page;
     switch (OBHomePageTabs.values[index]) {
-      case OBHomePageTabs.home:
+      case OBHomePageTabs.timeline:
         page = OBTimelinePage(
           controller: _timelinePageController,
         );
@@ -155,8 +159,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         var tappedTab = OBHomePageTabs.values[index];
         var currentTab = OBHomePageTabs.values[_lastIndex];
 
-        if (tappedTab == OBHomePageTabs.home &&
-            currentTab == OBHomePageTabs.home) {
+        if (tappedTab == OBHomePageTabs.timeline &&
+            currentTab == OBHomePageTabs.timeline) {
           if (_timelinePageController.isFirstRoute()) {
             _timelinePageController.scrollToTop();
           } else {
@@ -305,6 +309,42 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     }
   }
 
+  bool _backButtonInterceptor(bool stopDefaultButtonEvent) {
+    OBHomePageTabs currentTab = OBHomePageTabs.values[_lastIndex];
+    PoppablePageController currentTabController;
+
+    switch (currentTab) {
+      case OBHomePageTabs.notifications:
+        currentTabController = _notificationsPageController;
+        break;
+      case OBHomePageTabs.communities:
+        currentTabController = _communitiesPageController;
+        break;
+      case OBHomePageTabs.timeline:
+        currentTabController = _timelinePageController;
+        break;
+      case OBHomePageTabs.menu:
+        currentTabController = _mainMenuPageController;
+        break;
+      case OBHomePageTabs.search:
+        currentTabController = _searchPageController;
+        break;
+      case OBHomePageTabs.profile:
+        currentTabController = _ownProfilePageController;
+        break;
+      default:
+        throw 'No tab controller to pop';
+    }
+
+    bool stopDefault = currentTabController.canPop();
+
+    if (stopDefault) {
+      currentTabController.pop();
+    }
+
+    return stopDefault;
+  }
+
   void _onLoggedInUserChange(User newUser) async {
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
@@ -386,4 +426,11 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   }
 }
 
-enum OBHomePageTabs { home, search, communities, notifications, profile, menu }
+enum OBHomePageTabs {
+  timeline,
+  search,
+  communities,
+  notifications,
+  profile,
+  menu
+}

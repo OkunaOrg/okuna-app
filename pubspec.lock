@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  back_button_interceptor:
+    dependency: "direct main"
+    description:
+      name: back_button_interceptor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.1"
   boolean_selector:
     dependency: transitive
     description:
