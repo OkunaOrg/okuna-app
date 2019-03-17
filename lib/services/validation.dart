@@ -311,7 +311,7 @@ class ValidationService {
 
     if (!isBioAllowedLength(bio)) {
       errorMsg =
-          'Location can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
+          'Bio can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
     }
 
     return errorMsg;
