@@ -42,13 +42,15 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
       elevation: 0.0,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Expanded(
-              child: _buildLoginButton(context: context),
-            ),
+          _buildUseTokenLinkButton(context: context),
+          SizedBox(
+            height: 20,
+          ),
+          _buildLoginButton(context: context),
           ],
         ),
       ),
@@ -94,4 +96,26 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
       },
     );
   }
+
+  Widget _buildUseTokenLinkButton({@required BuildContext context}) {
+    String buttonText = localizationService.trans('AUTH.CREATE_ACCOUNT');
+
+    return OBSuccessButton(
+      minWidth: double.infinity,
+      size: OBButtonSize.large,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            buttonText,
+            style: TextStyle(fontSize: 18.0),
+          )
+        ],
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/auth/token');
+      },
+    );
+  }
+
 }

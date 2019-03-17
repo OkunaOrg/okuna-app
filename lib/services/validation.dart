@@ -51,6 +51,11 @@ class ValidationService {
     return validators.isEmail(email);
   }
 
+  bool isQualifiedLink(String link) {
+    final uri = Uri.decodeFull(link);
+    return isUrl(uri) && validators.contains(uri, '?token=');
+  }
+
   bool isUrl(String url) {
     return validators.isURL(url);
   }
@@ -235,6 +240,20 @@ class ValidationService {
       errorMsg = 'Email cannot be empty.';
     } else if (!isQualifiedEmail(email)) {
       errorMsg = 'Please provide a valid email.';
+    }
+
+    return errorMsg;
+  }
+
+  String validateUserRegistrationLink(String link) {
+    assert(link != null);
+
+    String errorMsg;
+
+    if (link.length == 0) {
+      errorMsg = 'Link cannot be empty.';
+    } else if (!isQualifiedLink(link)) {
+      errorMsg = 'This link appears to be invalid';
     }
 
     return errorMsg;
