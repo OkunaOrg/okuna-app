@@ -53,8 +53,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                     _buildLinkForm(),
                     const SizedBox(
                       height: 20.0
-                    ),
-                    _buildHelpText()
+                    )
                   ],
                 ))),
       ),
@@ -164,22 +163,6 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
-      ],
-    );
-  }
-
-  Widget _buildHelpText() {
-    String helpText =
-    _localizationService.trans('AUTH.CREATE_ACC.PASTE_LINK_HELP_TEXT');
-
-    return Column(
-      children: <Widget>[
-        Text(helpText,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white)),
       ],
