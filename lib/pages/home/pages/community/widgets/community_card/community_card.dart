@@ -27,6 +27,7 @@ class OBCommunityCard extends StatelessWidget {
               OBCommunityAvatar(
                 community: community,
                 size: OBAvatarSize.large,
+                isZoomable: true,
               ),
               Expanded(child: OBCommunityActions(community)),
             ],

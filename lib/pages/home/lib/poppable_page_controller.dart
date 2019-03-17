@@ -19,4 +19,12 @@ class PoppablePageController {
     });
     return currentRoute.isFirst;
   }
+
+  bool canPop() {
+    return Navigator.canPop(_context);
+  }
+
+  bool pop() {
+    return Navigator.pop(_context);
+  }
 }

@@ -49,9 +49,9 @@ class OBPostReactionsState extends State<OBPostReactions> {
           var post = snapshot.data;
 
           List<PostReactionsEmojiCount> emojiCounts =
-              post.reactionsEmojiCounts.counts;
+              post.reactionsEmojiCounts?.counts;
 
-          if (emojiCounts.length == 0)
+          if (emojiCounts == null || emojiCounts.length == 0)
             return const SizedBox(
               height: 35,
             );

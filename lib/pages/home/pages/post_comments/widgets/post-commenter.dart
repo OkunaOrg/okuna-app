@@ -3,10 +3,11 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_field.dart';
+import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
@@ -30,22 +31,35 @@ class OBPostCommenter extends StatefulWidget {
 class OBPostCommenterState extends State<OBPostCommenter> {
   TextEditingController _textController;
   bool _commentInProgress;
+  bool _formWasSubmitted;
+  bool _needsBootstrap;
 
   UserService _userService;
   ToastService _toastService;
+  ValidationService _validationService;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     _textController = TextEditingController();
     _commentInProgress = false;
+    _formWasSubmitted = false;
+    _needsBootstrap = true;
+
+    _textController.addListener(_onPostCommentChanged);
   }
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
-    _toastService = provider.toastService;
+    if (_needsBootstrap) {
+      var provider = OpenbookProvider.of(context);
+      _userService = provider.userService;
+      _toastService = provider.toastService;
+      _validationService = provider.validationService;
+      _needsBootstrap = false;
+    }
 
     EdgeInsetsGeometry inputContentPadding =
         EdgeInsets.symmetric(vertical: 8.0, horizontal: 20);
@@ -74,21 +88,27 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                 borderRadius: BorderRadius.circular(10.0),
                 color: Color.fromARGB(10, 0, 0, 0),
               ),
-              child: OBTextField(
-                controller: _textController,
-                focusNode: focusNode,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                style: TextStyle(fontSize: 14.0),
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  hintText: 'Write something...',
-                  contentPadding: inputContentPadding,
-                  border: InputBorder.none,
-                ),
-                autofocus: autofocus,
-                autocorrect: true,
-              ),
+              child: Form(
+                  key: _formKey,
+                  child: OBTextFormField(
+                    controller: _textController,
+                    focusNode: focusNode,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    style: TextStyle(fontSize: 14.0),
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
+                      hintText: 'Write something...',
+                      contentPadding: inputContentPadding,
+                    ),
+                    hasBorder: false,
+                    autofocus: autofocus,
+                    autocorrect: true,
+                    validator: (String comment) {
+                      if (!_formWasSubmitted) return null;
+                      return _validationService.validatePostComment(_textController.text);
+                    },
+                  )),
             ),
           ),
           Padding(
@@ -96,7 +116,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             child: OBButton(
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
-              onPressed: _commentPost,
+              onPressed: _submitForm,
               child: Text('Post'),
             ),
           )
@@ -105,7 +125,13 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     );
   }
 
-  void _commentPost() async {
+  void _submitForm() async {
+    _setFormWasSubmitted(true);
+
+    bool formIsValid = _validateForm();
+
+    if (!formIsValid) return;
+
     _setCommentInProgress(true);
     try {
       String commentText = _textController.text;
@@ -113,14 +139,26 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           await _userService.commentPost(text: commentText, post: widget.post);
       widget.post.incrementCommentsCount();
       _textController.clear();
+      _setFormWasSubmitted(false);
+      _validateForm();
       _setCommentInProgress(false);
       if (widget.onPostCommentCreated != null)
         widget.onPostCommentCreated(createdPostComment);
+
     } catch (error) {
       _onError(error);
     } finally {
       _setCommentInProgress(false);
     }
+  }
+
+  void _onPostCommentChanged() {
+    if (!_formWasSubmitted) return;
+    _validateForm();
+  }
+
+  bool _validateForm() {
+    return _formKey.currentState.validate();
   }
 
   void _onError(error) async {
@@ -139,6 +177,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   void _setCommentInProgress(bool commentInProgress) {
     setState(() {
       _commentInProgress = commentInProgress;
+    });
+  }
+
+  void _setFormWasSubmitted(bool formWasSubmitted) {
+    setState(() {
+      _formWasSubmitted = formWasSubmitted;
     });
   }
 }
