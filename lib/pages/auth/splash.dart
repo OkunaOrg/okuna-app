@@ -2,6 +2,7 @@ import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/splash_logo.dart';
 import 'package:flutter/material.dart';
@@ -42,15 +43,16 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
       elevation: 0.0,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            _buildCreateAccountButton(context: context),
-          SizedBox(
-            height: 20,
-          ),
-          _buildLoginButton(context: context),
+            Expanded(
+              child: _buildCreateAccountButton(context: context)
+            ),
+            Expanded(
+              child: _buildLoginButton(context: context),
+            ),
           ],
         ),
       ),
@@ -100,9 +102,8 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   Widget _buildCreateAccountButton({@required BuildContext context}) {
     String buttonText = localizationService.trans('AUTH.CREATE_ACCOUNT');
 
-    return OBSuccessButton(
-      minWidth: double.infinity,
-      size: OBButtonSize.large,
+    return OBSecondaryButton(
+      isLarge: true,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
