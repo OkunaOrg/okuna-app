@@ -59,7 +59,7 @@ class OBCommunityPostHeader extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: OBText(
-                      'c/' + community.name,
+                      '/c/' + community.name,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),

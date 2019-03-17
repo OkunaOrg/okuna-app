@@ -14,10 +14,14 @@ import 'package:flutter/material.dart';
 class OBActionableSmartText extends StatefulWidget {
   final String text;
   final OBTextSize size;
+  final TextOverflow overflow;
 
-  const OBActionableSmartText(
-      {Key key, this.text, this.size = OBTextSize.medium})
-      : super(key: key);
+  const OBActionableSmartText({
+    Key key,
+    this.text,
+    this.size = OBTextSize.medium,
+    this.overflow = TextOverflow.clip,
+  }) : super(key: key);
 
   @override
   OBActionableTextState createState() {
@@ -58,6 +62,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
 
     return OBSmartText(
       text: widget.text,
+      overflow: widget.overflow,
       onCommunityNameTapped: _onCommunityNameTapped,
       onUsernameTapped: _onUsernameTapped,
       onLinkTapped: _onLinkTapped,

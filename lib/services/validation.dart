@@ -17,8 +17,8 @@ class ValidationService {
   static const int COMMUNITY_DESCRIPTION_MAX_LENGTH = 500;
   static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
-  static const int POST_MAX_LENGTH = 560;
-  static const int POST_COMMENT_MAX_LENGTH = 280;
+  static const int POST_MAX_LENGTH = 1120;
+  static const int POST_COMMENT_MAX_LENGTH = 560;
   static const int PASSWORD_MIN_LENGTH = 10;
   static const int PASSWORD_MAX_LENGTH = 100;
   static const int CIRCLE_MAX_LENGTH = 100;
@@ -92,6 +92,11 @@ class ValidationService {
     return username.length > 0 && username.length < USERNAME_MAX_LENGTH;
   }
 
+  bool isPostCommentAllowedLength(String postComment) {
+    return postComment.length > 0 &&
+        postComment.length < POST_COMMENT_MAX_LENGTH;
+  }
+
   bool isCommunityNameAllowedLength(String name) {
     return name.length > 0 && name.length < COMMUNITY_NAME_MAX_LENGTH;
   }
@@ -124,7 +129,11 @@ class ValidationService {
   }
 
   bool isUsernameAllowedCharacters(String username) {
-    return isAlphanumericWithUnderscores(username);
+    String p = r'^[a-zA-Z0-9_.]+$';
+
+    RegExp regExp = new RegExp(p, caseSensitive: false);
+
+    return regExp.hasMatch(username);
   }
 
   bool isCommunityNameAllowedCharacters(String name) {
@@ -226,6 +235,21 @@ class ValidationService {
     return errorMsg;
   }
 
+  String validatePostComment(String postComment) {
+    assert(postComment != null);
+
+    String errorMsg;
+
+    if (postComment.length == 0) {
+      errorMsg = 'Comment cannot be empty.';
+    } else if (!isPostCommentAllowedLength(postComment)) {
+      errorMsg =
+          'A comment can\'t be longer than $POST_COMMENT_MAX_LENGTH characters.';
+    }
+
+    return errorMsg;
+  }
+
   String validateUserEmail(String email) {
     assert(email != null);
 
@@ -307,7 +331,7 @@ class ValidationService {
 
     if (!isBioAllowedLength(bio)) {
       errorMsg =
-          'Location can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
+          'Bio can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
     }
 
     return errorMsg;

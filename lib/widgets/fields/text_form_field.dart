@@ -17,6 +17,9 @@ class OBTextFormField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final bool autocorrect;
   final List<TextInputFormatter> inputFormatters;
+  final FocusNode focusNode;
+  final TextStyle style;
+  final bool hasBorder;
 
   const OBTextFormField(
       {this.controller,
@@ -30,7 +33,10 @@ class OBTextFormField extends StatelessWidget {
       this.maxLines,
       this.textInputAction = TextInputAction.done,
       this.decoration,
-      this.textCapitalization = TextCapitalization.none});
+      this.textCapitalization = TextCapitalization.none,
+      this.focusNode,
+      this.style = const TextStyle(),
+      this.hasBorder = true});
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +67,15 @@ class OBTextFormField extends StatelessWidget {
               break;
           }
 
+          TextStyle finalStyle = style.merge(TextStyle(
+              fontSize: fontSize,
+              color:
+                  themeValueParserService.parseColor(theme.primaryTextColor)));
+
           return Column(
             children: <Widget>[
               TextFormField(
+                focusNode: focusNode,
                 inputFormatters: inputFormatters,
                 textCapitalization: textCapitalization,
                 textInputAction: textInputAction,
@@ -74,10 +86,7 @@ class OBTextFormField extends StatelessWidget {
                 autocorrect: autocorrect,
                 maxLines: maxLines,
                 obscureText: obscureText,
-                style: TextStyle(
-                    fontSize: fontSize,
-                    color: themeValueParserService
-                        .parseColor(theme.primaryTextColor)),
+                style: finalStyle,
                 decoration: InputDecoration(
                   hintText: decoration.hintText,
                   labelStyle: TextStyle(
@@ -89,7 +98,7 @@ class OBTextFormField extends StatelessWidget {
                   hintStyle: TextStyle(
                       color: themeValueParserService
                           .parseColor(theme.primaryTextColor)),
-                  contentPadding:
+                  contentPadding: decoration.contentPadding ??
                       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                   border: InputBorder.none,
                   labelText: decoration.labelText,
@@ -97,7 +106,7 @@ class OBTextFormField extends StatelessWidget {
                   prefixText: decoration.prefixText,
                 ),
               ),
-              OBDivider()
+              hasBorder ? const OBDivider() : const SizedBox()
             ],
           );
         });

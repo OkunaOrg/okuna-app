@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class OBCommunityRules extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    OBText(community.rules)
+                    OBActionableSmartText(text: community.rules)
                   ],
                 ),
               )
