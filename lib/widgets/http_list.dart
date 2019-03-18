@@ -228,6 +228,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Future<void> _refreshList() async {
+    _setLoadingFinished(false);
     _setRefreshInProgress(true);
     try {
       _list = await widget.listRefresher();
