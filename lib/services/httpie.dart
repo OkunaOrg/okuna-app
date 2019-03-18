@@ -404,6 +404,7 @@ class HttpieService {
   }
 
   Future<String> _getFileMimeTypeFromMagicHeaders(File file) async {
+    // TODO When file uploads become larger, this needs to be turned into a stream
     List<int> fileBytes = file.readAsBytesSync();
 
     int magicHeaderBytesLeft = 12;
