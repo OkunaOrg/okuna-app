@@ -32,6 +32,10 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
   bool _needsBootstrap;
 
   StreamSubscription<PostsList> _getTrendingPostsSubscription;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
+
+  ScrollController _scrollController;
 
   @override
   void initState() {
@@ -39,6 +43,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     if (widget.controller != null) widget.controller.attach(this);
     _needsBootstrap = true;
     _posts = [];
+    _scrollController = ScrollController();
   }
 
   @override
@@ -58,19 +63,30 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
       _bootstrap();
       _needsBootstrap = false;
     }
-    return Column(
-      children: [
-        ListTile(
-            title: OBPrimaryAccentText('Trending posts',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
-        _posts.isEmpty && _getTrendingPostsSubscription == null
-            ? _buildNoTrendingPostsAlert()
-            : Column(
-                children: _posts.map((Post post) {
-                return OBPost(post);
-              }).toList())
-      ],
-    );
+    return _posts.isEmpty && _getTrendingPostsSubscription == null
+        ? _buildNoTrendingPostsAlert()
+        : RefreshIndicator(
+            key: _refreshIndicatorKey,
+            child: ListView.builder(
+                controller: _scrollController,
+                physics: const ClampingScrollPhysics(),
+                padding: const EdgeInsets.all(0),
+                itemCount: _posts.length + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: OBPrimaryAccentText('Trending posts',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 24)),
+                    );
+                  }
+
+                  return OBPost(_posts[index]);
+                }),
+            onRefresh: refresh,
+          );
   }
 
   Widget _buildNoTrendingPostsAlert() {
@@ -87,17 +103,29 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     refresh();
   }
 
+  void scrollToTop() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
+  }
+
   Future<void> refresh() async {
     if (_getTrendingPostsSubscription != null)
       _getTrendingPostsSubscription.cancel();
 
-    _getTrendingPostsSubscription = _userService
-        .getTrendingPosts()
-        .asStream()
-        .listen((PostsList postsList) {
+    Future<PostsList> refreshFuture = _userService.getTrendingPosts();
+
+    _getTrendingPostsSubscription =
+        refreshFuture.asStream().listen((PostsList postsList) {
       _setPosts(postsList.posts);
       _getTrendingPostsSubscription = null;
     }, onError: _onError);
+
+    return refreshFuture;
   }
 
   void _onError(error) async {
@@ -131,5 +159,9 @@ class OBTrendingPostsController {
 
   Future<void> refresh() {
     return _state.refresh();
+  }
+
+  void scrollToTop() {
+    _state.scrollToTop();
   }
 }

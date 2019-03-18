@@ -270,6 +270,7 @@ class CreateAccountBloc {
 
   void _onCreateAccountValidationError(String errorMessage) {
     _createAccountErrorFeedbackSubject.add(errorMessage);
+    _clearToken();
   }
 
   void _clearCreateAccount() {

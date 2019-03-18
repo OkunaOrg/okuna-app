@@ -14,6 +14,8 @@ class OBAvatar extends StatelessWidget {
   final VoidCallback onPressed;
   final double borderWidth;
   final bool isZoomable;
+  final double borderRadius;
+  final double customSize;
 
   static const double AVATAR_SIZE_EXTRA_SMALL = 20.0;
   static const double AVATAR_SIZE_SMALL = 30.0;
@@ -54,12 +56,14 @@ class OBAvatar extends StatelessWidget {
       this.onPressed,
       this.avatarFile,
       this.borderWidth,
-      this.isZoomable = false});
+      this.isZoomable = false,
+      this.borderRadius,
+      this.customSize});
 
   @override
   Widget build(BuildContext context) {
     OBAvatarSize finalSize = size ?? OBAvatarSize.small;
-    double avatarSize = getAvatarSize(finalSize);
+    double avatarSize = customSize ?? getAvatarSize(finalSize);
 
     Widget finalAvatarImage;
 
@@ -97,7 +101,7 @@ class OBAvatar extends StatelessWidget {
     }
 
     Widget avatar = ClipRRect(
-      borderRadius: BorderRadius.circular(avatarBorderRadius),
+      borderRadius: BorderRadius.circular(borderRadius ?? avatarBorderRadius),
       child: finalAvatarImage,
     );
 

@@ -1,4 +1,5 @@
 import 'package:Openbook/delegates/localization_delegate.dart';
+import 'package:Openbook/pages/auth/create_account/create_account.dart';
 import 'package:Openbook/pages/auth/create_account/done_step.dart';
 import 'package:Openbook/pages/auth/create_account/email_step.dart';
 import 'package:Openbook/pages/auth/create_account/get_started.dart';
@@ -58,6 +59,10 @@ class MyApp extends StatelessWidget {
               '/auth': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthSplashPage();
+              },
+              '/auth/token': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBAuthCreateAccountPage();
               },
               '/auth/get-started': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
