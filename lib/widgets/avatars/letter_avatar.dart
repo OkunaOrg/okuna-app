@@ -10,6 +10,8 @@ class OBLetterAvatar extends StatelessWidget {
   final Color labelColor;
   final String letter;
   final VoidCallback onPressed;
+  final double borderRadius;
+  final double customSize;
 
   static const double fontSizeExtraSmall = 10.0;
   static const double fontSizeSmall = 14.0;
@@ -23,14 +25,16 @@ class OBLetterAvatar extends StatelessWidget {
       @required this.color,
       this.labelColor,
       @required this.letter,
-      this.onPressed})
+      this.onPressed,
+      this.borderRadius,
+      this.customSize})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
-    double avatarSize = OBAvatar.getAvatarSize(size);
+    double avatarSize = customSize ?? OBAvatar.getAvatarSize(size);
     double fontSize = getAvatarFontSize(size);
     Color finalLabelColor = labelColor != null
         ? labelColor
@@ -43,7 +47,8 @@ class OBLetterAvatar extends StatelessWidget {
       width: avatarSize,
       decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(OBAvatar.avatarBorderRadius)),
+          borderRadius: BorderRadius.circular(
+              borderRadius ?? OBAvatar.avatarBorderRadius)),
       child: Center(
         child: Text(
           letter.toUpperCase(),
