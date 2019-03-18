@@ -14,13 +14,17 @@ class OBCommunityAvatar extends StatelessWidget {
   final OBAvatarSize size;
   final VoidCallback onPressed;
   final bool isZoomable;
+  final double borderRadius;
+  final double customSize;
 
   const OBCommunityAvatar(
       {Key key,
       @required this.community,
       this.size = OBAvatarSize.small,
       this.isZoomable = false,
-      this.onPressed})
+      this.borderRadius,
+      this.onPressed,
+      this.customSize})
       : super(key: key);
 
   @override
@@ -38,11 +42,12 @@ class OBCommunityAvatar extends StatelessWidget {
 
           if (communityHasAvatar) {
             avatar = OBAvatar(
-              avatarUrl: community?.avatar,
-              size: size,
-              onPressed: onPressed,
-              isZoomable: isZoomable,
-            );
+                avatarUrl: community?.avatar,
+                size: size,
+                onPressed: onPressed,
+                isZoomable: isZoomable,
+                borderRadius: borderRadius,
+                customSize: customSize);
           } else {
             String communityHexColor = community.color;
 
@@ -80,7 +85,9 @@ class OBCommunityAvatar extends StatelessWidget {
                 color: communityColor,
                 size: size,
                 onPressed: onPressed,
-                labelColor: textColor);
+                borderRadius: borderRadius,
+                labelColor: textColor,
+                customSize: customSize);
           }
 
           return avatar;

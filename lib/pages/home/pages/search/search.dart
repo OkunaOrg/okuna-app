@@ -4,9 +4,9 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
+import 'package:Openbook/pages/home/pages/search/widgets/trending_posts.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
-import 'package:Openbook/pages/home/pages/search/widgets/trending/trending.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -38,7 +38,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   String _searchQuery;
   List<User> _userSearchResults;
   List<Community> _communitySearchResults;
-  OBTrendingController _trendingController;
+  OBTrendingPostsController _trendingPostsController;
 
   OBUserSearchResultsTab _selectedSearchResultsTab;
 
@@ -50,7 +50,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     super.initState();
     if (widget.controller != null)
       widget.controller.attach(context: context, state: this);
-    _trendingController = OBTrendingController();
+    _trendingPostsController = OBTrendingPostsController();
     _userSearchRequestInProgress = false;
     _communitySearchRequestInProgress = false;
     _hasSearch = false;
@@ -82,8 +82,8 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
         onTabSelectionChanged: _onSearchTabSelectionChanged,
       );
     } else {
-      currentWidget = OBTrending(
-        controller: _trendingController,
+      currentWidget = OBTrendingPosts(
+        controller: _trendingPostsController,
       );
     }
 
@@ -230,7 +230,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   }
 
   void scrollToTop() {
-    _trendingController.scrollToTop();
+    _trendingPostsController.scrollToTop();
   }
 }
 
