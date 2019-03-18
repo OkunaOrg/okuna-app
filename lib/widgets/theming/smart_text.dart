@@ -73,11 +73,11 @@ class TextElement extends SmartTextElement {
 }
 
 final _linkRegex = RegExp(
-    r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)",
+    r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
     caseSensitive: false);
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
-final _usernameRegex = RegExp(r"^@[A-Za-z0-9_]{1,30}$", caseSensitive: false);
+final _usernameRegex = RegExp(r"^@[A-Za-z0-9_.]{1,30}$", caseSensitive: false);
 
 final _communityNameRegex =
     RegExp(r"^/c/[A-Za-z0-9_]{1,30}$", caseSensitive: false);
