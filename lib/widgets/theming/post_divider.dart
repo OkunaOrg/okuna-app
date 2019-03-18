@@ -3,9 +3,8 @@ import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class OBDivider extends StatelessWidget {
-
-  const OBDivider();
+class OBPostDivider extends StatelessWidget {
+  const OBPostDivider();
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +18,20 @@ class OBDivider extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          return SizedBox(
-            height: 16.0,
+          Color color = themeValueParserService.parseColor(theme.primaryColor);
+
+          TinyColor modifiedColor = themeValueParserService.isDarkColor(color)
+              ? TinyColor(color).lighten(15)
+              : TinyColor(color).darken(15);
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
             child: Center(
               child: Container(
-                height: 0.0,
-                margin: EdgeInsetsDirectional.only(start: 0),
                 decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                    color: themeValueParserService
-                        .parseColor(theme.secondaryTextColor),
-                    width: 0.5,
-                  )),
-                ),
+                    color: modifiedColor.color,
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
+                height: 1.0,
               ),
             ),
           );
