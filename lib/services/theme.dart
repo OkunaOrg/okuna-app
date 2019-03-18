@@ -64,6 +64,18 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview: 'assets/images/theme-previews/theme-preview-dark.png'),
+    OBTheme(
+        id: 5,
+        name: 'Space Blue',
+        primaryTextColor: '#ffffff',
+        secondaryTextColor: '#b3b3b3',
+        primaryColor: '#232323',
+        primaryAccentColor: '#045DE9, #7bd1e0',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview: 'assets/images/theme-previews/theme-preview-space-blue.png'),
   ];
 
   ThemeService() {
@@ -120,11 +132,11 @@ class ThemeService {
     return _themes.toList();
   }
 
-  String generateRandomHexColor(){
+  String generateRandomHexColor() {
     int length = 6;
     String chars = '0123456789ABCDEF';
     String hex = '#';
-    while(length-- > 0) hex += chars[(random.nextInt(16)) | 0];
+    while (length-- > 0) hex += chars[(random.nextInt(16)) | 0];
     return hex;
   }
 }
