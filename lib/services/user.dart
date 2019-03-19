@@ -259,9 +259,15 @@ class UserService {
 
   Future<void> loginWithStoredUserData() async {
     var token = await _getStoredAuthToken();
-    if (token == null && !_createAccountBlocService.hasToken()) throw AuthTokenMissingError();
+    if (token == null &&
+        !_createAccountBlocService.hasToken() &&
+        !_createAccountBlocService.hasPasswordResetToken()) throw AuthTokenMissingError();
     if (token == null && _createAccountBlocService.hasToken()) {
       print('User is in register via link flow, dont throw error as it will break the flow');
+      return;
+    }
+    if (token == null && _createAccountBlocService.hasPasswordResetToken()) {
+      print('User is in reset password via link flow, dont throw error as it will break the flow');
       return;
     }
 
