@@ -100,7 +100,10 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
         ],
       ),
       onPressed: () {
-        Navigator.popUntil(context, ModalRoute.withName('/auth/login'));
+        Navigator.popUntil(context, (route){
+          return route.isFirst;
+        });
+        Navigator.pushReplacementNamed(context, '/auth/login');
       },
     );
   }
