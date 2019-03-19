@@ -54,7 +54,7 @@
   "AUTH.LOGIN.PREVIOUS": "Previous",
   "AUTH.LOGIN.TITLE": "Welcome back!",
   "AUTH.LOGIN.SUBTITLE": "Enter your credentials to continue.",
-  "AUTH.LOGIN.FORGOT_PASSWORD": "Forgot Password",
+  "AUTH.LOGIN.FORGOT_PASSWORD": "Forgot password",
   "AUTH.LOGIN.FORGOT_PASSWORD_SUBTITLE": "Enter your username or email",
   "AUTH.LOGIN.USERNAME_LABEL": "Username",
   "AUTH.LOGIN.PASSWORD_LABEL": "Password",
