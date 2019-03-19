@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 
 export 'package:image_picker/image_picker.dart';
 
@@ -16,6 +17,7 @@ class ImagePickerService {
       {@required OBImageType imageType,
       ImageSource source = ImageSource.gallery}) async {
     var image = await ImagePicker.pickImage(source: source);
+    image = await FlutterExifRotation.rotateImage(path: image.path);
 
     if (image == null) {
       return null;
