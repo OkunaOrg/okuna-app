@@ -25,7 +25,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
 
     return Scaffold(
       body: Container(
-        child: Center(child: SingleChildScrollView(child: _buildHooray())),
+        child: Center(child: SingleChildScrollView(child: _buildAllSet())),
       ),
       bottomNavigationBar: _buildBottomBar(),
     );
@@ -50,11 +50,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
     );
   }
 
-  Widget _buildHooray() {
-    var title = localizationService.trans('AUTH.CREATE_ACC.DONE_TITLE');
-
-    String username = createAccountBloc.getUsername();
-
+  Widget _buildAllSet() {
     return Column(
       children: <Widget>[
         Text(
