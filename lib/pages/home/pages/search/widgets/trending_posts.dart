@@ -83,7 +83,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
                     );
                   }
 
-                  return OBPost(_posts[index]);
+                  return OBPost(_posts[index - 1]);
                 }),
             onRefresh: refresh,
           );
