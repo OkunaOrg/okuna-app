@@ -90,12 +90,17 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
   }
 
   Widget _buildNoTrendingPostsAlert() {
-    return OBButtonAlert(
-      text: 'There are no trending posts. Try refreshing in a couple seconds.',
-      onPressed: refresh,
-      buttonText: 'Refresh',
-      buttonIcon: OBIcons.refresh,
-      assetImage: 'assets/images/stickers/perplexed-owl.png',
+    return Column(
+      children: <Widget>[
+        OBButtonAlert(
+          text:
+              'There are no trending posts. Try refreshing in a couple seconds.',
+          onPressed: refresh,
+          buttonText: 'Refresh',
+          buttonIcon: OBIcons.refresh,
+          assetImage: 'assets/images/stickers/perplexed-owl.png',
+        )
+      ],
     );
   }
 
