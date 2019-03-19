@@ -2,10 +2,14 @@ import 'package:Openbook/delegates/localization_delegate.dart';
 import 'package:Openbook/pages/auth/create_account/create_account.dart';
 import 'package:Openbook/pages/auth/create_account/done_step.dart';
 import 'package:Openbook/pages/auth/create_account/email_step.dart';
+import 'package:Openbook/pages/auth/reset_password/forgot_password_step.dart';
 import 'package:Openbook/pages/auth/create_account/get_started.dart';
 import 'package:Openbook/pages/auth/create_account/legal_age_step.dart';
 import 'package:Openbook/pages/auth/create_account/submit_step.dart';
 import 'package:Openbook/pages/auth/create_account/password_step.dart';
+import 'package:Openbook/pages/auth/reset_password/reset_password_success_step.dart';
+import 'package:Openbook/pages/auth/reset_password/set_new_password_step.dart';
+import 'package:Openbook/pages/auth/reset_password/verify_reset_password_link_step.dart';
 import 'package:Openbook/pages/auth/login.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:Openbook/pages/home/home.dart';
@@ -95,6 +99,22 @@ class MyApp extends StatelessWidget {
               '/auth/login': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthLoginPage();
+              },
+              '/auth/forgot_password_step': (BuildContext context) {
+              bootstrapOpenbookProviderInContext(context);
+              return OBAuthForgotPasswordPage();
+              },
+              '/auth/verify_reset_password_link_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBAuthVerifyPasswordPage();
+              },
+              '/auth/set_new_password_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBAuthSetNewPasswordPage();
+              },
+              '/auth/password_reset_success_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBAuthPasswordResetSuccessPage();
               }
             }),
       ),

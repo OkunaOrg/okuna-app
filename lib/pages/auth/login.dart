@@ -169,6 +169,27 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     );
   }
 
+  Widget _buildForgotPasswordButton({@required BuildContext context}) {
+    String buttonText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD');
+
+    return OBSecondaryButton(
+      isFullWidth: true,
+      isLarge: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            buttonText,
+            style: TextStyle(fontSize: 18.0),
+          )
+        ],
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/auth/forgot_password_step');
+      },
+    );
+  }
+
   Widget _buildHeading({@required BuildContext context}) {
     String titleText = _localizationService.trans('AUTH.LOGIN.TITLE');
     String subtitleText = _localizationService.trans('AUTH.LOGIN.SUBTITLE');
@@ -252,6 +273,12 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                               border: OutlineInputBorder(),
                             ),
                             autocorrect: false,
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          Center(
+                            child: _buildForgotPasswordButton(context: context)
                           )
                         ],
                       )),
