@@ -8,23 +8,22 @@ import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
-class OBAuthLoginPage extends StatefulWidget {
+class OBAuthForgotPasswordPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return OBAuthLoginPageState();
+    return OBAuthForgotPasswordPageState();
   }
 }
 
-class OBAuthLoginPageState extends State<OBAuthLoginPage> {
+class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isSubmitted;
-  bool _passwordIsVisible;
-  String _loginFeedback;
-  bool _loginInProgress;
+  String _errorFeedback;
+  bool _requestInProgress;
 
   TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   LocalizationService _localizationService;
   ValidationService _validationService;
@@ -34,19 +33,18 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   void initState() {
     super.initState();
 
-    _loginInProgress = false;
+    _requestInProgress = false;
     _isSubmitted = false;
-    _passwordIsVisible = false;
 
     _usernameController.addListener(_validateForm);
-    _passwordController.addListener(_validateForm);
+    _emailController.addListener(_validateForm);
   }
 
   @override
   void dispose() {
     super.dispose();
     _usernameController.removeListener(_validateForm);
-    _passwordController.removeListener(_validateForm);
+    _emailController.removeListener(_validateForm);
   }
 
   @override
@@ -67,11 +65,11 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                     const SizedBox(
                       height: 30.0,
                     ),
-                    _buildLoginForm(),
+                    _buildRequestResetPasswordForm(),
                     const SizedBox(
                       height: 20.0,
                     ),
-                    _buildLoginFeedback()
+                    _buildErrorFeedback()
                   ],
                 ))),
       ),
@@ -95,12 +93,12 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     );
   }
 
-  Widget _buildLoginFeedback() {
-    if (_loginFeedback == null) return const SizedBox();
+  Widget _buildErrorFeedback() {
+    if (_errorFeedback == null) return const SizedBox();
 
     return SizedBox(
       child: Text(
-        _loginFeedback,
+        _errorFeedback,
         style: TextStyle(fontSize: 16.0, color: Colors.deepOrange),
         textAlign: TextAlign.center,
       ),
@@ -111,38 +109,41 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     String buttonText = _localizationService.trans('AUTH.LOGIN.LOGIN');
 
     return OBSuccessButton(
-      isLoading: _loginInProgress,
+      isLoading: _requestInProgress,
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () async {
         _isSubmitted = true;
         if (_validateForm()) {
-          await _login(context);
+          await _requestPasswordReset(context);
         }
       },
     );
   }
 
-  Future<void> _login(BuildContext context) async {
-    _setLoginInProgress(true);
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-    try {
-      await _userService.loginWithCredentials(
-          username: username, password: password);
-      Navigator.pop(context);  //pop the login form screen
-      Navigator.pushReplacementNamed(context, '/'); //replace the underlying login splash screen too
-    } on CredentialsMismatchError {
-      _setLoginFeedback(
-          _localizationService.trans('AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR'));
-    } on HttpieRequestError {
-      _setLoginFeedback(_localizationService.trans('AUTH.LOGIN.SERVER_ERROR'));
-    } on HttpieConnectionRefusedError {
-      _setLoginFeedback(
-          _localizationService.trans('AUTH.LOGIN.CONNECTION_ERROR'));
+  Future<void> _requestPasswordReset(BuildContext context) async {
+    _setRequestInProgress(true);
+    String username = _validateUsername(_usernameController.text) == null ?  _usernameController.text : '';
+    String email;
+    if (username == '') {
+      email = _validateEmail(_emailController.text) == null ?  _emailController.text : '';
     }
-    _setLoginInProgress(false);
+    try {
+      await _userService.requestPasswordReset(username: username, email: email);
+      Navigator.pushNamed(context, '/auth/verify_reset_password_link_step');
+    } catch (error) {
+      if (error is HttpieRequestError) {
+        String errorMessage = await error.toHumanReadableMessage();
+        _setErrorFeedback(errorMessage);
+      }
+      if (error is HttpieConnectionRefusedError) {
+        _setErrorFeedback(
+            _localizationService.trans('AUTH.LOGIN.CONNECTION_ERROR'));
+      }
+    } finally {
+      _setRequestInProgress(false);
+    }
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
@@ -169,35 +170,14 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     );
   }
 
-  Widget _buildForgotPasswordButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD');
-
-    return OBSecondaryButton(
-      isFullWidth: true,
-      isLarge: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            buttonText,
-            style: TextStyle(fontSize: 18.0),
-          )
-        ],
-      ),
-      onPressed: () {
-        Navigator.pushNamed(context, '/auth/forgot_password_step');
-      },
-    );
-  }
-
   Widget _buildHeading({@required BuildContext context}) {
-    String titleText = _localizationService.trans('AUTH.LOGIN.TITLE');
-    String subtitleText = _localizationService.trans('AUTH.LOGIN.SUBTITLE');
+    String titleText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD');
+    String subtitleText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD_SUBTITLE');
 
     return Column(
       children: <Widget>[
         Text(
-          '👋',
+          '😬',
           style: TextStyle(fontSize: 45.0, color: Colors.black),
         ),
         const SizedBox(
@@ -215,19 +195,22 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     );
   }
 
-  Widget _buildLoginForm() {
+  Widget _buildRequestResetPasswordForm() {
     // If we use StreamBuilder to build the TexField it has a weird
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     String usernameInputLabel =
-        _localizationService.trans('AUTH.LOGIN.USERNAME_LABEL');
+    _localizationService.trans('AUTH.LOGIN.USERNAME_LABEL');
 
-    String passwordInputLabel =
-        _localizationService.trans('AUTH.LOGIN.PASSWORD_LABEL');
+    String emailInputLabel =
+    _localizationService.trans('AUTH.LOGIN.EMAIL_LABEL');
+
+    String orText =
+    _localizationService.trans('AUTH.LOGIN.OR_TEXT');
 
     EdgeInsetsGeometry inputContentPadding =
-        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
+    EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
 
     return Form(
         key: _formKey,
@@ -255,31 +238,23 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                           const SizedBox(
                             height: 20.0,
                           ),
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: !_passwordIsVisible,
-                            validator: _validatePassword,
-                            decoration: InputDecoration(
-                              suffixIcon: GestureDetector(
-                                child: Icon(_passwordIsVisible
-                                    ? Icons.visibility_off
-                                    : Icons.visibility),
-                                onTap: () {
-                                  _togglePasswordVisibility();
-                                },
-                              ),
-                              contentPadding: inputContentPadding,
-                              labelText: passwordInputLabel,
-                              border: OutlineInputBorder(),
-                            ),
-                            autocorrect: false,
+                          SizedBox(
+                            height: 20.0,
+                            child: Text(orText),
                           ),
                           const SizedBox(
                             height: 20.0,
                           ),
-                          Center(
-                            child: _buildForgotPasswordButton(context: context)
-                          )
+                          TextFormField(
+                            controller: _emailController,
+                            validator: _validateEmail,
+                            decoration: InputDecoration(
+                              contentPadding: inputContentPadding,
+                              labelText: emailInputLabel,
+                              border: OutlineInputBorder(),
+                            ),
+                            autocorrect: false,
+                          ),
                         ],
                       )),
                 ),
@@ -291,37 +266,36 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
 
   String _validateUsername(String value) {
     if (!_isSubmitted) return null;
+    if (_emailController.text.length > 0 && value == '') {
+      return null;
+    }
     return _validationService.validateUserUsername(value);
   }
 
-  String _validatePassword(String value) {
+  String _validateEmail(String value) {
     if (!_isSubmitted) return null;
-
-    return _validationService.validateUserPassword(value);
+    if (_usernameController.text.length > 0) {
+      return null;
+    }
+    return _validationService.validateUserEmail(value);
   }
 
   bool _validateForm() {
-    if (_loginFeedback != null) {
-      _setLoginFeedback(null);
+    if (_errorFeedback != null) {
+      _setErrorFeedback(null);
     }
     return _formKey.currentState.validate();
   }
 
-  void _togglePasswordVisibility() {
+  void _setErrorFeedback(String feedback) {
     setState(() {
-      _passwordIsVisible = !_passwordIsVisible;
+      _errorFeedback = feedback;
     });
   }
 
-  void _setLoginFeedback(String feedback) {
+  void _setRequestInProgress(bool requestInProgress) {
     setState(() {
-      _loginFeedback = feedback;
-    });
-  }
-
-  void _setLoginInProgress(bool loginInProgress) {
-    setState(() {
-      _loginInProgress = loginInProgress;
+      _requestInProgress = requestInProgress;
     });
   }
 }

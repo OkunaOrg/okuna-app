@@ -15,6 +15,7 @@ class CreateAccountBloc {
 
   // Serves as a snapshot to the data
   final userRegistrationData = UserRegistrationData();
+  final passwordResetData = PasswordResetData();
 
   final _isOfLegalAgeSubject = ReplaySubject<bool>(maxSize: 1);
   final _nameSubject = ReplaySubject<String>(maxSize: 1);
@@ -23,6 +24,7 @@ class CreateAccountBloc {
   final _avatarSubject = ReplaySubject<File>(maxSize: 1);
   final _usernameSubject = ReplaySubject<String>(maxSize: 1);
   final registrationTokenSubject = ReplaySubject<String>(maxSize: 1);
+  final _passwordResetTokenSubject = ReplaySubject<String>(maxSize: 1);
 
   // Create account begins
 
@@ -45,6 +47,7 @@ class CreateAccountBloc {
     _passwordSubject.listen(_onPasswordChange);
     _avatarSubject.listen(_onAvatarChange);
     registrationTokenSubject.listen(_onTokenChange);
+    _passwordResetTokenSubject.listen(_onPasswordResetTokenChange);
   }
 
   void dispose() {
@@ -54,6 +57,7 @@ class CreateAccountBloc {
     _passwordSubject.close();
     _avatarSubject.close();
     _usernameSubject.close();
+    _passwordResetTokenSubject.close();
     registrationTokenSubject.close();
   }
 
@@ -231,6 +235,30 @@ class CreateAccountBloc {
 
   // Registration Token ends
 
+  // Password Reset Token begins
+  bool hasPasswordResetToken() {
+    return passwordResetData.passwordResetToken != null;
+  }
+
+  String getPasswordResetToken() {
+    return passwordResetData.passwordResetToken;
+  }
+
+  void setPasswordResetToken(String passwordResetToken) async {
+    _passwordResetTokenSubject.add(passwordResetToken);
+  }
+
+  void _onPasswordResetTokenChange(String passwordResetToken) {
+    if (passwordResetToken == null) return;
+    passwordResetData.passwordResetToken = passwordResetToken;
+  }
+
+  void _clearPasswordResetTokenToken() {
+    passwordResetData.passwordResetToken = null;
+  }
+
+  //Password Reset Token ends
+
   Future<bool> createAccount() async {
     _clearCreateAccount();
 
@@ -285,6 +313,7 @@ class CreateAccountBloc {
     _clearAvatar();
     _clearPassword();
     _clearToken();
+    _clearPasswordResetTokenToken();
   }
 }
 
@@ -296,4 +325,8 @@ class UserRegistrationData {
   String email;
   String password;
   File avatar;
+}
+
+class PasswordResetData {
+  String passwordResetToken;
 }

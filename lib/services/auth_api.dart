@@ -21,6 +21,8 @@ class AuthApiService {
   static const GET_LINKED_USERS_PATH = 'api/auth/linked-users/';
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const LOGIN_PATH = 'api/auth/login/';
+  static const REQUEST_RESET_PASSWORD_PATH = 'api/auth/password/reset/';
+  static const VERIFY_RESET_PASSWORD_PATH = 'api/auth/password/verify/';
   static const AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH =
       'api/auth/user/notifications-settings/';
 
@@ -189,6 +191,25 @@ class AuthApiService {
       {@required String username, @required String password}) {
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
+  }
+
+  Future<HttpieResponse> requestPasswordReset(
+      {String username, String email}) {
+    var body = {};
+    if (username != null && username != '') {
+      body = {'username': username };
+    }
+    if (email != null && email != '') {
+      body['email'] = email;
+    }
+    return this._httpService.postJSON('$apiURL$REQUEST_RESET_PASSWORD_PATH',
+        body: body);
+  }
+
+  Future<HttpieResponse> verifyPasswordReset(
+      {String newPassword, String passwordResetToken}) {
+    return this._httpService.postJSON('$apiURL$VERIFY_RESET_PASSWORD_PATH',
+        body: {'new_password': newPassword , 'token': passwordResetToken});
   }
 
   Future<HttpieResponse> getAuthenticatedUserNotificationsSettings() {

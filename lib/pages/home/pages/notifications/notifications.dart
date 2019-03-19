@@ -41,6 +41,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   StreamSubscription _pushNotificationSubscription;
 
   bool _needsBootstrap;
+  bool _isFirstNotificationsRefresh;
 
   // Should be the case when the page is visible to the user
   bool _shouldMarkNotificationsAsRead;
@@ -55,6 +56,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
     _needsBootstrap = true;
     _shouldMarkNotificationsAsRead = true;
+    _isFirstNotificationsRefresh = true;
   }
 
   @override
@@ -112,6 +114,12 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshNotifications() async {
+    if (!_isFirstNotificationsRefresh) {
+      _userService.readNotifications();
+    } else {
+      _isFirstNotificationsRefresh = false;
+    }
+
     NotificationsList notificationsList = await _userService.getNotifications();
     return notificationsList.notifications;
   }
