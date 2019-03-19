@@ -174,6 +174,20 @@ class UserService {
     }
   }
 
+  Future<void> requestPasswordReset(
+      {String username, String email}) async {
+    HttpieResponse response = await _authApiService.requestPasswordReset(
+        username: username, email: email);
+        _checkResponseIsOk(response);
+  }
+
+  Future<void> verifyPasswordReset(
+      {@required String newPassword, @required String passwordResetToken}) async {
+    HttpieResponse response = await _authApiService.verifyPasswordReset(
+        newPassword: newPassword, passwordResetToken: passwordResetToken);
+    _checkResponseIsOk(response);
+  }
+
   Future<void> loginWithAuthToken(String authToken) async {
     await _setAuthToken(authToken);
     await refreshUser();
