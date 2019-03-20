@@ -30,6 +30,7 @@ import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/url_launcher.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/utils_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
 
@@ -89,6 +90,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   UrlLauncherService urlLauncherService = UrlLauncherService();
   IntercomService intercomService = IntercomService();
   DialogService dialogService = DialogService();
+  UtilsService utilsService = UtilsService();
 
   @override
   void initState() {
@@ -96,6 +98,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     initAsyncState();
     imageCache.maximumSize = 200 << 20; // 200MB
     connectionsCirclesApiService.setHttpService(httpService);
+    httpService.setUtilsService(utilsService);
     connectionsCirclesApiService
         .setStringTemplateService(stringTemplateService);
     communitiesApiService.setHttpieService(httpService);
