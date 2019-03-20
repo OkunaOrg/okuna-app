@@ -133,7 +133,7 @@ packages:
       name: flutter_advanced_networkimage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.13"
+    version: "0.4.14"
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -194,7 +194,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0+1"
+    version: "0.12.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -248,14 +248,14 @@ packages:
       name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "1.0.0"
   image_picker:
     dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.12+1"
+    version: "0.5.0+9"
   intercom_flutter:
     dependency: "direct main"
     description:

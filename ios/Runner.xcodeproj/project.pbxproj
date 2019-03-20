@@ -162,6 +162,13 @@
 			remoteGlobalIDString = 89ABAE4D2203425900049DFB;
 			remoteInfo = OneSignalNotificationServiceExtension;
 		};
+		89CF474322419BFD001BC50D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CE8375F5D12E4C085E8D4CF09BCD280;
+			remoteInfo = flutter_exif_rotation;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -316,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				8925094A222F0E0900455D87 /* libdevice_info.a */,
+				89CF474422419BFD001BC50D /* libflutter_exif_rotation.a */,
 				8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */,
 				8928E31E22356450001DB32A /* libFMDB.a */,
 				898053A022047AAF00E47AD9 /* libimage_cropper.a */,
@@ -635,6 +643,13 @@
 			remoteRef = 898053B522047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		89CF474422419BFD001BC50D /* libflutter_exif_rotation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libflutter_exif_rotation.a;
+			remoteRef = 89CF474322419BFD001BC50D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -688,7 +703,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
