@@ -41,7 +41,7 @@ dependencies:
   rxdart: ^0.18.1
   video_player: ^0.10.0
   sprintf: "^4.0.0"
-  image_picker: ^0.5.0+9
+  image_picker: 0.5.0+3
   image_cropper: ^1.0.0
   flutter:
     sdk: flutter

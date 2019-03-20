@@ -1,13 +1,17 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/services/utils_service.dart';
+import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
-
 export 'package:image_picker/image_picker.dart';
 
 class ImagePickerService {
+
   static const Map IMAGE_RATIOS = {
     OBImageType.avatar: {'x': 1.0, 'y': 1.0},
     OBImageType.cover: {'x': 16.0, 'y': 9.0}
@@ -17,17 +21,19 @@ class ImagePickerService {
       {@required OBImageType imageType,
       ImageSource source = ImageSource.gallery}) async {
     var image = await ImagePicker.pickImage(source: source);
-    image = await FlutterExifRotation.rotateImage(path: image.path);
 
     if (image == null) {
       return null;
     }
 
-    if (imageType == OBImageType.post) return image;
+    double ratioX =
+        imageType != OBImageType.post ? IMAGE_RATIOS[imageType]['x'] : null;
+    double ratioY =
+        imageType != OBImageType.post ? IMAGE_RATIOS[imageType]['y'] : null;
 
-    double ratioX = IMAGE_RATIOS[imageType]['x'];
-    double ratioY = IMAGE_RATIOS[imageType]['y'];
     File croppedFile = await ImageCropper.cropImage(
+      toolbarTitle: 'Edit image',
+      toolbarColor: Colors.black,
       sourcePath: image.path,
       ratioX: ratioX,
       ratioY: ratioY,
