@@ -135,7 +135,7 @@ class OBNotificationsSettingsPageState
           value: _postCommentNotifications,
           title: 'Post comment',
           subtitle:
-              OBText('Be notified when someone comments on one of your posts'),
+              OBText('Be notified when someone comments on one of your posts or one you also commented.'),
           onChanged: _setPostCommentNotifications,
           onTap: _togglePostCommentNotifications,
           hasDivider: false,
