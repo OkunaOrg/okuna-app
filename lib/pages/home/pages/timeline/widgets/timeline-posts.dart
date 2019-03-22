@@ -157,6 +157,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   void scrollToTop() {
     if (_postsScrollController.hasClients) {
+      if (_postsScrollController.offset == 0) {
+        _refreshIndicatorKey.currentState.show();
+      }
+
       _postsScrollController.animateTo(
         0.0,
         curve: Curves.easeOut,
@@ -303,6 +307,10 @@ class OBTimelinePostsController {
     _homePostsState.scrollToTop();
   }
 
+  void refreshPosts() {
+    _homePostsState._refreshPosts();
+  }
+
   bool isAttached() {
     return _homePostsState != null;
   }
@@ -336,7 +344,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
 
   @override
   Widget buildChild(LoadMoreStatus status,
-      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.chinese}){
+      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.chinese}) {
     String text = builder(status);
 
     if (status == LoadMoreStatus.fail) {

@@ -92,6 +92,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   void scrollToTop() {
+    if (_listScrollController.offset == 0) {
+      _listRefreshIndicatorKey.currentState.show();
+    }
+
     _listScrollController.animateTo(
       0.0,
       curve: Curves.easeOut,
@@ -394,7 +398,7 @@ class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {
 
   @override
   Widget buildChild(LoadMoreStatus status,
-      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.chinese}){
+      {LoadMoreTextBuilder builder = DefaultLoadMoreTextBuilder.chinese}) {
     if (status == LoadMoreStatus.fail) {
       return SizedBox(
         child: Row(
