@@ -104,7 +104,7 @@ class OBCommunityTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('c/' + community.name,
+                Text('/c/' + community.name,
                     style: TextStyle(
                       color: textColor,
                       fontSize: 16,
