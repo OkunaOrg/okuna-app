@@ -195,12 +195,18 @@ class NavigationService {
   }
 
   Future navigateToPostComments(
-      {@required Post post, @required BuildContext context}) {
+      {@required Post post,
+      @required BuildContext context,
+      bool hasPostPreview = false}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
-            widget: OBPostCommentsPage(post, autofocusCommentInput: false)));
+            widget: OBPostCommentsPage(
+              post,
+              autofocusCommentInput: false,
+              hasPostPreview: hasPostPreview,
+            )));
   }
 
   Future navigateToPost({@required Post post, @required BuildContext context}) {
