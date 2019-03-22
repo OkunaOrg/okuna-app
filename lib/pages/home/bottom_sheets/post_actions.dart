@@ -61,13 +61,11 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           postCommunity.isModerator(loggedInUser);
     }
 
-    if (loggedInUserIsPostCreator) {
-      postActions.add(OBMutePostTile(
-        post: post,
-        onMutedPost: _dismiss,
-        onUnmutedPost: _dismiss,
-      ));
-    }
+    postActions.add(OBMutePostTile(
+      post: post,
+      onMutedPost: _dismiss,
+      onUnmutedPost: _dismiss,
+    ));
 
     if (loggedInUserIsPostCreator ||
         loggedInUserIsCommunityAdministrator ||
