@@ -35,7 +35,7 @@ class OBCommunityNavBar extends StatelessWidget
               border: null,
               actionsForegroundColor: actionsColor,
               middle: Text(
-                'c/' + community.name,
+                '/c/' + community.name,
                 style: TextStyle(color: actionsColor),
               ),
               transitionBetweenRoutes: false,

@@ -109,7 +109,8 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
     } else if (notificationTypeStr == OBNotification.communityInvite) {
       notificationType = NotificationType.communityInvite;
     } else {
-      throw 'Unsupported notification type';
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported notification type');
     }
 
     return notificationType;
