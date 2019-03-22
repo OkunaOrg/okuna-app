@@ -66,6 +66,19 @@ class ThemeService {
         themePreview: 'assets/images/theme-previews/theme-preview-dark.png'),
     OBTheme(
         id: 5,
+        name: 'Light Blue',
+        primaryAccentColor: '#045DE9, #7bd1e0',
+        primaryTextColor: '#505050',
+        secondaryTextColor: '#676767',
+        primaryColor: '#ffffff',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview:
+            'assets/images/theme-previews/theme-preview-light-blue.png'),
+    OBTheme(
+        id: 6,
         name: 'Space Blue',
         primaryTextColor: '#ffffff',
         secondaryTextColor: '#b3b3b3',
@@ -75,7 +88,34 @@ class ThemeService {
         successColorAccent: '#ffffff',
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
-        themePreview: 'assets/images/theme-previews/theme-preview-space-blue.png'),
+        themePreview:
+            'assets/images/theme-previews/theme-preview-space-blue.png'),
+    OBTheme(
+        id: 7,
+        name: 'Light Rose',
+        primaryAccentColor: '#D4418E, #ff84af',
+        primaryTextColor: '#505050',
+        secondaryTextColor: '#676767',
+        primaryColor: '#ffffff',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview:
+            'assets/images/theme-previews/theme-preview-light-rose.png'),
+    OBTheme(
+        id: 8,
+        name: 'Space Rose',
+        primaryTextColor: '#ffffff',
+        secondaryTextColor: '#b3b3b3',
+        primaryColor: '#232323',
+        primaryAccentColor: '#D4418E, #ff84af',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview:
+            'assets/images/theme-previews/theme-preview-space-rose.png')
   ];
 
   ThemeService() {

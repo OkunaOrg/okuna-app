@@ -110,6 +110,10 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
 
   void scrollToTop() {
     if (_scrollController.hasClients) {
+      if (_scrollController.offset == 0) {
+        _refreshIndicatorKey.currentState.show();
+      }
+
       _scrollController.animateTo(
         0.0,
         curve: Curves.easeOut,
