@@ -27,6 +27,11 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
 
+    int postCreatorId = postCommentNotification.getPostCreatorId();
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    bool isOwnPostNotification =
+        openbookProvider.userService.getLoggedInUser().id == postCreatorId;
+
     Widget postImagePreview;
     if (post.hasImage()) {
       postImagePreview = ClipRRect(
@@ -51,8 +56,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
       onTap: () {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
-        openbookProvider.navigationService
-            .navigateToPostComments(post: postComment.post, context: context);
+        openbookProvider.navigationService.navigateToPostComments(
+            post: postComment.post, context: context, hasPostPreview: true);
       },
       leading: OBAvatar(
         onPressed: navigateToCommenterProfile,
@@ -60,7 +65,9 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
       title: OBActionableSmartText(
-        text: '@$postCommenterUsername commented: $postCommentText',
+        text: isOwnPostNotification
+            ? '@$postCommenterUsername commented: $postCommentText'
+            : '@$postCommenterUsername also commented: $postCommentText',
       ),
       trailing: postImagePreview,
       subtitle: OBSecondaryText(notification.getRelativeCreated()),

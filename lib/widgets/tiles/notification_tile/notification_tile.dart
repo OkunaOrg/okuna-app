@@ -70,7 +70,8 @@ class OBNotificationTile extends StatelessWidget {
         );
         break;
       default:
-        throw 'Unsupported notification content object type';
+        print('Unsupported notification content object type');
+        return const SizedBox();
     }
 
     if (!notification.read) {

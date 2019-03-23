@@ -63,4 +63,8 @@ class PostComment {
   int getCommenterId() {
     return this.commenter.id;
   }
+
+  int getPostCreatorId(){
+    return post.getCreatorId();
+  }
 }

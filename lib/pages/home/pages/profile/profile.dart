@@ -42,6 +42,9 @@ class OBProfilePageState extends State<OBProfilePage> {
   ScrollController _scrollController;
   bool _refreshPostsInProgress;
 
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
   @override
   void initState() {
     super.initState();
@@ -74,6 +77,7 @@ class OBProfilePageState extends State<OBProfilePage> {
             children: <Widget>[
               Expanded(
                 child: RefreshIndicator(
+                    key: _refreshIndicatorKey,
                     child: LoadMore(
                         whenEmptyLoad: false,
                         isFinish: !_morePostsToLoad,
@@ -135,6 +139,10 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   void scrollToTop() {
+    if (_scrollController.offset == 0) {
+      _refreshIndicatorKey.currentState.show();
+    }
+
     _scrollController.animateTo(
       0.0,
       curve: Curves.easeOut,

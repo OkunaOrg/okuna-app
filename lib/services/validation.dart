@@ -149,14 +149,6 @@ class ValidationService {
     return regExp.hasMatch(name);
   }
 
-  bool isCommunityUserAdjectiveAllowedCharacters(String name) {
-    String p = r'^[a-zA-Z]+$';
-
-    RegExp regExp = new RegExp(p, caseSensitive: false);
-
-    return regExp.hasMatch(name);
-  }
-
   Future<bool> isUsernameTaken(String username) async {
     HttpieResponse response =
         await _authApiService.checkUsernameIsAvailable(username: username);
@@ -458,8 +450,6 @@ class ValidationService {
     if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
       errorMsg =
           'Adjectives can\'t be longer than $COMMUNITY_USER_ADJECTIVE_MAX_LENGTH characters.';
-    } else if (!isCommunityUserAdjectiveAllowedCharacters(userAdjective)) {
-      errorMsg = 'Adjectives can only contain alphabetical characters.';
     }
 
     return errorMsg;

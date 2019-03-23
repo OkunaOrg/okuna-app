@@ -7,6 +7,12 @@ import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
+import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
+import 'package:Openbook/widgets/post/widgets/post_circles.dart';
+import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
+import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
+import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,9 +23,11 @@ import 'package:Openbook/services/httpie.dart';
 class OBPostCommentsPage extends StatefulWidget {
   final Post post;
   final bool autofocusCommentInput;
+  final bool hasPostPreview;
 
   OBPostCommentsPage(
     this.post, {
+    this.hasPostPreview=false,
     this.autofocusCommentInput: false,
   });
 
@@ -88,24 +96,47 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                               itemCount: _postComments.length + 1,
                               itemBuilder: (context, index) {
                                 if (index == 0) {
+                                  List<Widget> columnChildren = [];
+
+                                  if (widget.hasPostPreview) {
+                                    columnChildren.addAll([
+                                      OBPostHeader(
+                                        post: widget.post,
+                                        onPostDeleted: _onPostDeleted,
+                                      ),
+                                      OBPostBody(widget.post),
+                                      OBPostReactions(widget.post),
+                                      OBPostCircles(widget.post),
+                                      OBPostActions(
+                                        widget.post,
+                                        onWantsToCommentPost:
+                                            _focusCommentInput,
+                                      ),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                      OBPostDivider(),
+                                    ]);
+                                  }
+
+                                  columnChildren.add(Padding(
+                                    key: _postCommentsKey,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 10.0),
+                                    child: OBSecondaryText(
+                                      _postComments.length > 0
+                                          ? 'Latest comments'
+                                          : 'Be the first to comment!',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0),
+                                    ),
+                                  ));
+
                                   return Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        key: _postCommentsKey,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20.0, vertical: 10.0),
-                                        child: OBSecondaryText(
-                                          _postComments.length > 0
-                                              ? 'Latest comments'
-                                              : 'Be the first to comment!',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16.0),
-                                        ),
-                                      ),
-                                    ],
+                                    children: columnChildren,
                                   );
                                 }
 
@@ -149,7 +180,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       _postComments =
           (await _userService.getCommentsForPost(widget.post)).comments;
       _setPostComments(_postComments);
-      _scrollToTop();
       _setNoMoreItemsToLoad(false);
     } catch (error) {
       _onError(error);
@@ -189,6 +219,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     return false;
   }
 
+  void _onPostDeleted(Post post) {
+    Navigator.of(context).pop();
+  }
+
   void _removePostCommentAtIndex(int index) {
     setState(() {
       _postComments.removeAt(index);
@@ -208,6 +242,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
+  }
+
+  void _focusCommentInput() {
+    FocusScope.of(context).requestFocus(_commentInputFocusNode);
   }
 
   void _unfocusCommentInput() {
