@@ -145,7 +145,7 @@ class OBNotificationsSettingsPageState
           value: _postReactionNotifications,
           title: 'Post reaction',
           subtitle:
-              OBText('Be notified when someone reactions on one of your posts'),
+              OBText('Be notified when someone reacts on one of your posts'),
           onChanged: _setPostReactionNotifications,
           onTap: _togglePostReactionNotifications,
           hasDivider: false,

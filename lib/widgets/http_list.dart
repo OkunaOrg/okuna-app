@@ -237,7 +237,6 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     try {
       _list = await widget.listRefresher();
       _setList(_list);
-      scrollToTop();
     } catch (error) {
       _onError(error);
     } finally {

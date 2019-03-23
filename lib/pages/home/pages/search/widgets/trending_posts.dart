@@ -83,7 +83,10 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
                     );
                   }
 
-                  return OBPost(_posts[index - 1]);
+                  return OBPost(
+                    _posts[index - 1],
+                    onPostDeleted: _onPostDeleted,
+                  );
                 }),
             onRefresh: refresh,
           );
@@ -106,6 +109,12 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
 
   void _bootstrap() {
     refresh();
+  }
+
+  void _onPostDeleted(Post post) {
+    setState(() {
+      _posts.remove(post);
+    });
   }
 
   void scrollToTop() {
