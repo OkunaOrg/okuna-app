@@ -54,8 +54,8 @@ class OBMutePostTileState extends State<OBMutePostTile> {
           enabled: !_requestInProgress,
           leading: OBIcon(isMuted ? OBIcons.unmutePost : OBIcons.mutePost),
           title: OBText(isMuted
-              ? 'Unmute post notifications'
-              : 'Mute post notifications'),
+              ? 'Turn on post notifications'
+              : 'Turn off post notifications'),
           onTap: isMuted ? _unmutePost : _mutePost,
         );
       },
