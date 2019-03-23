@@ -164,7 +164,7 @@ class User extends UpdatableModel<User> {
   }
 
   String getProfileAvatar() {
-    return this.profile.avatar;
+    return this.profile?.avatar;
   }
 
   String getProfileName() {
