@@ -204,9 +204,6 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         }
 
         if (tappedTab == OBHomePageTabs.notifications) {
-          // Allow notifications page to mark as read
-          _notificationsPageController.setShouldMarkNotificationsAsRead(true);
-
           if (currentTab == OBHomePageTabs.notifications) {
             if (_notificationsPageController.isFirstRoute()) {
               _notificationsPageController.scrollToTop();
@@ -214,8 +211,6 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               _notificationsPageController.popUntilFirstRoute();
             }
           }
-        } else {
-          _notificationsPageController.setShouldMarkNotificationsAsRead(false);
         }
 
         if (tappedTab == OBHomePageTabs.menu &&
