@@ -1156,7 +1156,9 @@ class UserService {
   }
 
   Future<void> _deleteCurrentDevice() async {
-    Device currentDevice = await getOrCreateCurrentDevice();
+    if (_getOrCreateCurrentDeviceCache == null) return;
+
+    Device currentDevice = await _getOrCreateCurrentDeviceCache;
 
     HttpieResponse response =
         await _devicesApiService.deleteDeviceWithUuid(currentDevice.uuid);
