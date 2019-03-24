@@ -112,17 +112,19 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshNotifications() async {
-
-    if (_notificationsListController.hasItems()) {
-      OBNotification firstItem = _notificationsListController.firstItem();
-      int maxId = firstItem.id;
-      _userService.readNotifications(
-        maxId: maxId
-      );
-    }
+    await _readNotifications();
 
     NotificationsList notificationsList = await _userService.getNotifications();
     return notificationsList.notifications;
+  }
+
+  Future _readNotifications() async {
+    if (_shouldMarkNotificationsAsRead &&
+        _notificationsListController.hasItems()) {
+      OBNotification firstItem = _notificationsListController.firstItem();
+      int maxId = firstItem.id;
+      await _userService.readNotifications(maxId: maxId);
+    }
   }
 
   Future<List<OBNotification>> _loadMoreNotifications(
@@ -170,14 +172,20 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   void _onPushNotification(PushNotification pushNotification) {
-    _notificationsListController.refresh();
+    _triggeRefreshNotifications();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      _notificationsListController.refresh();
+      _triggeRefreshNotifications();
     }
+  }
+
+  void _triggeRefreshNotifications() async {
+    _setShouldMarkNotificationsAsRead(false);
+    await _notificationsListController.refresh();
+    _setShouldMarkNotificationsAsRead(true);
   }
 
   void _setShouldMarkNotificationsAsRead(bool shouldMarkNotificationsAsRead) {
