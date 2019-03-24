@@ -37,9 +37,13 @@ class NotificationsApiService {
         appendAuthorizationToken: true, queryParameters: queryParams);
   }
 
-  Future<HttpieResponse> readNotifications() {
+  Future<HttpieResponse> readNotifications({int maxId}) {
     String url = _makeApiUrl(NOTIFICATIONS_READ_PATH);
-    return _httpService.post(url, appendAuthorizationToken: true);
+    Map<String, dynamic> body = {};
+
+    if (maxId != null) body['max_id'] = maxId.toString();
+
+    return _httpService.post(url, body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> deleteNotifications() {

@@ -104,20 +104,21 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Widget _buildNotification(BuildContext context, OBNotification notification) {
-    if (_shouldMarkNotificationsAsRead && !notification.read) {
-      _markNotificationAsRead(notification);
-    }
     return OBNotificationTile(
       notification: notification,
       onNotificationTileDeleted: _onNotificationTileDeleted,
+      onPressed: _markNotificationAsRead,
     );
   }
 
   Future<List<OBNotification>> _refreshNotifications() async {
-    if (!_isFirstNotificationsRefresh) {
-      _userService.readNotifications();
-    } else {
-      _isFirstNotificationsRefresh = false;
+
+    if (_notificationsListController.hasItems()) {
+      OBNotification firstItem = _notificationsListController.firstItem();
+      int maxId = firstItem.id;
+      _userService.readNotifications(
+        maxId: maxId
+      );
     }
 
     NotificationsList notificationsList = await _userService.getNotifications();
@@ -188,6 +189,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   void _markNotificationAsRead(OBNotification notification) {
     try {
       _userService.readNotification(notification);
+      notification.markNotificationAsRead();
     } on HttpieRequestError {
       // Nothing
     } catch (error) {

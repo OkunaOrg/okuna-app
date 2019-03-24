@@ -1052,9 +1052,9 @@ class UserService {
     return NotificationsList.fromJson(json.decode(response.body));
   }
 
-  Future<void> readNotifications() async {
+  Future<void> readNotifications({int maxId}) async {
     HttpieResponse response =
-        await _notificationsApiService.readNotifications();
+        await _notificationsApiService.readNotifications(maxId: maxId);
     _checkResponseIsOk(response);
   }
 

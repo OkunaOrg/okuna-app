@@ -14,11 +14,13 @@ class OBPostReactionNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostReactionNotification postReactionNotification;
   static final double postImagePreviewSize = 40;
+  final VoidCallback onPressed;
 
   const OBPostReactionNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.postReactionNotification})
+      @required this.postReactionNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -49,6 +51,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
 
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
         openbookProvider.navigationService
             .navigateToPost(post: postReaction.post, context: context);
