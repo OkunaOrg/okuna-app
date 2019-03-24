@@ -174,15 +174,15 @@ class UserService {
     }
   }
 
-  Future<void> requestPasswordReset(
-      {String username, String email}) async {
+  Future<void> requestPasswordReset({String username, String email}) async {
     HttpieResponse response = await _authApiService.requestPasswordReset(
         username: username, email: email);
-        _checkResponseIsOk(response);
+    _checkResponseIsOk(response);
   }
 
   Future<void> verifyPasswordReset(
-      {@required String newPassword, @required String passwordResetToken}) async {
+      {@required String newPassword,
+      @required String passwordResetToken}) async {
     HttpieResponse response = await _authApiService.verifyPasswordReset(
         newPassword: newPassword, passwordResetToken: passwordResetToken);
     _checkResponseIsOk(response);
@@ -261,13 +261,16 @@ class UserService {
     var token = await _getStoredAuthToken();
     if (token == null &&
         !_createAccountBlocService.hasToken() &&
-        !_createAccountBlocService.hasPasswordResetToken()) throw AuthTokenMissingError();
+        !_createAccountBlocService.hasPasswordResetToken())
+      throw AuthTokenMissingError();
     if (token == null && _createAccountBlocService.hasToken()) {
-      print('User is in register via link flow, dont throw error as it will break the flow');
+      print(
+          'User is in register via link flow, dont throw error as it will break the flow');
       return;
     }
     if (token == null && _createAccountBlocService.hasPasswordResetToken()) {
-      print('User is in reset password via link flow, dont throw error as it will break the flow');
+      print(
+          'User is in reset password via link flow, dont throw error as it will break the flow');
       return;
     }
 
@@ -1116,10 +1119,30 @@ class UserService {
     return Device.fromJSON(json.decode(response.body));
   }
 
+  Future<Device> _getOrCreateCurrentDeviceCache;
+
   Future<Device> getOrCreateCurrentDevice() async {
+    if (_getOrCreateCurrentDeviceCache != null)
+      return _getOrCreateCurrentDeviceCache;
+
+    _getOrCreateCurrentDeviceCache = _getOrCreateCurrentDevice();
+    _getOrCreateCurrentDeviceCache.catchError((error) {
+      _getOrCreateCurrentDeviceCache = null;
+      throw error;
+    });
+
+    return _getOrCreateCurrentDeviceCache;
+  }
+
+  Future<Device> _getOrCreateCurrentDevice() async {
+    if (_getOrCreateCurrentDeviceCache != null)
+      return _getOrCreateCurrentDeviceCache;
+
     String deviceUuid = await _getDeviceUuid();
     HttpieResponse response =
         await _devicesApiService.getDeviceWithUuid(deviceUuid);
+
+    print('Hey');
 
     if (response.isNotFound()) {
       // Device does not exists, create one.
@@ -1232,7 +1255,8 @@ class UserService {
   }
 
   void _setLoggedInUser(User user) {
-    if (_loggedInUser == null || _loggedInUser.id != user.id) _loggedInUserChangeSubject.add(user);
+    if (_loggedInUser == null || _loggedInUser.id != user.id)
+      _loggedInUserChangeSubject.add(user);
     _loggedInUser = user;
   }
 
