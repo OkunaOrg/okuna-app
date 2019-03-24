@@ -201,6 +201,6 @@ Future<Null> _reportError(
 
 bool get isInDebugMode {
   bool inDebugMode = false;
-  //assert(inDebugMode = true);
+  assert(inDebugMode = true);
   return inDebugMode;
 }
