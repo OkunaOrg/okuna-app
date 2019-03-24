@@ -80,6 +80,8 @@ class UserService {
 
   final _loggedInUserChangeSubject = ReplaySubject<User>(maxSize: 1);
 
+  Future<Device> _getOrCreateCurrentDeviceCache;
+
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
   }
@@ -156,6 +158,7 @@ class UserService {
     Post.clearCache();
     User.clearSessionCache();
     User.clearNavigationCache();
+    _getOrCreateCurrentDeviceCache = null;
   }
 
   Future<void> loginWithCredentials(
@@ -1119,8 +1122,6 @@ class UserService {
     return Device.fromJSON(json.decode(response.body));
   }
 
-  Future<Device> _getOrCreateCurrentDeviceCache;
-
   Future<Device> getOrCreateCurrentDevice() async {
     if (_getOrCreateCurrentDeviceCache != null)
       return _getOrCreateCurrentDeviceCache;
@@ -1142,8 +1143,6 @@ class UserService {
     HttpieResponse response =
         await _devicesApiService.getDeviceWithUuid(deviceUuid);
 
-    print('Hey');
-
     if (response.isNotFound()) {
       // Device does not exists, create one.
       String deviceName = await _getDeviceName();
@@ -1157,10 +1156,10 @@ class UserService {
   }
 
   Future<void> _deleteCurrentDevice() async {
-    String deviceUuid = await _getDeviceUuid();
+    Device currentDevice = await getOrCreateCurrentDevice();
 
     HttpieResponse response =
-        await _devicesApiService.deleteDeviceWithUuid(deviceUuid);
+        await _devicesApiService.deleteDeviceWithUuid(currentDevice.uuid);
 
     if (!response.isOk() && !response.isNotFound()) {
       print('Could not delete current device');
