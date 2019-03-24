@@ -33,6 +33,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/utils_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry/sentry.dart';
 
 // TODO Waiting for dependency injection support
 // https://github.com/flutter/flutter/issues/21980
@@ -40,7 +41,7 @@ import 'package:flutter/material.dart';
 class OpenbookProvider extends StatefulWidget {
   final Widget child;
 
-  OpenbookProvider({this.child});
+  const OpenbookProvider({Key key, @required this.child}) : super(key: key);
 
   @override
   OpenbookProviderState createState() {
@@ -91,6 +92,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   IntercomService intercomService = IntercomService();
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
+
+  SentryClient sentryClient;
 
   @override
   void initState() {
@@ -164,6 +167,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         iosApiKey: environment.intercomIosKey,
         androidApiKey: environment.intercomAndroidKey,
         appId: environment.intercomAppId);
+
+    sentryClient = SentryClient(dsn: environment.sentryDsn);
   }
 
   @override
