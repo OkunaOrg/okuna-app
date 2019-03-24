@@ -4,6 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
+import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -61,12 +62,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _needsBootstrap = false;
     }
 
-    EdgeInsetsGeometry inputContentPadding =
-        EdgeInsets.symmetric(vertical: 8.0, horizontal: 20);
-
-    bool autofocus = widget.autofocus;
-    FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
-
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
@@ -80,39 +75,36 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             size: OBAvatarSize.medium,
           ),
           const SizedBox(
-            width: 10.0,
+            width: 20.0,
           ),
           Expanded(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color.fromARGB(10, 0, 0, 0),
-              ),
+            child: OBAlert(
+              padding: const EdgeInsets.all(0),
               child: Form(
                   key: _formKey,
-                  child: OBTextFormField(
-                    controller: _textController,
-                    focusNode: focusNode,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    style: TextStyle(fontSize: 14.0),
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      hintText: 'Write something...',
-                      contentPadding: inputContentPadding,
-                    ),
-                    hasBorder: false,
-                    autofocus: autofocus,
-                    autocorrect: true,
-                    validator: (String comment) {
-                      if (!_formWasSubmitted) return null;
-                      return _validationService.validatePostComment(_textController.text);
-                    },
-                  )),
+                  child: LayoutBuilder(builder: (context, size) {
+                    TextSpan text = new TextSpan(
+                      text: _textController.text,
+                    );
+
+                    TextPainter tp = new TextPainter(
+                      text: text,
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.left,
+                    );
+                    tp.layout(maxWidth: size.maxWidth);
+
+                    int lines =
+                        (tp.size.height / tp.preferredLineHeight).ceil();
+                    int maxLines = 8;
+
+                    return _buildTextFormField(
+                        lines < maxLines ? null : maxLines);
+                  })),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 20.0, left: 10.0),
+            padding: EdgeInsets.only(right: 20.0, left: 20.0),
             child: OBButton(
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
@@ -122,6 +114,34 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildTextFormField(int maxLines) {
+    EdgeInsetsGeometry inputContentPadding =
+        EdgeInsets.symmetric(vertical: 8.0, horizontal: 10);
+
+    bool autofocus = widget.autofocus;
+    FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
+
+    return OBTextFormField(
+      controller: _textController,
+      focusNode: focusNode,
+      keyboardType: TextInputType.multiline,
+      maxLines: maxLines,
+      style: TextStyle(fontSize: 14.0),
+      textCapitalization: TextCapitalization.sentences,
+      decoration: InputDecoration(
+        hintText: 'Write something...',
+        contentPadding: inputContentPadding,
+      ),
+      hasBorder: false,
+      autofocus: autofocus,
+      autocorrect: true,
+      validator: (String comment) {
+        if (!_formWasSubmitted) return null;
+        return _validationService.validatePostComment(_textController.text);
+      },
     );
   }
 
@@ -144,7 +164,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _setCommentInProgress(false);
       if (widget.onPostCommentCreated != null)
         widget.onPostCommentCreated(createdPostComment);
-
     } catch (error) {
       _onError(error);
     } finally {
