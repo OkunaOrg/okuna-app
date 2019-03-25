@@ -14,6 +14,8 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/alert.dart';
+import 'package:Openbook/widgets/buttons/community_floating_action_button.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -157,147 +159,168 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Widget _buildUserCanSeePostsPage() {
-    return NestedScrollView(
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        // These are the slivers that show up in the "outer" scroll view.
-        return <Widget>[
-          SliverOverlapAbsorber(
-            // This widget takes the overlapping behavior of the SliverAppBar,
-            // and redirects it to the SliverOverlapInjector below. If it is
-            // missing, then it is possible for the nested "inner" scroll view
-            // below to end up under the SliverAppBar even when the inner
-            // scroll view thinks it has not been scrolled.
-            // This is not necessary if the "headerSliverBuilder" only builds
-            // widgets that do not overlap the next sliver.
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            child: SliverList(
-              delegate: new SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  switch (index) {
-                    case 0:
-                      return OBCommunityCover(_community);
-                      break;
-                    case 1:
-                      return OBCommunityCard(
-                        _community,
-                      );
-                      break;
-                  }
-                },
-                childCount: 2,
+    return Stack(
+      children: <Widget>[
+        NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            // These are the slivers that show up in the "outer" scroll view.
+            return <Widget>[
+              SliverOverlapAbsorber(
+                // This widget takes the overlapping behavior of the SliverAppBar,
+                // and redirects it to the SliverOverlapInjector below. If it is
+                // missing, then it is possible for the nested "inner" scroll view
+                // below to end up under the SliverAppBar even when the inner
+                // scroll view thinks it has not been scrolled.
+                // This is not necessary if the "headerSliverBuilder" only builds
+                // widgets that do not overlap the next sliver.
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                child: SliverList(
+                  delegate: new SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      switch (index) {
+                        case 0:
+                          return OBCommunityCover(_community);
+                          break;
+                        case 1:
+                          return OBCommunityCard(
+                            _community,
+                          );
+                          break;
+                      }
+                    },
+                    childCount: 2,
+                  ),
+                ),
               ),
-            ),
-          ),
-          SliverPersistentHeader(
-            pinned: false,
-            delegate: new CommunityTabBarDelegate(
-                community: widget.community,
-                pageStorageKey: _pageStorageKey,
-                controller: _tabController),
-          ),
-        ];
-      },
-      body: TabBarView(
-        key: _pageStorageKey,
-        controller: _tabController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          SafeArea(
-            top: false,
-            bottom: false,
-            child: Builder(
-              // This Builder is needed to provide a BuildContext that is "inside"
-              // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
-              // find the NestedScrollView.
-              builder: (BuildContext context) {
-                return CustomScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  // The "controller" and "primary" members should be left
-                  // unset, so that the NestedScrollView can control this
-                  // inner scroll view.
-                  // If the "controller" property is set, then this scroll
-                  // view will not be associated with the NestedScrollView.
-                  // The PageStorageKey should be unique to this ScrollView;
-                  // it allows the list to remember its scroll position when
-                  // the tab view is not on the screen.
-                  key: PageStorageKey<int>(0),
-                  slivers: <Widget>[
-                    SliverOverlapInjector(
-                      // This is the flip side of the SliverOverlapAbsorber above.
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                          context),
-                    ),
-                    PagewiseSliverList(
-                      noItemsFoundBuilder: (context) {
-                        return OBCommunityNoPosts(
-                          _community,
-                          onWantsToRefreshCommunity: _refreshPosts,
-                        );
-                      },
-                      loadingBuilder: (context) {
-                        return const Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: const OBProgressIndicator(),
-                        );
-                      },
-                      pageLoadController: this._pageWiseController,
-                      itemBuilder:
-                          (BuildContext context, dynamic post, int index) {
-                        if (_removedPosts.contains(post))
-                          return const SizedBox();
-                        return OBPost(post,
-                            onPostDeleted: _onPostDeleted,
-                            key: Key(post.id.toString()));
-                      },
-                    )
-                  ],
-                );
-              },
-            ),
-          ),
-          SafeArea(
-            top: false,
-            bottom: false,
-            child: Builder(
-              // This Builder is needed to provide a BuildContext that is "inside"
-              // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
-              // find the NestedScrollView.
-              builder: (BuildContext context) {
-                return CustomScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  key: PageStorageKey<int>(1),
-                  slivers: <Widget>[
-                    SliverOverlapInjector(
-                      // This is the flip side of the SliverOverlapAbsorber above.
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                          context),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        switch (index) {
-                          case 0:
-                            return OBCommunityRules(_community);
-                            break;
-                          case 1:
-                            return OBCommunityAdministrators(
+              SliverPersistentHeader(
+                pinned: false,
+                delegate: new CommunityTabBarDelegate(
+                    community: widget.community,
+                    pageStorageKey: _pageStorageKey,
+                    controller: _tabController),
+              ),
+            ];
+          },
+          body: TabBarView(
+            key: _pageStorageKey,
+            controller: _tabController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              SafeArea(
+                top: false,
+                bottom: false,
+                child: Builder(
+                  // This Builder is needed to provide a BuildContext that is "inside"
+                  // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
+                  // find the NestedScrollView.
+                  builder: (BuildContext context) {
+                    return CustomScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      // The "controller" and "primary" members should be left
+                      // unset, so that the NestedScrollView can control this
+                      // inner scroll view.
+                      // If the "controller" property is set, then this scroll
+                      // view will not be associated with the NestedScrollView.
+                      // The PageStorageKey should be unique to this ScrollView;
+                      // it allows the list to remember its scroll position when
+                      // the tab view is not on the screen.
+                      key: PageStorageKey<int>(0),
+                      slivers: <Widget>[
+                        SliverOverlapInjector(
+                          // This is the flip side of the SliverOverlapAbsorber above.
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context),
+                        ),
+                        PagewiseSliverList(
+                          noItemsFoundBuilder: (context) {
+                            return OBCommunityNoPosts(
                               _community,
+                              onWantsToRefreshCommunity: _refreshPosts,
                             );
-                            break;
-                          case 2:
-                            return OBCommunityModerators(_community);
-                            break;
-                          default:
-                        }
-                      }, childCount: 3),
-                    ),
-                  ],
-                );
-              },
-            ),
+                          },
+                          loadingBuilder: (context) {
+                            return const Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: const OBProgressIndicator(),
+                            );
+                          },
+                          pageLoadController: this._pageWiseController,
+                          itemBuilder:
+                              (BuildContext context, dynamic post, int index) {
+                            if (_removedPosts.contains(post))
+                              return const SizedBox();
+                            return OBPost(post,
+                                onPostDeleted: _onPostDeleted,
+                                key: Key(post.id.toString()));
+                          },
+                        )
+                      ],
+                    );
+                  },
+                ),
+              ),
+              SafeArea(
+                top: false,
+                bottom: false,
+                child: Builder(
+                  // This Builder is needed to provide a BuildContext that is "inside"
+                  // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
+                  // find the NestedScrollView.
+                  builder: (BuildContext context) {
+                    return CustomScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      key: PageStorageKey<int>(1),
+                      slivers: <Widget>[
+                        SliverOverlapInjector(
+                          // This is the flip side of the SliverOverlapAbsorber above.
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context),
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            switch (index) {
+                              case 0:
+                                return OBCommunityRules(_community);
+                                break;
+                              case 1:
+                                return OBCommunityAdministrators(
+                                  _community,
+                                );
+                                break;
+                              case 2:
+                                return OBCommunityModerators(_community);
+                                break;
+                              default:
+                            }
+                          }, childCount: 3),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        Positioned(
+            bottom: 20.0,
+            right: 20.0,
+            child: OBCommunityNewPostButton(
+              community: widget.community,
+              onPressed: () async {
+                /*          Post createdPost = await _modalService.openCreatePost(
+                      context: context);
+                  if (createdPost != null) {
+                    _timelinePostsController.addPostToTop(createdPost);
+                    _timelinePostsController.scrollToTop();
+                  }*/
+              },
+            ))
+      ],
     );
   }
 
@@ -373,9 +396,9 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   void _onPostDeleted(Post deletedPost) {
-    if(_posts.length == 1){
+    if (_posts.length == 1) {
       _refreshPosts();
-    } else{
+    } else {
       _removePost(deletedPost);
       _addRemovedPost(deletedPost);
     }
