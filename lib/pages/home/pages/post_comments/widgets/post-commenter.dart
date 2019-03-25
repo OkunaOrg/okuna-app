@@ -127,10 +127,11 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     return OBTextFormField(
       controller: _textController,
       focusNode: focusNode,
+      textCapitalization: TextCapitalization.sentences,
       keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.newline,
       maxLines: maxLines,
       style: TextStyle(fontSize: 14.0),
-      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         hintText: 'Write something...',
         contentPadding: inputContentPadding,
