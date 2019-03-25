@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -57,10 +56,8 @@ class ImagePickerService {
   }
 
   Future _ensureHasExternalStoragePermission()async {
-    PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
-    if(permission == PermissionStatus.granted) return;
-
-    await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    // TODO No plugin that could be built for both iOS and android was found
+    //  to do this... yeah. Seriously.
   }
 }
 
