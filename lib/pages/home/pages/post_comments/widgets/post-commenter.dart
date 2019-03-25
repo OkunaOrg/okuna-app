@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -35,6 +36,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   bool _formWasSubmitted;
   bool _needsBootstrap;
 
+  int _charactersCount;
+  bool _isMultiline;
+
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
@@ -48,6 +52,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _commentInProgress = false;
     _formWasSubmitted = false;
     _needsBootstrap = true;
+    _charactersCount = 0;
+    _isMultiline = false;
 
     _textController.addListener(_onPostCommentChanged);
   }
@@ -71,8 +77,22 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           const SizedBox(
             width: 20.0,
           ),
-          OBLoggedInUserAvatar(
-            size: OBAvatarSize.medium,
+          Column(
+            children: <Widget>[
+              OBLoggedInUserAvatar(
+                size: OBAvatarSize.medium,
+              ),
+              _isMultiline
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: OBRemainingPostCharacters(
+                        maxCharacters:
+                            ValidationService.POST_COMMENT_MAX_LENGTH,
+                        currentCharacters: _charactersCount,
+                      ),
+                    )
+                  : const SizedBox()
+            ],
           ),
           const SizedBox(
             width: 20.0,
@@ -83,9 +103,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
               child: Form(
                   key: _formKey,
                   child: LayoutBuilder(builder: (context, size) {
-                    TextSpan text = new TextSpan(
-                      text: _textController.text,
-                    );
+                    TextStyle style = TextStyle(fontSize: 14.0);
+                    TextSpan text =
+                        new TextSpan(text: _textController.text, style: style);
 
                     TextPainter tp = new TextPainter(
                       text: text,
@@ -96,10 +116,13 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
                     int lines =
                         (tp.size.height / tp.preferredLineHeight).ceil();
+
+                    _isMultiline = lines > 3;
+
                     int maxLines = 8;
 
                     return _buildTextFormField(
-                        lines < maxLines ? null : maxLines);
+                        lines < maxLines ? null : maxLines, style);
                   })),
             ),
           ),
@@ -117,7 +140,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     );
   }
 
-  Widget _buildTextFormField(int maxLines) {
+  Widget _buildTextFormField(int maxLines, TextStyle style) {
     EdgeInsetsGeometry inputContentPadding =
         EdgeInsets.symmetric(vertical: 8.0, horizontal: 10);
 
@@ -131,7 +154,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       keyboardType: TextInputType.multiline,
       textInputAction: TextInputAction.newline,
       maxLines: maxLines,
-      style: TextStyle(fontSize: 14.0),
+      style: style,
       decoration: InputDecoration(
         hintText: 'Write something...',
         contentPadding: inputContentPadding,
@@ -173,6 +196,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _onPostCommentChanged() {
+    int charactersCount = _textController.text.length;
+    _setCharactersCount(charactersCount);
+    if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
     _validateForm();
   }
@@ -203,6 +229,18 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   void _setFormWasSubmitted(bool formWasSubmitted) {
     setState(() {
       _formWasSubmitted = formWasSubmitted;
+    });
+  }
+
+  void _setIsMultilline(bool isMultiline) {
+    setState(() {
+      _isMultiline = isMultiline;
+    });
+  }
+
+  void _setCharactersCount(int charactersCount) {
+    setState(() {
+      _charactersCount = charactersCount;
     });
   }
 }
