@@ -112,7 +112,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
                           !communityIsPrivate || userIsMember;
 
                       return userCanSeePosts
-                          ? _buildUserCanSeePostsPage()
+                          ? _buildUserCanSeePostsPage(
+                              isMemberOfCommunity: userIsMember)
                           : _buildUserCannotSeePostsPage();
                     }),
               )
@@ -158,7 +159,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     );
   }
 
-  Widget _buildUserCanSeePostsPage() {
+  Widget _buildUserCanSeePostsPage({@required bool isMemberOfCommunity}) {
     return Stack(
       children: <Widget>[
         NestedScrollView(
@@ -306,20 +307,22 @@ class OBCommunityPageState extends State<OBCommunityPage>
             ],
           ),
         ),
-        Positioned(
-            bottom: 20.0,
-            right: 20.0,
-            child: OBCommunityNewPostButton(
-              community: widget.community,
-              onPressed: () async {
-                /*          Post createdPost = await _modalService.openCreatePost(
+        isMemberOfCommunity
+            ? Positioned(
+                bottom: 20.0,
+                right: 20.0,
+                child: OBCommunityNewPostButton(
+                  community: widget.community,
+                  onPressed: () async {
+                    /*          Post createdPost = await _modalService.openCreatePost(
                       context: context);
                   if (createdPost != null) {
                     _timelinePostsController.addPostToTop(createdPost);
                     _timelinePostsController.scrollToTop();
                   }*/
-              },
-            ))
+                  },
+                ))
+            : const SizedBox()
       ],
     );
   }
