@@ -2,19 +2,17 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
+import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
-import 'package:Openbook/widgets/post/widgets/post_circles.dart';
-import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
-import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
-import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
@@ -23,11 +21,9 @@ import 'package:Openbook/services/httpie.dart';
 class OBPostCommentsPage extends StatefulWidget {
   final Post post;
   final bool autofocusCommentInput;
-  final bool hasPostPreview;
 
   OBPostCommentsPage(
     this.post, {
-    this.hasPostPreview=false,
     this.autofocusCommentInput: false,
   });
 
@@ -40,6 +36,8 @@ class OBPostCommentsPage extends StatefulWidget {
 class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   UserService _userService;
   ToastService _toastService;
+  ThemeService _themeService;
+  ThemeValueParserService _themeValueParserService;
 
   GlobalKey _postCommentsKey;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
@@ -48,6 +46,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   bool _noMoreItemsToLoad;
   bool _needsBootstrap;
   FocusNode _commentInputFocusNode;
+  String _currentSort;
+  static const SORT_ASCENDING = 'ASC';
+  static const SORT_DESCENDING = 'DESC';
 
   @override
   void initState() {
@@ -56,6 +57,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
     _postComments = [];
+    _currentSort = SORT_DESCENDING;
     _noMoreItemsToLoad = true;
     _commentInputFocusNode = FocusNode();
     _postCommentsKey = new GlobalKey();
@@ -66,6 +68,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    _themeValueParserService = provider.themeValueParserService;
+    _themeService = provider.themeService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -96,47 +100,12 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                               itemCount: _postComments.length + 1,
                               itemBuilder: (context, index) {
                                 if (index == 0) {
-                                  List<Widget> columnChildren = [];
-
-                                  if (widget.hasPostPreview) {
-                                    columnChildren.addAll([
-                                      OBPostHeader(
-                                        post: widget.post,
-                                        onPostDeleted: _onPostDeleted,
-                                      ),
-                                      OBPostBody(widget.post),
-                                      OBPostReactions(widget.post),
-                                      OBPostCircles(widget.post),
-                                      OBPostActions(
-                                        widget.post,
-                                        onWantsToCommentPost:
-                                            _focusCommentInput,
-                                      ),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      OBPostDivider(),
-                                    ]);
-                                  }
-
-                                  columnChildren.add(Padding(
-                                    key: _postCommentsKey,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 10.0),
-                                    child: OBSecondaryText(
-                                      _postComments.length > 0
-                                          ? 'Latest comments'
-                                          : 'Be the first to comment!',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16.0),
-                                    ),
-                                  ));
-
                                   return Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: columnChildren,
+                                    CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      _buildCommentsHeader(),
+                                    ],
                                   );
                                 }
 
@@ -175,11 +144,68 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     await _refreshComments();
   }
 
+  Widget _buildCommentsHeader() {
+
+    var theme = _themeService.getActiveTheme();
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+            child: OBSecondaryText(
+              _postComments.length > 0
+                  ? _currentSort == SORT_DESCENDING ? 'Latest comments' : 'Oldest comments'
+                  : 'Be the first to comment!',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0),
+            ),
+          ),
+          FlatButton(
+              child: Row(
+                children: <Widget>[
+                  OBText(_currentSort == SORT_DESCENDING ? 'See old comments' : 'See latest comments',
+                    style: TextStyle(
+                        color: _themeValueParserService
+                            .parseGradient(theme.primaryAccentColor)
+                            .colors[1],
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ],
+              ),
+              onPressed: _onWantsToToggleSortComments
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onWantsToToggleSortComments() async {
+    var newSortValue = SORT_ASCENDING;
+    if (_currentSort == SORT_ASCENDING) {
+      newSortValue = SORT_DESCENDING;
+    }
+    try {
+      _postComments =
+      (await _userService.getCommentsForPost(widget.post, sort: newSortValue)).comments;
+     _setCurrentSortValue(newSortValue);
+    _setPostComments(_postComments);
+    _scrollToTop();
+    _setNoMoreItemsToLoad(false);
+    } catch (error) {
+    _onError(error);
+    }
+  }
+
   Future<void> _refreshComments() async {
     try {
       _postComments =
           (await _userService.getCommentsForPost(widget.post)).comments;
       _setPostComments(_postComments);
+      _scrollToTop();
       _setNoMoreItemsToLoad(false);
     } catch (error) {
       _onError(error);
@@ -219,10 +245,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     return false;
   }
 
-  void _onPostDeleted(Post post) {
-    Navigator.of(context).pop();
-  }
-
   void _removePostCommentAtIndex(int index) {
     setState(() {
       _postComments.removeAt(index);
@@ -236,16 +258,18 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     });
   }
 
+  void _setCurrentSortValue(String newSortValue) {
+    setState(() {
+      _currentSort = newSortValue;
+    });
+  }
+
   void _scrollToTop() {
     _postCommentsScrollController.animateTo(
       0.0,
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
-  }
-
-  void _focusCommentInput() {
-    FocusScope.of(context).requestFocus(_commentInputFocusNode);
   }
 
   void _unfocusCommentInput() {
