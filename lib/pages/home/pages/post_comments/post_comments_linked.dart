@@ -55,7 +55,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   bool _noMoreItemsToLoad;
   bool _noMoreEarlierItemsToLoad;
   bool _needsBootstrap;
-  bool _hideStackedLoadingScreen;
+  bool _shouldHideStackedLoadingScreen;
   String _currentSort;
   FocusNode _commentInputFocusNode;
   static const LOAD_MORE_COMMENTS_COUNT = 5;
@@ -75,7 +75,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
     _noMoreItemsToLoad = true;
     _currentSort = SORT_DESCENDING;
     _noMoreEarlierItemsToLoad = false;
-    _hideStackedLoadingScreen = false;
+    _shouldHideStackedLoadingScreen = false;
     _commentInputFocusNode = FocusNode();
     _postCommentsKey = new GlobalKey();
     _animationController = AnimationController(
@@ -84,7 +84,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
-          _hideStackedLoadingScreen = true;
+          _shouldHideStackedLoadingScreen = true;
         });
       }
     });
@@ -127,7 +127,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
 
     List<Widget> _stackChildren = [];
 
-    if (_hideStackedLoadingScreen) {
+    if (_shouldHideStackedLoadingScreen) {
       _stackChildren.add( Column(
         children: _getColumnChildren(),
       ));
