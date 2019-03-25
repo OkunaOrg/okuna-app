@@ -56,8 +56,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
       onTap: () {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
-        openbookProvider.navigationService.navigateToPostComments(
-            post: postComment.post, context: context, hasPostPreview: true);
+        openbookProvider.navigationService.navigateToPostCommentsLinked(
+            postComment: postComment, context: context);
       },
       leading: OBAvatar(
         onPressed: navigateToCommenterProfile,
