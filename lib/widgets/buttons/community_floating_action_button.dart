@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityNewPostButton extends StatelessWidget {
-  final VoidCallback onPressed;
   final bool isDisabled;
   final bool isLoading;
   final Color textColor;
@@ -19,17 +19,19 @@ class OBCommunityNewPostButton extends StatelessWidget {
   final EdgeInsets padding;
   final OBButtonType type;
   final Community community;
+  final ValueChanged<Post> onPostCreated;
 
-  const OBCommunityNewPostButton(
-      {this.type = OBButtonType.primary,
-      this.size = OBButtonSize.medium,
-      this.textColor = Colors.white,
-      this.isDisabled = false,
-      this.isLoading = false,
-      this.padding,
-      this.minWidth,
-      this.community,
-      this.onPressed});
+  const OBCommunityNewPostButton({
+    this.type = OBButtonType.primary,
+    this.size = OBButtonSize.medium,
+    this.textColor = Colors.white,
+    this.isDisabled = false,
+    this.isLoading = false,
+    this.padding,
+    this.minWidth,
+    this.community,
+    this.onPostCreated,
+  });
 
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -73,8 +75,9 @@ class OBCommunityNewPostButton extends StatelessWidget {
             onPressed: () async {
               OpenbookProviderState openbookProvider =
                   OpenbookProvider.of(context);
-              openbookProvider.modalService
+              Post post = await openbookProvider.modalService
                   .openCreatePost(context: context, community: community);
+              if (post != null && onPostCreated != null) onPostCreated(post);
             },
             child: OBIcon(OBIcons.createPost,
                 size: OBIconSize.large, color: textColor));

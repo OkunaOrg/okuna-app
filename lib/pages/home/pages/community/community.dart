@@ -57,6 +57,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   PageStorageKey _pageStorageKey;
 
+  // TODO A nasty hack to insert items into pageWise
+  // https://github.com/AbdulRahmanAlHamali/flutter_pagewise/issues/55
+  Post _createdPostToInsertOnNextRefresh;
+
   @override
   void initState() {
     super.initState();
@@ -313,13 +317,9 @@ class OBCommunityPageState extends State<OBCommunityPage>
                 right: 20.0,
                 child: OBCommunityNewPostButton(
                   community: widget.community,
-                  onPressed: () async {
-                    /*          Post createdPost = await _modalService.openCreatePost(
-                      context: context);
-                  if (createdPost != null) {
-                    _timelinePostsController.addPostToTop(createdPost);
-                    _timelinePostsController.scrollToTop();
-                  }*/
+                  onPostCreated: (Post createdPost) async {
+                    _createdPostToInsertOnNextRefresh = createdPost;
+                    _refreshPosts();
                   },
                 ))
             : const SizedBox()
@@ -356,11 +356,20 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Future<void> _refreshPosts() async {
-    _setPosts([]);
+    if (_createdPostToInsertOnNextRefresh == null) _setPosts([]);
     this._pageWiseController.reset();
   }
 
   Future<List<Post>> _loadMorePosts(int pageIndex) async {
+    // Part of nasty hack to insert items, see top of file
+    if (_createdPostToInsertOnNextRefresh != null) {
+      List<Post> currentPosts = _posts.isNotEmpty ? _posts.take(pageWiseSize - 1).toList() : [];
+      currentPosts.insert(0, _createdPostToInsertOnNextRefresh);
+      _posts = currentPosts;
+      _createdPostToInsertOnNextRefresh = null;
+      return currentPosts;
+    }
+
     List<Post> morePosts = [];
     int lastPostId;
 
