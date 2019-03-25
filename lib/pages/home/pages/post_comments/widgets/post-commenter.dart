@@ -95,7 +95,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             ],
           ),
           const SizedBox(
-            width: 20.0,
+            width: 10.0,
           ),
           Expanded(
             child: OBAlert(
@@ -119,7 +119,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
                     _isMultiline = lines > 3;
 
-                    int maxLines = 8;
+                    int maxLines = 5;
 
                     return _buildTextFormField(
                         lines < maxLines ? null : maxLines, style);
@@ -127,7 +127,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 20.0, left: 20.0),
+            padding: EdgeInsets.only(right: 20.0, left: 10.0),
             child: OBButton(
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
