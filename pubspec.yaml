@@ -13,6 +13,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  sentry: ^2.2.0
   flutter_exif_rotation: ^0.2.0
   back_button_interceptor: ^4.0.1
   flutter_colorpicker: any

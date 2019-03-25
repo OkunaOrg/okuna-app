@@ -19,13 +19,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ModalService {
-  Future<Post> openCreatePost({@required BuildContext context}) async {
+  Future<Post> openCreatePost({@required BuildContext context, Community community}) async {
     Post createdPost = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Post>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
-                child: CreatePostModal(),
+                child: CreatePostModal(
+                  community: community
+                ),
               );
             }));
 

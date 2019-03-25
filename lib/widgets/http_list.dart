@@ -382,6 +382,14 @@ class OBHttpListController<T> {
     _state._refreshList();
   }
 
+  bool hasItems(){
+    return _state._list.isNotEmpty;
+  }
+
+  T firstItem() {
+    return _state._list.first;
+  }
+
   bool _isAttached() {
     return _state != null;
   }

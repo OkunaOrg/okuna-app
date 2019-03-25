@@ -5,6 +5,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {

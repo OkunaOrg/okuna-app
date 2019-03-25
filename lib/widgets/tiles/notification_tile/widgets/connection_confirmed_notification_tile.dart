@@ -9,11 +9,13 @@ import 'package:flutter/material.dart';
 class OBConnectionConfirmedNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final ConnectionConfirmedNotification connectionConfirmedNotification;
+  final VoidCallback onPressed;
 
   const OBConnectionConfirmedNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.connectionConfirmedNotification})
+      @required this.connectionConfirmedNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
         connectionConfirmedNotification.connectionConfirmator.username;
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService.navigateToUserProfile(
@@ -34,7 +37,8 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
             .getProfileAvatar(),
       ),
       title: OBActionableSmartText(
-        text: '@$connectionConfirmatorUsername accepted your connection request.',
+        text:
+            '@$connectionConfirmatorUsername accepted your connection request.',
       ),
       subtitle: OBSecondaryText(notification.getRelativeCreated()),
     );

@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 class OBConnectionRequestNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final ConnectionRequestNotification connectionRequestNotification;
+  final VoidCallback onPressed;
 
   const OBConnectionRequestNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.connectionRequestNotification})
+      @required this.connectionRequestNotification, this.onPressed})
       : super(key: key);
 
   @override
@@ -22,6 +23,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
         connectionRequestNotification.connectionRequester.username;
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService.navigateToUserProfile(

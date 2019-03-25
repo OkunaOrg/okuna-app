@@ -13,12 +13,14 @@ import 'package:flutter/material.dart';
 class OBCommunityInviteNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final CommunityInviteNotification communityInviteNotification;
+  final VoidCallback onPressed;
   static final double postImagePreviewSize = 40;
 
   const OBCommunityInviteNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.communityInviteNotification})
+      @required this.communityInviteNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -40,6 +42,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
 
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService
@@ -51,7 +54,8 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         avatarUrl: inviteCreator.getProfileAvatar(),
       ),
       title: OBActionableSmartText(
-        text: '@$inviteCreatorUsername has invited you to join community /c/$communityName .',
+        text:
+            '@$inviteCreatorUsername has invited you to join community /c/$communityName .',
       ),
       trailing: OBCommunityAvatar(
         community: community,

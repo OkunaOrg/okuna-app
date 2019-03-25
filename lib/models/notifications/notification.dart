@@ -66,6 +66,11 @@ class OBNotification extends UpdatableModel<OBNotification> {
       created = factory.parseCreated(json['created']);
     }
   }
+
+  void markNotificationAsRead() {
+    read = true;
+    notifyUpdate();
+  }
 }
 
 class NotificationFactory extends UpdatableModelFactory<OBNotification> {
