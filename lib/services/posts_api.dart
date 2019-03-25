@@ -108,9 +108,9 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> getCommentsForPostWithUuid(String postUuid,
-      {int count, int maxId}) {
+      {int countMax, int maxId}) {
     Map<String, dynamic> queryParams = {};
-    if (count != null) queryParams['count'] = count;
+    if (countMax != null) queryParams['count_max'] = countMax;
 
     if (maxId != null) queryParams['max_id'] = maxId;
 

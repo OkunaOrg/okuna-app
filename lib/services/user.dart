@@ -432,9 +432,9 @@ class UserService {
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
-      {int count, int maxId}) async {
+      {int countMax, int maxId}) async {
     HttpieResponse response = await _postsApiService
-        .getCommentsForPostWithUuid(post.uuid, count: count, maxId: maxId);
+        .getCommentsForPostWithUuid(post.uuid, countMax: countMax, maxId: maxId);
 
     _checkResponseIsOk(response);
 
