@@ -181,8 +181,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                       .validateCommunityTitle(communityTitle);
                                 }),
                             OBTextFormField(
-                                textCapitalization:
-                                    TextCapitalization.none,
+                                textCapitalization: TextCapitalization.none,
                                 size: OBTextFormFieldSize.medium,
                                 controller: _nameController,
                                 autocorrect: false,
@@ -250,6 +249,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 size: OBTextFormFieldSize.medium,
                                 controller: _descriptionController,
                                 maxLines: 3,
+                                textInputAction: TextInputAction.newline,
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(
                                         OBIcons.communityDescription),
@@ -275,6 +275,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                     .validateCommunityRules(communityRules);
                               },
                               keyboardType: TextInputType.multiline,
+                              textInputAction: TextInputAction.newline,
                               maxLines: 3,
                             ),
                             OBTextFormField(
