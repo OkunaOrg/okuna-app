@@ -1,10 +1,13 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/material.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityNewPostButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -37,16 +40,32 @@ class OBCommunityNewPostButton extends StatelessWidget {
         if (community == null) return const SizedBox();
 
         String communityHexColor = community.color;
-        OpenbookProviderState openbookProviderState =
-            OpenbookProvider.of(context);
+        OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
         ThemeValueParserService themeValueParserService =
-            openbookProviderState.themeValueParserService;
+            openbookProvider.themeValueParserService;
+        ThemeService themeService = openbookProvider.themeService;
+
+        OBTheme currentTheme = themeService.getActiveTheme();
+        Color currentThemePrimaryColor =
+            themeValueParserService.parseColor(currentTheme.primaryColor);
+        double currentThemePrimaryColorLuminance =
+            currentThemePrimaryColor.computeLuminance();
 
         Color communityColor =
             themeValueParserService.parseColor(communityHexColor);
         Color textColor = themeValueParserService.isDarkColor(communityColor)
             ? Colors.white
             : Colors.black;
+        double communityColorLuminance = communityColor.computeLuminance();
+
+        if (communityColorLuminance > 0.9 &&
+            currentThemePrimaryColorLuminance > 0.9) {
+          // Is extremely white and our current theem is also extremely white, darken it
+          communityColor = TinyColor(communityColor).darken(5).color;
+        } else if (communityColorLuminance < 0.1) {
+          // Is extremely dark and our current theme is also extremely dark, lighten it
+          communityColor = TinyColor(communityColor).lighten(10).color;
+        }
 
         return OBFloatingActionButton(
             color: communityColor,
