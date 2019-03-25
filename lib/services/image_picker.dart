@@ -21,8 +21,6 @@ class ImagePickerService {
       return null;
     }
 
-    image = await _fixImageRotation(image);
-
     double ratioX =
         imageType != OBImageType.post ? IMAGE_RATIOS[imageType]['x'] : null;
     double ratioY =
