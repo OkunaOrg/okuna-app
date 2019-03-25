@@ -121,6 +121,10 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   }
 
   List <Widget> _getStackChildren() {
+    var theme = _themeService.getActiveTheme();
+    var primaryColor =
+    _themeValueParserService.parseColor(theme.primaryColor);
+
     List<Widget> _stackChildren = [];
 
     if (_hideStackedLoadingScreen) {
@@ -137,7 +141,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
             child: FadeTransition(
               opacity: _animation,
               child: Container(
-                color: Colors.white,
+                color: primaryColor,
                 height: _post.getImageHeight(),
                 width: _post.getImageWidth(),
                 child: Center(
@@ -282,17 +286,26 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   }
 
   Future<bool> _loadMoreComments() async {
+    print('calling load more');
     if (_postComments.length == 0) return true;
 
     var lastPost = _postComments.last;
     var lastPostId = lastPost.id;
-
+    var moreComments;
     try {
-      var moreComments = (await _userService.getCommentsForPost(_post,
-              countMax: LOAD_MORE_COMMENTS_COUNT,
-              maxId: lastPostId,
-              sort: _currentSort))
-          .comments;
+      if (_currentSort == SORT_DESCENDING) {
+        moreComments = (await _userService.getCommentsForPost(_post,
+            countMax: LOAD_MORE_COMMENTS_COUNT,
+            maxId: lastPostId,
+            sort: _currentSort))
+            .comments;
+      } else {
+        moreComments = (await _userService.getCommentsForPost(_post,
+            countMin: LOAD_MORE_COMMENTS_COUNT,
+            minId: lastPostId + 1,
+            sort: _currentSort))
+            .comments;
+      }
 
       if (moreComments.length == 0) {
         _setNoMoreItemsToLoad(true);
@@ -463,7 +476,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
             FlatButton(
                 child: Row(
                   children: <Widget>[
-                    OBText(_currentSort == SORT_DESCENDING ? 'See old comments' : 'See latest comments',
+                    OBText(_currentSort == SORT_DESCENDING ? 'See oldest comments' : 'See latest comments',
                       style: TextStyle(
                           color: _themeValueParserService
                               .parseGradient(theme.primaryAccentColor)
