@@ -133,7 +133,7 @@ packages:
       name: flutter_advanced_networkimage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.14"
+    version: "0.4.15"
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -445,6 +445,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.1"
+  sentry:
+    dependency: "direct main"
+    description:
+      name: sentry
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   shelf:
     dependency: transitive
     description:
@@ -604,6 +611,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.0+3"
+  usage:
+    dependency: transitive
+    description:
+      name: usage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.4.1"
   uuid:
     dependency: transitive
     description:

@@ -1,9 +1,11 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
+import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -34,6 +36,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   bool _formWasSubmitted;
   bool _needsBootstrap;
 
+  int _charactersCount;
+  bool _isMultiline;
+
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
@@ -47,6 +52,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _commentInProgress = false;
     _formWasSubmitted = false;
     _needsBootstrap = true;
+    _charactersCount = 0;
+    _isMultiline = false;
 
     _textController.addListener(_onPostCommentChanged);
   }
@@ -61,12 +68,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _needsBootstrap = false;
     }
 
-    EdgeInsetsGeometry inputContentPadding =
-        EdgeInsets.symmetric(vertical: 8.0, horizontal: 20);
-
-    bool autofocus = widget.autofocus;
-    FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
-
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
@@ -76,39 +77,53 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           const SizedBox(
             width: 20.0,
           ),
-          OBLoggedInUserAvatar(
-            size: OBAvatarSize.medium,
+          Column(
+            children: <Widget>[
+              OBLoggedInUserAvatar(
+                size: OBAvatarSize.medium,
+              ),
+              _isMultiline
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: OBRemainingPostCharacters(
+                        maxCharacters:
+                            ValidationService.POST_COMMENT_MAX_LENGTH,
+                        currentCharacters: _charactersCount,
+                      ),
+                    )
+                  : const SizedBox()
+            ],
           ),
           const SizedBox(
             width: 10.0,
           ),
           Expanded(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color.fromARGB(10, 0, 0, 0),
-              ),
+            child: OBAlert(
+              padding: const EdgeInsets.all(0),
               child: Form(
                   key: _formKey,
-                  child: OBTextFormField(
-                    controller: _textController,
-                    focusNode: focusNode,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    style: TextStyle(fontSize: 14.0),
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      hintText: 'Write something...',
-                      contentPadding: inputContentPadding,
-                    ),
-                    hasBorder: false,
-                    autofocus: autofocus,
-                    autocorrect: true,
-                    validator: (String comment) {
-                      if (!_formWasSubmitted) return null;
-                      return _validationService.validatePostComment(_textController.text);
-                    },
-                  )),
+                  child: LayoutBuilder(builder: (context, size) {
+                    TextStyle style = TextStyle(fontSize: 14.0);
+                    TextSpan text =
+                        new TextSpan(text: _textController.text, style: style);
+
+                    TextPainter tp = new TextPainter(
+                      text: text,
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.left,
+                    );
+                    tp.layout(maxWidth: size.maxWidth);
+
+                    int lines =
+                        (tp.size.height / tp.preferredLineHeight).ceil();
+
+                    _isMultiline = lines > 3;
+
+                    int maxLines = 5;
+
+                    return _buildTextFormField(
+                        lines < maxLines ? null : maxLines, style);
+                  })),
             ),
           ),
           Padding(
@@ -122,6 +137,35 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildTextFormField(int maxLines, TextStyle style) {
+    EdgeInsetsGeometry inputContentPadding =
+        EdgeInsets.symmetric(vertical: 8.0, horizontal: 10);
+
+    bool autofocus = widget.autofocus;
+    FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
+
+    return OBTextFormField(
+      controller: _textController,
+      focusNode: focusNode,
+      textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.newline,
+      maxLines: maxLines,
+      style: style,
+      decoration: InputDecoration(
+        hintText: 'Write something...',
+        contentPadding: inputContentPadding,
+      ),
+      hasBorder: false,
+      autofocus: autofocus,
+      autocorrect: true,
+      validator: (String comment) {
+        if (!_formWasSubmitted) return null;
+        return _validationService.validatePostComment(_textController.text);
+      },
     );
   }
 
@@ -144,7 +188,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _setCommentInProgress(false);
       if (widget.onPostCommentCreated != null)
         widget.onPostCommentCreated(createdPostComment);
-
     } catch (error) {
       _onError(error);
     } finally {
@@ -153,6 +196,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _onPostCommentChanged() {
+    int charactersCount = _textController.text.length;
+    _setCharactersCount(charactersCount);
+    if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
     _validateForm();
   }
@@ -183,6 +229,18 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   void _setFormWasSubmitted(bool formWasSubmitted) {
     setState(() {
       _formWasSubmitted = formWasSubmitted;
+    });
+  }
+
+  void _setIsMultilline(bool isMultiline) {
+    setState(() {
+      _isMultiline = isMultiline;
+    });
+  }
+
+  void _setCharactersCount(int charactersCount) {
+    setState(() {
+      _charactersCount = charactersCount;
     });
   }
 }

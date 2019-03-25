@@ -49,7 +49,7 @@ class OBCommunityAvatar extends StatelessWidget {
                 borderRadius: borderRadius,
                 customSize: customSize);
           } else {
-            String communityHexColor = community.color;
+            String communityHexColor = community.color ?? '#ffffff';
 
             OpenbookProviderState openbookProviderState =
                 OpenbookProvider.of(context);

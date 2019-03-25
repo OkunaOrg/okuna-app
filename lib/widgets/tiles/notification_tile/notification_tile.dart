@@ -21,52 +21,78 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class OBNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final ValueChanged<OBNotification> onNotificationTileDeleted;
+  final ValueChanged<OBNotification> onPressed;
 
   const OBNotificationTile(
-      {Key key, @required this.notification, this.onNotificationTileDeleted})
+      {Key key,
+      @required this.notification,
+      this.onNotificationTileDeleted,
+      this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: notification.updateSubject,
+      builder: _buildNotificationTile,
+    );
+  }
+
+  Widget _buildNotificationTile(BuildContext context, AsyncSnapshot<OBNotification> snapshot){
+    OBNotification notification = snapshot.data;
+    if(notification == null) return const SizedBox();
+
     Widget notificationTile;
 
     dynamic notificationContentObject = this.notification.contentObject;
+
+    Function finalOnPressed = onPressed != null
+        ? () {
+      onPressed(notification);
+    }
+        : null;
 
     switch (notificationContentObject.runtimeType) {
       case CommunityInviteNotification:
         notificationTile = OBCommunityInviteNotificationTile(
           notification: notification,
           communityInviteNotification: notificationContentObject,
+          onPressed: finalOnPressed,
         );
         break;
       case FollowNotification:
         notificationTile = OBFollowNotificationTile(
           notification: notification,
           followNotification: notificationContentObject,
+          onPressed: finalOnPressed,
         );
         break;
       case PostCommentNotification:
         notificationTile = OBPostCommentNotificationTile(
           notification: notification,
           postCommentNotification: notificationContentObject,
+          onPressed: finalOnPressed,
         );
         break;
       case PostReactionNotification:
         notificationTile = OBPostReactionNotificationTile(
           notification: notification,
           postReactionNotification: notificationContentObject,
+          onPressed: finalOnPressed,
         );
         break;
       case ConnectionRequestNotification:
         notificationTile = OBConnectionRequestNotificationTile(
           notification: notification,
           connectionRequestNotification: notificationContentObject,
+          onPressed: finalOnPressed,
         );
         break;
       case ConnectionConfirmedNotification:
         notificationTile = OBConnectionConfirmedNotificationTile(
           notification: notification,
           connectionConfirmedNotification: notificationContentObject,
+          onPressed: finalOnPressed,
         );
         break;
       default:
@@ -86,7 +112,7 @@ class OBNotificationTile extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
             var theme = snapshot.data;
             var primaryColor =
-                themeValueParserService.parseColor(theme.primaryColor);
+            themeValueParserService.parseColor(theme.primaryColor);
             final bool isDarkPrimaryColor =
                 primaryColor.computeLuminance() < 0.179;
 

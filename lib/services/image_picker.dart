@@ -1,9 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
-
-import 'package:Openbook/services/theme.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/services/utils_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,7 +6,6 @@ import 'package:meta/meta.dart';
 export 'package:image_picker/image_picker.dart';
 
 class ImagePickerService {
-
   static const Map IMAGE_RATIOS = {
     OBImageType.avatar: {'x': 1.0, 'y': 1.0},
     OBImageType.cover: {'x': 16.0, 'y': 9.0}

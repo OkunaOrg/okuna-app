@@ -17,6 +17,8 @@ class OBButton extends StatelessWidget {
   final double minHeight;
   final List<BoxShadow> boxShadow;
   final TextStyle textStyle;
+  final Color color;
+  final Color textColor;
 
   const OBButton(
       {@required this.child,
@@ -31,76 +33,87 @@ class OBButton extends StatelessWidget {
       this.isDisabled = false,
       this.isLoading = false,
       this.padding,
-      this.textStyle});
+      this.textStyle,
+      this.color,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
+
     var provider = OpenbookProvider.of(context);
     var themeService = provider.themeService;
     var themeValueParser = provider.themeValueParserService;
+
+    return color != null
+        ? _buildButton(color: color, textColor: textColor)
+        : StreamBuilder(
+            stream: themeService.themeChange,
+            initialData: themeService.getActiveTheme(),
+            builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
+              var theme = snapshot.data;
+              Color buttonTextColor = _getButtonTextColorForType(type,
+                  themeValueParser: themeValueParser, theme: theme);
+              Gradient gradient = _getButtonGradientForType(type,
+                  themeValueParser: themeValueParser, theme: theme);
+
+              return _buildButton(
+                  gradient: gradient, textColor: buttonTextColor);
+            });
+  }
+
+  Widget _buildButton(
+      {Gradient gradient, Color color, @required Color textColor}) {
     EdgeInsets buttonPadding = _getButtonPaddingForSize(size);
     double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
     double buttonMinHeight = minHeight ?? 20;
     var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
 
-    return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-          Color buttonTextColor = _getButtonTextColorForType(type,
-              themeValueParser: themeValueParser, theme: theme);
-          Gradient gradient = _getButtonGradientForType(type,
-              themeValueParser: themeValueParser, theme: theme);
+    var buttonChild = isLoading ? _getLoadingIndicator(textColor) : child;
 
-          var buttonChild =
-              isLoading ? _getLoadingIndicator(buttonTextColor) : child;
+    if (isDisabled) buttonChild = Opacity(opacity: 0.5, child: buttonChild);
 
-          if (isDisabled)
-            buttonChild = Opacity(opacity: 0.5, child: buttonChild);
+    if (icon != null && !isLoading) {
+      buttonChild = Row(
+        children: <Widget>[
+          icon,
+          const SizedBox(
+            width: 5,
+          ),
+          buttonChild
+        ],
+      );
+    }
 
-          if (icon != null && !isLoading) {
-            buttonChild = Row(
-              children: <Widget>[
-                icon,
-                const SizedBox(
-                  width: 5,
-                ),
-                buttonChild
-              ],
-            );
-          }
+    TextStyle defaultTextStyle =
+        _getButtonTextStyleForSize(size: size, color: textColor);
 
-          TextStyle defaultTextStyle =
-              _getButtonTextStyleForSize(size: size, color: buttonTextColor);
+    if (textStyle != null) {
+      defaultTextStyle = defaultTextStyle.merge(textStyle);
+    }
 
-          if (textStyle != null) {
-            defaultTextStyle = defaultTextStyle.merge(textStyle);
-          }
-
-          return GestureDetector(
-            child: Container(
-                constraints: BoxConstraints(
-                    minWidth: buttonMinWidth, minHeight: buttonMinHeight),
-                decoration: BoxDecoration(
-                    boxShadow: boxShadow ?? [],
-                    gradient: gradient,
-                    borderRadius: BorderRadius.circular(50.0)),
-                child: Material(
-                  color: Colors.transparent,
-                  textStyle: defaultTextStyle,
-                  child: Padding(
-                    padding: buttonPadding,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[buttonChild],
-                    ),
-                  ),
-                )),
-            onTap: finalOnPressed,
-          );
-        });
+    return GestureDetector(
+      child: Container(
+          constraints: BoxConstraints(
+              minWidth: buttonMinWidth, minHeight: buttonMinHeight),
+          decoration: BoxDecoration(
+              boxShadow: boxShadow ?? [],
+              gradient: gradient,
+              color: color,
+              borderRadius: BorderRadius.circular(50.0)),
+          child: Material(
+            color: Colors.transparent,
+            textStyle: defaultTextStyle,
+            child: Padding(
+              padding: buttonPadding,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[buttonChild],
+              ),
+            ),
+          )),
+      onTap: finalOnPressed,
+    );
   }
 
   Widget _getLoadingIndicator(Color color) {

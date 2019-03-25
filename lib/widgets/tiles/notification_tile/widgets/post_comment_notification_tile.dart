@@ -13,11 +13,12 @@ class OBPostCommentNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostCommentNotification postCommentNotification;
   static final double postImagePreviewSize = 40;
+  final VoidCallback onPressed;
 
   const OBPostCommentNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.postCommentNotification})
+      @required this.postCommentNotification, this.onPressed})
       : super(key: key);
 
   @override
@@ -54,6 +55,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
 
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService.navigateToPostComments(
