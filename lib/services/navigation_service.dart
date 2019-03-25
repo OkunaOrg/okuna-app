@@ -3,6 +3,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
@@ -197,16 +198,27 @@ class NavigationService {
 
   Future navigateToPostComments(
       {@required Post post,
-      @required BuildContext context,
-      bool hasPostPreview = false}) {
+      @required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
             widget: OBPostCommentsPage(
               post,
-              autofocusCommentInput: false,
-              hasPostPreview: hasPostPreview,
+              autofocusCommentInput: false
+            )));
+  }
+
+  Future navigateToPostCommentsLinked(
+      {@required PostComment postComment,
+        @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewCommentsLinked'),
+            widget: OBPostCommentsLinkedPage(
+              postComment,
+              autofocusCommentInput: false
             )));
   }
 

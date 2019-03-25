@@ -108,11 +108,14 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> getCommentsForPostWithUuid(String postUuid,
-      {int countMax, int maxId}) {
+      {int countMax, int maxId, int countMin, int minId, String sort}) {
     Map<String, dynamic> queryParams = {};
     if (countMax != null) queryParams['count_max'] = countMax;
+    if (countMin != null) queryParams['count_min'] = countMin;
 
     if (maxId != null) queryParams['max_id'] = maxId;
+    if (minId != null) queryParams['min_id'] = minId;
+    if (sort != null) queryParams['sort'] = sort;
 
     String path = _makeGetPostCommentsPath(postUuid);
 
