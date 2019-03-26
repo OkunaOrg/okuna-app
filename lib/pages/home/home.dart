@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:Openbook/models/push_notifications/push_notification.dart';
+import 'package:Openbook/models/push_notification.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
@@ -204,6 +204,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         }
 
         if (tappedTab == OBHomePageTabs.notifications) {
+          _notificationsPageController.setIsActivePage(true);
           if (currentTab == OBHomePageTabs.notifications) {
             if (_notificationsPageController.isFirstRoute()) {
               _notificationsPageController.scrollToTop();
@@ -211,6 +212,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               _notificationsPageController.popUntilFirstRoute();
             }
           }
+        } else {
+          _notificationsPageController.setIsActivePage(false);
         }
 
         if (tappedTab == OBHomePageTabs.menu &&

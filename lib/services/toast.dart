@@ -16,26 +16,32 @@ class ToastService {
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
   }) {
     toast(
         title: title,
         message: message,
         type: ToastType.warning,
         context: context,
+        onDismissed: onDismissed,
         scaffoldKey: scaffoldKey);
   }
 
   void success({
     String title,
+    Widget child,
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
   }) {
     toast(
         title: title,
         message: message,
         type: ToastType.success,
         context: context,
+        child: child,
+        onDismissed: onDismissed,
         scaffoldKey: scaffoldKey);
   }
 
@@ -44,39 +50,50 @@ class ToastService {
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
   }) {
     toast(
         title: title,
         message: message,
         type: ToastType.error,
         context: context,
+        onDismissed: onDismissed,
         scaffoldKey: scaffoldKey);
   }
 
   void info({
     String title,
+    Widget child,
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
   }) {
     toast(
         title: title,
+        child: child,
         message: message,
         type: ToastType.info,
         context: context,
-        scaffoldKey: scaffoldKey);
+        scaffoldKey: scaffoldKey,
+        onDismissed: onDismissed);
   }
 
   void toast({
     String title,
+    Widget child,
     @required String message,
     @required ToastType type,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
   }) {
-    print(message);
     if (context != null) {
-      OpenbookToast.of(context).showToast(ToastConfig(color: _getToastColor(type), message: message));
+      OpenbookToast.of(context).showToast(
+          child: child,
+          color: _getToastColor(type),
+          message: message,
+          onDismissed: onDismissed);
     } else {
       print('Context was null, cannot show toast');
     }
@@ -102,15 +119,4 @@ class ToastService {
 
     return color;
   }
-}
-
-class ToastConfig {
-  final Color color;
-  final String message;
-
-  ToastConfig({
-    this.color,
-    this.message
-  });
-
 }

@@ -45,9 +45,14 @@ class OpenbookToastState extends State<OpenbookToast>
     );
   }
 
-  Future showToast(ToastConfig config) async {
+  Future showToast(
+      {@required Color color,
+      String message,
+      Widget child,
+      VoidCallback onDismissed}) async {
     await _dismissToast();
-    this._overlayEntry = this._createOverlayEntryFromTop(config);
+    this._overlayEntry = this._createOverlayEntryFromTop(
+        color: color, message: message, onDismissed: onDismissed, child: child);
     final overlay = Overlay.of(_currentContext);
     WidgetsBinding.instance
         .addPostFrameCallback((_) => overlay.insert(_overlayEntry));
@@ -68,7 +73,11 @@ class OpenbookToastState extends State<OpenbookToast>
     this._overlayEntry = null;
   }
 
-  OverlayEntry _createOverlayEntryFromTop(ToastConfig config) {
+  OverlayEntry _createOverlayEntryFromTop(
+      {@required Color color,
+      String message,
+      Widget child,
+      VoidCallback onDismissed}) {
     return OverlayEntry(builder: (context) {
       final MediaQueryData existingMediaQuery = MediaQuery.of(context);
       // 44 is header height
@@ -79,67 +88,82 @@ class OpenbookToastState extends State<OpenbookToast>
             left: 0,
             width: existingMediaQuery.size.width,
             child: GestureDetector(
-              onTap: _dismissToast,
-              child: Material(
-                color: Colors.transparent,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Flexible(
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(top: paddingTop),
-                                child: SlideTransition(
-                                  position: offset,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Flexible(
-                                        child: Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 20, horizontal: 20),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 10),
-                                          decoration: BoxDecoration(
-                                              color: config.color,
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              Flexible(
-                                                child: Text(
-                                                  config.message,
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                            mainAxisSize: MainAxisSize.min,
-                          ),
-                        )
-                      ],
-                      mainAxisSize: MainAxisSize.max,
-                    ),
-                  ],
-                ),
-              ),
+              onTap: () {
+                if (onDismissed != null) onDismissed();
+                _dismissToast();
+              },
+              child: _buildToast(
+                  paddingTop: paddingTop,
+                  color: color,
+                  message: message,
+                  child: child),
             ))
       ]);
     });
+  }
+
+  Widget _buildToast(
+      {@required double paddingTop,
+      @required Color color,
+      @required String message,
+      Widget child}) {
+    return Material(
+      color: Colors.transparent,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Flexible(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: paddingTop),
+                      child: SlideTransition(
+                        position: offset,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Flexible(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 20),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                decoration: BoxDecoration(
+                                    color: color,
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    child ??
+                                        Flexible(
+                                          child: Text(
+                                            message,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                  mainAxisSize: MainAxisSize.min,
+                ),
+              )
+            ],
+            mainAxisSize: MainAxisSize.max,
+          ),
+        ],
+      ),
+    );
   }
 
   void _setCurrentContext(BuildContext context) {

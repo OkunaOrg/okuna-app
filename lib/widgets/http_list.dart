@@ -78,10 +78,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     _searchQuery = '';
   }
 
-  void insertListItem(T listItem) {
+  void insertListItem(T listItem, {bool shouldScrollToTop = true}) {
     this._list.insert(0, listItem);
     this._setList(this._list.toList());
-    scrollToTop();
+    if (shouldScrollToTop) scrollToTop();
   }
 
   void removeListItem(T listItem) {
@@ -244,6 +244,13 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     }
   }
 
+  Future refreshList({bool shouldScrollToTop = false}) async {
+    await _listRefreshIndicatorKey.currentState.show();
+    if (shouldScrollToTop && _listScrollController.offset != 0) {
+      scrollToTop();
+    }
+  }
+
   Future<bool> _loadMoreListItems() async {
     try {
       List<T> moreListItems = await widget.listOnScrollLoader(_list);
@@ -362,9 +369,9 @@ class OBHttpListController<T> {
     _state = state;
   }
 
-  void insertListItem(T listItem) {
+  void insertListItem(T listItem, {bool shouldScrollToTop = true}) {
     if (!_isAttached() || !_state.mounted) return;
-    _state.insertListItem(listItem);
+    _state.insertListItem(listItem, shouldScrollToTop: shouldScrollToTop);
   }
 
   void removeListItem(T listItem) {
@@ -377,12 +384,12 @@ class OBHttpListController<T> {
     _state.scrollToTop();
   }
 
-  Future refresh() async {
+  Future refresh({bool shouldScrollToTop = false}) async {
     if (!_state.mounted) return;
-    _state._refreshList();
+    _state.refreshList(shouldScrollToTop: shouldScrollToTop);
   }
 
-  bool hasItems(){
+  bool hasItems() {
     return _state._list.isNotEmpty;
   }
 
