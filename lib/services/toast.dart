@@ -98,7 +98,7 @@ class ToastService {
     Duration duration,
   }) {
     if (context != null) {
-      OpenbookToast.of(context).showToast(
+      OBToast.of(context).showToast(
           child: child,
           color: _getToastColor(type),
           message: message,
