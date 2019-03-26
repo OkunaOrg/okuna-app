@@ -17,12 +17,14 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
     VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
         message: message,
         type: ToastType.warning,
         context: context,
+        duration: duration,
         onDismissed: onDismissed,
         scaffoldKey: scaffoldKey);
   }
@@ -34,6 +36,7 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
     VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
@@ -41,6 +44,7 @@ class ToastService {
         type: ToastType.success,
         context: context,
         child: child,
+        duration: duration,
         onDismissed: onDismissed,
         scaffoldKey: scaffoldKey);
   }
@@ -51,6 +55,7 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
     VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
@@ -58,6 +63,7 @@ class ToastService {
         type: ToastType.error,
         context: context,
         onDismissed: onDismissed,
+        duration: duration,
         scaffoldKey: scaffoldKey);
   }
 
@@ -68,6 +74,7 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
     VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
@@ -75,6 +82,7 @@ class ToastService {
         message: message,
         type: ToastType.info,
         context: context,
+        duration: duration,
         scaffoldKey: scaffoldKey,
         onDismissed: onDismissed);
   }
@@ -87,12 +95,14 @@ class ToastService {
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
     VoidCallback onDismissed,
+    Duration duration,
   }) {
     if (context != null) {
       OpenbookToast.of(context).showToast(
           child: child,
           color: _getToastColor(type),
           message: message,
+          duration: duration,
           onDismissed: onDismissed);
     } else {
       print('Context was null, cannot show toast');

@@ -110,7 +110,6 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   void setIsActivePage(bool isActivePage) {
-    print(isActivePage);
     setState(() {
       _isActivePage = isActivePage;
     });
@@ -189,6 +188,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
       _triggerRefreshNotifications(shouldScrollToTop: true);
     } else {
       _toastService.info(
+          duration: Duration(seconds: 8),
           message: 'Load new notifications',
           child: Row(
             children: <Widget>[
@@ -209,7 +209,8 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
           ),
           context: context,
           onDismissed: () {
-            _triggerRefreshNotifications(shouldScrollToTop: true);
+            _triggerRefreshNotifications(
+                shouldScrollToTop: true, shouldUseRefreshIndicator: true);
           });
     }
   }
@@ -221,10 +222,14 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     }
   }
 
-  void _triggerRefreshNotifications({bool shouldScrollToTop = false}) async {
+  void _triggerRefreshNotifications({
+    bool shouldScrollToTop = false,
+    bool shouldUseRefreshIndicator = false,
+  }) async {
     _setShouldMarkNotificationsAsRead(false);
     await _notificationsListController.refresh(
-        shouldScrollToTop: shouldScrollToTop);
+        shouldScrollToTop: shouldScrollToTop,
+        shouldUseRefreshIndicator: shouldUseRefreshIndicator);
     _setShouldMarkNotificationsAsRead(true);
   }
 

@@ -244,8 +244,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     }
   }
 
-  Future refreshList({bool shouldScrollToTop = false}) async {
-    await _listRefreshIndicatorKey.currentState.show();
+  Future refreshList(
+      {bool shouldScrollToTop = false,
+      bool shouldUseRefreshIndicator = false}) async {
+    await (shouldUseRefreshIndicator
+        ? _listRefreshIndicatorKey.currentState.show()
+        : _refreshList());
     if (shouldScrollToTop && _listScrollController.offset != 0) {
       scrollToTop();
     }
@@ -384,9 +388,13 @@ class OBHttpListController<T> {
     _state.scrollToTop();
   }
 
-  Future refresh({bool shouldScrollToTop = false}) async {
+  Future refresh(
+      {bool shouldScrollToTop = false,
+      bool shouldUseRefreshIndicator = false}) async {
     if (!_state.mounted) return;
-    _state.refreshList(shouldScrollToTop: shouldScrollToTop);
+    _state.refreshList(
+        shouldScrollToTop: shouldScrollToTop,
+        shouldUseRefreshIndicator: shouldUseRefreshIndicator);
   }
 
   bool hasItems() {

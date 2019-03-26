@@ -49,6 +49,7 @@ class OpenbookToastState extends State<OpenbookToast>
       {@required Color color,
       String message,
       Widget child,
+      Duration duration,
       VoidCallback onDismissed}) async {
     await _dismissToast();
     this._overlayEntry = this._createOverlayEntryFromTop(
@@ -57,11 +58,13 @@ class OpenbookToastState extends State<OpenbookToast>
     WidgetsBinding.instance
         .addPostFrameCallback((_) => overlay.insert(_overlayEntry));
     controller.forward();
-    _dismissToastAfterDelay();
+
+    duration = duration ?? const Duration(seconds: 3);
+    _dismissToastAfterDelay(duration);
   }
 
-  void _dismissToastAfterDelay() async {
-    await new Future.delayed(const Duration(seconds: 3));
+  void _dismissToastAfterDelay(Duration duration) async {
+    await new Future.delayed(duration);
     // Might have been already dismissed
     if (_overlayEntry != null) _dismissToast();
   }
