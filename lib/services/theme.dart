@@ -115,7 +115,33 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-space-rose.png')
+            'assets/images/theme-previews/theme-preview-space-rose.png'),
+      OBTheme(
+        id: 9,
+        name: 'Light Cinnabar',
+        primaryAccentColor: '#7a1d22, #ba1b1d',
+        primaryTextColor: '#505050',
+        secondaryTextColor: '#676767',
+        primaryColor: '#ffffff',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview:
+            'assets/images/theme-previews/theme-preview-light-Cinnabar.png'),
+    OBTheme(
+        id: 10,
+        name: 'Space Cinnabar',
+        primaryTextColor: '#ffffff',
+        secondaryTextColor: '#b3b3b3',
+        primaryColor: '#232323',
+        primaryAccentColor: '#7a1d22, #ba1b1d',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview:
+            'assets/images/theme-previews/theme-preview-space-Cinnabar.png')
   ];
 
   ThemeService() {
