@@ -49,7 +49,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   AnimationController _animationController;
   Animation<double> _animation;
 
-  GlobalKey _postCommentsKey;
+  GlobalKey _keyPostBody = GlobalKey();
+  double _positionTopCommentSection;
   ScrollController _postCommentsScrollController;
   List<PostComment> _postComments = [];
   bool _noMoreItemsToLoad;
@@ -58,6 +59,13 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   bool _shouldHideStackedLoadingScreen;
   String _currentSort;
   FocusNode _commentInputFocusNode;
+  static const OFFSET_TOP_HEADER = 64.0;
+  static const HEIGHT_POST_HEADER = 72.0;
+  static const HEIGHT_POST_REACTIONS = 35.0;
+  static const HEIGHT_POST_CIRCLES = 26.0;
+  static const HEIGHT_POST_ACTIONS = 46.0;
+  static const TOTAL_FIXED_OFFSET_Y = OFFSET_TOP_HEADER + HEIGHT_POST_HEADER +
+      HEIGHT_POST_REACTIONS + HEIGHT_POST_CIRCLES + HEIGHT_POST_ACTIONS;
   static const LOAD_MORE_COMMENTS_COUNT = 5;
   static const COUNT_MIN_INCLUDING_LINKED_COMMENT = 2;
   static const COUNT_MAX_AFTER_LINKED_COMMENT = 3;
@@ -77,7 +85,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
     _noMoreEarlierItemsToLoad = false;
     _shouldHideStackedLoadingScreen = false;
     _commentInputFocusNode = FocusNode();
-    _postCommentsKey = new GlobalKey();
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 1500), vsync: this);
     _animation = new Tween(begin: 1.0, end: 0.0).animate(_animationController);
@@ -128,7 +135,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
     List<Widget> _stackChildren = [];
 
     if (_shouldHideStackedLoadingScreen) {
-      _stackChildren.add( Column(
+      _stackChildren.add(Column(
         children: _getColumnChildren(),
       ));
     } else {
@@ -160,7 +167,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
 
   List<Widget> _getColumnChildren() {
     List<Widget> _columnChildren = [];
-    _postCommentsScrollController = ScrollController(initialScrollOffset: _post.getImageHeight() + 200.0);
+    _postCommentsScrollController = ScrollController(initialScrollOffset: _post.getImageHeight());
     _columnChildren.addAll([
       Expanded(
         child: LoadMore(
@@ -199,6 +206,19 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
     var onPostCommentDeletedCallback = () {
       _removePostCommentAtIndex(commentIndex);
     };
+    print(index);
+    print('Length: ${_postComments.length}');
+    print(_positionTopCommentSection);
+
+    if (_animationController.status != AnimationStatus.completed && _positionTopCommentSection != null) {
+        _postCommentsScrollController.animateTo(_positionTopCommentSection - 100.0, duration: Duration(milliseconds: 5), curve: Curves.easeIn);
+    }
+
+    if (index == _postComments.length) {
+      Future.delayed(Duration(milliseconds: 0), () {
+        _animationController.forward();
+      });
+    }
 
     if (postComment.id == widget.postComment.id) {
       var theme = _themeService.getActiveTheme();
@@ -221,11 +241,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
         ),
       );
     } else {
-      if (index == TOTAL_COMMENTS_IN_SLICE) {
-        Future.delayed(Duration(milliseconds: 0), () {
-          _animationController.forward();
-        });
-      }
       return OBExpandedPostComment(
         postComment: postComment,
         post: _post,
@@ -236,14 +251,18 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   }
 
   Widget _getPostPreview() {
-      return Column(
+      return
+        Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           OBPostHeader(
             post: _post,
             onPostDeleted: _onPostDeleted,
           ),
-          OBPostBody(_post),
+          Container(
+            key: _keyPostBody,
+            child:  OBPostBody(_post),
+          ),
           OBPostReactions(_post),
           OBPostCircles(_post),
           OBPostActions(
@@ -270,10 +289,17 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
               countMin: COUNT_MIN_INCLUDING_LINKED_COMMENT))
               .comments;
       _setPostComments(_postComments);
+      _setPositionTopCommentSection();
       _setNoMoreItemsToLoad(false);
     } catch (error) {
       _onError(error);
     }
+  }
+
+  void _setPositionTopCommentSection() {
+    setState(() {
+      _positionTopCommentSection = _calculatePositionTopCommentSection();
+    });
   }
 
   Future<void> _refreshPost() async {
@@ -286,7 +312,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   }
 
   Future<bool> _loadMoreComments() async {
-    print('calling load more');
     if (_postComments.length == 0) return true;
 
     var lastPost = _postComments.last;
@@ -451,6 +476,20 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
       _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
+  }
+
+  double _calculatePositionTopCommentSection() {
+    final RenderBox renderBoxPostBody = _keyPostBody.currentContext.findRenderObject();
+    final heightPostBody = renderBoxPostBody.size.height;
+    final totalOffsetY = TOTAL_FIXED_OFFSET_Y + heightPostBody;
+    print('Total offset from render: $totalOffsetY');
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    double aspectRatio = _post.getImageWidth() / _post.getImageHeight();
+    double imageScreenHeight = screenWidth/aspectRatio;
+
+
+    return totalOffsetY;
   }
 
   Widget _buildLoadEarlierCommentsBar() {
