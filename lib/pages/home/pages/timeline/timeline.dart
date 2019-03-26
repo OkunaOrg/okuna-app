@@ -6,6 +6,7 @@ import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/badges/badge.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
@@ -45,8 +46,8 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     _modalService = openbookProvider.modalService;
 
     return OBCupertinoPageScaffold(
-        navigationBar:
-            OBThemedNavigationBar(title: 'Home', trailing: _buildFiltersButton()),
+        navigationBar: OBThemedNavigationBar(
+            title: 'Home', trailing: _buildFiltersButton()),
         child: OBPrimaryColorContainer(
           child: Stack(
             children: <Widget>[
@@ -57,6 +58,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                   bottom: 20.0,
                   right: 20.0,
                   child: OBFloatingActionButton(
+                      type: OBButtonType.primary,
                       onPressed: () async {
                         Post createdPost = await _modalService.openCreatePost(
                             context: context);

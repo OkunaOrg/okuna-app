@@ -80,6 +80,8 @@ class UserService {
 
   final _loggedInUserChangeSubject = ReplaySubject<User>(maxSize: 1);
 
+  Future<Device> _getOrCreateCurrentDeviceCache;
+
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
   }
@@ -156,6 +158,7 @@ class UserService {
     Post.clearCache();
     User.clearSessionCache();
     User.clearNavigationCache();
+    _getOrCreateCurrentDeviceCache = null;
   }
 
   Future<void> loginWithCredentials(
@@ -174,15 +177,15 @@ class UserService {
     }
   }
 
-  Future<void> requestPasswordReset(
-      {String username, String email}) async {
+  Future<void> requestPasswordReset({String username, String email}) async {
     HttpieResponse response = await _authApiService.requestPasswordReset(
         username: username, email: email);
-        _checkResponseIsOk(response);
+    _checkResponseIsOk(response);
   }
 
   Future<void> verifyPasswordReset(
-      {@required String newPassword, @required String passwordResetToken}) async {
+      {@required String newPassword,
+      @required String passwordResetToken}) async {
     HttpieResponse response = await _authApiService.verifyPasswordReset(
         newPassword: newPassword, passwordResetToken: passwordResetToken);
     _checkResponseIsOk(response);
@@ -261,13 +264,16 @@ class UserService {
     var token = await _getStoredAuthToken();
     if (token == null &&
         !_createAccountBlocService.hasToken() &&
-        !_createAccountBlocService.hasPasswordResetToken()) throw AuthTokenMissingError();
+        !_createAccountBlocService.hasPasswordResetToken())
+      throw AuthTokenMissingError();
     if (token == null && _createAccountBlocService.hasToken()) {
-      print('User is in register via link flow, dont throw error as it will break the flow');
+      print(
+          'User is in register via link flow, dont throw error as it will break the flow');
       return;
     }
     if (token == null && _createAccountBlocService.hasPasswordResetToken()) {
-      print('User is in reset password via link flow, dont throw error as it will break the flow');
+      print(
+          'User is in reset password via link flow, dont throw error as it will break the flow');
       return;
     }
 
@@ -1055,9 +1061,9 @@ class UserService {
     return NotificationsList.fromJson(json.decode(response.body));
   }
 
-  Future<void> readNotifications() async {
+  Future<void> readNotifications({int maxId}) async {
     HttpieResponse response =
-        await _notificationsApiService.readNotifications();
+        await _notificationsApiService.readNotifications(maxId: maxId);
     _checkResponseIsOk(response);
   }
 
@@ -1120,6 +1126,22 @@ class UserService {
   }
 
   Future<Device> getOrCreateCurrentDevice() async {
+    if (_getOrCreateCurrentDeviceCache != null)
+      return _getOrCreateCurrentDeviceCache;
+
+    _getOrCreateCurrentDeviceCache = _getOrCreateCurrentDevice();
+    _getOrCreateCurrentDeviceCache.catchError((error) {
+      _getOrCreateCurrentDeviceCache = null;
+      throw error;
+    });
+
+    return _getOrCreateCurrentDeviceCache;
+  }
+
+  Future<Device> _getOrCreateCurrentDevice() async {
+    if (_getOrCreateCurrentDeviceCache != null)
+      return _getOrCreateCurrentDeviceCache;
+
     String deviceUuid = await _getDeviceUuid();
     HttpieResponse response =
         await _devicesApiService.getDeviceWithUuid(deviceUuid);
@@ -1137,10 +1159,12 @@ class UserService {
   }
 
   Future<void> _deleteCurrentDevice() async {
-    String deviceUuid = await _getDeviceUuid();
+    if (_getOrCreateCurrentDeviceCache == null) return;
+
+    Device currentDevice = await _getOrCreateCurrentDeviceCache;
 
     HttpieResponse response =
-        await _devicesApiService.deleteDeviceWithUuid(deviceUuid);
+        await _devicesApiService.deleteDeviceWithUuid(currentDevice.uuid);
 
     if (!response.isOk() && !response.isNotFound()) {
       print('Could not delete current device');
@@ -1235,7 +1259,8 @@ class UserService {
   }
 
   void _setLoggedInUser(User user) {
-    if (_loggedInUser == null || _loggedInUser.id != user.id) _loggedInUserChangeSubject.add(user);
+    if (_loggedInUser == null || _loggedInUser.id != user.id)
+      _loggedInUserChangeSubject.add(user);
     _loggedInUser = user;
   }
 

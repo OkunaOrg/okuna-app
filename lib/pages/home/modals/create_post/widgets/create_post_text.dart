@@ -22,7 +22,7 @@ class OBCreatePostText extends StatelessWidget {
 
           return TextField(
             controller: controller,
-            autofocus: false,
+            autofocus: true,
             textCapitalization: TextCapitalization.sentences,
             keyboardType: TextInputType.multiline,
             maxLines: null,

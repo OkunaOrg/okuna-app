@@ -21,7 +21,7 @@ class OBConnectionsCircleName extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               OBSecondaryText(
-                'List',
+                'Circle',
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
