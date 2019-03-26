@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/push_notification.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
@@ -74,6 +75,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     List<Widget> stackItems = [
       OBPrimaryColorContainer(
         child: OBHttpList(
+          listKey: Key('notificationsList'),
           controller: _notificationsListController,
           listRefresher: _refreshNotifications,
           listOnScrollLoader: _loadMoreNotifications,
@@ -117,6 +119,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
   Widget _buildNotification(BuildContext context, OBNotification notification) {
     return OBNotificationTile(
+      key: Key(notification.id.toString()),
       notification: notification,
       onNotificationTileDeleted: _onNotificationTileDeleted,
       onPressed: _markNotificationAsRead,
@@ -187,46 +190,53 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     if (!_isActivePage) {
       _triggerRefreshNotifications(shouldScrollToTop: true);
     } else {
-      _toastService.info(
-          duration: Duration(seconds: 8),
-          message: 'Load new notifications',
-          child: Row(
-            children: <Widget>[
-              const OBIcon(
-                OBIcons.refresh,
-                color: Colors.white,
-                size: OBIconSize.small,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text(
-                'Load new notifications',
-                style: TextStyle(color: Colors.white),
-              )
-            ],
-            mainAxisSize: MainAxisSize.min,
-          ),
-          context: context,
-          onDismissed: () {
-            _triggerRefreshNotifications(
-                shouldScrollToTop: true, shouldUseRefreshIndicator: true);
-          });
+      _showRefreshNotificationsToast();
     }
+  }
+
+  void _showRefreshNotificationsToast() {
+    _toastService.info(
+        duration: Duration(seconds: 8),
+        message: 'Load new notifications',
+        child: Row(
+          children: <Widget>[
+            const OBIcon(
+              OBIcons.refresh,
+              color: Colors.white,
+              size: OBIconSize.small,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text(
+              'Load new notifications',
+              style: TextStyle(color: Colors.white),
+            )
+          ],
+          mainAxisSize: MainAxisSize.min,
+        ),
+        context: context,
+        onDismissed: () {
+          _triggerRefreshNotifications(
+              shouldScrollToTop: true,
+              shouldUseRefreshIndicator: false,
+              shouldMarkNotificationsAsRead: true);
+        });
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed && !_isActivePage) {
-      _triggerRefreshNotifications(shouldScrollToTop: true);
+    if (state == AppLifecycleState.resumed) {
+      _triggerRefreshNotifications(shouldScrollToTop: true, shouldUseRefreshIndicator: _isActivePage);
     }
   }
 
   void _triggerRefreshNotifications({
     bool shouldScrollToTop = false,
     bool shouldUseRefreshIndicator = false,
+    bool shouldMarkNotificationsAsRead = false,
   }) async {
-    _setShouldMarkNotificationsAsRead(false);
+    _setShouldMarkNotificationsAsRead(shouldMarkNotificationsAsRead);
     await _notificationsListController.refresh(
         shouldScrollToTop: shouldScrollToTop,
         shouldUseRefreshIndicator: shouldUseRefreshIndicator);
