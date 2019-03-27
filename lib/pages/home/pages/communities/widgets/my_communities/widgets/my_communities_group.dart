@@ -89,6 +89,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
         ),
       ),
       ListView.separated(
+          key: Key(widget.groupName + 'communitiesGroup'),
           physics: const NeverScrollableScrollPhysics(),
           separatorBuilder: _buildCommunitySeparator,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -106,6 +107,12 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: columnItems,
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (widget.controller != null) widget.controller.detach();
   }
 
   Widget _buildSeeAllButton() {
@@ -217,7 +224,12 @@ class OBMyCommunitiesGroupController {
     this._state = state;
   }
 
+  void detach() {
+    this._state = null;
+  }
+
   Future<void> refresh() {
+    if (_state == null) return Future.value();
     return _state._refreshJoinedCommunities();
   }
 }

@@ -59,51 +59,60 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       key: _refreshIndicatorKey,
       onRefresh: _refreshAllGroups,
       child: ListView(
+          key: Key('myCommunities'),
           // Need always scrollable for pull to refresh to work
           physics: const AlwaysScrollableScrollPhysics(),
           padding: EdgeInsets.all(0),
           children: <Widget>[
-            OBMyCommunitiesGroup(
-              controller: _favoriteCommunitiesGroupController,
-              title: 'Favorites',
-              groupName: 'favorite communities',
-              groupItemName: 'favorite community',
-              maxGroupListPreviewItems: 5,
-              communityGroupListItemBuilder: _buildFavoriteCommunityListItem,
-              communityGroupListRefresher: _refreshFavoriteCommunities,
-              communityGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
-            ),
-            OBMyCommunitiesGroup(
-                controller: _administratedCommunitiesGroupController,
-                title: 'Administrated',
-                groupName: 'administrated communities',
-                groupItemName: 'administrated community',
-                maxGroupListPreviewItems: 5,
-                communityGroupListItemBuilder:
+            Column(
+              children: <Widget>[
+                OBMyCommunitiesGroup(
+                  key: Key('FavoriteCommunitiesGroup'),
+                  controller: _favoriteCommunitiesGroupController,
+                  title: 'Favorites',
+                  groupName: 'favorite communities',
+                  groupItemName: 'favorite community',
+                  maxGroupListPreviewItems: 5,
+                  communityGroupListItemBuilder: _buildFavoriteCommunityListItem,
+                  communityGroupListRefresher: _refreshFavoriteCommunities,
+                  communityGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
+                ),
+                OBMyCommunitiesGroup(
+                    key: Key('AdministratedCommunitiesGroup'),
+                    controller: _administratedCommunitiesGroupController,
+                    title: 'Administrated',
+                    groupName: 'administrated communities',
+                    groupItemName: 'administrated community',
+                    maxGroupListPreviewItems: 5,
+                    communityGroupListItemBuilder:
                     _buildAdministratedCommunityListItem,
-                communityGroupListRefresher: _refreshAdministratedCommunities,
-                communityGroupListOnScrollLoader:
+                    communityGroupListRefresher: _refreshAdministratedCommunities,
+                    communityGroupListOnScrollLoader:
                     _loadMoreAdministratedCommunities),
-            OBMyCommunitiesGroup(
-              controller: _moderatedCommunitiesGroupController,
-              title: 'Moderated',
-              groupName: 'moderated communities',
-              groupItemName: 'moderated community',
-              maxGroupListPreviewItems: 5,
-              communityGroupListItemBuilder: _buildModeratedCommunityListItem,
-              communityGroupListRefresher: _refreshModeratedCommunities,
-              communityGroupListOnScrollLoader: _loadMoreModeratedCommunities,
-            ),
-            OBMyCommunitiesGroup(
-              controller: _joinedCommunitiesGroupController,
-              title: 'All',
-              groupName: 'all communities',
-              groupItemName: 'community',
-              maxGroupListPreviewItems: 5,
-              communityGroupListItemBuilder: _buildJoinedCommunityListItem,
-              communityGroupListRefresher: _refreshJoinedCommunities,
-              communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
-              noGroupItemsFallbackBuilder: _buildNoJoinedCommunitiesFallback,
+                OBMyCommunitiesGroup(
+                  key: Key('ModeratedCommunitiesGroup'),
+                  controller: _moderatedCommunitiesGroupController,
+                  title: 'Moderated',
+                  groupName: 'moderated communities',
+                  groupItemName: 'moderated community',
+                  maxGroupListPreviewItems: 5,
+                  communityGroupListItemBuilder: _buildModeratedCommunityListItem,
+                  communityGroupListRefresher: _refreshModeratedCommunities,
+                  communityGroupListOnScrollLoader: _loadMoreModeratedCommunities,
+                ),
+                OBMyCommunitiesGroup(
+                  key: Key('JoinedCommunitiesGroup'),
+                  controller: _joinedCommunitiesGroupController,
+                  title: 'All',
+                  groupName: 'all communities',
+                  groupItemName: 'community',
+                  maxGroupListPreviewItems: 5,
+                  communityGroupListItemBuilder: _buildJoinedCommunityListItem,
+                  communityGroupListRefresher: _refreshJoinedCommunities,
+                  communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
+                  noGroupItemsFallbackBuilder: _buildNoJoinedCommunitiesFallback,
+                )
+              ],
             )
           ]),
     );
