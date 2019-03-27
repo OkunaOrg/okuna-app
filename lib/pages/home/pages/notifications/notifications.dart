@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/push_notification.dart';
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
@@ -201,7 +200,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
         child: Row(
           children: <Widget>[
             const OBIcon(
-              OBIcons.refresh,
+              OBIcons.arrowUpward,
               color: Colors.white,
               size: OBIconSize.small,
             ),
@@ -219,7 +218,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
         onDismissed: () {
           _triggerRefreshNotifications(
               shouldScrollToTop: true,
-              shouldUseRefreshIndicator: false,
+              shouldUseRefreshIndicator: true,
               shouldMarkNotificationsAsRead: true);
         });
   }
@@ -227,7 +226,8 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      _triggerRefreshNotifications(shouldScrollToTop: true, shouldUseRefreshIndicator: _isActivePage);
+      _triggerRefreshNotifications(
+          shouldScrollToTop: true, shouldUseRefreshIndicator: _isActivePage);
     }
   }
 
