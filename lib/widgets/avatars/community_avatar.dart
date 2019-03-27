@@ -31,11 +31,9 @@ class OBCommunityAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: community.updateSubject,
+        initialData: community,
         builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
           Community community = snapshot.data;
-
-          if (community == null) return SizedBox();
-
           bool communityHasAvatar = community.hasAvatar();
 
           Widget avatar;

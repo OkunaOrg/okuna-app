@@ -54,10 +54,10 @@ class OBSharePostPageState extends State<OBSharePostPage> {
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
           child: StreamBuilder(
+            initialData: loggedInUser,
             stream: loggedInUser.updateSubject,
             builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
               User latestUser = snapshot.data;
-              if (latestUser == null) return const SizedBox();
 
               if (_loggedInUserRefreshInProgress)
                 return const Center(

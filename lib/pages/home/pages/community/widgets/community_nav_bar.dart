@@ -20,10 +20,9 @@ class OBCommunityNavBar extends StatelessWidget
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: community.updateSubject,
+        initialData: community,
         builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
           var community = snapshot.data;
-
-          if (community == null) return const SizedBox();
 
           String communityColor = community.color;
           ThemeValueParserService themeValueParserService =

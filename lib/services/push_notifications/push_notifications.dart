@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:Openbook/models/device.dart';
-import 'package:Openbook/models/push_notifications/push_notification.dart';
+import 'package:Openbook/models/push_notification.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:crypto/crypto.dart';

@@ -16,26 +16,36 @@ class ToastService {
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
         message: message,
         type: ToastType.warning,
         context: context,
+        duration: duration,
+        onDismissed: onDismissed,
         scaffoldKey: scaffoldKey);
   }
 
   void success({
     String title,
+    Widget child,
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
         message: message,
         type: ToastType.success,
         context: context,
+        child: child,
+        duration: duration,
+        onDismissed: onDismissed,
         scaffoldKey: scaffoldKey);
   }
 
@@ -44,39 +54,56 @@ class ToastService {
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
         message: message,
         type: ToastType.error,
         context: context,
+        onDismissed: onDismissed,
+        duration: duration,
         scaffoldKey: scaffoldKey);
   }
 
   void info({
     String title,
+    Widget child,
     @required String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
+    Duration duration,
   }) {
     toast(
         title: title,
+        child: child,
         message: message,
         type: ToastType.info,
         context: context,
-        scaffoldKey: scaffoldKey);
+        duration: duration,
+        scaffoldKey: scaffoldKey,
+        onDismissed: onDismissed);
   }
 
   void toast({
     String title,
+    Widget child,
     @required String message,
     @required ToastType type,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
+    VoidCallback onDismissed,
+    Duration duration,
   }) {
-    print(message);
     if (context != null) {
-      OpenbookToast.of(context).showToast(ToastConfig(color: _getToastColor(type), message: message));
+      OBToast.of(context).showToast(
+          child: child,
+          color: _getToastColor(type),
+          message: message,
+          duration: duration,
+          onDismissed: onDismissed);
     } else {
       print('Context was null, cannot show toast');
     }
@@ -102,15 +129,4 @@ class ToastService {
 
     return color;
   }
-}
-
-class ToastConfig {
-  final Color color;
-  final String message;
-
-  ToastConfig({
-    this.color,
-    this.message
-  });
-
 }
