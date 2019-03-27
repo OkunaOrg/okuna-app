@@ -166,7 +166,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
           FlatButton(
               child: Row(
                 children: <Widget>[
-                  OBText(_currentSort == SORT_DESCENDING ? 'See oldest comments' : 'See latest comments',
+                  OBText( _postComments.length > 0
+                      ?_currentSort == SORT_DESCENDING ? 'See oldest comments' : 'See latest comments': '',
                     style: TextStyle(
                         color: _themeValueParserService
                             .parseGradient(theme.primaryAccentColor)
