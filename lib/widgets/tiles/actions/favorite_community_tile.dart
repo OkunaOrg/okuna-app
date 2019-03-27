@@ -48,9 +48,9 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
 
     return StreamBuilder(
       stream: widget.community.updateSubject,
+      initialData: widget.community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
-        if (community == null) return const SizedBox();
 
         bool isFavorite = community.isFavorite;
 
