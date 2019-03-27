@@ -73,9 +73,11 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   groupName: 'favorite communities',
                   groupItemName: 'favorite community',
                   maxGroupListPreviewItems: 5,
-                  communityGroupListItemBuilder: _buildFavoriteCommunityListItem,
+                  communityGroupListItemBuilder:
+                      _buildFavoriteCommunityListItem,
                   communityGroupListRefresher: _refreshFavoriteCommunities,
-                  communityGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
+                  communityGroupListOnScrollLoader:
+                      _loadMoreFavoriteCommunities,
                 ),
                 OBMyCommunitiesGroup(
                     key: Key('AdministratedCommunitiesGroup'),
@@ -85,10 +87,11 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                     groupItemName: 'administrated community',
                     maxGroupListPreviewItems: 5,
                     communityGroupListItemBuilder:
-                    _buildAdministratedCommunityListItem,
-                    communityGroupListRefresher: _refreshAdministratedCommunities,
+                        _buildAdministratedCommunityListItem,
+                    communityGroupListRefresher:
+                        _refreshAdministratedCommunities,
                     communityGroupListOnScrollLoader:
-                    _loadMoreAdministratedCommunities),
+                        _loadMoreAdministratedCommunities),
                 OBMyCommunitiesGroup(
                   key: Key('ModeratedCommunitiesGroup'),
                   controller: _moderatedCommunitiesGroupController,
@@ -96,21 +99,24 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   groupName: 'moderated communities',
                   groupItemName: 'moderated community',
                   maxGroupListPreviewItems: 5,
-                  communityGroupListItemBuilder: _buildModeratedCommunityListItem,
+                  communityGroupListItemBuilder:
+                      _buildModeratedCommunityListItem,
                   communityGroupListRefresher: _refreshModeratedCommunities,
-                  communityGroupListOnScrollLoader: _loadMoreModeratedCommunities,
+                  communityGroupListOnScrollLoader:
+                      _loadMoreModeratedCommunities,
                 ),
                 OBMyCommunitiesGroup(
                   key: Key('JoinedCommunitiesGroup'),
                   controller: _joinedCommunitiesGroupController,
-                  title: 'All',
-                  groupName: 'all communities',
-                  groupItemName: 'community',
+                  title: 'Joined',
+                  groupName: 'joined communities',
+                  groupItemName: 'joined community',
                   maxGroupListPreviewItems: 5,
                   communityGroupListItemBuilder: _buildJoinedCommunityListItem,
                   communityGroupListRefresher: _refreshJoinedCommunities,
                   communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
-                  noGroupItemsFallbackBuilder: _buildNoJoinedCommunitiesFallback,
+                  noGroupItemsFallbackBuilder:
+                      _buildNoJoinedCommunitiesFallback,
                 )
               ],
             )
