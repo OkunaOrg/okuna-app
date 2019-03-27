@@ -21,7 +21,7 @@ class OBPost extends StatelessWidget {
   static const HEIGHT_SIZED_BOX = 16;
   static const TOTAL_PADDING_POST_TEXT = 40.0;
   static const TOTAL_FIXED_HEIGHT =  HEIGHT_POST_HEADER + HEIGHT_POST_REACTIONS + HEIGHT_POST_CIRCLES
-      + HEIGHT_POST_COMMENTS + HEIGHT_POST_ACTIONS + HEIGHT_SIZED_BOX + HEIGHT_POST_DIVIDER;
+      + HEIGHT_POST_COMMENTS + HEIGHT_POST_ACTIONS + HEIGHT_SIZED_BOX + TOTAL_PADDING_POST_TEXT + HEIGHT_POST_DIVIDER;
 
   const OBPost(this.post, {Key key, @required this.onPostDeleted})
       : super(key: key);
@@ -78,7 +78,7 @@ class OBPost extends StatelessWidget {
     );
     textPainter.layout(maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
     double finalTextHeight = textPainter.size.height;
-    final totalHeightPost = finalMediaScreenHeight + finalTextHeight + TOTAL_PADDING_POST_TEXT + TOTAL_FIXED_HEIGHT;
+    final totalHeightPost = finalMediaScreenHeight + finalTextHeight + TOTAL_FIXED_HEIGHT;
 
     return totalHeightPost;
   }
