@@ -38,8 +38,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   ToastService _toastService;
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
-
-  GlobalKey _postCommentsKey;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _postCommentsScrollController;
   List<PostComment> _postComments = [];
@@ -60,7 +58,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     _currentSort = SORT_DESCENDING;
     _noMoreItemsToLoad = true;
     _commentInputFocusNode = FocusNode();
-    _postCommentsKey = new GlobalKey();
   }
 
   @override
@@ -94,7 +91,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                           isFinish: _noMoreItemsToLoad,
                           delegate: OBInfinitePostCommentsLoadMoreDelegate(),
                           child: ListView.builder(
-                              physics: const ClampingScrollPhysics(),
+                              physics: const AlwaysScrollableScrollPhysics(),
                               controller: _postCommentsScrollController,
                               padding: EdgeInsets.all(0),
                               itemCount: _postComments.length + 1,
