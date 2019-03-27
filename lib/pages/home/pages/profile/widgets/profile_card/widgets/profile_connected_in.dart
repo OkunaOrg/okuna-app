@@ -12,6 +12,7 @@ class OBProfileConnectedIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: user.updateSubject,
+      initialData: user,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
         var connectedCircles = user?.connectedCircles?.circles;

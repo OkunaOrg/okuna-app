@@ -29,10 +29,11 @@ class OBUserPostHeader extends StatelessWidget {
     return ListTile(
       leading: StreamBuilder(
           stream: _post.creator.updateSubject,
+          initialData: _post.creator,
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             User postCreator = snapshot.data;
 
-            if (postCreator == null || !postCreator.hasProfileAvatar()) return const SizedBox();
+            if (!postCreator.hasProfileAvatar()) return const SizedBox();
 
             return OBAvatar(
               onPressed: () {
@@ -59,10 +60,9 @@ class OBUserPostHeader extends StatelessWidget {
         },
         child: StreamBuilder(
             stream: _post.creator.updateSubject,
+            initialData: _post.creator,
             builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
               var postCreator = snapshot.data;
-
-              if (postCreator == null) return const SizedBox();
 
               return Row(children: <Widget>[
                 OBText(

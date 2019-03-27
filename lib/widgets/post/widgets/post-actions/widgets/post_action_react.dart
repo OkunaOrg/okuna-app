@@ -20,9 +20,9 @@ class OBPostActionReact extends StatelessWidget {
 
     return StreamBuilder(
       stream: _post.updateSubject,
+      initialData: _post,
       builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
         Post post = snapshot.data;
-        if (post == null) return const SizedBox();
         PostReaction reaction = post.reaction;
         bool hasReaction = reaction != null;
 

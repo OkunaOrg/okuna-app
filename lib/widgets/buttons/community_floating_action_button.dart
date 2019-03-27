@@ -36,10 +36,9 @@ class OBCommunityNewPostButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community community = snapshot.data;
-
-        if (community == null) return const SizedBox();
 
         String communityHexColor = community.color;
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);

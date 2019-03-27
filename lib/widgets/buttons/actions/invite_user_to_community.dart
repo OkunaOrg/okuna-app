@@ -42,10 +42,10 @@ class OBInviteUserToCommunityButtonState
 
     return StreamBuilder(
       stream: loggedInUser.updateSubject,
+      initialData: loggedInUser,
       builder:
           (BuildContext context, AsyncSnapshot<User> loggedInUserSnapshot) {
         User latestLoggedInUser = loggedInUserSnapshot.data;
-        if (latestLoggedInUser == null) return const SizedBox();
 
         return StreamBuilder(
           stream: widget.user.updateSubject,

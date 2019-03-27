@@ -27,10 +27,9 @@ class OBCommunityPostHeader extends StatelessWidget {
 
     return StreamBuilder(
         stream: _post.community.updateSubject,
+        initialData: _post.community,
         builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
           Community community = snapshot.data;
-
-          if (community == null) return const SizedBox();
 
           return ListTile(
             leading: OBAvatar(

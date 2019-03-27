@@ -75,14 +75,14 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     List<Widget> stackItems = [
       OBPrimaryColorContainer(
         child: OBHttpList(
-          listKey: Key('notificationsList'),
+          key: Key('notificationsList'),
           controller: _notificationsListController,
           listRefresher: _refreshNotifications,
           listOnScrollLoader: _loadMoreNotifications,
           listItemBuilder: _buildNotification,
           resourceSingularName: 'notification',
           resourcePluralName: 'notifications',
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
         ),
       ),
     ];
@@ -196,7 +196,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
   void _showRefreshNotificationsToast() {
     _toastService.info(
-        duration: Duration(seconds: 8),
+        duration: Duration(seconds: 3),
         message: 'Load new notifications',
         child: Row(
           children: <Widget>[

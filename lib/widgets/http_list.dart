@@ -251,7 +251,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
         ? _listRefreshIndicatorKey.currentState.show()
         : _refreshList());
     if (shouldScrollToTop && _listScrollController.offset != 0) {
-      scrollToTop();
+      Future.delayed(Duration(seconds: 300), () {
+        scrollToTop();
+      });
     }
   }
 

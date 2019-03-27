@@ -44,9 +44,9 @@ class OBMutePostTileState extends State<OBMutePostTile> {
 
     return StreamBuilder(
       stream: widget.post.updateSubject,
+      initialData: widget.post,
       builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
         var post = snapshot.data;
-        if (post == null) return const SizedBox();
 
         bool isMuted = post.isMuted;
 

@@ -186,10 +186,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       BuildContext context, Community community) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isMember(loggedInUser)
@@ -203,10 +202,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       BuildContext context, Community community) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isModerator(loggedInUser)
@@ -220,10 +218,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       BuildContext context, Community community) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isAdministrator(loggedInUser)
@@ -236,11 +233,10 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
   Widget _buildFavoriteCommunityListItem(
       BuildContext context, Community community) {
     return StreamBuilder(
+      initialData: community,
       stream: community.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         return latestCommunity.isFavorite
             ? _buildCommunityListItem(community)
