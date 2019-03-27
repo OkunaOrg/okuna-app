@@ -97,7 +97,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
             OBMyCommunitiesGroup(
               controller: _joinedCommunitiesGroupController,
               title: 'All',
-              groupName: 'all communities',
+              groupName: 'communities',
               groupItemName: 'community',
               maxGroupListPreviewItems: 5,
               communityGroupListItemBuilder: _buildJoinedCommunityListItem,
