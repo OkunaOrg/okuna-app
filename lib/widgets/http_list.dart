@@ -63,6 +63,8 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
   StreamSubscription<List<T>> _searchRequestSubscription;
 
+  ScrollPhysics noItemsPhysics = const AlwaysScrollableScrollPhysics();
+
   @override
   void initState() {
     super.initState();
@@ -134,6 +136,8 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   Widget _buildSearchResultsList() {
     int listItemCount = _listSearchResults.length + 1;
 
+    ScrollPhysics physics = listItemCount > 0 ? widget.physics : noItemsPhysics;
+
     return NotificationListener(
       onNotification: (ScrollNotification notification) {
         // Hide keyboard
@@ -144,12 +148,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
           ? ListView.separated(
               separatorBuilder: widget.separatorBuilder,
               padding: widget.padding,
-              physics: widget.physics,
+              physics: physics,
               itemCount: listItemCount,
               itemBuilder: _buildSearchResultsListItem)
           : ListView.builder(
               padding: widget.padding,
-              physics: widget.physics,
+              physics: physics,
               itemCount: listItemCount,
               itemBuilder: _buildSearchResultsListItem),
     );
@@ -251,9 +255,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
         ? _listRefreshIndicatorKey.currentState.show()
         : _refreshList());
     if (shouldScrollToTop && _listScrollController.offset != 0) {
-      Future.delayed(Duration(seconds: 300), () {
-        scrollToTop();
-      });
+      scrollToTop();
     }
   }
 
