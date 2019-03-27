@@ -66,8 +66,9 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   static const HEIGHT_POST_CIRCLES = 26.0;
   static const HEIGHT_POST_ACTIONS = 46.0;
   static const TOTAL_PADDING_POST_TEXT = 40.0;
+  static const HEIGHT_POST_DIVIDER = 5.5;
   static const TOTAL_FIXED_OFFSET_Y = OFFSET_TOP_HEADER + HEIGHT_POST_HEADER +
-      HEIGHT_POST_REACTIONS + HEIGHT_POST_CIRCLES + HEIGHT_POST_ACTIONS;
+      HEIGHT_POST_REACTIONS + HEIGHT_POST_CIRCLES + HEIGHT_POST_ACTIONS + HEIGHT_POST_DIVIDER;
   static const LOAD_MORE_COMMENTS_COUNT = 5;
   static const COUNT_MIN_INCLUDING_LINKED_COMMENT = 3;
   static const COUNT_MAX_AFTER_LINKED_COMMENT = 2;
@@ -212,9 +213,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
     var onPostCommentDeletedCallback = () {
       _removePostCommentAtIndex(commentIndex);
     };
-    print(index);
-    print('Length: ${_postComments.length}');
-    print(_positionTopCommentSection);
 
     if (_animationController.status != AnimationStatus.completed && !_startScrollWasInitialised) {
         _postCommentsScrollController.animateTo(_positionTopCommentSection - 100.0, duration: Duration(milliseconds: 5), curve: Curves.easeIn);
@@ -403,9 +401,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
 
   void _checkIfMoreEarlierItemsToLoad() {
     var linkedCommentId = widget.postComment.id;
-    var listBeforeLinkedComment = _postComments.where((comment) => comment.id < linkedCommentId);
+    var listBeforeLinkedComment = _postComments.where((comment) => comment.id > linkedCommentId);
     if (listBeforeLinkedComment.length < 2) {
-      print('Setting no more items to load');
       _setNoMoreEarlierItemsToLoad(true);
     }
   }
@@ -503,10 +500,17 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
   }
 
   double _calculatePositionTopCommentSection() {
+    double aspectRatio;
+    double finalMediaScreenHeight = 0;
     double screenWidth = MediaQuery.of(context).size.width;
-    double aspectRatio = _post.getImageWidth() / _post.getImageHeight();
-    double imageScreenHeight = screenWidth/aspectRatio;
-
+    if (_post.hasImage()) {
+      aspectRatio = _post.getImageWidth() / _post.getImageHeight();
+      finalMediaScreenHeight = screenWidth/aspectRatio;
+    }
+    if (_post.hasVideo()) {
+      aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
+      finalMediaScreenHeight = screenWidth/aspectRatio;
+    }
     TextStyle style = TextStyle(fontSize: 16.0);
     TextSpan text =
     new TextSpan(text: _post.text, style: style);
@@ -517,7 +521,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage> with
       textAlign: TextAlign.left,
     );
     textPainter.layout(maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
-    final totalOffsetY = imageScreenHeight + textPainter.size.height + TOTAL_PADDING_POST_TEXT + TOTAL_FIXED_OFFSET_Y;
+    double finalTextHeight = textPainter.size.height;
+    final totalOffsetY = finalMediaScreenHeight + finalTextHeight + TOTAL_PADDING_POST_TEXT + TOTAL_FIXED_OFFSET_Y;
 
     return totalOffsetY;
   }

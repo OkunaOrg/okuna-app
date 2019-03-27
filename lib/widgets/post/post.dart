@@ -12,33 +12,74 @@ import 'package:flutter/material.dart';
 class OBPost extends StatelessWidget {
   final Post post;
   final OnPostDeleted onPostDeleted;
+  static const HEIGHT_POST_HEADER = 72.0;
+  static const HEIGHT_POST_REACTIONS = 35.0;
+  static const HEIGHT_POST_CIRCLES = 26.0;
+  static const HEIGHT_POST_ACTIONS = 46.0;
+  static const HEIGHT_POST_COMMENTS = 34.0;
+  static const HEIGHT_POST_DIVIDER = 5.5;
+  static const HEIGHT_SIZED_BOX = 16;
+  static const TOTAL_PADDING_POST_TEXT = 40.0;
+  static const TOTAL_FIXED_HEIGHT =  HEIGHT_POST_HEADER + HEIGHT_POST_REACTIONS + HEIGHT_POST_CIRCLES
+      + HEIGHT_POST_COMMENTS + HEIGHT_POST_ACTIONS + HEIGHT_SIZED_BOX + HEIGHT_POST_DIVIDER;
 
   const OBPost(this.post, {Key key, @required this.onPostDeleted})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        OBPostHeader(
-          post: post,
-          onPostDeleted: onPostDeleted,
-        ),
-        OBPostBody(post),
-        OBPostReactions(post),
-        OBPostCircles(post),
-        OBPostComments(
-          post,
-        ),
-        OBPostActions(
-          post,
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        OBPostDivider(),
-      ],
+    return  SizedBox(
+      height: _getTotalPostHeight(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          OBPostHeader(
+            post: post,
+            onPostDeleted: onPostDeleted,
+          ),
+          OBPostBody(post),
+          OBPostReactions(post),
+          OBPostCircles(post),
+          OBPostComments(
+            post,
+          ),
+          OBPostActions(
+            post,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          OBPostDivider(),
+        ],
+      ),
     );
+  }
+
+  double _getTotalPostHeight(BuildContext context) {
+    double aspectRatio;
+    double finalMediaScreenHeight = 0;
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (post.hasImage()) {
+      aspectRatio = post.getImageWidth() / post.getImageHeight();
+      finalMediaScreenHeight = screenWidth/aspectRatio;
+    }
+    if (post.hasVideo()) {
+      aspectRatio = post.getVideoWidth() / post.getVideoHeight();
+      finalMediaScreenHeight = screenWidth/aspectRatio;
+    }
+    TextStyle style = TextStyle(fontSize: 16.0);
+    TextSpan text =
+    new TextSpan(text: post.text, style: style);
+
+    TextPainter textPainter = new TextPainter(
+      text: text,
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.left,
+    );
+    textPainter.layout(maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
+    double finalTextHeight = textPainter.size.height;
+    final totalHeightPost = finalMediaScreenHeight + finalTextHeight + TOTAL_PADDING_POST_TEXT + TOTAL_FIXED_HEIGHT;
+
+    return totalHeightPost;
   }
 }
