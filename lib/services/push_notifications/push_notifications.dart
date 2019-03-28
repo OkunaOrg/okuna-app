@@ -30,7 +30,7 @@ class PushNotificationsService {
 
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
-
+    OneSignal.shared.setLocationShared(false);
     OneSignal.shared.setNotificationReceivedHandler(_onNotificationReceived);
     OneSignal.shared.setNotificationOpenedHandler(_onNotificationOpened);
     OneSignal.shared.setSubscriptionObserver(_onSubscriptionChanged);
