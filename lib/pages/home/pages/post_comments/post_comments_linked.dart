@@ -396,6 +396,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
         _addToStartPostComments(moreComments);
       } else {
         _setNoMoreEarlierItemsToLoad(true);
+        _showNoMoreTopItemsToLoad();
       }
       return true;
     } catch (error) {
@@ -437,6 +438,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
   Future _onWantsToLoadnewestComments() async {
     try {
+      _setCurrentSortValue(PostCommentsSortType.dec);
       _postComments = (await _userService.getCommentsForPost(_post)).comments;
       _setPostComments(_postComments);
       _setNoMoreItemsToLoad(false);
@@ -484,6 +486,10 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     setState(() {
       _noMoreEarlierItemsToLoad = noMoreItemsToLoad;
     });
+  }
+
+  void _showNoMoreTopItemsToLoad() {
+    _toastService.info(context: context,message: 'No more comments to load');
   }
 
   void _setCurrentSortValue(PostCommentsSortType newSortValue) {
