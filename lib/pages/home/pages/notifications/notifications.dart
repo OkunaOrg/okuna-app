@@ -39,6 +39,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   PushNotificationsService _pushNotificationsService;
   OBHttpListController<OBNotification> _notificationsListController;
   StreamSubscription _pushNotificationSubscription;
+  OBNotificationsPageController _controller;
 
   bool _needsBootstrap;
   bool _isActivePage;
@@ -51,8 +52,8 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _notificationsListController = OBHttpListController();
-    if (widget.controller != null)
-      widget.controller.attach(state: this, context: context);
+    _controller = widget.controller ?? OBNotificationsPage();
+    _controller.attach(state: this, context: context);
 
     _needsBootstrap = true;
     _shouldMarkNotificationsAsRead = true;
@@ -186,7 +187,9 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   void _onPushNotification(PushNotification pushNotification) {
-    if (!_isActivePage) {
+    bool isNavigating = _controller.canPop();
+
+    if (!_isActivePage || isNavigating) {
       _triggerRefreshNotifications(shouldScrollToTop: true);
     } else {
       _showRefreshNotificationsToast();
@@ -195,8 +198,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
   void _showRefreshNotificationsToast() {
     _toastService.info(
-        duration: Duration(seconds: 3),
-        message: 'Load new notifications',
+        duration: Duration(seconds: 2),
         child: Row(
           children: <Widget>[
             const OBIcon(
