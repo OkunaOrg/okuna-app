@@ -213,7 +213,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
         autofocus: widget.autofocusCommentInput,
         commentTextFieldFocusNode: _commentInputFocusNode,
         onPostCommentCreated: _onPostCommentCreated,
-        onPostCommentWillBeCreated: _onWantsToLoadLatestComments,
+        onPostCommentWillBeCreated: _onWantsToLoadnewestComments,
       )
     ]);
 
@@ -221,7 +221,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   Future _onWantsToRefreshComments() async {
-    await _onWantsToLoadLatestComments();
+    await _onWantsToLoadnewestComments();
   }
 
   Widget _getCommentTile(int index) {
@@ -427,7 +427,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     await _loadMoreTopComments();
   }
 
-  Future _onWantsToLoadLatestComments() async {
+  Future _onWantsToLoadnewestComments() async {
     try {
       _postComments = (await _userService.getCommentsForPost(_post)).comments;
       _setPostComments(_postComments);
@@ -574,7 +574,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
               child: OBSecondaryText(
                 _postComments.length > 0
                     ? _currentSort == PostCommentsSortType.dec
-                        ? 'Latest comments'
+                        ? 'newest comments'
                         : 'Oldest comments'
                     : 'Be the first to comment!',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
@@ -587,7 +587,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                       _postComments.length > 0
                           ? _currentSort == PostCommentsSortType.dec
                               ? 'See oldest comments'
-                              : 'See latest comments'
+                              : 'See newest comments'
                           : '',
                       style: TextStyle(
                           color: _themeValueParserService
@@ -623,7 +623,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                 child: Row(
                   children: <Widget>[
                     OBText(
-                      'View latest comments',
+                      'View newest comments',
                       style: TextStyle(
                           color: _themeValueParserService
                               .parseGradient(theme.primaryAccentColor)
@@ -632,7 +632,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                     ),
                   ],
                 ),
-                onPressed: _onWantsToLoadLatestComments),
+                onPressed: _onWantsToLoadnewestComments),
           ],
         ),
       );

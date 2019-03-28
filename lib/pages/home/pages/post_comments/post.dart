@@ -48,8 +48,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   bool _needsBootstrap;
   FocusNode _commentInputFocusNode;
   PostCommentsSortType _currentSort;
-  static const SORT_ASCENDING = 'ASC';
-  static const SORT_DESCENDING = 'DESC';
 
   @override
   void initState() {
@@ -124,7 +122,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                                       onPostCommentDeletedCallback,
                                 );
                               }),
-                          onLoadMore: _loadMoreComments),
+                          onLoadMore: _loadMoreBottomComments),
                     ),
                     onRefresh: _refreshComments),
               ),
@@ -163,7 +161,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
             child: OBSecondaryText(
               _postComments.length > 0
                   ? _currentSort == PostCommentsSortType.dec
-                      ? 'Latest comments'
+                      ? 'Newest comments'
                       : 'Oldest comments'
                   : 'Be the first to comment!',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
@@ -176,7 +174,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                     _postComments.length > 0
                         ? _currentSort == PostCommentsSortType.dec
                             ? 'See oldest comments'
-                            : 'See latest comments'
+                            : 'See newest comments'
                         : '',
                     style: TextStyle(
                         color: _themeValueParserService
@@ -206,6 +204,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
               sort: newSortType))
           .comments;
       _setCurrentSortValue(newSortType);
+      _userPreferencesService.setPostCommentsSortType(newSortType);
       _setPostComments(_postComments);
       _scrollToTop();
       _setNoMoreItemsToLoad(false);
@@ -216,8 +215,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
 
   Future<void> _refreshComments() async {
     try {
-      _postComments =
-          (await _userService.getCommentsForPost(widget.post)).comments;
+      _postComments = (await _userService.getCommentsForPost(widget.post,
+              sort: _currentSort))
+          .comments;
       _setPostComments(_postComments);
       _scrollToTop();
       _setNoMoreItemsToLoad(false);
@@ -235,16 +235,24 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     }
   }
 
-  Future<bool> _loadMoreComments() async {
+  Future<bool> _loadMoreBottomComments() async {
     if (_postComments.length == 0) return true;
 
     var lastPost = _postComments.last;
     var lastPostId = lastPost.id;
 
     try {
-      var moreComments = (await _userService.getCommentsForPost(widget.post,
-              maxId: lastPostId))
-          .comments;
+      var moreComments;
+
+      if (_currentSort == PostCommentsSortType.dec) {
+        moreComments = (await _userService.getCommentsForPost(widget.post,
+                maxId: lastPostId))
+            .comments;
+      } else {
+        moreComments = (await _userService.getCommentsForPost(widget.post,
+                minId: lastPostId + 1))
+            .comments;
+      }
 
       if (moreComments.length == 0) {
         _setNoMoreItemsToLoad(true);

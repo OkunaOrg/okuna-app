@@ -449,7 +449,9 @@ class UserService {
         maxId: maxId,
         countMin: countMin,
         minId: minId,
-        sort: PostComment.convertPostCommentSortTypeToString(sort));
+        sort: sort != null
+            ? PostComment.convertPostCommentSortTypeToString(sort)
+            : null);
 
     _checkResponseIsOk(response);
 
