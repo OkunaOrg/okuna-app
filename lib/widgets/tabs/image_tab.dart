@@ -25,29 +25,28 @@ class OBImageTab extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
             image: DecorationImage(fit: BoxFit.cover, image: imageProvider)),
         height: height,
-        width: width,
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(borderRadius),
-                          bottomRight: Radius.circular(borderRadius))),
-                  child: Text(
-                    text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: textColor, fontSize: 16),
-                  ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                constraints: BoxConstraints(minWidth: width),
+                decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(borderRadius),
+                        bottomRight: Radius.circular(borderRadius))),
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: textColor, fontSize: 16),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ));
   }
 }
