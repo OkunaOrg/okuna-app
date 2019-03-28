@@ -118,8 +118,34 @@ class ThemeService {
             'assets/images/theme-previews/theme-preview-space-rose.png'),
     OBTheme(
         id: 9,
+        name: 'Light Royale',
+        primaryAccentColor: '#5F0A87, #B621FE',
+        primaryTextColor: '#505050',
+        secondaryTextColor: '#676767',
+        primaryColor: '#ffffff',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview:
+        'assets/images/theme-previews/theme-preview-light-royale.png'),
+    OBTheme(
+        id: 10,
+        name: 'Space Royale',
+        primaryTextColor: '#ffffff',
+        secondaryTextColor: '#b3b3b3',
+        primaryColor: '#232323',
+        primaryAccentColor: '#5F0A87, #B621FE',
+        successColor: '#7ED321',
+        successColorAccent: '#ffffff',
+        dangerColor: '#FF3860',
+        dangerColorAccent: '#ffffff',
+        themePreview:
+        'assets/images/theme-previews/theme-preview-space-royale.png'),
+    OBTheme(
+        id: 11,
         name: 'Light Cinnabar',
-        primaryAccentColor: '#7a1d22, #cc2427',
+        primaryAccentColor: '#a31f3f, #db1143',
         primaryTextColor: '#505050',
         secondaryTextColor: '#676767',
         primaryColor: '#ffffff',
@@ -130,18 +156,18 @@ class ThemeService {
         themePreview:
             'assets/images/theme-previews/theme-preview-light-cinnabar.png'),
     OBTheme(
-        id: 10,
+        id: 12,
         name: 'Space Cinnabar',
         primaryTextColor: '#ffffff',
         secondaryTextColor: '#b3b3b3',
         primaryColor: '#232323',
-        primaryAccentColor: '#7a1d22, #cc2427',
+        primaryAccentColor: '#a31f3f, #db1143',
         successColor: '#7ED321',
         successColorAccent: '#ffffff',
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-space-cinnabar.png')
+            'assets/images/theme-previews/theme-preview-space-cinnabar.png'),
   ];
 
   ThemeService() {
