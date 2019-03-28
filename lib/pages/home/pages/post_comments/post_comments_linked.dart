@@ -574,7 +574,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
               child: OBSecondaryText(
                 _postComments.length > 0
                     ? _currentSort == PostCommentsSortType.dec
-                        ? 'newest comments'
+                        ? 'Newest comments'
                         : 'Oldest comments'
                     : 'Be the first to comment!',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),

@@ -245,12 +245,13 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       var moreComments;
 
       if (_currentSort == PostCommentsSortType.dec) {
-        moreComments = (await _userService.getCommentsForPost(widget.post,
-                maxId: lastPostId))
+        moreComments = (await _userService.getCommentsForPost(
+            widget.post,
+            maxId: lastPostId))
             .comments;
       } else {
         moreComments = (await _userService.getCommentsForPost(widget.post,
-                minId: lastPostId + 1))
+             minId: lastPostId + 1, sort: _currentSort))
             .comments;
       }
 
