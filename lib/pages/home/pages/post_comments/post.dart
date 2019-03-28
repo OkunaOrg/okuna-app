@@ -131,6 +131,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                 autofocus: widget.autofocusCommentInput,
                 commentTextFieldFocusNode: _commentInputFocusNode,
                 onPostCommentCreated: _onPostCommentCreated,
+                onPostCommentWillBeCreated: _onPostCommentWillBeCreated,
               )
             ],
           ),
@@ -245,13 +246,12 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       var moreComments;
 
       if (_currentSort == PostCommentsSortType.dec) {
-        moreComments = (await _userService.getCommentsForPost(
-            widget.post,
-            maxId: lastPostId))
+        moreComments = (await _userService.getCommentsForPost(widget.post,
+                maxId: lastPostId))
             .comments;
       } else {
         moreComments = (await _userService.getCommentsForPost(widget.post,
-             minId: lastPostId + 1, sort: _currentSort))
+                minId: lastPostId + 1, sort: _currentSort))
             .comments;
       }
 
@@ -279,6 +279,11 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     setState(() {
       this._postComments.insert(0, createdPostComment);
     });
+  }
+
+  Future _onPostCommentWillBeCreated() {
+    _setCurrentSortValue(PostCommentsSortType.dec);
+    return _refreshComments();
   }
 
   void _setCurrentSortValue(PostCommentsSortType newSortType) {
