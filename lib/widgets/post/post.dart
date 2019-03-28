@@ -20,18 +20,19 @@ class OBPost extends StatelessWidget {
   static const HEIGHT_POST_DIVIDER = 5.5;
   static const HEIGHT_SIZED_BOX = 16.0;
   static const TOTAL_PADDING_POST_TEXT = 40.0;
+  static const SCHRODINGERS_HEIGHT = 2.0; // @todo: find out where its coming from
   static const TOTAL_FIXED_HEIGHT =  HEIGHT_POST_HEADER
-      + HEIGHT_POST_REACTIONS + HEIGHT_POST_ACTIONS + HEIGHT_SIZED_BOX + HEIGHT_POST_DIVIDER;
+      + HEIGHT_POST_REACTIONS + HEIGHT_POST_ACTIONS + HEIGHT_SIZED_BOX + HEIGHT_POST_DIVIDER + SCHRODINGERS_HEIGHT;
 
   const OBPost(this.post, {Key key, @required this.onPostDeleted})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return  SizedBox(
       height: _getTotalPostHeight(context),
       child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             OBPostHeader(
