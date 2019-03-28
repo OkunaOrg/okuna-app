@@ -145,7 +145,7 @@ class ThemeService {
     OBTheme(
         id: 11,
         name: 'Light Cinnabar',
-        primaryAccentColor: '#a31f3f, #db1143',
+        primaryAccentColor: '#A71D31, #F53844',
         primaryTextColor: '#505050',
         secondaryTextColor: '#676767',
         primaryColor: '#ffffff',
@@ -161,7 +161,7 @@ class ThemeService {
         primaryTextColor: '#ffffff',
         secondaryTextColor: '#b3b3b3',
         primaryColor: '#232323',
-        primaryAccentColor: '#a31f3f, #db1143',
+        primaryAccentColor: '#A71D31, #F53844',
         successColor: '#7ED321',
         successColorAccent: '#ffffff',
         dangerColor: '#FF3860',
