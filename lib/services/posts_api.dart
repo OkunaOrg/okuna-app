@@ -207,7 +207,8 @@ class PostsApiService {
   }
 
   String _makeUnmutePostPath(String postUuid) {
-    return _stringTemplateService.parse(UNMUTE_POST_PATH, {'postUuid': postUuid});
+    return _stringTemplateService
+        .parse(UNMUTE_POST_PATH, {'postUuid': postUuid});
   }
 
   String _makeCommentPostPath(String postUuid) {

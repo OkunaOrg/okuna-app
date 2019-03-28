@@ -3,6 +3,34 @@ import 'package:Openbook/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostComment {
+  static convertPostCommentSortTypeToString(PostCommentsSortType type) {
+    String result;
+    switch (type) {
+      case PostCommentsSortType.asc:
+        result = 'ASC';
+        break;
+      case PostCommentsSortType.dec:
+        result = 'DESC';
+        break;
+      default:
+        throw 'Unsupported post comment sort type';
+    }
+    return result;
+  }
+
+  static PostCommentsSortType parsePostCommentSortType(String sortType) {
+    PostCommentsSortType type;
+    if (sortType == 'ASC') {
+      type = PostCommentsSortType.asc;
+    }
+
+    if (sortType == 'DESC') {
+      type = PostCommentsSortType.dec;
+    }
+
+    return type;
+  }
+
   final int id;
   final int creatorId;
   final DateTime created;
@@ -64,7 +92,9 @@ class PostComment {
     return this.commenter.id;
   }
 
-  int getPostCreatorId(){
+  int getPostCreatorId() {
     return post.getCreatorId();
   }
 }
+
+enum PostCommentsSortType { asc, dec }

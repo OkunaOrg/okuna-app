@@ -4,6 +4,7 @@ import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.d
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -46,6 +47,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
   Post _post;
+  UserPreferencesService _userPreferencesService;
   AnimationController _animationController;
   Animation<double> _animation;
 
@@ -58,7 +60,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   bool _needsBootstrap;
   bool _shouldHideStackedLoadingScreen;
   bool _startScrollWasInitialised;
-  String _currentSort;
+  PostCommentsSortType _currentSort;
   FocusNode _commentInputFocusNode;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
 
@@ -82,8 +84,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   static const COUNT_MAX_AFTER_LINKED_COMMENT = 2;
   static const TOTAL_COMMENTS_IN_SLICE =
       COUNT_MIN_INCLUDING_LINKED_COMMENT + COUNT_MAX_AFTER_LINKED_COMMENT;
-  static const SORT_ASCENDING = 'ASC';
-  static const SORT_DESCENDING = 'DESC';
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     _needsBootstrap = true;
     _postComments = [];
     _noMoreItemsToLoad = true;
-    _currentSort = SORT_DESCENDING;
+    _currentSort = PostCommentsSortType.dec;
     _noMoreEarlierItemsToLoad = false;
     _startScrollWasInitialised = false;
     _shouldHideStackedLoadingScreen = false;
@@ -112,13 +112,13 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
   @override
   Widget build(BuildContext context) {
-    var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
-    _toastService = provider.toastService;
-    _themeValueParserService = provider.themeValueParserService;
-    _themeService = provider.themeService;
-
     if (_needsBootstrap) {
+      var provider = OpenbookProvider.of(context);
+      _userService = provider.userService;
+      _toastService = provider.toastService;
+      _themeValueParserService = provider.themeValueParserService;
+      _themeService = provider.themeService;
+      _userPreferencesService = provider.userPreferencesService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -136,8 +136,15 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   void _bootstrap() async {
+    await _setPostCommentsSortTypeFromPreferences();
     await _refreshPost();
     await _refreshCommentsSlice();
+  }
+
+  Future _setPostCommentsSortTypeFromPreferences() async {
+    PostCommentsSortType sortType =
+        await _userPreferencesService.getPostCommentsSortType();
+    _currentSort = sortType;
   }
 
   List<Widget> _getStackChildren() {
@@ -187,26 +194,29 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
         ScrollController(initialScrollOffset: _calculatePositionTopCommentSection());
     _columnChildren.addAll([
       Expanded(
-        child: RefreshIndicator(child: GestureDetector(
-          onTap: _unfocusCommentInput,
-          child: LoadMore(
-              whenEmptyLoad: false,
-              isFinish: _noMoreItemsToLoad,
-              delegate: OBInfinitePostCommentsLoadMoreDelegate(),
-              child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  controller: _postCommentsScrollController,
-                  padding: EdgeInsets.all(0),
-                  itemCount: _postComments.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return _getPostPreview();
-                    } else {
-                      return _getCommentTile(index);
-                    }
-                  }),
-              onLoadMore: _loadMoreComments),
-        ), onRefresh: _onWantsToRefreshComments),
+        child: RefreshIndicator(
+            child: GestureDetector(
+              key: _refreshIndicatorKey,
+              onTap: _unfocusCommentInput,
+              child: LoadMore(
+                  whenEmptyLoad: false,
+                  isFinish: _noMoreItemsToLoad,
+                  delegate: OBInfinitePostCommentsLoadMoreDelegate(),
+                  child: ListView.builder(
+                      physics: const ClampingScrollPhysics(),
+                      controller: _postCommentsScrollController,
+                      padding: EdgeInsets.all(0),
+                      itemCount: _postComments.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return _getPostPreview();
+                        } else {
+                          return _getCommentTile(index);
+                        }
+                      }),
+                  onLoadMore: _loadMoreComments),
+            ),
+            onRefresh: _onWantsToRefreshComments),
       ),
       OBPostCommenter(
         _post,
@@ -220,7 +230,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     return _columnChildren;
   }
 
-  Future _onWantsToRefreshComments() async{
+  Future _onWantsToRefreshComments() async {
     await _onWantsToLoadLatestComments();
   }
 
@@ -342,7 +352,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     var lastPostId = lastPost.id;
     var moreComments;
     try {
-      if (_currentSort == SORT_DESCENDING) {
+      if (_currentSort == PostCommentsSortType.dec) {
         moreComments = (await _userService.getCommentsForPost(_post,
                 countMax: LOAD_MORE_COMMENTS_COUNT,
                 maxId: lastPostId,
@@ -478,22 +488,26 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     });
   }
 
-  void _setCurrentSortValue(String newSortValue) {
+  void _setCurrentSortValue(PostCommentsSortType newSortValue) {
     setState(() {
       _currentSort = newSortValue;
     });
   }
 
   void _onWantsToToggleSortComments() async {
-    var newSortValue = SORT_ASCENDING;
-    if (_currentSort == SORT_ASCENDING) {
-      newSortValue = SORT_DESCENDING;
+    PostCommentsSortType newSortType;
+
+    if (_currentSort == PostCommentsSortType.asc) {
+      newSortType = PostCommentsSortType.dec;
+    } else {
+      newSortType = PostCommentsSortType.asc;
     }
+
     try {
       _postComments =
-          (await _userService.getCommentsForPost(_post, sort: newSortValue))
+          (await _userService.getCommentsForPost(_post, sort: newSortType))
               .comments;
-      _setCurrentSortValue(newSortValue);
+      _setCurrentSortValue(newSortType);
       _setPostComments(_postComments);
       _setNoMoreItemsToLoad(false);
     } catch (error) {
@@ -565,7 +579,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
               child: OBSecondaryText(
                 _postComments.length > 0
-                    ? _currentSort == SORT_DESCENDING
+                    ? _currentSort == PostCommentsSortType.dec
                         ? 'Latest comments'
                         : 'Oldest comments'
                     : 'Be the first to comment!',
@@ -577,7 +591,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                   children: <Widget>[
                     OBText(
                       _postComments.length > 0
-                          ? _currentSort == SORT_DESCENDING
+                          ? _currentSort == PostCommentsSortType.dec
                               ? 'See oldest comments'
                               : 'See latest comments'
                           : '',
