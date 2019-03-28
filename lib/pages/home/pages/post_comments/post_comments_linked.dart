@@ -99,13 +99,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
     _animation = new Tween(begin: 1.0, end: 0.0).animate(_animationController);
-    _animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          _shouldHideStackedLoadingScreen = true;
-        });
-      }
-    });
+    _animation.addStatusListener(_onAnimationStatusChanged);
   }
 
   @override
@@ -137,6 +131,19 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     await _refreshCommentsSlice();
   }
 
+  void dispose() {
+    super.dispose();
+    _animation.removeStatusListener(_onAnimationStatusChanged);
+  }
+
+  void _onAnimationStatusChanged(status) {
+    if (status == AnimationStatus.completed) {
+      setState(() {
+        _shouldHideStackedLoadingScreen = true;
+      });
+    }
+  }
+
   List<Widget> _getStackChildren() {
     var theme = _themeService.getActiveTheme();
     var primaryColor = _themeValueParserService.parseColor(theme.primaryColor);
@@ -156,14 +163,15 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
         ),
         Positioned(
           top: 0.0,
+          left: 0.0,
+          right: 0.0,
+          bottom: 0,
           child: IgnorePointer(
               ignoring: true,
               child: FadeTransition(
                 opacity: _animation,
-                child: Container(
-                  color: primaryColor,
-                  height: screenHeight,
-                  width: screenWidth,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: primaryColor),
                   child: Center(
                     child: CircularProgressIndicator(
                       strokeWidth: 2.0,
