@@ -70,7 +70,7 @@ class ToastService {
   void info({
     String title,
     Widget child,
-    @required String message,
+    String message,
     @required BuildContext context,
     GlobalKey<ScaffoldState> scaffoldKey,
     VoidCallback onDismissed,

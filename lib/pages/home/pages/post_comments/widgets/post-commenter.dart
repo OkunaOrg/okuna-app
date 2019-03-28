@@ -18,11 +18,13 @@ class OBPostCommenter extends StatefulWidget {
   final bool autofocus;
   final FocusNode commentTextFieldFocusNode;
   final OnPostCommentCreatedCallback onPostCommentCreated;
+  final OnPostCommentWillBeCreatedCallback onPostCommentWillBeCreated;
 
   OBPostCommenter(this.post,
       {this.autofocus = false,
       this.commentTextFieldFocusNode,
-      this.onPostCommentCreated});
+      this.onPostCommentCreated,
+      this.onPostCommentWillBeCreated});
 
   @override
   State<StatefulWidget> createState() {
@@ -178,6 +180,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
     _setCommentInProgress(true);
     try {
+      await (widget.onPostCommentWillBeCreated != null
+          ? widget.onPostCommentWillBeCreated()
+          : Future.value());
       String commentText = _textController.text;
       PostComment createdPostComment =
           await _userService.commentPost(text: commentText, post: widget.post);
@@ -246,3 +251,4 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 }
 
 typedef void OnPostCommentCreatedCallback(PostComment createdPostComment);
+typedef Future OnPostCommentWillBeCreatedCallback();
