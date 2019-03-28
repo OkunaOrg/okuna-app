@@ -14,11 +14,11 @@ class OBPost extends StatelessWidget {
   final OnPostDeleted onPostDeleted;
   static const HEIGHT_POST_HEADER = 72.0;
   static const HEIGHT_POST_REACTIONS = 35.0;
-  static const HEIGHT_POST_CIRCLES = 26.0 + 20.0;
+  static const HEIGHT_POST_CIRCLES = 26.0;
   static const HEIGHT_POST_ACTIONS = 46.0;
   static const HEIGHT_POST_COMMENTS = 34.0;
   static const HEIGHT_POST_DIVIDER = 5.5;
-  static const HEIGHT_SIZED_BOX = 0.0;
+  static const HEIGHT_SIZED_BOX = 16.0;
   static const TOTAL_PADDING_POST_TEXT = 40.0;
   static const TOTAL_FIXED_HEIGHT =  HEIGHT_POST_HEADER
       + HEIGHT_POST_REACTIONS + HEIGHT_POST_ACTIONS + HEIGHT_SIZED_BOX + HEIGHT_POST_DIVIDER;
@@ -28,13 +28,10 @@ class OBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return  SizedBox(
       height: _getTotalPostHeight(context),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.redAccent, width: 1.0, style: BorderStyle.solid)
-        ),
-        child:  Column(
+      child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             OBPostHeader(
@@ -56,7 +53,6 @@ class OBPost extends StatelessWidget {
             OBPostDivider(),
           ],
         ),
-      )
     );
   }
 
@@ -89,11 +85,9 @@ class OBPost extends StatelessWidget {
       finalTextHeight = textPainter.size.height + TOTAL_PADDING_POST_TEXT;
     }
 
-//    if (post.hasCircles()) {
-//      totalHeightPost = totalHeightPost + HEIGHT_POST_CIRCLES;
-//    } else {
-//      totalHeightPost = totalHeightPost + 16.0;
-//    }
+    if (post.hasCircles() || (post.isEncircled != null && post.isEncircled)) {
+      totalHeightPost = totalHeightPost + HEIGHT_POST_CIRCLES;
+    }
 
     if (post.hasCommentsCount()) {
       totalHeightPost = totalHeightPost + HEIGHT_POST_COMMENTS;

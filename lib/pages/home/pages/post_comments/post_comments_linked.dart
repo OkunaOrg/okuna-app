@@ -69,11 +69,13 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   static const HEIGHT_POST_ACTIONS = 46.0;
   static const TOTAL_PADDING_POST_TEXT = 40.0;
   static const HEIGHT_POST_DIVIDER = 5.5;
+  static const HEIGHT_SIZED_BOX = 16.0;
   static const TOTAL_FIXED_OFFSET_Y = OFFSET_TOP_HEADER +
       HEIGHT_POST_HEADER +
       HEIGHT_POST_REACTIONS +
       HEIGHT_POST_CIRCLES +
       HEIGHT_POST_ACTIONS +
+      HEIGHT_SIZED_BOX +
       HEIGHT_POST_DIVIDER;
   static const LOAD_MORE_COMMENTS_COUNT = 5;
   static const COUNT_MIN_INCLUDING_LINKED_COMMENT = 3;
@@ -141,6 +143,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   List<Widget> _getStackChildren() {
     var theme = _themeService.getActiveTheme();
     var primaryColor = _themeValueParserService.parseColor(theme.primaryColor);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     List<Widget> _stackChildren = [];
 
@@ -161,8 +165,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                 opacity: _animation,
                 child: Container(
                   color: primaryColor,
-                  height: _post.getImageHeight(),
-                  width: _post.getImageWidth(),
+                  height: screenHeight,
+                  width: screenWidth,
                   child: Center(
                     child: CircularProgressIndicator(
                       strokeWidth: 2.0,
@@ -180,7 +184,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   List<Widget> _getColumnChildren() {
     List<Widget> _columnChildren = [];
     _postCommentsScrollController =
-        ScrollController(initialScrollOffset: _post.getImageHeight());
+        ScrollController(initialScrollOffset: _calculatePositionTopCommentSection());
     _columnChildren.addAll([
       Expanded(
         child: RefreshIndicator(child: GestureDetector(
@@ -251,7 +255,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
       var primaryColor =
           _themeValueParserService.parseColor(theme.primaryColor);
       final bool isDarkPrimaryColor = primaryColor.computeLuminance() < 0.179;
-
       return DecoratedBox(
         decoration: BoxDecoration(
           color: isDarkPrimaryColor
@@ -513,31 +516,38 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
   double _calculatePositionTopCommentSection() {
     double aspectRatio;
-    double finalMediaScreenHeight = 0;
+    double finalMediaScreenHeight = 0.0;
+    double finalTextHeight = 0.0;
+    double totalOffsetY = 0.0;
     double screenWidth = MediaQuery.of(context).size.width;
     if (_post.hasImage()) {
       aspectRatio = _post.getImageWidth() / _post.getImageHeight();
-      finalMediaScreenHeight = screenWidth / aspectRatio;
+      finalMediaScreenHeight = screenWidth/aspectRatio;
     }
     if (_post.hasVideo()) {
       aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
-      finalMediaScreenHeight = screenWidth / aspectRatio;
+      finalMediaScreenHeight = screenWidth/aspectRatio;
     }
-    TextStyle style = TextStyle(fontSize: 16.0);
-    TextSpan text = new TextSpan(text: _post.text, style: style);
 
-    TextPainter textPainter = new TextPainter(
-      text: text,
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.left,
-    );
-    textPainter.layout(
-        maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
-    double finalTextHeight = textPainter.size.height;
-    final totalOffsetY = finalMediaScreenHeight +
-        finalTextHeight +
-        TOTAL_PADDING_POST_TEXT +
-        TOTAL_FIXED_OFFSET_Y;
+    if (_post.hasText()) {
+      TextStyle style = TextStyle(fontSize: 16.0);
+      TextSpan text =
+      new TextSpan(text: _post.text, style: style);
+
+      TextPainter textPainter = new TextPainter(
+        text: text,
+        textDirection: TextDirection.ltr,
+        textAlign: TextAlign.left,
+      );
+      textPainter.layout(maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
+      finalTextHeight = textPainter.size.height + TOTAL_PADDING_POST_TEXT;
+    }
+
+    if (_post.hasCircles() || (_post.isEncircled != null && _post.isEncircled)) {
+      totalOffsetY = totalOffsetY + HEIGHT_POST_CIRCLES;
+    }
+
+    totalOffsetY = totalOffsetY + finalMediaScreenHeight + finalTextHeight + TOTAL_FIXED_OFFSET_Y;
 
     return totalOffsetY;
   }
