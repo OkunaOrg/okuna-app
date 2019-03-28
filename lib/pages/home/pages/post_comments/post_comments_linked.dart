@@ -61,7 +61,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   PostCommentsSortType _currentSort;
   FocusNode _commentInputFocusNode;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-
   static const OFFSET_TOP_HEADER = 64.0;
   static const HEIGHT_POST_HEADER = 72.0;
   static const HEIGHT_POST_REACTIONS = 35.0;
@@ -247,7 +246,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
           curve: Curves.easeIn);
     }
 
-    if (index == _postComments.length) {
+    if (commentIndex == 0) {
       _animationController.forward();
       Future.delayed(Duration(milliseconds: 0), () {
         if (!_startScrollWasInitialised) {
