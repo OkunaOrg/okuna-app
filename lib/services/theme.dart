@@ -205,6 +205,4 @@ class ThemeService {
     while (length-- > 0) hex += chars[(random.nextInt(16)) | 0];
     return hex;
   }
-
-
 }

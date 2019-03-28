@@ -12,9 +12,9 @@ class OBCommunityDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community community = snapshot.data;
-        if (community == null) return const SizedBox();
 
         return Padding(
             padding: EdgeInsets.only(top: 20),
