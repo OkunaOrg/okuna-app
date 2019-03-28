@@ -61,7 +61,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   PostCommentsSortType _currentSort;
   FocusNode _commentInputFocusNode;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-
   static const OFFSET_TOP_HEADER = 64.0;
   static const HEIGHT_POST_HEADER = 72.0;
   static const HEIGHT_POST_REACTIONS = 35.0;
@@ -221,7 +220,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
         autofocus: widget.autofocusCommentInput,
         commentTextFieldFocusNode: _commentInputFocusNode,
         onPostCommentCreated: _onPostCommentCreated,
-        onPostCommentWillBeCreated: _onWantsToLoadnewestComments,
+        onPostCommentWillBeCreated: _onWantsToLoadNewestComments,
       )
     ]);
 
@@ -229,7 +228,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   Future _onWantsToRefreshComments() async {
-    await _onWantsToLoadnewestComments();
+    await _onWantsToLoadNewestComments();
   }
 
   Widget _getCommentTile(int index) {
@@ -247,7 +246,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
           curve: Curves.easeIn);
     }
 
-    if (index == _postComments.length) {
+    if (commentIndex == 0) {
       _animationController.forward();
       Future.delayed(Duration(milliseconds: 0), () {
         if (!_startScrollWasInitialised) {
@@ -436,10 +435,10 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     await _loadMoreTopComments();
   }
 
-  Future _onWantsToLoadnewestComments() async {
+  Future _onWantsToLoadNewestComments() async {
     try {
       _setCurrentSortValue(PostCommentsSortType.dec);
-      _postComments = (await _userService.getCommentsForPost(_post)).comments;
+      _postComments = (await _userService.getCommentsForPost(_post, sort: PostCommentsSortType.dec)).comments;
       _setPostComments(_postComments);
       _setNoMoreItemsToLoad(false);
       _setNoMoreEarlierItemsToLoad(true);
@@ -646,7 +645,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                     ),
                   ],
                 ),
-                onPressed: _onWantsToLoadnewestComments),
+                onPressed: _onWantsToLoadNewestComments),
           ],
         ),
       );
