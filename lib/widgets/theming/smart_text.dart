@@ -374,7 +374,7 @@ class OBSmartText extends StatelessWidget {
         TextStyle textStyle = TextStyle(
             color: primaryTextColor,
             fontSize: fontSize,
-            fontFamilyFallback: ['NunitoSans']);
+            fontFamilyFallback: ['NunitoSans', 'Emoji']);
 
         TextStyle secondaryTextStyle;
 
@@ -386,7 +386,7 @@ class OBSmartText extends StatelessWidget {
           secondaryTextStyle = TextStyle(
               color: secondaryTextColor,
               fontSize: fontSize * 0.8,
-              fontFamilyFallback: ['NunitoSans']);
+              fontFamilyFallback: ['NunitoSans', 'Emoji']);
         }
 
         Color actionsForegroundColor = themeValueParserService
@@ -397,6 +397,7 @@ class OBSmartText extends StatelessWidget {
           color: actionsForegroundColor,
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
+          fontFamilyFallback: ['NunitoSans', 'Emoji'],
         );
 
         return RichText(

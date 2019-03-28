@@ -32,7 +32,8 @@ class OBPrimaryAccentText extends StatelessWidget {
           TextStyle themedTextStyle = TextStyle(
               foreground: Paint()
                 ..shader = themeValueParserService
-                    .parseGradient(theme.primaryAccentColor).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)));
+                    .parseGradient(theme.primaryAccentColor).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
+              fontFamilyFallback: ['NunitoSans', 'Emoji']);
 
           if (finalStyle != null) {
             finalStyle = finalStyle.merge(themedTextStyle);

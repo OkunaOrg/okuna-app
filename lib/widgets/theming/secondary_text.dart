@@ -28,7 +28,8 @@ class OBSecondaryText extends StatelessWidget {
           TextStyle finalStyle = style;
           TextStyle themedTextStyle = TextStyle(
               color:
-                  themeValueParserService.parseColor(theme.secondaryTextColor));
+                  themeValueParserService.parseColor(theme.secondaryTextColor),
+              fontFamilyFallback: ['NunitoSans', 'Emoji']);
 
           if (finalStyle != null) {
             finalStyle = finalStyle.merge(themedTextStyle);

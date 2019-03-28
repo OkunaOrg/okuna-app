@@ -59,7 +59,7 @@ class OBText extends StatelessWidget {
 
           TextStyle themedTextStyle = TextStyle(
               color: themeValueParserService.parseColor(theme.primaryTextColor),
-              fontFamilyFallback: ['NunitoSans'],
+              fontFamilyFallback: ['NunitoSans', 'Emoji'],
               fontSize: (style != null && style.fontSize != null)
                   ? style.fontSize
                   : fontSize);
