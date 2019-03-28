@@ -4,7 +4,6 @@ import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.d
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -47,7 +46,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
   Post _post;
-  UserPreferencesService _userPreferencesService;
   AnimationController _animationController;
   Animation<double> _animation;
 
@@ -118,7 +116,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
       _toastService = provider.toastService;
       _themeValueParserService = provider.themeValueParserService;
       _themeService = provider.themeService;
-      _userPreferencesService = provider.userPreferencesService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -136,15 +133,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   void _bootstrap() async {
-    await _setPostCommentsSortTypeFromPreferences();
     await _refreshPost();
     await _refreshCommentsSlice();
-  }
-
-  Future _setPostCommentsSortTypeFromPreferences() async {
-    PostCommentsSortType sortType =
-        await _userPreferencesService.getPostCommentsSortType();
-    _currentSort = sortType;
   }
 
   List<Widget> _getStackChildren() {
@@ -190,8 +180,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
   List<Widget> _getColumnChildren() {
     List<Widget> _columnChildren = [];
-    _postCommentsScrollController =
-        ScrollController(initialScrollOffset: _calculatePositionTopCommentSection());
+    _postCommentsScrollController = ScrollController(
+        initialScrollOffset: _calculatePositionTopCommentSection());
     _columnChildren.addAll([
       Expanded(
         child: RefreshIndicator(
@@ -214,7 +204,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                           return _getCommentTile(index);
                         }
                       }),
-                  onLoadMore: _loadMoreComments),
+                  onLoadMore: _loadMoreBottomComments),
             ),
             onRefresh: _onWantsToRefreshComments),
       ),
@@ -345,7 +335,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     }
   }
 
-  Future<bool> _loadMoreComments() async {
+  Future<bool> _loadMoreBottomComments() async {
     if (_postComments.length == 0) return true;
 
     var lastPost = _postComments.last;
@@ -379,7 +369,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     return false;
   }
 
-  Future<bool> _loadEarlierComments() async {
+  Future<bool> _loadMoreTopComments() async {
     if (_postComments.length == 0) return true;
 
     var firstPost = _postComments.first;
@@ -434,7 +424,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   void _onWantsToLoadEarlierComments() async {
-    await _loadEarlierComments();
+    await _loadMoreTopComments();
   }
 
   Future _onWantsToLoadLatestComments() async {
@@ -536,32 +526,36 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     double screenWidth = MediaQuery.of(context).size.width;
     if (_post.hasImage()) {
       aspectRatio = _post.getImageWidth() / _post.getImageHeight();
-      finalMediaScreenHeight = screenWidth/aspectRatio;
+      finalMediaScreenHeight = screenWidth / aspectRatio;
     }
     if (_post.hasVideo()) {
       aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
-      finalMediaScreenHeight = screenWidth/aspectRatio;
+      finalMediaScreenHeight = screenWidth / aspectRatio;
     }
 
     if (_post.hasText()) {
       TextStyle style = TextStyle(fontSize: 16.0);
-      TextSpan text =
-      new TextSpan(text: _post.text, style: style);
+      TextSpan text = new TextSpan(text: _post.text, style: style);
 
       TextPainter textPainter = new TextPainter(
         text: text,
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.left,
       );
-      textPainter.layout(maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
+      textPainter.layout(
+          maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
       finalTextHeight = textPainter.size.height + TOTAL_PADDING_POST_TEXT;
     }
 
-    if (_post.hasCircles() || (_post.isEncircled != null && _post.isEncircled)) {
+    if (_post.hasCircles() ||
+        (_post.isEncircled != null && _post.isEncircled)) {
       totalOffsetY = totalOffsetY + HEIGHT_POST_CIRCLES;
     }
 
-    totalOffsetY = totalOffsetY + finalMediaScreenHeight + finalTextHeight + TOTAL_FIXED_OFFSET_Y;
+    totalOffsetY = totalOffsetY +
+        finalMediaScreenHeight +
+        finalTextHeight +
+        TOTAL_FIXED_OFFSET_Y;
 
     return totalOffsetY;
   }
