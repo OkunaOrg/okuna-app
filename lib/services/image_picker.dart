@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
@@ -41,21 +40,6 @@ class ImagePickerService {
     var video = await ImagePicker.pickVideo(source: source);
 
     return video;
-  }
-
-  Future<File> _fixImageRotation(File image) async {
-    // Needed for the exif fix
-    await _ensureHasExternalStoragePermission();
-
-    if (Platform.isAndroid)
-      image = await FlutterExifRotation.rotateImage(path: image.path);
-
-    return image;
-  }
-
-  Future _ensureHasExternalStoragePermission()async {
-    // TODO No plugin that could be built for both iOS and android was found
-    //  to do this... yeah. Seriously.
   }
 }
 

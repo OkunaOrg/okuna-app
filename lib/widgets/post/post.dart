@@ -29,6 +29,7 @@ class OBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return  SizedBox(
       height: _getTotalPostHeight(context),
       child: Column(
