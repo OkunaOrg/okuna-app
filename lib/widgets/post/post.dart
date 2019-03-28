@@ -29,30 +29,28 @@ class OBPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return  SizedBox(
-      height: _getTotalPostHeight(context),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            OBPostHeader(
-              post: post,
-              onPostDeleted: onPostDeleted,
-            ),
-            OBPostBody(post),
-            OBPostReactions(post),
-            OBPostCircles(post),
-            OBPostComments(
-              post,
-            ),
-            OBPostActions(
-              post,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            OBPostDivider(),
-          ],
+    return  Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        OBPostHeader(
+          post: post,
+          onPostDeleted: onPostDeleted,
         ),
+        OBPostBody(post),
+        OBPostReactions(post),
+        OBPostCircles(post),
+        OBPostComments(
+          post,
+        ),
+        OBPostActions(
+          post,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        OBPostDivider(),
+      ],
     );
   }
 
