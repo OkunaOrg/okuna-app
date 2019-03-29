@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:Openbook/models/device.dart';
-import 'package:Openbook/models/push_notifications/push_notification.dart';
+import 'package:Openbook/models/push_notification.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:crypto/crypto.dart';
@@ -30,7 +30,7 @@ class PushNotificationsService {
 
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
-
+    OneSignal.shared.setLocationShared(false);
     OneSignal.shared.setNotificationReceivedHandler(_onNotificationReceived);
     OneSignal.shared.setNotificationOpenedHandler(_onNotificationOpened);
     OneSignal.shared.setSubscriptionObserver(_onSubscriptionChanged);

@@ -33,23 +33,27 @@ class OBNotificationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
+      initialData: notification,
       stream: notification.updateSubject,
       builder: _buildNotificationTile,
     );
   }
 
-  Widget _buildNotificationTile(BuildContext context, AsyncSnapshot<OBNotification> snapshot){
+  Widget _buildNotificationTile(
+      BuildContext context, AsyncSnapshot<OBNotification> snapshot) {
     OBNotification notification = snapshot.data;
-    if(notification == null) return const SizedBox();
+    return _buildNotification(notification, context);
+  }
 
+  Widget _buildNotification(OBNotification notification, BuildContext context) {
     Widget notificationTile;
 
     dynamic notificationContentObject = this.notification.contentObject;
 
     Function finalOnPressed = onPressed != null
         ? () {
-      onPressed(notification);
-    }
+            onPressed(notification);
+          }
         : null;
 
     switch (notificationContentObject.runtimeType) {
@@ -112,7 +116,7 @@ class OBNotificationTile extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
             var theme = snapshot.data;
             var primaryColor =
-            themeValueParserService.parseColor(theme.primaryColor);
+                themeValueParserService.parseColor(theme.primaryColor);
             final bool isDarkPrimaryColor =
                 primaryColor.computeLuminance() < 0.179;
 

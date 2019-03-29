@@ -263,7 +263,7 @@ class OBSmartText extends StatelessWidget {
             themeValueParserService.parseColor(theme.primaryTextColor);
 
         TextStyle textStyle =
-            TextStyle(color: primaryTextColor, fontSize: fontSize);
+            TextStyle(color: primaryTextColor, fontSize: fontSize, fontFamilyFallback: ['NunitoSans']);
 
         Color actionsForegroundColor = themeValueParserService
             .parseGradient(theme.primaryAccentColor)

@@ -14,16 +14,22 @@ class OBPostCircles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_post.hasCircles()) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        child: OBCirclesWrap(
-            textSize: OBTextSize.small,
-            circlePreviewSize: OBCircleColorPreviewSize.extraSmall,
-            leading: const OBText(
-              'You shared with',
-              size: OBTextSize.small,
-            ),
-            circles: _post.getPostCircles()),
+      return SizedBox(
+        height: 26.0,
+        child: ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          physics: const ClampingScrollPhysics(),
+          itemCount: 1,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) {
+            return OBCirclesWrap(
+                textSize: OBTextSize.small,
+                circlePreviewSize: OBCircleColorPreviewSize.extraSmall,
+                leading: const OBText('You shared with', size: OBTextSize.small),
+                circles: _post.getPostCircles()
+            );
+          },
+        ),
       );
     } else if (_post.isEncircled != null && _post.isEncircled) {
       String postCreatorUsername = _post.creator.username;

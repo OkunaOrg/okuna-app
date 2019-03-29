@@ -3,14 +3,15 @@ import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityName extends StatelessWidget {
-  final Community user;
+  final Community community;
 
-  OBCommunityName(this.user);
+  OBCommunityName(this.community);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: user.updateSubject,
+      stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
         String communityName = community?.name;
