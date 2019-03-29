@@ -105,7 +105,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
               child: Form(
                   key: _formKey,
                   child: LayoutBuilder(builder: (context, size) {
-                    TextStyle style = TextStyle(fontSize: 14.0);
+                    TextStyle style = TextStyle(fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
                     TextSpan text =
                         new TextSpan(text: _textController.text, style: style);
 
