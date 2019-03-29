@@ -22,7 +22,14 @@ class OBProfileActions extends StatelessWidget {
     List<Widget> actions = [];
 
     if (isLoggedInUser) {
-      actions.add(_buildEditButton(modalService, context));
+      actions.add(
+        Padding(
+          // The margin compensates for the height of the (missing) OBProfileActionMore
+          // Fixes cut-off Edit profile button, and level out layout distances
+          padding: EdgeInsets.only(top: 6.5, bottom: 6.5),
+          child: _buildEditButton(modalService, context),
+        )
+      );
     } else {
       actions.addAll([
         OBFollowButton(user),
