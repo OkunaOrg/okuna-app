@@ -615,7 +615,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
         usersAdjective: _usersAdjectiveController.text,
         categories: _categories,
         invitesEnabled: _invitesEnabled,
-        color: _color);
+        color: _color,
+        avatar: _avatarFile,
+        cover: _coverFile);
   }
 
   Future<bool> _isNameTaken(String communityName) async {
