@@ -213,8 +213,8 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (postActions.isEmpty) return const SizedBox();
 
     return Container(
-      height: 51.0,
-      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+      height: 83.0,
+      padding: EdgeInsets.only(top: 24.0, bottom: 24.0),
       color: Color.fromARGB(5, 0, 0, 0),
       child: ListView.separated(
         physics: const ClampingScrollPhysics(),
