@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pigment/pigment.dart';
+import 'package:swipedetector/swipedetector.dart';
 
 class OBZoomablePhotoModal extends StatefulWidget {
   final String imageUrl;
@@ -31,18 +32,39 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         child: Stack(
           children: <Widget>[
-            PhotoView(
-              backgroundDecoration: BoxDecoration(color: Colors.transparent),
-              key: Key(widget.imageUrl),
-              enableRotation: false,
-              scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
-              imageProvider: AdvancedNetworkImage(widget.imageUrl,
-                  retryLimit: 0,
-                  useDiskCache: true,
-                  fallbackAssetImage:
-                      'assets/images/fallbacks/post-fallback.png'),
-              maxScale: PhotoViewComputedScale.covered,
-              minScale: PhotoViewComputedScale.contained,
+            SwipeDetector(
+              child: PhotoView(
+                backgroundDecoration:
+                BoxDecoration(color: Colors.transparent),
+                key: Key(widget.imageUrl),
+                enableRotation: false,
+                scaleStateChangedCallback:
+                _photoViewScaleStateChangedCallback,
+                imageProvider: AdvancedNetworkImage(widget.imageUrl,
+                    retryLimit: 0,
+                    useDiskCache: true,
+                    fallbackAssetImage:
+                    'assets/images/fallbacks/post-fallback.png'),
+                maxScale: PhotoViewComputedScale.covered,
+                minScale: PhotoViewComputedScale.contained,
+              ),
+              onSwipeUp: () {
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+              onSwipeDown: () {
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+              swipeConfiguration: SwipeConfiguration(
+                  verticalSwipeMinVelocity: 100.0,
+                  verticalSwipeMinDisplacement: 50.0,
+                  verticalSwipeMaxWidthThreshold: 100.0,
+                  horizontalSwipeMaxHeightThreshold: 50.0,
+                  horizontalSwipeMinDisplacement: 50.0,
+                  horizontalSwipeMinVelocity: 200.0),
             ),
             _buildCloseButton()
           ],
