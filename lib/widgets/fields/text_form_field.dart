@@ -104,6 +104,7 @@ class OBTextFormField extends StatelessWidget {
                   labelText: decoration.labelText,
                   prefixIcon: decoration.prefixIcon,
                   prefixText: decoration.prefixText,
+                  errorMaxLines: decoration.errorMaxLines ?? 3
                 ),
               ),
               hasBorder ? const OBDivider() : const SizedBox()
