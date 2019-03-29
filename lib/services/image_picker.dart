@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:Openbook/services/validation.dart';
 export 'package:image_picker/image_picker.dart';
 
 class ImagePickerService {
@@ -11,6 +12,12 @@ class ImagePickerService {
     OBImageType.cover: {'x': 16.0, 'y': 9.0}
   };
 
+  ValidationService _validationService;
+
+  void setValidationService(ValidationService validationService) {
+    _validationService = validationService;
+  }
+
   Future<File> pickImage(
       {@required OBImageType imageType,
       ImageSource source = ImageSource.gallery}) async {
@@ -18,6 +25,10 @@ class ImagePickerService {
 
     if (image == null) {
       return null;
+    }
+
+    if (!await _validationService.isImageAllowedSize(image, imageType)) {
+      throw ImageTooLargeException(_validationService.getAllowedImageSize(imageType));
     }
 
     double ratioX =
@@ -40,6 +51,19 @@ class ImagePickerService {
     var video = await ImagePicker.pickVideo(source: source);
 
     return video;
+  }
+}
+
+class ImageTooLargeException implements Exception {
+  final int limit;
+
+  const ImageTooLargeException(this.limit);
+
+  String toString() =>
+      'ImageToLargeException: Images can\'t be larger than $limit';
+
+  int getLimitInMB() {
+    return limit ~/ 1048576;
   }
 }
 
