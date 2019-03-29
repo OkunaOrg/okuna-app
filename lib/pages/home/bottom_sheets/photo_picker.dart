@@ -33,7 +33,7 @@ class OBPhotoPickerBottomSheet extends StatelessWidget {
             Navigator.pop(context, image);
           } on ImageTooLargeException catch (e) {
             int limit = e.getLimitInMB();
-            toastService.error(message: 'Image to large (limit: $limit MB)', context: context);
+            toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
           }
         },
       ),
@@ -49,7 +49,7 @@ class OBPhotoPickerBottomSheet extends StatelessWidget {
             Navigator.pop(context, image);
           } on ImageTooLargeException catch (e) {
             int limit = e.getLimitInMB();
-            toastService.error(message: 'Image to large (limit: $limit MB)', context: context);
+            toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
           }
         },
       )

@@ -325,7 +325,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   //if (image != null) createAccountBloc.avatar.add(image);
                 } on ImageTooLargeException catch(e) {
                   int limit = e.getLimitInMB();
-                  toastService.error(message: 'Image to large (limit: $limit MB)', context: context);
+                  toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
                 }
                 Navigator.pop(context);
               },
@@ -340,7 +340,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   _onUserImageSelected(image: image, imageType: imageType);
                 } on ImageTooLargeException catch(e) {
                   int limit = e.getLimitInMB();
-                  toastService.error(message: 'Image to large (limit: $limit MB)', context: context);
+                  toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
                 }
                 Navigator.pop(context);
               },
