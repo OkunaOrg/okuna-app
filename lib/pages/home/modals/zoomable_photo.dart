@@ -17,12 +17,17 @@ class OBZoomablePhotoModal extends StatefulWidget {
   }
 }
 
-class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
+class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleTickerProviderStateMixin {
   bool isDismissible;
+  AnimationController controller;
+  Animation<Offset> offset;
 
   @override
   void initState() {
     super.initState();
+    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+    offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
+        .animate(controller);
     isDismissible = true;
   }
 
@@ -33,29 +38,35 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
         child: Stack(
           children: <Widget>[
             SwipeDetector(
-              child: PhotoView(
-                backgroundDecoration:
-                BoxDecoration(color: Colors.transparent),
-                key: Key(widget.imageUrl),
-                enableRotation: false,
-                scaleStateChangedCallback:
-                _photoViewScaleStateChangedCallback,
-                imageProvider: AdvancedNetworkImage(widget.imageUrl,
-                    retryLimit: 0,
-                    useDiskCache: true,
-                    fallbackAssetImage:
-                    'assets/images/fallbacks/post-fallback.png'),
-                maxScale: PhotoViewComputedScale.covered,
-                minScale: PhotoViewComputedScale.contained,
+              child: SlideTransition(position: offset,
+                child: PhotoView(
+                  backgroundDecoration:
+                  BoxDecoration(color: Colors.transparent),
+                  key: Key(widget.imageUrl),
+                  enableRotation: false,
+                  scaleStateChangedCallback:
+                  _photoViewScaleStateChangedCallback,
+                  imageProvider: AdvancedNetworkImage(widget.imageUrl,
+                      retryLimit: 0,
+                      useDiskCache: true,
+                      fallbackAssetImage:
+                      'assets/images/fallbacks/post-fallback.png'),
+                  maxScale: PhotoViewComputedScale.covered,
+                  minScale: PhotoViewComputedScale.contained,
+                )
               ),
               onSwipeUp: () {
                 setState(() {
-                  Navigator.pop(context);
+                  offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
+                      .animate(controller);
+                  _dismissModal();
                 });
               },
               onSwipeDown: () {
                 setState(() {
-                  Navigator.pop(context);
+                  offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
+                      .animate(controller);
+                  _dismissModal();
                 });
               },
               swipeConfiguration: SwipeConfiguration(
@@ -69,6 +80,11 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> {
             _buildCloseButton()
           ],
         ));
+  }
+
+  Future _dismissModal() async {
+    await controller.forward();
+    Navigator.pop(context);
   }
 
   Widget _buildCloseButton() {
