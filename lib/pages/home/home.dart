@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+
 import 'package:Openbook/models/push_notification.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/services/intercom.dart';
@@ -17,6 +19,7 @@ import 'package:Openbook/plugins/share/receive_share_state.dart';
 import 'package:Openbook/plugins/share/share.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
@@ -40,6 +43,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   ToastService _toastService;
   PushNotificationsService _pushNotificationsService;
   IntercomService _intercomService;
+  ModalService _modalService;
 
   int _currentIndex;
   int _lastIndex;
@@ -102,6 +106,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _pushNotificationsService = openbookProvider.pushNotificationsService;
       _intercomService = openbookProvider.intercomService;
       _toastService = openbookProvider.toastService;
+      _modalService = openbookProvider.modalService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -122,7 +127,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
 
   @override
   void receiveShare(Share share) {
-    debugPrint("share received");
+    debugPrint("received share to file " + share.path);
+    _modalService.openCreatePost(
+        context: context, sharedImage: File.fromUri(Uri.parse(share.path)));
   }
 
   Widget _getPageForTabIndex(int index) {
