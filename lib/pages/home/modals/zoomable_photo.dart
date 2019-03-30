@@ -17,7 +17,8 @@ class OBZoomablePhotoModal extends StatefulWidget {
   }
 }
 
-class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleTickerProviderStateMixin {
+class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
+    with SingleTickerProviderStateMixin {
   bool isDismissible;
   AnimationController controller;
   Animation<Offset> offset;
@@ -25,8 +26,9 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleT
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    offset = Tween<Offset>(begin: Offset.zero, end: Offset(-1.0, 0.0))
         .animate(controller);
     isDismissible = true;
   }
@@ -39,34 +41,36 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleT
           child: Stack(
             children: <Widget>[
               SwipeDetector(
-                child: SlideTransition(position: offset,
-                  child: PhotoView(
-                    backgroundDecoration:
-                    BoxDecoration(color: Colors.transparent),
-                    key: Key(widget.imageUrl),
-                    enableRotation: false,
-                    scaleStateChangedCallback:
-                    _photoViewScaleStateChangedCallback,
-                    imageProvider: AdvancedNetworkImage(widget.imageUrl,
-                        retryLimit: 0,
-                        useDiskCache: true,
-                        fallbackAssetImage:
-                        'assets/images/fallbacks/post-fallback.png'),
-                    maxScale: PhotoViewComputedScale.covered,
-                    minScale: PhotoViewComputedScale.contained,
-                  )
-                ),
+                child: SlideTransition(
+                    position: offset,
+                    child: PhotoView(
+                      backgroundDecoration:
+                          BoxDecoration(color: Colors.transparent),
+                      key: Key(widget.imageUrl),
+                      enableRotation: false,
+                      scaleStateChangedCallback:
+                          _photoViewScaleStateChangedCallback,
+                      imageProvider: AdvancedNetworkImage(widget.imageUrl,
+                          retryLimit: 0,
+                          useDiskCache: true,
+                          fallbackAssetImage:
+                              'assets/images/fallbacks/post-fallback.png'),
+                      maxScale: PhotoViewComputedScale.covered,
+                      minScale: PhotoViewComputedScale.contained,
+                    )),
                 onSwipeUp: () {
                   setState(() {
-                    offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
+                    offset = Tween<Offset>(
+                            begin: Offset.zero, end: Offset(0.0, -1.0))
                         .animate(controller);
                     _dismissModal();
                   });
                 },
                 onSwipeDown: () {
                   setState(() {
-                    offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
-                        .animate(controller);
+                    offset =
+                        Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
+                            .animate(controller);
                     _dismissModal();
                   });
                 },
@@ -80,15 +84,19 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleT
               ),
               _buildCloseButton()
             ],
-          )), onWillPop: () {
-             _dismissModal();
-            },
+          )),
+      onWillPop: _dismissModalNoPop,
     );
   }
 
   Future _dismissModal() async {
     await controller.forward();
-    Navigator.pop(context);
+    Navigator.pop(context, false);
+  }
+
+  Future<bool> _dismissModalNoPop() async {
+    await controller.forward();
+    return true;
   }
 
   Widget _buildCloseButton() {
