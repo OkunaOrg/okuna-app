@@ -25,7 +25,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleT
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
         .animate(controller);
     isDismissible = true;
@@ -33,53 +33,57 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleT
 
   @override
   Widget build(BuildContext context) {
-    return OBCupertinoPageScaffold(
-        backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        child: Stack(
-          children: <Widget>[
-            SwipeDetector(
-              child: SlideTransition(position: offset,
-                child: PhotoView(
-                  backgroundDecoration:
-                  BoxDecoration(color: Colors.transparent),
-                  key: Key(widget.imageUrl),
-                  enableRotation: false,
-                  scaleStateChangedCallback:
-                  _photoViewScaleStateChangedCallback,
-                  imageProvider: AdvancedNetworkImage(widget.imageUrl,
-                      retryLimit: 0,
-                      useDiskCache: true,
-                      fallbackAssetImage:
-                      'assets/images/fallbacks/post-fallback.png'),
-                  maxScale: PhotoViewComputedScale.covered,
-                  minScale: PhotoViewComputedScale.contained,
-                )
+    return WillPopScope(
+      child: OBCupertinoPageScaffold(
+          backgroundColor: Color.fromARGB(0, 0, 0, 0),
+          child: Stack(
+            children: <Widget>[
+              SwipeDetector(
+                child: SlideTransition(position: offset,
+                  child: PhotoView(
+                    backgroundDecoration:
+                    BoxDecoration(color: Colors.transparent),
+                    key: Key(widget.imageUrl),
+                    enableRotation: false,
+                    scaleStateChangedCallback:
+                    _photoViewScaleStateChangedCallback,
+                    imageProvider: AdvancedNetworkImage(widget.imageUrl,
+                        retryLimit: 0,
+                        useDiskCache: true,
+                        fallbackAssetImage:
+                        'assets/images/fallbacks/post-fallback.png'),
+                    maxScale: PhotoViewComputedScale.covered,
+                    minScale: PhotoViewComputedScale.contained,
+                  )
+                ),
+                onSwipeUp: () {
+                  setState(() {
+                    offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
+                        .animate(controller);
+                    _dismissModal();
+                  });
+                },
+                onSwipeDown: () {
+                  setState(() {
+                    offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
+                        .animate(controller);
+                    _dismissModal();
+                  });
+                },
+                swipeConfiguration: SwipeConfiguration(
+                    verticalSwipeMinVelocity: 100.0,
+                    verticalSwipeMinDisplacement: 50.0,
+                    verticalSwipeMaxWidthThreshold: 100.0,
+                    horizontalSwipeMaxHeightThreshold: 50.0,
+                    horizontalSwipeMinDisplacement: 50.0,
+                    horizontalSwipeMinVelocity: 200.0),
               ),
-              onSwipeUp: () {
-                setState(() {
-                  offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
-                      .animate(controller);
-                  _dismissModal();
-                });
-              },
-              onSwipeDown: () {
-                setState(() {
-                  offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
-                      .animate(controller);
-                  _dismissModal();
-                });
-              },
-              swipeConfiguration: SwipeConfiguration(
-                  verticalSwipeMinVelocity: 100.0,
-                  verticalSwipeMinDisplacement: 50.0,
-                  verticalSwipeMaxWidthThreshold: 100.0,
-                  horizontalSwipeMaxHeightThreshold: 50.0,
-                  horizontalSwipeMinDisplacement: 50.0,
-                  horizontalSwipeMinVelocity: 200.0),
-            ),
-            _buildCloseButton()
-          ],
-        ));
+              _buildCloseButton()
+            ],
+          )), onWillPop: () {
+             _dismissModal();
+            },
+    );
   }
 
   Future _dismissModal() async {
@@ -100,7 +104,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal> with SingleT
           children: <Widget>[
             GestureDetector(
               onTapDown: (tap) {
-                Navigator.pop(context);
+                _dismissModal();
               },
               child: Container(
                 padding: EdgeInsets.all(10),
