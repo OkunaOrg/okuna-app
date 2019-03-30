@@ -148,6 +148,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
+    imagePickerService.setValidationService(validationService);
   }
 
   void initAsyncState() async {
