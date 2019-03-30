@@ -619,41 +619,43 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
     if (_noMoreTopItemsToLoad) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-              child: OBSecondaryText(
-                _postComments.length > 0
-                    ? _currentSort == PostCommentsSortType.dec
+          padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                  child: OBSecondaryText(
+                    _postComments.length > 0
+                        ? _currentSort == PostCommentsSortType.dec
                         ? 'Newest comments'
                         : 'Oldest comments'
-                    : 'Be the first to comment!',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                        : 'Be the first to comment!',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                  ),
+                ),
               ),
-            ),
-            FlatButton(
-                child: Row(
-                  children: <Widget>[
-                    OBText(
+              Expanded(
+                child: FlatButton(
+                    child: OBText(
                       _postComments.length > 0
                           ? _currentSort == PostCommentsSortType.dec
-                              ? 'See oldest comments'
-                              : 'See newest comments'
+                          ? 'See oldest comments'
+                          : 'See newest comments'
                           : '',
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: _themeValueParserService
                               .parseGradient(theme.primaryAccentColor)
                               .colors[1],
                           fontWeight: FontWeight.bold),
                     ),
-                  ],
+                    onPressed: _onWantsToToggleSortComments
                 ),
-                onPressed: _onWantsToToggleSortComments),
-          ],
-        ),
+              ),
+            ],
+          ),
       );
     } else {
       return Container(
@@ -661,30 +663,33 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            FlatButton(
-                child: Row(
-                  children: <Widget>[
-                    OBIcon(OBIcons.arrowUp),
-                    const SizedBox(width: 10.0),
-                    OBText(_currentSort == PostCommentsSortType.dec ? 'Newer':'Older',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                onPressed: _loadMoreTopComments),
-            FlatButton(
-                child: Row(
-                  children: <Widget>[
-                    OBText( _currentSort == PostCommentsSortType.dec ? 'View newest comments': 'View oldest comments',
-                      style: TextStyle(
-                          color: _themeValueParserService
-                              .parseGradient(theme.primaryAccentColor)
-                              .colors[1],
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+            Expanded(
+              flex: 4,
+              child: FlatButton(
+                  child: Row(
+                    children: <Widget>[
+                      OBIcon(OBIcons.arrowUp),
+                      const SizedBox(width: 10.0),
+                      OBText(_currentSort == PostCommentsSortType.dec ? 'Newer':'Older',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  onPressed: _loadMoreTopComments),
+            ),
+            Expanded(
+              flex: 6,
+              child: FlatButton(
+                  child: OBText( _currentSort == PostCommentsSortType.dec ? 'View newest comments': 'View oldest comments',
+                    style: TextStyle(
+                        color: _themeValueParserService
+                            .parseGradient(theme.primaryAccentColor)
+                            .colors[1],
+                        fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 onPressed: _onWantsToRefreshComments),
+            ),
           ],
         ),
       );
