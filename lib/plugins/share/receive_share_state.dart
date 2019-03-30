@@ -10,7 +10,7 @@ abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
 
   StreamSubscription shareReceiveSubscription = null;
 
-  void enableReceiving() {
+  void enableSharing() {
     if (shareReceiveSubscription == null) {
       shareReceiveSubscription =
           stream.receiveBroadcastStream().listen(_onReceiveShare);
@@ -18,7 +18,7 @@ abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
     }
   }
 
-  void disableReceiving() {
+  void disableSharing() {
     if (shareReceiveSubscription != null) {
       shareReceiveSubscription.cancel();
       shareReceiveSubscription = null;
@@ -26,8 +26,8 @@ abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
   }
 
   void _onReceiveShare(dynamic shared) {
-    receiveShare(Share.fromReceived(shared));
+    onShare(Share.fromReceived(shared));
   }
 
-  void receiveShare(Share share);
+  void onShare(Share share);
 }

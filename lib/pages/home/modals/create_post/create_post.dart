@@ -28,9 +28,9 @@ import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
   final Community community;
-  final File sharedImage;
+  final File image;
 
-  const CreatePostModal({Key key, this.community, this.sharedImage})
+  const CreatePostModal({Key key, this.community, this.image})
       : super(key: key);
 
   @override
@@ -77,8 +77,8 @@ class CreatePostModalState extends State<CreatePostModal> {
       _postItemsWidgets.add(OBPostCommunityPreviewer(
         community: widget.community,
       ));
-    if (widget.sharedImage != null) {
-      _setPostImage(widget.sharedImage);
+    if (widget.image != null) {
+      _setPostImage(widget.image);
     }
     _isCreateCommunityPostInProgress = false;
   }

@@ -67,7 +67,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   @override
   void initState() {
     super.initState();
-    enableReceiving();
+    enableSharing();
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
@@ -126,10 +126,10 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   @override
-  void receiveShare(Share share) {
+  void onShare(Share share) {
     debugPrint("received share to file " + share.path);
     _modalService.openCreatePost(
-        context: context, sharedImage: File.fromUri(Uri.parse(share.path)));
+        context: context, image: File.fromUri(Uri.parse(share.path)));
   }
 
   Widget _getPageForTabIndex(int index) {
