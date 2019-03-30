@@ -13,6 +13,8 @@ import 'package:Openbook/pages/home/pages/search/search.dart';
 import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
+import 'package:Openbook/plugins/share/receive_share_state.dart';
+import 'package:Openbook/plugins/share/share.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -31,7 +33,8 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
+class OBHomePageState extends ReceiveShareState<OBHomePage>
+    with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
   ToastService _toastService;
@@ -60,6 +63,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    enableReceiving();
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
@@ -114,6 +118,11 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         tabBar: _createTabBar(),
       ),
     );
+  }
+
+  @override
+  void receiveShare(Share share) {
+    debugPrint("share received");
   }
 
   Widget _getPageForTabIndex(int index) {
