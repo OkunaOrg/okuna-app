@@ -19,9 +19,11 @@ import 'package:Openbook/plugins/share/receive_share_state.dart';
 import 'package:Openbook/plugins/share/share.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/badges/badge.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -44,6 +46,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   PushNotificationsService _pushNotificationsService;
   IntercomService _intercomService;
   ModalService _modalService;
+  ValidationService _validationService;
 
   int _currentIndex;
   int _lastIndex;
@@ -107,6 +110,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _intercomService = openbookProvider.intercomService;
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
+      _validationService = openbookProvider.validationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -126,10 +130,16 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   @override
-  void onShare(Share share) {
+  void onShare(Share share) async {
     debugPrint("received share to file " + share.path);
-    _modalService.openCreatePost(
-        context: context, image: File.fromUri(Uri.parse(share.path)));
+    var image = File.fromUri(Uri.parse(share.path));
+    if (!await _validationService.isImageAllowedSize(image, OBImageType.post)) {
+      int limit = _validationService.getAllowedImageSize(OBImageType.post);
+      _toastService.error(
+          message: 'Image too large (limit: $limit MB)', context: context);
+      return;
+    }
+    _modalService.openCreatePost(context: context, image: image);
   }
 
   Widget _getPageForTabIndex(int index) {
