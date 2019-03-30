@@ -134,7 +134,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     debugPrint("received share to file " + share.path);
     var image = File.fromUri(Uri.parse(share.path));
     if (!await _validationService.isImageAllowedSize(image, OBImageType.post)) {
-      int limit = _validationService.getAllowedImageSize(OBImageType.post);
+      int limit = _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
       _toastService.error(
           message: 'Image too large (limit: $limit MB)', context: context);
       return;
