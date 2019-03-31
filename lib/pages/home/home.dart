@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+
 import 'package:Openbook/models/push_notification.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/services/intercom.dart';
@@ -13,10 +15,15 @@ import 'package:Openbook/pages/home/pages/search/search.dart';
 import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
+import 'package:Openbook/plugins/share/receive_share_state.dart';
+import 'package:Openbook/plugins/share/share.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/badges/badge.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -31,12 +38,15 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
+class OBHomePageState extends ReceiveShareState<OBHomePage>
+    with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
   ToastService _toastService;
   PushNotificationsService _pushNotificationsService;
   IntercomService _intercomService;
+  ModalService _modalService;
+  ValidationService _validationService;
 
   int _currentIndex;
   int _lastIndex;
@@ -60,6 +70,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    enableSharing();
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
@@ -98,6 +109,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       _pushNotificationsService = openbookProvider.pushNotificationsService;
       _intercomService = openbookProvider.intercomService;
       _toastService = openbookProvider.toastService;
+      _modalService = openbookProvider.modalService;
+      _validationService = openbookProvider.validationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -114,6 +127,19 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         tabBar: _createTabBar(),
       ),
     );
+  }
+
+  @override
+  void onShare(Share share) async {
+    debugPrint("received share to file " + share.path);
+    var image = File.fromUri(Uri.parse(share.path));
+    if (!await _validationService.isImageAllowedSize(image, OBImageType.post)) {
+      int limit = _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
+      _toastService.error(
+          message: 'Image too large (limit: $limit MB)', context: context);
+      return;
+    }
+    _modalService.openCreatePost(context: context, image: image);
   }
 
   Widget _getPageForTabIndex(int index) {
