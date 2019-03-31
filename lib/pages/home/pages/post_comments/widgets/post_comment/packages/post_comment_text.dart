@@ -1,15 +1,19 @@
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OBPostCommentText extends StatelessWidget {
   final PostComment postComment;
   final VoidCallback onUsernamePressed;
   final Widget badge;
+  ToastService _toastService;
+  BuildContext _context;
 
-  const OBPostCommentText(this.postComment,
+  OBPostCommentText(this.postComment,
       {Key key, this.onUsernamePressed, this.badge})
       : super(key: key);
 
@@ -18,6 +22,9 @@ class OBPostCommentText extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+
+    _toastService = openbookProvider.toastService;
+    _context = context;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -53,14 +60,21 @@ class OBPostCommentText extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Flexible(
-                    child: OBActionableSmartText(
-                      text: postComment.text,
-                    ),
-                  )
-                ],
+                      child: GestureDetector(
+                        onLongPress: _copyText,
+                        child: OBActionableSmartText(
+                          text: postComment.text,
+                        ),
+                      )
+                  )],
               )
             ],
           );
         });
+  }
+
+  void _copyText(){
+    Clipboard.setData(ClipboardData(text: postComment.text));
+    _toastService.toast(message: 'Text copied!', context: _context, type: ToastType.info);
   }
 }
