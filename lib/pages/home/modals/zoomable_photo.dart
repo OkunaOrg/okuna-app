@@ -33,23 +33,24 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 600));
 
-    offset = Tween<Offset>(begin: Offset.zero, end: Offset(-800, 0)).chain(CurveTween(curve: Curves.easeInOutSine))
+    offset = Tween<Offset>(begin: Offset.zero, end: Offset(-800, 0))
+        .chain(CurveTween(curve: Curves.easeInOutSine))
         .animate(controller);
 
-    rotation = Tween<double>(begin: 0.0, end: 2 *pi).chain(CurveTween(curve: Curves.easeInOutCubic)).animate(controller)
-      ..addListener(() {
-        angle = rotation.value;
-        off = offset.value;
-        setState(() {});
-      });
+    rotation = Tween<double>(begin: 0.0, end: 2 * pi)
+        .chain(CurveTween(curve: Curves.easeInOutCubic))
+        .animate(controller)
+          ..addListener(() {
+            angle = rotation.value;
+            off = offset.value;
+            setState(() {});
+          });
 
     isDismissible = true;
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("angle: $angle");
-    debugPrint("offset: $off");
     return WillPopScope(
       child: OBCupertinoPageScaffold(
           backgroundColor: Color.fromARGB(0, 0, 0, 0),
@@ -80,16 +81,18 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
                 onSwipeUp: () {
                   setState(() {
                     offset = Tween<Offset>(
-                            begin: Offset.zero, end: Offset(0.0, -800)).chain(CurveTween(curve: Curves.easeInOutSine))
+                            begin: Offset.zero, end: Offset(0.0, -800))
+                        .chain(CurveTween(curve: Curves.easeInOutSine))
                         .animate(controller);
                     _dismissModal();
                   });
                 },
                 onSwipeDown: () {
                   setState(() {
-                    offset = Tween<Offset>(
-                            begin: Offset.zero, end: Offset(0.0, 800)).chain(CurveTween(curve: Curves.easeInOutSine))
-                        .animate(controller);                                        
+                    offset =
+                        Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 800))
+                            .chain(CurveTween(curve: Curves.easeInOutSine))
+                            .animate(controller);
                     _dismissModal();
                   });
                 },
