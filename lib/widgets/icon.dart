@@ -191,6 +191,7 @@ class OBIcons {
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity =
       OBIconData(nativeIcon: Icons.remove_circle);
+  static const fullscreen = OBIconData(nativeIcon: Icons.fullscreen);
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
