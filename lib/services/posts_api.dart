@@ -15,6 +15,7 @@ class PostsApiService {
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_PATH = 'api/posts/{postUuid}/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
+  static const EDIT_COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/{postCommentId}/';
   static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
   static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
   static const DELETE_POST_COMMENT_PATH =
@@ -132,6 +133,15 @@ class PostsApiService {
         body: body, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> editPostComment(
+      {@required String postUuid, @required int postCommentId, @required String text}) {
+    Map<String, dynamic> body = {'text': text};
+
+    String path = _makeEditCommentPostPath(postUuid, postCommentId);
+    return _httpService.patchJSON(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> deletePostComment(
       {@required postCommentId, @required postUuid}) {
     String path = _makeDeletePostCommentPath(
@@ -214,6 +224,11 @@ class PostsApiService {
   String _makeCommentPostPath(String postUuid) {
     return _stringTemplateService
         .parse(COMMENT_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeEditCommentPostPath(String postUuid, int postCommentId) {
+    return _stringTemplateService
+        .parse(EDIT_COMMENT_POST_PATH, {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 
   String _makeGetPostCommentsPath(String postUuid) {
