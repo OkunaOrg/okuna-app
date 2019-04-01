@@ -72,6 +72,18 @@ class TextElement extends SmartTextElement {
   }
 }
 
+/// Represents an element containing secondary text
+class SecondaryTextElement extends SmartTextElement {
+  final String text;
+
+  SecondaryTextElement(this.text);
+
+  @override
+  String toString() {
+    return "SecondaryTextElement: $text";
+  }
+}
+
 final _linkRegex = RegExp(
     r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
     caseSensitive: false);
@@ -144,6 +156,9 @@ class OBSmartText extends StatelessWidget {
   /// Callback for tapping a link
   final StringCallback onCommunityNameTapped;
 
+  /// SmartTextElement element to add at the end of smart text
+  final SmartTextElement trailingSmartTextElement;
+
   final OBTextSize size;
 
   final TextOverflow overflow;
@@ -159,6 +174,7 @@ class OBSmartText extends StatelessWidget {
     this.onTagTapped,
     this.onUsernameTapped,
     this.onCommunityNameTapped,
+    this.trailingSmartTextElement,
     this.size = OBTextSize.medium,
   }) : super(key: key);
 
@@ -166,6 +182,7 @@ class OBSmartText extends StatelessWidget {
   TextSpan _buildTextSpan({
     String text,
     TextStyle style,
+    TextStyle secondaryTextStyle,
     TextStyle linkStyle,
     TextStyle tagStyle,
     TextStyle usernameStyle,
@@ -207,7 +224,13 @@ class OBSmartText extends StatelessWidget {
       }
     }
 
-    final elements = _smartify(text);
+    List<SmartTextElement> elements = _smartify(text);
+
+    if (this.trailingSmartTextElement != null) {
+      elements.add(
+          this.trailingSmartTextElement
+      );
+    }
 
     return TextSpan(
         children: elements.map<TextSpan>((element) {
@@ -215,6 +238,11 @@ class OBSmartText extends StatelessWidget {
         return TextSpan(
           text: element.text,
           style: style,
+        );
+      } else if (element is SecondaryTextElement) {
+        return TextSpan(
+          text: element.text,
+          style: secondaryTextStyle,
         );
       } else if (element is LinkElement) {
         return LinkTextSpan(
@@ -262,8 +290,13 @@ class OBSmartText extends StatelessWidget {
         Color primaryTextColor =
             themeValueParserService.parseColor(theme.primaryTextColor);
 
+        Color secondaryTextColor = themeValueParserService.parseColor(theme.secondaryTextColor);
+
         TextStyle textStyle =
             TextStyle(color: primaryTextColor, fontSize: fontSize, fontFamilyFallback: ['NunitoSans']);
+
+        TextStyle secondaryTextStyle =
+        TextStyle(color: secondaryTextColor, fontSize: fontSize, fontFamilyFallback: ['NunitoSans']);
 
         Color actionsForegroundColor = themeValueParserService
             .parseGradient(theme.primaryAccentColor)
@@ -281,6 +314,7 @@ class OBSmartText extends StatelessWidget {
           text: _buildTextSpan(
               text: text,
               style: textStyle,
+              secondaryTextStyle: secondaryTextStyle,
               linkStyle: smartItemsStyle,
               tagStyle: smartItemsStyle,
               communityNameStyle: smartItemsStyle,
