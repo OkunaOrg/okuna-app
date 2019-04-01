@@ -31,7 +31,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
   void initState() {
     super.initState();
     controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
 
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(-800, 0))
         .chain(CurveTween(curve: Curves.easeInOutSine))
@@ -98,11 +98,8 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
                 },
                 swipeConfiguration: SwipeConfiguration(
                     verticalSwipeMinVelocity: 100.0,
-                    verticalSwipeMinDisplacement: 50.0,
-                    verticalSwipeMaxWidthThreshold: 100.0,
-                    horizontalSwipeMaxHeightThreshold: 50.0,
-                    horizontalSwipeMinDisplacement: 50.0,
-                    horizontalSwipeMinVelocity: 200.0),
+                    verticalSwipeMinDisplacement: 100.0,
+                    verticalSwipeMaxWidthThreshold: 350.0),
               ),
               _buildCloseButton()
             ],
