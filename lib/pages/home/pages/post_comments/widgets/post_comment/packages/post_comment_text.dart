@@ -1,7 +1,9 @@
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBPostCommentText extends StatelessWidget {
@@ -53,14 +55,26 @@ class OBPostCommentText extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Flexible(
-                    child: OBActionableSmartText(
-                      text: postComment.text,
-                    ),
-                  )
+                    child: _getActionableSmartText(postComment.isEdited),
+                  ),
                 ],
               )
             ],
           );
         });
   }
+
+  Widget _getActionableSmartText(bool isEdited) {
+    if (isEdited) {
+      return OBActionableSmartText(
+          text: postComment.text,
+          trailingSmartTextElement: SecondaryTextElement(' (edited)')
+      );
+    } else {
+      return OBActionableSmartText(
+          text: postComment.text
+      );
+    }
+  }
+
 }
