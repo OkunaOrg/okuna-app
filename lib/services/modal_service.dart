@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
@@ -21,14 +23,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ModalService {
-  Future<Post> openCreatePost({@required BuildContext context, Community community}) async {
+  Future<Post> openCreatePost(
+      {@required BuildContext context, Community community, File image}) async {
     Post createdPost = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Post>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
                 child: CreatePostModal(
-                  community: community
+                  community: community,
+                  image: image,
                 ),
               );
             }));
