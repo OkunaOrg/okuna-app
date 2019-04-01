@@ -14,7 +14,7 @@ import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore.dart';
+import 'package:Openbook/widgets/load_more.dart';
 
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
@@ -215,7 +215,9 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _setRefreshInProgress(true);
     try {
       _posts = (await _userService.getTimelinePosts(
-              circles: _filteredCircles, followsLists: _filteredFollowsLists))
+              count: 5,
+              circles: _filteredCircles,
+              followsLists: _filteredFollowsLists))
           .posts;
       _setPosts(_posts);
       _setLoadingFinished(false);
@@ -233,7 +235,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       var morePosts = (await _userService.getTimelinePosts(
               maxId: lastPostId,
               circles: _filteredCircles,
-              count: 20,
+              count: 5,
               followsLists: _filteredFollowsLists))
           .posts;
 
