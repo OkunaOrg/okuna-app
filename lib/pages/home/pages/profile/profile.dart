@@ -5,7 +5,7 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_c
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_no_posts.dart';
-import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Openbook/widgets/loadmore/loadmore_delegate.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
