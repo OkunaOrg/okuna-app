@@ -327,15 +327,19 @@ class UserService {
       return _makePostsList(postsData);
     } on HttpieConnectionRefusedError {
       if (areFirstPosts) {
-        // Response failed. Use stored first posts.
-        String firstPostsData = await this._getStoredFirstPostsData();
-        if (firstPostsData != null) {
-          var postsList = _makePostsList(firstPostsData);
-          return postsList;
-        }
+        return getStoredFirstPosts();
       }
       rethrow;
     }
+  }
+
+  Future<PostsList> getStoredFirstPosts() async {
+    String firstPostsData = await this._getStoredFirstPostsData();
+    if (firstPostsData != null) {
+      var postsList = _makePostsList(firstPostsData);
+      return postsList;
+    }
+    return PostsList();
   }
 
   Future<Post> createPost(

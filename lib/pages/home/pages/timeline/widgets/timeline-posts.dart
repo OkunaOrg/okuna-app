@@ -36,6 +36,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<Circle> _filteredCircles;
   List<FollowsList> _filteredFollowsLists;
   bool _needsBootstrap;
+  bool _cacheLoadAttempted;
+  bool _isFirstLoad;
   UserService _userService;
   ToastService _toastService;
   StreamSubscription _loggedInUserChangeSubscription;
@@ -45,7 +47,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       GlobalKey<RefreshIndicatorState>();
 
   OBTimelinePostsStatus _status;
-
   CancelableOperation _timelineRequest;
 
   @override
@@ -56,7 +57,9 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _filteredCircles = [];
     _filteredFollowsLists = [];
     _needsBootstrap = true;
-    _status = OBTimelinePostsStatus.refreshingPosts;
+    _cacheLoadAttempted = false;
+    _isFirstLoad = true;
+    _status = OBTimelinePostsStatus.bootstrapping;
     _postsScrollController = ScrollController();
     _postsScrollController.addListener(_onScroll);
   }
@@ -78,7 +81,9 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       _needsBootstrap = false;
     }
 
-    return _posts.isEmpty ? _buildDrHoo() : _buildTimelinePosts();
+    return _posts.isEmpty && _cacheLoadAttempted
+        ? _buildDrHoo()
+        : _buildTimelinePosts();
   }
 
   Widget _buildTimelinePosts() {
@@ -107,24 +112,38 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     bool isLastItem = index == _posts.length - 1;
 
     if (isLastItem) {
-      if (_status == OBTimelinePostsStatus.loadingMorePosts) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            postWidget,
-            OBLoadingTile(),
-          ],
-        );
-      } else if (_status == OBTimelinePostsStatus.loadingMorePostsFailed) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            postWidget,
-            OBRetryTile(
-              onWantsToRetry: _loadMorePosts,
-            ),
-          ],
-        );
+      switch (_status) {
+        case OBTimelinePostsStatus.loadingMorePosts:
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              postWidget,
+              OBLoadingTile(),
+            ],
+          );
+          break;
+        case OBTimelinePostsStatus.loadingMorePostsFailed:
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              postWidget,
+              OBRetryTile(
+                onWantsToRetry: _loadMorePosts,
+              ),
+            ],
+          );
+          break;
+        case OBTimelinePostsStatus.noMorePostsToLoad:
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              postWidget,
+              ListTile(
+                title: OBText('🏁 You\'ve reached the end of your timeline.'),
+              ),
+            ],
+          );
+        default:
       }
     }
 
@@ -263,7 +282,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   void _onLoggedInUserChange(User newUser) async {
     if (newUser == null) return;
-    _refreshPosts();
+    PostsList storedPosts = await _userService.getStoredFirstPosts();
+    if (storedPosts.posts != null) _setPosts(storedPosts.posts);
+    _setCacheLoadAttempted(true);
+    _refreshIndicatorKey.currentState.show();
     _loggedInUserChangeSubscription.cancel();
   }
 
@@ -274,7 +296,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       Future<PostsList> postsListFuture = _userService.getTimelinePosts(
           count: 10,
           circles: _filteredCircles,
-          followsLists: _filteredFollowsLists);
+          followsLists: _filteredFollowsLists,
+          areFirstPosts: true);
 
       _timelineRequest = CancelableOperation.fromFuture(postsListFuture);
 
@@ -355,6 +378,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       _status = status;
     });
   }
+
+  void _setCacheLoadAttempted(bool cacheLoadAttempted) {
+    setState(() {
+      _cacheLoadAttempted = cacheLoadAttempted;
+    });
+  }
 }
 
 class OBTimelinePostsController {
@@ -407,6 +436,7 @@ class OBTimelinePostsController {
 }
 
 enum OBTimelinePostsStatus {
+  bootstrapping,
   refreshingPosts,
   loadingMorePosts,
   loadingMorePostsFailed,
