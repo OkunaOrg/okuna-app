@@ -464,9 +464,13 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   void _checkIfMoreTopItemsToLoad() {
-    var linkedCommentId = widget.postComment.id;
-    var listBeforeLinkedComment =
-        _postComments.where((comment) => comment.id > linkedCommentId);
+    int linkedCommentId = widget.postComment.id;
+    Iterable<PostComment> listBeforeLinkedComment = [];
+    if (_currentSort == PostCommentsSortType.dec) {
+      listBeforeLinkedComment = _postComments.where((comment) => comment.id > linkedCommentId);
+    } else if (_currentSort == PostCommentsSortType.asc) {
+      listBeforeLinkedComment = _postComments.where((comment) => comment.id < linkedCommentId);
+    }
     if (listBeforeLinkedComment.length < 2) {
       _setNoMoreTopItemsToLoad(true);
     }
