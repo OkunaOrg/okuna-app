@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 class OBCreatePostText extends StatelessWidget {
   final TextEditingController controller;
+  String hintText;
 
-  OBCreatePostText({this.controller});
+  OBCreatePostText({this.controller, this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class OBCreatePostText extends StatelessWidget {
                 fontSize: 18.0),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'What\'s going on?',
+                hintText: this.hintText != null ? this.hintText : 'What\'s going on?',
                 hintStyle: TextStyle(
                     color: themeValueParserService
                         .parseColor(theme.secondaryTextColor),

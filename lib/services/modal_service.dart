@@ -4,9 +4,11 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/invite_to_community.dart';
+import 'package:Openbook/pages/home/modals/post_comment/post-commenter-expanded.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/add_community_administrator.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
@@ -36,6 +38,22 @@ class ModalService {
             }));
 
     return createdPost;
+  }
+
+  Future<PostComment> openExpandedCommenter(
+      {@required BuildContext context, @required PostComment postComment, @required Post post}) async {
+    PostComment editedComment = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<PostComment>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return Material(
+            child: OBPostCommenterExpandedModal(
+              post: post,
+              postComment: postComment,
+            ),
+          );
+        }));
+    return editedComment;
   }
 
   Future<void> openEditUserProfile(

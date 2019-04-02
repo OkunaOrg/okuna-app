@@ -60,17 +60,29 @@ class OBPostCommentText extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Flexible(
-                      child: GestureDetector(
-                        onLongPress: _copyText,
-                        child: OBActionableSmartText(
-                          text: postComment.text,
-                        ),
-                      )
-                  )],
+                    child: GestureDetector(
+                       onLongPress: _copyText,
+                       child:_getActionableSmartText(postComment.isEdited),
+                    ),
+                  ),
+                ],
               )
             ],
           );
         });
+  }
+
+  Widget _getActionableSmartText(bool isEdited) {
+    if (isEdited) {
+      return OBActionableSmartText(
+          text: postComment.text,
+          trailingSmartTextElement: SecondaryTextElement(' (edited)')
+      );
+    } else {
+      return OBActionableSmartText(
+          text: postComment.text
+      );
+    }
   }
 
   void _copyText(){

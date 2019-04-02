@@ -15,12 +15,14 @@ class OBActionableSmartText extends StatefulWidget {
   final String text;
   final OBTextSize size;
   final TextOverflow overflow;
+  final SmartTextElement trailingSmartTextElement;
 
   const OBActionableSmartText({
     Key key,
     this.text,
     this.size = OBTextSize.medium,
     this.overflow = TextOverflow.clip,
+    this.trailingSmartTextElement
   }) : super(key: key);
 
   @override
@@ -66,6 +68,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       onCommunityNameTapped: _onCommunityNameTapped,
       onUsernameTapped: _onUsernameTapped,
       onLinkTapped: _onLinkTapped,
+      trailingSmartTextElement: widget.trailingSmartTextElement,
       size: widget.size,
     );
   }

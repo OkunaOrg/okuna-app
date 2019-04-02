@@ -416,6 +416,14 @@ class UserService {
     return PostComment.fromJson(json.decode(response.body));
   }
 
+  Future<PostComment> editPostComment(
+      {@required Post post, @required PostComment postComment, @required String text}) async {
+    HttpieResponse response =
+    await _postsApiService.editPostComment(postUuid: post.uuid, postCommentId: postComment.id, text: text);
+    _checkResponseIsOk(response);
+    return PostComment.fromJson(json.decode(response.body));
+  }
+
   Future<void> deletePostComment(
       {@required PostComment postComment, @required Post post}) async {
     HttpieResponse response = await _postsApiService.deletePostComment(

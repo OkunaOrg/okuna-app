@@ -37,6 +37,7 @@ class PostComment {
   final String text;
   final User commenter;
   final Post post;
+  final bool isEdited;
 
   PostComment({
     this.id,
@@ -45,6 +46,7 @@ class PostComment {
     this.creatorId,
     this.commenter,
     this.post,
+    this.isEdited
   });
 
   factory PostComment.fromJson(Map<String, dynamic> parsedJson) {
@@ -69,6 +71,7 @@ class PostComment {
         created: created,
         commenter: commenter,
         post: post,
+        isEdited: parsedJson['is_edited'],
         text: parsedJson['text']);
   }
 
