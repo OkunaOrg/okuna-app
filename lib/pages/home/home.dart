@@ -375,17 +375,14 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         throw 'No tab controller to pop';
     }
 
+    bool canPopRootRoute = Navigator.of(context, rootNavigator: true).canPop();
     bool canPopRoute = currentTabController.canPop();
     bool preventCloseApp = false;
 
-    if (canPopRoute) {
+    if (canPopRoute && !canPopRootRoute) {
       currentTabController.pop();
       // Stop default
       preventCloseApp = true;
-    } else if (currentTab != OBHomePageTabs.timeline) {
-//      print('Navigating to timeline');
-//      _navigateToTab(OBHomePageTabs.timeline);
-//      preventCloseApp = true;
     }
 
     // Close the app
