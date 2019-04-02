@@ -38,6 +38,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<FollowsList> _filteredFollowsLists;
   bool _needsBootstrap;
   bool _cacheLoadAttempted;
+  bool _isFirstLoad;
   UserService _userService;
   ToastService _toastService;
   StreamSubscription _loggedInUserChangeSubscription;
@@ -58,6 +59,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _filteredFollowsLists = [];
     _needsBootstrap = true;
     _cacheLoadAttempted = false;
+    _isFirstLoad = true;
     _status = OBTimelinePostsStatus.refreshingPosts;
     _postsScrollController = ScrollController();
     _postsScrollController.addListener(_onScroll);
@@ -141,7 +143,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             children: <Widget>[
               postWidget,
               ListTile(
-                title: OBSecondaryText('🎉  All posts loaded', textAlign: TextAlign.center,),
+                title: OBSecondaryText(
+                  '🎉  All posts loaded',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           );
@@ -155,17 +160,16 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   Widget _buildDrHoo() {
     String drHooTitle;
     String drHooSubtitle;
-    bool hasRefreshButton = true;
+    bool hasRefreshButton = !_isFirstLoad;
 
     switch (_status) {
       case OBTimelinePostsStatus.refreshingPosts:
         drHooTitle = 'Hang in there!';
         drHooSubtitle = 'Loading your timeline.';
-        hasRefreshButton = false;
         break;
       case OBTimelinePostsStatus.noMorePostsToLoad:
         drHooTitle = 'Your timeline is empty.';
-        drHooSubtitle = 'I\'m loading your timeline.';
+        drHooSubtitle = 'Follow users or join a community to get started!';
         break;
       default:
         drHooTitle = 'Something\'s not right.';
@@ -210,7 +214,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
           type: OBButtonType.highlight,
           child: const OBText('Refresh posts'),
           onPressed: _refreshPosts,
-          isLoading: _status != OBTimelinePostsStatus.idle,
+          isLoading: _timelineRequest != null,
         )
       ]);
     }
@@ -275,7 +279,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   void _onScroll() {
-    if (_status == OBTimelinePostsStatus.loadingMorePosts || _status == OBTimelinePostsStatus.noMorePostsToLoad) return;
+    if (_status == OBTimelinePostsStatus.loadingMorePosts ||
+        _status == OBTimelinePostsStatus.noMorePostsToLoad) return;
     if (_postsScrollController.position.pixels >
         _postsScrollController.position.maxScrollExtent * 0.1) {
       _loadMorePosts();
@@ -294,7 +299,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     PostsList storedPosts = await _userService.getStoredFirstPosts();
     if (storedPosts.posts != null) _setPosts(storedPosts.posts);
     _setCacheLoadAttempted(true);
-    print('YO');
     _refreshIndicatorKey.currentState.show();
     _loggedInUserChangeSubscription.cancel();
   }
@@ -304,25 +308,39 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _setStatus(OBTimelinePostsStatus.refreshingPosts);
     try {
       debugPrint('Refreshing posts');
+      bool areFirstPosts = _isFirstLoad;
+      bool cachePosts = _filteredCircles == null && _filteredFollowsLists == null;
+
       Future<PostsList> postsListFuture = _userService.getTimelinePosts(
           count: 10,
           circles: _filteredCircles,
           followsLists: _filteredFollowsLists,
-          areFirstPosts: true);
+          cachePosts: cachePosts,
+          areFirstPosts: areFirstPosts);
 
       _timelineRequest = CancelableOperation.fromFuture(postsListFuture);
 
       List<Post> posts = (await postsListFuture).posts;
 
+      if (_isFirstLoad) _isFirstLoad = false;
+
+      if (posts.length == 0) {
+        debugPrint('No posts to load');
+        _setStatus(OBTimelinePostsStatus.noMorePostsToLoad);
+      } else {
+        _setStatus(OBTimelinePostsStatus.idle);
+      }
       _setPosts(posts);
-      _setStatus(OBTimelinePostsStatus.idle);
     } catch (error) {
       _onError(error);
+    } finally {
+      _timelineRequest = null;
     }
   }
 
   Future _loadMorePosts() async {
-    if (_status == OBTimelinePostsStatus.refreshingPosts || _status == OBTimelinePostsStatus.noMorePostsToLoad) return null;
+    if (_status == OBTimelinePostsStatus.refreshingPosts ||
+        _status == OBTimelinePostsStatus.noMorePostsToLoad) return null;
     _cancelPreviousTimelineRequest();
     _setStatus(OBTimelinePostsStatus.loadingMorePosts);
 
@@ -350,6 +368,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     } catch (error) {
       _setStatus(OBTimelinePostsStatus.loadingMorePostsFailed);
       _onError(error);
+    } finally {
+      _timelineRequest = null;
     }
   }
 

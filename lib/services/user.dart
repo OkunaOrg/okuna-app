@@ -310,7 +310,8 @@ class UserService {
       int maxId,
       int count,
       String username,
-      bool areFirstPosts = false}) async {
+      bool areFirstPosts = false,
+      bool cachePosts = false}) async {
     try {
       HttpieResponse response = await _postsApiService.getTimelinePosts(
           circleIds: circles.map((circle) => circle.id).toList(),
@@ -321,7 +322,7 @@ class UserService {
           authenticatedRequest: true);
       _checkResponseIsOk(response);
       String postsData = response.body;
-      if (areFirstPosts) {
+      if (cachePosts) {
         this._storeFirstPostsData(postsData);
       }
       return _makePostsList(postsData);
