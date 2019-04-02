@@ -12,6 +12,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/loading_tile.dart';
 import 'package:Openbook/widgets/tiles/retry_tile.dart';
@@ -37,7 +38,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<FollowsList> _filteredFollowsLists;
   bool _needsBootstrap;
   bool _cacheLoadAttempted;
-  bool _isFirstLoad;
   UserService _userService;
   ToastService _toastService;
   StreamSubscription _loggedInUserChangeSubscription;
@@ -58,8 +58,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _filteredFollowsLists = [];
     _needsBootstrap = true;
     _cacheLoadAttempted = false;
-    _isFirstLoad = true;
-    _status = OBTimelinePostsStatus.bootstrapping;
+    _status = OBTimelinePostsStatus.refreshingPosts;
     _postsScrollController = ScrollController();
     _postsScrollController.addListener(_onScroll);
   }
@@ -81,22 +80,25 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       _needsBootstrap = false;
     }
 
-    return _posts.isEmpty && _cacheLoadAttempted
+    Widget timelinePostsWidget = _posts.isEmpty && _cacheLoadAttempted
         ? _buildDrHoo()
         : _buildTimelinePosts();
+
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: _refreshPosts,
+      child: timelinePostsWidget,
+    );
   }
 
   Widget _buildTimelinePosts() {
-    return RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: _refreshPosts,
-        child: ListView.builder(
-            controller: _postsScrollController,
-            physics: const ClampingScrollPhysics(),
-            cacheExtent: 30,
-            padding: const EdgeInsets.all(0),
-            itemCount: _posts.length,
-            itemBuilder: _buildTimelinePost));
+    return ListView.builder(
+        controller: _postsScrollController,
+        physics: const ClampingScrollPhysics(),
+        cacheExtent: 30,
+        padding: const EdgeInsets.all(0),
+        itemCount: _posts.length,
+        itemBuilder: _buildTimelinePost);
   }
 
   Widget _buildTimelinePost(BuildContext context, int index) {
@@ -139,7 +141,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             children: <Widget>[
               postWidget,
               ListTile(
-                title: OBText('🏁 You\'ve reached the end of your timeline.'),
+                title: OBSecondaryText('🎉  All posts loaded', textAlign: TextAlign.center,),
               ),
             ],
           );
@@ -153,11 +155,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   Widget _buildDrHoo() {
     String drHooTitle;
     String drHooSubtitle;
+    bool hasRefreshButton = true;
 
     switch (_status) {
       case OBTimelinePostsStatus.refreshingPosts:
         drHooTitle = 'Hang in there!';
         drHooSubtitle = 'Loading your timeline.';
+        hasRefreshButton = false;
         break;
       case OBTimelinePostsStatus.noMorePostsToLoad:
         drHooTitle = 'Your timeline is empty.';
@@ -190,21 +194,26 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       OBText(
         drHooSubtitle,
         textAlign: TextAlign.center,
-      ),
-      const SizedBox(
-        height: 30,
-      ),
-      OBButton(
-        icon: const OBIcon(
-          OBIcons.refresh,
-          size: OBIconSize.small,
-        ),
-        type: OBButtonType.highlight,
-        child: const OBText('Refresh posts'),
-        onPressed: _refreshPosts,
-        isLoading: _status != OBTimelinePostsStatus.idle,
       )
     ];
+
+    if (hasRefreshButton) {
+      drHooColumnItems.addAll([
+        const SizedBox(
+          height: 30,
+        ),
+        OBButton(
+          icon: const OBIcon(
+            OBIcons.refresh,
+            size: OBIconSize.small,
+          ),
+          type: OBButtonType.highlight,
+          child: const OBText('Refresh posts'),
+          onPressed: _refreshPosts,
+          isLoading: _status != OBTimelinePostsStatus.idle,
+        )
+      ]);
+    }
 
     return SizedBox(
       child: Center(
@@ -266,7 +275,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   void _onScroll() {
-    if (_status == OBTimelinePostsStatus.loadingMorePosts) return;
+    if (_status == OBTimelinePostsStatus.loadingMorePosts || _status == OBTimelinePostsStatus.noMorePostsToLoad) return;
     if (_postsScrollController.position.pixels >
         _postsScrollController.position.maxScrollExtent * 0.1) {
       _loadMorePosts();
@@ -285,6 +294,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     PostsList storedPosts = await _userService.getStoredFirstPosts();
     if (storedPosts.posts != null) _setPosts(storedPosts.posts);
     _setCacheLoadAttempted(true);
+    print('YO');
     _refreshIndicatorKey.currentState.show();
     _loggedInUserChangeSubscription.cancel();
   }
@@ -293,6 +303,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _cancelPreviousTimelineRequest();
     _setStatus(OBTimelinePostsStatus.refreshingPosts);
     try {
+      debugPrint('Refreshing posts');
       Future<PostsList> postsListFuture = _userService.getTimelinePosts(
           count: 10,
           circles: _filteredCircles,
@@ -307,19 +318,18 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       _setStatus(OBTimelinePostsStatus.idle);
     } catch (error) {
       _onError(error);
-    } finally {
-      _setStatus(OBTimelinePostsStatus.idle);
     }
   }
 
   Future _loadMorePosts() async {
-    if (_status == OBTimelinePostsStatus.refreshingPosts) return null;
+    if (_status == OBTimelinePostsStatus.refreshingPosts || _status == OBTimelinePostsStatus.noMorePostsToLoad) return null;
     _cancelPreviousTimelineRequest();
     _setStatus(OBTimelinePostsStatus.loadingMorePosts);
 
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
+      debugPrint('Loading more posts');
       Future<PostsList> morePostsListFuture = _userService.getTimelinePosts(
           maxId: lastPostId,
           circles: _filteredCircles,
@@ -331,11 +341,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       List<Post> morePosts = (await morePostsListFuture).posts;
 
       if (morePosts.length == 0) {
+        debugPrint('No more posts to load');
         _setStatus(OBTimelinePostsStatus.noMorePostsToLoad);
       } else {
+        _setStatus(OBTimelinePostsStatus.idle);
         _addPosts(morePosts);
       }
-      _setStatus(OBTimelinePostsStatus.idle);
     } catch (error) {
       _setStatus(OBTimelinePostsStatus.loadingMorePostsFailed);
       _onError(error);
@@ -436,7 +447,6 @@ class OBTimelinePostsController {
 }
 
 enum OBTimelinePostsStatus {
-  bootstrapping,
   refreshingPosts,
   loadingMorePosts,
   loadingMorePostsFailed,
