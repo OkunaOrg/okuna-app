@@ -12,13 +12,13 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
-class OBExpandedPostComment extends StatefulWidget {
+class OBPostComment extends StatefulWidget {
   final PostComment postComment;
   final Post post;
   final VoidCallback onPostCommentDeletedCallback;
   final void Function(PostComment) onPostCommentEditedCallback;
 
-  OBExpandedPostComment(
+  OBPostComment(
       {@required this.post,
       @required this.postComment,
       this.onPostCommentDeletedCallback,
@@ -28,11 +28,11 @@ class OBExpandedPostComment extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return OBExpandedPostCommentState();
+    return OBPostCommentState();
   }
 }
 
-class OBExpandedPostCommentState extends State<OBExpandedPostComment> {
+class OBPostCommentState extends State<OBPostComment> {
   NavigationService _navigationService;
   BottomSheetService _bottomSheetService;
 

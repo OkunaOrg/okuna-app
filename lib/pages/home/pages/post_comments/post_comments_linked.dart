@@ -272,14 +272,14 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
               ? Color.fromARGB(20, 255, 255, 255)
               : Color.fromARGB(10, 0, 0, 0),
         ),
-        child: OBExpandedPostComment(
+        child: OBPostComment(
           postComment: postComment,
           post: _post,
           onPostCommentDeletedCallback: onPostCommentDeletedCallback,
         ),
       );
     } else {
-      return OBExpandedPostComment(
+      return OBPostComment(
         postComment: postComment,
         post: _post,
         onPostCommentDeletedCallback: onPostCommentDeletedCallback,
