@@ -161,6 +161,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     String drHooTitle;
     String drHooSubtitle;
     bool hasRefreshButton = !_isFirstLoad;
+    Function refreshFunction = _refreshPosts;
 
     switch (_status) {
       case OBTimelinePostsStatus.refreshingPosts:
@@ -171,9 +172,16 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         drHooTitle = 'Your timeline is empty.';
         drHooSubtitle = 'Follow users or join a community to get started!';
         break;
+      case OBTimelinePostsStatus.loadingMorePostsFailed:
+        drHooTitle = 'Could not load your timeline.';
+        drHooSubtitle = 'Try again in a couple seconds';
+        refreshFunction = _bootstrapPosts;
+        hasRefreshButton = true;
+        break;
       default:
         drHooTitle = 'Something\'s not right.';
         drHooSubtitle = 'Try refreshing the timeline.';
+        hasRefreshButton = true;
     }
 
     List<Widget> drHooColumnItems = [
@@ -213,7 +221,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
           ),
           type: OBButtonType.highlight,
           child: const OBText('Refresh posts'),
-          onPressed: _refreshPosts,
+          onPressed: refreshFunction,
           isLoading: _timelineRequest != null,
         )
       ]);
@@ -296,11 +304,15 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   void _onLoggedInUserChange(User newUser) async {
     if (newUser == null) return;
+    _bootstrapPosts();
+    _loggedInUserChangeSubscription.cancel();
+  }
+
+  Future _bootstrapPosts() async {
     PostsList storedPosts = await _userService.getStoredFirstPosts();
     if (storedPosts.posts != null) _setPosts(storedPosts.posts);
     _setCacheLoadAttempted(true);
     _refreshIndicatorKey.currentState.show();
-    _loggedInUserChangeSubscription.cancel();
   }
 
   Future<void> _refreshPosts() async {
@@ -331,6 +343,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       }
       _setPosts(posts);
     } catch (error) {
+      _setStatus(OBTimelinePostsStatus.loadingMorePostsFailed);
       _onError(error);
     } finally {
       _timelineRequest = null;

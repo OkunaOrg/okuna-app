@@ -312,26 +312,19 @@ class UserService {
       String username,
       bool areFirstPosts = false,
       bool cachePosts = false}) async {
-    try {
-      HttpieResponse response = await _postsApiService.getTimelinePosts(
-          circleIds: circles.map((circle) => circle.id).toList(),
-          listIds: followsLists.map((followsList) => followsList.id).toList(),
-          maxId: maxId,
-          count: count,
-          username: username,
-          authenticatedRequest: true);
-      _checkResponseIsOk(response);
-      String postsData = response.body;
-      if (cachePosts) {
-        this._storeFirstPostsData(postsData);
-      }
-      return _makePostsList(postsData);
-    } on HttpieConnectionRefusedError {
-      if (areFirstPosts) {
-        return getStoredFirstPosts();
-      }
-      rethrow;
+    HttpieResponse response = await _postsApiService.getTimelinePosts(
+        circleIds: circles.map((circle) => circle.id).toList(),
+        listIds: followsLists.map((followsList) => followsList.id).toList(),
+        maxId: maxId,
+        count: count,
+        username: username,
+        authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    String postsData = response.body;
+    if (cachePosts) {
+      this._storeFirstPostsData(postsData);
     }
+    return _makePostsList(postsData);
   }
 
   Future<PostsList> getStoredFirstPosts() async {
