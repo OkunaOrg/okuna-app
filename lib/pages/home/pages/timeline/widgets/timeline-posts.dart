@@ -115,7 +115,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
     bool isLastItem = index == _posts.length - 1;
 
-    if (isLastItem) {
+    if (isLastItem && _status != OBTimelinePostsStatus.idle) {
       switch (_status) {
         case OBTimelinePostsStatus.loadingMorePosts:
           return Column(
@@ -307,9 +307,9 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     _cancelPreviousTimelineRequest();
     _setStatus(OBTimelinePostsStatus.refreshingPosts);
     try {
-      debugPrint('Refreshing posts');
       bool areFirstPosts = _isFirstLoad;
-      bool cachePosts = _filteredCircles == null && _filteredFollowsLists == null;
+      bool cachePosts =
+          _filteredCircles.isEmpty && _filteredFollowsLists.isEmpty;
 
       Future<PostsList> postsListFuture = _userService.getTimelinePosts(
           count: 10,
@@ -325,7 +325,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       if (_isFirstLoad) _isFirstLoad = false;
 
       if (posts.length == 0) {
-        debugPrint('No posts to load');
         _setStatus(OBTimelinePostsStatus.noMorePostsToLoad);
       } else {
         _setStatus(OBTimelinePostsStatus.idle);
@@ -347,7 +346,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      debugPrint('Loading more posts');
       Future<PostsList> morePostsListFuture = _userService.getTimelinePosts(
           maxId: lastPostId,
           circles: _filteredCircles,
@@ -359,7 +357,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       List<Post> morePosts = (await morePostsListFuture).posts;
 
       if (morePosts.length == 0) {
-        debugPrint('No more posts to load');
         _setStatus(OBTimelinePostsStatus.noMorePostsToLoad);
       } else {
         _setStatus(OBTimelinePostsStatus.idle);
