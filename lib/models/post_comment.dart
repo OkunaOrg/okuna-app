@@ -41,13 +41,14 @@ class PostComment extends UpdatableModel<PostComment> {
     return type;
   }
 
-  PostComment({this.id,
-    this.created,
-    this.text,
-    this.creatorId,
-    this.commenter,
-    this.post,
-    this.isEdited});
+  PostComment(
+      {this.id,
+      this.created,
+      this.text,
+      this.creatorId,
+      this.commenter,
+      this.post,
+      this.isEdited});
 
   static final factory = PostCommentFactory();
 
@@ -108,6 +109,9 @@ class PostComment extends UpdatableModel<PostComment> {
 }
 
 class PostCommentFactory extends UpdatableModelFactory<PostComment> {
+  @override
+  SimpleCache<int, PostComment> cache =
+      LruCache(storage: UpdatableModelSimpleStorage(size: 200));
 
   @override
   PostComment makeFromJson(Map json) {
@@ -118,8 +122,7 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         commenter: parseUser(json['commenter']),
         post: parsePost(json['post']),
         isEdited: json['is_edited'],
-        text: json['text']
-    );
+        text: json['text']);
   }
 
   Post parsePost(Map post) {
