@@ -273,6 +273,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
               : Color.fromARGB(10, 0, 0, 0),
         ),
         child: OBPostComment(
+          key: Key('postComment#${postComment.id}'),
           postComment: postComment,
           post: _post,
           onPostCommentDeletedCallback: onPostCommentDeletedCallback,
@@ -280,6 +281,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
       );
     } else {
       return OBPostComment(
+        key: Key('postComment#${postComment.id}'),
         postComment: postComment,
         post: _post,
         onPostCommentDeletedCallback: onPostCommentDeletedCallback,
