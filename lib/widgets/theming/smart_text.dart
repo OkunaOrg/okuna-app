@@ -103,52 +103,69 @@ final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 //    )?                                entire part is optional to allow single character names
 //  )                                   end of mention
 //  (?=\b|$)                            next char must be either a word boundary or end of text
-final _usernameRegex = RegExp(r"^(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)", caseSensitive: false);
+final _usernameRegex = RegExp(r"(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)", caseSensitive: false);
 
 // Same idea as inner part of above regex, but only _ is allowed as special character
 final _communityNameRegex =
-    RegExp(r"^(/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)", caseSensitive: false);
+    RegExp(r"(/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)", caseSensitive: false);
+
+class SmartMatch {
+  final SmartTextElement span;
+  final int start;
+  final int end;
+
+  SmartMatch(this.span, this.start, this.end);
+}
 
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
-  final sentences = text.split('\n');
-  List<SmartTextElement> span = [];
-  sentences.forEach((sentence) {
-    final words = sentence.split(' ');
-    words.forEach((word) {
-      if (_linkRegex.hasMatch(word)) {
-        span.add(LinkElement(word));
-      }
-      /*else if (_tagRegex.hasMatch(word)) {
-        span.add(HashTagElement(word));
-      }*/
-      else {
-        var username = _usernameRegex.firstMatch(word);
-        var communityName = _communityNameRegex.firstMatch(word);
-        if (username != null) {
-          span.add(UsernameElement(username.group(0)));
-          if (word.length > username.end) {
-            span.add(TextElement(word.substring(username.end)));
-          }
-        } else if (communityName != null) {
-          span.add(CommunityNameElement(communityName.group(0)));
-          if (word.length > communityName.end) {
-            span.add(TextElement(word.substring(communityName.end)));
-          }
-        } else {
-          span.add(TextElement(word));
-        }
-      }
-      span.add(TextElement(' '));
-    });
-    if (words.isNotEmpty) {
-      span.removeLast();
-    }
-    span.add(TextElement('\n'));
+  List<SmartMatch> matches = [];
+  matches.addAll(_usernameRegex.allMatches(text).map((m) { return SmartMatch(UsernameElement(m.group(0)), m.start, m.end); }));
+  matches.addAll(_communityNameRegex.allMatches(text).map((m) { return SmartMatch(CommunityNameElement(m.group(0)), m.start, m.end); }));
+  matches.addAll(_linkRegex.allMatches(text).map((m) { return SmartMatch(LinkElement(m.group(0)), m.start, m.end); }));
+  // matches.addAll(_tagRegex.allMatches(text).map((m) { return SmartMatch(HashTagElement(m.group(0)), m.start, m.end); }));
+  matches.sort((a, b) {
+    return a.start.compareTo(b.start);
   });
-  if (sentences.isNotEmpty) {
-    span.removeLast();
+
+  if (matches.length == 0) {
+    return [TextElement(text)];
   }
+
+  List<SmartTextElement> span = [];
+  int currentTextIndex = 0;
+  int matchIndex = 0;
+  var currentMatch = matches[matchIndex];
+  while (currentTextIndex < text.length) {
+    if (currentMatch == null) {
+      // no more match found, add entire remaining text
+      span.add(TextElement(text.substring(currentTextIndex)));
+      break;
+    } else if (currentTextIndex < currentMatch.start) {
+      // there's normal text before the next match
+      span.add(TextElement(text.substring(currentTextIndex, currentMatch.start)));
+      currentTextIndex = currentMatch.start;
+    } else if (currentTextIndex == currentMatch.start) {
+      // next match starts here, add it
+      span.add(currentMatch.span);
+      currentTextIndex = currentMatch.end;
+      matchIndex++;
+      if (matchIndex < matches.length) {
+        currentMatch = matches[matchIndex];
+      } else {
+        currentMatch = null;
+      }
+    } else {
+      // we're already past a match, this can happen if we have overlapping matches, just move on to the next match
+      matchIndex++;
+      if (matchIndex < matches.length) {
+        currentMatch = matches[matchIndex];
+      } else {
+        currentMatch = null;
+      }
+    }
+  }
+
   return span;
 }
 
