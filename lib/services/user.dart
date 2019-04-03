@@ -411,7 +411,7 @@ class UserService {
     HttpieResponse response =
         await _postsApiService.commentPost(postUuid: post.uuid, text: text);
     _checkResponseIsCreated(response);
-    return PostComment.fromJson(json.decode(response.body));
+    return PostComment.fromJSON(json.decode(response.body));
   }
 
   Future<PostComment> editPostComment(
@@ -419,7 +419,7 @@ class UserService {
     HttpieResponse response =
     await _postsApiService.editPostComment(postUuid: post.uuid, postCommentId: postComment.id, text: text);
     _checkResponseIsOk(response);
-    return PostComment.fromJson(json.decode(response.body));
+    return PostComment.fromJSON(json.decode(response.body));
   }
 
   Future<void> deletePostComment(
@@ -460,7 +460,6 @@ class UserService {
             : null);
 
     _checkResponseIsOk(response);
-
     return PostCommentList.fromJson(json.decode(response.body));
   }
 
