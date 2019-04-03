@@ -15,7 +15,7 @@ import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore.dart';
+import 'package:Openbook/widgets/load_more.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBPostCommentsPage extends StatefulWidget {

@@ -9,7 +9,7 @@ import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/tiles/post_reaction_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore.dart';
+import 'package:Openbook/widgets/load_more.dart';
 
 class OBPostReactionList extends StatefulWidget {
   // The emoji to show reactions of

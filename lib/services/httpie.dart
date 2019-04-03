@@ -357,6 +357,7 @@ class HttpieService {
           // Network is unreachable
           errorCode == 101 ||
           errorCode == 51 ||
+          errorCode == 8 ||
           errorCode == 64) {
         // Connection refused.
         throw HttpieConnectionRefusedError(error);

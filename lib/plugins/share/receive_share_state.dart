@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,10 +12,12 @@ abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
   StreamSubscription shareReceiveSubscription = null;
 
   void enableSharing() {
-    if (shareReceiveSubscription == null) {
-      shareReceiveSubscription =
-          stream.receiveBroadcastStream().listen(_onReceiveShare);
-      debugPrint("enabled share receiving");
+    if(Platform.isAndroid){
+      if (shareReceiveSubscription == null) {
+        shareReceiveSubscription =
+            stream.receiveBroadcastStream().listen(_onReceiveShare);
+        debugPrint("enabled share receiving");
+      }
     }
   }
 

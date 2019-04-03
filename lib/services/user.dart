@@ -310,32 +310,30 @@ class UserService {
       int maxId,
       int count,
       String username,
-      bool areFirstPosts = false}) async {
-    try {
-      HttpieResponse response = await _postsApiService.getTimelinePosts(
-          circleIds: circles.map((circle) => circle.id).toList(),
-          listIds: followsLists.map((followsList) => followsList.id).toList(),
-          maxId: maxId,
-          count: count,
-          username: username,
-          authenticatedRequest: true);
-      _checkResponseIsOk(response);
-      String postsData = response.body;
-      if (areFirstPosts) {
-        this._storeFirstPostsData(postsData);
-      }
-      return _makePostsList(postsData);
-    } on HttpieConnectionRefusedError {
-      if (areFirstPosts) {
-        // Response failed. Use stored first posts.
-        String firstPostsData = await this._getStoredFirstPostsData();
-        if (firstPostsData != null) {
-          var postsList = _makePostsList(firstPostsData);
-          return postsList;
-        }
-      }
-      rethrow;
+      bool areFirstPosts = false,
+      bool cachePosts = false}) async {
+    HttpieResponse response = await _postsApiService.getTimelinePosts(
+        circleIds: circles.map((circle) => circle.id).toList(),
+        listIds: followsLists.map((followsList) => followsList.id).toList(),
+        maxId: maxId,
+        count: count,
+        username: username,
+        authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    String postsData = response.body;
+    if (cachePosts) {
+      this._storeFirstPostsData(postsData);
     }
+    return _makePostsList(postsData);
+  }
+
+  Future<PostsList> getStoredFirstPosts() async {
+    String firstPostsData = await this._getStoredFirstPostsData();
+    if (firstPostsData != null) {
+      var postsList = _makePostsList(firstPostsData);
+      return postsList;
+    }
+    return PostsList();
   }
 
   Future<Post> createPost(

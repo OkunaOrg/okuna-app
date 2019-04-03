@@ -22,7 +22,7 @@ import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore.dart';
+import 'package:Openbook/widgets/load_more.dart';
 import 'package:Openbook/services/httpie.dart';
 
 class OBPostCommentsLinkedPage extends StatefulWidget {
@@ -464,9 +464,13 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   void _checkIfMoreTopItemsToLoad() {
-    var linkedCommentId = widget.postComment.id;
-    var listBeforeLinkedComment =
-        _postComments.where((comment) => comment.id > linkedCommentId);
+    int linkedCommentId = widget.postComment.id;
+    Iterable<PostComment> listBeforeLinkedComment = [];
+    if (_currentSort == PostCommentsSortType.dec) {
+      listBeforeLinkedComment = _postComments.where((comment) => comment.id > linkedCommentId);
+    } else if (_currentSort == PostCommentsSortType.asc) {
+      listBeforeLinkedComment = _postComments.where((comment) => comment.id < linkedCommentId);
+    }
     if (listBeforeLinkedComment.length < 2) {
       _setNoMoreTopItemsToLoad(true);
     }
