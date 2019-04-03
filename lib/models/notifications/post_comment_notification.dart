@@ -12,7 +12,7 @@ class PostCommentNotification {
   }
 
   static PostComment _parsePostComment(Map postCommentData) {
-    return PostComment.fromJson(postCommentData);
+    return PostComment.fromJSON(postCommentData);
   }
 
   int getPostCreatorId() {

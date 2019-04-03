@@ -114,15 +114,11 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                                   _removePostCommentAtIndex(commentIndex);
                                 };
 
-                                var onPostCommentEditedCallback = (PostComment comment) {
-                                  _replacePostCommentAtIndex(commentIndex, comment);
-                                };
-
                                 return OBPostComment(
+                                  key: Key('postComment#${postComment.id}'),
                                   postComment: postComment,
                                   post: widget.post,
-                                  onPostCommentDeletedCallback: onPostCommentDeletedCallback,
-                                  onPostCommentEditedCallback: onPostCommentEditedCallback
+                                  onPostCommentDeletedCallback: onPostCommentDeletedCallback
                                 );
                               }),
                           onLoadMore: _loadMoreBottomComments),
@@ -274,13 +270,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   void _removePostCommentAtIndex(int index) {
     setState(() {
       _postComments.removeAt(index);
-    });
-  }
-
-  void _replacePostCommentAtIndex(int index, PostComment comment) {
-    setState(() {
-      _postComments.removeAt(index);
-      _postComments.insert(index, comment);
     });
   }
 
