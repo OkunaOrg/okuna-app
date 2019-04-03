@@ -5,6 +5,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,14 @@ class OBMainMenuPage extends StatelessWidget {
                         intercomService.displayMessenger();
                       },
                     );
+                  },
+                ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.link),
+                  title: OBText('Useful links'),
+                  onTap: () {
+                    navigationService.navigateToUsefulLinksPage(
+                        context: context);
                   },
                 ),
                 ListTile(

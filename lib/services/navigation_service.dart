@@ -27,6 +27,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/delete_account/pages/confir
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post.dart';
@@ -197,29 +198,22 @@ class NavigationService {
   }
 
   Future navigateToPostComments(
-      {@required Post post,
-      @required BuildContext context}) {
+      {@required Post post, @required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
-            widget: OBPostCommentsPage(
-              post,
-              autofocusCommentInput: false
-            )));
+            widget: OBPostCommentsPage(post, autofocusCommentInput: false)));
   }
 
   Future navigateToPostCommentsLinked(
-      {@required PostComment postComment,
-        @required BuildContext context}) {
+      {@required PostComment postComment, @required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewCommentsLinked'),
-            widget: OBPostCommentsLinkedPage(
-              postComment,
-              autofocusCommentInput: false
-            )));
+            widget: OBPostCommentsLinkedPage(postComment,
+                autofocusCommentInput: false)));
   }
 
   Future navigateToPost({@required Post post, @required BuildContext context}) {
@@ -232,6 +226,13 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
+  }
+
+  Future navigateToUsefulLinksPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obMenuUsefulLinks'), widget: OBUsefulLinksPage()));
   }
 
   Future<Post> navigateToSharePost(
