@@ -44,7 +44,7 @@ class OBPostCommentState extends State<OBPostComment> {
     var provider = OpenbookProvider.of(context);
     _navigationService = provider.navigationService;
     _bottomSheetService = provider.bottomSheetService;
-    Widget postTile = _buildPostTile(widget.postComment);
+    Widget postTile = _buildPostCommentTile(widget.postComment);
 
     return OBPostCommentActions(
       post: widget.post,
@@ -59,7 +59,7 @@ class OBPostCommentState extends State<OBPostComment> {
     super.dispose();
   }
 
-  Widget _buildPostTile(PostComment postComment) {
+  Widget _buildPostCommentTile(PostComment postComment) {
     return StreamBuilder(
         stream: widget.postComment.updateSubject,
         initialData: widget.postComment,
