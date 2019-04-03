@@ -91,7 +91,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                           isFinish: _noMoreItemsToLoad,
                           delegate: OBInfinitePostCommentsLoadMoreDelegate(),
                           child: ListView.builder(
-                              physics: const ClampingScrollPhysics(),
+                              physics: const AlwaysScrollableScrollPhysics(),
                               controller: _postCommentsScrollController,
                               padding: EdgeInsets.all(0),
                               itemCount: _postComments.length + 1,
