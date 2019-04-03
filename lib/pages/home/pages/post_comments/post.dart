@@ -275,8 +275,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
 
   void _onPostCommentCreated(PostComment createdPostComment) {
     _unfocusCommentInput();
-    print('NEW COMMENT');
-    print(createdPostComment.text);
     setState(() {
       this._postComments.insert(0, createdPostComment);
     });
