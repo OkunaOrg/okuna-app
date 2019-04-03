@@ -15,14 +15,12 @@ class OBPostCommentActions extends StatefulWidget {
   final PostComment postComment;
   final Widget child;
   final VoidCallback onPostCommentDeletedCallback;
-  final void Function(PostComment) onPostCommentEditedCallback;
 
   const OBPostCommentActions(
       {@required this.post,
        @required this.postComment,
        @required this.child,
        this.onPostCommentDeletedCallback,
-       this.onPostCommentEditedCallback,
        Key key})
       : super(key: key);
 
@@ -106,14 +104,10 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
   }
 
   void _editPostComment() async {
-    PostComment editedPostComment = await _modalService.openExpandedCommenter(
+    await _modalService.openExpandedCommenter(
         context: context,
         post: widget.post,
         postComment: widget.postComment);
-
-    if (widget.onPostCommentEditedCallback != null && editedPostComment != null) {
-      widget.onPostCommentEditedCallback(editedPostComment);
-    }
   }
 
   void _deletePostComment() async {

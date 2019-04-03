@@ -16,13 +16,11 @@ class OBPostComment extends StatefulWidget {
   final PostComment postComment;
   final Post post;
   final VoidCallback onPostCommentDeletedCallback;
-  final void Function(PostComment) onPostCommentEditedCallback;
 
   OBPostComment(
       {@required this.post,
       @required this.postComment,
       this.onPostCommentDeletedCallback,
-      this.onPostCommentEditedCallback,
       Key key})
       : super(key: key);
 
@@ -46,14 +44,12 @@ class OBPostCommentState extends State<OBPostComment> {
     var provider = OpenbookProvider.of(context);
     _navigationService = provider.navigationService;
     _bottomSheetService = provider.bottomSheetService;
-
-    Widget postTile = _buildPostTile();
+    Widget postTile = _buildPostTile(widget.postComment);
 
     return OBPostCommentActions(
       post: widget.post,
       postComment: widget.postComment,
       onPostCommentDeletedCallback: widget.onPostCommentDeletedCallback,
-      onPostCommentEditedCallback: widget.onPostCommentEditedCallback,
       child: postTile,
     );
   }
@@ -63,52 +59,60 @@ class OBPostCommentState extends State<OBPostComment> {
     super.dispose();
   }
 
-  Widget _buildPostTile() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          OBAvatar(
-            onPressed: () {
-              _navigationService.navigateToUserProfile(
-                  user: widget.postComment.commenter, context: context);
-            },
-            size: OBAvatarSize.small,
-            avatarUrl: widget.postComment.getCommenterProfileAvatar(),
-          ),
-          const SizedBox(
-            width: 20.0,
-          ),
-          Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              OBPostCommentText(
-                widget.postComment,
-                badge: _getCommunityBadge(),
-                onUsernamePressed: () {
-                  _navigationService.navigateToUserProfile(
-                      user: widget.postComment.commenter, context: context);
-                },
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              OBSecondaryText(
-                widget.postComment.getRelativeCreated(),
-                style: TextStyle(fontSize: 12.0),
-              )
-            ],
-          ))
-        ],
-      ),
-    );
+  Widget _buildPostTile(PostComment postComment) {
+    return StreamBuilder(
+        stream: widget.postComment.updateSubject,
+        initialData: widget.postComment,
+        builder: (BuildContext context, AsyncSnapshot<PostComment> snapshot) {
+          PostComment postComment = snapshot.data;
+
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                OBAvatar(
+                  onPressed: () {
+                    _navigationService.navigateToUserProfile(
+                        user: postComment.commenter, context: context);
+                  },
+                  size: OBAvatarSize.small,
+                  avatarUrl: postComment.getCommenterProfileAvatar(),
+                ),
+                const SizedBox(
+                  width: 20.0,
+                ),
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    OBPostCommentText(
+                      postComment,
+                      badge: _getCommunityBadge(postComment),
+                      onUsernamePressed: () {
+                        _navigationService.navigateToUserProfile(
+                            user: postComment.commenter, context: context);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    OBSecondaryText(
+                      postComment.getRelativeCreated(),
+                      style: TextStyle(fontSize: 12.0),
+                    )
+                  ],
+                ))
+              ],
+            ),
+          );
+        });
   }
 
-  Widget _getCommunityBadge() {
+  Widget _getCommunityBadge(PostComment postComment) {
     Post post = widget.post;
-    User postCommenter = widget.postComment.commenter;
+    User postCommenter = postComment.commenter;
 
     if (post.hasCommunity()) {
       Community postCommunity = post.community;

@@ -1,8 +1,18 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:Openbook/models/updatable_model.dart';
 
-class PostComment {
+class PostComment extends UpdatableModel<PostComment> {
+  final int id;
+  int creatorId;
+  DateTime created;
+  String text;
+  User commenter;
+  Post post;
+  bool isEdited;
+
   static convertPostCommentSortTypeToString(PostCommentsSortType type) {
     String result;
     switch (type) {
@@ -31,48 +41,45 @@ class PostComment {
     return type;
   }
 
-  final int id;
-  final int creatorId;
-  final DateTime created;
-  final String text;
-  final User commenter;
-  final Post post;
-  final bool isEdited;
-
-  PostComment({
-    this.id,
+  PostComment({this.id,
     this.created,
     this.text,
     this.creatorId,
     this.commenter,
     this.post,
-    this.isEdited
-  });
+    this.isEdited});
 
-  factory PostComment.fromJson(Map<String, dynamic> parsedJson) {
-    DateTime created;
-    if (parsedJson.containsKey('created')) {
-      created = DateTime.parse(parsedJson['created']).toLocal();
+  static final factory = PostCommentFactory();
+
+  factory PostComment.fromJSON(Map<String, dynamic> json) {
+    return factory.fromJson(json);
+  }
+
+  @override
+  void updateFromJson(Map json) {
+    if (json.containsKey('commenter')) {
+      commenter = factory.parseUser(json['commenter']);
     }
 
-    User commenter;
-    if (parsedJson.containsKey('commenter')) {
-      commenter = User.fromJson(parsedJson['commenter']);
+    if (json.containsKey('creater_id')) {
+      creatorId = json['creator_id'];
     }
 
-    Post post;
-    if (parsedJson.containsKey('post')) {
-      post = Post.fromJson(parsedJson['post']);
+    if (json.containsKey('is_edited')) {
+      isEdited = json['is_edited'];
     }
 
-    return PostComment(
-        id: parsedJson['id'],
-        creatorId: parsedJson['creator_id'],
-        created: created,
-        commenter: commenter,
-        post: post,
-        isEdited: parsedJson['is_edited'],
-        text: parsedJson['text']);
+    if (json.containsKey('text')) {
+      text = json['text'];
+    }
+
+    if (json.containsKey('post')) {
+      post = factory.parsePost(json['post']);
+    }
+
+    if (json.containsKey('created')) {
+      created = factory.parseCreated(json['created']);
+    }
   }
 
   String getRelativeCreated() {
@@ -97,6 +104,37 @@ class PostComment {
 
   int getPostCreatorId() {
     return post.getCreatorId();
+  }
+}
+
+class PostCommentFactory extends UpdatableModelFactory<PostComment> {
+
+  @override
+  PostComment makeFromJson(Map json) {
+    return PostComment(
+        id: json['id'],
+        creatorId: json['creator_id'],
+        created: parseCreated(json['created']),
+        commenter: parseUser(json['commenter']),
+        post: parsePost(json['post']),
+        isEdited: json['is_edited'],
+        text: json['text']
+    );
+  }
+
+  Post parsePost(Map post) {
+    if (post == null) return null;
+    return Post.fromJson(post);
+  }
+
+  DateTime parseCreated(String created) {
+    if (created == null) return null;
+    return DateTime.parse(created).toLocal();
+  }
+
+  User parseUser(Map userData) {
+    if (userData == null) return null;
+    return User.fromJson(userData);
   }
 }
 
