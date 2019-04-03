@@ -46,7 +46,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       'Request a feature or upvote existing requests'),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://openbook.canny.io/admin/board/feature-requests');
+                        'https://openbook.canny.io/feature-requests');
                   },
                 ),
                 ListTile(
@@ -56,7 +56,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       OBSecondaryText('Report a bug or upvote existing bugs'),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://openbook.canny.io/admin/board/bugs');
+                        'https://openbook.canny.io/bugs');
                   },
                 ),
                 ListTile(
