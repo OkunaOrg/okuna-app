@@ -90,10 +90,24 @@ final _linkRegex = RegExp(
     caseSensitive: false);
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
-final _usernameRegex = RegExp(r"^@[A-Za-z0-9_.]{1,30}$", caseSensitive: false);
+// Architecture of this regex:
+//  ^                                   only match at beginning
+//  (
+//    @                                 begin of mention
+//    [A-Za-z0-9]                       first character of username
+//    (
+//      (
+//        [A-Za-z0-9]|[._-](?![._-])    word character or one of [._-] which may not be followed by another special char
+//      ){0,28}                         repeat this 0 to 28 times
+//      [A-Za-z0-9]                     always end on a word character
+//    )?                                entire part is optional to allow single character names
+//  )                                   end of mention
+//  (?=\b|$)                            next char must be either a word boundary or end of text
+final _usernameRegex = RegExp(r"^(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)", caseSensitive: false);
 
+// Same idea as inner part of above regex, but only _ is allowed as special character
 final _communityNameRegex =
-    RegExp(r"^/c/[A-Za-z0-9_]{1,30}$", caseSensitive: false);
+    RegExp(r"^(/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)", caseSensitive: false);
 
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
@@ -108,12 +122,22 @@ List<SmartTextElement> _smartify(String text) {
       /*else if (_tagRegex.hasMatch(word)) {
         span.add(HashTagElement(word));
       }*/
-      else if (_usernameRegex.hasMatch(word)) {
-        span.add(UsernameElement(word));
-      } else if (_communityNameRegex.hasMatch(word)) {
-        span.add(CommunityNameElement(word));
-      } else {
-        span.add(TextElement(word));
+      else {
+        var username = _usernameRegex.firstMatch(word);
+        var communityName = _communityNameRegex.firstMatch(word);
+        if (username != null) {
+          span.add(UsernameElement(username.group(0)));
+          if (word.length > username.end) {
+            span.add(TextElement(word.substring(username.end)));
+          }
+        } else if (communityName != null) {
+          span.add(CommunityNameElement(communityName.group(0)));
+          if (word.length > communityName.end) {
+            span.add(TextElement(word.substring(communityName.end)));
+          }
+        } else {
+          span.add(TextElement(word));
+        }
       }
       span.add(TextElement(' '));
     });
