@@ -7,6 +7,7 @@ export 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 // Based on https://github.com/knoxpo/flutter_smart_text_view
 
@@ -227,9 +228,7 @@ class OBSmartText extends StatelessWidget {
     List<SmartTextElement> elements = _smartify(text);
 
     if (this.trailingSmartTextElement != null) {
-      elements.add(
-          this.trailingSmartTextElement
-      );
+      elements.add(this.trailingSmartTextElement);
     }
 
     return TextSpan(
@@ -290,13 +289,23 @@ class OBSmartText extends StatelessWidget {
         Color primaryTextColor =
             themeValueParserService.parseColor(theme.primaryTextColor);
 
-        Color secondaryTextColor = themeValueParserService.parseColor(theme.secondaryTextColor);
+        TextStyle textStyle = TextStyle(
+            color: primaryTextColor,
+            fontSize: fontSize,
+            fontFamilyFallback: ['NunitoSans']);
 
-        TextStyle textStyle =
-            TextStyle(color: primaryTextColor, fontSize: fontSize, fontFamilyFallback: ['NunitoSans']);
+        TextStyle secondaryTextStyle;
 
-        TextStyle secondaryTextStyle =
-        TextStyle(color: secondaryTextColor, fontSize: fontSize, fontFamilyFallback: ['NunitoSans']);
+        if (trailingSmartTextElement != null) {
+          // This is ugly af, why do we even need this.
+          Color secondaryTextColor =
+              themeValueParserService.parseColor(theme.secondaryTextColor);
+          secondaryTextColor = TinyColor(secondaryTextColor).lighten(10).color;
+          secondaryTextStyle = TextStyle(
+              color: secondaryTextColor,
+              fontSize: fontSize * 0.8,
+              fontFamilyFallback: ['NunitoSans']);
+        }
 
         Color actionsForegroundColor = themeValueParserService
             .parseGradient(theme.primaryAccentColor)
