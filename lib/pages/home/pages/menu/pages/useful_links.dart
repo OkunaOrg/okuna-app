@@ -30,6 +30,16 @@ class OBUsefulLinksPage extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
+                  leading: const OBIcon(OBIcons.dashboard ),
+                  title: OBText('Github project board'),
+                  subtitle: OBSecondaryText(
+                      'Take a look at what we\'re currently working on'),
+                  onTap: () {
+                    urlLauncherService.launchUrl(
+                        'https://github.com/orgs/OpenbookOrg/projects/3');
+                  },
+                ),
+                ListTile(
                   leading: const OBIcon(OBIcons.featureRequest),
                   title: OBText('Feature requests'),
                   subtitle: OBSecondaryText(
