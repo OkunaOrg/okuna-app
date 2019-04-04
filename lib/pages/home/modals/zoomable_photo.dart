@@ -20,10 +20,10 @@ class OBZoomablePhotoModal extends StatefulWidget {
 
 class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
     with SingleTickerProviderStateMixin {
-  bool isDismissible;
-  AnimationController controller;
-  Animation<Offset> offset;
-  Animation<double> rotation;
+  bool _isDismissible;
+  AnimationController _controller;
+  Animation<Offset> _offset;
+  Animation<double> _rotationAnimation;
   double _rotationAngle;
   double _rotationDirection;
   double _posX;
@@ -33,6 +33,14 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
   PointerDownEvent startDragDetails;
   PointerMoveEvent updateDragDetails;
   static const VELOCITY_THRESHOLD = 10.0;
+  // THRESHOLD_SECOND_POINTER_EVENT:
+  // max delta distance above which we classify that another pointer event has begin somewhere
+  // else on the screen, as dist between two drag pointer events will not be above
+  // this threshold (foreg. when scaling with two fingers, we ignore the other pointer to prevent a rebuild)
+  static const THRESHOLD_SECOND_POINTER_EVENT = 50.0;
+
+  // rate at which X and Y will increase while exiting the screen
+  static const EXIT_RATE_MULTIPLIER = 50.0;
   static const CLOCKWISE = 1.0;
   static const ANTICLOCKWISE = -1.0;
 
@@ -40,7 +48,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
   @override
   void initState() {
     super.initState();
-    controller =
+    _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 400));
     _rotationAngle = 0.0;
     _rotationDirection = CLOCKWISE;
@@ -48,7 +56,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
     _velocityX = 0.0;
     _velocityY = 0.0;
     _posY = 0.0;
-    isDismissible = true;
+    _isDismissible = true;
   }
 
   @override
@@ -131,7 +139,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
   }
 
   void _updateDragValues(double deltaX, double deltaY, PointerMoveEvent updatedDetails) {
-    if (deltaX.abs() > 50.0 || deltaY.abs() > 50.0 || !isDismissible) return;
+    if (deltaX.abs() > THRESHOLD_SECOND_POINTER_EVENT || deltaY.abs() > THRESHOLD_SECOND_POINTER_EVENT || !_isDismissible) return;
     setState(() {
       _posX = _posX + deltaX;
       _posY = _posY + deltaY;
@@ -155,25 +163,25 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
 
   void _setBackToOrginalPosition() {
     setState(() {
-      offset = Tween<Offset>(begin: Offset(_posX, _posY), end: Offset(0.0, 0.0))
+      _offset = Tween<Offset>(begin: Offset(_posX, _posY), end: Offset(0.0, 0.0))
           .chain(CurveTween(curve: Curves.easeInOutSine))
-          .animate(controller)..addListener(() {
-        _posX = offset.value.dx;
-        _posY = offset.value.dy;
+          .animate(_controller)..addListener(() {
+        _posX = _offset.value.dx;
+        _posY = _offset.value.dy;
         setState(() {});
       });
       startDragDetails = null;
       updateDragDetails = null;
     });
-    rotation = Tween<double>(begin: _rotationAngle, end: 0.0)
+    _rotationAnimation = Tween<double>(begin: _rotationAngle, end: 0.0)
         .chain(CurveTween(curve: Curves.easeInOutCubic))
-        .animate(controller)
+        .animate(_controller)
       ..addListener(() {
-        _rotationAngle = rotation.value;
+        _rotationAngle = _rotationAnimation.value;
         setState(() {});
       });
-    controller.reset();
-    controller.forward();
+    _controller.reset();
+    _controller.forward();
   }
 
   void _checkIsDismissible() {
@@ -213,30 +221,30 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
 
   void _setTweensWithVelocity() {
     setState(() {
-      offset = Tween<Offset>(begin: Offset(_posX, _posY), end: Offset(_velocityX * 50.0, _velocityY * 50.0))
+      _offset = Tween<Offset>(begin: Offset(_posX, _posY), end: Offset(_velocityX * EXIT_RATE_MULTIPLIER, _velocityY * EXIT_RATE_MULTIPLIER))
           .chain(CurveTween(curve: Curves.easeInOutSine))
-          .animate(controller)..addListener(() {
-        _posX = offset.value.dx + _velocityX/2;
-        _posY = offset.value.dy + _velocityY/2;
+          .animate(_controller)..addListener(() {
+        _posX = _offset.value.dx + _velocityX/2;
+        _posY = _offset.value.dy + _velocityY/2;
         setState(() {});
       });
 
-      rotation = Tween<double>(begin: _rotationAngle, end: 2 * pi * _rotationDirection)
+      _rotationAnimation = Tween<double>(begin: _rotationAngle, end: 1.5 * pi * _rotationDirection)
           .chain(CurveTween(curve: Curves.easeInOutCubic))
-          .animate(controller)
+          .animate(_controller)
         ..addListener(() {
-          _rotationAngle = rotation.value;
+          _rotationAngle = _rotationAnimation.value;
           setState(() {});
         });
 
       startDragDetails = null;
       updateDragDetails = null;
     });
-    controller.reset();
+    _controller.reset();
   }
 
   Future _dismissModal() async {
-    await controller.forward();
+    await _controller.forward();
     Navigator.pop(context);
   }
 
@@ -286,11 +294,11 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
 
   void _setIsDismissible(bool isDismissible) {
     setState(() {
-      this.isDismissible = isDismissible;
+      this._isDismissible = isDismissible;
     });
   }
 
   void toggleIsDismissible() {
-    _setIsDismissible(!isDismissible);
+    _setIsDismissible(!_isDismissible);
   }
 }
