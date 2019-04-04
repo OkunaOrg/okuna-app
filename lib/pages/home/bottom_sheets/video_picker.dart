@@ -40,10 +40,13 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
 
     return OBPrimaryColorContainer(
       mainAxisSize: MainAxisSize.min,
-      child: Column(
-        children: videoPickerActions,
-        mainAxisSize: MainAxisSize.min,
-      ),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 16),
+        child: Column(
+          children: videoPickerActions,
+          mainAxisSize: MainAxisSize.min,
+          ),
+        )
     );
   }
 }
