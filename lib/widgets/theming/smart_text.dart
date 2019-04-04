@@ -91,7 +91,9 @@ final _linkRegex = RegExp(
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
 // Architecture of this regex:
-//  ^                                   only match at beginning
+//  (?:                                 don't capture this group, so the mention itself is still the first capturing group
+//    [^A-Za-u0-9]|^                    make sure that no word characters are in front of name
+//  )
 //  (
 //    @                                 begin of mention
 //    [A-Za-z0-9]                       first character of username
@@ -103,7 +105,7 @@ final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 //    )?                                entire part is optional to allow single character names
 //  )                                   end of mention
 //  (?=\b|$)                            next char must be either a word boundary or end of text
-final _usernameRegex = RegExp(r"(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)", caseSensitive: false);
+final _usernameRegex = RegExp(r"(?:[^A-Za-u0-9]|^)(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)", caseSensitive: false);
 
 // Same idea as inner part of above regex, but only _ is allowed as special character
 final _communityNameRegex =
@@ -120,7 +122,7 @@ class SmartMatch {
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
   List<SmartMatch> matches = [];
-  matches.addAll(_usernameRegex.allMatches(text).map((m) { return SmartMatch(UsernameElement(m.group(0)), m.start, m.end); }));
+  matches.addAll(_usernameRegex.allMatches(text).map((m) { return SmartMatch(UsernameElement(m.group(1)), m.start + m.group(0).indexOf("@"), m.end); }));
   matches.addAll(_communityNameRegex.allMatches(text).map((m) { return SmartMatch(CommunityNameElement(m.group(0)), m.start, m.end); }));
   matches.addAll(_linkRegex.allMatches(text).map((m) { return SmartMatch(LinkElement(m.group(0)), m.start, m.end); }));
   // matches.addAll(_tagRegex.allMatches(text).map((m) { return SmartMatch(HashTagElement(m.group(0)), m.start, m.end); }));
