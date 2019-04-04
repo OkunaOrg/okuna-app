@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,13 @@ class OBCover extends StatelessWidget {
   static const double smallSizeHeight = 160.0;
   static const COVER_PLACEHOLDER = 'assets/images/fallbacks/cover-fallback.jpg';
   final OBCoverSize size;
+  final bool isZoomable;
 
-  OBCover({this.coverUrl, this.coverFile, this.size = OBCoverSize.normal});
+  OBCover(
+      {this.coverUrl,
+      this.coverFile,
+      this.size = OBCoverSize.normal,
+      this.isZoomable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +68,18 @@ class OBCover extends StatelessWidget {
         width: double.infinity,
         alignment: Alignment.center,
       );
+
+      if (isZoomable) {
+        image = GestureDetector(
+          child: image,
+          onTap: () {
+            OpenbookProviderState openbookProvider =
+                OpenbookProvider.of(context);
+            openbookProvider.dialogService
+                .showZoomablePhotoBoxView(imageUrl: coverUrl, context: context);
+          },
+        );
+      }
     }
 
     return SizedBox(

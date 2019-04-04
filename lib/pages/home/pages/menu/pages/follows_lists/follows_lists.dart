@@ -1,7 +1,6 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
 import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/widgets/buttons/accent_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -90,10 +89,17 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                             if (index == _followsListsSearchResults.length) {
                               if (_followsListsSearchResults.isEmpty) {
                                 // Results were empty
-                                return ListTile(
-                                    leading: OBIcon(OBIcons.sad),
-                                    title: OBText(
-                                        'No list found for "$_searchQuery"'));
+                                if(_searchQuery != null){
+                                  return ListTile(
+                                      leading: OBIcon(OBIcons.sad),
+                                      title: OBText(
+                                          'No list found for "$_searchQuery"'));
+                                }else{
+                                  return ListTile(
+                                      leading: OBIcon(OBIcons.sad),
+                                      title: OBText(
+                                          'No lists found.'));
+                                }
                               } else {
                                 return const SizedBox();
                               }

@@ -1,5 +1,9 @@
 import 'dart:async';
-import 'package:Openbook/models/push_notifications/push_notification.dart';
+import 'dart:io';
+
+import 'package:Openbook/models/push_notification.dart';
+import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
+import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/communities.dart';
@@ -11,12 +15,19 @@ import 'package:Openbook/pages/home/pages/search/search.dart';
 import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Openbook/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Openbook/pages/home/widgets/tab-scaffold.dart';
+import 'package:Openbook/plugins/share/receive_share_state.dart';
+import 'package:Openbook/plugins/share/share.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/badges/badge.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,10 +38,15 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
+class OBHomePageState extends ReceiveShareState<OBHomePage>
+    with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
+  ToastService _toastService;
   PushNotificationsService _pushNotificationsService;
+  IntercomService _intercomService;
+  ModalService _modalService;
+  ValidationService _validationService;
 
   int _currentIndex;
   int _lastIndex;
@@ -54,6 +70,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    enableSharing();
+    BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
     _loggedInUserUnreadNotifications = 0;
@@ -70,6 +88,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     super.dispose();
+    BackButtonInterceptor.remove(_backButtonInterceptor);
     WidgetsBinding.instance.removeObserver(this);
     _loggedInUserChangeSubscription.cancel();
     if (_loggedInUserUpdateSubscription != null)
@@ -88,6 +107,10 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _pushNotificationsService = openbookProvider.pushNotificationsService;
+      _intercomService = openbookProvider.intercomService;
+      _toastService = openbookProvider.toastService;
+      _modalService = openbookProvider.modalService;
+      _validationService = openbookProvider.validationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -106,10 +129,23 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     );
   }
 
+  @override
+  void onShare(Share share) async {
+    debugPrint("received share to file " + share.path);
+    var image = File.fromUri(Uri.parse(share.path));
+    if (!await _validationService.isImageAllowedSize(image, OBImageType.post)) {
+      int limit = _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
+      _toastService.error(
+          message: 'Image too large (limit: $limit MB)', context: context);
+      return;
+    }
+    _modalService.openCreatePost(context: context, image: image);
+  }
+
   Widget _getPageForTabIndex(int index) {
     Widget page;
     switch (OBHomePageTabs.values[index]) {
-      case OBHomePageTabs.home:
+      case OBHomePageTabs.timeline:
         page = OBTimelinePage(
           controller: _timelinePageController,
         );
@@ -152,8 +188,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         var tappedTab = OBHomePageTabs.values[index];
         var currentTab = OBHomePageTabs.values[_lastIndex];
 
-        if (tappedTab == OBHomePageTabs.home &&
-            currentTab == OBHomePageTabs.home) {
+        if (tappedTab == OBHomePageTabs.timeline &&
+            currentTab == OBHomePageTabs.timeline) {
           if (_timelinePageController.isFirstRoute()) {
             _timelinePageController.scrollToTop();
           } else {
@@ -194,9 +230,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         }
 
         if (tappedTab == OBHomePageTabs.notifications) {
-          // Allow notifications page to mark as read
-          _notificationsPageController.setShouldMarkNotificationsAsRead(true);
-
+          _notificationsPageController.setIsActivePage(true);
           if (currentTab == OBHomePageTabs.notifications) {
             if (_notificationsPageController.isFirstRoute()) {
               _notificationsPageController.scrollToTop();
@@ -205,7 +239,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
             }
           }
         } else {
-          _notificationsPageController.setShouldMarkNotificationsAsRead(false);
+          _notificationsPageController.setIsActivePage(false);
         }
 
         if (tappedTab == OBHomePageTabs.menu &&
@@ -293,12 +327,66 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     try {
       await _userService.loginWithStoredUserData();
     } catch (error) {
-      if (error is AuthTokenMissingError || error is HttpieRequestError) {
-        _pushNotificationsService.disablePushNotifications();
-        await _userService.logout();
+      if (error is AuthTokenMissingError) {
+        _logout();
+      } else if (error is HttpieRequestError) {
+        HttpieResponse response = error.response;
+        if (response.isForbidden() || response.isUnauthorized()) {
+          _logout();
+        } else {
+          _onError(error);
+        }
+      } else {
+        _onError(error);
       }
-      rethrow;
     }
+  }
+
+  Future _logout() async {
+    _pushNotificationsService.disablePushNotifications();
+    _intercomService.disableIntercom();
+    await _userService.logout();
+  }
+
+  bool _backButtonInterceptor(bool stopDefaultButtonEvent) {
+    OBHomePageTabs currentTab = OBHomePageTabs.values[_lastIndex];
+    PoppablePageController currentTabController;
+
+    switch (currentTab) {
+      case OBHomePageTabs.notifications:
+        currentTabController = _notificationsPageController;
+        break;
+      case OBHomePageTabs.communities:
+        currentTabController = _communitiesPageController;
+        break;
+      case OBHomePageTabs.timeline:
+        currentTabController = _timelinePageController;
+        break;
+      case OBHomePageTabs.menu:
+        currentTabController = _mainMenuPageController;
+        break;
+      case OBHomePageTabs.search:
+        currentTabController = _searchPageController;
+        break;
+      case OBHomePageTabs.profile:
+        currentTabController = _ownProfilePageController;
+        break;
+      default:
+        throw 'No tab controller to pop';
+    }
+
+    bool canPopRootRoute = Navigator.of(context, rootNavigator: true).canPop();
+    bool canPopRoute = currentTabController.canPop();
+    bool preventCloseApp = false;
+
+    if (canPopRoute && !canPopRootRoute) {
+      currentTabController.pop();
+      // Stop default
+      preventCloseApp = true;
+    }
+
+    // Close the app
+    return preventCloseApp;
   }
 
   void _onLoggedInUserChange(User newUser) async {
@@ -307,6 +395,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     } else {
       _pushNotificationsService.bootstrap();
       _pushNotificationsService.enablePushNotifications();
+      _intercomService.enableIntercom();
+
       _loggedInUserUpdateSubscription =
           newUser.updateSubject.listen(_onLoggedInUserUpdate);
 
@@ -334,10 +424,20 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
 
   void _onPushNotificationOpened(
       PushNotificationOpenedResult pushNotificationOpenedResult) {
-    // int newIndex = OBHomePageTabs.values.indexOf(OBHomePageTabs.notifications);
+    //_navigateToTab(OBHomePageTabs.notifications);
+  }
+
+  void _navigateToTab(OBHomePageTabs tab) {
+    int newIndex = OBHomePageTabs.values.indexOf(tab);
     // This only works once... bug with flutter.
     // Reported it here https://github.com/flutter/flutter/issues/28992
-    //_setCurrentIndex(newIndex);
+    _setCurrentIndex(newIndex);
+  }
+
+  void _setCurrentIndex(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -368,12 +468,6 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     });
   }
 
-  void _setCurrentIndex(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
   OBHomePageTabs _getCurrentTab() {
     return OBHomePageTabs.values[_lastIndex];
   }
@@ -384,6 +478,26 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       loggedInUser.resetUnreadNotificationsCount();
     }
   }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
+  }
 }
 
-enum OBHomePageTabs { home, search, communities, notifications, profile, menu }
+enum OBHomePageTabs {
+  timeline,
+  search,
+  communities,
+  notifications,
+  profile,
+  menu
+}

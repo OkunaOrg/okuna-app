@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 class OBCreatePostText extends StatelessWidget {
   final TextEditingController controller;
+  final FocusNode focusNode;
+  String hintText;
 
-  OBCreatePostText({this.controller});
+  OBCreatePostText({this.controller, this.focusNode, this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,8 @@ class OBCreatePostText extends StatelessWidget {
 
           return TextField(
             controller: controller,
-            autofocus: false,
+            autofocus: true,
+            focusNode: focusNode,
             textCapitalization: TextCapitalization.sentences,
             keyboardType: TextInputType.multiline,
             maxLines: null,
@@ -31,7 +34,7 @@ class OBCreatePostText extends StatelessWidget {
                 fontSize: 18.0),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'What\'s going on?',
+                hintText: this.hintText != null ? this.hintText : 'What\'s going on?',
                 hintStyle: TextStyle(
                     color: themeValueParserService
                         .parseColor(theme.secondaryTextColor),

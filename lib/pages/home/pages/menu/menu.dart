@@ -1,9 +1,11 @@
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class OBMainMenuPage extends StatelessWidget {
     controller.attach(context: context);
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = openbookProvider.localizationService;
+    var intercomService = openbookProvider.intercomService;
     var userService = openbookProvider.userService;
     var navigationService = openbookProvider.navigationService;
 
@@ -56,12 +59,30 @@ class OBMainMenuPage extends StatelessWidget {
                     navigationService.navigateToSettingsPage(context: context);
                   },
                 ),
+                StreamBuilder(
+                  stream: userService.loggedInUserChange,
+                  initialData: userService.getLoggedInUser(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<User> snapshot) {
+                    User loggedInUser = snapshot.data;
+
+                    if (loggedInUser == null) return const SizedBox();
+
+                    return ListTile(
+                      leading: const OBIcon(OBIcons.help),
+                      title: OBText(localizationService.trans('DRAWER.HELP')),
+                      onTap: () async {
+                        intercomService.displayMessenger();
+                      },
+                    );
+                  },
+                ),
                 ListTile(
-                  leading: const OBIcon(OBIcons.help),
-                  title: OBText(localizationService.trans('DRAWER.HELP')),
+                  leading: const OBIcon(OBIcons.link),
+                  title: OBText('Useful links'),
                   onTap: () {
-                    // Update the state of the app
-                    // ...
+                    navigationService.navigateToUsefulLinksPage(
+                        context: context);
                   },
                 ),
                 ListTile(

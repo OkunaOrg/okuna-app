@@ -1,7 +1,6 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/widgets/connections_circle_tile.dart';
 import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/widgets/buttons/accent_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -95,10 +94,17 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                                   _connectionsCirclesSearchResults.length) {
                                 if (_connectionsCirclesSearchResults.isEmpty) {
                                   // Results were empty
-                                  return ListTile(
-                                      leading: OBIcon(OBIcons.sad),
-                                      title: OBText(
-                                          'No circle found for "$_searchQuery"'));
+                                  if(_searchQuery != null){
+                                    return ListTile(
+                                        leading: OBIcon(OBIcons.sad),
+                                        title: OBText(
+                                            'No circles found for "$_searchQuery"'));
+                                  }else{
+                                    return ListTile(
+                                        leading: OBIcon(OBIcons.sad),
+                                        title: OBText(
+                                            'No circles found.'));
+                                  }
                                 } else {
                                   return const SizedBox();
                                 }

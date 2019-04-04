@@ -181,8 +181,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                       .validateCommunityTitle(communityTitle);
                                 }),
                             OBTextFormField(
-                                textCapitalization:
-                                    TextCapitalization.sentences,
+                                textCapitalization: TextCapitalization.none,
                                 size: OBTextFormFieldSize.medium,
                                 controller: _nameController,
                                 autocorrect: false,
@@ -250,6 +249,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 size: OBTextFormFieldSize.medium,
                                 controller: _descriptionController,
                                 maxLines: 3,
+                                textInputAction: TextInputAction.newline,
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(
                                         OBIcons.communityDescription),
@@ -275,6 +275,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                     .validateCommunityRules(communityRules);
                               },
                               keyboardType: TextInputType.multiline,
+                              textInputAction: TextInputAction.newline,
                               maxLines: 3,
                             ),
                             OBTextFormField(
@@ -614,7 +615,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
         usersAdjective: _usersAdjectiveController.text,
         categories: _categories,
         invitesEnabled: _invitesEnabled,
-        color: _color);
+        color: _color,
+        avatar: _avatarFile,
+        cover: _coverFile);
   }
 
   Future<bool> _isNameTaken(String communityName) async {

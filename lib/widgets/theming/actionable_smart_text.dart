@@ -8,15 +8,22 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/url_launcher.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/smart_text.dart';
+export 'package:Openbook/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 
 class OBActionableSmartText extends StatefulWidget {
   final String text;
   final OBTextSize size;
+  final TextOverflow overflow;
+  final SmartTextElement trailingSmartTextElement;
 
-  const OBActionableSmartText(
-      {Key key, this.text, this.size = OBTextSize.medium})
-      : super(key: key);
+  const OBActionableSmartText({
+    Key key,
+    this.text,
+    this.size = OBTextSize.medium,
+    this.overflow = TextOverflow.clip,
+    this.trailingSmartTextElement
+  }) : super(key: key);
 
   @override
   OBActionableTextState createState() {
@@ -57,9 +64,12 @@ class OBActionableTextState extends State<OBActionableSmartText> {
 
     return OBSmartText(
       text: widget.text,
+      overflow: widget.overflow,
       onCommunityNameTapped: _onCommunityNameTapped,
       onUsernameTapped: _onUsernameTapped,
       onLinkTapped: _onLinkTapped,
+      trailingSmartTextElement: widget.trailingSmartTextElement,
+      size: widget.size,
     );
   }
 

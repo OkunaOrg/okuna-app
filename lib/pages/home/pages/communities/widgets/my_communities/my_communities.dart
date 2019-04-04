@@ -7,7 +7,6 @@ import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,51 +59,66 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       key: _refreshIndicatorKey,
       onRefresh: _refreshAllGroups,
       child: ListView(
+          key: Key('myCommunities'),
           // Need always scrollable for pull to refresh to work
           physics: const AlwaysScrollableScrollPhysics(),
           padding: EdgeInsets.all(0),
           children: <Widget>[
-            OBMyCommunitiesGroup(
-              controller: _favoriteCommunitiesGroupController,
-              title: 'Favorites',
-              groupName: 'favorite communities',
-              groupItemName: 'favorite community',
-              maxGroupListPreviewItems: 5,
-              communityGroupListItemBuilder: _buildFavoriteCommunityListItem,
-              communityGroupListRefresher: _refreshFavoriteCommunities,
-              communityGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
-            ),
-            OBMyCommunitiesGroup(
-                controller: _administratedCommunitiesGroupController,
-                title: 'Administrated',
-                groupName: 'administrated communities',
-                groupItemName: 'administrated community',
-                maxGroupListPreviewItems: 5,
-                communityGroupListItemBuilder:
-                    _buildAdministratedCommunityListItem,
-                communityGroupListRefresher: _refreshAdministratedCommunities,
-                communityGroupListOnScrollLoader:
-                    _loadMoreAdministratedCommunities),
-            OBMyCommunitiesGroup(
-              controller: _moderatedCommunitiesGroupController,
-              title: 'Moderated',
-              groupName: 'moderated communities',
-              groupItemName: 'moderated community',
-              maxGroupListPreviewItems: 5,
-              communityGroupListItemBuilder: _buildModeratedCommunityListItem,
-              communityGroupListRefresher: _refreshModeratedCommunities,
-              communityGroupListOnScrollLoader: _loadMoreModeratedCommunities,
-            ),
-            OBMyCommunitiesGroup(
-              controller: _joinedCommunitiesGroupController,
-              title: 'All',
-              groupName: 'all communities',
-              groupItemName: 'community',
-              maxGroupListPreviewItems: 5,
-              communityGroupListItemBuilder: _buildJoinedCommunityListItem,
-              communityGroupListRefresher: _refreshJoinedCommunities,
-              communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
-              noGroupItemsFallbackBuilder: _buildNoJoinedCommunitiesFallback,
+            Column(
+              children: <Widget>[
+                OBMyCommunitiesGroup(
+                  key: Key('FavoriteCommunitiesGroup'),
+                  controller: _favoriteCommunitiesGroupController,
+                  title: 'Favorites',
+                  groupName: 'favorite communities',
+                  groupItemName: 'favorite community',
+                  maxGroupListPreviewItems: 5,
+                  communityGroupListItemBuilder:
+                      _buildFavoriteCommunityListItem,
+                  communityGroupListRefresher: _refreshFavoriteCommunities,
+                  communityGroupListOnScrollLoader:
+                      _loadMoreFavoriteCommunities,
+                ),
+                OBMyCommunitiesGroup(
+                    key: Key('AdministratedCommunitiesGroup'),
+                    controller: _administratedCommunitiesGroupController,
+                    title: 'Administrated',
+                    groupName: 'administrated communities',
+                    groupItemName: 'administrated community',
+                    maxGroupListPreviewItems: 5,
+                    communityGroupListItemBuilder:
+                        _buildAdministratedCommunityListItem,
+                    communityGroupListRefresher:
+                        _refreshAdministratedCommunities,
+                    communityGroupListOnScrollLoader:
+                        _loadMoreAdministratedCommunities),
+                OBMyCommunitiesGroup(
+                  key: Key('ModeratedCommunitiesGroup'),
+                  controller: _moderatedCommunitiesGroupController,
+                  title: 'Moderated',
+                  groupName: 'moderated communities',
+                  groupItemName: 'moderated community',
+                  maxGroupListPreviewItems: 5,
+                  communityGroupListItemBuilder:
+                      _buildModeratedCommunityListItem,
+                  communityGroupListRefresher: _refreshModeratedCommunities,
+                  communityGroupListOnScrollLoader:
+                      _loadMoreModeratedCommunities,
+                ),
+                OBMyCommunitiesGroup(
+                  key: Key('JoinedCommunitiesGroup'),
+                  controller: _joinedCommunitiesGroupController,
+                  title: 'Joined',
+                  groupName: 'joined communities',
+                  groupItemName: 'joined community',
+                  maxGroupListPreviewItems: 5,
+                  communityGroupListItemBuilder: _buildJoinedCommunityListItem,
+                  communityGroupListRefresher: _refreshJoinedCommunities,
+                  communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
+                  noGroupItemsFallbackBuilder:
+                      _buildNoJoinedCommunitiesFallback,
+                )
+              ],
             )
           ]),
     );
@@ -187,10 +201,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       BuildContext context, Community community) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isMember(loggedInUser)
@@ -204,10 +217,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       BuildContext context, Community community) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isModerator(loggedInUser)
@@ -221,10 +233,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       BuildContext context, Community community) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestCommunity.isAdministrator(loggedInUser)
@@ -237,11 +248,10 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
   Widget _buildFavoriteCommunityListItem(
       BuildContext context, Community community) {
     return StreamBuilder(
+      initialData: community,
       stream: community.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community latestCommunity = snapshot.data;
-
-        if (latestCommunity == null) return const SizedBox();
 
         return latestCommunity.isFavorite
             ? _buildCommunityListItem(community)

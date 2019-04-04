@@ -5,7 +5,7 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_c
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_no_posts.dart';
-import 'package:Openbook/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Openbook/widgets/loadmore/loadmore_delegate.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
@@ -15,7 +15,7 @@ import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loadmore/loadmore.dart';
+import 'package:Openbook/widgets/load_more.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
@@ -41,6 +41,9 @@ class OBProfilePageState extends State<OBProfilePage> {
   ToastService _toastService;
   ScrollController _scrollController;
   bool _refreshPostsInProgress;
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -74,6 +77,7 @@ class OBProfilePageState extends State<OBProfilePage> {
             children: <Widget>[
               Expanded(
                 child: RefreshIndicator(
+                    key: _refreshIndicatorKey,
                     child: LoadMore(
                         whenEmptyLoad: false,
                         isFinish: !_morePostsToLoad,
@@ -136,6 +140,10 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   void scrollToTop() {
+    if (_scrollController.offset == 0) {
+      _refreshIndicatorKey.currentState.show();
+    }
+
     _scrollController.animateTo(
       0.0,
       curve: Curves.easeOut,

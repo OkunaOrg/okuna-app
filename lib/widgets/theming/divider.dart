@@ -1,8 +1,12 @@
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class OBDivider extends StatelessWidget {
+
+  const OBDivider();
+
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
@@ -25,7 +29,7 @@ class OBDivider extends StatelessWidget {
                   border: Border(
                       bottom: BorderSide(
                     color: themeValueParserService
-                        .parseColor(theme.primaryTextColor),
+                        .parseColor(theme.secondaryTextColor),
                     width: 0.5,
                   )),
                 ),

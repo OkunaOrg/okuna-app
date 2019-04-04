@@ -27,19 +27,18 @@ class OBCommunityPostHeader extends StatelessWidget {
 
     return StreamBuilder(
         stream: _post.community.updateSubject,
+        initialData: _post.community,
         builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
           Community community = snapshot.data;
 
-          if (community == null) return const SizedBox();
-
           return ListTile(
-            leading: OBCommunityAvatar(
-              community: community,
-              onPressed: () {
-                navigationService.navigateToCommunity(
-                    community: community, context: context);
-              },
+            leading: OBAvatar(
+              avatarUrl: _post.creator.getProfileAvatar(),
               size: OBAvatarSize.medium,
+              onPressed: () {
+                navigationService.navigateToUserProfile(
+                    user: _post.creator, context: context);
+              },
             ),
             trailing: IconButton(
                 icon: const OBIcon(OBIcons.moreVertical),
@@ -57,9 +56,22 @@ class OBCommunityPostHeader extends StatelessWidget {
               },
               child: Row(
                 children: <Widget>[
+                  OBCommunityAvatar(
+                    borderRadius: 4,
+                    customSize: 16,
+                    community: community,
+                    onPressed: () {
+                      navigationService.navigateToCommunity(
+                          community: community, context: context);
+                    },
+                    size: OBAvatarSize.extraSmall,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
                   Expanded(
                     child: OBText(
-                      'c/' + community.name,
+                      '/c/' + community.name,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),

@@ -8,6 +8,7 @@ class OBAlert extends StatefulWidget {
   final double width;
   final EdgeInsets padding;
   final BorderRadiusGeometry borderRadius;
+  final Color color;
 
   const OBAlert(
       {Key key,
@@ -15,7 +16,8 @@ class OBAlert extends StatefulWidget {
       this.height,
       this.width,
       this.padding,
-      this.borderRadius})
+      this.borderRadius,
+      this.color})
       : super(key: key);
 
   @override
@@ -61,5 +63,17 @@ class OBAlertState extends State<OBAlert> {
             child: widget.child,
           );
         });
+  }
+
+  Widget _buildAlertWithColor(Color color){
+    return Container(
+      padding: widget.padding ?? EdgeInsets.all(15),
+      height: widget.height,
+      width: widget.width,
+      decoration: BoxDecoration(
+          color: color,
+          borderRadius: widget.borderRadius ?? BorderRadius.circular(10)),
+      child: widget.child,
+    );
   }
 }

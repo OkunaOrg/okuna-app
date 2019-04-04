@@ -17,11 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.1</string>
+	<string>0.0.29</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>29</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -33,6 +35,10 @@
 	<string>We use this permissions to allow you to choose a profile picture or share existing photos in your library.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We use this permissions to allow you to share photos taken within the application.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>OneSignal, our current push notification library includes code that can use your location, we have disabled this and are waiting on them to update their library to remove this permission completely.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>OneSignal, our current push notification library includes code that can use your location, we have disabled this and are waiting on them to update their library to remove this permission completely.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We use this permission to record audio when you take a video within the application.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

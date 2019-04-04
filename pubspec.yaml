@@ -7,12 +7,17 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.1
+version: 0.0.29+29
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  sentry: ^2.2.0
+  flutter_exif_rotation: ^0.2.0
+  back_button_interceptor: ^4.0.1
+  flutter_colorpicker: any
+  intercom_flutter: ^1.0.11
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
@@ -26,10 +31,8 @@ dependencies:
   flutter_cache_manager: ^0.3.2
   cached_network_image: ^0.7.0
   timeago: ^2.0.9
-  loadmore: ^1.0.2
   pigment: ^1.0.3
   photo_view: ^0.1.0
-  flushbar: ^1.1.2
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
@@ -37,9 +40,8 @@ dependencies:
   rxdart: ^0.18.1
   video_player: ^0.10.0
   sprintf: "^4.0.0"
-  image_picker: ^0.4.10
-  image_cropper: ^0.0.6
-  queries: ^0.1.10
+  image_picker: 0.5.0+3
+  image_cropper: ^1.0.0
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -79,6 +81,14 @@ flutter:
     - assets/images/theme-previews/theme-preview-dark-gold.png
     - assets/images/theme-previews/theme-preview-white.png
     - assets/images/theme-previews/theme-preview-white-gold.png
+    - assets/images/theme-previews/theme-preview-space-blue.png
+    - assets/images/theme-previews/theme-preview-light-blue.png
+    - assets/images/theme-previews/theme-preview-light-rose.png
+    - assets/images/theme-previews/theme-preview-space-rose.png
+    - assets/images/theme-previews/theme-preview-light-cinnabar.png
+    - assets/images/theme-previews/theme-preview-space-cinnabar.png
+    - assets/images/theme-previews/theme-preview-light-royale.png
+    - assets/images/theme-previews/theme-preview-space-royale.png
     - assets/images/splash-background.png
     - assets/images/openbook-o-logo.png
     - assets/images/pixel-universe.jpg
@@ -148,6 +158,11 @@ flutter:
           style: normal
         - asset: assets/fonts/VisbyRoundCF-Bold.otf
           style: italic
+    - family: ''
+      fonts:
+        - asset: assets/fonts/NunitoSans-Regular.ttf
+          weight: 400
+          style: normal
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:Openbook/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -12,13 +13,17 @@ class OBAvatar extends StatelessWidget {
   final OBAvatarSize size;
   final VoidCallback onPressed;
   final double borderWidth;
+  final bool isZoomable;
+  final double borderRadius;
+  final double customSize;
 
   static const double AVATAR_SIZE_EXTRA_SMALL = 20.0;
   static const double AVATAR_SIZE_SMALL = 30.0;
   static const double AVATAR_SIZE_MEDIUM = 40.0;
   static const double AVATAR_SIZE_LARGE = 80.0;
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
-  static const String DEFAULT_AVATAR_ASSET = 'assets/images/fallbacks/avatar-fallback.jpg';
+  static const String DEFAULT_AVATAR_ASSET =
+      'assets/images/fallbacks/avatar-fallback.jpg';
   static const double avatarBorderRadius = 10.0;
 
   static double getAvatarSize(OBAvatarSize size) {
@@ -50,12 +55,15 @@ class OBAvatar extends StatelessWidget {
       this.size = OBAvatarSize.small,
       this.onPressed,
       this.avatarFile,
-      this.borderWidth});
+      this.borderWidth,
+      this.isZoomable = false,
+      this.borderRadius,
+      this.customSize});
 
   @override
   Widget build(BuildContext context) {
     OBAvatarSize finalSize = size ?? OBAvatarSize.small;
-    double avatarSize = getAvatarSize(finalSize);
+    double avatarSize = customSize ?? getAvatarSize(finalSize);
 
     Widget finalAvatarImage;
 
@@ -72,13 +80,28 @@ class OBAvatar extends StatelessWidget {
           height: avatarSize,
           width: avatarSize,
           fit: BoxFit.cover,
-          image: AdvancedNetworkImage(avatarUrl, useDiskCache: true, fallbackAssetImage: DEFAULT_AVATAR_ASSET, retryLimit: 0));
+          image: AdvancedNetworkImage(avatarUrl,
+              useDiskCache: true,
+              fallbackAssetImage: DEFAULT_AVATAR_ASSET,
+              retryLimit: 0));
+
+      if (isZoomable) {
+        finalAvatarImage = GestureDetector(
+          child: finalAvatarImage,
+          onTap: () {
+            OpenbookProviderState openbookProvider =
+                OpenbookProvider.of(context);
+            openbookProvider.dialogService.showZoomablePhotoBoxView(
+                imageUrl: avatarUrl, context: context);
+          },
+        );
+      }
     } else {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }
 
     Widget avatar = ClipRRect(
-      borderRadius: BorderRadius.circular(avatarBorderRadius),
+      borderRadius: BorderRadius.circular(borderRadius ?? avatarBorderRadius),
       child: finalAvatarImage,
     );
 

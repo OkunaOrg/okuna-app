@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 class OBFollowNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final FollowNotification followNotification;
+  final VoidCallback onPressed;
 
   const OBFollowNotificationTile(
-      {Key key, @required this.notification, @required this.followNotification})
+      {Key key, @required this.notification, @required this.followNotification, this.onPressed})
       : super(key: key);
 
   @override
@@ -19,6 +20,7 @@ class OBFollowNotificationTile extends StatelessWidget {
     String followerUsername = followNotification.follower.username;
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService.navigateToUserProfile(

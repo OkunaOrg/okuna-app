@@ -3,6 +3,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/report_category.dart';
 import 'package:Openbook/models/user.dart';
@@ -28,9 +29,11 @@ import 'package:Openbook/pages/home/pages/menu/pages/delete_account/pages/confir
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post_comments_linked.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/post/pages/report_post_page.dart';
@@ -206,6 +209,16 @@ class NavigationService {
             widget: OBPostCommentsPage(post, autofocusCommentInput: false)));
   }
 
+  Future navigateToPostCommentsLinked(
+      {@required PostComment postComment, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewCommentsLinked'),
+            widget: OBPostCommentsLinkedPage(postComment,
+                autofocusCommentInput: false)));
+  }
+
   Future navigateToPost({@required Post post, @required BuildContext context}) {
     return Navigator.push(context,
         OBSlideRightRoute(key: Key('obSlidePost'), widget: OBPostPage(post)));
@@ -216,6 +229,13 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
+  }
+
+  Future navigateToUsefulLinksPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obMenuUsefulLinks'), widget: OBUsefulLinksPage()));
   }
 
   Future<Post> navigateToSharePost(

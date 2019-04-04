@@ -14,11 +14,13 @@ class OBPostReactionNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostReactionNotification postReactionNotification;
   static final double postImagePreviewSize = 40;
+  final VoidCallback onPressed;
 
   const OBPostReactionNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.postReactionNotification})
+      @required this.postReactionNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
           image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
           height: postImagePreviewSize,
           width: postImagePreviewSize,
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
       );
     }
@@ -49,6 +51,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
 
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
         openbookProvider.navigationService
             .navigateToPost(post: postReaction.post, context: context);
@@ -58,7 +61,8 @@ class OBPostReactionNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: postReaction.reactor.getProfileAvatar(),
       ),
-      title: Row(
+      title: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: <Widget>[
           OBActionableSmartText(
             text: '@$postReactorUsername reacted:',

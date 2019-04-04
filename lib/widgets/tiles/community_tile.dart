@@ -48,7 +48,9 @@ class OBCommunityTile extends StatelessWidget {
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.60), BlendMode.darken),
               image: AdvancedNetworkImage(community.cover,
-                  useDiskCache: true, fallbackAssetImage: COVER_PLACEHOLDER, retryLimit: 0)));
+                  useDiskCache: true,
+                  fallbackAssetImage: COVER_PLACEHOLDER,
+                  retryLimit: 0)));
     } else {
       textColor = isCommunityColorDark ? Colors.white : Colors.black;
       bool communityColorIsNearWhite = communityColor.computeLuminance() > 0.9;
@@ -85,7 +87,9 @@ class OBCommunityTile extends StatelessWidget {
 
     String userAdjective = community.userAdjective ?? 'Member';
     String usersAdjective = community.usersAdjective ?? 'Members';
-    String membersPrettyCount = getPrettyCount(community.membersCount);
+    String membersPrettyCount = community.membersCount != null
+        ? getPrettyCount(community.membersCount)
+        : null;
     String finalAdjective =
         community.membersCount == 1 ? userAdjective : usersAdjective;
 
@@ -104,7 +108,7 @@ class OBCommunityTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('c/' + community.name,
+                Text('/c/' + community.name,
                     style: TextStyle(
                       color: textColor,
                       fontSize: 16,
@@ -118,7 +122,7 @@ class OBCommunityTile extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
                 ),
-                isNormalSize
+                isNormalSize && membersPrettyCount != null
                     ? Text(
                         '$membersPrettyCount $finalAdjective',
                         style: TextStyle(color: textColor, fontSize: 14),

@@ -8,6 +8,8 @@ import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/post_reports_api.dart';
 import 'package:Openbook/services/devices_api.dart';
+import 'package:Openbook/services/dialog.dart';
+import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
@@ -29,8 +31,11 @@ import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/url_launcher.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/user_preferences.dart';
+import 'package:Openbook/services/utils_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry/sentry.dart';
 
 // TODO Waiting for dependency injection support
 // https://github.com/flutter/flutter/issues/21980
@@ -38,7 +43,7 @@ import 'package:flutter/material.dart';
 class OpenbookProvider extends StatefulWidget {
   final Widget child;
 
-  OpenbookProvider({this.child});
+  const OpenbookProvider({Key key, @required this.child}) : super(key: key);
 
   @override
   OpenbookProviderState createState() {
@@ -53,6 +58,7 @@ class OpenbookProvider extends StatefulWidget {
 }
 
 class OpenbookProviderState extends State<OpenbookProvider> {
+  UserPreferencesService userPreferencesService = UserPreferencesService();
   CreateAccountBloc createAccountBloc = CreateAccountBloc();
   ValidationService validationService = ValidationService();
   HttpieService httpService = HttpieService();
@@ -87,13 +93,20 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   PushNotificationsService pushNotificationsService =
       PushNotificationsService();
   UrlLauncherService urlLauncherService = UrlLauncherService();
+  IntercomService intercomService = IntercomService();
+  DialogService dialogService = DialogService();
+  UtilsService utilsService = UtilsService();
+
+  SentryClient sentryClient;
 
   @override
   void initState() {
     super.initState();
     initAsyncState();
     imageCache.maximumSize = 200 << 20; // 200MB
+    userPreferencesService.setStorageService(storageService);
     connectionsCirclesApiService.setHttpService(httpService);
+    httpService.setUtilsService(utilsService);
     connectionsCirclesApiService
         .setStringTemplateService(stringTemplateService);
     communitiesApiService.setHttpieService(httpService);
@@ -119,6 +132,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setPostReportsApiService(postReportsApiService);
     userService.setNotificationsApiService(notificationsApiService);
     userService.setDevicesApiService(devicesApiService);
+    userService.setCreateAccountBlocService(createAccountBloc);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
@@ -136,6 +150,10 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
     pushNotificationsService.setUserService(userService);
+    intercomService.setUserService(userService);
+    dialogService.setThemeService(themeService);
+    dialogService.setThemeValueParserService(themeValueParserService);
+    imagePickerService.setValidationService(validationService);
   }
 
   void initAsyncState() async {
@@ -155,6 +173,12 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
+    intercomService.bootstrap(
+        iosApiKey: environment.intercomIosKey,
+        androidApiKey: environment.intercomAndroidKey,
+        appId: environment.intercomAppId);
+
+    sentryClient = SentryClient(dsn: environment.sentryDsn);
   }
 
   @override

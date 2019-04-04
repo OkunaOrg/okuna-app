@@ -13,35 +13,41 @@ class OBCommunityAvatar extends StatelessWidget {
   final Community community;
   final OBAvatarSize size;
   final VoidCallback onPressed;
+  final bool isZoomable;
+  final double borderRadius;
+  final double customSize;
 
   const OBCommunityAvatar(
       {Key key,
       @required this.community,
       this.size = OBAvatarSize.small,
-      this.onPressed})
+      this.isZoomable = false,
+      this.borderRadius,
+      this.onPressed,
+      this.customSize})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: community.updateSubject,
+        initialData: community,
         builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
           Community community = snapshot.data;
-
-          if (community == null) return SizedBox();
-
           bool communityHasAvatar = community.hasAvatar();
 
           Widget avatar;
 
           if (communityHasAvatar) {
             avatar = OBAvatar(
-              avatarUrl: community?.avatar,
-              size: size,
-              onPressed: onPressed,
-            );
+                avatarUrl: community?.avatar,
+                size: size,
+                onPressed: onPressed,
+                isZoomable: isZoomable,
+                borderRadius: borderRadius,
+                customSize: customSize);
           } else {
-            String communityHexColor = community.color;
+            String communityHexColor = community.color ?? '#ffffff';
 
             OpenbookProviderState openbookProviderState =
                 OpenbookProvider.of(context);
@@ -77,7 +83,9 @@ class OBCommunityAvatar extends StatelessWidget {
                 color: communityColor,
                 size: size,
                 onPressed: onPressed,
-                labelColor: textColor);
+                borderRadius: borderRadius,
+                labelColor: textColor,
+                customSize: customSize);
           }
 
           return avatar;

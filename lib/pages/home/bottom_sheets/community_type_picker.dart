@@ -15,7 +15,7 @@ class OBCommunityTypePickerBottomSheet extends StatefulWidget {
   final CommunityType initialType;
 
   const OBCommunityTypePickerBottomSheet(
-      {Key key, @required this.onTypeChanged, CommunityType this.initialType})
+      {Key key, @required this.onTypeChanged, this.initialType})
       : super(key: key);
 
   @override
@@ -37,7 +37,6 @@ class OBCommunityTypePickerBottomSheetState
 
   @override
   Widget build(BuildContext context) {
-
     // Hack.
     if (_needsBootstrap) {
       Future.delayed(Duration(milliseconds: 0), () {

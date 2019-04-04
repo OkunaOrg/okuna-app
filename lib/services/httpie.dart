@@ -2,14 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/utils_service.dart';
+import 'package:crypto/crypto.dart';
 import 'package:http/http.dart';
-import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 export 'package:http/http.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 
 class HttpieService {
   LocalizationService _localizationService;
+  UtilsService _utilsService;
   String authorizationToken;
   String magicHeaderName;
   String magicHeaderValue;
@@ -24,6 +27,10 @@ class HttpieService {
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
+  }
+
+  void setUtilsService(UtilsService utilsService) {
+    _utilsService = utilsService;
   }
 
   void setMagicHeader(String name, String value) {
@@ -267,26 +274,37 @@ class HttpieService {
 
     List<Future> fileFields = [];
 
-    body.forEach((String key, dynamic value) {
+    List<String> bodyKeys = body.keys.toList();
+
+    for (final String key in bodyKeys) {
+      dynamic value = body[key];
       if (value is String || value is bool) {
         request.fields[key] = value.toString();
       } else if (value is List) {
         request.fields[key] =
             value.map((item) => item.toString()).toList().join(',');
       } else if (value is File) {
-        var fileMimeType = lookupMimeType(value.path);
-        // The silly multipart API requires media type to be in type & subtype.
-        var fileMimeTypeSplit = fileMimeType.split('/');
+        String fileMimeType = await _utilsService.getFileMimeType(value) ??
+            'application/octet-stream';
+
+        String fileExtension =
+            _utilsService.getFileExtensionForMimeType(fileMimeType);
+
+        var bytes = utf8.encode(value.path);
+        var digest = sha256.convert(bytes);
+
+        String newFileName = digest.toString() + '.' + fileExtension;
+
+        MediaType fileMediaType = MediaType.parse(fileMimeType);
 
         var fileFuture = http.MultipartFile.fromPath(key, value.path,
-            contentType:
-                new MediaType(fileMimeTypeSplit[0], fileMimeTypeSplit[1]));
+            filename: newFileName, contentType: fileMediaType);
 
         fileFields.add(fileFuture);
       } else {
         throw HttpieArgumentsError('Unsupported multiform value type');
       }
-    });
+    }
 
     var files = await Future.wait(fileFields);
     files.forEach((file) => request.files.add(file));
@@ -334,10 +352,12 @@ class HttpieService {
     if (error is SocketException) {
       var errorCode = error.osError.errorCode;
       if (errorCode == 61 ||
+          errorCode == 60 ||
           errorCode == 111 ||
           // Network is unreachable
           errorCode == 101 ||
           errorCode == 51 ||
+          errorCode == 8 ||
           errorCode == 64) {
         // Connection refused.
         throw HttpieConnectionRefusedError(error);
@@ -505,8 +525,19 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
     try {
       dynamic parsedError = json.decode(errorBody);
       if (parsedError is Map) {
-        if (parsedError.containsKey('detail')) {
-          return parsedError['detail'];
+        if (parsedError.isNotEmpty) {
+          if (parsedError.containsKey('detail')) {
+            return parsedError['detail'];
+          } else {
+            dynamic mapFirstValue = parsedError.values.toList().first;
+            dynamic value = mapFirstValue is List ? mapFirstValue[0] : null;
+            if (value != null && value is String) {
+              return value;
+            } else {
+              return convertStatusCodeToHumanReadableMessage(
+                  response.statusCode);
+            }
+          }
         } else {
           return convertStatusCodeToHumanReadableMessage(response.statusCode);
         }

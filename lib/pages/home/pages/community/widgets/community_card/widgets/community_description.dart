@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class OBCommunityDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: community.updateSubject,
+      initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
         var description = community?.description;
@@ -19,9 +21,9 @@ class OBCommunityDescription extends StatelessWidget {
 
         return Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: OBText(
-              description,
-              style: TextStyle(fontSize: 14),
+            child: OBActionableSmartText(
+              text: description,
+              size: OBTextSize.mediumSecondary,
             ));
       },
     );

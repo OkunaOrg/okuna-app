@@ -20,7 +20,7 @@ The Openbook mobile app.
 
 ## Project overview
 
-The project is a [Flutter](https://www.djangoproject.com/start/) application.
+The project is a [Flutter](https://flutter.dev) application.
  
 It's dependent on the [openbook-api](https://github.com/OpenbookOrg/openbook-api) backend.
 

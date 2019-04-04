@@ -7,14 +7,15 @@ import 'package:Openbook/services/user.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:io';
 
-
 class CreateAccountBloc {
+  // @todo: rename to CreateAccountService?
   LocalizationService _localizationService;
   AuthApiService _authApiService;
   UserService _userService;
 
   // Serves as a snapshot to the data
   final userRegistrationData = UserRegistrationData();
+  final passwordResetData = PasswordResetData();
 
   final _isOfLegalAgeSubject = ReplaySubject<bool>(maxSize: 1);
   final _nameSubject = ReplaySubject<String>(maxSize: 1);
@@ -23,6 +24,7 @@ class CreateAccountBloc {
   final _avatarSubject = ReplaySubject<File>(maxSize: 1);
   final _usernameSubject = ReplaySubject<String>(maxSize: 1);
   final registrationTokenSubject = ReplaySubject<String>(maxSize: 1);
+  final _passwordResetTokenSubject = ReplaySubject<String>(maxSize: 1);
 
   // Create account begins
 
@@ -45,6 +47,7 @@ class CreateAccountBloc {
     _passwordSubject.listen(_onPasswordChange);
     _avatarSubject.listen(_onAvatarChange);
     registrationTokenSubject.listen(_onTokenChange);
+    _passwordResetTokenSubject.listen(_onPasswordResetTokenChange);
   }
 
   void dispose() {
@@ -53,6 +56,8 @@ class CreateAccountBloc {
     _emailSubject.close();
     _passwordSubject.close();
     _avatarSubject.close();
+    _usernameSubject.close();
+    _passwordResetTokenSubject.close();
     registrationTokenSubject.close();
   }
 
@@ -125,6 +130,7 @@ class CreateAccountBloc {
   void clearUsername() {
     userRegistrationData.username = null;
   }
+
   // Username ends
 
   // Email begins
@@ -229,6 +235,30 @@ class CreateAccountBloc {
 
   // Registration Token ends
 
+  // Password Reset Token begins
+  bool hasPasswordResetToken() {
+    return passwordResetData.passwordResetToken != null;
+  }
+
+  String getPasswordResetToken() {
+    return passwordResetData.passwordResetToken;
+  }
+
+  void setPasswordResetToken(String passwordResetToken) async {
+    _passwordResetTokenSubject.add(passwordResetToken);
+  }
+
+  void _onPasswordResetTokenChange(String passwordResetToken) {
+    if (passwordResetToken == null) return;
+    passwordResetData.passwordResetToken = passwordResetToken;
+  }
+
+  void _clearPasswordResetTokenToken() {
+    passwordResetData.passwordResetToken = null;
+  }
+
+  //Password Reset Token ends
+
   Future<bool> createAccount() async {
     _clearCreateAccount();
 
@@ -244,38 +274,31 @@ class CreateAccountBloc {
           token: userRegistrationData.token,
           password: userRegistrationData.password,
           avatar: userRegistrationData.avatar);
-      if (response.isCreated()) {
-        accountWasCreated = true;
-        Map<String, dynamic> responseData = jsonDecode(await response.readAsString());
-        setUsername(responseData['username']);
-        _userService.loginWithAuthToken(responseData['token']);
-      } else if (response.isBadRequest()) {
-        _onCreateAccountValidationError(response);
-      } else {
-        _onCreateAccountServerError();
-      }
+
+      if (!response.isCreated()) throw HttpieRequestError(response);
+      accountWasCreated = true;
+      Map<String, dynamic> responseData =
+          jsonDecode(await response.readAsString());
+      setUsername(responseData['username']);
+      _userService.loginWithAuthToken(responseData['token']);
     } catch (error) {
-      _onCreateAccountServerError();
-      rethrow;
+      if (error is HttpieConnectionRefusedError) {
+        _onCreateAccountValidationError(error.toHumanReadableMessage());
+      } else if (error is HttpieRequestError) {
+        String errorMessage = await error.toHumanReadableMessage();
+        _onCreateAccountValidationError(errorMessage);
+      } else {
+        _onCreateAccountValidationError('Unknown error');
+        rethrow;
+      }
     }
 
     return accountWasCreated;
   }
 
-  void _onCreateAccountServerError() {
-    String errorFeedback =
-        _localizationService.trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_SERVER');
-
-    _createAccountErrorFeedbackSubject.add(errorFeedback);
-  }
-
-  void _onCreateAccountValidationError(HttpieStreamedResponse response) {
-    // Validation errors.
-    // TODO Display specific validation errors.
-    String errorFeedback = _localizationService
-        .trans('AUTH.CREATE_ACC.SUBMIT_ERROR_DESC_VALIDATION');
-
-    _createAccountErrorFeedbackSubject.add(errorFeedback);
+  void _onCreateAccountValidationError(String errorMessage) {
+    _createAccountErrorFeedbackSubject.add(errorMessage);
+    _clearToken();
   }
 
   void _clearCreateAccount() {
@@ -290,6 +313,7 @@ class CreateAccountBloc {
     _clearAvatar();
     _clearPassword();
     _clearToken();
+    _clearPasswordResetTokenToken();
   }
 }
 
@@ -301,4 +325,8 @@ class UserRegistrationData {
   String email;
   String password;
   File avatar;
+}
+
+class PasswordResetData {
+  String passwordResetToken;
 }

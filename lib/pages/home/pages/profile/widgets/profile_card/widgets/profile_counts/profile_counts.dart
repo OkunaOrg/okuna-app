@@ -13,9 +13,9 @@ class OBProfileCounts extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: user.updateSubject,
+      initialData: user,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
-        if (user == null) return const SizedBox();
 
         return Padding(
           padding: EdgeInsets.only(top: 20.0),

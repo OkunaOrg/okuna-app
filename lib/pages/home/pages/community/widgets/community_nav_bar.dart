@@ -5,6 +5,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -19,10 +20,9 @@ class OBCommunityNavBar extends StatelessWidget
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: community.updateSubject,
+        initialData: community,
         builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
           var community = snapshot.data;
-
-          if (community == null) return const SizedBox();
 
           String communityColor = community.color;
           ThemeValueParserService themeValueParserService =
@@ -35,7 +35,7 @@ class OBCommunityNavBar extends StatelessWidget
               border: null,
               actionsForegroundColor: actionsColor,
               middle: Text(
-                'c/' + community.name,
+                '/c/' + community.name,
                 style: TextStyle(color: actionsColor),
               ),
               transitionBetweenRoutes: false,

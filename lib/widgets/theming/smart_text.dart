@@ -7,6 +7,7 @@ export 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 // Based on https://github.com/knoxpo/flutter_smart_text_view
 
@@ -72,46 +73,101 @@ class TextElement extends SmartTextElement {
   }
 }
 
+/// Represents an element containing secondary text
+class SecondaryTextElement extends SmartTextElement {
+  final String text;
+
+  SecondaryTextElement(this.text);
+
+  @override
+  String toString() {
+    return "SecondaryTextElement: $text";
+  }
+}
+
 final _linkRegex = RegExp(
-    r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)",
+    r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
     caseSensitive: false);
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
-final _usernameRegex = RegExp(r"^@[A-Za-z0-9_]{1,30}$", caseSensitive: false);
+// Architecture of this regex:
+//  (?:                                 don't capture this group, so the mention itself is still the first capturing group
+//    [^A-Za-u0-9]|^                    make sure that no word characters are in front of name
+//  )
+//  (
+//    @                                 begin of mention
+//    [A-Za-z0-9]                       first character of username
+//    (
+//      (
+//        [A-Za-z0-9]|[._-](?![._-])    word character or one of [._-] which may not be followed by another special char
+//      ){0,28}                         repeat this 0 to 28 times
+//      [A-Za-z0-9]                     always end on a word character
+//    )?                                entire part is optional to allow single character names
+//  )                                   end of mention
+//  (?=\b|$)                            next char must be either a word boundary or end of text
+final _usernameRegex = RegExp(r"(?:[^A-Za-u0-9]|^)(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)", caseSensitive: false);
 
+// Same idea as inner part of above regex, but only _ is allowed as special character
 final _communityNameRegex =
-    RegExp(r"^/c/[A-Za-z0-9_]{1,30}$", caseSensitive: false);
+    RegExp(r"(/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)", caseSensitive: false);
+
+class SmartMatch {
+  final SmartTextElement span;
+  final int start;
+  final int end;
+
+  SmartMatch(this.span, this.start, this.end);
+}
 
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
-  final sentences = text.split('\n');
-  List<SmartTextElement> span = [];
-  sentences.forEach((sentence) {
-    final words = sentence.split(' ');
-    words.forEach((word) {
-      if (_linkRegex.hasMatch(word)) {
-        span.add(LinkElement(word));
-      }
-      /*else if (_tagRegex.hasMatch(word)) {
-        span.add(HashTagElement(word));
-      }*/
-      else if (_usernameRegex.hasMatch(word)) {
-        span.add(UsernameElement(word));
-      } else if (_communityNameRegex.hasMatch(word)) {
-        span.add(CommunityNameElement(word));
-      } else {
-        span.add(TextElement(word));
-      }
-      span.add(TextElement(' '));
-    });
-    if (words.isNotEmpty) {
-      span.removeLast();
-    }
-    span.add(TextElement('\n'));
+  List<SmartMatch> matches = [];
+  matches.addAll(_usernameRegex.allMatches(text).map((m) { return SmartMatch(UsernameElement(m.group(1)), m.start + m.group(0).indexOf("@"), m.end); }));
+  matches.addAll(_communityNameRegex.allMatches(text).map((m) { return SmartMatch(CommunityNameElement(m.group(0)), m.start, m.end); }));
+  matches.addAll(_linkRegex.allMatches(text).map((m) { return SmartMatch(LinkElement(m.group(0)), m.start, m.end); }));
+  // matches.addAll(_tagRegex.allMatches(text).map((m) { return SmartMatch(HashTagElement(m.group(0)), m.start, m.end); }));
+  matches.sort((a, b) {
+    return a.start.compareTo(b.start);
   });
-  if (sentences.isNotEmpty) {
-    span.removeLast();
+
+  if (matches.length == 0) {
+    return [TextElement(text)];
   }
+
+  List<SmartTextElement> span = [];
+  int currentTextIndex = 0;
+  int matchIndex = 0;
+  var currentMatch = matches[matchIndex];
+  while (currentTextIndex < text.length) {
+    if (currentMatch == null) {
+      // no more match found, add entire remaining text
+      span.add(TextElement(text.substring(currentTextIndex)));
+      break;
+    } else if (currentTextIndex < currentMatch.start) {
+      // there's normal text before the next match
+      span.add(TextElement(text.substring(currentTextIndex, currentMatch.start)));
+      currentTextIndex = currentMatch.start;
+    } else if (currentTextIndex == currentMatch.start) {
+      // next match starts here, add it
+      span.add(currentMatch.span);
+      currentTextIndex = currentMatch.end;
+      matchIndex++;
+      if (matchIndex < matches.length) {
+        currentMatch = matches[matchIndex];
+      } else {
+        currentMatch = null;
+      }
+    } else {
+      // we're already past a match, this can happen if we have overlapping matches, just move on to the next match
+      matchIndex++;
+      if (matchIndex < matches.length) {
+        currentMatch = matches[matchIndex];
+      } else {
+        currentMatch = null;
+      }
+    }
+  }
+
   return span;
 }
 
@@ -144,11 +200,17 @@ class OBSmartText extends StatelessWidget {
   /// Callback for tapping a link
   final StringCallback onCommunityNameTapped;
 
+  /// SmartTextElement element to add at the end of smart text
+  final SmartTextElement trailingSmartTextElement;
+
   final OBTextSize size;
+
+  final TextOverflow overflow;
 
   const OBSmartText({
     Key key,
     this.text,
+    this.overflow = TextOverflow.clip,
     this.style,
     this.linkStyle,
     this.tagStyle,
@@ -156,6 +218,7 @@ class OBSmartText extends StatelessWidget {
     this.onTagTapped,
     this.onUsernameTapped,
     this.onCommunityNameTapped,
+    this.trailingSmartTextElement,
     this.size = OBTextSize.medium,
   }) : super(key: key);
 
@@ -163,6 +226,7 @@ class OBSmartText extends StatelessWidget {
   TextSpan _buildTextSpan({
     String text,
     TextStyle style,
+    TextStyle secondaryTextStyle,
     TextStyle linkStyle,
     TextStyle tagStyle,
     TextStyle usernameStyle,
@@ -204,7 +268,11 @@ class OBSmartText extends StatelessWidget {
       }
     }
 
-    final elements = _smartify(text);
+    List<SmartTextElement> elements = _smartify(text);
+
+    if (this.trailingSmartTextElement != null) {
+      elements.add(this.trailingSmartTextElement);
+    }
 
     return TextSpan(
         children: elements.map<TextSpan>((element) {
@@ -212,6 +280,11 @@ class OBSmartText extends StatelessWidget {
         return TextSpan(
           text: element.text,
           style: style,
+        );
+      } else if (element is SecondaryTextElement) {
+        return TextSpan(
+          text: element.text,
+          style: secondaryTextStyle,
         );
       } else if (element is LinkElement) {
         return LinkTextSpan(
@@ -259,8 +332,23 @@ class OBSmartText extends StatelessWidget {
         Color primaryTextColor =
             themeValueParserService.parseColor(theme.primaryTextColor);
 
-        TextStyle textStyle =
-            TextStyle(color: primaryTextColor, fontSize: fontSize);
+        TextStyle textStyle = TextStyle(
+            color: primaryTextColor,
+            fontSize: fontSize,
+            fontFamilyFallback: ['NunitoSans']);
+
+        TextStyle secondaryTextStyle;
+
+        if (trailingSmartTextElement != null) {
+          // This is ugly af, why do we even need this.
+          Color secondaryTextColor =
+              themeValueParserService.parseColor(theme.secondaryTextColor);
+          secondaryTextColor = TinyColor(secondaryTextColor).lighten(10).color;
+          secondaryTextStyle = TextStyle(
+              color: secondaryTextColor,
+              fontSize: fontSize * 0.8,
+              fontFamilyFallback: ['NunitoSans']);
+        }
 
         Color actionsForegroundColor = themeValueParserService
             .parseGradient(theme.primaryAccentColor)
@@ -273,10 +361,12 @@ class OBSmartText extends StatelessWidget {
         );
 
         return RichText(
+          overflow: overflow,
           softWrap: true,
           text: _buildTextSpan(
               text: text,
               style: textStyle,
+              secondaryTextStyle: secondaryTextStyle,
               linkStyle: smartItemsStyle,
               tagStyle: smartItemsStyle,
               communityNameStyle: smartItemsStyle,

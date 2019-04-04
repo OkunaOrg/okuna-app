@@ -14,7 +14,7 @@ class OBSlideRightRoute<T> extends PageRouteBuilder<T> {
               return Material(
                   color: Color.fromARGB(0, 0, 0, 0),
                   child: Dismissible(
-                      background: DecoratedBox(decoration: const BoxDecoration(
+                      background: const DecoratedBox(decoration: const BoxDecoration(
                           color: Color.fromARGB(0, 0, 0, 0)
                       ),),
                       direction: DismissDirection.startToEnd,

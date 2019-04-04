@@ -2,6 +2,8 @@ PODS:
   - device_info (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_exif_rotation (0.0.1):
+    - Flutter
   - flutter_secure_storage (3.2.0):
     - Flutter
   - FMDB (2.7.5):
@@ -12,6 +14,10 @@ PODS:
     - TOCropViewController (~> 2.3.8)
   - image_picker (0.0.1):
     - Flutter
+  - Intercom (5.2.1)
+  - intercom_flutter (1.0.7):
+    - Flutter
+    - Intercom
   - onesignal (1.0.5):
     - Flutter
     - OneSignal (< 3.0, >= 2.9.5)
@@ -31,10 +37,12 @@ PODS:
 
 DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
+  - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - intercom_flutter (from `.symlinks/plugins/intercom_flutter/ios`)
   - OneSignal (< 3.0, >= 2.9.5)
   - onesignal (from `.symlinks/plugins/onesignal/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -46,6 +54,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - FMDB
+    - Intercom
     - OneSignal
     - TOCropViewController
 
@@ -53,13 +62,17 @@ EXTERNAL SOURCES:
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
+  flutter_exif_rotation:
+    :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   image_cropper:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  intercom_flutter:
+    :path: ".symlinks/plugins/intercom_flutter/ios"
   onesignal:
     :path: ".symlinks/plugins/onesignal/ios"
   path_provider:
@@ -76,10 +89,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   device_info: 76ce0b32e13034d1883be4a382433648f9dcee63
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_exif_rotation: 458778023267a1f0157ae8d9483474749990ce24
   flutter_secure_storage: dbcc8ff35d99569c3a4d3b483afa3339416c1a78
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: 046482c5501fc775e17f792d5af4b46c19bb774e
   image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
+  Intercom: 53f07c24f0ca18c1e910750e79b75f9c9867338f
+  intercom_flutter: e281b619d2fc03dccf171089c87c01a17e1ed8b1
   OneSignal: ccdeb961882f8668305e5b694e2cb7cb325fc907
   onesignal: c2122c20ffcb03d65445f3e0b49273c10f9c37a6
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873

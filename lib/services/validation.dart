@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/communities_api.dart';
 import 'package:Openbook/services/connections_circles_api.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
 import 'package:validators/validators.dart' as validators;
 
 class ValidationService {
@@ -17,8 +19,8 @@ class ValidationService {
   static const int COMMUNITY_DESCRIPTION_MAX_LENGTH = 500;
   static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
-  static const int POST_MAX_LENGTH = 560;
-  static const int POST_COMMENT_MAX_LENGTH = 280;
+  static const int POST_MAX_LENGTH = 1120;
+  static const int POST_COMMENT_MAX_LENGTH = 560;
   static const int PASSWORD_MIN_LENGTH = 10;
   static const int PASSWORD_MAX_LENGTH = 100;
   static const int CIRCLE_MAX_LENGTH = 100;
@@ -29,6 +31,9 @@ class ValidationService {
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
   static const int PROFILE_BIO_MAX_LENGTH = 150;
   static const int POST_REPORT_COMMENT_MAX_LENGTH = 560;
+  static const int POST_IMAGE_MAX_SIZE = 20971520;
+  static const int AVATAR_IMAGE_MAX_SIZE = 10485760;
+  static const int COVER_IMAGE_MAX_SIZE = 10485760;
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
@@ -50,6 +55,11 @@ class ValidationService {
 
   bool isQualifiedEmail(String email) {
     return validators.isEmail(email);
+  }
+
+  bool isQualifiedLink(String link) {
+    final uri = Uri.decodeFull(link);
+    return isUrl(uri) && validators.contains(uri, '?token=');
   }
 
   bool isUrl(String url) {
@@ -93,6 +103,11 @@ class ValidationService {
     return username.length > 0 && username.length < USERNAME_MAX_LENGTH;
   }
 
+  bool isPostCommentAllowedLength(String postComment) {
+    return postComment.length > 0 &&
+        postComment.length < POST_COMMENT_MAX_LENGTH;
+  }
+
   bool isCommunityNameAllowedLength(String name) {
     return name.length > 0 && name.length < COMMUNITY_NAME_MAX_LENGTH;
   }
@@ -129,19 +144,15 @@ class ValidationService {
   }
 
   bool isUsernameAllowedCharacters(String username) {
-    return isAlphanumericWithUnderscores(username);
+    String p = r'^[a-zA-Z0-9_.]+$';
+
+    RegExp regExp = new RegExp(p, caseSensitive: false);
+
+    return regExp.hasMatch(username);
   }
 
   bool isCommunityNameAllowedCharacters(String name) {
     String p = r'^[a-zA-Z0-9_]+$';
-
-    RegExp regExp = new RegExp(p, caseSensitive: false);
-
-    return regExp.hasMatch(name);
-  }
-
-  bool isCommunityUserAdjectiveAllowedCharacters(String name) {
-    String p = r'^[a-zA-Z]+$';
 
     RegExp regExp = new RegExp(p, caseSensitive: false);
 
@@ -213,6 +224,21 @@ class ValidationService {
         name.length <= PROFILE_NAME_MAX_LENGTH;
   }
 
+  Future<bool> isImageAllowedSize(File image, OBImageType type) async {
+    int size = await image.length();
+    return size <= getAllowedImageSize(type);
+  }
+
+  int getAllowedImageSize(OBImageType type) {
+    if (type == OBImageType.avatar) {
+      return AVATAR_IMAGE_MAX_SIZE;
+    } else if (type == OBImageType.cover) {
+      return COVER_IMAGE_MAX_SIZE;
+    } else {
+      return POST_IMAGE_MAX_SIZE;
+    }
+  }
+
   String validateUserUsername(String username) {
     assert(username != null);
 
@@ -231,6 +257,21 @@ class ValidationService {
     return errorMsg;
   }
 
+  String validatePostComment(String postComment) {
+    assert(postComment != null);
+
+    String errorMsg;
+
+    if (postComment.length == 0) {
+      errorMsg = 'Comment cannot be empty.';
+    } else if (!isPostCommentAllowedLength(postComment)) {
+      errorMsg =
+          'A comment can\'t be longer than $POST_COMMENT_MAX_LENGTH characters.';
+    }
+
+    return errorMsg;
+  }
+
   String validateUserEmail(String email) {
     assert(email != null);
 
@@ -240,6 +281,20 @@ class ValidationService {
       errorMsg = 'Email cannot be empty.';
     } else if (!isQualifiedEmail(email)) {
       errorMsg = 'Please provide a valid email.';
+    }
+
+    return errorMsg;
+  }
+
+  String validateUserRegistrationLink(String link) {
+    assert(link != null);
+
+    String errorMsg;
+
+    if (link.length == 0) {
+      errorMsg = 'Link cannot be empty.';
+    } else if (!isQualifiedLink(link)) {
+      errorMsg = 'This link appears to be invalid';
     }
 
     return errorMsg;
@@ -312,7 +367,7 @@ class ValidationService {
 
     if (!isBioAllowedLength(bio)) {
       errorMsg =
-          'Location can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
+          'Bio can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
     }
 
     return errorMsg;
@@ -420,8 +475,6 @@ class ValidationService {
     if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
       errorMsg =
           'Adjectives can\'t be longer than $COMMUNITY_USER_ADJECTIVE_MAX_LENGTH characters.';
-    } else if (!isCommunityUserAdjectiveAllowedCharacters(userAdjective)) {
-      errorMsg = 'Adjectives can only contain alphabetical characters.';
     }
 
     return errorMsg;

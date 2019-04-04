@@ -21,7 +21,7 @@ class CreateAccountLinkHandler extends UniversalLinkHandler {
         CreateAccountBloc createAccountBloc =
             openbookProvider.createAccountBloc;
         createAccountBloc.setToken(token);
-        Navigator.pushNamed(context, '/auth/get-started');
+        Navigator.pushReplacementNamed(context, '/auth/get-started');
       }
     }
   }

@@ -15,7 +15,6 @@ import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -309,6 +308,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   }
 
   void _showImageBottomSheet({@required OBImageType imageType}) {
+    ToastService toastService = OpenbookProvider.of(context).toastService;
+
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -317,20 +318,30 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               leading: new Icon(Icons.camera_alt),
               title: new Text('Camera'),
               onTap: () async {
-                var image = await _imagePickerService.pickImage(
-                    source: ImageSource.camera, imageType: imageType);
-                _onUserImageSelected(image: image, imageType: imageType);
+                try {
+                  var image = await _imagePickerService.pickImage(
+                      source: ImageSource.camera, imageType: imageType);
+                  _onUserImageSelected(image: image, imageType: imageType);
+                  //if (image != null) createAccountBloc.avatar.add(image);
+                } on ImageTooLargeException catch(e) {
+                  int limit = e.getLimitInMB();
+                  toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
+                }
                 Navigator.pop(context);
-                //if (image != null) createAccountBloc.avatar.add(image);
               },
             ),
             new ListTile(
               leading: new Icon(Icons.photo_library),
               title: new Text('Gallery'),
               onTap: () async {
-                var image = await _imagePickerService.pickImage(
-                    source: ImageSource.gallery, imageType: imageType);
-                _onUserImageSelected(image: image, imageType: imageType);
+                try {
+                  var image = await _imagePickerService.pickImage(
+                      source: ImageSource.gallery, imageType: imageType);
+                  _onUserImageSelected(image: image, imageType: imageType);
+                } on ImageTooLargeException catch(e) {
+                  int limit = e.getLimitInMB();
+                  toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
+                }
                 Navigator.pop(context);
               },
             )

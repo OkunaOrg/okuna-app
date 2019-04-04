@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:Openbook/models/device.dart';
-import 'package:Openbook/models/push_notifications/push_notification.dart';
+import 'package:Openbook/models/push_notification.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:crypto/crypto.dart';
 import 'package:onesignal/onesignal.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -29,7 +30,7 @@ class PushNotificationsService {
 
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
-
+    OneSignal.shared.setLocationShared(false);
     OneSignal.shared.setNotificationReceivedHandler(_onNotificationReceived);
     OneSignal.shared.setNotificationOpenedHandler(_onNotificationOpened);
     OneSignal.shared.setSubscriptionObserver(_onSubscriptionChanged);
@@ -118,8 +119,10 @@ class PushNotificationsService {
     User loggedInUser = _userService.getLoggedInUser();
     Device currentDevice = await _userService.getOrCreateCurrentDevice();
 
+    String userId = _makeUserId(loggedInUser);
+
     return Future.wait([
-      OneSignal.shared.sendTag('user_id', loggedInUser.id),
+      OneSignal.shared.sendTag('user_id', userId),
       OneSignal.shared.sendTag('device_uuid', currentDevice.uuid),
     ]);
   }
@@ -129,6 +132,12 @@ class PushNotificationsService {
       OneSignal.shared.deleteTag('user_id'),
       OneSignal.shared.deleteTag('user_uuid')
     ]);
+  }
+
+  String _makeUserId(User user) {
+    var bytes = utf8.encode(user.uuid + user.id.toString());
+    var digest = sha256.convert(bytes);
+    return digest.toString();
   }
 
   void dispose() {

@@ -11,6 +11,7 @@ class OBProfileBio extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: user.updateSubject,
+      initialData: user,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
         var bio = user?.getProfileBio();
@@ -18,13 +19,14 @@ class OBProfileBio extends StatelessWidget {
         if (bio == null) return const SizedBox();
 
         return Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 10),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Flexible(
                 child: OBActionableSmartText(
                   text: bio,
+                  size: OBTextSize.mediumSecondary,
                 ),
               )
             ],

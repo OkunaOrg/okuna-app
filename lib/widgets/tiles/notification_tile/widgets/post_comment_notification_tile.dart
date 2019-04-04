@@ -13,11 +13,12 @@ class OBPostCommentNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostCommentNotification postCommentNotification;
   static final double postImagePreviewSize = 40;
+  final VoidCallback onPressed;
 
   const OBPostCommentNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.postCommentNotification})
+      @required this.postCommentNotification, this.onPressed})
       : super(key: key);
 
   @override
@@ -27,6 +28,11 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
 
+    int postCreatorId = postCommentNotification.getPostCreatorId();
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    bool isOwnPostNotification =
+        openbookProvider.userService.getLoggedInUser().id == postCreatorId;
+
     Widget postImagePreview;
     if (post.hasImage()) {
       postImagePreview = ClipRRect(
@@ -35,7 +41,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
           image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
           height: postImagePreviewSize,
           width: postImagePreviewSize,
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
       );
     }
@@ -49,10 +55,11 @@ class OBPostCommentNotificationTile extends StatelessWidget {
 
     return ListTile(
       onTap: () {
+        if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
-        openbookProvider.navigationService
-            .navigateToPostComments(post: postComment.post, context: context);
+        openbookProvider.navigationService.navigateToPostCommentsLinked(
+            postComment: postComment, context: context);
       },
       leading: OBAvatar(
         onPressed: navigateToCommenterProfile,
@@ -60,7 +67,9 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
       title: OBActionableSmartText(
-        text: '@$postCommenterUsername commented: $postCommentText',
+        text: isOwnPostNotification
+            ? '@$postCommenterUsername commented: $postCommentText'
+            : '@$postCommenterUsername also commented: $postCommentText',
       ),
       trailing: postImagePreview,
       subtitle: OBSecondaryText(notification.getRelativeCreated()),

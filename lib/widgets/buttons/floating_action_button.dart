@@ -12,22 +12,25 @@ class OBFloatingActionButton extends StatelessWidget {
   final double minWidth;
   final EdgeInsets padding;
   final OBButtonType type;
+  final Color color;
 
   const OBFloatingActionButton(
       {@required this.child,
       @required this.onPressed,
-      this.type = OBButtonType.primary,
+      this.type,
       this.size = OBButtonSize.medium,
       this.textColor = Colors.white,
       this.icon,
       this.isDisabled = false,
       this.isLoading = false,
       this.padding,
-      this.minWidth});
+      this.minWidth, this.color});
 
   @override
   Widget build(BuildContext context) {
     return OBButton(
+      color: color,
+      textColor: textColor,
       child: child,
       boxShadow: [
         BoxShadow(

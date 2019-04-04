@@ -66,6 +66,11 @@ class OBNotification extends UpdatableModel<OBNotification> {
       created = factory.parseCreated(json['created']);
     }
   }
+
+  void markNotificationAsRead() {
+    read = true;
+    notifyUpdate();
+  }
 }
 
 class NotificationFactory extends UpdatableModelFactory<OBNotification> {
@@ -109,7 +114,8 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
     } else if (notificationTypeStr == OBNotification.communityInvite) {
       notificationType = NotificationType.communityInvite;
     } else {
-      throw 'Unsupported notification type';
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported notification type');
     }
 
     return notificationType;
@@ -117,6 +123,8 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
 
   dynamic parseContentObject(
       {@required Map contentObjectData, @required NotificationType type}) {
+    if (contentObjectData == null) return null;
+
     dynamic contentObject;
     switch (type) {
       case NotificationType.connectionConfirmed:

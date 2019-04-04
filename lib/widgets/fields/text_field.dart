@@ -14,11 +14,13 @@ class OBTextField extends StatelessWidget {
   final int maxLines;
   final FormFieldValidator<String> validator;
   final bool obscureText;
+  final TextCapitalization textCapitalization;
 
   OBTextField(
       {this.style,
       this.focusNode,
       this.controller,
+      this.textCapitalization = TextCapitalization.none,
       this.validator,
       this.maxLines,
       this.decoration,
@@ -40,15 +42,17 @@ class OBTextField extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          TextStyle themedTextStyle =
-              TextStyle(color: themeValueParserService.parseColor(theme.primaryTextColor));
+          TextStyle themedTextStyle = TextStyle(
+              color:
+                  themeValueParserService.parseColor(theme.primaryTextColor));
 
           if (style != null) {
             themedTextStyle = themedTextStyle.merge(style);
           }
 
-          TextStyle hintTextStyle =
-              TextStyle(color: themeValueParserService.parseColor(theme.secondaryTextColor));
+          TextStyle hintTextStyle = TextStyle(
+              color:
+                  themeValueParserService.parseColor(theme.secondaryTextColor));
 
           if (decoration != null && decoration.hintStyle != null) {
             hintTextStyle = hintTextStyle.merge(decoration.hintStyle);
@@ -62,6 +66,7 @@ class OBTextField extends StatelessWidget {
             style: themedTextStyle,
             maxLines: maxLines,
             obscureText: obscureText,
+            textCapitalization: textCapitalization,
             decoration: InputDecoration(
                 hintText: decoration.hintText,
                 hintStyle: hintTextStyle,

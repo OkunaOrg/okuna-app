@@ -37,6 +37,7 @@ class Post extends UpdatableModel<Post> {
   PostReportsList reportsList;
 
   bool isMuted;
+  bool isEncircled;
 
   static final factory = PostFactory();
 
@@ -67,7 +68,8 @@ class Post extends UpdatableModel<Post> {
       this.community,
       this.reportsList,
       this.publicReactions,
-      this.isMuted})
+      this.isMuted,
+      this.isEncircled})
       : super();
 
   void updateFromJson(Map json) {
@@ -95,6 +97,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('text')) text = json['text'];
 
     if (json.containsKey('is_muted')) isMuted = json['is_muted'];
+
+    if (json.containsKey('is_encircled')) isEncircled = json['is_encircled'];
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
@@ -196,6 +200,14 @@ class Post extends UpdatableModel<Post> {
     return image.width;
   }
 
+  double getVideoHeight() {
+    return video.height;
+  }
+
+  double getVideoWidth() {
+    return video.width;
+  }
+
   String getVideo() {
     return video.video;
   }
@@ -275,7 +287,7 @@ class Post extends UpdatableModel<Post> {
 class PostFactory extends UpdatableModelFactory<Post> {
   @override
   SimpleCache<int, Post> cache =
-      SimpleCache(storage: UpdatableModelSimpleStorage(size: 100));
+      LruCache(storage: UpdatableModelSimpleStorage(size: 250));
 
   @override
   Post makeFromJson(Map json) {
@@ -297,6 +309,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         reaction: parseReaction(json['reaction']),
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
+        isEncircled: json['is_encircled'],
         reportsList: parseReportsList(json['reports']),
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));

@@ -44,9 +44,9 @@ class OBMutePostTileState extends State<OBMutePostTile> {
 
     return StreamBuilder(
       stream: widget.post.updateSubject,
+      initialData: widget.post,
       builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
         var post = snapshot.data;
-        if (post == null) return const SizedBox();
 
         bool isMuted = post.isMuted;
 
@@ -54,8 +54,8 @@ class OBMutePostTileState extends State<OBMutePostTile> {
           enabled: !_requestInProgress,
           leading: OBIcon(isMuted ? OBIcons.unmutePost : OBIcons.mutePost),
           title: OBText(isMuted
-              ? 'Unmute post notifications'
-              : 'Mute post notifications'),
+              ? 'Turn on post notifications'
+              : 'Turn off post notifications'),
           onTap: isMuted ? _unmutePost : _mutePost,
         );
       },

@@ -2,6 +2,7 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OBTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -15,19 +16,27 @@ class OBTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextCapitalization textCapitalization;
   final bool autocorrect;
+  final List<TextInputFormatter> inputFormatters;
+  final FocusNode focusNode;
+  final TextStyle style;
+  final bool hasBorder;
 
   const OBTextFormField(
       {this.controller,
       this.validator,
       this.autofocus = false,
       this.keyboardType,
+      this.inputFormatters,
       this.obscureText = false,
       this.autocorrect = true,
       this.size = OBTextFormFieldSize.medium,
       this.maxLines,
       this.textInputAction = TextInputAction.done,
       this.decoration,
-      this.textCapitalization = TextCapitalization.none});
+      this.textCapitalization = TextCapitalization.none,
+      this.focusNode,
+      this.style = const TextStyle(),
+      this.hasBorder = true});
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +67,16 @@ class OBTextFormField extends StatelessWidget {
               labelHeight = 0.60;
               break;
           }
-          //@todo: better way to set this default?
-          if (decoration.contentPadding == null) {
-              contentPadding = EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
-          } else {
-            contentPadding = decoration.contentPadding;
-          }
+          TextStyle finalStyle = style.merge(TextStyle(
+              fontSize: fontSize,
+              color:
+                  themeValueParserService.parseColor(theme.primaryTextColor)));
 
           return Column(
             children: <Widget>[
               TextFormField(
+                focusNode: focusNode,
+                inputFormatters: inputFormatters,
                 textCapitalization: textCapitalization,
                 textInputAction: textInputAction,
                 autofocus: autofocus,
@@ -77,10 +86,7 @@ class OBTextFormField extends StatelessWidget {
                 autocorrect: autocorrect,
                 maxLines: maxLines,
                 obscureText: obscureText,
-                style: TextStyle(
-                    fontSize: fontSize,
-                    color: themeValueParserService
-                        .parseColor(theme.primaryTextColor)),
+                style: finalStyle,
                 decoration: InputDecoration(
                   hintText: decoration.hintText,
                   labelStyle: TextStyle(
@@ -92,14 +98,16 @@ class OBTextFormField extends StatelessWidget {
                   hintStyle: TextStyle(
                       color: themeValueParserService
                           .parseColor(theme.primaryTextColor)),
-                  contentPadding: contentPadding,
+                  contentPadding: decoration.contentPadding ??
+                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                   border: InputBorder.none,
                   labelText: decoration.labelText,
                   prefixIcon: decoration.prefixIcon,
                   prefixText: decoration.prefixText,
+                  errorMaxLines: decoration.errorMaxLines ?? 3
                 ),
               ),
-              OBDivider()
+              hasBorder ? const OBDivider() : const SizedBox()
             ],
           );
         });

@@ -3,16 +3,13 @@ import 'dart:async';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
-import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/buttons/actions/invite_user_to_community.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +28,6 @@ class OBInviteToCommunityModal extends StatefulWidget {
 
 class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
   UserService _userService;
-  NavigationService _navigationService;
 
   bool _needsBootstrap;
 
@@ -46,7 +42,6 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
-      _navigationService = provider.navigationService;
       _needsBootstrap = false;
     }
 

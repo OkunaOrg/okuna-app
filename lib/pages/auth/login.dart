@@ -131,7 +131,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     try {
       await _userService.loginWithCredentials(
           username: username, password: password);
-      Navigator.pushReplacementNamed(context, '/');
+      Navigator.pop(context);  //pop the login form screen
+      Navigator.pushReplacementNamed(context, '/'); //replace the underlying login splash screen too
     } on CredentialsMismatchError {
       _setLoginFeedback(
           _localizationService.trans('AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR'));
@@ -164,6 +165,27 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       ),
       onPressed: () {
         Navigator.pop(context);
+      },
+    );
+  }
+
+  Widget _buildForgotPasswordButton({@required BuildContext context}) {
+    String buttonText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD');
+
+    return OBSecondaryButton(
+      isFullWidth: true,
+      isLarge: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            buttonText,
+            style: TextStyle(fontSize: 18.0),
+          )
+        ],
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/auth/forgot_password_step');
       },
     );
   }
@@ -251,6 +273,12 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                               border: OutlineInputBorder(),
                             ),
                             autocorrect: false,
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          Center(
+                            child: _buildForgotPasswordButton(context: context)
                           )
                         ],
                       )),

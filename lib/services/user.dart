@@ -32,6 +32,7 @@ import 'package:Openbook/models/report_category.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/auth_api.dart';
 import 'package:Openbook/services/categories_api.dart';
 import 'package:Openbook/services/communities_api.dart';
@@ -48,6 +49,7 @@ import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Openbook/services/httpie.dart';
@@ -72,6 +74,7 @@ class UserService {
   NotificationsApiService _notificationsApiService;
   DevicesApiService _devicesApiService;
   PostReportsApiService _postReportsApiService;
+  CreateAccountBloc _createAccountBlocService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -81,6 +84,8 @@ class UserService {
   String _authToken;
 
   final _loggedInUserChangeSubject = ReplaySubject<User>(maxSize: 1);
+
+  Future<Device> _getOrCreateCurrentDeviceCache;
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
@@ -141,6 +146,10 @@ class UserService {
     _postReportsApiService = postReportsApiService;
   }
 
+  void setCreateAccountBlocService(CreateAccountBloc createAccountBloc) {
+    _createAccountBlocService = createAccountBloc;
+  }
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -152,11 +161,13 @@ class UserService {
     await _removeStoredFirstPostsData();
     await _removeStoredUserData();
     await _removeStoredAuthToken();
+    DiskCache().clear();
     _httpieService.removeAuthorizationToken();
     _removeLoggedInUser();
     Post.clearCache();
     User.clearSessionCache();
     User.clearNavigationCache();
+    _getOrCreateCurrentDeviceCache = null;
   }
 
   Future<void> loginWithCredentials(
@@ -173,6 +184,20 @@ class UserService {
     } else {
       throw HttpieRequestError(response);
     }
+  }
+
+  Future<void> requestPasswordReset({String username, String email}) async {
+    HttpieResponse response = await _authApiService.requestPasswordReset(
+        username: username, email: email);
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> verifyPasswordReset(
+      {@required String newPassword,
+      @required String passwordResetToken}) async {
+    HttpieResponse response = await _authApiService.verifyPasswordReset(
+        newPassword: newPassword, passwordResetToken: passwordResetToken);
+    _checkResponseIsOk(response);
   }
 
   Future<void> loginWithAuthToken(String authToken) async {
@@ -246,7 +271,20 @@ class UserService {
 
   Future<void> loginWithStoredUserData() async {
     var token = await _getStoredAuthToken();
-    if (token == null) throw AuthTokenMissingError();
+    if (token == null &&
+        !_createAccountBlocService.hasToken() &&
+        !_createAccountBlocService.hasPasswordResetToken())
+      throw AuthTokenMissingError();
+    if (token == null && _createAccountBlocService.hasToken()) {
+      print(
+          'User is in register via link flow, dont throw error as it will break the flow');
+      return;
+    }
+    if (token == null && _createAccountBlocService.hasPasswordResetToken()) {
+      print(
+          'User is in reset password via link flow, dont throw error as it will break the flow');
+      return;
+    }
 
     String userData = await this._getStoredUserData();
     if (userData != null) {
@@ -281,32 +319,30 @@ class UserService {
       int maxId,
       int count,
       String username,
-      bool areFirstPosts = false}) async {
-    try {
-      HttpieResponse response = await _postsApiService.getTimelinePosts(
-          circleIds: circles.map((circle) => circle.id).toList(),
-          listIds: followsLists.map((followsList) => followsList.id).toList(),
-          maxId: maxId,
-          count: count,
-          username: username,
-          authenticatedRequest: true);
-      _checkResponseIsOk(response);
-      String postsData = response.body;
-      if (areFirstPosts) {
-        this._storeFirstPostsData(postsData);
-      }
-      return _makePostsList(postsData);
-    } on HttpieConnectionRefusedError {
-      if (areFirstPosts) {
-        // Response failed. Use stored first posts.
-        String firstPostsData = await this._getStoredFirstPostsData();
-        if (firstPostsData != null) {
-          var postsList = _makePostsList(firstPostsData);
-          return postsList;
-        }
-      }
-      rethrow;
+      bool areFirstPosts = false,
+      bool cachePosts = false}) async {
+    HttpieResponse response = await _postsApiService.getTimelinePosts(
+        circleIds: circles.map((circle) => circle.id).toList(),
+        listIds: followsLists.map((followsList) => followsList.id).toList(),
+        maxId: maxId,
+        count: count,
+        username: username,
+        authenticatedRequest: true);
+    _checkResponseIsOk(response);
+    String postsData = response.body;
+    if (cachePosts) {
+      this._storeFirstPostsData(postsData);
     }
+    return _makePostsList(postsData);
+  }
+
+  Future<PostsList> getStoredFirstPosts() async {
+    String firstPostsData = await this._getStoredFirstPostsData();
+    if (firstPostsData != null) {
+      var postsList = _makePostsList(firstPostsData);
+      return postsList;
+    }
+    return PostsList();
   }
 
   Future<Post> createPost(
@@ -384,7 +420,15 @@ class UserService {
     HttpieResponse response =
         await _postsApiService.commentPost(postUuid: post.uuid, text: text);
     _checkResponseIsCreated(response);
-    return PostComment.fromJson(json.decode(response.body));
+    return PostComment.fromJSON(json.decode(response.body));
+  }
+
+  Future<PostComment> editPostComment(
+      {@required Post post, @required PostComment postComment, @required String text}) async {
+    HttpieResponse response =
+    await _postsApiService.editPostComment(postUuid: post.uuid, postCommentId: postComment.id, text: text);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
   }
 
   Future<void> deletePostComment(
@@ -409,12 +453,22 @@ class UserService {
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
-      {int count, int maxId}) async {
-    HttpieResponse response = await _postsApiService
-        .getCommentsForPostWithUuid(post.uuid, count: count, maxId: maxId);
+      {int maxId,
+      int countMax,
+      int minId,
+      int countMin,
+      PostCommentsSortType sort}) async {
+    HttpieResponse response = await _postsApiService.getCommentsForPostWithUuid(
+        post.uuid,
+        countMax: countMax,
+        maxId: maxId,
+        countMin: countMin,
+        minId: minId,
+        sort: sort != null
+            ? PostComment.convertPostCommentSortTypeToString(sort)
+            : null);
 
     _checkResponseIsOk(response);
-
     return PostCommentList.fromJson(json.decode(response.body));
   }
 
@@ -1044,9 +1098,16 @@ class UserService {
     return NotificationsList.fromJson(json.decode(response.body));
   }
 
-  Future<void> readNotifications() async {
+  Future<OBNotification> getNotificationWithId(int notificationId) async {
     HttpieResponse response =
-        await _notificationsApiService.readNotifications();
+        await _notificationsApiService.getNotificationWithId(notificationId);
+    _checkResponseIsOk(response);
+    return OBNotification.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> readNotifications({int maxId}) async {
+    HttpieResponse response =
+        await _notificationsApiService.readNotifications(maxId: maxId);
     _checkResponseIsOk(response);
   }
 
@@ -1109,6 +1170,22 @@ class UserService {
   }
 
   Future<Device> getOrCreateCurrentDevice() async {
+    if (_getOrCreateCurrentDeviceCache != null)
+      return _getOrCreateCurrentDeviceCache;
+
+    _getOrCreateCurrentDeviceCache = _getOrCreateCurrentDevice();
+    _getOrCreateCurrentDeviceCache.catchError((error) {
+      _getOrCreateCurrentDeviceCache = null;
+      throw error;
+    });
+
+    return _getOrCreateCurrentDeviceCache;
+  }
+
+  Future<Device> _getOrCreateCurrentDevice() async {
+    if (_getOrCreateCurrentDeviceCache != null)
+      return _getOrCreateCurrentDeviceCache;
+
     String deviceUuid = await _getDeviceUuid();
     HttpieResponse response =
         await _devicesApiService.getDeviceWithUuid(deviceUuid);
@@ -1126,10 +1203,12 @@ class UserService {
   }
 
   Future<void> _deleteCurrentDevice() async {
-    String deviceUuid = await _getDeviceUuid();
+    if (_getOrCreateCurrentDeviceCache == null) return;
+
+    Device currentDevice = await _getOrCreateCurrentDeviceCache;
 
     HttpieResponse response =
-        await _devicesApiService.deleteDeviceWithUuid(deviceUuid);
+        await _devicesApiService.deleteDeviceWithUuid(currentDevice.uuid);
 
     if (!response.isOk() && !response.isNotFound()) {
       print('Could not delete current device');
@@ -1264,8 +1343,9 @@ class UserService {
   }
 
   void _setLoggedInUser(User user) {
+    if (_loggedInUser == null || _loggedInUser.id != user.id)
+      _loggedInUserChangeSubject.add(user);
     _loggedInUser = user;
-    _loggedInUserChangeSubject.add(user);
   }
 
   void _removeLoggedInUser() {

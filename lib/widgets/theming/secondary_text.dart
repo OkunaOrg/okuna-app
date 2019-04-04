@@ -8,8 +8,10 @@ class OBSecondaryText extends StatelessWidget {
   final TextStyle style;
   final OBTextSize size;
   final TextOverflow overflow;
+  final TextAlign textAlign;
 
-  const OBSecondaryText(this.text, {this.style, this.size, this.overflow});
+  const OBSecondaryText(this.text,
+      {this.style, this.size, this.overflow, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class OBSecondaryText extends StatelessWidget {
             style: finalStyle,
             size: size,
             overflow: overflow,
+            textAlign: textAlign,
           );
         });
   }

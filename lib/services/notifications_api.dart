@@ -1,6 +1,5 @@
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/string_template.dart';
-import 'package:meta/meta.dart';
 
 class NotificationsApiService {
   HttpieService _httpService;
@@ -38,9 +37,13 @@ class NotificationsApiService {
         appendAuthorizationToken: true, queryParameters: queryParams);
   }
 
-  Future<HttpieResponse> readNotifications() {
+  Future<HttpieResponse> readNotifications({int maxId}) {
     String url = _makeApiUrl(NOTIFICATIONS_READ_PATH);
-    return _httpService.post(url, appendAuthorizationToken: true);
+    Map<String, dynamic> body = {};
+
+    if (maxId != null) body['max_id'] = maxId.toString();
+
+    return _httpService.post(url, body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> deleteNotifications() {
@@ -51,6 +54,11 @@ class NotificationsApiService {
   Future<HttpieResponse> deleteNotificationWithId(int notificationId) {
     String url = _makeNotificationPath(notificationId);
     return _httpService.delete(url, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getNotificationWithId(int notificationId) {
+    String url = _makeNotificationPath(notificationId);
+    return _httpService.get(url, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> readNotificationWithId(int notificationId) {

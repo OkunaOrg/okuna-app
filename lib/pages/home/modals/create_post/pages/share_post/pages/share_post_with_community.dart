@@ -1,23 +1,17 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/checkbox.dart';
 import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/community_selectable_tile.dart';
-import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

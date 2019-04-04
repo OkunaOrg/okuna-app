@@ -14,7 +14,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.35.3"
+    version: "0.35.4"
   archive:
     dependency: transitive
     description:
@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  back_button_interceptor:
+    dependency: "direct main"
+    description:
+      name: back_button_interceptor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -78,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.6"
-  csslib:
-    dependency: transitive
-    description:
-      name: csslib
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.14.6"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -115,13 +115,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.0+1"
-  flushbar:
-    dependency: "direct main"
-    description:
-      name: flushbar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -133,7 +126,7 @@ packages:
       name: flutter_advanced_networkimage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.13"
+    version: "0.4.15"
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -141,6 +134,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.2"
+  flutter_colorpicker:
+    dependency: "direct main"
+    description:
+      name: flutter_colorpicker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
+  flutter_exif_rotation:
+    dependency: "direct main"
+    description:
+      name: flutter_exif_rotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -180,7 +187,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0+1"
+    version: "0.12.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -192,14 +199,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.13"
-  function_types:
-    dependency: transitive
-    description:
-      name: function_types
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
+    version: "0.1.14"
   glob:
     dependency: transitive
     description:
@@ -207,13 +207,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.7"
-  html:
-    dependency: transitive
-    description:
-      name: html
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.13.4+1"
   http:
     dependency: "direct main"
     description:
@@ -248,14 +241,21 @@ packages:
       name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "1.0.0"
   image_picker:
     dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.12+1"
+    version: "0.5.0+3"
+  intercom_flutter:
+    dependency: "direct main"
+    description:
+      name: intercom_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.12"
   intl:
     dependency: "direct main"
     description:
@@ -290,21 +290,7 @@ packages:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.13"
-  loadmore:
-    dependency: "direct main"
-    description:
-      name: loadmore
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.11.3+2"
+    version: "0.3.14"
   matcher:
     dependency: transitive
     description:
@@ -346,7 +332,7 @@ packages:
       name: onesignal
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.1.0"
   package_config:
     dependency: transitive
     description:
@@ -417,13 +403,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  plugin:
-    dependency: transitive
-    description:
-      name: plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0+3"
   pool:
     dependency: transitive
     description:
@@ -438,13 +417,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.2"
-  queries:
-    dependency: "direct main"
-    description:
-      name: queries
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.10"
   quiver:
     dependency: transitive
     description:
@@ -459,6 +431,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.1"
+  sentry:
+    dependency: "direct main"
+    description:
+      name: sentry
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   shelf:
     dependency: transitive
     description:
@@ -618,13 +597,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.0+3"
-  utf:
+  usage:
     dependency: transitive
     description:
-      name: utf
+      name: usage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.0+5"
+    version: "3.4.1"
   uuid:
     dependency: transitive
     description:
