@@ -30,6 +30,7 @@ class OBCommunityPostReports<T> extends StatefulWidget {
 
 class OBCommunityPostReportsState extends State<OBCommunityPostReports> with TickerProviderStateMixin {
   bool _confirmationInProgress;
+  bool _rejectionInProgress;
   UserService _userService;
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
@@ -49,6 +50,7 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
     offset = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero)
         .animate(animationController);
     _confirmationInProgress = false;
+    _rejectionInProgress = false;
   }
 
   @override
@@ -65,7 +67,6 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
     }
 
     double screenHeight = MediaQuery.of(context).size.height;
-    print(screenHeight);
 
     return Column(
           mainAxisSize: MainAxisSize.max,
@@ -95,6 +96,7 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
               type: OBButtonType.highlight,
               child: Text('Reject'),
               onPressed: _onCancel,
+              isLoading: _rejectionInProgress,
             ),
           ),
           const SizedBox(
@@ -243,11 +245,13 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
 
   Widget _getProgressIndicator() {
     if (_reportedPosts == null) {
-      return Center(
+      return Expanded(
+        child: Center(
             child: CircularProgressIndicator()
-        );
+        ),
+      );
     } else {
-      return const SizedBox(height: 0.0,);
+      return const SizedBox();
     }
   }
 
@@ -281,7 +285,7 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
   }
 
   void _onCancel() async {
-    _setConfirmationInProgress(true);
+    _setRejectionInProgress(true);
     try {
       await _userService.rejectPostReport(
           post: _activePost,
@@ -291,13 +295,19 @@ class OBCommunityPostReportsState extends State<OBCommunityPostReports> with Tic
     } catch (error) {
       _onError(error);
     } finally {
-      _setConfirmationInProgress(false);
+      _setRejectionInProgress(false);
     }
   }
 
   void _setConfirmationInProgress(confirmationInProgress) {
     setState(() {
       _confirmationInProgress = confirmationInProgress;
+    });
+  }
+
+  void _setRejectionInProgress(rejectionInProgress) {
+    setState(() {
+      _rejectionInProgress = rejectionInProgress;
     });
   }
 }
