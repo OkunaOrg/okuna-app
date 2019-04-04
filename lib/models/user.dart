@@ -309,6 +309,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         connectedCircles: parseCircles(json['connected_circles']),
         communitiesMemberships:
             parseMemberships(json['communities_memberships']),
+        communitiesInvites: parseInvites(json['communities_invites']),
         followLists: parseFollowsLists(json['follow_lists']));
   }
 
