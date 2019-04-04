@@ -249,6 +249,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                               contentPadding: inputContentPadding,
                               labelText: usernameInputLabel,
                               border: OutlineInputBorder(),
+                              errorMaxLines: 3
                             ),
                             autocorrect: false,
                           ),
