@@ -179,7 +179,7 @@ class OBReportPostPageState extends State<OBReportPostPage> {
     try {
       await _userService.createPostReport(
           postUuid: widget.reportedPost.uuid,
-          categoryName: widget.reportedCategory.name,
+          categoryId: widget.reportedCategory.id,
           comment: _commentController.text);
       Navigator.of(context).pop(true);
     } catch (error) {
@@ -193,8 +193,8 @@ class OBReportPostPageState extends State<OBReportPostPage> {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(message: 'No internet connection', context: context);
     } else if (error is HttpieRequestError) {
-      List<dynamic> errorText = json.decode(await error.body());
-      _toastService.error(message: errorText[0], context: context);
+      String errorText = await error.toHumanReadableMessage();
+      _toastService.error(message: errorText.toString(), context: context);
     } else {
       _toastService.error(message: 'Unknown error.', context: context);
       throw error;

@@ -278,7 +278,7 @@ class HttpieService {
 
     for (final String key in bodyKeys) {
       dynamic value = body[key];
-      if (value is String || value is bool) {
+      if (value is String || value is bool || value is int) {
         request.fields[key] = value.toString();
       } else if (value is List) {
         request.fields[key] =
@@ -521,6 +521,7 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
 
   Future<String> toHumanReadableMessage() async {
     String errorBody = await body();
+    print(errorBody);
 
     try {
       dynamic parsedError = json.decode(errorBody);

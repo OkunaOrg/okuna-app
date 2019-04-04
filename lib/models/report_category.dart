@@ -1,10 +1,12 @@
 class ReportCategory {
+  final int id;
   final String name;
   final String title;
   final String description;
 
   ReportCategory(
-      { this.name,
+      { this.id,
+        this.name,
         this.title,
         this.description
       });
@@ -22,6 +24,7 @@ class ReportCategory {
     }
 
     return ReportCategory(
+        id: parsedJson['id'],
         name: parsedJson['name'],
         title: parsedTitle,
         description: parsedDescription

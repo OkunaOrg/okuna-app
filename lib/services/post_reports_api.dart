@@ -35,11 +35,11 @@ class PostReportsApiService {
   }
 
   Future<HttpieStreamedResponse> createPostReport(
-      {@required postUuid, @required String categoryName, String comment}) {
+      {@required postUuid, @required int categoryId, String comment}) {
     Map<String, dynamic> body = {};
 
-    if (categoryName != null) {
-      body['category_name'] = categoryName;
+    if (categoryId != null) {
+      body['category_id'] = categoryId;
     }
 
     if (comment != null) {

@@ -1287,13 +1287,13 @@ class UserService {
 
   Future<PostReport> createPostReport(
       {@required String postUuid,
-        @required String categoryName,
+        @required int categoryId,
         String comment,
       }) async {
 
     HttpieStreamedResponse response = await _postReportsApiService.createPostReport(
         postUuid: postUuid,
-        categoryName: categoryName,
+        categoryId: categoryId,
         comment: comment);
 
     _checkResponseIsCreated(response);

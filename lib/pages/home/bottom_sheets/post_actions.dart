@@ -109,7 +109,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       _onError(error);
     }
   }
-
+  
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
