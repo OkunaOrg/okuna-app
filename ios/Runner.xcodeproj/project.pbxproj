@@ -40,6 +40,9 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		A647F8112257B18C00A31CF1 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A647F8102257B18C00A31CF1 /* ShareViewController.m */; };
+		A647F8142257B18C00A31CF1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A647F8122257B18C00A31CF1 /* MainInterface.storyboard */; };
+		A647F8182257B18C00A31CF1 /* OpenbookShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A647F80D2257B18C00A31CF1 /* OpenbookShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +172,13 @@
 			remoteGlobalIDString = 1CE8375F5D12E4C085E8D4CF09BCD280;
 			remoteInfo = flutter_exif_rotation;
 		};
+		A647F8162257B18C00A31CF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A647F80C2257B18C00A31CF1;
+			remoteInfo = OpenbookShareExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,6 +189,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				89ABAE562203425900049DFB /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+				A647F8182257B18C00A31CF1 /* OpenbookShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,6 +244,11 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A647F80D2257B18C00A31CF1 /* OpenbookShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenbookShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A647F80F2257B18C00A31CF1 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
+		A647F8102257B18C00A31CF1 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		A647F8132257B18C00A31CF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		A647F8152257B18C00A31CF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6C34D3821BE816E00882F1E /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		AAF4B8238CF43C30122544EF /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; sourceTree = "<group>"; };
 		B23196F4E53E7786037AC8B5 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; sourceTree = "<group>"; };
@@ -275,6 +291,13 @@
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
 				26B90459017411DF809A7507 /* libPods-Runner.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A647F80A2257B18C00A31CF1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +396,7 @@
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				89ABAE4F2203425900049DFB /* OneSignalNotificationServiceExtension */,
+				A647F80E2257B18C00A31CF1 /* OpenbookShareExtension */,
 				97C146EF1CF9000F007C117D /* Products */,
 				0532A0D3A2BF06AB149735E4 /* Pods */,
 				5ABC6138995F2182C962F35D /* Frameworks */,
@@ -384,6 +408,7 @@
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				89ABAE4E2203425900049DFB /* OneSignalNotificationServiceExtension.appex */,
+				A647F80D2257B18C00A31CF1 /* OpenbookShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -413,6 +438,17 @@
 				97C146F21CF9000F007C117D /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A647F80E2257B18C00A31CF1 /* OpenbookShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				A647F80F2257B18C00A31CF1 /* ShareViewController.h */,
+				A647F8102257B18C00A31CF1 /* ShareViewController.m */,
+				A647F8122257B18C00A31CF1 /* MainInterface.storyboard */,
+				A647F8152257B18C00A31CF1 /* Info.plist */,
+			);
+			path = OpenbookShareExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,11 +491,29 @@
 			);
 			dependencies = (
 				89ABAE552203425900049DFB /* PBXTargetDependency */,
+				A647F8172257B18C00A31CF1 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A647F80C2257B18C00A31CF1 /* OpenbookShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A647F8342257B18C00A31CF1 /* Build configuration list for PBXNativeTarget "OpenbookShareExtension" */;
+			buildPhases = (
+				A647F8092257B18C00A31CF1 /* Sources */,
+				A647F80A2257B18C00A31CF1 /* Frameworks */,
+				A647F80B2257B18C00A31CF1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenbookShareExtension;
+			productName = OpenbookShareExtension;
+			productReference = A647F80D2257B18C00A31CF1 /* OpenbookShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -499,6 +553,11 @@
 							};
 						};
 					};
+					A647F80C2257B18C00A31CF1 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = GAR7B57RXU;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */;
@@ -526,6 +585,7 @@
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
 				89ABAE4D2203425900049DFB /* OneSignalNotificationServiceExtension */,
+				A647F80C2257B18C00A31CF1 /* OpenbookShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -671,6 +731,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A647F80B2257B18C00A31CF1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A647F8142257B18C00A31CF1 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -799,6 +867,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A647F8092257B18C00A31CF1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A647F8112257B18C00A31CF1 /* ShareViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -806,6 +882,11 @@
 			isa = PBXTargetDependency;
 			target = 89ABAE4D2203425900049DFB /* OneSignalNotificationServiceExtension */;
 			targetProxy = 89ABAE542203425900049DFB /* PBXContainerItemProxy */;
+		};
+		A647F8172257B18C00A31CF1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A647F80C2257B18C00A31CF1 /* OpenbookShareExtension */;
+			targetProxy = A647F8162257B18C00A31CF1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -824,6 +905,14 @@
 				97C147001CF9000F007C117D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A647F8122257B18C00A31CF1 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A647F8132257B18C00A31CF1 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1606,6 +1695,170 @@
 			};
 			name = Release;
 		};
+		A647F8192257B18C00A31CF1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A647F81A2257B18C00A31CF1 /* Debug-production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-production";
+		};
+		A647F81B2257B18C00A31CF1 /* Debug-development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-development";
+		};
+		A647F81C2257B18C00A31CF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A647F81D2257B18C00A31CF1 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
+		};
+		A647F81E2257B18C00A31CF1 /* Release-production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-production";
+		};
+		A647F81F2257B18C00A31CF1 /* Release-development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-development";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1647,6 +1900,20 @@
 				37B6600F21AC30B3006D36AB /* Profile */,
 				37BDAB282170B86300811BA5 /* Release-production */,
 				37BDAB242170B84A00811BA5 /* Release-development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A647F8342257B18C00A31CF1 /* Build configuration list for PBXNativeTarget "OpenbookShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A647F8192257B18C00A31CF1 /* Debug */,
+				A647F81A2257B18C00A31CF1 /* Debug-production */,
+				A647F81B2257B18C00A31CF1 /* Debug-development */,
+				A647F81C2257B18C00A31CF1 /* Release */,
+				A647F81D2257B18C00A31CF1 /* Profile */,
+				A647F81E2257B18C00A31CF1 /* Release-production */,
+				A647F81F2257B18C00A31CF1 /* Release-development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
