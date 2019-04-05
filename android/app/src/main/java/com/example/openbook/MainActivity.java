@@ -44,7 +44,6 @@ public class MainActivity extends FlutterActivity {
         public void onListen(Object args, final EventChannel.EventSink events) {
           eventSink = events;
           streamCanceled = false;
-          Log.i(getClass().getSimpleName(), "listening");
           for (int i = 0; i < intentBacklog.size(); i++) {
             sendIntent(intentBacklog.remove(i));
           }
@@ -54,7 +53,6 @@ public class MainActivity extends FlutterActivity {
         public void onCancel(Object args) {
           eventSink = null;
           streamCanceled = true;
-          Log.i(getClass().getSimpleName(), "canceled");
         }
       }
     );
@@ -69,21 +67,27 @@ public class MainActivity extends FlutterActivity {
   }
 
   private void sendIntent(Intent intent) {
-    if (intent.getAction().equals(Intent.ACTION_SEND) && intent.getType().startsWith("image/")) {
-      if (eventSink != null) {
-        Map<String, String> args = new HashMap<>();
+    if (intent.getAction().equals(Intent.ACTION_SEND)) {
+      if (eventSink == null) {
+        if (!streamCanceled && !intentBacklog.contains(intent)) {
+          intentBacklog.add(intent);
+        }
+        return;
+      }
+
+      Map<String, String> args = new HashMap<>();
+      if (intent.getType().startsWith("image/")) {
         Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
         uri = copyImageToTempFile(uri);
-        args.put("type", intent.getType());
         args.put("path", uri.toString());
-        Log.i(getClass().getSimpleName(), "sending intent to flutter");
-        eventSink.success(args);
-      } else if (!streamCanceled && !intentBacklog.contains(intent)) {
-        intentBacklog.add(intent);
-        Log.i(getClass().getSimpleName(), "intent queued in backlog");
+      } else if (intent.getType().startsWith("text/")) {
+        args.put("text", intent.getStringExtra(Intent.EXTRA_TEXT));
+      } else {
+        Log.w(getClass().getSimpleName(), "unknown intent type \"" + intent.getType() + "\" received, ignoring");
+        return;
       }
-    } else {
-      Log.i(getClass().getSimpleName(), "received useless intent action " + intent.getAction() + " type " + intent.getType() + ", not sending");
+      Log.i(getClass().getSimpleName(), "sending intent to flutter");
+      eventSink.success(args);
     }
   }
 
