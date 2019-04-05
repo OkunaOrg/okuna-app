@@ -134,7 +134,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     String text;
     File image;
     if (share.path != null) {
-      debugPrint("received share to file " + share.path);
       image = File.fromUri(Uri.parse(share.path));
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {

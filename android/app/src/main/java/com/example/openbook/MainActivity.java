@@ -44,7 +44,6 @@ public class MainActivity extends FlutterActivity {
         public void onListen(Object args, final EventChannel.EventSink events) {
           eventSink = events;
           streamCanceled = false;
-          Log.i(getClass().getSimpleName(), "listening");
           for (int i = 0; i < intentBacklog.size(); i++) {
             sendIntent(intentBacklog.remove(i));
           }
@@ -54,7 +53,6 @@ public class MainActivity extends FlutterActivity {
         public void onCancel(Object args) {
           eventSink = null;
           streamCanceled = true;
-          Log.i(getClass().getSimpleName(), "canceled");
         }
       }
     );
