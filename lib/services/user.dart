@@ -217,10 +217,6 @@ class UserService {
   Future<User> updateUserEmail(String email) async {
     HttpieStreamedResponse response =
         await _authApiService.updateUserEmail(email: email);
-
-    if (response.isBadRequest()) {
-      return getLoggedInUser();
-    }
     _checkResponseIsOk(response);
     String userData = await response.readAsString();
     return _makeLoggedInUser(userData);
