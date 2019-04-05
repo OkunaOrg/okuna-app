@@ -122,13 +122,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     _setRequestInProgress(true);
     try {
       var email = _emailController.text;
-      var originalEmail = _userService.getLoggedInUser().getEmail();
-      User user = await _userService.updateUserEmail(email);
-      if (user.getEmail() != email || originalEmail == user.getEmail()) {
-        _setChangedEmailTaken(true);
-        _validateForm();
-        return;
-      }
+      await _userService.updateUserEmail(email);
       _toastService.success(
           message:
               'We\'ve sent a confirmation link to your new email address, click it to verify your new email',
