@@ -43,6 +43,7 @@
 		A647F8112257B18C00A31CF1 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A647F8102257B18C00A31CF1 /* ShareViewController.m */; };
 		A647F8142257B18C00A31CF1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A647F8122257B18C00A31CF1 /* MainInterface.storyboard */; };
 		A647F8182257B18C00A31CF1 /* OpenbookShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A647F80D2257B18C00A31CF1 /* OpenbookShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A647F8362257BB7F00A31CF1 /* ReceiveShareStreamHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A647F8352257BB7F00A31CF1 /* ReceiveShareStreamHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,6 +250,8 @@
 		A647F8102257B18C00A31CF1 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		A647F8132257B18C00A31CF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		A647F8152257B18C00A31CF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A647F8352257BB7F00A31CF1 /* ReceiveShareStreamHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReceiveShareStreamHandler.m; sourceTree = "<group>"; };
+		A647F8372257BBA700A31CF1 /* ReceiveShareStreamHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReceiveShareStreamHandler.h; sourceTree = "<group>"; };
 		A6C34D3821BE816E00882F1E /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		AAF4B8238CF43C30122544EF /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; sourceTree = "<group>"; };
 		B23196F4E53E7786037AC8B5 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; sourceTree = "<group>"; };
@@ -422,6 +425,8 @@
 				7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */,
 				97C147021CF9000F007C117D /* Info.plist */,
 				7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */,
+				A647F8372257BBA700A31CF1 /* ReceiveShareStreamHandler.h */,
+				A647F8352257BB7F00A31CF1 /* ReceiveShareStreamHandler.m */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -863,6 +868,7 @@
 			files = (
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
+				A647F8362257BB7F00A31CF1 /* ReceiveShareStreamHandler.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

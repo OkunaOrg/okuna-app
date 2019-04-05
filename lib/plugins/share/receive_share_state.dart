@@ -12,12 +12,10 @@ abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
   StreamSubscription shareReceiveSubscription = null;
 
   void enableSharing() {
-    if(Platform.isAndroid){
-      if (shareReceiveSubscription == null) {
-        shareReceiveSubscription =
-            stream.receiveBroadcastStream().listen(_onReceiveShare);
-        debugPrint("enabled share receiving");
-      }
+    if (shareReceiveSubscription == null) {
+      shareReceiveSubscription =
+          stream.receiveBroadcastStream().listen(_onReceiveShare);
+      debugPrint("enabled share receiving");
     }
   }
 
