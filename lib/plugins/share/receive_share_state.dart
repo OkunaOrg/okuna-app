@@ -15,7 +15,6 @@ abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
     if (shareReceiveSubscription == null) {
       shareReceiveSubscription =
           stream.receiveBroadcastStream().listen(_onReceiveShare);
-      debugPrint("enabled share receiving")
     }
   }
 
