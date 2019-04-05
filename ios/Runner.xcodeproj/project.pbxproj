@@ -252,7 +252,6 @@
 		A647F8152257B18C00A31CF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A647F8352257BB7F00A31CF1 /* ReceiveShareStreamHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReceiveShareStreamHandler.m; sourceTree = "<group>"; };
 		A647F8372257BBA700A31CF1 /* ReceiveShareStreamHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReceiveShareStreamHandler.h; sourceTree = "<group>"; };
-		A647F8382257D37A00A31CF1 /* OpenbookShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenbookShareExtension.entitlements; sourceTree = "<group>"; };
 		A6C34D3821BE816E00882F1E /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		AAF4B8238CF43C30122544EF /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; sourceTree = "<group>"; };
 		B23196F4E53E7786037AC8B5 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; sourceTree = "<group>"; };
@@ -449,7 +448,6 @@
 		A647F80E2257B18C00A31CF1 /* OpenbookShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				A647F8382257D37A00A31CF1 /* OpenbookShareExtension.entitlements */,
 				A647F80F2257B18C00A31CF1 /* ShareViewController.h */,
 				A647F8102257B18C00A31CF1 /* ShareViewController.m */,
 				A647F8122257B18C00A31CF1 /* MainInterface.storyboard */,
@@ -564,11 +562,6 @@
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = GAR7B57RXU;
 						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
 					};
 				};
 			};
@@ -1716,7 +1709,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GAR7B57RXU;
@@ -1741,7 +1733,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GAR7B57RXU;
@@ -1766,7 +1757,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GAR7B57RXU;
@@ -1791,7 +1781,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GAR7B57RXU;
@@ -1815,7 +1804,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GAR7B57RXU;
@@ -1839,7 +1827,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GAR7B57RXU;
@@ -1863,7 +1850,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GAR7B57RXU;
