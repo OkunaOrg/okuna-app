@@ -14,6 +14,7 @@
 
   FlutterViewController* controller = (FlutterViewController*)self.window.rootViewController;
   _receiveShareStreamHandler = [ReceiveShareStreamHandler receiveShareStreamHandlerWithController: controller];
+  // TODO: handle URL opening
   // Override point for customization after application launch.
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
