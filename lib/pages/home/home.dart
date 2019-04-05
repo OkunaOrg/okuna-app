@@ -131,15 +131,20 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
 
   @override
   void onShare(Share share) async {
-    debugPrint("received share to file " + share.path);
-    var image = File.fromUri(Uri.parse(share.path));
-    if (!await _validationService.isImageAllowedSize(image, OBImageType.post)) {
-      int limit = _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
-      _toastService.error(
-          message: 'Image too large (limit: $limit MB)', context: context);
-      return;
+    File image;
+    if (share.path != null) {
+      debugPrint("received share to file " + share.path);
+      image = File.fromUri(Uri.parse(share.path));
+      if (!await _validationService.isImageAllowedSize(
+          image, OBImageType.post)) {
+        int limit = _validationService.getAllowedImageSize(OBImageType.post) ~/
+            1048576;
+        _toastService.error(
+            message: 'Image too large (limit: $limit MB)', context: context);
+        return;
+      }
     }
-    _modalService.openCreatePost(context: context, image: image);
+    _modalService.openCreatePost(context: context, text: share.text, image: image);
   }
 
   Widget _getPageForTabIndex(int index) {

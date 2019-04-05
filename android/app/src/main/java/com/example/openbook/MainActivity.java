@@ -82,6 +82,17 @@ public class MainActivity extends FlutterActivity {
         intentBacklog.add(intent);
         Log.i(getClass().getSimpleName(), "intent queued in backlog");
       }
+    } else if (intent.getAction().equals(Intent.ACTION_SEND) && intent.getType().startsWith("text/")) {
+      if (eventSink != null) {
+        Map<String, String> args = new HashMap<>();
+        args.put("type", intent.getType());
+        args.put("text", intent.getStringExtra(Intent.EXTRA_TEXT));
+        Log.i(getClass().getSimpleName(), "sending intent to flutter");
+        eventSink.success(args);
+      } else if (!streamCanceled && !intentBacklog.contains(intent)) {
+        intentBacklog.add(intent);
+        Log.i(getClass().getSimpleName(), "intent queued in backlog");
+      }
     } else {
       Log.i(getClass().getSimpleName(), "received useless intent action " + intent.getAction() + " type " + intent.getType() + ", not sending");
     }
