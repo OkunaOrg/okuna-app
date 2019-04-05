@@ -131,6 +131,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
 
   @override
   void onShare(Share share) async {
+    String text;
     File image;
     if (share.path != null) {
       debugPrint("received share to file " + share.path);
@@ -144,7 +145,16 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         return;
       }
     }
-    _modalService.openCreatePost(context: context, text: share.text, image: image);
+    if (share.text != null) {
+      text = share.text;
+      if (!_validationService.isPostTextAllowedLength(text)) {
+        _toastService.error(
+            message: 'Text too long (limit: ${ValidationService.POST_MAX_LENGTH} characters)',
+            context: context);
+        return;
+      }
+    }
+    _modalService.openCreatePost(context: context, text: text, image: image);
   }
 
   Widget _getPageForTabIndex(int index) {
