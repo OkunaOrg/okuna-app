@@ -9,6 +9,7 @@ import 'package:Openbook/widgets/load_more.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -63,6 +64,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
   StreamSubscription<List<T>> _searchRequestSubscription;
 
+  CancelableOperation _searchOperation;
+  CancelableOperation _refreshOperation;
+  CancelableOperation _loadMoreOperation;
+
   ScrollPhysics noItemsPhysics = const AlwaysScrollableScrollPhysics();
 
   @override
@@ -103,6 +108,13 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
+  }
+
+  void dispose() {
+    super.dispose();
+    if (_searchOperation != null) _searchOperation.cancel();
+    if (_loadMoreOperation != null) _loadMoreOperation.cancel();
+    if (_refreshOperation != null) _refreshOperation.cancel();
   }
 
   @override
@@ -236,15 +248,19 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Future<void> _refreshList() async {
+    if (_refreshOperation != null) _refreshOperation.cancel();
     _setLoadingFinished(false);
     _setRefreshInProgress(true);
     try {
-      _list = await widget.listRefresher();
-      _setList(_list);
+      Future<List<T>> listRefresh = widget.listRefresher();
+      _refreshOperation = CancelableOperation.fromFuture(listRefresh);
+      List<T> list = await listRefresh;
+      _setList(list);
     } catch (error) {
       _onError(error);
     } finally {
       _setRefreshInProgress(false);
+      _refreshOperation = null;
     }
   }
 
@@ -260,8 +276,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Future<bool> _loadMoreListItems() async {
+    if (_loadMoreOperation != null) _loadMoreOperation.cancel();
+
     try {
-      List<T> moreListItems = await widget.listOnScrollLoader(_list);
+      Future<List<T>> loadMoreRequest = widget.listOnScrollLoader(_list);
+      _loadMoreOperation = CancelableOperation.fromFuture(loadMoreRequest);
+      List<T> moreListItems = await loadMoreRequest;
 
       if (moreListItems.length == 0) {
         _setLoadingFinished(true);
@@ -271,6 +291,8 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       return true;
     } catch (error) {
       _onError(error);
+    } finally {
+      _loadMoreOperation = null;
     }
 
     return false;
@@ -286,21 +308,23 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     }
   }
 
-  void _searchWithQuery(String query) {
-    if (_searchRequestSubscription != null) _searchRequestSubscription.cancel();
+  void _searchWithQuery(String query) async {
+    if (_searchOperation != null) _searchOperation.cancel();
 
     _setSearchRequestInProgress(true);
 
-    _searchRequestSubscription =
-        widget.listSearcher(_searchQuery).asStream().listen(
-            (List<T> listSearchResults) {
-              _searchRequestSubscription = null;
-              _setListSearchResults(listSearchResults);
-            },
-            onError: _onError,
-            onDone: () {
-              _setSearchRequestInProgress(false);
-            });
+    try {
+      Future<List<T>> searchRequest = widget.listSearcher(_searchQuery);
+      _searchOperation = CancelableOperation.fromFuture(searchRequest);
+
+      List<T> listSearchResults = await searchRequest;
+      _setListSearchResults(listSearchResults);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setSearchRequestInProgress(false);
+      _searchOperation = null;
+    }
   }
 
   void _resetListSearchResults() {
