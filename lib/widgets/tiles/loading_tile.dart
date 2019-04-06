@@ -2,12 +2,40 @@ import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class OBLoadingTile extends StatelessWidget {
+  final bool isLoading;
+  final Widget title;
+  final Widget subtitle;
+  final Widget leading;
+  final Widget trailing;
+  final VoidCallback onTap;
+
+  const OBLoadingTile(
+      {Key key,
+      this.isLoading = false,
+      this.title,
+      this.subtitle,
+      this.onTap,
+      this.trailing,
+      this.leading})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      title: Center(
-        child: OBProgressIndicator(),
-      ),
+    Widget tile = ListTile(
+      leading: leading,
+      title: title,
+      subtitle: subtitle,
+      trailing: trailing,
+      onTap: isLoading ? null : onTap,
     );
+
+    if (isLoading) {
+      tile = Opacity(
+        opacity: 0.5,
+        child: tile,
+      );
+    }
+
+    return tile;
   }
 }

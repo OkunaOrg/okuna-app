@@ -164,6 +164,7 @@ class OBIcons {
   static const connect = OBIconData(nativeIcon: Icons.group_add);
   static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const deletePost = OBIconData(nativeIcon: Icons.delete);
+  static const clear = OBIconData(nativeIcon: Icons.delete);
   static const reportPost = OBIconData(nativeIcon: Icons.report);
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
@@ -194,6 +195,8 @@ class OBIcons {
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
+  static const account = OBIconData(nativeIcon: Icons.account_circle);
+  static const application = OBIconData(nativeIcon: Icons.phone_iphone);
   static const arrowUp = OBIconData(nativeIcon: Icons.keyboard_arrow_up);
   static const arrowUpward = OBIconData(nativeIcon: Icons.arrow_upward);
   static const bug = OBIconData(nativeIcon: Icons.bug_report);

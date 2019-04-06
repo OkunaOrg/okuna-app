@@ -41,6 +41,10 @@ class PostComment extends UpdatableModel<PostComment> {
     return type;
   }
 
+  static void clearCache() {
+    factory.clearCache();
+  }
+
   PostComment(
       {this.id,
       this.created,

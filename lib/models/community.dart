@@ -37,6 +37,10 @@ class Community extends UpdatableModel<Community> {
     return result;
   }
 
+  static void clearCache() {
+    factory.clearCache();
+  }
+
   final int id;
   final User creator;
   String name;
