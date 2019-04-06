@@ -8,6 +8,7 @@ import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   NavigationService _navigationService;
   List<Community> _communityGroupList;
   bool _refreshInProgress;
+  CancelableOperation _refreshOperation;
 
   @override
   void initState() {
@@ -113,6 +115,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   void dispose() {
     super.dispose();
     if (widget.controller != null) widget.controller.detach();
+    if (_refreshOperation != null) _refreshOperation.cancel();
   }
 
   Widget _buildSeeAllButton() {
@@ -153,14 +156,21 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   }
 
   Future<void> _refreshJoinedCommunities() async {
+    if (_refreshOperation != null) _refreshOperation.cancel();
     _setRefreshInProgress(true);
     try {
-      List<Community> groupCommunities =
-          await widget.communityGroupListRefresher();
+      _refreshOperation =
+          CancelableOperation.fromFuture(widget.communityGroupListRefresher());
+
+      Future<List<Community>> groupCommunitiesRefresh =
+          await _refreshOperation.value;
+
+      List<Community> groupCommunities = await groupCommunitiesRefresh;
       _setCommunityGroupList(groupCommunities);
     } catch (error) {
       _onError(error);
     } finally {
+      _refreshOperation = null;
       _setRefreshInProgress(false);
     }
   }
