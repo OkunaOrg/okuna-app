@@ -36,6 +36,7 @@ class Post extends UpdatableModel<Post> {
 
   bool isMuted;
   bool isEncircled;
+  bool isEdited;
 
   static final factory = PostFactory();
 
@@ -66,7 +67,8 @@ class Post extends UpdatableModel<Post> {
       this.community,
       this.publicReactions,
       this.isMuted,
-      this.isEncircled})
+      this.isEncircled,
+      this.isEdited})
       : super();
 
   void updateFromJson(Map json) {
@@ -93,6 +95,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('is_muted')) isMuted = json['is_muted'];
 
     if (json.containsKey('is_encircled')) isEncircled = json['is_encircled'];
+
+    if (json.containsKey('is_edited')) isEdited = json['is_edited'];
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
@@ -304,6 +308,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
         isEncircled: json['is_encircled'],
+        isEdited: json['is_edited'],
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }
