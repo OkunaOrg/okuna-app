@@ -252,9 +252,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     _setLoadingFinished(false);
     _setRefreshInProgress(true);
     try {
-      Future<List<T>> listRefresh = widget.listRefresher();
-      _refreshOperation = CancelableOperation.fromFuture(listRefresh);
-      List<T> list = await listRefresh;
+      _refreshOperation =
+          CancelableOperation.fromFuture(widget.listRefresher());
+      List<T> list = await _refreshOperation.value;
       _setList(list);
     } catch (error) {
       _onError(error);
@@ -279,9 +279,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     if (_loadMoreOperation != null) _loadMoreOperation.cancel();
 
     try {
-      Future<List<T>> loadMoreRequest = widget.listOnScrollLoader(_list);
-      _loadMoreOperation = CancelableOperation.fromFuture(loadMoreRequest);
-      List<T> moreListItems = await loadMoreRequest;
+      _loadMoreOperation =
+          CancelableOperation.fromFuture(widget.listOnScrollLoader(_list));
+      List<T> moreListItems = await _loadMoreOperation.value;
 
       if (moreListItems.length == 0) {
         _setLoadingFinished(true);
@@ -314,10 +314,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     _setSearchRequestInProgress(true);
 
     try {
-      Future<List<T>> searchRequest = widget.listSearcher(_searchQuery);
-      _searchOperation = CancelableOperation.fromFuture(searchRequest);
+      _searchOperation =
+          CancelableOperation.fromFuture(widget.listSearcher(_searchQuery));
 
-      List<T> listSearchResults = await searchRequest;
+      List<T> listSearchResults = await _searchOperation.value;
       _setListSearchResults(listSearchResults);
     } catch (error) {
       _onError(error);
