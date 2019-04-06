@@ -60,22 +60,12 @@ const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
   }
 }
 
-- (void)didSelectPost {
-  // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
+- (void)callOpenbookAppWithData:(NSDictionary*)data {
   NSFileManager* manager = [NSFileManager defaultManager];
-  NSExtensionContext* context = self.extensionContext;
-  NSArray* images = context.inputItems;
-  NSString* tempPath = [self getTempDir];
-  NSString* fileName = [self getTempFileWithExtension:@"jpg"];
-  // TODO: write image to file
-
-  // As we have to communicate text and an image to the app, write everything to a file instead of putting everything in an URL.
-  NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
-  args[@"text"] = self.contentText;
-  args[@"path"] = [tempPath stringByAppendingPathComponent:fileName];
   NSError* error;
-  NSData* jsonData = [NSJSONSerialization dataWithJSONObject:args options:0 error:&error];
+  NSData* jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
   // TODO: handle error
+  NSString* tempPath = [self getTempDir];
   NSString* jsonFile = [self getTempFileWithExtension:@"json"];
   if (![manager createFileAtPath:[tempPath stringByAppendingPathComponent:jsonFile] contents:jsonData attributes:nil]) {
     // TODO: handle error
@@ -84,6 +74,46 @@ const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
   [self callOpenbookAppWithSharedFileName:jsonFile];
   // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
   [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+}
+
+- (void)didSelectPost {
+  // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
+  NSFileManager* manager = [NSFileManager defaultManager];
+  NSExtensionContext* context = self.extensionContext;
+  // As we have to communicate text and an image to the app, write everything to a file instead of putting everything in an URL.
+  NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
+  args[@"text"] = self.contentText;
+  // Handle an image
+  BOOL hasCallback = NO;
+  NSArray* items = context.inputItems;
+  if ([items count] >= 1) {
+    NSExtensionItem* item = items[0];
+    if ([item.attachments count] >= 1) {
+      NSItemProvider* itemProvider = item.attachments[0];
+      if ([itemProvider hasItemConformingToTypeIdentifier:@"public.image"]) {
+        hasCallback = YES;
+        [itemProvider loadItemForTypeIdentifier:@"public.image" options:nil completionHandler:^void(UIImage* image, NSError* error) {
+          // TODO: handle error
+          NSData* imageData = UIImageJPEGRepresentation(image, 1.0);
+          if (imageData == nil){
+            // TODO: handle error
+          }
+          NSString* tempPath = [self getTempDir];
+          NSString* fileName = [self getTempFileWithExtension:@"jpg"];
+          if (![manager createFileAtPath:[tempPath stringByAppendingPathComponent:fileName] contents:imageData attributes:nil]) {
+            // TODO: handle error
+          }
+          args[@"path"] = [tempPath stringByAppendingPathComponent:fileName];
+          [self callOpenbookAppWithData:args];
+        }];
+      }
+    }
+  }
+
+  // If we have a callback (when loading an image), do not immediately open the app, that will happen in the callback
+  if (!hasCallback) {
+    [self callOpenbookAppWithData:args];
+  }
 }
 
 - (NSArray *)configurationItems {
