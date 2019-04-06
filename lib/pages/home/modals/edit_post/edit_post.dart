@@ -63,7 +63,7 @@ class EditPostModalState extends State<EditPostModal> {
     _hasVideo = false;
     _postItemsWidgets = [OBCreatePostText(controller: _textController, focusNode: _focusNode)];
 
-    if (widget.post.community != null)
+    if (widget.post.hasCommunity())
       _postItemsWidgets.add(OBPostCommunityPreviewer(
         community: widget.post.community,
       ));
@@ -200,15 +200,18 @@ class EditPostModalState extends State<EditPostModal> {
     setState(() {
       _hasImage = true;
 
-      var postImageWidget = Image(
-          height: 200.0,
-          width: 200.0,
-          fit: BoxFit.cover,
-          image: AdvancedNetworkImage(imageUrl,
-              useDiskCache: true,
-              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-              retryLimit: 0
-          )
+      var postImageWidget = ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child:  Image(
+              height: 200.0,
+              width: 200.0,
+              fit: BoxFit.cover,
+              image: AdvancedNetworkImage(imageUrl,
+                  useDiskCache: true,
+                  fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+                  retryLimit: 0
+              )
+          ),
         );
 
       _addPostItemWidget(postImageWidget);
