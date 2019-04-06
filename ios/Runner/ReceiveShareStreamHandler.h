@@ -2,5 +2,5 @@
 
 @interface ReceiveShareStreamHandler : NSObject<FlutterStreamHandler>
 + (id)receiveShareStreamHandlerWithController:(FlutterViewController*)controller;
-- (void)sendEventWithShare:(id)share;
+- (void)sendShareFromFile:(NSString*)fileName;
 @end

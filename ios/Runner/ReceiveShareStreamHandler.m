@@ -2,12 +2,13 @@
 #import <Foundation/Foundation.h>
 
 const NSString* CHANNEL_NAME = @"openbook.social/receive_share";
+const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
 
 @implementation ReceiveShareStreamHandler {
   FlutterEventChannel* _channel;
   FlutterEventSink _eventSink;
   BOOL _streamCanceled;
-  NSMutableArray* _shareBacklog;
+  NSMutableArray<NSString*>* _shareBacklog;
 }
 
 + (id)receiveShareStreamHandlerWithController:(FlutterViewController *)controller {
@@ -31,9 +32,9 @@ const NSString* CHANNEL_NAME = @"openbook.social/receive_share";
   _eventSink = events;
   _streamCanceled = NO;
   while ([_shareBacklog count] > 0) {
-    id share = _shareBacklog[0];
+    NSString* shareFile = _shareBacklog[0];
     [_shareBacklog removeObjectAtIndex:0];
-    [self sendEventWithShare:share];
+    [self sendShareFromFile:shareFile];
   }
   return nil;
 }
@@ -44,7 +45,20 @@ const NSString* CHANNEL_NAME = @"openbook.social/receive_share";
   return nil;
 }
 
-- (void)sendEventWithShare:(id)share {
-  // TODO
+- (void)sendShareFromFile:(NSString*)fileName {
+  if (_eventSink == nil) {
+    if (!_streamCanceled && ![_shareBacklog containsObject:fileName]) {
+      [_shareBacklog addObject:fileName];
+    }
+    return;
+  }
+
+  NSFileManager* manager = [NSFileManager defaultManager];
+  NSString* tempDir = [[[manager containerURLForSecurityApplicationGroupIdentifier:APP_GROUP_NAME] path] stringByAppendingPathComponent:@"tmp"];
+  NSString* fullFileName = [tempDir stringByAppendingPathComponent:fileName];
+  NSError* error;
+  NSDictionary* args = [NSJSONSerialization JSONObjectWithData:[manager contentsAtPath:fullFileName] options:0 error: &error];
+  // TODO: handle error
+  _eventSink(args);
 }
 @end

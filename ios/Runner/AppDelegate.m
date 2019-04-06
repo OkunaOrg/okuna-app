@@ -26,6 +26,10 @@
 
   if ([url.scheme isEqualToString:@"openbook"]) {
     NSLog(@"Handling openURL: %@", [url absoluteString]);
+    if ([url.host isEqualToString:@"share"]) {
+      NSArray<NSString*>* components = [url pathComponents];
+      [_receiveShareStreamHandler sendShareFromFile:components[1]];
+    }
   }
   return [super application:app openURL:url options:options];
 }
