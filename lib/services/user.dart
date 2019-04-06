@@ -356,6 +356,18 @@ class UserService {
     return Post.fromJson(json.decode(responseBody));
   }
 
+  Future<Post> editPost(
+      {String postUuid, String text}) async {
+    HttpieStreamedResponse response = await _postsApiService.editPost(
+        postUuid: postUuid,
+        text: text);
+
+    _checkResponseIsOk(response);
+
+    String responseBody = await response.readAsString();
+    return Post.fromJson(json.decode(responseBody));
+  }
+
   Future<void> deletePost(Post post) async {
     HttpieResponse response =
         await _postsApiService.deletePostWithUuid(post.uuid);

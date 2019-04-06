@@ -13,6 +13,7 @@ class PostsApiService {
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
+  static const EDIT_POST_PATH = 'api/posts/{postUuid}/';
   static const POST_PATH = 'api/posts/{postUuid}/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
   static const EDIT_COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/{postCommentId}/';
@@ -92,6 +93,22 @@ class PostsApiService {
     }
 
     return _httpService.putMultiform(_makeApiUrl(CREATE_POST_PATH),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieStreamedResponse> editPost(
+      {@required String postUuid, String text}) {
+    Map<String, dynamic> body = {};
+
+    body['post_uuid'] = postUuid;
+
+    if (text != null && text.length > 0) {
+      body['text'] = text;
+    }
+
+    String path = _makePostPath(postUuid);
+
+    return _httpService.patchMultiform(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
