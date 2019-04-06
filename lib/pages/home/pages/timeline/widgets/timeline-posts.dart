@@ -14,7 +14,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/loading_tile.dart';
+import 'package:Openbook/widgets/tiles/loading_indicator_tile.dart';
 import 'package:Openbook/widgets/tiles/retry_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
@@ -122,7 +122,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               postWidget,
-              OBLoadingTile(),
+              OBLoadingIndicatorTile(),
             ],
           );
           break;

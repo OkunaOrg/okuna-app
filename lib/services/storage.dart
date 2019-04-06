@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/services.dart';
 
 class StorageService {
   OBStorage getSecureStorage({String namespace}) {
@@ -36,21 +37,31 @@ class OBStorage {
 
 class _SecureStore implements _Store<String> {
   final storage = new FlutterSecureStorage();
+  Set<String> _storedKeys = Set();
 
-  Future<String> get(String key) {
-    return storage.read(key: key);
+  Future<String> get(String key) async {
+    try {
+      return storage.read(key: key);
+    } on PlatformException {
+      // This might happen when failed to decrypt
+      await storage.delete(key: key);
+      rethrow;
+    }
   }
 
   Future<void> set(String key, String value) {
+    _storedKeys.add(value);
     return storage.write(key: key, value: value);
   }
 
   Future<void> remove(String key) {
+    _storedKeys.remove(key);
     return storage.delete(key: key);
   }
 
   Future<void> clear() {
-    return storage.deleteAll();
+    return Future.wait(
+        _storedKeys.map((String key) => storage.delete(key: key)));
   }
 }
 

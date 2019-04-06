@@ -26,6 +26,8 @@ import 'package:Openbook/pages/home/pages/menu/pages/delete_account/delete_accou
 import 'package:Openbook/pages/home/pages/menu/pages/delete_account/pages/confirm_delete_account.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
@@ -226,6 +228,22 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
+  }
+
+  Future navigateToAccountSettingsPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obAccountSettingsPage'),
+            widget: OBAccountSettingsPage()));
+  }
+
+  Future navigateToApplicationSettingsPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obApplicationSettingsPage'),
+            widget: OBApplicationSettingsPage()));
   }
 
   Future navigateToUsefulLinksPage({@required BuildContext context}) {
