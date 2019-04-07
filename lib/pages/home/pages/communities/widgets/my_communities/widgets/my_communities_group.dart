@@ -162,10 +162,8 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       _refreshOperation =
           CancelableOperation.fromFuture(widget.communityGroupListRefresher());
 
-      Future<List<Community>> groupCommunitiesRefresh =
-          await _refreshOperation.value;
+      List<Community> groupCommunities = await _refreshOperation.value;
 
-      List<Community> groupCommunities = await groupCommunitiesRefresh;
       _setCommunityGroupList(groupCommunities);
     } catch (error) {
       _onError(error);
