@@ -176,8 +176,17 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   Future<void> _refreshUser() async {
-    var user = await _userService.getUserWithUsername(_user.username);
-    _setUser(user);
+    if (_refreshUserOperation != null) _refreshUserOperation.cancel();
+    try {
+      _refreshUserOperation = CancelableOperation.fromFuture(
+          _userService.getUserWithUsername(_user.username));
+      var user = await _refreshUserOperation.value;
+      _setUser(user);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _refreshUserOperation = null;
+    }
   }
 
   Future<void> _refreshPosts() async {
@@ -189,6 +198,7 @@ class OBProfilePageState extends State<OBProfilePage> {
           _userService.getTimelinePosts(username: _user.username));
       _posts = (await _refreshPostsOperation.value).posts;
       _setPosts(_posts);
+      _setMorePostsToLoad(true);
     } catch (error) {
       _onError(error);
     } finally {
