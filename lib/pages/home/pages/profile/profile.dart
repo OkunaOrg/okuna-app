@@ -13,6 +13,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/widgets/load_more.dart';
@@ -42,6 +43,10 @@ class OBProfilePageState extends State<OBProfilePage> {
   ScrollController _scrollController;
   bool _refreshPostsInProgress;
 
+  CancelableOperation _loadMoreOperation;
+  CancelableOperation _refreshUserOperation;
+  CancelableOperation _refreshPostsOperation;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -55,6 +60,14 @@ class OBProfilePageState extends State<OBProfilePage> {
     _posts = [];
     _refreshPostsInProgress = false;
     if (widget.controller != null) widget.controller.attach(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_loadMoreOperation != null) _loadMoreOperation.cancel();
+    if (_refreshUserOperation != null) _refreshUserOperation.cancel();
+    if (_refreshPostsOperation != null) _refreshPostsOperation.cancel();
   }
 
   @override
@@ -168,21 +181,32 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   Future<void> _refreshPosts() async {
+    if (_refreshPostsOperation != null) _refreshPostsOperation.cancel();
     _setRefreshPostsInProgress(true);
-    PostsList postsList =
-        await _userService.getTimelinePosts(username: _user.username);
-    _posts = postsList.posts;
-    _setPosts(_posts);
-    _setRefreshPostsInProgress(false);
+
+    try {
+      _refreshPostsOperation = CancelableOperation.fromFuture(
+          _userService.getTimelinePosts(username: _user.username));
+      _posts = (await _refreshPostsOperation.value).posts;
+      _setPosts(_posts);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRefreshPostsInProgress(false);
+      _refreshPostsOperation = null;
+    }
   }
 
   Future<bool> _loadMorePosts() async {
+    if (_loadMoreOperation != null) _loadMoreOperation.cancel();
+
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      var morePosts = (await _userService.getTimelinePosts(
-              maxId: lastPostId, username: _user.username))
-          .posts;
+      _loadMoreOperation = CancelableOperation.fromFuture(_userService
+          .getTimelinePosts(maxId: lastPostId, username: _user.username));
+
+      var morePosts = (await _loadMoreOperation.value).posts;
 
       if (morePosts.length == 0) {
         _setMorePostsToLoad(false);
@@ -194,6 +218,8 @@ class OBProfilePageState extends State<OBProfilePage> {
       return true;
     } catch (error) {
       _onError(error);
+    } finally {
+      _loadMoreOperation = null;
     }
 
     return false;
