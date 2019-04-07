@@ -20,6 +20,7 @@ import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/widgets/load_more.dart';
@@ -84,6 +85,14 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   static const TOTAL_COMMENTS_IN_SLICE =
       COUNT_MIN_INCLUDING_LINKED_COMMENT + COUNT_MAX_AFTER_LINKED_COMMENT;
 
+  CancelableOperation _refreshCommentsOperation;
+  CancelableOperation _refreshCommentsSliceOperation;
+  CancelableOperation _refreshCommentsWithCreatedPostCommentVisibleOperation;
+  CancelableOperation _refreshPostOperation;
+  CancelableOperation _loadMoreBottomCommentsOperation;
+  CancelableOperation _loadMoreTopCommentsOperation;
+  CancelableOperation _toggleSortCommentsOperation;
+
   @override
   void initState() {
     super.initState();
@@ -143,6 +152,18 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   void dispose() {
     super.dispose();
     _animation.removeStatusListener(_onAnimationStatusChanged);
+    if (_refreshCommentsOperation != null) _refreshCommentsOperation.cancel();
+    if (_refreshCommentsSliceOperation != null)
+      _refreshCommentsSliceOperation.cancel();
+    if (_loadMoreBottomCommentsOperation != null)
+      _loadMoreBottomCommentsOperation.cancel();
+    if (_refreshPostOperation != null) _refreshPostOperation.cancel();
+    if (_toggleSortCommentsOperation != null)
+      _toggleSortCommentsOperation.cancel();
+    if (_loadMoreTopCommentsOperation != null)
+      _loadMoreTopCommentsOperation.cancel();
+    if (_refreshCommentsWithCreatedPostCommentVisibleOperation != null)
+      _refreshCommentsWithCreatedPostCommentVisibleOperation.cancel();
   }
 
   void _onAnimationStatusChanged(status) {
@@ -318,19 +339,25 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   Future<void> _refreshCommentsSlice() async {
+    if (_refreshCommentsSliceOperation != null)
+      _refreshCommentsSliceOperation.cancel();
     try {
-      _postComments = (await _userService.getCommentsForPost(_post,
+      _refreshCommentsSliceOperation = CancelableOperation.fromFuture(
+          _userService.getCommentsForPost(_post,
               minId: widget.postComment.id,
               maxId: widget.postComment.id,
               countMax: COUNT_MAX_AFTER_LINKED_COMMENT,
               countMin: COUNT_MIN_INCLUDING_LINKED_COMMENT,
-              sort: _currentSort))
-          .comments;
+              sort: _currentSort));
+
+      _postComments = (await _refreshCommentsSliceOperation.value).comments;
       _setPostComments(_postComments);
       _checkIfMoreTopItemsToLoad();
       _setNoMoreBottomItemsToLoad(false);
     } catch (error) {
       _onError(error);
+    } finally {
+      _refreshCommentsSliceOperation = null;
     }
   }
 
@@ -341,16 +368,24 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   Future<void> _refreshPost() async {
+    if (_refreshPostOperation != null) _refreshPostOperation.cancel();
     try {
       // This will trigger the updateSubject of the post
-      await _userService.getPostWithUuid(_post.uuid);
+      _refreshPostOperation = CancelableOperation.fromFuture(
+          _userService.getPostWithUuid(_post.uuid));
+
+      await _refreshPostOperation.value;
       _setPositionTopCommentSection();
     } catch (error) {
       _onError(error);
+    } finally {
+      _refreshPostOperation = null;
     }
   }
 
   Future<bool> _loadMoreBottomComments() async {
+    if (_loadMoreBottomCommentsOperation != null)
+      _loadMoreBottomCommentsOperation.cancel();
     if (_postComments.length == 0) return true;
 
     PostComment lastPost = _postComments.last;
@@ -358,18 +393,20 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     List<PostComment> moreComments;
     try {
       if (_currentSort == PostCommentsSortType.dec) {
-        moreComments = (await _userService.getCommentsForPost(_post,
+        _loadMoreBottomCommentsOperation = CancelableOperation.fromFuture(
+            _userService.getCommentsForPost(_post,
                 countMax: LOAD_MORE_COMMENTS_COUNT,
                 maxId: lastPostId,
-                sort: _currentSort))
-            .comments;
+                sort: _currentSort));
       } else {
-        moreComments = (await _userService.getCommentsForPost(_post,
+        _loadMoreBottomCommentsOperation = CancelableOperation.fromFuture(
+            _userService.getCommentsForPost(_post,
                 countMin: LOAD_MORE_COMMENTS_COUNT,
                 minId: lastPostId + 1,
-                sort: _currentSort))
-            .comments;
+                sort: _currentSort));
       }
+
+      moreComments = (await _loadMoreBottomCommentsOperation.value).comments;
 
       if (moreComments.length == 0) {
         _setNoMoreBottomItemsToLoad(true);
@@ -379,12 +416,16 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
       return true;
     } catch (error) {
       _onError(error);
+    } finally {
+      _loadMoreBottomCommentsOperation = null;
     }
 
     return false;
   }
 
   Future<bool> _loadMoreTopComments() async {
+    if (_loadMoreTopCommentsOperation != null)
+      _loadMoreTopCommentsOperation.cancel();
     if (_postComments.length == 0) return true;
 
     List<PostComment> topComments;
@@ -392,18 +433,20 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     int firstPostId = firstPost.id;
     try {
       if (_currentSort == PostCommentsSortType.dec) {
-        topComments = (await _userService.getCommentsForPost(_post,
+        _loadMoreTopCommentsOperation = CancelableOperation.fromFuture(
+            _userService.getCommentsForPost(_post,
                 sort: PostCommentsSortType.dec,
                 countMin: LOAD_MORE_COMMENTS_COUNT,
-                minId: firstPostId + 1))
-            .comments;
+                minId: firstPostId + 1));
       } else if (_currentSort == PostCommentsSortType.asc) {
-        topComments = (await _userService.getCommentsForPost(_post,
+        _loadMoreTopCommentsOperation = CancelableOperation.fromFuture(
+            _userService.getCommentsForPost(_post,
                 sort: PostCommentsSortType.asc,
                 countMax: LOAD_MORE_COMMENTS_COUNT,
-                maxId: firstPostId))
-            .comments;
+                maxId: firstPostId));
       }
+
+      topComments = (await _loadMoreTopCommentsOperation.value).comments;
 
       if (topComments.length < LOAD_MORE_COMMENTS_COUNT &&
           topComments.length != 0) {
@@ -418,6 +461,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
       return true;
     } catch (error) {
       _onError(error);
+    } finally {
+      _loadMoreTopCommentsOperation = null;
     }
 
     return false;
@@ -431,29 +476,40 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
   void _refreshCommentsWithCreatedPostCommentVisible(
       PostComment createdPostComment) async {
+    if (_refreshCommentsWithCreatedPostCommentVisibleOperation != null)
+      _refreshCommentsWithCreatedPostCommentVisibleOperation.cancel();
     _unfocusCommentInput();
     List<PostComment> comments;
     int createdCommentId = createdPostComment.id;
     try {
       if (_currentSort == PostCommentsSortType.dec) {
-        comments = (await _userService.getCommentsForPost(_post,
+        _refreshCommentsWithCreatedPostCommentVisibleOperation =
+            CancelableOperation.fromFuture(_userService.getCommentsForPost(
+                _post,
                 sort: PostCommentsSortType.dec,
                 countMin: LOAD_MORE_COMMENTS_COUNT,
-                minId: createdCommentId))
-            .comments;
+                minId: createdCommentId));
       } else if (_currentSort == PostCommentsSortType.asc) {
-        comments = (await _userService.getCommentsForPost(_post,
+        _refreshCommentsWithCreatedPostCommentVisibleOperation =
+            CancelableOperation.fromFuture(_userService.getCommentsForPost(
+                _post,
                 sort: PostCommentsSortType.asc,
                 countMax: LOAD_MORE_COMMENTS_COUNT,
-                maxId: createdCommentId + 1))
-            .comments;
+                maxId: createdCommentId + 1));
       }
+
+      comments =
+          (await _refreshCommentsWithCreatedPostCommentVisibleOperation.value)
+              .comments;
+
       _setPostComments(comments);
       _setNoMoreTopItemsToLoad(false);
       _setNoMoreBottomItemsToLoad(false);
       _scrollToNewComment();
     } catch (error) {
       _onError(error);
+    } finally {
+      _refreshCommentsWithCreatedPostCommentVisibleOperation = null;
     }
   }
 
@@ -477,15 +533,18 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   Future _onWantsToRefreshComments() async {
+    if (_refreshCommentsOperation != null) _refreshCommentsOperation.cancel();
     try {
-      _postComments =
-          (await _userService.getCommentsForPost(_post, sort: _currentSort))
-              .comments;
+      _refreshCommentsOperation = CancelableOperation.fromFuture(
+          _userService.getCommentsForPost(_post, sort: _currentSort));
+      _postComments = (await _refreshCommentsOperation.value).comments;
       _setPostComments(_postComments);
       _setNoMoreBottomItemsToLoad(false);
       _setNoMoreTopItemsToLoad(true);
     } catch (error) {
       _onError(error);
+    } finally {
+      _refreshCommentsOperation = null;
     }
   }
 
