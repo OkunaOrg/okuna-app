@@ -49,7 +49,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
   void initState() {
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _rotationAngle = 0.0;
     _rotationDirection = CLOCKWISE;
     _posX = 0.0;
@@ -64,7 +64,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
 
     return WillPopScope(
       child: OBCupertinoPageScaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.black26,
           child: Stack(
             overflow: Overflow.visible,
             children: <Widget>[
@@ -119,7 +119,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
         angle: _rotationAngle,
         child: PhotoView(
           backgroundDecoration:
-          BoxDecoration(color: Colors.black),
+          BoxDecoration(color: Colors.transparent),
           key: Key(widget.imageUrl),
           enableRotation: false,
           scaleStateChangedCallback:
@@ -263,7 +263,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
             children: <Widget>[
               GestureDetector(
                 onTapDown: (tap) {
-                  _dismissModal();
+                  Navigator.pop(context);
                 },
                 child: Container(
                   padding: EdgeInsets.all(10),

@@ -1,5 +1,3 @@
-import 'package:Openbook/pages/home/pages/menu/pages/settings/modals/change-password/change_password.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/settings/modals/change_email/change_email.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -12,7 +10,6 @@ class OBSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    var localizationService = openbookProvider.localizationService;
     var navigationService = openbookProvider.navigationService;
 
     return CupertinoPageScaffold(
@@ -25,43 +22,21 @@ class OBSettingsPage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             ListTile(
-              leading: const OBIcon(OBIcons.email),
-              title: OBText(localizationService.trans('SETTINGS.CHANGE_EMAIL')),
+              leading: const OBIcon(OBIcons.account),
+              title: OBText('Account settings'),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute<bool>(
-                    fullscreenDialog: true,
-                    builder: (BuildContext context) => Material(
-                          child: OBChangeEmailModal(),
-                        )));
-              },
-            ),
-            ListTile(
-              leading: const OBIcon(OBIcons.lock),
-              title:
-                  OBText(localizationService.trans('SETTINGS.CHANGE_PASSWORD')),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute<bool>(
-                    fullscreenDialog: true,
-                    builder: (BuildContext context) => Material(
-                          child: OBChangePasswordModal(),
-                        )));
-              },
-            ),
-            ListTile(
-              leading: const OBIcon(OBIcons.notifications),
-              title: OBText('Notifications'),
-              onTap: () {
-                navigationService.navigateToNotificationsSettings(
+                navigationService.navigateToAccountSettingsPage(
                     context: context);
               },
             ),
             ListTile(
-              leading: const OBIcon(OBIcons.deleteCommunity),
-              title: OBText('Delete account'),
+              leading: const OBIcon(OBIcons.application),
+              title: OBText('Application settings'),
               onTap: () {
-                navigationService.navigateToDeleteAccount(context: context);
+                navigationService.navigateToApplicationSettingsPage(
+                    context: context);
               },
-            )
+            ),
           ],
         ),
       ),
