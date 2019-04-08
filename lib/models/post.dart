@@ -210,10 +210,6 @@ class Post extends UpdatableModel<Post> {
     return video.video;
   }
 
-  String getText() {
-    return text;
-  }
-
   String getRelativeCreated() {
     return timeago.format(created);
   }

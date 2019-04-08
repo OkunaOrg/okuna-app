@@ -35,19 +35,19 @@ class OBPostBodyText extends StatelessWidget {
 
           if (post.isEdited != null && post.isEdited) {
             return OBActionableSmartText(
-              text: post.getText(),
+              text: post.text,
               trailingSmartTextElement: SecondaryTextElement(' (edited)'),
             );
           } else {
             return OBActionableSmartText(
-              text: post.getText(),
+              text: post.text,
             );
           }
     });
   }
 
   void _copyText() {
-    Clipboard.setData(ClipboardData(text: _post.getText()));
+    Clipboard.setData(ClipboardData(text: _post.text));
     _toastService.toast(message: 'Text copied!', context: _context, type: ToastType.info);
   }
 }
