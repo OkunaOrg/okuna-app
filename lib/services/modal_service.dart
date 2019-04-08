@@ -7,6 +7,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/modals/edit_post/edit_post.dart';
 import 'package:Openbook/pages/home/modals/invite_to_community.dart';
 import 'package:Openbook/pages/home/modals/post_comment/post-commenter-expanded.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/add_community_administrator.dart';
@@ -24,7 +25,7 @@ import 'package:flutter/material.dart';
 
 class ModalService {
   Future<Post> openCreatePost(
-      {@required BuildContext context, Community community, File image}) async {
+      {@required BuildContext context, Community community, String text, File image}) async {
     Post createdPost = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Post>(
             fullscreenDialog: true,
@@ -32,12 +33,29 @@ class ModalService {
               return Material(
                 child: CreatePostModal(
                   community: community,
+                  text: text,
                   image: image,
                 ),
               );
             }));
 
     return createdPost;
+  }
+
+  Future<Post> openEditPost(
+      {@required BuildContext context, @required Post post}) async {
+    Post editedPost = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Post>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return Material(
+            child: EditPostModal(
+              post: post,
+            ),
+          );
+        }));
+
+    return editedPost;
   }
 
   Future<PostComment> openExpandedCommenter(

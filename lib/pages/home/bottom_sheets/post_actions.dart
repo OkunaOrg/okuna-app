@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -32,12 +34,14 @@ class OBPostActionsBottomSheet extends StatefulWidget {
 
 class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   UserService _userService;
+  ModalService _modalService;
   ToastService _toastService;
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
+    _modalService = openbookProvider.modalService;
     _toastService = openbookProvider.toastService;
 
     List<Widget> postActions = [];
@@ -70,6 +74,15 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
     if (loggedInUserIsPostCreator ||
         loggedInUserIsCommunityAdministrator ||
         loggedInUserIsCommunityModerator) {
+
+      postActions.add(ListTile(
+        leading: const OBIcon(OBIcons.editPost),
+        title: const OBText(
+          'Edit post',
+        ),
+        onTap: _onWantsToEditPost,
+      ));
+
       postActions.add(ListTile(
         leading: const OBIcon(OBIcons.deletePost),
         title: const OBText(
@@ -101,6 +114,18 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       await _userService.deletePost(widget.post);
       _toastService.success(message: 'Post deleted', context: context);
       widget.onPostDeleted(widget.post);
+      Navigator.pop(context);
+    } catch (error) {
+      _onError(error);
+    }
+  }
+
+  Future _onWantsToEditPost() async {
+    try {
+      await _modalService.openEditPost(
+        context: context,
+        post: widget.post
+      );
       Navigator.pop(context);
     } catch (error) {
       _onError(error);

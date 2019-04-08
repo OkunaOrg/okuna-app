@@ -20,6 +20,7 @@ import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -61,6 +62,9 @@ class OBCommunityPageState extends State<OBCommunityPage>
   // https://github.com/AbdulRahmanAlHamali/flutter_pagewise/issues/55
   Post _createdPostToInsertOnNextRefresh;
 
+  CancelableOperation _loadMorePostsOperation;
+  CancelableOperation _refreshCommunityOperation;
+
   @override
   void initState() {
     super.initState();
@@ -74,6 +78,13 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _removedPosts = [];
     _tabController = TabController(length: 2, vsync: this);
     _pageStorageKey = PageStorageKey<Type>(TabBar);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_loadMorePostsOperation != null) _loadMorePostsOperation.cancel();
+    if (_refreshCommunityOperation != null) _refreshCommunityOperation.cancel();
   }
 
   @override
@@ -350,7 +361,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Future<void> _refreshCommunity() async {
-    var community = await _userService.getCommunityWithName(_community.name);
+    if (_refreshCommunityOperation != null) _refreshCommunityOperation.cancel();
+    _refreshCommunityOperation = CancelableOperation.fromFuture(
+        _userService.getCommunityWithName(_community.name));
+    var community = await _refreshCommunityOperation.value;
     _setCommunity(community);
   }
 
@@ -370,6 +384,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
       return currentPosts;
     }
 
+    if (_loadMorePostsOperation != null) _loadMorePostsOperation.cancel();
+
     List<Post> morePosts = [];
     int lastPostId;
 
@@ -383,12 +399,14 @@ class OBCommunityPageState extends State<OBCommunityPage>
     }
 
     try {
-      morePosts = (await _userService.getPostsForCommunity(_community,
-              maxId: lastPostId))
-          .posts;
+      _loadMorePostsOperation = CancelableOperation.fromFuture(
+          _userService.getPostsForCommunity(_community, maxId: lastPostId));
+      morePosts = (await _loadMorePostsOperation.value).posts;
       _addPosts(morePosts);
     } catch (error) {
       _onError(error);
+    } finally {
+      _loadMorePostsOperation = null;
     }
 
     return morePosts;

@@ -41,7 +41,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
           image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
           height: postImagePreviewSize,
           width: postImagePreviewSize,
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
       );
     }

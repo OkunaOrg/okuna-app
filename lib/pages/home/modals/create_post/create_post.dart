@@ -28,9 +28,10 @@ import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
   final Community community;
+  final String text;
   final File image;
 
-  const CreatePostModal({Key key, this.community, this.image})
+  const CreatePostModal({Key key, this.community, this.text, this.image})
       : super(key: key);
 
   @override
@@ -47,9 +48,11 @@ class CreatePostModalState extends State<CreatePostModal> {
   UserService _userService;
 
   TextEditingController _textController;
+  FocusNode _focusNode;
   int _charactersCount;
 
   bool _isPostTextAllowedLength;
+  bool _hasFocus;
   bool _hasImage;
   bool _hasVideo;
   File _postImage;
@@ -66,12 +69,18 @@ class CreatePostModalState extends State<CreatePostModal> {
   void initState() {
     super.initState();
     _textController = TextEditingController();
+    if (widget.text != null) {
+      _textController.text = widget.text;
+    }
     _textController.addListener(_onPostTextChanged);
+    _focusNode = FocusNode();
+    _focusNode.addListener(_onFocusNodeChanged);
+    _hasFocus = false;
     _charactersCount = 0;
     _isPostTextAllowedLength = false;
     _hasImage = false;
     _hasVideo = false;
-    _postItemsWidgets = [OBCreatePostText(controller: _textController)];
+    _postItemsWidgets = [OBCreatePostText(controller: _textController, focusNode: _focusNode)];
 
     if (widget.community != null)
       _postItemsWidgets.add(OBPostCommunityPreviewer(
@@ -87,6 +96,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   void dispose() {
     super.dispose();
     _textController.removeListener(_onPostTextChanged);
+    _focusNode.removeListener(_onFocusNodeChanged);
   }
 
   @override
@@ -213,8 +223,8 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (postActions.isEmpty) return const SizedBox();
 
     return Container(
-      height: 51.0,
-      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+      height: _hasFocus == true ? 51 : 67,
+      padding: EdgeInsets.only(top: 8.0, bottom: _hasFocus == true ? 8 : 24),
       color: Color.fromARGB(5, 0, 0, 0),
       child: ListView.separated(
         physics: const ClampingScrollPhysics(),
@@ -266,6 +276,10 @@ class CreatePostModalState extends State<CreatePostModal> {
       _isPostTextAllowedLength =
           _validationService.isPostTextAllowedLength(text);
     });
+  }
+
+  void _onFocusNodeChanged() {
+    _hasFocus = _focusNode.hasFocus;
   }
 
   void _setPostImage(File image) {

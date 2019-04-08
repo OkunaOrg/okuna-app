@@ -1,4 +1,5 @@
 import 'package:Openbook/models/badge.dart';
+import 'package:Openbook/models/badges_list.dart';
 
 class UserProfile {
   final int id;
@@ -23,13 +24,6 @@ class UserProfile {
       this.followersCountVisible});
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
-    List badgesList;
-    if (parsedJson.containsKey('badges')) {
-      List<dynamic> badges = parsedJson['badges'];
-      badgesList =
-          badges.map((badgeJson) => Badge.fromJson(badgeJson)).toList();
-    }
-
     return UserProfile(
         id: parsedJson['id'],
         name: parsedJson['name'],
@@ -38,8 +32,13 @@ class UserProfile {
         bio: parsedJson['bio'],
         url: parsedJson['url'],
         location: parsedJson['location'],
-        badges: badgesList,
+        badges: parseBadges(parsedJson['badges']),
         followersCountVisible: parsedJson['followers_count_visible']);
+  }
+
+  static List<Badge> parseBadges(List<dynamic> badges) {
+    if (badges == null) return null;
+    return BadgesList.fromJson(badges).badges;
   }
 
   void updateFromJson(Map<String, dynamic> json) {
@@ -49,6 +48,7 @@ class UserProfile {
     if (json.containsKey('bio')) bio = json['bio'];
     if (json.containsKey('url')) url = json['url'];
     if (json.containsKey('location')) location = json['location'];
+    if (json.containsKey('badges')) badges = parseBadges(json['badges']);
     if (json.containsKey('followers_count_visible'))
       followersCountVisible = json['followers_count_visible'];
   }

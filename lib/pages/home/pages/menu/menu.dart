@@ -54,7 +54,7 @@ class OBMainMenuPage extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const OBIcon(OBIcons.settings),
-                  title: OBText('Account'),
+                  title: OBText('Settings'),
                   onTap: () {
                     navigationService.navigateToSettingsPage(context: context);
                   },

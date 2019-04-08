@@ -10,6 +10,7 @@ import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 
@@ -45,6 +46,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   ToastService _toastService;
   ValidationService _validationService;
 
+  CancelableOperation _submitFormOperation;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -58,6 +61,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _isMultiline = false;
 
     _textController.addListener(_onPostCommentChanged);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_submitFormOperation != null) _submitFormOperation.cancel();
   }
 
   @override
@@ -105,7 +114,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
               child: Form(
                   key: _formKey,
                   child: LayoutBuilder(builder: (context, size) {
-                    TextStyle style = TextStyle(fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
+                    TextStyle style = TextStyle(
+                        fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
                     TextSpan text =
                         new TextSpan(text: _textController.text, style: style);
 
@@ -172,6 +182,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _submitForm() async {
+    if (_submitFormOperation != null) _submitFormOperation.cancel();
     _setFormWasSubmitted(true);
 
     bool formIsValid = _validateForm();
@@ -184,8 +195,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           ? widget.onPostCommentWillBeCreated()
           : Future.value());
       String commentText = _textController.text;
-      PostComment createdPostComment =
-          await _userService.commentPost(text: commentText, post: widget.post);
+      _submitFormOperation = CancelableOperation.fromFuture(
+          _userService.commentPost(text: commentText, post: widget.post));
+      PostComment createdPostComment = await _submitFormOperation.value;
       widget.post.incrementCommentsCount();
       _textController.clear();
       _setFormWasSubmitted(false);
@@ -196,6 +208,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     } catch (error) {
       _onError(error);
     } finally {
+      _submitFormOperation = null;
       _setCommentInProgress(false);
     }
   }
@@ -234,12 +247,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   void _setFormWasSubmitted(bool formWasSubmitted) {
     setState(() {
       _formWasSubmitted = formWasSubmitted;
-    });
-  }
-
-  void _setIsMultilline(bool isMultiline) {
-    setState(() {
-      _isMultiline = isMultiline;
     });
   }
 

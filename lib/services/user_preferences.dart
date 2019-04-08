@@ -36,4 +36,8 @@ class UserPreferencesService {
   PostCommentsSortType _getDefaultPostCommentsSortType() {
     return PostCommentsSortType.asc;
   }
+
+  Future clear() {
+    return _storage.clear();
+  }
 }
