@@ -114,6 +114,7 @@ class OBPostActionReactState extends State<OBPostActionReact> {
     } catch (error) {
       _onError(error: error, openbookProvider: openbookProvider);
     } finally {
+      _clearPostReactionOperation = null;
       _setClearPostReactionInProgress(false);
     }
   }
