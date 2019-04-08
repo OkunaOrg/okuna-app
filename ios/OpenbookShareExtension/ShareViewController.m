@@ -38,6 +38,7 @@ const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
 
 - (void)callOpenbookAppWithSharedFileName:(NSString*)fileName {
   NSURL* url = [[NSURL URLWithString:@"openbook://share"] URLByAppendingPathComponent:fileName];
+  NSLog(@"Opening URL: %@", url);
   SEL selectorOpenURL = NSSelectorFromString(@"openURL:options:completionHandler:");
 
   UIResponder* responder = (UIResponder*)self;
@@ -57,6 +58,9 @@ const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
       [invocation invoke];
       break;
     }
+  }
+  if (responder == nil) {
+    NSLog(@"Warning: No responder found to open URL");
   }
 }
 
@@ -104,8 +108,11 @@ const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
             // TODO: handle error
           }
           args[@"path"] = [tempPath stringByAppendingPathComponent:fileName];
+          NSLog(@"image written to %@, opening app", args[@"path"]);
           [self callOpenbookAppWithData:args];
         }];
+      } else {
+        NSLog(@"No UTI public.image found, ignoring attachment");
       }
     }
   }
