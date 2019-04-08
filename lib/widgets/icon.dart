@@ -204,6 +204,7 @@ class OBIcons {
   static const guide = OBIconData(nativeIcon: Icons.book);
   static const slackChannel = OBIconData(nativeIcon: Icons.tag_faces);
   static const dashboard = OBIconData(nativeIcon: Icons.dashboard);
+  static const themes = OBIconData(nativeIcon: Icons.format_paint);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
