@@ -76,7 +76,7 @@ class OBNotification extends UpdatableModel<OBNotification> {
 class NotificationFactory extends UpdatableModelFactory<OBNotification> {
   @override
   SimpleCache<int, OBNotification> cache =
-      SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
+      SimpleCache(storage: UpdatableModelSimpleStorage(size: 120));
 
   @override
   OBNotification makeFromJson(Map json) {

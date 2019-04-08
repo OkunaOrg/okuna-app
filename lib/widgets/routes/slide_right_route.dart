@@ -11,18 +11,18 @@ class OBSlideRightRoute<T> extends PageRouteBuilder<T> {
             transitionDuration: const Duration(milliseconds: 200),
             pageBuilder: (BuildContext context, Animation<double> animation,
                 Animation<double> secondaryAnimation) {
-              return Material(
-                  color: Color.fromARGB(0, 0, 0, 0),
-                  child: Dismissible(
-                      background: const DecoratedBox(decoration: const BoxDecoration(
-                          color: Color.fromARGB(0, 0, 0, 0)
-                      ),),
-                      direction: DismissDirection.startToEnd,
-                      onDismissed: (direction) {
-                        Navigator.pop(context);
-                      },
-                      key: key,
-                      child: widget));
+              return Dismissible(
+                  background: const DecoratedBox(decoration: const BoxDecoration(
+                      color: Color.fromARGB(0, 0, 0, 0)
+                  ),),
+                  direction: DismissDirection.startToEnd,
+                  onDismissed: (direction) {
+                    Navigator.pop(context);
+                  },
+                  key: key,
+                  child: Material(
+                    child: widget,
+                  ));
             },
             transitionsBuilder: (BuildContext context,
                 Animation<double> animation,

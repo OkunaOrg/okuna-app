@@ -14,15 +14,14 @@ class OBToast extends StatefulWidget {
   }
 
   static OBToastState of(BuildContext context) {
-    final OBToastState toastState = context
-        .rootAncestorStateOfType(const TypeMatcher<OBToastState>());
+    final OBToastState toastState =
+        context.rootAncestorStateOfType(const TypeMatcher<OBToastState>());
     toastState._setCurrentContext(context);
     return toastState;
   }
 }
 
-class OBToastState extends State<OBToast>
-    with SingleTickerProviderStateMixin {
+class OBToastState extends State<OBToast> with SingleTickerProviderStateMixin {
   OverlayEntry _overlayEntry;
   BuildContext _currentContext;
   AnimationController controller;
@@ -79,7 +78,7 @@ class OBToastState extends State<OBToast>
 
   Future _dismissToast() async {
     await controller.reverse();
-    this._overlayEntry.remove();
+    if (this._overlayEntry != null) this._overlayEntry.remove();
     this._overlayEntry = null;
     _dismissInProgress = false;
     _toastInProgress = false;

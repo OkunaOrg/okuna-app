@@ -67,7 +67,9 @@ class AuthApiService {
   }
 
   Future<HttpieResponse> verifyEmailWithToken(String token) {
-    return _httpService.get('$apiURL$VERIFY_EMAIL_TOKEN$token/',
+    Map<String, dynamic> body = {'token': token};
+    return _httpService.postJSON('$apiURL$VERIFY_EMAIL_TOKEN',
+        body: body,
         appendAuthorizationToken: true);
   }
 

@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 class ModalService {
   Future<Post> openCreatePost(
-      {@required BuildContext context, Community community, File image}) async {
+      {@required BuildContext context, Community community, String text, File image}) async {
     Post createdPost = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Post>(
             fullscreenDialog: true,
@@ -33,6 +33,7 @@ class ModalService {
               return Material(
                 child: CreatePostModal(
                   community: community,
+                  text: text,
                   image: image,
                 ),
               );

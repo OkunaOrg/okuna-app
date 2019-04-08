@@ -13,6 +13,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/widgets/load_more.dart';
@@ -48,6 +49,11 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   FocusNode _commentInputFocusNode;
   PostCommentsSortType _currentSort;
 
+  CancelableOperation _refreshCommentsOperation;
+  CancelableOperation _refreshPostOperation;
+  CancelableOperation _loadMoreBottomCommentsOperation;
+  CancelableOperation _toggleSortCommentsOperation;
+
   @override
   void initState() {
     super.initState();
@@ -58,6 +64,17 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     _currentSort = PostCommentsSortType.dec;
     _noMoreItemsToLoad = true;
     _commentInputFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_refreshCommentsOperation != null) _refreshCommentsOperation.cancel();
+    if (_loadMoreBottomCommentsOperation != null)
+      _loadMoreBottomCommentsOperation.cancel();
+    if (_refreshPostOperation != null) _refreshPostOperation.cancel();
+    if (_toggleSortCommentsOperation != null)
+      _toggleSortCommentsOperation.cancel();
   }
 
   @override
@@ -115,11 +132,11 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                                 };
 
                                 return OBPostComment(
-                                  key: Key('postComment#${postComment.id}'),
-                                  postComment: postComment,
-                                  post: widget.post,
-                                  onPostCommentDeletedCallback: onPostCommentDeletedCallback
-                                );
+                                    key: Key('postComment#${postComment.id}'),
+                                    postComment: postComment,
+                                    post: widget.post,
+                                    onPostCommentDeletedCallback:
+                                        onPostCommentDeletedCallback);
                               }),
                           onLoadMore: _loadMoreBottomComments),
                     ),
@@ -191,6 +208,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   }
 
   void _onWantsToToggleSortComments() async {
+    if (_toggleSortCommentsOperation != null)
+      _toggleSortCommentsOperation.cancel();
     PostCommentsSortType newSortType;
 
     if (_currentSort == PostCommentsSortType.asc) {
@@ -200,9 +219,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     }
 
     try {
-      _postComments = (await _userService.getCommentsForPost(widget.post,
-              sort: newSortType))
-          .comments;
+      _toggleSortCommentsOperation = CancelableOperation.fromFuture(
+          _userService.getCommentsForPost(widget.post, sort: newSortType));
+
+      _postComments = (await _toggleSortCommentsOperation.value).comments;
       _setCurrentSortValue(newSortType);
       _userPreferencesService.setPostCommentsSortType(newSortType);
       _setPostComments(_postComments);
@@ -210,32 +230,44 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       _setNoMoreItemsToLoad(false);
     } catch (error) {
       _onError(error);
+    } finally {
+      _toggleSortCommentsOperation = null;
     }
   }
 
   Future<void> _refreshComments() async {
+    if (_refreshCommentsOperation != null) _refreshCommentsOperation.cancel();
     try {
-      _postComments = (await _userService.getCommentsForPost(widget.post,
-              sort: _currentSort))
-          .comments;
+      _refreshCommentsOperation = CancelableOperation.fromFuture(
+          _userService.getCommentsForPost(widget.post, sort: _currentSort));
+      _postComments = (await _refreshCommentsOperation.value).comments;
       _setPostComments(_postComments);
       _scrollToTop();
       _setNoMoreItemsToLoad(false);
     } catch (error) {
       _onError(error);
+    } finally {
+      _refreshCommentsOperation = null;
     }
   }
 
   Future<void> _refreshPost() async {
+    if (_refreshPostOperation != null) _refreshPostOperation.cancel();
     try {
       // This will trigger the updateSubject of the post
-      await _userService.getPostWithUuid(widget.post.uuid);
+      _refreshPostOperation = CancelableOperation.fromFuture(
+          _userService.getPostWithUuid(widget.post.uuid));
+      await _refreshPostOperation.value;
     } catch (error) {
       _onError(error);
+    } finally {
+      _refreshPostOperation = null;
     }
   }
 
   Future<bool> _loadMoreBottomComments() async {
+    if (_loadMoreBottomCommentsOperation != null)
+      _loadMoreBottomCommentsOperation.cancel();
     if (_postComments.length == 0) return true;
 
     var lastPost = _postComments.last;
@@ -245,14 +277,15 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       var moreComments;
 
       if (_currentSort == PostCommentsSortType.dec) {
-        moreComments = (await _userService.getCommentsForPost(widget.post,
-                maxId: lastPostId))
-            .comments;
+        _loadMoreBottomCommentsOperation = CancelableOperation.fromFuture(
+            _userService.getCommentsForPost(widget.post, maxId: lastPostId));
       } else {
-        moreComments = (await _userService.getCommentsForPost(widget.post,
-                minId: lastPostId + 1, sort: _currentSort))
-            .comments;
+        _loadMoreBottomCommentsOperation = CancelableOperation.fromFuture(
+            _userService.getCommentsForPost(widget.post,
+                minId: lastPostId + 1, sort: _currentSort));
       }
+
+      moreComments = (await _loadMoreBottomCommentsOperation.value).comments;
 
       if (moreComments.length == 0) {
         _setNoMoreItemsToLoad(true);
@@ -262,6 +295,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       return true;
     } catch (error) {
       _onError(error);
+    } finally {
+      _loadMoreBottomCommentsOperation = null;
     }
 
     return false;

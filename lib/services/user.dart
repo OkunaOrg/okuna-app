@@ -149,16 +149,22 @@ class UserService {
 
   Future<void> logout() async {
     _deleteCurrentDevice();
-    await _removeStoredFirstPostsData();
     await _removeStoredUserData();
     await _removeStoredAuthToken();
-    DiskCache().clear();
     _httpieService.removeAuthorizationToken();
     _removeLoggedInUser();
-    Post.clearCache();
+    await clearCache();
     User.clearSessionCache();
-    User.clearNavigationCache();
     _getOrCreateCurrentDeviceCache = null;
+  }
+
+  Future<void> clearCache() async {
+    await _removeStoredFirstPostsData();
+    await DiskCache().clear();
+    Post.clearCache();
+    User.clearNavigationCache();
+    PostComment.clearCache();
+    Community.clearCache();
   }
 
   Future<void> loginWithCredentials(
@@ -217,10 +223,6 @@ class UserService {
   Future<User> updateUserEmail(String email) async {
     HttpieStreamedResponse response =
         await _authApiService.updateUserEmail(email: email);
-
-    if (response.isBadRequest()) {
-      return getLoggedInUser();
-    }
     _checkResponseIsOk(response);
     String userData = await response.readAsString();
     return _makeLoggedInUser(userData);
@@ -427,9 +429,11 @@ class UserService {
   }
 
   Future<PostComment> editPostComment(
-      {@required Post post, @required PostComment postComment, @required String text}) async {
-    HttpieResponse response =
-    await _postsApiService.editPostComment(postUuid: post.uuid, postCommentId: postComment.id, text: text);
+      {@required Post post,
+      @required PostComment postComment,
+      @required String text}) async {
+    HttpieResponse response = await _postsApiService.editPostComment(
+        postUuid: post.uuid, postCommentId: postComment.id, text: text);
     _checkResponseIsOk(response);
     return PostComment.fromJSON(json.decode(response.body));
   }

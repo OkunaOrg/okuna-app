@@ -10,6 +10,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   bool _changedEmailTaken = false;
   bool _formValid = true;
   TextEditingController _emailController = TextEditingController();
+  CancelableOperation _requestOperation;
 
   @override
   void initState() {
@@ -42,6 +44,12 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     _changedEmailTaken = false;
     _formValid = true;
     _emailController.addListener(_updateFormValid);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_requestOperation != null) _requestOperation.cancel();
   }
 
   @override
@@ -122,13 +130,9 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     _setRequestInProgress(true);
     try {
       var email = _emailController.text;
-      var originalEmail = _userService.getLoggedInUser().getEmail();
-      User user = await _userService.updateUserEmail(email);
-      if (user.getEmail() != email || originalEmail == user.getEmail()) {
-        _setChangedEmailTaken(true);
-        _validateForm();
-        return;
-      }
+      _requestOperation =
+          CancelableOperation.fromFuture(_userService.updateUserEmail(email));
+      await _requestOperation.value;
       _toastService.success(
           message:
               'We\'ve sent a confirmation link to your new email address, click it to verify your new email',
@@ -137,6 +141,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     } catch (error) {
       _onError(error);
     } finally {
+      _requestOperation = null;
       _setRequestInProgress(false);
     }
   }

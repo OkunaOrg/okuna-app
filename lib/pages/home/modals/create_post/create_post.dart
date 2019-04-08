@@ -28,9 +28,10 @@ import 'package:pigment/pigment.dart';
 
 class CreatePostModal extends StatefulWidget {
   final Community community;
+  final String text;
   final File image;
 
-  const CreatePostModal({Key key, this.community, this.image})
+  const CreatePostModal({Key key, this.community, this.text, this.image})
       : super(key: key);
 
   @override
@@ -68,6 +69,9 @@ class CreatePostModalState extends State<CreatePostModal> {
   void initState() {
     super.initState();
     _textController = TextEditingController();
+    if (widget.text != null) {
+      _textController.text = widget.text;
+    }
     _textController.addListener(_onPostTextChanged);
     _focusNode = FocusNode();
     _focusNode.addListener(_onFocusNodeChanged);
