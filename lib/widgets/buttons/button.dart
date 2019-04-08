@@ -118,8 +118,8 @@ class OBButton extends StatelessWidget {
 
   Widget _getLoadingIndicator(Color color) {
     return SizedBox(
-      height: 15.0,
-      width: 15.0,
+      height: 18.0,
+      width: 18.0,
       child: CircularProgressIndicator(
           strokeWidth: 2.0, valueColor: AlwaysStoppedAnimation<Color>(color)),
     );
