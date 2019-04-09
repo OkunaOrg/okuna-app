@@ -11,8 +11,6 @@ class OBCuratedThemes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _themeService = OpenbookProvider.of(context).themeService;
-    var themes = _themeService.getCuratedThemes();
-    var maxExtent = 120.0;
 
     return Padding(
       padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
@@ -23,7 +21,7 @@ class OBCuratedThemes extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(bottom: 15.0),
+              padding: EdgeInsets.only(bottom: 15.0, top: 15.0),
               child: const OBText(
                 'Curated themes',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -33,7 +31,7 @@ class OBCuratedThemes extends StatelessWidget {
             GridView.extent(
               primary: false,
               physics: const NeverScrollableScrollPhysics(),
-              maxCrossAxisExtent: maxExtent,
+              maxCrossAxisExtent: OBThemePreview.maxWidth,
               children: _buildThemePreviews(),
               shrinkWrap: true,
             ),
