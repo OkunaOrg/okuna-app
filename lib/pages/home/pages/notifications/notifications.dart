@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/push_notification.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
@@ -20,9 +23,13 @@ import 'package:flutter/material.dart';
 
 class OBNotificationsPage extends StatefulWidget {
   final OBNotificationsPageController controller;
+  final OBNotificationsPageTab selectedTab;
+  final ValueChanged<OBNotificationsPageTab> onTabSelectionChanged;
 
   OBNotificationsPage({
     this.controller,
+    this.selectedTab = OBNotificationsPageTab.general,
+    this.onTabSelectionChanged
   });
 
   @override
@@ -32,7 +39,7 @@ class OBNotificationsPage extends StatefulWidget {
 }
 
 class OBNotificationsPageState extends State<OBNotificationsPage>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
@@ -40,6 +47,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   OBHttpListController<OBNotification> _notificationsListController;
   StreamSubscription _pushNotificationSubscription;
   OBNotificationsPageController _controller;
+  TabController _tabController;
 
   bool _needsBootstrap;
   bool _isActivePage;
@@ -55,6 +63,18 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     _controller = widget.controller ?? OBNotificationsPage();
     _controller.attach(state: this, context: context);
 
+    _tabController = TabController(length: 2, vsync: this);
+    //_tabController.addListener(_onTabSelectionChanged);
+    switch (widget.selectedTab) {
+      case OBNotificationsPageTab.general:
+        _tabController.index = 0;
+        break;
+      case OBNotificationsPageTab.connectionRequests:
+        _tabController.index = 1;
+        break;
+      default:
+        throw 'Unhandled tab index';
+    }
     _needsBootstrap = true;
     _shouldMarkNotificationsAsRead = true;
     if (_isActivePage == null) _isActivePage = false;
@@ -62,8 +82,9 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+
     if (_needsBootstrap) {
-      var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
       _navigationService = openbookProvider.navigationService;
@@ -72,20 +93,12 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
       _needsBootstrap = false;
     }
 
-    List<Widget> stackItems = [
-      OBPrimaryColorContainer(
-        child: OBHttpList(
-          key: Key('notificationsList'),
-          controller: _notificationsListController,
-          listRefresher: _refreshNotifications,
-          listOnScrollLoader: _loadMoreNotifications,
-          listItemBuilder: _buildNotification,
-          resourceSingularName: 'notification',
-          resourcePluralName: 'notifications',
-          physics: const ClampingScrollPhysics(),
-        ),
-      ),
-    ];
+    ThemeService themeService = openbookProvider.themeService;
+    ThemeValueParserService themeValueParser = openbookProvider.themeValueParserService;
+    OBTheme theme = themeService.getActiveTheme();
+
+    Color tabIndicatorColor = themeValueParser.parseGradient(theme.primaryAccentColor).colors[1];
+    Color tabLabelColor = themeValueParser.parseColor(theme.primaryTextColor);
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
@@ -96,15 +109,71 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
             onPressed: _onWantsToConfigureNotifications,
           ),
         ),
-        child: Stack(
-          children: stackItems,
-        ));
+        child: OBPrimaryColorContainer(
+        child: Column(
+          children: <Widget>[
+            TabBar(
+              controller: _tabController,
+              tabs: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: Tab(text: 'General'),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: Tab(text: 'Requests'),
+                )
+              ],
+              isScrollable: false,
+              indicatorColor: tabIndicatorColor,
+              labelColor: tabLabelColor,
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  _buildGeneralNotifications(),
+                  _buildRequestNotifications(),
+                ],
+              )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGeneralNotifications() {
+    return OBHttpList(
+      key: Key('notificationsList'),
+      controller: _notificationsListController,
+      listRefresher: _refreshGeneralNotifications,
+      listOnScrollLoader: _loadMoreGeneralNotifications,
+      listItemBuilder: _buildNotification,
+      resourceSingularName: 'notification',
+      resourcePluralName: 'notifications',
+      physics: const ClampingScrollPhysics(),
+    );
+  }
+
+  Widget _buildRequestNotifications() {
+    return OBHttpList(
+      key: Key('notificationsList'),
+      controller: _notificationsListController,
+      listRefresher: _refreshRequestNotifications,
+      listOnScrollLoader: _loadMoreRequestNotifications,
+      listItemBuilder: _buildNotification,
+      resourceSingularName: 'notification',
+      resourcePluralName: 'notifications',
+      physics: const ClampingScrollPhysics(),
+    );
   }
 
   void dispose() {
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
     _pushNotificationSubscription.cancel();
+   // _tabController.removeListener(_onTabSelectionChanged);
   }
 
   void scrollToTop() {
@@ -126,10 +195,19 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     );
   }
 
-  Future<List<OBNotification>> _refreshNotifications() async {
+  Future<List<OBNotification>> _refreshGeneralNotifications() async {
     await _readNotifications();
 
-    NotificationsList notificationsList = await _userService.getNotifications();
+    var types = <String>['PR', 'PC', 'CC', 'F', 'CI'];
+    NotificationsList notificationsList = await _userService.getNotifications(types: types);
+    return notificationsList.notifications;
+  }
+
+  Future<List<OBNotification>> _refreshRequestNotifications() async {
+    await _readNotifications();
+
+    var types = <String>['CR'];
+    NotificationsList notificationsList = await _userService.getNotifications(types: types);
     return notificationsList.notifications;
   }
 
@@ -142,12 +220,23 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     }
   }
 
-  Future<List<OBNotification>> _loadMoreNotifications(
+  Future<List<OBNotification>> _loadMoreGeneralNotifications(
       List<OBNotification> currentNotifications) async {
     OBNotification lastNotification = currentNotifications.last;
     int lastNotificationId = lastNotification.id;
+    var types = <String>['PR', 'PC', 'CC', 'F', 'CI'];
     NotificationsList moreNotifications =
-        await _userService.getNotifications(maxId: lastNotificationId);
+    await _userService.getNotifications(maxId: lastNotificationId, types: types);
+    return moreNotifications.notifications;
+  }
+
+  Future<List<OBNotification>> _loadMoreRequestNotifications(
+      List<OBNotification> currentNotifications) async {
+    OBNotification lastNotification = currentNotifications.last;
+    int lastNotificationId = lastNotification.id;
+    var types = <String>['CR'];
+    NotificationsList moreNotifications =
+    await _userService.getNotifications(maxId: lastNotificationId, types: types);
     return moreNotifications.notifications;
   }
 
@@ -184,6 +273,12 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   void _bootstrap() {
     _pushNotificationSubscription =
         _pushNotificationsService.pushNotification.listen(_onPushNotification);
+  }
+
+  void _onTabSelectionChanged() {
+    OBNotificationsPageTab newSelection =
+        OBNotificationsPageTab.values[_tabController.previousIndex];
+    widget.onTabSelectionChanged(newSelection);
   }
 
   void _onPushNotification(PushNotification pushNotification) {
@@ -295,3 +390,5 @@ class OBNotificationsPageController extends PoppablePageController {
     _markNotificationsAsRead = markNotificationsAsRead;
   }
 }
+
+enum OBNotificationsPageTab { general, connectionRequests }

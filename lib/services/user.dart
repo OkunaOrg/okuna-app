@@ -1311,9 +1311,9 @@ class UserService {
     return CategoriesList.fromJson(json.decode(response.body));
   }
 
-  Future<NotificationsList> getNotifications({int maxId, int count}) async {
+  Future<NotificationsList> getNotifications({int maxId, int count, List<String> types}) async {
     HttpieResponse response = await _notificationsApiService.getNotifications(
-        maxId: maxId, count: count);
+        maxId: maxId, count: count, types: types);
     _checkResponseIsOk(response);
     return NotificationsList.fromJson(json.decode(response.body));
   }

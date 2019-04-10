@@ -25,12 +25,14 @@ class NotificationsApiService {
     apiURL = newApiURL;
   }
 
-  Future<HttpieResponse> getNotifications({int maxId, int count}) {
+  Future<HttpieResponse> getNotifications({int maxId, int count, List<String> types}) {
     Map<String, dynamic> queryParams = {};
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
     if (count != null) queryParams['count'] = count;
+
+    if (types != null) queryParams['types'] = types;
 
     String url = _makeApiUrl(NOTIFICATIONS_PATH);
     return _httpService.get(url,
