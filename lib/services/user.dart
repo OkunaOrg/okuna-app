@@ -1325,9 +1325,9 @@ class UserService {
     return OBNotification.fromJSON(json.decode(response.body));
   }
 
-  Future<void> readNotifications({int maxId}) async {
+  Future<void> readNotifications({int maxId, List<String> types}) async {
     HttpieResponse response =
-        await _notificationsApiService.readNotifications(maxId: maxId);
+        await _notificationsApiService.readNotifications(maxId: maxId, types: types);
     _checkResponseIsOk(response);
   }
 
