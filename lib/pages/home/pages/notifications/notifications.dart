@@ -196,23 +196,17 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshGeneralNotifications() async {
-    var types = <NotificationType>[
-      NotificationType.postReaction,
-      NotificationType.postComment,
-      NotificationType.connectionConfirmed,
-      NotificationType.follow,
-      NotificationType.communityInvite
-    ];
-    return _refreshNotifications(types);
+    await _readNotifications();
+
+    var types = <String>['PR', 'PC', 'CC', 'F', 'CI'];
+    NotificationsList notificationsList = await _userService.getNotifications(types: types);
+    return notificationsList.notifications;
   }
 
   Future<List<OBNotification>> _refreshRequestNotifications() async {
-    return _refreshNotifications([NotificationType.connectionRequest]);
-  }
+    await _readNotifications();
 
-  Future<List<OBNotification>> _refreshNotifications([List<NotificationType> types]) async {
-    await _readNotifications(types: types);
-
+    var types = <String>['CR'];
     NotificationsList notificationsList = await _userService.getNotifications(types: types);
     return notificationsList.notifications;
   }
@@ -228,25 +222,19 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
   Future<List<OBNotification>> _loadMoreGeneralNotifications(
       List<OBNotification> currentNotifications) async {
-    var types = <NotificationType>[
-      NotificationType.postReaction,
-      NotificationType.postComment,
-      NotificationType.connectionConfirmed,
-      NotificationType.follow,
-      NotificationType.communityInvite
-    ];
-    return _loadMoreNotifications(currentNotifications, types);
+    OBNotification lastNotification = currentNotifications.last;
+    int lastNotificationId = lastNotification.id;
+    var types = <String>['PR', 'PC', 'CC', 'F', 'CI'];
+    NotificationsList moreNotifications =
+    await _userService.getNotifications(maxId: lastNotificationId, types: types);
+    return moreNotifications.notifications;
   }
 
   Future<List<OBNotification>> _loadMoreRequestNotifications(
       List<OBNotification> currentNotifications) async {
-    return _loadMoreNotifications(currentNotifications, [NotificationType.connectionRequest]);
-  }
-
-  Future<List<OBNotification>> _loadMoreNotifications(
-      List<OBNotification> currentNotifications, [List<NotificationType> types]) async {
     OBNotification lastNotification = currentNotifications.last;
     int lastNotificationId = lastNotification.id;
+    var types = <String>['CR'];
     NotificationsList moreNotifications =
     await _userService.getNotifications(maxId: lastNotificationId, types: types);
     return moreNotifications.notifications;
