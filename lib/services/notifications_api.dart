@@ -40,14 +40,14 @@ class NotificationsApiService {
         appendAuthorizationToken: true, queryParameters: queryParams);
   }
 
-  Future<HttpieResponse> readNotifications({int maxId, List<NotificationType> types}) {
+  Future<HttpieResponse> readNotifications({int maxId, List<String> types}) {
     String url = _makeApiUrl(NOTIFICATIONS_READ_PATH);
     Map<String, dynamic> body = {};
 
     if (maxId != null) body['max_id'] = maxId.toString();
 
     if (types != null) {
-      body['types'] = types.map<String>((type) => type.toString()).join(',');
+      body['types'] = types.join(',');
     }
 
     return _httpService.post(url, body: body, appendAuthorizationToken: true);

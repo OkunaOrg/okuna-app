@@ -196,22 +196,24 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshGeneralNotifications() async {
-    await _readNotifications();
-
     var types = <String>['PR', 'PC', 'CC', 'F', 'CI'];
+
+    await _readNotifications(types: types);
+
     NotificationsList notificationsList = await _userService.getNotifications(types: types);
     return notificationsList.notifications;
   }
 
   Future<List<OBNotification>> _refreshRequestNotifications() async {
-    await _readNotifications();
-
     var types = <String>['CR'];
+
+    await _readNotifications(types: types);
+
     NotificationsList notificationsList = await _userService.getNotifications(types: types);
     return notificationsList.notifications;
   }
 
-  Future _readNotifications({List<NotificationType> types}) async {
+  Future _readNotifications({List<String> types}) async {
     if (_shouldMarkNotificationsAsRead &&
         _notificationsListController.hasItems()) {
       OBNotification firstItem = _notificationsListController.firstItem();
