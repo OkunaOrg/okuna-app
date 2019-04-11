@@ -21,14 +21,33 @@ class OBPostBodyText extends StatelessWidget {
         onLongPress: _copyText,
         child: Padding(
             padding: EdgeInsets.all(20.0),
-            child: OBActionableSmartText(
-              text: _post.getText(),
-            ))
+            child: _buildActionablePostText()
+      )
     );
   }
 
+  Widget _buildActionablePostText() {
+    return StreamBuilder(
+        stream: this._post.updateSubject,
+        initialData: this._post,
+        builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
+          Post post = snapshot.data;
+
+          if (post.isEdited != null && post.isEdited) {
+            return OBActionableSmartText(
+              text: post.text,
+              trailingSmartTextElement: SecondaryTextElement(' (edited)'),
+            );
+          } else {
+            return OBActionableSmartText(
+              text: post.text,
+            );
+          }
+    });
+  }
+
   void _copyText() {
-    Clipboard.setData(ClipboardData(text: _post.getText()));
+    Clipboard.setData(ClipboardData(text: _post.text));
     _toastService.toast(message: 'Text copied!', context: _context, type: ToastType.info);
   }
 }

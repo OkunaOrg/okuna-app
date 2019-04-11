@@ -4,6 +4,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class OBUserBadge extends StatelessWidget {
   final Badge badge;
@@ -44,6 +45,8 @@ class OBUserBadge extends StatelessWidget {
               return _getDiamondFounderBadge(badge); break;
             case BadgeKeyword.super_founder:
               return _getSuperFounderBadge(badge); break;
+            case BadgeKeyword.angel:
+              return _getAngelBadge(badge); break;
             case BadgeKeyword.none:
               return const SizedBox(); break;
           }
@@ -74,6 +77,38 @@ class OBUserBadge extends StatelessWidget {
         child: OBIcon(OBIcons.check, customSize: _getUserBadgeIconSize(size), color: Colors.white),
       ),
     );
+  }
+
+  Widget _getAngelBadge(Badge badge) {
+    double badgeSize = _getUserBadgeSize(size);
+    double iconSize = _getUserBadgeIconSize(size);
+
+    return Stack(
+          children: <Widget>[
+            Shimmer.fromColors(
+              baseColor: Colors.pink,
+              highlightColor: Colors.pinkAccent[100],
+              child: Container(
+                margin: EdgeInsets.only(left: 4.0, right: 4.0),
+                width: badgeSize,
+                height: badgeSize,
+                decoration: BoxDecoration(
+                    color: Colors.pink[200],
+                    border: Border.all(color: Colors.pink),
+                    borderRadius: BorderRadius.circular(50)
+                ),
+                child: SizedBox(),
+              ),
+            ),
+            Positioned(
+              top: 0.0,
+              left: 0.0,
+              bottom: 0.0,
+              right: 0.0,
+              child: OBIcon(OBIcons.check, customSize: iconSize, color: Colors.white),
+            ),
+          ],
+        );
   }
 
   Widget _getFounderBadge(Badge badge) {
