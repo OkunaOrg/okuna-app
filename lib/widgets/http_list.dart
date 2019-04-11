@@ -99,15 +99,17 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   void scrollToTop() {
-    if (_listScrollController.offset == 0) {
-      _listRefreshIndicatorKey.currentState.show();
-    }
+    if (_listScrollController.hasClients) {
+      if (_listScrollController.offset == 0) {
+        _listRefreshIndicatorKey.currentState.show();
+      }
 
-    _listScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+      _listScrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 
   void dispose() {
@@ -270,7 +272,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     await (shouldUseRefreshIndicator
         ? _listRefreshIndicatorKey.currentState.show()
         : _refreshList());
-    if (shouldScrollToTop && _listScrollController.offset != 0) {
+    if (shouldScrollToTop &&
+        _listScrollController.hasClients &&
+        _listScrollController.offset != 0) {
       scrollToTop();
     }
   }
