@@ -29,13 +29,6 @@ class OBNotification extends UpdatableModel<OBNotification> {
       this.read});
 
   static final factory = NotificationFactory();
-  static final postReaction = 'PR';
-  static final postComment = 'PC';
-  static final postCommentReply = 'PCR';
-  static final connectionRequest = 'CR';
-  static final connectionConfirmed = 'CC';
-  static final follow = 'F';
-  static final communityInvite = 'CI';
 
   factory OBNotification.fromJSON(Map<String, dynamic> json) {
     return factory.fromJson(json);
@@ -52,7 +45,7 @@ class OBNotification extends UpdatableModel<OBNotification> {
     }
 
     if (json.containsKey('notification_type')) {
-      type = factory.parseType(json['notification_type']);
+      type = NotificationType.parse(json['notification_type']);
     }
 
     if (json.containsKey('content_object')) {
@@ -82,7 +75,7 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
 
   @override
   OBNotification makeFromJson(Map json) {
-    NotificationType type = parseType(json['notification_type']);
+    NotificationType type = NotificationType.parse(json['notification_type']);
 
     return OBNotification(
         id: json['id'],
@@ -97,32 +90,6 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
   User parseUser(Map userData) {
     if (userData == null) return null;
     return User.fromJson(userData);
-  }
-
-  NotificationType parseType(String notificationTypeStr) {
-    if (notificationTypeStr == null) return null;
-
-    NotificationType notificationType;
-    if (notificationTypeStr == OBNotification.postReaction) {
-      notificationType = NotificationType.postReaction;
-    } else if (notificationTypeStr == OBNotification.postComment) {
-      notificationType = NotificationType.postComment;
-    } else if (notificationTypeStr == OBNotification.postCommentReply) {
-      notificationType = NotificationType.postCommentReply;
-    } else if (notificationTypeStr == OBNotification.connectionRequest) {
-      notificationType = NotificationType.connectionRequest;
-    } else if (notificationTypeStr == OBNotification.connectionConfirmed) {
-      notificationType = NotificationType.connectionConfirmed;
-    } else if (notificationTypeStr == OBNotification.follow) {
-      notificationType = NotificationType.follow;
-    } else if (notificationTypeStr == OBNotification.communityInvite) {
-      notificationType = NotificationType.communityInvite;
-    } else {
-      // Don't throw as we might introduce new notifications on the API which might not be yet in code
-      print('Unsupported notification type');
-    }
-
-    return notificationType;
   }
 
   dynamic parseContentObject(
@@ -164,12 +131,45 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
   }
 }
 
-enum NotificationType {
-  postReaction,
-  postComment,
-  postCommentReply,
-  connectionRequest,
-  connectionConfirmed,
-  follow,
-  communityInvite
+class NotificationType {
+  // Using a custom-built enum class to link the notification type strings
+  // directly to the matching enum constants.
+  // This class can still be used in switch statements as a normal enum.
+  final String _value;
+  const NotificationType._internal(this._value);
+  toString() => _value;
+
+  static const postReaction = const NotificationType._internal('PR');
+  static const postComment = const NotificationType._internal('PC');
+  static const postCommentReply = const NotificationType._internal('PCR');
+  static const connectionRequest = const NotificationType._internal('CR');
+  static const connectionConfirmed = const NotificationType._internal('CC');
+  static const follow = const NotificationType._internal('F');
+  static const communityInvite = const NotificationType._internal('CI');
+
+  static NotificationType parse(String string) {
+    if (string == null) return null;
+
+    NotificationType notificationType;
+    if (string == postReaction._value) {
+      notificationType = postReaction;
+    } else if (string == postComment._value) {
+      notificationType = postComment;
+    } else if (string == postCommentReply._value) {
+      notificationType = postCommentReply;
+    } else if (string == connectionRequest._value) {
+      notificationType = connectionRequest;
+    } else if (string == connectionConfirmed._value) {
+      notificationType = connectionConfirmed;
+    } else if (string == follow._value) {
+      notificationType = follow;
+    } else if (string == communityInvite._value) {
+      notificationType = communityInvite;
+    } else {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported notification type');
+    }
+
+    return notificationType;
+  }
 }

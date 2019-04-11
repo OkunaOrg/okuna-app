@@ -1311,7 +1311,7 @@ class UserService {
     return CategoriesList.fromJson(json.decode(response.body));
   }
 
-  Future<NotificationsList> getNotifications({int maxId, int count, List<String> types}) async {
+  Future<NotificationsList> getNotifications({int maxId, int count, List<NotificationType> types}) async {
     HttpieResponse response = await _notificationsApiService.getNotifications(
         maxId: maxId, count: count, types: types);
     _checkResponseIsOk(response);
@@ -1325,7 +1325,7 @@ class UserService {
     return OBNotification.fromJSON(json.decode(response.body));
   }
 
-  Future<void> readNotifications({int maxId, List<String> types}) async {
+  Future<void> readNotifications({int maxId, List<NotificationType> types}) async {
     HttpieResponse response =
         await _notificationsApiService.readNotifications(maxId: maxId, types: types);
     _checkResponseIsOk(response);
