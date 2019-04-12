@@ -45,6 +45,7 @@
 	<string>We use this permission to allow you to share photos/videos from your library.</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
