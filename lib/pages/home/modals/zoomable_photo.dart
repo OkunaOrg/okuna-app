@@ -99,7 +99,8 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
                   _checkIsDismissible();
                 },
               ),
-              _buildCloseButton()
+              _buildCloseButton(),
+              _buildDownloadButton(),
             ],
           )),
       onWillPop: _dismissModalNoPop,
@@ -256,7 +257,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
   Widget _buildCloseButton() {
     return Positioned(
       bottom: 50,
-      left: 0,
+      left: 100,
       right: 0,
       child: SafeArea(
           child: Column(
@@ -279,6 +280,36 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
               )
             ],
           )),
+    );
+  }
+
+  Widget _buildDownloadButton() {
+    return Positioned(
+      bottom: 50,
+      left: 0,
+      right: 100,
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            GestureDetector(
+              onTapDown: (tap) {
+                
+              },
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Pigment.fromString('#1d1d1d'),
+                  borderRadius: BorderRadius.circular(50)),
+                child: const OBIcon(
+                  OBIcons.download,
+                  size: OBIconSize.large,
+                  color: Colors.white
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
