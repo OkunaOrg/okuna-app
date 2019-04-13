@@ -30,6 +30,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_sett
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post.dart';
@@ -244,6 +245,13 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obApplicationSettingsPage'),
             widget: OBApplicationSettingsPage()));
+  }
+
+  Future navigateToThemesPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obMenuThemes'), widget: OBThemesPage()));
   }
 
   Future navigateToUsefulLinksPage({@required BuildContext context}) {

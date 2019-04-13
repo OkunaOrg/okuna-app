@@ -4,6 +4,7 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBThemePreview extends StatelessWidget {
+  static const maxWidth = 120.0;
   final OBTheme theme;
   final OnThemePreviewPressed onThemePreviewPressed;
 
@@ -32,7 +33,7 @@ class OBThemePreview extends StatelessWidget {
               }
             },
             child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: 70),
+              constraints: BoxConstraints(minWidth: 70, maxWidth: maxWidth),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -56,6 +57,8 @@ class OBThemePreview extends StatelessWidget {
                   OBText(
                     theme.name,
                     size: OBTextSize.small,
+                    maxLines: 3,
+                    textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
