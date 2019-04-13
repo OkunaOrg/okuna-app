@@ -39,23 +39,13 @@ const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
 - (void)callOpenbookAppWithSharedFileName:(NSString*)fileName {
   NSURL* url = [[NSURL URLWithString:@"openbook://share"] URLByAppendingPathComponent:fileName];
   NSLog(@"Opening URL: %@", url);
-  SEL selectorOpenURL = NSSelectorFromString(@"openURL:options:completionHandler:");
+  SEL selectorOpenURL = NSSelectorFromString(@"openURL:");
+  [self.extensionContext openURL:url completionHandler:nil];
 
   UIResponder* responder = (UIResponder*)self;
   while ((responder = [responder nextResponder]) != nil) {
     if ([responder respondsToSelector:selectorOpenURL]) {
-      NSMethodSignature* signature = [responder methodSignatureForSelector:selectorOpenURL];
-      NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
-      NSDictionary<NSString*,id>* options = [NSDictionary dictionary];
-      void (^completion)(BOOL success) = ^void(BOOL success) {
-        NSLog(@"completion for openURL: %i", success);
-      };
-      [invocation setTarget:responder];
-      [invocation setSelector:selectorOpenURL];
-      [invocation setArgument:&url atIndex:2];
-      [invocation setArgument:&options atIndex:3];
-      [invocation setArgument:&completion atIndex:4];
-      [invocation invoke];
+      [responder performSelector:selectorOpenURL withObject:url];
       break;
     }
   }
