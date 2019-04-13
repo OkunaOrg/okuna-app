@@ -13,41 +13,30 @@ class OBCuratedThemes extends StatelessWidget {
     _themeService = OpenbookProvider.of(context).themeService;
 
     return Padding(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-      child:
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(bottom: 15.0, top: 15.0),
-              child: const OBText(
-                'Curated themes',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                size: OBTextSize.large,
+        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              GridView.extent(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                maxCrossAxisExtent: OBThemePreview.maxWidth,
+                children: _buildThemePreviews(),
+                shrinkWrap: true,
               ),
-            ),
-            GridView.extent(
-              primary: false,
-              physics: const NeverScrollableScrollPhysics(),
-              maxCrossAxisExtent: OBThemePreview.maxWidth,
-              children: _buildThemePreviews(),
-              shrinkWrap: true,
-            ),
-          ],
-        ),
-      )
-    );
+            ],
+          ),
+        ));
   }
-
 
   List<Widget> _buildThemePreviews() {
     var themes = _themeService.getCuratedThemes();
     var res = <Widget>[];
 
-    for (var theme in themes)
-    {
+    for (var theme in themes) {
       var builder = Builder(builder: (buildContext) {
         return OBThemePreview(
           theme,
