@@ -1,3 +1,4 @@
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:flutter/gestures.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pigment/pigment.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:downloads_path_provider/downloads_path_provider.dart';
 import "dart:math" show pi;
 
 class OBZoomablePhotoModal extends StatefulWidget {
@@ -292,8 +295,22 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
         child: Column(
           children: <Widget>[
             GestureDetector(
-              onTapDown: (tap) {
-                
+              onTapDown: (tap) async {
+                bool hasPermission = await OpenbookProvider
+                  .of(context)
+                  .permissionService
+                  .checkOrAcquireStoragePermission(context);
+                if (!hasPermission) {
+                  return;
+                }
+                var directory = await DownloadsPathProvider.downloadsDirectory;
+                Uri uri = Uri.parse(widget.imageUrl);
+                await FlutterDownloader.enqueue(
+                  url: widget.imageUrl,
+                  savedDir: directory.path,
+                  showNotification: true,
+                  openFileFromNotification: true,
+                  fileName: uri.pathSegments.last);
               },
               child: Container(
                 padding: EdgeInsets.all(10),
