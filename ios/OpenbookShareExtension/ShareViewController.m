@@ -36,22 +36,26 @@ const NSString* APP_GROUP_NAME = @"group.social.openbook.app";
   return tempFile;
 }
 
+- (UIApplication*)getUIApplication {
+  UIResponder* responder = (UIResponder*)self;
+  while ((responder = [responder nextResponder]) != nil) {
+    if ([responder isKindOfClass:[UIApplication class]]) {
+      return (UIApplication*)responder;
+    }
+  }
+  return nil;
+}
+
 - (void)callOpenbookAppWithSharedFileName:(NSString*)fileName {
   NSURL* url = [[NSURL URLWithString:@"openbook://share"] URLByAppendingPathComponent:fileName];
   NSLog(@"Opening URL: %@", url);
-  SEL selectorOpenURL = NSSelectorFromString(@"openURL:");
-  [self.extensionContext openURL:url completionHandler:nil];
+  UIApplication* application = [self getUIApplication];
+  if (application == nil) {
+    NSLog(@"Failed to get UIApplication, can't open URL!");
+    return;
+  }
 
-  UIResponder* responder = (UIResponder*)self;
-  while ((responder = [responder nextResponder]) != nil) {
-    if ([responder respondsToSelector:selectorOpenURL]) {
-      [responder performSelector:selectorOpenURL withObject:url];
-      break;
-    }
-  }
-  if (responder == nil) {
-    NSLog(@"Warning: No responder found to open URL");
-  }
+  [application performSelector:@selector(openURL:) withObject:url];
 }
 
 - (void)callOpenbookAppWithData:(NSDictionary*)data {
