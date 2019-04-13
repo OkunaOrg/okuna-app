@@ -20,9 +20,17 @@ class OBPostBodyImage extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double maxBoxHeight = screenHeight*.75;
 
-    double aspectRatio = post.getImageWidth() / post.getImageHeight();
-    double imageHeight = (screenWidth / aspectRatio);
+    double imageAspectRatio = post.getImageWidth() / post.getImageHeight();
+    double imageHeight = (screenWidth / imageAspectRatio);
     double boxHeight = min(imageHeight, maxBoxHeight);
+
+    List<Widget> stackItems = [
+      _buildImageWidget(screenWidth, imageHeight, imageUrl)
+    ];
+
+    if (imageHeight > maxBoxHeight) {
+      stackItems.add(_buildExpandIcon());
+    }
 
     return GestureDetector(
         onTap: () {
@@ -34,39 +42,46 @@ class OBPostBodyImage extends StatelessWidget {
           width: screenWidth,
           height: boxHeight,
           child: Stack(
-            children: <Widget>[TransitionToImage(
-              width: screenWidth,
-              height: imageHeight,
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.center,
-              image: AdvancedNetworkImage(imageUrl,
-                  useDiskCache: true,
-                  fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-                  retryLimit: 3,
-                  timeoutDuration: const Duration(minutes: 1)),
-              placeholder: Center(
-                child: const OBProgressIndicator(),
-              ),
-              duration: const Duration(milliseconds: 300),
-            ),
-            Positioned(
-                bottom: 10,
-                right: 10,
-                child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Pigment.fromString("#1d1d1d"), //Same as in OBZoomablePhotoModal
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    child: OBIcon(
-                      OBIcons.fullscreen,
-                      size: OBIconSize.medium,
-                      color: Colors.white,
-                    )
-                )
-            ),
-            ],
+            children: stackItems,
           ),
+        )
+    );
+  }
+
+  Widget _buildImageWidget(double width, double height, String imageUrl) {
+    return TransitionToImage(
+      width: width,
+      height: height,
+      fit: BoxFit.fitWidth,
+      alignment: Alignment.center,
+      image: AdvancedNetworkImage(imageUrl,
+          useDiskCache: true,
+          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+          retryLimit: 3,
+          timeoutDuration: const Duration(minutes: 1)),
+      placeholder: Center(
+        child: const OBProgressIndicator(),
+      ),
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  Widget _buildExpandIcon() {
+    return Positioned(
+        bottom: 10,
+        right: 10,
+        child: Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              //Same dark grey as in OBZoomablePhotoModal
+              color: Pigment.fromString("#1d1d1d"),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            child: OBIcon(
+              OBIcons.fullscreen,
+              size: OBIconSize.medium,
+              color: Colors.white,
+            )
         )
     );
   }
