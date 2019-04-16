@@ -25,7 +25,7 @@
   "AUTH.CREATE_ACC.USERNAME_SERVER_ERROR": "😭 We're experiencing issues with our servers, please try again in a couple of minutes.",
   "AUTH.CREATE_ACC.WHAT_EMAIL": "What's your email?",
   "AUTH.CREATE_ACC.EMAIL_PLACEHOLDER": "john_travolta@mail.com",
-  "AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR": "😱 Your email can't be empty",
+  "AUTH.CREATE_ACC.EMAIL_EMPTY_ERROR": "😱 Your email can't be empty.",
   "AUTH.CREATE_ACC.EMAIL_INVALID_ERROR": "😅 Please provide a valid email address.",
   "AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR": "🤔 An account already exists for that email.",
   "AUTH.CREATE_ACC.EMAIL_SERVER_ERROR": "😭 We're experiencing issues with our servers, please try again in a couple of minutes.",
