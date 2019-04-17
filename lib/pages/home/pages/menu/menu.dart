@@ -53,6 +53,13 @@ class OBMainMenuPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  leading: const OBIcon(OBIcons.connections),
+                  title: const OBText('My invites'),
+                  onTap: () {
+                    navigationService.navigateToUserInvites(context: context);
+                  },
+                ),
+                ListTile(
                   leading: const OBIcon(OBIcons.settings),
                   title: OBText('Settings'),
                   onTap: () {
