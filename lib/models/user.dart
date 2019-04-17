@@ -24,6 +24,7 @@ class User extends UpdatableModel<User> {
   int followingCount;
   int unreadNotificationsCount;
   int postsCount;
+  int inviteCount;
   bool isFollowing;
   bool isConnected;
   bool isFullyConnected;
@@ -77,6 +78,7 @@ class User extends UpdatableModel<User> {
     this.followingCount,
     this.unreadNotificationsCount,
     this.postsCount,
+    this.inviteCount,
     this.isFollowing,
     this.isConnected,
     this.isFullyConnected,
@@ -113,6 +115,7 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('unread_notifications_count'))
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
+    if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('connections_circle_id'))
@@ -297,6 +300,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
         postsCount: json['posts_count'],
+        inviteCount: json['invite_count'],
         unreadNotificationsCount: json['unread_notifications_count'],
         email: json['email'],
         username: json['username'],
