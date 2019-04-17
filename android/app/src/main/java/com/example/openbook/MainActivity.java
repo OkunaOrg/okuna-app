@@ -25,6 +25,8 @@ import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
+import social.openbook.app.plugins.Permissions;
+
 public class MainActivity extends FlutterActivity {
 
   public static final String SHARE_STREAM = "openbook.social/receive_share";
@@ -37,6 +39,7 @@ public class MainActivity extends FlutterActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
+    Permissions.registerWith(this.registrarFor("social.openbook.app.plugins.Permissions"));
 
     new EventChannel(getFlutterView(), SHARE_STREAM).setStreamHandler(
       new EventChannel.StreamHandler() {

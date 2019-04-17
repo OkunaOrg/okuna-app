@@ -1,6 +1,7 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/plugins/permissions/permissions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -296,10 +297,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
           children: <Widget>[
             GestureDetector(
               onTapDown: (tap) async {
-                bool hasPermission = await OpenbookProvider
-                  .of(context)
-                  .permissionService
-                  .checkOrAcquireStoragePermission(context);
+                bool hasPermission = await Permissions.checkOrRequestPermission(Permission.WriteExternalStorage);
                 if (!hasPermission) {
                   return;
                 }

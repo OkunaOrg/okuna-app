@@ -22,7 +22,6 @@ import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/permission_service.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:Openbook/services/string_template.dart';
@@ -95,7 +94,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   IntercomService intercomService = IntercomService();
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
-  PermissionService permissionService = PermissionService();
 
   SentryClient sentryClient;
 
