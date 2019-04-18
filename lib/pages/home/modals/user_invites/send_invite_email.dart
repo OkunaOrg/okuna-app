@@ -32,7 +32,6 @@ class OBSendUserInviteEmailModalState
 
   UserService _userService;
   ToastService _toastService;
-  NavigationService _navigationService;
   ValidationService _validationService;
 
   bool _requestInProgress;
@@ -64,7 +63,6 @@ class OBSendUserInviteEmailModalState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _validationService = openbookProvider.validationService;
-    _navigationService = openbookProvider.navigationService;
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),

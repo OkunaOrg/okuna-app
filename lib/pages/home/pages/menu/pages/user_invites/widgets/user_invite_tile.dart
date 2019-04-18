@@ -49,12 +49,13 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
       actionExtentRatio: 0.25,
       child: ListTile(
           onTap: () {
+            if (widget.userInvite.createdUser != null) return;
             navigationService.navigateToInviteDetailPage(
                 userInvite: widget.userInvite,
                 context: context
             );
           },
-          leading: const OBIcon(OBIcons.communityMember),
+          leading: const OBIcon(OBIcons.invite),
           title: OBText(
             widget.userInvite.nickname,
             style: TextStyle(fontWeight: FontWeight.bold),

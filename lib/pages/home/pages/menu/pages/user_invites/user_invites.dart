@@ -1,5 +1,7 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
+import 'package:Openbook/models/user_invites_list.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/my_invite_group.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_count.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_tile.dart';
 import 'package:Openbook/services/modal_service.dart';
@@ -10,9 +12,7 @@ import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/search_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -34,8 +34,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   ScrollController _userInvitesScrollController;
   List<UserInvite> _userInvites = [];
   List<UserInvite> _userInvitesSearchResults = [];
-
-  String _searchQuery;
+  OBMyInvitesGroupController _acceptedInvitesGroupController;
+  OBMyInvitesGroupController _pendingInvitesGroupController;
 
   bool _needsBootstrap;
 
@@ -65,82 +65,87 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
         navigationBar: OBThemedNavigationBar(
           title: 'My Invites',
           trailing: Opacity(
-              opacity: _user.inviteCount == 0 ? 0.5: 1.0,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  OBUserInviteCount(
-                    count: _user.inviteCount,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  OBIconButton(
-                    OBIcons.add,
-                    themeColor: OBIconThemeColor.primaryAccent,
-                    onPressed: _onWantsToCreateInvite,
-                  ),
-                ],
-              ),
+            opacity: _user.inviteCount == 0 ? 0.5 : 1.0,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                OBUserInviteCount(
+                  count: _user.inviteCount,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                OBIconButton(
+                  OBIcons.add,
+                  themeColor: OBIconThemeColor.primaryAccent,
+                  onPressed: _onWantsToCreateInvite,
+                ),
+              ],
+            ),
           ),
         ),
         child: Stack(
           children: <Widget>[
             OBPrimaryColorContainer(
                 child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                        child: OBSearchBar(
-                          onSearch: _onSearch,
-                          hintText: 'Search for someone...',
-                        )),
-                    Expanded(
-                      child: RefreshIndicator(
-                          key: _refreshIndicatorKey,
-                          child: ListView.builder(
-                              physics: const ClampingScrollPhysics(),
-                              controller: _userInvitesScrollController,
-                              padding: EdgeInsets.all(0),
-                              itemCount: _userInvitesSearchResults.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index == _userInvitesSearchResults.length) {
-                                  if (_userInvitesSearchResults.isEmpty) {
-                                    // Results were empty
-                                    if(_searchQuery != null) {
-                                      return ListTile(
-                                          leading: OBIcon(OBIcons.sad),
-                                          title: OBText(
-                                              'No one found with nickname "$_searchQuery"'));
-                                    }else{
-                                      return ListTile(
-                                          leading: OBIcon(OBIcons.sad),
-                                          title: OBText(
-                                              'No invites found.'));
-                                    }
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                }
-
-                                var userInvite = _userInvitesSearchResults[index];
-
-                                var onUserInviteDeletedCallback = () {
-                                  _removeUserInvite(userInvite);
-                                  _refreshUser();
-                                };
-
-                                return OBUserInviteTile(
-                                  userInvite: userInvite,
-                                  onUserInviteDeletedCallback:
-                                  onUserInviteDeletedCallback,
-                                );
-                              }),
-                          onRefresh: _refreshInvites),
-                    ),
-                  ],
-                )),
+              children: <Widget>[
+                Expanded(
+                  child: RefreshIndicator(
+                    key: _refreshIndicatorKey,
+                    onRefresh: _refreshInvites,
+                    child: ListView(
+                        key: Key('myUserInvites'),
+                        controller: _userInvitesScrollController,
+                        // Need always scrollable for pull to refresh to work
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(0),
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              OBMyInvitesGroup(
+                                key: Key('AcceptedInvitesGroup'),
+                                controller: _acceptedInvitesGroupController,
+                                title: 'Accepted',
+                                groupName: 'accepted invites',
+                                groupItemName: 'accepted invite',
+                                maxGroupListPreviewItems: 5,
+                                inviteListSearcher: _searchAcceptedUserInvites,
+                                inviteGroupListItemBuilder: _buildInviteListItem,
+                                inviteGroupListRefresher: _refreshAcceptedInvites,
+                                inviteGroupListOnScrollLoader: _loadMoreAcceptedInvites,
+                              ),
+                              OBMyInvitesGroup(
+                                  key: Key('PendingInvitesGroup'),
+                                  controller: _pendingInvitesGroupController,
+                                  title: 'Pending',
+                                  groupName: 'pending invites',
+                                  groupItemName: 'pending invite',
+                                  maxGroupListPreviewItems: 5,
+                                  inviteListSearcher: _searchPendingUserInvites,
+                                  inviteGroupListItemBuilder: _buildInviteListItem,
+                                  inviteGroupListRefresher: _refreshPendingInvites,
+                                  inviteGroupListOnScrollLoader: _loadMorePendingInvites),
+                            ],
+                          )
+                        ]),
+                  ),
+                ),
+              ],
+            )),
           ],
         ));
+  }
+
+  Widget _buildInviteListItem(BuildContext context, UserInvite userInvite) {
+    var onUserInviteDeletedCallback = () {
+        _removeUserInvite(userInvite);
+        _refreshUser();
+      };
+
+    return OBUserInviteTile(
+      userInvite: userInvite,
+      onUserInviteDeletedCallback: onUserInviteDeletedCallback,
+    );
   }
 
   void _bootstrap() async {
@@ -150,8 +155,6 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   Future<void> _refreshInvites() async {
     try {
       await _refreshUser();
-      _userInvites = (await _userService.getUserInvites()).invites;
-      _setUserInvites(_userInvites);
       _scrollToTop();
     } catch (error) {
       _onError(error);
@@ -159,11 +162,47 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   Future<void> _refreshUser() async {
-      await _userService.refreshUser();
-      User refreshedUser = _userService.getLoggedInUser();
-      setState(() {
-        _user = refreshedUser;
-      });
+    await _userService.refreshUser();
+    User refreshedUser = _userService.getLoggedInUser();
+    setState(() {
+      _user = refreshedUser;
+    });
+  }
+
+  Future<List<UserInvite>> _refreshPendingInvites() async {
+    UserInvitesList pendingInvitesList = await _userService.getUserInvites(status: UserInviteFilterByStatus.pending);
+    return pendingInvitesList.invites;
+  }
+
+  Future<List<UserInvite>> _refreshAcceptedInvites() async {
+    UserInvitesList acceptedInvitesList = await _userService.getUserInvites(status: UserInviteFilterByStatus.accepted);
+    return acceptedInvitesList.invites;
+  }
+
+  Future<List<UserInvite>> _loadMorePendingInvites(
+      List<UserInvite> currentInviteList) async {
+    int offset = currentInviteList.length;
+
+    UserInvitesList morePendingInvites = await _userService.getUserInvites(offset: offset, status: UserInviteFilterByStatus.pending);
+    return morePendingInvites.invites;
+  }
+
+  Future<List<UserInvite>> _loadMoreAcceptedInvites(
+      List<UserInvite> currentInviteList) async {
+    int offset = currentInviteList.length;
+
+    UserInvitesList moreAcceptedInvites = await _userService.getUserInvites(offset: offset, status: UserInviteFilterByStatus.accepted);
+    return moreAcceptedInvites.invites;
+  }
+
+  Future<List<UserInvite>> _searchPendingUserInvites(String query) async {
+    UserInvitesList results = await _userService.searchUserInvites(query: query, status: UserInviteFilterByStatus.pending);
+    return results.invites;
+  }
+
+  Future<List<UserInvite>> _searchAcceptedUserInvites(String query) async {
+    UserInvitesList results = await _userService.searchUserInvites(query: query, status: UserInviteFilterByStatus.accepted);
+    return results.invites;
   }
 
   void _onError(error) async {
@@ -184,8 +223,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       _showNoInvitesLeft();
       return;
     }
-     UserInvite createdUserInvite =
-     await _modalService.openCreateUserInvite(context: context);
+    UserInvite createdUserInvite =
+        await _modalService.openCreateUserInvite(context: context);
     if (createdUserInvite != null) {
       _onUserInviteCreated(createdUserInvite);
     }
@@ -193,33 +232,6 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
 
   void _showNoInvitesLeft() {
     _toastService.error(message: 'You have no invites left', context: context);
-  }
-
-  void _onSearch(String query) {
-    if (query.isEmpty) {
-      _resetUserInvitesSearchResults();
-      _setSearchQuery(null);
-      return;
-    }
-
-    _setSearchQuery(query);
-    String uppercaseQuery = query.toUpperCase();
-    var searchResults = _userInvites.where((userInvite) {
-      return userInvite.nickname.toUpperCase().contains(uppercaseQuery);
-    }).toList();
-
-    _setUserInvitesSearchResults(searchResults);
-  }
-
-  void _resetUserInvitesSearchResults() {
-    _setUserInvitesSearchResults(_userInvites.toList());
-  }
-
-  void _setUserInvitesSearchResults(
-      List<UserInvite> userInvitesSearchResults) {
-    setState(() {
-      _userInvitesSearchResults = userInvitesSearchResults;
-    });
   }
 
   void _removeUserInvite(UserInvite userInvite) {
@@ -240,19 +252,6 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
-  }
-
-  void _setUserInvites(List<UserInvite> userInvites) {
-    setState(() {
-      this._userInvites = userInvites;
-      _resetUserInvitesSearchResults();
-    });
-  }
-
-  void _setSearchQuery(String searchQuery) {
-    setState(() {
-      _searchQuery = searchQuery;
-    });
   }
 }
 
