@@ -22,6 +22,24 @@ class UserInvite extends UpdatableModel<UserInvite> {
     return message;
   }
 
+  static convertUserInviteStatusToString(UserInviteFilterByStatus value) {
+    String result;
+    switch (value) {
+      case UserInviteFilterByStatus.all:
+        result = 'ALL';
+        break;
+      case UserInviteFilterByStatus.pending:
+        result = 'PENDING';
+        break;
+      case UserInviteFilterByStatus.accepted:
+        result = 'ACCEPTED';
+        break;
+      default:
+        throw 'Unsupported post comment sort type';
+    }
+    return result;
+  }
+
   static void clearCache() {
     factory.clearCache();
   }
@@ -40,7 +58,7 @@ class UserInvite extends UpdatableModel<UserInvite> {
       email = json['email'];
     }
 
-    if (json.containsKey('createdUser')) {
+    if (json.containsKey('created_user')) {
       createdUser = factory.parseUser(json['created_user']);
     }
 
@@ -80,3 +98,5 @@ class UserInviteFactory extends UpdatableModelFactory<UserInvite> {
     return User.fromJson(userData);
   }
 }
+
+enum UserInviteFilterByStatus { pending, accepted, all }
