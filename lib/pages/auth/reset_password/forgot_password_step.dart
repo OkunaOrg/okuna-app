@@ -232,6 +232,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
                               contentPadding: inputContentPadding,
                               labelText: usernameInputLabel,
                               border: OutlineInputBorder(),
+                              errorMaxLines: 3
                             ),
                             autocorrect: false,
                           ),
@@ -252,6 +253,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
                               contentPadding: inputContentPadding,
                               labelText: emailInputLabel,
                               border: OutlineInputBorder(),
+                              errorMaxLines: 3
                             ),
                             autocorrect: false,
                           ),

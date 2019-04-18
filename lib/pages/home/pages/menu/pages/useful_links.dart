@@ -1,6 +1,5 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -46,7 +45,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       'Request a feature or upvote existing requests'),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://openbook.canny.io/admin/board/feature-requests');
+                        'https://openbook.canny.io/feature-requests');
                   },
                 ),
                 ListTile(
@@ -56,7 +55,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       OBSecondaryText('Report a bug or upvote existing bugs'),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://openbook.canny.io/admin/board/bugs');
+                        'https://openbook.canny.io/bugs');
                   },
                 ),
                 ListTile(

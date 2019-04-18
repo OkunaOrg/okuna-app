@@ -1,5 +1,5 @@
 import 'package:Openbook/widgets/load_more.dart';
-import 'package:Openbook/widgets/tiles/loading_tile.dart';
+import 'package:Openbook/widgets/tiles/loading_indicator_tile.dart';
 import 'package:Openbook/widgets/tiles/retry_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {
       return const SizedBox();
     }
     if (status == LoadMoreStatus.loading) {
-      return OBLoadingTile();
+      return OBLoadingIndicatorTile();
     }
     if (status == LoadMoreStatus.nomore) {
       return const SizedBox();

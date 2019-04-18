@@ -1,11 +1,9 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
-import 'package:Openbook/pages/home/pages/menu/widgets/curated_themes.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +52,16 @@ class OBMainMenuPage extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const OBIcon(OBIcons.settings),
-                  title: OBText('Account'),
+                  title: OBText('Settings'),
                   onTap: () {
                     navigationService.navigateToSettingsPage(context: context);
+                  },
+                ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.themes),
+                  title: OBText('Themes'),
+                  onTap: () {
+                    navigationService.navigateToThemesPage(context: context);
                   },
                 ),
                 StreamBuilder(
@@ -93,8 +98,7 @@ class OBMainMenuPage extends StatelessWidget {
                   },
                 )
               ],
-            )),
-            OBCuratedThemes()
+            ))
           ],
         ),
       ),

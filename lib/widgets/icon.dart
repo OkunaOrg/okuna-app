@@ -164,6 +164,7 @@ class OBIcons {
   static const connect = OBIconData(nativeIcon: Icons.group_add);
   static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const deletePost = OBIconData(nativeIcon: Icons.delete);
+  static const clear = OBIconData(nativeIcon: Icons.delete);
   static const reportPost = OBIconData(nativeIcon: Icons.report);
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
@@ -190,10 +191,13 @@ class OBIcons {
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity =
       OBIconData(nativeIcon: Icons.remove_circle);
+  static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
+  static const account = OBIconData(nativeIcon: Icons.account_circle);
+  static const application = OBIconData(nativeIcon: Icons.phone_iphone);
   static const arrowUp = OBIconData(nativeIcon: Icons.keyboard_arrow_up);
   static const arrowUpward = OBIconData(nativeIcon: Icons.arrow_upward);
   static const bug = OBIconData(nativeIcon: Icons.bug_report);
@@ -201,6 +205,8 @@ class OBIcons {
   static const guide = OBIconData(nativeIcon: Icons.book);
   static const slackChannel = OBIconData(nativeIcon: Icons.tag_faces);
   static const dashboard = OBIconData(nativeIcon: Icons.dashboard);
+  static const themes = OBIconData(nativeIcon: Icons.format_paint);
+  static const angelBadge = OBIconData(nativeIcon: Icons.stars);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

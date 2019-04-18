@@ -9,6 +9,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/emoji_picker/emoji_picker.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,11 +31,18 @@ class OBReactToPostBottomSheetState extends State<OBReactToPostBottomSheet> {
   ToastService _toastService;
 
   bool _isReactToPostInProgress;
+  CancelableOperation _reactOperation;
 
   @override
   void initState() {
     super.initState();
     _isReactToPostInProgress = false;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_reactOperation != null) _reactOperation.cancel();
   }
 
   @override
@@ -52,10 +60,16 @@ class OBReactToPostBottomSheetState extends State<OBReactToPostBottomSheet> {
         children: <Widget>[
           SizedBox(
             height: screenHeight / 3,
-            child: OBEmojiPicker(
-              hasSearch: false,
-              isReactionsPicker: true,
-              onEmojiPicked: _onEmojiPicked,
+            child: IgnorePointer(
+              ignoring: _isReactToPostInProgress,
+              child: Opacity(
+                opacity: _isReactToPostInProgress ? 0.5 : 1,
+                child: OBEmojiPicker(
+                  hasSearch: false,
+                  isReactionsPicker: true,
+                  onEmojiPicked: _reactToPost,
+                ),
+              ),
             ),
           )
         ],
@@ -63,24 +77,24 @@ class OBReactToPostBottomSheetState extends State<OBReactToPostBottomSheet> {
     );
   }
 
-  void _onEmojiPicked(Emoji pressedEmoji, EmojiGroup emojiGroup) {
-    _reactToPost(pressedEmoji, emojiGroup);
-  }
-
   Future<void> _reactToPost(Emoji emoji, EmojiGroup emojiGroup) async {
     if (_isReactToPostInProgress) return null;
     _setReactToPostInProgress(true);
 
     try {
-      PostReaction postReaction = await _userService.reactToPost(
-          post: widget.post, emoji: emoji, emojiGroup: emojiGroup);
+      _reactOperation = CancelableOperation.fromFuture(_userService.reactToPost(
+          post: widget.post, emoji: emoji, emojiGroup: emojiGroup));
+
+      PostReaction postReaction = await _reactOperation.value;
       widget.post.setReaction(postReaction);
       // Remove modal
       Navigator.pop(context);
+      _setReactToPostInProgress(false);
     } catch (error) {
       _onError(error);
-    } finally {
       _setReactToPostInProgress(false);
+    } finally {
+      _reactOperation = null;
     }
   }
 

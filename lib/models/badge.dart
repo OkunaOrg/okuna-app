@@ -18,6 +18,7 @@ class Badge {
   static BadgeKeyword _getBadgeKeywordEnum(keyword) {
 
     switch(keyword) {
+      case 'ANGEL': return BadgeKeyword.angel; break;
       case 'VERIFIED': return BadgeKeyword.verified; break;
       case 'FOUNDER': return BadgeKeyword.founder; break;
       case 'GOLDEN_FOUNDER': return BadgeKeyword.golden_founder; break;
@@ -38,4 +39,4 @@ class Badge {
   }
 }
 
-enum BadgeKeyword { verified, founder, golden_founder, diamond_founder, super_founder, none }
+enum BadgeKeyword { angel, verified, founder, golden_founder, diamond_founder, super_founder, none }

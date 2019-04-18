@@ -32,7 +32,7 @@ class EmailVerificationLinkHandler extends UniversalLinkHandler {
           if (response.isOk()) {
             toastService.success(
                 message: 'Awesome! Your email is now verified', context: context);
-          } else if (response.isUnauthorized()) {
+          } else if (response.isBadRequest()) {
             toastService.error(
                 message:
                 'Oops! Your token was not valid or expired, please try again',
