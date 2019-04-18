@@ -51,6 +51,7 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
+          key: Key('inviteToCommunityUserList'),
           listItemBuilder: _buildLinkedUserListItem,
           searchResultListItemBuilder: _buildLinkedUserListItem,
           listRefresher: _refreshLinkedUsers,

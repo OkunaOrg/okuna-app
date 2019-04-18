@@ -42,7 +42,7 @@ PODS:
 DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - downloads_path_provider (from `.symlinks/plugins/downloads_path_provider/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
@@ -70,7 +70,7 @@ EXTERNAL SOURCES:
   downloads_path_provider:
     :path: ".symlinks/plugins/downloads_path_provider/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_downloader:
     :path: ".symlinks/plugins/flutter_downloader/ios"
   flutter_exif_rotation:

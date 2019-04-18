@@ -1,6 +1,6 @@
 String getPrettyCount(int value) {
   String postfix;
-  double finalValue = value.toDouble();
+  double finalValue;
 
   if (value < 0) {
     throw 'Invalid value';
@@ -17,5 +17,5 @@ String getPrettyCount(int value) {
     finalValue = value / 1000000000;
   }
 
-  return finalValue.toString() + postfix;
+  return finalValue.round().toString() + postfix;
 }

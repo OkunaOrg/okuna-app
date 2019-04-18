@@ -191,6 +191,7 @@ class OBIcons {
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity =
       OBIconData(nativeIcon: Icons.remove_circle);
+  static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
@@ -204,6 +205,7 @@ class OBIcons {
   static const guide = OBIconData(nativeIcon: Icons.book);
   static const slackChannel = OBIconData(nativeIcon: Icons.tag_faces);
   static const dashboard = OBIconData(nativeIcon: Icons.dashboard);
+  static const themes = OBIconData(nativeIcon: Icons.format_paint);
   static const angelBadge = OBIconData(nativeIcon: Icons.stars);
   static const download = OBIconData(nativeIcon: Icons.file_download);
   static const success = OBIconData(filename: 'success-icon.png');
