@@ -18,7 +18,7 @@ class OBPostBodyImage extends StatelessWidget {
     String imageUrl = post.getImage();
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double maxBoxHeight = screenHeight*.75;
+    double maxBoxHeight = screenHeight * .75;
 
     double imageAspectRatio = post.getImageWidth() / post.getImageHeight();
     double imageHeight = (screenWidth / imageAspectRatio);
@@ -44,8 +44,7 @@ class OBPostBodyImage extends StatelessWidget {
           child: Stack(
             children: stackItems,
           ),
-        )
-    );
+        ));
   }
 
   Widget _buildImageWidget(double width, double height, String imageUrl) {
@@ -68,21 +67,18 @@ class OBPostBodyImage extends StatelessWidget {
 
   Widget _buildExpandIcon() {
     return Positioned(
-        bottom: 10,
-        right: 10,
+        bottom: 15,
+        right: 15,
         child: Container(
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               //Same dark grey as in OBZoomablePhotoModal
-              color: Pigment.fromString("#1d1d1d"),
+              color: Colors.black87,
               borderRadius: BorderRadius.circular(50.0),
             ),
             child: OBIcon(
-              OBIcons.fullscreen,
-              size: OBIconSize.medium,
-              color: Colors.white,
-            )
-        )
-    );
+              OBIcons.expand,
+              customSize: 12,
+            )));
   }
 }
