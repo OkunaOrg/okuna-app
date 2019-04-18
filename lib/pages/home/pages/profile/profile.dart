@@ -1,5 +1,4 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
@@ -210,8 +209,12 @@ class OBProfilePageState extends State<OBProfilePage> {
   Future<bool> _loadMorePosts() async {
     if (_loadMoreOperation != null) _loadMoreOperation.cancel();
 
-    var lastPost = _posts.last;
-    var lastPostId = lastPost.id;
+    var lastPostId;
+    if (_posts.isNotEmpty) {
+      Post lastPost = _posts.last;
+      lastPostId = lastPost.id;
+    }
+
     try {
       _loadMoreOperation = CancelableOperation.fromFuture(_userService
           .getTimelinePosts(maxId: lastPostId, username: _user.username));

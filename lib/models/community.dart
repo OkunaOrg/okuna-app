@@ -112,6 +112,10 @@ class Community extends UpdatableModel<Community> {
     return type == CommunityType.private;
   }
 
+  bool isPublic() {
+    return type == CommunityType.public;
+  }
+
   bool isAdministrator(User user) {
     CommunityMembership membership = getMembershipForUser(user);
     if (membership == null) return false;

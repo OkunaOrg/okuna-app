@@ -23,6 +23,8 @@ class OBCommunityMembersCount extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+    var userService = openbookProvider.userService;
+    var navigationService = openbookProvider.navigationService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -30,29 +32,42 @@ class OBCommunityMembersCount extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Flexible(
-                child: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: count,
-                      style: TextStyle(
-                        fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: themeValueParserService
-                              .parseColor(theme.primaryTextColor))),
-                  TextSpan(text: ' '),
-                  TextSpan(
-                      text: membersCount == 1 ? userAdjective : usersAdjective,
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: themeValueParserService
-                              .parseColor(theme.secondaryTextColor)))
-                ])),
-              ),
-            ],
+          return GestureDetector(
+            onTap: () {
+              bool isPublicCommunity = community.isPublic();
+              bool isLoggedInUserMember =
+                  community.isMember(userService.getLoggedInUser());
+
+              if (isPublicCommunity || isLoggedInUserMember) {
+                navigationService.navigateToCommunityMembers(
+                    community: community, context: context);
+              }
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Flexible(
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: count,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: themeValueParserService
+                                .parseColor(theme.primaryTextColor))),
+                    TextSpan(text: ' '),
+                    TextSpan(
+                        text:
+                            membersCount == 1 ? userAdjective : usersAdjective,
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: themeValueParserService
+                                .parseColor(theme.secondaryTextColor)))
+                  ])),
+                ),
+              ],
+            ),
           );
         });
   }
