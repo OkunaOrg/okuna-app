@@ -51,6 +51,20 @@ class OBMainMenuPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  leading: const OBIcon(OBIcons.followers),
+                  title: const OBText('My followers'),
+                  onTap: () {
+                    navigationService.navigateToFollowersPage(context: context);
+                  },
+                ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.following),
+                  title: const OBText('My following'),
+                  onTap: () {
+                    navigationService.navigateToFollowingPage(context: context);
+                  },
+                ),
+                ListTile(
                   leading: const OBIcon(OBIcons.settings),
                   title: OBText('Settings'),
                   onTap: () {
