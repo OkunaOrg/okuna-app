@@ -1,5 +1,3 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';

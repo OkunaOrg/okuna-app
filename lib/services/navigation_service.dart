@@ -24,6 +24,8 @@ import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connecti
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/delete_account/delete_account.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/delete_account/pages/confirm_delete_account.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/followers.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/following.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
@@ -231,6 +233,20 @@ class NavigationService {
             key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
   }
 
+  Future navigateToFollowersPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obFollowersPage'), widget: OBFollowersPage()));
+  }
+
+  Future navigateToFollowingPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obFollowingPage'), widget: OBFollowingPage()));
+  }
+
   Future navigateToAccountSettingsPage({@required BuildContext context}) {
     return Navigator.push(
         context,
@@ -248,10 +264,8 @@ class NavigationService {
   }
 
   Future navigateToThemesPage({@required BuildContext context}) {
-    return Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obMenuThemes'), widget: OBThemesPage()));
+    return Navigator.push(context,
+        OBSlideRightRoute(key: Key('obMenuThemes'), widget: OBThemesPage()));
   }
 
   Future navigateToUsefulLinksPage({@required BuildContext context}) {

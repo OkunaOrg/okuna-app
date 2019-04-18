@@ -152,6 +152,7 @@ class OBIcons {
   static const bio = OBIconData(nativeIcon: Icons.bookmark);
   static const name = OBIconData(nativeIcon: Icons.person);
   static const followers = OBIconData(nativeIcon: Icons.supervisor_account);
+  static const following = OBIconData(nativeIcon: Icons.person);
   static const cake = OBIconData(nativeIcon: Icons.cake);
   static const remove = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const checkCircle =

@@ -20,6 +20,10 @@ class AuthApiService {
   static const GET_USERS_PATH = 'api/auth/users/';
   static const GET_LINKED_USERS_PATH = 'api/auth/linked-users/';
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
+  static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
+  static const SEARCH_FOLLOWERS_PATH = 'api/auth/followers/search/';
+  static const GET_FOLLOWINGS_PATH = 'api/auth/followings/';
+  static const SEARCH_FOLLOWINGS_PATH = 'api/auth/followings/search/';
   static const LOGIN_PATH = 'api/auth/login/';
   static const REQUEST_RESET_PASSWORD_PATH = 'api/auth/password/reset/';
   static const VERIFY_RESET_PASSWORD_PATH = 'api/auth/password/verify/';
@@ -69,8 +73,7 @@ class AuthApiService {
   Future<HttpieResponse> verifyEmailWithToken(String token) {
     Map<String, dynamic> body = {'token': token};
     return _httpService.postJSON('$apiURL$VERIFY_EMAIL_TOKEN',
-        body: body,
-        appendAuthorizationToken: true);
+        body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieStreamedResponse> updateUser({
@@ -189,29 +192,78 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
+  Future<HttpieResponse> searchFollowers(
+      {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$SEARCH_FOLLOWERS_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getFollowers(
+      {bool authenticatedRequest = true, int maxId, int count}) {
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    return _httpService.get('$apiURL$GET_FOLLOWERS_PATH',
+        queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
+  Future<HttpieResponse> searchFollowings(
+      {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$SEARCH_FOLLOWINGS_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getFollowings({
+    bool authenticatedRequest = true,
+    int maxId,
+    int count,
+  }) {
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    return _httpService.get('$apiURL$GET_FOLLOWINGS_PATH',
+        queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
   Future<HttpieResponse> loginWithCredentials(
       {@required String username, @required String password}) {
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
   }
 
-  Future<HttpieResponse> requestPasswordReset(
-      {String username, String email}) {
+  Future<HttpieResponse> requestPasswordReset({String username, String email}) {
     var body = {};
     if (username != null && username != '') {
-      body = {'username': username };
+      body = {'username': username};
     }
     if (email != null && email != '') {
       body['email'] = email;
     }
-    return this._httpService.postJSON('$apiURL$REQUEST_RESET_PASSWORD_PATH',
-        body: body);
+    return this
+        ._httpService
+        .postJSON('$apiURL$REQUEST_RESET_PASSWORD_PATH', body: body);
   }
 
   Future<HttpieResponse> verifyPasswordReset(
       {String newPassword, String passwordResetToken}) {
     return this._httpService.postJSON('$apiURL$VERIFY_RESET_PASSWORD_PATH',
-        body: {'new_password': newPassword , 'token': passwordResetToken});
+        body: {'new_password': newPassword, 'token': passwordResetToken});
   }
 
   Future<HttpieResponse> getAuthenticatedUserNotificationsSettings() {
