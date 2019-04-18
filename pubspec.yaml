@@ -44,7 +44,7 @@ dependencies:
   image_cropper: ^1.0.0
   shimmer: ^1.0.0
   flutter_downloader: ^1.1.7
-  downloads_path_provider: ^0.0.2
+  downloads_path_provider: ^0.1.0
   flutter:
     sdk: flutter
   flutter_localizations:
