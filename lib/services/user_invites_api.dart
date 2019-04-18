@@ -9,6 +9,7 @@ class UserInvitesApiService {
   String apiURL;
 
   static const GET_USER_INVITES_PATH = 'api/invites/';
+  static const SEARCH_USER_INVITES_PATH = 'api/invites/search/';
   static const CREATE_USER_INVITE_PATH = 'api/invites/';
   static const UPDATE_USER_INVITE_PATH = 'api/invites/{userInviteId}/';
   static const DELETE_INVITE_PATH = 'api/invites/{userInviteId}/';
@@ -53,13 +54,30 @@ class UserInvitesApiService {
 
   Future<HttpieResponse> getUserInvites(
       { int offset,
-        int count}) {
+        int count,
+        String status}) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
     if (offset != null) queryParams['offset'] = offset;
+    if (status != null) queryParams['status'] = status;
 
     return _httpService.get(_makeApiUrl(GET_USER_INVITES_PATH),
+        queryParameters: queryParams,
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> searchUserInvites(
+      { int count,
+        String status,
+        String query}) {
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+    if (query != null) queryParams['query'] = query;
+    if (status != null) queryParams['status'] = status;
+
+    return _httpService.get(_makeApiUrl(SEARCH_USER_INVITES_PATH),
         queryParameters: queryParams,
         appendAuthorizationToken: true);
   }
