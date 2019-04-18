@@ -11,6 +11,7 @@ import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/sh
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/community_members.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
@@ -167,6 +168,17 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obCommunityAdministratorsPage'),
             widget: OBCommunityAdministratorsPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityMembers(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityMembersPage'),
+            widget: OBCommunityMembersPage(
               community: community,
             )));
   }
