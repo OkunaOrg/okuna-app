@@ -49,6 +49,7 @@ class OBInviteUserToCommunityButtonState
 
         return StreamBuilder(
           stream: widget.user.updateSubject,
+          initialData: widget.user,
           builder:
               (BuildContext context, AsyncSnapshot<User> latestUserSnapshot) {
             User latestUser = latestUserSnapshot.data;

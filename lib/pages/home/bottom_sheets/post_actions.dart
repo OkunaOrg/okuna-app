@@ -71,10 +71,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       onUnmutedPost: _dismiss,
     ));
 
-    if (loggedInUserIsPostCreator ||
-        loggedInUserIsCommunityAdministrator ||
-        loggedInUserIsCommunityModerator) {
-
+    if (loggedInUserIsPostCreator) {
       postActions.add(ListTile(
         leading: const OBIcon(OBIcons.editPost),
         title: const OBText(
@@ -82,6 +79,11 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
         ),
         onTap: _onWantsToEditPost,
       ));
+    }
+
+    if (loggedInUserIsPostCreator ||
+        loggedInUserIsCommunityAdministrator ||
+        loggedInUserIsCommunityModerator) {
 
       postActions.add(ListTile(
         leading: const OBIcon(OBIcons.deletePost),
