@@ -69,7 +69,7 @@
   "AUTH.LOGIN.SERVER_ERROR": "Uh oh.. Wir haben gerade Probleme mit den Servern. Bitte versuche es in ein paar Minuten nochmal.",
   "AUTH.LOGIN.CONNECTION_ERROR": "Wir können unsere Server nicht erreichen. Hast du Verbindung mit dem Internet?",
   "DRAWER.PROFILE": "Profil",
-  "DRAWER.CONNECTIONS": "Meine Verbindunge",
+  "DRAWER.CONNECTIONS": "Meine Verbindungen",
   "DRAWER.LISTS": "Meine Listen",
   "DRAWER.SETTINGS": "Account Einstellungen",
   "DRAWER.HELP": "Hilfe & Kontakt",
