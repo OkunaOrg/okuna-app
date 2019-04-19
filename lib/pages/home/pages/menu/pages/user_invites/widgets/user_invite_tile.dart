@@ -43,32 +43,48 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
     _userService = provider.userService;
     _toastService = provider.toastService;
     var navigationService = provider.navigationService;
+    Widget tile;
 
-    Widget tile = Slidable(
-      delegate: new SlidableDrawerDelegate(),
-      actionExtentRatio: 0.25,
-      child: ListTile(
+    if (widget.userInvite.createdUser != null) {
+      tile = ListTile(
           onTap: () {
-            if (widget.userInvite.createdUser != null) return;
-            navigationService.navigateToInviteDetailPage(
-                userInvite: widget.userInvite,
-                context: context
-            );
+              navigationService.navigateToUserProfile(
+                  user: widget.userInvite.createdUser,
+                  context: context);
           },
           leading: const OBIcon(OBIcons.invite),
           title: OBText(
             widget.userInvite.nickname,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: _buildActionableSecondaryText()),
-      secondaryActions: <Widget>[
-        new IconSlideAction(
-            caption: 'Delete',
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: _deleteUserInvite),
-      ],
-    );
+          subtitle: _buildActionableSecondaryText()
+      );
+    } else {
+      tile = Slidable(
+        delegate: new SlidableDrawerDelegate(),
+        actionExtentRatio: 0.25,
+        child: ListTile(
+            onTap: () {
+                navigationService.navigateToInviteDetailPage(
+                    userInvite: widget.userInvite,
+                    context: context
+                );
+            },
+            leading: const OBIcon(OBIcons.invite),
+            title: OBText(
+              widget.userInvite.nickname,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: _buildActionableSecondaryText()),
+        secondaryActions: <Widget>[
+          new IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: _deleteUserInvite),
+        ],
+      );
+    }
 
     if (_requestInProgress) {
       tile = Opacity(opacity: 0.5, child: tile);
