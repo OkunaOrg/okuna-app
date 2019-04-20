@@ -11,6 +11,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,8 @@ class OBCreateUserInviteModalState
 
   TextEditingController _nicknameController;
 
+  CancelableOperation _createUpdateOperation;
+
   @override
   void initState() {
     super.initState();
@@ -58,6 +61,13 @@ class OBCreateUserInviteModalState
     }
 
     _nicknameController.addListener(_updateFormValid);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_createUpdateOperation != null)
+      _createUpdateOperation.cancel();
   }
 
   @override
@@ -138,11 +148,14 @@ class OBCreateUserInviteModalState
     if (!formIsValid) return;
     _setRequestInProgress(true);
     try {
-      UserInvite userInvite = await (_hasExistingUserInvite
+
+      _createUpdateOperation = CancelableOperation.fromFuture(_hasExistingUserInvite
           ? _userService.updateUserInvite(userInvite: widget.userInvite,
           nickname: _nicknameController.text != widget.userInvite.nickname ? _nicknameController.text : null)
           : _userService.createUserInvite(
           nickname: _nicknameController.text));
+
+      UserInvite userInvite = await _createUpdateOperation.value;
       if (!_hasExistingUserInvite) {
         _navigateToShareInvite(userInvite);
       } else {
@@ -152,6 +165,7 @@ class OBCreateUserInviteModalState
       _onError(error);
     } finally {
       _setRequestInProgress(false);
+      _createUpdateOperation = null;
     }
   }
 

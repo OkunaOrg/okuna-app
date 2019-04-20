@@ -13,6 +13,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -37,6 +38,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   OBMyInvitesGroupController _acceptedInvitesGroupController;
   OBMyInvitesGroupController _pendingInvitesGroupController;
 
+  CancelableOperation _refreshUserOperation;
+
   bool _needsBootstrap;
 
   @override
@@ -46,6 +49,12 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _needsBootstrap = true;
     _userInvites = [];
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_refreshUserOperation != null) _refreshUserOperation.cancel();
   }
 
   @override
@@ -154,7 +163,11 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
 
   Future<void> _refreshInvites() async {
     try {
-      await _refreshUser();
+      await Future.wait([
+        _refreshUser(),
+        _acceptedInvitesGroupController.refresh(),
+        _pendingInvitesGroupController.refresh()
+      ]);
       _scrollToTop();
     } catch (error) {
       _onError(error);
@@ -162,7 +175,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   Future<void> _refreshUser() async {
-    await _userService.refreshUser();
+    if (_refreshUserOperation != null) _refreshUserOperation.cancel();
+    _refreshUserOperation = CancelableOperation.fromFuture(_userService.refreshUser());
+    await _refreshUserOperation.value;
     User refreshedUser = _userService.getLoggedInUser();
     setState(() {
       _user = refreshedUser;

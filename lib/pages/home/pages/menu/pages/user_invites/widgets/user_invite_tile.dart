@@ -8,6 +8,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -31,10 +32,19 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
   UserService _userService;
   ToastService _toastService;
 
+  CancelableOperation _deleteOperation;
+
   @override
   void initState() {
     super.initState();
     _requestInProgress = false;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_deleteOperation != null)
+      _deleteOperation.cancel();
   }
 
   @override
@@ -105,7 +115,8 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
   void _deleteUserInvite() async {
     _setRequestInProgress(true);
     try {
-      await _userService.deleteUserInvite(widget.userInvite);
+      _deleteOperation = CancelableOperation.fromFuture(_userService.deleteUserInvite(widget.userInvite));
+      await _deleteOperation.value;
       _setRequestInProgress(false);
       if (widget.onUserInviteDeletedCallback != null) {
         widget.onUserInviteDeletedCallback();
@@ -114,6 +125,7 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
       _onError(error);
     } finally {
       _setRequestInProgress(false);
+      _deleteOperation = null;
     }
   }
 
