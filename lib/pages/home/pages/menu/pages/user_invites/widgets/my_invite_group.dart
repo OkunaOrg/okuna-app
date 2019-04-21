@@ -1,5 +1,6 @@
 import 'package:Openbook/libs/str_utils.dart';
 import 'package:Openbook/models/user_invite.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_tile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/navigation_service.dart';
@@ -15,7 +16,7 @@ import 'package:flutter/material.dart';
 class OBMyInvitesGroup extends StatefulWidget {
   final OBHttpListRefresher<UserInvite> inviteGroupListRefresher;
   final OBHttpListSearcher<UserInvite> inviteListSearcher;
-  final OBHttpListItemBuilder<UserInvite> inviteGroupListItemBuilder;
+  final void Function(BuildContext, UserInvite) inviteGroupListItemDeleteCallback;
   final OBHttpListOnScrollLoader<UserInvite> inviteGroupListOnScrollLoader;
   final OBMyInvitesGroupFallbackBuilder noGroupItemsFallbackBuilder;
   final OBMyInvitesGroupController controller;
@@ -33,7 +34,7 @@ class OBMyInvitesGroup extends StatefulWidget {
     @required this.groupName,
     @required this.title,
     @required this.maxGroupListPreviewItems,
-    @required this.inviteGroupListItemBuilder,
+    @required this.inviteGroupListItemDeleteCallback,
     this.noGroupItemsFallbackBuilder,
     this.controller,
   }) : super(key: key);
@@ -144,7 +145,19 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
 
   Widget _buildGroupListPreviewItem(BuildContext context, index) {
     UserInvite userInvite = _inviteGroupList[index];
-    return widget.inviteGroupListItemBuilder(context, userInvite);
+    return _buildInviteTile(context, userInvite);
+  }
+
+  Widget _buildInviteTile(BuildContext context, UserInvite userInvite) {
+    var onUserInviteDeletedCallback = () {
+      _removeUserInvite(userInvite);
+      widget.inviteGroupListItemDeleteCallback(context, userInvite);
+    };
+
+    return OBUserInviteTile(
+      userInvite: userInvite,
+      onUserInviteDeletedCallback: onUserInviteDeletedCallback,
+    );
   }
 
   Widget _buildInviteSeparator(BuildContext context, int index) {
@@ -153,6 +166,12 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
 
   void _bootstrap() {
     _refreshInvites();
+  }
+  
+  void _removeUserInvite(UserInvite userInvite) {
+    setState(() {
+      _inviteGroupList.remove(userInvite);
+    });
   }
 
   Future<void> _refreshInvites() async {
@@ -201,8 +220,8 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
             child: OBHttpList<UserInvite>(
                   separatorBuilder: _buildInviteSeparator,
                   listSearcher: widget.inviteListSearcher,
-                  searchResultListItemBuilder: widget.inviteGroupListItemBuilder,
-                  listItemBuilder: widget.inviteGroupListItemBuilder,
+                  searchResultListItemBuilder: _buildInviteTile,
+                  listItemBuilder: _buildInviteTile,
                   listRefresher: widget.inviteGroupListRefresher,
                   listOnScrollLoader: widget.inviteGroupListOnScrollLoader,
                   resourcePluralName: widget.groupName,

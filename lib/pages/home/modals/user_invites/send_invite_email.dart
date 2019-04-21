@@ -11,6 +11,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/fields/text_form_field.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,8 @@ class OBSendUserInviteEmailModalState
   ToastService _toastService;
   ValidationService _validationService;
 
+  CancelableOperation _emailOperation;
+
   bool _requestInProgress;
   bool _formWasSubmitted;
   bool _formValid;
@@ -41,6 +44,12 @@ class OBSendUserInviteEmailModalState
   GlobalKey<FormState> _formKey;
 
   TextEditingController _emailController;
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_emailOperation != null) _emailOperation.cancel();
+  }
 
   @override
   void initState() {
@@ -134,13 +143,18 @@ class OBSendUserInviteEmailModalState
     if (!formIsValid) return;
     _setRequestInProgress(true);
     try {
-      await _userService.sendUserInviteEmail(widget.userInvite, _emailController.text);
+      _emailOperation = CancelableOperation.fromFuture(
+          _userService.sendUserInviteEmail(
+              widget.userInvite, _emailController.text)
+      );
+      await _emailOperation.value;
       _showUserInviteSent();
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(widget.userInvite);
     } catch (error) {
       _onError(error);
     } finally {
       _setRequestInProgress(false);
+      _emailOperation = null;
     }
   }
 

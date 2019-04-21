@@ -47,6 +47,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     super.initState();
     _userInvitesScrollController = ScrollController();
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    _acceptedInvitesGroupController = OBMyInvitesGroupController();
+    _pendingInvitesGroupController = OBMyInvitesGroupController();
     _needsBootstrap = true;
     _userInvites = [];
   }
@@ -119,7 +121,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
                                 groupItemName: 'accepted invite',
                                 maxGroupListPreviewItems: 5,
                                 inviteListSearcher: _searchAcceptedUserInvites,
-                                inviteGroupListItemBuilder: _buildInviteListItem,
+                                inviteGroupListItemDeleteCallback: _onUserInviteDeletedCallback,
                                 inviteGroupListRefresher: _refreshAcceptedInvites,
                                 inviteGroupListOnScrollLoader: _loadMoreAcceptedInvites,
                               ),
@@ -131,7 +133,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
                                   groupItemName: 'pending invite',
                                   maxGroupListPreviewItems: 5,
                                   inviteListSearcher: _searchPendingUserInvites,
-                                  inviteGroupListItemBuilder: _buildInviteListItem,
+                                  inviteGroupListItemDeleteCallback: _onUserInviteDeletedCallback,
                                   inviteGroupListRefresher: _refreshPendingInvites,
                                   inviteGroupListOnScrollLoader: _loadMorePendingInvites),
                             ],
@@ -145,16 +147,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
         ));
   }
 
-  Widget _buildInviteListItem(BuildContext context, UserInvite userInvite) {
-    var onUserInviteDeletedCallback = () {
-        _removeUserInvite(userInvite);
-        _refreshUser();
-      };
-
-    return OBUserInviteTile(
-      userInvite: userInvite,
-      onUserInviteDeletedCallback: onUserInviteDeletedCallback,
-    );
+  Widget _onUserInviteDeletedCallback(BuildContext context, UserInvite userInvite) {
+    _refreshUser();
   }
 
   void _bootstrap() async {

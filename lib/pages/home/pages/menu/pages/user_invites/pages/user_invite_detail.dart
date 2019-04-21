@@ -109,7 +109,7 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
           'We will send an invitation email with instructions on your behalf',
         ),
         onTap: () async {
-          await _modalService.openSendUserInviteEmail(
+         await _modalService.openSendUserInviteEmail(
               context: context,
               userInvite: widget.userInvite);
           Navigator.of(context).pop();
