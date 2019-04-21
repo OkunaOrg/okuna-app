@@ -12,6 +12,7 @@ import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/sh
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
+import 'package:Openbook/pages/home/pages/community/pages/community_members.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
@@ -25,6 +26,8 @@ import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connecti
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/delete_account/delete_account.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/delete_account/pages/confirm_delete_account.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/followers.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/following.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
@@ -33,6 +36,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/user_invites.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post.dart';
@@ -171,6 +175,17 @@ class NavigationService {
             )));
   }
 
+  Future<void> navigateToCommunityMembers(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityMembersPage'),
+            widget: OBCommunityMembersPage(
+              community: community,
+            )));
+  }
+
   Future<void> navigateToCommunityModerators(
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
@@ -233,6 +248,20 @@ class NavigationService {
             key: Key('obMenuViewSettings'), widget: OBSettingsPage()));
   }
 
+  Future navigateToFollowersPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obFollowersPage'), widget: OBFollowersPage()));
+  }
+
+  Future navigateToFollowingPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obFollowingPage'), widget: OBFollowingPage()));
+  }
+
   Future navigateToAccountSettingsPage({@required BuildContext context}) {
     return Navigator.push(
         context,
@@ -247,6 +276,11 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obApplicationSettingsPage'),
             widget: OBApplicationSettingsPage()));
+  }
+
+  Future navigateToThemesPage({@required BuildContext context}) {
+    return Navigator.push(context,
+        OBSlideRightRoute(key: Key('obMenuThemes'), widget: OBThemesPage()));
   }
 
   Future navigateToUsefulLinksPage({@required BuildContext context}) {

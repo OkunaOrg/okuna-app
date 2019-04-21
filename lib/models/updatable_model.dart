@@ -23,7 +23,7 @@ abstract class UpdatableModel<T> {
 
   void updateFromJson(Map json);
 
-  void dispose() {
+  void dipose() {
     _updateChangeSubject.close();
   }
 }
@@ -106,7 +106,8 @@ class UpdatableModelSimpleStorage<K, V extends UpdatableModel>
   @override
   void remove(K key) {
     CacheEntry<K, UpdatableModel> item = get(key);
-    item.value.dispose();
+    // https://stackoverflow.com/questions/49879438/dart-do-i-have-to-cancel-stream-subscriptions-and-close-streamsinks
+    // item.value.dispose();
     this._internalMap.remove(key);
   }
 
@@ -128,3 +129,5 @@ class UpdatableModelSimpleStorage<K, V extends UpdatableModel>
   @override
   int get capacity => this._size;
 }
+
+typedef void UpdateCallback(Map json);

@@ -4,12 +4,17 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
+export 'package:Openbook/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowButton extends StatefulWidget {
   final User user;
+  final OBButtonSize size;
+  final OBButtonType unfollowButtonType;
 
-  OBFollowButton(this.user);
+  OBFollowButton(this.user,
+      {this.size = OBButtonSize.medium,
+      this.unfollowButtonType = OBButtonType.primary});
 
   @override
   OBFollowButtonState createState() {
@@ -49,6 +54,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
 
   Widget _buildFollowButton() {
     return OBButton(
+      size: widget.size,
       child: Text(
         'Follow',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -60,12 +66,13 @@ class OBFollowButtonState extends State<OBFollowButton> {
 
   Widget _buildUnfollowButton() {
     return OBButton(
+      size: widget.size,
       child: Text(
         'Unfollow',
-        style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,
       onPressed: _unFollowUser,
+      type: widget.unfollowButtonType,
     );
   }
 

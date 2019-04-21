@@ -152,6 +152,7 @@ class OBIcons {
   static const bio = OBIconData(nativeIcon: Icons.bookmark);
   static const name = OBIconData(nativeIcon: Icons.person);
   static const followers = OBIconData(nativeIcon: Icons.supervisor_account);
+  static const following = OBIconData(nativeIcon: Icons.person);
   static const cake = OBIconData(nativeIcon: Icons.cake);
   static const remove = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const checkCircle =
@@ -191,6 +192,7 @@ class OBIcons {
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity =
       OBIconData(nativeIcon: Icons.remove_circle);
+  static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
@@ -204,6 +206,7 @@ class OBIcons {
   static const guide = OBIconData(nativeIcon: Icons.book);
   static const slackChannel = OBIconData(nativeIcon: Icons.tag_faces);
   static const dashboard = OBIconData(nativeIcon: Icons.dashboard);
+  static const themes = OBIconData(nativeIcon: Icons.format_paint);
   static const chat = OBIconData(nativeIcon: Icons.chat_bubble);
   static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
   static const success = OBIconData(filename: 'success-icon.png');

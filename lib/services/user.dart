@@ -366,11 +366,9 @@ class UserService {
     return Post.fromJson(json.decode(responseBody));
   }
 
-  Future<Post> editPost(
-      {String postUuid, String text}) async {
-    HttpieStreamedResponse response = await _postsApiService.editPost(
-        postUuid: postUuid,
-        text: text);
+  Future<Post> editPost({String postUuid, String text}) async {
+    HttpieStreamedResponse response =
+        await _postsApiService.editPost(postUuid: postUuid, text: text);
 
     _checkResponseIsOk(response);
 
@@ -533,6 +531,43 @@ class UserService {
       Community withCommunity}) async {
     HttpieResponse response = await _authApiService.getLinkedUsers(
         count: count, withCommunity: withCommunity.name, maxId: maxId);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> searchFollowers({@required String query, int count}) async {
+    HttpieResponse response =
+        await _authApiService.searchFollowers(query: query, count: count);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> getFollowers(
+      {bool authenticatedRequest = true,
+      int maxId,
+      int count,
+      Community withCommunity}) async {
+    HttpieResponse response =
+        await _authApiService.getFollowers(count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> searchFollowings(
+      {@required String query, int count, Community withCommunity}) async {
+    HttpieResponse response =
+        await _authApiService.searchFollowings(query: query, count: count);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> getFollowings(
+      {bool authenticatedRequest = true,
+      int maxId,
+      int count,
+      Community withCommunity}) async {
+    HttpieResponse response =
+        await _authApiService.getFollowings(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }
