@@ -55,12 +55,12 @@ class UserInvitesApiService {
   Future<HttpieResponse> getUserInvites(
       { int offset,
         int count,
-        String status}) {
+        bool isStatusPending}) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
     if (offset != null) queryParams['offset'] = offset;
-    if (status != null) queryParams['status'] = status;
+    if (isStatusPending != null) queryParams['pending'] = isStatusPending;
 
     return _httpService.get(_makeApiUrl(GET_USER_INVITES_PATH),
         queryParameters: queryParams,
@@ -69,13 +69,13 @@ class UserInvitesApiService {
 
   Future<HttpieResponse> searchUserInvites(
       { int count,
-        String status,
+        bool isStatusPending,
         String query}) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
     if (query != null) queryParams['query'] = query;
-    if (status != null) queryParams['status'] = status;
+    if (isStatusPending != null) queryParams['pending'] = isStatusPending;
 
     return _httpService.get(_makeApiUrl(SEARCH_USER_INVITES_PATH),
         queryParameters: queryParams,

@@ -726,22 +726,22 @@ class UserService {
   }
 
   Future<UserInvitesList> getUserInvites({int offset, int count, UserInviteFilterByStatus status}) async {
-    String statusValue = status != null ?
-    UserInvite.convertUserInviteStatusToString(status) :
-    UserInvite.convertUserInviteStatusToString(UserInviteFilterByStatus.all);
+    bool isPending = status != null ?
+    UserInvite.convertUserInviteStatusToBool(status) :
+    UserInvite.convertUserInviteStatusToBool(UserInviteFilterByStatus.all);
 
-    HttpieResponse response = await _userInvitesApiService.getUserInvites(status: statusValue, count: count, offset: offset);
+    HttpieResponse response = await _userInvitesApiService.getUserInvites(isStatusPending: isPending, count: count, offset: offset);
     _checkResponseIsOk(response);
     return UserInvitesList.fromJson(json.decode(response.body));
   }
 
 
   Future<UserInvitesList> searchUserInvites({int count, UserInviteFilterByStatus status, String query}) async {
-    String statusValue = status != null ?
-    UserInvite.convertUserInviteStatusToString(status) :
-    UserInvite.convertUserInviteStatusToString(UserInviteFilterByStatus.all);
+    bool isPending = status != null ?
+    UserInvite.convertUserInviteStatusToBool(status) :
+    UserInvite.convertUserInviteStatusToBool(UserInviteFilterByStatus.all);
 
-    HttpieResponse response = await _userInvitesApiService.searchUserInvites(status: statusValue, count: count, query: query);
+    HttpieResponse response = await _userInvitesApiService.searchUserInvites(isStatusPending: isPending, count: count, query: query);
     _checkResponseIsOk(response);
     return UserInvitesList.fromJson(json.decode(response.body));
   }

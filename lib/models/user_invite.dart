@@ -22,22 +22,22 @@ class UserInvite extends UpdatableModel<UserInvite> {
     return message;
   }
 
-  static convertUserInviteStatusToString(UserInviteFilterByStatus value) {
-    String result;
+  static convertUserInviteStatusToBool(UserInviteFilterByStatus value) {
+    bool isPending;
     switch (value) {
       case UserInviteFilterByStatus.all:
-        result = 'ALL';
+        isPending = null;
         break;
       case UserInviteFilterByStatus.pending:
-        result = 'PENDING';
+        isPending = true;
         break;
       case UserInviteFilterByStatus.accepted:
-        result = 'ACCEPTED';
+        isPending = false;
         break;
       default:
         throw 'Unsupported post comment sort type';
     }
-    return result;
+    return isPending;
   }
 
   static void clearCache() {

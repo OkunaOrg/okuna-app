@@ -105,6 +105,7 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
   Widget _buildActionableSecondaryText() {
     if (widget.userInvite.createdUser != null) {
       return OBActionableSmartText(
+        size: OBTextSize.mediumSecondary,
         text: 'Joined with username @${widget.userInvite.createdUser.username}',
       );
     } else {
