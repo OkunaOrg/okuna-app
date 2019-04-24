@@ -6,6 +6,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
@@ -33,6 +34,8 @@ import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_sett
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/user_invites/user_invites.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
@@ -325,6 +328,33 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSeeFollowsLists'), widget: OBFollowsListsPage()));
+  }
+
+  Future navigateToUserInvites({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSeeUserInvites'), widget: OBUserInvitesPage()));
+  }
+
+  Future navigateToShareInvite({@required BuildContext context, @required UserInvite userInvite}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obShareUserInvitePage'), widget: OBUserInviteDetailPage(
+          userInvite: userInvite,
+          showEdit: false
+        )));
+  }
+
+  Future navigateToInviteDetailPage({@required BuildContext context, @required UserInvite userInvite}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSeeUserInviteDetail'), widget: OBUserInviteDetailPage(
+            userInvite: userInvite,
+            showEdit: true
+        )));
   }
 
   Future navigateToConnectionsCircles({@required BuildContext context}) {

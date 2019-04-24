@@ -207,7 +207,8 @@ class OBIcons {
   static const slackChannel = OBIconData(nativeIcon: Icons.tag_faces);
   static const dashboard = OBIconData(nativeIcon: Icons.dashboard);
   static const themes = OBIconData(nativeIcon: Icons.format_paint);
-  static const angelBadge = OBIconData(nativeIcon: Icons.stars);
+  static const chat = OBIconData(nativeIcon: Icons.chat_bubble);
+  static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
