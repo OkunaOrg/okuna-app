@@ -8,6 +8,7 @@ import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/user_permissions.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -36,6 +37,7 @@ class OBPostComment extends StatefulWidget {
 class OBPostCommentState extends State<OBPostComment> {
   NavigationService _navigationService;
   UserService _userService;
+  UserPermissionsService _userPermissionsService;
   ToastService _toastService;
   ModalService _modalService;
   bool _requestInProgress;
@@ -59,6 +61,7 @@ class OBPostCommentState extends State<OBPostComment> {
     var provider = OpenbookProvider.of(context);
     _navigationService = provider.navigationService;
     _userService = provider.userService;
+    _userPermissionsService = provider.userPermissionsService;
     _toastService = provider.toastService;
     _modalService = provider.modalService;
     Widget postTile = _buildPostCommentTile(widget.postComment);
@@ -133,24 +136,7 @@ class OBPostCommentState extends State<OBPostComment> {
   Widget _buildPostCommentActions({@required Widget child}) {
     List<Widget> _editCommentActions = [];
 
-    User loggedInUser = _userService.getLoggedInUser();
-    bool loggedInUserIsCommunityAdministrator = false;
-    bool loggedInUserIsCommunityModerator = false;
-
-    Post post = widget.post;
-    User postCommenter = widget.postComment.commenter;
-
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
-
-      loggedInUserIsCommunityAdministrator =
-          postCommunity.isAdministrator(loggedInUser);
-
-      loggedInUserIsCommunityModerator =
-          postCommunity.isModerator(loggedInUser);
-    }
-
-    if (postCommenter.id == loggedInUser.id) {
+    if (_userPermissionsService.canEditPost(widget.post)) {
       _editCommentActions.add(
         new IconSlideAction(
           caption: 'Edit',
@@ -161,10 +147,7 @@ class OBPostCommentState extends State<OBPostComment> {
       );
     }
 
-    if (widget.postComment.getCommenterId() == loggedInUser.id ||
-        loggedInUserIsCommunityAdministrator ||
-        loggedInUserIsCommunityModerator ||
-        post.creator.id == loggedInUser.id) {
+    if (_userPermissionsService.canDeletePostComment(widget.post, widget.postComment)) {
       _editCommentActions.add(
         new IconSlideAction(
           caption: 'Delete',

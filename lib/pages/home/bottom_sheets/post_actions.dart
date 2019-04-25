@@ -7,9 +7,11 @@ import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/user_permissions.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/disable_comments_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class OBPostActionsBottomSheet extends StatefulWidget {
 
 class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   UserService _userService;
+  UserPermissionsService _userPermissionsService;
   ModalService _modalService;
   ToastService _toastService;
 
@@ -41,74 +44,69 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
+    _userPermissionsService = openbookProvider.userPermissionsService;
     _modalService = openbookProvider.modalService;
     _toastService = openbookProvider.toastService;
 
-    List<Widget> postActions = [];
 
-    User loggedInUser = _userService.getLoggedInUser();
+    return StreamBuilder(
+        stream: widget.post.updateSubject,
+        initialData: widget.post,
+        builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
+        Post post = snapshot.data;
+        List<Widget> postActions = [];
 
-    bool loggedInUserIsPostCreator =
-        loggedInUser.id == widget.post.getCreatorId();
-    bool loggedInUserIsCommunityAdministrator = false;
-    bool loggedInUserIsCommunityModerator = false;
+        postActions.add(OBMutePostTile(
+          post: post,
+          onMutedPost: _dismiss,
+          onUnmutedPost: _dismiss,
+        ));
 
-    Post post = widget.post;
+        if (_userPermissionsService.canDisableEnableCommentsForPost(post)) {
+          postActions.add(OBDisableCommentsPostTile(
+            post: post,
+            onDisableComments: _dismiss,
+            onEnableComments: _dismiss,
+          ));
+        }
 
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
+        if (_userPermissionsService.canEditPost(post)) {
+          postActions.add(ListTile(
+            leading: const OBIcon(OBIcons.editPost),
+            title: const OBText(
+              'Edit post',
+            ),
+            onTap: _onWantsToEditPost,
+          ));
+        }
 
-      loggedInUserIsCommunityAdministrator =
-          postCommunity.isAdministrator(loggedInUser);
+        if (_userPermissionsService.canDeletePost(post)) {
+          postActions.add(ListTile(
+            leading: const OBIcon(OBIcons.deletePost),
+            title: const OBText(
+              'Delete post',
+            ),
+            onTap: _onWantsToDeletePost,
+          ));
+        } else {
+          postActions.add(ListTile(
+            leading: const OBIcon(OBIcons.reportPost),
+            title: const OBText(
+              'Report post',
+            ),
+            onTap: _onWantsToReportPost,
+          ));
+        }
 
-      loggedInUserIsCommunityModerator =
-          postCommunity.isModerator(loggedInUser);
-    }
+        return OBPrimaryColorContainer(
+          mainAxisSize: MainAxisSize.min,
+          child: Column(
+            children: postActions,
+            mainAxisSize: MainAxisSize.min,
+          ),
+        );
 
-    postActions.add(OBMutePostTile(
-      post: post,
-      onMutedPost: _dismiss,
-      onUnmutedPost: _dismiss,
-    ));
-
-    if (loggedInUserIsPostCreator) {
-      postActions.add(ListTile(
-        leading: const OBIcon(OBIcons.editPost),
-        title: const OBText(
-          'Edit post',
-        ),
-        onTap: _onWantsToEditPost,
-      ));
-    }
-
-    if (loggedInUserIsPostCreator ||
-        loggedInUserIsCommunityAdministrator ||
-        loggedInUserIsCommunityModerator) {
-
-      postActions.add(ListTile(
-        leading: const OBIcon(OBIcons.deletePost),
-        title: const OBText(
-          'Delete post',
-        ),
-        onTap: _onWantsToDeletePost,
-      ));
-    } else {
-      postActions.add(ListTile(
-        leading: const OBIcon(OBIcons.reportPost),
-        title: const OBText(
-          'Report post',
-        ),
-        onTap: _onWantsToReportPost,
-      ));
-    }
-
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
-      child: Column(
-        children: postActions,
-        mainAxisSize: MainAxisSize.min,
-      ),
-    );
+    });
   }
 
   Future _onWantsToDeletePost() async {

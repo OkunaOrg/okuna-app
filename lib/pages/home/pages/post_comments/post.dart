@@ -1,10 +1,15 @@
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Openbook/services/user_permissions.dart';
 import 'package:Openbook/services/user_preferences.dart';
+import 'package:Openbook/widgets/alerts/alert.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
@@ -36,6 +41,7 @@ class OBPostCommentsPage extends StatefulWidget {
 
 class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   UserService _userService;
+  UserPermissionsService _userPermissionsService;
   ToastService _toastService;
   ThemeService _themeService;
   UserPreferencesService _userPreferencesService;
@@ -82,6 +88,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
+      _userPermissionsService = provider.userPermissionsService;
       _toastService = provider.toastService;
       _themeValueParserService = provider.themeValueParserService;
       _themeService = provider.themeService;
@@ -142,13 +149,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                     ),
                     onRefresh: _refreshComments),
               ),
-              OBPostCommenter(
-                widget.post,
-                autofocus: widget.autofocusCommentInput,
-                commentTextFieldFocusNode: _commentInputFocusNode,
-                onPostCommentCreated: _onPostCommentCreated,
-                onPostCommentWillBeCreated: _onPostCommentWillBeCreated,
-              )
+              _buildPostCommenterSection()
             ],
           ),
         ));
@@ -205,6 +206,31 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
         ],
       ),
     );
+  }
+  
+  Widget _buildPostCommenterSection() {
+    if (widget.post.areCommentsEnabled || _userPermissionsService.canCommentOnPostWithDisabledComments(widget.post)) {
+      return OBPostCommenter(
+        widget.post,
+        autofocus: widget.autofocusCommentInput,
+        commentTextFieldFocusNode: _commentInputFocusNode,
+        onPostCommentCreated: _onPostCommentCreated,
+        onPostCommentWillBeCreated: _onPostCommentWillBeCreated,
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.all(10.0),
+        child: OBAlert(
+            padding: EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+               OBText('Comments are disabled for this post'),
+            ],
+          )
+        ),
+      );
+    }
   }
 
   void _onWantsToToggleSortComments() async {
