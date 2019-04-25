@@ -22,6 +22,8 @@ class PostsApiService {
   static const DELETE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
   static const GET_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/';
+  static const DISABLE_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/disable/';
+  static const ENABLE_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/enable/';
   static const REACT_TO_POST_PATH = 'api/posts/{postUuid}/reactions/';
   static const DELETE_POST_REACTION_PATH =
       'api/posts/{postUuid}/reactions/{postReactionId}/';
@@ -220,6 +222,16 @@ class PostsApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> disableCommentsForPostWithUuidPost(String postUuid) {
+    String path = _makeDisableCommentsForPostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> enableCommentsForPostWithUuidPost(String postUuid) {
+    String path = _makeEnableCommentsForPostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> getReactionEmojiGroups() {
     String url = _makeApiUrl(GET_REACTION_EMOJI_GROUPS);
     return _httpService.get(url, appendAuthorizationToken: true);
@@ -236,6 +248,16 @@ class PostsApiService {
   String _makeUnmutePostPath(String postUuid) {
     return _stringTemplateService
         .parse(UNMUTE_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeDisableCommentsForPostPath(String postUuid) {
+    return _stringTemplateService
+        .parse(DISABLE_POST_COMMENTS_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeEnableCommentsForPostPath(String postUuid) {
+    return _stringTemplateService
+        .parse(ENABLE_POST_COMMENTS_PATH, {'postUuid': postUuid});
   }
 
   String _makeCommentPostPath(String postUuid) {
