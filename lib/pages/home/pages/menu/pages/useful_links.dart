@@ -27,7 +27,19 @@ class OBUsefulLinksPage extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
-                  leading: const OBIcon(OBIcons.dashboard ),
+                  leading: const OBIcon(OBIcons.guide),
+                  title: OBText('Community guidelines'),
+                  subtitle: OBSecondaryText(
+                      'The guidelines we\'re all expected to follow for a healthy and friendly co-existence.'),
+                  onTap: () {
+                    OpenbookProviderState openbookProvider =
+                        OpenbookProvider.of(context);
+                    openbookProvider.navigationService
+                        .navigateToCommunityGuidelinesPage(context: context);
+                  },
+                ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.dashboard),
                   title: OBText('Github project board'),
                   subtitle: OBSecondaryText(
                       'Take a look at what we\'re currently working on'),
@@ -52,8 +64,8 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle:
                       OBSecondaryText('Report a bug or upvote existing bugs'),
                   onTap: () {
-                    urlLauncherService.launchUrl(
-                        'https://openbook.canny.io/bugs');
+                    urlLauncherService
+                        .launchUrl('https://openbook.canny.io/bugs');
                   },
                 ),
                 ListTile(
@@ -62,8 +74,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                       'An introduction to the Openbook Experience by @meep'),
                   onTap: () {
-                    urlLauncherService
-                        .launchUrl('https://openbook.support/');
+                    urlLauncherService.launchUrl('https://openbook.support/');
                   },
                 ),
                 ListTile(
