@@ -31,7 +31,6 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/url_launcher.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/user_invites_api.dart';
-import 'package:Openbook/services/user_permissions.dart';
 import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/services/utils_service.dart';
 import 'package:Openbook/services/validation.dart';
@@ -67,7 +66,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   PostsApiService postsApiService = PostsApiService();
   StorageService storageService = StorageService();
   UserService userService = UserService();
-  UserPermissionsService userPermissionsService = UserPermissionsService();
   ToastService toastService = ToastService();
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
@@ -137,7 +135,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setNotificationsApiService(notificationsApiService);
     userService.setDevicesApiService(devicesApiService);
     userService.setCreateAccountBlocService(createAccountBloc);
-    userPermissionsService.setUserService(userService);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);

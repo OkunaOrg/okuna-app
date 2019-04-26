@@ -7,7 +7,6 @@ import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/user_permissions.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -36,7 +35,6 @@ class OBPostActionsBottomSheet extends StatefulWidget {
 
 class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   UserService _userService;
-  UserPermissionsService _userPermissionsService;
   ModalService _modalService;
   ToastService _toastService;
 
@@ -44,10 +42,10 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
-    _userPermissionsService = openbookProvider.userPermissionsService;
     _modalService = openbookProvider.modalService;
     _toastService = openbookProvider.toastService;
-
+    
+    User loggedInUser = _userService.getLoggedInUser();
 
     return StreamBuilder(
         stream: widget.post.updateSubject,
@@ -62,7 +60,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           onUnmutedPost: _dismiss,
         ));
 
-        if (_userPermissionsService.canDisableEnableCommentsForPost(post)) {
+        if (loggedInUser.canDisableEnableCommentsForPost(post)) {
           postActions.add(OBDisableCommentsPostTile(
             post: post,
             onDisableComments: _dismiss,
@@ -70,7 +68,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           ));
         }
 
-        if (_userPermissionsService.canEditPost(post)) {
+        if (loggedInUser.canEditPost(post)) {
           postActions.add(ListTile(
             leading: const OBIcon(OBIcons.editPost),
             title: const OBText(
@@ -80,7 +78,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           ));
         }
 
-        if (_userPermissionsService.canDeletePost(post)) {
+        if (loggedInUser.canDeletePost(post)) {
           postActions.add(ListTile(
             leading: const OBIcon(OBIcons.deletePost),
             title: const OBText(

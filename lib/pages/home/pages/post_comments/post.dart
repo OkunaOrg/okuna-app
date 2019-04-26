@@ -6,7 +6,6 @@ import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.d
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/services/user_permissions.dart';
 import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -41,7 +40,6 @@ class OBPostCommentsPage extends StatefulWidget {
 
 class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   UserService _userService;
-  UserPermissionsService _userPermissionsService;
   ToastService _toastService;
   ThemeService _themeService;
   UserPreferencesService _userPreferencesService;
@@ -88,7 +86,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
-      _userPermissionsService = provider.userPermissionsService;
       _toastService = provider.toastService;
       _themeValueParserService = provider.themeValueParserService;
       _themeService = provider.themeService;
@@ -209,7 +206,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
   }
   
   Widget _buildPostCommenterSection() {
-    if (widget.post.areCommentsEnabled || _userPermissionsService.canCommentOnPostWithDisabledComments(widget.post)) {
+    User loggedInUser = _userService.getLoggedInUser();
+    if (widget.post.areCommentsEnabled || loggedInUser.canCommentOnPostWithDisabledComments(widget.post)) {
       return OBPostCommenter(
         widget.post,
         autofocus: widget.autofocusCommentInput,
