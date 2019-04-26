@@ -17,6 +17,7 @@ import 'package:Openbook/pages/auth/splash.dart';
 import 'package:Openbook/pages/home/home.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
+import 'package:Openbook/plugins/desktop/error-reporting.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/widgets/toast.dart';
@@ -156,7 +157,10 @@ Future<Null> main() async {
   _setPlatformOverrideForDesktop();
   // This captures errors reported by the Flutter framework.
   FlutterError.onError = (FlutterErrorDetails details) async {
-    if (isInDebugMode) {
+    if (isOnDesktop) {
+      // Report errors on Desktop to embedder
+      DesktopErrorReporting.reportError(details.exception, details.stack);
+    } else if (isInDebugMode) {
       // In development mode simply print to console.
       FlutterError.dumpErrorToConsole(details);
     } else {
@@ -183,6 +187,10 @@ Future<Null> main() async {
     app = MyApp();
     runApp(app);
   }, onError: (error, stackTrace) async {
+    if (isOnDesktop) {
+      DesktopErrorReporting.reportError(error, stackTrace);
+      return;
+    }
     SentryClient sentryClient =
         app.openbookProviderKey.currentState.sentryClient;
     await _reportError(error, stackTrace, sentryClient);
