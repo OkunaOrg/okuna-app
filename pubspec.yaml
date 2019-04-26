@@ -45,6 +45,7 @@ dependencies:
   shimmer: ^1.0.0
   flutter_downloader: ^1.1.7
   downloads_path_provider: ^0.1.0
+  share: ^0.6.1
   flutter:
     sdk: flutter
   flutter_localizations:

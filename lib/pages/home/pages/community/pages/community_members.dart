@@ -74,13 +74,17 @@ class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
   }
 
   Widget _buildCommunityMemberListItem(BuildContext context, User user) {
+    bool isLoggedInUser = _userService.isLoggedInUser(user);
+
     return OBUserTile(user,
         onUserTilePressed: _onCommunityMemberListItemPressed,
-        trailing: OBFollowButton(
-          user,
-          size: OBButtonSize.small,
-          unfollowButtonType: OBButtonType.highlight,
-        ));
+        trailing: isLoggedInUser
+            ? null
+            : OBFollowButton(
+                user,
+                size: OBButtonSize.small,
+                unfollowButtonType: OBButtonType.highlight,
+              ));
   }
 
   void _onCommunityMemberListItemPressed(User communityMember) {

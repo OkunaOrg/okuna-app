@@ -63,7 +63,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       'An introduction to the Openbook Experience by @meep'),
                   onTap: () {
                     urlLauncherService
-                        .launchUrl('https://openbooksocial.info/');
+                        .launchUrl('https://openbook.support/');
                   },
                 ),
                 ListTile(

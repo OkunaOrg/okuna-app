@@ -7,6 +7,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/modals/edit_post/edit_post.dart';
 import 'package:Openbook/pages/home/modals/invite_to_community.dart';
 import 'package:Openbook/pages/home/modals/post_comment/post-commenter-expanded.dart';
@@ -19,6 +20,8 @@ import 'package:Openbook/pages/home/modals/save_follows_list/save_follows_list.d
 import 'package:Openbook/pages/home/modals/timeline_filters.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/ban_community_user.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/add_community_moderator.dart';
+import 'package:Openbook/pages/home/modals/user_invites/create_user_invite.dart';
+import 'package:Openbook/pages/home/modals/user_invites/send_invite_email.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -255,5 +258,51 @@ class ModalService {
                 ),
               );
             }));
+  }
+
+  Future<UserInvite> openCreateUserInvite({
+  @required BuildContext context
+  }) async {
+    UserInvite createdUserInvite =
+        await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBCreateUserInviteModal(
+            autofocusNameTextField: true,
+          );
+        }));
+
+    return createdUserInvite;
+  }
+
+  Future<UserInvite> openEditUserInvite({
+    @required BuildContext context,
+    @required UserInvite userInvite
+  }) async {
+    UserInvite editedUserInvite =
+    await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBCreateUserInviteModal(
+            autofocusNameTextField: true,
+            userInvite: userInvite,
+          );
+        }));
+
+    return editedUserInvite;
+  }
+
+  Future<void> openSendUserInviteEmail({
+    @required BuildContext context,
+    @required UserInvite userInvite
+  }) async {
+    await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBSendUserInviteEmailModal(
+            autofocusEmailTextField: true,
+            userInvite: userInvite,
+          );
+        }));
   }
 }
