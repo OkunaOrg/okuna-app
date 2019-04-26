@@ -1,10 +1,12 @@
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/plugins/permissions/permissions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:pigment/pigment.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:downloads_path_provider/downloads_path_provider.dart';
 import "dart:math" show pi;
 
 class OBZoomablePhotoModal extends StatefulWidget {
@@ -99,7 +101,27 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
                   _checkIsDismissible();
                 },
               ),
-              _buildCloseButton()
+              Positioned(
+                bottom: 50,
+                left: 0,
+                right: 0,
+                child: AnimatedOpacity(
+                  opacity: _isDismissible ? 1 : 0,
+                  duration: Duration(milliseconds: 300),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      _buildDownloadButton(),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      _buildCloseButton(),
+                    ],
+                  ),
+                ),
+              )
             ],
           )),
       onWillPop: _dismissModalNoPop,
@@ -262,31 +284,47 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
   }
 
   Widget _buildCloseButton() {
-    return Positioned(
-      bottom: 50,
-      left: 0,
-      right: 0,
-      child: SafeArea(
-          child: Column(
-        children: <Widget>[
-          GestureDetector(
-            onTapDown: (tap) {
-              Navigator.pop(context);
-            },
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: Colors.black87,
-                  borderRadius: BorderRadius.circular(50)),
-              child: const OBIcon(
-                OBIcons.close,
-                size: OBIconSize.large,
-                color: Colors.white,
-              ),
-            ),
-          )
-        ],
-      )),
+    return GestureDetector(
+      onTapDown: (tap) {
+        Navigator.pop(context);
+      },
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Colors.black87, borderRadius: BorderRadius.circular(50)),
+        child: const OBIcon(
+          OBIcons.close,
+          size: OBIconSize.large,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDownloadButton() {
+    return GestureDetector(
+      onTapDown: (tap) async {
+        bool hasPermission = await Permissions.checkOrRequestPermission(
+            Permission.WriteExternalStorage);
+        if (!hasPermission) {
+          return;
+        }
+        var directory = await DownloadsPathProvider.downloadsDirectory;
+        Uri uri = Uri.parse(widget.imageUrl);
+        await FlutterDownloader.enqueue(
+            url: widget.imageUrl,
+            savedDir: directory.path,
+            showNotification: true,
+            openFileFromNotification: true,
+            fileName: uri.pathSegments.last);
+      },
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Colors.black87, borderRadius: BorderRadius.circular(50)),
+        child: const OBIcon(OBIcons.download,
+            size: OBIconSize.large, color: Colors.white),
+      ),
     );
   }
 

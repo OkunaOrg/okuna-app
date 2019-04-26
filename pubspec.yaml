@@ -43,6 +43,8 @@ dependencies:
   image_picker: 0.5.0+3
   image_cropper: ^1.0.0
   shimmer: ^1.0.0
+  flutter_downloader: ^1.1.7
+  downloads_path_provider: ^0.1.0
   share: ^0.6.1
   flutter:
     sdk: flutter
