@@ -7,6 +7,7 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
+import 'package:Openbook/pages/home/modals/accept_guidelines/pages/confirm_reject_guidelines.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
@@ -297,6 +298,14 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obCommunityGuidelinesPage'),
             widget: OBCommunityGuidelinesPage()));
+  }
+
+  Future navigateToConfirmRejectGuidelinesPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obConfirmRejectGuidelinesPage'),
+            widget: OBConfirmRejectGuidelines()));
   }
 
   Future<Post> navigateToSharePost(

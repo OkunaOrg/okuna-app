@@ -12,6 +12,7 @@ class AuthApiService {
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
   static const UPDATE_EMAIL_PATH = 'api/auth/user/settings/';
   static const VERIFY_EMAIL_TOKEN = 'api/auth/email/verify/';
+  static const ACCEPT_GUIDELINES = 'api/auth/user/accept-guidelines/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
   static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
@@ -305,5 +306,9 @@ class AuthApiService {
         '$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
         body: body,
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> acceptGuidelines() {
+    return this._httpService.post('$apiURL$ACCEPT_GUIDELINES', appendAuthorizationToken: true);
   }
 }

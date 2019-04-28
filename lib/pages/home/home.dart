@@ -137,8 +137,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       image = File.fromUri(Uri.parse(share.path));
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {
-        int limit = _validationService.getAllowedImageSize(OBImageType.post) ~/
-            1048576;
+        int limit =
+            _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
         _toastService.error(
             message: 'Image too large (limit: $limit MB)', context: context);
         return;
@@ -148,7 +148,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       text = share.text;
       if (!_validationService.isPostTextAllowedLength(text)) {
         _toastService.error(
-            message: 'Text too long (limit: ${ValidationService.POST_MAX_LENGTH} characters)',
+            message:
+                'Text too long (limit: ${ValidationService.POST_MAX_LENGTH} characters)',
             context: context);
         return;
       }
@@ -420,6 +421,10 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
 
       _pushNotificationSubscription = _pushNotificationsService.pushNotification
           .listen(_onPushNotification);
+
+      if (!newUser.areGuidelinesAccepted) {
+        _modalService.openAcceptGuidelines(context: context);
+      }
     }
   }
 
