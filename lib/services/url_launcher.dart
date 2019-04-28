@@ -12,7 +12,7 @@ class UrlLauncherService {
   }
 
   Future<bool> canLaunchUrl(String url){
-    return canLaunchUrl(url);
+    return canLaunch(url);
   }
 }
 

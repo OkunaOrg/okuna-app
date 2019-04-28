@@ -1,6 +1,6 @@
 import 'package:Openbook/services/httpie.dart';
 
-class DocumentsApiService {
+class DocumentsService {
   HttpieService _httpService;
 
   static const guidelinesUrl =

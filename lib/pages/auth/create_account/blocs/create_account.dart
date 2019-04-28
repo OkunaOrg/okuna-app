@@ -8,7 +8,6 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:io';
 
 class CreateAccountBloc {
-  // @todo: rename to CreateAccountService?
   LocalizationService _localizationService;
   AuthApiService _authApiService;
   UserService _userService;
@@ -17,26 +16,26 @@ class CreateAccountBloc {
   final userRegistrationData = UserRegistrationData();
   final passwordResetData = PasswordResetData();
 
-  final _isOfLegalAgeSubject = ReplaySubject<bool>(maxSize: 1);
-  final _nameSubject = ReplaySubject<String>(maxSize: 1);
-  final _emailSubject = ReplaySubject<String>(maxSize: 1);
-  final _passwordSubject = ReplaySubject<String>(maxSize: 1);
-  final _avatarSubject = ReplaySubject<File>(maxSize: 1);
-  final _usernameSubject = ReplaySubject<String>(maxSize: 1);
-  final registrationTokenSubject = ReplaySubject<String>(maxSize: 1);
-  final _passwordResetTokenSubject = ReplaySubject<String>(maxSize: 1);
+  final _isOfLegalAgeSubject = BehaviorSubject<bool>();
+  final _nameSubject = BehaviorSubject<String>();
+  final _emailSubject = BehaviorSubject<String>();
+  final _passwordSubject = BehaviorSubject<String>();
+  final _avatarSubject = BehaviorSubject<File>();
+  final _usernameSubject = BehaviorSubject<String>();
+  final registrationTokenSubject = BehaviorSubject<String>();
+  final _passwordResetTokenSubject = BehaviorSubject<String>();
 
   // Create account begins
 
   Stream<bool> get createAccountInProgress =>
       _createAccountInProgressSubject.stream;
 
-  final _createAccountInProgressSubject = ReplaySubject<bool>(maxSize: 1);
+  final _createAccountInProgressSubject = ReplaySubject<bool>();
 
   Stream<String> get createAccountErrorFeedback =>
       _createAccountErrorFeedbackSubject.stream;
 
-  final _createAccountErrorFeedbackSubject = ReplaySubject<String>(maxSize: 1);
+  final _createAccountErrorFeedbackSubject = ReplaySubject<String>();
 
   // Create account ends
 
@@ -85,6 +84,17 @@ class CreateAccountBloc {
 
   void setLegalAgeConfirmation(bool isOfLegalAge) {
     _isOfLegalAgeSubject.add(isOfLegalAge);
+  }
+
+  // Legal Age Confirmation
+
+  bool areGuidelinesAccepted() {
+    if (userRegistrationData.areGuidelinesAccepted == null) return false;
+    return userRegistrationData.areGuidelinesAccepted;
+  }
+
+  void setAreGuidelinesAcceptedConfirmation(bool areGuidelinesAccepted) {
+    userRegistrationData.areGuidelinesAccepted = areGuidelinesAccepted;
   }
 
   // Name begins
@@ -273,6 +283,7 @@ class CreateAccountBloc {
           name: userRegistrationData.name,
           token: userRegistrationData.token,
           password: userRegistrationData.password,
+          areGuidelinesAccepted: userRegistrationData.areGuidelinesAccepted,
           avatar: userRegistrationData.avatar);
 
       if (!response.isCreated()) throw HttpieRequestError(response);
@@ -321,6 +332,7 @@ class UserRegistrationData {
   String token;
   String name;
   bool isOfLegalAge;
+  bool areGuidelinesAccepted;
   String username;
   String email;
   String password;

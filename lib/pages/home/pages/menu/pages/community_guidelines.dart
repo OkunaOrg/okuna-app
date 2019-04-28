@@ -36,7 +36,7 @@ class OBCommunityGuidelinesPageState extends State {
   void _bootstrap() async {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     _getGuidelinesOperation = CancelableOperation.fromFuture(
-        openbookProvider.documentsApiService.getCommunityGuidelines());
+        openbookProvider.documentsService.getCommunityGuidelines());
 
     String guidelines = await _getGuidelinesOperation.value;
     _setGuidelinesText(guidelines);

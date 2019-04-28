@@ -124,6 +124,7 @@ class AuthApiService {
       @required String token,
       @required String name,
       @required bool isOfLegalAge,
+      @required bool areGuidelinesAccepted,
       @required String password,
       File avatar}) {
     Map<String, dynamic> body = {
@@ -131,6 +132,7 @@ class AuthApiService {
       'token': token,
       'name': name,
       'is_of_legal_age': isOfLegalAge,
+      'are_guidelines_accepted': areGuidelinesAccepted,
       'password': password
     };
 
@@ -192,8 +194,7 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> searchFollowers(
-      {@required String query, int count}) {
+  Future<HttpieResponse> searchFollowers({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (count != null) queryParams['count'] = count;
@@ -215,8 +216,7 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> searchFollowings(
-      {@required String query, int count}) {
+  Future<HttpieResponse> searchFollowings({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (count != null) queryParams['count'] = count;

@@ -97,7 +97,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   IntercomService intercomService = IntercomService();
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
-  DocumentsApiService documentsApiService = DocumentsApiService();
+  DocumentsService documentsService = DocumentsService();
 
   SentryClient sentryClient;
 
@@ -156,7 +156,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
     imagePickerService.setValidationService(validationService);
-    documentsApiService.setHttpService(httpService);
+    documentsService.setHttpService(httpService);
   }
 
   void initAsyncState() async {
