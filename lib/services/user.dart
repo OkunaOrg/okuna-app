@@ -382,6 +382,20 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
+  Future<Post> disableCommentsForPost(Post post) async {
+    HttpieResponse response =
+    await _postsApiService.disableCommentsForPostWithUuidPost(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> enableCommentsForPost(Post post) async {
+    HttpieResponse response =
+    await _postsApiService.enableCommentsForPostWithUuidPost(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
   Future<Post> getPostWithUuid(String uuid) async {
     HttpieResponse response = await _postsApiService.getPostWithUuid(uuid);
     _checkResponseIsOk(response);

@@ -132,25 +132,9 @@ class OBPostCommentState extends State<OBPostComment> {
 
   Widget _buildPostCommentActions({@required Widget child}) {
     List<Widget> _editCommentActions = [];
-
     User loggedInUser = _userService.getLoggedInUser();
-    bool loggedInUserIsCommunityAdministrator = false;
-    bool loggedInUserIsCommunityModerator = false;
 
-    Post post = widget.post;
-    User postCommenter = widget.postComment.commenter;
-
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
-
-      loggedInUserIsCommunityAdministrator =
-          postCommunity.isAdministrator(loggedInUser);
-
-      loggedInUserIsCommunityModerator =
-          postCommunity.isModerator(loggedInUser);
-    }
-
-    if (postCommenter.id == loggedInUser.id) {
+    if (loggedInUser.canEditPostComment(widget.postComment)) {
       _editCommentActions.add(
         new IconSlideAction(
           caption: 'Edit',
@@ -161,10 +145,7 @@ class OBPostCommentState extends State<OBPostComment> {
       );
     }
 
-    if (widget.postComment.getCommenterId() == loggedInUser.id ||
-        loggedInUserIsCommunityAdministrator ||
-        loggedInUserIsCommunityModerator ||
-        post.creator.id == loggedInUser.id) {
+    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
       _editCommentActions.add(
         new IconSlideAction(
           caption: 'Delete',

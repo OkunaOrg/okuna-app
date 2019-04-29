@@ -26,7 +26,7 @@ class Post extends UpdatableModel<Post> {
   PostReaction reaction;
   int reactionsCount;
   int commentsCount;
-  bool publicComments;
+  bool areCommentsEnabled;
   bool publicReactions;
   String text;
   PostImage image;
@@ -62,7 +62,7 @@ class Post extends UpdatableModel<Post> {
       this.commentsList,
       this.reaction,
       this.reactionsEmojiCounts,
-      this.publicComments,
+      this.areCommentsEnabled,
       this.circles,
       this.community,
       this.publicReactions,
@@ -84,8 +84,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('comments_count'))
       commentsCount = json['comments_count'];
 
-    if (json.containsKey('public_comments'))
-      publicComments = json['public_comments'];
+    if (json.containsKey('comments_enabled'))
+      areCommentsEnabled = json['comments_enabled'];
 
     if (json.containsKey('public_reactions'))
       publicReactions = json['public_reactions'];
@@ -131,7 +131,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   bool hasPublicInteractions() {
-    return publicReactions && publicComments;
+    return publicReactions && areCommentsEnabled;
   }
 
   bool hasImage() {
@@ -295,7 +295,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
         isMuted: json['is_muted'],
-        publicComments: json['public_comments'],
+        areCommentsEnabled: json['comments_enabled'],
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
         image: parseImage(json['image']),
