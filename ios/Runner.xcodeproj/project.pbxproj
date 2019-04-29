@@ -17,6 +17,20 @@
 		8902A1082236D5BF005F914D /* libintercom_flutter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A1062236D5BF005F914D /* libintercom_flutter.a */; };
 		8902A1092236D5BF005F914D /* libsqflite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8928E32022356450001DB32A /* libsqflite.a */; };
 		8925094F222F0E0900455D87 /* libdevice_info.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8925094A222F0E0900455D87 /* libdevice_info.a */; };
+		89416F7A2257ECCB00896B34 /* libdevice_info.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8925094A222F0E0900455D87 /* libdevice_info.a */; };
+		89416F7B2257ECCB00896B34 /* libflutter_exif_rotation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CF474422419BFD001BC50D /* libflutter_exif_rotation.a */; };
+		89416F7C2257ECCB00896B34 /* libflutter_secure_storage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */; };
+		89416F7E2257ECCB00896B34 /* libimage_cropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A022047AAF00E47AD9 /* libimage_cropper.a */; };
+		89416F7F2257ECCB00896B34 /* libimage_picker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A222047AAF00E47AD9 /* libimage_picker.a */; };
+		89416F802257ECCB00896B34 /* libintercom_flutter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A1062236D5BF005F914D /* libintercom_flutter.a */; };
+		89416F812257ECCB00896B34 /* libonesignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A422047AAF00E47AD9 /* libonesignal.a */; };
+		89416F822257ECCB00896B34 /* libpath_provider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A622047AAF00E47AD9 /* libpath_provider.a */; };
+		89416F852257ECCB00896B34 /* libsqflite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8928E32022356450001DB32A /* libsqflite.a */; };
+		89416F862257ECCB00896B34 /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* libTOCropViewController.a */; };
+		89416F872257ECCB00896B34 /* libuni_links.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B222047AAF00E47AD9 /* libuni_links.a */; };
+		89416F882257ECCB00896B34 /* liburl_launcher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B422047AAF00E47AD9 /* liburl_launcher.a */; };
+		89416F892257ECCB00896B34 /* libvideo_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B622047AAF00E47AD9 /* libvideo_player.a */; };
+		89416F9F2257EE3C00896B34 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8928E31E22356450001DB32A /* libFMDB.a */; };
 		898053B722047AD000E47AD9 /* libflutter_secure_storage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */; };
 		898053B822047AD000E47AD9 /* libimage_cropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A022047AAF00E47AD9 /* libimage_cropper.a */; };
 		898053B922047AD000E47AD9 /* libimage_picker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A222047AAF00E47AD9 /* libimage_picker.a */; };
@@ -40,6 +54,10 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		A647F8112257B18C00A31CF1 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A647F8102257B18C00A31CF1 /* ShareViewController.m */; };
+		A647F8142257B18C00A31CF1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A647F8122257B18C00A31CF1 /* MainInterface.storyboard */; };
+		A647F8182257B18C00A31CF1 /* OpenbookSharingExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A647F80D2257B18C00A31CF1 /* OpenbookSharingExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A647F8362257BB7F00A31CF1 /* ReceiveShareStreamHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A647F8352257BB7F00A31CF1 /* ReceiveShareStreamHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +187,13 @@
 			remoteGlobalIDString = 1CE8375F5D12E4C085E8D4CF09BCD280;
 			remoteInfo = flutter_exif_rotation;
 		};
+		A647F8162257B18C00A31CF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A647F80C2257B18C00A31CF1;
+			remoteInfo = OpenbookShareExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,6 +204,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				89ABAE562203425900049DFB /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+				A647F8182257B18C00A31CF1 /* OpenbookSharingExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,6 +248,7 @@
 		89ABAE502203425900049DFB /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
 		89ABAE512203425900049DFB /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
 		89ABAE532203425900049DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89D66D132257E9C4005EA600 /* OpenbookShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenbookShareExtension.entitlements; sourceTree = "<group>"; };
 		89DBC2DD2203430700F80685 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		970D6175355421F353EA64C9 /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
@@ -233,6 +260,13 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A647F80D2257B18C00A31CF1 /* OpenbookSharingExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenbookSharingExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A647F80F2257B18C00A31CF1 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
+		A647F8102257B18C00A31CF1 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		A647F8132257B18C00A31CF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		A647F8152257B18C00A31CF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A647F8352257BB7F00A31CF1 /* ReceiveShareStreamHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReceiveShareStreamHandler.m; sourceTree = "<group>"; };
+		A647F8372257BBA700A31CF1 /* ReceiveShareStreamHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReceiveShareStreamHandler.h; sourceTree = "<group>"; };
 		A6C34D3821BE816E00882F1E /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		AAF4B8238CF43C30122544EF /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; sourceTree = "<group>"; };
 		B23196F4E53E7786037AC8B5 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; sourceTree = "<group>"; };
@@ -275,6 +309,27 @@
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
 				26B90459017411DF809A7507 /* libPods-Runner.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A647F80A2257B18C00A31CF1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89416F9F2257EE3C00896B34 /* libFMDB.a in Frameworks */,
+				89416F7A2257ECCB00896B34 /* libdevice_info.a in Frameworks */,
+				89416F7B2257ECCB00896B34 /* libflutter_exif_rotation.a in Frameworks */,
+				89416F7C2257ECCB00896B34 /* libflutter_secure_storage.a in Frameworks */,
+				89416F7E2257ECCB00896B34 /* libimage_cropper.a in Frameworks */,
+				89416F7F2257ECCB00896B34 /* libimage_picker.a in Frameworks */,
+				89416F802257ECCB00896B34 /* libintercom_flutter.a in Frameworks */,
+				89416F812257ECCB00896B34 /* libonesignal.a in Frameworks */,
+				89416F822257ECCB00896B34 /* libpath_provider.a in Frameworks */,
+				89416F852257ECCB00896B34 /* libsqflite.a in Frameworks */,
+				89416F862257ECCB00896B34 /* libTOCropViewController.a in Frameworks */,
+				89416F872257ECCB00896B34 /* libuni_links.a in Frameworks */,
+				89416F882257ECCB00896B34 /* liburl_launcher.a in Frameworks */,
+				89416F892257ECCB00896B34 /* libvideo_player.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +428,7 @@
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				89ABAE4F2203425900049DFB /* OneSignalNotificationServiceExtension */,
+				A647F80E2257B18C00A31CF1 /* OpenbookShareExtension */,
 				97C146EF1CF9000F007C117D /* Products */,
 				0532A0D3A2BF06AB149735E4 /* Pods */,
 				5ABC6138995F2182C962F35D /* Frameworks */,
@@ -384,6 +440,7 @@
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				89ABAE4E2203425900049DFB /* OneSignalNotificationServiceExtension.appex */,
+				A647F80D2257B18C00A31CF1 /* OpenbookSharingExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -397,6 +454,8 @@
 				7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */,
 				97C147021CF9000F007C117D /* Info.plist */,
 				7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */,
+				A647F8372257BBA700A31CF1 /* ReceiveShareStreamHandler.h */,
+				A647F8352257BB7F00A31CF1 /* ReceiveShareStreamHandler.m */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -413,6 +472,18 @@
 				97C146F21CF9000F007C117D /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A647F80E2257B18C00A31CF1 /* OpenbookShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				89D66D132257E9C4005EA600 /* OpenbookShareExtension.entitlements */,
+				A647F80F2257B18C00A31CF1 /* ShareViewController.h */,
+				A647F8102257B18C00A31CF1 /* ShareViewController.m */,
+				A647F8122257B18C00A31CF1 /* MainInterface.storyboard */,
+				A647F8152257B18C00A31CF1 /* Info.plist */,
+			);
+			path = OpenbookShareExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,11 +526,29 @@
 			);
 			dependencies = (
 				89ABAE552203425900049DFB /* PBXTargetDependency */,
+				A647F8172257B18C00A31CF1 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A647F80C2257B18C00A31CF1 /* OpenbookSharingExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A647F8342257B18C00A31CF1 /* Build configuration list for PBXNativeTarget "OpenbookSharingExtension" */;
+			buildPhases = (
+				A647F8092257B18C00A31CF1 /* Sources */,
+				A647F80A2257B18C00A31CF1 /* Frameworks */,
+				A647F80B2257B18C00A31CF1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenbookSharingExtension;
+			productName = OpenbookShareExtension;
+			productReference = A647F80D2257B18C00A31CF1 /* OpenbookSharingExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -499,6 +588,16 @@
 							};
 						};
 					};
+					A647F80C2257B18C00A31CF1 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = GAR7B57RXU;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = 97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */;
@@ -526,6 +625,7 @@
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
 				89ABAE4D2203425900049DFB /* OneSignalNotificationServiceExtension */,
+				A647F80C2257B18C00A31CF1 /* OpenbookSharingExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -671,6 +771,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A647F80B2257B18C00A31CF1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A647F8142257B18C00A31CF1 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -795,7 +903,16 @@
 			files = (
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
+				A647F8362257BB7F00A31CF1 /* ReceiveShareStreamHandler.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A647F8092257B18C00A31CF1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A647F8112257B18C00A31CF1 /* ShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +923,11 @@
 			isa = PBXTargetDependency;
 			target = 89ABAE4D2203425900049DFB /* OneSignalNotificationServiceExtension */;
 			targetProxy = 89ABAE542203425900049DFB /* PBXContainerItemProxy */;
+		};
+		A647F8172257B18C00A31CF1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A647F80C2257B18C00A31CF1 /* OpenbookSharingExtension */;
+			targetProxy = A647F8162257B18C00A31CF1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -824,6 +946,14 @@
 				97C147001CF9000F007C117D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A647F8122257B18C00A31CF1 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A647F8132257B18C00A31CF1 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1606,6 +1736,191 @@
 			};
 			name = Release;
 		};
+		A647F8192257B18C00A31CF1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookSharingExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A647F81A2257B18C00A31CF1 /* Debug-production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookSharingExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-production";
+		};
+		A647F81B2257B18C00A31CF1 /* Debug-development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookSharingExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-development";
+		};
+		A647F81C2257B18C00A31CF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookSharingExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A647F81D2257B18C00A31CF1 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookSharingExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
+		};
+		A647F81E2257B18C00A31CF1 /* Release-production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookSharingExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-production";
+		};
+		A647F81F2257B18C00A31CF1 /* Release-development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenbookShareExtension/OpenbookShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAR7B57RXU;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenbookShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OpenbookSharingExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-development";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1647,6 +1962,20 @@
 				37B6600F21AC30B3006D36AB /* Profile */,
 				37BDAB282170B86300811BA5 /* Release-production */,
 				37BDAB242170B84A00811BA5 /* Release-development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A647F8342257B18C00A31CF1 /* Build configuration list for PBXNativeTarget "OpenbookSharingExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A647F8192257B18C00A31CF1 /* Debug */,
+				A647F81A2257B18C00A31CF1 /* Debug-production */,
+				A647F81B2257B18C00A31CF1 /* Debug-development */,
+				A647F81C2257B18C00A31CF1 /* Release */,
+				A647F81D2257B18C00A31CF1 /* Profile */,
+				A647F81E2257B18C00A31CF1 /* Release-production */,
+				A647F81F2257B18C00A31CF1 /* Release-development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
