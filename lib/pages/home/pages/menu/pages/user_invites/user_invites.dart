@@ -3,8 +3,8 @@ import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/models/user_invites_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/my_invite_group.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_count.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_tile.dart';
 import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/icon_button.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -33,10 +33,12 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   User _user;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _userInvitesScrollController;
-  List<UserInvite> _userInvites = [];
-  List<UserInvite> _userInvitesSearchResults = [];
   OBMyInvitesGroupController _acceptedInvitesGroupController;
   OBMyInvitesGroupController _pendingInvitesGroupController;
+
+  bool _hasAcceptedInvites;
+  bool _hasPendingInvites;
+  bool _refreshInProgress;
 
   CancelableOperation _refreshUserOperation;
 
@@ -49,8 +51,10 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _acceptedInvitesGroupController = OBMyInvitesGroupController();
     _pendingInvitesGroupController = OBMyInvitesGroupController();
+    _hasAcceptedInvites = true;
+    _hasPendingInvites = true;
     _needsBootstrap = true;
-    _userInvites = [];
+    _refreshInProgress = true;
   }
 
   @override
@@ -100,54 +104,84 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
             OBPrimaryColorContainer(
                 child: Column(
               children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    key: _refreshIndicatorKey,
-                    onRefresh: _refreshInvites,
-                    child: ListView(
-                        key: Key('myUserInvites'),
-                        controller: _userInvitesScrollController,
-                        // Need always scrollable for pull to refresh to work
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        padding: EdgeInsets.all(0),
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              OBMyInvitesGroup(
-                                key: Key('AcceptedInvitesGroup'),
-                                controller: _acceptedInvitesGroupController,
-                                title: 'Accepted',
-                                groupName: 'accepted invites',
-                                groupItemName: 'accepted invite',
-                                maxGroupListPreviewItems: 5,
-                                inviteListSearcher: _searchAcceptedUserInvites,
-                                inviteGroupListItemDeleteCallback: _onUserInviteDeletedCallback,
-                                inviteGroupListRefresher: _refreshAcceptedInvites,
-                                inviteGroupListOnScrollLoader: _loadMoreAcceptedInvites,
-                              ),
-                              OBMyInvitesGroup(
-                                  key: Key('PendingInvitesGroup'),
-                                  controller: _pendingInvitesGroupController,
-                                  title: 'Pending',
-                                  groupName: 'pending invites',
-                                  groupItemName: 'pending invite',
-                                  maxGroupListPreviewItems: 5,
-                                  inviteListSearcher: _searchPendingUserInvites,
-                                  inviteGroupListItemDeleteCallback: _onUserInviteDeletedCallback,
-                                  inviteGroupListRefresher: _refreshPendingInvites,
-                                  inviteGroupListOnScrollLoader: _loadMorePendingInvites),
-                            ],
-                          )
-                        ]),
-                  ),
-                ),
+                _hasAcceptedInvites && _hasPendingInvites
+                    ? _buildInvitesList()
+                    : _buildNoInvitesFallback()
               ],
             )),
           ],
         ));
   }
 
-  Widget _onUserInviteDeletedCallback(BuildContext context, UserInvite userInvite) {
+  Widget _buildInvitesList() {
+    return Expanded(
+      child: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: _refreshInvites,
+        child: ListView(
+            key: Key('myUserInvites'),
+            controller: _userInvitesScrollController,
+            // Need always scrollable for pull to refresh to work
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.all(0),
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  OBMyInvitesGroup(
+                    key: Key('AcceptedInvitesGroup'),
+                    controller: _acceptedInvitesGroupController,
+                    title: 'Accepted',
+                    groupName: 'accepted invites',
+                    groupItemName: 'accepted invite',
+                    maxGroupListPreviewItems: 5,
+                    inviteListSearcher: _searchAcceptedUserInvites,
+                    inviteGroupListItemDeleteCallback:
+                        _onUserInviteDeletedCallback,
+                    inviteGroupListRefresher: _refreshAcceptedInvites,
+                    inviteGroupListOnScrollLoader: _loadMoreAcceptedInvites,
+                  ),
+                  OBMyInvitesGroup(
+                    key: Key('PendingInvitesGroup'),
+                    controller: _pendingInvitesGroupController,
+                    title: 'Pending',
+                    groupName: 'pending invites',
+                    groupItemName: 'pending invite',
+                    maxGroupListPreviewItems: 5,
+                    inviteListSearcher: _searchPendingUserInvites,
+                    inviteGroupListItemDeleteCallback:
+                        _onUserInviteDeletedCallback,
+                    inviteGroupListRefresher: _refreshPendingInvites,
+                    inviteGroupListOnScrollLoader: _loadMorePendingInvites,
+                  ),
+                ],
+              )
+            ]),
+      ),
+    );
+  }
+
+  Widget _buildNoInvitesFallback() {
+    bool hasInvites = _user.inviteCount > 0;
+
+    String message = hasInvites
+        ? 'Looks like you haven\'t used any invite.'
+        : 'You have no invites available.';
+
+    String assetImage = hasInvites
+        ? 'assets/images/stickers/perplexed-owl.png'
+        : 'assets/images/stickers/owl-instructor.png';
+    return OBButtonAlert(
+      text: message,
+      onPressed: _refreshInvites,
+      buttonText: 'Refresh',
+      buttonIcon: OBIcons.refresh,
+      isLoading: _refreshInProgress,
+      assetImage: assetImage,
+    );
+  }
+
+  Widget _onUserInviteDeletedCallback(
+      BuildContext context, UserInvite userInvite) {
     _refreshUser();
   }
 
@@ -156,6 +190,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   Future<void> _refreshInvites() async {
+    _setRefreshInProgress(true);
     try {
       await Future.wait([
         _refreshUser(),
@@ -165,12 +200,15 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       _scrollToTop();
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRefreshInProgress(false);
     }
   }
 
   Future<void> _refreshUser() async {
     if (_refreshUserOperation != null) _refreshUserOperation.cancel();
-    _refreshUserOperation = CancelableOperation.fromFuture(_userService.refreshUser());
+    _refreshUserOperation =
+        CancelableOperation.fromFuture(_userService.refreshUser());
     await _refreshUserOperation.value;
     User refreshedUser = _userService.getLoggedInUser();
     setState(() {
@@ -179,12 +217,16 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   Future<List<UserInvite>> _refreshPendingInvites() async {
-    UserInvitesList pendingInvitesList = await _userService.getUserInvites(status: UserInviteFilterByStatus.pending);
+    UserInvitesList pendingInvitesList = await _userService.getUserInvites(
+        status: UserInviteFilterByStatus.pending);
+    _setHasPendingInvites(pendingInvitesList.invites.isNotEmpty);
     return pendingInvitesList.invites;
   }
 
   Future<List<UserInvite>> _refreshAcceptedInvites() async {
-    UserInvitesList acceptedInvitesList = await _userService.getUserInvites(status: UserInviteFilterByStatus.accepted);
+    UserInvitesList acceptedInvitesList = await _userService.getUserInvites(
+        status: UserInviteFilterByStatus.accepted);
+    _setHasAcceptedInvites(acceptedInvitesList.invites.isNotEmpty);
     return acceptedInvitesList.invites;
   }
 
@@ -192,7 +234,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       List<UserInvite> currentInviteList) async {
     int offset = currentInviteList.length;
 
-    UserInvitesList morePendingInvites = await _userService.getUserInvites(offset: offset, status: UserInviteFilterByStatus.pending);
+    UserInvitesList morePendingInvites = await _userService.getUserInvites(
+        offset: offset, status: UserInviteFilterByStatus.pending);
     return morePendingInvites.invites;
   }
 
@@ -200,17 +243,20 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       List<UserInvite> currentInviteList) async {
     int offset = currentInviteList.length;
 
-    UserInvitesList moreAcceptedInvites = await _userService.getUserInvites(offset: offset, status: UserInviteFilterByStatus.accepted);
+    UserInvitesList moreAcceptedInvites = await _userService.getUserInvites(
+        offset: offset, status: UserInviteFilterByStatus.accepted);
     return moreAcceptedInvites.invites;
   }
 
   Future<List<UserInvite>> _searchPendingUserInvites(String query) async {
-    UserInvitesList results = await _userService.searchUserInvites(query: query, status: UserInviteFilterByStatus.pending);
+    UserInvitesList results = await _userService.searchUserInvites(
+        query: query, status: UserInviteFilterByStatus.pending);
     return results.invites;
   }
 
   Future<List<UserInvite>> _searchAcceptedUserInvites(String query) async {
-    UserInvitesList results = await _userService.searchUserInvites(query: query, status: UserInviteFilterByStatus.accepted);
+    UserInvitesList results = await _userService.searchUserInvites(
+        query: query, status: UserInviteFilterByStatus.accepted);
     return results.invites;
   }
 
@@ -243,24 +289,37 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     _toastService.error(message: 'You have no invites left', context: context);
   }
 
-  void _removeUserInvite(UserInvite userInvite) {
-    setState(() {
-      _userInvites.remove(userInvite);
-      _userInvitesSearchResults.remove(userInvite);
-    });
-  }
-
   void _onUserInviteCreated(UserInvite createdUserInvite) {
     _refreshInvites();
     _scrollToTop();
   }
 
   void _scrollToTop() {
-    _userInvitesScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    if (_userInvitesScrollController.hasClients) {
+      _userInvitesScrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
+  }
+
+  void _setHasAcceptedInvites(bool hasAcceptedInvites) {
+    setState(() {
+      _hasAcceptedInvites = hasAcceptedInvites;
+    });
+  }
+
+  void _setHasPendingInvites(bool hasPendingInvites) {
+    setState(() {
+      _hasPendingInvites = hasPendingInvites;
+    });
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
+    });
   }
 }
 

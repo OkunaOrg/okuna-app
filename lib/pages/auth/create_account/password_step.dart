@@ -22,7 +22,6 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   ValidationService validationService;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-
   TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -37,7 +36,6 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     localizationService = openbookProvider.localizationService;
     validationService = openbookProvider.validationService;
     createAccountBloc = openbookProvider.createAccountBloc;
-
 
     return Scaffold(
       body: Center(
@@ -95,7 +93,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     if (isPasswordValid) {
       setState(() {
         createAccountBloc.setPassword(_passwordController.text);
-        Navigator.pushNamed(context, '/auth/legal_age_step');
+        Navigator.pushNamed(context, '/auth/guidelines_step');
       });
     }
   }
@@ -160,7 +158,6 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   }
 
   Widget _buildPasswordForm() {
-
     return Form(
       key: _formKey,
       child: Row(children: <Widget>[
@@ -171,7 +168,8 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
                 autocorrect: false,
                 obscureText: !passwordIsVisible,
                 validator: (String password) {
-                  String validatePassword = validationService.validateUserPassword(password);
+                  String validatePassword =
+                      validationService.validateUserPassword(password);
                   if (validatePassword != null) return validatePassword;
                 },
                 suffixIcon: GestureDetector(
@@ -183,8 +181,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
                   },
                 ),
                 controller: _passwordController,
-              )
-          ),
+              )),
         ),
       ]),
     );

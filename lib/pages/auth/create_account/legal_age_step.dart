@@ -73,7 +73,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
       children: <Widget>[
         SizedBox(width: 10.0),
         Text(
-          '🏁',
+          '🤔',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
           textAlign: TextAlign.center,
         ),

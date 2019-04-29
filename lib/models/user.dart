@@ -27,6 +27,7 @@ class User extends UpdatableModel<User> {
   int unreadNotificationsCount;
   int postsCount;
   int inviteCount;
+  bool areGuidelinesAccepted;
   bool isFollowing;
   bool isConnected;
   bool isFullyConnected;
@@ -68,32 +69,34 @@ class User extends UpdatableModel<User> {
     sessionUsersFactory.clearCache();
   }
 
-  User({
-    this.id,
-    this.uuid,
-    this.connectionsCircleId,
-    this.username,
-    this.email,
-    this.profile,
-    this.notificationsSettings,
-    this.followersCount,
-    this.followingCount,
-    this.unreadNotificationsCount,
-    this.postsCount,
-    this.inviteCount,
-    this.isFollowing,
-    this.isConnected,
-    this.isFullyConnected,
-    this.isMemberOfCommunities,
-    this.connectedCircles,
-    this.followLists,
-    this.communitiesMemberships,
-    this.communitiesInvites,
-  });
+  User(
+      {this.id,
+      this.uuid,
+      this.connectionsCircleId,
+      this.username,
+      this.email,
+      this.profile,
+      this.notificationsSettings,
+      this.followersCount,
+      this.followingCount,
+      this.unreadNotificationsCount,
+      this.postsCount,
+      this.inviteCount,
+      this.isFollowing,
+      this.isConnected,
+      this.isFullyConnected,
+      this.isMemberOfCommunities,
+      this.connectedCircles,
+      this.followLists,
+      this.communitiesMemberships,
+      this.communitiesInvites,
+      this.areGuidelinesAccepted});
 
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
     if (json.containsKey('uuid')) uuid = json['uuid'];
+    if (json.containsKey('are_guidelines_accepted'))
+      areGuidelinesAccepted = json['are_guidelines_accepted'];
     if (json.containsKey('email')) email = json['email'];
     if (json.containsKey('profile')) {
       if (profile != null) {
@@ -387,6 +390,7 @@ class UserFactory extends UpdatableModelFactory<User> {
     return User(
         id: json['id'],
         uuid: json['uuid'],
+        areGuidelinesAccepted: json['are_guidelines_accepted'],
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
         postsCount: json['posts_count'],

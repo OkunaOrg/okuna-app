@@ -7,6 +7,7 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
+import 'package:Openbook/pages/home/modals/accept_guidelines/pages/confirm_reject_guidelines.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
@@ -22,6 +23,7 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/community_guidelines.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/delete_account/delete_account.dart';
@@ -290,6 +292,22 @@ class NavigationService {
             key: Key('obMenuUsefulLinks'), widget: OBUsefulLinksPage()));
   }
 
+  Future navigateToCommunityGuidelinesPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityGuidelinesPage'),
+            widget: OBCommunityGuidelinesPage()));
+  }
+
+  Future navigateToConfirmRejectGuidelinesPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obConfirmRejectGuidelinesPage'),
+            widget: OBConfirmRejectGuidelines()));
+  }
+
   Future<Post> navigateToSharePost(
       {@required BuildContext context, @required SharePostData sharePostData}) {
     return Navigator.push(
@@ -337,24 +355,24 @@ class NavigationService {
             key: Key('obSeeUserInvites'), widget: OBUserInvitesPage()));
   }
 
-  Future navigateToShareInvite({@required BuildContext context, @required UserInvite userInvite}) {
+  Future navigateToShareInvite(
+      {@required BuildContext context, @required UserInvite userInvite}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
-            key: Key('obShareUserInvitePage'), widget: OBUserInviteDetailPage(
-          userInvite: userInvite,
-          showEdit: false
-        )));
+            key: Key('obShareUserInvitePage'),
+            widget: OBUserInviteDetailPage(
+                userInvite: userInvite, showEdit: false)));
   }
 
-  Future navigateToInviteDetailPage({@required BuildContext context, @required UserInvite userInvite}) {
+  Future navigateToInviteDetailPage(
+      {@required BuildContext context, @required UserInvite userInvite}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
-            key: Key('obSeeUserInviteDetail'), widget: OBUserInviteDetailPage(
-            userInvite: userInvite,
-            showEdit: true
-        )));
+            key: Key('obSeeUserInviteDetail'),
+            widget: OBUserInviteDetailPage(
+                userInvite: userInvite, showEdit: true)));
   }
 
   Future navigateToConnectionsCircles({@required BuildContext context}) {

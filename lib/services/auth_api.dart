@@ -12,6 +12,7 @@ class AuthApiService {
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
   static const UPDATE_EMAIL_PATH = 'api/auth/user/settings/';
   static const VERIFY_EMAIL_TOKEN = 'api/auth/email/verify/';
+  static const ACCEPT_GUIDELINES = 'api/auth/user/accept-guidelines/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
   static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
@@ -124,6 +125,7 @@ class AuthApiService {
       @required String token,
       @required String name,
       @required bool isOfLegalAge,
+      @required bool areGuidelinesAccepted,
       @required String password,
       File avatar}) {
     Map<String, dynamic> body = {
@@ -131,6 +133,7 @@ class AuthApiService {
       'token': token,
       'name': name,
       'is_of_legal_age': isOfLegalAge,
+      'are_guidelines_accepted': areGuidelinesAccepted,
       'password': password
     };
 
@@ -192,8 +195,7 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> searchFollowers(
-      {@required String query, int count}) {
+  Future<HttpieResponse> searchFollowers({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (count != null) queryParams['count'] = count;
@@ -215,8 +217,7 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> searchFollowings(
-      {@required String query, int count}) {
+  Future<HttpieResponse> searchFollowings({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (count != null) queryParams['count'] = count;
@@ -305,5 +306,9 @@ class AuthApiService {
         '$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
         body: body,
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> acceptGuidelines() {
+    return this._httpService.post('$apiURL$ACCEPT_GUIDELINES', appendAuthorizationToken: true);
   }
 }

@@ -8,6 +8,7 @@ import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/devices_api.dart';
 import 'package:Openbook/services/dialog.dart';
+import 'package:Openbook/services/documents.dart';
 import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
@@ -96,6 +97,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   IntercomService intercomService = IntercomService();
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
+  DocumentsService documentsService = DocumentsService();
 
   SentryClient sentryClient;
 
@@ -154,6 +156,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
     imagePickerService.setValidationService(validationService);
+    documentsService.setHttpService(httpService);
   }
 
   void initAsyncState() async {

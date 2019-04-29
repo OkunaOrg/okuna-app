@@ -205,6 +205,11 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
+  Future<void> acceptGuidelines() async {
+    HttpieResponse response = await _authApiService.acceptGuidelines();
+    _checkResponseIsOk(response);
+  }
+
   Future<void> loginWithAuthToken(String authToken) async {
     await _setAuthToken(authToken);
     await refreshUser();
@@ -722,53 +727,59 @@ class UserService {
   }
 
   Future<UserInvite> createUserInvite({String nickname}) async {
-    HttpieStreamedResponse response = await _userInvitesApiService.
-    createUserInvite(nickname: nickname);
+    HttpieStreamedResponse response =
+        await _userInvitesApiService.createUserInvite(nickname: nickname);
     _checkResponseIsCreated(response);
 
     String responseBody = await response.readAsString();
     return UserInvite.fromJSON(json.decode(responseBody));
   }
 
-  Future<UserInvite> updateUserInvite({String nickname, UserInvite userInvite}) async {
-    HttpieStreamedResponse response = await _userInvitesApiService.
-    updateUserInvite(nickname: nickname, userInviteId: userInvite.id);
+  Future<UserInvite> updateUserInvite(
+      {String nickname, UserInvite userInvite}) async {
+    HttpieStreamedResponse response = await _userInvitesApiService
+        .updateUserInvite(nickname: nickname, userInviteId: userInvite.id);
     _checkResponseIsOk(response);
 
     String responseBody = await response.readAsString();
     return UserInvite.fromJSON(json.decode(responseBody));
   }
 
-  Future<UserInvitesList> getUserInvites({int offset, int count, UserInviteFilterByStatus status}) async {
-    bool isPending = status != null ?
-    UserInvite.convertUserInviteStatusToBool(status) :
-    UserInvite.convertUserInviteStatusToBool(UserInviteFilterByStatus.all);
+  Future<UserInvitesList> getUserInvites(
+      {int offset, int count, UserInviteFilterByStatus status}) async {
+    bool isPending = status != null
+        ? UserInvite.convertUserInviteStatusToBool(status)
+        : UserInvite.convertUserInviteStatusToBool(
+            UserInviteFilterByStatus.all);
 
-    HttpieResponse response = await _userInvitesApiService.getUserInvites(isStatusPending: isPending, count: count, offset: offset);
+    HttpieResponse response = await _userInvitesApiService.getUserInvites(
+        isStatusPending: isPending, count: count, offset: offset);
     _checkResponseIsOk(response);
     return UserInvitesList.fromJson(json.decode(response.body));
   }
 
+  Future<UserInvitesList> searchUserInvites(
+      {int count, UserInviteFilterByStatus status, String query}) async {
+    bool isPending = status != null
+        ? UserInvite.convertUserInviteStatusToBool(status)
+        : UserInvite.convertUserInviteStatusToBool(
+            UserInviteFilterByStatus.all);
 
-  Future<UserInvitesList> searchUserInvites({int count, UserInviteFilterByStatus status, String query}) async {
-    bool isPending = status != null ?
-    UserInvite.convertUserInviteStatusToBool(status) :
-    UserInvite.convertUserInviteStatusToBool(UserInviteFilterByStatus.all);
-
-    HttpieResponse response = await _userInvitesApiService.searchUserInvites(isStatusPending: isPending, count: count, query: query);
+    HttpieResponse response = await _userInvitesApiService.searchUserInvites(
+        isStatusPending: isPending, count: count, query: query);
     _checkResponseIsOk(response);
     return UserInvitesList.fromJson(json.decode(response.body));
   }
 
   Future<void> deleteUserInvite(UserInvite userInvite) async {
     HttpieResponse response =
-    await _userInvitesApiService.deleteUserInvite(userInvite.id);
+        await _userInvitesApiService.deleteUserInvite(userInvite.id);
     _checkResponseIsOk(response);
   }
 
   Future<void> sendUserInviteEmail(UserInvite userInvite, String email) async {
-    HttpieResponse response =
-    await _userInvitesApiService.emailUserInvite(userInviteId: userInvite.id, email: email);
+    HttpieResponse response = await _userInvitesApiService.emailUserInvite(
+        userInviteId: userInvite.id, email: email);
 
     _checkResponseIsOk(response);
   }

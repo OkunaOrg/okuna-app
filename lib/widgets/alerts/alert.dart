@@ -64,16 +64,4 @@ class OBAlertState extends State<OBAlert> {
           );
         });
   }
-
-  Widget _buildAlertWithColor(Color color){
-    return Container(
-      padding: widget.padding ?? EdgeInsets.all(15),
-      height: widget.height,
-      width: widget.width,
-      decoration: BoxDecoration(
-          color: color,
-          borderRadius: widget.borderRadius ?? BorderRadius.circular(10)),
-      child: widget.child,
-    );
-  }
 }

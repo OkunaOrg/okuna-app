@@ -8,6 +8,7 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
+import 'package:Openbook/pages/home/modals/accept_guidelines/accept_guidelines.dart';
 import 'package:Openbook/pages/home/modals/edit_post/edit_post.dart';
 import 'package:Openbook/pages/home/modals/invite_to_community.dart';
 import 'package:Openbook/pages/home/modals/post_comment/post-commenter-expanded.dart';
@@ -28,7 +29,10 @@ import 'package:flutter/material.dart';
 
 class ModalService {
   Future<Post> openCreatePost(
-      {@required BuildContext context, Community community, String text, File image}) async {
+      {@required BuildContext context,
+      Community community,
+      String text,
+      File image}) async {
     Post createdPost = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Post>(
             fullscreenDialog: true,
@@ -49,31 +53,33 @@ class ModalService {
       {@required BuildContext context, @required Post post}) async {
     Post editedPost = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Post>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: EditPostModal(
-              post: post,
-            ),
-          );
-        }));
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: EditPostModal(
+                  post: post,
+                ),
+              );
+            }));
 
     return editedPost;
   }
 
   Future<PostComment> openExpandedCommenter(
-      {@required BuildContext context, @required PostComment postComment, @required Post post}) async {
+      {@required BuildContext context,
+      @required PostComment postComment,
+      @required Post post}) async {
     PostComment editedComment = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<PostComment>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBPostCommenterExpandedModal(
-              post: post,
-              postComment: postComment,
-            ),
-          );
-        }));
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBPostCommenterExpandedModal(
+                  post: post,
+                  postComment: postComment,
+                ),
+              );
+            }));
     return editedComment;
   }
 
@@ -260,48 +266,53 @@ class ModalService {
             }));
   }
 
-  Future<UserInvite> openCreateUserInvite({
-  @required BuildContext context
-  }) async {
+  Future<UserInvite> openCreateUserInvite(
+      {@required BuildContext context}) async {
     UserInvite createdUserInvite =
         await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return OBCreateUserInviteModal(
-            autofocusNameTextField: true,
-          );
-        }));
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBCreateUserInviteModal(
+                autofocusNameTextField: true,
+              );
+            }));
 
     return createdUserInvite;
   }
 
-  Future<UserInvite> openEditUserInvite({
-    @required BuildContext context,
-    @required UserInvite userInvite
-  }) async {
+  Future<UserInvite> openEditUserInvite(
+      {@required BuildContext context, @required UserInvite userInvite}) async {
     UserInvite editedUserInvite =
-    await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return OBCreateUserInviteModal(
-            autofocusNameTextField: true,
-            userInvite: userInvite,
-          );
-        }));
+        await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return OBCreateUserInviteModal(
+                autofocusNameTextField: true,
+                userInvite: userInvite,
+              );
+            }));
 
     return editedUserInvite;
   }
 
-  Future<void> openSendUserInviteEmail({
-    @required BuildContext context,
-    @required UserInvite userInvite
-  }) async {
+  Future<void> openSendUserInviteEmail(
+      {@required BuildContext context, @required UserInvite userInvite}) async {
     await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
         fullscreenDialog: true,
         builder: (BuildContext context) {
           return OBSendUserInviteEmailModal(
             autofocusEmailTextField: true,
             userInvite: userInvite,
+          );
+        }));
+  }
+
+  Future<void> openAcceptGuidelines({@required BuildContext context}) async {
+    await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return Material(
+            child: OBAcceptGuidelinesModal(),
           );
         }));
   }

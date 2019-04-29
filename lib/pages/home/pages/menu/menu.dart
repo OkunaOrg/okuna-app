@@ -51,13 +51,6 @@ class OBMainMenuPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const OBIcon(OBIcons.connections),
-                  title: const OBText('My invites'),
-                  onTap: () {
-                    navigationService.navigateToUserInvites(context: context);
-                  },
-                ),
-                ListTile(
                   leading: const OBIcon(OBIcons.followers),
                   title: const OBText('My followers'),
                   onTap: () {
@@ -69,6 +62,13 @@ class OBMainMenuPage extends StatelessWidget {
                   title: const OBText('My following'),
                   onTap: () {
                     navigationService.navigateToFollowingPage(context: context);
+                  },
+                ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.invite),
+                  title: const OBText('My invites'),
+                  onTap: () {
+                    navigationService.navigateToUserInvites(context: context);
                   },
                 ),
                 ListTile(
