@@ -321,6 +321,58 @@ class User extends UpdatableModel<User> {
     return _canCloseOpenPost;
   }
 
+  bool canCloseOpenPostsInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canCloseOpenPost = false;
+
+    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+      _canCloseOpenPost = true;
+    }
+
+    return _canCloseOpenPost;
+  }
+
+  bool canBanUnbanUsersInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canBanUnban = false;
+
+    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+      _canBanUnban = true;
+    }
+
+    return _canBanUnban;
+  }
+
+  bool isCreatorOfCommunity(Community community) {
+    return community.isCreator;
+  }
+
+  bool canChangeDetailsOfCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canChangeDetails = false;
+
+    if (community.isAdministrator(loggedInUser)) {
+      _canChangeDetails = true;
+    }
+
+    return _canChangeDetails;
+  }
+
+  bool canAddRemoveModeratorsInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canAddMods = false;
+
+    if (community.isAdministrator(loggedInUser)) {
+      _canAddMods = true;
+    }
+
+    return _canAddMods;
+  }
+
+  bool canAddRemoveAdministratorsInCommunity(Community community) {
+    return community.isCreator;
+  }
+
   bool canCommentOnPostWithDisabledComments(Post post) {
     User loggedInUser = this;
     bool _canComment = false;
