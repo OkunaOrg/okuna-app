@@ -28,9 +28,7 @@ class OBCreateUserInviteModal extends StatefulWidget {
   }
 }
 
-class OBCreateUserInviteModalState
-    extends State<OBCreateUserInviteModal> {
-
+class OBCreateUserInviteModalState extends State<OBCreateUserInviteModal> {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
@@ -66,8 +64,7 @@ class OBCreateUserInviteModalState
   @override
   void dispose() {
     super.dispose();
-    if (_createUpdateOperation != null)
-      _createUpdateOperation.cancel();
+    if (_createUpdateOperation != null) _createUpdateOperation.cancel();
   }
 
   @override
@@ -94,7 +91,7 @@ class OBCreateUserInviteModalState
                           children: <Widget>[
                             OBTextFormField(
                                 textCapitalization:
-                                TextCapitalization.sentences,
+                                    TextCapitalization.sentences,
                                 size: OBTextFormFieldSize.large,
                                 autofocus: widget.autofocusNameTextField,
                                 controller: _nicknameController,
@@ -103,7 +100,9 @@ class OBCreateUserInviteModalState
                                     hintText: 'e.g. Jane Doe'),
                                 validator: (String userInviteNickname) {
                                   if (!_formWasSubmitted) return null;
-                                  return _validationService.validateUserProfileName(userInviteNickname);
+                                  return _validationService
+                                      .validateUserProfileName(
+                                          userInviteNickname);
                                 }),
                           ],
                         )),
@@ -127,7 +126,7 @@ class OBCreateUserInviteModalState
           isLoading: _requestInProgress,
           size: OBButtonSize.small,
           onPressed: _submitForm,
-          child: Text('Next'),
+          child: _hasExistingUserInvite ? Text('Save') : Text('Create'),
         ));
   }
 
@@ -148,12 +147,16 @@ class OBCreateUserInviteModalState
     if (!formIsValid) return;
     _setRequestInProgress(true);
     try {
-
-      _createUpdateOperation = CancelableOperation.fromFuture(_hasExistingUserInvite
-          ? _userService.updateUserInvite(userInvite: widget.userInvite,
-          nickname: _nicknameController.text != widget.userInvite.nickname ? _nicknameController.text : null)
-          : _userService.createUserInvite(
-          nickname: _nicknameController.text));
+      _createUpdateOperation = CancelableOperation.fromFuture(
+          _hasExistingUserInvite
+              ? _userService.updateUserInvite(
+                  userInvite: widget.userInvite,
+                  nickname:
+                      _nicknameController.text != widget.userInvite.nickname
+                          ? _nicknameController.text
+                          : null)
+              : _userService.createUserInvite(
+                  nickname: _nicknameController.text));
 
       UserInvite userInvite = await _createUpdateOperation.value;
       if (!_hasExistingUserInvite) {
@@ -170,14 +173,9 @@ class OBCreateUserInviteModalState
   }
 
   void _navigateToShareInvite(UserInvite userInvite) async {
-    UserInvite sharedInvite = await _navigationService.navigateToShareInvite(
-        context: context,
-        userInvite: userInvite);
-    Navigator.of(context).pop(userInvite);
-    if (sharedInvite != null) {
-      // Remove modal
-      Navigator.of(context).pop(sharedInvite);
-    }
+    Navigator.pop(context, userInvite);
+    await _navigationService.navigateToShareInvite(
+        context: context, userInvite: userInvite);
   }
 
   void _onError(error) async {
@@ -204,5 +202,4 @@ class OBCreateUserInviteModalState
       _formValid = formValid;
     });
   }
-
 }
