@@ -1,9 +1,7 @@
 import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
