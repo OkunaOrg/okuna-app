@@ -8,25 +8,25 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBMutePostTile extends StatefulWidget {
+class OBClosePostTile extends StatefulWidget {
   final Post post;
-  final VoidCallback onMutedPost;
-  final VoidCallback onUnmutedPost;
+  final VoidCallback onClosePost;
+  final VoidCallback onOpenPost;
 
-  const OBMutePostTile({
+  const OBClosePostTile({
     Key key,
     @required this.post,
-    this.onMutedPost,
-    this.onUnmutedPost,
+    this.onClosePost,
+    this.onOpenPost,
   }) : super(key: key);
 
   @override
-  OBMutePostTileState createState() {
-    return OBMutePostTileState();
+  OBClosePostTileState createState() {
+    return OBClosePostTileState();
   }
 }
 
-class OBMutePostTileState extends State<OBMutePostTile> {
+class OBClosePostTileState extends State<OBClosePostTile> {
   UserService _userService;
   ToastService _toastService;
   bool _requestInProgress;
@@ -49,25 +49,26 @@ class OBMutePostTileState extends State<OBMutePostTile> {
       builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
         var post = snapshot.data;
 
-        bool isMuted = post.isMuted;
+        bool isPostClosed = post.isClosed;
 
         return OBLoadingTile(
           isLoading: _requestInProgress,
-          leading: OBIcon(isMuted ? OBIcons.unmutePost : OBIcons.mutePost),
-          title: OBText(isMuted
-              ? 'Turn on post notifications'
-              : 'Turn off post notifications'),
-          onTap: isMuted ? _unmutePost : _mutePost,
+          leading: OBIcon(isPostClosed ? OBIcons.openPost : OBIcons.closePost),
+          title: OBText(isPostClosed
+              ? 'Open post to community'
+              : 'Close post from community'),
+          onTap: isPostClosed ? _openPost : _closePost,
         );
       },
     );
   }
 
-  void _mutePost() async {
+  void _openPost() async {
     _setRequestInProgress(true);
     try {
-      await _userService.mutePost(widget.post);
-      if (widget.onMutedPost != null) widget.onMutedPost();
+      await _userService.openPost(widget.post);
+      if (widget.onClosePost != null) widget.onClosePost();
+      _toastService.success(message: 'Post is now open to community', context: context);
     } catch (e) {
       _onError(e);
     } finally {
@@ -75,11 +76,12 @@ class OBMutePostTileState extends State<OBMutePostTile> {
     }
   }
 
-  void _unmutePost() async {
+  void _closePost() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unmutePost(widget.post);
-      if (widget.onUnmutedPost != null) widget.onUnmutedPost();
+      await _userService.closePost(widget.post);
+      if (widget.onOpenPost != null) widget.onOpenPost();
+      _toastService.info(message: 'Post is now closed to community, owner can still comment', context: context);
     } catch (e) {
       _onError(e);
     } finally {

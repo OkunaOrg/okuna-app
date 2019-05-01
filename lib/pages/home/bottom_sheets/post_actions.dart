@@ -10,6 +10,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/disable_comments_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +61,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             onUnmutedPost: _dismiss,
           ));
 
-          if (loggedInUser.canDisableEnableCommentsForPost(post)) {
+          if (loggedInUser.canDisableOrEnableCommentsForPost(post)) {
             postActions.add(OBDisableCommentsPostTile(
               post: post,
               onDisableComments: _dismiss,
@@ -68,32 +69,42 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             ));
           }
 
-          if (loggedInUser.canEditPost(post)) {
-            postActions.add(ListTile(
-              leading: const OBIcon(OBIcons.editPost),
-              title: const OBText(
-                'Edit post',
-              ),
-              onTap: _onWantsToEditPost,
-            ));
-          }
-          if (loggedInUser.canDeletePost(post)) {
-            postActions.add(ListTile(
-              leading: const OBIcon(OBIcons.deletePost),
-              title: const OBText(
-                'Delete post',
-              ),
-              onTap: _onWantsToDeletePost,
-            ));
-          } else {
-            postActions.add(ListTile(
-              leading: const OBIcon(OBIcons.reportPost),
-              title: const OBText(
-                'Report post',
-              ),
-              onTap: _onWantsToReportPost,
-            ));
-          }
+
+        if (loggedInUser.canCloseOrOpenPost(post)) {
+          postActions.add(OBClosePostTile(
+            post: post,
+            onClosePost: _dismiss,
+            onOpenPost: _dismiss,
+          ));
+        }
+
+        if (loggedInUser.canEditPost(post)) {
+          postActions.add(ListTile(
+            leading: const OBIcon(OBIcons.editPost),
+            title: const OBText(
+              'Edit post',
+            ),
+            onTap: _onWantsToEditPost,
+          ));
+        }
+
+        if (loggedInUser.canDeletePost(post)) {
+          postActions.add(ListTile(
+            leading: const OBIcon(OBIcons.deletePost),
+            title: const OBText(
+              'Delete post',
+            ),
+            onTap: _onWantsToDeletePost,
+          ));
+        } else {
+          postActions.add(ListTile(
+            leading: const OBIcon(OBIcons.reportPost),
+            title: const OBText(
+              'Report post',
+            ),
+            onTap: _onWantsToReportPost,
+          ));
+        }
 
           return OBPrimaryColorContainer(
             mainAxisSize: MainAxisSize.min,

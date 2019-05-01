@@ -29,11 +29,7 @@ class OBManageCommunityPage extends StatelessWidget {
 
     const TextStyle listItemSubtitleStyle = TextStyle(fontSize: 14);
 
-    bool loggedInUserIsAdministrator = community.isAdministrator(loggedInUser);
-    bool loggedInUserIsModerator = community.isModerator(loggedInUser);
-    bool loggedInUserIsCreator = community.isCreator;
-
-    if (loggedInUserIsAdministrator) {
+    if (loggedInUser.canChangeDetailsOfCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communities),
         title: const OBText('Details'),
@@ -48,7 +44,7 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
-    if (loggedInUserIsCreator) {
+    if (loggedInUser.canAddOrRemoveAdministratorsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityAdministrators),
         title: const OBText('Administrators'),
@@ -63,7 +59,7 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
-    if (loggedInUserIsAdministrator) {
+    if (loggedInUser.canAddOrRemoveModeratorsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityModerators),
         title: const OBText('Moderators'),
@@ -78,7 +74,7 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
-    if (loggedInUserIsAdministrator || loggedInUserIsModerator) {
+    if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityBannedUsers),
         title: const OBText('Banned users'),
@@ -88,6 +84,21 @@ class OBManageCommunityPage extends StatelessWidget {
         ),
         onTap: () {
           navigationService.navigateToCommunityBannedUsers(
+              context: context, community: community);
+        },
+      ));
+    }
+
+    if (loggedInUser.canCloseOrOpenPostsInCommunity(community)) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.closePost),
+        title: const OBText('Closed posts'),
+        subtitle: const OBText(
+          'See and manage closed posts',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToCommunityClosedPosts(
               context: context, community: community);
         },
       ));
@@ -117,7 +128,7 @@ class OBManageCommunityPage extends StatelessWidget {
           style: listItemSubtitleStyle,
         )));
 
-    if (loggedInUserIsCreator) {
+    if (loggedInUser.isCreatorOfCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.deleteCommunity),
         title: const OBText('Delete community'),

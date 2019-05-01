@@ -296,19 +296,85 @@ class User extends UpdatableModel<User> {
     }
   }
 
-  bool canDisableEnableCommentsForPost(Post post) {
+  bool canDisableOrEnableCommentsForPost(Post post) {
     User loggedInUser = this;
-    bool _canDisableEnableComments = false;
+    bool _canDisableOrEnableComments = false;
 
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
 
       if (postCommunity.isAdministrator(loggedInUser) ||
           postCommunity.isModerator(loggedInUser)) {
-        _canDisableEnableComments = true;
+        _canDisableOrEnableComments = true;
       }
     }
-    return _canDisableEnableComments;
+    return _canDisableOrEnableComments;
+  }
+
+  bool canCloseOrOpenPost(Post post) {
+    User loggedInUser = this;
+    bool _canCloseOrOpenPost = false;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      if (postCommunity.isAdministrator(loggedInUser) || postCommunity.isModerator(loggedInUser)) {
+        _canCloseOrOpenPost = true;
+      }
+    }
+    return _canCloseOrOpenPost;
+  }
+
+  bool canCloseOrOpenPostsInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canCloseOrOpenPost = false;
+
+    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+      _canCloseOrOpenPost = true;
+    }
+
+    return _canCloseOrOpenPost;
+  }
+
+  bool canBanOrUnbanUsersInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canBanOrUnban = false;
+
+    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+      _canBanOrUnban = true;
+    }
+
+    return _canBanOrUnban;
+  }
+
+  bool isCreatorOfCommunity(Community community) {
+    return community.isCreator;
+  }
+
+  bool canChangeDetailsOfCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canChangeDetails = false;
+
+    if (community.isAdministrator(loggedInUser)) {
+      _canChangeDetails = true;
+    }
+
+    return _canChangeDetails;
+  }
+
+  bool canAddOrRemoveModeratorsInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canAddOrRemoveMods = false;
+
+    if (community.isAdministrator(loggedInUser)) {
+      _canAddOrRemoveMods = true;
+    }
+
+    return _canAddOrRemoveMods;
+  }
+
+  bool canAddOrRemoveAdministratorsInCommunity(Community community) {
+    return community.isCreator;
   }
 
   bool canCommentOnPostWithDisabledComments(Post post) {
