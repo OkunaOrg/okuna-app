@@ -321,7 +321,7 @@ class User extends UpdatableModel<User> {
     return _canCloseOpenPost;
   }
 
-  bool canCloseOpenPostsInCommunity(Community community) {
+  bool canCloseOrOpenPostsInCommunity(Community community) {
     User loggedInUser = this;
     bool _canCloseOpenPost = false;
 
@@ -332,7 +332,7 @@ class User extends UpdatableModel<User> {
     return _canCloseOpenPost;
   }
 
-  bool canBanUnbanUsersInCommunity(Community community) {
+  bool canBanOrUnbanUsersInCommunity(Community community) {
     User loggedInUser = this;
     bool _canBanUnban = false;
 
@@ -358,7 +358,7 @@ class User extends UpdatableModel<User> {
     return _canChangeDetails;
   }
 
-  bool canAddRemoveModeratorsInCommunity(Community community) {
+  bool canAddOrRemoveModeratorsInCommunity(Community community) {
     User loggedInUser = this;
     bool _canAddMods = false;
 
@@ -369,7 +369,7 @@ class User extends UpdatableModel<User> {
     return _canAddMods;
   }
 
-  bool canAddRemoveAdministratorsInCommunity(Community community) {
+  bool canAddOrRemoveAdministratorsInCommunity(Community community) {
     return community.isCreator;
   }
 

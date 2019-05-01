@@ -44,7 +44,7 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
-    if (loggedInUser.canAddRemoveAdministratorsInCommunity(community)) {
+    if (loggedInUser.canAddOrRemoveAdministratorsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityAdministrators),
         title: const OBText('Administrators'),
@@ -59,7 +59,7 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
-    if (loggedInUser.canAddRemoveModeratorsInCommunity(community)) {
+    if (loggedInUser.canAddOrRemoveModeratorsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityModerators),
         title: const OBText('Moderators'),
@@ -74,7 +74,7 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
-    if (loggedInUser.canBanUnbanUsersInCommunity(community)) {
+    if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityBannedUsers),
         title: const OBText('Banned users'),
@@ -89,7 +89,7 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
-    if (loggedInUser.canCloseOpenPostsInCommunity(community)) {
+    if (loggedInUser.canCloseOrOpenPostsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.closePost),
         title: const OBText('Closed posts'),

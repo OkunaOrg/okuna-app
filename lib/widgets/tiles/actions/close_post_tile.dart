@@ -5,6 +5,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBClosePostTile extends StatefulWidget {
@@ -50,8 +51,8 @@ class OBClosePostTileState extends State<OBClosePostTile> {
 
         bool isPostClosed = post.isClosed;
 
-        return ListTile(
-          enabled: !_requestInProgress,
+        return OBLoadingTile(
+          isLoading: _requestInProgress,
           leading: OBIcon(isPostClosed ? OBIcons.openPost : OBIcons.closePost),
           title: OBText(isPostClosed
               ? 'Open post to community'
