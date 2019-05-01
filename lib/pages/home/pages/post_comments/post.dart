@@ -204,7 +204,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       ),
     );
   }
-  
+
   Widget _buildPostCommenterSection() {
     User loggedInUser = _userService.getLoggedInUser();
     if (widget.post.areCommentsEnabled || loggedInUser.canCommentOnPostWithDisabledComments(widget.post)) {
@@ -223,7 +223,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-               OBText('Comments are disabled for this post'),
+               Flexible(
+                 child: OBText('Comments have been disabled for this post', textAlign: TextAlign.center,),
+               ),
             ],
           )
         ),
