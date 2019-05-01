@@ -8,7 +8,6 @@ import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
