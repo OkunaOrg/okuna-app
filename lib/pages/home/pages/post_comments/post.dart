@@ -8,7 +8,6 @@ import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
@@ -204,7 +203,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
       ),
     );
   }
-  
+
   Widget _buildPostCommenterSection() {
     User loggedInUser = _userService.getLoggedInUser();
     if (widget.post.areCommentsEnabled || loggedInUser.canCommentOnPostWithDisabledComments(widget.post)) {
@@ -223,7 +222,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-               OBText('Comments are disabled for this post'),
+               Flexible(
+                 child: OBText('Comments have been disabled for this post', textAlign: TextAlign.center,),
+               ),
             ],
           )
         ),

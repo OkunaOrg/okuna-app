@@ -67,7 +67,7 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
     try {
       await _userService.enableCommentsForPost(widget.post);
       if (widget.onDisableComments != null) widget.onDisableComments();
-      _toastService.success(message: 'Comments now enabled for post', context: context);
+      _toastService.success(message: 'Comments enabled for post', context: context);
     } catch (e) {
       _onError(e);
     } finally {
@@ -80,7 +80,7 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
     try {
       await _userService.disableCommentsForPost(widget.post);
       if (widget.onEnableComments != null) widget.onEnableComments();
-      _toastService.info(message: 'Comments now disabled for post', context: context);
+      _toastService.success(message: 'Comments disabled for post', context: context);
     } catch (e) {
       _onError(e);
     } finally {
