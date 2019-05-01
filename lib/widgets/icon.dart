@@ -211,7 +211,7 @@ class OBIcons {
   static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
   static const disableComments = OBIconData(nativeIcon: Icons.block);
   static const enableComments = OBIconData(nativeIcon: Icons.comment);
-
+  static const block = OBIconData(nativeIcon: Icons.block);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

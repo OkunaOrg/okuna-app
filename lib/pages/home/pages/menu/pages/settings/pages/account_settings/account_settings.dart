@@ -56,6 +56,14 @@ class OBAccountSettingsPage extends StatelessWidget {
               },
             ),
             ListTile(
+              leading: const OBIcon(OBIcons.block),
+              title: OBText('Blocked users'),
+              onTap: () {
+                navigationService.navigateToBlockedUsers(
+                    context: context);
+              },
+            ),
+            ListTile(
               leading: const OBIcon(OBIcons.deleteCommunity),
               title: OBText('Delete account'),
               onTap: () {
