@@ -389,14 +389,14 @@ class UserService {
 
   Future<Post> disableCommentsForPost(Post post) async {
     HttpieResponse response =
-    await _postsApiService.disableCommentsForPostWithUuidPost(post.uuid);
+        await _postsApiService.disableCommentsForPostWithUuidPost(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
   }
 
   Future<Post> enableCommentsForPost(Post post) async {
     HttpieResponse response =
-    await _postsApiService.enableCommentsForPostWithUuidPost(post.uuid);
+        await _postsApiService.enableCommentsForPostWithUuidPost(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
   }
@@ -556,33 +556,29 @@ class UserService {
 
   Future<User> blockUser(User user) async {
     HttpieResponse response =
-    await _authApiService.blockUserWithUsername(user.username);
+        await _authApiService.blockUserWithUsername(user.username);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body));
   }
 
   Future<User> unblockUser(User user) async {
     HttpieResponse response =
-    await _authApiService.unblockUserWithUsername(user.username);
+        await _authApiService.unblockUserWithUsername(user.username);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body));
   }
 
   Future<UsersList> searchBlockedUsers(
-      {@required String query, int count, Community withCommunity}) async {
-    HttpieResponse response = await _authApiService.searchBlockedUsers(
-        query: query, count: count);
+      {@required String query, int count}) async {
+    HttpieResponse response =
+        await _authApiService.searchBlockedUsers(query: query, count: count);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }
 
-  Future<UsersList> getBlockedUsers(
-      {bool authenticatedRequest = true,
-        int maxId,
-        int count,
-        Community withCommunity}) async {
-    HttpieResponse response = await _authApiService.getBlockedUsers(
-        count: count, maxId: maxId);
+  Future<UsersList> getBlockedUsers({int maxId, int count}) async {
+    HttpieResponse response =
+        await _authApiService.getBlockedUsers(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }

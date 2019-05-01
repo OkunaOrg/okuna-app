@@ -380,6 +380,10 @@ class User extends UpdatableModel<User> {
         || loggedInUserIsCommunityAdministrator);
 
   }
+
+  bool canBlockUser(User user){
+    return user.id != id;
+  }
 }
 
 class UserFactory extends UpdatableModelFactory<User> {

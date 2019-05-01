@@ -5,8 +5,10 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/add_account_to_list_tile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/remove_account_from_lists_tile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/update_connection_with_user_tile.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActionMore extends StatelessWidget {
@@ -16,6 +18,8 @@ class OBProfileActionMore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+
     return StreamBuilder(
       stream: user.updateSubject,
       initialData: user,
@@ -74,6 +78,22 @@ class OBProfileActionMore extends StatelessWidget {
                 user,
                 context,
                 onWillShowModalBottomSheet: _dismissModalBottomSheet,
+              ));
+            }
+
+            User loggedInUser = openbookProvider.userService.getLoggedInUser();
+
+            if (loggedInUser.canBlockUser(user)) {
+              moreTiles.add(ListTile(
+                leading: const OBIcon(OBIcons.block),
+                title: const OBText(
+                  'Block user',
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  openbookProvider.navigationService
+                      .navigateToConfirmBlockUser(context: context, user: user);
+                },
               ));
             }
 

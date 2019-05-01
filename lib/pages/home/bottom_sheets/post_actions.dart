@@ -44,67 +44,65 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
     _userService = openbookProvider.userService;
     _modalService = openbookProvider.modalService;
     _toastService = openbookProvider.toastService;
-    
+
     User loggedInUser = _userService.getLoggedInUser();
 
     return StreamBuilder(
         stream: widget.post.updateSubject,
         initialData: widget.post,
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-        Post post = snapshot.data;
-        List<Widget> postActions = [];
+          Post post = snapshot.data;
+          List<Widget> postActions = [];
 
-        postActions.add(OBMutePostTile(
-          post: post,
-          onMutedPost: _dismiss,
-          onUnmutedPost: _dismiss,
-        ));
-
-        if (loggedInUser.canDisableEnableCommentsForPost(post)) {
-          postActions.add(OBDisableCommentsPostTile(
+          postActions.add(OBMutePostTile(
             post: post,
-            onDisableComments: _dismiss,
-            onEnableComments: _dismiss,
+            onMutedPost: _dismiss,
+            onUnmutedPost: _dismiss,
           ));
-        }
 
-        if (loggedInUser.canEditPost(post)) {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.editPost),
-            title: const OBText(
-              'Edit post',
-            ),
-            onTap: _onWantsToEditPost,
-          ));
-        }
+          if (loggedInUser.canDisableEnableCommentsForPost(post)) {
+            postActions.add(OBDisableCommentsPostTile(
+              post: post,
+              onDisableComments: _dismiss,
+              onEnableComments: _dismiss,
+            ));
+          }
 
-        if (loggedInUser.canDeletePost(post)) {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.deletePost),
-            title: const OBText(
-              'Delete post',
-            ),
-            onTap: _onWantsToDeletePost,
-          ));
-        } else {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.reportPost),
-            title: const OBText(
-              'Report post',
-            ),
-            onTap: _onWantsToReportPost,
-          ));
-        }
+          if (loggedInUser.canEditPost(post)) {
+            postActions.add(ListTile(
+              leading: const OBIcon(OBIcons.editPost),
+              title: const OBText(
+                'Edit post',
+              ),
+              onTap: _onWantsToEditPost,
+            ));
+          }
+          if (loggedInUser.canDeletePost(post)) {
+            postActions.add(ListTile(
+              leading: const OBIcon(OBIcons.deletePost),
+              title: const OBText(
+                'Delete post',
+              ),
+              onTap: _onWantsToDeletePost,
+            ));
+          } else {
+            postActions.add(ListTile(
+              leading: const OBIcon(OBIcons.reportPost),
+              title: const OBText(
+                'Report post',
+              ),
+              onTap: _onWantsToReportPost,
+            ));
+          }
 
-        return OBPrimaryColorContainer(
-          mainAxisSize: MainAxisSize.min,
-          child: Column(
-            children: postActions,
+          return OBPrimaryColorContainer(
             mainAxisSize: MainAxisSize.min,
-          ),
-        );
-
-    });
+            child: Column(
+              children: postActions,
+              mainAxisSize: MainAxisSize.min,
+            ),
+          );
+        });
   }
 
   Future _onWantsToDeletePost() async {
@@ -120,10 +118,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
 
   Future _onWantsToEditPost() async {
     try {
-      await _modalService.openEditPost(
-        context: context,
-        post: widget.post
-      );
+      await _modalService.openEditPost(context: context, post: widget.post);
       Navigator.pop(context);
     } catch (error) {
       _onError(error);

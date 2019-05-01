@@ -8,6 +8,7 @@ import 'package:Openbook/models/post_reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/modals/accept_guidelines/pages/confirm_reject_guidelines.dart';
+import 'package:Openbook/pages/home/modals/confirm_block_user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
@@ -33,6 +34,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/following.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
@@ -300,7 +302,8 @@ class NavigationService {
             widget: OBCommunityGuidelinesPage()));
   }
 
-  Future navigateToConfirmRejectGuidelinesPage({@required BuildContext context}) {
+  Future navigateToConfirmRejectGuidelinesPage(
+      {@required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
@@ -427,6 +430,26 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obNotificationsSettingsPage'),
             widget: OBNotificationsSettingsPage()));
+  }
+
+  Future<void> navigateToBlockedUsers({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obBlockedUsersPage'), widget: OBBlockedUsersPage()));
+  }
+
+  Future<void> navigateToConfirmBlockUser(
+      {@required BuildContext context, @required User user}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obConfirmBlockUser'),
+            widget: OBConfirmBlockUserModal(
+              user: user,
+            )));
   }
 
   Future<void> navigateToBlankPageWithWidget(
