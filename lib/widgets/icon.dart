@@ -211,8 +211,8 @@ class OBIcons {
   static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
   static const disableComments = OBIconData(nativeIcon: Icons.mode_comment);
   static const enableComments = OBIconData(nativeIcon: Icons.comment);
-  static const closePost = OBIconData(nativeIcon: Icons.visibility_off);
-  static const openPost = OBIconData(nativeIcon: Icons.visibility);
+  static const closePost = OBIconData(nativeIcon: Icons.lock_outline);
+  static const openPost = OBIconData(nativeIcon: Icons.lock_open);
   static const block = OBIconData(nativeIcon: Icons.block);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
