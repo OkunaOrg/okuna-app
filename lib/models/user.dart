@@ -307,6 +307,20 @@ class User extends UpdatableModel<User> {
     return _canDisableEnableComments;
   }
 
+  bool canCloseOpenPost(Post post) {
+    User loggedInUser = this;
+    bool _canCloseOpenPost = false;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      if (postCommunity.isAdministrator(loggedInUser) || postCommunity.isModerator(loggedInUser)) {
+        _canCloseOpenPost = true;
+      }
+    }
+    return _canCloseOpenPost;
+  }
+
   bool canCommentOnPostWithDisabledComments(Post post) {
     User loggedInUser = this;
     bool _canComment = false;
