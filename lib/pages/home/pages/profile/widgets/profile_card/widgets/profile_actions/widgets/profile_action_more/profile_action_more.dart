@@ -9,6 +9,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/block_user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActionMore extends StatelessWidget {
@@ -83,16 +84,18 @@ class OBProfileActionMore extends StatelessWidget {
 
             User loggedInUser = openbookProvider.userService.getLoggedInUser();
 
-            if (loggedInUser.canBlockUser(user)) {
-              moreTiles.add(ListTile(
-                leading: const OBIcon(OBIcons.block),
-                title: const OBText(
-                  'Block user',
-                ),
-                onTap: () {
+            if (loggedInUser.canBlockOrUnblockUser(user)) {
+              moreTiles.add(OBBlockUserTile(
+                user: user,
+                onBlockedUser: (){
+                  // Bottom sheet
                   Navigator.pop(context);
-                  openbookProvider.navigationService
-                      .navigateToConfirmBlockUser(context: context, user: user);
+                  openbookProvider.toastService.success(message: 'User blocked', context:context);
+                },
+                onUnblockedUser: (){
+                  // Bottom sheet
+                  Navigator.pop(context);
+                  openbookProvider.toastService.success(message: 'User unblocked', context:context);
                 },
               ));
             }
