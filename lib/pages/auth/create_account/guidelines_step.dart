@@ -10,6 +10,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
 import 'package:Openbook/widgets/markdown.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
@@ -27,11 +28,13 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
   ToastService _toastService;
   bool _needsBootstrap;
   bool _acceptButtonEnabled;
+  bool _requestInProgress;
   String _communityGuidelines;
   ScrollController _guidelinesScrollController;
 
   @override
   void initState() {
+    _requestInProgress = false;
     _needsBootstrap = true;
     _communityGuidelines = '';
     _acceptButtonEnabled = false;
@@ -78,20 +81,31 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
                 child: ListView(
                   controller: _guidelinesScrollController,
                   children: <Widget>[
-                    OBMarkdown(
-                      onlyBody: true,
-                      data: _communityGuidelines,
-                      theme: OBTheme(
-                        primaryTextColor: '#ffffff',
-                        secondaryTextColor: '#b3b3b3',
-                        primaryColor: '#000000',
-                        primaryAccentColor: '#ffffff,#ffffff',
-                        successColor: '#7ED321',
-                        successColorAccent: '#ffffff',
-                        dangerColor: '#FF3860',
-                        dangerColorAccent: '#ffffff',
-                      ),
-                    )
+                    _requestInProgress
+                        ? Row(
+                            children: <Widget>[
+                              const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: OBProgressIndicator(color: Colors.white,),
+                              )
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                          )
+                        : OBMarkdown(
+                            onlyBody: true,
+                            data: _communityGuidelines,
+                            theme: OBTheme(
+                              primaryTextColor: '#ffffff',
+                              secondaryTextColor: '#b3b3b3',
+                              primaryColor: '#000000',
+                              primaryAccentColor: '#ffffff,#ffffff',
+                              successColor: '#7ED321',
+                              successColorAccent: '#ffffff',
+                              dangerColor: '#FF3860',
+                              dangerColorAccent: '#ffffff',
+                            ),
+                          )
                   ],
                 ),
               ),
@@ -121,12 +135,20 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
   }
 
   void _bootstrap() async {
+    return _refreshGuidelines();
+  }
+
+  void _refreshGuidelines() async {
+    _setRequestInProgress(true);
+
     try {
       String communityGuidelines =
           await _documentsService.getCommunityGuidelines();
       _setCommunityGuidelines(communityGuidelines);
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
   }
 
@@ -203,6 +225,12 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
   void _setAcceptButtonEnabled(bool acceptButtonEnabled) {
     setState(() {
       _acceptButtonEnabled = acceptButtonEnabled;
+    });
+  }
+
+  void _setRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
     });
   }
 }

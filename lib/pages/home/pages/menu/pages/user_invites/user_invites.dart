@@ -104,7 +104,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
             OBPrimaryColorContainer(
                 child: Column(
               children: <Widget>[
-                _hasAcceptedInvites && _hasPendingInvites
+                _hasAcceptedInvites || _hasPendingInvites
                     ? _buildInvitesList()
                     : _buildNoInvitesFallback()
               ],

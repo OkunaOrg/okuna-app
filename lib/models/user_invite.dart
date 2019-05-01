@@ -14,7 +14,7 @@ class UserInvite extends UpdatableModel<UserInvite> {
   static getShareMessageForInviteWithToken(String token, String apiURL) {
     const String IOS_DOWNLOAD_LINK = 'https://testflight.apple.com/join/XniAjdyF';
     const String ANDROID_DOWNLOAD_LINK = 'https://play.google.com/apps/testing/social.openbook.app';
-    String inviteLink = '$apiURL/api/auth/invite?token=$token';
+    String inviteLink = apiURL + 'api/auth/invite?token=$token';
 
     String message = 'Hey, I\'d like to invite you to Openbook. First, Download the app on iTunes ($IOS_DOWNLOAD_LINK) or the Play store ($ANDROID_DOWNLOAD_LINK). '
         'Second, paste this personalised invite link in the \'Sign up\' form in the Openbook App: $inviteLink ';

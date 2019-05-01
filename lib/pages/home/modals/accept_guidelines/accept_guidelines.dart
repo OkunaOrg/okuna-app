@@ -6,6 +6,7 @@ import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/markdown.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:async/async.dart';
@@ -26,7 +27,8 @@ class OBAcceptGuidelinesModalState extends State {
   String _guidelinesText;
   bool _needsBootstrap;
   bool _acceptButtonEnabled;
-  bool _requestInProgress;
+  bool _acceptGuidelinesInProgress;
+  bool _refreshGuidelinesInProgress;
   ScrollController _guidelinesScrollController;
 
   CancelableOperation _getGuidelinesOperation;
@@ -35,7 +37,8 @@ class OBAcceptGuidelinesModalState extends State {
   void initState() {
     super.initState();
     _needsBootstrap = true;
-    _requestInProgress = false;
+    _acceptGuidelinesInProgress = false;
+    _refreshGuidelinesInProgress = false;
     _guidelinesText = '';
     _acceptButtonEnabled = false;
     _guidelinesScrollController = ScrollController();
@@ -49,12 +52,7 @@ class OBAcceptGuidelinesModalState extends State {
   }
 
   void _bootstrap() async {
-    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    _getGuidelinesOperation = CancelableOperation.fromFuture(
-        openbookProvider.documentsService.getCommunityGuidelines());
-
-    String guidelines = await _getGuidelinesOperation.value;
-    _setGuidelinesText(guidelines);
+    return _refreshGuidelines();
   }
 
   @override
@@ -94,10 +92,21 @@ class OBAcceptGuidelinesModalState extends State {
                     child: ListView(
                       controller: _guidelinesScrollController,
                       children: <Widget>[
-                        OBMarkdown(
-                          onlyBody: true,
-                          data: _guidelinesText,
-                        )
+                        _refreshGuidelinesInProgress
+                            ? Row(
+                                children: <Widget>[
+                                  const Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: OBProgressIndicator(),
+                                  )
+                                ],
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                              )
+                            : OBMarkdown(
+                                onlyBody: true,
+                                data: _guidelinesText,
+                              )
                       ],
                     ),
                   ),
@@ -133,7 +142,7 @@ class OBAcceptGuidelinesModalState extends State {
       size: OBButtonSize.large,
       child: Text('Accept', style: TextStyle(fontSize: 18.0)),
       isDisabled: !_acceptButtonEnabled && _guidelinesText.isNotEmpty,
-      isLoading: _requestInProgress,
+      isLoading: _acceptGuidelinesInProgress,
       onPressed: _acceptGuidelines,
     );
   }
@@ -158,8 +167,24 @@ class OBAcceptGuidelinesModalState extends State {
     );
   }
 
+  void _refreshGuidelines() async {
+    _setRefreshGuidelinesInProgress(true);
+    try {
+      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+      _getGuidelinesOperation = CancelableOperation.fromFuture(
+          openbookProvider.documentsService.getCommunityGuidelines());
+
+      String guidelines = await _getGuidelinesOperation.value;
+      _setGuidelinesText(guidelines);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRefreshGuidelinesInProgress(false);
+    }
+  }
+
   Future _acceptGuidelines() async {
-    _setRequestInProgress(true);
+    _setAcceptGuidelinesInProgress(true);
     try {
       await _userService.acceptGuidelines();
       await _userService.refreshUser();
@@ -167,7 +192,7 @@ class OBAcceptGuidelinesModalState extends State {
     } catch (error) {
       _onError(error);
     } finally {
-      _setRequestInProgress(false);
+      _setAcceptGuidelinesInProgress(false);
     }
   }
 
@@ -204,9 +229,15 @@ class OBAcceptGuidelinesModalState extends State {
     });
   }
 
-  void _setRequestInProgress(bool requestInProgress) {
+  void _setAcceptGuidelinesInProgress(bool acceptGuidelinesInProgress) {
     setState(() {
-      _requestInProgress = requestInProgress;
+      _acceptGuidelinesInProgress = acceptGuidelinesInProgress;
+    });
+  }
+
+  void _setRefreshGuidelinesInProgress(bool refreshGuidelinesInProgress) {
+    setState(() {
+      _refreshGuidelinesInProgress = refreshGuidelinesInProgress;
     });
   }
 }
