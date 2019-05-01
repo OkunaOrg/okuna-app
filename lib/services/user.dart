@@ -401,6 +401,20 @@ class UserService {
     return Post.fromJson(json.decode(response.body));
   }
 
+  Future<Post> closePost(Post post) async {
+    HttpieResponse response =
+    await _postsApiService.closePostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> openPost(Post post) async {
+    HttpieResponse response =
+    await _postsApiService.openPostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
   Future<Post> getPostWithUuid(String uuid) async {
     HttpieResponse response = await _postsApiService.getPostWithUuid(uuid);
     _checkResponseIsOk(response);
@@ -808,6 +822,16 @@ class UserService {
     HttpieResponse response = await _communitiesApiService
         .getPostsForCommunityWithName(community.name,
             count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return PostsList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostsList> getClosedPostsForCommunity(Community community,
+      {int maxId, int count}) async {
+    HttpieResponse response =
+    await _communitiesApiService.getClosedPostsForCommunityWithName(community.name,
+      count: count, maxId: maxId
+    );
     _checkResponseIsOk(response);
     return PostsList.fromJson(json.decode(response.body));
   }

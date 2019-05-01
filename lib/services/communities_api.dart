@@ -49,6 +49,8 @@ class CommunitiesApiService {
       'api/communities/{communityName}/posts/';
   static const CREATE_COMMUNITY_POST_PATH =
       'api/communities/{communityName}/posts/';
+  static const CLOSED_COMMUNITY_POSTS_PATH =
+      'api/communities/{communityName}/posts/closed/';
   static const GET_COMMUNITY_MEMBERS_PATH =
       'api/communities/{communityName}/members/';
   static const SEARCH_COMMUNITY_MEMBERS_PATH =
@@ -141,6 +143,22 @@ class CommunitiesApiService {
         queryParameters: queryParams,
         appendAuthorizationToken: authenticatedRequest);
   }
+
+  Future<HttpieResponse> getClosedPostsForCommunityWithName(String communityName,
+      {int maxId, int count, bool authenticatedRequest = true}) {
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    String url = _makeClosedCommunityPostsPath(communityName);
+
+    return _httpService.get(_makeApiUrl(url),
+        queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
 
   Future<HttpieResponse> getCommunitiesWithQuery(
       {bool authenticatedRequest = true, @required String query}) {
@@ -551,6 +569,11 @@ class CommunitiesApiService {
   String _makeCreateCommunityPost(String communityName) {
     return _stringTemplateService
         .parse(CREATE_COMMUNITY_POST_PATH, {'communityName': communityName});
+  }
+
+  String _makeClosedCommunityPostsPath(String communityName) {
+    return _stringTemplateService
+        .parse(CLOSED_COMMUNITY_POSTS_PATH, {'communityName': communityName});
   }
 
   String _makeInviteUserToCommunityPath(String communityName) {

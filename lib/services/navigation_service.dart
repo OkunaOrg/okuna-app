@@ -19,6 +19,7 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/community_banned_users.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_banned_users/modals/ban_community_user/pages/confirm_ban_community_user.dart';
+import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_closed_posts/community_closed_posts.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/community_moderators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
@@ -207,6 +208,17 @@ class NavigationService {
             key: Key('obCommunityBannedUsersPage'),
             widget: OBCommunityBannedUsersPage(
               community: community,
+            )));
+  }
+
+  Future<void> navigateToCommunityClosedPosts(
+      {@required Community community, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityClosedPostsPage'),
+            widget: OBCommunityClosedPostsPage(
+              community,
             )));
   }
 
