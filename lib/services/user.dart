@@ -554,6 +554,39 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
+  Future<User> blockUser(User user) async {
+    HttpieResponse response =
+    await _authApiService.blockUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> unblockUser(User user) async {
+    HttpieResponse response =
+    await _authApiService.unblockUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> searchBlockedUsers(
+      {@required String query, int count, Community withCommunity}) async {
+    HttpieResponse response = await _authApiService.searchBlockedUsers(
+        query: query, count: count);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> getBlockedUsers(
+      {bool authenticatedRequest = true,
+        int maxId,
+        int count,
+        Community withCommunity}) async {
+    HttpieResponse response = await _authApiService.getBlockedUsers(
+        count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
   Future<UsersList> searchFollowers({@required String query, int count}) async {
     HttpieResponse response =
         await _authApiService.searchFollowers(query: query, count: count);
