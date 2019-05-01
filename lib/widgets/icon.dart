@@ -209,7 +209,7 @@ class OBIcons {
   static const dashboard = OBIconData(nativeIcon: Icons.dashboard);
   static const themes = OBIconData(nativeIcon: Icons.format_paint);
   static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
-  static const disableComments = OBIconData(nativeIcon: Icons.block);
+  static const disableComments = OBIconData(nativeIcon: Icons.mode_comment);
   static const enableComments = OBIconData(nativeIcon: Icons.comment);
   static const block = OBIconData(nativeIcon: Icons.block);
   static const success = OBIconData(filename: 'success-icon.png');
