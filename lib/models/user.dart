@@ -296,55 +296,55 @@ class User extends UpdatableModel<User> {
     }
   }
 
-  bool canDisableEnableCommentsForPost(Post post) {
+  bool canDisableOrEnableCommentsForPost(Post post) {
     User loggedInUser = this;
-    bool _canDisableEnableComments = false;
+    bool _canDisableOrEnableComments = false;
 
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
 
       if (postCommunity.isAdministrator(loggedInUser) ||
           postCommunity.isModerator(loggedInUser)) {
-        _canDisableEnableComments = true;
+        _canDisableOrEnableComments = true;
       }
     }
-    return _canDisableEnableComments;
+    return _canDisableOrEnableComments;
   }
 
-  bool canCloseOpenPost(Post post) {
+  bool canCloseOrOpenPost(Post post) {
     User loggedInUser = this;
-    bool _canCloseOpenPost = false;
+    bool _canCloseOrOpenPost = false;
 
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
 
       if (postCommunity.isAdministrator(loggedInUser) || postCommunity.isModerator(loggedInUser)) {
-        _canCloseOpenPost = true;
+        _canCloseOrOpenPost = true;
       }
     }
-    return _canCloseOpenPost;
+    return _canCloseOrOpenPost;
   }
 
   bool canCloseOrOpenPostsInCommunity(Community community) {
     User loggedInUser = this;
-    bool _canCloseOpenPost = false;
+    bool _canCloseOrOpenPost = false;
 
     if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
-      _canCloseOpenPost = true;
+      _canCloseOrOpenPost = true;
     }
 
-    return _canCloseOpenPost;
+    return _canCloseOrOpenPost;
   }
 
   bool canBanOrUnbanUsersInCommunity(Community community) {
     User loggedInUser = this;
-    bool _canBanUnban = false;
+    bool _canBanOrUnban = false;
 
     if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
-      _canBanUnban = true;
+      _canBanOrUnban = true;
     }
 
-    return _canBanUnban;
+    return _canBanOrUnban;
   }
 
   bool isCreatorOfCommunity(Community community) {
@@ -364,13 +364,13 @@ class User extends UpdatableModel<User> {
 
   bool canAddOrRemoveModeratorsInCommunity(Community community) {
     User loggedInUser = this;
-    bool _canAddMods = false;
+    bool _canAddOrRemoveMods = false;
 
     if (community.isAdministrator(loggedInUser)) {
-      _canAddMods = true;
+      _canAddOrRemoveMods = true;
     }
 
-    return _canAddMods;
+    return _canAddOrRemoveMods;
   }
 
   bool canAddOrRemoveAdministratorsInCommunity(Community community) {

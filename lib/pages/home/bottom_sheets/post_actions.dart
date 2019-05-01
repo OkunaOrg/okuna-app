@@ -61,7 +61,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             onUnmutedPost: _dismiss,
           ));
 
-          if (loggedInUser.canDisableEnableCommentsForPost(post)) {
+          if (loggedInUser.canDisableOrEnableCommentsForPost(post)) {
             postActions.add(OBDisableCommentsPostTile(
               post: post,
               onDisableComments: _dismiss,
@@ -70,7 +70,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           }
 
 
-        if (loggedInUser.canCloseOpenPost(post)) {
+        if (loggedInUser.canCloseOrOpenPost(post)) {
           postActions.add(OBClosePostTile(
             post: post,
             onClosePost: _dismiss,
