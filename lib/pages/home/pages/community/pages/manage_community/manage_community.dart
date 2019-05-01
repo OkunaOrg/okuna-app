@@ -93,6 +93,21 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
+    if (loggedInUserIsAdministrator || loggedInUserIsModerator) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.closePost),
+        title: const OBText('Closed posts'),
+        subtitle: const OBText(
+          'See and manage closed posts',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToCommunityClosedPosts(
+              context: context, community: community);
+        },
+      ));
+    }
+
     menuListTiles.add(ListTile(
       leading: const OBIcon(OBIcons.communityInvites),
       title: const OBText('Invite people'),

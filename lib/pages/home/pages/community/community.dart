@@ -262,14 +262,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
                             );
                           },
                           pageLoadController: this._pageWiseController,
-                          itemBuilder:
-                              (BuildContext context, dynamic post, int index) {
-                            if (_removedPosts.contains(post))
-                              return const SizedBox();
-                            return OBPost(post,
-                                onPostDeleted: _onPostDeleted,
-                                key: Key(post.id.toString()));
-                          },
+                          itemBuilder: _getPostItem,
                         )
                       ],
                     );
@@ -347,6 +340,25 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   void _bootstrap() async {
     await _refresh();
+  }
+
+  Widget _getPostItem(BuildContext context, dynamic post, int index) {
+
+    return StreamBuilder(
+        stream: post.updateSubject,
+        initialData: post,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          Post post = snapshot.data;
+
+          if (_removedPosts.contains(post) || post.isClosed) {
+            return const SizedBox();
+          }
+
+          return OBPost(post,
+              onPostDeleted: _onPostDeleted,
+              key: Key(post.id.toString()));
+        }
+    );
   }
 
   Future<void> _refresh() async {

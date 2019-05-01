@@ -10,6 +10,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/disable_comments_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,6 +66,15 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             post: post,
             onDisableComments: _dismiss,
             onEnableComments: _dismiss,
+          ));
+        }
+
+
+        if (loggedInUser.canCloseOpenPost(post)) {
+          postActions.add(OBClosePostTile(
+            post: post,
+            onClosePost: _dismiss,
+            onOpenPost: _dismiss,
           ));
         }
 
