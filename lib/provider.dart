@@ -119,6 +119,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userInvitesApiService.setStringTemplateService(stringTemplateService);
     connectionsApiService.setHttpService(httpService);
     authApiService.setHttpService(httpService);
+    authApiService.setStringTemplateService(stringTemplateService);
     followsApiService.setHttpService(httpService);
     createAccountBloc.setAuthApiService(authApiService);
     createAccountBloc.setUserService(userService);
