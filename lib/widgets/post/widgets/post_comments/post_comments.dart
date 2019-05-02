@@ -23,44 +23,77 @@ class OBPostComments extends StatelessWidget {
 
         bool isClosed = _post.isClosed ?? false;
         bool hasComments = commentsCount != null && commentsCount > 0;
+        bool areCommentsEnabled = _post.areCommentsEnabled ?? true;
+        bool canDisableOrEnableCommentsForPost = false;
+
+        if (!areCommentsEnabled) {
+          canDisableOrEnableCommentsForPost = openbookProvider.userService
+              .getLoggedInUser()
+              .canDisableOrEnableCommentsForPost(_post);
+        }
 
         List<Widget> rowItems = [];
 
         if (hasComments) {
-          rowItems.add(
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  navigationService.navigateToPostComments(
-                      post: _post, context: context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: OBSecondaryText('View all $commentsCount comments'),
-                ),
-              ),
+          rowItems.add(GestureDetector(
+            onTap: () {
+              navigationService.navigateToPostComments(
+                  post: _post, context: context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: OBSecondaryText('View all $commentsCount comments'),
             ),
-          );
+          ));
         }
 
-        if (isClosed) {
+        if (isClosed ||
+            (!areCommentsEnabled && canDisableOrEnableCommentsForPost)) {
+          List<Widget> secondaryItems = [];
+
+          if (isClosed) {
+            secondaryItems.add(Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                const OBIcon(
+                  OBIcons.closePost,
+                  size: OBIconSize.small,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const OBSecondaryText('Closed post')
+              ],
+            ));
+          }
+
+          if (!areCommentsEnabled && canDisableOrEnableCommentsForPost) {
+            secondaryItems.add(Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                const OBIcon(
+                  OBIcons.disableComments,
+                  size: OBIconSize.small,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const OBSecondaryText('Comments disabled')
+              ],
+            ));
+          }
+
           rowItems.addAll([
             const SizedBox(
               width: 10,
             ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  const OBIcon(
-                    OBIcons.closePost,
-                    size: OBIconSize.small,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const OBSecondaryText('Closed post')
-                ],
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: secondaryItems,
               ),
             )
           ]);
