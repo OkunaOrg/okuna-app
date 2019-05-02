@@ -106,64 +106,56 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   Widget _buildTimelinePost(BuildContext context, int index) {
     Post post = _posts[index];
 
-    return StreamBuilder(
-        stream: post.updateSubject,
-        initialData: post,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          Post post = snapshot.data;
-
-          OBPost postWidget = OBPost(
-            post,
-            onPostDeleted: _onPostDeleted,
-            key: Key(
-              post.id.toString(),
-            ),
-          );
-
-          bool isLastItem = index == _posts.length - 1;
-
-          if (isLastItem && _status != OBTimelinePostsStatus.idle) {
-            switch (_status) {
-              case OBTimelinePostsStatus.loadingMorePosts:
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    postWidget,
-                    OBLoadingIndicatorTile(),
-                  ],
-                );
-                break;
-              case OBTimelinePostsStatus.loadingMorePostsFailed:
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    postWidget,
-                    OBRetryTile(
-                      onWantsToRetry: _loadMorePosts,
-                    ),
-                  ],
-                );
-                break;
-              case OBTimelinePostsStatus.noMorePostsToLoad:
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    postWidget,
-                    ListTile(
-                      title: OBSecondaryText(
-                        '🎉  All posts loaded',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                );
-              default:
-            }
-          }
-
-          return postWidget;
-        }
+    OBPost postWidget = OBPost(
+      post,
+      onPostDeleted: _onPostDeleted,
+      key: Key(
+        post.id.toString(),
+      ),
     );
+
+    bool isLastItem = index == _posts.length - 1;
+
+    if (isLastItem && _status != OBTimelinePostsStatus.idle) {
+      switch (_status) {
+        case OBTimelinePostsStatus.loadingMorePosts:
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              postWidget,
+              OBLoadingIndicatorTile(),
+            ],
+          );
+          break;
+        case OBTimelinePostsStatus.loadingMorePostsFailed:
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              postWidget,
+              OBRetryTile(
+                onWantsToRetry: _loadMorePosts,
+              ),
+            ],
+          );
+          break;
+        case OBTimelinePostsStatus.noMorePostsToLoad:
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              postWidget,
+              ListTile(
+                title: OBSecondaryText(
+                  '🎉  All posts loaded',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          );
+        default:
+      }
+    }
+
+    return postWidget;
 
   }
 
