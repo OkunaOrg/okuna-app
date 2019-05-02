@@ -39,6 +39,8 @@ class ImagePickerService {
     File croppedFile = await ImageCropper.cropImage(
       toolbarTitle: 'Edit image',
       toolbarColor: Colors.black,
+      statusBarColor: Colors.black,
+      toolbarWidgetColor: Colors.white,
       sourcePath: image.path,
       ratioX: ratioX,
       ratioY: ratioY,
