@@ -175,7 +175,7 @@ class ThemeService {
   }
 
   void setStorageService(StorageService storageService) {
-    _storage = storageService.getSecureStorage(namespace: 'theme');
+    _storage = storageService.getSystemPreferencesStorage(namespace: 'theme');
     this._bootstrap();
   }
 

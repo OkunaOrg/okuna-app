@@ -7,7 +7,7 @@ class UserPreferencesService {
   Future _getPostCommentsSortTypeCache;
 
   void setStorageService(StorageService storageService) {
-    _storage = storageService.getSecureStorage(namespace: 'userPreferences');
+    _storage = storageService.getSystemPreferencesStorage(namespace: 'userPreferences');
   }
 
   Future setPostCommentsSortType(PostCommentsSortType type) {

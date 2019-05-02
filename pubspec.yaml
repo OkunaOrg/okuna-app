@@ -7,12 +7,13 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.41+41
+version: 0.0.43+43
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0
   sentry: ^2.2.0
   flutter_exif_rotation: ^0.2.0
