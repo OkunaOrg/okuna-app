@@ -5,6 +5,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBMutePostTile extends StatefulWidget {
@@ -50,8 +51,8 @@ class OBMutePostTileState extends State<OBMutePostTile> {
 
         bool isMuted = post.isMuted;
 
-        return ListTile(
-          enabled: !_requestInProgress,
+        return OBLoadingTile(
+          isLoading: _requestInProgress,
           leading: OBIcon(isMuted ? OBIcons.unmutePost : OBIcons.mutePost),
           title: OBText(isMuted
               ? 'Turn on post notifications'

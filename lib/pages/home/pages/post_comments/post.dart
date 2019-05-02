@@ -1,10 +1,13 @@
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/user_preferences.dart';
+import 'package:Openbook/widgets/alerts/alert.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
@@ -142,13 +145,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                     ),
                     onRefresh: _refreshComments),
               ),
-              OBPostCommenter(
-                widget.post,
-                autofocus: widget.autofocusCommentInput,
-                commentTextFieldFocusNode: _commentInputFocusNode,
-                onPostCommentCreated: _onPostCommentCreated,
-                onPostCommentWillBeCreated: _onPostCommentWillBeCreated,
-              )
+              _buildPostCommenterSection()
             ],
           ),
         ));
@@ -205,6 +202,34 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
         ],
       ),
     );
+  }
+
+  Widget _buildPostCommenterSection() {
+    User loggedInUser = _userService.getLoggedInUser();
+    if (widget.post.areCommentsEnabled || loggedInUser.canCommentOnPostWithDisabledComments(widget.post)) {
+      return OBPostCommenter(
+        widget.post,
+        autofocus: widget.autofocusCommentInput,
+        commentTextFieldFocusNode: _commentInputFocusNode,
+        onPostCommentCreated: _onPostCommentCreated,
+        onPostCommentWillBeCreated: _onPostCommentWillBeCreated,
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.all(10.0),
+        child: OBAlert(
+            padding: EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+               Flexible(
+                 child: OBText('Comments have been disabled for this post', textAlign: TextAlign.center,),
+               ),
+            ],
+          )
+        ),
+      );
+    }
   }
 
   void _onWantsToToggleSortComments() async {

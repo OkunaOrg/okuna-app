@@ -7,6 +7,8 @@ import 'package:Openbook/models/community_invite_list.dart';
 import 'package:Openbook/models/community_membership.dart';
 import 'package:Openbook/models/community_membership_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
+import 'package:Openbook/models/post.dart';
+import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/user_profile.dart';
@@ -24,8 +26,11 @@ class User extends UpdatableModel<User> {
   int followingCount;
   int unreadNotificationsCount;
   int postsCount;
+  int inviteCount;
+  bool areGuidelinesAccepted;
   bool isFollowing;
   bool isConnected;
+  bool isBlocked;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
   bool isMemberOfCommunities;
@@ -65,31 +70,35 @@ class User extends UpdatableModel<User> {
     sessionUsersFactory.clearCache();
   }
 
-  User({
-    this.id,
-    this.uuid,
-    this.connectionsCircleId,
-    this.username,
-    this.email,
-    this.profile,
-    this.notificationsSettings,
-    this.followersCount,
-    this.followingCount,
-    this.unreadNotificationsCount,
-    this.postsCount,
-    this.isFollowing,
-    this.isConnected,
-    this.isFullyConnected,
-    this.isMemberOfCommunities,
-    this.connectedCircles,
-    this.followLists,
-    this.communitiesMemberships,
-    this.communitiesInvites,
-  });
+  User(
+      {this.id,
+      this.uuid,
+      this.connectionsCircleId,
+      this.username,
+      this.email,
+      this.profile,
+      this.notificationsSettings,
+      this.followersCount,
+      this.followingCount,
+      this.unreadNotificationsCount,
+      this.postsCount,
+      this.inviteCount,
+      this.isFollowing,
+      this.isBlocked,
+      this.isConnected,
+      this.isFullyConnected,
+      this.isMemberOfCommunities,
+      this.connectedCircles,
+      this.followLists,
+      this.communitiesMemberships,
+      this.communitiesInvites,
+      this.areGuidelinesAccepted});
 
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
     if (json.containsKey('uuid')) uuid = json['uuid'];
+    if (json.containsKey('are_guidelines_accepted'))
+      areGuidelinesAccepted = json['are_guidelines_accepted'];
     if (json.containsKey('email')) email = json['email'];
     if (json.containsKey('profile')) {
       if (profile != null) {
@@ -113,8 +122,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('unread_notifications_count'))
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
+    if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
+    if (json.containsKey('is_blocked')) isBlocked = json['is_blocked'];
     if (json.containsKey('connections_circle_id'))
       connectionsCircleId = json['connections_circle_id'];
     if (json.containsKey('is_fully_connected'))
@@ -284,6 +295,166 @@ class User extends UpdatableModel<User> {
       notifyUpdate();
     }
   }
+
+  bool canDisableOrEnableCommentsForPost(Post post) {
+    User loggedInUser = this;
+    bool _canDisableOrEnableComments = false;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      if (postCommunity.isAdministrator(loggedInUser) ||
+          postCommunity.isModerator(loggedInUser)) {
+        _canDisableOrEnableComments = true;
+      }
+    }
+    return _canDisableOrEnableComments;
+  }
+
+  bool canCloseOrOpenPost(Post post) {
+    User loggedInUser = this;
+    bool _canCloseOrOpenPost = false;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      if (postCommunity.isAdministrator(loggedInUser) || postCommunity.isModerator(loggedInUser)) {
+        _canCloseOrOpenPost = true;
+      }
+    }
+    return _canCloseOrOpenPost;
+  }
+
+  bool canCloseOrOpenPostsInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canCloseOrOpenPost = false;
+
+    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+      _canCloseOrOpenPost = true;
+    }
+
+    return _canCloseOrOpenPost;
+  }
+
+  bool canBanOrUnbanUsersInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canBanOrUnban = false;
+
+    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+      _canBanOrUnban = true;
+    }
+
+    return _canBanOrUnban;
+  }
+
+  bool isCreatorOfCommunity(Community community) {
+    return community.isCreator;
+  }
+
+  bool canChangeDetailsOfCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canChangeDetails = false;
+
+    if (community.isAdministrator(loggedInUser)) {
+      _canChangeDetails = true;
+    }
+
+    return _canChangeDetails;
+  }
+
+  bool canAddOrRemoveModeratorsInCommunity(Community community) {
+    User loggedInUser = this;
+    bool _canAddOrRemoveMods = false;
+
+    if (community.isAdministrator(loggedInUser)) {
+      _canAddOrRemoveMods = true;
+    }
+
+    return _canAddOrRemoveMods;
+  }
+
+  bool canAddOrRemoveAdministratorsInCommunity(Community community) {
+    return community.isCreator;
+  }
+
+  bool canCommentOnPostWithDisabledComments(Post post) {
+    User loggedInUser = this;
+    bool _canComment = false;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      if (postCommunity.isAdministrator(loggedInUser) ||
+          postCommunity.isModerator(loggedInUser)) {
+        _canComment = true;
+      }
+    }
+    return _canComment;
+  }
+
+  bool canDeletePost(Post post) {
+    User loggedInUser = this;
+    bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
+    bool loggedInUserIsCommunityAdministrator = false;
+    bool loggedInUserIsCommunityModerator = false;
+    bool _canDelete = false;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      loggedInUserIsCommunityAdministrator =
+          postCommunity.isAdministrator(loggedInUser);
+
+      loggedInUserIsCommunityModerator =
+          postCommunity.isModerator(loggedInUser);
+    }
+
+    if (loggedInUserIsPostCreator ||
+        loggedInUserIsCommunityAdministrator ||
+        loggedInUserIsCommunityModerator) {
+      _canDelete = true;
+    }
+
+    return _canDelete;
+  }
+
+  bool canEditPost(Post post) {
+    User loggedInUser = this;
+    bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
+    return loggedInUserIsPostCreator;
+  }
+
+  bool canEditPostComment(PostComment postComment) {
+    User loggedInUser = this;
+    User postCommenter = postComment.commenter;
+
+    return loggedInUser.id == postCommenter.id;
+  }
+
+  bool canDeletePostComment(Post post, PostComment postComment) {
+    User loggedInUser = this;
+    User postCommenter = postComment.commenter;
+    bool loggedInUserIsCommunityAdministrator = false;
+    bool loggedInUserIsCommunityModerator = false;
+
+    if (post.hasCommunity()) {
+      Community postCommunity = post.community;
+
+      loggedInUserIsCommunityAdministrator =
+          postCommunity.isAdministrator(loggedInUser);
+
+      loggedInUserIsCommunityModerator =
+          postCommunity.isModerator(loggedInUser);
+    }
+
+    return (loggedInUser.id == postCommenter.id ||
+        loggedInUserIsCommunityModerator ||
+        loggedInUserIsCommunityAdministrator);
+  }
+
+  bool canBlockOrUnblockUser(User user) {
+    return user.id != id;
+  }
 }
 
 class UserFactory extends UpdatableModelFactory<User> {
@@ -294,15 +465,18 @@ class UserFactory extends UpdatableModelFactory<User> {
     return User(
         id: json['id'],
         uuid: json['uuid'],
+        areGuidelinesAccepted: json['are_guidelines_accepted'],
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
         postsCount: json['posts_count'],
+        inviteCount: json['invite_count'],
         unreadNotificationsCount: json['unread_notifications_count'],
         email: json['email'],
         username: json['username'],
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
+        isBlocked: json['is_blocked'],
         isFullyConnected: json['is_fully_connected'],
         isMemberOfCommunities: json['is_member_of_communities'],
         profile: parseUserProfile(json['profile']),

@@ -27,6 +27,8 @@ import 'package:Openbook/models/post_reaction_list.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/models/user_invite.dart';
+import 'package:Openbook/models/user_invites_list.dart';
 import 'package:Openbook/models/user_notifications_settings.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
@@ -43,6 +45,7 @@ import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
+import 'package:Openbook/services/user_invites_api.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -67,6 +70,7 @@ class UserService {
   ConnectionsApiService _connectionsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
   FollowsListsApiService _followsListsApiService;
+  UserInvitesApiService _userInvitesApiService;
   NotificationsApiService _notificationsApiService;
   DevicesApiService _devicesApiService;
   CreateAccountBloc _createAccountBlocService;
@@ -92,6 +96,10 @@ class UserService {
 
   void setFollowsApiService(FollowsApiService followsApiService) {
     _followsApiService = followsApiService;
+  }
+
+  void setUserInvitesApiService(UserInvitesApiService userInvitesApiService) {
+    _userInvitesApiService = userInvitesApiService;
   }
 
   void setFollowsListsApiService(
@@ -194,6 +202,11 @@ class UserService {
       @required String passwordResetToken}) async {
     HttpieResponse response = await _authApiService.verifyPasswordReset(
         newPassword: newPassword, passwordResetToken: passwordResetToken);
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> acceptGuidelines() async {
+    HttpieResponse response = await _authApiService.acceptGuidelines();
     _checkResponseIsOk(response);
   }
 
@@ -374,6 +387,34 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
+  Future<Post> disableCommentsForPost(Post post) async {
+    HttpieResponse response =
+        await _postsApiService.disableCommentsForPostWithUuidPost(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> enableCommentsForPost(Post post) async {
+    HttpieResponse response =
+        await _postsApiService.enableCommentsForPostWithUuidPost(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> closePost(Post post) async {
+    HttpieResponse response =
+    await _postsApiService.closePostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> openPost(Post post) async {
+    HttpieResponse response =
+    await _postsApiService.openPostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
   Future<Post> getPostWithUuid(String uuid) async {
     HttpieResponse response = await _postsApiService.getPostWithUuid(uuid);
     _checkResponseIsOk(response);
@@ -523,6 +564,35 @@ class UserService {
       Community withCommunity}) async {
     HttpieResponse response = await _authApiService.getLinkedUsers(
         count: count, withCommunity: withCommunity.name, maxId: maxId);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<User> blockUser(User user) async {
+    HttpieResponse response =
+        await _authApiService.blockUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> unblockUser(User user) async {
+    HttpieResponse response =
+        await _authApiService.unblockUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> searchBlockedUsers(
+      {@required String query, int count}) async {
+    HttpieResponse response =
+        await _authApiService.searchBlockedUsers(query: query, count: count);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> getBlockedUsers({int maxId, int count}) async {
+    HttpieResponse response =
+        await _authApiService.getBlockedUsers(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }
@@ -699,6 +769,64 @@ class UserService {
     return FollowsList.fromJSON(json.decode(response.body));
   }
 
+  Future<UserInvite> createUserInvite({String nickname}) async {
+    HttpieStreamedResponse response =
+        await _userInvitesApiService.createUserInvite(nickname: nickname);
+    _checkResponseIsCreated(response);
+
+    String responseBody = await response.readAsString();
+    return UserInvite.fromJSON(json.decode(responseBody));
+  }
+
+  Future<UserInvite> updateUserInvite(
+      {String nickname, UserInvite userInvite}) async {
+    HttpieStreamedResponse response = await _userInvitesApiService
+        .updateUserInvite(nickname: nickname, userInviteId: userInvite.id);
+    _checkResponseIsOk(response);
+
+    String responseBody = await response.readAsString();
+    return UserInvite.fromJSON(json.decode(responseBody));
+  }
+
+  Future<UserInvitesList> getUserInvites(
+      {int offset, int count, UserInviteFilterByStatus status}) async {
+    bool isPending = status != null
+        ? UserInvite.convertUserInviteStatusToBool(status)
+        : UserInvite.convertUserInviteStatusToBool(
+            UserInviteFilterByStatus.all);
+
+    HttpieResponse response = await _userInvitesApiService.getUserInvites(
+        isStatusPending: isPending, count: count, offset: offset);
+    _checkResponseIsOk(response);
+    return UserInvitesList.fromJson(json.decode(response.body));
+  }
+
+  Future<UserInvitesList> searchUserInvites(
+      {int count, UserInviteFilterByStatus status, String query}) async {
+    bool isPending = status != null
+        ? UserInvite.convertUserInviteStatusToBool(status)
+        : UserInvite.convertUserInviteStatusToBool(
+            UserInviteFilterByStatus.all);
+
+    HttpieResponse response = await _userInvitesApiService.searchUserInvites(
+        isStatusPending: isPending, count: count, query: query);
+    _checkResponseIsOk(response);
+    return UserInvitesList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deleteUserInvite(UserInvite userInvite) async {
+    HttpieResponse response =
+        await _userInvitesApiService.deleteUserInvite(userInvite.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> sendUserInviteEmail(UserInvite userInvite, String email) async {
+    HttpieResponse response = await _userInvitesApiService.emailUserInvite(
+        userInviteId: userInvite.id, email: email);
+
+    _checkResponseIsOk(response);
+  }
+
   Future<CommunitiesList> getTrendingCommunities({Category category}) async {
     HttpieResponse response = await _communitiesApiService
         .getTrendingCommunities(category: category?.name);
@@ -723,6 +851,16 @@ class UserService {
     HttpieResponse response = await _communitiesApiService
         .getPostsForCommunityWithName(community.name,
             count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return PostsList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostsList> getClosedPostsForCommunity(Community community,
+      {int maxId, int count}) async {
+    HttpieResponse response =
+    await _communitiesApiService.getClosedPostsForCommunityWithName(community.name,
+      count: count, maxId: maxId
+    );
     _checkResponseIsOk(response);
     return PostsList.fromJson(json.decode(response.body));
   }

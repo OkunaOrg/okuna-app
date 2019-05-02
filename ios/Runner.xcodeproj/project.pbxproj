@@ -169,6 +169,20 @@
 			remoteGlobalIDString = 1CE8375F5D12E4C085E8D4CF09BCD280;
 			remoteInfo = flutter_exif_rotation;
 		};
+		89EE3230227B56510094ACB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCEA37817AFFA85CBA7361E54F3FE2F0;
+			remoteInfo = share;
+		};
+		89EE3232227B56510094ACB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9753D7E828995FC13548AB75309010D;
+			remoteInfo = shared_preferences;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -333,6 +347,8 @@
 				898053A622047AAF00E47AD9 /* libpath_provider.a */,
 				898053A822047AAF00E47AD9 /* libPods-OneSignalNotificationServiceExtension.a */,
 				898053AA22047AAF00E47AD9 /* libPods-Runner.a */,
+				89EE3231227B56510094ACB0 /* libshare.a */,
+				89EE3233227B56510094ACB0 /* libshared_preferences.a */,
 				8928E32022356450001DB32A /* libsqflite.a */,
 				898053AE22047AAF00E47AD9 /* libTOCropViewController.a */,
 				898053B022047AAF00E47AD9 /* TOCropViewControllerBundle.bundle */,
@@ -649,6 +665,20 @@
 			fileType = archive.ar;
 			path = libflutter_exif_rotation.a;
 			remoteRef = 89CF474322419BFD001BC50D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89EE3231227B56510094ACB0 /* libshare.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libshare.a;
+			remoteRef = 89EE3230227B56510094ACB0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89EE3233227B56510094ACB0 /* libshared_preferences.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libshared_preferences.a;
+			remoteRef = 89EE3232227B56510094ACB0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

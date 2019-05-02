@@ -26,7 +26,7 @@ class Post extends UpdatableModel<Post> {
   PostReaction reaction;
   int reactionsCount;
   int commentsCount;
-  bool publicComments;
+  bool areCommentsEnabled;
   bool publicReactions;
   String text;
   PostImage image;
@@ -37,6 +37,7 @@ class Post extends UpdatableModel<Post> {
   bool isMuted;
   bool isEncircled;
   bool isEdited;
+  bool isClosed;
 
   static final factory = PostFactory();
 
@@ -62,12 +63,13 @@ class Post extends UpdatableModel<Post> {
       this.commentsList,
       this.reaction,
       this.reactionsEmojiCounts,
-      this.publicComments,
+      this.areCommentsEnabled,
       this.circles,
       this.community,
       this.publicReactions,
       this.isMuted,
       this.isEncircled,
+      this.isClosed,
       this.isEdited})
       : super();
 
@@ -84,8 +86,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('comments_count'))
       commentsCount = json['comments_count'];
 
-    if (json.containsKey('public_comments'))
-      publicComments = json['public_comments'];
+    if (json.containsKey('comments_enabled'))
+      areCommentsEnabled = json['comments_enabled'];
 
     if (json.containsKey('public_reactions'))
       publicReactions = json['public_reactions'];
@@ -97,6 +99,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('is_encircled')) isEncircled = json['is_encircled'];
 
     if (json.containsKey('is_edited')) isEdited = json['is_edited'];
+
+    if (json.containsKey('is_closed')) isClosed = json['is_closed'];
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
@@ -131,7 +135,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   bool hasPublicInteractions() {
-    return publicReactions && publicComments;
+    return publicReactions && areCommentsEnabled;
   }
 
   bool hasImage() {
@@ -295,7 +299,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
         isMuted: json['is_muted'],
-        publicComments: json['public_comments'],
+        areCommentsEnabled: json['comments_enabled'],
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
         image: parseImage(json['image']),
@@ -305,6 +309,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         commentsList: parseCommentList(json['comments']),
         isEncircled: json['is_encircled'],
         isEdited: json['is_edited'],
+        isClosed: json['is_closed'],
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }

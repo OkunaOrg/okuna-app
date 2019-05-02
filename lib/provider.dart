@@ -8,6 +8,7 @@ import 'package:Openbook/services/connections_api.dart';
 import 'package:Openbook/services/date_picker.dart';
 import 'package:Openbook/services/devices_api.dart';
 import 'package:Openbook/services/dialog.dart';
+import 'package:Openbook/services/documents.dart';
 import 'package:Openbook/services/intercom.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
@@ -30,6 +31,7 @@ import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/url_launcher.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/services/user_invites_api.dart';
 import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/services/utils_service.dart';
 import 'package:Openbook/services/validation.dart';
@@ -81,6 +83,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ConnectionsCirclesApiService connectionsCirclesApiService =
       ConnectionsCirclesApiService();
   FollowsListsApiService followsListsApiService = FollowsListsApiService();
+  UserInvitesApiService userInvitesApiService = UserInvitesApiService();
   ThemeValueParserService themeValueParserService = ThemeValueParserService();
   ModalService modalService = ModalService();
   NavigationService navigationService = NavigationService();
@@ -94,6 +97,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   IntercomService intercomService = IntercomService();
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
+  DocumentsService documentsService = DocumentsService();
 
   SentryClient sentryClient;
 
@@ -111,8 +115,11 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     communitiesApiService.setStringTemplateService(stringTemplateService);
     followsListsApiService.setHttpService(httpService);
     followsListsApiService.setStringTemplateService(stringTemplateService);
+    userInvitesApiService.setHttpService(httpService);
+    userInvitesApiService.setStringTemplateService(stringTemplateService);
     connectionsApiService.setHttpService(httpService);
     authApiService.setHttpService(httpService);
+    authApiService.setStringTemplateService(stringTemplateService);
     followsApiService.setHttpService(httpService);
     createAccountBloc.setAuthApiService(authApiService);
     createAccountBloc.setUserService(userService);
@@ -121,6 +128,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setEmojisApiService(emojisApiService);
     userService.setHttpieService(httpService);
     userService.setStorageService(storageService);
+    userService.setUserInvitesApiService(userInvitesApiService);
     userService.setFollowsApiService(followsApiService);
     userService.setFollowsListsApiService(followsListsApiService);
     userService.setConnectionsApiService(connectionsApiService);
@@ -149,6 +157,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
     imagePickerService.setValidationService(validationService);
+    documentsService.setHttpService(httpService);
   }
 
   void initAsyncState() async {
@@ -159,6 +168,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     authApiService.setApiURL(environment.apiUrl);
     postsApiService.setApiURL(environment.apiUrl);
     emojisApiService.setApiURL(environment.apiUrl);
+    userInvitesApiService.setApiURL(environment.apiUrl);
     followsApiService.setApiURL(environment.apiUrl);
     connectionsApiService.setApiURL(environment.apiUrl);
     connectionsCirclesApiService.setApiURL(environment.apiUrl);

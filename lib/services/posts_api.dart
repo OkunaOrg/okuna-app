@@ -15,6 +15,8 @@ class PostsApiService {
   static const CREATE_POST_PATH = 'api/posts/';
   static const EDIT_POST_PATH = 'api/posts/{postUuid}/';
   static const POST_PATH = 'api/posts/{postUuid}/';
+  static const OPEN_POST_PATH = 'api/posts/{postUuid}/open/';
+  static const CLOSE_POST_PATH = 'api/posts/{postUuid}/close/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
   static const EDIT_COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/{postCommentId}/';
   static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
@@ -22,6 +24,8 @@ class PostsApiService {
   static const DELETE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
   static const GET_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/';
+  static const DISABLE_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/disable/';
+  static const ENABLE_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/enable/';
   static const REACT_TO_POST_PATH = 'api/posts/{postUuid}/reactions/';
   static const DELETE_POST_REACTION_PATH =
       'api/posts/{postUuid}/reactions/{postReactionId}/';
@@ -220,6 +224,26 @@ class PostsApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> disableCommentsForPostWithUuidPost(String postUuid) {
+    String path = _makeDisableCommentsForPostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> enableCommentsForPostWithUuidPost(String postUuid) {
+    String path = _makeEnableCommentsForPostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> openPostWithUuid(String postUuid) {
+    String path = _makeOpenPostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> closePostWithUuid(String postUuid) {
+    String path = _makeClosePostPath(postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> getReactionEmojiGroups() {
     String url = _makeApiUrl(GET_REACTION_EMOJI_GROUPS);
     return _httpService.get(url, appendAuthorizationToken: true);
@@ -236,6 +260,26 @@ class PostsApiService {
   String _makeUnmutePostPath(String postUuid) {
     return _stringTemplateService
         .parse(UNMUTE_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeDisableCommentsForPostPath(String postUuid) {
+    return _stringTemplateService
+        .parse(DISABLE_POST_COMMENTS_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeEnableCommentsForPostPath(String postUuid) {
+    return _stringTemplateService
+        .parse(ENABLE_POST_COMMENTS_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeOpenPostPath(String postUuid) {
+    return _stringTemplateService
+        .parse(OPEN_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeClosePostPath(String postUuid) {
+    return _stringTemplateService
+        .parse(CLOSE_POST_PATH, {'postUuid': postUuid});
   }
 
   String _makeCommentPostPath(String postUuid) {

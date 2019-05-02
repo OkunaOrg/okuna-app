@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/string_template.dart';
 import 'package:meta/meta.dart';
 
 class AuthApiService {
   HttpieService _httpService;
+  StringTemplateService _stringTemplateService;
 
   String apiURL;
 
@@ -12,6 +14,7 @@ class AuthApiService {
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
   static const UPDATE_EMAIL_PATH = 'api/auth/user/settings/';
   static const VERIFY_EMAIL_TOKEN = 'api/auth/email/verify/';
+  static const ACCEPT_GUIDELINES = 'api/auth/user/accept-guidelines/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
   static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
@@ -20,6 +23,10 @@ class AuthApiService {
   static const GET_USERS_PATH = 'api/auth/users/';
   static const GET_LINKED_USERS_PATH = 'api/auth/linked-users/';
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
+  static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
+  static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
+  static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
+  static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
   static const SEARCH_FOLLOWERS_PATH = 'api/auth/followers/search/';
   static const GET_FOLLOWINGS_PATH = 'api/auth/followings/';
@@ -32,6 +39,10 @@ class AuthApiService {
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
+  }
+
+  void setStringTemplateService(StringTemplateService stringTemplateService) {
+    _stringTemplateService = stringTemplateService;
   }
 
   void setApiURL(String newApiURL) {
@@ -119,18 +130,19 @@ class AuthApiService {
         body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieStreamedResponse> createUser(
-      {@required String email,
-      @required String token,
-      @required String name,
-      @required bool isOfLegalAge,
-      @required String password,
-      File avatar}) {
+  Future<HttpieStreamedResponse> createUser({@required String email,
+    @required String token,
+    @required String name,
+    @required bool isOfLegalAge,
+    @required bool areGuidelinesAccepted,
+    @required String password,
+    File avatar}) {
     Map<String, dynamic> body = {
       'email': email,
       'token': token,
       'name': name,
       'is_of_legal_age': isOfLegalAge,
+      'are_guidelines_accepted': areGuidelinesAccepted,
       'password': password
     };
 
@@ -174,11 +186,10 @@ class AuthApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getLinkedUsers(
-      {bool authenticatedRequest = true,
-      int maxId,
-      int count,
-      String withCommunity}) {
+  Future<HttpieResponse> getLinkedUsers({bool authenticatedRequest = true,
+    int maxId,
+    int count,
+    String withCommunity}) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
@@ -192,8 +203,41 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> searchFollowers(
+  Future<HttpieResponse> searchBlockedUsers(
       {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$SEARCH_BLOCKED_USERS_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getBlockedUsers({bool authenticatedRequest = true,
+    int maxId,
+    int count,}) {
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    return _httpService.get('$apiURL$GET_BLOCKED_USERS_PATH',
+        queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
+  Future<HttpieResponse> blockUserWithUsername(String userUsername) {
+    String path = _makeBlockUserWithUsernamePath(userUsername);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> unblockUserWithUsername(String userUsername) {
+    String path = _makeUnblockUserWithUsernamePath(userUsername);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> searchFollowers({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (count != null) queryParams['count'] = count;
@@ -215,8 +259,7 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> searchFollowings(
-      {@required String query, int count}) {
+  Future<HttpieResponse> searchFollowings({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (count != null) queryParams['count'] = count;
@@ -305,5 +348,24 @@ class AuthApiService {
         '$apiURL$AUTHENTICATED_USER_NOTIFICATIONS_SETTINGS_PATH',
         body: body,
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> acceptGuidelines() {
+    return this._httpService.post(
+        '$apiURL$ACCEPT_GUIDELINES', appendAuthorizationToken: true);
+  }
+
+  String _makeBlockUserWithUsernamePath(String username) {
+    return _stringTemplateService
+        .parse(BLOCK_USER_PATH, {'userUsername': username});
+  }
+
+  String _makeUnblockUserWithUsernamePath(String username) {
+    return _stringTemplateService
+        .parse(UNBLOCK_USER_PATH, {'userUsername': username});
+  }
+
+  String _makeApiUrl(String string) {
+    return '$apiURL$string';
   }
 }

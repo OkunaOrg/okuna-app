@@ -105,6 +105,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
   Widget _buildTimelinePost(BuildContext context, int index) {
     Post post = _posts[index];
+
     OBPost postWidget = OBPost(
       post,
       onPostDeleted: _onPostDeleted,
@@ -155,6 +156,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
 
     return postWidget;
+
   }
 
   Widget _buildDrHoo() {
