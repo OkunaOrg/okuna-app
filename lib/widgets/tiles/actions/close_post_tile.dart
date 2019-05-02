@@ -55,8 +55,8 @@ class OBClosePostTileState extends State<OBClosePostTile> {
           isLoading: _requestInProgress,
           leading: OBIcon(isPostClosed ? OBIcons.openPost : OBIcons.closePost),
           title: OBText(isPostClosed
-              ? 'Open post to community'
-              : 'Close post from community'),
+              ? 'Open post'
+              : 'Close post'),
           onTap: isPostClosed ? _openPost : _closePost,
         );
       },
@@ -68,7 +68,7 @@ class OBClosePostTileState extends State<OBClosePostTile> {
     try {
       await _userService.openPost(widget.post);
       if (widget.onClosePost != null) widget.onClosePost();
-      _toastService.success(message: 'Post is now open to community', context: context);
+      _toastService.success(message: 'Post opened', context: context);
     } catch (e) {
       _onError(e);
     } finally {
@@ -81,7 +81,7 @@ class OBClosePostTileState extends State<OBClosePostTile> {
     try {
       await _userService.closePost(widget.post);
       if (widget.onOpenPost != null) widget.onOpenPost();
-      _toastService.info(message: 'Post is now closed to community, owner can still comment', context: context);
+      _toastService.success(message: 'Post closed', context: context);
     } catch (e) {
       _onError(e);
     } finally {

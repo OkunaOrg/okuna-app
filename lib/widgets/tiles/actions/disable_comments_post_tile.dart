@@ -54,8 +54,8 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
           enabled: !_requestInProgress,
           leading: OBIcon(areCommentsEnabled ? OBIcons.disableComments : OBIcons.enableComments),
           title: OBText(areCommentsEnabled
-              ? 'Disable comments for post'
-              : 'Enable comments for post'),
+              ? 'Disable post comments'
+              : 'Enable post comments'),
           onTap: areCommentsEnabled ? _disableComments : _enableComments,
         );
       },

@@ -350,7 +350,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           Post post = snapshot.data;
 
-          if (_removedPosts.contains(post) || post.isClosed) {
+          if (_removedPosts.contains(post)) {
             return const SizedBox();
           }
 

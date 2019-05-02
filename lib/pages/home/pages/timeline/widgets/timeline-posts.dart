@@ -112,10 +112,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           Post post = snapshot.data;
 
-          if (post.isClosed) {
-            return const SizedBox();
-          }
-
           OBPost postWidget = OBPost(
             post,
             onPostDeleted: _onPostDeleted,
