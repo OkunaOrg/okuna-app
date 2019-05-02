@@ -26,6 +26,8 @@ PODS:
     - Flutter
   - share (0.5.2):
     - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
@@ -49,6 +51,7 @@ DEPENDENCIES:
   - onesignal (from `.symlinks/plugins/onesignal/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - share (from `.symlinks/plugins/share/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
@@ -82,6 +85,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   uni_links:
@@ -105,6 +110,7 @@ SPEC CHECKSUMS:
   onesignal: c2122c20ffcb03d65445f3e0b49273c10f9c37a6
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   share: 222b5dcc8031238af9d7de91149df65bad1aef75
+  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
   sqflite: d1612813fa7db7c667bed9f1d1b508deffc56999
   TOCropViewController: 0a075f02c253e88095143bbac7b013fc6fba5090
   uni_links: 5ee5240df5cbffc52d9e7f8017a576b6a6bc5141

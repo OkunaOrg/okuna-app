@@ -52,7 +52,7 @@ class _SecureStore implements _Store<String> {
     } on PlatformException {
       // This might happen when failed to decrypt
       await storage.delete(key: key);
-      rethrow;
+      return null;
     }
   }
 
