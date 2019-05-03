@@ -172,9 +172,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
         : 'assets/images/stickers/owl-instructor.png';
     return OBButtonAlert(
       text: message,
-      onPressed: _refreshInvites,
-      buttonText: 'Refresh',
-      buttonIcon: OBIcons.refresh,
+      onPressed: _onWantsToCreateInvite,
+      buttonText: 'Invite a friend',
+      buttonIcon: OBIcons.add,
       isLoading: _refreshInProgress,
       assetImage: assetImage,
     );
