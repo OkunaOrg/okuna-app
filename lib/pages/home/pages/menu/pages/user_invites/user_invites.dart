@@ -170,11 +170,20 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     String assetImage = hasInvites
         ? 'assets/images/stickers/perplexed-owl.png'
         : 'assets/images/stickers/owl-instructor.png';
+
+    Function _onPressed = hasInvites
+        ? _onWantsToCreateInvite
+        : _refreshInvites;
+
+    String buttonText = hasInvites
+        ? 'Invite a friend'
+        : 'Refresh';
+
     return OBButtonAlert(
       text: message,
-      onPressed: _refreshInvites,
-      buttonText: 'Refresh',
-      buttonIcon: OBIcons.refresh,
+      onPressed: _onPressed,
+      buttonText: buttonText,
+      buttonIcon: hasInvites ? OBIcons.add : OBIcons.refresh,
       isLoading: _refreshInProgress,
       assetImage: assetImage,
     );
@@ -286,7 +295,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   void _showNoInvitesLeft() {
-    _toastService.error(message: 'You have no invites left', context: context);
+    _toastService.error(message: 'You have no invites available', context: context);
   }
 
   void _onUserInviteCreated(UserInvite createdUserInvite) {
