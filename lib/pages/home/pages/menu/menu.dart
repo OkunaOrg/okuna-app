@@ -35,6 +35,14 @@ class OBMainMenuPage extends StatelessWidget {
               // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
               children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 5.0, left: 10),
+                  child: const OBText(
+                    'My Openbook',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    size: OBTextSize.large,
+                  ),
+                ),
                 ListTile(
                   leading: const OBIcon(OBIcons.circles),
                   title: const OBText('My circles'),
@@ -71,6 +79,14 @@ class OBMainMenuPage extends StatelessWidget {
                     navigationService.navigateToUserInvites(context: context);
                   },
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 5.0, left: 10),
+                  child: const OBText(
+                    'Account & App',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    size: OBTextSize.large,
+                  ),
+                ),
                 ListTile(
                   leading: const OBIcon(OBIcons.settings),
                   title: OBText('Settings'),
@@ -84,6 +100,21 @@ class OBMainMenuPage extends StatelessWidget {
                   onTap: () {
                     navigationService.navigateToThemesPage(context: context);
                   },
+                ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.logout),
+                  title: OBText(localizationService.trans('DRAWER.LOGOUT')),
+                  onTap: () {
+                    userService.logout();
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 5.0, left: 10),
+                  child: const OBText(
+                    'Resources',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    size: OBTextSize.large,
+                  ),
                 ),
                 StreamBuilder(
                   stream: userService.loggedInUserChange,
@@ -109,13 +140,6 @@ class OBMainMenuPage extends StatelessWidget {
                   onTap: () {
                     navigationService.navigateToUsefulLinksPage(
                         context: context);
-                  },
-                ),
-                ListTile(
-                  leading: const OBIcon(OBIcons.logout),
-                  title: OBText(localizationService.trans('DRAWER.LOGOUT')),
-                  onTap: () {
-                    userService.logout();
                   },
                 )
               ],
