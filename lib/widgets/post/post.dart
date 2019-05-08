@@ -10,13 +10,20 @@ import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart
 import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:flutter/material.dart';
 
-class OBPost extends StatelessWidget {
+class OBPost extends StatefulWidget {
   final Post post;
   final OnPostDeleted onPostDeleted;
 
   const OBPost(this.post, {Key key, @required this.onPostDeleted})
       : super(key: key);
 
+  @override
+  OBPostState createState() {
+    return OBPostState();
+  }
+}
+
+class OBPostState extends State<OBPost> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,17 +32,17 @@ class OBPost extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBPostHeader(
-          post: post,
-          onPostDeleted: onPostDeleted,
+          post: widget.post,
+          onPostDeleted: widget.onPostDeleted,
         ),
-        OBPostBody(post),
-        OBPostReactions(post),
-        OBPostCircles(post),
+        OBPostBody(widget.post),
+        OBPostReactions(widget.post),
+        OBPostCircles(widget.post),
         OBPostComments(
-          post,
+          widget.post,
         ),
         OBPostActions(
-          post,
+          widget.post,
         ),
         const SizedBox(
           height: 16,
