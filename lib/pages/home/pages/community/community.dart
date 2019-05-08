@@ -18,6 +18,7 @@ import 'package:Openbook/widgets/buttons/community_floating_action_button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:async/async.dart';
@@ -230,41 +231,43 @@ class OBCommunityPageState extends State<OBCommunityPage>
                   // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
                   // find the NestedScrollView.
                   builder: (BuildContext context) {
-                    return CustomScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      // The "controller" and "primary" members should be left
-                      // unset, so that the NestedScrollView can control this
-                      // inner scroll view.
-                      // If the "controller" property is set, then this scroll
-                      // view will not be associated with the NestedScrollView.
-                      // The PageStorageKey should be unique to this ScrollView;
-                      // it allows the list to remember its scroll position when
-                      // the tab view is not on the screen.
-                      key: PageStorageKey<int>(0),
-                      slivers: <Widget>[
-                        SliverOverlapInjector(
-                          // This is the flip side of the SliverOverlapAbsorber above.
-                          handle:
-                              NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                  context),
-                        ),
-                        PagewiseSliverList(
-                          noItemsFoundBuilder: (context) {
-                            return OBCommunityNoPosts(
-                              _community,
-                              onWantsToRefreshCommunity: _refreshPosts,
-                            );
-                          },
-                          loadingBuilder: (context) {
-                            return const Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: const OBProgressIndicator(),
-                            );
-                          },
-                          pageLoadController: this._pageWiseController,
-                          itemBuilder: _getPostItem,
-                        )
-                      ],
+                    return OBScrollContainer(
+                      scroll: CustomScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        // The "controller" and "primary" members should be left
+                        // unset, so that the NestedScrollView can control this
+                        // inner scroll view.
+                        // If the "controller" property is set, then this scroll
+                        // view will not be associated with the NestedScrollView.
+                        // The PageStorageKey should be unique to this ScrollView;
+                        // it allows the list to remember its scroll position when
+                        // the tab view is not on the screen.
+                        key: PageStorageKey<int>(0),
+                        slivers: <Widget>[
+                          SliverOverlapInjector(
+                            // This is the flip side of the SliverOverlapAbsorber above.
+                            handle:
+                            NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                context),
+                          ),
+                          PagewiseSliverList(
+                            noItemsFoundBuilder: (context) {
+                              return OBCommunityNoPosts(
+                                _community,
+                                onWantsToRefreshCommunity: _refreshPosts,
+                              );
+                            },
+                            loadingBuilder: (context) {
+                              return const Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: const OBProgressIndicator(),
+                              );
+                            },
+                            pageLoadController: this._pageWiseController,
+                            itemBuilder: _getPostItem,
+                          )
+                        ],
+                      ),
                     );
                   },
                 ),

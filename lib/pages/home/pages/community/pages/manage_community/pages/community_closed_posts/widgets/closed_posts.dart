@@ -8,6 +8,7 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
+import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/loading_indicator_tile.dart';
@@ -79,13 +80,15 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   }
 
   Widget _buildClosedPosts() {
-    return ListView.builder(
-        controller: _postsScrollController,
-        physics: const ClampingScrollPhysics(),
-        cacheExtent: 30,
-        padding: const EdgeInsets.all(0),
-        itemCount: _posts.length,
-        itemBuilder: _buildPostItem);
+    return OBScrollContainer(
+      scroll: ListView.builder(
+          controller: _postsScrollController,
+          physics: const ClampingScrollPhysics(),
+          cacheExtent: 30,
+          padding: const EdgeInsets.all(0),
+          itemCount: _posts.length,
+          itemBuilder: _buildPostItem),
+    );
   }
 
   Widget _buildPostItem(BuildContext context, int index) {
