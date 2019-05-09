@@ -47,9 +47,6 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     if (scrollContainer != null)
       _scroll = scrollContainer.scroll;
 
-    //This is async, so it will be executed after build completes.
-    _afterLayout();
-
     return GestureDetector(
       onLongPress: _copyText,
       child: Padding(padding: EdgeInsets.all(20.0), child: _buildPostText()),
@@ -115,8 +112,8 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     if (!_expanded) {
       _heightCollapsed = context.size.height;
       if (_hasScrollController()) {
-        _minScrollOffset = _scroll.controller.position.minScrollExtent + 0.1;
-        _maxScrollOffset = _scroll.controller.position.maxScrollExtent - 0.1;
+        _minScrollOffset = _scroll.controller.position.minScrollExtent;
+        _maxScrollOffset = _scroll.controller.position.maxScrollExtent;
       }
     } else {
       _heightExpanded = context.size.height;
@@ -125,19 +122,17 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     setState(() {
       _doScroll = _expanded;
       _expanded = !_expanded;
+
+      if (_doScroll && _hasScrollController()) {
+        var scrollOffset = _scroll.controller.offset - (_heightExpanded - _heightCollapsed);
+        _scroll.controller.jumpTo(scrollOffset.clamp(_minScrollOffset, _maxScrollOffset));
+        _doScroll = false;
+      }
     });
   }
 
   bool _hasScrollController() {
     return _scroll != null && _scroll.controller != null;
-  }
-
-  void _afterLayout() async {
-    if (_doScroll && _hasScrollController()) {
-      var scrollOffset = _scroll.controller.offset - (_heightExpanded - _heightCollapsed);
-      _scroll.controller.jumpTo(scrollOffset.clamp(_minScrollOffset, _maxScrollOffset));
-      _doScroll = false;
-    }
   }
 
   void _copyText() {
