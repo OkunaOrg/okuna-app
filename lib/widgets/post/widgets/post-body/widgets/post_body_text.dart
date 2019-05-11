@@ -71,15 +71,12 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   }
 
   Widget _buildCollapsiblePostText(String postText, Post post, bool expanded) {
-    if (!_expanded) {
-      var newLength = _LENGTH_LIMIT - _CUTOFF_OFFSET;
-      postText = postText.substring(0, newLength).trimRight() + '...';
-    }
+    var maxlength = expanded ? null : _LENGTH_LIMIT - _CUTOFF_OFFSET;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildActionablePostText(postText, post),
+        _buildActionablePostText(postText, post, maxlength: maxlength),
         GestureDetector(
           onTap: _toggleExpanded,
           child: Padding(
@@ -95,15 +92,17 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     );
   }
 
-  Widget _buildActionablePostText(String postText, Post post) {
+  Widget _buildActionablePostText(String postText, Post post, {int maxlength}) {
     if (post.isEdited != null && post.isEdited) {
       return OBActionableSmartText(
         text: postText,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
+        maxlength: maxlength,
       );
     } else {
       return OBActionableSmartText(
         text: postText,
+        maxlength: maxlength,
       );
     }
   }
