@@ -91,15 +91,15 @@ class ValidationService {
   }
 
   bool isBioAllowedLength(String bio) {
-    return bio.length > 0 && bio.length < PROFILE_BIO_MAX_LENGTH;
+    return bio.length > 0 && bio.length <= PROFILE_BIO_MAX_LENGTH;
   }
 
   bool isLocationAllowedLength(String location) {
-    return location.length > 0 && location.length < PROFILE_LOCATION_MAX_LENGTH;
+    return location.length > 0 && location.length <= PROFILE_LOCATION_MAX_LENGTH;
   }
 
   bool isUsernameAllowedLength(String username) {
-    return username.length > 0 && username.length < USERNAME_MAX_LENGTH;
+    return username.length > 0 && username.length <= USERNAME_MAX_LENGTH;
   }
 
   bool isPostCommentAllowedLength(String postComment) {
@@ -108,34 +108,34 @@ class ValidationService {
   }
 
   bool isCommunityNameAllowedLength(String name) {
-    return name.length > 0 && name.length < COMMUNITY_NAME_MAX_LENGTH;
+    return name.length > 0 && name.length <= COMMUNITY_NAME_MAX_LENGTH;
   }
 
   bool isCommunityDescriptionAllowedLength(String description) {
     return description.length > 0 &&
-        description.length < COMMUNITY_DESCRIPTION_MAX_LENGTH;
+        description.length <= COMMUNITY_DESCRIPTION_MAX_LENGTH;
   }
 
   bool isCommunityTitleAllowedLength(String title) {
-    return title.length > 0 && title.length < COMMUNITY_TITLE_MAX_LENGTH;
+    return title.length > 0 && title.length <= COMMUNITY_TITLE_MAX_LENGTH;
   }
 
   bool isCommunityRulesAllowedLength(String rules) {
-    return rules.length > 0 && rules.length < COMMUNITY_RULES_MAX_LENGTH;
+    return rules.length > 0 && rules.length <= COMMUNITY_RULES_MAX_LENGTH;
   }
 
   bool isCommunityUserAdjectiveAllowedLength(String userAdjective) {
     return userAdjective.length > 0 &&
-        userAdjective.length < COMMUNITY_USER_ADJECTIVE_MAX_LENGTH;
+        userAdjective.length <= COMMUNITY_USER_ADJECTIVE_MAX_LENGTH;
   }
 
   bool isFollowsListNameAllowedLength(String followsList) {
-    return followsList.length > 0 && followsList.length < LIST_MAX_LENGTH;
+    return followsList.length > 0 && followsList.length <= LIST_MAX_LENGTH;
   }
 
   bool isConnectionsCircleNameAllowedLength(String connectionsCircle) {
     return connectionsCircle.length > 0 &&
-        connectionsCircle.length < CIRCLE_MAX_LENGTH;
+        connectionsCircle.length <= CIRCLE_MAX_LENGTH;
   }
 
   bool isUsernameAllowedCharacters(String username) {
