@@ -87,7 +87,7 @@ class ValidationService {
   }
 
   bool isPostTextAllowedLength(String postText) {
-    return postText.length < POST_MAX_LENGTH;
+    return postText.length <= POST_MAX_LENGTH;
   }
 
   bool isBioAllowedLength(String bio) {
@@ -104,7 +104,7 @@ class ValidationService {
 
   bool isPostCommentAllowedLength(String postComment) {
     return postComment.length > 0 &&
-        postComment.length < POST_COMMENT_MAX_LENGTH;
+        postComment.length <= POST_COMMENT_MAX_LENGTH;
   }
 
   bool isCommunityNameAllowedLength(String name) {
