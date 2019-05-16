@@ -89,11 +89,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       HEIGHT_POST_ACTIONS +
       HEIGHT_SIZED_BOX +
       HEIGHT_POST_DIVIDER;
-  static const LOAD_MORE_COMMENTS_COUNT = 5;
-  static const COUNT_MIN_INCLUDING_LINKED_COMMENT = 3;
-  static const COUNT_MAX_AFTER_LINKED_COMMENT = 2;
-  static const TOTAL_COMMENTS_IN_SLICE =
-      COUNT_MIN_INCLUDING_LINKED_COMMENT + COUNT_MAX_AFTER_LINKED_COMMENT;
 
   static const PAGE_COMMENTS_TEXT_MAP = {
     'TITLE': 'Post comments',
@@ -298,6 +293,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       ),
       OBPostCommenter(
         _post,
+        postComment: widget.postComment,
         autofocus: widget.autofocusCommentInput,
         commentTextFieldFocusNode: _commentInputFocusNode,
         onPostCommentCreated:(PostComment createdPostComment) {
@@ -329,13 +325,13 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   Widget _getCommentTile(int index) {
     int commentIndex = index - 1;
     var postComment = _postComments[commentIndex];
-    var onPostCommentDeletedCallback = () {
+    var onPostCommentDeletedCallback = (PostComment comment) {
       _removePostCommentAtIndex(commentIndex);
       if (widget.onCommentDeleted != null) widget.onCommentDeleted(postComment);
     };
 
     if (_animationController.status != AnimationStatus.completed &&
-        !_startScrollWasInitialised) {
+        !_startScrollWasInitialised && widget.linkedPostComment != null) {
       Future.delayed(Duration(milliseconds: 0), () {
         _postCommentsScrollController.animateTo(
             _positionTopCommentSection - 100.0,
@@ -397,11 +393,13 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   }
 
   void _scrollToTop() {
-    _postCommentsScrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    Future.delayed(Duration(milliseconds: 0), () {
+      _postCommentsScrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    });
   }
 
   void _setPositionTopCommentSection() {
@@ -448,6 +446,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     setState(() {
       this._postComments.addAll(postComments);
     });
+    _commentsPageController.updateControllerPostComments(this._postComments);
   }
 
   void _addToStartPostComments(List<PostComment> postComments) {
@@ -456,12 +455,14 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         this._postComments.insert(0, comment);
       });
     });
+    _commentsPageController.updateControllerPostComments(this._postComments);
   }
 
   void _setPostComments(List<PostComment> postComments) {
     setState(() {
       this._postComments = postComments;
     });
+    _commentsPageController.updateControllerPostComments(this._postComments);
   }
 
   void _setNoMoreBottomItemsToLoad(bool noMoreItemsToLoad) {
@@ -488,8 +489,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
   void _scrollToNewComment() {
     if (_currentSort == PostCommentsSortType.asc) {
-      _postCommentsScrollController.animateTo(10000,
-          duration: Duration(milliseconds: 5), curve: Curves.easeIn);
+      _postCommentsScrollController.animateTo(_postCommentsScrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 50), curve: Curves.easeIn);
     } else if (_currentSort == PostCommentsSortType.dec) {
       _postCommentsScrollController.animateTo(
           _positionTopCommentSection - 200.0,
