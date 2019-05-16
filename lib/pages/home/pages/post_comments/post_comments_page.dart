@@ -2,46 +2,54 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_tile.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comments_page_controller.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/user_preferences.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
-import 'package:Openbook/widgets/post/widgets/post_circles.dart';
-import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
-import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Openbook/widgets/load_more.dart';
 import 'package:Openbook/services/httpie.dart';
 
-class OBPostCommentsLinkedPage extends StatefulWidget {
-  final PostComment postComment;
+class OBPostCommentsPage extends StatefulWidget {
+  final PostComment linkedPostComment;
+  final Post post;
+  final PostCommentsPageType pageType;
   final bool autofocusCommentInput;
+  final bool showPostPreview;
+  final PostComment postComment;
+  Function(PostComment) onCommentDeleted;
+  Function(PostComment) onCommentAdded;
 
-  OBPostCommentsLinkedPage(
-    this.postComment, {
+  OBPostCommentsPage({
+    @required this.pageType,
+    this.post,
+    this.linkedPostComment,
+    this.postComment,
+    this.onCommentDeleted,
+    this.onCommentAdded,
+    this.showPostPreview,
     this.autofocusCommentInput: false,
   });
 
   @override
-  State<OBPostCommentsLinkedPage> createState() {
-    return OBPostCommentsLinkedPageState();
+  State<OBPostCommentsPage> createState() {
+    return OBPostCommentsPageState();
   }
 }
 
-class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
+class OBPostCommentsPageState extends State<OBPostCommentsPage>
     with SingleTickerProviderStateMixin {
   UserService _userService;
   UserPreferencesService _userPreferencesService;
@@ -52,7 +60,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   AnimationController _animationController;
   Animation<double> _animation;
 
-  GlobalKey _keyPostBody = GlobalKey();
   double _positionTopCommentSection;
   ScrollController _postCommentsScrollController;
   List<PostComment> _postComments = [];
@@ -64,6 +71,9 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   PostCommentsSortType _currentSort;
   FocusNode _commentInputFocusNode;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
+  OBPostCommentsPageController _commentsPageController;
+  Map<String, String> _pageTextMap;
+
   static const OFFSET_TOP_HEADER = 64.0;
   static const HEIGHT_POST_HEADER = 72.0;
   static const HEIGHT_POST_REACTIONS = 35.0;
@@ -85,18 +95,31 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   static const TOTAL_COMMENTS_IN_SLICE =
       COUNT_MIN_INCLUDING_LINKED_COMMENT + COUNT_MAX_AFTER_LINKED_COMMENT;
 
-  CancelableOperation _refreshCommentsOperation;
-  CancelableOperation _refreshCommentsSliceOperation;
-  CancelableOperation _refreshCommentsWithCreatedPostCommentVisibleOperation;
+  static const PAGE_COMMENTS_TEXT_MAP = {
+    'TITLE': 'Post comments',
+    'NO_MORE_TO_LOAD': 'No more comments to load',
+    'TAP_TO_RETRY': 'Tap to retry loading comments.',
+
+  };
+
+  static const PAGE_REPLIES_TEXT_MAP = {
+    'TITLE': 'Post replies',
+    'NO_MORE_TO_LOAD': 'No more replies to load',
+    'TAP_TO_RETRY': 'Tap to retry loading replies.',
+  };
+
   CancelableOperation _refreshPostOperation;
-  CancelableOperation _loadMoreBottomCommentsOperation;
-  CancelableOperation _loadMoreTopCommentsOperation;
-  CancelableOperation _toggleSortCommentsOperation;
 
   @override
   void initState() {
     super.initState();
-    _post = widget.postComment.post;
+    if (widget.linkedPostComment != null) _post = widget.linkedPostComment.post;
+    if (widget.post != null) _post = widget.post;
+    if (widget.pageType == PostCommentsPageType.comments){
+      _pageTextMap = PAGE_COMMENTS_TEXT_MAP;
+    } else {
+      _pageTextMap = PAGE_REPLIES_TEXT_MAP;
+    }
     _needsBootstrap = true;
     _postComments = [];
     _noMoreBottomItemsToLoad = true;
@@ -128,7 +151,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
-          title: 'Post comments',
+          title: _pageTextMap['TITLE'],
         ),
         child: OBPrimaryColorContainer(
           child: Stack(
@@ -139,8 +162,8 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
   void _bootstrap() async {
     await _setPostCommentsSortTypeFromPreferences();
-    await _refreshPost();
-    await _refreshCommentsSlice();
+    _initialiseCommentsPageController();
+    if (widget.post != null) await _refreshPost();
   }
 
   Future _setPostCommentsSortTypeFromPreferences() async {
@@ -149,21 +172,33 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     _currentSort = sortType;
   }
 
+  void _initialiseCommentsPageController() {
+    _commentsPageController = OBPostCommentsPageController(
+      pageType: widget.pageType,
+      userService: _userService,
+      userPreferencesService: _userPreferencesService,
+      currentSort: _currentSort,
+      post: _post,
+      postComment: widget.postComment,
+      linkedPostComment: widget.linkedPostComment,
+      addPostComments: _addPostComments,
+      addToStartPostComments: _addToStartPostComments,
+      setPostComments: _setPostComments,
+      setCurrentSortValue: _setCurrentSortValue,
+      setNoMoreBottomItemsToLoad: _setNoMoreBottomItemsToLoad,
+      setNoMoreTopItemsToLoad: _setNoMoreTopItemsToLoad,
+      showNoMoreTopItemsToLoadToast: _showNoMoreTopItemsToLoadToast,
+      scrollToNewComment: _scrollToNewComment,
+      scrollToTop: _scrollToTop,
+      unfocusCommentInput: _unfocusCommentInput,
+      onError: _onError
+    );
+  }
+
   void dispose() {
     super.dispose();
     _animation.removeStatusListener(_onAnimationStatusChanged);
-    if (_refreshCommentsOperation != null) _refreshCommentsOperation.cancel();
-    if (_refreshCommentsSliceOperation != null)
-      _refreshCommentsSliceOperation.cancel();
-    if (_loadMoreBottomCommentsOperation != null)
-      _loadMoreBottomCommentsOperation.cancel();
-    if (_refreshPostOperation != null) _refreshPostOperation.cancel();
-    if (_toggleSortCommentsOperation != null)
-      _toggleSortCommentsOperation.cancel();
-    if (_loadMoreTopCommentsOperation != null)
-      _loadMoreTopCommentsOperation.cancel();
-    if (_refreshCommentsWithCreatedPostCommentVisibleOperation != null)
-      _refreshCommentsWithCreatedPostCommentVisibleOperation.cancel();
+    _commentsPageController.dispose();
   }
 
   void _onAnimationStatusChanged(status) {
@@ -227,7 +262,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
               child: LoadMore(
                   whenEmptyLoad: false,
                   isFinish: _noMoreBottomItemsToLoad,
-                  delegate: OBInfinitePostCommentsLoadMoreDelegate(),
+                  delegate: OBInfinitePostCommentsLoadMoreDelegate(_pageTextMap),
                   child: ListView.builder(
                       physics: const ClampingScrollPhysics(),
                       controller: _postCommentsScrollController,
@@ -235,24 +270,60 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
                       itemCount: _postComments.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
-                          return _getPostPreview();
+                          return Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: <Widget>[
+                              _getPostPreview(),
+                              _getCommentPreview(),
+                              _getDivider(),
+                              OBPostCommentsHeaderBar(
+                                pageType: widget.pageType,
+                                noMoreTopItemsToLoad: _noMoreTopItemsToLoad,
+                                postComments: _postComments,
+                                currentSort: _currentSort,
+                                onWantsToToggleSortComments:() => _commentsPageController.onWantsToToggleSortComments(),
+                                loadMoreTopComments: () => _commentsPageController.loadMoreTopComments(),
+                                onWantsToRefreshComments:() => _commentsPageController.onWantsToRefreshComments()
+                              ),
+                            ],
+                          );
                         } else {
                           return _getCommentTile(index);
                         }
                       }),
-                  onLoadMore: _loadMoreBottomComments),
+                  onLoadMore: () => _commentsPageController.loadMoreBottomComments()),
             ),
-            onRefresh: _onWantsToRefreshComments),
+            onRefresh: () => _commentsPageController.onWantsToRefreshComments()),
       ),
       OBPostCommenter(
         _post,
         autofocus: widget.autofocusCommentInput,
         commentTextFieldFocusNode: _commentInputFocusNode,
-        onPostCommentCreated: _refreshCommentsWithCreatedPostCommentVisible,
+        onPostCommentCreated:(PostComment createdPostComment) {
+          _commentsPageController.refreshCommentsWithCreatedPostCommentVisible(createdPostComment);
+          if (widget.onCommentAdded != null) {
+            widget.onCommentAdded(createdPostComment);
+            }
+          },
       )
     ]);
 
     return _columnChildren;
+  }
+
+  Widget _getDivider() {
+    if (widget.postComment != null) {
+      return OBPostDivider();
+    }
+    return SizedBox();
+  }
+
+  Widget _getCommentPreview() {
+    if (widget.postComment == null) {
+      return SizedBox();
+    }
+    return OBPostCommentTile(post: widget.post, postComment: widget.postComment);
   }
 
   Widget _getCommentTile(int index) {
@@ -260,6 +331,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     var postComment = _postComments[commentIndex];
     var onPostCommentDeletedCallback = () {
       _removePostCommentAtIndex(commentIndex);
+      if (widget.onCommentDeleted != null) widget.onCommentDeleted(postComment);
     };
 
     if (_animationController.status != AnimationStatus.completed &&
@@ -283,7 +355,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
       });
     }
 
-    if (postComment.id == widget.postComment.id) {
+    if (widget.linkedPostComment != null && postComment.id == widget.linkedPostComment.id) {
       var theme = _themeService.getActiveTheme();
       var primaryColor =
           _themeValueParserService.parseColor(theme.primaryColor);
@@ -295,7 +367,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
               : Color.fromARGB(10, 0, 0, 0),
         ),
         child: OBPostComment(
-          key: Key('postComment#${postComment.id}'),
+          key: Key('postComment#${widget.pageType}#${postComment.id}'),
           postComment: postComment,
           post: _post,
           onPostCommentDeletedCallback: onPostCommentDeletedCallback,
@@ -303,7 +375,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
       );
     } else {
       return OBPostComment(
-        key: Key('postComment#${postComment.id}'),
+        key: Key('postComment#${widget.pageType}#${postComment.id}'),
         postComment: postComment,
         post: _post,
         onPostCommentDeletedCallback: onPostCommentDeletedCallback,
@@ -312,53 +384,24 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   Widget _getPostPreview() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        OBPostHeader(
-          post: _post,
-          onPostDeleted: _onPostDeleted,
-        ),
-        Container(
-          key: _keyPostBody,
-          child: OBPostBody(_post),
-        ),
-        OBPostReactions(_post),
-        OBPostCircles(_post),
-        OBPostActions(
-          _post,
-          onWantsToCommentPost: _focusCommentInput,
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        OBPostDivider(),
-        _buildLoadTopCommentsBar(),
-      ],
+    if (widget.post == null || !widget.showPostPreview) {
+      return SizedBox();
+    }
+
+    return OBPostPreview(
+      post: _post,
+      onPostDeleted: _onPostDeleted,
+      focusCommentInput: _focusCommentInput,
     );
+
   }
 
-  Future<void> _refreshCommentsSlice() async {
-    if (_refreshCommentsSliceOperation != null)
-      _refreshCommentsSliceOperation.cancel();
-    try {
-      _refreshCommentsSliceOperation = CancelableOperation.fromFuture(
-          _userService.getCommentsForPost(_post,
-              minId: widget.postComment.id,
-              maxId: widget.postComment.id,
-              countMax: COUNT_MAX_AFTER_LINKED_COMMENT,
-              countMin: COUNT_MIN_INCLUDING_LINKED_COMMENT,
-              sort: _currentSort));
-
-      _postComments = (await _refreshCommentsSliceOperation.value).comments;
-      _setPostComments(_postComments);
-      _checkIfMoreTopItemsToLoad();
-      _setNoMoreBottomItemsToLoad(false);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _refreshCommentsSliceOperation = null;
-    }
+  void _scrollToTop() {
+    _postCommentsScrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 
   void _setPositionTopCommentSection() {
@@ -383,169 +426,14 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     }
   }
 
-  Future<bool> _loadMoreBottomComments() async {
-    if (_loadMoreBottomCommentsOperation != null)
-      _loadMoreBottomCommentsOperation.cancel();
-    if (_postComments.length == 0) return true;
-
-    PostComment lastPost = _postComments.last;
-    int lastPostId = lastPost.id;
-    List<PostComment> moreComments;
-    try {
-      if (_currentSort == PostCommentsSortType.dec) {
-        _loadMoreBottomCommentsOperation = CancelableOperation.fromFuture(
-            _userService.getCommentsForPost(_post,
-                countMax: LOAD_MORE_COMMENTS_COUNT,
-                maxId: lastPostId,
-                sort: _currentSort));
-      } else {
-        _loadMoreBottomCommentsOperation = CancelableOperation.fromFuture(
-            _userService.getCommentsForPost(_post,
-                countMin: LOAD_MORE_COMMENTS_COUNT,
-                minId: lastPostId + 1,
-                sort: _currentSort));
-      }
-
-      moreComments = (await _loadMoreBottomCommentsOperation.value).comments;
-
-      if (moreComments.length == 0) {
-        _setNoMoreBottomItemsToLoad(true);
-      } else {
-        _addPostComments(moreComments);
-      }
-      return true;
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _loadMoreBottomCommentsOperation = null;
-    }
-
-    return false;
-  }
-
-  Future<bool> _loadMoreTopComments() async {
-    if (_loadMoreTopCommentsOperation != null)
-      _loadMoreTopCommentsOperation.cancel();
-    if (_postComments.length == 0) return true;
-
-    List<PostComment> topComments;
-    PostComment firstPost = _postComments.first;
-    int firstPostId = firstPost.id;
-    try {
-      if (_currentSort == PostCommentsSortType.dec) {
-        _loadMoreTopCommentsOperation = CancelableOperation.fromFuture(
-            _userService.getCommentsForPost(_post,
-                sort: PostCommentsSortType.dec,
-                countMin: LOAD_MORE_COMMENTS_COUNT,
-                minId: firstPostId + 1));
-      } else if (_currentSort == PostCommentsSortType.asc) {
-        _loadMoreTopCommentsOperation = CancelableOperation.fromFuture(
-            _userService.getCommentsForPost(_post,
-                sort: PostCommentsSortType.asc,
-                countMax: LOAD_MORE_COMMENTS_COUNT,
-                maxId: firstPostId));
-      }
-
-      topComments = (await _loadMoreTopCommentsOperation.value).comments;
-
-      if (topComments.length < LOAD_MORE_COMMENTS_COUNT &&
-          topComments.length != 0) {
-        _setNoMoreTopItemsToLoad(true);
-        _addToStartPostComments(topComments);
-      } else if (topComments.length == LOAD_MORE_COMMENTS_COUNT) {
-        _addToStartPostComments(topComments);
-      } else {
-        _setNoMoreTopItemsToLoad(true);
-        _showNoMoreTopItemsToLoadToast();
-      }
-      return true;
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _loadMoreTopCommentsOperation = null;
-    }
-
-    return false;
-  }
-
   void _removePostCommentAtIndex(int index) {
     setState(() {
       _postComments.removeAt(index);
     });
   }
 
-  void _refreshCommentsWithCreatedPostCommentVisible(
-      PostComment createdPostComment) async {
-    if (_refreshCommentsWithCreatedPostCommentVisibleOperation != null)
-      _refreshCommentsWithCreatedPostCommentVisibleOperation.cancel();
-    _unfocusCommentInput();
-    List<PostComment> comments;
-    int createdCommentId = createdPostComment.id;
-    try {
-      if (_currentSort == PostCommentsSortType.dec) {
-        _refreshCommentsWithCreatedPostCommentVisibleOperation =
-            CancelableOperation.fromFuture(_userService.getCommentsForPost(
-                _post,
-                sort: PostCommentsSortType.dec,
-                countMin: LOAD_MORE_COMMENTS_COUNT,
-                minId: createdCommentId));
-      } else if (_currentSort == PostCommentsSortType.asc) {
-        _refreshCommentsWithCreatedPostCommentVisibleOperation =
-            CancelableOperation.fromFuture(_userService.getCommentsForPost(
-                _post,
-                sort: PostCommentsSortType.asc,
-                countMax: LOAD_MORE_COMMENTS_COUNT,
-                maxId: createdCommentId + 1));
-      }
-
-      comments =
-          (await _refreshCommentsWithCreatedPostCommentVisibleOperation.value)
-              .comments;
-
-      _setPostComments(comments);
-      _setNoMoreTopItemsToLoad(false);
-      _setNoMoreBottomItemsToLoad(false);
-      _scrollToNewComment();
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _refreshCommentsWithCreatedPostCommentVisibleOperation = null;
-    }
-  }
-
   void _onPostDeleted(Post post) {
     Navigator.of(context).pop();
-  }
-
-  void _checkIfMoreTopItemsToLoad() {
-    int linkedCommentId = widget.postComment.id;
-    Iterable<PostComment> listBeforeLinkedComment = [];
-    if (_currentSort == PostCommentsSortType.dec) {
-      listBeforeLinkedComment =
-          _postComments.where((comment) => comment.id > linkedCommentId);
-    } else if (_currentSort == PostCommentsSortType.asc) {
-      listBeforeLinkedComment =
-          _postComments.where((comment) => comment.id < linkedCommentId);
-    }
-    if (listBeforeLinkedComment.length < 2) {
-      _setNoMoreTopItemsToLoad(true);
-    }
-  }
-
-  Future _onWantsToRefreshComments() async {
-    if (_refreshCommentsOperation != null) _refreshCommentsOperation.cancel();
-    try {
-      _refreshCommentsOperation = CancelableOperation.fromFuture(
-          _userService.getCommentsForPost(_post, sort: _currentSort));
-      _postComments = (await _refreshCommentsOperation.value).comments;
-      _setPostComments(_postComments);
-      _setNoMoreBottomItemsToLoad(false);
-      _setNoMoreTopItemsToLoad(true);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _refreshCommentsOperation = null;
-    }
   }
 
   void _focusCommentInput() {
@@ -589,7 +477,7 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
   }
 
   void _showNoMoreTopItemsToLoadToast() {
-    _toastService.info(context: context, message: 'No more comments to load');
+    _toastService.info(context: context, message: _pageTextMap['NO_MORE_TO_LOAD']);
   }
 
   void _setCurrentSortValue(PostCommentsSortType newSortValue) {
@@ -610,19 +498,6 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     }
   }
 
-  void _onWantsToToggleSortComments() async {
-    PostCommentsSortType newSortType;
-
-    if (_currentSort == PostCommentsSortType.asc) {
-      newSortType = PostCommentsSortType.dec;
-    } else {
-      newSortType = PostCommentsSortType.asc;
-    }
-    _userPreferencesService.setPostCommentsSortType(newSortType);
-    _setCurrentSortValue(newSortType);
-    _onWantsToRefreshComments();
-  }
-
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
@@ -641,6 +516,9 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
     double finalMediaScreenHeight = 0.0;
     double finalTextHeight = 0.0;
     double totalOffsetY = 0.0;
+
+    if (widget.post == null) return totalOffsetY;
+
     double screenWidth = MediaQuery.of(context).size.width;
     if (_post.hasImage()) {
       aspectRatio = _post.getImageWidth() / _post.getImageHeight();
@@ -677,97 +555,11 @@ class OBPostCommentsLinkedPageState extends State<OBPostCommentsLinkedPage>
 
     return totalOffsetY;
   }
-
-  Widget _buildLoadTopCommentsBar() {
-    var theme = _themeService.getActiveTheme();
-
-    if (_noMoreTopItemsToLoad) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                child: OBSecondaryText(
-                  _postComments.length > 0
-                      ? _currentSort == PostCommentsSortType.dec
-                          ? 'Newest comments'
-                          : 'Oldest comments'
-                      : 'Be the first to comment!',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                ),
-              ),
-            ),
-            Expanded(
-              child: FlatButton(
-                  child: OBText(
-                    _postComments.length > 0
-                        ? _currentSort == PostCommentsSortType.dec
-                            ? 'See oldest comments'
-                            : 'See newest comments'
-                        : '',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: _themeValueParserService
-                            .parseGradient(theme.primaryAccentColor)
-                            .colors[1],
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: _onWantsToToggleSortComments),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              flex: 4,
-              child: FlatButton(
-                  child: Row(
-                    children: <Widget>[
-                      OBIcon(OBIcons.arrowUp),
-                      const SizedBox(width: 10.0),
-                      OBText(
-                        _currentSort == PostCommentsSortType.dec
-                            ? 'Newer'
-                            : 'Older',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  onPressed: _loadMoreTopComments),
-            ),
-            Expanded(
-              flex: 6,
-              child: FlatButton(
-                  child: OBText(
-                    _currentSort == PostCommentsSortType.dec
-                        ? 'View newest comments'
-                        : 'View oldest comments',
-                    style: TextStyle(
-                        color: _themeValueParserService
-                            .parseGradient(theme.primaryAccentColor)
-                            .colors[1],
-                        fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  onPressed: _onWantsToRefreshComments),
-            ),
-          ],
-        ),
-      );
-    }
-  }
 }
 
 class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
-  const OBInfinitePostCommentsLoadMoreDelegate();
+  Map<String, String> pageTextMap;
+  OBInfinitePostCommentsLoadMoreDelegate(Map<String, String> pageTextMap);
 
   @override
   Widget buildChild(LoadMoreStatus status,
@@ -784,7 +576,7 @@ class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
             const SizedBox(
               width: 10.0,
             ),
-            Text('Tap to retry loading comments.')
+            Text(pageTextMap['TAP_TO_RETRY'])
           ],
         ),
       );
