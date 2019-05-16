@@ -477,6 +477,16 @@ class UserService {
     return PostComment.fromJSON(json.decode(response.body));
   }
 
+  Future<PostComment> replyPostComment(
+      {@required Post post,
+        @required PostComment postComment,
+        @required String text}) async {
+    HttpieResponse response = await _postsApiService.replyPostComment(
+        postUuid: post.uuid, postCommentId: postComment.id, text: text);
+    _checkResponseIsCreated(response);
+    return PostComment.fromJSON(json.decode(response.body));
+  }
+
   Future<void> deletePostComment(
       {@required PostComment postComment, @required Post post}) async {
     HttpieResponse response = await _postsApiService.deletePostComment(
@@ -506,6 +516,28 @@ class UserService {
       PostCommentsSortType sort}) async {
     HttpieResponse response = await _postsApiService.getCommentsForPostWithUuid(
         post.uuid,
+        countMax: countMax,
+        maxId: maxId,
+        countMin: countMin,
+        minId: minId,
+        sort: sort != null
+            ? PostComment.convertPostCommentSortTypeToString(sort)
+            : null);
+
+    _checkResponseIsOk(response);
+    return PostCommentList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostCommentList> getCommentRepliesForPostComment(Post post,
+      PostComment postComment,
+      {int maxId,
+        int countMax,
+        int minId,
+        int countMin,
+        PostCommentsSortType sort}) async {
+    HttpieResponse response = await _postsApiService.getRepliesForCommentWithIdForPostWithUuid(
+        post.uuid,
+        postComment.id,
         countMax: countMax,
         maxId: maxId,
         countMin: countMin,
