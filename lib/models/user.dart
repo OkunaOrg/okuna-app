@@ -436,6 +436,8 @@ class User extends UpdatableModel<User> {
     User postCommenter = postComment.commenter;
     bool loggedInUserIsCommunityAdministrator = false;
     bool loggedInUserIsCommunityModerator = false;
+    bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
+    bool userIsCreatorOfNonCommunityPost = loggedInUserIsPostCreator && !post.hasCommunity();
 
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
@@ -449,7 +451,7 @@ class User extends UpdatableModel<User> {
 
     return (loggedInUser.id == postCommenter.id ||
         loggedInUserIsCommunityModerator ||
-        loggedInUserIsCommunityAdministrator);
+        loggedInUserIsCommunityAdministrator || userIsCreatorOfNonCommunityPost);
   }
 
   bool canBlockOrUnblockUser(User user) {
