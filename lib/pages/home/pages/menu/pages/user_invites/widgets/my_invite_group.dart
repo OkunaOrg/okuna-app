@@ -252,6 +252,11 @@ class OBMyInvitesGroupController {
     this._state = state;
   }
 
+  int getListLength() {
+    if (_state == null) return null;
+    return _state._inviteGroupList.length;
+  }
+
   void detach() {
     this._state = null;
   }
