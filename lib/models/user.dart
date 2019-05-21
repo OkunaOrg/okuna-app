@@ -429,7 +429,6 @@ class User extends UpdatableModel<User> {
     User postCommenter = postComment.commenter;
 
     return loggedInUser.id == postCommenter.id;
-
   }
 
   bool canDeletePostComment(Post post, PostComment postComment) {
