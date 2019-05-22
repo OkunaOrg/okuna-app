@@ -46,6 +46,7 @@ import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
 import 'package:Openbook/services/user_invites_api.dart';
+import 'package:Openbook/services/waitlist_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -74,6 +75,7 @@ class UserService {
   NotificationsApiService _notificationsApiService;
   DevicesApiService _devicesApiService;
   CreateAccountBloc _createAccountBlocService;
+  WaitlistApiService _waitlistApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -149,6 +151,10 @@ class UserService {
     _createAccountBlocService = createAccountBloc;
   }
 
+  void setWaitlistApiService(WaitlistApiService waitlistApiService) {
+    _waitlistApiService = waitlistApiService;
+  }
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -207,6 +213,11 @@ class UserService {
 
   Future<void> acceptGuidelines() async {
     HttpieResponse response = await _authApiService.acceptGuidelines();
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> subscribeToBetaWaitlist({String email}) async {
+    HttpieResponse response = await _waitlistApiService.subscribeToBetaWaitlist(email: email);
     _checkResponseIsOk(response);
   }
 
