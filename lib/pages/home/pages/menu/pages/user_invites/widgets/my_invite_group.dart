@@ -152,6 +152,7 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
     var onUserInviteDeletedCallback = () {
       _removeUserInvite(userInvite);
       widget.inviteGroupListItemDeleteCallback(context, userInvite);
+      if (_inviteGroupList.length == 0) _refreshInvites();
     };
 
     return OBUserInviteTile(
@@ -250,11 +251,6 @@ class OBMyInvitesGroupController {
 
   void attach(OBMyInvitesGroupState state) {
     this._state = state;
-  }
-
-  int getListLength() {
-    if (_state == null) return null;
-    return _state._inviteGroupList.length;
   }
 
   void detach() {

@@ -194,12 +194,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
 
   Widget _onUserInviteDeletedCallback(
       BuildContext context, UserInvite userInvite) {
-    int _acceptedInvitesLength = _acceptedInvitesGroupController.getListLength();
-    int _pendingInvitesLength = _pendingInvitesGroupController.getListLength();
-    if (userInvite.createdUser != null) _user.inviteCount -= 1;
-    if (userInvite.createdUser == null) _user.inviteCount += 1;
-    if (_acceptedInvitesLength != null && _acceptedInvitesLength == 0) _acceptedInvitesGroupController.refresh();
-    if (_pendingInvitesLength != null && _pendingInvitesLength == 0) _pendingInvitesGroupController.refresh();
+    setState(() {
+      if (userInvite.createdUser == null) _user.inviteCount += 1;
+    });
   }
 
   void _bootstrap() async {
