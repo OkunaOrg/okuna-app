@@ -10,6 +10,10 @@ import 'package:meta/meta.dart';
 class ModeratedObject extends UpdatableModel<ModeratedObject> {
   static final factory = ModeratedObjectFactory();
 
+  factory ModeratedObject.fromJSON(Map<String, dynamic> json) {
+    return factory.fromJson(json);
+  }
+
   static String objectTypePost = 'P';
   static String objectTypePostComment = 'PC';
   static String objectTypeCommunity = 'C';
@@ -135,6 +139,38 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     }
 
     return moderatedObjectStatus;
+  }
+
+  String convertStatusToString(ModeratedObjectStatus moderatedObjectStatus) {
+    if (moderatedObjectStatus == null) return null;
+
+    switch (moderatedObjectStatus) {
+      case ModeratedObjectStatus.approved:
+        return ModeratedObject.statusApproved;
+      case ModeratedObjectStatus.rejected:
+        return ModeratedObject.statusRejected;
+      case ModeratedObjectStatus.pending:
+        return ModeratedObject.statusPending;
+      default:
+        return '';
+    }
+  }
+
+  String convertTypeToString(ModeratedObjectType moderatedObjectType) {
+    if (moderatedObjectType == null) return null;
+
+    switch (moderatedObjectType) {
+      case ModeratedObjectType.community:
+        return ModeratedObject.objectTypeCommunity;
+      case ModeratedObjectType.user:
+        return ModeratedObject.objectTypeUser;
+      case ModeratedObjectType.post:
+        return ModeratedObject.objectTypePost;
+      case ModeratedObjectType.postComment:
+        return ModeratedObject.objectTypePostComment;
+      default:
+        return '';
+    }
   }
 
   dynamic parseContentObject(

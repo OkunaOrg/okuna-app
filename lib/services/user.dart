@@ -17,6 +17,8 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/models/moderation/moderated_object_list.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
@@ -43,6 +45,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
 import 'package:Openbook/services/storage.dart';
@@ -64,6 +67,7 @@ class UserService {
   AuthApiService _authApiService;
   HttpieService _httpieService;
   PostsApiService _postsApiService;
+  ModerationApiService _moderationApiService;
   CommunitiesApiService _communitiesApiService;
   CategoriesApiService _categoriesApiService;
   EmojisApiService _emojisApiService;
@@ -89,6 +93,10 @@ class UserService {
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
+  }
+
+  void setModerationApiService(ModerationApiService moderationApiService) {
+    _moderationApiService = moderationApiService;
   }
 
   void setPostsApiService(PostsApiService postsApiService) {
@@ -1449,6 +1457,92 @@ class UserService {
         postCommentId: postComment.id,
         postUuid: post.uuid,
         moderationCategoryId: moderationCategory.id);
+    _checkResponseIsCreated(response);
+  }
+
+  Future<ModeratedObjectsList> getGlobalModeratedObjects(
+      {List<ModeratedObjectStatus> statuses,
+      List<ModeratedObjectType> types,
+      int count,
+      int maxId,
+      bool verified}) async {
+    HttpieResponse response =
+        await _moderationApiService
+            .getGlobalModeratedObjects(
+                maxId: maxId,
+                verified: verified,
+                types: types != null
+                    ? types.map((status) =>
+                        ModeratedObject.factory.convertTypeToString(status))
+                    : null,
+                statuses:
+                    statuses != null
+                        ? statuses.map((status) => ModeratedObject.factory
+                            .convertStatusToString(status))
+                        : null,
+                count: count);
+
+    _checkResponseIsOk(response);
+
+    return ModeratedObjectsList.fromJson(json.decode(response.body));
+  }
+
+  Future<ModeratedObjectsList> getModeratedObjectsForCommunity(
+      {@required Community community,
+      List<ModeratedObjectStatus> statuses,
+      List<ModeratedObjectType> types,
+      int count,
+      int maxId,
+      bool verified}) async {
+    HttpieResponse response = await _communitiesApiService.getModeratedObjects(
+        communityName: community.name,
+        maxId: maxId,
+        verified: verified,
+        types: types != null
+            ? types.map(
+                (status) => ModeratedObject.factory.convertTypeToString(status))
+            : null,
+        statuses: statuses != null
+            ? statuses.map((status) =>
+                ModeratedObject.factory.convertStatusToString(status))
+            : null,
+        count: count);
+
+    _checkResponseIsOk(response);
+
+    return ModeratedObjectsList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> updateModeratedObject(ModeratedObject moderatedObject,
+      {String description, ModerationCategory category}) async {
+    HttpieResponse response = await _moderationApiService
+        .updateModeratedObjectWithId(moderatedObject.id,
+            description: description, categoryId: category.id);
+    _checkResponseIsCreated(response);
+    return ModeratedObject.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> verifyModeratedObject(ModeratedObject moderatedObject) async {
+    HttpieResponse response = await _moderationApiService
+        .verifyModeratedObjectWithId(moderatedObject.id);
+    _checkResponseIsCreated(response);
+  }
+
+  Future<void> unverifyModeratedObject(ModeratedObject moderatedObject) async {
+    HttpieResponse response = await _moderationApiService
+        .unverifyModeratedObjectWithId(moderatedObject.id);
+    _checkResponseIsCreated(response);
+  }
+
+  Future<void> approveModeratedObject(ModeratedObject moderatedObject) async {
+    HttpieResponse response = await _moderationApiService
+        .approveModeratedObjectWithId(moderatedObject.id);
+    _checkResponseIsCreated(response);
+  }
+
+  Future<void> rejectModeratedObject(ModeratedObject moderatedObject) async {
+    HttpieResponse response = await _moderationApiService
+        .rejectModeratedObjectWithId(moderatedObject.id);
     _checkResponseIsCreated(response);
   }
 

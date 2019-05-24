@@ -98,7 +98,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           ));
         } else {
           postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.reportPost),
+            leading: const OBIcon(OBIcons.report),
             title: const OBText(
               'Report post',
             ),

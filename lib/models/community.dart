@@ -63,6 +63,8 @@ class Community extends UpdatableModel<Community> {
 
   bool isFavorite;
 
+  bool isReported;
+
   bool invitesEnabled;
 
   CategoriesList categories;

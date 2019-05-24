@@ -30,6 +30,7 @@ class User extends UpdatableModel<User> {
   bool areGuidelinesAccepted;
   bool isFollowing;
   bool isConnected;
+  bool isReported;
   bool isBlocked;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
@@ -86,6 +87,7 @@ class User extends UpdatableModel<User> {
       this.isFollowing,
       this.isBlocked,
       this.isConnected,
+      this.isReported,
       this.isFullyConnected,
       this.isMemberOfCommunities,
       this.connectedCircles,
@@ -126,6 +128,7 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_blocked')) isBlocked = json['is_blocked'];
+    if (json.containsKey('is_reported')) isBlocked = json['is_reported'];
     if (json.containsKey('connections_circle_id'))
       connectionsCircleId = json['connections_circle_id'];
     if (json.containsKey('is_fully_connected'))
@@ -318,7 +321,8 @@ class User extends UpdatableModel<User> {
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
 
-      if (postCommunity.isAdministrator(loggedInUser) || postCommunity.isModerator(loggedInUser)) {
+      if (postCommunity.isAdministrator(loggedInUser) ||
+          postCommunity.isModerator(loggedInUser)) {
         _canCloseOrOpenPost = true;
       }
     }
@@ -329,7 +333,8 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     bool _canCloseOrOpenPost = false;
 
-    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+    if (community.isAdministrator(loggedInUser) ||
+        community.isModerator(loggedInUser)) {
       _canCloseOrOpenPost = true;
     }
 
@@ -340,7 +345,8 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     bool _canBanOrUnban = false;
 
-    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+    if (community.isAdministrator(loggedInUser) ||
+        community.isModerator(loggedInUser)) {
       _canBanOrUnban = true;
     }
 
@@ -477,6 +483,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
         isBlocked: json['is_blocked'],
+        isReported: json['is_reported'],
         isFullyConnected: json['is_fully_connected'],
         isMemberOfCommunities: json['is_member_of_communities'],
         profile: parseUserProfile(json['profile']),

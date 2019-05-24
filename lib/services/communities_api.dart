@@ -77,6 +77,8 @@ class CommunitiesApiService {
       'api/communities/{communityName}/moderators/{username}/';
   static const CREATE_COMMUNITY_POSTS_PATH =
       'api/communities/{communityName}/posts/';
+  static const GET_COMMUNITY_MODERATED_OBJECTS_PATH =
+      'api/communities/{communityName}/moderated-objects/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -583,6 +585,36 @@ class CommunitiesApiService {
     }
 
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getModeratedObjects({
+    @required String communityName,
+    int count,
+    int maxId,
+    String type,
+    bool verified,
+    List<String> statuses,
+    List<String> types,
+  }) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (statuses != null) queryParams['statuses'] = statuses;
+    if (types != null) queryParams['types'] = types;
+
+    if (verified != null) queryParams['verified'] = verified;
+
+    String path = _makeGetCommunityModeratedObjectsPath(communityName);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  String _makeGetCommunityModeratedObjectsPath(String communityName) {
+    return _stringTemplateService.parse(
+        GET_COMMUNITY_MODERATED_OBJECTS_PATH, {'communityName': communityName});
   }
 
   String _makeCreateCommunityPost(String communityName) {

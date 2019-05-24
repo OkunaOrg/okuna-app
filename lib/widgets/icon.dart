@@ -167,7 +167,7 @@ class OBIcons {
   static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const deletePost = OBIconData(nativeIcon: Icons.delete);
   static const clear = OBIconData(nativeIcon: Icons.delete);
-  static const reportPost = OBIconData(nativeIcon: Icons.report);
+  static const report = OBIconData(nativeIcon: Icons.report);
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
   static const camera = OBIconData(nativeIcon: Icons.camera_alt);
