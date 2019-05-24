@@ -104,18 +104,20 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
             OBPrimaryColorContainer(
                 child: Column(
               children: <Widget>[
-                _hasAcceptedInvites || _hasPendingInvites
-                    ? _buildInvitesList()
-                    : _buildNoInvitesFallback()
-              ],
-            )),
+               _hasAcceptedInvites || _hasPendingInvites
+                            ? _buildInvitesList()
+                            : _buildNoInvitesFallback()
+                ],
+              )
+            ),
           ],
-        ));
+      ),
+    );
   }
 
   Widget _buildInvitesList() {
     return Expanded(
-      child: RefreshIndicator(
+        child: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _refreshInvites,
         child: ListView(
@@ -155,8 +157,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
                   ),
                 ],
               )
-            ]),
-      ),
+            ]
+          ),
+        )
     );
   }
 
@@ -191,7 +194,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
 
   Widget _onUserInviteDeletedCallback(
       BuildContext context, UserInvite userInvite) {
-    _refreshUser();
+    setState(() {
+      if (userInvite.createdUser == null) _user.inviteCount += 1;
+    });
   }
 
   void _bootstrap() async {
@@ -203,8 +208,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     try {
       await Future.wait([
         _refreshUser(),
-        _acceptedInvitesGroupController.refresh(),
-        _pendingInvitesGroupController.refresh()
+        _hasAcceptedInvites ?_acceptedInvitesGroupController.refresh() : _refreshAcceptedInvites(),
+        _hasPendingInvites ? _pendingInvitesGroupController.refresh() : _refreshPendingInvites(),
       ]);
       _scrollToTop();
     } catch (error) {
