@@ -1,8 +1,6 @@
 import 'package:Openbook/pages/waitlist/subscribe_done_step.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -79,7 +77,6 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
       ),
     );
   }
-
 
   bool _validateForm() {
     if (!_isSubmitted) return null;
@@ -161,7 +158,6 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
   }
 
   Widget _buildEmailForm() {
-
     String emailInputPlaceholder =
     _localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
 
