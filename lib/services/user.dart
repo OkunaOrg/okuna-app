@@ -216,9 +216,11 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
-  Future<void> subscribeToBetaWaitlist({String email}) async {
+  Future<int> subscribeToBetaWaitlist({String email}) async {
     HttpieResponse response = await _waitlistApiService.subscribeToBetaWaitlist(email: email);
     _checkResponseIsOk(response);
+    Map<String, dynamic> parsedJson = json.decode(response.body);
+    return parsedJson['count'];
   }
 
   Future<void> loginWithAuthToken(String authToken) async {
