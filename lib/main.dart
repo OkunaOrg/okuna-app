@@ -16,6 +16,8 @@ import 'package:Openbook/pages/auth/reset_password/verify_reset_password_link_st
 import 'package:Openbook/pages/auth/login.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:Openbook/pages/home/home.dart';
+import 'package:Openbook/pages/waitlist/subscribe_done_step.dart';
+import 'package:Openbook/pages/waitlist/subscribe_email_step.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/plugins/desktop/error-reporting.dart';
@@ -134,6 +136,15 @@ class MyApp extends StatelessWidget {
               '/auth/password_reset_success_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthPasswordResetSuccessPage();
+              },
+              '/waitlist/subscribe_email_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBWaitlistSubscribePage();
+              },
+              '/waitlist/subscribe_done_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                WaitlistSubscribeArguments args = ModalRoute.of(context).settings.arguments;
+                return OBWaitlistSubscribeDoneStep(count: args.count);
               }
             }),
       ),

@@ -213,7 +213,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
         ],
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/auth/forgot_password_step');
+        Navigator.pushNamed(context, '/waitlist/subscribe_email_step');
       },
     );
   }

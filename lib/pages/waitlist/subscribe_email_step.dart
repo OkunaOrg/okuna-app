@@ -1,3 +1,4 @@
+import 'package:Openbook/pages/waitlist/subscribe_done_step.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
@@ -21,17 +22,19 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
   bool _subscribeInProgress;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool _isSubmitted;
   UserService _userService;
   LocalizationService _localizationService;
   ValidationService _validationService;
-  ToastService _toastService;
 
   TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
-    _subscribeInProgress = false;
     super.initState();
+    _isSubmitted = false;
+    _subscribeInProgress = false;
+    _emailController.addListener(_validateForm);
   }
 
   @override
@@ -39,7 +42,6 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
     var openbookProvider = OpenbookProvider.of(context);
     _localizationService = openbookProvider.localizationService;
     _validationService = openbookProvider.validationService;
-    _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
 
     return Scaffold(
@@ -57,7 +59,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFFFF3939),
+      backgroundColor: Color(0xFFFFB649),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -80,14 +82,17 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
 
 
   bool _validateForm() {
+    if (!_isSubmitted) return null;
     return _formKey.currentState.validate();
   }
 
   void onPressedNextStep(BuildContext context) async {
+    _isSubmitted = true;
     bool isEmailValid = _validateForm();
     if (isEmailValid) {
-        await _userService.subscribeToBetaWaitlist(email: _emailController.text);
-        Navigator.pushNamed(context, '/auth/password_step');
+        int count = await _userService.subscribeToBetaWaitlist(email: _emailController.text);
+        WaitlistSubscribeArguments args = new WaitlistSubscribeArguments(count: count);
+        Navigator.pushNamed(context, '/waitlist/subscribe_done_step', arguments: args);
     }
   }
 
