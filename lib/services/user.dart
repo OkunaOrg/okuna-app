@@ -17,6 +17,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
@@ -403,14 +404,14 @@ class UserService {
 
   Future<Post> closePost(Post post) async {
     HttpieResponse response =
-    await _postsApiService.closePostWithUuid(post.uuid);
+        await _postsApiService.closePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
   }
 
   Future<Post> openPost(Post post) async {
     HttpieResponse response =
-    await _postsApiService.openPostWithUuid(post.uuid);
+        await _postsApiService.openPostWithUuid(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
   }
@@ -857,10 +858,9 @@ class UserService {
 
   Future<PostsList> getClosedPostsForCommunity(Community community,
       {int maxId, int count}) async {
-    HttpieResponse response =
-    await _communitiesApiService.getClosedPostsForCommunityWithName(community.name,
-      count: count, maxId: maxId
-    );
+    HttpieResponse response = await _communitiesApiService
+        .getClosedPostsForCommunityWithName(community.name,
+            count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return PostsList.fromJson(json.decode(response.body));
   }
@@ -1409,6 +1409,47 @@ class UserService {
             connectionRequestNotifications: connectionRequestNotifications);
     _checkResponseIsOk(response);
     return UserNotificationsSettings.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> reportUser(
+      {@required User user,
+      String description,
+      ModerationCategory moderationCategory}) async {
+    HttpieResponse response = await _authApiService.reportUserWithUsername(
+        userUsername: user.username,
+        moderationCategoryId: moderationCategory.id);
+    _checkResponseIsCreated(response);
+  }
+
+  Future<void> reportCommunity(
+      {@required Community community,
+      String description,
+      ModerationCategory moderationCategory}) async {
+    HttpieResponse response = await _communitiesApiService.reportCommunity(
+        communityName: community.name,
+        moderationCategoryId: moderationCategory.id);
+    _checkResponseIsCreated(response);
+  }
+
+  Future<void> reportPost(
+      {@required Post post,
+      String description,
+      ModerationCategory moderationCategory}) async {
+    HttpieResponse response = await _postsApiService.reportPost(
+        postUuid: post.uuid, moderationCategoryId: moderationCategory.id);
+    _checkResponseIsCreated(response);
+  }
+
+  Future<void> reportPostComment(
+      {@required PostComment postComment,
+      Post post,
+      String description,
+      ModerationCategory moderationCategory}) async {
+    HttpieResponse response = await _postsApiService.reportPostComment(
+        postCommentId: postComment.id,
+        postUuid: post.uuid,
+        moderationCategoryId: moderationCategory.id);
+    _checkResponseIsCreated(response);
   }
 
   Future<String> _getDeviceName() async {

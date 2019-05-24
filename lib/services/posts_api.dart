@@ -18,14 +18,20 @@ class PostsApiService {
   static const OPEN_POST_PATH = 'api/posts/{postUuid}/open/';
   static const CLOSE_POST_PATH = 'api/posts/{postUuid}/close/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
-  static const EDIT_COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/{postCommentId}/';
+  static const EDIT_COMMENT_POST_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/';
   static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
   static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
+  static const REPORT_POST_PATH = 'api/posts/{postUuid}/report/';
   static const DELETE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
+  static const REPORT_POST_COMMENT_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/report/';
   static const GET_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/';
-  static const DISABLE_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/disable/';
-  static const ENABLE_POST_COMMENTS_PATH = 'api/posts/{postUuid}/comments/enable/';
+  static const DISABLE_POST_COMMENTS_PATH =
+      'api/posts/{postUuid}/comments/disable/';
+  static const ENABLE_POST_COMMENTS_PATH =
+      'api/posts/{postUuid}/comments/enable/';
   static const REACT_TO_POST_PATH = 'api/posts/{postUuid}/reactions/';
   static const DELETE_POST_REACTION_PATH =
       'api/posts/{postUuid}/reactions/{postReactionId}/';
@@ -155,7 +161,9 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> editPostComment(
-      {@required String postUuid, @required int postCommentId, @required String text}) {
+      {@required String postUuid,
+      @required int postCommentId,
+      @required String text}) {
     Map<String, dynamic> body = {'text': text};
 
     String path = _makeEditCommentPostPath(postUuid, postCommentId);
@@ -249,6 +257,38 @@ class PostsApiService {
     return _httpService.get(url, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> reportPostComment(
+      {@required int postCommentId,
+      @required String postUuid,
+      @required int moderationCategoryId,
+      String description}) {
+    String path = _makeReportPostCommentPath(
+        postCommentId: postCommentId, postUuid: postUuid);
+
+    Map<String, dynamic> body = {'category_id': moderationCategoryId};
+
+    if (description != null && description.isNotEmpty) {
+      body['description'] = description;
+    }
+
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> reportPost(
+      {@required String postUuid,
+      @required int moderationCategoryId,
+      String description}) {
+    String path = _makeReportPostPath(postUuid: postUuid);
+
+    Map<String, dynamic> body = {'category_id': moderationCategoryId};
+
+    if (description != null && description.isNotEmpty) {
+      body['description'] = description;
+    }
+
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   String _makePostPath(String postUuid) {
     return _stringTemplateService.parse(POST_PATH, {'postUuid': postUuid});
   }
@@ -273,8 +313,7 @@ class PostsApiService {
   }
 
   String _makeOpenPostPath(String postUuid) {
-    return _stringTemplateService
-        .parse(OPEN_POST_PATH, {'postUuid': postUuid});
+    return _stringTemplateService.parse(OPEN_POST_PATH, {'postUuid': postUuid});
   }
 
   String _makeClosePostPath(String postUuid) {
@@ -288,8 +327,8 @@ class PostsApiService {
   }
 
   String _makeEditCommentPostPath(String postUuid, int postCommentId) {
-    return _stringTemplateService
-        .parse(EDIT_COMMENT_POST_PATH, {'postUuid': postUuid, 'postCommentId': postCommentId});
+    return _stringTemplateService.parse(EDIT_COMMENT_POST_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 
   String _makeGetPostCommentsPath(String postUuid) {
@@ -322,6 +361,17 @@ class PostsApiService {
   String _makeGetPostReactionsEmojiCountPath(String postUuid) {
     return _stringTemplateService
         .parse(GET_POST_REACTIONS_EMOJI_COUNT_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeReportPostCommentPath(
+      {@required int postCommentId, @required String postUuid}) {
+    return _stringTemplateService.parse(REPORT_POST_COMMENT_PATH,
+        {'postCommentId': postCommentId, 'postUuid': postUuid});
+  }
+
+  String _makeReportPostPath({@required postUuid}) {
+    return _stringTemplateService
+        .parse(REPORT_POST_PATH, {'postUuid': postUuid});
   }
 
   String _makeApiUrl(String string) {
