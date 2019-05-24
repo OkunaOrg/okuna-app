@@ -392,26 +392,32 @@ class User extends UpdatableModel<User> {
     return _canComment;
   }
 
+  bool isStaffForCommunity(Community community) {
+    User loggedInUser = this;
+    bool loggedInUserIsCommunityAdministrator = false;
+    bool loggedInUserIsCommunityModerator = false;
+
+    loggedInUserIsCommunityAdministrator =
+        community.isAdministrator(loggedInUser);
+
+    loggedInUserIsCommunityModerator =
+        community.isModerator(loggedInUser);
+
+    return loggedInUserIsCommunityModerator || loggedInUserIsCommunityAdministrator;
+
+  }
+
   bool canDeletePost(Post post) {
     User loggedInUser = this;
     bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
-    bool loggedInUserIsCommunityAdministrator = false;
-    bool loggedInUserIsCommunityModerator = false;
     bool _canDelete = false;
+    bool loggedInUserIsStaffForCommunity = false;
 
     if (post.hasCommunity()) {
-      Community postCommunity = post.community;
-
-      loggedInUserIsCommunityAdministrator =
-          postCommunity.isAdministrator(loggedInUser);
-
-      loggedInUserIsCommunityModerator =
-          postCommunity.isModerator(loggedInUser);
+      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
     }
 
-    if (loggedInUserIsPostCreator ||
-        loggedInUserIsCommunityAdministrator ||
-        loggedInUserIsCommunityModerator) {
+    if (loggedInUserIsPostCreator || loggedInUserIsStaffForCommunity) {
       _canDelete = true;
     }
 
@@ -421,35 +427,39 @@ class User extends UpdatableModel<User> {
   bool canEditPost(Post post) {
     User loggedInUser = this;
     bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
-    return loggedInUserIsPostCreator;
+
+    return loggedInUserIsPostCreator && !post.isClosed;
   }
 
-  bool canEditPostComment(PostComment postComment) {
+  bool canEditPostComment(PostComment postComment, Post post) {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
+    bool loggedInUserIsStaffForCommunity = false;
+    bool loggedInUserIsCommenter = loggedInUser.id == postCommenter.id;
+    bool loggedInUserIsCommenterForOpenPost = loggedInUserIsCommenter && !post.isClosed && post.areCommentsEnabled;
 
-    return loggedInUser.id == postCommenter.id;
+    if (post.hasCommunity()) {
+      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
+    }
+
+    return loggedInUserIsCommenterForOpenPost || (loggedInUserIsStaffForCommunity && loggedInUserIsCommenter);
   }
 
   bool canDeletePostComment(Post post, PostComment postComment) {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
-    bool loggedInUserIsCommunityAdministrator = false;
-    bool loggedInUserIsCommunityModerator = false;
+    bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
+    bool userIsCreatorOfNonCommunityPost = loggedInUserIsPostCreator && !post.hasCommunity();
+    bool loggedInUserIsStaffForCommunity = false;
+    bool loggedInUserIsCommenterForOpenPost = (loggedInUser.id == postCommenter.id) && !post.isClosed;
 
     if (post.hasCommunity()) {
-      Community postCommunity = post.community;
-
-      loggedInUserIsCommunityAdministrator =
-          postCommunity.isAdministrator(loggedInUser);
-
-      loggedInUserIsCommunityModerator =
-          postCommunity.isModerator(loggedInUser);
+      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
     }
 
-    return (loggedInUser.id == postCommenter.id ||
-        loggedInUserIsCommunityModerator ||
-        loggedInUserIsCommunityAdministrator);
+    return (loggedInUserIsCommenterForOpenPost ||
+        loggedInUserIsStaffForCommunity ||
+        userIsCreatorOfNonCommunityPost);
   }
 
   bool canBlockOrUnblockUser(User user) {

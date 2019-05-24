@@ -134,7 +134,7 @@ class OBPostCommentState extends State<OBPostComment> {
     List<Widget> _editCommentActions = [];
     User loggedInUser = _userService.getLoggedInUser();
 
-    if (loggedInUser.canEditPostComment(widget.postComment)) {
+    if (loggedInUser.canEditPostComment(widget.postComment, widget.post)) {
       _editCommentActions.add(
         new IconSlideAction(
           caption: 'Edit',
