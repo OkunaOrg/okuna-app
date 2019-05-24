@@ -20,6 +20,7 @@ import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderated_object_list.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
+import 'package:Openbook/models/moderation/moderation_category_list.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
@@ -1422,7 +1423,7 @@ class UserService {
   Future<void> reportUser(
       {@required User user,
       String description,
-      ModerationCategory moderationCategory}) async {
+      @required ModerationCategory moderationCategory}) async {
     HttpieResponse response = await _authApiService.reportUserWithUsername(
         userUsername: user.username,
         moderationCategoryId: moderationCategory.id);
@@ -1432,7 +1433,7 @@ class UserService {
   Future<void> reportCommunity(
       {@required Community community,
       String description,
-      ModerationCategory moderationCategory}) async {
+      @required ModerationCategory moderationCategory}) async {
     HttpieResponse response = await _communitiesApiService.reportCommunity(
         communityName: community.name,
         moderationCategoryId: moderationCategory.id);
@@ -1442,7 +1443,7 @@ class UserService {
   Future<void> reportPost(
       {@required Post post,
       String description,
-      ModerationCategory moderationCategory}) async {
+      @required ModerationCategory moderationCategory}) async {
     HttpieResponse response = await _postsApiService.reportPost(
         postUuid: post.uuid, moderationCategoryId: moderationCategory.id);
     _checkResponseIsCreated(response);
@@ -1452,7 +1453,7 @@ class UserService {
       {@required PostComment postComment,
       Post post,
       String description,
-      ModerationCategory moderationCategory}) async {
+      @required ModerationCategory moderationCategory}) async {
     HttpieResponse response = await _postsApiService.reportPostComment(
         postCommentId: postComment.id,
         postUuid: post.uuid,
@@ -1544,6 +1545,15 @@ class UserService {
     HttpieResponse response = await _moderationApiService
         .rejectModeratedObjectWithId(moderatedObject.id);
     _checkResponseIsCreated(response);
+  }
+
+  Future<ModerationCategoriesList> getModerationCategories() async {
+    HttpieResponse response =
+        await _moderationApiService.getModerationCategories();
+
+    _checkResponseIsOk(response);
+
+    return ModerationCategoriesList.fromJson(json.decode(response.body));
   }
 
   Future<String> _getDeviceName() async {

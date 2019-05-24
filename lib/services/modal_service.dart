@@ -12,6 +12,8 @@ import 'package:Openbook/pages/home/modals/accept_guidelines/accept_guidelines.d
 import 'package:Openbook/pages/home/modals/edit_post/edit_post.dart';
 import 'package:Openbook/pages/home/modals/invite_to_community.dart';
 import 'package:Openbook/pages/home/modals/post_comment/post-commenter-expanded.dart';
+import 'package:Openbook/pages/home/modals/report_object/pages/confirm_report_object.dart';
+import 'package:Openbook/pages/home/modals/report_object/report_object.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/add_community_administrator.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
 import 'package:Openbook/pages/home/modals/edit_user_profile/edit_user_profile.dart';
@@ -313,6 +315,20 @@ class ModalService {
         builder: (BuildContext context) {
           return Material(
             child: OBAcceptGuidelinesModal(),
+          );
+        }));
+  }
+
+  Future<void> openReportObject(
+      {@required BuildContext context,
+      @required dynamic object,
+      ValueChanged<dynamic> onObjectReported}) async {
+    await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBReportObjectModal(
+            object: object,
+            onObjectReported: onObjectReported,
           );
         }));
   }

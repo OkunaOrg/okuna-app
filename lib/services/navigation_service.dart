@@ -2,6 +2,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
@@ -13,6 +14,7 @@ import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/sh
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
+import 'package:Openbook/pages/home/modals/report_object/pages/confirm_report_object.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/community_members.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
@@ -461,6 +463,20 @@ class NavigationService {
             key: Key('obConfirmBlockUser'),
             widget: OBConfirmBlockUserModal(
               user: user,
+            )));
+  }
+
+  Future<bool> navigateToConfirmReportObject(
+      {@required BuildContext context,
+      @required dynamic object,
+      @required ModerationCategory category}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obConfirmReportObject'),
+            widget: OBConfirmReportObject(
+              object: object,
+              category: category,
             )));
   }
 

@@ -58,12 +58,7 @@ class ModerationApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getModerationCategories(
-      {int count,
-      int maxId,
-      String type,
-      bool verified,
-      List<String> statuses}) {
+  Future<HttpieResponse> getModerationCategories() {
     String path = GET_MODERATION_CATEGORIES_PATH;
 
     return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
