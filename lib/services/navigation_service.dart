@@ -470,21 +470,23 @@ class NavigationService {
   Future<bool> navigateToConfirmReportObject(
       {@required BuildContext context,
       @required dynamic object,
+      Map<String, dynamic> extraData,
       @required ModerationCategory category}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obConfirmReportObject'),
             widget: OBConfirmReportObject(
+              extraData: extraData,
               object: object,
               category: category,
             )));
   }
 
-
   Future<void> navigateToReportObject(
       {@required BuildContext context,
       @required dynamic object,
+      Map<String, dynamic> extraData,
       ValueChanged<dynamic> onObjectReported}) async {
     return Navigator.push(
         context,
@@ -492,6 +494,7 @@ class NavigationService {
             key: Key('obReportObject'),
             widget: OBReportObjectPage(
               object: object,
+              extraData: extraData,
               onObjectReported: onObjectReported,
             )));
   }

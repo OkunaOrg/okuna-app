@@ -13,6 +13,7 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/disable_comments_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
+import 'package:Openbook/widgets/tiles/actions/report_post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,42 +70,38 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             ));
           }
 
+          if (loggedInUser.canCloseOrOpenPost(post)) {
+            postActions.add(OBClosePostTile(
+              post: post,
+              onClosePost: _dismiss,
+              onOpenPost: _dismiss,
+            ));
+          }
 
-        if (loggedInUser.canCloseOrOpenPost(post)) {
-          postActions.add(OBClosePostTile(
-            post: post,
-            onClosePost: _dismiss,
-            onOpenPost: _dismiss,
-          ));
-        }
+          if (loggedInUser.canEditPost(post)) {
+            postActions.add(ListTile(
+              leading: const OBIcon(OBIcons.editPost),
+              title: const OBText(
+                'Edit post',
+              ),
+              onTap: _onWantsToEditPost,
+            ));
+          }
 
-        if (loggedInUser.canEditPost(post)) {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.editPost),
-            title: const OBText(
-              'Edit post',
-            ),
-            onTap: _onWantsToEditPost,
-          ));
-        }
-
-        if (loggedInUser.canDeletePost(post)) {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.deletePost),
-            title: const OBText(
-              'Delete post',
-            ),
-            onTap: _onWantsToDeletePost,
-          ));
-        } else {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.report),
-            title: const OBText(
-              'Report post',
-            ),
-            onTap: _onWantsToReportPost,
-          ));
-        }
+          if (loggedInUser.canDeletePost(post)) {
+            postActions.add(ListTile(
+              leading: const OBIcon(OBIcons.deletePost),
+              title: const OBText(
+                'Delete post',
+              ),
+              onTap: _onWantsToDeletePost,
+            ));
+          } else {
+            postActions.add(OBReportPostTile(
+              post: widget.post,
+              onWantsToReportPost: _dismiss,
+            ));
+          }
 
           return OBPrimaryColorContainer(
             mainAxisSize: MainAxisSize.min,
@@ -147,11 +144,6 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
-  }
-
-  void _onWantsToReportPost() async {
-    _toastService.error(message: 'Not implemented yet', context: context);
-    _dismiss();
   }
 
   void _dismiss() {

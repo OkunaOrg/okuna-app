@@ -442,6 +442,13 @@ class User extends UpdatableModel<User> {
     return loggedInUser.id == postCommenter.id;
   }
 
+  bool canReportPostComment(PostComment postComment) {
+    User loggedInUser = this;
+    User postCommenter = postComment.commenter;
+
+    return loggedInUser.id != postCommenter.id;
+  }
+
   bool canDeletePostComment(Post post, PostComment postComment) {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;

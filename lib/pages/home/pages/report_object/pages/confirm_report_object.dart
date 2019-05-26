@@ -1,4 +1,3 @@
-import 'package:Openbook/libs/type_to_str.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
@@ -22,10 +21,11 @@ import 'package:flutter/material.dart';
 
 class OBConfirmReportObject extends StatefulWidget {
   final dynamic object;
+  final Map<String, dynamic> extraData;
   final ModerationCategory category;
 
   const OBConfirmReportObject(
-      {Key key, @required this.object, @required this.category})
+      {Key key, @required this.object, @required this.category, this.extraData})
       : super(key: key);
 
   @override
@@ -163,6 +163,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
         _submitReportOperation = CancelableOperation.fromFuture(
             _userService.reportPostComment(
                 description: _descriptionController.text,
+                post: widget.extraData['post'],
                 postComment: widget.object,
                 moderationCategory: widget.category));
       } else if (widget.object is Community) {
@@ -181,12 +182,12 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
         throw 'Object type not supported';
       }
       await _submitReportOperation.value;
-      if (widget.object is User) {
-        widget.object.setIsReported(true);
-      } else if (widget.object is Community) {
+      if (widget.object is User ||
+          widget.object is Community ||
+          widget.object is Post ||
+          widget.object is PostComment) {
         widget.object.setIsReported(true);
       }
-
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);

@@ -134,6 +134,20 @@ class OBPostCommentState extends State<OBPostComment> {
     List<Widget> _editCommentActions = [];
     User loggedInUser = _userService.getLoggedInUser();
 
+    if (loggedInUser.canReportPostComment(widget.postComment)) {
+      _editCommentActions.add(
+        Opacity(
+          opacity: widget.postComment.isReported ? 0.5 : 1,
+          child: IconSlideAction(
+            caption: widget.postComment.isReported ? 'Reported' : 'Report',
+            color: Colors.red,
+            icon: Icons.report,
+            onTap: _reportPostComment,
+          ),
+        ),
+      );
+    }
+
     if (loggedInUser.canEditPostComment(widget.postComment)) {
       _editCommentActions.add(
         new IconSlideAction(
@@ -167,6 +181,13 @@ class OBPostCommentState extends State<OBPostComment> {
   void _editPostComment() async {
     await _modalService.openExpandedCommenter(
         context: context, post: widget.post, postComment: widget.postComment);
+  }
+
+  void _reportPostComment() async {
+    await _navigationService.navigateToReportObject(
+        context: context,
+        object: widget.postComment,
+        extraData: {'post': widget.post});
   }
 
   void _deletePostComment() async {

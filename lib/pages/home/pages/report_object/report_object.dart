@@ -18,11 +18,13 @@ import 'package:flutter/material.dart';
 class OBReportObjectPage extends StatefulWidget {
   final dynamic object;
   final OnObjectReported onObjectReported;
+  final Map<String, dynamic> extraData;
 
   const OBReportObjectPage({
     Key key,
     this.object,
     this.onObjectReported,
+    this.extraData,
   }) : super(key: key);
 
   @override
@@ -32,12 +34,9 @@ class OBReportObjectPage extends StatefulWidget {
 }
 
 class OBReportObjectPageState extends State<OBReportObjectPage> {
-  ThemeService _themeService;
   NavigationService _navigationService;
   UserService _userService;
-  ThemeValueParserService _themeValueParserService;
   List<ModerationCategory> _moderationCategories = [];
-  ModerationCategory _pickedModerationCategory;
   bool _needsBootstrap;
 
   @override
@@ -50,10 +49,8 @@ class OBReportObjectPageState extends State<OBReportObjectPage> {
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
-      _themeService = openbookProvider.themeService;
       _userService = openbookProvider.userService;
       _navigationService = openbookProvider.navigationService;
-      _themeValueParserService = openbookProvider.themeValueParserService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -109,9 +106,13 @@ class OBReportObjectPageState extends State<OBReportObjectPage> {
     return ListTile(
       onTap: () async {
         var result = await _navigationService.navigateToConfirmReportObject(
-            object: widget.object, category: category, context: context);
+            extraData: widget.extraData,
+            object: widget.object,
+            category: category,
+            context: context);
         if (result != null && result) {
-          if(widget.onObjectReported != null) widget.onObjectReported(widget.object);
+          if (widget.onObjectReported != null)
+            widget.onObjectReported(widget.object);
           Navigator.pop(context);
         }
       },

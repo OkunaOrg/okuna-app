@@ -265,13 +265,16 @@ class PostsApiService {
     String path = _makeReportPostCommentPath(
         postCommentId: postCommentId, postUuid: postUuid);
 
-    Map<String, dynamic> body = {'category_id': moderationCategoryId};
+    Map<String, dynamic> body = {
+      'category_id': moderationCategoryId.toString()
+    };
 
     if (description != null && description.isNotEmpty) {
       body['description'] = description;
     }
 
-    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+    return _httpService.post(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> reportPost(
@@ -280,13 +283,16 @@ class PostsApiService {
       String description}) {
     String path = _makeReportPostPath(postUuid: postUuid);
 
-    Map<String, dynamic> body = {'category_id': moderationCategoryId};
+    Map<String, dynamic> body = {
+      'category_id': moderationCategoryId.toString()
+    };
 
     if (description != null && description.isNotEmpty) {
       body['description'] = description;
     }
 
-    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+    return _httpService.post(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
   }
 
   String _makePostPath(String postUuid) {
