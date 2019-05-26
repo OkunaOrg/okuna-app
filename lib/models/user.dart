@@ -128,7 +128,7 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_blocked')) isBlocked = json['is_blocked'];
-    if (json.containsKey('is_reported')) isBlocked = json['is_reported'];
+    if (json.containsKey('is_reported')) isReported = json['is_reported'];
     if (json.containsKey('connections_circle_id'))
       connectionsCircleId = json['connections_circle_id'];
     if (json.containsKey('is_fully_connected'))

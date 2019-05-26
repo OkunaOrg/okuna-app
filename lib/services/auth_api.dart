@@ -367,15 +367,14 @@ class AuthApiService {
       String description}) {
     String path = _makeReportUserPath(username: userUsername);
 
-    Map<String, dynamic> body = {
-      'category_id': moderationCategoryId
-    };
+    Map<String, String> body = {'category_id': moderationCategoryId.toString()};
 
     if (description != null && description.isNotEmpty) {
       body['description'] = description;
     }
 
-    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+    return _httpService.post(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
   }
 
   String _makeBlockUserWithUsernamePath(String username) {

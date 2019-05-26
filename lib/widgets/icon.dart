@@ -214,6 +214,7 @@ class OBIcons {
   static const closePost = OBIconData(nativeIcon: Icons.lock_outline);
   static const openPost = OBIconData(nativeIcon: Icons.lock_open);
   static const block = OBIconData(nativeIcon: Icons.block);
+  static const chevronRight = OBIconData(nativeIcon: Icons.chevron_right);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

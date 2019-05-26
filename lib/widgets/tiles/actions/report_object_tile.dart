@@ -1,6 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/loading_tile.dart';
@@ -25,7 +25,7 @@ class OBReportUserTile extends StatefulWidget {
 }
 
 class OBReportUserTileState extends State<OBReportUserTile> {
-  ModalService _modalService;
+  NavigationService _navigationService;
   bool _requestInProgress;
 
   @override
@@ -37,7 +37,7 @@ class OBReportUserTileState extends State<OBReportUserTile> {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    _modalService = openbookProvider.modalService;
+    _navigationService = openbookProvider.navigationService;
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -51,7 +51,7 @@ class OBReportUserTileState extends State<OBReportUserTile> {
           isLoading: _requestInProgress || isReported,
           leading: OBIcon(OBIcons.report),
           title: OBText(
-              isReported ?  'You have reported this account' : 'Report account'),
+              isReported ? 'You have reported this account' : 'Report account'),
           onTap: isReported ? () {} : _reportUser,
         );
       },
@@ -60,7 +60,7 @@ class OBReportUserTileState extends State<OBReportUserTile> {
 
   void _reportUser() {
     if (widget.onWantsToReportUser != null) widget.onWantsToReportUser();
-    _modalService.openReportObject(
+    _navigationService.navigateToReportObject(
         context: context,
         object: widget.user,
         onObjectReported: widget.onUserReported);
