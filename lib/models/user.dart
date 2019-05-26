@@ -299,6 +299,11 @@ class User extends UpdatableModel<User> {
     }
   }
 
+  void setIsReported(isReported) {
+    this.isReported = isReported;
+    notifyUpdate();
+  }
+
   bool canDisableOrEnableCommentsForPost(Post post) {
     User loggedInUser = this;
     bool _canDisableOrEnableComments = false;

@@ -181,6 +181,12 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
         throw 'Object type not supported';
       }
       await _submitReportOperation.value;
+      if (widget.object is User) {
+        widget.object.setIsReported(true);
+      } else if (widget.object is Community) {
+        widget.object.setIsReported(true);
+      }
+
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);

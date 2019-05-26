@@ -1413,7 +1413,6 @@ class UserService {
   Future<void> reportUser({@required User user,
     String description,
     @required ModerationCategory moderationCategory}) async {
-    print(user.username);
     HttpieResponse response = await _authApiService.reportUserWithUsername(
         description: description,
         userUsername: user.username,
