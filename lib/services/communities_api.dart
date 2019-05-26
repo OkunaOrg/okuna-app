@@ -578,13 +578,13 @@ class CommunitiesApiService {
       String description}) {
     String path = _makeReportCommunityPath(communityName);
 
-    Map<String, dynamic> body = {'category_id': moderationCategoryId};
+    Map<String, dynamic> body = {'category_id': moderationCategoryId.toString()};
 
     if (description != null && description.isNotEmpty) {
       body['description'] = description;
     }
 
-    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+    return _httpService.post(_makeApiUrl(path), body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> getModeratedObjects({

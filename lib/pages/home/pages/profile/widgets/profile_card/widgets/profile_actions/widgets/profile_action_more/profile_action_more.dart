@@ -10,7 +10,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/actions/block_user_tile.dart';
-import 'package:Openbook/widgets/tiles/actions/report_object_tile.dart';
+import 'package:Openbook/widgets/tiles/actions/report_user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActionMore extends StatelessWidget {

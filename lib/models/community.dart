@@ -90,6 +90,7 @@ class Community extends UpdatableModel<Community> {
       this.cover,
       this.isInvited,
       this.isCreator,
+      this.isReported,
       this.moderators,
       this.memberships,
       this.administrators,
@@ -204,6 +205,10 @@ class Community extends UpdatableModel<Community> {
       usersAdjective = json['users_adjective'];
     }
 
+    if (json.containsKey('is_reported')) {
+      isReported = json['is_reported'];
+    }
+
     if (json.containsKey('color')) {
       color = json['color'];
     }
@@ -249,6 +254,11 @@ class Community extends UpdatableModel<Community> {
       notifyUpdate();
     }
   }
+
+  void setIsReported(isReported) {
+    this.isReported = isReported;
+    notifyUpdate();
+  }
 }
 
 class CommunityFactory extends UpdatableModelFactory<Community> {
@@ -267,6 +277,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         avatar: json['avatar'],
         isInvited: json['is_invited'],
         isCreator: json['is_creator'],
+        isReported: json['is_reported'],
         isFavorite: json['is_favorite'],
         invitesEnabled: json['invites_enabled'],
         cover: json['cover'],
