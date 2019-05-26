@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class OBReportPostTile extends StatefulWidget {
   final Post post;
-  final ValueChanged<dynamic> onPostReported;
+  final ValueChanged<Post> onPostReported;
   final VoidCallback onWantsToReportPost;
 
   const OBReportPostTile({
@@ -63,6 +63,9 @@ class OBReportPostTileState extends State<OBReportPostTile> {
     _navigationService.navigateToReportObject(
         context: context,
         object: widget.post,
-        onObjectReported: widget.onPostReported);
+        onObjectReported: (dynamic reportedObject) {
+          if (reportedObject != null && widget.onPostReported != null)
+            widget.onPostReported(reportedObject as Post);
+        });
   }
 }

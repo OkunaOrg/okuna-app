@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 
 class OBPostActionsBottomSheet extends StatefulWidget {
   final Post post;
-  final OnPostReported onPostReported;
+  final ValueChanged<Post> onPostReported;
   final OnPostDeleted onPostDeleted;
 
   const OBPostActionsBottomSheet(
@@ -100,6 +100,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             postActions.add(OBReportPostTile(
               post: widget.post,
               onWantsToReportPost: _dismiss,
+              onPostReported: widget.onPostReported,
             ));
           }
 
@@ -151,5 +152,4 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   }
 }
 
-typedef OnPostReported(Post post);
 typedef OnPostDeleted(Post post);

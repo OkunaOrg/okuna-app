@@ -14,9 +14,10 @@ import 'package:flutter/material.dart';
 class OBCommunityPostHeader extends StatelessWidget {
   final Post _post;
   final OnPostDeleted onPostDeleted;
+  final ValueChanged<Post> onPostReported;
 
   const OBCommunityPostHeader(this._post,
-      {Key key, @required this.onPostDeleted})
+      {Key key, @required this.onPostDeleted, this.onPostReported})
       : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ class OBCommunityPostHeader extends StatelessWidget {
                       context: context,
                       post: _post,
                       onPostDeleted: onPostDeleted,
-                      onPostReported: null);
+                      onPostReported: onPostReported);
                 }),
             title: GestureDetector(
               onTap: () {
