@@ -135,11 +135,15 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
                                 };
 
                                 return OBPostComment(
-                                    key: Key('postComment#${postComment.id}'),
-                                    postComment: postComment,
-                                    post: widget.post,
-                                    onPostCommentDeletedCallback:
-                                        onPostCommentDeletedCallback);
+                                  key: Key('postComment#${postComment.id}'),
+                                  postComment: postComment,
+                                  post: widget.post,
+                                  onPostCommentDeletedCallback:
+                                      onPostCommentDeletedCallback,
+                                  onPostCommentReported:
+                                      (PostComment postComment) =>
+                                          onPostCommentDeletedCallback(),
+                                );
                               }),
                           onLoadMore: _loadMoreBottomComments),
                     ),
@@ -206,7 +210,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
 
   Widget _buildPostCommenterSection() {
     User loggedInUser = _userService.getLoggedInUser();
-    if (widget.post.areCommentsEnabled || loggedInUser.canCommentOnPostWithDisabledComments(widget.post)) {
+    if (widget.post.areCommentsEnabled ||
+        loggedInUser.canCommentOnPostWithDisabledComments(widget.post)) {
       return OBPostCommenter(
         widget.post,
         autofocus: widget.autofocusCommentInput,
@@ -219,15 +224,17 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage> {
         padding: EdgeInsets.all(10.0),
         child: OBAlert(
             padding: EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-               Flexible(
-                 child: OBText('Comments have been disabled for this post', textAlign: TextAlign.center,),
-               ),
-            ],
-          )
-        ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  child: OBText(
+                    'Comments have been disabled for this post',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            )),
       );
     }
   }

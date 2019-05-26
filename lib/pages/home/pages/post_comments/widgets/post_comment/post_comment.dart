@@ -19,11 +19,13 @@ class OBPostComment extends StatefulWidget {
   final PostComment postComment;
   final Post post;
   final VoidCallback onPostCommentDeletedCallback;
+  final ValueChanged<PostComment> onPostCommentReported;
 
   OBPostComment(
       {@required this.post,
       @required this.postComment,
       this.onPostCommentDeletedCallback,
+      this.onPostCommentReported,
       Key key})
       : super(key: key);
 
@@ -137,9 +139,10 @@ class OBPostCommentState extends State<OBPostComment> {
     if (loggedInUser.canReportPostComment(widget.postComment)) {
       _editCommentActions.add(
         Opacity(
-          opacity: widget.postComment.isReported ? 0.5 : 1,
+          opacity: widget.postComment.isReported ?? false ? 0.5 : 1,
           child: IconSlideAction(
-            caption: widget.postComment.isReported ? 'Reported' : 'Report',
+            caption:
+                widget.postComment.isReported ?? false ? 'Reported' : 'Report',
             color: Colors.red,
             icon: Icons.report,
             onTap: _reportPostComment,
@@ -187,7 +190,11 @@ class OBPostCommentState extends State<OBPostComment> {
     await _navigationService.navigateToReportObject(
         context: context,
         object: widget.postComment,
-        extraData: {'post': widget.post});
+        extraData: {'post': widget.post},
+        onObjectReported: (dynamic reportedObject) {
+          if (widget.onPostCommentReported != null && reportedObject != null)
+            widget.onPostCommentReported(reportedObject as PostComment);
+        });
   }
 
   void _deletePostComment() async {
