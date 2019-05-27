@@ -153,7 +153,7 @@ class OBPostCommentState extends State<OBPostComment> {
   }
 
   Widget _buildPostCommentReplies() {
-    if (widget.postComment.repliesCount == 0) return SizedBox();
+    if (_repliesCount == 0) return SizedBox();
     return Padding(
         padding: EdgeInsets.only(left: 30.0, top: 0.0),
         child: Column(
