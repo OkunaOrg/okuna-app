@@ -445,6 +445,10 @@ class User extends UpdatableModel<User> {
     return loggedInUserIsCommenterForOpenPost || (loggedInUserIsStaffForCommunity && loggedInUserIsCommenter);
   }
 
+  bool canReplyPostComment(PostComment postComment) {
+    return postComment.parentComment == null;
+  }
+
   bool canDeletePostComment(Post post, PostComment postComment) {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;

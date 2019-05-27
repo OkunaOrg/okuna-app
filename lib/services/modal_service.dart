@@ -11,6 +11,7 @@ import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/modals/accept_guidelines/accept_guidelines.dart';
 import 'package:Openbook/pages/home/modals/edit_post/edit_post.dart';
 import 'package:Openbook/pages/home/modals/invite_to_community.dart';
+import 'package:Openbook/pages/home/modals/post_comment/post-comment-reply-expanded.dart';
 import 'package:Openbook/pages/home/modals/post_comment/post-commenter-expanded.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/add_community_administrator.dart';
 import 'package:Openbook/pages/home/modals/create_post/create_post.dart';
@@ -81,6 +82,28 @@ class ModalService {
               );
             }));
     return editedComment;
+  }
+
+  Future<PostComment> openExpandedReplyCommenter(
+      {@required BuildContext context,
+        @required PostComment postComment,
+        @required Post post,
+        @required Function(PostComment) onReplyAdded,
+        @required Function(PostComment) onReplyDeleted}) async {
+    PostComment replyComment = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<PostComment>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return Material(
+            child: OBPostCommentReplyExpandedModal(
+              post: post,
+              postComment: postComment,
+              onReplyAdded: onReplyAdded,
+              onReplyDeleted: onReplyDeleted
+            ),
+          );
+        }));
+    return replyComment;
   }
 
   Future<void> openEditUserProfile(
