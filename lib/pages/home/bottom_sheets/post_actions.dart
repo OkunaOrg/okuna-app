@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';

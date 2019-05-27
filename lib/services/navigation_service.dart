@@ -234,7 +234,8 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
             widget: OBPostCommentsPage(
-                post:post,
+                pageType: PostCommentsPageType.comments,
+                post: post,
                 showPostPreview: false,
                 autofocusCommentInput: true)));
   }
@@ -249,17 +250,15 @@ class NavigationService {
                 post: post,
                 showPostPreview: false,
                 pageType: PostCommentsPageType.comments,
-                autofocusCommentInput: false)
-        ));
+                autofocusCommentInput: false)));
   }
 
   Future navigateToPostCommentReplies(
       {@required Post post,
-        @required PostComment postComment,
-        @required BuildContext context,
-        Function(PostComment) onReplyDeleted,
-        Function(PostComment) onReplyAdded
-      }) {
+      @required PostComment postComment,
+      @required BuildContext context,
+      Function(PostComment) onReplyDeleted,
+      Function(PostComment) onReplyAdded}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
@@ -288,7 +287,9 @@ class NavigationService {
   }
 
   Future navigateToPostCommentRepliesLinked(
-      {@required PostComment postComment, @required PostComment parentComment, @required BuildContext context}) {
+      {@required PostComment postComment,
+      @required PostComment parentComment,
+      @required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
