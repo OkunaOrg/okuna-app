@@ -95,17 +95,16 @@ class OBPostCommentState extends State<OBPostComment> {
     List<Widget> _commentActions = [];
     User loggedInUser = _userService.getLoggedInUser();
 
-    if (loggedInUser.canReplyPostComment(widget.postComment)) {
+    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
       _commentActions.add(
-          new IconSlideAction(
-            caption: 'Reply',
-            color: Colors.black38,
-            icon: Icons.reply,
-            onTap: _replyPostComment,
-          )
+        new IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: _deletePostComment,
+        ),
       );
     }
-
 
     if (loggedInUser.canReportPostComment(widget.postComment)) {
       _commentActions.add(
@@ -113,8 +112,8 @@ class OBPostCommentState extends State<OBPostComment> {
           opacity: widget.postComment.isReported ?? false ? 0.5 : 1,
           child: IconSlideAction(
             caption:
-                widget.postComment.isReported ?? false ? 'Reported' : 'Report',
-            color: Colors.red,
+            widget.postComment.isReported ?? false ? 'Reported' : 'Report',
+            color: Colors.black38,
             icon: Icons.report,
             onTap: _reportPostComment,
           ),
@@ -133,14 +132,14 @@ class OBPostCommentState extends State<OBPostComment> {
       );
     }
 
-    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
+    if (loggedInUser.canReplyPostComment(widget.postComment)) {
       _commentActions.add(
-        new IconSlideAction(
-          caption: 'Delete',
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: _deletePostComment,
-        ),
+          new IconSlideAction(
+            caption: 'Reply',
+            color: Colors.blue,
+            icon: Icons.reply,
+            onTap: _replyPostComment,
+          )
       );
     }
 
