@@ -463,6 +463,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       this._postComments = postComments;
     });
     _commentsPageController.updateControllerPostComments(this._postComments);
+    if (this._postComments.length == 0) {
+      _animationController.forward();
+    }
   }
 
   void _setNoMoreBottomItemsToLoad(bool noMoreItemsToLoad) {
