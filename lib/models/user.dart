@@ -411,11 +411,10 @@ class User extends UpdatableModel<User> {
     loggedInUserIsCommunityAdministrator =
         community.isAdministrator(loggedInUser);
 
-    loggedInUserIsCommunityModerator =
-        community.isModerator(loggedInUser);
+    loggedInUserIsCommunityModerator = community.isModerator(loggedInUser);
 
-    return loggedInUserIsCommunityModerator || loggedInUserIsCommunityAdministrator;
-
+    return loggedInUserIsCommunityModerator ||
+        loggedInUserIsCommunityAdministrator;
   }
 
   bool canDeletePost(Post post) {
@@ -425,7 +424,8 @@ class User extends UpdatableModel<User> {
     bool loggedInUserIsStaffForCommunity = false;
 
     if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
+      loggedInUserIsStaffForCommunity =
+          this.isStaffForCommunity(post.community);
     }
 
     if (loggedInUserIsPostCreator || loggedInUserIsStaffForCommunity) {
@@ -447,13 +447,15 @@ class User extends UpdatableModel<User> {
     User postCommenter = postComment.commenter;
     bool loggedInUserIsStaffForCommunity = false;
     bool loggedInUserIsCommenter = loggedInUser.id == postCommenter.id;
-    bool loggedInUserIsCommenterForOpenPost = loggedInUserIsCommenter && !post.isClosed && post.areCommentsEnabled;
+    bool loggedInUserIsCommenterForOpenPost =
+        loggedInUserIsCommenter && !post.isClosed && post.areCommentsEnabled;
 
     if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
+      loggedInUserIsStaffForCommunity = isStaffForCommunity(post.community);
     }
 
-    return loggedInUserIsCommenterForOpenPost || (loggedInUserIsStaffForCommunity && loggedInUserIsCommenter);
+    return loggedInUserIsCommenterForOpenPost ||
+        (loggedInUserIsStaffForCommunity && loggedInUserIsCommenter);
   }
 
   bool canReportPostComment(PostComment postComment) {
@@ -467,12 +469,15 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
     bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
-    bool userIsCreatorOfNonCommunityPost = loggedInUserIsPostCreator && !post.hasCommunity();
+    bool userIsCreatorOfNonCommunityPost =
+        loggedInUserIsPostCreator && !post.hasCommunity();
     bool loggedInUserIsStaffForCommunity = false;
-    bool loggedInUserIsCommenterForOpenPost = (loggedInUser.id == postCommenter.id) && !post.isClosed;
+    bool loggedInUserIsCommenterForOpenPost =
+        (loggedInUser.id == postCommenter.id) && !post.isClosed;
 
     if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
+      loggedInUserIsStaffForCommunity =
+          this.isStaffForCommunity(post.community);
     }
 
     return (loggedInUserIsCommenterForOpenPost ||
