@@ -94,7 +94,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     'TITLE': 'Post comments',
     'NO_MORE_TO_LOAD': 'No more comments to load',
     'TAP_TO_RETRY': 'Tap to retry loading comments.',
-
   };
 
   static const PAGE_REPLIES_TEXT_MAP = {
@@ -110,7 +109,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     super.initState();
     if (widget.linkedPostComment != null) _post = widget.linkedPostComment.post;
     if (widget.post != null) _post = widget.post;
-    if (widget.pageType == PostCommentsPageType.comments){
+    if (widget.pageType == PostCommentsPageType.comments) {
       _pageTextMap = PAGE_COMMENTS_TEXT_MAP;
     } else {
       _pageTextMap = PAGE_REPLIES_TEXT_MAP;
@@ -169,25 +168,24 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
   void _initialiseCommentsPageController() {
     _commentsPageController = OBPostCommentsPageController(
-      pageType: widget.pageType,
-      userService: _userService,
-      userPreferencesService: _userPreferencesService,
-      currentSort: _currentSort,
-      post: _post,
-      postComment: widget.postComment,
-      linkedPostComment: widget.linkedPostComment,
-      addPostComments: _addPostComments,
-      addToStartPostComments: _addToStartPostComments,
-      setPostComments: _setPostComments,
-      setCurrentSortValue: _setCurrentSortValue,
-      setNoMoreBottomItemsToLoad: _setNoMoreBottomItemsToLoad,
-      setNoMoreTopItemsToLoad: _setNoMoreTopItemsToLoad,
-      showNoMoreTopItemsToLoadToast: _showNoMoreTopItemsToLoadToast,
-      scrollToNewComment: _scrollToNewComment,
-      scrollToTop: _scrollToTop,
-      unfocusCommentInput: _unfocusCommentInput,
-      onError: _onError
-    );
+        pageType: widget.pageType,
+        userService: _userService,
+        userPreferencesService: _userPreferencesService,
+        currentSort: _currentSort,
+        post: _post,
+        postComment: widget.postComment,
+        linkedPostComment: widget.linkedPostComment,
+        addPostComments: _addPostComments,
+        addToStartPostComments: _addToStartPostComments,
+        setPostComments: _setPostComments,
+        setCurrentSortValue: _setCurrentSortValue,
+        setNoMoreBottomItemsToLoad: _setNoMoreBottomItemsToLoad,
+        setNoMoreTopItemsToLoad: _setNoMoreTopItemsToLoad,
+        showNoMoreTopItemsToLoadToast: _showNoMoreTopItemsToLoadToast,
+        scrollToNewComment: _scrollToNewComment,
+        scrollToTop: _scrollToTop,
+        unfocusCommentInput: _unfocusCommentInput,
+        onError: _onError);
   }
 
   void dispose() {
@@ -257,7 +255,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
               child: LoadMore(
                   whenEmptyLoad: false,
                   isFinish: _noMoreBottomItemsToLoad,
-                  delegate: OBInfinitePostCommentsLoadMoreDelegate(_pageTextMap),
+                  delegate:
+                      OBInfinitePostCommentsLoadMoreDelegate(_pageTextMap),
                   child: ListView.builder(
                       physics: const ClampingScrollPhysics(),
                       controller: _postCommentsScrollController,
@@ -266,42 +265,49 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
                       itemBuilder: (context, index) {
                         if (index == 0) {
                           return Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               _getPostPreview(),
                               _getCommentPreview(),
                               _getDivider(),
                               OBPostCommentsHeaderBar(
-                                pageType: widget.pageType,
-                                noMoreTopItemsToLoad: _noMoreTopItemsToLoad,
-                                postComments: _postComments,
-                                currentSort: _currentSort,
-                                onWantsToToggleSortComments:() => _commentsPageController.onWantsToToggleSortComments(),
-                                loadMoreTopComments: () => _commentsPageController.loadMoreTopComments(),
-                                onWantsToRefreshComments:() => _commentsPageController.onWantsToRefreshComments()
-                              ),
+                                  pageType: widget.pageType,
+                                  noMoreTopItemsToLoad: _noMoreTopItemsToLoad,
+                                  postComments: _postComments,
+                                  currentSort: _currentSort,
+                                  onWantsToToggleSortComments: () =>
+                                      _commentsPageController
+                                          .onWantsToToggleSortComments(),
+                                  loadMoreTopComments: () =>
+                                      _commentsPageController
+                                          .loadMoreTopComments(),
+                                  onWantsToRefreshComments: () =>
+                                      _commentsPageController
+                                          .onWantsToRefreshComments()),
                             ],
                           );
                         } else {
                           return _getCommentTile(index);
                         }
                       }),
-                  onLoadMore: () => _commentsPageController.loadMoreBottomComments()),
+                  onLoadMore: () =>
+                      _commentsPageController.loadMoreBottomComments()),
             ),
-            onRefresh: () => _commentsPageController.onWantsToRefreshComments()),
+            onRefresh: () =>
+                _commentsPageController.onWantsToRefreshComments()),
       ),
       OBPostCommenter(
         _post,
         postComment: widget.postComment,
         autofocus: widget.autofocusCommentInput,
         commentTextFieldFocusNode: _commentInputFocusNode,
-        onPostCommentCreated:(PostComment createdPostComment) {
-          _commentsPageController.refreshCommentsWithCreatedPostCommentVisible(createdPostComment);
+        onPostCommentCreated: (PostComment createdPostComment) {
+          _commentsPageController
+              .refreshCommentsWithCreatedPostCommentVisible(createdPostComment);
           if (widget.onCommentAdded != null) {
             widget.onCommentAdded(createdPostComment);
-            }
-          },
+          }
+        },
       )
     ]);
 
@@ -319,7 +325,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     if (widget.postComment == null) {
       return SizedBox();
     }
-    return OBPostCommentTile(post: widget.post, postComment: widget.postComment);
+    return OBPostCommentTile(
+        post: widget.post, postComment: widget.postComment);
   }
 
   Widget _getCommentTile(int index) {
@@ -331,7 +338,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     };
 
     if (_animationController.status != AnimationStatus.completed &&
-        !_startScrollWasInitialised && widget.linkedPostComment != null) {
+        !_startScrollWasInitialised &&
+        widget.linkedPostComment != null) {
       Future.delayed(Duration(milliseconds: 0), () {
         _postCommentsScrollController.animateTo(
             _positionTopCommentSection - 100.0,
@@ -351,7 +359,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       });
     }
 
-    if (widget.linkedPostComment != null && postComment.id == widget.linkedPostComment.id) {
+    if (widget.linkedPostComment != null &&
+        postComment.id == widget.linkedPostComment.id) {
       var theme = _themeService.getActiveTheme();
       var primaryColor =
           _themeValueParserService.parseColor(theme.primaryColor);
@@ -367,6 +376,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           postComment: postComment,
           post: _post,
           onPostCommentDeletedCallback: onPostCommentDeletedCallback,
+          onPostCommentReported: onPostCommentDeletedCallback,
         ),
       );
     } else {
@@ -375,6 +385,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         postComment: postComment,
         post: _post,
         onPostCommentDeletedCallback: onPostCommentDeletedCallback,
+        onPostCommentReported: onPostCommentDeletedCallback,
       );
     }
   }
@@ -389,7 +400,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       onPostDeleted: _onPostDeleted,
       focusCommentInput: _focusCommentInput,
     );
-
   }
 
   void _scrollToTop() {
@@ -481,7 +491,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   }
 
   void _showNoMoreTopItemsToLoadToast() {
-    _toastService.info(context: context, message: _pageTextMap['NO_MORE_TO_LOAD']);
+    _toastService.info(
+        context: context, message: _pageTextMap['NO_MORE_TO_LOAD']);
   }
 
   void _setCurrentSortValue(PostCommentsSortType newSortValue) {
@@ -492,8 +503,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
   void _scrollToNewComment() {
     if (_currentSort == PostCommentsSortType.asc) {
-      _postCommentsScrollController.animateTo(_postCommentsScrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 50), curve: Curves.easeIn);
+      _postCommentsScrollController.animateTo(
+          _postCommentsScrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 50),
+          curve: Curves.easeIn);
     } else if (_currentSort == PostCommentsSortType.dec) {
       _postCommentsScrollController.animateTo(
           _positionTopCommentSection - 200.0,
@@ -563,6 +576,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
 class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
   Map<String, String> pageTextMap;
+
   OBInfinitePostCommentsLoadMoreDelegate(Map<String, String> pageTextMap);
 
   @override
