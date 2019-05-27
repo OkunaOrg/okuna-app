@@ -251,8 +251,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     _columnChildren.addAll([
       Expanded(
         child: RefreshIndicator(
+            key: _refreshIndicatorKey,
             child: GestureDetector(
-              key: _refreshIndicatorKey,
               onTap: _unfocusCommentInput,
               child: LoadMore(
                   whenEmptyLoad: false,
