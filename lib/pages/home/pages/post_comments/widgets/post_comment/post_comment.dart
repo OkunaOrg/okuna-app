@@ -107,7 +107,7 @@ class OBPostCommentState extends State<OBPostComment> {
     }
 
 
-    if (loggedInUser.canEditPostComment(widget.postComment)) {
+    if (loggedInUser.canEditPostComment(widget.postComment, widget.post)) {
       _commentActions.add(
         new IconSlideAction(
           caption: 'Edit',

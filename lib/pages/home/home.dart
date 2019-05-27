@@ -422,7 +422,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _pushNotificationSubscription = _pushNotificationsService.pushNotification
           .listen(_onPushNotification);
 
-      if (!newUser.areGuidelinesAccepted) {
+      if (!newUser.areGuidelinesAccepted != null && !newUser.areGuidelinesAccepted) {
         _modalService.openAcceptGuidelines(context: context);
       }
     }
