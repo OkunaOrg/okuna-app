@@ -46,7 +46,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post_comments_page.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comments_page_controller.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/report_object/pages/confirm_report_object.dart';
 import 'package:Openbook/pages/home/pages/report_object/report_object.dart';

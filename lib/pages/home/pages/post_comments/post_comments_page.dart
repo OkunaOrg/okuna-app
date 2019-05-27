@@ -1,9 +1,9 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_tile.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comments_page_controller.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Openbook/services/theme.dart';
