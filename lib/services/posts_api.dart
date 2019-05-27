@@ -20,6 +20,8 @@ class PostsApiService {
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
   static const EDIT_COMMENT_POST_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
+  static const REPLY_COMMENT_POST_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/replies/';
   static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
   static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
   static const REPORT_POST_PATH = 'api/posts/{postUuid}/report/';
@@ -151,6 +153,23 @@ class PostsApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> getRepliesForCommentWithIdForPostWithUuid(
+      String postUuid, int postCommentId,
+      {int countMax, int maxId, int countMin, int minId, String sort}) {
+    Map<String, dynamic> queryParams = {};
+    if (countMax != null) queryParams['count_max'] = countMax;
+    if (countMin != null) queryParams['count_min'] = countMin;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+    if (minId != null) queryParams['min_id'] = minId;
+    if (sort != null) queryParams['sort'] = sort;
+
+    String path = _makeGetReplyCommentsPostPath(postUuid, postCommentId);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> commentPost(
       {@required String postUuid, @required String text}) {
     Map<String, dynamic> body = {'text': text};
@@ -168,6 +187,17 @@ class PostsApiService {
 
     String path = _makeEditCommentPostPath(postUuid, postCommentId);
     return _httpService.patchJSON(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> replyPostComment(
+      {@required String postUuid,
+      @required int postCommentId,
+      @required String text}) {
+    Map<String, dynamic> body = {'text': text};
+
+    String path = _makeReplyCommentPostPath(postUuid, postCommentId);
+    return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
@@ -334,6 +364,16 @@ class PostsApiService {
 
   String _makeEditCommentPostPath(String postUuid, int postCommentId) {
     return _stringTemplateService.parse(EDIT_COMMENT_POST_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
+  }
+
+  String _makeReplyCommentPostPath(String postUuid, int postCommentId) {
+    return _stringTemplateService.parse(REPLY_COMMENT_POST_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
+  }
+
+  String _makeGetReplyCommentsPostPath(String postUuid, int postCommentId) {
+    return _stringTemplateService.parse(REPLY_COMMENT_POST_PATH,
         {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 

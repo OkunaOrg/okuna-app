@@ -45,8 +45,8 @@ import 'package:Openbook/pages/home/pages/menu/pages/user_invites/user_invites.d
 import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
-import 'package:Openbook/pages/home/pages/post_comments/post.dart';
-import 'package:Openbook/pages/home/pages/post_comments/post_comments_linked.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post_comments_page.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comments_page_controller.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
 import 'package:Openbook/pages/home/pages/report_object/pages/confirm_report_object.dart';
 import 'package:Openbook/pages/home/pages/report_object/report_object.dart';
@@ -233,7 +233,10 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
-            widget: OBPostCommentsPage(post, autofocusCommentInput: true)));
+            widget: OBPostCommentsPage(
+                post:post,
+                showPostPreview: false,
+                autofocusCommentInput: true)));
   }
 
   Future navigateToPostComments(
@@ -242,7 +245,32 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
-            widget: OBPostCommentsPage(post, autofocusCommentInput: false)));
+            widget: OBPostCommentsPage(
+                post: post,
+                showPostPreview: false,
+                pageType: PostCommentsPageType.comments,
+                autofocusCommentInput: false)
+        ));
+  }
+
+  Future navigateToPostCommentReplies(
+      {@required Post post,
+        @required PostComment postComment,
+        @required BuildContext context,
+        Function(PostComment) onReplyDeleted,
+        Function(PostComment) onReplyAdded
+      }) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewComments'),
+            widget: OBPostCommentsPage(
+                post: post,
+                showPostPreview: false,
+                postComment: postComment,
+                onCommentDeleted: onReplyDeleted,
+                onCommentAdded: onReplyAdded,
+                autofocusCommentInput: false)));
   }
 
   Future navigateToPostCommentsLinked(
@@ -251,7 +279,26 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewCommentsLinked'),
-            widget: OBPostCommentsLinkedPage(postComment,
+            widget: OBPostCommentsPage(
+                post: postComment.post,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.comments,
+                linkedPostComment: postComment,
+                autofocusCommentInput: false)));
+  }
+
+  Future navigateToPostCommentRepliesLinked(
+      {@required PostComment postComment, @required PostComment parentComment, @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewCommentsLinked'),
+            widget: OBPostCommentsPage(
+                post: postComment.post,
+                postComment: parentComment,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.replies,
+                linkedPostComment: postComment,
                 autofocusCommentInput: false)));
   }
 
