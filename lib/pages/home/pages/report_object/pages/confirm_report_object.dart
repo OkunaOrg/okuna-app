@@ -1,3 +1,4 @@
+import 'package:Openbook/libs/type_to_str.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
@@ -188,6 +189,10 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
           widget.object is PostComment) {
         widget.object.setIsReported(true);
       }
+      _toastService.success(
+          message:
+              modelTypeToString(widget.object, capitalize: true) + ' reported',
+          context: context);
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);

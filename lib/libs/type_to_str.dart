@@ -1,17 +1,22 @@
+import 'package:Openbook/libs/str_utils.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
 
-String modelTypeToString(dynamic modelInstance) {
+String modelTypeToString(dynamic modelInstance, {bool capitalize = false}) {
+  String result;
   if (modelInstance is Post) {
-    return 'post';
+    result = 'post';
   } else if (modelInstance is PostComment) {
-    return 'post comment';
+    result = 'post comment';
   } else if (modelInstance is Community) {
-    return 'community';
+    result = 'community';
   } else if (modelInstance is User) {
-    return 'user';
+    result = 'user';
+  } else {
+    result = 'item';
   }
-  return 'item';
+
+  return capitalize ? toCapital(result) : result;
 }
