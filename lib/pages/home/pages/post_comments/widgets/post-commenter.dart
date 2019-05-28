@@ -206,7 +206,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       }
 
       PostComment createdPostComment = await _submitFormOperation.value;
-      widget.post.incrementCommentsCount();
+      if (createdPostComment.parentComment == null) widget.post.incrementCommentsCount();
       _textController.clear();
       _setFormWasSubmitted(false);
       _validateForm();
