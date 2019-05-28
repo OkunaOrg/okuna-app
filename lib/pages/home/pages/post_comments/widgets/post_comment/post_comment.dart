@@ -214,12 +214,12 @@ class OBPostCommentState extends State<OBPostComment> {
   void _onReplyAdded(PostComment postCommentReply) async {
     PostCommentsSortType sortType = await _userPreferencesService.getPostCommentsSortType();
     setState(() {
-      _repliesCount += 1;
       if (sortType == PostCommentsSortType.dec) {
         _replies.insert(0, postCommentReply);
-      } else if (_repliesCount <= 2) {
+      } else if (_repliesCount == _replies.length) {
         _replies.add(postCommentReply);
       }
+      _repliesCount += 1;
     });
   }
 
@@ -240,12 +240,20 @@ class OBPostCommentState extends State<OBPostComment> {
   }
 
   void _replyPostComment() async {
-    await _modalService.openExpandedReplyCommenter(
+    PostComment comment = await _modalService.openExpandedReplyCommenter(
         context: context,
         post: widget.post,
         postComment: widget.postComment,
         onReplyDeleted: _onReplyDeleted,
         onReplyAdded: _onReplyAdded);
+    if (comment != null) {
+      await _navigationService.navigateToPostCommentReplies(
+          post: widget.post,
+          postComment: widget.postComment,
+          onReplyAdded: _onReplyAdded,
+          onReplyDeleted: _onReplyDeleted,
+          context: context);
+    }
   }
 
   void _deletePostComment() async {
@@ -257,7 +265,7 @@ class OBPostCommentState extends State<OBPostComment> {
               postComment: widget.postComment, post: widget.post));
 
       await _requestOperation.value;
-      widget.post.decreaseCommentsCount();
+      if (widget.postComment.parentComment == null) widget.post.decreaseCommentsCount();
       _toastService.success(message: 'Comment deleted', context: context);
       if (widget.onPostCommentDeletedCallback != null) {
         widget.onPostCommentDeletedCallback(widget.postComment);

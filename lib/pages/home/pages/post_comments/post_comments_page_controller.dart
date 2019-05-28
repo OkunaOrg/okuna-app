@@ -175,7 +175,7 @@ class OBPostCommentsPageController {
   Future<bool> loadMoreBottomComments() async {
     if (_loadMoreBottomCommentsOperation != null)
       _loadMoreBottomCommentsOperation.cancel();
-    if (this.postComments.length == 0) return true;
+    if (this.postComments.length == 0 || _refreshCommentsWithCreatedPostCommentVisibleOperation != null) return true;
 
     PostComment lastPost = this.postComments.last;
     int lastPostId = lastPost.id;
