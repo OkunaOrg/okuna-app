@@ -31,6 +31,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
   static int itemsLoadMoreCount = 10;
 
   OBModeratedObjectsPageController _controller;
+
   Community _community;
   OBModeratedObjectsFilters _filters;
   ScrollController _scrollController;
@@ -149,7 +150,11 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
         key: Key(moderatedObject.id.toString()));
   }
 
-  void _bootstrap() {}
+  void _bootstrap() {
+    Future.delayed(Duration(milliseconds: 100), () {
+      _refresh();
+    });
+  }
 
   Future<void> setFilters(OBModeratedObjectsFilters filters) {
     _filters = filters;
@@ -176,7 +181,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
 
   Future<void> _refreshModeratedObjects() async {
     try {
-      if (widget.community != null) {
+      if (widget.community == null) {
         _refreshModeratedObjectsOperation = CancelableOperation.fromFuture(
             _userService.getGlobalModeratedObjects(count: itemsLoadMoreCount));
       } else {

@@ -1,6 +1,8 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_actions.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
@@ -42,9 +44,13 @@ class OBModeratedObject extends StatelessWidget {
         );
         break;
       case ModeratedObjectType.postComment:
+        PostComment postComment = moderatedObject.contentObject;
         widget = Column(
           children: <Widget>[
-            OBCommunityTile(community),
+            OBPostComment(
+              post: postComment.post,
+              postComment: moderatedObject.contentObject,
+            ),
           ],
         );
         break;

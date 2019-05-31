@@ -8,22 +8,22 @@ class ModerationApiService {
   String apiURL;
 
   static const GET_GLOBAL_MODERATED_OBJECTS_PATH =
-      'api/moderation/moderated_objects/';
+      'api/moderation/moderated-objects/global/';
   static const GET_MODERATION_CATEGORIES_PATH = 'api/moderation/categories/';
   static const MODERATED_OBJECT_PATH =
-      'api/moderation/moderated_objects/{moderatedObjectId}/';
+      'api/moderation/moderated-objects/{moderatedObjectId}/';
   static const APPROVE_MODERATED_OBJECT_PATH =
-      'api/moderation/moderated_objects/{moderatedObjectId}/approve/';
+      'api/moderation/moderated-objects/{moderatedObjectId}/approve/';
   static const REJECT_MODERATED_OBJECT_PATH =
-      'api/moderation/moderated_objects/{moderatedObjectId}/reject/';
+      'api/moderation/moderated-objects/{moderatedObjectId}/reject/';
   static const VERIFY_MODERATED_OBJECT_PATH =
-      'api/moderation/moderated_objects/{moderatedObjectId}/verify/';
+      'api/moderation/moderated-objects/{moderatedObjectId}/verify/';
   static const UNVERIFY_MODERATED_OBJECT_PATH =
-      'api/moderation/moderated_objects/{moderatedObjectId}/unverify/';
+      'api/moderation/moderated-objects/{moderatedObjectId}/unverify/';
   static const MODERATED_OBJECT_LOGS_PATH =
-      'api/moderation/moderated_objects/{moderatedObjectId}/logs/';
+      'api/moderation/moderated-objects/{moderatedObjectId}/logs/';
   static const MODERATED_OBJECT_REPORTS_PATH =
-      'api/moderation/moderated_objects/{moderatedObjectId}/reports/';
+      'api/moderation/moderated-objects/{moderatedObjectId}/reports/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;

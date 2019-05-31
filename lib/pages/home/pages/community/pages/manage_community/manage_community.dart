@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 
 class OBManageCommunityPage extends StatelessWidget {
   final Community community;
-
   const OBManageCommunityPage({@required this.community});
 
   @override
