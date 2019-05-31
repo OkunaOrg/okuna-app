@@ -196,6 +196,7 @@ class OBIcons {
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
+  static const reviewModeratedObject = OBIconData(nativeIcon: Icons.edit);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const account = OBIconData(nativeIcon: Icons.account_circle);
@@ -210,7 +211,8 @@ class OBIcons {
   static const themes = OBIconData(nativeIcon: Icons.format_paint);
   static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
   static const disableComments = OBIconData(nativeIcon: Icons.chat_bubble);
-  static const enableComments = OBIconData(nativeIcon: Icons.chat_bubble_outline);
+  static const enableComments =
+      OBIconData(nativeIcon: Icons.chat_bubble_outline);
   static const closePost = OBIconData(nativeIcon: Icons.lock_outline);
   static const openPost = OBIconData(nativeIcon: Icons.lock_open);
   static const block = OBIconData(nativeIcon: Icons.block);

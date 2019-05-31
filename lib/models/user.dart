@@ -32,6 +32,7 @@ class User extends UpdatableModel<User> {
   bool isConnected;
   bool isReported;
   bool isBlocked;
+  bool isGlobalModerator;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
   bool isMemberOfCommunities;
@@ -86,6 +87,7 @@ class User extends UpdatableModel<User> {
       this.inviteCount,
       this.isFollowing,
       this.isBlocked,
+      this.isGlobalModerator,
       this.isConnected,
       this.isReported,
       this.isFullyConnected,
@@ -127,6 +129,8 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
+    if (json.containsKey('is_global_moderator'))
+      isGlobalModerator = json['is_global_moderator'];
     if (json.containsKey('is_blocked')) isBlocked = json['is_blocked'];
     if (json.containsKey('is_reported')) isReported = json['is_reported'];
     if (json.containsKey('connections_circle_id'))
@@ -513,6 +517,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
+        isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],
         isReported: json['is_reported'],
         isFullyConnected: json['is_fully_connected'],

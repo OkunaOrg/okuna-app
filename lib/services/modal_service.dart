@@ -24,6 +24,8 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/add_community_moderator.dart';
 import 'package:Openbook/pages/home/modals/user_invites/create_user_invite.dart';
 import 'package:Openbook/pages/home/modals/user_invites/send_invite_email.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/modals/moderated_objects_filters/moderated_objects_filters.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -86,23 +88,22 @@ class ModalService {
 
   Future<PostComment> openExpandedReplyCommenter(
       {@required BuildContext context,
-        @required PostComment postComment,
-        @required Post post,
-        @required Function(PostComment) onReplyAdded,
-        @required Function(PostComment) onReplyDeleted}) async {
+      @required PostComment postComment,
+      @required Post post,
+      @required Function(PostComment) onReplyAdded,
+      @required Function(PostComment) onReplyDeleted}) async {
     PostComment replyComment = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<PostComment>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBPostCommentReplyExpandedModal(
-              post: post,
-              postComment: postComment,
-              onReplyAdded: onReplyAdded,
-              onReplyDeleted: onReplyDeleted
-            ),
-          );
-        }));
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBPostCommentReplyExpandedModal(
+                    post: post,
+                    postComment: postComment,
+                    onReplyAdded: onReplyAdded,
+                    onReplyDeleted: onReplyDeleted),
+              );
+            }));
     return replyComment;
   }
 
@@ -326,6 +327,21 @@ class ModalService {
           return OBSendUserInviteEmailModal(
             autofocusEmailTextField: true,
             userInvite: userInvite,
+          );
+        }));
+  }
+
+  Future<void> openModeratedObjectsFilters(
+      {@required
+          BuildContext context,
+      @required
+          OBModeratedObjectsPageController
+              moderatedObjectsPageController}) async {
+    await Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBModeratedObjectsFiltersModal(
+            moderatedObjectsPageController: moderatedObjectsPageController,
           );
         }));
   }

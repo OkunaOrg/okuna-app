@@ -20,6 +20,10 @@ class ModerationApiService {
       'api/moderation/moderated_objects/{moderatedObjectId}/verify/';
   static const UNVERIFY_MODERATED_OBJECT_PATH =
       'api/moderation/moderated_objects/{moderatedObjectId}/unverify/';
+  static const MODERATED_OBJECT_LOGS_PATH =
+      'api/moderation/moderated_objects/{moderatedObjectId}/logs/';
+  static const MODERATED_OBJECT_REPORTS_PATH =
+      'api/moderation/moderated_objects/{moderatedObjectId}/reports/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -53,6 +57,38 @@ class ModerationApiService {
     if (verified != null) queryParams['verified'] = verified;
 
     String path = GET_GLOBAL_MODERATED_OBJECTS_PATH;
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getModeratedObjectLogs(
+    int moderatedObjectId, {
+    int count,
+    int maxId,
+  }) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    String path = _makeModeratedObjectLogsPath(moderatedObjectId);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getModeratedObjectReports(
+    int moderatedObjectId, {
+    int count,
+    int maxId,
+  }) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    String path = _makeModeratedObjectReportsPath(moderatedObjectId);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
@@ -119,6 +155,16 @@ class ModerationApiService {
 
   String _makeApproveModeratedObjectsPath(int moderatedObjectId) {
     return _stringTemplateService.parse(APPROVE_MODERATED_OBJECT_PATH,
+        {'moderatedObjectId': moderatedObjectId});
+  }
+
+  String _makeModeratedObjectLogsPath(int moderatedObjectId) {
+    return _stringTemplateService.parse(
+        MODERATED_OBJECT_LOGS_PATH, {'moderatedObjectId': moderatedObjectId});
+  }
+
+  String _makeModeratedObjectReportsPath(int moderatedObjectId) {
+    return _stringTemplateService.parse(MODERATED_OBJECT_REPORTS_PATH,
         {'moderatedObjectId': moderatedObjectId});
   }
 

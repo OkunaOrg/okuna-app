@@ -19,8 +19,10 @@ import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderated_object_list.dart';
+import 'package:Openbook/models/moderation/moderated_object_log_list.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/moderation/moderation_category_list.dart';
+import 'package:Openbook/models/moderation/moderation_report_list.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
@@ -489,8 +491,8 @@ class UserService {
 
   Future<PostComment> replyPostComment(
       {@required Post post,
-        @required PostComment postComment,
-        @required String text}) async {
+      @required PostComment postComment,
+      @required String text}) async {
     HttpieResponse response = await _postsApiService.replyPostComment(
         postUuid: post.uuid, postCommentId: postComment.id, text: text);
     _checkResponseIsCreated(response);
@@ -538,23 +540,22 @@ class UserService {
     return PostCommentList.fromJson(json.decode(response.body));
   }
 
-  Future<PostCommentList> getCommentRepliesForPostComment(Post post,
-      PostComment postComment,
+  Future<PostCommentList> getCommentRepliesForPostComment(
+      Post post, PostComment postComment,
       {int maxId,
-        int countMax,
-        int minId,
-        int countMin,
-        PostCommentsSortType sort}) async {
-    HttpieResponse response = await _postsApiService.getRepliesForCommentWithIdForPostWithUuid(
-        post.uuid,
-        postComment.id,
-        countMax: countMax,
-        maxId: maxId,
-        countMin: countMin,
-        minId: minId,
-        sort: sort != null
-            ? PostComment.convertPostCommentSortTypeToString(sort)
-            : null);
+      int countMax,
+      int minId,
+      int countMin,
+      PostCommentsSortType sort}) async {
+    HttpieResponse response = await _postsApiService
+        .getRepliesForCommentWithIdForPostWithUuid(post.uuid, postComment.id,
+            countMax: countMax,
+            maxId: maxId,
+            countMin: countMin,
+            minId: minId,
+            sort: sort != null
+                ? PostComment.convertPostCommentSortTypeToString(sort)
+                : null);
 
     _checkResponseIsOk(response);
     return PostCommentList.fromJson(json.decode(response.body));
@@ -1525,7 +1526,7 @@ class UserService {
     return ModeratedObjectsList.fromJson(json.decode(response.body));
   }
 
-  Future<ModeratedObjectsList> getModeratedObjectsForCommunity(
+  Future<ModeratedObjectsList> getCommunityModeratedObjects(
       {@required Community community,
       List<ModeratedObjectStatus> statuses,
       List<ModeratedObjectType> types,
@@ -1564,6 +1565,29 @@ class UserService {
     HttpieResponse response = await _moderationApiService
         .verifyModeratedObjectWithId(moderatedObject.id);
     _checkResponseIsCreated(response);
+  }
+
+  Future<ModeratedObjectLogsList> getModeratedObjectLogs(
+      ModeratedObject moderatedObject,
+      {int maxId,
+      int count}) async {
+    HttpieResponse response = await _moderationApiService
+        .getModeratedObjectLogs(moderatedObject.id, maxId: maxId, count: count);
+    _checkResponseIsOk(response);
+
+    return ModeratedObjectLogsList.fromJson(json.decode(response.body));
+  }
+
+  Future<ModerationReportsList> getModeratedObjectReports(
+      ModeratedObject moderatedObject,
+      {int maxId,
+      int count}) async {
+    HttpieResponse response = await _moderationApiService
+        .getModeratedObjectReports(moderatedObject.id,
+            maxId: maxId, count: count);
+    _checkResponseIsOk(response);
+
+    return ModerationReportsList.fromJson(json.decode(response.body));
   }
 
   Future<void> unverifyModeratedObject(ModeratedObject moderatedObject) async {

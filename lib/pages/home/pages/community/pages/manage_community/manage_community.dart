@@ -89,6 +89,21 @@ class OBManageCommunityPage extends StatelessWidget {
       ));
     }
 
+    if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
+      menuListTiles.add(ListTile(
+        leading: const OBIcon(OBIcons.communityBannedUsers),
+        title: const OBText('Moderation reports'),
+        subtitle: const OBText(
+          'See the community moderation reports.',
+          style: listItemSubtitleStyle,
+        ),
+        onTap: () {
+          navigationService.navigateToCommunityModeratedObjects(
+              context: context, community: community);
+        },
+      ));
+    }
+
     if (loggedInUser.canCloseOrOpenPostsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.closePost),

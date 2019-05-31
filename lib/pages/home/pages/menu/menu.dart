@@ -103,6 +103,27 @@ class OBMainMenuPage extends StatelessWidget {
                     );
                   },
                 ),
+                StreamBuilder(
+                  stream: userService.loggedInUserChange,
+                  initialData: userService.getLoggedInUser(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<User> snapshot) {
+                    User loggedInUser = snapshot.data;
+
+                    if (loggedInUser == null ||
+                        !(loggedInUser.isGlobalModerator ?? false))
+                      return const SizedBox();
+
+                    return ListTile(
+                      leading: const OBIcon(OBIcons.communityModerators),
+                      title: OBText('Global moderation'),
+                      onTap: () async {
+                        navigationService.navigateToGlobalModeratedObjects(
+                            context: context);
+                      },
+                    );
+                  },
+                ),
                 ListTile(
                   leading: const OBIcon(OBIcons.link),
                   title: OBText('Useful links'),

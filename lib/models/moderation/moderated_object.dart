@@ -1,3 +1,4 @@
+import 'package:Openbook/libs/str_utils.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
@@ -65,6 +66,28 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
       contentObject = factory.parseContentObject(
           contentObjectData: json['content_object'], type: type);
     }
+  }
+
+  void setIsVerified(bool isVerified) {
+    verified = isVerified;
+    notifyUpdate();
+  }
+
+  bool isVerified() {
+    return verified;
+  }
+
+  void setIsApproved() {
+    _setStatus(ModeratedObjectStatus.approved);
+  }
+
+  void setIsRejected() {
+    _setStatus(ModeratedObjectStatus.rejected);
+  }
+
+  void _setStatus(ModeratedObjectStatus newStatus) {
+    status = newStatus;
+    notifyUpdate();
   }
 }
 
@@ -156,6 +179,29 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     }
   }
 
+  String convertStatusToHumanReadableString(
+      ModeratedObjectStatus moderatedObjectStatus,
+      {capitalize = false}) {
+    if (moderatedObjectStatus == null) return null;
+
+    String result;
+
+    switch (moderatedObjectStatus) {
+      case ModeratedObjectStatus.approved:
+        result = 'approved';
+        break;
+      case ModeratedObjectStatus.rejected:
+        result = 'rejected';
+        break;
+      case ModeratedObjectStatus.pending:
+        result = 'pending';
+        break;
+      default:
+    }
+
+    return capitalize ? toCapital(result) : result;
+  }
+
   String convertTypeToString(ModeratedObjectType moderatedObjectType) {
     if (moderatedObjectType == null) return null;
 
@@ -171,6 +217,32 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
       default:
         return '';
     }
+  }
+
+  String convertTypeToHumanReadableString(
+      ModeratedObjectType moderatedObjectType,
+      {capitalize = false}) {
+    if (moderatedObjectType == null) return null;
+
+    String result = 'object';
+
+    switch (moderatedObjectType) {
+      case ModeratedObjectType.community:
+        result = 'community';
+        break;
+      case ModeratedObjectType.user:
+        result = 'user';
+        break;
+      case ModeratedObjectType.post:
+        result = 'post';
+        break;
+      case ModeratedObjectType.postComment:
+        result = 'post comment';
+        break;
+      default:
+    }
+
+    return capitalize ? toCapital(result) : result;
   }
 
   dynamic parseContentObject(

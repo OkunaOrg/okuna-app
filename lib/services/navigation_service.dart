@@ -2,6 +2,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
@@ -43,6 +44,12 @@ import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/user_invites.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/moderated_object_community_review.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/moderated_object_global_review.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/pages/moderated_object_update_category.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/pages/moderated_object_update_description.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/pages/moderated_object_reports.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post_comments_page.dart';
@@ -545,6 +552,88 @@ class NavigationService {
               object: object,
               extraData: extraData,
               onObjectReported: onObjectReported,
+            )));
+  }
+
+  Future<void> navigateToCommunityModeratedObjects(
+      {@required BuildContext context, @required Community community}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityModeratedObjects'),
+            widget: OBModeratedObjectsPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToGlobalModeratedObjects(
+      {@required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obGlobalModeratedObjects'),
+            widget: OBModeratedObjectsPage()));
+  }
+
+  Future<void> navigateToModeratedObjectUpdateDescription(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectUpdateDescriptionPage'),
+            widget: OBModeratedObjectUpdateDescriptionPage(
+              moderatedObject: moderatedObject,
+            )));
+  }
+
+  Future<void> navigateToModeratedObjectUpdateCategory(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectUpdateCategoryPage'),
+            widget: OBModeratedObjectUpdateCategoryPage(
+              moderatedObject: moderatedObject,
+            )));
+  }
+
+  Future<void> navigateToModeratedObjectReports(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectReportsPage'),
+            widget: OBModeratedObjectReportsPage(
+              moderatedObject: moderatedObject,
+            )));
+  }
+
+  Future<void> navigateToModeratedObjectGlobalReview(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectGlobalReviewPage'),
+            widget: OBModeratedObjectGlobalReviewPage(
+              moderatedObject: moderatedObject,
+            )));
+  }
+
+  Future<void> navigateToModeratedObjectCommunityReview(
+      {@required BuildContext context,
+      @required Community community,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectCommunityReviewPage'),
+            widget: OBModeratedObjectCommunityReviewPage(
+              community: community,
+              moderatedObject: moderatedObject,
             )));
   }
 
