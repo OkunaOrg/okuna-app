@@ -4,9 +4,13 @@ import 'package:Openbook/models/moderation/moderation_report_list.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
+import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tile_group_title.dart';
+import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -58,33 +62,114 @@ class OBModeratedObjectReportsPreviewState
       _needsBootstrap = false;
       _refreshInProgress = true;
     }
-    return _refreshInProgress
-        ? Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: OBProgressIndicator(),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        OBTileGroupTitle(
+          title: 'Reports',
+        ),
+        OBDivider(),
+        _refreshInProgress
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: OBProgressIndicator(),
+                  )
+                ],
               )
-            ],
-          )
-        : ListView.builder(
-            itemBuilder: _buildModerationReport,
-            itemCount: _reports.length,
-          );
+            : ListView.separated(
+                separatorBuilder: (BuildContext context, int index) {
+                  return OBDivider();
+                },
+                itemBuilder: _buildModerationReport,
+                itemCount: _reports.length,
+                shrinkWrap: true,
+              ),
+        OBDivider(),
+      ],
+    );
   }
 
   Widget _buildModerationReport(BuildContext contenxt, int index) {
     ModerationReport report = _reports[index];
-    return ListTile(
-      title: OBSecondaryText(report.reporter.username),
-      subtitle: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          OBText(report.description),
-          OBSecondaryText(report.category.title)
-        ],
-      ),
-      isThreeLine: true,
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              _buildReportCategory(report),
+              _buildReportDescription(report),
+              SizedBox(height: 10,),
+              _buildReportReporter(report),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReportReporter(ModerationReport report) {
+    return Row(
+      children: <Widget>[
+        OBAvatar(
+          borderRadius: 4,
+          customSize: 16,
+          avatarUrl: report.reporter.getProfileAvatar(),
+        ),
+        const SizedBox(
+          width: 6,
+        ),
+        OBSecondaryText(
+          '@' + report.reporter.username,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        OBSecondaryText(' reported'),
+      ],
+    );
+  }
+
+  Widget _buildReportDescription(ModerationReport report) {
+    if (report.description == null) return const SizedBox();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        OBText(
+          'Description',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        OBSecondaryText(
+          report.description != null ? report.description : 'No description',
+          style: TextStyle(
+              fontStyle: report.description == null
+                  ? FontStyle.italic
+                  : FontStyle.normal),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReportCategory(ModerationReport report) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        OBText(
+          'Category',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        OBSecondaryText(
+          report.category.title,
+        ),
+      ],
     );
   }
 

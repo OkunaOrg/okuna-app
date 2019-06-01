@@ -78,17 +78,14 @@ class OBModeratedObjectUpdateCategoryPageState
   }
 
   Widget _buildModerationCategories() {
-    return Opacity(
-      opacity: _requestInProgress ? 0.8 : 1,
-      child: Expanded(
-        child: ListView.separated(
-          padding: EdgeInsets.all(0.0),
-          itemBuilder: _buildModerationCategoryTile,
-          separatorBuilder: (context, index) {
-            return const Divider();
-          },
-          itemCount: _moderationCategories.length,
-        ),
+    return Expanded(
+      child: ListView.separated(
+        itemBuilder: _buildModerationCategoryTile,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        separatorBuilder: (context, index) {
+          return const Divider();
+        },
+        itemCount: _moderationCategories.length,
       ),
     );
   }
@@ -97,6 +94,7 @@ class OBModeratedObjectUpdateCategoryPageState
     ModerationCategory category = _moderationCategories[index];
 
     return GestureDetector(
+      key: Key(category.id.toString()),
       onTap: () => _setSelectedModerationCategory(category),
       child: Row(
         children: <Widget>[
@@ -113,7 +111,7 @@ class OBModeratedObjectUpdateCategoryPageState
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: OBCheckbox(
-              value: _selectedModerationCategory == category,
+              value: _selectedModerationCategory.id == category.id,
             ),
           )
         ],
@@ -132,6 +130,7 @@ class OBModeratedObjectUpdateCategoryPageState
     try {
       _userService.updateModeratedObject(widget.moderatedObject,
           category: _selectedModerationCategory);
+      print(_selectedModerationCategory);
       Navigator.of(context).pop();
     } catch (error) {
       _onError(error);

@@ -12,6 +12,7 @@ class ModerationReport {
       {this.description, this.reporter, this.category, this.created});
 
   factory ModerationReport.fromJson(Map<String, dynamic> parsedJson) {
+    print(parsedJson);
     return ModerationReport(
         description: parsedJson['description'],
         reporter: parseReporter(
@@ -30,6 +31,8 @@ class ModerationReport {
 
   static ModerationCategory parseCategory(Map rawModerationCategory) {
     if (rawModerationCategory == null) return null;
+    print('PARSIN');
+    print(rawModerationCategory);
     return ModerationCategory.fromJson(rawModerationCategory);
   }
 

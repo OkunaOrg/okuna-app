@@ -130,11 +130,11 @@ class ModerationApiService {
 
     if (description != null) body['description'] = description;
 
-    if (categoryId != null) body['category_id'] = categoryId;
+    if (categoryId != null) body['category_id'] = categoryId.toString();
 
     String path = _makeModeratedObjectsPath(moderatedObjectId);
 
-    return _httpService.post(_makeApiUrl(path),
+    return _httpService.patchJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 

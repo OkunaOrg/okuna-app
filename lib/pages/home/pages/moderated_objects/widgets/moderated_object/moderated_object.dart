@@ -30,6 +30,7 @@ class OBModeratedObject extends StatelessWidget {
           children: <Widget>[
             OBPostHeader(
               post: moderatedObject.contentObject,
+              hasActions: false,
             ),
             OBPostBody(moderatedObject.contentObject),
           ],

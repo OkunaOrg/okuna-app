@@ -208,7 +208,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
     }
 
     try {
-      if (widget.community != null) {
+      if (widget.community == null) {
         _loadMoreOperation = CancelableOperation.fromFuture(
             _userService.getGlobalModeratedObjects(
                 maxId: lastModeratedObjectId, count: itemsLoadMoreCount));

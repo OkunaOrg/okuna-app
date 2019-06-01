@@ -1523,6 +1523,9 @@ class UserService {
 
     _checkResponseIsOk(response);
 
+    var what = json.decode(response.body);
+    print(what);
+
     return ModeratedObjectsList.fromJson(json.decode(response.body));
   }
 
@@ -1556,8 +1559,8 @@ class UserService {
       {String description, ModerationCategory category}) async {
     HttpieResponse response = await _moderationApiService
         .updateModeratedObjectWithId(moderatedObject.id,
-            description: description, categoryId: category.id);
-    _checkResponseIsCreated(response);
+            description: description, categoryId: category?.id);
+    _checkResponseIsOk(response);
     return ModeratedObject.fromJSON(json.decode(response.body));
   }
 

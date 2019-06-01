@@ -1,6 +1,7 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class OBModeratedObjectDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBTileGroupTitle(
@@ -34,7 +36,13 @@ class OBModeratedObjectDescription extends StatelessWidget {
             stream: moderatedObject.updateSubject,
             builder: (BuildContext context,
                 AsyncSnapshot<ModeratedObject> snapshot) {
-              return OBText(snapshot.data.description);
+              String description = snapshot.data.description;
+              return description != null
+                  ? OBText(snapshot.data.description)
+                  : OBSecondaryText(
+                      'No description',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    );
             },
           ),
           trailing: const OBIcon(OBIcons.chevronRight),

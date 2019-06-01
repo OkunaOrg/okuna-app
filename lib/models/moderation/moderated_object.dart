@@ -18,7 +18,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
   static String objectTypePost = 'P';
   static String objectTypePostComment = 'PC';
   static String objectTypeCommunity = 'C';
-  static String objectTypeUser = 'C';
+  static String objectTypeUser = 'U';
   static String statusPending = 'P';
   static String statusApproved = 'A';
   static String statusRejected = 'R';
@@ -48,6 +48,10 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
   void updateFromJson(Map json) {
     if (json.containsKey('description')) {
       description = json['description'];
+    }
+
+    if (json.containsKey('category')) {
+      category = factory.parseModerationCategory(json['category']);
     }
 
     if (json.containsKey('verified')) {

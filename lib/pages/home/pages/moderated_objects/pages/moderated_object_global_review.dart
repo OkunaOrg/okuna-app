@@ -41,6 +41,7 @@ class OBModeratedObjectGlobalReviewPageState
     super.initState();
     _needsBootstrap = true;
     _isEditable = false;
+    _requestInProgress = false;
   }
 
   @override
@@ -56,8 +57,7 @@ class OBModeratedObjectGlobalReviewPageState
       navigationBar: OBThemedNavigationBar(
         title: 'Review moderated object',
       ),
-      child: OBPrimaryColorContainer(
-          child: Column(
+      child: Column(
         children: <Widget>[
           Expanded(
             child: ListView(
@@ -78,11 +78,11 @@ class OBModeratedObjectGlobalReviewPageState
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: _buildPrimaryActions(),
           )
         ],
-      )),
+      ),
     );
   }
 
@@ -103,7 +103,7 @@ class OBModeratedObjectGlobalReviewPageState
       actions.add(Expanded(
         child: OBButton(
           size: OBButtonSize.large,
-          type: OBButtonType.danger,
+          type: OBButtonType.success,
           child: Text('Verify'),
           onPressed: _onWantsToVerifyModeratedObject,
           isLoading: _requestInProgress,
@@ -112,6 +112,7 @@ class OBModeratedObjectGlobalReviewPageState
     }
 
     return Row(
+      mainAxisSize: MainAxisSize.max,
       children: actions,
     );
   }
