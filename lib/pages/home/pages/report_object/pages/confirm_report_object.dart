@@ -126,7 +126,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                         data: '- Your report will be submitted anonymously. \n '
                             '- If you are reporting a post or comment, the report will be sent to the Openbook staff and the community moderators if applicable and the post will be hidden from your feed \n'
                             '- If you are reporting an account or community, it will be sent to the Openbook staff. \n'
-                            '- We\'ll review it, if approved, content will be deleted and penalties delivered to the people involved randing from deletion of account to hours of suspension depending on the severity of the report. \n'
+                            '- We\'ll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from deletion of account to hours of suspension depending on the severity of the report. \n'
                             '- If the report is found to be made in an attempt to damage another member or community in the platform with no infringement of the stated reason, penalties will be applied to you. \n')
                   ],
                 ),
