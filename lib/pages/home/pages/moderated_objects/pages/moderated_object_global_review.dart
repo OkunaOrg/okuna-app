@@ -53,6 +53,7 @@ class OBModeratedObjectGlobalReviewPageState
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -100,33 +101,39 @@ class OBModeratedObjectGlobalReviewPageState
   }
 
   Widget _buildPrimaryActions() {
-    List<Widget> actions = [];
+    return StreamBuilder(
+      stream: widget.moderatedObject.updateSubject,
+      initialData: widget.moderatedObject,
+      builder: (BuildContext context, AsyncSnapshot<ModeratedObject> snapshot) {
+        List<Widget> actions = [];
 
-    if (widget.moderatedObject.verified) {
-      actions.add(Expanded(
-        child: OBButton(
-          size: OBButtonSize.large,
-          type: OBButtonType.danger,
-          child: Text('Unverify'),
-          onPressed: _onWantsToUnverifyModeratedObject,
-          isLoading: _requestInProgress,
-        ),
-      ));
-    } else {
-      actions.add(Expanded(
-        child: OBButton(
-          size: OBButtonSize.large,
-          type: OBButtonType.success,
-          child: Text('Verify'),
-          onPressed: _onWantsToVerifyModeratedObject,
-          isLoading: _requestInProgress,
-        ),
-      ));
-    }
+        if (snapshot.data.verified) {
+          actions.add(Expanded(
+            child: OBButton(
+              size: OBButtonSize.large,
+              type: OBButtonType.danger,
+              child: Text('Unverify'),
+              onPressed: _onWantsToUnverifyModeratedObject,
+              isLoading: _requestInProgress,
+            ),
+          ));
+        } else {
+          actions.add(Expanded(
+            child: OBButton(
+              size: OBButtonSize.large,
+              type: OBButtonType.success,
+              child: Text('Verify'),
+              onPressed: _onWantsToVerifyModeratedObject,
+              isLoading: _requestInProgress,
+            ),
+          ));
+        }
 
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: actions,
+        return Row(
+          mainAxisSize: MainAxisSize.max,
+          children: actions,
+        );
+      },
     );
   }
 
@@ -147,26 +154,33 @@ class OBModeratedObjectGlobalReviewPageState
   }
 
   void _onWantsToVerifyModeratedObject() async {
+    _setRequestInProgress(true);
     try {
       _requestOperation = CancelableOperation.fromFuture(
           _userService.verifyModeratedObject(widget.moderatedObject));
       await _requestOperation.value;
       widget.moderatedObject.setIsVerified(true);
-      Navigator.pop(context);
+      _refreshLogs();
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
   }
 
   void _onWantsToUnverifyModeratedObject() async {
+    _setRequestInProgress(true);
+
     try {
       _requestOperation = CancelableOperation.fromFuture(
           _userService.unverifyModeratedObject(widget.moderatedObject));
       await _requestOperation.value;
       widget.moderatedObject.setIsVerified(false);
-      Navigator.pop(context);
+      _refreshLogs();
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
   }
 
@@ -185,5 +199,11 @@ class OBModeratedObjectGlobalReviewPageState
       _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
+  }
+
+  void _setRequestInProgress(requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
   }
 }

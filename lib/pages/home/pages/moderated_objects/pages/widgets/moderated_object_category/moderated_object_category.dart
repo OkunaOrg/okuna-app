@@ -46,10 +46,10 @@ class OBModeratedObjectCategory extends StatelessWidget {
                 if (newModerationCategory != null && onCategoryChanged != null)
                   onCategoryChanged(newModerationCategory);
               },
-              trailing: const OBIcon(
+              trailing: isEditable ? const OBIcon(
                 OBIcons.edit,
                 themeColor: OBIconThemeColor.secondaryText,
-              ),
+              ) : null,
             );
           },
         ),

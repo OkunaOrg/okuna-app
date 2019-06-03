@@ -45,10 +45,10 @@ class OBModeratedObjectStatus extends StatelessWidget {
                 if (newModerationStatus != null && onStatusChanged != null)
                   onStatusChanged(newModerationStatus);
               },
-              trailing: const OBIcon(
+              trailing: isEditable ? const OBIcon(
                 OBIcons.edit,
                 themeColor: OBIconThemeColor.secondaryText,
-              ),
+              ) : null,
             );
           },
         ),

@@ -52,10 +52,10 @@ class OBModeratedObjectDescription extends StatelessWidget {
                     );
             },
           ),
-          trailing: const OBIcon(
+          trailing: isEditable ? const OBIcon(
             OBIcons.edit,
             themeColor: OBIconThemeColor.secondaryText,
-          ),
+          ) : null,
         )
       ],
     );

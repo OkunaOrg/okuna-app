@@ -6,7 +6,6 @@ import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/pos
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:Openbook/widgets/tiles/community_tile.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';

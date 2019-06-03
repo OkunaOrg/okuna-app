@@ -1566,7 +1566,7 @@ class UserService {
   Future<void> verifyModeratedObject(ModeratedObject moderatedObject) async {
     HttpieResponse response = await _moderationApiService
         .verifyModeratedObjectWithId(moderatedObject.id);
-    _checkResponseIsCreated(response);
+    _checkResponseIsOk(response);
   }
 
   Future<ModeratedObjectLogsList> getModeratedObjectLogs(
@@ -1595,7 +1595,7 @@ class UserService {
   Future<void> unverifyModeratedObject(ModeratedObject moderatedObject) async {
     HttpieResponse response = await _moderationApiService
         .unverifyModeratedObjectWithId(moderatedObject.id);
-    _checkResponseIsCreated(response);
+    _checkResponseIsOk(response);
   }
 
   Future<void> approveModeratedObject(ModeratedObject moderatedObject) async {
