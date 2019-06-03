@@ -5,16 +5,15 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+
+import '../moderation_report_tile.dart';
 
 class OBModeratedObjectReportsPage extends StatefulWidget {
   final ModeratedObject moderatedObject;
 
-  const OBModeratedObjectReportsPage(
-      {Key key, @required this.moderatedObject})
+  const OBModeratedObjectReportsPage({Key key, @required this.moderatedObject})
       : super(key: key);
 
   @override
@@ -74,16 +73,8 @@ class OBModeratedObjectReportsPageState
 
   Widget _buildModerationReport(BuildContext contenxt, int index) {
     ModerationReport report = _reports[index];
-    return ListTile(
-      title: OBSecondaryText(report.reporter.username),
-      subtitle: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          OBText(report.description),
-          OBSecondaryText(report.category.title)
-        ],
-      ),
-      isThreeLine: true,
+    return OBModerationReportTile(
+      report: report,
     );
   }
 

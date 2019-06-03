@@ -1,4 +1,5 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -9,9 +10,13 @@ import 'package:flutter/material.dart';
 class OBModeratedObjectCategory extends StatelessWidget {
   final bool isEditable;
   final ModeratedObject moderatedObject;
+  final ValueChanged<ModerationCategory> onCategoryChanged;
 
   const OBModeratedObjectCategory(
-      {Key key, @required this.moderatedObject, @required this.isEditable})
+      {Key key,
+      @required this.moderatedObject,
+      @required this.isEditable,
+      this.onCategoryChanged})
       : super(key: key);
 
   @override
@@ -30,11 +35,15 @@ class OBModeratedObjectCategory extends StatelessWidget {
               (BuildContext context, AsyncSnapshot<ModeratedObject> snapshot) {
             return OBModerationCategoryTile(
               category: snapshot.data.category,
-              onPressed: (category) {
+              onPressed: (category) async {
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
-                openbookProvider.modalService.openModeratedObjectUpdateCategory(
-                    context: context, moderatedObject: moderatedObject);
+                ModerationCategory newModerationCategory =
+                    await openbookProvider.modalService
+                        .openModeratedObjectUpdateCategory(
+                            context: context, moderatedObject: moderatedObject);
+                if (newModerationCategory != null && onCategoryChanged != null)
+                  onCategoryChanged(newModerationCategory);
               },
               trailing: const OBIcon(
                 OBIcons.edit,

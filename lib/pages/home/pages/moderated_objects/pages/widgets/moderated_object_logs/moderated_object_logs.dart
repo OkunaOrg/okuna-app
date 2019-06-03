@@ -13,8 +13,10 @@ import 'package:flutter/material.dart';
 
 class OBModeratedObjectLogs extends StatefulWidget {
   final ModeratedObject moderatedObject;
+  final OBModeratedObjectLogsController controller;
 
-  const OBModeratedObjectLogs({Key key, @required this.moderatedObject})
+  const OBModeratedObjectLogs(
+      {Key key, @required this.moderatedObject, this.controller})
       : super(key: key);
 
   @override
@@ -40,6 +42,7 @@ class OBModeratedObjectLogsState extends State<OBModeratedObjectLogs> {
     _needsBootstrap = true;
     _refreshInProgress = false;
     _logs = [];
+    if (widget.controller != null) widget.controller.attach(this);
   }
 
   @override
@@ -89,11 +92,13 @@ class OBModeratedObjectLogsState extends State<OBModeratedObjectLogs> {
   Widget _buildModerationLog(BuildContext context, int index) {
     ModeratedObjectLog log = _logs[index];
     return OBModeratedObjectLogTile(
+      key: Key(log.id.toString()),
       log: log,
     );
   }
 
   Future _refreshLogs() async {
+    if (_refreshInProgress) return;
     _setRefreshInProgress(true);
     try {
       _refreshLogsOperation = CancelableOperation.fromFuture(_userService
@@ -102,10 +107,12 @@ class OBModeratedObjectLogsState extends State<OBModeratedObjectLogs> {
       ModeratedObjectLogsList moderationLogsList =
           await _refreshLogsOperation.value;
       _setLogs(moderationLogsList.moderatedObjectLogs);
+      print(moderationLogsList.moderatedObjectLogs.first.logType);
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRefreshInProgress(false);
     }
-    _setRefreshInProgress(false);
   }
 
   void _setRefreshInProgress(bool refreshInProgress) {
@@ -131,5 +138,17 @@ class OBModeratedObjectLogsState extends State<OBModeratedObjectLogs> {
       _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
+  }
+}
+
+class OBModeratedObjectLogsController {
+  OBModeratedObjectLogsState _state;
+
+  void attach(state) {
+    _state = state;
+  }
+
+  Future refreshLogs() {
+    return _state._refreshLogs();
   }
 }

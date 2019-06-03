@@ -191,7 +191,6 @@ class UserService {
       {@required String username, @required String password}) async {
     HttpieResponse response = await _authApiService.loginWithCredentials(
         username: username, password: password);
-
     if (response.isOk()) {
       var parsedResponse = response.parseJsonBody();
       var authToken = parsedResponse['token'];

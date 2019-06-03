@@ -140,7 +140,7 @@ class OBModeratedObjectUpdateDescriptionModalState
           _userService.updateModeratedObject(widget.moderatedObject,
               description: _descriptionController.text));
 
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(_descriptionController.text);
     } catch (error) {
       _onError(error);
     } finally {

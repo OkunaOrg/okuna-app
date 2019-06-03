@@ -9,9 +9,13 @@ import 'package:flutter/material.dart';
 class OBModeratedObjectDescription extends StatelessWidget {
   final bool isEditable;
   final ModeratedObject moderatedObject;
+  final ValueChanged<String> onDescriptionChanged;
 
   const OBModeratedObjectDescription(
-      {Key key, @required this.moderatedObject, @required this.isEditable})
+      {Key key,
+      @required this.moderatedObject,
+      @required this.isEditable,
+      this.onDescriptionChanged})
       : super(key: key);
 
   @override
@@ -24,11 +28,14 @@ class OBModeratedObjectDescription extends StatelessWidget {
           title: 'Description',
         ),
         ListTile(
-          onTap: () {
+          onTap: () async {
             OpenbookProviderState openbookProvider =
                 OpenbookProvider.of(context);
-            openbookProvider.modalService.openModeratedObjectUpdateDescription(
-                context: context, moderatedObject: moderatedObject);
+            String newDescription = await openbookProvider.modalService
+                .openModeratedObjectUpdateDescription(
+                    context: context, moderatedObject: moderatedObject);
+            if (newDescription != null && onDescriptionChanged != null)
+              onDescriptionChanged(newDescription);
           },
           title: StreamBuilder(
             initialData: moderatedObject,

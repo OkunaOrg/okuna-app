@@ -4,6 +4,7 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reaction.dart';
@@ -359,10 +360,10 @@ class ModalService {
         }));
   }
 
-  Future<void> openModeratedObjectUpdateDescription(
+  Future<String> openModeratedObjectUpdateDescription(
       {@required BuildContext context,
       @required ModeratedObject moderatedObject}) async {
-    return Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+    return Navigator.of(context).push(CupertinoPageRoute<String>(
         fullscreenDialog: true,
         builder: (BuildContext context) {
           return OBModeratedObjectUpdateDescriptionModal(
@@ -371,11 +372,10 @@ class ModalService {
         }));
   }
 
-  Future<void> openModeratedObjectUpdateCategory(
+  Future<ModerationCategory> openModeratedObjectUpdateCategory(
       {@required BuildContext context,
       @required ModeratedObject moderatedObject}) async {
-
-    return Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+    return Navigator.of(context).push(CupertinoPageRoute<ModerationCategory>(
         fullscreenDialog: true,
         builder: (BuildContext context) {
           return OBModeratedObjectUpdateCategoryModal(

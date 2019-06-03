@@ -16,6 +16,8 @@ import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
+import 'moderation_report_tile.dart';
+
 class OBModeratedObjectReportsPreview extends StatefulWidget {
   final bool isEditable;
   final ModeratedObject moderatedObject;
@@ -108,89 +110,7 @@ class OBModeratedObjectReportsPreviewState
   Widget _buildModerationReport(BuildContext contenxt, int index) {
     ModerationReport report = _reports[index];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ListTile(
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _buildReportCategory(report),
-              _buildReportDescription(report),
-              SizedBox(
-                height: 10,
-              ),
-              _buildReportReporter(report),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildReportReporter(ModerationReport report) {
-    return GestureDetector(
-      onTap: () {
-        _navigationService.navigateToUserProfile(
-            user: report.reporter, context: context);
-      },
-      child: Row(
-        children: <Widget>[
-          OBAvatar(
-            borderRadius: 4,
-            customSize: 16,
-            avatarUrl: report.reporter.getProfileAvatar(),
-          ),
-          const SizedBox(
-            width: 6,
-          ),
-          OBSecondaryText(
-            '@' + report.reporter.username,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          OBSecondaryText(' reported'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildReportDescription(ModerationReport report) {
-    if (report.description == null) return const SizedBox();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        OBText(
-          'Description',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        OBSecondaryText(
-          report.description != null ? report.description : 'No description',
-          style: TextStyle(
-              fontStyle: report.description == null
-                  ? FontStyle.italic
-                  : FontStyle.normal),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildReportCategory(ModerationReport report) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        OBText(
-          'Category',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        OBSecondaryText(
-          report.category.title,
-        ),
-      ],
-    );
+    return OBModerationReportTile(report: report);
   }
 
   Future _refreshReports() async {

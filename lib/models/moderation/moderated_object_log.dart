@@ -9,6 +9,7 @@ class ModeratedObjectLog {
   static String verifiedChangedLogType = 'VC';
   static String categoryChangedLogType = 'CC';
 
+  final int id;
   final String description;
   final bool verified;
   final User actor;
@@ -19,6 +20,7 @@ class ModeratedObjectLog {
 
   ModeratedObjectLog(
       {this.verified,
+      this.id,
       this.description,
       this.contentObject,
       this.actor,
@@ -30,6 +32,7 @@ class ModeratedObjectLog {
 
     return ModeratedObjectLog(
         verified: parsedJson['verified'],
+        id: parsedJson['id'],
         description: parsedJson['description'],
         actor: parseActor(
           parsedJson['actor'],

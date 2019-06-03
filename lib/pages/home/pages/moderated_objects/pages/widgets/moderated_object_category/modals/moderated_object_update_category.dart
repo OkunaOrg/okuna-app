@@ -130,8 +130,7 @@ class OBModeratedObjectUpdateCategoryModalState
     try {
       _userService.updateModeratedObject(widget.moderatedObject,
           category: _selectedModerationCategory);
-      print(_selectedModerationCategory);
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(_selectedModerationCategory);
     } catch (error) {
       _onError(error);
     } finally {

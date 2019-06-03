@@ -1,4 +1,5 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/moderated_object_category.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/moderated_object_description.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/moderated_object_logs.dart';
@@ -36,6 +37,7 @@ class OBModeratedObjectGlobalReviewPageState
   bool _needsBootstrap;
 
   CancelableOperation _requestOperation;
+  OBModeratedObjectLogsController _logsController;
 
   @override
   void initState() {
@@ -43,6 +45,7 @@ class OBModeratedObjectGlobalReviewPageState
     _needsBootstrap = true;
     _isEditable = false;
     _requestInProgress = false;
+    _logsController = OBModeratedObjectLogsController();
   }
 
   @override
@@ -64,19 +67,20 @@ class OBModeratedObjectGlobalReviewPageState
             child: ListView(
               children: <Widget>[
                 OBModeratedObjectDescription(
-                  isEditable: _isEditable,
-                  moderatedObject: widget.moderatedObject,
-                ),
+                    isEditable: _isEditable,
+                    moderatedObject: widget.moderatedObject,
+                    onDescriptionChanged: _onDescriptionChanged),
                 OBModeratedObjectCategory(
-                  isEditable: _isEditable,
-                  moderatedObject: widget.moderatedObject,
-                ),
+                    isEditable: _isEditable,
+                    moderatedObject: widget.moderatedObject,
+                    onCategoryChanged: _onCategoryChanged),
                 OBModeratedObjectReportsPreview(
                   isEditable: _isEditable,
                   moderatedObject: widget.moderatedObject,
                 ),
                 OBModeratedObjectLogs(
                   moderatedObject: widget.moderatedObject,
+                  controller: _logsController,
                 )
               ],
             ),
@@ -119,6 +123,18 @@ class OBModeratedObjectGlobalReviewPageState
       mainAxisSize: MainAxisSize.max,
       children: actions,
     );
+  }
+
+  void _onDescriptionChanged(String newDescription) {
+    Future.delayed(Duration(seconds: 1), (){
+      _logsController.refreshLogs();
+    });
+  }
+
+  void _onCategoryChanged(ModerationCategory newCategory) {
+    Future.delayed(Duration(seconds: 1), (){
+      _logsController.refreshLogs();
+    });
   }
 
   void _onWantsToVerifyModeratedObject() async {

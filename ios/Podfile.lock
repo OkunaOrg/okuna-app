@@ -11,7 +11,7 @@ PODS:
   - FMDB/standard (2.7.5)
   - image_cropper (0.0.1):
     - Flutter
-    - TOCropViewController (~> 2.4.0)
+    - TOCropViewController (~> 2.5.0)
   - image_picker (0.0.1):
     - Flutter
   - Intercom (5.2.1)
@@ -31,7 +31,7 @@ PODS:
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
-  - TOCropViewController (2.4.0)
+  - TOCropViewController (2.5.0)
   - uni_links (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
@@ -102,7 +102,7 @@ SPEC CHECKSUMS:
   flutter_exif_rotation: 458778023267a1f0157ae8d9483474749990ce24
   flutter_secure_storage: dbcc8ff35d99569c3a4d3b483afa3339416c1a78
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  image_cropper: 43c1f7f5ea92b68f43cae9340f55c84bdaad54bb
+  image_cropper: e0a40e80b2107490926d0f15e3b42f44867c15b4
   image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
   Intercom: 53f07c24f0ca18c1e910750e79b75f9c9867338f
   intercom_flutter: e281b619d2fc03dccf171089c87c01a17e1ed8b1
@@ -112,7 +112,7 @@ SPEC CHECKSUMS:
   share: 222b5dcc8031238af9d7de91149df65bad1aef75
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
   sqflite: d1612813fa7db7c667bed9f1d1b508deffc56999
-  TOCropViewController: 368d8df3ea43b62c3dc5a61f11b9048274d240bd
+  TOCropViewController: d86078d3a57a70c116bf3db7c89c80046a0e5fdf
   uni_links: 5ee5240df5cbffc52d9e7f8017a576b6a6bc5141
   url_launcher: 92b89c1029a0373879933c21642958c874539095
   video_player: 906796a841943c8d370ac7c13b18039aa9b56498
