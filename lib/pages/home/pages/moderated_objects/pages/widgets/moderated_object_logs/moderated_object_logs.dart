@@ -7,6 +7,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
@@ -79,12 +80,19 @@ class OBModeratedObjectLogsState extends State<OBModeratedObjectLogs> {
                   )
                 ],
               )
-            : ListView.builder(
-                padding: EdgeInsets.all(0),
-                itemBuilder: _buildModerationLog,
-                itemCount: _logs.length,
-                shrinkWrap: true,
-              ),
+            : _logs.length > 0
+                ? ListView.builder(
+                    padding: EdgeInsets.all(0),
+                    itemBuilder: _buildModerationLog,
+                    itemCount: _logs.length,
+                    shrinkWrap: true,
+                  )
+                : ListTile(
+                    title: OBSecondaryText(
+                      'No logs available',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
       ],
     );
   }

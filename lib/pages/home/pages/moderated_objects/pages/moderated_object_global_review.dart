@@ -76,6 +76,7 @@ class OBModeratedObjectGlobalReviewPageState
                 OBModeratedObjectPreview(
                   moderatedObject: widget.moderatedObject,
                 ),
+                SizedBox(height: 10,),
                 OBModeratedObjectDescription(
                     isEditable: _isEditable,
                     moderatedObject: widget.moderatedObject,
