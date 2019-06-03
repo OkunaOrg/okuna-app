@@ -2,6 +2,7 @@ import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
 import 'package:Openbook/widgets/fields/checkbox_field.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/moderated_object_status_circle.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -58,8 +59,8 @@ class OBModeratedObjectsFiltersModalState
       ];
     }
 
-    _selectedTypes = currentFilters.types;
-    _selectedStatuses = currentFilters.statuses;
+    _selectedTypes = currentFilters.types.toList();
+    _selectedStatuses = currentFilters.statuses.toList();
 
     _onlyVerified = currentFilters.onlyVerified;
   }
@@ -82,8 +83,8 @@ class OBModeratedObjectsFiltersModalState
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('Clear all'),
-                      onPressed: _onWantsToClearFilters,
+                      child: Text('Reset'),
+                      onPressed: _onWantsToResetFilters,
                     ),
                   ),
                   const SizedBox(
@@ -146,11 +147,12 @@ class OBModeratedObjectsFiltersModalState
     String typeString = ModeratedObject.factory
         .convertTypeToHumanReadableString(type, capitalize: true);
     return OBCheckboxField(
+      titleStyle: TextStyle(fontWeight: FontWeight.normal),
       onTap: () {
         _onTypePressed(type);
       },
       title: typeString,
-      value: _types.contains(type),
+      value: _selectedTypes.contains(type),
     );
   }
 
@@ -158,19 +160,49 @@ class OBModeratedObjectsFiltersModalState
     ModeratedObjectStatus status = _statuses[index];
     String statusString = ModeratedObject.factory
         .convertStatusToHumanReadableString(status, capitalize: true);
-    return OBCheckboxField(
-      onTap: () {
-        _onStatusPressed(status);
-      },
-      title: statusString,
-      value: _statuses.contains(status),
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: OBModeratedObjectStatusCircle(
+            status: status,
+          ),
+        ),
+        Expanded(
+          child: OBCheckboxField(
+            titleStyle: TextStyle(fontWeight: FontWeight.normal),
+            onTap: () {
+              _onStatusPressed(status);
+            },
+            title: statusString,
+            value: _selectedStatuses.contains(status),
+          ),
+        )
+      ],
     );
   }
 
   Widget _buildIsVerifiedListTile() {
-    return OBCheckboxField(
-      title: 'Are verified',
-      value: _onlyVerified,
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: OBIcon(OBIcons.verify),
+        ),
+        Expanded(
+          child: OBCheckboxField(
+            titleStyle: TextStyle(fontWeight: FontWeight.normal),
+            title: 'Verified',
+            value: _onlyVerified,
+            onTap: () {
+              setState(() {
+                _onlyVerified = !_onlyVerified;
+              });
+            },
+          ),
+        )
+      ],
     );
   }
 
@@ -189,20 +221,28 @@ class OBModeratedObjectsFiltersModalState
     _setRequestInProgress(true);
     await widget.moderatedObjectsPageController.setFilters(
         OBModeratedObjectsFilters(
-            types: _types, statuses: _statuses, onlyVerified: _onlyVerified));
+            types: _selectedTypes,
+            statuses: _selectedStatuses,
+            onlyVerified: _onlyVerified));
     _setRequestInProgress(false);
     Navigator.pop(context);
   }
 
-  void _onWantsToClearFilters() async {
+  void _onWantsToResetFilters() async {
+    OBModeratedObjectsFilters _defaultFilters =
+        OBModeratedObjectsFilters.makeDefault(
+            isGlobalModeration:
+                !widget.moderatedObjectsPageController.hasCommunity());
     setState(() {
-      _selectedTypes = [];
-      _selectedStatuses = [];
+      _selectedTypes = _defaultFilters.types;
+      _selectedStatuses = _defaultFilters.statuses;
+      _onlyVerified = _defaultFilters.onlyVerified;
     });
   }
 
   void _onTypePressed(ModeratedObjectType pressedType) {
     if (_selectedTypes.contains(pressedType)) {
+      if (_selectedTypes.length == 1) return;
       // Remove
       _removeSelectedType(pressedType);
     } else {
@@ -225,6 +265,7 @@ class OBModeratedObjectsFiltersModalState
 
   void _onStatusPressed(ModeratedObjectStatus pressedStatus) {
     if (_selectedStatuses.contains(pressedStatus)) {
+      if (_selectedStatuses.length == 1) return;
       // Remove
       _removeSelectedStatus(pressedStatus);
     } else {

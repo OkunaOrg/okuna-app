@@ -1510,20 +1510,23 @@ class UserService {
                 maxId: maxId,
                 verified: verified,
                 types: types != null
-                    ? types.map((status) =>
-                        ModeratedObject.factory.convertTypeToString(status))
+                    ? types
+                        .map((ModeratedObjectType type) =>
+                            ModeratedObject.factory.convertTypeToString(type))
+                        .toList()
                     : null,
                 statuses:
                     statuses != null
-                        ? statuses.map((status) => ModeratedObject.factory
-                            .convertStatusToString(status))
+                        ? statuses
+                            .map(
+                                (ModeratedObjectStatus status) =>
+                                    ModeratedObject.factory
+                                        .convertStatusToString(status))
+                            .toList()
                         : null,
                 count: count);
 
     _checkResponseIsOk(response);
-
-    var what = json.decode(response.body);
-    print(what);
 
     return ModeratedObjectsList.fromJson(json.decode(response.body));
   }
@@ -1540,12 +1543,16 @@ class UserService {
         maxId: maxId,
         verified: verified,
         types: types != null
-            ? types.map(
-                (status) => ModeratedObject.factory.convertTypeToString(status))
+            ? types
+                .map((status) =>
+                    ModeratedObject.factory.convertTypeToString(status))
+                .toList()
             : null,
         statuses: statuses != null
-            ? statuses.map((status) =>
-                ModeratedObject.factory.convertStatusToString(status))
+            ? statuses
+                .map((status) =>
+                    ModeratedObject.factory.convertStatusToString(status))
+                .toList()
             : null,
         count: count);
 
