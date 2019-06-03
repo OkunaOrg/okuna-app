@@ -107,7 +107,6 @@ class OBModeratedObjectLogsState extends State<OBModeratedObjectLogs> {
       ModeratedObjectLogsList moderationLogsList =
           await _refreshLogsOperation.value;
       _setLogs(moderationLogsList.moderatedObjectLogs);
-      print(moderationLogsList.moderatedObjectLogs.first.logType);
     } catch (error) {
       _onError(error);
     } finally {

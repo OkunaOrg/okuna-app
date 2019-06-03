@@ -125,10 +125,10 @@ class OBModeratedObjectUpdateCategoryModalState
     });
   }
 
-  void _saveModerationCategory() {
+  void _saveModerationCategory() async{
     _setRequestInProgress(true);
     try {
-      _userService.updateModeratedObject(widget.moderatedObject,
+      await _userService.updateModeratedObject(widget.moderatedObject,
           category: _selectedModerationCategory);
       Navigator.of(context).pop(_selectedModerationCategory);
     } catch (error) {
