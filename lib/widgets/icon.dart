@@ -197,7 +197,7 @@ class OBIcons {
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const edit = OBIconData(nativeIcon: Icons.edit);
-  static const reviewModeratedObject = OBIconData(nativeIcon: Icons.edit);
+  static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const account = OBIconData(nativeIcon: Icons.account_circle);
