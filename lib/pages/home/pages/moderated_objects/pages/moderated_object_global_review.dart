@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/modera
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/moderated_object_logs.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/moderated_object_reports_preview.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/moderated_object_status.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -12,6 +13,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -68,6 +70,12 @@ class OBModeratedObjectGlobalReviewPageState
           Expanded(
             child: ListView(
               children: <Widget>[
+                OBTileGroupTitle(
+                  title: 'Object',
+                ),
+                OBModeratedObjectPreview(
+                  moderatedObject: widget.moderatedObject,
+                ),
                 OBModeratedObjectDescription(
                     isEditable: _isEditable,
                     moderatedObject: widget.moderatedObject,
