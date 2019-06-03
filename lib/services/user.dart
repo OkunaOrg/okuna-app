@@ -1601,13 +1601,13 @@ class UserService {
   Future<void> approveModeratedObject(ModeratedObject moderatedObject) async {
     HttpieResponse response = await _moderationApiService
         .approveModeratedObjectWithId(moderatedObject.id);
-    _checkResponseIsCreated(response);
+    _checkResponseIsOk(response);
   }
 
   Future<void> rejectModeratedObject(ModeratedObject moderatedObject) async {
     HttpieResponse response = await _moderationApiService
         .rejectModeratedObjectWithId(moderatedObject.id);
-    _checkResponseIsCreated(response);
+    _checkResponseIsOk(response);
   }
 
   Future<ModerationCategoriesList> getModerationCategories() async {

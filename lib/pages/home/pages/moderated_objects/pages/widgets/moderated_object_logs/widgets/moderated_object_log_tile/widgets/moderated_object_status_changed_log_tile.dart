@@ -30,7 +30,8 @@ class OBModeratedObjectStatusChangedLogTile extends StatelessWidget {
           ),
           OBSecondaryText(ModeratedObject.factory
               .convertStatusToHumanReadableString(
-                  moderatedObjectStatusChangedLog.changedFrom)),
+                  moderatedObjectStatusChangedLog.changedFrom,
+                  capitalize: true)),
           const SizedBox(
             height: 10,
           ),
@@ -40,7 +41,8 @@ class OBModeratedObjectStatusChangedLogTile extends StatelessWidget {
           ),
           OBSecondaryText(ModeratedObject.factory
               .convertStatusToHumanReadableString(
-                  moderatedObjectStatusChangedLog.changedTo)),
+                  moderatedObjectStatusChangedLog.changedTo,
+                  capitalize: true)),
         ],
       ),
     );

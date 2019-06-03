@@ -29,6 +29,7 @@ class OBModeratedObjectDescription extends StatelessWidget {
         ),
         ListTile(
           onTap: () async {
+            if(!isEditable) return;
             OpenbookProviderState openbookProvider =
                 OpenbookProvider.of(context);
             String newDescription = await openbookProvider.modalService

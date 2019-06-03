@@ -88,14 +88,14 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
   }
 
   void setIsApproved() {
-    _setStatus(ModeratedObjectStatus.approved);
+    setStatus(ModeratedObjectStatus.approved);
   }
 
   void setIsRejected() {
-    _setStatus(ModeratedObjectStatus.rejected);
+    setStatus(ModeratedObjectStatus.rejected);
   }
 
-  void _setStatus(ModeratedObjectStatus newStatus) {
+  void setStatus(ModeratedObjectStatus newStatus) {
     status = newStatus;
     notifyUpdate();
   }

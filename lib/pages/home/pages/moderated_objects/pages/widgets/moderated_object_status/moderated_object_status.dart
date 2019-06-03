@@ -1,22 +1,20 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
-import 'package:Openbook/widgets/tiles/moderation_category_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBModeratedObjectCategory extends StatelessWidget {
+class OBModeratedObjectStatus extends StatelessWidget {
   final bool isEditable;
   final ModeratedObject moderatedObject;
-  final ValueChanged<ModerationCategory> onCategoryChanged;
+  final ValueChanged<ModeratedObjectStatus> onStatusChanged;
 
-  const OBModeratedObjectCategory(
+  const OBModeratedObjectStatus(
       {Key key,
       @required this.moderatedObject,
       @required this.isEditable,
-      this.onCategoryChanged})
+      this.onStatusChanged})
       : super(key: key);
 
   @override
@@ -26,25 +24,26 @@ class OBModeratedObjectCategory extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBTileGroupTitle(
-          title: 'Category',
+          title: 'Status',
         ),
         StreamBuilder(
           initialData: moderatedObject,
           stream: moderatedObject.updateSubject,
           builder:
               (BuildContext context, AsyncSnapshot<ModeratedObject> snapshot) {
-            return OBModerationCategoryTile(
-              category: snapshot.data.category,
-              onPressed: (category) async {
+            return ListTile(
+              title: OBText(ModeratedObject.factory
+                  .convertStatusToHumanReadableString(moderatedObject.status, capitalize: true)),
+              onTap: () async {
                 if (!isEditable) return;
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
-                ModerationCategory newModerationCategory =
+                ModeratedObjectStatus newModerationStatus =
                     await openbookProvider.modalService
-                        .openModeratedObjectUpdateCategory(
+                        .openModeratedObjectUpdateStatus(
                             context: context, moderatedObject: moderatedObject);
-                if (newModerationCategory != null && onCategoryChanged != null)
-                  onCategoryChanged(newModerationCategory);
+                if (newModerationStatus != null && onStatusChanged != null)
+                  onStatusChanged(newModerationStatus);
               },
               trailing: const OBIcon(
                 OBIcons.edit,

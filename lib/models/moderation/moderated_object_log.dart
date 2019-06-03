@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 class ModeratedObjectLog {
   static String descriptionChangedLogType = 'DC';
-  static String statusChangedLogType = 'SC';
+  static String statusChangedLogType = 'AC';
   static String verifiedChangedLogType = 'VC';
   static String categoryChangedLogType = 'CC';
 
@@ -172,8 +172,13 @@ class ModeratedObjectStatusChangedLog {
   factory ModeratedObjectStatusChangedLog.fromJson(
       Map<String, dynamic> parsedJson) {
     return ModeratedObjectStatusChangedLog(
-      changedFrom: parsedJson['changed_from'],
-      changedTo: parsedJson['changed_to'],
+      changedFrom: parseStatus(parsedJson['changed_from']),
+      changedTo: parseStatus(parsedJson['changed_to']),
     );
+  }
+
+  static ModeratedObjectStatus parseStatus(String rawModerationStatus) {
+    if (rawModerationStatus == null) return null;
+    return ModeratedObject.factory.parseStatus(rawModerationStatus);
   }
 }

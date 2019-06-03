@@ -50,7 +50,7 @@ class OBModeratedObjectLogTile extends StatelessWidget {
         );
         break;
       default:
-        logTile = const ListTile(
+        logTile = ListTile(
           title: OBText(
             'Unsupported log type',
             style: TextStyle(fontWeight: FontWeight.bold),

@@ -4,6 +4,7 @@ import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/modera
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/moderated_object_description.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/moderated_object_logs.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/moderated_object_reports_preview.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/moderated_object_status.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -73,6 +74,11 @@ class OBModeratedObjectGlobalReviewPageState
                     isEditable: _isEditable,
                     moderatedObject: widget.moderatedObject,
                     onCategoryChanged: _onCategoryChanged),
+                OBModeratedObjectStatus(
+                  moderatedObject: widget.moderatedObject,
+                  isEditable: _isEditable,
+                  onStatusChanged: _onStatusChanged,
+                ),
                 OBModeratedObjectReportsPreview(
                   isEditable: _isEditable,
                   moderatedObject: widget.moderatedObject,
@@ -125,10 +131,18 @@ class OBModeratedObjectGlobalReviewPageState
   }
 
   void _onDescriptionChanged(String newDescription) {
-    _logsController.refreshLogs();
+    _refreshLogs();
   }
 
   void _onCategoryChanged(ModerationCategory newCategory) {
+    _refreshLogs();
+  }
+
+  void _onStatusChanged(ModeratedObjectStatus newStatus) {
+    _refreshLogs();
+  }
+
+  void _refreshLogs() {
     _logsController.refreshLogs();
   }
 

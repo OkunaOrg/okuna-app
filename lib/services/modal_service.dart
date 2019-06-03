@@ -30,6 +30,7 @@ import 'package:Openbook/pages/home/pages/moderated_objects/modals/moderated_obj
 import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/modals/moderated_object_update_category.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/modals/moderated_object_update_description.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/modals/moderated_object_update_status.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -379,6 +380,18 @@ class ModalService {
         fullscreenDialog: true,
         builder: (BuildContext context) {
           return OBModeratedObjectUpdateCategoryModal(
+            moderatedObject: moderatedObject,
+          );
+        }));
+  }
+
+  Future<ModeratedObjectStatus> openModeratedObjectUpdateStatus(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.of(context).push(CupertinoPageRoute<ModeratedObjectStatus>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBModeratedObjectUpdateStatusModal(
             moderatedObject: moderatedObject,
           );
         }));
