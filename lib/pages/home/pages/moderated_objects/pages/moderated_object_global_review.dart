@@ -13,6 +13,7 @@ import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
@@ -66,49 +67,51 @@ class OBModeratedObjectGlobalReviewPageState
       navigationBar: OBThemedNavigationBar(
         title: 'Review moderated object',
       ),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                OBTileGroupTitle(
-                  title: 'Object',
-                ),
-                OBModeratedObjectPreview(
-                  moderatedObject: widget.moderatedObject,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                OBModeratedObjectDescription(
+      child: OBPrimaryColorContainer(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  OBTileGroupTitle(
+                    title: 'Object',
+                  ),
+                  OBModeratedObjectPreview(
+                    moderatedObject: widget.moderatedObject,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  OBModeratedObjectDescription(
+                      isEditable: _isEditable,
+                      moderatedObject: widget.moderatedObject,
+                      onDescriptionChanged: _onDescriptionChanged),
+                  OBModeratedObjectCategory(
+                      isEditable: _isEditable,
+                      moderatedObject: widget.moderatedObject,
+                      onCategoryChanged: _onCategoryChanged),
+                  OBModeratedObjectStatus(
+                    moderatedObject: widget.moderatedObject,
+                    isEditable: _isEditable,
+                    onStatusChanged: _onStatusChanged,
+                  ),
+                  OBModeratedObjectReportsPreview(
                     isEditable: _isEditable,
                     moderatedObject: widget.moderatedObject,
-                    onDescriptionChanged: _onDescriptionChanged),
-                OBModeratedObjectCategory(
-                    isEditable: _isEditable,
+                  ),
+                  OBModeratedObjectLogs(
                     moderatedObject: widget.moderatedObject,
-                    onCategoryChanged: _onCategoryChanged),
-                OBModeratedObjectStatus(
-                  moderatedObject: widget.moderatedObject,
-                  isEditable: _isEditable,
-                  onStatusChanged: _onStatusChanged,
-                ),
-                OBModeratedObjectReportsPreview(
-                  isEditable: _isEditable,
-                  moderatedObject: widget.moderatedObject,
-                ),
-                OBModeratedObjectLogs(
-                  moderatedObject: widget.moderatedObject,
-                  controller: _logsController,
-                )
-              ],
+                    controller: _logsController,
+                  )
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: _buildPrimaryActions(),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: _buildPrimaryActions(),
+            )
+          ],
+        ),
       ),
     );
   }
