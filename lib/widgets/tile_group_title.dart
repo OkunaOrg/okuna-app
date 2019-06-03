@@ -9,7 +9,7 @@ class OBTileGroupTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: OBText(
         title,
         size: OBTextSize.large,

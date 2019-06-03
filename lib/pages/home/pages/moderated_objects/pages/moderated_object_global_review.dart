@@ -1,6 +1,7 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/moderated_object_category.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/moderated_object_description.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/moderated_object_logs.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/moderated_object_reports_preview.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -72,6 +73,9 @@ class OBModeratedObjectGlobalReviewPageState
                 ),
                 OBModeratedObjectReportsPreview(
                   isEditable: _isEditable,
+                  moderatedObject: widget.moderatedObject,
+                ),
+                OBModeratedObjectLogs(
                   moderatedObject: widget.moderatedObject,
                 )
               ],

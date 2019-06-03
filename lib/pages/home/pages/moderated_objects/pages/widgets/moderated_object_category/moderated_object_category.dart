@@ -3,6 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
+import 'package:Openbook/widgets/tiles/moderation_category_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectCategory extends StatelessWidget {
@@ -27,16 +28,18 @@ class OBModeratedObjectCategory extends StatelessWidget {
           stream: moderatedObject.updateSubject,
           builder:
               (BuildContext context, AsyncSnapshot<ModeratedObject> snapshot) {
-            return ListTile(
-              onTap: () {
+            return OBModerationCategoryTile(
+              category: snapshot.data.category,
+              onPressed: (category) {
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
                 openbookProvider.modalService.openModeratedObjectUpdateCategory(
                     context: context, moderatedObject: moderatedObject);
               },
-              title: OBText(snapshot.data.category.title),
-              subtitle: OBText(snapshot.data.category.description),
-              trailing: const OBIcon(OBIcons.edit, themeColor: OBIconThemeColor.secondaryText,),
+              trailing: const OBIcon(
+                OBIcons.edit,
+                themeColor: OBIconThemeColor.secondaryText,
+              ),
             );
           },
         ),

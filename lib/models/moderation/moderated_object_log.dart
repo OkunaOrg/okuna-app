@@ -1,6 +1,7 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:meta/meta.dart';
 
 class ModeratedObjectLog {
   static String descriptionChangedLogType = 'DC';
@@ -14,22 +15,29 @@ class ModeratedObjectLog {
   final DateTime created;
   ModeratedObjectLogType logType;
 
+  dynamic contentObject;
+
   ModeratedObjectLog(
       {this.verified,
       this.description,
+      this.contentObject,
       this.actor,
       this.created,
       this.logType});
 
   factory ModeratedObjectLog.fromJson(Map<String, dynamic> parsedJson) {
+    ModeratedObjectLogType logType = parseType(parsedJson['log_type']);
+
     return ModeratedObjectLog(
         verified: parsedJson['verified'],
         description: parsedJson['description'],
         actor: parseActor(
           parsedJson['actor'],
         ),
-        logType: parseType(parsedJson['log_type']),
-        created: parseCreated(parsedJson['created']));
+        logType: logType,
+        created: parseCreated(parsedJson['created']),
+        contentObject: parseContentObject(
+            contentObjectData: parsedJson['content_object'], logType: logType));
   }
 
   static User parseActor(Map rawActor) {
@@ -40,6 +48,35 @@ class ModeratedObjectLog {
   static DateTime parseCreated(String created) {
     if (created == null) return null;
     return DateTime.parse(created).toLocal();
+  }
+
+  static dynamic parseContentObject(
+      {@required Map contentObjectData,
+      @required ModeratedObjectLogType logType}) {
+    if (contentObjectData == null) return null;
+
+    dynamic contentObject;
+    switch (logType) {
+      case ModeratedObjectLogType.categoryChanged:
+        contentObject =
+            ModeratedObjectCategoryChangedLog.fromJson(contentObjectData);
+        break;
+      case ModeratedObjectLogType.descriptionChanged:
+        contentObject =
+            ModeratedObjectDescriptionChangedLog.fromJson(contentObjectData);
+        break;
+      case ModeratedObjectLogType.verifiedChanged:
+        contentObject =
+            ModeratedObjectVerifiedChangedLog.fromJson(contentObjectData);
+        break;
+      case ModeratedObjectLogType.statusChanged:
+        contentObject =
+            ModeratedObjectStatusChangedLog.fromJson(contentObjectData);
+        break;
+      default:
+    }
+
+    return contentObject;
   }
 
   static ModeratedObjectLogType parseType(String moderatedObjectTypeStr) {
@@ -78,6 +115,19 @@ class ModeratedObjectCategoryChangedLog {
   final ModerationCategory changedTo;
 
   ModeratedObjectCategoryChangedLog({this.changedFrom, this.changedTo});
+
+  factory ModeratedObjectCategoryChangedLog.fromJson(
+      Map<String, dynamic> parsedJson) {
+    return ModeratedObjectCategoryChangedLog(
+      changedFrom: parseCategory(parsedJson['changed_from']),
+      changedTo: parseCategory(parsedJson['changed_to']),
+    );
+  }
+
+  static ModerationCategory parseCategory(Map rawModerationCategory) {
+    if (rawModerationCategory == null) return null;
+    return ModerationCategory.fromJson(rawModerationCategory);
+  }
 }
 
 class ModeratedObjectDescriptionChangedLog {
@@ -85,6 +135,14 @@ class ModeratedObjectDescriptionChangedLog {
   final String changedTo;
 
   ModeratedObjectDescriptionChangedLog({this.changedFrom, this.changedTo});
+
+  factory ModeratedObjectDescriptionChangedLog.fromJson(
+      Map<String, dynamic> parsedJson) {
+    return ModeratedObjectDescriptionChangedLog(
+      changedFrom: parsedJson['changed_from'],
+      changedTo: parsedJson['changed_to'],
+    );
+  }
 }
 
 class ModeratedObjectVerifiedChangedLog {
@@ -92,6 +150,14 @@ class ModeratedObjectVerifiedChangedLog {
   final bool changedTo;
 
   ModeratedObjectVerifiedChangedLog({this.changedFrom, this.changedTo});
+
+  factory ModeratedObjectVerifiedChangedLog.fromJson(
+      Map<String, dynamic> parsedJson) {
+    return ModeratedObjectVerifiedChangedLog(
+      changedFrom: parsedJson['changed_from'],
+      changedTo: parsedJson['changed_to'],
+    );
+  }
 }
 
 class ModeratedObjectStatusChangedLog {
@@ -99,4 +165,12 @@ class ModeratedObjectStatusChangedLog {
   final ModeratedObjectStatus changedTo;
 
   ModeratedObjectStatusChangedLog({this.changedFrom, this.changedTo});
+
+  factory ModeratedObjectStatusChangedLog.fromJson(
+      Map<String, dynamic> parsedJson) {
+    return ModeratedObjectStatusChangedLog(
+      changedFrom: parsedJson['changed_from'],
+      changedTo: parsedJson['changed_to'],
+    );
+  }
 }
