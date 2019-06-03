@@ -3,6 +3,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
+import 'package:Openbook/widgets/tiles/moderated_object_status_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectStatus extends StatelessWidget {
@@ -31,10 +32,15 @@ class OBModeratedObjectStatus extends StatelessWidget {
           stream: moderatedObject.updateSubject,
           builder:
               (BuildContext context, AsyncSnapshot<ModeratedObject> snapshot) {
-            return ListTile(
-              title: OBText(ModeratedObject.factory
-                  .convertStatusToHumanReadableString(moderatedObject.status, capitalize: true)),
-              onTap: () async {
+            return OBModeratedObjectStatusTile(
+              moderatedObject: moderatedObject,
+              trailing: isEditable
+                  ? const OBIcon(
+                      OBIcons.edit,
+                      themeColor: OBIconThemeColor.secondaryText,
+                    )
+                  : null,
+              onPressed: (moderatedObject) async {
                 if (!isEditable) return;
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
@@ -45,10 +51,6 @@ class OBModeratedObjectStatus extends StatelessWidget {
                 if (newModerationStatus != null && onStatusChanged != null)
                   onStatusChanged(newModerationStatus);
               },
-              trailing: isEditable ? const OBIcon(
-                OBIcons.edit,
-                themeColor: OBIconThemeColor.secondaryText,
-              ) : null,
             );
           },
         ),

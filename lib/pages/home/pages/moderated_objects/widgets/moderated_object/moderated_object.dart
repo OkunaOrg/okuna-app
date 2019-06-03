@@ -31,7 +31,10 @@ class OBModeratedObject extends StatelessWidget {
           moderatedObject: moderatedObject,
           community: community,
         ),
-        OBDivider()
+        const SizedBox(
+          height: 10,
+        ),
+        const OBDivider()
       ],
     );
   }

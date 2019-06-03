@@ -3,6 +3,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/checkbox.dart';
+import 'package:Openbook/widgets/moderated_object_status_circle.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -110,9 +111,19 @@ class OBModeratedObjectUpdateStatusModalState
         children: <Widget>[
           Expanded(
             child: ListTile(
-              title: OBText(
-                statusString,
-                style: TextStyle(fontWeight: FontWeight.bold),
+              title: Row(
+                children: <Widget>[
+                  OBModeratedObjectStatusCircle(
+                    status: status,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  OBText(
+                    statusString,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
               ),
               //trailing: OBIcon(OBIcons.chevronRight),
             ),
