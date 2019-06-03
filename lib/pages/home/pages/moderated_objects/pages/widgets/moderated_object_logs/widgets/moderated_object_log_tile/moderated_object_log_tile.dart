@@ -1,6 +1,7 @@
 import 'package:Openbook/models/moderation/moderated_object_log.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_category_changed_log_tile.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_description_changed_log_tile.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_log_actor.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_status_changed_log_tile.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_verified_changed_log_tile.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
@@ -61,7 +62,36 @@ class OBModeratedObjectLogTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      children: <Widget>[logTile, OBDivider()],
+      children: <Widget>[
+        logTile,
+        const SizedBox(
+          height: 5,
+        ),
+        ListTile(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              OBText(
+                'By:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              OBModeratedObjectLogActor(
+                actor: log.actor,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              OBText(
+                'On:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              OBText(log.created.toString()),
+            ],
+          ),
+        ),
+        OBDivider()
+      ],
     );
   }
 }

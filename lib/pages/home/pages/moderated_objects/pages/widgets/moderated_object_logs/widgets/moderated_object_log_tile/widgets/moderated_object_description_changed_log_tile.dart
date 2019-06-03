@@ -37,16 +37,6 @@ class OBModeratedObjectDescriptionChangedLogTile extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           OBSecondaryText(moderatedObjectDescriptionChangedLog.changedTo),
-          const SizedBox(
-            height: 10,
-          ),
-          OBText(
-            'By:',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          OBModeratedObjectLogActor(
-            actor: log.actor,
-          )
         ],
       ),
     );

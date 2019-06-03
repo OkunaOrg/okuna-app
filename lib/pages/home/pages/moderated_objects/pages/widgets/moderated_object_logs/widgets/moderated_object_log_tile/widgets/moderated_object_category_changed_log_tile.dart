@@ -38,13 +38,6 @@ class OBModeratedObjectCategoryChangedLogTile extends StatelessWidget {
           OBModerationCategoryTile(
               contentPadding: const EdgeInsets.all(0),
               category: moderatedObjectCategoryChangedLog.changedTo),
-          OBText(
-            'By:',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          OBModeratedObjectLogActor(
-            actor: log.actor,
-          )
         ],
       ),
     );

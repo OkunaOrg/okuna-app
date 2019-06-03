@@ -38,16 +38,6 @@ class OBModeratedObjectVerifiedChangedLogTile extends StatelessWidget {
           ),
           OBSecondaryText(
               moderatedObjectVerifiedChangedLog.changedTo.toString()),
-          const SizedBox(
-            height: 10,
-          ),
-          OBText(
-            'By:',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          OBModeratedObjectLogActor(
-            actor: log.actor,
-          )
         ],
       ),
     );
