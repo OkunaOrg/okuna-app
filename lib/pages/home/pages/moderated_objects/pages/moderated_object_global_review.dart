@@ -16,6 +16,7 @@ import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBModeratedObjectGlobalReviewPage extends StatefulWidget {
   final ModeratedObject moderatedObject;
@@ -76,7 +77,9 @@ class OBModeratedObjectGlobalReviewPageState
                 OBModeratedObjectPreview(
                   moderatedObject: widget.moderatedObject,
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 OBModeratedObjectDescription(
                     isEditable: _isEditable,
                     moderatedObject: widget.moderatedObject,
@@ -143,7 +146,6 @@ class OBModeratedObjectGlobalReviewPageState
           actions.add(Expanded(
             child: OBButton(
               size: OBButtonSize.large,
-              type: OBButtonType.success,
               child: Row(
                 children: <Widget>[
                   const OBIcon(
@@ -159,6 +161,7 @@ class OBModeratedObjectGlobalReviewPageState
               ),
               onPressed: _onWantsToVerifyModeratedObject,
               isLoading: _requestInProgress,
+              color: Pigment.fromString('#5e9bff'),
             ),
           ));
         }

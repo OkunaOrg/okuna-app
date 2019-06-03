@@ -31,11 +31,9 @@ class OBModeratedObjectPreview extends StatelessWidget {
         );
         break;
       case ModeratedObjectType.community:
-        widget = Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            OBCommunityTile(moderatedObject.contentObject),
-          ],
+        widget = Padding(
+          padding: EdgeInsets.all(10),
+          child: OBCommunityTile(moderatedObject.contentObject),
         );
         break;
       case ModeratedObjectType.postComment:
