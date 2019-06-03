@@ -1,6 +1,8 @@
+import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
 import 'package:Openbook/widgets/tiles/community_tile.dart';
@@ -33,7 +35,15 @@ class OBModeratedObjectPreview extends StatelessWidget {
       case ModeratedObjectType.community:
         widget = Padding(
           padding: EdgeInsets.all(10),
-          child: OBCommunityTile(moderatedObject.contentObject),
+          child: OBCommunityTile(
+            moderatedObject.contentObject,
+            onCommunityTilePressed: (Community community) {
+              OpenbookProviderState openbookProvider =
+                  OpenbookProvider.of(context);
+              openbookProvider.navigationService
+                  .navigateToCommunity(community: community, context: context);
+            },
+          ),
         );
         break;
       case ModeratedObjectType.postComment:
