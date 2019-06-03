@@ -9,6 +9,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:async/async.dart';
@@ -112,7 +113,19 @@ class OBModeratedObjectGlobalReviewPageState
             child: OBButton(
               size: OBButtonSize.large,
               type: OBButtonType.danger,
-              child: Text('Unverify'),
+              child: Row(
+                children: <Widget>[
+                  const OBIcon(
+                    OBIcons.unverify,
+                    color: Colors.white,
+                    customSize: 18,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text('Unverify')
+                ],
+              ),
               onPressed: _onWantsToUnverifyModeratedObject,
               isLoading: _requestInProgress,
             ),
@@ -122,7 +135,19 @@ class OBModeratedObjectGlobalReviewPageState
             child: OBButton(
               size: OBButtonSize.large,
               type: OBButtonType.success,
-              child: Text('Verify'),
+              child: Row(
+                children: <Widget>[
+                  const OBIcon(
+                    OBIcons.verify,
+                    color: Colors.white,
+                    customSize: 18,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text('Verify')
+                ],
+              ),
               onPressed: _onWantsToVerifyModeratedObject,
               isLoading: _requestInProgress,
             ),
@@ -160,6 +185,7 @@ class OBModeratedObjectGlobalReviewPageState
           _userService.verifyModeratedObject(widget.moderatedObject));
       await _requestOperation.value;
       widget.moderatedObject.setIsVerified(true);
+      _updateIsEditable();
       _refreshLogs();
     } catch (error) {
       _onError(error);
@@ -176,6 +202,7 @@ class OBModeratedObjectGlobalReviewPageState
           _userService.unverifyModeratedObject(widget.moderatedObject));
       await _requestOperation.value;
       widget.moderatedObject.setIsVerified(false);
+      _updateIsEditable();
       _refreshLogs();
     } catch (error) {
       _onError(error);
@@ -186,6 +213,12 @@ class OBModeratedObjectGlobalReviewPageState
 
   void _bootstrap() {
     _isEditable = !widget.moderatedObject.verified;
+  }
+
+  void _updateIsEditable() {
+    setState(() {
+      _isEditable = !widget.moderatedObject.verified;
+    });
   }
 
   void _onError(error) async {

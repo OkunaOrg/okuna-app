@@ -28,7 +28,16 @@ class OBModeratedObjectDescriptionChangedLogTile extends StatelessWidget {
             'Description changed from:',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          OBSecondaryText(moderatedObjectDescriptionChangedLog.changedFrom),
+          OBSecondaryText(
+            moderatedObjectDescriptionChangedLog.changedFrom != null
+                ? moderatedObjectDescriptionChangedLog.changedFrom
+                : 'No description',
+            style: TextStyle(
+                fontStyle:
+                    moderatedObjectDescriptionChangedLog.changedFrom != null
+                        ? FontStyle.normal
+                        : FontStyle.italic),
+          ),
           const SizedBox(
             height: 10,
           ),
