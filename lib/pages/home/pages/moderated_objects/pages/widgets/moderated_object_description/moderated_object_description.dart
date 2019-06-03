@@ -27,9 +27,8 @@ class OBModeratedObjectDescription extends StatelessWidget {
           onTap: () {
             OpenbookProviderState openbookProvider =
                 OpenbookProvider.of(context);
-            openbookProvider.navigationService
-                .navigateToModeratedObjectUpdateDescription(
-                    context: context, moderatedObject: moderatedObject);
+            openbookProvider.modalService.openModeratedObjectUpdateDescription(
+                context: context, moderatedObject: moderatedObject);
           },
           title: StreamBuilder(
             initialData: moderatedObject,
@@ -45,7 +44,10 @@ class OBModeratedObjectDescription extends StatelessWidget {
                     );
             },
           ),
-          trailing: const OBIcon(OBIcons.chevronRight),
+          trailing: const OBIcon(
+            OBIcons.edit,
+            themeColor: OBIconThemeColor.secondaryText,
+          ),
         )
       ],
     );

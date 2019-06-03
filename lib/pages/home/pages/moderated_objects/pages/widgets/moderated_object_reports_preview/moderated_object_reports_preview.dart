@@ -2,9 +2,11 @@ import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderation_report.dart';
 import 'package:Openbook/models/moderation/moderation_report_list.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/buttons/see_all_button.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -30,9 +32,12 @@ class OBModeratedObjectReportsPreview extends StatefulWidget {
 
 class OBModeratedObjectReportsPreviewState
     extends State<OBModeratedObjectReportsPreview> {
+  static int reportsPreviewsCount = 5;
+
   bool _needsBootstrap;
   UserService _userService;
   ToastService _toastService;
+  NavigationService _navigationService;
 
   CancelableOperation _refreshReportsOperation;
   bool _refreshInProgress;
@@ -58,6 +63,7 @@ class OBModeratedObjectReportsPreviewState
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _navigationService = openbookProvider.navigationService;
       _refreshReports();
       _needsBootstrap = false;
       _refreshInProgress = true;
@@ -89,6 +95,12 @@ class OBModeratedObjectReportsPreviewState
                 shrinkWrap: true,
               ),
         OBDivider(),
+        OBSeeAllButton(
+          previewedResourcesCount: _reports.length,
+          resourcesCount: widget.moderatedObject.reportsCount,
+          resourceName: 'reports',
+          onPressed: _onWantsToSeeAllReports,
+        )
       ],
     );
   }
@@ -107,7 +119,9 @@ class OBModeratedObjectReportsPreviewState
             children: <Widget>[
               _buildReportCategory(report),
               _buildReportDescription(report),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               _buildReportReporter(report),
             ],
           ),
@@ -117,22 +131,28 @@ class OBModeratedObjectReportsPreviewState
   }
 
   Widget _buildReportReporter(ModerationReport report) {
-    return Row(
-      children: <Widget>[
-        OBAvatar(
-          borderRadius: 4,
-          customSize: 16,
-          avatarUrl: report.reporter.getProfileAvatar(),
-        ),
-        const SizedBox(
-          width: 6,
-        ),
-        OBSecondaryText(
-          '@' + report.reporter.username,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        OBSecondaryText(' reported'),
-      ],
+    return GestureDetector(
+      onTap: () {
+        _navigationService.navigateToUserProfile(
+            user: report.reporter, context: context);
+      },
+      child: Row(
+        children: <Widget>[
+          OBAvatar(
+            borderRadius: 4,
+            customSize: 16,
+            avatarUrl: report.reporter.getProfileAvatar(),
+          ),
+          const SizedBox(
+            width: 6,
+          ),
+          OBSecondaryText(
+            '@' + report.reporter.username,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          OBSecondaryText(' reported'),
+        ],
+      ),
     );
   }
 
@@ -186,6 +206,11 @@ class OBModeratedObjectReportsPreviewState
       _onError(error);
     }
     _setRefreshInProgress(false);
+  }
+
+  void _onWantsToSeeAllReports() {
+    _navigationService.navigateToModeratedObjectReports(
+        context: context, moderatedObject: widget.moderatedObject);
   }
 
   void _setRefreshInProgress(bool refreshInProgress) {

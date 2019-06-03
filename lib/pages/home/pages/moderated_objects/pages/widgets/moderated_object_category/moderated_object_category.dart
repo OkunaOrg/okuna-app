@@ -31,13 +31,12 @@ class OBModeratedObjectCategory extends StatelessWidget {
               onTap: () {
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
-                openbookProvider.navigationService
-                    .navigateToModeratedObjectUpdateCategory(
-                        context: context, moderatedObject: moderatedObject);
+                openbookProvider.modalService.openModeratedObjectUpdateCategory(
+                    context: context, moderatedObject: moderatedObject);
               },
               title: OBText(snapshot.data.category.title),
               subtitle: OBText(snapshot.data.category.description),
-              trailing: const OBIcon(OBIcons.chevronRight),
+              trailing: const OBIcon(OBIcons.edit, themeColor: OBIconThemeColor.secondaryText,),
             );
           },
         ),

@@ -196,6 +196,7 @@ class OBIcons {
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
+  static const edit = OBIconData(nativeIcon: Icons.edit);
   static const reviewModeratedObject = OBIconData(nativeIcon: Icons.edit);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);

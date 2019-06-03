@@ -33,6 +33,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
 
   String description;
   bool verified;
+  int reportsCount;
 
   ModeratedObject(
       {this.id,
@@ -40,6 +41,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
       this.contentObject,
       this.type,
       this.status,
+      this.reportsCount,
       this.category,
       this.description,
       this.verified});
@@ -56,6 +58,10 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
 
     if (json.containsKey('verified')) {
       verified = json['verified'];
+    }
+
+    if (json.containsKey('reports_count')) {
+      reportsCount = json['reports_count'];
     }
 
     if (json.containsKey('status')) {
@@ -112,6 +118,7 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
         community: community,
         category: category,
         description: json['description'],
+        reportsCount: json['reports_count'],
         status: status,
         type: type,
         contentObject: parseContentObject(

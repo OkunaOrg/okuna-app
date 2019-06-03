@@ -1,5 +1,4 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -15,21 +14,21 @@ import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBModeratedObjectUpdateDescriptionPage extends StatefulWidget {
+class OBModeratedObjectUpdateDescriptionModal extends StatefulWidget {
   final ModeratedObject moderatedObject;
 
-  const OBModeratedObjectUpdateDescriptionPage(
+  const OBModeratedObjectUpdateDescriptionModal(
       {Key key, @required this.moderatedObject})
       : super(key: key);
 
   @override
-  OBModeratedObjectUpdateDescriptionPageState createState() {
-    return OBModeratedObjectUpdateDescriptionPageState();
+  OBModeratedObjectUpdateDescriptionModalState createState() {
+    return OBModeratedObjectUpdateDescriptionModalState();
   }
 }
 
-class OBModeratedObjectUpdateDescriptionPageState
-    extends State<OBModeratedObjectUpdateDescriptionPage> {
+class OBModeratedObjectUpdateDescriptionModalState
+    extends State<OBModeratedObjectUpdateDescriptionModal> {
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
@@ -110,12 +109,6 @@ class OBModeratedObjectUpdateDescriptionPageState
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-        leading: GestureDetector(
-          child: const OBIcon(OBIcons.close),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
         title: 'Edit description',
         trailing: OBButton(
           isDisabled: !_formValid,

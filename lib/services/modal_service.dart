@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reaction.dart';
@@ -26,6 +27,8 @@ import 'package:Openbook/pages/home/modals/user_invites/create_user_invite.dart'
 import 'package:Openbook/pages/home/modals/user_invites/send_invite_email.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/modals/moderated_objects_filters/moderated_objects_filters.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/modals/moderated_object_update_category.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/modals/moderated_object_update_description.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -352,6 +355,31 @@ class ModalService {
         builder: (BuildContext context) {
           return Material(
             child: OBAcceptGuidelinesModal(),
+          );
+        }));
+  }
+
+  Future<void> openModeratedObjectUpdateDescription(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBModeratedObjectUpdateDescriptionModal(
+            moderatedObject: moderatedObject,
+          );
+        }));
+  }
+
+  Future<void> openModeratedObjectUpdateCategory(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+
+    return Navigator.of(context).push(CupertinoPageRoute<UserInvite>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBModeratedObjectUpdateCategoryModal(
+            moderatedObject: moderatedObject,
           );
         }));
   }

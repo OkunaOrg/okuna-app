@@ -15,21 +15,21 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBModeratedObjectUpdateCategoryPage extends StatefulWidget {
+class OBModeratedObjectUpdateCategoryModal extends StatefulWidget {
   final ModeratedObject moderatedObject;
 
-  const OBModeratedObjectUpdateCategoryPage(
+  const OBModeratedObjectUpdateCategoryModal(
       {Key key, @required this.moderatedObject})
       : super(key: key);
 
   @override
-  OBModeratedObjectUpdateCategoryPageState createState() {
-    return OBModeratedObjectUpdateCategoryPageState();
+  OBModeratedObjectUpdateCategoryModalState createState() {
+    return OBModeratedObjectUpdateCategoryModalState();
   }
 }
 
-class OBModeratedObjectUpdateCategoryPageState
-    extends State<OBModeratedObjectUpdateCategoryPage> {
+class OBModeratedObjectUpdateCategoryModalState
+    extends State<OBModeratedObjectUpdateCategoryModal> {
   UserService _userService;
   ToastService _toastService;
   List<ModerationCategory> _moderationCategories = [];

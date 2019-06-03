@@ -47,8 +47,6 @@ import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/moderated_object_community_review.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/moderated_object_global_review.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/pages/moderated_object_update_category.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/pages/moderated_object_update_description.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/pages/moderated_object_reports.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
@@ -573,30 +571,6 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obGlobalModeratedObjects'),
             widget: OBModeratedObjectsPage()));
-  }
-
-  Future<void> navigateToModeratedObjectUpdateDescription(
-      {@required BuildContext context,
-      @required ModeratedObject moderatedObject}) async {
-    return Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obModeratedObjectUpdateDescriptionPage'),
-            widget: OBModeratedObjectUpdateDescriptionPage(
-              moderatedObject: moderatedObject,
-            )));
-  }
-
-  Future<void> navigateToModeratedObjectUpdateCategory(
-      {@required BuildContext context,
-      @required ModeratedObject moderatedObject}) async {
-    return Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obModeratedObjectUpdateCategoryPage'),
-            widget: OBModeratedObjectUpdateCategoryPage(
-              moderatedObject: moderatedObject,
-            )));
   }
 
   Future<void> navigateToModeratedObjectReports(
