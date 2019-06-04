@@ -143,6 +143,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
 
     return OBModeratedObject(
         moderatedObject: moderatedObject,
+        community: widget.community,
         key: Key(moderatedObject.id.toString()));
   }
 

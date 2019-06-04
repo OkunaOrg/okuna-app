@@ -35,7 +35,6 @@ class OBModeratedObjectActions extends StatelessWidget {
               onPressed: () {
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
-
                 if (community != null) {
                   openbookProvider.navigationService
                       .navigateToModeratedObjectCommunityReview(

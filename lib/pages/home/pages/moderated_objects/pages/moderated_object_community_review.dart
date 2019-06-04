@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/modera
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/moderated_object_description.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/moderated_object_logs.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/moderated_object_reports_preview.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/moderated_object_status.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
@@ -49,6 +50,7 @@ class OBModeratedObjectCommunityReviewPageState
     _needsBootstrap = true;
     _isEditable = false;
     _logsController = OBModeratedObjectLogsController();
+    _requestInProgress = false;
   }
 
   @override
@@ -93,6 +95,10 @@ class OBModeratedObjectCommunityReviewPageState
                     isEditable: _isEditable,
                     moderatedObject: widget.moderatedObject,
                     onCategoryChanged: _onCategoryChanged),
+                OBModeratedObjectStatus(
+                  moderatedObject: widget.moderatedObject,
+                  isEditable: false,
+                ),
                 OBModeratedObjectReportsPreview(
                   isEditable: _isEditable,
                   moderatedObject: widget.moderatedObject,
@@ -116,44 +122,62 @@ class OBModeratedObjectCommunityReviewPageState
   Widget _buildPrimaryActions() {
     List<Widget> actions = [];
 
-    if (widget.moderatedObject.status == ModeratedObjectStatus.pending) {
+    if (widget.moderatedObject.verified) {
+      actions.add(_buildVerifiedButton());
+    } else if (widget.moderatedObject.status != ModeratedObjectStatus.pending) {
+      if (widget.moderatedObject.status == ModeratedObjectStatus.approved) {
+        actions.add(_buildRejectButton());
+      } else if (widget.moderatedObject.status ==
+          ModeratedObjectStatus.rejected) {
+        actions.add(_buildApproveButton());
+      }
+    } else {
       actions.addAll([
-        Expanded(
-          child: OBButton(
-            size: OBButtonSize.large,
-            type: OBButtonType.danger,
-            child: Text('Reject'),
-            onPressed: _onWantsToRejectModeratedObject,
-            isLoading: _requestInProgress,
-          ),
-        ),
+        _buildRejectButton(),
         const SizedBox(
           width: 20,
         ),
-        Expanded(
-          child: OBButton(
-            size: OBButtonSize.large,
-            child: Text('Approve'),
-            onPressed: _onWantsToApproveModeratedObject,
-            isLoading: _requestInProgress,
-          ),
-        )
+        _buildApproveButton()
       ]);
-    } else {
-      actions.add(
-        Expanded(
-          child: OBButton(
-            size: OBButtonSize.large,
-            type: OBButtonType.primary,
-            child: Text('This item has been verified'),
-            onPressed: null,
-          ),
-        ),
-      );
     }
 
     return Row(
       children: actions,
+    );
+  }
+
+  Widget _buildRejectButton() {
+    return Expanded(
+      child: OBButton(
+        size: OBButtonSize.large,
+        type: OBButtonType.danger,
+        child: Text('Reject'),
+        onPressed: _onWantsToRejectModeratedObject,
+        isLoading: _requestInProgress,
+      ),
+    );
+  }
+
+  Widget _buildApproveButton() {
+    return Expanded(
+      child: OBButton(
+        size: OBButtonSize.large,
+        child: Text('Approve'),
+        type: OBButtonType.success,
+        onPressed: _onWantsToApproveModeratedObject,
+        isLoading: _requestInProgress,
+      ),
+    );
+  }
+
+  Widget _buildVerifiedButton() {
+    return Expanded(
+      child: OBButton(
+        size: OBButtonSize.large,
+        type: OBButtonType.highlight,
+        child: Text('This item has been verified'),
+        onPressed: null,
+      ),
     );
   }
 
@@ -170,6 +194,8 @@ class OBModeratedObjectCommunityReviewPageState
   }
 
   void _onWantsToApproveModeratedObject() async {
+    _setRequestInProgress(true);
+
     try {
       _requestOperation = CancelableOperation.fromFuture(
           _userService.approveModeratedObject(widget.moderatedObject));
@@ -178,10 +204,14 @@ class OBModeratedObjectCommunityReviewPageState
       _updateIsEditable();
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
   }
 
   void _onWantsToRejectModeratedObject() async {
+    _setRequestInProgress(true);
+
     try {
       _requestOperation = CancelableOperation.fromFuture(
           _userService.rejectModeratedObject(widget.moderatedObject));
@@ -190,7 +220,15 @@ class OBModeratedObjectCommunityReviewPageState
       _updateIsEditable();
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
+  }
+
+  void _setRequestInProgress(requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
   }
 
   void _bootstrap() {

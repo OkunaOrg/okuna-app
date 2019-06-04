@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 
 class OBManageCommunityPage extends StatelessWidget {
   final Community community;
+
   const OBManageCommunityPage({@required this.community});
 
   @override
@@ -90,10 +91,10 @@ class OBManageCommunityPage extends StatelessWidget {
 
     if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.communityBannedUsers),
+        leading: const OBIcon(OBIcons.communityModerators),
         title: const OBText('Moderation reports'),
         subtitle: const OBText(
-          'See the community moderation reports.',
+          'Review the community moderation reports.',
           style: listItemSubtitleStyle,
         ),
         onTap: () {
