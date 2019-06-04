@@ -1,18 +1,33 @@
+import 'package:Openbook/libs/str_utils.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/user.dart';
 
 class ModerationPenalty {
+  static String moderationPenaltyTypeSuspension = 'S';
+
+  final int id;
   final User user;
   final DateTime expiration;
   final ModeratedObject moderatedObject;
+  final ModerationPenaltyType type;
 
-  ModerationPenalty({this.user, this.expiration, this.moderatedObject});
+  ModerationPenalty({
+    this.user,
+    this.expiration,
+    this.moderatedObject,
+    this.id,
+    this.type,
+  });
 
   factory ModerationPenalty.fromJson(Map<String, dynamic> parsedJson) {
     return ModerationPenalty(
+        id: parsedJson['id'],
         user: parseUser(
           parsedJson['user'],
+        ),
+        type: parseType(
+          parsedJson['type'],
         ),
         moderatedObject: parseModeratedObject(
           parsedJson['moderated_object'],
@@ -39,4 +54,35 @@ class ModerationPenalty {
     if (rawModeratedObject == null) return null;
     return ModeratedObject.fromJSON(rawModeratedObject);
   }
+
+  static ModerationPenaltyType parseType(String moderationPenaltyTypeStr) {
+    if (moderationPenaltyTypeStr == null) return null;
+
+    ModerationPenaltyType moderationPenaltyType;
+    if (moderationPenaltyTypeStr ==
+        ModerationPenalty.moderationPenaltyTypeSuspension) {
+      moderationPenaltyType = ModerationPenaltyType.suspension;
+    } else {
+      // Don't throw as we might introduce new moderation penalties on the API which might not be yet in code
+      print('Unsupported moderation penalty type');
+    }
+
+    return moderationPenaltyType;
+  }
+
+  static String convertModerationPenaltyTypeToHumanReadableString(
+      ModerationPenaltyType type,
+      {bool capitalize}) {
+    String result;
+    switch (type) {
+      case ModerationPenaltyType.suspension:
+        result = 'Account suspension';
+        break;
+      default:
+        result = 'unknown';
+    }
+    return capitalize ? toCapital(result) : result;
+  }
 }
+
+enum ModerationPenaltyType { suspension }

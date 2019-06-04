@@ -80,6 +80,14 @@ class OBMainMenuPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  leading: const OBIcon(OBIcons.moderationPenalties),
+                  title: OBText('My moderation penalties'),
+                  onTap: () {
+                    navigationService.navigateToMyModerationPenaltiesPage(
+                        context: context);
+                  },
+                ),
+                ListTile(
                   leading: const OBIcon(OBIcons.settings),
                   title: OBText('Settings'),
                   onTap: () {

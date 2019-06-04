@@ -188,7 +188,7 @@ class OBIcons {
   static const deleteCommunity = OBIconData(nativeIcon: Icons.delete_forever);
   static const seeMore = OBIconData(nativeIcon: Icons.arrow_right);
   static const leaveCommunity = OBIconData(nativeIcon: Icons.exit_to_app);
-  static const reportCommunity = OBIconData(nativeIcon: Icons.report);
+  static const reportCommunity = OBIconData(nativeIcon: Icons.flag);
   static const communityInvites = OBIconData(nativeIcon: Icons.email);
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity =
@@ -221,6 +221,7 @@ class OBIcons {
   static const verify = OBIconData(nativeIcon: Icons.check);
   static const unverify = OBIconData(nativeIcon: Icons.close);
   static const globalModerator = OBIconData(nativeIcon: Icons.account_balance);
+  static const moderationPenalties = OBIconData(nativeIcon: Icons.flag);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
