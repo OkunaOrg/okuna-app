@@ -330,14 +330,19 @@ class OBModeratedObjectsFilters {
       ModeratedObjectType.postComment,
       ModeratedObjectType.post,
     ];
-    if (isGlobalModeration)
+    List<ModeratedObjectStatus> filterStatuses = [
+      ModeratedObjectStatus.pending
+    ];
+
+    if (isGlobalModeration) {
       filterTypes
           .addAll([ModeratedObjectType.user, ModeratedObjectType.community]);
+      filterStatuses.addAll(
+          [ModeratedObjectStatus.approved, ModeratedObjectStatus.rejected]);
+    }
 
     return OBModeratedObjectsFilters(
-        statuses: [ModeratedObjectStatus.pending],
-        types: filterTypes,
-        onlyVerified: false);
+        statuses: filterStatuses, types: filterTypes, onlyVerified: false);
   }
 
   OBModeratedObjectsFilters(
