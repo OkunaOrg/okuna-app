@@ -193,7 +193,7 @@ class OBModeratedObjectsFiltersModalState
         Expanded(
           child: OBCheckboxField(
             titleStyle: TextStyle(fontWeight: FontWeight.normal),
-            title: 'Verified',
+            title: 'Only verified',
             value: _onlyVerified,
             onTap: () {
               setState(() {
