@@ -22,6 +22,7 @@ import 'package:Openbook/models/moderation/moderated_object_list.dart';
 import 'package:Openbook/models/moderation/moderated_object_log_list.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/moderation/moderation_category_list.dart';
+import 'package:Openbook/models/moderation/moderation_penalty_list.dart';
 import 'package:Openbook/models/moderation/moderation_report_list.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/notifications_list.dart';
@@ -1597,6 +1598,24 @@ class UserService {
     _checkResponseIsOk(response);
 
     return ModerationReportsList.fromJson(json.decode(response.body));
+  }
+
+  Future<ModerationPenaltiesList> getModerationPenalties(
+      {int maxId, int count}) async {
+    HttpieResponse response = await _moderationApiService
+        .getUserModerationPenalties(maxId: maxId, count: count);
+    _checkResponseIsOk(response);
+
+    return ModerationPenaltiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> getPendingModeratedObjectsCommunities(
+      {int maxId, int count}) async {
+    HttpieResponse response = await _moderationApiService
+        .getUserPendingModeratedObjectsCommunities(maxId: maxId, count: count);
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
   }
 
   Future<void> unverifyModeratedObject(ModeratedObject moderatedObject) async {

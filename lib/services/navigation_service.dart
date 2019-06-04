@@ -36,6 +36,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/followers.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/following.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_tasks/my_moderation_tasks.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
@@ -609,6 +610,15 @@ class NavigationService {
               community: community,
               moderatedObject: moderatedObject,
             )));
+  }
+
+  Future<void> navigateToMyModerationTasksPage(
+      {@required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obMyModerationTasksPage'),
+            widget: OBMyModerationTasksPage()));
   }
 
   Future<void> navigateToBlankPageWithWidget(

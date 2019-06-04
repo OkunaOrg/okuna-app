@@ -9,6 +9,10 @@ class ModerationApiService {
 
   static const GET_GLOBAL_MODERATED_OBJECTS_PATH =
       'api/moderation/moderated-objects/global/';
+  static const USER_MODERATION_PENALTIES_PATH =
+      'api/moderation/user/penalties/';
+  static const USER_PENDING_MODERATED_OBJECTS_COMMUNITIES_PATH =
+      'api/moderation/user/pending-moderated-objects-communities/';
   static const GET_MODERATION_CATEGORIES_PATH = 'api/moderation/categories/';
   static const MODERATED_OBJECT_PATH =
       'api/moderation/moderated-objects/{moderatedObjectId}/';
@@ -98,6 +102,31 @@ class ModerationApiService {
     String path = GET_MODERATION_CATEGORIES_PATH;
 
     return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getUserModerationPenalties({int maxId, int count}) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    String path = USER_MODERATION_PENALTIES_PATH;
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getUserPendingModeratedObjectsCommunities(
+      {int maxId, int count}) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    String path = USER_PENDING_MODERATED_OBJECTS_COMMUNITIES_PATH;
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> verifyModeratedObjectWithId(int moderatedObjectId) {

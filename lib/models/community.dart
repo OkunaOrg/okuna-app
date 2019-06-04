@@ -53,6 +53,8 @@ class Community extends UpdatableModel<Community> {
   String userAdjective;
   String usersAdjective;
   int membersCount;
+  int pendingModeratedObjectsCount;
+
   CommunityType type;
 
   // Whether the user has been invited to the community
@@ -97,6 +99,7 @@ class Community extends UpdatableModel<Community> {
       this.isFavorite,
       this.invitesEnabled,
       this.membersCount,
+      this.pendingModeratedObjectsCount,
       this.categories});
 
   bool hasDescription() {
@@ -209,6 +212,10 @@ class Community extends UpdatableModel<Community> {
       isReported = json['is_reported'];
     }
 
+    if (json.containsKey('pending_moderated_objects_count')) {
+      pendingModeratedObjectsCount = json['pending_moderated_objects_count'];
+    }
+
     if (json.containsKey('color')) {
       color = json['color'];
     }
@@ -280,6 +287,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         isReported: json['is_reported'],
         isFavorite: json['is_favorite'],
         invitesEnabled: json['invites_enabled'],
+        pendingModeratedObjectsCount: json['pending_moderated_objects_count'],
         cover: json['cover'],
         color: json['color'],
         memberships: parseMemberships(json['memberships']),

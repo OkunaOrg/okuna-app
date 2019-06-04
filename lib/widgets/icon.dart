@@ -167,7 +167,7 @@ class OBIcons {
   static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const deletePost = OBIconData(nativeIcon: Icons.delete);
   static const clear = OBIconData(nativeIcon: Icons.delete);
-  static const report = OBIconData(nativeIcon: Icons.report);
+  static const report = OBIconData(nativeIcon: Icons.flag);
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
   static const camera = OBIconData(nativeIcon: Icons.camera_alt);
@@ -220,6 +220,7 @@ class OBIcons {
   static const chevronRight = OBIconData(nativeIcon: Icons.chevron_right);
   static const verify = OBIconData(nativeIcon: Icons.check);
   static const unverify = OBIconData(nativeIcon: Icons.close);
+  static const globalModerator = OBIconData(nativeIcon: Icons.account_balance);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

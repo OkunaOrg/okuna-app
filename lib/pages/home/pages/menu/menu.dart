@@ -72,6 +72,14 @@ class OBMainMenuPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  leading: const OBIcon(OBIcons.communityModerators),
+                  title: OBText('My pending moderation tasks'),
+                  onTap: () {
+                    navigationService.navigateToMyModerationTasksPage(
+                        context: context);
+                  },
+                ),
+                ListTile(
                   leading: const OBIcon(OBIcons.settings),
                   title: OBText('Settings'),
                   onTap: () {
@@ -115,7 +123,7 @@ class OBMainMenuPage extends StatelessWidget {
                       return const SizedBox();
 
                     return ListTile(
-                      leading: const OBIcon(OBIcons.communityModerators),
+                      leading: const OBIcon(OBIcons.globalModerator),
                       title: OBText('Global moderation'),
                       onTap: () async {
                         navigationService.navigateToGlobalModeratedObjects(
