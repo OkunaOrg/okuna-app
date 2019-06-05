@@ -152,6 +152,7 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
     var onUserInviteDeletedCallback = () {
       _removeUserInvite(userInvite);
       widget.inviteGroupListItemDeleteCallback(context, userInvite);
+      if (_inviteGroupList.length == 0) _refreshInvites();
     };
 
     return OBUserInviteTile(
@@ -209,7 +210,7 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
     _navigationService.navigateToBlankPageWithWidget(
         context: context,
         key: Key('obMyUserInvitesGroup' + widget.groupItemName),
-        navBarTitle: capitalize(widget.groupName),
+        navBarTitle: toCapital(widget.groupName),
         widget: _buildSeeAllGroupItemsPage());
   }
 

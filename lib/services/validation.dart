@@ -27,6 +27,7 @@ class ValidationService {
   static const int COLOR_ATTR_MAX_LENGTH = 7;
   static const int LIST_MAX_LENGTH = 100;
   static const int PROFILE_NAME_MAX_LENGTH = 192;
+  static const int MODERATED_OBJECT_DESCRIPTION_MAX_LENGTH = 1000;
   static const int PROFILE_NAME_MIN_LENGTH = 1;
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
   static const int PROFILE_BIO_MAX_LENGTH = 150;
@@ -95,7 +96,8 @@ class ValidationService {
   }
 
   bool isLocationAllowedLength(String location) {
-    return location.length > 0 && location.length <= PROFILE_LOCATION_MAX_LENGTH;
+    return location.length > 0 &&
+        location.length <= PROFILE_LOCATION_MAX_LENGTH;
   }
 
   bool isUsernameAllowedLength(String username) {
@@ -219,6 +221,11 @@ class ValidationService {
         name.length <= PROFILE_NAME_MAX_LENGTH;
   }
 
+  bool isModeratedObjectDescriptionAllowedLength(
+      String moderatedObjectDescription) {
+    return moderatedObjectDescription.length <= PROFILE_NAME_MAX_LENGTH;
+  }
+
   Future<bool> isImageAllowedSize(File image, OBImageType type) async {
     int size = await image.length();
     return size <= getAllowedImageSize(type);
@@ -320,6 +327,20 @@ class ValidationService {
     } else if (!isNameAllowedLength(name)) {
       errorMsg =
           'Name must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
+    }
+    return errorMsg;
+  }
+
+  String validateModeratedObjectDescription(String description) {
+    assert(description != null);
+
+    String errorMsg;
+
+    if (description.isEmpty) {
+      errorMsg = 'Description can\'t be empty.';
+    } else if (!isModeratedObjectDescriptionAllowedLength(description)) {
+      errorMsg =
+          'Description must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
     }
     return errorMsg;
   }

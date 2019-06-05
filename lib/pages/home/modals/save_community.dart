@@ -43,7 +43,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
-  BottomSheetService _bottomSheetService;
+  ImagePickerService _imagePickerService;
   ThemeValueParserService _themeValueParserService;
 
   bool _requestInProgress;
@@ -121,7 +121,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _validationService = openbookProvider.validationService;
-    _bottomSheetService = openbookProvider.bottomSheetService;
+    _imagePickerService = openbookProvider.imagePickerService;
     _themeValueParserService = openbookProvider.themeValueParserService;
     var themeService = openbookProvider.themeService;
 
@@ -399,8 +399,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   }
 
   void _pickNewAvatar() async {
-    File newAvatar = await _bottomSheetService.showPhotoPicker(
-        context: context, imageType: OBImageType.avatar);
+    File newAvatar =
+        await _imagePickerService.pickImage(imageType: OBImageType.avatar);
     if (newAvatar != null) _setAvatarFile(newAvatar);
   }
 
@@ -443,8 +443,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   }
 
   void _pickNewCover() async {
-    File newCover = await _bottomSheetService.showPhotoPicker(
-        context: context, imageType: OBImageType.cover);
+    File newCover =
+        await _imagePickerService.pickImage(imageType: OBImageType.cover);
     if (newCover != null) _setCoverFile(newCover);
   }
 

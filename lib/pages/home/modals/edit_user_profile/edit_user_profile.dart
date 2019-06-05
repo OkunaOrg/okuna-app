@@ -315,32 +315,18 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         builder: (BuildContext context) {
           List<Widget> listTiles = [
             new ListTile(
-              leading: new Icon(Icons.camera_alt),
-              title: new Text('Camera'),
-              onTap: () async {
-                try {
-                  var image = await _imagePickerService.pickImage(
-                      source: ImageSource.camera, imageType: imageType);
-                  _onUserImageSelected(image: image, imageType: imageType);
-                  //if (image != null) createAccountBloc.avatar.add(image);
-                } on ImageTooLargeException catch(e) {
-                  int limit = e.getLimitInMB();
-                  toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
-                }
-                Navigator.pop(context);
-              },
-            ),
-            new ListTile(
               leading: new Icon(Icons.photo_library),
-              title: new Text('Gallery'),
+              title: new Text('Pick image'),
               onTap: () async {
                 try {
-                  var image = await _imagePickerService.pickImage(
-                      source: ImageSource.gallery, imageType: imageType);
+                  var image = await _imagePickerService.pickImage(imageType: imageType);
+
                   _onUserImageSelected(image: image, imageType: imageType);
-                } on ImageTooLargeException catch(e) {
+                } on ImageTooLargeException catch (e) {
                   int limit = e.getLimitInMB();
-                  toastService.error(message: 'Image too large (limit: $limit MB)', context: context);
+                  toastService.error(
+                      message: 'Image too large (limit: $limit MB)',
+                      context: context);
                 }
                 Navigator.pop(context);
               },

@@ -20,6 +20,8 @@ class CommunitiesApiService {
   static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
   static const UPDATE_COMMUNITY_PATH = 'api/communities/{communityName}/';
   static const GET_COMMUNITY_PATH = 'api/communities/{communityName}/';
+  static const REPORT_COMMUNITY_PATH =
+      'api/communities/{communityName}/report/';
   static const JOIN_COMMUNITY_PATH =
       'api/communities/{communityName}/members/join/';
   static const LEAVE_COMMUNITY_PATH =
@@ -75,6 +77,8 @@ class CommunitiesApiService {
       'api/communities/{communityName}/moderators/{username}/';
   static const CREATE_COMMUNITY_POSTS_PATH =
       'api/communities/{communityName}/posts/';
+  static const GET_COMMUNITY_MODERATED_OBJECTS_PATH =
+      'api/communities/{communityName}/moderated-objects/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -144,8 +148,11 @@ class CommunitiesApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> getClosedPostsForCommunityWithName(String communityName,
-      {int maxId, int count, bool authenticatedRequest = true}) {
+  Future<HttpieResponse> getClosedPostsForCommunityWithName(
+      String communityName,
+      {int maxId,
+      int count,
+      bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
@@ -158,7 +165,6 @@ class CommunitiesApiService {
         queryParameters: queryParams,
         appendAuthorizationToken: authenticatedRequest);
   }
-
 
   Future<HttpieResponse> getCommunitiesWithQuery(
       {bool authenticatedRequest = true, @required String query}) {
@@ -566,9 +572,59 @@ class CommunitiesApiService {
         queryParameters: {'offset': offset});
   }
 
+  Future<HttpieResponse> reportCommunity(
+      {@required String communityName,
+      @required int moderationCategoryId,
+      String description}) {
+    String path = _makeReportCommunityPath(communityName);
+
+    Map<String, dynamic> body = {'category_id': moderationCategoryId.toString()};
+
+    if (description != null && description.isNotEmpty) {
+      body['description'] = description;
+    }
+
+    return _httpService.post(_makeApiUrl(path), body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getModeratedObjects({
+    @required String communityName,
+    int count,
+    int maxId,
+    String type,
+    bool verified,
+    List<String> statuses,
+    List<String> types,
+  }) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (statuses != null) queryParams['statuses'] = statuses;
+    if (types != null) queryParams['types'] = types;
+
+    if (verified != null) queryParams['verified'] = verified;
+
+    String path = _makeGetCommunityModeratedObjectsPath(communityName);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  String _makeGetCommunityModeratedObjectsPath(String communityName) {
+    return _stringTemplateService.parse(
+        GET_COMMUNITY_MODERATED_OBJECTS_PATH, {'communityName': communityName});
+  }
+
   String _makeCreateCommunityPost(String communityName) {
     return _stringTemplateService
         .parse(CREATE_COMMUNITY_POST_PATH, {'communityName': communityName});
+  }
+
+  String _makeReportCommunityPath(String communityName) {
+    return _stringTemplateService
+        .parse(REPORT_COMMUNITY_PATH, {'communityName': communityName});
   }
 
   String _makeClosedCommunityPostsPath(String communityName) {
