@@ -11,14 +11,15 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 class OBPostCommentReplyExpandedModal extends StatefulWidget {
   final Post post;
@@ -26,7 +27,13 @@ class OBPostCommentReplyExpandedModal extends StatefulWidget {
   final Function(PostComment) onReplyAdded;
   final Function(PostComment) onReplyDeleted;
 
-  const OBPostCommentReplyExpandedModal({Key key, this.post, this.postComment, this.onReplyAdded, this.onReplyDeleted}) : super(key: key);
+  const OBPostCommentReplyExpandedModal(
+      {Key key,
+      this.post,
+      this.postComment,
+      this.onReplyAdded,
+      this.onReplyDeleted})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -34,7 +41,8 @@ class OBPostCommentReplyExpandedModal extends StatefulWidget {
   }
 }
 
-class OBPostCommentReplyExpandedModalState extends State<OBPostCommentReplyExpandedModal> {
+class OBPostCommentReplyExpandedModalState
+    extends State<OBPostCommentReplyExpandedModal> {
   ValidationService _validationService;
   NavigationService _navigationService;
   ToastService _toastService;
@@ -45,6 +53,9 @@ class OBPostCommentReplyExpandedModalState extends State<OBPostCommentReplyExpan
   bool _isPostCommentTextAllowedLength;
   List<Widget> _postCommentItemsWidgets;
 
+  CancelableOperation _postCommentReplyOperation;
+  bool _requestInProgress;
+
   @override
   void initState() {
     super.initState();
@@ -53,13 +64,16 @@ class OBPostCommentReplyExpandedModalState extends State<OBPostCommentReplyExpan
     _charactersCount = 0;
     _isPostCommentTextAllowedLength = false;
     String hintText = 'Your reply...';
-    _postCommentItemsWidgets = [OBCreatePostText(controller: _textController, hintText: hintText)];
-
+    _postCommentItemsWidgets = [
+      OBCreatePostText(controller: _textController, hintText: hintText)
+    ];
+    _requestInProgress = false;
   }
 
   @override
   void dispose() {
     super.dispose();
+    if (_postCommentReplyOperation != null) _postCommentReplyOperation.cancel();
     _textController.removeListener(_onPostCommentTextChanged);
   }
 
@@ -76,13 +90,13 @@ class OBPostCommentReplyExpandedModalState extends State<OBPostCommentReplyExpan
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
-              children: <Widget>[_buildPostCommentContent()],
-            )));
+          children: <Widget>[_buildPostCommentContent()],
+        )));
   }
 
   Widget _buildNavigationBar() {
     bool isPrimaryActionButtonIsEnabled =
-    (_isPostCommentTextAllowedLength && _charactersCount > 0);
+        (_isPostCommentTextAllowedLength && _charactersCount > 0);
 
     return OBThemedNavigationBar(
       leading: GestureDetector(
@@ -93,87 +107,88 @@ class OBPostCommentReplyExpandedModalState extends State<OBPostCommentReplyExpan
       ),
       title: 'Reply comment',
       trailing:
-      _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
+          _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
   }
 
   Widget _buildPrimaryActionButton({bool isEnabled}) {
-    Widget primaryButton;
-
-    if (isEnabled) {
-      primaryButton = GestureDetector(
-        onTap: _onWantsToReplyComment,
-        child: const OBText('Post'),
-      );
-    } else {
-      primaryButton = Opacity(
-        opacity: 0.5,
-        child: const OBText('Post'),
-      );
-    }
-
-    return primaryButton;
+    return OBButton(
+      isDisabled: !isEnabled,
+      isLoading: _requestInProgress,
+      size: OBButtonSize.small,
+      onPressed: _onWantsToReplyComment,
+      child: Text('Post'),
+    );
   }
 
   void _onWantsToReplyComment() async {
-    PostComment comment;
-    if (widget.postComment != null) {
-      comment = await _userService.replyPostComment(
-          post: widget.post,
-          postComment: widget.postComment,
-          text: _textController.text);
-    }
-    if (comment != null) {
-      // Remove modal
+    if (_requestInProgress) return;
+    _setRequestInProgress(true);
+    try {
+      _postCommentReplyOperation = CancelableOperation.fromFuture(
+          _userService.replyPostComment(
+              post: widget.post,
+              postComment: widget.postComment,
+              text: _textController.text));
+
+      PostComment comment = await _postCommentReplyOperation.value;
       if (widget.onReplyAdded != null) widget.onReplyAdded(comment);
       Navigator.pop(context, comment);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
   }
 
   Widget _buildPostCommentContent() {
     return Expanded(
-      child: Padding(
-        padding: EdgeInsets.only(left: 0.0, top: 20.0),
-        child: Column(
-          children: <Widget>[
-            OBPostCommentTile(post:widget.post, postComment: widget.postComment),
-            OBPostDivider(),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 10.0),
-              child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+            padding: EdgeInsets.only(left: 0.0, top: 20.0),
+            child: Column(
               children: <Widget>[
-              Column(
-                  children: <Widget>[
-                      OBLoggedInUserAvatar(
-                        size: OBAvatarSize.medium,
+                OBPostCommentTile(
+                    post: widget.post, postComment: widget.postComment),
+                OBPostDivider(),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0, top: 10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          OBLoggedInUserAvatar(
+                            size: OBAvatarSize.medium,
+                          ),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          OBRemainingPostCharacters(
+                            maxCharacters:
+                                ValidationService.POST_COMMENT_MAX_LENGTH,
+                            currentCharacters: _charactersCount,
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 12.0,
-                      ),
-                      OBRemainingPostCharacters(
-                        maxCharacters: ValidationService.POST_COMMENT_MAX_LENGTH,
-                        currentCharacters: _charactersCount,
-                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const ClampingScrollPhysics(),
+                          child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 20.0,
+                                  right: 20.0,
+                                  bottom: 30.0,
+                                  top: 0.0),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: _postCommentItemsWidgets)),
+                        ),
+                      )
                     ],
                   ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Padding(
-                      padding:
-                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0, top: 0.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: _postCommentItemsWidgets)),
-                      ),
-                    )
-                  ],
-          ),
-        )
-      ],
-    )
-    ));
+                )
+              ],
+            )));
   }
 
   void _onPostCommentTextChanged() {
@@ -198,7 +213,10 @@ class OBPostCommentReplyExpandedModalState extends State<OBPostCommentReplyExpan
     }
   }
 
-  void _unfocusTextField() {
-    FocusScope.of(context).requestFocus(new FocusNode());
+  void _setRequestInProgress(requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
   }
+
 }
