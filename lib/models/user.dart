@@ -27,6 +27,8 @@ class User extends UpdatableModel<User> {
   int unreadNotificationsCount;
   int postsCount;
   int inviteCount;
+  int pendingCommunitiesModeratedObjectsCount;
+  int activeModerationPenaltiesCount;
   bool areGuidelinesAccepted;
   bool isFollowing;
   bool isConnected;
@@ -96,6 +98,8 @@ class User extends UpdatableModel<User> {
       this.followLists,
       this.communitiesMemberships,
       this.communitiesInvites,
+      this.activeModerationPenaltiesCount,
+      this.pendingCommunitiesModeratedObjectsCount,
       this.areGuidelinesAccepted});
 
   void updateFromJson(Map json) {
@@ -121,6 +125,12 @@ class User extends UpdatableModel<User> {
     }
     if (json.containsKey('followers_count'))
       followersCount = json['followers_count'];
+    if (json.containsKey('pending_communities_moderated_objects_count'))
+      pendingCommunitiesModeratedObjectsCount =
+          json['pending_communities_moderated_objects_count'];
+    if (json.containsKey('active_moderation_penalties_count'))
+      activeModerationPenaltiesCount =
+          json['active_moderation_penalties_count'];
     if (json.containsKey('following_count'))
       followingCount = json['following_count'];
     if (json.containsKey('unread_notifications_count'))
@@ -301,6 +311,16 @@ class User extends UpdatableModel<User> {
       this.followersCount -= 1;
       notifyUpdate();
     }
+  }
+
+  bool hasPendingCommunitiesModeratedObjects() {
+    return pendingCommunitiesModeratedObjectsCount != null &&
+        pendingCommunitiesModeratedObjectsCount > 0;
+  }
+
+  bool hasActiveModerationPenaltiesCount() {
+    return activeModerationPenaltiesCount != null &&
+        activeModerationPenaltiesCount > 0;
   }
 
   void setIsReported(isReported) {
@@ -512,6 +532,10 @@ class UserFactory extends UpdatableModelFactory<User> {
         postsCount: json['posts_count'],
         inviteCount: json['invite_count'],
         unreadNotificationsCount: json['unread_notifications_count'],
+        pendingCommunitiesModeratedObjectsCount:
+            json['pending_communities_moderated_objects_count'],
+        activeModerationPenaltiesCount:
+            json['active_moderation_penalties_count'],
         email: json['email'],
         username: json['username'],
         followingCount: json['following_count'],
