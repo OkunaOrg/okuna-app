@@ -1,6 +1,7 @@
 import 'package:Openbook/pages/waitlist/subscribe_done_step.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -24,6 +25,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
   UserService _userService;
   LocalizationService _localizationService;
   ValidationService _validationService;
+  ToastService _toastService;
 
   TextEditingController _emailController = TextEditingController();
 
@@ -41,6 +43,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
     _localizationService = openbookProvider.localizationService;
     _validationService = openbookProvider.validationService;
     _userService = openbookProvider.userService;
+    _toastService = openbookProvider.toastService;
 
     return Scaffold(
       body: Center(
@@ -84,12 +87,24 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
   }
 
   void onPressedNextStep(BuildContext context) async {
+    if (_subscribeInProgress) return;
     _isSubmitted = true;
     bool isEmailValid = _validateForm();
-    if (isEmailValid) {
-        int count = await _userService.subscribeToBetaWaitlist(email: _emailController.text);
-        WaitlistSubscribeArguments args = new WaitlistSubscribeArguments(count: count);
-        Navigator.pushNamed(context, '/waitlist/subscribe_done_step', arguments: args);
+
+    if (!isEmailValid) return;
+
+    _setSubscribeInProgress(true);
+    try {
+      int count = await _userService.subscribeToBetaWaitlist(
+          email: _emailController.text);
+      WaitlistSubscribeArguments args =
+          new WaitlistSubscribeArguments(count: count);
+      Navigator.pushNamed(context, '/waitlist/subscribe_done_step',
+          arguments: args);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setSubscribeInProgress(false);
     }
   }
 
@@ -135,8 +150,8 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
   }
 
   Widget _buildSubscribeEmailText({@required BuildContext context}) {
-    String subscribeEmailText =
-    _localizationService.trans('AUTH.CREATE_ACC.SUBSCRIBE_TO_WAITLIST_TEXT');
+    String subscribeEmailText = _localizationService
+        .trans('AUTH.CREATE_ACC.SUBSCRIBE_TO_WAITLIST_TEXT');
 
     return Column(
       children: <Widget>[
@@ -159,7 +174,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
 
   Widget _buildEmailForm() {
     String emailInputPlaceholder =
-    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
 
     return Form(
       key: _formKey,
@@ -171,14 +186,33 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
                 autocorrect: false,
                 hintText: emailInputPlaceholder,
                 validator: (String email) {
-                  String validateEMail = _validationService.validateUserEmail(email);
+                  String validateEMail =
+                      _validationService.validateUserEmail(email);
                   if (validateEMail != null) return validateEMail;
                 },
                 controller: _emailController,
-              )
-          ),
+              )),
         ),
       ]),
     );
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
+  }
+
+  void _setSubscribeInProgress(subscribeInProgress) {
+    setState(() {
+      _subscribeInProgress = subscribeInProgress;
+    });
   }
 }

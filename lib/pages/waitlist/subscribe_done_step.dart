@@ -94,8 +94,6 @@ class OBWaitlistSubscribeDoneStepState extends State<OBWaitlistSubscribeDoneStep
   }
 
   Widget _buildNextButton({@required BuildContext context}) {
-    String buttonText =
-    localizationService.trans('AUTH.LOGIN.LOGIN');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -104,7 +102,7 @@ class OBWaitlistSubscribeDoneStepState extends State<OBWaitlistSubscribeDoneStep
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            buttonText,
+            'Done',
             style: TextStyle(fontSize: 18.0),
           )
         ],
