@@ -16,7 +16,7 @@ class OBCheckbox extends StatelessWidget {
     return GestureDetector(
       child: DecoratedBox(
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(50)),
+            borderRadius: BorderRadius.circular(50)),
         child: Center(
           child: OBIcon(
             value ? OBIcons.checkCircleSelected : OBIcons.checkCircle,

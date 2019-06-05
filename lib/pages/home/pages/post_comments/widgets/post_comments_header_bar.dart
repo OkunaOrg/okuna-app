@@ -1,5 +1,5 @@
 import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comments_page_controller.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
@@ -41,7 +41,7 @@ class OBPostCommentsHeaderBar extends StatelessWidget {
     'SEE_OLDEST': 'See oldest replies',
     'BE_THE_FIRST': 'Be the first to reply',
   };
-  
+
   OBPostCommentsHeaderBar({
     @required this.pageType,
     @required this.noMoreTopItemsToLoad,

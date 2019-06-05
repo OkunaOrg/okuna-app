@@ -10,6 +10,7 @@ import 'package:Openbook/services/devices_api.dart';
 import 'package:Openbook/services/dialog.dart';
 import 'package:Openbook/services/documents.dart';
 import 'package:Openbook/services/intercom.dart';
+import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
@@ -67,6 +68,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   PostsApiService postsApiService = PostsApiService();
   StorageService storageService = StorageService();
   UserService userService = UserService();
+  ModerationApiService moderationApiService = ModerationApiService();
   ToastService toastService = ToastService();
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
@@ -138,6 +140,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setNotificationsApiService(notificationsApiService);
     userService.setDevicesApiService(devicesApiService);
     userService.setCreateAccountBlocService(createAccountBloc);
+    userService.setModerationApiService(moderationApiService);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
     postsApiService.setHttpieService(httpService);
@@ -158,6 +161,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     dialogService.setThemeValueParserService(themeValueParserService);
     imagePickerService.setValidationService(validationService);
     documentsService.setHttpService(httpService);
+    moderationApiService.setStringTemplateService(stringTemplateService);
+    moderationApiService.setHttpieService(httpService);
   }
 
   void initAsyncState() async {
@@ -170,6 +175,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     emojisApiService.setApiURL(environment.apiUrl);
     userInvitesApiService.setApiURL(environment.apiUrl);
     followsApiService.setApiURL(environment.apiUrl);
+    moderationApiService.setApiURL(environment.apiUrl);
     connectionsApiService.setApiURL(environment.apiUrl);
     connectionsCirclesApiService.setApiURL(environment.apiUrl);
     followsListsApiService.setApiURL(environment.apiUrl);

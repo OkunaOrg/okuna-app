@@ -28,7 +28,7 @@ class OBUsefulLinksPage extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   leading: const OBIcon(OBIcons.guide),
-                  title: OBText('Community guidelines'),
+                  title: OBText('Openbook guidelines'),
                   subtitle: OBSecondaryText(
                       'The guidelines we\'re all expected to follow for a healthy and friendly co-existence.'),
                   onTap: () {
@@ -70,9 +70,9 @@ class OBUsefulLinksPage extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const OBIcon(OBIcons.guide),
-                  title: OBText('Community guide'),
+                  title: OBText('Openbook handbook'),
                   subtitle: OBSecondaryText(
-                      'An introduction to the Openbook Experience by @meep'),
+                      'A book with everything there is to know about using the platform'),
                   onTap: () {
                     urlLauncherService.launchUrl('https://openbook.support/');
                   },

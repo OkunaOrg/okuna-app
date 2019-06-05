@@ -16,6 +16,7 @@ class PostComment extends UpdatableModel<PostComment> {
   PostCommentList replies;
   Post post;
   bool isEdited;
+  bool isReported;
 
   static convertPostCommentSortTypeToString(PostCommentsSortType type) {
     String result;
@@ -49,17 +50,19 @@ class PostComment extends UpdatableModel<PostComment> {
     factory.clearCache();
   }
 
-  PostComment(
-      {this.id,
-      this.repliesCount,
-      this.created,
-      this.text,
-      this.creatorId,
-      this.parentComment,
-      this.replies,
-      this.commenter,
-      this.post,
-      this.isEdited});
+  PostComment({
+    this.id,
+    this.created,
+    this.text,
+    this.creatorId,
+    this.commenter,
+    this.post,
+    this.isEdited,
+    this.isReported,
+    this.parentComment,
+    this.replies,
+    this.repliesCount,
+  });
 
   static final factory = PostCommentFactory();
 
@@ -83,6 +86,10 @@ class PostComment extends UpdatableModel<PostComment> {
 
     if (json.containsKey('is_edited')) {
       isEdited = json['is_edited'];
+    }
+
+    if (json.containsKey('is_reported')) {
+      isReported = json['is_reported'];
     }
 
     if (json.containsKey('text')) {
@@ -138,6 +145,11 @@ class PostComment extends UpdatableModel<PostComment> {
   int getPostCreatorId() {
     return post.getCreatorId();
   }
+
+  void setIsReported(isReported) {
+    this.isReported = isReported;
+    notifyUpdate();
+  }
 }
 
 class PostCommentFactory extends UpdatableModelFactory<PostComment> {
@@ -157,6 +169,7 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         replies: parseCommentReplies(json['replies']),
         parentComment: parseParentComment(json['parent_comment']),
         isEdited: json['is_edited'],
+        isReported: json['is_reported'],
         text: json['text']);
   }
 

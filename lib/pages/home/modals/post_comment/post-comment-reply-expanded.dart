@@ -127,12 +127,6 @@ class OBPostCommentReplyExpandedModalState extends State<OBPostCommentReplyExpan
       // Remove modal
       if (widget.onReplyAdded != null) widget.onReplyAdded(comment);
       Navigator.pop(context, comment);
-      _navigationService.navigateToPostCommentReplies(
-          post: widget.post,
-          postComment: widget.postComment,
-          onReplyAdded: widget.onReplyAdded,
-          onReplyDeleted: widget.onReplyDeleted,
-          context: context);
     }
   }
 

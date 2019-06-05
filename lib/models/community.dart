@@ -53,6 +53,8 @@ class Community extends UpdatableModel<Community> {
   String userAdjective;
   String usersAdjective;
   int membersCount;
+  int pendingModeratedObjectsCount;
+
   CommunityType type;
 
   // Whether the user has been invited to the community
@@ -62,6 +64,8 @@ class Community extends UpdatableModel<Community> {
   bool isCreator;
 
   bool isFavorite;
+
+  bool isReported;
 
   bool invitesEnabled;
 
@@ -88,12 +92,14 @@ class Community extends UpdatableModel<Community> {
       this.cover,
       this.isInvited,
       this.isCreator,
+      this.isReported,
       this.moderators,
       this.memberships,
       this.administrators,
       this.isFavorite,
       this.invitesEnabled,
       this.membersCount,
+      this.pendingModeratedObjectsCount,
       this.categories});
 
   bool hasDescription() {
@@ -202,6 +208,14 @@ class Community extends UpdatableModel<Community> {
       usersAdjective = json['users_adjective'];
     }
 
+    if (json.containsKey('is_reported')) {
+      isReported = json['is_reported'];
+    }
+
+    if (json.containsKey('pending_moderated_objects_count')) {
+      pendingModeratedObjectsCount = json['pending_moderated_objects_count'];
+    }
+
     if (json.containsKey('color')) {
       color = json['color'];
     }
@@ -247,6 +261,11 @@ class Community extends UpdatableModel<Community> {
       notifyUpdate();
     }
   }
+
+  void setIsReported(isReported) {
+    this.isReported = isReported;
+    notifyUpdate();
+  }
 }
 
 class CommunityFactory extends UpdatableModelFactory<Community> {
@@ -265,8 +284,10 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         avatar: json['avatar'],
         isInvited: json['is_invited'],
         isCreator: json['is_creator'],
+        isReported: json['is_reported'],
         isFavorite: json['is_favorite'],
         invitesEnabled: json['invites_enabled'],
+        pendingModeratedObjectsCount: json['pending_moderated_objects_count'],
         cover: json['cover'],
         color: json['color'],
         memberships: parseMemberships(json['memberships']),

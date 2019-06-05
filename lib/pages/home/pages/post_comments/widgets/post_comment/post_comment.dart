@@ -17,11 +17,13 @@ class OBPostComment extends StatefulWidget {
   final PostComment postComment;
   final Post post;
   final Function(PostComment) onPostCommentDeletedCallback;
+  final ValueChanged<PostComment> onPostCommentReported;
 
   OBPostComment(
       {@required this.post,
       @required this.postComment,
       this.onPostCommentDeletedCallback,
+      this.onPostCommentReported,
       Key key})
       : super(key: key);
 
@@ -38,7 +40,6 @@ class OBPostCommentState extends State<OBPostComment> {
   ToastService _toastService;
   ModalService _modalService;
   bool _requestInProgress;
-  ScrollController _commentRepliesScrollController;
   int _repliesCount;
   List<PostComment> _replies;
 
@@ -50,7 +51,6 @@ class OBPostCommentState extends State<OBPostComment> {
     _requestInProgress = false;
     _repliesCount = widget.postComment.repliesCount;
     _replies = widget.postComment.getPostCommentReplies();
-    _commentRepliesScrollController = ScrollController();
   }
 
   @override
@@ -95,17 +95,31 @@ class OBPostCommentState extends State<OBPostComment> {
     List<Widget> _commentActions = [];
     User loggedInUser = _userService.getLoggedInUser();
 
-    if (loggedInUser.canReplyPostComment(widget.postComment)) {
+    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
       _commentActions.add(
-          new IconSlideAction(
-            caption: 'Reply',
-            color: Colors.black38,
-            icon: Icons.reply,
-            onTap: _replyPostComment,
-          )
+        new IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: _deletePostComment,
+        ),
       );
     }
 
+    if (loggedInUser.canReportPostComment(widget.postComment)) {
+      _commentActions.add(
+        Opacity(
+          opacity: widget.postComment.isReported ?? false ? 0.5 : 1,
+          child: IconSlideAction(
+            caption:
+            widget.postComment.isReported ?? false ? 'Reported' : 'Report',
+            color: Colors.black38,
+            icon: Icons.report,
+            onTap: _reportPostComment,
+          ),
+        ),
+      );
+    }
 
     if (loggedInUser.canEditPostComment(widget.postComment, widget.post)) {
       _commentActions.add(
@@ -118,14 +132,14 @@ class OBPostCommentState extends State<OBPostComment> {
       );
     }
 
-    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
+    if (loggedInUser.canReplyPostComment(widget.postComment)) {
       _commentActions.add(
-        new IconSlideAction(
-          caption: 'Delete',
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: _deletePostComment,
-        ),
+          new IconSlideAction(
+            caption: 'Reply',
+            color: Colors.blue,
+            icon: Icons.reply,
+            onTap: _replyPostComment,
+          )
       );
     }
 
@@ -138,7 +152,7 @@ class OBPostCommentState extends State<OBPostComment> {
   }
 
   Widget _buildPostCommentReplies() {
-    if (widget.postComment.repliesCount == 0) return SizedBox();
+    if (_repliesCount == 0) return SizedBox();
     return Padding(
         padding: EdgeInsets.only(left: 30.0, top: 0.0),
         child: Column(
@@ -200,12 +214,12 @@ class OBPostCommentState extends State<OBPostComment> {
   void _onReplyAdded(PostComment postCommentReply) async {
     PostCommentsSortType sortType = await _userPreferencesService.getPostCommentsSortType();
     setState(() {
-      _repliesCount += 1;
       if (sortType == PostCommentsSortType.dec) {
         _replies.insert(0, postCommentReply);
-      } else if (_repliesCount <= 2) {
+      } else if (_repliesCount == _replies.length) {
         _replies.add(postCommentReply);
       }
+      _repliesCount += 1;
     });
   }
 
@@ -214,13 +228,32 @@ class OBPostCommentState extends State<OBPostComment> {
         context: context, post: widget.post, postComment: widget.postComment);
   }
 
+  void _reportPostComment() async {
+    await _navigationService.navigateToReportObject(
+        context: context,
+        object: widget.postComment,
+        extraData: {'post': widget.post},
+        onObjectReported: (dynamic reportedObject) {
+          if (widget.onPostCommentReported != null && reportedObject != null)
+            widget.onPostCommentReported(reportedObject as PostComment);
+        });
+  }
+
   void _replyPostComment() async {
-    await _modalService.openExpandedReplyCommenter(
+    PostComment comment = await _modalService.openExpandedReplyCommenter(
         context: context,
         post: widget.post,
         postComment: widget.postComment,
         onReplyDeleted: _onReplyDeleted,
         onReplyAdded: _onReplyAdded);
+    if (comment != null) {
+      await _navigationService.navigateToPostCommentReplies(
+          post: widget.post,
+          postComment: widget.postComment,
+          onReplyAdded: _onReplyAdded,
+          onReplyDeleted: _onReplyDeleted,
+          context: context);
+    }
   }
 
   void _deletePostComment() async {
@@ -232,7 +265,7 @@ class OBPostCommentState extends State<OBPostComment> {
               postComment: widget.postComment, post: widget.post));
 
       await _requestOperation.value;
-      widget.post.decreaseCommentsCount();
+      if (widget.postComment.parentComment == null) widget.post.decreaseCommentsCount();
       _toastService.success(message: 'Comment deleted', context: context);
       if (widget.onPostCommentDeletedCallback != null) {
         widget.onPostCommentDeletedCallback(widget.postComment);

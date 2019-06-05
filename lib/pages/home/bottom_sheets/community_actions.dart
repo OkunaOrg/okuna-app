@@ -8,6 +8,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/actions/favorite_community_tile.dart';
+import 'package:Openbook/widgets/tiles/actions/report_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,12 +66,11 @@ class OBCommunityActionsBottomSheetState
     }
 
     if (!isCommunityAdministrator && !isCommunityModerator) {
-      communityActions.add(ListTile(
-        leading: const OBIcon(OBIcons.reportCommunity),
-        title: const OBText(
-          'Report community',
-        ),
-        onTap: _onWantsToReportCommunity,
+      communityActions.add(OBReportCommunityTile(
+        community: community,
+        onWantsToReportCommunity: () {
+          Navigator.of(context).pop();
+        },
       ));
     }
 

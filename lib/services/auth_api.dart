@@ -21,6 +21,7 @@ class AuthApiService {
   static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const UPDATE_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const GET_USERS_PATH = 'api/auth/users/';
+  static const REPORT_USER_PATH = 'api/auth/users/{userUsername}/report/';
   static const GET_LINKED_USERS_PATH = 'api/auth/linked-users/';
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
@@ -130,13 +131,14 @@ class AuthApiService {
         body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieStreamedResponse> createUser({@required String email,
-    @required String token,
-    @required String name,
-    @required bool isOfLegalAge,
-    @required bool areGuidelinesAccepted,
-    @required String password,
-    File avatar}) {
+  Future<HttpieStreamedResponse> createUser(
+      {@required String email,
+      @required String token,
+      @required String name,
+      @required bool isOfLegalAge,
+      @required bool areGuidelinesAccepted,
+      @required String password,
+      File avatar}) {
     Map<String, dynamic> body = {
       'email': email,
       'token': token,
@@ -186,10 +188,11 @@ class AuthApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getLinkedUsers({bool authenticatedRequest = true,
-    int maxId,
-    int count,
-    String withCommunity}) {
+  Future<HttpieResponse> getLinkedUsers(
+      {bool authenticatedRequest = true,
+      int maxId,
+      int count,
+      String withCommunity}) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
@@ -213,9 +216,11 @@ class AuthApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getBlockedUsers({bool authenticatedRequest = true,
+  Future<HttpieResponse> getBlockedUsers({
+    bool authenticatedRequest = true,
     int maxId,
-    int count,}) {
+    int count,
+  }) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
@@ -351,8 +356,25 @@ class AuthApiService {
   }
 
   Future<HttpieResponse> acceptGuidelines() {
-    return this._httpService.post(
-        '$apiURL$ACCEPT_GUIDELINES', appendAuthorizationToken: true);
+    return this
+        ._httpService
+        .post('$apiURL$ACCEPT_GUIDELINES', appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> reportUserWithUsername(
+      {@required String userUsername,
+      @required int moderationCategoryId,
+      String description}) {
+    String path = _makeReportUserPath(username: userUsername);
+
+    Map<String, String> body = {'category_id': moderationCategoryId.toString()};
+
+    if (description != null && description.isNotEmpty) {
+      body['description'] = description;
+    }
+
+    return _httpService.post(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
   }
 
   String _makeBlockUserWithUsernamePath(String username) {
@@ -363,6 +385,11 @@ class AuthApiService {
   String _makeUnblockUserWithUsernamePath(String username) {
     return _stringTemplateService
         .parse(UNBLOCK_USER_PATH, {'userUsername': username});
+  }
+
+  String _makeReportUserPath({@required username}) {
+    return _stringTemplateService
+        .parse(REPORT_USER_PATH, {'userUsername': username});
   }
 
   String _makeApiUrl(String string) {

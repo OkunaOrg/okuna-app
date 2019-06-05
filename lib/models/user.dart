@@ -27,10 +27,14 @@ class User extends UpdatableModel<User> {
   int unreadNotificationsCount;
   int postsCount;
   int inviteCount;
+  int pendingCommunitiesModeratedObjectsCount;
+  int activeModerationPenaltiesCount;
   bool areGuidelinesAccepted;
   bool isFollowing;
   bool isConnected;
+  bool isReported;
   bool isBlocked;
+  bool isGlobalModerator;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
   bool isMemberOfCommunities;
@@ -85,13 +89,17 @@ class User extends UpdatableModel<User> {
       this.inviteCount,
       this.isFollowing,
       this.isBlocked,
+      this.isGlobalModerator,
       this.isConnected,
+      this.isReported,
       this.isFullyConnected,
       this.isMemberOfCommunities,
       this.connectedCircles,
       this.followLists,
       this.communitiesMemberships,
       this.communitiesInvites,
+      this.activeModerationPenaltiesCount,
+      this.pendingCommunitiesModeratedObjectsCount,
       this.areGuidelinesAccepted});
 
   void updateFromJson(Map json) {
@@ -117,6 +125,12 @@ class User extends UpdatableModel<User> {
     }
     if (json.containsKey('followers_count'))
       followersCount = json['followers_count'];
+    if (json.containsKey('pending_communities_moderated_objects_count'))
+      pendingCommunitiesModeratedObjectsCount =
+          json['pending_communities_moderated_objects_count'];
+    if (json.containsKey('active_moderation_penalties_count'))
+      activeModerationPenaltiesCount =
+          json['active_moderation_penalties_count'];
     if (json.containsKey('following_count'))
       followingCount = json['following_count'];
     if (json.containsKey('unread_notifications_count'))
@@ -125,7 +139,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
+    if (json.containsKey('is_global_moderator'))
+      isGlobalModerator = json['is_global_moderator'];
     if (json.containsKey('is_blocked')) isBlocked = json['is_blocked'];
+    if (json.containsKey('is_reported')) isReported = json['is_reported'];
     if (json.containsKey('connections_circle_id'))
       connectionsCircleId = json['connections_circle_id'];
     if (json.containsKey('is_fully_connected'))
@@ -296,6 +313,21 @@ class User extends UpdatableModel<User> {
     }
   }
 
+  bool hasPendingCommunitiesModeratedObjects() {
+    return pendingCommunitiesModeratedObjectsCount != null &&
+        pendingCommunitiesModeratedObjectsCount > 0;
+  }
+
+  bool hasActiveModerationPenaltiesCount() {
+    return activeModerationPenaltiesCount != null &&
+        activeModerationPenaltiesCount > 0;
+  }
+
+  void setIsReported(isReported) {
+    this.isReported = isReported;
+    notifyUpdate();
+  }
+
   bool canDisableOrEnableCommentsForPost(Post post) {
     User loggedInUser = this;
     bool _canDisableOrEnableComments = false;
@@ -318,7 +350,8 @@ class User extends UpdatableModel<User> {
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
 
-      if (postCommunity.isAdministrator(loggedInUser) || postCommunity.isModerator(loggedInUser)) {
+      if (postCommunity.isAdministrator(loggedInUser) ||
+          postCommunity.isModerator(loggedInUser)) {
         _canCloseOrOpenPost = true;
       }
     }
@@ -329,7 +362,8 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     bool _canCloseOrOpenPost = false;
 
-    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+    if (community.isAdministrator(loggedInUser) ||
+        community.isModerator(loggedInUser)) {
       _canCloseOrOpenPost = true;
     }
 
@@ -340,7 +374,8 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     bool _canBanOrUnban = false;
 
-    if (community.isAdministrator(loggedInUser) || community.isModerator(loggedInUser)) {
+    if (community.isAdministrator(loggedInUser) ||
+        community.isModerator(loggedInUser)) {
       _canBanOrUnban = true;
     }
 
@@ -400,11 +435,10 @@ class User extends UpdatableModel<User> {
     loggedInUserIsCommunityAdministrator =
         community.isAdministrator(loggedInUser);
 
-    loggedInUserIsCommunityModerator =
-        community.isModerator(loggedInUser);
+    loggedInUserIsCommunityModerator = community.isModerator(loggedInUser);
 
-    return loggedInUserIsCommunityModerator || loggedInUserIsCommunityAdministrator;
-
+    return loggedInUserIsCommunityModerator ||
+        loggedInUserIsCommunityAdministrator;
   }
 
   bool canDeletePost(Post post) {
@@ -414,7 +448,8 @@ class User extends UpdatableModel<User> {
     bool loggedInUserIsStaffForCommunity = false;
 
     if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
+      loggedInUserIsStaffForCommunity =
+          this.isStaffForCommunity(post.community);
     }
 
     if (loggedInUserIsPostCreator || loggedInUserIsStaffForCommunity) {
@@ -436,13 +471,22 @@ class User extends UpdatableModel<User> {
     User postCommenter = postComment.commenter;
     bool loggedInUserIsStaffForCommunity = false;
     bool loggedInUserIsCommenter = loggedInUser.id == postCommenter.id;
-    bool loggedInUserIsCommenterForOpenPost = loggedInUserIsCommenter && !post.isClosed && post.areCommentsEnabled;
+    bool loggedInUserIsCommenterForOpenPost =
+        loggedInUserIsCommenter && !post.isClosed && post.areCommentsEnabled;
 
     if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
+      loggedInUserIsStaffForCommunity = isStaffForCommunity(post.community);
     }
 
-    return loggedInUserIsCommenterForOpenPost || (loggedInUserIsStaffForCommunity && loggedInUserIsCommenter);
+    return loggedInUserIsCommenterForOpenPost ||
+        (loggedInUserIsStaffForCommunity && loggedInUserIsCommenter);
+  }
+
+  bool canReportPostComment(PostComment postComment) {
+    User loggedInUser = this;
+    User postCommenter = postComment.commenter;
+
+    return loggedInUser.id != postCommenter.id;
   }
 
   bool canReplyPostComment(PostComment postComment) {
@@ -453,12 +497,15 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
     bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
-    bool userIsCreatorOfNonCommunityPost = loggedInUserIsPostCreator && !post.hasCommunity();
+    bool userIsCreatorOfNonCommunityPost =
+        loggedInUserIsPostCreator && !post.hasCommunity();
     bool loggedInUserIsStaffForCommunity = false;
-    bool loggedInUserIsCommenterForOpenPost = (loggedInUser.id == postCommenter.id) && !post.isClosed;
+    bool loggedInUserIsCommenterForOpenPost =
+        (loggedInUser.id == postCommenter.id) && !post.isClosed;
 
     if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity = this.isStaffForCommunity(post.community);
+      loggedInUserIsStaffForCommunity =
+          this.isStaffForCommunity(post.community);
     }
 
     return (loggedInUserIsCommenterForOpenPost ||
@@ -485,12 +532,18 @@ class UserFactory extends UpdatableModelFactory<User> {
         postsCount: json['posts_count'],
         inviteCount: json['invite_count'],
         unreadNotificationsCount: json['unread_notifications_count'],
+        pendingCommunitiesModeratedObjectsCount:
+            json['pending_communities_moderated_objects_count'],
+        activeModerationPenaltiesCount:
+            json['active_moderation_penalties_count'],
         email: json['email'],
         username: json['username'],
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
+        isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],
+        isReported: json['is_reported'],
         isFullyConnected: json['is_fully_connected'],
         isMemberOfCommunities: json['is_member_of_communities'],
         profile: parseUserProfile(json['profile']),

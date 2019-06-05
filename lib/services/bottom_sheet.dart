@@ -82,7 +82,7 @@ class BottomSheetService {
       {@required BuildContext context,
       @required Post post,
       @required OnPostDeleted onPostDeleted,
-      @required OnPostReported onPostReported,
+      @required ValueChanged<Post> onPostReported,
       List<FollowsList> initialPickedFollowsLists}) {
     return showModalBottomSheetApp(
         context: context,
@@ -111,15 +111,13 @@ class BottomSheetService {
 
   Future<void> showMoreCommentActions(
       {@required BuildContext context,
-        @required Post post,
-        @required PostComment postComment}) {
+      @required Post post,
+      @required PostComment postComment}) {
     return showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBCommentMoreActionsBottomSheet(
-            post: post,
-            postComment: postComment
-          );
+              post: post, postComment: postComment);
         });
   }
 

@@ -210,7 +210,7 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
     _navigationService.navigateToBlankPageWithWidget(
         context: context,
         key: Key('obMyUserInvitesGroup' + widget.groupItemName),
-        navBarTitle: capitalize(widget.groupName),
+        navBarTitle: toCapital(widget.groupName),
         widget: _buildSeeAllGroupItemsPage());
   }
 
