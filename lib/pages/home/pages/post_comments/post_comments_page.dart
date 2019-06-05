@@ -340,7 +340,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
     if (_animationController.status != AnimationStatus.completed &&
         !_startScrollWasInitialised &&
-        widget.linkedPostComment != null) {
+        widget.showPostPreview == true) {
       Future.delayed(Duration(milliseconds: 0), () {
         _postCommentsScrollController.animateTo(
             _positionTopCommentSection - 100.0,

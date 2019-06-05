@@ -255,7 +255,7 @@ class NavigationService {
             key: Key('obSlideViewComments'),
             widget: OBPostCommentsPage(
                 post: post,
-                showPostPreview: false,
+                showPostPreview: true,
                 pageType: PostCommentsPageType.comments,
                 autofocusCommentInput: false)));
   }

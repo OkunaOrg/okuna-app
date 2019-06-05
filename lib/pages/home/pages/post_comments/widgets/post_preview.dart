@@ -7,6 +7,7 @@ import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_circles.dart';
+import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:Openbook/widgets/theming/post_divider.dart';
@@ -37,10 +38,13 @@ class OBPostPreview extends StatelessWidget {
         ),
         OBPostReactions(this.post),
         OBPostCircles(this.post),
-        OBPostActions(
+        OBPostComments(
           this.post,
-          onWantsToCommentPost: this.focusCommentInput,
         ),
+//        OBPostActions(
+//          this.post,
+//          onWantsToCommentPost: this.focusCommentInput,
+//        ),
         const SizedBox(
           height: 16,
         ),
