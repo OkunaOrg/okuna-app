@@ -36,6 +36,7 @@ import 'package:Openbook/services/user_invites_api.dart';
 import 'package:Openbook/services/user_preferences.dart';
 import 'package:Openbook/services/utils_service.dart';
 import 'package:Openbook/services/validation.dart';
+import 'package:Openbook/services/waitlist_service.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 
@@ -89,6 +90,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ThemeValueParserService themeValueParserService = ThemeValueParserService();
   ModalService modalService = ModalService();
   NavigationService navigationService = NavigationService();
+  WaitlistApiService waitlistApiService = WaitlistApiService();
 
   LocalizationService localizationService;
   UniversalLinksService universalLinksService = UniversalLinksService();
@@ -140,6 +142,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setNotificationsApiService(notificationsApiService);
     userService.setDevicesApiService(devicesApiService);
     userService.setCreateAccountBlocService(createAccountBloc);
+    userService.setWaitlistApiService(waitlistApiService);
+    waitlistApiService.setHttpService(httpService);
     userService.setModerationApiService(moderationApiService);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
@@ -183,6 +187,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
+    waitlistApiService.setOpenbookSocialApiURL(environment.openbookSocialApiUrl);
     intercomService.bootstrap(
         iosApiKey: environment.intercomIosKey,
         androidApiKey: environment.intercomAndroidKey,

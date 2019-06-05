@@ -1,7 +1,8 @@
+import 'package:Openbook/pages/waitlist/subscribe_done_step.dart';
 import 'package:Openbook/provider.dart';
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/buttons/success_button.dart';
@@ -9,26 +10,31 @@ import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
-class OBAuthCreateAccountPage extends StatefulWidget {
+class OBWaitlistSubscribePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return OBAuthCreateAccountPageState();
+    return OBWaitlistSubscribePageState();
   }
 }
 
-class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
+class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
+  bool _subscribeInProgress;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  CreateAccountBloc _createAccountBloc;
+  bool _isSubmitted;
+  UserService _userService;
   LocalizationService _localizationService;
   ValidationService _validationService;
   ToastService _toastService;
 
-  TextEditingController _linkController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _isSubmitted = false;
+    _subscribeInProgress = false;
+    _emailController.addListener(_validateForm);
   }
 
   @override
@@ -36,7 +42,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     var openbookProvider = OpenbookProvider.of(context);
     _localizationService = openbookProvider.localizationService;
     _validationService = openbookProvider.validationService;
-    _createAccountBloc = openbookProvider.createAccountBloc;
+    _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
 
     return Scaffold(
@@ -46,19 +52,15 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildPasteRegisterLink(context: context),
+                    _buildSubscribeEmailText(context: context),
                     const SizedBox(
                       height: 20.0,
                     ),
-                    _buildLinkForm(),
-                    const SizedBox(
-                      height: 20.0
-                    ),
-                    _buildRequestInvite(context: context)
+                    _buildEmailForm()
                   ],
                 ))),
       ),
-      backgroundColor: Colors.indigoAccent,
+      backgroundColor: Color(0xFFFFB649),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -79,40 +81,40 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     );
   }
 
-
   bool _validateForm() {
+    if (!_isSubmitted) return null;
     return _formKey.currentState.validate();
   }
 
-  void onPressedNextStep(BuildContext context) {
-    bool isLinkValid = _validateForm();
-    if (isLinkValid) {
-      setState(() {
-        var token = _getTokenFromLink(_linkController.text);
-        _createAccountBloc.setToken(token);
-        Navigator.pushNamed(context, '/auth/get-started');
-      });
-    }
-  }
+  void onPressedNextStep(BuildContext context) async {
+    if (_subscribeInProgress) return;
+    _isSubmitted = true;
+    bool isEmailValid = _validateForm();
 
-  String _getTokenFromLink(String link) {
-    final uri = Uri.decodeFull(link);
-    final params = Uri.parse(uri).queryParametersAll;
-    var token = '';
-    if (params.containsKey('token')) {
-      token = params['token'][0];
-    } else {
-      token = uri.split('?token=')[1];
+    if (!isEmailValid) return;
+
+    _setSubscribeInProgress(true);
+    try {
+      int count = await _userService.subscribeToBetaWaitlist(
+          email: _emailController.text);
+      WaitlistSubscribeArguments args =
+          new WaitlistSubscribeArguments(count: count);
+      Navigator.pushNamed(context, '/waitlist/subscribe_done_step',
+          arguments: args);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setSubscribeInProgress(false);
     }
-    return token;
   }
 
   Widget _buildNextButton(BuildContext context) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.SUBSCRIBE');
 
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
+      isLoading: _subscribeInProgress,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
         onPressedNextStep(context);
@@ -147,20 +149,20 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     );
   }
 
-  Widget _buildPasteRegisterLink({@required BuildContext context}) {
-    String pasteLinkText =
-    _localizationService.trans('AUTH.CREATE_ACC.PASTE_LINK');
+  Widget _buildSubscribeEmailText({@required BuildContext context}) {
+    String subscribeEmailText = _localizationService
+        .trans('AUTH.CREATE_ACC.SUBSCRIBE_TO_WAITLIST_TEXT');
 
     return Column(
       children: <Widget>[
         Text(
-          '🔗',
+          '💌',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         const SizedBox(
           height: 20.0,
         ),
-        Text(pasteLinkText,
+        Text(subscribeEmailText,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 24.0,
@@ -170,9 +172,9 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     );
   }
 
-  Widget _buildLinkForm() {
-    String invalidLink =
-    _localizationService.trans('AUTH.CREATE_ACC.INVALID_REGISTER_LINK');
+  Widget _buildEmailForm() {
+    String emailInputPlaceholder =
+        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
 
     return Form(
       key: _formKey,
@@ -182,39 +184,35 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
               color: Colors.transparent,
               child: OBAuthTextField(
                 autocorrect: false,
-                hintText: '',
-                validator: (String link) {
-                  String validateLink = _validationService.validateUserRegistrationLink(link);
-                  if (validateLink != null) {
-                    return validateLink;
-                  }
+                hintText: emailInputPlaceholder,
+                validator: (String email) {
+                  String validateEMail =
+                      _validationService.validateUserEmail(email);
+                  if (validateEMail != null) return validateEMail;
                 },
-                controller: _linkController,
-              )
-          ),
+                controller: _emailController,
+              )),
         ),
       ]),
     );
   }
 
-  Widget _buildRequestInvite({@required BuildContext context}) {
-    String requestInviteText = _localizationService.trans('AUTH.CREATE_ACC.REQUEST_INVITE');
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
+  }
 
-    return OBSecondaryButton(
-      isFullWidth: true,
-      isLarge: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            requestInviteText,
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
-          )
-        ],
-      ),
-      onPressed: () {
-        Navigator.pushNamed(context, '/waitlist/subscribe_email_step');
-      },
-    );
+  void _setSubscribeInProgress(subscribeInProgress) {
+    setState(() {
+      _subscribeInProgress = subscribeInProgress;
+    });
   }
 }
