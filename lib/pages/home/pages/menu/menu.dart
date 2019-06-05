@@ -6,6 +6,7 @@ import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +53,9 @@ class OBMainMenuPage extends StatelessWidget {
                       // Important: Remove any padding from the ListView.
                       padding: EdgeInsets.zero,
                       children: <Widget>[
+                        OBTileGroupTitle(
+                          title: 'My Openbook',
+                        ),
                         ListTile(
                           leading: const OBIcon(OBIcons.circles),
                           title: const OBText('My circles'),
@@ -119,6 +123,9 @@ class OBMainMenuPage extends StatelessWidget {
                             size: 25,
                             count: user.activeModerationPenaltiesCount,
                           ),
+                        ),
+                        OBTileGroupTitle(
+                          title: 'App & Account',
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.settings),
