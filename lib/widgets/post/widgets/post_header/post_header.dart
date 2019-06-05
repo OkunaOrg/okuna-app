@@ -7,20 +7,27 @@ import 'package:flutter/material.dart';
 class OBPostHeader extends StatelessWidget {
   final Post post;
   final OnPostDeleted onPostDeleted;
+  final ValueChanged<Post> onPostReported;
+  final bool hasActions;
 
-  const OBPostHeader({Key key, this.onPostDeleted, this.post})
+  const OBPostHeader(
+      {Key key,
+      this.onPostDeleted,
+      this.post,
+      this.onPostReported,
+      this.hasActions = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return post.isCommunityPost()
-        ? OBCommunityPostHeader(
-            post,
+        ? OBCommunityPostHeader(post,
             onPostDeleted: onPostDeleted,
-          )
-        : OBUserPostHeader(
-            post,
+            onPostReported: onPostReported,
+            hasActions: hasActions)
+        : OBUserPostHeader(post,
             onPostDeleted: onPostDeleted,
-          );
+            onPostReported: onPostReported,
+            hasActions: hasActions);
   }
 }

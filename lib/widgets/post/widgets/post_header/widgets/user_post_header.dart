@@ -14,8 +14,14 @@ import 'package:flutter/material.dart';
 class OBUserPostHeader extends StatelessWidget {
   final Post _post;
   final OnPostDeleted onPostDeleted;
+  final ValueChanged<Post> onPostReported;
+  final bool hasActions;
 
-  const OBUserPostHeader(this._post, {Key key, @required this.onPostDeleted})
+  const OBUserPostHeader(this._post,
+      {Key key,
+      @required this.onPostDeleted,
+      this.onPostReported,
+      this.hasActions = true})
       : super(key: key);
 
   @override
@@ -44,15 +50,17 @@ class OBUserPostHeader extends StatelessWidget {
               avatarUrl: postCreator.getProfileAvatar(),
             );
           }),
-      trailing: IconButton(
-          icon: const OBIcon(OBIcons.moreVertical),
-          onPressed: () {
-            bottomSheetService.showPostActions(
-                context: context,
-                post: _post,
-                onPostDeleted: onPostDeleted,
-                onPostReported: null);
-          }),
+      trailing: hasActions
+          ? IconButton(
+              icon: const OBIcon(OBIcons.moreVertical),
+              onPressed: () {
+                bottomSheetService.showPostActions(
+                    context: context,
+                    post: _post,
+                    onPostDeleted: onPostDeleted,
+                    onPostReported: onPostReported);
+              })
+          : null,
       title: GestureDetector(
         onTap: () {
           navigationService.navigateToUserProfile(

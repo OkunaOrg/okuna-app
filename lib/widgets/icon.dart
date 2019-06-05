@@ -167,7 +167,7 @@ class OBIcons {
   static const disconnect = OBIconData(nativeIcon: Icons.remove_circle_outline);
   static const deletePost = OBIconData(nativeIcon: Icons.delete);
   static const clear = OBIconData(nativeIcon: Icons.delete);
-  static const reportPost = OBIconData(nativeIcon: Icons.report);
+  static const report = OBIconData(nativeIcon: Icons.flag);
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
   static const camera = OBIconData(nativeIcon: Icons.camera_alt);
@@ -188,7 +188,7 @@ class OBIcons {
   static const deleteCommunity = OBIconData(nativeIcon: Icons.delete_forever);
   static const seeMore = OBIconData(nativeIcon: Icons.arrow_right);
   static const leaveCommunity = OBIconData(nativeIcon: Icons.exit_to_app);
-  static const reportCommunity = OBIconData(nativeIcon: Icons.report);
+  static const reportCommunity = OBIconData(nativeIcon: Icons.flag);
   static const communityInvites = OBIconData(nativeIcon: Icons.email);
   static const favoriteCommunity = OBIconData(nativeIcon: Icons.favorite);
   static const unfavoriteCommunity =
@@ -196,6 +196,8 @@ class OBIcons {
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
+  static const edit = OBIconData(nativeIcon: Icons.edit);
+  static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const account = OBIconData(nativeIcon: Icons.account_circle);
@@ -210,10 +212,18 @@ class OBIcons {
   static const themes = OBIconData(nativeIcon: Icons.format_paint);
   static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
   static const disableComments = OBIconData(nativeIcon: Icons.chat_bubble);
-  static const enableComments = OBIconData(nativeIcon: Icons.chat_bubble_outline);
+  static const enableComments =
+      OBIconData(nativeIcon: Icons.chat_bubble_outline);
   static const closePost = OBIconData(nativeIcon: Icons.lock_outline);
   static const openPost = OBIconData(nativeIcon: Icons.lock_open);
   static const block = OBIconData(nativeIcon: Icons.block);
+  static const chevronRight = OBIconData(nativeIcon: Icons.chevron_right);
+  static const verify = OBIconData(nativeIcon: Icons.check);
+  static const unverify = OBIconData(nativeIcon: Icons.close);
+  static const globalModerator = OBIconData(nativeIcon: Icons.account_balance);
+  static const moderationPenalties = OBIconData(nativeIcon: Icons.flag);
+  static const send = OBIconData(nativeIcon: Icons.send);
+  static const arrowDown = OBIconData(nativeIcon: Icons.keyboard_arrow_down);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

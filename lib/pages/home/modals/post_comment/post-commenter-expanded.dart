@@ -117,20 +117,24 @@ class OBPostCommenterExpandedModalState extends State<OBPostCommenterExpandedMod
 
   void _onWantsToSaveComment() async {
     PostComment comment;
-    if (widget.postComment != null) {
-      comment = await _userService.editPostComment(
-          post: widget.post,
-          postComment: widget.postComment,
-          text: _textController.text);
-    } else {
-      comment = await _userService.commentPost(
-          post: widget.post,
-          text: _textController.text);
-    }
+    try {
+      if (widget.postComment != null) {
+        comment = await _userService.editPostComment(
+            post: widget.post,
+            postComment: widget.postComment,
+            text: _textController.text);
+      } else {
+        comment = await _userService.commentPost(
+            post: widget.post,
+            text: _textController.text);
+      }
 
-    if (comment != null) {
-      // Remove modal
-      Navigator.pop(context, comment);
+      if (comment != null) {
+        // Remove modal
+        Navigator.pop(context, comment);
+      }
+    } catch(error) {
+      _onError(error);
     }
   }
 

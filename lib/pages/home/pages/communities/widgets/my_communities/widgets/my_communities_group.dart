@@ -190,7 +190,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
     _navigationService.navigateToBlankPageWithWidget(
         context: context,
         key: Key('obMyCommunitiesGroup' + widget.groupItemName),
-        navBarTitle: capitalize(widget.groupName),
+        navBarTitle: toCapital(widget.groupName),
         widget: _buildSeeAllGroupItemsPage());
   }
 

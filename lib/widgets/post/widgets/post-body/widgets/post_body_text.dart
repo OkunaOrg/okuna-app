@@ -1,8 +1,10 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +20,7 @@ class OBPostBodyText extends StatefulWidget {
 }
 
 class OBPostBodyTextState extends State<OBPostBodyText> {
-  static const int _LENGTH_LIMIT = 500;
+  static const int _LENGTH_LIMIT = 1300;
   static const int _CUTOFF_OFFSET = 25;
 
   ToastService _toastService;
@@ -43,9 +45,9 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   Widget build(BuildContext context) {
     _toastService = OpenbookProvider.of(context).toastService;
     _context = context;
-    var scrollContainer = (_context.inheritFromWidgetOfExactType(OBScrollContainer) as OBScrollContainer);
-    if (scrollContainer != null)
-      _scroll = scrollContainer.scroll;
+    var scrollContainer = (_context
+        .inheritFromWidgetOfExactType(OBScrollContainer) as OBScrollContainer);
+    if (scrollContainer != null) _scroll = scrollContainer.scroll;
 
     return GestureDetector(
       onLongPress: _copyText,
@@ -80,11 +82,24 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         GestureDetector(
           onTap: _toggleExpanded,
           child: Padding(
-            padding: EdgeInsets.only(top: 5),
-            child: OBText(
-              expanded ? "Show less" : "Show more",
-              style: TextStyle(decoration: TextDecoration.underline),
-              textAlign: TextAlign.start,
+            padding: const EdgeInsets.only(top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                OBSecondaryText(
+                  expanded ? "Show less" : "Show more",
+                  size: OBTextSize.medium,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                OBIcon(
+                  expanded ? OBIcons.arrowUp : OBIcons.arrowDown,
+                  themeColor: OBIconThemeColor.secondaryText,
+                )
+              ],
             ),
           ),
         ),
@@ -123,8 +138,10 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       _expanded = !_expanded;
 
       if (_doScroll && _hasScrollController()) {
-        var scrollOffset = _scroll.controller.offset - (_heightExpanded - _heightCollapsed);
-        _scroll.controller.jumpTo(scrollOffset.clamp(_minScrollOffset, _maxScrollOffset));
+        var scrollOffset =
+            _scroll.controller.offset - (_heightExpanded - _heightCollapsed);
+        _scroll.controller
+            .jumpTo(scrollOffset.clamp(_minScrollOffset, _maxScrollOffset));
         _doScroll = false;
       }
     });

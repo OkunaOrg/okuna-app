@@ -19,17 +19,18 @@ class ValidationService {
   static const int COMMUNITY_DESCRIPTION_MAX_LENGTH = 500;
   static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
-  static const int POST_MAX_LENGTH = 1120;
-  static const int POST_COMMENT_MAX_LENGTH = 560;
+  static const int POST_MAX_LENGTH = 5000;
+  static const int POST_COMMENT_MAX_LENGTH = 1500;
   static const int PASSWORD_MIN_LENGTH = 10;
   static const int PASSWORD_MAX_LENGTH = 100;
   static const int CIRCLE_MAX_LENGTH = 100;
   static const int COLOR_ATTR_MAX_LENGTH = 7;
   static const int LIST_MAX_LENGTH = 100;
   static const int PROFILE_NAME_MAX_LENGTH = 192;
+  static const int MODERATED_OBJECT_DESCRIPTION_MAX_LENGTH = 1000;
   static const int PROFILE_NAME_MIN_LENGTH = 1;
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
-  static const int PROFILE_BIO_MAX_LENGTH = 150;
+  static const int PROFILE_BIO_MAX_LENGTH = 1000;
   static const int POST_IMAGE_MAX_SIZE = 20971520;
   static const int AVATAR_IMAGE_MAX_SIZE = 10485760;
   static const int COVER_IMAGE_MAX_SIZE = 10485760;
@@ -87,55 +88,56 @@ class ValidationService {
   }
 
   bool isPostTextAllowedLength(String postText) {
-    return postText.length < POST_MAX_LENGTH;
+    return postText.length <= POST_MAX_LENGTH;
   }
 
   bool isBioAllowedLength(String bio) {
-    return bio.length > 0 && bio.length < PROFILE_BIO_MAX_LENGTH;
+    return bio.length > 0 && bio.length <= PROFILE_BIO_MAX_LENGTH;
   }
 
   bool isLocationAllowedLength(String location) {
-    return location.length > 0 && location.length < PROFILE_LOCATION_MAX_LENGTH;
+    return location.length > 0 &&
+        location.length <= PROFILE_LOCATION_MAX_LENGTH;
   }
 
   bool isUsernameAllowedLength(String username) {
-    return username.length > 0 && username.length < USERNAME_MAX_LENGTH;
+    return username.length > 0 && username.length <= USERNAME_MAX_LENGTH;
   }
 
   bool isPostCommentAllowedLength(String postComment) {
     return postComment.length > 0 &&
-        postComment.length < POST_COMMENT_MAX_LENGTH;
+        postComment.length <= POST_COMMENT_MAX_LENGTH;
   }
 
   bool isCommunityNameAllowedLength(String name) {
-    return name.length > 0 && name.length < COMMUNITY_NAME_MAX_LENGTH;
+    return name.length > 0 && name.length <= COMMUNITY_NAME_MAX_LENGTH;
   }
 
   bool isCommunityDescriptionAllowedLength(String description) {
     return description.length > 0 &&
-        description.length < COMMUNITY_DESCRIPTION_MAX_LENGTH;
+        description.length <= COMMUNITY_DESCRIPTION_MAX_LENGTH;
   }
 
   bool isCommunityTitleAllowedLength(String title) {
-    return title.length > 0 && title.length < COMMUNITY_TITLE_MAX_LENGTH;
+    return title.length > 0 && title.length <= COMMUNITY_TITLE_MAX_LENGTH;
   }
 
   bool isCommunityRulesAllowedLength(String rules) {
-    return rules.length > 0 && rules.length < COMMUNITY_RULES_MAX_LENGTH;
+    return rules.length > 0 && rules.length <= COMMUNITY_RULES_MAX_LENGTH;
   }
 
   bool isCommunityUserAdjectiveAllowedLength(String userAdjective) {
     return userAdjective.length > 0 &&
-        userAdjective.length < COMMUNITY_USER_ADJECTIVE_MAX_LENGTH;
+        userAdjective.length <= COMMUNITY_USER_ADJECTIVE_MAX_LENGTH;
   }
 
   bool isFollowsListNameAllowedLength(String followsList) {
-    return followsList.length > 0 && followsList.length < LIST_MAX_LENGTH;
+    return followsList.length > 0 && followsList.length <= LIST_MAX_LENGTH;
   }
 
   bool isConnectionsCircleNameAllowedLength(String connectionsCircle) {
     return connectionsCircle.length > 0 &&
-        connectionsCircle.length < CIRCLE_MAX_LENGTH;
+        connectionsCircle.length <= CIRCLE_MAX_LENGTH;
   }
 
   bool isUsernameAllowedCharacters(String username) {
@@ -217,6 +219,11 @@ class ValidationService {
   bool isNameAllowedLength(String name) {
     return name.length >= PROFILE_NAME_MIN_LENGTH &&
         name.length <= PROFILE_NAME_MAX_LENGTH;
+  }
+
+  bool isModeratedObjectDescriptionAllowedLength(
+      String moderatedObjectDescription) {
+    return moderatedObjectDescription.length <= PROFILE_NAME_MAX_LENGTH;
   }
 
   Future<bool> isImageAllowedSize(File image, OBImageType type) async {
@@ -320,6 +327,20 @@ class ValidationService {
     } else if (!isNameAllowedLength(name)) {
       errorMsg =
           'Name must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
+    }
+    return errorMsg;
+  }
+
+  String validateModeratedObjectDescription(String description) {
+    assert(description != null);
+
+    String errorMsg;
+
+    if (description.isEmpty) {
+      errorMsg = 'Description can\'t be empty.';
+    } else if (!isModeratedObjectDescriptionAllowedLength(description)) {
+      errorMsg =
+          'Description must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
     }
     return errorMsg;
   }

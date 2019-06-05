@@ -1,29 +1,20 @@
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_circles.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
-import 'package:Openbook/widgets/post/widgets/post_is_closed.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
 import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:flutter/material.dart';
 
-class OBPost extends StatefulWidget {
+class OBPost extends StatelessWidget {
   final Post post;
-  final OnPostDeleted onPostDeleted;
+  final ValueChanged<Post> onPostDeleted;
 
   const OBPost(this.post, {Key key, @required this.onPostDeleted})
       : super(key: key);
 
-  @override
-  OBPostState createState() {
-    return OBPostState();
-  }
-}
-
-class OBPostState extends State<OBPost> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,17 +23,18 @@ class OBPostState extends State<OBPost> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBPostHeader(
-          post: widget.post,
-          onPostDeleted: widget.onPostDeleted,
+          post: post,
+          onPostDeleted: onPostDeleted,
+          onPostReported: onPostDeleted,
         ),
-        OBPostBody(widget.post),
-        OBPostReactions(widget.post),
-        OBPostCircles(widget.post),
+        OBPostBody(post),
+        OBPostReactions(post),
+        OBPostCircles(post),
         OBPostComments(
-          widget.post,
+          post,
         ),
         OBPostActions(
-          widget.post,
+          post,
         ),
         const SizedBox(
           height: 16,

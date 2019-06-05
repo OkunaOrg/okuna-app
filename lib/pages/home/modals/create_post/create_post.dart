@@ -10,6 +10,7 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_ch
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/image_picker.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -43,7 +44,7 @@ class CreatePostModal extends StatefulWidget {
 class CreatePostModalState extends State<CreatePostModal> {
   ValidationService _validationService;
   NavigationService _navigationService;
-  BottomSheetService _bottomSheetService;
+  ImagePickerService _imagePickerService;
   ToastService _toastService;
   UserService _userService;
 
@@ -80,7 +81,9 @@ class CreatePostModalState extends State<CreatePostModal> {
     _isPostTextAllowedLength = false;
     _hasImage = false;
     _hasVideo = false;
-    _postItemsWidgets = [OBCreatePostText(controller: _textController, focusNode: _focusNode)];
+    _postItemsWidgets = [
+      OBCreatePostText(controller: _textController, focusNode: _focusNode)
+    ];
 
     if (widget.community != null)
       _postItemsWidgets.add(OBPostCommunityPreviewer(
@@ -104,7 +107,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     var openbookProvider = OpenbookProvider.of(context);
     _validationService = openbookProvider.validationService;
     _navigationService = openbookProvider.navigationService;
-    _bottomSheetService = openbookProvider.bottomSheetService;
+    _imagePickerService = openbookProvider.imagePickerService;
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
 
@@ -262,7 +265,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         onPressed: () async {
           _unfocusTextField();
           File pickedPhoto =
-              await _bottomSheetService.showPhotoPicker(context: context);
+              await _imagePickerService.pickImage(imageType: OBImageType.post);
           if (pickedPhoto != null) _setPostImage(pickedPhoto);
         },
       ),

@@ -110,7 +110,7 @@ final _usernameRegex = RegExp(r"(?:[^A-Za-u0-9]|^)(@[A-Za-z0-9](([A-Za-z0-9]|[._
 
 // Same idea as inner part of above regex, but only _ is allowed as special character
 final _communityNameRegex =
-    RegExp(r"(/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)", caseSensitive: false);
+    RegExp(r"((?:(?<=\s)|^)/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)", caseSensitive: false);
 
 class SmartMatch {
   final SmartTextElement span;
