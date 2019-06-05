@@ -11,11 +11,9 @@ import 'package:Openbook/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/connection_circles_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/comment_more_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/follows_lists_picker.dart';
-import 'package:Openbook/pages/home/bottom_sheets/photo_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/video_picker.dart';
 import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
-import 'package:Openbook/services/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
@@ -118,18 +116,6 @@ class BottomSheetService {
         builder: (BuildContext context) {
           return OBCommentMoreActionsBottomSheet(
               post: post, postComment: postComment);
-        });
-  }
-
-  Future<File> showPhotoPicker(
-      {@required BuildContext context,
-      OBImageType imageType = OBImageType.post}) {
-    return showModalBottomSheetApp(
-        context: context,
-        builder: (BuildContext context) {
-          return OBPhotoPickerBottomSheet(
-            imageType: imageType,
-          );
         });
   }
 

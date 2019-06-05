@@ -192,7 +192,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.4+1"
+    version: "0.12.4+2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -232,7 +232,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.1.0"
   http_parser:
     dependency: transitive
     description:
@@ -331,6 +331,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
+  multi_image_picker:
+    dependency: "direct main"
+    description:
+      name: multi_image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.3.3"
   multi_server_socket:
     dependency: transitive
     description:
@@ -345,12 +352,14 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.4"
-  onesignal:
+  onesignalflutter:
     dependency: "direct main"
     description:
-      name: onesignal
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: fb4bd2da344db58f2073d314ff1e363556804673
+      url: "git://github.com/jmrobles/OneSignal-Flutter-SDK.git"
+    source: git
     version: "1.1.0"
   package_config:
     dependency: transitive
@@ -470,7 +479,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.3"
+    version: "0.5.3+1"
   shelf:
     dependency: transitive
     description:
@@ -645,7 +654,7 @@ packages:
     source: hosted
     version: "3.4.1"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
       url: "https://pub.dartlang.org"
@@ -671,7 +680,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.1+2"
+    version: "0.10.1+3"
   vm_service_client:
     dependency: transitive
     description:
@@ -709,4 +718,4 @@ packages:
     version: "2.1.15"
 sdks:
   dart: ">=2.2.0 <3.0.0"
-  flutter: ">=1.5.0 <2.0.0"
+  flutter: ">=1.5.0 <1.5.9"
