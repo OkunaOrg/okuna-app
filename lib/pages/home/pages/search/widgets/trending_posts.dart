@@ -8,6 +8,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
+import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/primary_accent_text.dart';
 import 'package:flutter/material.dart';
 
@@ -66,30 +67,32 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     return _posts.isEmpty && _getTrendingPostsSubscription == null
         ? _buildNoTrendingPostsAlert()
         : RefreshIndicator(
-            key: _refreshIndicatorKey,
-            child: ListView.builder(
-                controller: _scrollController,
-                physics: const ClampingScrollPhysics(),
-                padding: const EdgeInsets.all(0),
-                itemCount: _posts.length + 1,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: OBPrimaryAccentText('Trending posts',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24)),
-                    );
-                  }
+      key: _refreshIndicatorKey,
+      child: OBScrollContainer(
+        scroll: ListView.builder(
+            controller: _scrollController,
+            physics: const ClampingScrollPhysics(),
+            padding: const EdgeInsets.all(0),
+            itemCount: _posts.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 10),
+                  child: OBPrimaryAccentText('Trending posts',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 24)),
+                );
+              }
 
-                  return OBPost(
-                    _posts[index - 1],
-                    onPostDeleted: _onPostDeleted,
-                  );
-                }),
-            onRefresh: refresh,
-          );
+              return OBPost(
+                _posts[index - 1],
+                onPostDeleted: _onPostDeleted,
+              );
+            }),
+      ),
+      onRefresh: refresh,
+    );
   }
 
   Widget _buildNoTrendingPostsAlert() {

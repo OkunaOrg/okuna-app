@@ -11,13 +11,18 @@ import 'package:tinycolor/tinycolor.dart';
 
 // Based on https://github.com/knoxpo/flutter_smart_text_view
 
-abstract class SmartTextElement {}
+abstract class SmartTextElement {
+  /// Stores the text used when rendering the element
+  String text;
+
+  SmartTextElement(this.text);
+}
 
 /// Represents an element containing a link
 class LinkElement extends SmartTextElement {
   final String url;
 
-  LinkElement(this.url);
+  LinkElement(this.url) : super(url);
 
   @override
   String toString() {
@@ -29,7 +34,7 @@ class LinkElement extends SmartTextElement {
 class HashTagElement extends SmartTextElement {
   final String tag;
 
-  HashTagElement(this.tag);
+  HashTagElement(this.tag) : super(tag);
 
   @override
   String toString() {
@@ -41,7 +46,7 @@ class HashTagElement extends SmartTextElement {
 class UsernameElement extends SmartTextElement {
   final String username;
 
-  UsernameElement(this.username);
+  UsernameElement(this.username) : super(username);
 
   @override
   String toString() {
@@ -53,7 +58,7 @@ class UsernameElement extends SmartTextElement {
 class CommunityNameElement extends SmartTextElement {
   final String communityName;
 
-  CommunityNameElement(this.communityName);
+  CommunityNameElement(this.communityName) : super(communityName);
 
   @override
   String toString() {
@@ -63,9 +68,7 @@ class CommunityNameElement extends SmartTextElement {
 
 /// Represents an element containing text
 class TextElement extends SmartTextElement {
-  final String text;
-
-  TextElement(this.text);
+  TextElement(String text) : super(text);
 
   @override
   String toString() {
@@ -75,9 +78,7 @@ class TextElement extends SmartTextElement {
 
 /// Represents an element containing secondary text
 class SecondaryTextElement extends SmartTextElement {
-  final String text;
-
-  SecondaryTextElement(this.text);
+  SecondaryTextElement(String text) : super(text);
 
   @override
   String toString() {
@@ -179,6 +180,9 @@ class OBSmartText extends StatelessWidget {
   /// Text to be linkified
   final String text;
 
+  /// Maximum text length
+  final int maxlength;
+
   /// Style for non-link text
   final TextStyle style;
 
@@ -207,10 +211,14 @@ class OBSmartText extends StatelessWidget {
 
   final TextOverflow overflow;
 
+  final TextOverflow lengthOverflow;
+
   const OBSmartText({
     Key key,
     this.text,
+    this.maxlength,
     this.overflow = TextOverflow.clip,
+    this.lengthOverflow = TextOverflow.ellipsis,
     this.style,
     this.linkStyle,
     this.tagStyle,
@@ -270,6 +278,10 @@ class OBSmartText extends StatelessWidget {
 
     List<SmartTextElement> elements = _smartify(text);
 
+    if (this.maxlength != null && text.length > maxlength) {
+      _enforceMaxLength(elements, maxlength);
+    }
+
     if (this.trailingSmartTextElement != null) {
       elements.add(this.trailingSmartTextElement);
     }
@@ -288,30 +300,57 @@ class OBSmartText extends StatelessWidget {
         );
       } else if (element is LinkElement) {
         return LinkTextSpan(
-          text: element.url,
+          text: element.text,
           style: linkStyle,
           onPressed: () => _onOpen(element.url),
         );
       } else if (element is HashTagElement) {
         return LinkTextSpan(
-          text: element.tag,
+          text: element.text,
           style: tagStyle,
           onPressed: () => _onTagTapped(element.tag),
         );
       } else if (element is UsernameElement) {
         return LinkTextSpan(
-          text: element.username,
+          text: element.text,
           style: usernameStyle,
           onPressed: () => _onUsernameTapped(element.username),
         );
       } else if (element is CommunityNameElement) {
         return LinkTextSpan(
-          text: element.communityName,
+          text: element.text,
           style: communityNameStyle,
           onPressed: () => _onCommunityNameTapped(element.communityName),
         );
       }
     }).toList());
+  }
+
+  void _enforceMaxLength(List<SmartTextElement> elements, int maxlength) {
+    int length = 0;
+
+    if (lengthOverflow == TextOverflow.visible) {
+      return;
+    } else if (lengthOverflow == TextOverflow.ellipsis) {
+      maxlength -= 3;
+    }
+
+    for (int i = 0; i < elements.length; i++) {
+      var element = elements[i];
+      var elementLength = element.text.length;
+
+      if (length + elementLength > maxlength) {
+        elements.removeRange(i+1, elements.length);
+        element.text = element.text.substring(0, maxlength - length).trimRight();
+
+        if (lengthOverflow == TextOverflow.ellipsis) {
+          element.text = element.text + '...';
+        }
+        break;
+      } else {
+        length += elementLength;
+      }
+    }
   }
 
   @override

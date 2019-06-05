@@ -11,6 +11,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
 import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
@@ -94,54 +95,57 @@ class OBProfilePageState extends State<OBProfilePage> {
                         whenEmptyLoad: false,
                         isFinish: !_morePostsToLoad,
                         delegate: OBHomePostsLoadMoreDelegate(),
-                        child: ListView.builder(
-                            controller: _scrollController,
-                            physics: const ClampingScrollPhysics(),
-                            padding: EdgeInsets.all(0),
-                            itemCount: _posts.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index == 0) {
-                                Widget postsItem;
+                        child: OBScrollContainer(
+                          scroll: ListView.builder(
+                              controller: _scrollController,
+                              physics: const ClampingScrollPhysics(),
+                              padding: EdgeInsets.all(0),
+                              itemCount: _posts.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index == 0) {
+                                  Widget postsItem;
 
-                                if (_refreshPostsInProgress && _posts.isEmpty) {
-                                  postsItem = SizedBox(
-                                    child: Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 20),
-                                        child: OBProgressIndicator(),
+                                  if (_refreshPostsInProgress &&
+                                      _posts.isEmpty) {
+                                    postsItem = SizedBox(
+                                      child: Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(top: 20),
+                                          child: OBProgressIndicator(),
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                } else if (_posts.length == 0) {
-                                  postsItem = OBProfileNoPosts(
-                                    _user,
-                                    onWantsToRefreshProfile: _refresh,
-                                  );
-                                } else {
-                                  postsItem = const SizedBox(
-                                    height: 20,
+                                    );
+                                  } else if (_posts.length == 0) {
+                                    postsItem = OBProfileNoPosts(
+                                      _user,
+                                      onWantsToRefreshProfile: _refresh,
+                                    );
+                                  } else {
+                                    postsItem = const SizedBox(
+                                      height: 20,
+                                    );
+                                  }
+
+                                  return Column(
+                                    children: <Widget>[
+                                      OBProfileCover(_user),
+                                      OBProfileCard(
+                                        _user,
+                                      ),
+                                      postsItem
+                                    ],
                                   );
                                 }
 
-                                return Column(
-                                  children: <Widget>[
-                                    OBProfileCover(_user),
-                                    OBProfileCard(
-                                      _user,
-                                    ),
-                                    postsItem
-                                  ],
-                                );
-                              }
+                                int postIndex = index - 1;
 
-                              int postIndex = index - 1;
+                                var post = _posts[postIndex];
 
-                              var post = _posts[postIndex];
-
-                              return OBPost(post,
-                                  onPostDeleted: _onPostDeleted,
-                                  key: Key(post.id.toString()));
-                            }),
+                                return OBPost(post,
+                                    onPostDeleted: _onPostDeleted,
+                                    key: Key(post.id.toString()));
+                              }),
+                        ),
                         onLoadMore: _loadMorePosts),
                     onRefresh: _refresh),
               )

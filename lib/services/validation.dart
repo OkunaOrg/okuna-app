@@ -19,8 +19,8 @@ class ValidationService {
   static const int COMMUNITY_DESCRIPTION_MAX_LENGTH = 500;
   static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
-  static const int POST_MAX_LENGTH = 1120;
-  static const int POST_COMMENT_MAX_LENGTH = 560;
+  static const int POST_MAX_LENGTH = 5000;
+  static const int POST_COMMENT_MAX_LENGTH = 1500;
   static const int PASSWORD_MIN_LENGTH = 10;
   static const int PASSWORD_MAX_LENGTH = 100;
   static const int CIRCLE_MAX_LENGTH = 100;
@@ -30,7 +30,7 @@ class ValidationService {
   static const int MODERATED_OBJECT_DESCRIPTION_MAX_LENGTH = 1000;
   static const int PROFILE_NAME_MIN_LENGTH = 1;
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
-  static const int PROFILE_BIO_MAX_LENGTH = 150;
+  static const int PROFILE_BIO_MAX_LENGTH = 1000;
   static const int POST_IMAGE_MAX_SIZE = 20971520;
   static const int AVATAR_IMAGE_MAX_SIZE = 10485760;
   static const int COVER_IMAGE_MAX_SIZE = 10485760;
