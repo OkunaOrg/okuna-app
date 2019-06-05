@@ -4,6 +4,7 @@ import 'package:Openbook/models/notifications/connection_request_notification.da
 import 'package:Openbook/models/notifications/follow_notification.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/notifications/post_comment_notification.dart';
+import 'package:Openbook/models/notifications/post_comment_reply_notification.dart';
 import 'package:Openbook/models/notifications/post_reaction_notification.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/provider.dart';
@@ -14,6 +15,7 @@ import 'package:Openbook/widgets/tiles/notification_tile/widgets/connection_conf
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/connection_request_notification_tile.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/follow_notification_tile.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/post_comment_notification_tile.dart';
+import 'package:Openbook/widgets/tiles/notification_tile/widgets/post_comment_reply_notification_tile.dart';
 import 'package:Openbook/widgets/tiles/notification_tile/widgets/post_reaction_notification_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -73,6 +75,13 @@ class OBNotificationTile extends StatelessWidget {
         break;
       case PostCommentNotification:
         notificationTile = OBPostCommentNotificationTile(
+          notification: notification,
+          postCommentNotification: notificationContentObject,
+          onPressed: finalOnPressed,
+        );
+        break;
+      case PostCommentReplyNotification:
+        notificationTile = OBPostCommentReplyNotificationTile(
           notification: notification,
           postCommentNotification: notificationContentObject,
           onPressed: finalOnPressed,

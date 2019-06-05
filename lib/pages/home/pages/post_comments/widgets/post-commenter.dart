@@ -16,13 +16,15 @@ import 'package:Openbook/services/httpie.dart';
 
 class OBPostCommenter extends StatefulWidget {
   final Post post;
+  final PostComment postComment;
   final bool autofocus;
   final FocusNode commentTextFieldFocusNode;
   final OnPostCommentCreatedCallback onPostCommentCreated;
   final OnPostCommentWillBeCreatedCallback onPostCommentWillBeCreated;
 
   OBPostCommenter(this.post,
-      {this.autofocus = false,
+      {this.postComment,
+      this.autofocus = false,
       this.commentTextFieldFocusNode,
       this.onPostCommentCreated,
       this.onPostCommentWillBeCreated});
@@ -195,10 +197,16 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           ? widget.onPostCommentWillBeCreated()
           : Future.value());
       String commentText = _textController.text;
-      _submitFormOperation = CancelableOperation.fromFuture(
-          _userService.commentPost(text: commentText, post: widget.post));
+      if (widget.postComment != null) {
+        _submitFormOperation = CancelableOperation.fromFuture(
+            _userService.replyPostComment(text: commentText, post: widget.post, postComment: widget.postComment));
+      } else {
+        _submitFormOperation = CancelableOperation.fromFuture(
+            _userService.commentPost(text: commentText, post: widget.post));
+      }
+
       PostComment createdPostComment = await _submitFormOperation.value;
-      widget.post.incrementCommentsCount();
+      if (createdPostComment.parentComment == null) widget.post.incrementCommentsCount();
       _textController.clear();
       _setFormWasSubmitted(false);
       _validateForm();

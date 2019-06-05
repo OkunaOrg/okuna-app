@@ -88,7 +88,7 @@ class OBTextFormField extends StatelessWidget {
                 obscureText: obscureText,
                 style: finalStyle,
                 decoration: InputDecoration(
-                  hintText: decoration.hintText,
+                  hintText: decoration?.hintText,
                   labelStyle: TextStyle(
                       height: labelHeight,
                       fontWeight: FontWeight.bold,
@@ -98,13 +98,13 @@ class OBTextFormField extends StatelessWidget {
                   hintStyle: TextStyle(
                       color: themeValueParserService
                           .parseColor(theme.primaryTextColor)),
-                  contentPadding: decoration.contentPadding ??
+                  contentPadding: decoration?.contentPadding ??
                       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                   border: InputBorder.none,
-                  labelText: decoration.labelText,
-                  prefixIcon: decoration.prefixIcon,
-                  prefixText: decoration.prefixText,
-                  errorMaxLines: decoration.errorMaxLines ?? 3
+                  labelText: decoration?.labelText,
+                  prefixIcon: decoration?.prefixIcon,
+                  prefixText: decoration?.prefixText,
+                  errorMaxLines: decoration?.errorMaxLines ?? 3
                 ),
               ),
               hasBorder ? const OBDivider() : const SizedBox()

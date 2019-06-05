@@ -24,9 +24,11 @@ class Environment {
   final String intercomAndroidKey;
   final String intercomAppId;
   final String sentryDsn;
+  final String openbookSocialApiUrl;
 
   const Environment(
       {this.sentryDsn = '',
+      this.openbookSocialApiUrl = '',
       this.apiUrl = '',
       this.magicHeaderName = '',
       this.magicHeaderValue = '',
@@ -43,6 +45,7 @@ class Environment {
       intercomIosKey: jsonMap["INTERCOM_IOS_KEY"],
       intercomAndroidKey: jsonMap["INTERCOM_ANDROID_KEY"],
       sentryDsn: jsonMap["SENTRY_DSN"],
+      openbookSocialApiUrl: jsonMap["OPENBOOK_SOCIAL_API_URL"]
     );
   }
 }

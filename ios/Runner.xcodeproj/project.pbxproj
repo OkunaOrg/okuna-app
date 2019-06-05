@@ -8,29 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
-		26B90459017411DF809A7507 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 970D6175355421F353EA64C9 /* libPods-Runner.a */; };
+		30C0AB83114DC50252134799 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2F8A8BC5DC89A5ADEF49D1 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		542BD8834B6D6BE2F3E671A0 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4BA49A905C89E90E88FD37 /* libPods-OneSignalNotificationServiceExtension.a */; };
-		8902A1072236D5BF005F914D /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8928E31E22356450001DB32A /* libFMDB.a */; };
-		8902A1082236D5BF005F914D /* libintercom_flutter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A1062236D5BF005F914D /* libintercom_flutter.a */; };
-		8902A1092236D5BF005F914D /* libsqflite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8928E32022356450001DB32A /* libsqflite.a */; };
-		8925094F222F0E0900455D87 /* libdevice_info.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8925094A222F0E0900455D87 /* libdevice_info.a */; };
-		898053B722047AD000E47AD9 /* libflutter_secure_storage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */; };
-		898053B822047AD000E47AD9 /* libimage_cropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A022047AAF00E47AD9 /* libimage_cropper.a */; };
-		898053B922047AD000E47AD9 /* libimage_picker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A222047AAF00E47AD9 /* libimage_picker.a */; };
-		898053BA22047AD000E47AD9 /* libonesignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A422047AAF00E47AD9 /* libonesignal.a */; };
-		898053BB22047AD000E47AD9 /* libpath_provider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A622047AAF00E47AD9 /* libpath_provider.a */; };
-		898053BC22047AD000E47AD9 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AA22047AAF00E47AD9 /* libPods-Runner.a */; };
-		898053BE22047AD000E47AD9 /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* libTOCropViewController.a */; };
-		898053BF22047AD000E47AD9 /* libuni_links.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B222047AAF00E47AD9 /* libuni_links.a */; };
-		898053C022047AD000E47AD9 /* liburl_launcher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B422047AAF00E47AD9 /* liburl_launcher.a */; };
-		898053C122047AD000E47AD9 /* libvideo_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B622047AAF00E47AD9 /* libvideo_player.a */; };
-		898053C322047AF100E47AD9 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053C222047AF100E47AD9 /* UserNotifications.framework */; };
-		898053C522047AF800E47AD9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053C422047AF700E47AD9 /* SystemConfiguration.framework */; };
-		898053C622047B3B00E47AD9 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
-		898053C722047B4200E47AD9 /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
+		89A543B022A7FFB500A4C0BB /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AA22047AAF00E47AD9 /* Pods_Runner.framework */; };
 		89ABAE522203425900049DFB /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89ABAE512203425900049DFB /* NotificationService.m */; };
 		89ABAE562203425900049DFB /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 89ABAE4E2203425900049DFB /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
@@ -40,6 +22,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		D9A32CBE0439E00B856D454C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBB57E8B03FDA9D0A698867 /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,13 +74,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = D6D2B1288A9474AE589E5F0AED80524B;
 			remoteInfo = image_picker;
-		};
-		898053A322047AAF00E47AD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BEB67C58BB1B431F81FB28DF8658A597;
-			remoteInfo = onesignal;
 		};
 		898053A522047AAF00E47AD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -155,12 +131,54 @@
 			remoteGlobalIDString = F223BD1D37BD4412AC0C0C61C7615399;
 			remoteInfo = video_player;
 		};
+		8986A1FD22A7F7E7009824AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B71D6799C47D234A25EDBDA75F0C660D;
+			remoteInfo = onesignalflutter;
+		};
 		89ABAE542203425900049DFB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 89ABAE4D2203425900049DFB;
 			remoteInfo = OneSignalNotificationServiceExtension;
+		};
+		89B81DB322A7F41F00B3E9E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E17ED85F3FB0A1819C818427E1B96D7D;
+			remoteInfo = BSGridCollectionViewLayout;
+		};
+		89B81DB522A7F41F00B3E9E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F0A7A725902A8FF9A7D6AB717B2F7501;
+			remoteInfo = BSImagePicker;
+		};
+		89B81DB722A7F41F00B3E9E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95ED3BFAFDF702EF9348BDAB4EE5507C;
+			remoteInfo = "BSImagePicker-BSImagePicker";
+		};
+		89B81DB922A7F41F00B3E9E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03FE8D1D31B74F15F3AEC7ACEEE84D4F;
+			remoteInfo = BSImageView;
+		};
+		89B81DBB22A7F41F00B3E9E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BFBFB5926D8AB35D39D19DC735F22517;
+			remoteInfo = multi_image_picker;
 		};
 		89CF474322419BFD001BC50D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -220,7 +238,6 @@
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		4130CBCE97AB39E4070E45EF /* Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig"; sourceTree = "<group>"; };
 		4E993998490EDCE06AC2B3F0 /* Pods-OneSignalNotificationServiceExtension.debug-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug-production.xcconfig"; sourceTree = "<group>"; };
-		7A4BA49A905C89E90E88FD37 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -236,8 +253,9 @@
 		89ABAE502203425900049DFB /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
 		89ABAE512203425900049DFB /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
 		89ABAE532203425900049DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89B81DC622A7F4EA00B3E9E0 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
+		89B81DC722A7F4EA00B3E9E0 /* OneSignalNotificationServiceExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OneSignalNotificationServiceExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		89DBC2DD2203430700F80685 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
-		970D6175355421F353EA64C9 /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		9740EEBA1CF902C7004384FC /* Flutter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Flutter.framework; path = Flutter/Flutter.framework; sourceTree = "<group>"; };
@@ -250,7 +268,9 @@
 		A6C34D3821BE816E00882F1E /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		AAF4B8238CF43C30122544EF /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-production.xcconfig"; sourceTree = "<group>"; };
 		B23196F4E53E7786037AC8B5 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release-development.xcconfig"; sourceTree = "<group>"; };
+		BEBB57E8B03FDA9D0A698867 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD573B1F3D19BD6C5F5624A /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		CE2F8A8BC5DC89A5ADEF49D1 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C0DC9AEB28225FDDAABF70 /* Pods-OneSignalNotificationServiceExtension.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.profile.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.profile.xcconfig"; sourceTree = "<group>"; };
 		E73A042BEC81027B2EBB8967 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -260,25 +280,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8902A1072236D5BF005F914D /* libFMDB.a in Frameworks */,
-				8902A1082236D5BF005F914D /* libintercom_flutter.a in Frameworks */,
-				8902A1092236D5BF005F914D /* libsqflite.a in Frameworks */,
-				8925094F222F0E0900455D87 /* libdevice_info.a in Frameworks */,
-				898053C722047B4200E47AD9 /* App.framework in Frameworks */,
-				898053C622047B3B00E47AD9 /* Flutter.framework in Frameworks */,
-				898053C522047AF800E47AD9 /* SystemConfiguration.framework in Frameworks */,
-				898053C322047AF100E47AD9 /* UserNotifications.framework in Frameworks */,
-				898053B722047AD000E47AD9 /* libflutter_secure_storage.a in Frameworks */,
-				898053B822047AD000E47AD9 /* libimage_cropper.a in Frameworks */,
-				898053B922047AD000E47AD9 /* libimage_picker.a in Frameworks */,
-				898053BA22047AD000E47AD9 /* libonesignal.a in Frameworks */,
-				898053BB22047AD000E47AD9 /* libpath_provider.a in Frameworks */,
-				898053BC22047AD000E47AD9 /* libPods-Runner.a in Frameworks */,
-				898053BE22047AD000E47AD9 /* libTOCropViewController.a in Frameworks */,
-				898053BF22047AD000E47AD9 /* libuni_links.a in Frameworks */,
-				898053C022047AD000E47AD9 /* liburl_launcher.a in Frameworks */,
-				898053C122047AD000E47AD9 /* libvideo_player.a in Frameworks */,
-				542BD8834B6D6BE2F3E671A0 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
+				89A543B022A7FFB500A4C0BB /* Pods_Runner.framework in Frameworks */,
+				30C0AB83114DC50252134799 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +291,7 @@
 			files = (
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
-				26B90459017411DF809A7507 /* libPods-Runner.a in Frameworks */,
+				D9A32CBE0439E00B856D454C /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,8 +323,8 @@
 				8980538622047A2300E47AD9 /* Runner */,
 				89805384220479C200E47AD9 /* video_player */,
 				898053822204791900E47AD9 /* VideoPlayerPlugin.h */,
-				7A4BA49A905C89E90E88FD37 /* libPods-OneSignalNotificationServiceExtension.a */,
-				970D6175355421F353EA64C9 /* libPods-Runner.a */,
+				CE2F8A8BC5DC89A5ADEF49D1 /* Pods_OneSignalNotificationServiceExtension.framework */,
+				BEBB57E8B03FDA9D0A698867 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -336,25 +339,30 @@
 		8980538E22047AAE00E47AD9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8925094A222F0E0900455D87 /* libdevice_info.a */,
-				89CF474422419BFD001BC50D /* libflutter_exif_rotation.a */,
-				8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */,
-				8928E31E22356450001DB32A /* libFMDB.a */,
-				898053A022047AAF00E47AD9 /* libimage_cropper.a */,
-				898053A222047AAF00E47AD9 /* libimage_picker.a */,
-				8902A1062236D5BF005F914D /* libintercom_flutter.a */,
-				898053A422047AAF00E47AD9 /* libonesignal.a */,
-				898053A622047AAF00E47AD9 /* libpath_provider.a */,
-				898053A822047AAF00E47AD9 /* libPods-OneSignalNotificationServiceExtension.a */,
-				898053AA22047AAF00E47AD9 /* libPods-Runner.a */,
-				89EE3231227B56510094ACB0 /* libshare.a */,
-				89EE3233227B56510094ACB0 /* libshared_preferences.a */,
-				8928E32022356450001DB32A /* libsqflite.a */,
-				898053AE22047AAF00E47AD9 /* libTOCropViewController.a */,
+				89B81DB422A7F41F00B3E9E0 /* BSGridCollectionViewLayout.framework */,
+				89B81DB622A7F41F00B3E9E0 /* BSImagePicker.framework */,
+				89B81DB822A7F41F00B3E9E0 /* BSImagePicker.bundle */,
+				89B81DBA22A7F41F00B3E9E0 /* BSImageView.framework */,
+				8925094A222F0E0900455D87 /* device_info.framework */,
+				89CF474422419BFD001BC50D /* flutter_exif_rotation.framework */,
+				8980539E22047AAF00E47AD9 /* flutter_secure_storage.framework */,
+				8928E31E22356450001DB32A /* FMDB.framework */,
+				898053A022047AAF00E47AD9 /* image_cropper.framework */,
+				898053A222047AAF00E47AD9 /* image_picker.framework */,
+				8902A1062236D5BF005F914D /* intercom_flutter.framework */,
+				89B81DBC22A7F41F00B3E9E0 /* multi_image_picker.framework */,
+				8986A1FE22A7F7E7009824AF /* onesignalflutter.framework */,
+				898053A622047AAF00E47AD9 /* path_provider.framework */,
+				898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */,
+				898053AA22047AAF00E47AD9 /* Pods_Runner.framework */,
+				89EE3231227B56510094ACB0 /* share.framework */,
+				89EE3233227B56510094ACB0 /* shared_preferences.framework */,
+				8928E32022356450001DB32A /* sqflite.framework */,
+				898053AE22047AAF00E47AD9 /* TOCropViewController.framework */,
 				898053B022047AAF00E47AD9 /* TOCropViewControllerBundle.bundle */,
-				898053B222047AAF00E47AD9 /* libuni_links.a */,
-				898053B422047AAF00E47AD9 /* liburl_launcher.a */,
-				898053B622047AAF00E47AD9 /* libvideo_player.a */,
+				898053B222047AAF00E47AD9 /* uni_links.framework */,
+				898053B422047AAF00E47AD9 /* url_launcher.framework */,
+				898053B622047AAF00E47AD9 /* video_player.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -392,6 +400,8 @@
 				97C146EF1CF9000F007C117D /* Products */,
 				0532A0D3A2BF06AB149735E4 /* Pods */,
 				5ABC6138995F2182C962F35D /* Frameworks */,
+				89B81DC622A7F4EA00B3E9E0 /* Runner-Bridging-Header.h */,
+				89B81DC722A7F4EA00B3E9E0 /* OneSignalNotificationServiceExtension-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -490,6 +500,7 @@
 					89ABAE4D2203425900049DFB = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = GAR7B57RXU;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -500,6 +511,7 @@
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = GAR7B57RXU;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -548,87 +560,80 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		8902A1062236D5BF005F914D /* libintercom_flutter.a */ = {
+		8902A1062236D5BF005F914D /* intercom_flutter.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libintercom_flutter.a;
+			fileType = wrapper.framework;
+			path = intercom_flutter.framework;
 			remoteRef = 8902A1052236D5BF005F914D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8925094A222F0E0900455D87 /* libdevice_info.a */ = {
+		8925094A222F0E0900455D87 /* device_info.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libdevice_info.a;
+			fileType = wrapper.framework;
+			path = device_info.framework;
 			remoteRef = 89250949222F0E0900455D87 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8928E31E22356450001DB32A /* libFMDB.a */ = {
+		8928E31E22356450001DB32A /* FMDB.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libFMDB.a;
+			fileType = wrapper.framework;
+			path = FMDB.framework;
 			remoteRef = 8928E31D22356450001DB32A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8928E32022356450001DB32A /* libsqflite.a */ = {
+		8928E32022356450001DB32A /* sqflite.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libsqflite.a;
+			fileType = wrapper.framework;
+			path = sqflite.framework;
 			remoteRef = 8928E31F22356450001DB32A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */ = {
+		8980539E22047AAF00E47AD9 /* flutter_secure_storage.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libflutter_secure_storage.a;
+			fileType = wrapper.framework;
+			path = flutter_secure_storage.framework;
 			remoteRef = 8980539D22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A022047AAF00E47AD9 /* libimage_cropper.a */ = {
+		898053A022047AAF00E47AD9 /* image_cropper.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libimage_cropper.a;
+			fileType = wrapper.framework;
+			path = image_cropper.framework;
 			remoteRef = 8980539F22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A222047AAF00E47AD9 /* libimage_picker.a */ = {
+		898053A222047AAF00E47AD9 /* image_picker.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libimage_picker.a;
+			fileType = wrapper.framework;
+			path = image_picker.framework;
 			remoteRef = 898053A122047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A422047AAF00E47AD9 /* libonesignal.a */ = {
+		898053A622047AAF00E47AD9 /* path_provider.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libonesignal.a;
-			remoteRef = 898053A322047AAF00E47AD9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		898053A622047AAF00E47AD9 /* libpath_provider.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libpath_provider.a;
+			fileType = wrapper.framework;
+			path = path_provider.framework;
 			remoteRef = 898053A522047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053A822047AAF00E47AD9 /* libPods-OneSignalNotificationServiceExtension.a */ = {
+		898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-OneSignalNotificationServiceExtension.a";
+			fileType = wrapper.framework;
+			path = Pods_OneSignalNotificationServiceExtension.framework;
 			remoteRef = 898053A722047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053AA22047AAF00E47AD9 /* libPods-Runner.a */ = {
+		898053AA22047AAF00E47AD9 /* Pods_Runner.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-Runner.a";
+			fileType = wrapper.framework;
+			path = Pods_Runner.framework;
 			remoteRef = 898053A922047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053AE22047AAF00E47AD9 /* libTOCropViewController.a */ = {
+		898053AE22047AAF00E47AD9 /* TOCropViewController.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libTOCropViewController.a;
+			fileType = wrapper.framework;
+			path = TOCropViewController.framework;
 			remoteRef = 898053AD22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -639,45 +644,87 @@
 			remoteRef = 898053AF22047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053B222047AAF00E47AD9 /* libuni_links.a */ = {
+		898053B222047AAF00E47AD9 /* uni_links.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libuni_links.a;
+			fileType = wrapper.framework;
+			path = uni_links.framework;
 			remoteRef = 898053B122047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053B422047AAF00E47AD9 /* liburl_launcher.a */ = {
+		898053B422047AAF00E47AD9 /* url_launcher.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liburl_launcher.a;
+			fileType = wrapper.framework;
+			path = url_launcher.framework;
 			remoteRef = 898053B322047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		898053B622047AAF00E47AD9 /* libvideo_player.a */ = {
+		898053B622047AAF00E47AD9 /* video_player.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libvideo_player.a;
+			fileType = wrapper.framework;
+			path = video_player.framework;
 			remoteRef = 898053B522047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		89CF474422419BFD001BC50D /* libflutter_exif_rotation.a */ = {
+		8986A1FE22A7F7E7009824AF /* onesignalflutter.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libflutter_exif_rotation.a;
+			fileType = wrapper.framework;
+			path = onesignalflutter.framework;
+			remoteRef = 8986A1FD22A7F7E7009824AF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89B81DB422A7F41F00B3E9E0 /* BSGridCollectionViewLayout.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BSGridCollectionViewLayout.framework;
+			remoteRef = 89B81DB322A7F41F00B3E9E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89B81DB622A7F41F00B3E9E0 /* BSImagePicker.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BSImagePicker.framework;
+			remoteRef = 89B81DB522A7F41F00B3E9E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89B81DB822A7F41F00B3E9E0 /* BSImagePicker.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BSImagePicker.bundle;
+			remoteRef = 89B81DB722A7F41F00B3E9E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89B81DBA22A7F41F00B3E9E0 /* BSImageView.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BSImageView.framework;
+			remoteRef = 89B81DB922A7F41F00B3E9E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89B81DBC22A7F41F00B3E9E0 /* multi_image_picker.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = multi_image_picker.framework;
+			remoteRef = 89B81DBB22A7F41F00B3E9E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89CF474422419BFD001BC50D /* flutter_exif_rotation.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = flutter_exif_rotation.framework;
 			remoteRef = 89CF474322419BFD001BC50D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		89EE3231227B56510094ACB0 /* libshare.a */ = {
+		89EE3231227B56510094ACB0 /* share.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libshare.a;
+			fileType = wrapper.framework;
+			path = share.framework;
 			remoteRef = 89EE3230227B56510094ACB0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		89EE3233227B56510094ACB0 /* libshared_preferences.a */ = {
+		89EE3233227B56510094ACB0 /* shared_preferences.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libshared_preferences.a;
+			fileType = wrapper.framework;
+			path = shared_preferences.framework;
 			remoteRef = 89EE3232227B56510094ACB0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -714,13 +761,11 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh",
 				"${PODS_ROOT}/Intercom/Intercom/Intercom.framework/Versions/A/Resources/Intercom.bundle",
 				"${PODS_ROOT}/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Intercom.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IntercomTranslations.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -734,11 +779,45 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
+				"${BUILT_PRODUCTS_DIR}/BSGridCollectionViewLayout/BSGridCollectionViewLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework",
+				"${BUILT_PRODUCTS_DIR}/BSImageView/BSImageView.framework",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
+				"${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/device_info/device_info.framework",
+				"${BUILT_PRODUCTS_DIR}/flutter_exif_rotation/flutter_exif_rotation.framework",
+				"${BUILT_PRODUCTS_DIR}/flutter_secure_storage/flutter_secure_storage.framework",
+				"${BUILT_PRODUCTS_DIR}/image_picker/image_picker.framework",
+				"${BUILT_PRODUCTS_DIR}/multi_image_picker/multi_image_picker.framework",
+				"${BUILT_PRODUCTS_DIR}/path_provider/path_provider.framework",
+				"${BUILT_PRODUCTS_DIR}/share/share.framework",
+				"${BUILT_PRODUCTS_DIR}/shared_preferences/shared_preferences.framework",
+				"${BUILT_PRODUCTS_DIR}/sqflite/sqflite.framework",
+				"${BUILT_PRODUCTS_DIR}/uni_links/uni_links.framework",
+				"${BUILT_PRODUCTS_DIR}/url_launcher/url_launcher.framework",
+				"${BUILT_PRODUCTS_DIR}/video_player/video_player.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSGridCollectionViewLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSImagePicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSImageView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TOCropViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/device_info.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_exif_rotation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_secure_storage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/image_picker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/multi_image_picker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/path_provider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/share.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/shared_preferences.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sqflite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/uni_links.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/url_launcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/video_player.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -915,6 +994,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -933,6 +1013,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -999,6 +1081,7 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1017,6 +1100,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1077,6 +1163,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1095,6 +1182,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1161,6 +1250,7 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1179,6 +1269,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1239,6 +1332,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1257,6 +1351,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1268,6 +1364,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1289,6 +1386,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OneSignalNotificationServiceExtension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1299,6 +1399,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1320,6 +1421,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OneSignalNotificationServiceExtension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Debug-production";
@@ -1330,6 +1434,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1351,6 +1456,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OneSignalNotificationServiceExtension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Debug-development";
@@ -1361,6 +1469,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1381,6 +1490,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OneSignalNotificationServiceExtension-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1391,6 +1502,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1411,6 +1523,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OneSignalNotificationServiceExtension-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Profile;
@@ -1421,6 +1535,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1441,6 +1556,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OneSignalNotificationServiceExtension-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Release-production";
@@ -1451,6 +1568,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1471,6 +1589,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OneSignalNotificationServiceExtension-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Release-development";
@@ -1586,6 +1706,7 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1604,6 +1725,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1614,6 +1738,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1632,6 +1757,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = social.openbook.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
