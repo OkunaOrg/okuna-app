@@ -67,32 +67,35 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     return _posts.isEmpty && _getTrendingPostsSubscription == null
         ? _buildNoTrendingPostsAlert()
         : RefreshIndicator(
-      key: _refreshIndicatorKey,
-      child: OBScrollContainer(
-        scroll: ListView.builder(
-            controller: _scrollController,
-            physics: const ClampingScrollPhysics(),
-            padding: const EdgeInsets.all(0),
-            itemCount: _posts.length + 1,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 10),
-                  child: OBPrimaryAccentText('Trending posts',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24)),
-                );
-              }
+            key: _refreshIndicatorKey,
+            child: OBScrollContainer(
+              scroll: ListView.builder(
+                  controller: _scrollController,
+                  physics: const ClampingScrollPhysics(),
+                  padding: const EdgeInsets.all(0),
+                  itemCount: _posts.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: OBPrimaryAccentText('Trending posts',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 24)),
+                      );
+                    }
 
-              return OBPost(
-                _posts[index - 1],
-                onPostDeleted: _onPostDeleted,
-              );
-            }),
-      ),
-      onRefresh: refresh,
-    );
+                    Post post = _posts[index - 1];
+
+                    return OBPost(
+                      post,
+                      key: Key(post.id.toString()),
+                      onPostDeleted: _onPostDeleted,
+                    );
+                  }),
+            ),
+            onRefresh: refresh,
+          );
   }
 
   Widget _buildNoTrendingPostsAlert() {
