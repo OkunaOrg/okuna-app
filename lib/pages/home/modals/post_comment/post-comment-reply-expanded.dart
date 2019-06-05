@@ -138,6 +138,7 @@ class OBPostCommentReplyExpandedModalState
       _onError(error);
     } finally {
       _setRequestInProgress(false);
+      _postCommentReplyOperation = null;
     }
   }
 
