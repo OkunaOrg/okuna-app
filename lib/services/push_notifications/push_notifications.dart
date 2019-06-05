@@ -5,7 +5,7 @@ import 'package:Openbook/models/push_notification.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:crypto/crypto.dart';
-import 'package:onesignal/onesignal.dart';
+import 'package:onesignalflutter/onesignalflutter.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PushNotificationsService {
