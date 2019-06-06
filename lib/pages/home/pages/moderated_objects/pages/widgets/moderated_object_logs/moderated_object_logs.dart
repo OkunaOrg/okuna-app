@@ -82,6 +82,7 @@ class OBModeratedObjectLogsState extends State<OBModeratedObjectLogs> {
               )
             : _logs.length > 0
                 ? ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.all(0),
                     itemBuilder: _buildModerationLog,
                     itemCount: _logs.length,

@@ -89,6 +89,7 @@ class OBModeratedObjectReportsPreviewState
                 ],
               )
             : ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
                 separatorBuilder: (BuildContext context, int index) {
                   return OBDivider();
                 },
