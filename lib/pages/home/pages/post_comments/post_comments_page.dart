@@ -117,6 +117,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     _needsBootstrap = true;
     _postComments = [];
     _noMoreBottomItemsToLoad = true;
+    _positionTopCommentSection = 0.0;
     _currentSort = PostCommentsSortType.dec;
     _noMoreTopItemsToLoad = false;
     _startScrollWasInitialised = false;
