@@ -243,7 +243,7 @@ class NavigationService {
             widget: OBPostCommentsPage(
                 pageType: PostCommentsPageType.comments,
                 post: post,
-                showPostPreview: false,
+                showPostPreview: true,
                 autofocusCommentInput: true)));
   }
 
