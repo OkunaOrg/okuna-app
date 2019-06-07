@@ -169,7 +169,7 @@ flutter:
     # Generic name to allow changing the emoji font later on
     - family: Emoji
       fonts:
-        - asset: assets/fonts/emojione.ttf
+        - asset: assets/fonts/Twemoji.ttf
           style: normal
     - family: ''
       fonts:
