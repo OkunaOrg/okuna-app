@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 class OBPost extends StatelessWidget {
   final Post post;
   final ValueChanged<Post> onPostDeleted;
+  final ValueChanged<bool> onTextExpandedChange;
 
-  const OBPost(this.post, {Key key, @required this.onPostDeleted})
+  const OBPost(this.post,
+      {Key key, @required this.onPostDeleted, this.onTextExpandedChange})
       : super(key: key);
 
   @override
@@ -27,7 +29,10 @@ class OBPost extends StatelessWidget {
           onPostDeleted: onPostDeleted,
           onPostReported: onPostDeleted,
         ),
-        OBPostBody(post),
+        OBPostBody(
+          post,
+          onTextExpandedChange: onTextExpandedChange,
+        ),
         OBPostReactions(post),
         OBPostCircles(post),
         OBPostComments(

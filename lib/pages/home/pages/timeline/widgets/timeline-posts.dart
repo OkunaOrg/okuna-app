@@ -12,7 +12,6 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/loading_indicator_tile.dart';
@@ -95,15 +94,13 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   }
 
   Widget _buildTimelinePosts() {
-    return OBScrollContainer(
-      scroll: ListView.builder(
-          controller: _postsScrollController,
-          physics: const ClampingScrollPhysics(),
-          cacheExtent: 30,
-          padding: const EdgeInsets.all(0),
-          itemCount: _posts.length,
-          itemBuilder: _buildTimelinePost),
-    );
+    return ListView.builder(
+        controller: _postsScrollController,
+        physics: const ClampingScrollPhysics(),
+        cacheExtent: 30,
+        padding: const EdgeInsets.all(0),
+        itemCount: _posts.length,
+        itemBuilder: _buildTimelinePost);
   }
 
   Widget _buildTimelinePost(BuildContext context, int index) {
@@ -159,7 +156,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
 
     return postWidget;
-
   }
 
   Widget _buildDrHoo() {

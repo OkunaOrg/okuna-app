@@ -13,6 +13,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  expandable: ^2.2.2+3
   uuid: ^2.0.1
   multi_image_picker: ^4.3.3
   flutter_exif_rotation: ^0.2.2
