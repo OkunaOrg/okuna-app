@@ -10,7 +10,7 @@ import 'package:expandable/expandable.dart';
 
 class OBPostBodyText extends StatefulWidget {
   final Post _post;
-  final ValueChanged<bool> onTextExpandedChange;
+  final OnTextExpandedChange onTextExpandedChange;
 
   OBPostBodyText(this._post, {this.onTextExpandedChange}) : super();
 
@@ -38,7 +38,8 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
 
   void _onExpandableControllerChange() {
     if (widget.onTextExpandedChange != null)
-      widget.onTextExpandedChange(_expandableController.value);
+      widget.onTextExpandedChange(
+          post: widget._post, isExpanded: _expandableController.value);
   }
 
   @override
@@ -132,3 +133,6 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         message: 'Text copied!', context: _context, type: ToastType.info);
   }
 }
+
+typedef void OnTextExpandedChange(
+    {@required Post post, @required bool isExpanded});

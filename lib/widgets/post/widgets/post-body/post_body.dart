@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class OBPostBody extends StatelessWidget {
   final Post post;
-  final ValueChanged<bool> onTextExpandedChange;
+  final OnTextExpandedChange onTextExpandedChange;
 
   const OBPostBody(this.post, {Key key, this.onTextExpandedChange})
       : super(key: key);

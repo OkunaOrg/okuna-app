@@ -10,11 +10,8 @@ import 'package:tinycolor/tinycolor.dart';
 class OBCommunityNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Community community;
-  final bool refreshInProgress;
-  final VoidCallback onWantsRefresh;
 
-  const OBCommunityNavBar(this.community,
-      {@required this.refreshInProgress, @required this.onWantsRefresh});
+  const OBCommunityNavBar(this.community);
 
   @override
   Widget build(BuildContext context) {
@@ -32,23 +29,15 @@ class OBCommunityNavBar extends StatelessWidget
           Color actionsColor = isDarkColor ? Colors.white : Colors.black;
 
           return CupertinoNavigationBar(
-              border: null,
-              actionsForegroundColor: actionsColor,
-              middle: Text(
-                '/c/' + community.name,
-                style: TextStyle(color: actionsColor),
-              ),
-              transitionBetweenRoutes: false,
-              backgroundColor: color,
-              trailing: refreshInProgress
-                  ? OBProgressIndicator(color: actionsColor)
-                  : GestureDetector(
-                      onTap: onWantsRefresh,
-                      child: OBIcon(
-                        OBIcons.refresh,
-                        color: actionsColor,
-                      ),
-                    ));
+            border: null,
+            actionsForegroundColor: actionsColor,
+            middle: Text(
+              '/c/' + community.name,
+              style: TextStyle(color: actionsColor),
+            ),
+            transitionBetweenRoutes: false,
+            backgroundColor: color,
+          );
         });
   }
 

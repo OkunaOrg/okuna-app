@@ -17,6 +17,8 @@ import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_po
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/community_members.dart';
+import 'package:Openbook/pages/home/pages/community/pages/community_rules.dart';
+import 'package:Openbook/pages/home/pages/community/pages/community_staff/community_staff.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
@@ -83,6 +85,28 @@ class NavigationService {
             key: Key('obSlideCommunityPage'),
             widget: OBCommunityPage(
               community,
+            )));
+  }
+
+  Future navigateToCommunityStaffPage(
+      {@required BuildContext context, @required Community community}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityStaffPage'),
+            widget: OBCommunityStaffPage(
+              community: community,
+            )));
+  }
+
+  Future navigateToCommunityRulesPage(
+      {@required BuildContext context, @required Community community}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityRulesPage'),
+            widget: OBCommunityRulesPage(
+              community: community,
             )));
   }
 
