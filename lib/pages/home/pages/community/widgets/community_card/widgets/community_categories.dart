@@ -26,6 +26,7 @@ class OBCommunityCategories extends StatelessWidget {
             children: <Widget>[
               OBCategoryBadge(
                 category: category,
+                size: OBCategoryBadgeSize.small,
               )
             ],
           ));

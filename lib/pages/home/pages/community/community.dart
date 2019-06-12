@@ -7,7 +7,7 @@ import 'package:Openbook/pages/home/pages/community/pages/community_staff/widget
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_nav_bar.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_posts/community_posts.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_posts.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/alert.dart';

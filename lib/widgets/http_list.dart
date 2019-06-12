@@ -54,7 +54,8 @@ class OBHttpList<T> extends StatefulWidget {
 class OBHttpListState<T> extends State<OBHttpList<T>> {
   ToastService _toastService;
 
-  GlobalKey<RefreshIndicatorState> _listRefreshIndicatorKey;
+  GlobalKey<RefreshIndicatorState> _listRefreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   ScrollController _listScrollController;
   List<T> _list = [];
   List<T> _listSearchResults = [];
@@ -78,7 +79,6 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _listScrollController = ScrollController();
-    _listRefreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _loadingFinished = false;
     _needsBootstrap = true;
     _refreshInProgress = false;
@@ -203,11 +203,11 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Widget _buildList() {
-    return _list.isEmpty && !_refreshInProgress
-        ? _buildNoList()
-        : RefreshIndicator(
-            key: _listRefreshIndicatorKey,
-            child: LoadMore(
+    return RefreshIndicator(
+        key: _listRefreshIndicatorKey,
+        child: _list.isEmpty && !_refreshInProgress
+            ? _buildNoList()
+            : LoadMore(
                 whenEmptyLoad: false,
                 isFinish: _loadingFinished,
                 delegate: const OBHttpListLoadMoreDelegate(),
@@ -226,7 +226,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
                         itemCount: _list.length + _prependedItems.length,
                         itemBuilder: _buildListItem),
                 onLoadMore: _loadMoreListItems),
-            onRefresh: _refreshList);
+        onRefresh: _refreshList);
   }
 
   Widget _buildNoList() {
@@ -255,7 +255,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   void _bootstrap() async {
-    await _refreshList();
+    Future.delayed(Duration(milliseconds: 0), () {
+      _listRefreshIndicatorKey.currentState.show();
+    });
   }
 
   Future<void> _refreshList() async {
