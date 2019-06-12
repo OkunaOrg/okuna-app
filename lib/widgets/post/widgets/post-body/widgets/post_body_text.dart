@@ -1,13 +1,10 @@
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/collapsible_smart_text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:expandable/expandable.dart';
 
 class OBPostBodyText extends StatefulWidget {
   final Post _post;
@@ -22,7 +19,7 @@ class OBPostBodyText extends StatefulWidget {
 }
 
 class OBPostBodyTextState extends State<OBPostBodyText> {
-  static const int _LENGTH_LIMIT = 200;
+  static const int MAX_LENGTH_LIMIT = 1300;
 
   ToastService _toastService;
   BuildContext _context;
@@ -57,12 +54,12 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       return OBCollapsibleSmartText(
         text: widget._post.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
-        maxlength: _LENGTH_LIMIT,
+        maxlength: MAX_LENGTH_LIMIT,
       );
     } else {
       return OBCollapsibleSmartText(
         text: widget._post.text,
-        maxlength: _LENGTH_LIMIT,
+        maxlength: MAX_LENGTH_LIMIT,
       );
     }
   }

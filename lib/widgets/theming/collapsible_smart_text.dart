@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'actionable_smart_text.dart';
 
-class OBCollapsibleSmartText extends StatelessWidget {
+class OBCollapsibleSmartText extends StatefulWidget {
   final String text;
   final int maxlength;
   final OBTextSize size;
@@ -26,8 +26,23 @@ class OBCollapsibleSmartText extends StatelessWidget {
       : super(key: key);
 
   @override
+  OBCollapsibleSmartTextState createState() {
+    return OBCollapsibleSmartTextState();
+  }
+}
+
+class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
+  ExpandableController _expandableController;
+
+  @override
+  void initState() {
+    super.initState();
+    _expandableController = ExpandableController();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool shouldBeCollapsed = text.length > maxlength;
+    bool shouldBeCollapsed = widget.text.length > widget.maxlength;
 
     return shouldBeCollapsed
         ? _buildExpandableActionableSmartText()
@@ -36,12 +51,12 @@ class OBCollapsibleSmartText extends StatelessWidget {
 
   Widget _buildExpandableActionableSmartText() {
     return ExpandableNotifier(
-      controller: ExpandableController(),
+      controller: _expandableController,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expandable(
-            collapsed: _buildActionableSmartText(maxLength: maxlength),
+            collapsed: _buildActionableSmartText(maxLength: widget.maxlength),
             expanded: _buildActionableSmartText(),
           ),
           Builder(builder: (BuildContext context) {
@@ -50,9 +65,7 @@ class OBCollapsibleSmartText extends StatelessWidget {
             if (exp.expanded) return const SizedBox();
 
             return GestureDetector(
-                onTap: () {
-                  exp.toggle();
-                },
+                onTap: _toggleExpandable,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Row(
@@ -80,13 +93,17 @@ class OBCollapsibleSmartText extends StatelessWidget {
     );
   }
 
+  void _toggleExpandable() {
+    _expandableController.toggle();
+  }
+
   Widget _buildActionableSmartText({int maxLength}) {
     return OBActionableSmartText(
-      text: text,
+      text: widget.text,
       maxlength: maxLength,
-      size: size,
-      lengthOverflow: lengthOverflow,
-      trailingSmartTextElement: trailingSmartTextElement,
+      size: widget.size,
+      lengthOverflow: widget.lengthOverflow,
+      trailingSmartTextElement: widget.trailingSmartTextElement,
     );
   }
 }
