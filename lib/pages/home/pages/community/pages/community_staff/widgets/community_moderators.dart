@@ -37,7 +37,6 @@ class OBCommunityModerators extends StatelessWidget {
                     child: Row(children: [
                       OBIcon(
                         OBIcons.communityModerators,
-                        themeColor: OBIconThemeColor.primaryAccent,
                         size: OBIconSize.medium,
                       ),
                       const SizedBox(

@@ -37,7 +37,6 @@ class OBCommunityAdministrators extends StatelessWidget {
                     child: Row(children: [
                       OBIcon(
                         OBIcons.communityAdministrators,
-                        themeColor: OBIconThemeColor.primaryAccent,
                         size: OBIconSize.medium,
                       ),
                       const SizedBox(

@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
@@ -34,25 +35,31 @@ class OBCommunityRulesPage extends StatelessWidget {
 
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        OBText(
-                          'Rules',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        OBActionableSmartText(text: community.rules)
-                      ],
-                    ),
-                  )
+                  Row(
+                    children: <Widget>[
+                      OBIcon(
+                        OBIcons.rules,
+                        size: OBIconSize.medium,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      OBText(
+                        'Rules',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 24),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  OBActionableSmartText(text: community.rules)
                 ],
               ),
             );

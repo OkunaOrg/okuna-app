@@ -103,7 +103,7 @@ class OBCategoryBadge extends StatelessWidget {
 
     switch (size) {
       case OBCategoryBadgeSize.small:
-        fontSize = 12;
+        fontSize = 14;
         break;
       case OBCategoryBadgeSize.medium:
         fontSize = 16;

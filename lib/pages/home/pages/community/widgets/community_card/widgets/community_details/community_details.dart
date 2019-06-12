@@ -16,25 +16,23 @@ class OBCommunityDetails extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community community = snapshot.data;
 
-        return Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Flexible(
-                  child: SizedBox(
-                    child: Wrap(
-                      spacing: 10.0,
-                      runSpacing: 10.0,
-                      children: <Widget>[
-                        OBCommunityType(community),
-                        OBCommunityMembersCount(community)
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ));
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Flexible(
+              child: SizedBox(
+                child: Wrap(
+                  spacing: 10.0,
+                  runSpacing: 10.0,
+                  children: <Widget>[
+                    OBCommunityType(community),
+                    OBCommunityMembersCount(community)
+                  ],
+                ),
+              ),
+            )
+          ],
+        );
       },
     );
   }

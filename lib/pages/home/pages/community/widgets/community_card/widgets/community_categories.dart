@@ -1,6 +1,8 @@
 import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/widgets/category_badge.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityCategories extends StatelessWidget {
