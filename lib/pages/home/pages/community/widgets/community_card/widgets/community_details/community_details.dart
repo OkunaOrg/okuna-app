@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_favorite.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_members_count.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_type.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class OBCommunityDetails extends StatelessWidget {
                   runSpacing: 10.0,
                   children: <Widget>[
                     OBCommunityType(community),
-                    OBCommunityMembersCount(community)
+                    OBCommunityMembersCount(community),
+                    OBCommunityFavorite(community)
                   ],
                 ),
               ),

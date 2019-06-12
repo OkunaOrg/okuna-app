@@ -35,7 +35,7 @@ class OBCommunityCategories extends StatelessWidget {
         });
 
         return Padding(
-          padding: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.only(top: 10),
           child: Wrap(
             spacing: 10,
             runSpacing: 10,

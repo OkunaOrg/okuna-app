@@ -4,7 +4,6 @@ import 'package:Openbook/pages/home/pages/community/widgets/community_card/widge
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_categories.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_description.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/community_details.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_favorite.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_name.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_title.dart';
 import 'package:Openbook/widgets/avatars/community_avatar.dart';
@@ -44,11 +43,10 @@ class OBCommunityCard extends StatelessWidget {
               OBCommunityName(community),
               OBCommunityDescription(community),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               OBCommunityDetails(community),
               OBCommunityCategories(community),
-              OBCommunityFavorite(community),
               const SizedBox(
                 height: 10,
               ),

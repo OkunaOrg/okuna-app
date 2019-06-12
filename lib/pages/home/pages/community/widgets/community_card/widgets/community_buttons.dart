@@ -55,7 +55,7 @@ class OBCommunityButtons extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: 10),
       child: SizedBox(
         height: 35,
         child: ListView.separated(
