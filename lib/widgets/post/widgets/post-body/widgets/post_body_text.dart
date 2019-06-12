@@ -3,6 +3,7 @@ import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
+import 'package:Openbook/widgets/theming/collapsible_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,20 +27,9 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   ToastService _toastService;
   BuildContext _context;
 
-  ExpandableController _expandableController;
-
   @override
   void initState() {
     super.initState();
-    _expandableController = ExpandableController(false);
-    if (widget.onTextExpandedChange != null)
-      _expandableController.addListener(_onExpandableControllerChange);
-  }
-
-  void _onExpandableControllerChange() {
-    if (widget.onTextExpandedChange != null)
-      widget.onTextExpandedChange(
-          post: widget._post, isExpanded: _expandableController.value);
   }
 
   @override
@@ -58,71 +48,21 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         stream: widget._post.updateSubject,
         initialData: widget._post,
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-          Post post = snapshot.data;
-          String postText = post.text;
-          bool isLongPost = postText.length > _LENGTH_LIMIT;
-
-          return isLongPost
-              ? _buildExpandableWidget()
-              : _buildActionablePostText();
+          return _buildActionablePostText();
         });
   }
 
-  Widget _buildExpandableWidget() {
-    return ExpandableNotifier(
-      controller: _expandableController,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expandable(
-            collapsed: _buildActionablePostText(maxlength: _LENGTH_LIMIT),
-            expanded: _buildActionablePostText(),
-          ),
-          Builder(builder: (BuildContext context) {
-            var exp = ExpandableController.of(context);
-
-            return GestureDetector(
-                onTap: () {
-                  exp.toggle();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      OBSecondaryText(
-                        exp.expanded ? "Show less" : "Show more",
-                        size: OBTextSize.medium,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OBIcon(
-                        exp.expanded ? OBIcons.arrowUp : OBIcons.arrowDown,
-                        themeColor: OBIconThemeColor.secondaryText,
-                      )
-                    ],
-                  ),
-                ));
-          })
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActionablePostText({int maxlength}) {
+  Widget _buildActionablePostText() {
     if (widget._post.isEdited != null && widget._post.isEdited) {
-      return OBActionableSmartText(
+      return OBCollapsibleSmartText(
         text: widget._post.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
-        maxlength: maxlength,
+        maxlength: _LENGTH_LIMIT,
       );
     } else {
-      return OBActionableSmartText(
+      return OBCollapsibleSmartText(
         text: widget._post.text,
-        maxlength: maxlength,
+        maxlength: _LENGTH_LIMIT,
       );
     }
   }
