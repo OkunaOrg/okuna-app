@@ -73,7 +73,7 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
                     children: <Widget>[
                       OBSecondaryText(
                         'Show more',
-                        size: OBTextSize.medium,
+                        size: widget.size,
                         textAlign: TextAlign.start,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
