@@ -23,6 +23,7 @@ class OBPostCommentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     var provider = OpenbookProvider.of(context);
     NavigationService _navigationService = provider.navigationService;
+    GlobalKey _keyComment = GlobalKey();
 
     return StreamBuilder(
         key: Key('OBPostCommentTile#${this.postComment.id}'),
@@ -31,7 +32,14 @@ class OBPostCommentTile extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PostComment> snapshot) {
           PostComment postComment = snapshot.data;
 
+          Future.delayed(Duration(milliseconds: 1000), () {
+            final RenderBox renderBoxRed = _keyComment.currentContext.findRenderObject();
+            final sizeRed = renderBoxRed.size;
+            print("SIZE of Comment tile: $sizeRed");
+          });
+
           return Padding(
+            key: _keyComment,
             padding:
             const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             child: Row(
