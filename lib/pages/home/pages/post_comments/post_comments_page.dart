@@ -579,7 +579,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
   Map<String, String> pageTextMap;
 
-  OBInfinitePostCommentsLoadMoreDelegate(Map<String, String> pageTextMap);
+  OBInfinitePostCommentsLoadMoreDelegate(this.pageTextMap);
 
   @override
   Widget buildChild(LoadMoreStatus status,
