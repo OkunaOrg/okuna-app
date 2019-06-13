@@ -21,8 +21,8 @@ class OBPostDivider extends StatelessWidget {
           Color color = themeValueParserService.parseColor(theme.primaryColor);
 
           TinyColor modifiedColor = themeValueParserService.isDarkColor(color)
-              ? TinyColor(color).lighten(20)
-              : TinyColor(color).darken(20);
+              ? TinyColor(color).lighten(30)
+              : TinyColor(color).darken(30);
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
