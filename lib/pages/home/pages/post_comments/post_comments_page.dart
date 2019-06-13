@@ -602,8 +602,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       if (widget.postComment.text.length > MAX_COMMENT_TEXT_LENGTH_LIMIT) {
         finalCommentTextHeight = finalCommentTextHeight + HEIGHT_SHOW_MORE_TEXT;
       }
-
-      print('FINAL COMMENT TEXT HEIGHT $finalCommentTextHeight');
     }
 
     totalOffsetY = totalOffsetY +
