@@ -265,7 +265,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
                   isFinish: _noMoreBottomItemsToLoad,
                   delegate:
                       OBInfinitePostCommentsLoadMoreDelegate(_pageTextMap),
-                  child: ListView.builder(
+                  child: new ListView.builder(
                       shrinkWrap: true,
                       physics: const AlwaysScrollableScrollPhysics(),
                       controller: _postCommentsScrollController,
@@ -273,6 +273,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
                       itemCount: _postComments.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
+                          if (_postComments.length > 0) {
+                            _beginAnimations();
+                          }
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -323,6 +326,29 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     return _columnChildren;
   }
 
+  void _beginAnimations() {
+    if (_animationController.status != AnimationStatus.completed &&
+        !_startScrollWasInitialised &&
+        widget.showPostPreview == true) {
+      Future.delayed(Duration(milliseconds: 0), () {
+        if (_positionTopCommentSection == 0.0) _setPositionTopCommentSection();
+        _postCommentsScrollController.animateTo(
+            _positionTopCommentSection - 100.0,
+            duration: Duration(milliseconds: 5),
+            curve: Curves.easeIn);
+      });
+    }
+
+    _animationController.forward();
+    Future.delayed(Duration(milliseconds: 0), () {
+      if (!_startScrollWasInitialised) {
+        setState(() {
+          _startScrollWasInitialised = true;
+        });
+      }
+    });
+  }
+
   Widget _getDivider() {
     if (widget.postComment != null) {
       return OBPostDivider();
@@ -345,28 +371,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       _removePostCommentAtIndex(commentIndex);
       if (widget.onCommentDeleted != null) widget.onCommentDeleted(postComment);
     };
-
-    if (_animationController.status != AnimationStatus.completed &&
-        !_startScrollWasInitialised &&
-        widget.showPostPreview == true) {
-      Future.delayed(Duration(milliseconds: 0), () {
-        _postCommentsScrollController.animateTo(
-            _positionTopCommentSection - 100.0,
-            duration: Duration(milliseconds: 5),
-            curve: Curves.easeIn);
-      });
-    }
-
-    if (commentIndex == 0) {
-      _animationController.forward();
-      Future.delayed(Duration(milliseconds: 0), () {
-        if (!_startScrollWasInitialised) {
-          setState(() {
-            _startScrollWasInitialised = true;
-          });
-        }
-      });
-    }
 
     if (widget.linkedPostComment != null &&
         postComment.id == widget.linkedPostComment.id) {
