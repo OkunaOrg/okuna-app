@@ -2,6 +2,8 @@ import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_reactions_emoji_count.dart';
@@ -15,6 +17,8 @@ import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_po
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/community_members.dart';
+import 'package:Openbook/pages/home/pages/community/pages/community_rules.dart';
+import 'package:Openbook/pages/home/pages/community/pages/community_staff/community_staff.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/manage_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/community_administrators.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/pages/confirm_add_community_administrator.dart';
@@ -34,6 +38,8 @@ import 'package:Openbook/pages/home/pages/menu/pages/followers.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/following.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_lists/follows_lists.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_penalties/my_moderation_penalties.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_tasks/my_moderation_tasks.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
@@ -42,11 +48,17 @@ import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/user_invites.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/themes/themes.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/moderated_object_community_review.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/moderated_object_global_review.dart';
+import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/pages/moderated_object_reports.dart';
 import 'package:Openbook/pages/home/pages/notifications/pages/notifications_settings.dart';
 import 'package:Openbook/pages/home/pages/post/post.dart';
-import 'package:Openbook/pages/home/pages/post_comments/post.dart';
-import 'package:Openbook/pages/home/pages/post_comments/post_comments_linked.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post_comments_page.dart';
+import 'package:Openbook/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Openbook/pages/home/pages/profile/profile.dart';
+import 'package:Openbook/pages/home/pages/report_object/pages/confirm_report_object.dart';
+import 'package:Openbook/pages/home/pages/report_object/report_object.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/routes/slide_right_route.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
@@ -73,6 +85,28 @@ class NavigationService {
             key: Key('obSlideCommunityPage'),
             widget: OBCommunityPage(
               community,
+            )));
+  }
+
+  Future navigateToCommunityStaffPage(
+      {@required BuildContext context, @required Community community}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityStaffPage'),
+            widget: OBCommunityStaffPage(
+              community: community,
+            )));
+  }
+
+  Future navigateToCommunityRulesPage(
+      {@required BuildContext context, @required Community community}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityRulesPage'),
+            widget: OBCommunityRulesPage(
+              community: community,
             )));
   }
 
@@ -230,25 +264,74 @@ class NavigationService {
         context,
         OBSlideRightRoute(
             key: Key('obSlidePostComments'),
-            widget: OBPostCommentsPage(post, autofocusCommentInput: true)));
+            widget: OBPostCommentsPage(
+                pageType: PostCommentsPageType.comments,
+                post: post,
+                showPostPreview: true,
+                autofocusCommentInput: true)));
   }
 
-  Future navigateToPostComments(
+  Future<void> navigateToPostComments(
       {@required Post post, @required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewComments'),
-            widget: OBPostCommentsPage(post, autofocusCommentInput: false)));
+            widget: OBPostCommentsPage(
+                post: post,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.comments,
+                autofocusCommentInput: false)));
   }
 
-  Future navigateToPostCommentsLinked(
+  Future<void> navigateToPostCommentReplies(
+      {@required Post post,
+      @required PostComment postComment,
+      @required BuildContext context,
+      Function(PostComment) onReplyDeleted,
+      Function(PostComment) onReplyAdded}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewComments'),
+            widget: OBPostCommentsPage(
+                pageType: PostCommentsPageType.replies,
+                post: post,
+                showPostPreview: true,
+                postComment: postComment,
+                onCommentDeleted: onReplyDeleted,
+                onCommentAdded: onReplyAdded,
+                autofocusCommentInput: false)));
+  }
+
+  Future<void> navigateToPostCommentsLinked(
       {@required PostComment postComment, @required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSlideViewCommentsLinked'),
-            widget: OBPostCommentsLinkedPage(postComment,
+            widget: OBPostCommentsPage(
+                post: postComment.post,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.comments,
+                linkedPostComment: postComment,
+                autofocusCommentInput: false)));
+  }
+
+  Future<void> navigateToPostCommentRepliesLinked(
+      {@required PostComment postComment,
+      @required PostComment parentComment,
+      @required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obSlideViewCommentsLinked'),
+            widget: OBPostCommentsPage(
+                post: postComment.post,
+                postComment: parentComment,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.replies,
+                linkedPostComment: postComment,
                 autofocusCommentInput: false)));
   }
 
@@ -462,6 +545,114 @@ class NavigationService {
             widget: OBConfirmBlockUserModal(
               user: user,
             )));
+  }
+
+  Future<bool> navigateToConfirmReportObject(
+      {@required BuildContext context,
+      @required dynamic object,
+      Map<String, dynamic> extraData,
+      @required ModerationCategory category}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obConfirmReportObject'),
+            widget: OBConfirmReportObject(
+              extraData: extraData,
+              object: object,
+              category: category,
+            )));
+  }
+
+  Future<void> navigateToReportObject(
+      {@required BuildContext context,
+      @required dynamic object,
+      Map<String, dynamic> extraData,
+      ValueChanged<dynamic> onObjectReported}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obReportObject'),
+            widget: OBReportObjectPage(
+              object: object,
+              extraData: extraData,
+              onObjectReported: onObjectReported,
+            )));
+  }
+
+  Future<void> navigateToCommunityModeratedObjects(
+      {@required BuildContext context, @required Community community}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obCommunityModeratedObjects'),
+            widget: OBModeratedObjectsPage(
+              community: community,
+            )));
+  }
+
+  Future<void> navigateToGlobalModeratedObjects(
+      {@required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obGlobalModeratedObjects'),
+            widget: OBModeratedObjectsPage()));
+  }
+
+  Future<void> navigateToModeratedObjectReports(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectReportsPage'),
+            widget: OBModeratedObjectReportsPage(
+              moderatedObject: moderatedObject,
+            )));
+  }
+
+  Future<void> navigateToModeratedObjectGlobalReview(
+      {@required BuildContext context,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectGlobalReviewPage'),
+            widget: OBModeratedObjectGlobalReviewPage(
+              moderatedObject: moderatedObject,
+            )));
+  }
+
+  Future<void> navigateToModeratedObjectCommunityReview(
+      {@required BuildContext context,
+      @required Community community,
+      @required ModeratedObject moderatedObject}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obModeratedObjectCommunityReviewPage'),
+            widget: OBModeratedObjectCommunityReviewPage(
+              community: community,
+              moderatedObject: moderatedObject,
+            )));
+  }
+
+  Future<void> navigateToMyModerationTasksPage(
+      {@required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obMyModerationTasksPage'),
+            widget: OBMyModerationTasksPage()));
+  }
+
+  Future<void> navigateToMyModerationPenaltiesPage(
+      {@required BuildContext context}) async {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obMyModerationPenaltiesPage'),
+            widget: OBMyModerationPenaltiesPage()));
   }
 
   Future<void> navigateToBlankPageWithWidget(

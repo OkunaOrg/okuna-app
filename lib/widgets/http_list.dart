@@ -25,6 +25,8 @@ class OBHttpList<T> extends StatefulWidget {
   final EdgeInsets padding;
   final IndexedWidgetBuilder separatorBuilder;
   final ScrollPhysics physics;
+  final List<Widget> prependedItems;
+  final OBHttpListSecondaryRefresher secondaryRefresher;
 
   const OBHttpList(
       {Key key,
@@ -38,7 +40,9 @@ class OBHttpList<T> extends StatefulWidget {
       this.listSearcher,
       this.searchResultListItemBuilder,
       this.controller,
-      this.separatorBuilder})
+      this.separatorBuilder,
+      this.prependedItems,
+      this.secondaryRefresher})
       : super(key: key);
 
   @override
@@ -50,10 +54,12 @@ class OBHttpList<T> extends StatefulWidget {
 class OBHttpListState<T> extends State<OBHttpList<T>> {
   ToastService _toastService;
 
-  GlobalKey<RefreshIndicatorState> _listRefreshIndicatorKey;
+  GlobalKey<RefreshIndicatorState> _listRefreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   ScrollController _listScrollController;
   List<T> _list = [];
   List<T> _listSearchResults = [];
+  List<Widget> _prependedItems;
 
   bool _hasSearch;
   String _searchQuery;
@@ -61,8 +67,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   bool _refreshInProgress;
   bool _searchRequestInProgress;
   bool _loadingFinished;
-
-  StreamSubscription<List<T>> _searchRequestSubscription;
+  bool _wasBootstrapped;
 
   CancelableOperation _searchOperation;
   CancelableOperation _refreshOperation;
@@ -75,14 +80,16 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _listScrollController = ScrollController();
-    _listRefreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _loadingFinished = false;
     _needsBootstrap = true;
     _refreshInProgress = false;
+    _wasBootstrapped = false;
     _searchRequestInProgress = false;
     _hasSearch = false;
     _list = [];
     _searchQuery = '';
+    _prependedItems =
+        widget.prependedItems != null ? widget.prependedItems.toList() : [];
   }
 
   void insertListItem(T listItem, {bool shouldScrollToTop = true}) {
@@ -198,11 +205,11 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Widget _buildList() {
-    return _list.isEmpty && !_refreshInProgress
-        ? _buildNoList()
-        : RefreshIndicator(
-            key: _listRefreshIndicatorKey,
-            child: LoadMore(
+    return RefreshIndicator(
+        key: _listRefreshIndicatorKey,
+        child: _list.isEmpty && !_refreshInProgress && _wasBootstrapped
+            ? _buildNoList()
+            : LoadMore(
                 whenEmptyLoad: false,
                 isFinish: _loadingFinished,
                 delegate: const OBHttpListLoadMoreDelegate(),
@@ -212,20 +219,26 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
                         controller: _listScrollController,
                         physics: widget.physics,
                         padding: widget.padding,
-                        itemCount: _list.length,
+                        itemCount: _list.length + _prependedItems.length,
                         itemBuilder: _buildListItem)
                     : ListView.builder(
                         controller: _listScrollController,
                         physics: widget.physics,
                         padding: widget.padding,
-                        itemCount: _list.length,
+                        itemCount: _list.length + _prependedItems.length,
                         itemBuilder: _buildListItem),
                 onLoadMore: _loadMoreListItems),
-            onRefresh: _refreshList);
+        onRefresh: _refreshList);
   }
 
   Widget _buildNoList() {
-    return Column(
+    List<Widget> items = [];
+
+    if (widget.prependedItems != null && widget.prependedItems.isNotEmpty) {
+      items.addAll(widget.prependedItems);
+    }
+
+    items.add(Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
@@ -236,17 +249,33 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
           assetImage: 'assets/images/stickers/perplexed-owl.png',
         )
       ],
+    ));
+
+    return ListView(
+      controller: _listScrollController,
+      physics: widget.physics,
+      padding: widget.padding,
+      children: items,
     );
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    T listItem = _list[index];
+    if (_prependedItems.isNotEmpty && index < _prependedItems.length) {
+      return _prependedItems[index];
+    }
+
+    T listItem = _list[index - _prependedItems.length];
 
     return widget.listItemBuilder(context, listItem);
   }
 
   void _bootstrap() async {
-    await _refreshList();
+    Future.delayed(Duration(milliseconds: 0), () async {
+      await _listRefreshIndicatorKey.currentState.show();
+      setState(() {
+        _wasBootstrapped = true;
+      });
+    });
   }
 
   Future<void> _refreshList() async {
@@ -254,9 +283,16 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     _setLoadingFinished(false);
     _setRefreshInProgress(true);
     try {
+      List<Future<dynamic>> refreshFutures = [widget.listRefresher()];
+
+      if (widget.secondaryRefresher != null)
+        refreshFutures.add(widget.secondaryRefresher());
+
       _refreshOperation =
-          CancelableOperation.fromFuture(widget.listRefresher());
-      List<T> list = await _refreshOperation.value;
+          CancelableOperation.fromFuture(Future.wait(refreshFutures));
+      List<dynamic> results = await _refreshOperation.value;
+      List<T> list = results[0];
+
       _setList(list);
     } catch (error) {
       _onError(error);
@@ -280,7 +316,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Future<bool> _loadMoreListItems() async {
-    if (_loadMoreOperation != null) _loadMoreOperation.cancel();
+    if (_refreshOperation != null) return true;
+    if (_loadMoreOperation != null) return true;
+    if (_list.isEmpty) return true;
+    debugPrint('Loading more list items');
 
     try {
       _loadMoreOperation =
@@ -445,6 +484,7 @@ class OBHttpListController<T> {
 typedef Widget OBHttpListItemBuilder<T>(BuildContext context, T listItem);
 typedef Future<List<T>> OBHttpListSearcher<T>(String searchQuery);
 typedef Future<List<T>> OBHttpListRefresher<T>();
+typedef Future OBHttpListSecondaryRefresher<T>();
 typedef Future<List<T>> OBHttpListOnScrollLoader<T>(List<T> currentList);
 
 class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {

@@ -24,15 +24,15 @@ class OBSplashLogo extends StatelessWidget {
         ),
         Text('Open',
             style: TextStyle(
-              fontSize: 38.0,
-              fontWeight: FontWeight.bold,
-              //color: Colors.white
-            )),
-        Text('book',
-            style: TextStyle(
-              fontSize: 38.0,
-              //color: Colors.white
-            )),
+                fontSize: 38.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'VisbyRoundCF'
+                //color: Colors.white
+                )),
+        Text('space',
+            style: TextStyle(fontSize: 38.0, fontFamily: 'VisbyRoundCF'
+                //color: Colors.white
+                )),
       ],
     );
   }

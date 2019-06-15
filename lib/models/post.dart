@@ -38,6 +38,7 @@ class Post extends UpdatableModel<Post> {
   bool isEncircled;
   bool isEdited;
   bool isClosed;
+  bool isReported;
 
   static final factory = PostFactory();
 
@@ -70,6 +71,7 @@ class Post extends UpdatableModel<Post> {
       this.isMuted,
       this.isEncircled,
       this.isClosed,
+      this.isReported,
       this.isEdited})
       : super();
 
@@ -101,6 +103,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('is_edited')) isEdited = json['is_edited'];
 
     if (json.containsKey('is_closed')) isClosed = json['is_closed'];
+
+    if (json.containsKey('is_reported')) isReported = json['is_reported'];
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
@@ -277,6 +281,11 @@ class Post extends UpdatableModel<Post> {
     this.notifyUpdate();
   }
 
+  void setIsReported(isReported) {
+    this.isReported = isReported;
+    notifyUpdate();
+  }
+
   void _setReactionsEmojiCounts(PostReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
   }
@@ -299,6 +308,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
         isMuted: json['is_muted'],
+        isReported: json['is_reported'],
         areCommentsEnabled: json['comments_enabled'],
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),

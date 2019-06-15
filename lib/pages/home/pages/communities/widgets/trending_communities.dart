@@ -58,6 +58,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
     return RefreshIndicator(
       onRefresh: _refreshTrendingCommunities,
       key: _refreshIndicatorKey,
+      displacement: 80,
       child: ListView(
         // BUG https://github.com/flutter/flutter/issues/22180
         //controller: widget.scrollController,
@@ -126,10 +127,16 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
   }
 
   void _bootstrap() {
-    _refreshTrendingCommunities();
+    Future.delayed(
+        Duration(
+          milliseconds: 0,
+        ), () {
+      _refreshIndicatorKey.currentState.show();
+    });
   }
 
   Future<void> _refreshTrendingCommunities() async {
+    debugPrint('Refreshing trending communities');
     _setRefreshInProgress(true);
     try {
       CommunitiesList trendingCommunitiesList =

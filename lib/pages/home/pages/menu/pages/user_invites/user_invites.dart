@@ -104,18 +104,20 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
             OBPrimaryColorContainer(
                 child: Column(
               children: <Widget>[
-                _hasAcceptedInvites || _hasPendingInvites
-                    ? _buildInvitesList()
-                    : _buildNoInvitesFallback()
-              ],
-            )),
+               _hasAcceptedInvites || _hasPendingInvites
+                            ? _buildInvitesList()
+                            : _buildNoInvitesFallback()
+                ],
+              )
+            ),
           ],
-        ));
+      ),
+    );
   }
 
   Widget _buildInvitesList() {
     return Expanded(
-      child: RefreshIndicator(
+        child: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _refreshInvites,
         child: ListView(
@@ -155,8 +157,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
                   ),
                 ],
               )
-            ]),
-      ),
+            ]
+          ),
+        )
     );
   }
 
@@ -170,11 +173,20 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     String assetImage = hasInvites
         ? 'assets/images/stickers/perplexed-owl.png'
         : 'assets/images/stickers/owl-instructor.png';
+
+    Function _onPressed = hasInvites
+        ? _onWantsToCreateInvite
+        : _refreshInvites;
+
+    String buttonText = hasInvites
+        ? 'Invite a friend'
+        : 'Refresh';
+
     return OBButtonAlert(
       text: message,
-      onPressed: _refreshInvites,
-      buttonText: 'Refresh',
-      buttonIcon: OBIcons.refresh,
+      onPressed: _onPressed,
+      buttonText: buttonText,
+      buttonIcon: hasInvites ? OBIcons.add : OBIcons.refresh,
       isLoading: _refreshInProgress,
       assetImage: assetImage,
     );
@@ -182,7 +194,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
 
   Widget _onUserInviteDeletedCallback(
       BuildContext context, UserInvite userInvite) {
-    _refreshUser();
+    setState(() {
+      if (userInvite.createdUser == null) _user.inviteCount += 1;
+    });
   }
 
   void _bootstrap() async {
@@ -194,8 +208,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     try {
       await Future.wait([
         _refreshUser(),
-        _acceptedInvitesGroupController.refresh(),
-        _pendingInvitesGroupController.refresh()
+        _hasAcceptedInvites ?_acceptedInvitesGroupController.refresh() : _refreshAcceptedInvites(),
+        _hasPendingInvites ? _pendingInvitesGroupController.refresh() : _refreshPendingInvites(),
       ]);
       _scrollToTop();
     } catch (error) {
@@ -286,7 +300,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   void _showNoInvitesLeft() {
-    _toastService.error(message: 'You have no invites left', context: context);
+    _toastService.error(message: 'You have no invites available', context: context);
   }
 
   void _onUserInviteCreated(UserInvite createdUserInvite) {

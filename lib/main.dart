@@ -16,6 +16,8 @@ import 'package:Openbook/pages/auth/reset_password/verify_reset_password_link_st
 import 'package:Openbook/pages/auth/login.dart';
 import 'package:Openbook/pages/auth/splash.dart';
 import 'package:Openbook/pages/home/home.dart';
+import 'package:Openbook/pages/waitlist/subscribe_done_step.dart';
+import 'package:Openbook/pages/waitlist/subscribe_email_step.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/pages/auth/create_account/name_step.dart';
 import 'package:Openbook/plugins/desktop/error-reporting.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = _defaultTextTheme();
     return OpenbookProvider(
       key: openbookProviderKey,
       child: OBToast(
@@ -62,7 +65,10 @@ class MyApp extends StatelessWidget {
                 // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
                 // counter didn't reset back to zero; the application is not restarted.
                 primarySwatch: Colors.grey,
-                fontFamily: 'NunitoSans'),
+                fontFamily: 'NunitoSans',
+                textTheme: textTheme,
+                primaryTextTheme: textTheme,
+                accentTextTheme: textTheme),
             routes: {
               /// The openbookProvider uses services available in the context
               /// Their connection must be bootstrapped but no other way to execute
@@ -130,6 +136,15 @@ class MyApp extends StatelessWidget {
               '/auth/password_reset_success_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthPasswordResetSuccessPage();
+              },
+              '/waitlist/subscribe_email_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBWaitlistSubscribePage();
+              },
+              '/waitlist/subscribe_done_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                WaitlistSubscribeArguments args = ModalRoute.of(context).settings.arguments;
+                return OBWaitlistSubscribeDoneStep(count: args.count);
               }
             }),
       ),
@@ -237,4 +252,29 @@ bool get isInDebugMode {
 
 bool get isOnDesktop {
   return Platform.isLinux || Platform.isMacOS || Platform.isWindows;
+}
+
+TextTheme _defaultTextTheme() {
+  // This text theme is merged with the default theme in the `TextData`
+  // constructor. This makes sure that the emoji font is used as fallback for
+  // every text that uses the default theme.
+  var style;
+  if (isOnDesktop) {
+    style = new TextStyle(fontFamilyFallback: ['Emoji']);
+  }
+  return new TextTheme(
+    body1: style,
+    body2: style,
+    button: style,
+    caption: style,
+    display1: style,
+    display2: style,
+    display3: style,
+    display4: style,
+    headline: style,
+    overline: style,
+    subhead: style,
+    subtitle: style,
+    title: style,
+  );
 }

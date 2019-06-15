@@ -47,6 +47,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   ValidationService _validationService;
+  ImagePickerService _imagePickerService;
 
   int _currentIndex;
   int _lastIndex;
@@ -111,6 +112,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _validationService = openbookProvider.validationService;
+      _imagePickerService = openbookProvider.imagePickerService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -135,6 +137,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     File image;
     if (share.path != null) {
       image = File.fromUri(Uri.parse(share.path));
+      image = await _imagePickerService.processImage(image);
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {
         int limit =
@@ -422,7 +425,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _pushNotificationSubscription = _pushNotificationsService.pushNotification
           .listen(_onPushNotification);
 
-      if (!newUser.areGuidelinesAccepted) {
+      if (newUser.areGuidelinesAccepted != null &&
+          !newUser.areGuidelinesAccepted) {
         _modalService.openAcceptGuidelines(context: context);
       }
     }

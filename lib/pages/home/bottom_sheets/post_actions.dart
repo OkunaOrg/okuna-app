@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
@@ -13,12 +11,13 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/disable_comments_post_tile.dart';
 import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
+import 'package:Openbook/widgets/tiles/actions/report_post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBPostActionsBottomSheet extends StatefulWidget {
   final Post post;
-  final OnPostReported onPostReported;
+  final ValueChanged<Post> onPostReported;
   final OnPostDeleted onPostDeleted;
 
   const OBPostActionsBottomSheet(
@@ -69,42 +68,39 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             ));
           }
 
+          if (loggedInUser.canCloseOrOpenPost(post)) {
+            postActions.add(OBClosePostTile(
+              post: post,
+              onClosePost: _dismiss,
+              onOpenPost: _dismiss,
+            ));
+          }
 
-        if (loggedInUser.canCloseOrOpenPost(post)) {
-          postActions.add(OBClosePostTile(
-            post: post,
-            onClosePost: _dismiss,
-            onOpenPost: _dismiss,
-          ));
-        }
+          if (loggedInUser.canEditPost(post)) {
+            postActions.add(ListTile(
+              leading: const OBIcon(OBIcons.editPost),
+              title: const OBText(
+                'Edit post',
+              ),
+              onTap: _onWantsToEditPost,
+            ));
+          }
 
-        if (loggedInUser.canEditPost(post)) {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.editPost),
-            title: const OBText(
-              'Edit post',
-            ),
-            onTap: _onWantsToEditPost,
-          ));
-        }
-
-        if (loggedInUser.canDeletePost(post)) {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.deletePost),
-            title: const OBText(
-              'Delete post',
-            ),
-            onTap: _onWantsToDeletePost,
-          ));
-        } else {
-          postActions.add(ListTile(
-            leading: const OBIcon(OBIcons.reportPost),
-            title: const OBText(
-              'Report post',
-            ),
-            onTap: _onWantsToReportPost,
-          ));
-        }
+          if (loggedInUser.canDeletePost(post)) {
+            postActions.add(ListTile(
+              leading: const OBIcon(OBIcons.deletePost),
+              title: const OBText(
+                'Delete post',
+              ),
+              onTap: _onWantsToDeletePost,
+            ));
+          } else {
+            postActions.add(OBReportPostTile(
+              post: widget.post,
+              onWantsToReportPost: _dismiss,
+              onPostReported: widget.onPostReported,
+            ));
+          }
 
           return OBPrimaryColorContainer(
             mainAxisSize: MainAxisSize.min,
@@ -149,15 +145,9 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
     }
   }
 
-  void _onWantsToReportPost() async {
-    _toastService.error(message: 'Not implemented yet', context: context);
-    _dismiss();
-  }
-
   void _dismiss() {
     Navigator.pop(context);
   }
 }
 
-typedef OnPostReported(Post post);
 typedef OnPostDeleted(Post post);

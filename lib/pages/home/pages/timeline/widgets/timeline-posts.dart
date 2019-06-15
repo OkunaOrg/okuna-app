@@ -156,7 +156,6 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
 
     return postWidget;
-
   }
 
   Widget _buildDrHoo() {

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class OBPostBody extends StatelessWidget {
   final Post post;
+  final OnTextExpandedChange onTextExpandedChange;
 
-  const OBPostBody(this.post, {Key key}) : super(key: key);
+  const OBPostBody(this.post, {Key key, this.onTextExpandedChange})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,10 @@ class OBPostBody extends StatelessWidget {
     }
 
     if (post.hasText()) {
-      bodyItems.add(OBPostBodyText(post));
+      bodyItems.add(OBPostBodyText(
+        post,
+        onTextExpandedChange: onTextExpandedChange,
+      ));
     }
 
     return Row(

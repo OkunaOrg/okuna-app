@@ -15,18 +15,25 @@ class OBCommunityFavorite extends StatelessWidget {
       initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community community = snapshot.data;
-        if (community.isFavorite == null || !community.isFavorite) return const SizedBox();
+        if (community.isFavorite == null || !community.isFavorite)
+          return const SizedBox();
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            OBIcon(OBIcons.favoriteCommunity,
-                themeColor: OBIconThemeColor.primaryAccent, size: OBIconSize.small,),
+            OBIcon(
+              OBIcons.favoriteCommunity,
+              themeColor: OBIconThemeColor.primaryAccent,
+              size: OBIconSize.small,
+            ),
             const SizedBox(
               width: 10,
             ),
-            OBText('In favorites', style: TextStyle(fontSize: 16),)
+            OBText(
+              'In favorites',
+              style: TextStyle(fontSize: 16),
+            )
           ],
         );
       },

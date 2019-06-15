@@ -14,9 +14,14 @@ import 'package:flutter/material.dart';
 class OBCommunityPostHeader extends StatelessWidget {
   final Post _post;
   final OnPostDeleted onPostDeleted;
+  final ValueChanged<Post> onPostReported;
+  final bool hasActions;
 
   const OBCommunityPostHeader(this._post,
-      {Key key, @required this.onPostDeleted})
+      {Key key,
+      @required this.onPostDeleted,
+      this.onPostReported,
+      this.hasActions = true})
       : super(key: key);
 
   @override
@@ -40,15 +45,17 @@ class OBCommunityPostHeader extends StatelessWidget {
                     user: _post.creator, context: context);
               },
             ),
-            trailing: IconButton(
-                icon: const OBIcon(OBIcons.moreVertical),
-                onPressed: () {
-                  bottomSheetService.showPostActions(
-                      context: context,
-                      post: _post,
-                      onPostDeleted: onPostDeleted,
-                      onPostReported: null);
-                }),
+            trailing: hasActions
+                ? IconButton(
+                    icon: const OBIcon(OBIcons.moreVertical),
+                    onPressed: () {
+                      bottomSheetService.showPostActions(
+                          context: context,
+                          post: _post,
+                          onPostDeleted: onPostDeleted,
+                          onPostReported: onPostReported);
+                    })
+                : null,
             title: GestureDetector(
               onTap: () {
                 navigationService.navigateToCommunity(

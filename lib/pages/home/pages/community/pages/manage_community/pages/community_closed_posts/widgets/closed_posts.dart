@@ -35,7 +35,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   ScrollController _postsScrollController;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
   OBCommunityClosedPostsStatus _status;
   CancelableOperation _postsRequest;
@@ -67,9 +67,8 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
       _needsBootstrap = false;
     }
 
-    Widget timelinePostsWidget = _posts.isEmpty
-        ? _buildLoadingState()
-        : _buildClosedPosts();
+    Widget timelinePostsWidget =
+        _posts.isEmpty ? _buildLoadingState() : _buildClosedPosts();
 
     return RefreshIndicator(
       key: _refreshIndicatorKey,
@@ -146,8 +145,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
           }
 
           return postWidget;
-        }
-    );
+        });
   }
 
   Widget _buildLoadingState() {
@@ -222,9 +220,8 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   }
 
   Future _bootstrap() async {
-    PostsList closedPosts = await _userService.getClosedPostsForCommunity(
-      widget.community
-    );
+    PostsList closedPosts =
+        await _userService.getClosedPostsForCommunity(widget.community);
     if (closedPosts.posts != null) _setPosts(closedPosts.posts);
     _refreshIndicatorKey.currentState.show();
   }
@@ -233,10 +230,8 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
     _cancelPreviousPostsRequest();
     _setStatus(OBCommunityClosedPostsStatus.refreshingPosts);
     try {
-      Future<PostsList> postsListFuture = _userService.getClosedPostsForCommunity(
-          widget.community,
-          count: 10
-      );
+      Future<PostsList> postsListFuture =
+          _userService.getClosedPostsForCommunity(widget.community, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(postsListFuture);
 
@@ -267,10 +262,9 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      Future<PostsList> morePostsListFuture = _userService.getClosedPostsForCommunity(
-          widget.community,
-          maxId: lastPostId,
-          count: 10);
+      Future<PostsList> morePostsListFuture =
+          _userService.getClosedPostsForCommunity(widget.community,
+              maxId: lastPostId, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(morePostsListFuture);
 

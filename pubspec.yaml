@@ -7,23 +7,28 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.43+44
+version: 0.0.44+46
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  scroll_to_index: ^1.0.1
+  expandable: ^2.2.2+3
+  uuid: ^2.0.1
+  multi_image_picker: ^4.3.3
+  flutter_exif_rotation: ^0.2.2
   shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0
   sentry: ^2.2.0
-  flutter_exif_rotation: ^0.2.0
   back_button_interceptor: ^4.0.1
   flutter_colorpicker: any
   intercom_flutter: ^1.0.11
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
-  onesignal: ^1.0.5
+  onesignalflutter:
+    git: git://github.com/jmrobles/OneSignal-Flutter-SDK.git
   flutter_advanced_networkimage: ^0.4.13
   dcache: ^0.1.0
   validators: ^1.0.0+1

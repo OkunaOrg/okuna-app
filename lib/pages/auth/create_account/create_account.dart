@@ -53,7 +53,8 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                     _buildLinkForm(),
                     const SizedBox(
                       height: 20.0
-                    )
+                    ),
+                    _buildRequestInvite(context: context)
                   ],
                 ))),
       ),
@@ -193,6 +194,27 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
           ),
         ),
       ]),
+    );
+  }
+
+  Widget _buildRequestInvite({@required BuildContext context}) {
+    String requestInviteText = _localizationService.trans('AUTH.CREATE_ACC.REQUEST_INVITE');
+
+    return OBSecondaryButton(
+      isFullWidth: true,
+      isLarge: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            requestInviteText,
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
+          )
+        ],
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/waitlist/subscribe_email_step');
+      },
     );
   }
 }
