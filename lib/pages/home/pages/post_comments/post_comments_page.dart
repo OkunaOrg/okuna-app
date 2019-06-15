@@ -273,7 +273,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
                       itemCount: _postComments.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
-                          print('Builder: ${_postComments.length}');
                           if (_postComments.length > 0) {
                             _beginAnimations();
                           }
@@ -328,14 +327,11 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   }
 
   void _beginAnimations() {
-    print('${_animationController.status} -- $_startScrollWasInitialised -- ${widget.showPostPreview}');
     if (_animationController.status != AnimationStatus.completed &&
         !_startScrollWasInitialised &&
         widget.showPostPreview == true) {
-      print('Old top pos: $_positionTopCommentSection');
       Future.delayed(Duration(milliseconds: 0), () {
         if (_positionTopCommentSection == 0.0) _setPositionTopCommentSection();
-        print('New top pos: $_positionTopCommentSection');
         _postCommentsScrollController.animateTo(
             _positionTopCommentSection - 100.0,
             duration: Duration(milliseconds: 5),
@@ -489,7 +485,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     setState(() {
       this._postComments = postComments;
     });
-    print(this._postComments);
     _commentsPageController.updateControllerPostComments(this._postComments);
     if (this._postComments.length == 0) {
       _animationController.forward();
