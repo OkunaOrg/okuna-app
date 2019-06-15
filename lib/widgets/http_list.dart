@@ -67,6 +67,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   bool _refreshInProgress;
   bool _searchRequestInProgress;
   bool _loadingFinished;
+  bool _wasBootstrapped;
 
   CancelableOperation _searchOperation;
   CancelableOperation _refreshOperation;
@@ -82,6 +83,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     _loadingFinished = false;
     _needsBootstrap = true;
     _refreshInProgress = false;
+    _wasBootstrapped = false;
     _searchRequestInProgress = false;
     _hasSearch = false;
     _list = [];
@@ -205,7 +207,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   Widget _buildList() {
     return RefreshIndicator(
         key: _listRefreshIndicatorKey,
-        child: _list.isEmpty && !_refreshInProgress
+        child: _list.isEmpty && !_refreshInProgress && _wasBootstrapped
             ? _buildNoList()
             : LoadMore(
                 whenEmptyLoad: false,
@@ -230,7 +232,13 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Widget _buildNoList() {
-    return Column(
+    List<Widget> items = [];
+
+    if (widget.prependedItems != null && widget.prependedItems.isNotEmpty) {
+      items.addAll(widget.prependedItems);
+    }
+
+    items.add(Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
@@ -241,6 +249,13 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
           assetImage: 'assets/images/stickers/perplexed-owl.png',
         )
       ],
+    ));
+
+    return ListView(
+      controller: _listScrollController,
+      physics: widget.physics,
+      padding: widget.padding,
+      children: items,
     );
   }
 
@@ -255,8 +270,11 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   void _bootstrap() async {
-    Future.delayed(Duration(milliseconds: 0), () {
-      _listRefreshIndicatorKey.currentState.show();
+    Future.delayed(Duration(milliseconds: 0), () async {
+      await _listRefreshIndicatorKey.currentState.show();
+      setState(() {
+        _wasBootstrapped = true;
+      });
     });
   }
 
@@ -298,8 +316,10 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Future<bool> _loadMoreListItems() async {
-    if (_refreshInProgress) return true;
-    if (_loadMoreOperation != null) _loadMoreOperation.cancel();
+    if (_refreshOperation != null) return true;
+    if (_loadMoreOperation != null) return true;
+    if (_list.isEmpty) return true;
+    debugPrint('Loading more list items');
 
     try {
       _loadMoreOperation =
