@@ -297,7 +297,7 @@ class NavigationService {
             widget: OBPostCommentsPage(
                 pageType: PostCommentsPageType.replies,
                 post: post,
-                showPostPreview: false,
+                showPostPreview: true,
                 postComment: postComment,
                 onCommentDeleted: onReplyDeleted,
                 onCommentAdded: onReplyAdded,
