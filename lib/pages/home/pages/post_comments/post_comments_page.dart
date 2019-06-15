@@ -545,44 +545,50 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     double aspectRatio;
     double finalMediaScreenHeight = 0.0;
     double finalTextHeight = 0.0;
-    double finalCommentTextHeight = 0.0;
+    double finalCommentHeight = 0.0;
+    double finalPostHeight = 0.0;
     double totalOffsetY = 0.0;
 
     if (widget.post == null) return totalOffsetY;
 
     double screenWidth = MediaQuery.of(context).size.width;
-    if (_post.hasImage()) {
-      aspectRatio = _post.getImageWidth() / _post.getImageHeight();
-      finalMediaScreenHeight = screenWidth / aspectRatio;
-    }
-    if (_post.hasVideo()) {
-      aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
-      finalMediaScreenHeight = screenWidth / aspectRatio;
-    }
 
-    if (_post.hasText()) {
-      TextStyle style = TextStyle(fontSize: 16.0);
-      String postText = _post.text;
-      if (postText.length > MAX_POST_TEXT_LENGTH_LIMIT) postText = postText.substring(0, MAX_POST_TEXT_LENGTH_LIMIT);
-      TextSpan text = new TextSpan(text: postText, style: style);
-
-      TextPainter textPainter = new TextPainter(
-        text: text,
-        textDirection: TextDirection.ltr,
-        textAlign: TextAlign.left,
-      );
-      textPainter.layout(
-          maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
-      finalTextHeight = textPainter.size.height + TOTAL_PADDING_POST_TEXT;
-
-      if (_post.text.length > MAX_POST_TEXT_LENGTH_LIMIT) {
-        finalTextHeight = finalTextHeight + HEIGHT_SHOW_MORE_TEXT;
+    if (widget.showPostPreview && widget.post != null) {
+      if (_post.hasImage()) {
+        aspectRatio = _post.getImageWidth() / _post.getImageHeight();
+        finalMediaScreenHeight = screenWidth / aspectRatio;
       }
-    }
+      if (_post.hasVideo()) {
+        aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
+        finalMediaScreenHeight = screenWidth / aspectRatio;
+      }
 
-    if (_post.hasCircles() ||
-        (_post.isEncircled != null && _post.isEncircled)) {
-      totalOffsetY = totalOffsetY + HEIGHT_POST_CIRCLES;
+      if (_post.hasText()) {
+        TextStyle style = TextStyle(fontSize: 16.0);
+        String postText = _post.text;
+        if (postText.length > MAX_POST_TEXT_LENGTH_LIMIT) postText = postText.substring(0, MAX_POST_TEXT_LENGTH_LIMIT);
+        TextSpan text = new TextSpan(text: postText, style: style);
+
+        TextPainter textPainter = new TextPainter(
+          text: text,
+          textDirection: TextDirection.ltr,
+          textAlign: TextAlign.left,
+        );
+        textPainter.layout(
+            maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
+        finalTextHeight = textPainter.size.height + TOTAL_PADDING_POST_TEXT;
+
+        if (_post.text.length > MAX_POST_TEXT_LENGTH_LIMIT) {
+          finalTextHeight = finalTextHeight + HEIGHT_SHOW_MORE_TEXT;
+        }
+      }
+
+      if (_post.hasCircles() ||
+          (_post.isEncircled != null && _post.isEncircled)) {
+        finalPostHeight = finalPostHeight + HEIGHT_POST_CIRCLES;
+      }
+
+      finalPostHeight = finalPostHeight + finalTextHeight + finalMediaScreenHeight + TOTAL_FIXED_OFFSET_Y;
     }
 
     // linked comment
@@ -601,18 +607,14 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       );
       textPainter.layout(
           maxWidth: screenWidth - 80.0); //padding is 100 around comments
-      finalCommentTextHeight = textPainter.size.height + COMMENTS_MIN_HEIGHT + HEIGHT_COMMENTS_RELATIVE_TIMESTAMP_TEXT;
+      finalCommentHeight = textPainter.size.height + COMMENTS_MIN_HEIGHT + HEIGHT_COMMENTS_RELATIVE_TIMESTAMP_TEXT;
 
       if (widget.postComment.text.length > MAX_COMMENT_TEXT_LENGTH_LIMIT) {
-        finalCommentTextHeight = finalCommentTextHeight + HEIGHT_SHOW_MORE_TEXT;
+        finalCommentHeight = finalCommentHeight + HEIGHT_SHOW_MORE_TEXT;
       }
     }
 
-    totalOffsetY = totalOffsetY +
-        finalMediaScreenHeight +
-        finalTextHeight +
-        finalCommentTextHeight +
-        TOTAL_FIXED_OFFSET_Y;
+    totalOffsetY = totalOffsetY + finalPostHeight + finalCommentHeight;
 
     return totalOffsetY;
   }
