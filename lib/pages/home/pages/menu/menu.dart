@@ -54,7 +54,7 @@ class OBMainMenuPage extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       children: <Widget>[
                         OBTileGroupTitle(
-                          title: 'My Openbook',
+                          title: 'My Openspace',
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.circles),
