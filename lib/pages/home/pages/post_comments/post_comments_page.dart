@@ -381,8 +381,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       return DecoratedBox(
         decoration: BoxDecoration(
           color: isDarkPrimaryColor
-              ? Color.fromARGB(20, 255, 255, 255)
-              : Color.fromARGB(10, 0, 0, 0),
+              ? Color.fromARGB(30, 255, 255, 255)
+              : Color.fromARGB(20, 0, 0, 0),
         ),
         child: OBPostComment(
           key: Key('postComment#${widget.pageType}#${postComment.id}'),
