@@ -74,6 +74,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   OBPostCommentsPageController _commentsPageController;
   Map<String, String> _pageTextMap;
 
+  static const int MAX_POST_TEXT_LENGTH_LIMIT = 1300;
+  static const int MAX_COMMENT_TEXT_LENGTH_LIMIT = 500;
+
   static const OFFSET_TOP_HEADER = 64.0;
   static const HEIGHT_POST_HEADER = 72.0;
   static const HEIGHT_POST_REACTIONS = 35.0;
@@ -82,6 +85,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   static const TOTAL_PADDING_POST_TEXT = 40.0;
   static const HEIGHT_POST_DIVIDER = 5.5;
   static const HEIGHT_SIZED_BOX = 16.0;
+  static const HEIGHT_SHOW_MORE_TEXT = 45.0;
+  static const HEIGHT_COMMENTS_RELATIVE_TIMESTAMP_TEXT = 21.0;
+  static const COMMENTS_MIN_HEIGHT = 20.0;
+
   static const TOTAL_FIXED_OFFSET_Y = OFFSET_TOP_HEADER +
       HEIGHT_POST_HEADER +
       HEIGHT_POST_REACTIONS +
@@ -117,6 +124,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     _needsBootstrap = true;
     _postComments = [];
     _noMoreBottomItemsToLoad = true;
+    _positionTopCommentSection = 0.0;
     _currentSort = PostCommentsSortType.dec;
     _noMoreTopItemsToLoad = false;
     _startScrollWasInitialised = false;
@@ -257,14 +265,17 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
                   isFinish: _noMoreBottomItemsToLoad,
                   delegate:
                       OBInfinitePostCommentsLoadMoreDelegate(_pageTextMap),
-                  child: ListView.builder(
+                  child: new ListView.builder(
                       shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       controller: _postCommentsScrollController,
                       padding: EdgeInsets.all(0),
                       itemCount: _postComments.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
+                          if (_postComments.length > 0) {
+                            _beginAnimations();
+                          }
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -315,6 +326,29 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     return _columnChildren;
   }
 
+  void _beginAnimations() {
+    if (_animationController.status != AnimationStatus.completed &&
+        !_startScrollWasInitialised &&
+        widget.showPostPreview == true) {
+      Future.delayed(Duration(milliseconds: 0), () {
+        if (_positionTopCommentSection == 0.0) _setPositionTopCommentSection();
+        _postCommentsScrollController.animateTo(
+            _positionTopCommentSection - 100.0,
+            duration: Duration(milliseconds: 5),
+            curve: Curves.easeIn);
+      });
+    }
+
+    _animationController.forward();
+    Future.delayed(Duration(milliseconds: 0), () {
+      if (!_startScrollWasInitialised) {
+        setState(() {
+          _startScrollWasInitialised = true;
+        });
+      }
+    });
+  }
+
   Widget _getDivider() {
     if (widget.postComment != null) {
       return OBPostDivider();
@@ -338,28 +372,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       if (widget.onCommentDeleted != null) widget.onCommentDeleted(postComment);
     };
 
-    if (_animationController.status != AnimationStatus.completed &&
-        !_startScrollWasInitialised &&
-        widget.linkedPostComment != null) {
-      Future.delayed(Duration(milliseconds: 0), () {
-        _postCommentsScrollController.animateTo(
-            _positionTopCommentSection - 100.0,
-            duration: Duration(milliseconds: 5),
-            curve: Curves.easeIn);
-      });
-    }
-
-    if (commentIndex == 0) {
-      _animationController.forward();
-      Future.delayed(Duration(milliseconds: 0), () {
-        if (!_startScrollWasInitialised) {
-          setState(() {
-            _startScrollWasInitialised = true;
-          });
-        }
-      });
-    }
-
     if (widget.linkedPostComment != null &&
         postComment.id == widget.linkedPostComment.id) {
       var theme = _themeService.getActiveTheme();
@@ -369,8 +381,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       return DecoratedBox(
         decoration: BoxDecoration(
           color: isDarkPrimaryColor
-              ? Color.fromARGB(20, 255, 255, 255)
-              : Color.fromARGB(10, 0, 0, 0),
+              ? Color.fromARGB(30, 255, 255, 255)
+              : Color.fromARGB(20, 0, 0, 0),
         ),
         child: OBPostComment(
           key: Key('postComment#${widget.pageType}#${postComment.id}'),
@@ -510,7 +522,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           curve: Curves.easeIn);
     } else if (_currentSort == PostCommentsSortType.dec) {
       _postCommentsScrollController.animateTo(
-          _positionTopCommentSection - 200.0,
+          _positionTopCommentSection - 100.0,
           duration: Duration(milliseconds: 5),
           curve: Curves.easeIn);
     }
@@ -533,23 +545,60 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     double aspectRatio;
     double finalMediaScreenHeight = 0.0;
     double finalTextHeight = 0.0;
+    double finalCommentHeight = 0.0;
+    double finalPostHeight = 0.0;
     double totalOffsetY = 0.0;
 
     if (widget.post == null) return totalOffsetY;
 
     double screenWidth = MediaQuery.of(context).size.width;
-    if (_post.hasImage()) {
-      aspectRatio = _post.getImageWidth() / _post.getImageHeight();
-      finalMediaScreenHeight = screenWidth / aspectRatio;
-    }
-    if (_post.hasVideo()) {
-      aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
-      finalMediaScreenHeight = screenWidth / aspectRatio;
+
+    if (widget.showPostPreview && widget.post != null) {
+      if (_post.hasImage()) {
+        aspectRatio = _post.getImageWidth() / _post.getImageHeight();
+        finalMediaScreenHeight = screenWidth / aspectRatio;
+      }
+      if (_post.hasVideo()) {
+        aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
+        finalMediaScreenHeight = screenWidth / aspectRatio;
+      }
+
+      if (_post.hasText()) {
+        TextStyle style = TextStyle(fontSize: 16.0);
+        String postText = _post.text;
+        if (postText.length > MAX_POST_TEXT_LENGTH_LIMIT) postText = postText.substring(0, MAX_POST_TEXT_LENGTH_LIMIT);
+        TextSpan text = new TextSpan(text: postText, style: style);
+
+        TextPainter textPainter = new TextPainter(
+          text: text,
+          textDirection: TextDirection.ltr,
+          textAlign: TextAlign.left,
+        );
+        textPainter.layout(
+            maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
+        finalTextHeight = textPainter.size.height + TOTAL_PADDING_POST_TEXT;
+
+        if (_post.text.length > MAX_POST_TEXT_LENGTH_LIMIT) {
+          finalTextHeight = finalTextHeight + HEIGHT_SHOW_MORE_TEXT;
+        }
+      }
+
+      if (_post.hasCircles() ||
+          (_post.isEncircled != null && _post.isEncircled)) {
+        finalPostHeight = finalPostHeight + HEIGHT_POST_CIRCLES;
+      }
+
+      finalPostHeight = finalPostHeight + finalTextHeight + finalMediaScreenHeight + TOTAL_FIXED_OFFSET_Y;
     }
 
-    if (_post.hasText()) {
+    // linked comment
+
+    if (widget.postComment != null) {
       TextStyle style = TextStyle(fontSize: 16.0);
-      TextSpan text = new TextSpan(text: _post.text, style: style);
+      String commentText = widget.postComment.text;
+      if (commentText.length > MAX_COMMENT_TEXT_LENGTH_LIMIT) commentText = commentText.substring(0, MAX_COMMENT_TEXT_LENGTH_LIMIT);
+
+      TextSpan text = new TextSpan(text: commentText, style: style);
 
       TextPainter textPainter = new TextPainter(
         text: text,
@@ -557,19 +606,15 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         textAlign: TextAlign.left,
       );
       textPainter.layout(
-          maxWidth: screenWidth - 40.0); //padding is 20 in OBPostBodyText
-      finalTextHeight = textPainter.size.height + TOTAL_PADDING_POST_TEXT;
+          maxWidth: screenWidth - 80.0); //padding is 100 around comments
+      finalCommentHeight = textPainter.size.height + COMMENTS_MIN_HEIGHT + HEIGHT_COMMENTS_RELATIVE_TIMESTAMP_TEXT;
+
+      if (widget.postComment.text.length > MAX_COMMENT_TEXT_LENGTH_LIMIT) {
+        finalCommentHeight = finalCommentHeight + HEIGHT_SHOW_MORE_TEXT;
+      }
     }
 
-    if (_post.hasCircles() ||
-        (_post.isEncircled != null && _post.isEncircled)) {
-      totalOffsetY = totalOffsetY + HEIGHT_POST_CIRCLES;
-    }
-
-    totalOffsetY = totalOffsetY +
-        finalMediaScreenHeight +
-        finalTextHeight +
-        TOTAL_FIXED_OFFSET_Y;
+    totalOffsetY = totalOffsetY + finalPostHeight + finalCommentHeight;
 
     return totalOffsetY;
   }
@@ -578,7 +623,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 class OBInfinitePostCommentsLoadMoreDelegate extends LoadMoreDelegate {
   Map<String, String> pageTextMap;
 
-  OBInfinitePostCommentsLoadMoreDelegate(Map<String, String> pageTextMap);
+  OBInfinitePostCommentsLoadMoreDelegate(this.pageTextMap);
 
   @override
   Widget buildChild(LoadMoreStatus status,

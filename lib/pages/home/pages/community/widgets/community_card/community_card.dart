@@ -1,9 +1,9 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_actions/community_actions.dart';
+import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_buttons.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_categories.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_description.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/community_details.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_favorite.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_name.dart';
 import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_title.dart';
 import 'package:Openbook/widgets/avatars/community_avatar.dart';
@@ -42,12 +42,17 @@ class OBCommunityCard extends StatelessWidget {
               OBCommunityTitle(community),
               OBCommunityName(community),
               OBCommunityDescription(community),
+              const SizedBox(
+                height: 15,
+              ),
               OBCommunityDetails(community),
               OBCommunityCategories(community),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
-              OBCommunityFavorite(community),
+              OBCommunityButtons(
+                community: community,
+              ),
             ],
           ),
         ],

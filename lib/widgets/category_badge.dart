@@ -65,7 +65,7 @@ class OBCategoryBadge extends StatelessWidget {
       onTap: _onTapped,
       child: Container(
         decoration:
-            BoxDecoration(color: color, borderRadius: BorderRadius.circular(50)),
+            BoxDecoration(color: color, borderRadius: BorderRadius.circular(5)),
         padding: _getPadding(),
         child: Text(
           category.name,
@@ -82,6 +82,9 @@ class OBCategoryBadge extends StatelessWidget {
     EdgeInsets padding;
 
     switch (size) {
+      case OBCategoryBadgeSize.small:
+        padding = const EdgeInsets.symmetric(horizontal: 6, vertical: 2);
+        break;
       case OBCategoryBadgeSize.medium:
         padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 3);
         break;
@@ -99,6 +102,9 @@ class OBCategoryBadge extends StatelessWidget {
     double fontSize;
 
     switch (size) {
+      case OBCategoryBadgeSize.small:
+        fontSize = 14;
+        break;
       case OBCategoryBadgeSize.medium:
         fontSize = 16;
         break;
@@ -117,4 +123,4 @@ class OBCategoryBadge extends StatelessWidget {
   }
 }
 
-enum OBCategoryBadgeSize { medium, large }
+enum OBCategoryBadgeSize { medium, large, small }

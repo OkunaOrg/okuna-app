@@ -132,8 +132,8 @@ class OBNotificationTile extends StatelessWidget {
             return DecoratedBox(
               decoration: BoxDecoration(
                 color: isDarkPrimaryColor
-                    ? Color.fromARGB(20, 255, 255, 255)
-                    : Color.fromARGB(10, 0, 0, 0),
+                    ? Color.fromARGB(30, 255, 255, 255)
+                    : Color.fromARGB(20, 0, 0, 0),
               ),
               child: notificationTile,
             );

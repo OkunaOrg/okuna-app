@@ -48,7 +48,7 @@ class ImagePickerService {
           _validationService.getAllowedImageSize(imageType));
     }
 
-    File processedImage = await _processImage(file);
+    File processedImage = await processImage(file);
 
     double ratioX =
         imageType != OBImageType.post ? IMAGE_RATIOS[imageType]['x'] : null;
@@ -74,7 +74,7 @@ class ImagePickerService {
     return video;
   }
 
-  Future<File> _processImage(File image) async {
+  Future<File> processImage(File image) async {
     /// Fix rotation issue on android
     if (Platform.isAndroid)
       return FlutterExifRotation.rotateImage(path: image.path);

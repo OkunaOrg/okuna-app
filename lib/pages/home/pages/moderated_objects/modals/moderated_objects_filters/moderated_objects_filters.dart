@@ -122,6 +122,7 @@ class OBModeratedObjectsFiltersModalState
           title: 'Type',
         ),
         ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: _buildTypeListTile,
           shrinkWrap: true,
           itemCount: _types.length,
@@ -130,6 +131,7 @@ class OBModeratedObjectsFiltersModalState
           title: 'Status',
         ),
         ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: _buildStatusListTile,
           shrinkWrap: true,
           itemCount: _statuses.length,

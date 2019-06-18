@@ -224,6 +224,8 @@ class OBIcons {
   static const moderationPenalties = OBIconData(nativeIcon: Icons.flag);
   static const send = OBIconData(nativeIcon: Icons.send);
   static const arrowDown = OBIconData(nativeIcon: Icons.keyboard_arrow_down);
+  static const rules = OBIconData(nativeIcon: Icons.book);
+  static const communityStaff = OBIconData(nativeIcon: Icons.tag_faces);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');
@@ -238,6 +240,7 @@ class OBIcons {
   static const like = OBIconData(filename: 'like-icon.png');
   static const thinking = OBIconData(filename: 'thinking.gif');
   static const finish = OBIconData(filename: 'finish-icon.png');
+  static const staff = OBIconData(filename: 'staff-icon.png');
   static const loadingMorePosts =
       OBIconData(filename: 'load-more-posts-icon.gif');
 }

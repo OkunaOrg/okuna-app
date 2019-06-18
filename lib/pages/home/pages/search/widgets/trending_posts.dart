@@ -8,8 +8,8 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/primary_accent_text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
 class OBTrendingPosts extends StatefulWidget {
@@ -31,10 +31,13 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
 
   List<Post> _posts;
   bool _needsBootstrap;
+  bool _refreshInProgress;
+  bool _wasBootstrapped;
 
-  StreamSubscription<PostsList> _getTrendingPostsSubscription;
+  CancelableOperation _getTrendingPostsOperation;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  new GlobalKey<RefreshIndicatorState>();
 
   ScrollController _scrollController;
 
@@ -45,13 +48,14 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     _needsBootstrap = true;
     _posts = [];
     _scrollController = ScrollController();
+    _refreshInProgress = false;
+    _wasBootstrapped = false;
   }
 
   @override
   void dispose() {
     super.dispose();
-    if (_getTrendingPostsSubscription != null)
-      _getTrendingPostsSubscription.cancel();
+    if (_getTrendingPostsOperation != null) _getTrendingPostsOperation.cancel();
   }
 
   @override
@@ -64,33 +68,35 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
       _bootstrap();
       _needsBootstrap = false;
     }
-    return _posts.isEmpty && _getTrendingPostsSubscription == null
-        ? _buildNoTrendingPostsAlert()
-        : RefreshIndicator(
+    return RefreshIndicator(
       key: _refreshIndicatorKey,
-      child: OBScrollContainer(
-        scroll: ListView.builder(
-            controller: _scrollController,
-            physics: const ClampingScrollPhysics(),
-            padding: const EdgeInsets.all(0),
-            itemCount: _posts.length + 1,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 10),
-                  child: OBPrimaryAccentText('Trending posts',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24)),
-                );
-              }
-
-              return OBPost(
-                _posts[index - 1],
-                onPostDeleted: _onPostDeleted,
+      displacement: 60,
+      child: _posts.isEmpty && !_refreshInProgress && !_wasBootstrapped
+          ? _buildNoTrendingPostsAlert()
+          : ListView.builder(
+          controller: _scrollController,
+          physics: const ClampingScrollPhysics(),
+          padding: const EdgeInsets.all(0),
+          itemCount: _posts.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20, vertical: 10),
+                child: OBPrimaryAccentText('Trending posts',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 24)),
               );
-            }),
-      ),
+            }
+
+            Post post = _posts[index - 1];
+
+            return OBPost(
+              post,
+              key: Key(post.id.toString()),
+              onPostDeleted: _onPostDeleted,
+            );
+          }),
       onRefresh: refresh,
     );
   }
@@ -100,7 +106,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
       children: <Widget>[
         OBButtonAlert(
           text:
-              'There are no trending posts. Try refreshing in a couple seconds.',
+          'There are no trending posts. Try refreshing in a couple seconds.',
           onPressed: refresh,
           buttonText: 'Refresh',
           buttonIcon: OBIcons.refresh,
@@ -111,7 +117,12 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
   }
 
   void _bootstrap() {
-    refresh();
+    Future.delayed(Duration(milliseconds: 0), () {
+      _refreshIndicatorKey.currentState.show();
+      setState(() {
+        _wasBootstrapped = true;
+      });
+    });
   }
 
   void _onPostDeleted(Post post) {
@@ -135,23 +146,23 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
   }
 
   Future<void> refresh() async {
-    if (_getTrendingPostsSubscription != null)
-      _getTrendingPostsSubscription.cancel();
+    _setRefreshInProgress(true);
 
-    Future<PostsList> refreshFuture = _userService.getTrendingPosts();
+    try {
+      _getTrendingPostsOperation =
+          CancelableOperation.fromFuture(_userService.getTrendingPosts());
 
-    _getTrendingPostsSubscription =
-        refreshFuture.asStream().listen((PostsList postsList) {
+      PostsList postsList = await _getTrendingPostsOperation.value;
       _setPosts(postsList.posts);
-      _getTrendingPostsSubscription = null;
-    }, onError: _onError);
 
-    return refreshFuture;
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRefreshInProgress(false);
+    }
   }
 
   void _onError(error) async {
-    _getTrendingPostsSubscription = null;
-
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
           message: error.toHumanReadableMessage(), context: context);
@@ -167,6 +178,12 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
   void _setPosts(List<Post> posts) {
     setState(() {
       _posts = posts;
+    });
+  }
+
+  void _setRefreshInProgress(refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
     });
   }
 }

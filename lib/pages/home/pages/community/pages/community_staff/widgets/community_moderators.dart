@@ -7,10 +7,10 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityAdministrators extends StatelessWidget {
+class OBCommunityModerators extends StatelessWidget {
   final Community community;
 
-  OBCommunityAdministrators(this.community);
+  OBCommunityModerators(this.community);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class OBCommunityAdministrators extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
 
-        List<User> communityAdministrators = community?.administrators?.users;
+        List<User> communityModerators = community?.moderators?.users;
 
-        if (communityAdministrators == null || communityAdministrators.isEmpty)
+        if (communityModerators == null || communityModerators.isEmpty)
           return const SizedBox();
 
         return Row(
@@ -36,15 +36,14 @@ class OBCommunityAdministrators extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: Row(children: [
                       OBIcon(
-                        OBIcons.communityAdministrators,
-                        themeColor: OBIconThemeColor.primaryAccent,
+                        OBIcons.communityModerators,
                         size: OBIconSize.medium,
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       OBText(
-                        'Administrators',
+                        'Moderators',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 24),
                       )
@@ -58,14 +57,14 @@ class OBCommunityAdministrators extends StatelessWidget {
                     padding: EdgeInsets.all(0),
                     shrinkWrap: true,
                     children:
-                        communityAdministrators.map((User communityAdministrator) {
+                        communityModerators.map((User communityModerator) {
                       return OBUserTile(
-                        communityAdministrator,
+                        communityModerator,
                         onUserTilePressed: (User user) {
                           NavigationService navigationService =
                               OpenbookProvider.of(context).navigationService;
                           navigationService.navigateToUserProfile(
-                              user: communityAdministrator, context: context);
+                              user: communityModerator, context: context);
                         },
                       );
                     }).toList(),

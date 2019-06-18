@@ -8,7 +8,6 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/tiles/loading_indicator_tile.dart';
@@ -36,7 +35,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   ScrollController _postsScrollController;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
   OBCommunityClosedPostsStatus _status;
   CancelableOperation _postsRequest;
@@ -68,9 +67,8 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
       _needsBootstrap = false;
     }
 
-    Widget timelinePostsWidget = _posts.isEmpty
-        ? _buildLoadingState()
-        : _buildClosedPosts();
+    Widget timelinePostsWidget =
+        _posts.isEmpty ? _buildLoadingState() : _buildClosedPosts();
 
     return RefreshIndicator(
       key: _refreshIndicatorKey,
@@ -80,15 +78,13 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   }
 
   Widget _buildClosedPosts() {
-    return OBScrollContainer(
-      scroll: ListView.builder(
-          controller: _postsScrollController,
-          physics: const ClampingScrollPhysics(),
-          cacheExtent: 30,
-          padding: const EdgeInsets.all(0),
-          itemCount: _posts.length,
-          itemBuilder: _buildPostItem),
-    );
+    return ListView.builder(
+        controller: _postsScrollController,
+        physics: const ClampingScrollPhysics(),
+        cacheExtent: 30,
+        padding: const EdgeInsets.all(0),
+        itemCount: _posts.length,
+        itemBuilder: _buildPostItem);
   }
 
   Widget _buildPostItem(BuildContext context, int index) {
@@ -149,8 +145,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
           }
 
           return postWidget;
-        }
-    );
+        });
   }
 
   Widget _buildLoadingState() {
@@ -225,9 +220,8 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   }
 
   Future _bootstrap() async {
-    PostsList closedPosts = await _userService.getClosedPostsForCommunity(
-      widget.community
-    );
+    PostsList closedPosts =
+        await _userService.getClosedPostsForCommunity(widget.community);
     if (closedPosts.posts != null) _setPosts(closedPosts.posts);
     _refreshIndicatorKey.currentState.show();
   }
@@ -236,10 +230,8 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
     _cancelPreviousPostsRequest();
     _setStatus(OBCommunityClosedPostsStatus.refreshingPosts);
     try {
-      Future<PostsList> postsListFuture = _userService.getClosedPostsForCommunity(
-          widget.community,
-          count: 10
-      );
+      Future<PostsList> postsListFuture =
+          _userService.getClosedPostsForCommunity(widget.community, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(postsListFuture);
 
@@ -270,10 +262,9 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      Future<PostsList> morePostsListFuture = _userService.getClosedPostsForCommunity(
-          widget.community,
-          maxId: lastPostId,
-          count: 10);
+      Future<PostsList> morePostsListFuture =
+          _userService.getClosedPostsForCommunity(widget.community,
+              maxId: lastPostId, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(morePostsListFuture);
 

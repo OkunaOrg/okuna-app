@@ -5,7 +5,6 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/scroll_container.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,17 +57,15 @@ class OBPostPageState extends State<OBPostPage> {
               Expanded(
                 child: RefreshIndicator(
                     key: _refreshIndicatorKey,
-                    child: OBScrollContainer(
-                      scroll: ListView(
-                        padding: const EdgeInsets.all(0),
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        children: <Widget>[
-                          StreamBuilder(
-                              stream: widget.post.updateSubject,
-                              initialData: widget.post,
-                              builder: _buildPost)
-                        ],
-                      ),
+                    child: ListView(
+                      padding: const EdgeInsets.all(0),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: <Widget>[
+                        StreamBuilder(
+                            stream: widget.post.updateSubject,
+                            initialData: widget.post,
+                            builder: _buildPost)
+                      ],
                     ),
                     onRefresh: _refreshPost),
               ),

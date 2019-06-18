@@ -73,7 +73,7 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
                       height: 40,
                     ),
                     const OBText(
-                        'This is a permanent action and can\'t be undoed.')
+                        'This is a permanent action and can\'t be undone.')
                   ],
                 ),
               ),

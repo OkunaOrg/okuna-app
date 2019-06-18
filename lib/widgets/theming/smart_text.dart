@@ -106,11 +106,14 @@ final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 //    )?                                entire part is optional to allow single character names
 //  )                                   end of mention
 //  (?=\b|$)                            next char must be either a word boundary or end of text
-final _usernameRegex = RegExp(r"(?:[^A-Za-u0-9]|^)(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)", caseSensitive: false);
+final _usernameRegex = RegExp(
+    r"(?:[^A-Za-u0-9]|^)(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)",
+    caseSensitive: false);
 
 // Same idea as inner part of above regex, but only _ is allowed as special character
-final _communityNameRegex =
-    RegExp(r"((?:(?<=\s)|^)/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)", caseSensitive: false);
+final _communityNameRegex = RegExp(
+    r"((?:(?<=\s)|^)/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)",
+    caseSensitive: false);
 
 class SmartMatch {
   final SmartTextElement span;
@@ -123,9 +126,16 @@ class SmartMatch {
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
   List<SmartMatch> matches = [];
-  matches.addAll(_usernameRegex.allMatches(text).map((m) { return SmartMatch(UsernameElement(m.group(1)), m.start + m.group(0).indexOf("@"), m.end); }));
-  matches.addAll(_communityNameRegex.allMatches(text).map((m) { return SmartMatch(CommunityNameElement(m.group(0)), m.start, m.end); }));
-  matches.addAll(_linkRegex.allMatches(text).map((m) { return SmartMatch(LinkElement(m.group(0)), m.start, m.end); }));
+  matches.addAll(_usernameRegex.allMatches(text).map((m) {
+    return SmartMatch(
+        UsernameElement(m.group(1)), m.start + m.group(0).indexOf("@"), m.end);
+  }));
+  matches.addAll(_communityNameRegex.allMatches(text).map((m) {
+    return SmartMatch(CommunityNameElement(m.group(0)), m.start, m.end);
+  }));
+  matches.addAll(_linkRegex.allMatches(text).map((m) {
+    return SmartMatch(LinkElement(m.group(0)), m.start, m.end);
+  }));
   // matches.addAll(_tagRegex.allMatches(text).map((m) { return SmartMatch(HashTagElement(m.group(0)), m.start, m.end); }));
   matches.sort((a, b) {
     return a.start.compareTo(b.start);
@@ -146,7 +156,8 @@ List<SmartTextElement> _smartify(String text) {
       break;
     } else if (currentTextIndex < currentMatch.start) {
       // there's normal text before the next match
-      span.add(TextElement(text.substring(currentTextIndex, currentMatch.start)));
+      span.add(
+          TextElement(text.substring(currentTextIndex, currentMatch.start)));
       currentTextIndex = currentMatch.start;
     } else if (currentTextIndex == currentMatch.start) {
       // next match starts here, add it
@@ -340,8 +351,9 @@ class OBSmartText extends StatelessWidget {
       var elementLength = element.text.length;
 
       if (length + elementLength > maxlength) {
-        elements.removeRange(i+1, elements.length);
-        element.text = element.text.substring(0, maxlength - length).trimRight();
+        elements.removeRange(i + 1, elements.length);
+        element.text =
+            element.text.substring(0, maxlength - length).trimRight();
 
         if (lengthOverflow == TextOverflow.ellipsis) {
           element.text = element.text + '...';

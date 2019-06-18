@@ -4,32 +4,30 @@ import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_text.d
 import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_video.dart';
 import 'package:flutter/material.dart';
 
-class OBPostBody extends StatefulWidget {
+class OBPostBody extends StatelessWidget {
   final Post post;
+  final OnTextExpandedChange onTextExpandedChange;
 
-  const OBPostBody(this.post, {Key key}) : super(key: key);
+  const OBPostBody(this.post, {Key key, this.onTextExpandedChange})
+      : super(key: key);
 
-  @override
-  OBPostBodyState createState() {
-    return OBPostBodyState();
-  }
-}
-
-class OBPostBodyState extends State<OBPostBody> {
   @override
   Widget build(BuildContext context) {
     List<Widget> bodyItems = [];
 
-    if (widget.post.hasImage()) {
+    if (post.hasImage()) {
       bodyItems.add(OBPostBodyImage(
-        post: widget.post,
+        post: post,
       ));
-    } else if (widget.post.hasVideo()) {
-      bodyItems.add(OBPostBodyVideo(post: widget.post));
+    } else if (post.hasVideo()) {
+      bodyItems.add(OBPostBodyVideo(post: post));
     }
 
-    if (widget.post.hasText()) {
-      bodyItems.add(OBPostBodyText(widget.post));
+    if (post.hasText()) {
+      bodyItems.add(OBPostBodyText(
+        post,
+        onTextExpandedChange: onTextExpandedChange,
+      ));
     }
 
     return Row(

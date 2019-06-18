@@ -17,7 +17,6 @@ import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class OBEditUserProfileModal extends StatefulWidget {
   final User user;
@@ -191,6 +190,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                               labelText: 'Bio',
                               prefixIcon: const OBIcon(OBIcons.bio),
                             ),
+                            textInputAction: TextInputAction.newline,
                           ),
                           OBToggleField(
                             value: _followersCountVisible,
@@ -319,7 +319,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               title: new Text('Pick image'),
               onTap: () async {
                 try {
-                  var image = await _imagePickerService.pickImage(imageType: imageType);
+                  var image =
+                      await _imagePickerService.pickImage(imageType: imageType);
 
                   _onUserImageSelected(image: image, imageType: imageType);
                 } on ImageTooLargeException catch (e) {

@@ -1,6 +1,8 @@
 import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/widgets/category_badge.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityCategories extends StatelessWidget {
@@ -26,13 +28,14 @@ class OBCommunityCategories extends StatelessWidget {
             children: <Widget>[
               OBCategoryBadge(
                 category: category,
+                size: OBCategoryBadgeSize.small,
               )
             ],
           ));
         });
 
         return Padding(
-          padding: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.only(top: 10),
           child: Wrap(
             spacing: 10,
             runSpacing: 10,
