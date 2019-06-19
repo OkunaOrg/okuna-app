@@ -4,6 +4,7 @@ import 'package:Okuna/models/notifications/notification.dart';
 import 'package:Okuna/models/notifications/notifications_list.dart';
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
+import 'package:Okuna/pages/home/pages/notifications/widgets/notification_filter.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
@@ -44,6 +45,9 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   bool _needsBootstrap;
   bool _isActivePage;
 
+  bool _showFilters = false;
+  NotificationFilter _filter = NotificationFilter();
+
   // Should be the case when the page is visible to the user
   bool _shouldMarkNotificationsAsRead;
 
@@ -72,8 +76,47 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
       _needsBootstrap = false;
     }
 
-    List<Widget> stackItems = [
-      OBPrimaryColorContainer(
+    return CupertinoPageScaffold(
+      navigationBar: OBThemedNavigationBar(
+        title: 'Notifications',
+        trailing: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            OBIconButton(
+              OBIcons.filter,
+              themeColor: (_showFilters
+                  ? OBIconThemeColor.primaryAccent
+                  : OBIconThemeColor.secondaryText),
+              onPressed: _toggleNotificationFiltersVisible,
+            ),
+            Container(
+              width: 10,
+            ),
+            OBIconButton(
+              OBIcons.settings,
+              themeColor: OBIconThemeColor.primaryAccent,
+              onPressed: _onWantsToConfigureNotifications,
+            )
+          ],
+        ),
+      ),
+      child: OBPrimaryColorContainer(
+        child: buildNotificationList(),
+      ),
+    );
+  }
+
+  Widget buildNotificationList() {
+    var widgets = <Widget>[];
+
+    if (_showFilters) {
+      widgets.add(OBNotificationFilter(_filter, _filtersUpdated));
+    }
+
+    widgets.add(
+      Expanded(
         child: OBHttpList(
           key: Key('notificationsList'),
           controller: _notificationsListController,
@@ -85,20 +128,11 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
           physics: const ClampingScrollPhysics(),
         ),
       ),
-    ];
+    );
 
-    return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(
-          title: 'Notifications',
-          trailing: OBIconButton(
-            OBIcons.settings,
-            themeColor: OBIconThemeColor.primaryAccent,
-            onPressed: _onWantsToConfigureNotifications,
-          ),
-        ),
-        child: Stack(
-          children: stackItems,
-        ));
+    return Column(
+      children: widgets,
+    );
   }
 
   void dispose() {
@@ -129,7 +163,10 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   Future<List<OBNotification>> _refreshNotifications() async {
     await _readNotifications();
 
-    NotificationsList notificationsList = await _userService.getNotifications();
+    print("Refresh: ${_filter.getActive()}");
+
+    NotificationsList notificationsList =
+        await _userService.getNotifications(types: _filter.getActive());
     return notificationsList.notifications;
   }
 
@@ -138,7 +175,8 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
         _notificationsListController.hasItems()) {
       OBNotification firstItem = _notificationsListController.firstItem();
       int maxId = firstItem.id;
-      await _userService.readNotifications(maxId: maxId);
+      await _userService.readNotifications(
+          maxId: maxId, types: _filter.getActive());
     }
   }
 
@@ -189,10 +227,30 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   void _onPushNotification(PushNotification pushNotification) {
     bool isNavigating = _controller.canPop();
 
-    if (!_isActivePage || isNavigating) {
-      _triggerRefreshNotifications(shouldScrollToTop: true);
-    } else {
-      _showRefreshNotificationsToast();
+    if (_pushNotificationTypeVisible(pushNotification.type)) {
+      if (!_isActivePage || isNavigating) {
+        _triggerRefreshNotifications(shouldScrollToTop: true);
+      } else {
+        _showRefreshNotificationsToast();
+      }
+    }
+  }
+
+  bool _pushNotificationTypeVisible(PushNotificationType type) {
+    switch (type) {
+      case PushNotificationType.postReaction:
+        return _filter.isActive(NotificationType.postReaction);
+      case PushNotificationType.postComment:
+        return _filter.isActive(NotificationType.postComment);
+      case PushNotificationType.connectionRequest:
+        return _filter.isActive(NotificationType.connectionRequest);
+      case PushNotificationType.follow:
+        return _filter.isActive(NotificationType.follow);
+      case PushNotificationType.communityInvite:
+        return _filter.isActive(NotificationType.communityInvite);
+      default :
+        print("Unsupported notification type: $type");
+        return true;
     }
   }
 
@@ -261,6 +319,18 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
       print(
           'Couldnt mark notification as read with error: ' + error.toString());
     }
+  }
+
+  void _toggleNotificationFiltersVisible() {
+    setState(() {
+      _showFilters = !_showFilters;
+    });
+  }
+
+  void _filtersUpdated(NotificationFilter filter) {
+    setState(() {
+      _triggerRefreshNotifications(shouldScrollToTop: true);
+    });
   }
 }
 
