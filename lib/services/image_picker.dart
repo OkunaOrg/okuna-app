@@ -5,6 +5,7 @@ import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:Openbook/plugins/image_converter/image_converter.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -41,6 +42,7 @@ class ImagePickerService {
     final file = File('$path/$tmpImageName');
     ByteData byteData = await pickedAsset.requestOriginal();
     List<int> imageData = byteData.buffer.asUint8List();
+    imageData = await ImageConverter.convertImage(imageData);
     file.writeAsBytesSync(imageData);
 
     if (!await _validationService.isImageAllowedSize(file, imageType)) {
