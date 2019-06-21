@@ -1,4 +1,5 @@
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Openbook/widgets/post/widgets/post_circles.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
@@ -12,9 +13,10 @@ class OBPostPreview extends StatelessWidget {
   final Post post;
   final Function(Post) onPostDeleted;
   final VoidCallback focusCommentInput;
+  bool showViewAllCommentsAction = true;
   GlobalKey _keyPostBody = GlobalKey();
   
-  OBPostPreview({this.post, this.onPostDeleted, this.focusCommentInput});
+  OBPostPreview({this.post, this.onPostDeleted, this.focusCommentInput, this.showViewAllCommentsAction});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,9 +31,14 @@ class OBPostPreview extends StatelessWidget {
           child: OBPostBody(this.post),
         ),
         OBPostReactions(this.post),
-        OBPostCircles(this.post),
+        showViewAllCommentsAction == true ?
         OBPostComments(
           this.post,
+        ) : SizedBox(),
+        OBPostCircles(this.post),
+        OBPostActions(
+          this.post,
+          onWantsToCommentPost: this.focusCommentInput,
         ),
         const SizedBox(
           height: 16,
