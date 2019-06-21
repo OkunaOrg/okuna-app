@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       child: OBToast(
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Openbook',
+            title: 'Openspace',
             supportedLocales: [
               const Locale('en', 'US'),
               const Locale('es', 'ES'),
