@@ -155,7 +155,7 @@ class OBMainMenuPage extends StatelessWidget {
                             return ListTile(
                               leading: const OBIcon(OBIcons.help),
                               title: OBText(
-                                  localizationService.trans('DRAWER.HELP')),
+                                  localizationService.trans('drawer__help')),
                               onTap: () async {
                                 intercomService.displayMessenger();
                               },
@@ -195,7 +195,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ListTile(
                           leading: const OBIcon(OBIcons.logout),
                           title: OBText(
-                              localizationService.trans('DRAWER.LOGOUT')),
+                              localizationService.trans('drawer__logout')),
                           onTap: () {
                             userService.logout();
                           },

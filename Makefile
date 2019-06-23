@@ -18,3 +18,12 @@ build_ios_prod:
 
 build_apk_prod:
 	flutter build apk --flavor production
+
+generate_locale:
+	flutter pub pub run intl_translation:extract_to_arb --output-dir assets/i18n lib/services/localization.dart
+	node bin/splitLocales
+	rm assets/i18n/intl_messages.arb
+
+build_locale:
+	node bin/buildLocales
+	flutter pub pub run intl_translation:generate_from_arb --output-dir=lib/locale --no-use-deferred-loading lib/services/localization.dart assets/i18n/intl_*.arb
