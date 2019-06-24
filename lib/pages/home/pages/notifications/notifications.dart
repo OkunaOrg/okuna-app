@@ -184,8 +184,8 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
       List<OBNotification> currentNotifications) async {
     OBNotification lastNotification = currentNotifications.last;
     int lastNotificationId = lastNotification.id;
-    NotificationsList moreNotifications =
-        await _userService.getNotifications(maxId: lastNotificationId);
+    NotificationsList moreNotifications = await _userService.getNotifications(
+        maxId: lastNotificationId, types: _filter.getActive());
     return moreNotifications.notifications;
   }
 
