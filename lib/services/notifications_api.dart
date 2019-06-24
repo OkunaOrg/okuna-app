@@ -26,27 +26,31 @@ class NotificationsApiService {
     apiURL = newApiURL;
   }
 
-  Future<HttpieResponse> getNotifications({int maxId, int count, List<NotificationType> types}) {
+  Future<HttpieResponse> getNotifications(
+      {int maxId, int count, List<NotificationType> types}) {
     Map<String, dynamic> queryParams = {};
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
     if (count != null) queryParams['count'] = count;
 
-    if (types != null) queryParams['types'] = types.map<String>((type) => type.code).toList();
+    if (types != null && types.isNotEmpty)
+      queryParams['types'] = types.map<String>((type) => type.code).toList();
 
     String url = _makeApiUrl(NOTIFICATIONS_PATH);
     return _httpService.get(url,
         appendAuthorizationToken: true, queryParameters: queryParams);
   }
 
-  Future<HttpieResponse> readNotifications({int maxId, List<NotificationType> types}) {
+  Future<HttpieResponse> readNotifications(
+      {int maxId, List<NotificationType> types}) {
     String url = _makeApiUrl(NOTIFICATIONS_READ_PATH);
     Map<String, dynamic> body = {};
 
     if (maxId != null) body['max_id'] = maxId.toString();
 
-    if (types != null) body['types'] = types.map<String>((type) => type.code).join(',');
+    if (types != null && types.isNotEmpty)
+      body['types'] = types.map<String>((type) => type.code).join(',');
 
     return _httpService.post(url, body: body, appendAuthorizationToken: true);
   }
