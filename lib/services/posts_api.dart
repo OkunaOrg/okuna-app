@@ -42,6 +42,20 @@ class PostsApiService {
       'api/posts/{postUuid}/reactions/emoji-count/';
   static const GET_REACTION_EMOJI_GROUPS = 'api/posts/emojis/groups/';
 
+  static const REACT_TO_POST_COMMENT_PATH =
+      'api/posts/{postUuid}/comments/{postCommendId}/reactions/';
+  static const DELETE_POST_COMMENT_REACTION_PATH =
+      'api/posts/{postUuid}/comments/{postCommendId}/reactions/{postReactionId}/';
+  static const GET_POST_COMMENT_REACTIONS_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/reactions/';
+  static const GET_POST_COMMENT_REACTIONS_EMOJI_COUNT_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/reactions/emoji-count/';
+
+  static const MUTE_POST_COMMENT_PATH =
+      'api/posts/{postUuid}/comments/{postCommendId}/notifications/mute/';
+  static const UNMUTE_POST_COMMENT_PATH =
+      'api/posts/{postUuid}/comments/{postCommendId}/notifications/unmute/';
+
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
   }
@@ -233,10 +247,8 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> reactToPost(
-      {@required String postUuid,
-      @required int emojiId,
-      @required int emojiGroupId}) {
-    Map<String, dynamic> body = {'emoji_id': emojiId, 'group_id': emojiGroupId};
+      {@required String postUuid, @required int emojiId}) {
+    Map<String, dynamic> body = {'emoji_id': emojiId};
 
     String path = _makeReactToPostPath(postUuid);
     return _httpService.putJSON(_makeApiUrl(path),
@@ -250,6 +262,81 @@ class PostsApiService {
 
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getReactionsForPostComment(
+      {@required int postCommentId,
+      @required String postUuid,
+      int count,
+      int maxId,
+      int emojiId}) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (emojiId != null) queryParams['emoji_id'] = emojiId;
+
+    String path = _makeGetPostCommentReactionsPath(
+        postUuid: postUuid, postCommentId: postCommentId);
+
+    return _httpService.get(_makeApiUrl(path),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getReactionsEmojiCountForPostComment({
+    @required int postCommentId,
+    @required String postUuid,
+  }) {
+    String path = _makeGetPostCommentReactionsEmojiCountPath(
+        postCommentId: postCommentId, postUuid: postUuid);
+
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> reactToPostComment(
+      {@required int postCommentId,
+      @required String postUuid,
+      @required int emojiId}) {
+    Map<String, dynamic> body = {'emoji_id': emojiId};
+
+    String path = _makeReactToPostCommentPath(
+        postUuid: postUuid, postCommentId: postCommentId);
+    return _httpService.putJSON(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> deletePostCommentReaction({
+    @required postCommentReactionId,
+    @required int postCommentId,
+    @required String postUuid,
+  }) {
+    String path = _makeDeletePostCommentReactionPath(
+      postCommentReactionId: postCommentReactionId,
+      postUuid: postUuid,
+      postCommentId: postCommentId,
+    );
+
+    return _httpService.delete(_makeApiUrl(path),
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> mutePostComment({
+    @required int postCommentId,
+    @required String postUuid,
+  }) {
+    String path = _makeMutePostCommentPath(
+        postCommentId: postCommentId, postUuid: postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> unmutePostComment({
+    @required int postCommentId,
+    @required String postUuid,
+  }) {
+    String path = _makeUnmutePostCommentPath(
+        postCommentId: postCommentId, postUuid: postUuid);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> mutePostWithUuid(String postUuid) {
@@ -338,6 +425,22 @@ class PostsApiService {
         .parse(UNMUTE_POST_PATH, {'postUuid': postUuid});
   }
 
+  String _makeMutePostCommentPath({
+    @required int postCommentId,
+    @required String postUuid,
+  }) {
+    return _stringTemplateService.parse(MUTE_POST_COMMENT_PATH,
+        {'postCommentId': postCommentId, 'postUuid': postUuid});
+  }
+
+  String _makeUnmutePostCommentPath({
+    @required int postCommentId,
+    @required String postUuid,
+  }) {
+    return _stringTemplateService.parse(UNMUTE_POST_COMMENT_PATH,
+        {'postCommentId': postCommentId, 'postUuid': postUuid});
+  }
+
   String _makeDisableCommentsForPostPath(String postUuid) {
     return _stringTemplateService
         .parse(DISABLE_POST_COMMENTS_PATH, {'postUuid': postUuid});
@@ -396,6 +499,36 @@ class PostsApiService {
   String _makeGetPostReactionsPath(String postUuid) {
     return _stringTemplateService
         .parse(GET_POST_REACTIONS_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeReactToPostCommentPath(
+      {@required int postCommentId, @required String postUuid}) {
+    return _stringTemplateService.parse(REACT_TO_POST_COMMENT_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
+  }
+
+  String _makeGetPostCommentReactionsPath(
+      {@required int postCommentId, @required String postUuid}) {
+    return _stringTemplateService.parse(GET_POST_COMMENT_REACTIONS_PATH,
+        {'postCommentId': postCommentId, 'postUuid': postUuid});
+  }
+
+  String _makeDeletePostCommentReactionPath(
+      {@required int postCommentReactionId,
+      @required String postUuid,
+      @required int postCommentId}) {
+    return _stringTemplateService.parse(DELETE_POST_COMMENT_REACTION_PATH, {
+      'postCommentReactionId': postCommentReactionId,
+      'postUuid': postUuid,
+      'postCommentId': postCommentId
+    });
+  }
+
+  String _makeGetPostCommentReactionsEmojiCountPath(
+      {@required postUuid, @required int postCommentId}) {
+    return _stringTemplateService.parse(
+        GET_POST_COMMENT_REACTIONS_EMOJI_COUNT_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 
   String _makeDeletePostReactionPath(

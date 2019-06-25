@@ -1,5 +1,8 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment_list.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
+import 'package:Openbook/models/post_comment_reactions_emoji_count.dart';
+import 'package:Openbook/models/post_comment_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -14,6 +17,9 @@ class PostComment extends UpdatableModel<PostComment> {
   User commenter;
   PostComment parentComment;
   PostCommentList replies;
+  PostCommentReactionsEmojiCountList reactionsEmojiCounts;
+  PostCommentReaction reaction;
+
   Post post;
   bool isEdited;
   bool isReported;
@@ -50,19 +56,20 @@ class PostComment extends UpdatableModel<PostComment> {
     factory.clearCache();
   }
 
-  PostComment({
-    this.id,
-    this.created,
-    this.text,
-    this.creatorId,
-    this.commenter,
-    this.post,
-    this.isEdited,
-    this.isReported,
-    this.parentComment,
-    this.replies,
-    this.repliesCount,
-  });
+  PostComment(
+      {this.id,
+      this.created,
+      this.text,
+      this.creatorId,
+      this.commenter,
+      this.post,
+      this.isEdited,
+      this.isReported,
+      this.parentComment,
+      this.replies,
+      this.repliesCount,
+      this.reactionsEmojiCounts,
+      this.reaction});
 
   static final factory = PostCommentFactory();
 
@@ -150,6 +157,60 @@ class PostComment extends UpdatableModel<PostComment> {
     this.isReported = isReported;
     notifyUpdate();
   }
+
+  void setReaction(PostCommentReaction newReaction) {
+    bool hasReaction = this.hasReaction();
+
+    if (!hasReaction && newReaction == null) {
+      throw 'Trying to remove no reaction';
+    }
+
+    var newEmojiCounts = reactionsEmojiCounts.counts.toList();
+
+    if (hasReaction) {
+      var currentReactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
+        return emojiCount.getEmojiId() == reaction.getEmojiId();
+      });
+
+      if (currentReactionEmojiCount.count > 1) {
+        // Decrement emoji reaction counts
+        currentReactionEmojiCount.count -= 1;
+      } else {
+        // Remove emoji reaction count
+        newEmojiCounts.remove(currentReactionEmojiCount);
+      }
+    }
+
+    if (newReaction != null) {
+      var reactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
+        return emojiCount.getEmojiId() == newReaction.getEmojiId();
+      }, orElse: () {});
+
+      if (reactionEmojiCount != null) {
+        // Up existing count
+        reactionEmojiCount.count += 1;
+      } else {
+        // Add new emoji count
+        newEmojiCounts.add(
+            PostCommentReactionsEmojiCount(emoji: newReaction.emoji, count: 1));
+      }
+    }
+
+    this.reaction = newReaction;
+    this._setReactionsEmojiCounts(
+        PostCommentReactionsEmojiCountList(counts: newEmojiCounts));
+
+    this.notifyUpdate();
+  }
+
+  void _setReactionsEmojiCounts(
+      PostCommentReactionsEmojiCountList emojiCounts) {
+    reactionsEmojiCounts = emojiCounts;
+  }
+
+  bool hasReaction() {
+    return reaction != null;
+  }
 }
 
 class PostCommentFactory extends UpdatableModelFactory<PostComment> {
@@ -170,7 +231,10 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         parentComment: parseParentComment(json['parent_comment']),
         isEdited: json['is_edited'],
         isReported: json['is_reported'],
-        text: json['text']);
+        text: json['text'],
+        reaction: parseReaction(json['reaction']),
+        reactionsEmojiCounts:
+            parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }
 
   Post parsePost(Map post) {
@@ -198,6 +262,16 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
     return PostCommentList.fromJson(repliesData);
   }
 
+  PostCommentReaction parseReaction(Map postCommentReaction) {
+    if (postCommentReaction == null) return null;
+    return PostCommentReaction.fromJson(postCommentReaction);
+  }
+
+  PostCommentReactionsEmojiCountList parseReactionsEmojiCounts(
+      List reactionsEmojiCounts) {
+    if (reactionsEmojiCounts == null) return null;
+    return PostCommentReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
+  }
 }
 
 enum PostCommentsSortType { asc, dec }

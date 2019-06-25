@@ -29,6 +29,9 @@ import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
+import 'package:Openbook/models/post_comment_reaction_list.dart';
+import 'package:Openbook/models/post_comment_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reaction_list.dart';
 import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
@@ -229,7 +232,8 @@ class UserService {
   }
 
   Future<int> subscribeToBetaWaitlist({String email}) async {
-    HttpieResponse response = await _waitlistApiService.subscribeToBetaWaitlist(email: email);
+    HttpieResponse response =
+        await _waitlistApiService.subscribeToBetaWaitlist(email: email);
     _checkResponseIsOk(response);
     Map<String, dynamic> parsedJson = json.decode(response.body);
     return parsedJson['count'];
@@ -451,7 +455,7 @@ class UserService {
       @required Emoji emoji,
       @required EmojiGroup emojiGroup}) async {
     HttpieResponse response = await _postsApiService.reactToPost(
-        postUuid: post.uuid, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
+        postUuid: post.uuid, emojiId: emoji.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
@@ -482,6 +486,62 @@ class UserService {
     _checkResponseIsOk(response);
 
     return PostReactionsEmojiCountList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostCommentReaction> reactToPostComment(
+      {@required Post post,
+      @required PostComment postComment,
+      @required Emoji emoji,
+      @required EmojiGroup emojiGroup}) async {
+    HttpieResponse response = await _postsApiService.reactToPostComment(
+      postCommentId: postComment.id,
+      postUuid: post.uuid,
+      emojiId: emoji.id,
+    );
+    _checkResponseIsCreated(response);
+    return PostCommentReaction.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deletePostCommentReaction(
+      {@required PostCommentReaction postCommentReaction,
+      @required PostComment postComment,
+      @required Post post}) async {
+    HttpieResponse response = await _postsApiService.deletePostCommentReaction(
+        postCommentReactionId: postCommentReaction.id,
+        postUuid: post.uuid,
+        postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<PostCommentReactionList> getReactionsForPostComment(
+      {PostComment postComment,
+      Post post,
+      int count,
+      int maxId,
+      Emoji emoji}) async {
+    HttpieResponse response = await _postsApiService.getReactionsForPostComment(
+        postUuid: post.uuid,
+        postCommentId: postComment.id,
+        count: count,
+        maxId: maxId,
+        emojiId: emoji.id);
+
+    _checkResponseIsOk(response);
+
+    return PostCommentReactionList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostCommentReactionsEmojiCountList>
+      getReactionsEmojiCountForPostComment(
+          {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.getReactionsEmojiCountForPostComment(
+            postCommentId: postComment.id, postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+
+    return PostCommentReactionsEmojiCountList.fromJson(
+        json.decode(response.body));
   }
 
   Future<PostComment> commentPost(
@@ -531,6 +591,22 @@ class UserService {
         await _postsApiService.unmutePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<PostComment> mutePostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.mutePostComment(
+        postUuid: post.uuid, postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
+  }
+
+  Future<PostComment> unmutePostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.unmutePostComment(
+        postCommentId: postComment.id, postUuid: post.uuid);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
