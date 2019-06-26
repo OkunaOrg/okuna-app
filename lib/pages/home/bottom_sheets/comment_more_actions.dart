@@ -3,21 +3,31 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
 class OBCommentMoreActionsBottomSheet extends StatefulWidget {
   final PostComment postComment;
   final Post post;
+  final Function(PostComment) onPostCommentDeletedCallback;
+  final ValueChanged<PostComment> onPostCommentReported;
+  final ValueChanged<PostComment> onReplyAdded;
+  final ValueChanged<PostComment> onReplyDeleted;
 
-  const OBCommentMoreActionsBottomSheet({
-    @required this.post,
-    @required this.postComment,
-    Key key})
+  const OBCommentMoreActionsBottomSheet(
+      {@required this.post,
+      @required this.postComment,
+      Key key,
+      @required this.onPostCommentDeletedCallback,
+      @required this.onPostCommentReported,
+      @required this.onReplyAdded,
+      @required this.onReplyDeleted})
       : super(key: key);
 
   @override
@@ -26,11 +36,14 @@ class OBCommentMoreActionsBottomSheet extends StatefulWidget {
   }
 }
 
-class OBCommentMoreActionsBottomSheetState extends State<OBCommentMoreActionsBottomSheet> {
+class OBCommentMoreActionsBottomSheetState
+    extends State<OBCommentMoreActionsBottomSheet> {
   ToastService _toastService;
   UserService _userService;
+  NavigationService _navigationService;
   ModalService _modalService;
   bool _requestInProgress;
+  CancelableOperation _requestOperation;
 
   @override
   void initState() {
@@ -39,43 +52,112 @@ class OBCommentMoreActionsBottomSheetState extends State<OBCommentMoreActionsBot
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    if (_requestOperation != null) _requestOperation.cancel();
+  }
+
+  @override
   Widget build(BuildContext context) {
     OpenbookProviderState provider = OpenbookProvider.of(context);
     _toastService = provider.toastService;
     _userService = provider.userService;
+    _navigationService = provider.navigationService;
     _modalService = provider.modalService;
-    List<Widget> _moreCommentActions = [];
-
-    User loggedInUser = _userService.getLoggedInUser();
-    bool loggedInUserIsCommunityAdministrator = false;
-    bool loggedInUserIsCommunityModerator = false;
-
-    Post post = widget.post;
-    User postCommenter = widget.postComment.commenter;
-
-    _moreCommentActions.add(
-      ListTile(
-        leading: const OBIcon(OBIcons.editPost),
-        title: const OBText(
-          'Report comment',
-        ),
-        onTap: _reportPostComment,
-      ),
-    );
-
 
     return OBPrimaryColorContainer(
       mainAxisSize: MainAxisSize.min,
-      child: Column(
-        children: _moreCommentActions,
-        mainAxisSize: MainAxisSize.min,
+      child: Opacity(
+        opacity: _requestInProgress ? 0.5 : 1,
+        child: Column(
+          children: _buildActionTiles(),
+          mainAxisSize: MainAxisSize.min,
+        ),
       ),
     );
   }
 
+  List<Widget> _buildActionTiles() {
+    List<Widget> actionTiles = [];
+    User loggedInUser = _userService.getLoggedInUser();
+
+    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
+      actionTiles.add(
+        ListTile(
+          leading: const OBIcon(OBIcons.deletePost),
+          title: const OBText(
+            'Delete comment',
+          ),
+          onTap: _deletePostComment,
+        ),
+      );
+    }
+
+    if (loggedInUser.canReportPostComment(widget.postComment)) {
+      actionTiles.add(
+        Opacity(
+          opacity: widget.postComment.isReported ?? false ? 0.5 : 1,
+          child: ListTile(
+            leading: const OBIcon(OBIcons.report),
+            title: OBText(
+                widget.postComment.isReported ?? false ? 'Reported' : 'Report'),
+            onTap: _reportPostComment,
+          ),
+        ),
+      );
+    }
+
+    if (loggedInUser.canEditPostComment(widget.postComment, widget.post)) {
+      actionTiles.add(
+        ListTile(
+          leading: const OBIcon(OBIcons.edit),
+          title: const OBText(
+            'Edit comment',
+          ),
+          onTap: _editPostComment,
+        ),
+      );
+    }
+
+    return actionTiles;
+  }
+
   void _reportPostComment() async {
-    _toastService.error(message: 'Not implemented yet', context: context);
-    Navigator.pop(context);
+    await _navigationService.navigateToReportObject(
+        context: context,
+        object: widget.postComment,
+        extraData: {'post': widget.post},
+        onObjectReported: (dynamic reportedObject) {
+          if (widget.onPostCommentReported != null && reportedObject != null)
+            widget.onPostCommentReported(reportedObject as PostComment);
+        });
+  }
+
+  void _deletePostComment() async {
+    if (_requestInProgress) return;
+    _setRequestInProgress(true);
+    try {
+      _requestOperation = CancelableOperation.fromFuture(
+          _userService.deletePostComment(
+              postComment: widget.postComment, post: widget.post));
+
+      await _requestOperation.value;
+      if (widget.postComment.parentComment == null)
+        widget.post.decreaseCommentsCount();
+      _toastService.success(message: 'Comment deleted', context: context);
+      if (widget.onPostCommentDeletedCallback != null) {
+        widget.onPostCommentDeletedCallback(widget.postComment);
+      }
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
+
+  void _editPostComment() async {
+    await _modalService.openExpandedCommenter(
+        context: context, post: widget.post, postComment: widget.postComment);
   }
 
   void _onError(error) async {
