@@ -1,15 +1,15 @@
-import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
-class OBEmojiReactionCount extends StatelessWidget {
-  final PostReactionsEmojiCount postReactionsEmojiCount;
+class OBEmojiReactionButton extends StatelessWidget {
+  final ReactionsEmojiCount postReactionsEmojiCount;
   final bool reacted;
-  final ValueChanged<PostReactionsEmojiCount> onPressed;
-  final ValueChanged<PostReactionsEmojiCount> onLongPressed;
+  final ValueChanged<ReactionsEmojiCount> onPressed;
+  final ValueChanged<ReactionsEmojiCount> onLongPressed;
 
-  const OBEmojiReactionCount(this.postReactionsEmojiCount,
+  const OBEmojiReactionButton(this.postReactionsEmojiCount,
       {this.onPressed, this.reacted, this.onLongPressed});
 
   @override

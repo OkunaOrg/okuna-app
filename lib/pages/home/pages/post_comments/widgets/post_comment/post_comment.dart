@@ -1,6 +1,8 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_reactions/post_comment_reactions.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_tile.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
@@ -86,6 +88,10 @@ class OBPostCommentState extends State<OBPostComment> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         postComment,
+        OBPostCommentReactions(
+          postComment: widget.postComment,
+          post: widget.post,
+        ),
         _buildPostCommentReplies()
       ],
     );
@@ -164,7 +170,8 @@ class OBPostCommentState extends State<OBPostComment> {
                 padding: EdgeInsets.all(0),
                 itemCount: widget.postComment.getPostCommentReplies().length,
                 itemBuilder: (context, index) {
-                  PostComment reply = widget.postComment.getPostCommentReplies()[index];
+                  PostComment reply =
+                      widget.postComment.getPostCommentReplies()[index];
 
                   return OBPostComment(
                     key: Key('postCommentReply#${reply.id}'),
@@ -172,36 +179,34 @@ class OBPostCommentState extends State<OBPostComment> {
                     post: widget.post,
                     onPostCommentDeletedCallback: _onReplyDeleted,
                   );
-                }
-            ),
+                }),
             _buildViewAllReplies()
           ],
-        )
-      );
+        ));
   }
 
   Widget _buildViewAllReplies() {
-    if (!widget.postComment.hasReplies() || (_repliesCount == _replies.length)) {
+    if (!widget.postComment.hasReplies() ||
+        (_repliesCount == _replies.length)) {
       return SizedBox();
     }
 
     return FlatButton(
-        child: OBSecondaryText('View all $_repliesCount replies',
+        child: OBSecondaryText(
+          'View all $_repliesCount replies',
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onPressed: _onWantsToViewAllReplies);
-    }
+  }
 
   void _onWantsToViewAllReplies() {
     _navigationService.navigateToPostCommentReplies(
-      post: widget.post,
-      postComment: widget.postComment,
-      context: context,
-      onReplyDeleted: _onReplyDeleted,
-      onReplyAdded: _onReplyAdded
-    );
+        post: widget.post,
+        postComment: widget.postComment,
+        context: context,
+        onReplyDeleted: _onReplyDeleted,
+        onReplyAdded: _onReplyAdded);
   }
 
   void _onReplyDeleted(PostComment postCommentReply) async {
@@ -212,7 +217,8 @@ class OBPostCommentState extends State<OBPostComment> {
   }
 
   void _onReplyAdded(PostComment postCommentReply) async {
-    PostCommentsSortType sortType = await _userPreferencesService.getPostCommentsSortType();
+    PostCommentsSortType sortType =
+        await _userPreferencesService.getPostCommentsSortType();
     setState(() {
       if (sortType == PostCommentsSortType.dec) {
         _replies.insert(0, postCommentReply);

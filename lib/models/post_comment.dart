@@ -1,12 +1,14 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_comment_reaction.dart';
-import 'package:Openbook/models/post_comment_reactions_emoji_count.dart';
-import 'package:Openbook/models/post_comment_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:Openbook/models/updatable_model.dart';
+
+import 'emoji.dart';
 
 class PostComment extends UpdatableModel<PostComment> {
   final int id;
@@ -17,7 +19,7 @@ class PostComment extends UpdatableModel<PostComment> {
   User commenter;
   PostComment parentComment;
   PostCommentList replies;
-  PostCommentReactionsEmojiCountList reactionsEmojiCounts;
+  ReactionsEmojiCountList reactionsEmojiCounts;
   PostCommentReaction reaction;
 
   Post post;
@@ -158,6 +160,14 @@ class PostComment extends UpdatableModel<PostComment> {
     notifyUpdate();
   }
 
+  void clearReaction() {
+    this.setReaction(null);
+  }
+
+  bool isReactionEmoji(Emoji emoji) {
+    return hasReaction() && reaction.getEmojiId() == emoji.id;
+  }
+
   void setReaction(PostCommentReaction newReaction) {
     bool hasReaction = this.hasReaction();
 
@@ -191,20 +201,19 @@ class PostComment extends UpdatableModel<PostComment> {
         reactionEmojiCount.count += 1;
       } else {
         // Add new emoji count
-        newEmojiCounts.add(
-            PostCommentReactionsEmojiCount(emoji: newReaction.emoji, count: 1));
+        newEmojiCounts
+            .add(ReactionsEmojiCount(emoji: newReaction.emoji, count: 1));
       }
     }
 
     this.reaction = newReaction;
     this._setReactionsEmojiCounts(
-        PostCommentReactionsEmojiCountList(counts: newEmojiCounts));
+        ReactionsEmojiCountList(counts: newEmojiCounts));
 
     this.notifyUpdate();
   }
 
-  void _setReactionsEmojiCounts(
-      PostCommentReactionsEmojiCountList emojiCounts) {
+  void _setReactionsEmojiCounts(ReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
   }
 
@@ -267,10 +276,9 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
     return PostCommentReaction.fromJson(postCommentReaction);
   }
 
-  PostCommentReactionsEmojiCountList parseReactionsEmojiCounts(
-      List reactionsEmojiCounts) {
+  ReactionsEmojiCountList parseReactionsEmojiCounts(List reactionsEmojiCounts) {
     if (reactionsEmojiCounts == null) return null;
-    return PostCommentReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
+    return ReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
   }
 }
 

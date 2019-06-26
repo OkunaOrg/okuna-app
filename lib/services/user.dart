@@ -9,7 +9,6 @@ import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/device.dart';
 import 'package:Openbook/models/devices_list.dart';
-import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
@@ -31,10 +30,9 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_comment_reaction.dart';
 import 'package:Openbook/models/post_comment_reaction_list.dart';
-import 'package:Openbook/models/post_comment_reactions_emoji_count_list.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reaction_list.dart';
-import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
@@ -451,9 +449,7 @@ class UserService {
   }
 
   Future<PostReaction> reactToPost(
-      {@required Post post,
-      @required Emoji emoji,
-      @required EmojiGroup emojiGroup}) async {
+      {@required Post post, @required Emoji emoji}) async {
     HttpieResponse response = await _postsApiService.reactToPost(
         postUuid: post.uuid, emojiId: emoji.id);
     _checkResponseIsCreated(response);
@@ -478,21 +474,20 @@ class UserService {
     return PostReactionList.fromJson(json.decode(response.body));
   }
 
-  Future<PostReactionsEmojiCountList> getReactionsEmojiCountForPost(
+  Future<ReactionsEmojiCountList> getReactionsEmojiCountForPost(
       Post post) async {
     HttpieResponse response =
         await _postsApiService.getReactionsEmojiCountForPostWithUuid(post.uuid);
 
     _checkResponseIsOk(response);
 
-    return PostReactionsEmojiCountList.fromJson(json.decode(response.body));
+    return ReactionsEmojiCountList.fromJson(json.decode(response.body));
   }
 
   Future<PostCommentReaction> reactToPostComment(
       {@required Post post,
       @required PostComment postComment,
-      @required Emoji emoji,
-      @required EmojiGroup emojiGroup}) async {
+      @required Emoji emoji}) async {
     HttpieResponse response = await _postsApiService.reactToPostComment(
       postCommentId: postComment.id,
       postUuid: post.uuid,
@@ -531,17 +526,15 @@ class UserService {
     return PostCommentReactionList.fromJson(json.decode(response.body));
   }
 
-  Future<PostCommentReactionsEmojiCountList>
-      getReactionsEmojiCountForPostComment(
-          {@required PostComment postComment, @required Post post}) async {
+  Future<ReactionsEmojiCountList> getReactionsEmojiCountForPostComment(
+      {@required PostComment postComment, @required Post post}) async {
     HttpieResponse response =
         await _postsApiService.getReactionsEmojiCountForPostComment(
             postCommentId: postComment.id, postUuid: post.uuid);
 
     _checkResponseIsOk(response);
 
-    return PostCommentReactionsEmojiCountList.fromJson(
-        json.decode(response.body));
+    return ReactionsEmojiCountList.fromJson(json.decode(response.body));
   }
 
   Future<PostComment> commentPost(

@@ -1,13 +1,13 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
-import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/post/widgets/post_reactions/widgets/reaction_emoji_count.dart';
+import 'package:Openbook/widgets/reaction_emoji_count.dart';
 import 'package:flutter/material.dart';
 
 class OBPostReactions extends StatefulWidget {
@@ -44,7 +44,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
           var post = snapshot.data;
 
-          List<PostReactionsEmojiCount> emojiCounts =
+          List<ReactionsEmojiCount> emojiCounts =
               post.reactionsEmojiCounts?.counts;
 
           if (emojiCounts == null || emojiCounts.length == 0)
@@ -60,9 +60,9 @@ class OBPostReactionsState extends State<OBPostReactions> {
               itemCount: emojiCounts.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
-                PostReactionsEmojiCount emojiCount = emojiCounts[index];
+                ReactionsEmojiCount emojiCount = emojiCounts[index];
 
-                return OBEmojiReactionCount(
+                return OBEmojiReactionButton(
                   emojiCount,
                   reacted: widget.post.isReactionEmoji(emojiCount.emoji),
                   onPressed: (pressedEmojiCount) {
@@ -79,8 +79,8 @@ class OBPostReactionsState extends State<OBPostReactions> {
         });
   }
 
-  void _onEmojiReactionCountPressed(PostReactionsEmojiCount pressedEmojiCount,
-      List<PostReactionsEmojiCount> emojiCounts) async {
+  void _onEmojiReactionCountPressed(ReactionsEmojiCount pressedEmojiCount,
+      List<ReactionsEmojiCount> emojiCounts) async {
     bool reacted = widget.post.isReactionEmoji(pressedEmojiCount.emoji);
 
     if (reacted) {

@@ -5,6 +5,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/community_type_picker.dart';
@@ -13,7 +14,8 @@ import 'package:Openbook/pages/home/bottom_sheets/comment_more_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/video_picker.dart';
-import 'package:Openbook/pages/home/modals/react_to_post/react_to_post.dart';
+import 'package:Openbook/pages/home/bottom_sheets/react_to_post.dart';
+import 'package:Openbook/pages/home/bottom_sheets/react_to_post_comment.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
@@ -26,6 +28,20 @@ class BottomSheetService {
         builder: (BuildContext context) {
           return Material(
             child: OBReactToPostBottomSheet(post),
+          );
+        });
+  }
+
+  Future<PostCommentReaction> showReactToPostComment(
+      {@required PostComment postComment,
+      @required Post post,
+      @required BuildContext context}) async {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return Material(
+            child: OBReactToPostCommentBottomSheet(
+                postComment: postComment, post: post),
           );
         });
   }

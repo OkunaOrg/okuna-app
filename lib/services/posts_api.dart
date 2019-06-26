@@ -43,18 +43,18 @@ class PostsApiService {
   static const GET_REACTION_EMOJI_GROUPS = 'api/posts/emojis/groups/';
 
   static const REACT_TO_POST_COMMENT_PATH =
-      'api/posts/{postUuid}/comments/{postCommendId}/reactions/';
+      'api/posts/{postUuid}/comments/{postCommentId}/reactions/';
   static const DELETE_POST_COMMENT_REACTION_PATH =
-      'api/posts/{postUuid}/comments/{postCommendId}/reactions/{postReactionId}/';
+      'api/posts/{postUuid}/comments/{postCommentId}/reactions/{postCommentReactionId}/';
   static const GET_POST_COMMENT_REACTIONS_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/reactions/';
   static const GET_POST_COMMENT_REACTIONS_EMOJI_COUNT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/reactions/emoji-count/';
 
   static const MUTE_POST_COMMENT_PATH =
-      'api/posts/{postUuid}/comments/{postCommendId}/notifications/mute/';
+      'api/posts/{postUuid}/comments/{postCommentId}/notifications/mute/';
   static const UNMUTE_POST_COMMENT_PATH =
-      'api/posts/{postUuid}/comments/{postCommendId}/notifications/unmute/';
+      'api/posts/{postUuid}/comments/{postCommentId}/notifications/unmute/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -302,6 +302,7 @@ class PostsApiService {
 
     String path = _makeReactToPostCommentPath(
         postUuid: postUuid, postCommentId: postCommentId);
+
     return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
