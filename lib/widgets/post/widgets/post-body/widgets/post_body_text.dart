@@ -36,7 +36,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
 
     return GestureDetector(
       onLongPress: _copyText,
-      child: Padding(padding: EdgeInsets.all(20.0), child: _buildPostText()),
+      child: Padding(padding: EdgeInsets.only(top: 20.0, left:20, right: 20), child: _buildPostText()),
     );
   }
 

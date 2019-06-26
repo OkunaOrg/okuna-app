@@ -12,7 +12,6 @@ class OBPostPreview extends StatelessWidget {
   final Post post;
   final Function(Post) onPostDeleted;
   final VoidCallback focusCommentInput;
-  GlobalKey _keyPostBody = GlobalKey();
 
   OBPostPreview({this.post, this.onPostDeleted, this.focusCommentInput});
   @override
@@ -24,11 +23,10 @@ class OBPostPreview extends StatelessWidget {
           post: this.post,
           onPostDeleted: this.onPostDeleted,
         ),
-        Container(
-          key: _keyPostBody,
-          child: OBPostBody(this.post),
-        ),
+        OBPostBody(this.post),
+        const SizedBox(height: 20,),
         OBPostReactions(this.post),
+        const SizedBox(height: 10,),
         OBPostCircles(this.post),
         OBPostComments(
           this.post,

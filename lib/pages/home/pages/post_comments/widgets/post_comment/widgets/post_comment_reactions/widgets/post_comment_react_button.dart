@@ -50,36 +50,45 @@ class OBPostCommentReactButtonState extends State<OBPostCommentReactButton> {
         PostCommentReaction reaction = postComment.reaction;
         bool hasReaction = reaction != null;
 
-        Widget buttonChild = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            hasReaction
-                ? CachedNetworkImage(
-                    height: 18.0,
-                    imageUrl: reaction.getEmojiImage(),
-                    errorWidget:
-                        (BuildContext context, String url, Object error) {
-                      return SizedBox(
-                        child: Center(child: Text('?')),
-                      );
-                    },
-                  )
-                : const OBIcon(
-                    OBIcons.react,
-                    customSize: 20.0,
-                  ),
+        List<Widget> buttonRowItems = [
+          hasReaction
+              ? CachedNetworkImage(
+                  height: 18.0,
+                  imageUrl: reaction.getEmojiImage(),
+                  errorWidget:
+                      (BuildContext context, String url, Object error) {
+                    return SizedBox(
+                      child: Center(child: Text('?')),
+                    );
+                  },
+                )
+              : const OBIcon(
+                  OBIcons.react,
+                  customSize: 20.0,
+                ),
+        ];
+
+        if (hasReaction) {
+          buttonRowItems.addAll([
             const SizedBox(
               width: 10.0,
             ),
             OBText(
-              hasReaction ? reaction.getEmojiKeyword() : '',
+              reaction.getEmojiKeyword(),
               style: TextStyle(
                 color: hasReaction ? Colors.white : null,
-                fontWeight: hasReaction ? FontWeight.bold : FontWeight.normal,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-        );
+            const SizedBox(
+              width: 5.0,
+            ),
+          ]);
+        }
+
+        Widget buttonChild = Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: buttonRowItems);
 
         return OBButton(
           minWidth: 50,

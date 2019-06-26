@@ -51,37 +51,40 @@ class OBPostCommentReactionsState extends State<OBPostCommentReactions> {
           List<ReactionsEmojiCount> emojiCounts =
               postComment.reactionsEmojiCounts?.counts ?? [];
 
-          return SizedBox(
-            height: 35,
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              physics: const ClampingScrollPhysics(),
-              itemCount: emojiCounts.length + 1,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == 0) {
-                  return OBPostCommentReactButton(
-                    postComment: widget.postComment,
-                    post: widget.post,
+          if (emojiCounts.isEmpty) return const SizedBox();
+
+          return Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: SizedBox(
+              height: 30,
+              child: ListView.separated(
+                physics: const ClampingScrollPhysics(),
+                itemCount: emojiCounts.length,
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(
+                    width: 10,
                   );
-                }
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  ReactionsEmojiCount emojiCount = emojiCounts[index];
 
-                ReactionsEmojiCount emojiCount = emojiCounts[index - 1];
-
-                return OBEmojiReactionButton(
-                  emojiCount,
-                  reacted: widget.postComment.isReactionEmoji(emojiCount.emoji),
-                  onPressed: _onEmojiReactionCountPressed,
-                  onLongPressed: (pressedEmojiCount) {
-                    _navigationService.navigateToPostCommentReactions(
-                        post: widget.post,
-                        postComment: widget.postComment,
-                        reactionsEmojiCounts: emojiCounts,
-                        context: context,
-                        reactionEmoji: pressedEmojiCount.emoji);
-                  },
-                );
-              },
+                  return OBEmojiReactionButton(
+                    emojiCount,
+                    size: OBEmojiReactionButtonSize.small,
+                    reacted: widget.postComment.isReactionEmoji(emojiCount.emoji),
+                    onPressed: _onEmojiReactionCountPressed,
+                    onLongPressed: (pressedEmojiCount) {
+                      _navigationService.navigateToPostCommentReactions(
+                          post: widget.post,
+                          postComment: widget.postComment,
+                          reactionsEmojiCounts: emojiCounts,
+                          context: context,
+                          reactionEmoji: pressedEmojiCount.emoji);
+                    },
+                  );
+                },
+              ),
             ),
           );
         });

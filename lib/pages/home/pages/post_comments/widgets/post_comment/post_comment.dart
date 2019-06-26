@@ -1,9 +1,8 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_comment_reaction.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_reactions/post_comment_reactions.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_tile.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_body/post_comment_body.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
@@ -69,11 +68,8 @@ class OBPostCommentState extends State<OBPostComment> {
     _userPreferencesService = provider.userPreferencesService;
     _toastService = provider.toastService;
     _modalService = provider.modalService;
-    Widget commentTile = OBPostCommentTile(post:widget.post, postComment: widget.postComment);
-
-    Widget postComment = _buildPostCommentActions(
-      child: commentTile,
-    );
+    Widget postComment =
+        OBPostCommentBody(post: widget.post, postComment: widget.postComment);
 
     if (_requestInProgress) {
       postComment = IgnorePointer(
@@ -88,9 +84,8 @@ class OBPostCommentState extends State<OBPostComment> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         postComment,
-        OBPostCommentReactions(
-          postComment: widget.postComment,
-          post: widget.post,
+        const SizedBox(
+          height: 10,
         ),
         _buildPostCommentReplies()
       ],
@@ -118,7 +113,7 @@ class OBPostCommentState extends State<OBPostComment> {
           opacity: widget.postComment.isReported ?? false ? 0.5 : 1,
           child: IconSlideAction(
             caption:
-            widget.postComment.isReported ?? false ? 'Reported' : 'Report',
+                widget.postComment.isReported ?? false ? 'Reported' : 'Report',
             color: Colors.black38,
             icon: Icons.report,
             onTap: _reportPostComment,
@@ -139,14 +134,12 @@ class OBPostCommentState extends State<OBPostComment> {
     }
 
     if (loggedInUser.canReplyPostComment(widget.postComment)) {
-      _commentActions.add(
-          new IconSlideAction(
-            caption: 'Reply',
-            color: Colors.blue,
-            icon: Icons.reply,
-            onTap: _replyPostComment,
-          )
-      );
+      _commentActions.add(new IconSlideAction(
+        caption: 'Reply',
+        color: Colors.blue,
+        icon: Icons.reply,
+        onTap: _replyPostComment,
+      ));
     }
 
     return Slidable(
@@ -271,7 +264,8 @@ class OBPostCommentState extends State<OBPostComment> {
               postComment: widget.postComment, post: widget.post));
 
       await _requestOperation.value;
-      if (widget.postComment.parentComment == null) widget.post.decreaseCommentsCount();
+      if (widget.postComment.parentComment == null)
+        widget.post.decreaseCommentsCount();
       _toastService.success(message: 'Comment deleted', context: context);
       if (widget.onPostCommentDeletedCallback != null) {
         widget.onPostCommentDeletedCallback(widget.postComment);

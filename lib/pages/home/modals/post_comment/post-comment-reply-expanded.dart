@@ -2,7 +2,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_tile.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_body/post_comment_body.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/navigation_service.dart';
@@ -163,7 +163,7 @@ class OBPostCommentReplyExpandedModalState
               padding: EdgeInsets.only(left: 0.0, top: 20.0),
               child: Column(
                 children: <Widget>[
-                  OBPostCommentTile(
+                  OBPostCommentBody(
                       post: widget.post, postComment: widget.postComment),
                   OBPostDivider(),
                   Padding(

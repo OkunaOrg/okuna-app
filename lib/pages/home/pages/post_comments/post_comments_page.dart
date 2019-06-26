@@ -3,7 +3,7 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_tile.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_body/post_comment_body.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Openbook/services/theme.dart';
@@ -360,7 +360,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     if (widget.postComment == null) {
       return SizedBox();
     }
-    return OBPostCommentTile(
+    return OBPostCommentBody(
         post: widget.post, postComment: widget.postComment);
   }
 

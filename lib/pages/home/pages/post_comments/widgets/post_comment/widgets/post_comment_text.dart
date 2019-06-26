@@ -23,67 +23,38 @@ class OBPostCommentText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
 
     _toastService = openbookProvider.toastService;
     _context = context;
 
-    return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Flexible(
-                    child: GestureDetector(
-                        onTap: onUsernamePressed,
-                        child: Text(
-                          postComment.getCommenterUsername(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: themeValueParserService
-                                  .parseColor(theme.primaryTextColor),
-                              fontSize: 16),
-                          overflow: TextOverflow.ellipsis,
-                        )),
-                  ),
-                  badge == null
-                      ? const SizedBox()
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: badge,
-                        ),
-                ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Flexible(
+              child: GestureDetector(
+                onLongPress: _copyText,
+                child: _getActionableSmartText(postComment.isEdited),
               ),
-              Row(
-                children: <Widget>[
-                  Flexible(
-                    child: GestureDetector(
-                      onLongPress: _copyText,
-                      child: _getActionableSmartText(postComment.isEdited),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          );
-        });
+            ),
+          ],
+        )
+      ],
+    );
   }
 
   Widget _getActionableSmartText(bool isEdited) {
     if (isEdited) {
       return OBCollapsibleSmartText(
+        size: OBTextSize.medium,
         text: postComment.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
         maxlength: postCommentMaxVisibleLength,
       );
     } else {
       return OBCollapsibleSmartText(
+        size: OBTextSize.medium,
         text: postComment.text,
         maxlength: postCommentMaxVisibleLength,
       );
