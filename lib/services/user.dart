@@ -1524,6 +1524,8 @@ class UserService {
   Future<UserNotificationsSettings>
       updateAuthenticatedUserNotificationsSettings({
     bool postCommentNotifications,
+    bool postCommentReplyNotifications,
+    bool postCommentReactionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
@@ -1533,6 +1535,8 @@ class UserService {
     HttpieResponse response =
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
             postCommentNotifications: postCommentNotifications,
+            postCommentReplyNotifications: postCommentReplyNotifications,
+            postCommentReactionNotifications: postCommentReactionNotifications,
             postReactionNotifications: postReactionNotifications,
             followNotifications: followNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
