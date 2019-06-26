@@ -67,8 +67,11 @@ class OBPostReactionsState extends State<OBPostReactions> {
             opacity: _requestInProgress ? 0.6 : 1,
             child: SizedBox(
               height: 35,
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListView.separated(
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(width: 10,);
+                },
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 physics: const ClampingScrollPhysics(),
                 itemCount: emojiCounts.length,
                 scrollDirection: Axis.horizontal,
@@ -104,7 +107,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
     } else {
       // React
       PostReaction newPostReaction =
-          await _reactToPost(pressedEmojiCount.emoji);
+      await _reactToPost(pressedEmojiCount.emoji);
       widget.post.setReaction(newPostReaction);
     }
   }
