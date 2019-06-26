@@ -8,6 +8,7 @@ import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/reaction_emoji_count.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
 class OBPostReactions extends StatefulWidget {
@@ -26,9 +27,19 @@ class OBPostReactionsState extends State<OBPostReactions> {
   ToastService _toastService;
   NavigationService _navigationService;
 
+  CancelableOperation _requestOperation;
+  bool _requestInProgress;
+
   @override
   void initState() {
     super.initState();
+    _requestInProgress = false;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_requestOperation != null) _requestOperation.cancel();
   }
 
   @override
@@ -52,35 +63,39 @@ class OBPostReactionsState extends State<OBPostReactions> {
               height: 35,
             );
 
-          return SizedBox(
-            height: 35,
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              physics: const ClampingScrollPhysics(),
-              itemCount: emojiCounts.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                ReactionsEmojiCount emojiCount = emojiCounts[index];
+          return Opacity(
+            opacity: _requestInProgress ? 0.6 : 1,
+            child: SizedBox(
+              height: 35,
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                physics: const ClampingScrollPhysics(),
+                itemCount: emojiCounts.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  ReactionsEmojiCount emojiCount = emojiCounts[index];
 
-                return OBEmojiReactionButton(
-                  emojiCount,
-                  reacted: widget.post.isReactionEmoji(emojiCount.emoji),
-                  onPressed: (pressedEmojiCount) {
-                    _navigationService.navigateToPostReactions(
-                        post: widget.post,
-                        reactionsEmojiCounts: emojiCounts,
-                        context: context,
-                        reactionEmoji: pressedEmojiCount.emoji);
-                  },
-                );
-              },
+                  return OBEmojiReactionButton(
+                    emojiCount,
+                    reacted: widget.post.isReactionEmoji(emojiCount.emoji),
+                    onLongPressed: (pressedEmojiCount) {
+                      _navigationService.navigateToPostReactions(
+                          post: widget.post,
+                          reactionsEmojiCounts: emojiCounts,
+                          context: context,
+                          reactionEmoji: pressedEmojiCount.emoji);
+                    },
+                    onPressed: _onEmojiReactionCountPressed,
+                  );
+                },
+              ),
             ),
           );
         });
   }
 
-  void _onEmojiReactionCountPressed(ReactionsEmojiCount pressedEmojiCount,
-      List<ReactionsEmojiCount> emojiCounts) async {
+  void _onEmojiReactionCountPressed(
+      ReactionsEmojiCount pressedEmojiCount) async {
     bool reacted = widget.post.isReactionEmoji(pressedEmojiCount.emoji);
 
     if (reacted) {
@@ -95,23 +110,32 @@ class OBPostReactionsState extends State<OBPostReactions> {
   }
 
   Future<PostReaction> _reactToPost(Emoji emoji) async {
+    _setRequestInProgress(true);
     PostReaction postReaction;
     try {
-      postReaction =
-          await _userService.reactToPost(post: widget.post, emoji: emoji);
+      _requestOperation = CancelableOperation.fromFuture(
+          _userService.reactToPost(post: widget.post, emoji: emoji));
+      postReaction = await _requestOperation.value;
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
 
     return postReaction;
   }
 
   Future<void> _deleteReaction() async {
+    _setRequestInProgress(true);
     try {
-      await _userService.deletePostReaction(
-          postReaction: widget.post.reaction, post: widget.post);
+      _requestOperation = CancelableOperation.fromFuture(
+          _userService.deletePostReaction(
+              postReaction: widget.post.reaction, post: widget.post));
+      await _requestOperation.value;
     } catch (error) {
       _onError(error);
+    } finally {
+      _setRequestInProgress(false);
     }
   }
 
@@ -126,5 +150,11 @@ class OBPostReactionsState extends State<OBPostReactions> {
       _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
+  }
+
+  void _setRequestInProgress(requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
   }
 }
