@@ -20,6 +20,7 @@ class OBPostComment extends StatefulWidget {
   final ValueChanged<PostComment> onPostCommentReported;
   final bool showReplies;
   final bool showActions;
+  final bool showReplyAction;
   final bool showReactions;
 
   OBPostComment({
@@ -31,6 +32,7 @@ class OBPostComment extends StatefulWidget {
     this.showReplies = true,
     this.showActions = true,
     this.showReactions = true,
+    this.showReplyAction = true,
   }) : super(key: key);
 
   @override
@@ -101,9 +103,6 @@ class OBPostCommentState extends State<OBPostComment> {
 
           if (widget.showActions) {
             commentBodyColumnItems.addAll([
-              const SizedBox(
-                height: 10,
-              ),
               OBPostCommentActions(
                 post: widget.post,
                 postComment: widget.postComment,
@@ -111,6 +110,7 @@ class OBPostCommentState extends State<OBPostComment> {
                 onReplyAdded: _onReplyAdded,
                 onPostCommentReported: widget.onPostCommentReported,
                 onPostCommentDeleted: widget.onPostCommentDeleted,
+                showReplyAction: widget.showReplyAction,
               ),
             ]);
           }
@@ -126,7 +126,8 @@ class OBPostCommentState extends State<OBPostComment> {
           return Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding:
+                    EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
@@ -154,30 +155,28 @@ class OBPostCommentState extends State<OBPostComment> {
 
   Widget _buildPostCommentReplies() {
     if (_repliesCount == 0) return SizedBox();
-    return Padding(
-        padding: EdgeInsets.only(left: 30.0, top: 0.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                padding: EdgeInsets.all(0),
-                itemCount: widget.postComment.getPostCommentReplies().length,
-                itemBuilder: (context, index) {
-                  PostComment reply =
-                      widget.postComment.getPostCommentReplies()[index];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            padding: EdgeInsets.all(0),
+            itemCount: widget.postComment.getPostCommentReplies().length,
+            itemBuilder: (context, index) {
+              PostComment reply =
+                  widget.postComment.getPostCommentReplies()[index];
 
-                  return OBPostComment(
-                    key: Key('postCommentReply#${reply.id}'),
-                    postComment: reply,
-                    post: widget.post,
-                    onPostCommentDeleted: _onReplyDeleted,
-                  );
-                }),
-            _buildViewAllReplies()
-          ],
-        ));
+              return OBPostComment(
+                key: Key('postCommentReply#${reply.id}'),
+                postComment: reply,
+                post: widget.post,
+                onPostCommentDeleted: _onReplyDeleted,
+              );
+            }),
+        _buildViewAllReplies()
+      ],
+    );
   }
 
   Widget _buildViewAllReplies() {

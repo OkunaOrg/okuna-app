@@ -19,6 +19,7 @@ class OBPostCommentActions extends StatefulWidget {
   final ValueChanged<PostComment> onPostCommentReported;
   final Post post;
   final PostComment postComment;
+  final bool showReplyAction;
 
   const OBPostCommentActions(
       {Key key,
@@ -27,7 +28,8 @@ class OBPostCommentActions extends StatefulWidget {
       this.onReplyDeleted,
       this.onReplyAdded,
       this.onPostCommentDeleted,
-      this.onPostCommentReported})
+      this.onPostCommentReported,
+      this.showReplyAction = true})
       : super(key: key);
 
   @override
@@ -112,7 +114,8 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
   Widget _buildReplyButton() {
     User loggedInUser = _userService.getLoggedInUser();
 
-    if (!loggedInUser.canReplyPostComment(widget.postComment))
+    if (!widget.showReplyAction ||
+        !loggedInUser.canReplyPostComment(widget.postComment))
       return const SizedBox();
 
     return Expanded(

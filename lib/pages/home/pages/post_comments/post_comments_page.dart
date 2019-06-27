@@ -363,6 +363,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       post: widget.post,
       postComment: widget.postComment,
       showReplies: false,
+      showReplyAction: false,
       onPostCommentDeleted: _onPostCommentDeleted,
       onPostCommentReported: _onPostCommentReported,
     );

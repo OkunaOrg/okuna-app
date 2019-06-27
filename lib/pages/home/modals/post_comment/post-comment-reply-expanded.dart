@@ -167,6 +167,7 @@ class OBPostCommentReplyExpandedModalState
                 postComment: widget.postComment,
                 showActions: false,
                 showReactions: false,
+                showReplies: false,
               ),
               OBPostDivider(),
               Padding(
