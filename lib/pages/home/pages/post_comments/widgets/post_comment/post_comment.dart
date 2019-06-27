@@ -22,6 +22,7 @@ class OBPostComment extends StatefulWidget {
   final bool showActions;
   final bool showReplyAction;
   final bool showReactions;
+  final EdgeInsets padding;
 
   OBPostComment({
     @required this.post,
@@ -33,6 +34,7 @@ class OBPostComment extends StatefulWidget {
     this.showActions = true,
     this.showReactions = true,
     this.showReplyAction = true,
+    this.padding = const EdgeInsets.all(15),
   }) : super(key: key);
 
   @override
@@ -126,8 +128,7 @@ class OBPostCommentState extends State<OBPostComment> {
           return Column(
             children: <Widget>[
               Padding(
-                padding:
-                    EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+                padding: widget.padding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
@@ -169,6 +170,7 @@ class OBPostCommentState extends State<OBPostComment> {
 
               return OBPostComment(
                 key: Key('postCommentReply#${reply.id}'),
+                padding: EdgeInsets.symmetric(vertical: 15),
                 postComment: reply,
                 post: widget.post,
                 onPostCommentDeleted: _onReplyDeleted,
