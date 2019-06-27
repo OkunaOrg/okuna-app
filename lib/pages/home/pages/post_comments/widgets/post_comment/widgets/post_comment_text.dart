@@ -10,23 +10,14 @@ import 'package:flutter/services.dart';
 class OBPostCommentText extends StatelessWidget {
   final PostComment postComment;
   final VoidCallback onUsernamePressed;
-  final Widget badge;
-  ToastService _toastService;
-  BuildContext _context;
 
   static int postCommentMaxVisibleLength = 500;
 
-  OBPostCommentText(this.postComment,
-      {Key key, this.onUsernamePressed, this.badge})
+  OBPostCommentText(this.postComment, {Key key, this.onUsernamePressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-
-    _toastService = openbookProvider.toastService;
-    _context = context;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -34,7 +25,15 @@ class OBPostCommentText extends StatelessWidget {
           children: <Widget>[
             Flexible(
               child: GestureDetector(
-                onLongPress: _copyText,
+                onLongPress: () {
+                  OpenbookProviderState openbookProvider =
+                      OpenbookProvider.of(context);
+                  Clipboard.setData(ClipboardData(text: postComment.text));
+                  openbookProvider.toastService.toast(
+                      message: 'Text copied!',
+                      context: context,
+                      type: ToastType.info);
+                },
                 child: _getActionableSmartText(postComment.isEdited),
               ),
             ),
@@ -59,11 +58,5 @@ class OBPostCommentText extends StatelessWidget {
         maxlength: postCommentMaxVisibleLength,
       );
     }
-  }
-
-  void _copyText() {
-    Clipboard.setData(ClipboardData(text: postComment.text));
-    _toastService.toast(
-        message: 'Text copied!', context: _context, type: ToastType.info);
   }
 }

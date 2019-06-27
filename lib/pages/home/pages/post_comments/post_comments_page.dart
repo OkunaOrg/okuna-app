@@ -3,7 +3,6 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_body/post_comment_body.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Openbook/services/theme.dart';
@@ -29,8 +28,8 @@ class OBPostCommentsPage extends StatefulWidget {
   final bool autofocusCommentInput;
   final bool showPostPreview;
   final PostComment postComment;
-  Function(PostComment) onCommentDeleted;
-  Function(PostComment) onCommentAdded;
+  final ValueChanged<PostComment> onCommentDeleted;
+  final ValueChanged<PostComment> onCommentAdded;
 
   OBPostCommentsPage({
     @required this.pageType,
@@ -360,8 +359,21 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     if (widget.postComment == null) {
       return SizedBox();
     }
-    return OBPostCommentBody(
-        post: widget.post, postComment: widget.postComment);
+    return OBPostComment(
+      post: widget.post,
+      postComment: widget.postComment,
+      showReplies: false,
+      onPostCommentDeleted: _onPostCommentDeleted,
+      onPostCommentReported: _onPostCommentReported,
+    );
+  }
+
+  void _onPostCommentReported(PostComment postComment) {
+    Navigator.of(context).pop();
+  }
+
+  void _onPostCommentDeleted(PostComment postComment) {
+    Navigator.of(context).pop();
   }
 
   Widget _getCommentTile(int index) {
@@ -388,7 +400,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           key: Key('postComment#${widget.pageType}#${postComment.id}'),
           postComment: postComment,
           post: _post,
-          onPostCommentDeletedCallback: onPostCommentDeletedCallback,
+          onPostCommentDeleted: onPostCommentDeletedCallback,
           onPostCommentReported: onPostCommentDeletedCallback,
         ),
       );
@@ -397,7 +409,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         key: Key('postComment#${widget.pageType}#${postComment.id}'),
         postComment: postComment,
         post: _post,
-        onPostCommentDeletedCallback: onPostCommentDeletedCallback,
+        onPostCommentDeleted: onPostCommentDeletedCallback,
         onPostCommentReported: onPostCommentDeletedCallback,
       );
     }
@@ -566,7 +578,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       if (_post.hasText()) {
         TextStyle style = TextStyle(fontSize: 16.0);
         String postText = _post.text;
-        if (postText.length > MAX_POST_TEXT_LENGTH_LIMIT) postText = postText.substring(0, MAX_POST_TEXT_LENGTH_LIMIT);
+        if (postText.length > MAX_POST_TEXT_LENGTH_LIMIT)
+          postText = postText.substring(0, MAX_POST_TEXT_LENGTH_LIMIT);
         TextSpan text = new TextSpan(text: postText, style: style);
 
         TextPainter textPainter = new TextPainter(
@@ -588,7 +601,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         finalPostHeight = finalPostHeight + HEIGHT_POST_CIRCLES;
       }
 
-      finalPostHeight = finalPostHeight + finalTextHeight + finalMediaScreenHeight + TOTAL_FIXED_OFFSET_Y;
+      finalPostHeight = finalPostHeight +
+          finalTextHeight +
+          finalMediaScreenHeight +
+          TOTAL_FIXED_OFFSET_Y;
     }
 
     // linked comment
@@ -596,7 +612,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     if (widget.postComment != null) {
       TextStyle style = TextStyle(fontSize: 16.0);
       String commentText = widget.postComment.text;
-      if (commentText.length > MAX_COMMENT_TEXT_LENGTH_LIMIT) commentText = commentText.substring(0, MAX_COMMENT_TEXT_LENGTH_LIMIT);
+      if (commentText.length > MAX_COMMENT_TEXT_LENGTH_LIMIT)
+        commentText = commentText.substring(0, MAX_COMMENT_TEXT_LENGTH_LIMIT);
 
       TextSpan text = new TextSpan(text: commentText, style: style);
 
@@ -607,7 +624,9 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       );
       textPainter.layout(
           maxWidth: screenWidth - 80.0); //padding is 100 around comments
-      finalCommentHeight = textPainter.size.height + COMMENTS_MIN_HEIGHT + HEIGHT_COMMENTS_RELATIVE_TIMESTAMP_TEXT;
+      finalCommentHeight = textPainter.size.height +
+          COMMENTS_MIN_HEIGHT +
+          HEIGHT_COMMENTS_RELATIVE_TIMESTAMP_TEXT;
 
       if (widget.postComment.text.length > MAX_COMMENT_TEXT_LENGTH_LIMIT) {
         finalCommentHeight = finalCommentHeight + HEIGHT_SHOW_MORE_TEXT;

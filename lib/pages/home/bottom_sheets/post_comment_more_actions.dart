@@ -12,32 +12,28 @@ import 'package:Openbook/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
-class OBCommentMoreActionsBottomSheet extends StatefulWidget {
+class OBPostCommentMoreActionsBottomSheet extends StatefulWidget {
   final PostComment postComment;
   final Post post;
-  final Function(PostComment) onPostCommentDeletedCallback;
+  final ValueChanged<PostComment> onPostCommentDeleted;
   final ValueChanged<PostComment> onPostCommentReported;
-  final ValueChanged<PostComment> onReplyAdded;
-  final ValueChanged<PostComment> onReplyDeleted;
 
-  const OBCommentMoreActionsBottomSheet(
-      {@required this.post,
-      @required this.postComment,
-      Key key,
-      @required this.onPostCommentDeletedCallback,
-      @required this.onPostCommentReported,
-      @required this.onReplyAdded,
-      @required this.onReplyDeleted})
-      : super(key: key);
+  const OBPostCommentMoreActionsBottomSheet({
+    @required this.post,
+    @required this.postComment,
+    Key key,
+    @required this.onPostCommentDeleted,
+    @required this.onPostCommentReported,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return OBCommentMoreActionsBottomSheetState();
+    return OBPostCommentMoreActionsBottomSheetState();
   }
 }
 
-class OBCommentMoreActionsBottomSheetState
-    extends State<OBCommentMoreActionsBottomSheet> {
+class OBPostCommentMoreActionsBottomSheetState
+    extends State<OBPostCommentMoreActionsBottomSheet> {
   ToastService _toastService;
   UserService _userService;
   NavigationService _navigationService;
@@ -145,8 +141,8 @@ class OBCommentMoreActionsBottomSheetState
       if (widget.postComment.parentComment == null)
         widget.post.decreaseCommentsCount();
       _toastService.success(message: 'Comment deleted', context: context);
-      if (widget.onPostCommentDeletedCallback != null) {
-        widget.onPostCommentDeletedCallback(widget.postComment);
+      if (widget.onPostCommentDeleted != null) {
+        widget.onPostCommentDeleted(widget.postComment);
       }
     } catch (error) {
       _onError(error);

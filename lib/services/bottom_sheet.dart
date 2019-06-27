@@ -10,7 +10,7 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/connection_circles_picker.dart';
-import 'package:Openbook/pages/home/bottom_sheets/comment_more_actions.dart';
+import 'package:Openbook/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/pages/home/bottom_sheets/video_picker.dart';
@@ -123,15 +123,21 @@ class BottomSheetService {
         });
   }
 
-  Future<void> showMoreCommentActions(
-      {@required BuildContext context,
-      @required Post post,
-      @required PostComment postComment}) {
+  Future<void> showMoreCommentActions({
+    @required BuildContext context,
+    @required Post post,
+    @required PostComment postComment,
+    @required ValueChanged<PostComment> onPostCommentDeleted,
+    @required ValueChanged<PostComment> onPostCommentReported,
+  }) {
     return showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
-          return OBCommentMoreActionsBottomSheet(
-              post: post, postComment: postComment);
+          return OBPostCommentMoreActionsBottomSheet(
+              onPostCommentReported: onPostCommentReported,
+              onPostCommentDeleted: onPostCommentDeleted,
+              post: post,
+              postComment: postComment);
         });
   }
 

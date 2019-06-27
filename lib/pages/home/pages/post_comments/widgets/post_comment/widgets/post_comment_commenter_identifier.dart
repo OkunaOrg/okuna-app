@@ -7,14 +7,14 @@ import 'package:Openbook/widgets/theming/collapsible_smart_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class OBPostCommentBodyCommenter extends StatelessWidget {
+class OBPostCommentCommenterIdentifier extends StatelessWidget {
   final PostComment postComment;
   final VoidCallback onUsernamePressed;
   final Widget badge;
 
   static int postCommentMaxVisibleLength = 500;
 
-  OBPostCommentBodyCommenter({
+  OBPostCommentCommenterIdentifier({
     Key key,
     @required this.onUsernamePressed,
     @required this.badge,
@@ -41,13 +41,12 @@ class OBPostCommentBodyCommenter extends StatelessWidget {
 
           String commenterUsername = postComment.commenter.username;
           String commenterName = postComment.commenter.getProfileName();
-          String relativeTimeCreated = postComment.getRelativeCreated();
 
           return GestureDetector(
             onTap: onUsernamePressed,
             child: RichText(
               text: TextSpan(
-                  style: TextStyle(color: secondaryTextColor, fontSize: 14),
+                  style: TextStyle(color: primaryTextColor, fontSize: 14),
                   children: [
                     TextSpan(
                         text: '$commenterName',
