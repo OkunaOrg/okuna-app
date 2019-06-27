@@ -33,8 +33,6 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           OBTheme theme = snapshot.data;
 
-          Color primaryTextColor =
-              themeValueParserService.parseColor(theme.primaryTextColor);
 
           Color secondaryTextColor =
               themeValueParserService.parseColor(theme.secondaryTextColor);
@@ -46,7 +44,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
             onTap: onUsernamePressed,
             child: RichText(
               text: TextSpan(
-                  style: TextStyle(color: primaryTextColor, fontSize: 14),
+                  style: TextStyle(color: secondaryTextColor, fontSize: 14),
                   children: [
                     TextSpan(
                         text: '$commenterName',
@@ -54,7 +52,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
                     TextSpan(
                         text: ' · @$commenterUsername',
                         style:
-                            TextStyle(color: secondaryTextColor, fontSize: 12)),
+                            TextStyle(fontSize: 12)),
                   ]),
             ),
           );

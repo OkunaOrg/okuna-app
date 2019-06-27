@@ -1,14 +1,19 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
+import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
+import 'package:Openbook/services/theme.dart';
+import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Openbook/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +49,8 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
   BottomSheetService _bottomSheetService;
   UserService _userService;
   ToastService _toastService;
+  ThemeService _themeService;
+  ThemeValueParserService _themeValueParserService;
 
   bool _requestInProgress;
   CancelableOperation _requestOperation;
@@ -53,6 +60,7 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
   @override
   void initState() {
     super.initState();
+    _requestInProgress = false;
     _needsBootstrap = true;
   }
 
@@ -65,6 +73,8 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
       _bottomSheetService = openbookProvider.bottomSheetService;
       _navigationService = openbookProvider.navigationService;
       _modalService = openbookProvider.modalService;
+      _themeService = openbookProvider.themeService;
+      _themeValueParserService = openbookProvider.themeValueParserService;
       _needsBootstrap = false;
     }
 
@@ -102,11 +112,28 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
               initialData: widget.postComment,
               builder:
                   (BuildContext context, AsyncSnapshot<PostComment> snapshot) {
-                return OBSecondaryText(
-                  'React',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                );
+                PostComment postComment = snapshot.data;
+
+                PostCommentReaction reaction = postComment.reaction;
+                bool hasReaction = reaction != null;
+
+                OBTheme activeTheme = _themeService.getActiveTheme();
+
+                return hasReaction
+                    ? OBText(
+                        reaction.getEmojiKeyword(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: _themeValueParserService
+                                .parseGradient(activeTheme.primaryAccentColor)
+                                .colors[1]),
+                      )
+                    : OBSecondaryText(
+                        'React',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      );
               })),
     );
   }
@@ -153,24 +180,27 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
   }
 
   void _reactToPostComment() {
-    if (widget.post.hasReaction()) {
-      _clearPostReaction();
+    if (widget.postComment.hasReaction()) {
+      _clearPostCommentReaction();
     } else {
-      _bottomSheetService.showReactToPost(post: widget.post, context: context);
+      _bottomSheetService.showReactToPostComment(
+          post: widget.post, postComment: widget.postComment, context: context);
     }
   }
 
-  Future _clearPostReaction() async {
+  Future _clearPostCommentReaction() async {
     if (_requestInProgress) return;
     _setRequestInProgress(true);
 
     try {
       _requestOperation = CancelableOperation.fromFuture(
-          _userService.deletePostReaction(
-              postReaction: widget.post.reaction, post: widget.post));
+          _userService.deletePostCommentReaction(
+              postComment: widget.postComment,
+              postCommentReaction: widget.postComment.reaction,
+              post: widget.post));
 
       await _requestOperation.value;
-      widget.post.clearReaction();
+      widget.postComment.clearReaction();
     } catch (error) {
       _onError(error);
     } finally {

@@ -34,7 +34,7 @@ class OBPostComment extends StatefulWidget {
     this.showActions = true,
     this.showReactions = true,
     this.showReplyAction = true,
-    this.padding = const EdgeInsets.all(15),
+    this.padding = const EdgeInsets.only(left: 15, right: 15, top: 10),
   }) : super(key: key);
 
   @override
@@ -117,13 +117,8 @@ class OBPostCommentState extends State<OBPostComment> {
             ]);
           }
 
-          if (widget.showReplies)
-            commentBodyColumnItems.addAll([
-              const SizedBox(
-                height: 10,
-              ),
-              _buildPostCommentReplies()
-            ]);
+          if (widget.showReplies && _repliesCount != null && _repliesCount > 0)
+            commentBodyColumnItems.add(_buildPostCommentReplies());
 
           return Column(
             children: <Widget>[
@@ -155,7 +150,6 @@ class OBPostCommentState extends State<OBPostComment> {
   }
 
   Widget _buildPostCommentReplies() {
-    if (_repliesCount == 0) return SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -170,7 +164,7 @@ class OBPostCommentState extends State<OBPostComment> {
 
               return OBPostComment(
                 key: Key('postCommentReply#${reply.id}'),
-                padding: EdgeInsets.symmetric(vertical: 15),
+                padding: EdgeInsets.only(top: 15),
                 postComment: reply,
                 post: widget.post,
                 onPostCommentDeleted: _onReplyDeleted,

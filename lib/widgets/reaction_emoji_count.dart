@@ -1,4 +1,6 @@
 import 'package:Openbook/models/reactions_emoji_count.dart';
+import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -50,7 +52,6 @@ class OBEmojiReactionButton extends StatelessWidget {
       onPressed: () {
         if (onPressed != null) onPressed(postReactionsEmojiCount);
       },
-      //isLoading: _clearPostCommentReactionInProgress,
       type: OBButtonType.highlight,
     );
   }

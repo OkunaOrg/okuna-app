@@ -168,6 +168,7 @@ class OBPostCommentReplyExpandedModalState
                 showActions: false,
                 showReactions: false,
                 showReplies: false,
+                padding: EdgeInsets.all(15),
               ),
               OBPostDivider(),
               Padding(
