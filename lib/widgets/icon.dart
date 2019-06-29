@@ -195,10 +195,12 @@ class OBIcons {
       OBIconData(nativeIcon: Icons.remove_circle);
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
+  static const mutePostComment = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const edit = OBIconData(nativeIcon: Icons.edit);
   static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
+  static const unmutePostComment = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const account = OBIconData(nativeIcon: Icons.account_circle);
   static const application = OBIconData(nativeIcon: Icons.phone_iphone);

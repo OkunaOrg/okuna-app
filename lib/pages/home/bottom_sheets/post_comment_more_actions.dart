@@ -9,6 +9,7 @@ import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Openbook/widgets/tiles/actions/mute_post_comment_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -74,7 +75,12 @@ class OBPostCommentMoreActionsBottomSheetState
   }
 
   List<Widget> _buildActionTiles() {
-    List<Widget> actionTiles = [];
+    List<Widget> actionTiles = [
+      OBMutePostCommentTile(
+        postComment: widget.postComment,
+        post: widget.post,
+      )
+    ];
     User loggedInUser = _userService.getLoggedInUser();
 
     if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {

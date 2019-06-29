@@ -25,6 +25,7 @@ class PostComment extends UpdatableModel<PostComment> {
   Post post;
   bool isEdited;
   bool isReported;
+  bool isMuted;
 
   static convertPostCommentSortTypeToString(PostCommentsSortType type) {
     String result;
@@ -67,6 +68,7 @@ class PostComment extends UpdatableModel<PostComment> {
       this.post,
       this.isEdited,
       this.isReported,
+      this.isMuted,
       this.parentComment,
       this.replies,
       this.repliesCount,
@@ -95,6 +97,10 @@ class PostComment extends UpdatableModel<PostComment> {
 
     if (json.containsKey('is_edited')) {
       isEdited = json['is_edited'];
+    }
+
+    if (json.containsKey('is_muted')) {
+      isMuted = json['is_muted'];
     }
 
     if (json.containsKey('is_reported')) {
@@ -157,6 +163,11 @@ class PostComment extends UpdatableModel<PostComment> {
 
   void setIsReported(isReported) {
     this.isReported = isReported;
+    notifyUpdate();
+  }
+
+  void setIsMuted(isMuted) {
+    this.isMuted = isMuted;
     notifyUpdate();
   }
 
@@ -239,6 +250,7 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         replies: parseCommentReplies(json['replies']),
         parentComment: parseParentComment(json['parent_comment']),
         isEdited: json['is_edited'],
+        isMuted: json['is_muted'],
         isReported: json['is_reported'],
         text: json['text'],
         reaction: parseReaction(json['reaction']),
