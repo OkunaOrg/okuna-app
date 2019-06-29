@@ -23,8 +23,8 @@ class PostCommentReaction {
     if (reactorData != null) reactor = User.fromJson(reactorData);
 
     PostComment postComment;
-    if (parsedJson.containsKey('postComment')) {
-      postComment = PostComment.fromJSON(parsedJson['postComment']);
+    if (parsedJson.containsKey('post_comment')) {
+      postComment = PostComment.fromJSON(parsedJson['post_comment']);
     }
 
     Emoji emoji = Emoji.fromJson(parsedJson['emoji']);

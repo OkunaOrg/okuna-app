@@ -3,6 +3,7 @@ import 'package:Openbook/models/notifications/connection_confirmed_notification.
 import 'package:Openbook/models/notifications/connection_request_notification.dart';
 import 'package:Openbook/models/notifications/follow_notification.dart';
 import 'package:Openbook/models/notifications/post_comment_notification.dart';
+import 'package:Openbook/models/notifications/post_comment_reaction_notification.dart';
 import 'package:Openbook/models/notifications/post_comment_reply_notification.dart';
 import 'package:Openbook/models/notifications/post_reaction_notification.dart';
 import 'package:Openbook/models/updatable_model.dart';
@@ -32,6 +33,7 @@ class OBNotification extends UpdatableModel<OBNotification> {
   static final postReaction = 'PR';
   static final postComment = 'PC';
   static final postCommentReply = 'PCR';
+  static final postCommentReaction = 'PCRA';
   static final connectionRequest = 'CR';
   static final connectionConfirmed = 'CC';
   static final follow = 'F';
@@ -109,6 +111,8 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       notificationType = NotificationType.postComment;
     } else if (notificationTypeStr == OBNotification.postCommentReply) {
       notificationType = NotificationType.postCommentReply;
+    } else if (notificationTypeStr == OBNotification.postCommentReaction) {
+      notificationType = NotificationType.postCommentReaction;
     } else if (notificationTypeStr == OBNotification.connectionRequest) {
       notificationType = NotificationType.connectionRequest;
     } else if (notificationTypeStr == OBNotification.connectionConfirmed) {
@@ -146,10 +150,15 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
         contentObject = PostCommentNotification.fromJson(contentObjectData);
         break;
       case NotificationType.postCommentReply:
-        contentObject = PostCommentReplyNotification.fromJson(contentObjectData);
+        contentObject =
+            PostCommentReplyNotification.fromJson(contentObjectData);
         break;
       case NotificationType.postReaction:
         contentObject = PostReactionNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.postCommentReaction:
+        contentObject =
+            PostCommentReactionNotification.fromJson(contentObjectData);
         break;
       case NotificationType.communityInvite:
         contentObject = CommunityInviteNotification.fromJson(contentObjectData);
@@ -168,6 +177,7 @@ enum NotificationType {
   postReaction,
   postComment,
   postCommentReply,
+  postCommentReaction,
   connectionRequest,
   connectionConfirmed,
   follow,

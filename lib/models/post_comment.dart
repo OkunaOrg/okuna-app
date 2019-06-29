@@ -126,6 +126,12 @@ class PostComment extends UpdatableModel<PostComment> {
     if (json.containsKey('replies')) {
       replies = factory.parseCommentReplies(json['replies']);
     }
+
+    if (json.containsKey('reactions_emoji_counts'))
+      reactionsEmojiCounts =
+          factory.parseReactionsEmojiCounts(json['reactions_emoji_counts']);
+    if (json.containsKey('reaction'))
+      reaction = factory.parseReaction(json['reaction']);
   }
 
   String getRelativeCreated() {
