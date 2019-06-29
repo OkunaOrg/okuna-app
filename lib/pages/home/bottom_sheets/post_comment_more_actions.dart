@@ -119,6 +119,7 @@ class OBPostCommentMoreActionsBottomSheetState
   }
 
   void _reportPostComment() async {
+    _dismissMoreActions();
     await _navigationService.navigateToReportObject(
         context: context,
         object: widget.postComment,
@@ -132,6 +133,7 @@ class OBPostCommentMoreActionsBottomSheetState
   void _deletePostComment() async {
     if (_requestInProgress) return;
     _setRequestInProgress(true);
+    _dismissMoreActions();
     try {
       _requestOperation = CancelableOperation.fromFuture(
           _userService.deletePostComment(
@@ -152,6 +154,7 @@ class OBPostCommentMoreActionsBottomSheetState
   }
 
   void _editPostComment() async {
+    _dismissMoreActions();
     await _modalService.openExpandedCommenter(
         context: context, post: widget.post, postComment: widget.postComment);
   }
@@ -173,5 +176,9 @@ class OBPostCommentMoreActionsBottomSheetState
     setState(() {
       _requestInProgress = requestInProgress;
     });
+  }
+
+  void _dismissMoreActions() {
+    Navigator.pop(context);
   }
 }
