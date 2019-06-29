@@ -63,7 +63,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                       height: 20,
                     ),
                     OBText(
-                      'You can\'t use Openbook until you accept the guidelines.',
+                      'You can\'t use Openspace until you accept the guidelines.',
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -87,7 +87,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                           'Join the Slack channel.'),
                       onTap: () {
                         openbookProvider.urlLauncherService.launchUrl(
-                            'https://join.slack.com/t/openbookorg/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
+                            'https://join.slack.com/t/openspacesocial/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
                       },
                     ),
                   ],

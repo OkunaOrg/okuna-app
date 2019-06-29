@@ -421,10 +421,18 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       return SizedBox();
     }
 
+    bool _showViewAllCommentsAction = true;
+
+    if ((widget.pageType == PostCommentsPageType.replies && widget.linkedPostComment == null)
+        || (widget.pageType == PostCommentsPageType.comments)) {
+      _showViewAllCommentsAction = false;
+    }
+
     return OBPostPreview(
       post: _post,
       onPostDeleted: _onPostDeleted,
       focusCommentInput: _focusCommentInput,
+      showViewAllCommentsAction: _showViewAllCommentsAction
     );
   }
 
