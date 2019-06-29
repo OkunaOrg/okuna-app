@@ -80,6 +80,7 @@ class OBPostCommentState extends State<OBPostComment> {
 
           List<Widget> commentBodyColumnItems = [
             OBPostCommentCommenterIdentifier(
+              post: widget.post,
               postComment: widget.postComment,
             ),
             const SizedBox(
