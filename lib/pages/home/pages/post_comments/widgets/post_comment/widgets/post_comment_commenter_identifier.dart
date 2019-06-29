@@ -43,21 +43,25 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
           return GestureDetector(
             onTap: onUsernamePressed,
             child: Row(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                RichText(
-                  text: TextSpan(
-                      style: TextStyle(color: secondaryTextColor, fontSize: 14),
-                      children: [
-                        TextSpan(
-                            text: '$commenterName',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(
-                            text: ' · @$commenterUsername',
-                            style: TextStyle(fontSize: 12)),
-                      ]),
+                Flexible(
+                  child: RichText(
+                    text: TextSpan(
+                        style:
+                            TextStyle(color: secondaryTextColor, fontSize: 14),
+                        children: [
+                          TextSpan(
+                              text: '$commenterName',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                              text: ' @$commenterUsername',
+                              style: TextStyle(fontSize: 12)),
+                        ]),
+                  ),
                 ),
                 const SizedBox(
-                  width: 5,
+                  width: 3,
                 ),
                 _buildBadge()
               ],
