@@ -85,7 +85,9 @@ class OBPostCommentReactionListState extends State<OBPostCommentReactionList> {
   Future<List<PostCommentReaction>> _refreshPostCommentReactions() async {
     PostCommentReactionList postCommentReactions =
         await _userService.getReactionsForPostComment(
-            post: widget.post, postComment: widget.postComment);
+            post: widget.post,
+            postComment: widget.postComment,
+            emoji: widget.emoji);
     return postCommentReactions.reactions;
   }
 
@@ -98,6 +100,7 @@ class OBPostCommentReactionListState extends State<OBPostCommentReactionList> {
       post: widget.post,
       postComment: widget.postComment,
       maxId: lastPostCommentReactionId,
+      emoji: widget.emoji,
       count: 20,
     ))
             .reactions;
