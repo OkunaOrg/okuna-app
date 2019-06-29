@@ -223,8 +223,12 @@ class User extends UpdatableModel<User> {
     return this.profile.badges;
   }
 
+  Badge getDisplayedProfileBadge() {
+    return getProfileBadges().first;
+  }
+
   bool hasProfileBadges() {
-    return this.profile.badges != null && this.profile.badges.length > 0;
+    return this.profile != null && this.profile.badges != null && this.profile.badges.length > 0;
   }
 
   bool isConnectionsCircle(Circle circle) {

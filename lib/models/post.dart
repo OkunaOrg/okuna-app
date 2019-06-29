@@ -6,8 +6,8 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
 import 'package:Openbook/models/post_image.dart';
 import 'package:Openbook/models/post_reaction.dart';
-import 'package:Openbook/models/post_reactions_emoji_count.dart';
-import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count_list.dart';
 import 'package:Openbook/models/updatable_model.dart';
 import 'package:Openbook/models/post_video.dart';
 import 'package:Openbook/models/user.dart';
@@ -22,7 +22,7 @@ class Post extends UpdatableModel<Post> {
   User creator;
   CirclesList circles;
 
-  PostReactionsEmojiCountList reactionsEmojiCounts;
+  ReactionsEmojiCountList reactionsEmojiCounts;
   PostReaction reaction;
   int reactionsCount;
   int commentsCount;
@@ -178,7 +178,7 @@ class Post extends UpdatableModel<Post> {
     return circles.circles;
   }
 
-  List<PostReactionsEmojiCount> getEmojiCounts() {
+  List<ReactionsEmojiCount> getEmojiCounts() {
     return reactionsEmojiCounts.counts.toList();
   }
 
@@ -270,13 +270,13 @@ class Post extends UpdatableModel<Post> {
       } else {
         // Add new emoji count
         newEmojiCounts
-            .add(PostReactionsEmojiCount(emoji: newReaction.emoji, count: 1));
+            .add(ReactionsEmojiCount(emoji: newReaction.emoji, count: 1));
       }
     }
 
     this.reaction = newReaction;
     this._setReactionsEmojiCounts(
-        PostReactionsEmojiCountList(counts: newEmojiCounts));
+        ReactionsEmojiCountList(counts: newEmojiCounts));
 
     this.notifyUpdate();
   }
@@ -286,7 +286,7 @@ class Post extends UpdatableModel<Post> {
     notifyUpdate();
   }
 
-  void _setReactionsEmojiCounts(PostReactionsEmojiCountList emojiCounts) {
+  void _setReactionsEmojiCounts(ReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
   }
 }
@@ -359,10 +359,10 @@ class PostFactory extends UpdatableModelFactory<Post> {
     return Community.fromJSON(communityData);
   }
 
-  PostReactionsEmojiCountList parseReactionsEmojiCounts(
+  ReactionsEmojiCountList parseReactionsEmojiCounts(
       List reactionsEmojiCounts) {
     if (reactionsEmojiCounts == null) return null;
-    return PostReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
+    return ReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
   }
 
   PostCommentList parseCommentList(List commentList) {

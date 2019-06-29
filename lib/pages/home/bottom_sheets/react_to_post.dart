@@ -13,8 +13,6 @@ import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-enum OBReactToPostModalStatus { searching, suggesting, overview }
-
 class OBReactToPostBottomSheet extends StatefulWidget {
   final Post post;
 
@@ -83,7 +81,7 @@ class OBReactToPostBottomSheetState extends State<OBReactToPostBottomSheet> {
 
     try {
       _reactOperation = CancelableOperation.fromFuture(_userService.reactToPost(
-          post: widget.post, emoji: emoji, emojiGroup: emojiGroup));
+          post: widget.post, emoji: emoji));
 
       PostReaction postReaction = await _reactOperation.value;
       widget.post.setReaction(postReaction);
