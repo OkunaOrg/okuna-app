@@ -7,6 +7,7 @@ import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
 import 'package:Openbook/widgets/post/widgets/post_reactions.dart';
 import 'package:Openbook/widgets/theming/post_divider.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBPost extends StatelessWidget {

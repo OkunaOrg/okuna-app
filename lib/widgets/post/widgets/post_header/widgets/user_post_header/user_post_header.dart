@@ -77,12 +77,4 @@ class OBUserPostHeader extends StatelessWidget {
           : const SizedBox(),
     );
   }
-
-  Widget _getUserBadge(User creator) {
-    if (creator.hasProfileBadges() && creator.getProfileBadges().length > 0) {
-      Badge badge = creator.getProfileBadges()[0];
-      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
-    }
-    return const SizedBox();
-  }
 }

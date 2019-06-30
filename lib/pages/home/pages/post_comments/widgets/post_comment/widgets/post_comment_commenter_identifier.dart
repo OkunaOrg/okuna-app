@@ -40,31 +40,34 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
           String commenterUsername = postComment.commenter.username;
           String commenterName = postComment.commenter.getProfileName();
 
-          return GestureDetector(
-            onTap: onUsernamePressed,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Flexible(
-                  child: RichText(
-                    text: TextSpan(
-                        style:
-                            TextStyle(color: secondaryTextColor, fontSize: 14),
-                        children: [
-                          TextSpan(
-                              text: '$commenterName',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: ' @$commenterUsername',
-                              style: TextStyle(fontSize: 12)),
-                        ]),
+          return Opacity(
+            opacity: 0.8,
+            child: GestureDetector(
+              onTap: onUsernamePressed,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Flexible(
+                    child: RichText(
+                      text: TextSpan(
+                          style:
+                          TextStyle(color: secondaryTextColor, fontSize: 14),
+                          children: [
+                            TextSpan(
+                                text: '$commenterName',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: ' @$commenterUsername',
+                                style: TextStyle(fontSize: 12)),
+                          ]),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 3,
-                ),
-                _buildBadge()
-              ],
+                  const SizedBox(
+                    width: 3,
+                  ),
+                  _buildBadge()
+                ],
+              ),
             ),
           );
         });
