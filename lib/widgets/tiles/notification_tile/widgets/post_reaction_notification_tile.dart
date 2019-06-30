@@ -41,9 +41,11 @@ class OBPostReactionNotificationTile extends StatelessWidget {
         ),
       );
     }
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
+
 
     Function navigateToReactorProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
       openbookProvider.navigationService
           .navigateToUserProfile(user: postReaction.reactor, context: context);
@@ -73,7 +75,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
         ],
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

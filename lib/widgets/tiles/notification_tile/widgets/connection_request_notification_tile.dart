@@ -21,6 +21,9 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     String connectionRequesterUsername =
         connectionRequestNotification.connectionRequester.username;
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
+
     return ListTile(
       onTap: () {
         if (onPressed != null) onPressed();
@@ -38,7 +41,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
       title: OBActionableSmartText(
         text: '@$connectionRequesterUsername wants to connect with you.',
       ),
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

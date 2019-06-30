@@ -33,9 +33,10 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
     String inviteCreatorUsername = inviteCreator.username;
     String communityName = community.name;
 
-    Function navigateToInviteCreatorProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
 
+    Function navigateToInviteCreatorProfile = () {
       openbookProvider.navigationService
           .navigateToUserProfile(user: inviteCreator, context: context);
     };
@@ -61,7 +62,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         community: community,
         size: OBAvatarSize.medium,
       ),
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

@@ -45,9 +45,11 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
         ),
       );
     }
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
+
 
     Function navigateToReactorProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
       openbookProvider.navigationService.navigateToUserProfile(
           user: postCommentReaction.reactor, context: context);
@@ -77,7 +79,7 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
         ],
       ),
       trailing: postCommentImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

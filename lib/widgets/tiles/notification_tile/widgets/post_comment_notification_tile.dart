@@ -27,6 +27,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     Post post = postComment.post;
     String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
+    String postCommenterName = postComment.getCommenterName();
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -46,8 +47,10 @@ class OBPostCommentNotificationTile extends StatelessWidget {
       );
     }
 
+    var utilsService = openbookProvider.utilsService;
+
+
     Function navigateToCommenterProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
       openbookProvider.navigationService
           .navigateToUserProfile(user: postComment.commenter, context: context);
@@ -72,7 +75,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
             : '@$postCommenterUsername also commented: $postCommentText',
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

@@ -45,10 +45,6 @@ class UtilsService {
       return '${(difference.inDays / 365).floor()}y';
     } else if ((difference.inDays / 365).floor() >= 1) {
       return '1y';
-    } else if ((difference.inDays / 30).floor() >= 2) {
-      return '${(difference.inDays / 365).floor()}m';
-    } else if ((difference.inDays / 30).floor() >= 1) {
-      return '1m';
     } else if ((difference.inDays / 7).floor() >= 2) {
       return '${(difference.inDays / 7).floor()}w';
     } else if ((difference.inDays / 7).floor() >= 1) {
@@ -62,9 +58,9 @@ class UtilsService {
     } else if (difference.inHours >= 1) {
       return '1h';
     } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes}mins';
+      return '${difference.inMinutes}m';
     } else if (difference.inMinutes >= 1) {
-      return '1min';
+      return '1m';
     } else if (difference.inSeconds >= 3) {
       return '${difference.inSeconds}s';
     } else {

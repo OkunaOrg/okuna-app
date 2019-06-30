@@ -22,6 +22,9 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     String connectionConfirmatorUsername =
         connectionConfirmedNotification.connectionConfirmator.username;
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
+
     return ListTile(
       onTap: () {
         if (onPressed != null) onPressed();
@@ -40,7 +43,7 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
         text:
             '@$connectionConfirmatorUsername accepted your connection request.',
       ),
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

@@ -29,6 +29,7 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
     PostComment parentComment = postCommentNotification.parentComment;
     Post post = postComment.post;
     String postCommenterUsername = postComment.getCommenterUsername();
+    String postCommenterName = postComment.getCommenterName();
     String postCommentText = postComment.text;
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
@@ -49,8 +50,10 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
       );
     }
 
+    var utilsService = openbookProvider.utilsService;
+
+
     Function navigateToCommenterProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
       openbookProvider.navigationService
           .navigateToUserProfile(user: postComment.commenter, context: context);
@@ -71,11 +74,11 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
       ),
       title: OBActionableSmartText(
         text: isOwnPostNotification
-            ? '@$postCommenterUsername replied: $postCommentText'
+            ? '$postCommenterName @$postCommenterUsername replied: $postCommentText'
             : '@$postCommenterUsername also replied: $postCommentText',
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

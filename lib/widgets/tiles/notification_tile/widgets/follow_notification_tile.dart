@@ -18,11 +18,13 @@ class OBFollowNotificationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String followerUsername = followNotification.follower.username;
+
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
+
     return ListTile(
       onTap: () {
         if (onPressed != null) onPressed();
-        OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-
         openbookProvider.navigationService.navigateToUserProfile(
             user: followNotification.follower, context: context);
       },
@@ -33,7 +35,7 @@ class OBFollowNotificationTile extends StatelessWidget {
       title: OBActionableSmartText(
         text: '@$followerUsername is now following you.',
       ),
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }
