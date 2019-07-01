@@ -11,6 +11,9 @@ import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
+import 'notification_tile_skeleton.dart';
+import 'notification_tile_title.dart';
+
 class OBPostCommentReactionNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostCommentReactionNotification postCommentReactionNotification;
@@ -48,38 +51,37 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
 
-
     Function navigateToReactorProfile = () {
-
       openbookProvider.navigationService.navigateToUserProfile(
           user: postCommentReaction.reactor, context: context);
     };
 
-    return ListTile(
+    return OBNotificationTileSkeleton(
       onTap: () {
         if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-        openbookProvider.navigationService.navigateToPostCommentsLinked(
-            postComment: postCommentReaction.postComment, context: context);
+        openbookProvider.navigationService.navigateToPost(
+            post: postCommentReaction.postComment.post, context: context);
       },
       leading: OBAvatar(
         onPressed: navigateToReactorProfile,
         size: OBAvatarSize.medium,
         avatarUrl: postCommentReaction.reactor.getProfileAvatar(),
       ),
-      title: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
+      title: OBNotificationTileTitle(
+        text: TextSpan(text: ' reacted to your comment'),
+        onUsernamePressed: navigateToReactorProfile,
+        user: postCommentReaction.reactor,
+      ),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created), size: OBTextSize.small,),
+      trailing: Row(
         children: <Widget>[
-          OBActionableSmartText(
-            text: '@$postCommentReactorUsername reacted to your comment:',
-          ),
           OBEmoji(
             postCommentReaction.emoji,
           ),
+          postCommentImagePreview ?? const SizedBox()
         ],
       ),
-      trailing: postCommentImagePreview,
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

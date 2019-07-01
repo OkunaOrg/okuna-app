@@ -4,6 +4,7 @@ class OBNotificationTileSkeleton extends StatelessWidget {
   final Widget leading;
   final Widget trailing;
   final Widget title;
+  final Widget subtitle;
   final VoidCallback onTap;
 
   const OBNotificationTileSkeleton(
@@ -11,7 +12,8 @@ class OBNotificationTileSkeleton extends StatelessWidget {
       @required this.leading,
       @required this.trailing,
       @required this.title,
-      this.onTap})
+      this.onTap,
+      @required this.subtitle})
       : super(key: key);
 
   @override
@@ -28,7 +30,10 @@ class OBNotificationTileSkeleton extends StatelessWidget {
               width: 15,
             ),
             Flexible(
-              child: title,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[title, subtitle],
+              ),
             ),
             const SizedBox(
               width: 15,

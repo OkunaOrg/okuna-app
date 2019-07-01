@@ -5,6 +5,7 @@ import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -44,6 +45,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
               )));
     }
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
 
     Function navigateToReactorProfile = () {
       openbookProvider.navigationService
@@ -67,6 +69,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
         onUsernamePressed: navigateToReactorProfile,
         user: postReaction.reactor,
       ),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
       trailing: Row(
         children: <Widget>[
           OBEmoji(
