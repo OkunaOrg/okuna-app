@@ -55,7 +55,7 @@ class OBNotificationTileTitle extends StatelessWidget {
             TextSpan(
                 text: ' @$commenterUsername',
                 recognizer: usernameTapGestureRecognizer,
-                style: TextStyle(fontSize: 14, color: secondaryTextColor)),
+                style: TextStyle(color: secondaryTextColor)),
             text
           ];
 
