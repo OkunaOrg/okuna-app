@@ -59,20 +59,17 @@ class OBNotificationTileTitle extends StatelessWidget {
             text
           ];
 
-          return GestureDetector(
-            onTap: onUsernamePressed,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Flexible(
-                  child: RichText(
-                    text: TextSpan(
-                        style: TextStyle(color: primaryTextColor, fontSize: 16),
-                        children: textItems),
-                  ),
+          return Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Flexible(
+                child: RichText(
+                  text: TextSpan(
+                      style: TextStyle(color: primaryTextColor, fontSize: 16),
+                      children: textItems),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         });
   }
