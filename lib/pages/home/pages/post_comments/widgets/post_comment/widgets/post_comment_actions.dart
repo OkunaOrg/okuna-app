@@ -78,7 +78,9 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
       _needsBootstrap = false;
     }
 
-    List<Widget> actionItems = [];
+    List<Widget> actionItems = [
+      _buildReactButton(),
+    ];
 
     if (widget.showReplyAction &&
         _userService
@@ -88,7 +90,6 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
     }
 
     actionItems.addAll([
-      _buildReactButton(),
       _buildMoreButton(),
     ]);
 
@@ -151,7 +152,6 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
   }
 
   Widget _buildReplyButton() {
-    User loggedInUser = _userService.getLoggedInUser();
 
     return Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
