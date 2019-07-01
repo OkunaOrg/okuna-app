@@ -10,6 +10,9 @@ import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
+import 'notification_tile_skeleton.dart';
+import 'notification_tile_title.dart';
+
 class OBCommunityInviteNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final CommunityInviteNotification communityInviteNotification;
@@ -41,7 +44,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
           .navigateToUserProfile(user: inviteCreator, context: context);
     };
 
-    return ListTile(
+    return OBNotificationTileSkeleton(
       onTap: () {
         if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -54,9 +57,11 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: inviteCreator.getProfileAvatar(),
       ),
-      title: OBActionableSmartText(
-        text:
-            '@$inviteCreatorUsername has invited you to join community /c/$communityName .',
+      title: OBNotificationTileTitle(
+        user: inviteCreator,
+        onUsernamePressed: navigateToInviteCreatorProfile,
+        text: TextSpan(
+            text: ' has invited you to join community /c/$communityName .'),
       ),
       trailing: OBCommunityAvatar(
         community: community,

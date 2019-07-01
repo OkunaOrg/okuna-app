@@ -10,7 +10,7 @@ class OBNotificationTileSkeleton extends StatelessWidget {
   const OBNotificationTileSkeleton(
       {Key key,
       @required this.leading,
-      @required this.trailing,
+      this.trailing,
       @required this.title,
       this.onTap,
       @required this.subtitle})
@@ -18,6 +18,13 @@ class OBNotificationTileSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget paddedTrailing = trailing != null
+        ? Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: trailing,
+          )
+        : const SizedBox();
+
     return GestureDetector(
       onTap: onTap,
       child: Padding(
@@ -35,10 +42,7 @@ class OBNotificationTileSkeleton extends StatelessWidget {
                 children: <Widget>[title, subtitle],
               ),
             ),
-            const SizedBox(
-              width: 15,
-            ),
-            trailing,
+            paddedTrailing
           ],
         ),
       ),
