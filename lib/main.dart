@@ -31,21 +31,53 @@ import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   final openbookProviderKey = new GlobalKey<OpenbookProviderState>();
+
+  @override
+  _MyAppState createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState state =
+    context.ancestorStateOfType(TypeMatcher<_MyAppState>());
+
+    state.setState(() {
+      state.locale = newLocale;
+    });
+  }
+
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale locale;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var textTheme = _defaultTextTheme();
     return OpenbookProvider(
-      key: openbookProviderKey,
+      key: widget.openbookProviderKey,
       child: OBToast(
         child: MaterialApp(
+            locale: this.locale,
             debugShowCheckedModeBanner: false,
+            localeResolutionCallback: (deviceLocale, supportedLocales) {
+              // initialise locale from device
+              if (this.locale == null) {
+                this.locale = deviceLocale;
+              }
+              return this.locale;
+            },
             title: 'Openspace',
             supportedLocales: [
               const Locale('en', 'US'),
               const Locale('es', 'ES'),
+              const Locale('nl', 'NL'),
             ],
             localizationsDelegates: [
               const LocalizationServiceDelegate(),
@@ -154,11 +186,17 @@ class MyApp extends StatelessWidget {
   void bootstrapOpenbookProviderInContext(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = LocalizationService.of(context);
+    if (this.locale.languageCode != localizationService.getLocale().languageCode) {
+      Future.delayed(Duration(milliseconds: 0), () {
+        MyApp.setLocale(context, Locale(this.locale.languageCode, ''));
+      });
+    }
     openbookProvider.setLocalizationService(localizationService);
     UniversalLinksService universalLinksService =
         openbookProvider.universalLinksService;
     universalLinksService.digestLinksWithContext(context);
   }
+
 }
 
 void _setPlatformOverrideForDesktop() {
