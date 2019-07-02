@@ -58,7 +58,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
   }
 
   Widget _buildHooray() {
-    var title = localizationService.trans('AUTH.CREATE_ACC.DONE_TITLE');
+    var title = localizationService.trans('auth__create_acc__done_title');
 
     String username = createAccountBloc.getUsername();
 
@@ -110,7 +110,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
 
   Widget _buildNextButton({@required BuildContext context}) {
     String buttonText =
-        localizationService.trans('AUTH.CREATE_ACC.DONE_CONTINUE');
+        localizationService.trans('auth__create_acc__done_continue');
 
     return OBSuccessButton(
       minWidth: double.infinity,

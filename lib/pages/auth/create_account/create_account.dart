@@ -108,7 +108,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   }
 
   Widget _buildNextButton(BuildContext context) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('auth__create_acc__next');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -121,7 +121,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -149,7 +149,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
 
   Widget _buildPasteRegisterLink({@required BuildContext context}) {
     String pasteLinkText =
-    _localizationService.trans('AUTH.CREATE_ACC.PASTE_LINK');
+    _localizationService.trans('auth__create_acc__paste_link');
 
     return Column(
       children: <Widget>[
@@ -171,9 +171,6 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   }
 
   Widget _buildLinkForm() {
-    String invalidLink =
-    _localizationService.trans('AUTH.CREATE_ACC.INVALID_REGISTER_LINK');
-
     return Form(
       key: _formKey,
       child: Row(children: <Widget>[
@@ -198,7 +195,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   }
 
   Widget _buildRequestInvite({@required BuildContext context}) {
-    String requestInviteText = _localizationService.trans('AUTH.CREATE_ACC.REQUEST_INVITE');
+    String requestInviteText = _localizationService.trans('auth__create_acc__request_invite');
 
     return OBSecondaryButton(
       isFullWidth: true,

@@ -58,8 +58,8 @@ class OBWaitlistSubscribeDoneStepState extends State<OBWaitlistSubscribeDoneStep
   }
 
   Widget _buildAllSet() {
-    String congratulationsText = localizationService.trans('AUTH.CREATE_ACC.CONGRATULATIONS');
-    String countText = localizationService.trans('AUTH.CREATE_ACC.YOUR_SUBSCRIBED');
+    String congratulationsText = localizationService.trans('auth__create_acc__congratulations');
+    String countText = localizationService.trans('auth__create_acc__your_subscribed');
 
     return Column(
         children: <Widget>[

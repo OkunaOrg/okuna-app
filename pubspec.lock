@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  dart_style:
+    dependency: transitive
+    description:
+      name: dart_style
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.7"
   dcache:
     dependency: "direct main"
     description:
@@ -152,7 +159,7 @@ packages:
       name: flutter_exif_rotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.2.3"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -282,6 +289,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.8"
+  intl_translation:
+    dependency: "direct dev"
+    description:
+      name: intl_translation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.5"
   io:
     dependency: transitive
     description:
@@ -344,7 +358,7 @@ packages:
       name: multi_image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.3"
+    version: "4.3.4"
   multi_server_socket:
     dependency: transitive
     description:
@@ -596,7 +610,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.0+1"
   term_glyph:
     dependency: transitive
     description:
@@ -729,7 +743,7 @@ packages:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.15"
+    version: "2.1.16"
 sdks:
   dart: ">=2.3.0-dev.0.5.flutter-a1668566e5 <3.0.0"
   flutter: ">=1.5.0 <1.5.9"

@@ -28,7 +28,7 @@ class OBAccountSettingsPage extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const OBIcon(OBIcons.email),
-              title: OBText(localizationService.trans('SETTINGS.CHANGE_EMAIL')),
+              title: OBText(localizationService.trans('settings__change_email')),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,
@@ -40,7 +40,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ListTile(
               leading: const OBIcon(OBIcons.lock),
               title:
-                  OBText(localizationService.trans('SETTINGS.CHANGE_PASSWORD')),
+                  OBText(localizationService.trans('settings__change_password')),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,

@@ -108,7 +108,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildContinueButton(BuildContext context) {
-    String buttonText = _localizationService.trans('AUTH.LOGIN.LOGIN');
+    String buttonText = _localizationService.trans('auth__login__login');
 
     return OBSuccessButton(
       isLoading: _loginInProgress,
@@ -135,18 +135,18 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       Navigator.pushReplacementNamed(context, '/'); //replace the underlying login splash screen too
     } on CredentialsMismatchError {
       _setLoginFeedback(
-          _localizationService.trans('AUTH.LOGIN.CREDENTIALS_MISMATCH_ERROR'));
+          _localizationService.trans('auth__login__credentials_mismatch_error'));
     } on HttpieRequestError {
-      _setLoginFeedback(_localizationService.trans('AUTH.LOGIN.SERVER_ERROR'));
+      _setLoginFeedback(_localizationService.trans('auth__login__server_error'));
     } on HttpieConnectionRefusedError {
       _setLoginFeedback(
-          _localizationService.trans('AUTH.LOGIN.CONNECTION_ERROR'));
+          _localizationService.trans('auth__login__connection_error'));
     }
     _setLoginInProgress(false);
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.LOGIN.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__login__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -170,7 +170,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildForgotPasswordButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD');
+    String buttonText = _localizationService.trans('auth__login__forgot_password');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -191,8 +191,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildHeading({@required BuildContext context}) {
-    String titleText = _localizationService.trans('AUTH.LOGIN.TITLE');
-    String subtitleText = _localizationService.trans('AUTH.LOGIN.SUBTITLE');
+    String titleText = _localizationService.trans('auth__login__title');
+    String subtitleText = _localizationService.trans('auth__login__subtitle');
 
     return Column(
       children: <Widget>[
@@ -221,10 +221,10 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     String usernameInputLabel =
-        _localizationService.trans('AUTH.LOGIN.USERNAME_LABEL');
+        _localizationService.trans('auth__login__username_label');
 
     String passwordInputLabel =
-        _localizationService.trans('AUTH.LOGIN.PASSWORD_LABEL');
+        _localizationService.trans('auth__login__password_label');
 
     EdgeInsetsGeometry inputContentPadding =
         EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);

@@ -82,7 +82,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = localizationService.trans('auth__create_acc__next');
 
     return OBSuccessButton(
       isLoading: _requestInProgress,
@@ -118,7 +118,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
         _showErrorMessage(errorMessage);
       }
       if (error is HttpieConnectionRefusedError) {
-        _showErrorMessage(localizationService.trans('AUTH.LOGIN.CONNECTION_ERROR'));
+        _showErrorMessage(localizationService.trans('auth__login__connection_error'));
       }
     } finally {
       _setRequestInProgress(false);
@@ -126,7 +126,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -154,7 +154,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
 
   Widget _buildWhatYourPassword({@required BuildContext context}) {
     String whatPasswordText =
-    localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
+    localizationService.trans('auth__create_acc__what_password');
 
     return Column(
       children: <Widget>[

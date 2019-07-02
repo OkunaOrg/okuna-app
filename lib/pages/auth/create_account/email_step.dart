@@ -96,7 +96,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
       var isEmailTaken = await _validationService.isEmailTaken(email);
       _setEmailTaken(isEmailTaken);
     } catch (error) {
-      String errorFeedback = _localizationService.trans('AUTH.CREATE_ACC.EMAIL_SERVER_ERROR');
+      String errorFeedback = _localizationService.trans('auth__create_acc__email_server_error');
       _toastService.error(message: errorFeedback, context: context);
     } finally {
       _setEmailCheckInProgress(false);
@@ -115,7 +115,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   }
 
   Widget _buildNextButton(BuildContext context) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('auth__create_acc__next');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -129,7 +129,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -157,7 +157,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
 
   Widget _buildWhatYourEmail({@required BuildContext context}) {
     String whatEmailText =
-        _localizationService.trans('AUTH.CREATE_ACC.WHAT_EMAIL');
+        _localizationService.trans('auth__create_acc__what_email');
 
     return Column(
       children: <Widget>[
@@ -181,9 +181,9 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   Widget _buildEmailForm() {
 
     String emailInputPlaceholder =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
+        _localizationService.trans('auth__create_acc__email_placeholder');
     String errorEmailTaken =
-    _localizationService.trans('AUTH.CREATE_ACC.EMAIL_TAKEN_ERROR');
+    _localizationService.trans('auth__create_acc__email_taken_error');
 
     return Form(
       key: _formKey,
