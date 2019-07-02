@@ -34,6 +34,8 @@ class OBNotificationsSettingsPageState
   bool _pushNotifications;
 
   bool _postCommentNotifications;
+  bool _postCommentReactionNotifications;
+  bool _postCommentReplyNotifications;
   bool _postReactionNotifications;
   bool _followNotifications;
   bool _connectionRequestNotifications;
@@ -47,6 +49,8 @@ class OBNotificationsSettingsPageState
     _bootstrapInProgress = true;
     _pushNotifications = true;
     _postCommentNotifications = true;
+    _postCommentReactionNotifications = true;
+    _postCommentReplyNotifications = true;
     _postReactionNotifications = true;
     _followNotifications = true;
     _connectionRequestNotifications = true;
@@ -134,10 +138,28 @@ class OBNotificationsSettingsPageState
         OBToggleField(
           value: _postCommentNotifications,
           title: 'Post comment',
-          subtitle:
-              OBText('Be notified when someone comments on one of your posts or one you also commented.'),
+          subtitle: OBText(
+              'Be notified when someone comments on one of your posts or one you also commented.'),
           onChanged: _setPostCommentNotifications,
           onTap: _togglePostCommentNotifications,
+          hasDivider: false,
+        ),
+        OBToggleField(
+          value: _postCommentReplyNotifications,
+          title: 'Post comment reply',
+          subtitle: OBText(
+              'Be notified when someone replies to one of your comments or one you also replied to.'),
+          onChanged: _setPostCommentReplyNotifications,
+          onTap: _togglePostCommentReplyNotifications,
+          hasDivider: false,
+        ),
+        OBToggleField(
+          value: _postCommentReactionNotifications,
+          title: 'Post comment reaction',
+          subtitle: OBText(
+              'Be notified when someone reacts on one of your post commments.'),
+          onChanged: _setPostCommentReactionNotifications,
+          onTap: _togglePostCommentReactionNotifications,
           hasDivider: false,
         ),
         listItemSeparator,
@@ -234,6 +256,30 @@ class OBNotificationsSettingsPageState
     _submitNotificationsSettings();
   }
 
+  void _togglePostCommentReactionNotifications() {
+    _setPostCommentReactionNotifications(!_postCommentReactionNotifications);
+  }
+
+  void _setPostCommentReactionNotifications(bool newValue) {
+    setState(() {
+      _postCommentReactionNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
+  void _togglePostCommentReplyNotifications() {
+    _setPostCommentReplyNotifications(!_postCommentReplyNotifications);
+  }
+
+  void _setPostCommentReplyNotifications(bool newValue) {
+    setState(() {
+      _postCommentReplyNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
   void _togglePostReactionNotifications() {
     _setPostReactionNotifications(!_postReactionNotifications);
   }
@@ -279,6 +325,8 @@ class OBNotificationsSettingsPageState
       _userService.updateAuthenticatedUserNotificationsSettings(
           followNotifications: _followNotifications,
           postCommentNotifications: _postCommentNotifications,
+          postCommentReplyNotifications: _postCommentReplyNotifications,
+          postCommentReactionNotifications: _postCommentReactionNotifications,
           postReactionNotifications: _postReactionNotifications,
           connectionRequestNotifications: _connectionRequestNotifications,
           communityInviteNotifications: _communityInviteNotifications);
@@ -306,6 +354,10 @@ class OBNotificationsSettingsPageState
       _connectionRequestNotifications =
           notificationSettings.connectionRequestNotifications;
       _postCommentNotifications = notificationSettings.postCommentNotifications;
+      _postCommentReactionNotifications =
+          notificationSettings.postCommentReactionNotifications;
+      _postCommentReplyNotifications =
+          notificationSettings.postCommentReplyNotifications;
       _postReactionNotifications =
           notificationSettings.postReactionNotifications;
       _followNotifications = notificationSettings.followNotifications;

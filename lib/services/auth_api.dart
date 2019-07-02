@@ -325,6 +325,8 @@ class AuthApiService {
 
   Future<HttpieResponse> updateAuthenticatedUserNotificationsSettings({
     bool postCommentNotifications,
+    bool postCommentReplyNotifications,
+    bool postCommentReactionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
@@ -335,6 +337,13 @@ class AuthApiService {
 
     if (postCommentNotifications != null)
       body['post_comment_notifications'] = postCommentNotifications;
+
+    if (postCommentReplyNotifications != null)
+      body['post_comment_reply_notifications'] = postCommentReplyNotifications;
+
+    if (postCommentReactionNotifications != null)
+      body['post_comment_reaction_notifications'] =
+          postCommentReactionNotifications;
 
     if (postReactionNotifications != null)
       body['post_reaction_notifications'] = postReactionNotifications;

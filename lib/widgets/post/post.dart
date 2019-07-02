@@ -5,7 +5,7 @@ import 'package:Openbook/widgets/post/widgets/post-body/widgets/post_body_text.d
 import 'package:Openbook/widgets/post/widgets/post_circles.dart';
 import 'package:Openbook/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
-import 'package:Openbook/widgets/post/widgets/post_reactions/post_reactions.dart';
+import 'package:Openbook/widgets/post/widgets/post_reactions.dart';
 import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,9 @@ class OBPost extends StatelessWidget {
           post,
           onTextExpandedChange: onTextExpandedChange,
         ),
+        const SizedBox(height: 20,),
         OBPostReactions(post),
+        const SizedBox(height: 10,),
         OBPostCircles(post),
         OBPostComments(
           post,

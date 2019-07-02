@@ -6,7 +6,7 @@ import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/modals/accept_guidelines/pages/confirm_reject_guidelines.dart';
@@ -14,6 +14,7 @@ import 'package:Openbook/pages/home/modals/confirm_block_user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
+import 'package:Openbook/pages/home/modals/post_comment_reactions/post_comment_reactions.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/community_members.dart';
@@ -504,7 +505,7 @@ class NavigationService {
 
   Future<void> navigateToPostReactions(
       {@required Post post,
-      @required List<PostReactionsEmojiCount> reactionsEmojiCounts,
+      @required List<ReactionsEmojiCount> reactionsEmojiCounts,
       @required BuildContext context,
       Emoji reactionEmoji}) {
     return Navigator.push(
@@ -513,6 +514,24 @@ class NavigationService {
             key: Key('obPostReactionsModal'),
             widget: OBPostReactionsModal(
               post: post,
+              reactionsEmojiCounts: reactionsEmojiCounts,
+              reactionEmoji: reactionEmoji,
+            )));
+  }
+
+  Future<void> navigateToPostCommentReactions(
+      {@required PostComment postComment,
+      @required Post post,
+      @required List<ReactionsEmojiCount> reactionsEmojiCounts,
+      @required BuildContext context,
+      Emoji reactionEmoji}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obPostCommentReactionsModal'),
+            widget: OBPostCommentReactionsModal(
+              post: post,
+              postComment: postComment,
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
             )));

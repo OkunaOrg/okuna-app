@@ -9,7 +9,6 @@ import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/device.dart';
 import 'package:Openbook/models/devices_list.dart';
-import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
@@ -31,9 +30,11 @@ import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
+import 'package:Openbook/models/post_comment_reaction_list.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reaction_list.dart';
-import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
@@ -237,7 +238,8 @@ class UserService {
   }
 
   Future<int> subscribeToBetaWaitlist({String email}) async {
-    HttpieResponse response = await _waitlistApiService.subscribeToBetaWaitlist(email: email);
+    HttpieResponse response =
+        await _waitlistApiService.subscribeToBetaWaitlist(email: email);
     _checkResponseIsOk(response);
     Map<String, dynamic> parsedJson = json.decode(response.body);
     return parsedJson['count'];
@@ -455,11 +457,9 @@ class UserService {
   }
 
   Future<PostReaction> reactToPost(
-      {@required Post post,
-      @required Emoji emoji,
-      @required EmojiGroup emojiGroup}) async {
+      {@required Post post, @required Emoji emoji}) async {
     HttpieResponse response = await _postsApiService.reactToPost(
-        postUuid: post.uuid, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
+        postUuid: post.uuid, emojiId: emoji.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
@@ -482,14 +482,67 @@ class UserService {
     return PostReactionList.fromJson(json.decode(response.body));
   }
 
-  Future<PostReactionsEmojiCountList> getReactionsEmojiCountForPost(
+  Future<ReactionsEmojiCountList> getReactionsEmojiCountForPost(
       Post post) async {
     HttpieResponse response =
         await _postsApiService.getReactionsEmojiCountForPostWithUuid(post.uuid);
 
     _checkResponseIsOk(response);
 
-    return PostReactionsEmojiCountList.fromJson(json.decode(response.body));
+    return ReactionsEmojiCountList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostCommentReaction> reactToPostComment(
+      {@required Post post,
+      @required PostComment postComment,
+      @required Emoji emoji}) async {
+    HttpieResponse response = await _postsApiService.reactToPostComment(
+      postCommentId: postComment.id,
+      postUuid: post.uuid,
+      emojiId: emoji.id,
+    );
+    _checkResponseIsCreated(response);
+    return PostCommentReaction.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deletePostCommentReaction(
+      {@required PostCommentReaction postCommentReaction,
+      @required PostComment postComment,
+      @required Post post}) async {
+    HttpieResponse response = await _postsApiService.deletePostCommentReaction(
+        postCommentReactionId: postCommentReaction.id,
+        postUuid: post.uuid,
+        postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<PostCommentReactionList> getReactionsForPostComment(
+      {PostComment postComment,
+      Post post,
+      int count,
+      int maxId,
+      Emoji emoji}) async {
+    HttpieResponse response = await _postsApiService.getReactionsForPostComment(
+        postUuid: post.uuid,
+        postCommentId: postComment.id,
+        count: count,
+        maxId: maxId,
+        emojiId: emoji.id);
+
+    _checkResponseIsOk(response);
+
+    return PostCommentReactionList.fromJson(json.decode(response.body));
+  }
+
+  Future<ReactionsEmojiCountList> getReactionsEmojiCountForPostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.getReactionsEmojiCountForPostComment(
+            postCommentId: postComment.id, postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+
+    return ReactionsEmojiCountList.fromJson(json.decode(response.body));
   }
 
   Future<PostComment> commentPost(
@@ -539,6 +592,22 @@ class UserService {
         await _postsApiService.unmutePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<PostComment> mutePostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.mutePostComment(
+        postUuid: post.uuid, postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
+  }
+
+  Future<PostComment> unmutePostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.unmutePostComment(
+        postCommentId: postComment.id, postUuid: post.uuid);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
@@ -1470,6 +1539,8 @@ class UserService {
   Future<UserNotificationsSettings>
       updateAuthenticatedUserNotificationsSettings({
     bool postCommentNotifications,
+    bool postCommentReplyNotifications,
+    bool postCommentReactionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
@@ -1479,6 +1550,8 @@ class UserService {
     HttpieResponse response =
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
             postCommentNotifications: postCommentNotifications,
+            postCommentReplyNotifications: postCommentReplyNotifications,
+            postCommentReactionNotifications: postCommentReactionNotifications,
             postReactionNotifications: postReactionNotifications,
             followNotifications: followNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
