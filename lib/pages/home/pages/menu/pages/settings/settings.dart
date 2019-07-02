@@ -11,6 +11,7 @@ class OBSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var navigationService = openbookProvider.navigationService;
+    var localizationService = openbookProvider.localizationService;
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
@@ -23,7 +24,7 @@ class OBSettingsPage extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const OBIcon(OBIcons.account),
-              title: OBText('Account settings'),
+              title: OBText(localizationService.trans('DRAWER.SETTINGS')),
               onTap: () {
                 navigationService.navigateToAccountSettingsPage(
                     context: context);

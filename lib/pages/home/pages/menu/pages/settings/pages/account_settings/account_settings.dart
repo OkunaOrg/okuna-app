@@ -14,6 +14,8 @@ class OBAccountSettingsPage extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = openbookProvider.localizationService;
     var navigationService = openbookProvider.navigationService;
+    var userService = openbookProvider.userService;
+    String currentUserLanguage = userService.getLoggedInUser().language.name;
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
@@ -52,6 +54,14 @@ class OBAccountSettingsPage extends StatelessWidget {
               title: OBText('Notifications'),
               onTap: () {
                 navigationService.navigateToNotificationsSettings(
+                    context: context);
+              },
+            ),
+            ListTile(
+              leading: const OBIcon(OBIcons.language),
+              title: OBText('Language ($currentUserLanguage)'),
+              onTap: () {
+                navigationService.navigateToLanguageSettings(
                     context: context);
               },
             ),
