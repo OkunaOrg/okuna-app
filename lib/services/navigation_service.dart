@@ -29,6 +29,7 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
+import 'package:Openbook/pages/home/pages/language/language_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/community_guidelines.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
@@ -525,6 +526,16 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obNotificationsSettingsPage'),
             widget: OBNotificationsSettingsPage()));
+  }
+
+  Future<void> navigateToLanguageSettings({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obLanguageSettingsPage'),
+            widget: OBLanguageSettingsPage()));
   }
 
   Future<void> navigateToBlockedUsers({

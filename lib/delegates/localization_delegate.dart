@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 
 class LocalizationServiceDelegate
     extends LocalizationsDelegate<LocalizationService> {
+
   const LocalizationServiceDelegate();
 
   @override
   bool isSupported(Locale locale) {
-    return ['es', 'en'].contains(locale.languageCode);
+    return ['es', 'en', 'nl'].contains(locale.languageCode);
   }
 
   @override

@@ -17,6 +17,8 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/language.dart';
+import 'package:Openbook/models/language_list.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderated_object_list.dart';
 import 'package:Openbook/models/moderation/moderated_object_log_list.dart';
@@ -49,6 +51,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/translate_api_service.dart';
 import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
@@ -85,6 +88,7 @@ class UserService {
   DevicesApiService _devicesApiService;
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
+  TranslateApiService _translateApiService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -166,6 +170,10 @@ class UserService {
 
   void setWaitlistApiService(WaitlistApiService waitlistApiService) {
     _waitlistApiService = waitlistApiService;
+  }
+
+  void setTranslateApiService(TranslateApiService translateApiService) {
+    _translateApiService = translateApiService;
   }
 
   Future<void> deleteAccountWithPassword(String password) async {
@@ -589,6 +597,20 @@ class UserService {
     _checkResponseIsOk(response);
 
     return EmojiGroupList.fromJson(json.decode(response.body));
+  }
+
+  Future<LanguagesList> getAllLanguages() async {
+    HttpieResponse response = await this._authApiService.getAllLanguages();
+
+    _checkResponseIsOk(response);
+
+    return LanguagesList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> setNewLanguage(Language newLanguage) async {
+    HttpieResponse response = await this._authApiService.setNewLanguage(newLanguage);
+
+    _checkResponseIsOk(response);
   }
 
   Future<User> getUserWithUsername(String username) async {
