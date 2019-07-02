@@ -104,6 +104,7 @@ flutter:
     - assets/images/confetti-background.gif
     - assets/lang/es.json
     - assets/lang/en.json
+    - assets/lang/nl.json
     - assets/images/icons/gif-icon.png
     - assets/images/icons/profile-icon.png
     - assets/images/icons/connections-icon.png
