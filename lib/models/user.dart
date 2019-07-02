@@ -7,6 +7,7 @@ import 'package:Openbook/models/community_invite_list.dart';
 import 'package:Openbook/models/community_membership.dart';
 import 'package:Openbook/models/community_membership_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
+import 'package:Openbook/models/language.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/updatable_model.dart';
@@ -20,6 +21,7 @@ class User extends UpdatableModel<User> {
   int connectionsCircleId;
   String email;
   String username;
+  Language language;
   UserProfile profile;
   UserNotificationsSettings notificationsSettings;
   int followersCount;
@@ -81,6 +83,7 @@ class User extends UpdatableModel<User> {
       this.username,
       this.email,
       this.profile,
+      this.language,
       this.notificationsSettings,
       this.followersCount,
       this.followingCount,
@@ -114,6 +117,9 @@ class User extends UpdatableModel<User> {
       } else {
         profile = navigationUsersFactory.parseUserProfile(json['profile']);
       }
+    }
+    if (json.containsKey('language')) {
+      language = navigationUsersFactory.parseLanguage(json['language']);
     }
     if (json.containsKey('notifications_settings')) {
       if (notificationsSettings != null) {
@@ -538,6 +544,7 @@ class UserFactory extends UpdatableModelFactory<User> {
             json['active_moderation_penalties_count'],
         email: json['email'],
         username: json['username'],
+        language: parseLanguage(json['language']),
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
@@ -583,5 +590,10 @@ class UserFactory extends UpdatableModelFactory<User> {
   FollowsListsList parseFollowsLists(List followsListsData) {
     if (followsListsData == null) return null;
     return FollowsListsList.fromJson(followsListsData);
+  }
+
+  Language parseLanguage(Map languageData) {
+    if (languageData == null) return null;
+    return Language.fromJson(languageData);
   }
 }
