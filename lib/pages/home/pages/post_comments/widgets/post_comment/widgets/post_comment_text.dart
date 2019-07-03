@@ -10,89 +10,53 @@ import 'package:flutter/services.dart';
 class OBPostCommentText extends StatelessWidget {
   final PostComment postComment;
   final VoidCallback onUsernamePressed;
-  final Widget badge;
-  ToastService _toastService;
-  BuildContext _context;
 
   static int postCommentMaxVisibleLength = 500;
 
-  OBPostCommentText(this.postComment,
-      {Key key, this.onUsernamePressed, this.badge})
+  OBPostCommentText(this.postComment, {Key key, this.onUsernamePressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
-
-    _toastService = openbookProvider.toastService;
-    _context = context;
-
-    return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Flexible(
-                    child: GestureDetector(
-                        onTap: onUsernamePressed,
-                        child: Text(
-                          postComment.getCommenterUsername(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: themeValueParserService
-                                  .parseColor(theme.primaryTextColor),
-                              fontSize: 16),
-                          overflow: TextOverflow.ellipsis,
-                        )),
-                  ),
-                  badge == null
-                      ? const SizedBox()
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: badge,
-                        ),
-                ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Flexible(
+              child: GestureDetector(
+                onLongPress: () {
+                  OpenbookProviderState openbookProvider =
+                      OpenbookProvider.of(context);
+                  Clipboard.setData(ClipboardData(text: postComment.text));
+                  openbookProvider.toastService.toast(
+                      message: 'Text copied!',
+                      context: context,
+                      type: ToastType.info);
+                },
+                child: _getActionableSmartText(postComment.isEdited),
               ),
-              Row(
-                children: <Widget>[
-                  Flexible(
-                    child: GestureDetector(
-                      onLongPress: _copyText,
-                      child: _getActionableSmartText(postComment.isEdited),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          );
-        });
+            ),
+          ],
+        )
+      ],
+    );
   }
 
   Widget _getActionableSmartText(bool isEdited) {
     if (isEdited) {
       return OBCollapsibleSmartText(
+        size: OBTextSize.large,
         text: postComment.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
         maxlength: postCommentMaxVisibleLength,
       );
     } else {
       return OBCollapsibleSmartText(
+        size: OBTextSize.large,
         text: postComment.text,
         maxlength: postCommentMaxVisibleLength,
       );
     }
-  }
-
-  void _copyText() {
-    Clipboard.setData(ClipboardData(text: postComment.text));
-    _toastService.toast(
-        message: 'Text copied!', context: _context, type: ToastType.info);
   }
 }

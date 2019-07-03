@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/post/widgets/post_header/widgets/user_post_header/widgets/post_creator_identifier.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/user_badge.dart';
@@ -29,6 +30,7 @@ class OBUserPostHeader extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var navigationService = openbookProvider.navigationService;
     var bottomSheetService = openbookProvider.bottomSheetService;
+    var utilsService = openbookProvider.utilsService;
 
     if (_post.creator == null) return const SizedBox();
 
@@ -61,40 +63,19 @@ class OBUserPostHeader extends StatelessWidget {
                     onPostReported: onPostReported);
               })
           : null,
-      title: GestureDetector(
-        onTap: () {
+      title: OBPostCreatorIdentifier(
+        post: _post,
+        onUsernamePressed: () {
           navigationService.navigateToUserProfile(
               user: _post.creator, context: context);
         },
-        child: StreamBuilder(
-            stream: _post.creator.updateSubject,
-            initialData: _post.creator,
-            builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-              var postCreator = snapshot.data;
-
-              return Row(children: <Widget>[
-                OBText(
-                  postCreator.username,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                _getUserBadge(_post.creator)
-              ]);
-            }),
       ),
       subtitle: _post.created != null
           ? OBSecondaryText(
-              _post.getRelativeCreated(),
+              utilsService.timeAgo(_post.created),
               style: TextStyle(fontSize: 12.0),
             )
           : const SizedBox(),
     );
-  }
-
-  Widget _getUserBadge(User creator) {
-    if (creator.hasProfileBadges() && creator.getProfileBadges().length > 0) {
-      Badge badge = creator.getProfileBadges()[0];
-      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
-    }
-    return const SizedBox();
   }
 }

@@ -1362,6 +1362,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E73A042BEC81027B2EBB8967 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -1397,6 +1398,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4E993998490EDCE06AC2B3F0 /* Pods-OneSignalNotificationServiceExtension.debug-production.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -1432,6 +1434,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4130CBCE97AB39E4070E45EF /* Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -1467,6 +1470,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CBD573B1F3D19BD6C5F5624A /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -1500,6 +1504,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E6C0DC9AEB28225FDDAABF70 /* Pods-OneSignalNotificationServiceExtension.profile.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -1533,6 +1538,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AAF4B8238CF43C30122544EF /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -1566,6 +1572,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B23196F4E53E7786037AC8B5 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;

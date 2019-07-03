@@ -70,7 +70,7 @@ class OBModeratedObject extends StatelessWidget {
           ],
         ),
         OBTileGroupTitle(
-          title: community != null ? 'Verified by Openbook staff' : 'Verified',
+          title: community != null ? 'Verified by Openspace staff' : 'Verified',
         ),
         StreamBuilder(
           stream: moderatedObject.updateSubject,

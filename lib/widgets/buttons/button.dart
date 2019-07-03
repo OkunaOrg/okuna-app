@@ -7,6 +7,7 @@ class OBButton extends StatelessWidget {
   final Widget child;
   final Widget icon;
   final VoidCallback onPressed;
+  final VoidCallback onLongPressed;
   final bool isDisabled;
   final bool isLoading;
   final OBButtonSize size;
@@ -35,7 +36,7 @@ class OBButton extends StatelessWidget {
       this.padding,
       this.textStyle,
       this.color,
-      this.textColor});
+      this.textColor, this.onLongPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,7 @@ class OBButton extends StatelessWidget {
     double buttonMinWidth = minWidth ?? _getButtonMinWidthForSize(size);
     double buttonMinHeight = minHeight ?? 20;
     var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
+    var finalOnLongPressed = isLoading || isDisabled ? () {} : onLongPressed;
 
     var buttonChild = isLoading ? _getLoadingIndicator(textColor) : child;
 
@@ -113,6 +115,7 @@ class OBButton extends StatelessWidget {
             ),
           )),
       onTap: finalOnPressed,
+      onLongPress: finalOnLongPressed,
     );
   }
 

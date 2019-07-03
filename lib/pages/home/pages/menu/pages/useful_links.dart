@@ -28,7 +28,7 @@ class OBUsefulLinksPage extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   leading: const OBIcon(OBIcons.guide),
-                  title: OBText('Openbook guidelines'),
+                  title: OBText('Openspace guidelines'),
                   subtitle: OBSecondaryText(
                       'The guidelines we\'re all expected to follow for a healthy and friendly co-existence.'),
                   onTap: () {
@@ -70,7 +70,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const OBIcon(OBIcons.guide),
-                  title: OBText('Openbook handbook'),
+                  title: OBText('Openspace handbook'),
                   subtitle: OBSecondaryText(
                       'A book with everything there is to know about using the platform'),
                   onTap: () {
@@ -81,10 +81,10 @@ class OBUsefulLinksPage extends StatelessWidget {
                   leading: const OBIcon(OBIcons.slackChannel),
                   title: OBText('Community slack channel'),
                   subtitle: OBSecondaryText(
-                      'A place to discuss everything about Openbook'),
+                      'A place to discuss everything about Openspace'),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://join.slack.com/t/openbookorg/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
+                        'https://join.slack.com/t/openspacesocial/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
                   },
                 ),
               ],

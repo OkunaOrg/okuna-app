@@ -1,6 +1,6 @@
 import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/widgets/post_reaction_list.dart';
 import 'package:Openbook/services/theme.dart';
@@ -21,7 +21,7 @@ class OBPostReactionsModal extends StatefulWidget {
   final Emoji reactionEmoji;
 
   // The post reactiosn emoji counts
-  final List<PostReactionsEmojiCount> reactionsEmojiCounts;
+  final List<ReactionsEmojiCount> reactionsEmojiCounts;
 
   const OBPostReactionsModal(
       {Key key,

@@ -6,6 +6,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/community_avatar.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/post/widgets/post_header/widgets/community_post_header/widgets/community_post_creator_identifier.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -86,27 +87,12 @@ class OBCommunityPostHeader extends StatelessWidget {
                 ],
               ),
             ),
-            subtitle: GestureDetector(
-              onTap: () {
+            subtitle: OBCommunityPostCreatorIdentifier(
+              post: _post,
+              onUsernamePressed: () {
                 navigationService.navigateToUserProfile(
                     user: _post.creator, context: context);
               },
-              child: Row(
-                children: <Widget>[
-                  Flexible(
-                    child: OBSecondaryText(
-                      '@' + _post.creator.username + ' ',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 12.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  OBSecondaryText(
-                    _post.getRelativeCreated(),
-                    style: TextStyle(fontSize: 12.0),
-                  )
-                ],
-              ),
             ),
           );
         });
