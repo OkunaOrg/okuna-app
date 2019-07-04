@@ -46,14 +46,14 @@ class OBPostCommentText extends StatelessWidget {
   Widget _getActionableSmartText(bool isEdited) {
     if (isEdited) {
       return OBCollapsibleSmartText(
-        size: OBTextSize.medium,
+        size: OBTextSize.large,
         text: postComment.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
         maxlength: postCommentMaxVisibleLength,
       );
     } else {
       return OBCollapsibleSmartText(
-        size: OBTextSize.medium,
+        size: OBTextSize.large,
         text: postComment.text,
         maxlength: postCommentMaxVisibleLength,
       );

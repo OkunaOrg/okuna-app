@@ -82,6 +82,7 @@ class OBPostCommentState extends State<OBPostComment> {
             OBPostCommentCommenterIdentifier(
               post: widget.post,
               postComment: widget.postComment,
+              onUsernamePressed: _onPostCommenterPressed,
             ),
             const SizedBox(
               height: 5,
@@ -132,6 +133,7 @@ class OBPostCommentState extends State<OBPostComment> {
                     OBAvatar(
                       avatarUrl: commenter.getProfileAvatar(),
                       customSize: 35,
+                      onPressed: _onPostCommenterPressed,
                     ),
                     SizedBox(
                       width: 15,
@@ -218,6 +220,11 @@ class OBPostCommentState extends State<OBPostComment> {
       }
       _repliesCount += 1;
     });
+  }
+
+  void _onPostCommenterPressed() {
+    _navigationService.navigateToUserProfile(
+        user: widget.postComment.commenter, context: context);
   }
 }
 

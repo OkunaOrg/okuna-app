@@ -5,6 +5,7 @@ import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/widgets/icon.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
+    var utilsService = openbookProvider.utilsService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -39,32 +41,38 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
 
           String commenterUsername = postComment.commenter.username;
           String commenterName = postComment.commenter.getProfileName();
+          String created = utilsService.timeAgo(postComment.created);
 
-          return GestureDetector(
-            onTap: onUsernamePressed,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Flexible(
-                  child: RichText(
-                    text: TextSpan(
-                        style:
-                            TextStyle(color: secondaryTextColor, fontSize: 14),
-                        children: [
-                          TextSpan(
-                              text: '$commenterName',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: ' @$commenterUsername',
-                              style: TextStyle(fontSize: 12)),
-                        ]),
+          return Opacity(
+            opacity: 0.8,
+            child: GestureDetector(
+              onTap: onUsernamePressed,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Flexible(
+                    child: RichText(
+                      overflow: TextOverflow.ellipsis,
+                      text: TextSpan(
+                          style: TextStyle(
+                              color: secondaryTextColor, fontSize: 14),
+                          children: [
+                            TextSpan(
+                                text: '$commenterName',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: ' @$commenterUsername',
+                                style: TextStyle(fontSize: 12)),
+                          ]),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 3,
-                ),
-                _buildBadge()
-              ],
+                  _buildBadge(),
+                  OBSecondaryText(
+                    ' · $created',
+                    style: TextStyle(fontSize: 12),
+                  )
+                ],
+              ),
             ),
           );
         });
@@ -99,10 +107,13 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
   }
 
   Widget _buildCommunityAdministratorBadge() {
-    return const OBIcon(
-      OBIcons.communityAdministrators,
-      size: OBIconSize.small,
-      themeColor: OBIconThemeColor.primaryAccent,
+    return const Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 1),
+      child: OBIcon(
+        OBIcons.communityAdministrators,
+        size: OBIconSize.small,
+        themeColor: OBIconThemeColor.primaryAccent,
+      ),
     );
   }
 
@@ -115,8 +126,11 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
   }
 
   Widget _buildProfileBadge() {
-    return OBUserBadge(
-        badge: postComment.commenter.getDisplayedProfileBadge(),
-        size: OBUserBadgeSize.small);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 1),
+      child: OBUserBadge(
+          badge: postComment.commenter.getDisplayedProfileBadge(),
+          size: OBUserBadgeSize.small),
+    );
   }
 }

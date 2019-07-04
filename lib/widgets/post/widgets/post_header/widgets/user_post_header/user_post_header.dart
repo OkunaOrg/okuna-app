@@ -30,6 +30,7 @@ class OBUserPostHeader extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var navigationService = openbookProvider.navigationService;
     var bottomSheetService = openbookProvider.bottomSheetService;
+    var utilsService = openbookProvider.utilsService;
 
     if (_post.creator == null) return const SizedBox();
 
@@ -71,18 +72,10 @@ class OBUserPostHeader extends StatelessWidget {
       ),
       subtitle: _post.created != null
           ? OBSecondaryText(
-              _post.getRelativeCreated(),
+              utilsService.timeAgo(_post.created),
               style: TextStyle(fontSize: 12.0),
             )
           : const SizedBox(),
     );
-  }
-
-  Widget _getUserBadge(User creator) {
-    if (creator.hasProfileBadges() && creator.getProfileBadges().length > 0) {
-      Badge badge = creator.getProfileBadges()[0];
-      return OBUserBadge(badge: badge, size: OBUserBadgeSize.small);
-    }
-    return const SizedBox();
   }
 }

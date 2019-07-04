@@ -20,7 +20,7 @@ class OBText extends StatelessWidget {
         fontSize = 16;
         break;
       case OBTextSize.large:
-        fontSize = 18;
+        fontSize = 17;
         break;
       case OBTextSize.extraLarge:
         fontSize = 30;
