@@ -33,34 +33,38 @@ class OBCommunityRulesPage extends StatelessWidget {
                 communityRules.isEmpty ||
                 communityColor == null) return const SizedBox();
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      OBIcon(
-                        OBIcons.rules,
-                        size: OBIconSize.medium,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OBText(
-                        'Rules',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 24),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  OBActionableSmartText(text: community.rules)
-                ],
+            return SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        OBIcon(
+                          OBIcons.rules,
+                          size: OBIconSize.medium,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        OBText(
+                          'Rules',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 24),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    OBActionableSmartText(text: community.rules)
+                  ],
+                ),
               ),
             );
           },
