@@ -33,8 +33,6 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
         postCommentReactionNotification.postCommentReaction;
     PostComment postComment = postCommentReaction.postComment;
     Post post = postComment.post;
-    String postCommentReactorUsername =
-        postCommentReaction.getReactorUsername();
 
     Widget postCommentImagePreview;
     if (post.hasImage()) {
@@ -60,8 +58,17 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
       onTap: () {
         if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-        openbookProvider.navigationService.navigateToPost(
-            post: postCommentReaction.postComment.post, context: context);
+
+        PostComment parentComment = postComment.parentComment;
+        if(parentComment!=null){
+          openbookProvider.navigationService.navigateToPostCommentRepliesLinked(
+              postComment: postComment,
+              context: context,
+              parentComment: parentComment);
+        }else {
+          openbookProvider.navigationService.navigateToPostCommentsLinked(
+              postComment: postComment, context: context);
+        }
       },
       leading: OBAvatar(
         onPressed: navigateToReactorProfile,
@@ -73,7 +80,10 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
         onUsernamePressed: navigateToReactorProfile,
         user: postCommentReaction.reactor,
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created), size: OBTextSize.small,),
+      subtitle: OBSecondaryText(
+        utilsService.timeAgo(notification.created),
+        size: OBTextSize.small,
+      ),
       trailing: Row(
         children: <Widget>[
           OBEmoji(

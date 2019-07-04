@@ -29,10 +29,8 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PostComment postComment = postCommentNotification.postComment;
-    PostComment parentComment = postCommentNotification.parentComment;
+    PostComment parentComment = postComment.parentComment;
     Post post = postComment.post;
-    String postCommenterUsername = postComment.getCommenterUsername();
-    String postCommenterName = postComment.getCommenterName();
     String postCommentText = postComment.text;
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
