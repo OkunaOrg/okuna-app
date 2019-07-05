@@ -31,9 +31,9 @@ class LocalizationService {
     var openbookProvider = OpenbookProvider.of(context);
     _onLoggedInUserChangeSubscription =
         openbookProvider.userService.loggedInUserChange.listen((User newUser) {
-      String _userLanguageCode = openbookProvider.userService.getLoggedInUser().language.code;
+      String _userLanguageCode = newUser != null && newUser.hasLanguage() ? newUser.language.code: null;
       Locale _currentLocale = Localizations.localeOf(context);
-      if (_userLanguageCode != _currentLocale.languageCode) {
+      if (_userLanguageCode != null && _userLanguageCode != _currentLocale.languageCode) {
         print('Overriding locale ${_currentLocale.languageCode} with user locale: $_userLanguageCode');
         MyApp.setLocale(context, Locale(_userLanguageCode, ''));
       }

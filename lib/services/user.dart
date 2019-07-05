@@ -63,6 +63,7 @@ import 'package:Openbook/services/user_invites_api.dart';
 import 'package:Openbook/services/waitlist_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -1817,19 +1818,19 @@ class UserService {
 
   Future<User> _setUserWithData(String userData) async {
     var user = _makeLoggedInUser(userData);
-    if (user.language == null) await _setLanguageFromDefaults();
     _setLoggedInUser(user);
     await _storeUserData(userData);
     return user;
   }
 
-  Future<void> _setLanguageFromDefaults() async {
+  Future<void> setLanguageFromDefaults() async {
     Locale currentLocale = _localizationService.getLocale();
     LanguagesList languageList =  await getAllLanguages();
     Language deviceLanguage = languageList.languages.firstWhere((Language language) {
       return language.code.toLowerCase() == currentLocale.languageCode.toLowerCase();
     });
     if (deviceLanguage != null) {
+      print('Setting language from device ${currentLocale.languageCode}');
       return await setNewLanguage(deviceLanguage);
     } else {
       Language english = languageList.languages.firstWhere((Language language) => language.code.toLowerCase() == 'en');
