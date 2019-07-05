@@ -476,6 +476,18 @@ class User extends UpdatableModel<User> {
     return loggedInUserIsPostCreator && !post.isClosed;
   }
 
+  bool canTranslatePostComment(PostComment postComment) {
+    User loggedInUser = this;
+    return postComment.hasLanguage() &&
+        postComment.getLanguage().code != loggedInUser.language.code;
+  }
+
+  bool canTranslatePost(Post post) {
+    User loggedInUser = this;
+    return post.hasLanguage() &&
+        post.getLanguage().code != loggedInUser.language.code;
+  }
+
   bool canEditPostComment(PostComment postComment, Post post) {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
