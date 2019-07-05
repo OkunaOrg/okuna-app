@@ -24,7 +24,7 @@ class OBSettingsPage extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const OBIcon(OBIcons.account),
-              title: OBText(localizationService.trans('DRAWER.SETTINGS')),
+              title: OBText(localizationService.trans('drawer__settings')),
               onTap: () {
                 navigationService.navigateToAccountSettingsPage(
                     context: context);

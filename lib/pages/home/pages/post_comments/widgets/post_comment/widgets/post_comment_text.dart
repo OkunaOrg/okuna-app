@@ -1,25 +1,59 @@
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/theme.dart';
+import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/collapsible_smart_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class OBPostCommentText extends StatelessWidget {
+class OBPostCommentText extends StatefulWidget {
   final PostComment postComment;
   final VoidCallback onUsernamePressed;
+  final int postCommentMaxVisibleLength = 500;
 
-  static int postCommentMaxVisibleLength = 500;
 
-  OBPostCommentText(this.postComment, {Key key, this.onUsernamePressed})
+  OBPostCommentText(this.postComment,
+      {Key key, this.onUsernamePressed})
       : super(key: key);
 
   @override
+  State<StatefulWidget> createState() {
+    return OBPostCommentTextState();
+  }
+
+}
+
+class OBPostCommentTextState extends State<OBPostCommentText> {
+  String _translatedText;
+  CancelableOperation _requestOperation;
+
+  bool _needsBootstrap;
+  bool _requestInProgress;
+  UserService _userService;
+  ToastService _toastService;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _requestInProgress = false;
+    _needsBootstrap = true;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    OpenbookProviderState provider = OpenbookProvider.of(context);
+    _toastService = provider.toastService;
+    _userService = provider.userService;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
           children: <Widget>[
@@ -28,13 +62,13 @@ class OBPostCommentText extends StatelessWidget {
                 onLongPress: () {
                   OpenbookProviderState openbookProvider =
                       OpenbookProvider.of(context);
-                  Clipboard.setData(ClipboardData(text: postComment.text));
+                  Clipboard.setData(ClipboardData(text: widget.postComment.text));
                   openbookProvider.toastService.toast(
                       message: 'Text copied!',
                       context: context,
                       type: ToastType.info);
                 },
-                child: _getActionableSmartText(postComment.isEdited),
+                child: _getActionableSmartText(widget.postComment.isEdited),
               ),
             ),
           ],
@@ -43,20 +77,96 @@ class OBPostCommentText extends StatelessWidget {
     );
   }
 
+  Widget _getPostCommentTranslateButton() {
+    if (_requestInProgress) {
+      return Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Container(
+            width: 10.0,
+            height: 10.0,
+            child: CircularProgressIndicator(strokeWidth: 2.0),
+          )
+      );
+    }
+
+    User loggedInUser = _userService.getLoggedInUser();
+    if (loggedInUser.canTranslatePostComment(widget.postComment)) {
+      return GestureDetector(
+        onTap: _toggleTranslatePostComment,
+        child: _translatedText != null ?
+          OBSecondaryText('Show original', size: OBTextSize.medium):
+          OBSecondaryText('See translation', size: OBTextSize.medium),
+
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+
+  void _toggleTranslatePostComment() async {
+    try {
+      if (_translatedText == null) {
+        _setRequestInProgress(true);
+        CancelableOperation<String> _getTranslationOperation =
+        CancelableOperation.fromFuture(
+            _userService.getTranslatedText(
+                text: widget.postComment.text,
+                sourceLanguageCode: widget.postComment.getLanguage().code,
+                targetLanguageCode: _userService.getUserLanguage().code));
+
+        String translatedText = await _getTranslationOperation.value;
+        _setPostCommentTranslatedText(translatedText);
+      } else {
+        _setPostCommentTranslatedText(null);
+      }
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
+
   Widget _getActionableSmartText(bool isEdited) {
     if (isEdited) {
       return OBCollapsibleSmartText(
         size: OBTextSize.medium,
-        text: postComment.text,
+        text: _translatedText ?? widget.postComment.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
-        maxlength: postCommentMaxVisibleLength,
+        maxlength: widget.postCommentMaxVisibleLength,
+        getChild: _getPostCommentTranslateButton
       );
     } else {
       return OBCollapsibleSmartText(
         size: OBTextSize.medium,
-        text: postComment.text,
-        maxlength: postCommentMaxVisibleLength,
+        text: _translatedText ?? widget.postComment.text,
+        maxlength: widget.postCommentMaxVisibleLength,
+        getChild: _getPostCommentTranslateButton
       );
     }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
+  }
+
+  void _setRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
+  }
+
+  void _setPostCommentTranslatedText(String newText) {
+    setState(() {
+      _translatedText = newText;
+    });
   }
 }

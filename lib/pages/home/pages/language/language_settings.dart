@@ -113,7 +113,6 @@ class OBLanguageSettingsPageState
     try {
       await _userService.setNewLanguage(_selectedLanguage);
       MyApp.setLocale(context, Locale(_selectedLanguage.code, ''));
-      await _userService.refreshUser();
       _showLanguageChangedSuccessToast();
       Navigator.pop(context);
     } catch(error) {
