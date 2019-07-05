@@ -237,6 +237,10 @@ class User extends UpdatableModel<User> {
     return this.profile != null && this.profile.badges != null && this.profile.badges.length > 0;
   }
 
+  bool hasLanguage() {
+    return this.language != null;
+  }
+
   bool isConnectionsCircle(Circle circle) {
     return connectionsCircleId != null && connectionsCircleId == circle.id;
   }

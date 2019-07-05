@@ -2,7 +2,6 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/collapsible_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -120,8 +119,8 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       child: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: _translatedText != null ?
-        OBSecondaryText('Show original', size: OBTextSize.medium):
-        OBSecondaryText('See translation', size: OBTextSize.medium),
+        OBSecondaryText('Show original', size: OBTextSize.large):
+        OBSecondaryText('See translation', size: OBTextSize.large),
       ),
     );
   }

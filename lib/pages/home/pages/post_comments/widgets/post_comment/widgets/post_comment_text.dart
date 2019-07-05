@@ -94,8 +94,8 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
       return GestureDetector(
         onTap: _toggleTranslatePostComment,
         child: _translatedText != null ?
-          OBSecondaryText('Show original', size: OBTextSize.medium):
-          OBSecondaryText('See translation', size: OBTextSize.medium),
+          OBSecondaryText('Show original', size: OBTextSize.large):
+          OBSecondaryText('See translation', size: OBTextSize.large),
 
       );
     } else {
@@ -129,7 +129,7 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
   Widget _getActionableSmartText(bool isEdited) {
     if (isEdited) {
       return OBCollapsibleSmartText(
-        size: OBTextSize.medium,
+        size: OBTextSize.large,
         text: _translatedText ?? widget.postComment.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
         maxlength: widget.postCommentMaxVisibleLength,
@@ -137,7 +137,7 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
       );
     } else {
       return OBCollapsibleSmartText(
-        size: OBTextSize.medium,
+        size: OBTextSize.large,
         text: _translatedText ?? widget.postComment.text,
         maxlength: widget.postCommentMaxVisibleLength,
         getChild: _getPostCommentTranslateButton

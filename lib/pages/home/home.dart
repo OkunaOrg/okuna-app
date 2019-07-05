@@ -429,6 +429,10 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
           !newUser.areGuidelinesAccepted) {
         _modalService.openAcceptGuidelines(context: context);
       }
+
+      if (newUser.language == null) {
+        _userService.setLanguageFromDefaults();
+      }
     }
   }
 

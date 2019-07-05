@@ -80,7 +80,6 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
                             'Show more',
                             size: widget.size,
                             textAlign: TextAlign.start,
-                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             width: 10,
