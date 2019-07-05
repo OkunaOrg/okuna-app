@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:Openbook/models/categories_list.dart';
 import 'package:Openbook/models/category.dart';
@@ -52,6 +53,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/translate_api_service.dart';
 import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
@@ -90,6 +92,7 @@ class UserService {
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
   TranslateApiService _translateApiService;
+  LocalizationService _localizationService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -177,6 +180,11 @@ class UserService {
     _translateApiService = translateApiService;
   }
 
+  void setLocalizationsService(LocalizationService localizationService) {
+    _localizationService = localizationService;
+  }
+
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -252,6 +260,10 @@ class UserService {
 
   User getLoggedInUser() {
     return _loggedInUser;
+  }
+
+  Language getUserLanguage() {
+    return _loggedInUser.language;
   }
 
   bool isLoggedInUser(User user) {
@@ -678,8 +690,19 @@ class UserService {
 
   Future<void> setNewLanguage(Language newLanguage) async {
     HttpieResponse response = await this._authApiService.setNewLanguage(newLanguage);
+    _checkResponseIsOk(response);
+    await refreshUser();
+  }
+
+  Future<String> getTranslatedText({String text, String sourceLanguageCode, String targetLanguageCode}) async {
+    HttpieResponse response = await this._translateApiService.translateText(
+      text: text,
+      sourceLanguageCode: sourceLanguageCode,
+      targetLanguageCode: targetLanguageCode
+    );
 
     _checkResponseIsOk(response);
+    return json.decode(response.body)['translated_text'];
   }
 
   Future<User> getUserWithUsername(String username) async {
@@ -1794,9 +1817,24 @@ class UserService {
 
   Future<User> _setUserWithData(String userData) async {
     var user = _makeLoggedInUser(userData);
+    if (user.language == null) await _setLanguageFromDefaults();
     _setLoggedInUser(user);
     await _storeUserData(userData);
     return user;
+  }
+
+  Future<void> _setLanguageFromDefaults() async {
+    Locale currentLocale = _localizationService.getLocale();
+    LanguagesList languageList =  await getAllLanguages();
+    Language deviceLanguage = languageList.languages.firstWhere((Language language) {
+      return language.code.toLowerCase() == currentLocale.languageCode.toLowerCase();
+    });
+    if (deviceLanguage != null) {
+      return await setNewLanguage(deviceLanguage);
+    } else {
+      Language english = languageList.languages.firstWhere((Language language) => language.code.toLowerCase() == 'en');
+      return await setNewLanguage(english);
+    }
   }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {

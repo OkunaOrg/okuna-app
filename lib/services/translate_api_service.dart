@@ -15,7 +15,22 @@ class TranslateApiService {
     apiURL = newApiURL;
   }
 
-  String _makeApiUrl(String string) {
-    return '$apiURL$string';
+  Future<HttpieResponse> translateText({String text, String sourceLanguageCode, String targetLanguageCode}) {
+    var body = {};
+    if (text != null && text != '') {
+      body = {'text': text};
+    }
+
+    if (sourceLanguageCode != null && sourceLanguageCode != '') {
+      body['source_language_code'] = sourceLanguageCode;
+    }
+
+    if (targetLanguageCode != null && targetLanguageCode != '') {
+      body['target_language_code'] = targetLanguageCode;
+    }
+
+    return this
+        ._httpService
+        .postJSON('$apiURL$TRANSLATE_PATH', body: body, appendAuthorizationToken: true);
   }
 }
