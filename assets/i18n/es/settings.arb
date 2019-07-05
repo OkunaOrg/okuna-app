@@ -1,12 +1,12 @@
 {
-    "change_email": "Change Email",
+    "change_email": "Cambiar Email",
     "@change_email": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password": "Change Password",
+    "change_password": "Cambiar Contraseña",
     "@change_password": {
         "type": "text",
         "placeholders": {
