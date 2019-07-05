@@ -220,6 +220,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     localizationService = newLocalizationService;
     createAccountBloc.setLocalizationService(localizationService);
     httpService.setLocalizationService(localizationService);
+    userService.setLocalizationsService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {
