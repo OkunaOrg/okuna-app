@@ -10,6 +10,9 @@ import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
+import 'notification_tile_skeleton.dart';
+import 'notification_tile_title.dart';
+
 class OBPostCommentReplyNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostCommentReplyNotification postCommentNotification;
@@ -18,17 +21,16 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
 
   const OBPostCommentReplyNotificationTile(
       {Key key,
-        @required this.notification,
-        @required this.postCommentNotification,
-        this.onPressed})
+      @required this.notification,
+      @required this.postCommentNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     PostComment postComment = postCommentNotification.postComment;
-    PostComment parentComment = postCommentNotification.parentComment;
+    PostComment parentComment = postComment.parentComment;
     Post post = postComment.post;
-    String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
@@ -49,33 +51,41 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
       );
     }
 
-    Function navigateToCommenterProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
 
+    Function navigateToCommenterProfile = () {
       openbookProvider.navigationService
           .navigateToUserProfile(user: postComment.commenter, context: context);
     };
 
-    return ListTile(
+    return OBNotificationTileSkeleton(
       onTap: () {
         if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService.navigateToPostCommentRepliesLinked(
-            postComment: postComment, context: context, parentComment: parentComment);
+            postComment: postComment,
+            context: context,
+            parentComment: parentComment);
       },
       leading: OBAvatar(
         onPressed: navigateToCommenterProfile,
         size: OBAvatarSize.medium,
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
-      title: OBActionableSmartText(
-        text: isOwnPostNotification
-            ? '@$postCommenterUsername replied: $postCommentText'
-            : '@$postCommenterUsername also replied: $postCommentText',
+      title: OBNotificationTileTitle(
+        text: TextSpan(
+            text: isOwnPostNotification
+                ? ' replied: $postCommentText'
+                : ' also replied: $postCommentText'),
+        onUsernamePressed: navigateToCommenterProfile,
+        user: postComment.commenter,
       ),
-      trailing: postImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(
+        utilsService.timeAgo(notification.created),
+        size: OBTextSize.small,
+      ),
+      trailing: postImagePreview ?? const SizedBox(),
     );
   }
 }

@@ -9,6 +9,9 @@ import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
+import 'notification_tile_skeleton.dart';
+import 'notification_tile_title.dart';
+
 class OBPostCommentNotificationTile extends StatelessWidget {
   final OBNotification notification;
   final PostCommentNotification postCommentNotification;
@@ -18,7 +21,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
   const OBPostCommentNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.postCommentNotification, this.onPressed})
+      @required this.postCommentNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -27,6 +31,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     Post post = postComment.post;
     String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
+    String postCommenterName = postComment.getCommenterName();
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -46,14 +51,14 @@ class OBPostCommentNotificationTile extends StatelessWidget {
       );
     }
 
-    Function navigateToCommenterProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
 
+    Function navigateToCommenterProfile = () {
       openbookProvider.navigationService
           .navigateToUserProfile(user: postComment.commenter, context: context);
     };
 
-    return ListTile(
+    return OBNotificationTileSkeleton(
       onTap: () {
         if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -66,13 +71,16 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
-      title: OBActionableSmartText(
-        text: isOwnPostNotification
-            ? '@$postCommenterUsername commented: $postCommentText'
-            : '@$postCommenterUsername also commented: $postCommentText',
+      title: OBNotificationTileTitle(
+        onUsernamePressed: navigateToCommenterProfile,
+        user: postComment.commenter,
+        text: TextSpan(
+            text: isOwnPostNotification
+                ? ' commented on your post: $postCommentText'
+                : ' also commented: $postCommentText'),
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

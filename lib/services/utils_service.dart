@@ -36,6 +36,38 @@ class UtilsService {
     return mimeType;
   }
 
+  String timeAgo(DateTime date) {
+    /// Originally from https://gist.github.com/DineshKachhot/bc8cee616f30c323c1dd1e63a4bf65df
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if ((difference.inDays / 365).floor() >= 2) {
+      return '${(difference.inDays / 365).floor()}y';
+    } else if ((difference.inDays / 365).floor() >= 1) {
+      return '1y';
+    } else if ((difference.inDays / 7).floor() >= 2) {
+      return '${(difference.inDays / 7).floor()}w';
+    } else if ((difference.inDays / 7).floor() >= 1) {
+      return '1w';
+    } else if (difference.inDays >= 2) {
+      return '${difference.inDays}d';
+    } else if (difference.inDays >= 1) {
+      return '1d';
+    } else if (difference.inHours >= 2) {
+      return '${difference.inHours}h';
+    } else if (difference.inHours >= 1) {
+      return '1h';
+    } else if (difference.inMinutes >= 2) {
+      return '${difference.inMinutes}m';
+    } else if (difference.inMinutes >= 1) {
+      return '1m';
+    } else if (difference.inSeconds >= 3) {
+      return '${difference.inSeconds}s';
+    } else {
+      return 'now';
+    }
+  }
+
   Future<String> _getFileMimeTypeFromMagicHeaders(File file) async {
     // TODO When file uploads become larger, this needs to be turned into a stream
     List<int> fileBytes = file.readAsBytesSync();

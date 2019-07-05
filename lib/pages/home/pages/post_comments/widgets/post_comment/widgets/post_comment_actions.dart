@@ -78,82 +78,92 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
       _needsBootstrap = false;
     }
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: OBSecondaryText(
-            widget.postComment.getRelativeCreated(),
-            style: TextStyle(fontSize: 12.0),
-          ),
-        ),
-        _buildReplyButton(),
-        _buildReactButton(),
-        _buildMoreButton(),
-      ],
+    List<Widget> actionItems = [
+      _buildReactButton(),
+    ];
+
+    if (widget.showReplyAction &&
+        _userService
+            .getLoggedInUser()
+            .canReplyPostComment(widget.postComment)) {
+      actionItems.add(_buildReplyButton());
+    }
+
+    actionItems.addAll([
+      _buildMoreButton(),
+    ]);
+
+    return Opacity(
+      opacity: 0.8,
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: actionItems),
     );
   }
 
   Widget _buildMoreButton() {
-    return Expanded(
-      child: FlatButton(
-          onPressed: _onWantsToOpenMoreActions,
-          child: OBIcon(
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
+      child: GestureDetector(
+          onTap: _onWantsToOpenMoreActions,
+          child: SizedBox(
+              child: OBIcon(
             OBIcons.moreHorizontal,
             themeColor: OBIconThemeColor.secondaryText,
-          )),
+          ))),
     );
   }
 
   Widget _buildReactButton() {
-    return Expanded(
-      child: FlatButton(
-          onPressed: _reactToPostComment,
-          child: StreamBuilder(
-              initialData: widget.postComment,
-              builder:
-                  (BuildContext context, AsyncSnapshot<PostComment> snapshot) {
-                PostComment postComment = snapshot.data;
+    return Padding(
+        padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
+        child: GestureDetector(
+          onTap: _reactToPostComment,
+          child: SizedBox(
+              child: StreamBuilder(
+                  initialData: widget.postComment,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<PostComment> snapshot) {
+                    PostComment postComment = snapshot.data;
 
-                PostCommentReaction reaction = postComment.reaction;
-                bool hasReaction = reaction != null;
+                    PostCommentReaction reaction = postComment.reaction;
+                    bool hasReaction = reaction != null;
 
-                OBTheme activeTheme = _themeService.getActiveTheme();
+                    OBTheme activeTheme = _themeService.getActiveTheme();
 
-                return hasReaction
-                    ? OBText(
-                        reaction.getEmojiKeyword(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: _themeValueParserService
-                                .parseGradient(activeTheme.primaryAccentColor)
-                                .colors[1]),
-                      )
-                    : OBSecondaryText(
-                        'React',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      );
-              })),
-    );
+                    return hasReaction
+                        ? OBText(
+                            reaction.getEmojiKeyword(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: _themeValueParserService
+                                    .parseGradient(
+                                        activeTheme.primaryAccentColor)
+                                    .colors[1]),
+                          )
+                        : OBSecondaryText(
+                            'React',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          );
+                  })),
+        ));
   }
 
   Widget _buildReplyButton() {
-    User loggedInUser = _userService.getLoggedInUser();
 
-    if (!widget.showReplyAction ||
-        !loggedInUser.canReplyPostComment(widget.postComment))
-      return const SizedBox();
-
-    return Expanded(
-      child: FlatButton(
-          onPressed: _replyToPostComment,
-          child: OBSecondaryText(
+    return Padding(
+        padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
+        child: GestureDetector(
+          onTap: _replyToPostComment,
+          child: SizedBox(
+              child: OBSecondaryText(
             'Reply',
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
             style: TextStyle(fontWeight: FontWeight.bold),
           )),
-    );
+        ));
   }
 
   @override
