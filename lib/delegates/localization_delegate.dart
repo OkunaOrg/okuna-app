@@ -10,7 +10,32 @@ class LocalizationServiceDelegate
 
   @override
   bool isSupported(Locale locale) {
-    return ['es', 'en', 'nl'].contains(locale.languageCode);
+    return ['en',
+            'es',
+            'nl',
+            'ar',
+            'zh',
+            'zh-TW',
+            'cs',
+            'da',
+            'fi',
+            'fr',
+            'de',
+            'he',
+            'hi',
+            'id',
+            'it',
+            'ja',
+            'ko',
+            'ms',
+            'no',
+            'fa',
+            'pl',
+            'pt',
+            'ru',
+            'sv',
+            'tr' ]
+        .contains(locale.languageCode);
   }
 
   @override
