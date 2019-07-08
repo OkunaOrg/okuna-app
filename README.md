@@ -188,7 +188,7 @@ flutter run --profile
 2. Run `make generate_locale`
 3. Upload assets/i18n/en folder's contents to crowdin
 4. Apply the translations on crowdin, then build and download
-5. Copy the contents of the downloaded archive to assets/i18n (only what we need for the app, though, might write a script for that or automate it)
+5. Copy the contents of the downloaded archive to assets/i18n 
 6. Run `make build_locale`
 
 ### 8. Contribute! 

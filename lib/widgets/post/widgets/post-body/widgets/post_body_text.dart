@@ -1,4 +1,5 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/services/user.dart';
@@ -25,6 +26,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
 
   ToastService _toastService;
   UserService _userService;
+  LocalizationService _localizationService;
   BuildContext _context;
   String _translatedText;
   bool _translationInProgress;
@@ -40,6 +42,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   Widget build(BuildContext context) {
     _toastService = OpenbookProvider.of(context).toastService;
     _userService = OpenbookProvider.of(context).userService;
+    _localizationService = OpenbookProvider.of(context).localizationService;
     _context = context;
 
     return GestureDetector(
@@ -119,8 +122,8 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       child: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: _translatedText != null ?
-        OBSecondaryText('Show original', size: OBTextSize.large):
-        OBSecondaryText('See translation', size: OBTextSize.large),
+        OBSecondaryText(_localizationService.trans('translate__show_original'), size: OBTextSize.large):
+        OBSecondaryText(_localizationService.trans('translate__see_translation'), size: OBTextSize.large),
       ),
     );
   }

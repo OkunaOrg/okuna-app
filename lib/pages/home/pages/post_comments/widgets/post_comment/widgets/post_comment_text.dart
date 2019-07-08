@@ -2,6 +2,7 @@ import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
@@ -30,19 +31,16 @@ class OBPostCommentText extends StatefulWidget {
 
 class OBPostCommentTextState extends State<OBPostCommentText> {
   String _translatedText;
-  CancelableOperation _requestOperation;
-
-  bool _needsBootstrap;
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
 
   @override
   void initState() {
     super.initState();
     _requestInProgress = false;
-    _needsBootstrap = true;
   }
 
   @override
@@ -50,6 +48,7 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
     OpenbookProviderState provider = OpenbookProvider.of(context);
     _toastService = provider.toastService;
     _userService = provider.userService;
+    _localizationService = provider.localizationService;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -94,8 +93,8 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
       return GestureDetector(
         onTap: _toggleTranslatePostComment,
         child: _translatedText != null ?
-          OBSecondaryText('Show original', size: OBTextSize.large):
-          OBSecondaryText('See translation', size: OBTextSize.large),
+          OBSecondaryText(_localizationService.trans('translate__show_original'), size: OBTextSize.large):
+          OBSecondaryText(_localizationService.trans('translate__see_translation'), size: OBTextSize.large),
 
       );
     } else {

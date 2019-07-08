@@ -299,6 +299,14 @@ class LocalizationService {
     return Intl.message("Change Password", name: 'settings__change_password');
   }
 
+  String get translate__see_translation {
+    return Intl.message("See translation", name: 'translate__see_translation');
+  }
+
+  String get translate__show_original {
+    return Intl.message("Show original", name: 'translate__show_original');
+  }
+
   Locale getLocale() {
     return locale;
   }
