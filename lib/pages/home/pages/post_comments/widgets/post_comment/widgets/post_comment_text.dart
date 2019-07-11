@@ -1,3 +1,4 @@
+import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
@@ -14,11 +15,13 @@ import 'package:flutter/services.dart';
 
 class OBPostCommentText extends StatefulWidget {
   final PostComment postComment;
+  final Post post;
   final VoidCallback onUsernamePressed;
   final int postCommentMaxVisibleLength = 500;
 
 
   OBPostCommentText(this.postComment,
+      this.post,
       {Key key, this.onUsernamePressed})
       : super(key: key);
 
@@ -108,10 +111,11 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
         _setRequestInProgress(true);
         CancelableOperation<String> _getTranslationOperation =
         CancelableOperation.fromFuture(
-            _userService.getTranslatedText(
-                text: widget.postComment.text,
-                sourceLanguageCode: widget.postComment.getLanguage().code,
-                targetLanguageCode: _userService.getUserLanguage().code));
+            _userService.getTranslatedPostCommentText(
+                postCommentId: widget.postComment.id,
+                postUuid: widget.post.uuid,
+              )
+        );
 
         String translatedText = await _getTranslationOperation.value;
         _setPostCommentTranslatedText(translatedText);

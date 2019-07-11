@@ -24,6 +24,7 @@ import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
+import 'package:Openbook/translation/constants.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/badges/badge.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -430,7 +431,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         _modalService.openAcceptGuidelines(context: context);
       }
 
-      if (newUser.language == null) {
+      if (newUser.language == null || !supportedLanguages.contains(newUser.language.code)) {
         _userService.setLanguageFromDefaults();
       }
     }

@@ -54,7 +54,6 @@ import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
 import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/translate_api_service.dart';
 import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
@@ -92,7 +91,6 @@ class UserService {
   DevicesApiService _devicesApiService;
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
-  TranslateApiService _translateApiService;
   LocalizationService _localizationService;
 
   // If this is null, means user logged out.
@@ -175,10 +173,6 @@ class UserService {
 
   void setWaitlistApiService(WaitlistApiService waitlistApiService) {
     _waitlistApiService = waitlistApiService;
-  }
-
-  void setTranslateApiService(TranslateApiService translateApiService) {
-    _translateApiService = translateApiService;
   }
 
   void setLocalizationsService(LocalizationService localizationService) {
@@ -693,17 +687,6 @@ class UserService {
     HttpieResponse response = await this._authApiService.setNewLanguage(newLanguage);
     _checkResponseIsOk(response);
     await refreshUser();
-  }
-
-  Future<String> getTranslatedText({String text, String sourceLanguageCode, String targetLanguageCode}) async {
-    HttpieResponse response = await this._translateApiService.translateText(
-      text: text,
-      sourceLanguageCode: sourceLanguageCode,
-      targetLanguageCode: targetLanguageCode
-    );
-
-    _checkResponseIsOk(response);
-    return json.decode(response.body)['translated_text'];
   }
 
   Future<User> getUserWithUsername(String username) async {
@@ -1777,6 +1760,28 @@ class UserService {
     return ModerationCategoriesList.fromJson(json.decode(response.body));
   }
 
+  Future<String> getTranslatedPostText({@required String postUuid}) async {
+    HttpieResponse response =
+    await _postsApiService.translatePost(postUuid: postUuid);
+
+    _checkResponseIsOk(response);
+
+    return json.decode(response.body)['translated_text'];
+  }
+
+  Future<String> getTranslatedPostCommentText({
+    @required String postUuid,
+    @required int postCommentId}) async {
+    HttpieResponse response =
+    await _postsApiService.translatePostComment(
+        postUuid: postUuid, postCommentId: postCommentId
+    );
+
+    _checkResponseIsOk(response);
+
+    return json.decode(response.body)['translated_text'];
+  }
+
   Future<String> _getDeviceName() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
@@ -1829,8 +1834,9 @@ class UserService {
     Language deviceLanguage = languageList.languages.firstWhere((Language language) {
       return language.code.toLowerCase() == currentLocale.languageCode.toLowerCase();
     });
+
     if (deviceLanguage != null) {
-      print('Setting language from device ${currentLocale.languageCode}');
+      print('Setting language from defaults ${currentLocale.languageCode}');
       return await setNewLanguage(deviceLanguage);
     } else {
       Language english = languageList.languages.firstWhere((Language language) => language.code.toLowerCase() == 'en');

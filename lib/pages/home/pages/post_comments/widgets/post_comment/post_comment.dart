@@ -89,6 +89,7 @@ class OBPostCommentState extends State<OBPostComment> {
             ),
             OBPostCommentText(
               widget.postComment,
+              widget.post,
               onUsernamePressed: () {
                 _navigationService.navigateToUserProfile(
                     user: widget.postComment.commenter, context: context);
