@@ -4,7 +4,6 @@ import 'dart:ui';
 
 const supportedLocales = [
   const Locale('en', 'US'),
-// const Locale('es', 'ES'),
 // const Locale('nl', 'NL'),
 // const Locale('ar', 'SA'),
 // const Locale('zh', 'CN'),
@@ -30,7 +29,5 @@ const supportedLocales = [
 // const Locale('tr', 'TR'),
 ];
 
-const supportedLanguages = [
-  'en'
-];
+var supportedLanguages = supportedLocales.map((Locale locale) => locale.languageCode).toList();
 
