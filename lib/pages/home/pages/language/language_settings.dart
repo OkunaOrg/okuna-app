@@ -1,6 +1,7 @@
 import 'package:Openbook/models/language.dart';
 import 'package:Openbook/models/language_list.dart';
 import 'package:Openbook/pages/home/pages/language/widgets/language_selectable_tile.dart';
+import 'package:Openbook/translation/constants.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
@@ -38,6 +39,7 @@ class OBLanguageSettingsPageState
     _needsBootstrap = true;
     _bootstrapInProgress = true;
     _isSetLanguageInProgress = false;
+    _allLanguages = [];
   }
 
   @override
@@ -57,7 +59,7 @@ class OBLanguageSettingsPageState
             size: OBButtonSize.small,
             type: OBButtonType.primary,
             isLoading: _isSetLanguageInProgress,
-            isDisabled: _selectedLanguage.code == _currentUserLanguage.code,
+            isDisabled: _selectedLanguage != null && _selectedLanguage.code == _currentUserLanguage.code,
             onPressed: () => _saveNewLanguage(context),
             child: Text('Save'),
           ),
@@ -128,8 +130,9 @@ class OBLanguageSettingsPageState
   }
 
   void _setLanguagesList(LanguagesList list) {
+    List<Language> supportedList = list.languages.where((Language language) => supportedLanguages.contains(language.code)).toList();
     setState(() {
-      _allLanguages = list.languages;
+      _allLanguages = supportedList;
     });
   }
 
