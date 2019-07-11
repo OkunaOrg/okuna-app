@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,11 +34,13 @@ class LocalizationService {
         openbookProvider.userService.loggedInUserChange.listen((User newUser) {
       String _userLanguageCode = newUser != null && newUser.hasLanguage() ? newUser.language.code: null;
       Locale _currentLocale = Localizations.localeOf(context);
-      if (_userLanguageCode != null && _userLanguageCode != _currentLocale.languageCode) {
+      if (_userLanguageCode != null
+          && supportedLocales.contains(_userLanguageCode)
+          && _userLanguageCode != _currentLocale.languageCode) {
         print('Overriding locale ${_currentLocale.languageCode} with user locale: $_userLanguageCode');
         MyApp.setLocale(context, Locale(_userLanguageCode, ''));
       }
-       _onLoggedInUserChangeSubscription.cancel();
+      _onLoggedInUserChangeSubscription.cancel();
     });
 
     return Localizations.of<LocalizationService>(context, LocalizationService);

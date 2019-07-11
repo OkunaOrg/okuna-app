@@ -10,7 +10,6 @@ import 'package:Openbook/services/devices_api.dart';
 import 'package:Openbook/services/dialog.dart';
 import 'package:Openbook/services/documents.dart';
 import 'package:Openbook/services/intercom.dart';
-import 'package:Openbook/services/translate_api_service.dart';
 import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
@@ -92,7 +91,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ModalService modalService = ModalService();
   NavigationService navigationService = NavigationService();
   WaitlistApiService waitlistApiService = WaitlistApiService();
-  TranslateApiService translateApiService = TranslateApiService();
 
   LocalizationService localizationService;
   UniversalLinksService universalLinksService = UniversalLinksService();
@@ -129,7 +127,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     followsApiService.setHttpService(httpService);
     createAccountBloc.setAuthApiService(authApiService);
     createAccountBloc.setUserService(userService);
-    translateApiService.setHttpService(httpService);
     userService.setAuthApiService(authApiService);
     userService.setPostsApiService(postsApiService);
     userService.setEmojisApiService(emojisApiService);
@@ -146,7 +143,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setDevicesApiService(devicesApiService);
     userService.setCreateAccountBlocService(createAccountBloc);
     userService.setWaitlistApiService(waitlistApiService);
-    userService.setTranslateApiService(translateApiService);
     waitlistApiService.setHttpService(httpService);
     userService.setModerationApiService(moderationApiService);
     emojisApiService.setHttpService(httpService);
@@ -191,7 +187,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
-    translateApiService.setApiURL(environment.apiUrl);
     waitlistApiService.setOpenbookSocialApiURL(environment.openbookSocialApiUrl);
     intercomService.bootstrap(
         iosApiKey: environment.intercomIosKey,

@@ -24,6 +24,7 @@ import 'package:Openbook/plugins/desktop/error-reporting.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/widgets/toast.dart';
+import 'package:Openbook/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
@@ -68,39 +69,16 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
               // initialise locale from device
-              if (this.locale == null) {
-                this.locale = deviceLocale;
+              if (this.locale == null && supportedLocales.contains(deviceLocale.languageCode)) {
+                  this.locale = deviceLocale;
+              } else {
+                print('Locale ${deviceLocale.languageCode} not supported, defaulting to en');
+                this.locale = Locale('en', 'US');
               }
               return this.locale;
             },
             title: 'Openspace',
-            supportedLocales: [
-              const Locale('en', 'US'),
-              const Locale('es', 'ES'),
-              const Locale('nl', 'NL'),
-              const Locale('ar', 'SA'),
-              const Locale('zh', 'CN'),
-              const Locale('zh-TW', 'TW'),
-              const Locale('cs', 'CZ'),
-              const Locale('da', 'DK'),
-              const Locale('fi', 'FI'),
-              const Locale('fr', 'FR'),
-              const Locale('de', 'DE'),
-              const Locale('he', 'IL'),
-              const Locale('hi', 'IN'),
-              const Locale('id', 'ID'),
-              const Locale('it', 'IT'),
-              const Locale('ja', 'JP'),
-              const Locale('ko', 'KR'),
-              const Locale('ms', 'MY'),
-              const Locale('no', 'NO'),
-              const Locale('fa', 'IR'),
-              const Locale('pl', 'PL'),
-              const Locale('pt', 'BR'),
-              const Locale('ru', 'RU'),
-              const Locale('sv', 'SE'),
-              const Locale('tr', 'TR'),
-            ],
+            supportedLocales: supportedLocales,
             localizationsDelegates: [
               const LocalizationServiceDelegate(),
               GlobalMaterialLocalizations.delegate,

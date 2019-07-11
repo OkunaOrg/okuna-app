@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:Openbook/services/localization.dart';
+import 'package:Openbook/translation/constants.dart';
 import 'package:flutter/material.dart';
 
 class LocalizationServiceDelegate
@@ -10,32 +11,7 @@ class LocalizationServiceDelegate
 
   @override
   bool isSupported(Locale locale) {
-    return ['en',
-            'es',
-            'nl',
-            'ar',
-            'zh',
-            'zh-TW',
-            'cs',
-            'da',
-            'fi',
-            'fr',
-            'de',
-            'he',
-            'hi',
-            'id',
-            'it',
-            'ja',
-            'ko',
-            'ms',
-            'no',
-            'fa',
-            'pl',
-            'pt',
-            'ru',
-            'sv',
-            'tr' ]
-        .contains(locale.languageCode);
+    return supportedLocales.contains(locale);
   }
 
   @override
@@ -45,7 +21,7 @@ class LocalizationServiceDelegate
 
       locale = Locale('en', 'US'); // fallback to default language
     }
-
+    print('Setting localisation service with ${locale.languageCode}');
     LocalizationService localizations = new LocalizationService(locale);
     await localizations.load();
     return localizations;
