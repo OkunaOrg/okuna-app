@@ -169,6 +169,7 @@ class NotificationType {
 
   static const _values = const <NotificationType>[
     postReaction,
+    postCommentReaction,
     postComment,
     postCommentReply,
     postCommentReaction,
