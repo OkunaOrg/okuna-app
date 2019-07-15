@@ -30,7 +30,7 @@ class OBNotificationFilter extends StatelessWidget {
             : OBIconThemeColor.primaryText),
         onPressed: () => _toggleFilter(null),
       ),
-      _createFilterButton([NotificationType.postReaction]),
+      _createFilterButton([NotificationType.postReaction, NotificationType.postCommentReaction]),
       _createFilterButton(
           [NotificationType.postComment, NotificationType.postCommentReply]),
       _createFilterButton([NotificationType.connectionRequest, NotificationType.connectionConfirmed]),
@@ -54,6 +54,7 @@ class OBNotificationFilter extends StatelessWidget {
   OBIconData _getIcon(NotificationType value) {
     switch (value) {
       case NotificationType.postReaction:
+      case NotificationType.postCommentReaction:
         return OBIcons.react;
       case NotificationType.postComment:
       case NotificationType.postCommentReply:
