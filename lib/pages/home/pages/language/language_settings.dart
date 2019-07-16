@@ -24,6 +24,7 @@ class OBLanguageSettingsPage extends StatefulWidget {
 class OBLanguageSettingsPageState
     extends State<OBLanguageSettingsPage> {
   Language _selectedLanguage;
+  Locale _selectedLocale;
   Language _currentUserLanguage;
   List<Language> _allLanguages;
   UserService _userService;
@@ -114,7 +115,7 @@ class OBLanguageSettingsPageState
     _setSaveInProgress(true);
     try {
       await _userService.setNewLanguage(_selectedLanguage);
-      MyApp.setLocale(context, Locale(_selectedLanguage.code, ''));
+      MyApp.setLocale(context, _selectedLocale);
       _showLanguageChangedSuccessToast();
       Navigator.pop(context);
     } catch(error) {
@@ -139,6 +140,14 @@ class OBLanguageSettingsPageState
   void _setSelectedLanguageInWidget(Language language) {
     setState(() {
       _selectedLanguage = language;
+    });
+    _setSelectedLocaleFromLanguage(language);
+  }
+
+  void _setSelectedLocaleFromLanguage(Language language) {
+    Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == language.code);
+    setState(() {
+      _selectedLocale = supportedMatchedLocale;
     });
   }
 

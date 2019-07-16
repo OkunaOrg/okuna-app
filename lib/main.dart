@@ -69,9 +69,10 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
               // initialise locale from device
-              if (this.locale == null && supportedLocales.contains(deviceLocale.languageCode)) {
-                  this.locale = deviceLocale;
-              } else {
+              if (deviceLocale != null && this.locale == null && supportedLanguages.contains(deviceLocale.languageCode)) {
+                  Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == deviceLocale.languageCode);
+                  this.locale = supportedMatchedLocale;
+              } else if (this.locale == null) {
                 print('Locale ${deviceLocale.languageCode} not supported, defaulting to en');
                 this.locale = Locale('en', 'US');
               }
@@ -188,7 +189,7 @@ class _MyAppState extends State<MyApp> {
     var localizationService = LocalizationService.of(context);
     if (this.locale.languageCode != localizationService.getLocale().languageCode) {
       Future.delayed(Duration(milliseconds: 0), () {
-        MyApp.setLocale(context, Locale(this.locale.languageCode, ''));
+        MyApp.setLocale(context, this.locale);
       });
     }
     openbookProvider.setLocalizationService(localizationService);

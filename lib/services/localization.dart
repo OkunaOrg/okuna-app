@@ -35,10 +35,11 @@ class LocalizationService {
       String _userLanguageCode = newUser != null && newUser.hasLanguage() ? newUser.language.code: null;
       Locale _currentLocale = Localizations.localeOf(context);
       if (_userLanguageCode != null
-          && supportedLocales.contains(_userLanguageCode)
+          && supportedLanguages.contains(_userLanguageCode)
           && _userLanguageCode != _currentLocale.languageCode) {
-        print('Overriding locale ${_currentLocale.languageCode} with user locale: $_userLanguageCode');
-        MyApp.setLocale(context, Locale(_userLanguageCode, ''));
+        Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == _userLanguageCode);
+        print('Overriding locale $_currentLocale with user locale: $supportedMatchedLocale');
+        MyApp.setLocale(context, supportedMatchedLocale);
       }
       _onLoggedInUserChangeSubscription.cancel();
     });
