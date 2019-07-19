@@ -1,5 +1,6 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/fields/checkbox_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/moderated_object_status_circle.dart';
@@ -9,6 +10,8 @@ import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../provider.dart';
 
 class OBModeratedObjectsFiltersModal extends StatefulWidget {
   final OBModeratedObjectsPageController moderatedObjectsPageController;
@@ -26,6 +29,7 @@ class OBModeratedObjectsFiltersModal extends StatefulWidget {
 class OBModeratedObjectsFiltersModalState
     extends State<OBModeratedObjectsFiltersModal> {
   bool _requestInProgress;
+  LocalizationService _localizationService;
 
   List<ModeratedObjectType> _types;
   List<ModeratedObjectType> _selectedTypes;
@@ -67,6 +71,9 @@ class OBModeratedObjectsFiltersModalState
 
   @override
   Widget build(BuildContext context) {
+    var provider = OpenbookProvider.of(context);
+    _localizationService = provider.localizationService;
+
     return CupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
@@ -83,7 +90,7 @@ class OBModeratedObjectsFiltersModalState
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('Reset'),
+                      child: Text(_localizationService.trans('moderation__filters_reset')),
                       onPressed: _onWantsToResetFilters,
                     ),
                   ),
@@ -106,7 +113,7 @@ class OBModeratedObjectsFiltersModalState
   }
 
   Widget _buildApplyFiltersText() {
-    String text = 'Apply filters';
+    String text = _localizationService.trans('moderation__filters_apply');
     int filterCount = _countFilters();
     if (filterCount > 0) {
       String friendlyCount = filterCount.toString();
@@ -119,7 +126,7 @@ class OBModeratedObjectsFiltersModalState
     return ListView(
       children: <Widget>[
         OBTileGroupTitle(
-          title: 'Type',
+          title: _localizationService.trans('moderation__filters_type')
         ),
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
@@ -128,7 +135,7 @@ class OBModeratedObjectsFiltersModalState
           itemCount: _types.length,
         ),
         OBTileGroupTitle(
-          title: 'Status',
+          title: _localizationService.trans('moderation__filters_status')
         ),
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
@@ -137,7 +144,7 @@ class OBModeratedObjectsFiltersModalState
           itemCount: _statuses.length,
         ),
         OBTileGroupTitle(
-          title: 'Other',
+          title: _localizationService.trans('moderation__filters_other')
         ),
         _buildIsVerifiedListTile()
       ],
@@ -195,7 +202,7 @@ class OBModeratedObjectsFiltersModalState
         Expanded(
           child: OBCheckboxField(
             titleStyle: TextStyle(fontWeight: FontWeight.normal),
-            title: 'Verified',
+            title: _localizationService.trans('moderation__filters_verified'),
             value: _onlyVerified,
             onTap: () {
               setState(() {
@@ -216,7 +223,7 @@ class OBModeratedObjectsFiltersModalState
             Navigator.pop(context);
           },
         ),
-        title: 'Moderation Filters');
+        title: _localizationService.trans('moderation__filters_title'));
   }
 
   void _onWantsToApplyFilters() async {

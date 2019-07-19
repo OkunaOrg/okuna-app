@@ -1,8 +1,11 @@
 import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_nickname.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../../provider.dart';
 
 class OBUserInviteDetailHeader extends StatelessWidget {
   final UserInvite userInvite;
@@ -11,6 +14,7 @@ class OBUserInviteDetailHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     return StreamBuilder(
         stream: this.userInvite.updateSubject,
@@ -20,7 +24,7 @@ class OBUserInviteDetailHeader extends StatelessWidget {
 
           List<Widget> columnItems = [_buildUserInviteNickname(userInvite)];
 
-          columnItems.add(_buildUserDescription(userInvite));
+          columnItems.add(_buildUserDescription(userInvite, localizationService));
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,14 +48,14 @@ class OBUserInviteDetailHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildUserDescription(UserInvite userInvite) {
+  Widget _buildUserDescription(UserInvite userInvite, LocalizationService localizationService) {
     Widget _description;
     if (userInvite.createdUser != null) {
-      _description = OBActionableSmartText(text: 'Joined with username @${userInvite.createdUser.username}');
+      _description = OBActionableSmartText(text:localizationService.user__invites_joined_with(userInvite.createdUser.username));
     } else if (userInvite.isInviteEmailSent) {
-      _description = OBText('Pending, invite email sent to ${userInvite.email}');
+      _description = OBText(localizationService.user__invites_pending_email(userInvite.email));
     } else {
-      _description = OBText('Pending');
+      _description = OBText(localizationService.user__invites_pending);
     }
 
     return Padding(

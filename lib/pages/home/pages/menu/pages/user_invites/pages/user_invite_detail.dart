@@ -1,5 +1,6 @@
 import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_detail_header.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/user_invites_api.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -33,9 +34,9 @@ class OBUserInviteDetailPage extends StatefulWidget {
 }
 
 class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
-  UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
+  LocalizationService _localizationService;
   UserInvitesApiService _userInvitesApiService;
   bool _needsBootstrap;
 
@@ -48,9 +49,9 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
   @override
   Widget build(BuildContext context) {
     var provider = OpenbookProvider.of(context);
-    _userService = provider.userService;
     _toastService = provider.toastService;
     _modalService = provider.modalService;
+    _localizationService = provider.localizationService;
     _userInvitesApiService = provider.userInvitesApiService;
 
     if (_needsBootstrap) {
@@ -60,7 +61,7 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
-          title: 'Invite',
+          title: _localizationService.user__invites_invite_text,
           trailing: _buildNavigationBarTrailingItem(),
         ),
         child: OBPrimaryColorContainer(
@@ -92,9 +93,9 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
     return [
       ListTile(
         leading: const OBIcon(OBIcons.chat),
-        title: const OBText('Share invite yourself'),
-        subtitle: const OBSecondaryText(
-          'Choose from messaging apps, etc.',
+        title: OBText(_localizationService.user__invites_share_yourself),
+        subtitle: OBSecondaryText(
+          _localizationService.user__invites_share_yourself_desc,
         ),
         onTap: () {
           String apiURL = _userInvitesApiService.apiURL;
@@ -104,9 +105,9 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
       ),
       ListTile(
         leading: const OBIcon(OBIcons.email),
-        title: const OBText('Share invite by email'),
-        subtitle: const OBSecondaryText(
-          'We will send an invitation email with instructions on your behalf',
+        title: OBText(_localizationService.user__invites_share_email),
+        subtitle: OBSecondaryText(
+          _localizationService.user__invites_share_email_desc,
         ),
         onTap: () async {
          await _modalService.openSendUserInviteEmail(
@@ -127,7 +128,7 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
             userInvite: widget.userInvite,
             context: context);
       },
-      child: OBPrimaryAccentText('Edit'),
+      child: OBPrimaryAccentText(_localizationService.user__invites_edit_text),
     );
   }
 
@@ -139,7 +140,7 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

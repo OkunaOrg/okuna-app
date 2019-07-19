@@ -3,6 +3,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
@@ -28,6 +29,7 @@ class OBTrendingPosts extends StatefulWidget {
 class OBTrendingPostsState extends State<OBTrendingPosts> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   List<Post> _posts;
   bool _needsBootstrap;
@@ -63,6 +65,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -83,7 +86,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
               return Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 20, vertical: 10),
-                child: OBPrimaryAccentText('Trending posts',
+                child: OBPrimaryAccentText(_localizationService.post__trending_posts_title,
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 24)),
               );
@@ -106,9 +109,9 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
       children: <Widget>[
         OBButtonAlert(
           text:
-          'There are no trending posts. Try refreshing in a couple seconds.',
+          _localizationService.post__trending_posts_no_trending_posts,
           onPressed: refresh,
-          buttonText: 'Refresh',
+          buttonText: _localizationService.post__trending_posts_refresh,
           buttonIcon: OBIcons.refresh,
           assetImage: 'assets/images/stickers/perplexed-owl.png',
         )
@@ -170,7 +173,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

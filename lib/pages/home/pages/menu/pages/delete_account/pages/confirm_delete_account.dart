@@ -1,4 +1,5 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -24,6 +25,7 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
 
   @override
@@ -39,11 +41,12 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: 'Confirmation'),
+        navigationBar: OBThemedNavigationBar(title: _localizationService.user__delete_account_confirmation_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -64,7 +67,7 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
                       height: 20,
                     ),
                     OBText(
-                      'Are you sure you want to delete your account?',
+                      _localizationService.user__delete_account_confirmation_desc,
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -72,8 +75,8 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
                     const SizedBox(
                       height: 40,
                     ),
-                    const OBText(
-                        'This is a permanent action and can\'t be undone.')
+                    OBText(
+                        _localizationService.user__delete_account_confirmation_desc_info)
                   ],
                 ),
               ),
@@ -86,7 +89,7 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('No'),
+                      child: Text(_localizationService.user__delete_account_confirmation_no),
                       onPressed: _onCancel,
                     ),
                   ),
@@ -96,7 +99,7 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text('Yes'),
+                      child: Text(_localizationService.user__delete_account_confirmation_yes),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -112,7 +115,7 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
     _setConfirmationInProgress(true);
     try {
       await _userService.deleteAccountWithPassword(widget.userPassword);
-      _toastService.info(message: 'Goodbye 😢', context: context);
+      _toastService.info(message: _localizationService.user__delete_account_confirmation_goodbye, context: context);
       Future.delayed(Duration(seconds: 3), () {
         return _userService.logout();
       });
@@ -136,7 +139,7 @@ class OBConfirmDeleteAccountState extends State<OBConfirmDeleteAccount> {
         Navigator.pop(context, false);
       }
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

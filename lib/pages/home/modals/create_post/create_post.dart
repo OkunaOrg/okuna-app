@@ -11,6 +11,7 @@ import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -46,6 +47,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   NavigationService _navigationService;
   ImagePickerService _imagePickerService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   UserService _userService;
 
   TextEditingController _textController;
@@ -109,6 +111,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     _navigationService = openbookProvider.navigationService;
     _imagePickerService = openbookProvider.imagePickerService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
 
     return CupertinoPageScaffold(
@@ -133,7 +136,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           Navigator.pop(context);
         },
       ),
-      title: 'New post',
+      title: _localizationService.trans('post__create_new'),
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -145,7 +148,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (widget.community != null) {
       return OBButton(
           type: OBButtonType.primary,
-          child: Text('Share'),
+          child: Text(_localizationService.trans('post__share')),
           size: OBButtonSize.small,
           onPressed: _createCommunityPost,
           isDisabled: !isEnabled || _isCreateCommunityPostInProgress,
@@ -154,12 +157,12 @@ class CreatePostModalState extends State<CreatePostModal> {
       if (isEnabled) {
         nextButton = GestureDetector(
           onTap: _onWantsToGoNext,
-          child: const OBText('Next'),
+          child: OBText(_localizationService.trans('post__create_next')),
         );
       } else {
         nextButton = Opacity(
           opacity: 0.5,
-          child: const OBText('Next'),
+          child: OBText(_localizationService.trans('post__create_next')),
         );
       }
     }
@@ -259,7 +262,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   List<Widget> _getImagePostActions() {
     return [
       OBPillButton(
-        text: 'Photo',
+        text: _localizationService.trans('post__create_photo'),
         color: Pigment.fromString('#FCC14B'),
         icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
@@ -349,7 +352,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

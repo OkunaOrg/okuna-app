@@ -1,5 +1,6 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class OBCommunityButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> communityButtons = [];
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-
+    LocalizationService localizationService = openbookProvider.localizationService;
     communityButtons.add(
       OBButton(
         child: Row(
@@ -22,7 +23,7 @@ class OBCommunityButtons extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            const Text('Staff')
+            Text(localizationService.trans('community__button_staff'))
           ],
         ),
         onPressed: () async {
@@ -42,7 +43,7 @@ class OBCommunityButtons extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              const Text('Rules')
+              Text(localizationService.trans('community__button_rules'))
             ],
           ),
           onPressed: () async {

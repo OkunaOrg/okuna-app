@@ -1,4 +1,5 @@
 import 'package:Openbook/models/user_notifications_settings.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/push_notifications/push_notifications.dart';
 import 'package:Openbook/widgets/fields/toggle_field.dart';
 import 'package:Openbook/provider.dart';
@@ -25,6 +26,7 @@ class OBNotificationsSettingsPageState
   UserService _userService;
   PushNotificationsService _pushNotificationsService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   bool _needsBootstrap;
   bool _bootstrapInProgress;
@@ -63,6 +65,7 @@ class OBNotificationsSettingsPageState
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _pushNotificationsService = openbookProvider.pushNotificationsService;
       _bootstrap();
       _needsBootstrap = false;
@@ -70,7 +73,7 @@ class OBNotificationsSettingsPageState
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
-          title: 'Notifications settings',
+          title: _localizationService.trans('notifications__settings_title'),
         ),
         child: OBPrimaryColorContainer(
           child: SingleChildScrollView(
@@ -105,8 +108,8 @@ class OBNotificationsSettingsPageState
     List<Widget> toggles = [
       OBToggleField(
         value: _pushNotifications,
-        title: 'Notifications',
-        subtitle: OBText('Be notified when something happens'),
+        title: _localizationService.trans('notifications__general_title'),
+        subtitle: OBText(_localizationService.trans('notifications__general_desc')),
         onChanged: _setPushNotifications,
         onTap: _togglePushNotifications,
         hasDivider: false,
@@ -118,8 +121,8 @@ class OBNotificationsSettingsPageState
         OBDivider(),
         OBToggleField(
           value: _followNotifications,
-          title: 'Follow',
-          subtitle: OBText('Be notified when someone starts following you'),
+          title: _localizationService.trans('notifications__follow_title'),
+          subtitle: OBText(_localizationService.trans('notifications__follow_desc')),
           onChanged: _setFollowNotifications,
           onTap: _toggleFollowNotifications,
           hasDivider: false,
@@ -127,9 +130,9 @@ class OBNotificationsSettingsPageState
         listItemSeparator,
         OBToggleField(
           value: _connectionRequestNotifications,
-          title: 'Connection request',
+          title: _localizationService.trans('notifications__connection_title'),
           subtitle:
-              OBText('Be notified when someone wants to connect with you'),
+              OBText(_localizationService.trans('notifications__connection_desc')),
           onChanged: _setConnectionRequestNotifications,
           onTap: _toggleConnectionRequestNotifications,
           hasDivider: false,
@@ -137,27 +140,27 @@ class OBNotificationsSettingsPageState
         listItemSeparator,
         OBToggleField(
           value: _postCommentNotifications,
-          title: 'Post comment',
+          title: _localizationService.trans('notifications__comment_title'),
           subtitle: OBText(
-              'Be notified when someone comments on one of your posts or one you also commented.'),
+              _localizationService.trans('notifications__comment_desc')),
           onChanged: _setPostCommentNotifications,
           onTap: _togglePostCommentNotifications,
           hasDivider: false,
         ),
         OBToggleField(
           value: _postCommentReplyNotifications,
-          title: 'Post comment reply',
+          title: _localizationService.trans('notifications__comment_reply_title'),
           subtitle: OBText(
-              'Be notified when someone replies to one of your comments or one you also replied to.'),
+              _localizationService.trans('notifications__comment_reply_desc')),
           onChanged: _setPostCommentReplyNotifications,
           onTap: _togglePostCommentReplyNotifications,
           hasDivider: false,
         ),
         OBToggleField(
           value: _postCommentReactionNotifications,
-          title: 'Post comment reaction',
+          title: _localizationService.trans('notifications__comment_reaction_title'),
           subtitle: OBText(
-              'Be notified when someone reacts on one of your post commments.'),
+              _localizationService.trans('notifications__comment_reaction_desc')),
           onChanged: _setPostCommentReactionNotifications,
           onTap: _togglePostCommentReactionNotifications,
           hasDivider: false,
@@ -165,18 +168,18 @@ class OBNotificationsSettingsPageState
         listItemSeparator,
         OBToggleField(
           value: _postReactionNotifications,
-          title: 'Post reaction',
+          title: _localizationService.trans('notifications__post_reaction_title'),
           subtitle:
-              OBText('Be notified when someone reacts on one of your posts'),
+              OBText(_localizationService.trans('notifications__post_reaction_desc'),),
           onChanged: _setPostReactionNotifications,
           onTap: _togglePostReactionNotifications,
           hasDivider: false,
         ),
         OBToggleField(
           value: _communityInviteNotifications,
-          title: 'Community invite',
+          title: _localizationService.trans('notifications__community_invite_title'),
           subtitle: OBText(
-              'Be notified when someone invites you to join a community'),
+              _localizationService.trans('notifications__community_invite_desc')),
           onChanged: _setCommunityInviteNotifications,
           onTap: _toggleCommunityInviteNotifications,
           hasDivider: false,
@@ -343,7 +346,7 @@ class OBNotificationsSettingsPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

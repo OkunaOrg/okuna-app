@@ -58,7 +58,9 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
   }
 
   Widget _buildHooray() {
-    var title = localizationService.trans('auth__create_acc__done_title');
+    String title = localizationService.trans('auth__create_acc__done_title');
+    String usernameSubtext = localizationService.trans('auth__create_acc__done_subtext');
+    String accCreated = localizationService.trans('auth__create_acc__done_created');
 
     String username = createAccountBloc.getUsername();
 
@@ -89,7 +91,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
                 color: Colors.black,
               ),
               children: [
-                TextSpan(text: 'Your account has been created with username '),
+                TextSpan(text: accCreated),
                 TextSpan(
                     text: '@$username',
                     style: TextStyle(fontWeight: FontWeight.bold)),
@@ -99,7 +101,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         const SizedBox(
           height: 20.0,
         ),
-        Text('You can change this in your profile settings.',
+        Text(usernameSubtext,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16
                 //color: Colors.white

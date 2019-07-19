@@ -1,6 +1,7 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -29,6 +30,7 @@ class OBConfirmAddCommunityModeratorState
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
 
   @override
@@ -46,11 +48,12 @@ class OBConfirmAddCommunityModeratorState
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: 'Confirmation'),
+        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -71,7 +74,7 @@ class OBConfirmAddCommunityModeratorState
                       height: 20,
                     ),
                     OBText(
-                      'Are you sure you want to add @$username as a community moderator?',
+                      _localizationService.community__moderator_add_confirmation(username),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -79,8 +82,7 @@ class OBConfirmAddCommunityModeratorState
                     const SizedBox(
                       height: 40,
                     ),
-                    const OBText(
-                        'This will allow the member to edit the community details, moderators, moderators and banned users.')
+                    OBText(_localizationService.trans('community__moderator_desc'))
                   ],
                 ),
               ),
@@ -93,7 +95,7 @@ class OBConfirmAddCommunityModeratorState
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('No'),
+                      child: Text(_localizationService.trans('community__no')),
                       onPressed: _onCancel,
                     ),
                   ),
@@ -103,7 +105,7 @@ class OBConfirmAddCommunityModeratorState
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text('Yes'),
+                      child: Text(_localizationService.trans('community__yes')),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -136,7 +138,7 @@ class OBConfirmAddCommunityModeratorState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

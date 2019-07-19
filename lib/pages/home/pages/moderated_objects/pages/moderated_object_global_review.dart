@@ -7,6 +7,7 @@ import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/modera
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/moderated_object_status.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -39,6 +40,7 @@ class OBModeratedObjectGlobalReviewPageState
 
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
 
   CancelableOperation _requestOperation;
@@ -59,13 +61,14 @@ class OBModeratedObjectGlobalReviewPageState
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Review moderated object',
+        title: _localizationService.moderation__global_review_title,
       ),
       child: OBPrimaryColorContainer(
         child: Column(
@@ -74,7 +77,7 @@ class OBModeratedObjectGlobalReviewPageState
               child: ListView(
                 children: <Widget>[
                   OBTileGroupTitle(
-                    title: 'Object',
+                    title: _localizationService.moderation__global_review_object_text,
                   ),
                   OBModeratedObjectPreview(
                     moderatedObject: widget.moderatedObject,
@@ -138,7 +141,7 @@ class OBModeratedObjectGlobalReviewPageState
                   const SizedBox(
                     width: 10,
                   ),
-                  Text('Unverify')
+                  Text(_localizationService.moderation__global_review_unverify_text)
                 ],
               ),
               onPressed: _onWantsToUnverifyModeratedObject,
@@ -159,7 +162,7 @@ class OBModeratedObjectGlobalReviewPageState
                   const SizedBox(
                     width: 10,
                   ),
-                  Text('Verify')
+                  Text(_localizationService.moderation__global_review_verify_text)
                 ],
               ),
               onPressed: _onWantsToVerifyModeratedObject,
@@ -244,7 +247,7 @@ class OBModeratedObjectGlobalReviewPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

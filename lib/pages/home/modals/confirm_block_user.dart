@@ -1,6 +1,7 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -25,6 +26,7 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
 
   @override
@@ -42,11 +44,12 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: 'Confirmation'),
+        navigationBar: OBThemedNavigationBar(title: _localizationService.user__confirm_block_user_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -67,7 +70,7 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                       height: 20,
                     ),
                     OBText(
-                      'Are you sure you want to block @$username?',
+                      _localizationService.user__confirm_block_user_question(username),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -75,8 +78,8 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                     const SizedBox(
                       height: 40,
                     ),
-                    const OBText(
-                        'You won\'t see each other posts nor be able to interact in any way.')
+                    OBText(
+                        _localizationService.user__confirm_block_user_info)
                   ],
                 ),
               ),
@@ -89,7 +92,7 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('No'),
+                      child: Text(_localizationService.user__confirm_block_user_no),
                       onPressed: _onCancel,
                     ),
                   ),
@@ -99,7 +102,7 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text('Yes'),
+                      child: Text(_localizationService.user__confirm_block_user_yes),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -116,7 +119,7 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
     try {
       await _userService.blockUser(widget.user);
       Navigator.of(context).pop(true);
-      _toastService.success(message: 'User blocked.', context: context);
+      _toastService.success(message: _localizationService.user__confirm_block_user_blocked, context: context);
     } catch (error) {
       _onError(error);
     } finally {
@@ -132,7 +135,7 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

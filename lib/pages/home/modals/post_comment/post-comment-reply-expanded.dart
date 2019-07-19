@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_ch
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -44,8 +45,8 @@ class OBPostCommentReplyExpandedModal extends StatefulWidget {
 class OBPostCommentReplyExpandedModalState
     extends State<OBPostCommentReplyExpandedModal> {
   ValidationService _validationService;
-  NavigationService _navigationService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   UserService _userService;
 
   TextEditingController _textController;
@@ -65,7 +66,7 @@ class OBPostCommentReplyExpandedModalState
     _textController.addListener(_onPostCommentTextChanged);
     _charactersCount = 0;
     _isPostCommentTextAllowedLength = false;
-    String hintText = 'Your reply...';
+    String hintText = _localizationService.post__comment_reply_expanded_reply_hint_text;
     _postCommentItemsWidgets = [
       OBCreatePostText(controller: _textController, hintText: hintText)
     ];
@@ -85,6 +86,7 @@ class OBPostCommentReplyExpandedModalState
     _validationService = openbookProvider.validationService;
     _navigationService = openbookProvider.navigationService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
 
     //Scroll to bottom
@@ -116,7 +118,7 @@ class OBPostCommentReplyExpandedModalState
           Navigator.pop(context);
         },
       ),
-      title: 'Reply comment',
+      title: _localizationService.post__comment_reply_expanded_reply_comment,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -128,7 +130,7 @@ class OBPostCommentReplyExpandedModalState
       isLoading: _requestInProgress,
       size: OBButtonSize.small,
       onPressed: _onWantsToReplyComment,
-      child: Text('Post'),
+      child: Text(_localizationService.post__comment_reply_expanded_post),
     );
   }
 
@@ -230,7 +232,7 @@ class OBPostCommentReplyExpandedModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

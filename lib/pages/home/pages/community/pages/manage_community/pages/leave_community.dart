@@ -1,5 +1,6 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -25,6 +26,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
 
   @override
@@ -40,11 +42,12 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: 'Confirmation'),
+        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -64,8 +67,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    OBText(
-                      'Are you sure you want to leave the community?',
+                    OBText(_localizationService.trans('community__moderators_desc'),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -73,8 +75,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    const OBText(
-                        'You won\'t see it\'s posts in your timeline nor will be able to post to it anymore.')
+                    OBText(_localizationService.trans('community__moderators_desc'))
                   ],
                 ),
               ),
@@ -87,7 +88,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('No'),
+                      child: Text(_localizationService.trans('community__no')),
                       onPressed: _onCancel,
                     ),
                   ),
@@ -97,7 +98,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text('Yes'),
+                      child: Text(_localizationService.trans('community__yes')),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -132,7 +133,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

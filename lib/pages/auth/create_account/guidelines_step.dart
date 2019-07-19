@@ -66,7 +66,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
           Padding(
             padding: EdgeInsets.only(top: 30, left: 20, right: 20),
             child: Text(
-              'Please take a moment to read and accept our guidelines.',
+              _localizationService.user__guidelines_desc,
               style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -160,7 +160,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -177,7 +177,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      child: Text('Accept', style: TextStyle(fontSize: 18.0)),
+      child: Text(_localizationService.user__guidelines_accept, style: TextStyle(fontSize: 18.0)),
       isDisabled: !_acceptButtonEnabled &&
           !_createAccountBloc.areGuidelinesAccepted() &&
           _communityGuidelines.isNotEmpty,

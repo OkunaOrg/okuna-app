@@ -1,6 +1,7 @@
 import 'package:Openbook/models/language.dart';
 import 'package:Openbook/models/language_list.dart';
 import 'package:Openbook/pages/home/pages/language/widgets/language_selectable_tile.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/translation/constants.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
 import 'package:Openbook/provider.dart';
@@ -29,6 +30,7 @@ class OBLanguageSettingsPageState
   List<Language> _allLanguages;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   bool _needsBootstrap;
   bool _bootstrapInProgress;
@@ -49,20 +51,21 @@ class OBLanguageSettingsPageState
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
-          title: 'Language settings',
+          title: _localizationService.user__language_settings_title,
           trailing: OBButton(
             size: OBButtonSize.small,
             type: OBButtonType.primary,
             isLoading: _isSetLanguageInProgress,
             isDisabled: _selectedLanguage != null && _selectedLanguage.code == _currentUserLanguage.code,
             onPressed: () => _saveNewLanguage(context),
-            child: Text('Save'),
+            child: Text(_localizationService.user__language_settings_save),
           ),
         ),
         child: OBPrimaryColorContainer(
@@ -188,13 +191,13 @@ class OBLanguageSettingsPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
 
   void _showLanguageChangedSuccessToast() {
-    _toastService.success(message: 'Language changed successfully', context: context);
+    _toastService.success(message: _localizationService.user__language_settings_saved_success, context: context);
   }
 
   void _setBootstrapInProgress(bool bootstrapInProgress) {
