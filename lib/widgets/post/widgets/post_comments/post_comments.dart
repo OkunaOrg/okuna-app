@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -13,6 +14,7 @@ class OBPostComments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return StreamBuilder(
       stream: _post.updateSubject,
       initialData: _post,
@@ -20,6 +22,7 @@ class OBPostComments extends StatelessWidget {
         int commentsCount = _post.commentsCount;
         var openbookProvider = OpenbookProvider.of(context);
         var navigationService = openbookProvider.navigationService;
+        LocalizationService _localizationService = openbookProvider.localizationService;
 
         bool isClosed = _post.isClosed ?? false;
         bool hasComments = commentsCount != null && commentsCount > 0;
@@ -42,7 +45,7 @@ class OBPostComments extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: OBSecondaryText('View all $commentsCount comments'),
+              child: OBSecondaryText(_localizationService.post__comments_view_all_comments(commentsCount)),
             ),
           ));
         }
@@ -63,7 +66,7 @@ class OBPostComments extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                const OBSecondaryText('Closed post')
+                OBSecondaryText(_localizationService.post__comments_closed_post)
               ],
             ));
           }
@@ -80,7 +83,7 @@ class OBPostComments extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                const OBSecondaryText('Comments disabled')
+                OBSecondaryText(_localizationService.post__comments_disabled)
               ],
             ));
           }

@@ -2,6 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -24,6 +25,7 @@ class OBInviteUserToCommunityButtonState
     extends State<OBInviteUserToCommunityButton> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -37,6 +39,7 @@ class OBInviteUserToCommunityButtonState
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     User loggedInUser = _userService.getLoggedInUser();
 
@@ -79,7 +82,7 @@ class OBInviteUserToCommunityButtonState
       type: OBButtonType.primary,
       isLoading: _requestInProgress,
       onPressed: _inviteUser,
-      child: Text('Invite'),
+      child: Text(_localizationService.trans('user__invite')),
     );
   }
 
@@ -89,7 +92,7 @@ class OBInviteUserToCommunityButtonState
       type: OBButtonType.highlight,
       isLoading: _requestInProgress,
       onPressed: _uninviteUser,
-      child: Text('Uninvite'),
+      child: Text(_localizationService.trans('user__uninvite')),
     );
   }
 
@@ -100,7 +103,7 @@ class OBInviteUserToCommunityButtonState
       isDisabled: true,
       isLoading: _requestInProgress,
       onPressed: () {},
-      child: Text('Member'),
+      child: Text(_localizationService.trans('user__invite_member')),
     );
   }
 
@@ -136,7 +139,7 @@ class OBInviteUserToCommunityButtonState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

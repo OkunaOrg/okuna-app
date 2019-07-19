@@ -1,4 +1,5 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -16,7 +17,6 @@ class OBClearApplicationCacheTile extends StatefulWidget {
 class OBClearApplicationCacheTileState
     extends State<OBClearApplicationCacheTile> {
   bool _inProgress;
-  ToastService _toastService;
 
   @override
   initState() {
@@ -26,26 +26,28 @@ class OBClearApplicationCacheTileState
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+
     return OBLoadingTile(
       leading: OBIcon(OBIcons.clear),
-      title: OBText('Clear cache'),
-      subtitle: OBSecondaryText('Clear cached posts, accounts, images & more.'),
+      title: OBText(localizationService.user__clear_application_cache_text),
+      subtitle: OBSecondaryText(localizationService.user__clear_application_cache_desc),
       isLoading: _inProgress,
-      onTap: _clearApplicationCache,
+      onTap: () => _clearApplicationCache(localizationService),
     );
   }
 
-  Future _clearApplicationCache() async {
+  Future _clearApplicationCache(LocalizationService localizationService) async {
     _setInProgress(true);
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     try {
       await openbookProvider.userService.clearCache();
       openbookProvider.toastService
-          .success(message: 'Cleared cache successfully', context: context);
+          .success(message: localizationService.user__clear_application_cache_success, context: context);
     } catch (error) {
       openbookProvider.toastService
-          .error(message: 'Could not clear cache', context: context);
+          .error(message: localizationService.user__clear_application_cache_failure, context: context);
       rethrow;
     } finally {
       _setInProgress(false);

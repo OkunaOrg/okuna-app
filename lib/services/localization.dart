@@ -84,6 +84,14 @@ class LocalizationService {
   String get auth__create_acc__paste_link_help_text {
     return Intl.message("Use the link from the Join Openbook button in your invitation email.", name: 'auth__create_acc__paste_link_help_text');
   }
+  String get auth__reset_password_success_title {
+    return Intl.message("All set!",
+        name: 'auth__reset_password_success_title');
+  }
+  String get auth__reset_password_success_info {
+    return Intl.message("Your password has been updated successfully",
+        name: 'auth__reset_password_success_info');
+  }
   String get auth__create_acc__request_invite {
     return Intl.message("No invite? Request one here.", name: 'auth__create_acc__request_invite');
   }
@@ -159,6 +167,9 @@ class LocalizationService {
   String get auth__create_acc__what_password {
     return Intl.message("Choose a password", name: 'auth__create_acc__what_password');
   }
+  String get auth__create_acc_password_hint_text {
+    return Intl.message("(10-100 characters)", name: 'auth__create_acc_password_hint_text');
+  }
   String get auth__create_acc__what_password_subtext {
     return Intl.message("(min 10 chars.)", name: 'auth__create_acc__what_password_subtext');
   }
@@ -167,6 +178,9 @@ class LocalizationService {
   }
   String get auth__create_acc__password_length_error {
     return Intl.message("😅 A password must be between 8 and 64 characters.", name: 'auth__create_acc__password_length_error');
+  }
+  String get auth__create_acc__password_characters {
+    return Intl.message("(10-100 characters)", name: 'auth__create_acc__password_characters');
   }
   String get auth__create_acc__what_avatar {
     return Intl.message("Choose a profile picture", name: 'auth__create_acc__what_avatar');
@@ -185,6 +199,12 @@ class LocalizationService {
   }
   String get auth__create_acc__done {
     return Intl.message("Create account", name: 'auth__create_acc__done');
+  }
+  String get auth__create_acc__done_subtext {
+    return Intl.message("You can change this in your profile settings.", name: 'auth__create_acc__done_subtext');
+  }
+  String get auth__create_acc__done_created {
+    return Intl.message("Your account has been created with username ", name: 'auth__create_acc__done_created');
   }
   String get auth__create_acc__enter {
     return Intl.message("Enter", name: 'auth__create_acc__enter');
@@ -218,6 +238,15 @@ class LocalizationService {
   }
   String get auth__create_acc__done_continue {
     return Intl.message("Login", name: 'auth__create_acc__done_continue');
+  }
+  String get auth__create_acc__one_last_thing {
+    return Intl.message("One last thing...", name: 'auth__create_acc__one_last_thing');
+  }
+  String get auth__create_acc__register {
+    return Intl.message("Register", name: 'auth__create_acc__register');
+  }
+  String get auth__create_acc__are_you_legal_age {
+    return Intl.message("Are you older than 16 years?", name: 'auth__create_acc__are_you_legal_age');
   }
   String get auth__login__login {
     return Intl.message("Continue", name: 'auth__login__login');
@@ -273,7 +302,91 @@ class LocalizationService {
   String get auth__login__connection_error {
     return Intl.message("We can't reach our servers. Are you connected to the internet?", name: 'auth__login__connection_error');
   }
+  String get auth__change_password_title {
+    return Intl.message("Change password",
+        name: 'auth__change_password_title');
+  }
+  String get auth__change_password_current_pwd {
+    return Intl.message("Current password",
+        name: 'auth__change_password_current_pwd');
+  }
+  String get auth__change_password_current_pwd_hint {
+    return Intl.message("Enter your current password",
+        name: 'auth__change_password_current_pwd_hint');
+  }
+  String get auth__change_password_current_pwd_incorrect {
+    return Intl.message("Entered password was incorrect",
+        name: 'auth__change_password_current_pwd_incorrect');
+  }
+  String get auth__change_password_new_pwd {
+    return Intl.message("New password",
+        name: 'auth__change_password_new_pwd');
+  }
+  String get auth__change_password_new_pwd_hint {
+    return Intl.message("Enter your new password",
+        name: 'auth__change_password_new_pwd_hint');
+  }
+  String get auth__change_password_new_pwd_error {
+    return Intl.message("Please ensure password is between 10 and 100 characters long",
+        name: 'auth__change_password_new_pwd_error');
+  }
+  String get auth__change_password_save_text {
+    return Intl.message("Save",
+        name: 'auth__change_password_save_text');
+  }
+  String get auth__change_password_save_success {
+    return Intl.message("All good! Your password has been updated",
+        name: 'auth__change_password_save_success');
+  }
 
+  String get drawer__menu_title {
+    return Intl.message("Menu",
+        name: 'drawer__menu_title');
+  }
+  String get drawer__main_title {
+    return Intl.message("My openspace",
+        name: 'drawer__main_title');
+  }
+  String get drawer__my_circles {
+    return Intl.message("My circles",
+        name: 'drawer__my_circles');
+  }
+  String get drawer__my_lists {
+    return Intl.message("My lists",
+        name: 'drawer__my_lists');
+  }
+  String get drawer__my_followers {
+    return Intl.message("My followers",
+        name: 'drawer__my_followers');
+  }
+  String get drawer__my_following {
+    return Intl.message("My following",
+        name: 'drawer__my_following');
+  }
+  String get drawer__my_invites {
+    return Intl.message("My invites",
+        name: 'drawer__my_invites');
+  }
+  String get drawer__my_pending_mod_tasks {
+    return Intl.message("My pending moderation tasks",
+        name: 'drawer__my_pending_mod_tasks');
+  }
+  String get drawer__my_mod_penalties {
+    return Intl.message("My moderation penalties",
+        name: 'drawer__my_mod_penalties');
+  }
+  String get drawer__app_account_text {
+    return Intl.message("App & Account",
+        name: 'drawer__app_account_text');
+  }
+  String get drawer__themes {
+    return Intl.message("Themes",
+        name: 'drawer__themes');
+  }
+  String get drawer__global_moderation {
+    return Intl.message("Global moderation",
+        name: 'drawer__global_moderation');
+  }
   String get drawer__profile {
     return Intl.message("Profile", name: 'drawer__profile');
   }
@@ -284,7 +397,36 @@ class LocalizationService {
     return Intl.message("My lists", name: 'drawer__lists');
   }
   String get drawer__settings {
-    return Intl.message("Account Settings", name: 'drawer__settings');
+    return Intl.message("Settings", name: 'drawer__settings');
+  }
+  String get drawer__application_settings {
+    return Intl.message("Application Settings", name: 'drawer__application_settings');
+  }
+  String get drawer__account_settings {
+    return Intl.message("Account Settings", name: 'drawer__account_settings');
+  }
+  String get drawer__account_settings_change_email {
+    return Intl.message("Change Email", name: 'drawer__account_settings_change_email');
+  }
+  String get drawer__account_settings_change_password {
+    return Intl.message("Change Password", name: 'drawer__account_settings_change_password');
+  }
+  String get drawer__account_settings_notifications {
+    return Intl.message("Notifications", name: 'drawer__account_settings_notifications');
+  }
+  String get drawer__account_settings_language_text {
+    return Intl.message("Language", name: 'drawer__account_settings_language_text');
+  }
+  String drawer__account_settings_language(String currentUserLanguage) {
+    return Intl.message("Language ($currentUserLanguage)",
+        args: [currentUserLanguage],
+        name: 'drawer__account_settings_language');
+  }
+  String get drawer__account_settings_blocked_users {
+    return Intl.message("Blocked users", name: 'drawer__account_settings_blocked_users');
+  }
+  String get drawer__account_settings_delete_account {
+    return Intl.message("Delete account", name: 'drawer__account_settings_delete_account');
   }
   String get drawer__help {
     return Intl.message("Support & Feedback", name: 'drawer__help');
@@ -295,12 +437,56 @@ class LocalizationService {
   String get drawer__logout {
     return Intl.message("Log out", name: 'drawer__logout');
   }
-
-  String get settings__change_email {
-    return Intl.message("Change Email", name: 'settings__change_email');
+  String get drawer__useful_links_title {
+    return Intl.message("Useful links", name: 'drawer__useful_links_title');
   }
-  String get settings__change_password {
-    return Intl.message("Change Password", name: 'settings__change_password');
+  String get drawer__useful_links_guidelines {
+    return Intl.message("Openspace guidelines",
+        name: 'drawer__useful_links_guidelines');
+  }
+  String get drawer__useful_links_guidelines_desc {
+    return Intl.message("The guidelines we're all expected to follow for a healthy and friendly co-existence.",
+        name: 'drawer__useful_links_guidelines_desc');
+  }
+  String get drawer__useful_links_guidelines_github {
+    return Intl.message("Github project board",
+        name: 'drawer__useful_links_guidelines_github');
+  }
+  String get drawer__useful_links_guidelines_github_desc {
+    return Intl.message("Take a look at what we're currently working on",
+        name: 'drawer__useful_links_guidelines_github_desc');
+  }
+  String get drawer__useful_links_guidelines_feature_requests {
+    return Intl.message("Feature requests",
+        name: 'drawer__useful_links_guidelines_feature_requests');
+  }
+  String get drawer__useful_links_guidelines_feature_requests_desc {
+    return Intl.message("Request a feature or upvote existing requests",
+        name: 'drawer__useful_links_guidelines_feature_requests_desc');
+  }
+  String get drawer__useful_links_guidelines_bug_tracker {
+    return Intl.message("Bug tracker",
+        name: 'drawer__useful_links_guidelines_bug_tracker');
+  }
+  String get drawer__useful_links_guidelines_bug_tracker_desc {
+    return Intl.message("Report a bug or upvote existing bugs",
+        name: 'drawer__useful_links_guidelines_bug_tracker_desc');
+  }
+  String get drawer__useful_links_guidelines_handbook {
+    return Intl.message("Openspace handbook",
+        name: 'drawer__useful_links_guidelines_handbook');
+  }
+  String get drawer__useful_links_guidelines_handbook_desc {
+    return Intl.message("A book with everything there is to know about using the platform",
+        name: 'drawer__useful_links_guidelines_handbook_desc');
+  }
+  String get drawer__useful_links_slack_channel {
+    return Intl.message("Community slack channel",
+        name: 'drawer__useful_links_slack_channel');
+  }
+  String get drawer__useful_links_slack_channel_desc {
+    return Intl.message("A place to discuss everything about Openspace",
+        name: 'drawer__useful_links_slack_channel_desc');
   }
 
   String get translate__see_translation {
@@ -310,6 +496,1492 @@ class LocalizationService {
   String get translate__show_original {
     return Intl.message("Show original", name: 'translate__show_original');
   }
+
+  String get error__unknown_error {
+    return Intl.message("Unknown error", name: 'error__unknown_error');
+  }
+
+  String get community__no {
+    return Intl.message("No", name: 'community__no');
+  }
+
+  String get community__yes {
+    return Intl.message("Yes", name: 'community__yes');
+  }
+
+  String get community__button_staff {
+    return Intl.message("Staff", name: 'community__button_staff');
+  }
+
+  String get community__button_rules {
+    return Intl.message("Rules", name: 'community__button_rules');
+  }
+
+  String get community__community {
+    return Intl.message("community", name: 'community__community');
+  }
+
+  String get community__communities {
+    return Intl.message("communities", name: 'community__communities');
+  }
+
+  String get community__type_public {
+    return Intl.message("Public", name: 'community__type_public');
+  }
+
+  String get community__type_private {
+    return Intl.message("Private", name: 'community__type_private');
+  }
+
+  String get community__admin_desc {
+    return Intl.message("This will allow the member to edit the community details, administrators, moderators and banned users.",
+        name: 'community__admin_desc');
+  }
+
+  String get community__confirmation_title {
+    return Intl.message("Confirmation",
+        name: 'community__confirmation_title');
+  }
+
+  String community__admin_add_confirmation(String username) {
+    return Intl.message("Are you sure you want to add @$username as a community administrator?",
+        args: [username],
+        name: 'community__admin_add_confirmation');
+  }
+
+  String community__ban_confirmation(String username) {
+    return Intl.message("Are you sure you want to ban @$username?",
+        args: [username],
+        name: 'community__ban_confirmation');
+  }
+
+  String get community__ban_desc {
+    return Intl.message("This will remove the user from the community and disallow them from joining again.",
+        name: 'community__ban_desc');
+  }
+
+  String community__moderator_add_confirmation(String username) {
+    return Intl.message("Are you sure you want to add @$username as a community moderator?",
+        args: [username],
+        name: 'community__moderator_add_confirmation');
+  }
+
+  String get community__moderator_desc {
+    return Intl.message("This will allow the member to edit the community details, moderators and banned users.",
+        name: 'community__moderator_desc');
+  }
+
+  String get community__moderators_you {
+    return Intl.message("You",
+        name: 'community__moderators_you');
+  }
+
+  String get community__moderators_title {
+    return Intl.message("Moderators",
+        name: 'community__moderators_title');
+  }
+
+  String get community__moderators_desc {
+    return Intl.message("You won't see it's posts in your timeline nor will be able to post to it anymore.",
+        name: 'community__moderators_desc');
+  }
+
+  String get community__moderators_confirmation {
+    return Intl.message("Are you sure you want to leave the community?",
+        name: 'community__moderators_confirmation');
+  }
+
+  String get community__moderator_resource_name {
+    return Intl.message("moderator",
+        name: 'community__moderator_resource_name');
+  }
+
+  String get community__moderators_resource_name {
+    return Intl.message("moderators",
+        name: 'community__moderators_resource_name');
+  }
+
+  String get community__delete_confirmation {
+    return Intl.message("Are you sure you want to delete the community?",
+        name: 'community__delete_confirmation');
+  }
+
+  String get community__delete_desc {
+    return Intl.message("You won't see it's posts in your timeline nor will be able to post to it anymore.",
+        name: 'community__delete_desc');
+  }
+
+  String get community__manage_title {
+    return Intl.message("Manage community",
+        name: 'community__manage_title');
+  }
+
+  String get community__manage_details_title {
+    return Intl.message("Details",
+        name: 'community__manage_details_title');
+  }
+
+  String get community__manage_details_desc {
+    return Intl.message("Change the title, name, avatar, cover photo and more.",
+        name: 'community__manage_details_desc');
+  }
+
+  String get community__manage_admins_title {
+    return Intl.message("Administrators",
+        name: 'community__manage_admins_title');
+  }
+
+  String get community__manage_admins_desc {
+    return Intl.message("See, add and remove administrators.",
+        name: 'community__manage_admins_desc');
+  }
+
+  String get community__manage_mods_title {
+    return Intl.message("Moderators",
+        name: 'community__manage_mods_title');
+  }
+
+  String get community__manage_mods_desc {
+    return Intl.message("See, add and remove moderators.",
+        name: 'community__manage_mods_desc');
+  }
+
+  String get community__manage_banned_title {
+    return Intl.message("Banned users",
+        name: 'community__manage_banned_title');
+  }
+
+  String get community__manage_banned_desc {
+    return Intl.message("See, add and remove banned users.",
+        name: 'community__manage_banned_desc');
+  }
+
+  String get community__manage_mod_reports_title {
+    return Intl.message("Moderation reports",
+        name: 'community__manage_mod_reports_title');
+  }
+
+  String get community__manage_mod_reports_desc {
+    return Intl.message("Review the community moderation reports.",
+        name: 'community__manage_mod_reports_desc');
+  }
+
+  String get community__manage_closed_posts_title {
+    return Intl.message("Closed posts",
+        name: 'community__manage_closed_posts_title');
+  }
+
+  String get community__manage_closed_posts_desc {
+    return Intl.message("See and manage closed posts",
+        name: 'community__manage_closed_posts_desc');
+  }
+
+  String get community__manage_invite_title {
+    return Intl.message("Invite people",
+        name: 'community__manage_invite_title');
+  }
+
+  String get community__manage_invite_desc {
+    return Intl.message("Invite your connections and followers to join the community.",
+        name: 'community__manage_invite_desc');
+  }
+
+  String get community__manage_delete_title {
+    return Intl.message("Delete community",
+        name: 'community__manage_delete_title');
+  }
+
+  String get community__manage_delete_desc {
+    return Intl.message("Delete the community, forever." ,
+        name: 'community__manage_delete_desc');
+  }
+
+  String get community__manage_leave_title {
+    return Intl.message("Leave community",
+        name: 'community__manage_leave_title');
+  }
+
+  String get community__manage_leave_desc {
+    return Intl.message("Leave the community." ,
+        name: 'community__manage_leave_desc');
+  }
+
+  String get community__manage_add_favourite {
+    return Intl.message("Add the community to your favorites",
+        name: 'community__manage_add_favourite');
+  }
+
+  String get community__manage_remove_favourite {
+    return Intl.message("Remove the community to your favorites",
+        name: 'community__manage_remove_favourite');
+  }
+
+  String get community__is_private {
+    return Intl.message("This community is private.",
+        name: 'community__is_private');
+  }
+
+  String get community__invited_by_member {
+    return Intl.message("You must be invited by a member.",
+        name: 'community__invited_by_member');
+  }
+
+  String get community__invited_by_moderator {
+    return Intl.message("You must be invited by a moderator.",
+        name: 'community__invited_by_moderator');
+  }
+
+  String get community__refreshing {
+    return Intl.message("Refreshing community",
+        name: 'community__refreshing');
+  }
+
+  String get community__posts {
+    return Intl.message("Posts",
+        name: 'community__posts');
+  }
+
+  String get community__about {
+    return Intl.message("About",
+        name: 'community__about');
+  }
+
+  String get community__category {
+    return Intl.message("category.",
+        name: 'community__category');
+  }
+
+  String get community__categories {
+    return Intl.message("categories.",
+        name: 'community__categories');
+  }
+
+  String community__pick_upto_max(int max) {
+    return Intl.message("Pick up to $max categories",
+        args:[max],
+        name: 'community__pick_upto_max');
+  }
+
+  String community__pick_atleast_min(int min) {
+    return Intl.message("You must pick at least $min ",
+        args:[min],
+        name: 'community__pick_atleast_min');
+  }
+
+  String get user_search__communities {
+    return Intl.message("Communities",
+        name: 'user_search__communities');
+  }
+
+  String get user_search__users {
+    return Intl.message("Users",
+        name: 'user_search__users');
+  }
+
+  String get user_search__list_search_text {
+    return Intl.message("Search ",
+        name: 'user_search__list_search_text');
+  }
+
+  String get user_search__list_no_text {
+    return Intl.message("No ",
+        name: 'user_search__list_no_text');
+  }
+
+  String get user_search__list_found_text {
+    return Intl.message(" found.",
+        name: 'user_search__list_found_text');
+  }
+
+  String get user_search__list_refresh_text {
+    return Intl.message("Refresh",
+        name: 'user_search__list_refresh_text');
+  }
+
+  String get user_search__list_retry {
+    return Intl.message("Tap to retry.",
+        name: 'user_search__list_retry');
+  }
+
+  String get user_search__cancel {
+    return Intl.message("Cancel",
+        name: 'user_search__cancel');
+  }
+
+  String user_search__searching_for(String searchQuery) {
+    return Intl.message("Searching for '$searchQuery'",
+        args: [searchQuery],
+        name: 'user_search__searching_for');
+  }
+
+  String user_search__no_results_for(String searchQuery) {
+    return Intl.message("No results for '$searchQuery'.",
+        args: [searchQuery],
+        name: 'user_search__no_results_for');
+  }
+
+  String user_search__no_communities_for(String searchQuery) {
+    return Intl.message("'No communities found for '$searchQuery'.",
+        args: [searchQuery],
+        name: 'user_search__no_communities_for');
+  }
+
+  String user_search__no_users_for(String searchQuery) {
+    return Intl.message("'No users found for '$searchQuery'.",
+        args: [searchQuery],
+        name: 'user_search__no_users_for');
+  }
+
+  String get post__timeline_posts_all_loaded {
+    return Intl.message("🎉  All posts loaded",
+        name: 'post__timeline_posts_all_loaded');
+  }
+
+  String get post__timeline_posts_refreshing_drhoo_title {
+    return Intl.message("Hang in there!",
+        name: 'post__timeline_posts_refreshing_drhoo_title');
+  }
+
+  String get post__timeline_posts_refreshing_drhoo_subtitle {
+    return Intl.message("Loading your timeline.",
+        name: 'post__timeline_posts_refreshing_drhoo_subtitle');
+  }
+
+  String get post__timeline_posts_no_more_drhoo_title {
+    return Intl.message("Your timeline is empty.",
+        name: 'post__timeline_posts_no_more_drhoo_title');
+  }
+
+  String get post__timeline_posts_no_more_drhoo_subtitle {
+    return Intl.message("Follow users or join a community to get started!",
+        name: 'post__timeline_posts_no_more_drhoo_subtitle');
+  }
+
+  String get post__timeline_posts_failed_drhoo_title {
+    return Intl.message("Could not load your timeline.",
+        name: 'post__timeline_posts_failed_drhoo_title');
+  }
+
+  String get post__timeline_posts_failed_drhoo_subtitle {
+    return Intl.message("Try again in a couple seconds",
+        name: 'post__timeline_posts_failed_drhoo_subtitle');
+  }
+
+  String get post__timeline_posts_default_drhoo_title {
+    return Intl.message("Something's not right.",
+        name: 'post__timeline_posts_default_drhoo_title');
+  }
+
+  String get post__timeline_posts_default_drhoo_subtitle {
+    return Intl.message("Try refreshing the timeline.",
+        name: 'post__timeline_posts_default_drhoo_subtitle');
+  }
+
+  String get post__timeline_posts_refresh_posts {
+    return Intl.message("Refresh posts",
+        name: 'post__timeline_posts_refresh_posts');
+  }
+
+  String post__no_circles_for(String circlesSearchQuery) {
+    return Intl.message("'No circles found matching '$circlesSearchQuery'.",
+        args: [circlesSearchQuery],
+        name: 'post__no_circles_for');
+  }
+
+  String get post__share_to_circles {
+    return Intl.message("Share to circles",
+        name: 'post__share_to_circles');
+  }
+
+  String get post__action_comment {
+    return Intl.message("Comment",
+        name: 'post__action_comment');
+  }
+
+  String get post__share {
+    return Intl.message("Share",
+        name: 'post__share');
+  }
+
+  String get post__share_to {
+    return Intl.message("Share to",
+        name: 'post__share_to');
+  }
+
+  String get post__sharing_post_to {
+    return Intl.message("Sharing post to",
+        name: 'post__sharing_post_to');
+  }
+
+  String get post__you_shared_with {
+    return Intl.message("You shared with",
+        name: 'post__you_shared_with');
+  }
+
+  String get post__shared_privately_on {
+    return Intl.message("Shared privately on",
+        name: 'post__shared_privately_on');
+  }
+
+  String post__usernames_circles(String postCreatorUsername) {
+    return Intl.message("@$postCreatorUsername's circles",
+        args: [postCreatorUsername],
+        name: 'post__usernames_circles');
+  }
+
+  String get post__share_community {
+    return Intl.message("Share",
+        name: 'post__share_community');
+  }
+
+  String get post__share_to_community {
+    return Intl.message("Share to community",
+        name: 'post__share_to_community');
+  }
+
+  String get post__share_community_title {
+    return Intl.message("A community",
+        name: 'post__share_community_title');
+  }
+
+  String get post__share_community_desc {
+    return Intl.message("Share the post to a community you're part of.",
+        name: 'post__share_community_desc');
+  }
+
+  String get post__my_circles {
+    return Intl.message("My circles",
+        name: 'post__my_circles');
+  }
+
+  String get post__my_circles_desc {
+    return Intl.message("Share the post to one or multiple of your circles.",
+        name: 'post__my_circles_desc');
+  }
+
+  String get post__world_circle_name {
+    return Intl.message("World",
+        name: 'post__world_circle_name');
+  }
+
+  String get post__search_circles {
+    return Intl.message("Search circles...",
+        name: 'post__search_circles');
+  }
+
+  String get post__reaction_list_tap_retry {
+    return Intl.message("Tap to retry loading reactions.",
+        name: 'post__reaction_list_tap_retry');
+  }
+
+  String get post__create_new {
+    return Intl.message("New post",
+        name: 'post__create_new');
+  }
+
+  String get post__create_next {
+    return Intl.message("Next",
+        name: 'post__create_next');
+  }
+
+  String get post__create_photo {
+    return Intl.message("Photo",
+        name: 'post__create_photo');
+  }
+
+  String get post__commenter_post_text {
+    return Intl.message("Post",
+        name: 'post__commenter_post_text');
+  }
+
+  String get post__commenter_write_something {
+    return Intl.message("Write something...",
+        name: 'post__commenter_write_something');
+  }
+
+  String get post__edit_title {
+    return Intl.message("Edit post",
+        name: 'post__edit_title');
+  }
+
+  String get post__edit_save {
+    return Intl.message("Save",
+        name: 'post__edit_save');
+  }
+
+  String get post__commenter_expanded_save {
+    return Intl.message("Save",
+        name: 'post__commenter_expanded_save');
+  }
+
+  String get post__commenter_expanded_join_conversation {
+    return Intl.message("Join the conversation..",
+        name: 'post__commenter_expanded_join_conversation');
+  }
+
+  String get post__commenter_expanded_start_conversation {
+    return Intl.message("Start the conversation..",
+        name: 'post__commenter_expanded_start_conversation');
+  }
+
+  String get post__commenter_expanded_edit_comment {
+    return Intl.message("Edit comment",
+        name: 'post__commenter_expanded_edit_comment');
+  }
+
+  String get post__is_closed {
+    return Intl.message("Closed post",
+        name: 'post__is_closed');
+  }
+
+  String get post__comment_reply_expanded_reply_comment {
+    return Intl.message("Reply comment",
+        name: 'post__comment_reply_expanded_reply_comment');
+  }
+
+  String get post__comment_reply_expanded_post {
+    return Intl.message("Post",
+        name: 'post__comment_reply_expanded_post');
+  }
+
+  String get post__comment_reply_expanded_reply_hint_text {
+    return Intl.message("Your reply...",
+        name: 'post__comment_reply_expanded_reply_hint_text');
+  }
+
+  String get post__trending_posts_title {
+    return Intl.message("Trending posts",
+        name: 'post__trending_posts_title');
+  }
+
+  String get post__trending_posts_no_trending_posts {
+    return Intl.message("There are no trending posts. Try refreshing in a couple seconds.",
+        name: 'post__trending_posts_no_trending_posts');
+  }
+
+  String get post__trending_posts_refresh {
+    return Intl.message("Refresh",
+        name: 'post__trending_posts_refresh');
+  }
+
+  String post__comments_view_all_comments(String commentsCount) {
+    return Intl.message("View all $commentsCount comments",
+        args: [commentsCount],
+        name: 'post__comments_view_all_comments');
+  }
+
+  String get post__comments_closed_post {
+    return Intl.message("Closed post",
+        name: 'post__comments_closed_post');
+  }
+
+  String get post__comments_disabled {
+    return Intl.message("Comments disabled",
+        name: 'post__comments_disabled');
+  }
+
+  String user__edit_profile_user_name_taken(String username) {
+    return Intl.message("Username @$username is taken",
+        args: [username],
+        name: 'user__edit_profile_user_name_taken');
+  }
+
+  String get user__edit_profile_username {
+    return Intl.message("Username",
+        name: 'user__edit_profile_username');
+  }
+
+  String get user__emoji_field_none_selected {
+    return Intl.message("No emoji selected",
+        name: 'user__emoji_field_none_selected');
+  }
+
+  String user__emoji_search_none_found(String searchQuery) {
+    return Intl.message("No emoji found matching '$searchQuery'.",
+        args: [searchQuery],
+        name: 'user__emoji_search_none_found');
+  }
+
+  String get user__save_follows_list_name {
+    return Intl.message("Name",
+        name: 'user__save_follows_list_name');
+  }
+
+  String get user__save_follows_list_hint_text {
+    return Intl.message("e.g. Travel, Photography",
+        name: 'user__save_follows_list_hint_text');
+  }
+
+  String user__save_follows_list_name_taken (String listName){
+    return Intl.message("List name '$listName' is taken",
+        args: [listName],
+        name: 'user__save_follows_list_name_taken');
+  }
+
+  String get user__save_follows_list_emoji {
+    return Intl.message("Emoji is required",
+        name: 'user__save_follows_list_emoji');
+  }
+
+  String get user__save_follows_list_users {
+    return Intl.message("Users",
+        name: 'user__save_follows_list_users');
+  }
+
+  String get user__save_follows_list_edit {
+    return Intl.message("Edit list",
+        name: 'user__save_follows_list_edit');
+  }
+
+  String get user__save_follows_list_create {
+    return Intl.message("Create list",
+        name: 'user__save_follows_list_create');
+  }
+
+  String get user__save_follows_list_save {
+    return Intl.message("Save",
+        name: 'user__save_follows_list_save');
+  }
+
+  String get user__save_follows_list_emoji_required_error {
+    return Intl.message("Emoji",
+        name: 'user__save_follows_list_emoji_required_error');
+  }
+
+  String get user__follows_list_edit {
+    return Intl.message("Edit",
+        name: 'user__follows_list_edit');
+  }
+
+  String get user__follows_list_header_title {
+    return Intl.message("Users",
+        name: 'user__follows_list_header_title');
+  }
+
+  String get user__edit_profile_name {
+    return Intl.message("Name",
+        name: 'user__edit_profile_name');
+  }
+
+  String get user__edit_profile_url {
+    return Intl.message("Url",
+        name: 'user__edit_profile_url');
+  }
+
+  String get user__edit_profile_location {
+    return Intl.message("Location",
+        name: 'user__edit_profile_location');
+  }
+
+  String get user__edit_profile_bio {
+    return Intl.message("Bio",
+        name: 'user__edit_profile_bio');
+  }
+
+  String get user__edit_profile_followers_count {
+    return Intl.message("Followers count",
+        name: 'user__edit_profile_followers_count');
+  }
+
+  String get user__edit_profile_title {
+    return Intl.message("Edit profile",
+        name: 'user__edit_profile_title');
+  }
+
+  String get user__edit_profile_save_text {
+    return Intl.message("Save",
+        name: 'user__edit_profile_save_text');
+  }
+
+  String get user__edit_profile_pick_image {
+    return Intl.message("Pick image",
+        name: 'user__edit_profile_pick_image');
+  }
+
+  String get user__edit_profile_delete {
+    return Intl.message("Delete",
+        name: 'user__edit_profile_delete');
+  }
+
+  String user__edit_profile_pick_image_error_too_large(int limit) {
+    return Intl.message("Image too large (limit: $limit MB)",
+        args: [limit],
+        name: 'user__edit_profile_pick_image_error_too_large');
+  }
+
+  String get user__tile_following {
+    return Intl.message(" · Following",
+        name: 'user__tile_following');
+  }
+
+  String get user__tile_delete {
+    return Intl.message("Delete",
+        name: 'user__tile_delete');
+  }
+
+  String get user__invite {
+    return Intl.message("Invite",
+        name: 'user__invite');
+  }
+
+  String get user__uninvite {
+    return Intl.message("Uninvite",
+        name: 'user__uninvite');
+  }
+
+  String get user__invite_member {
+    return Intl.message("Member",
+        name: 'user__invite_member');
+  }
+
+  String get user__connections_header_circle_desc {
+    return Intl.message("The circle all of your connections get added to.",
+        name: 'user__connections_header_circle_desc');
+  }
+
+  String get user__connections_header_users {
+    return Intl.message("Users",
+        name: 'user__connections_header_users');
+  }
+
+  String get user__connection_pending {
+    return Intl.message("Pending",
+        name: 'user__connection_pending');
+  }
+
+  String get user__connection_circle_edit {
+    return Intl.message("Edit",
+        name: 'user__connection_circle_edit');
+  }
+
+  String get user__save_connection_circle_name {
+    return Intl.message("Name",
+        name: 'user__save_connection_circle_name');
+  }
+
+  String get user__save_connection_circle_hint {
+    return Intl.message("e.g. Friends, Family, Work.",
+        name: 'user__save_connection_circle_hint');
+  }
+
+  String get user__save_connection_circle_color_name {
+    return Intl.message("Color",
+        name: 'user__save_connection_circle_color_name');
+  }
+
+  String get user__save_connection_circle_color_hint {
+    return Intl.message("(Tap to change)",
+        name: 'user__save_connection_circle_color_hint');
+  }
+
+  String get user__save_connection_circle_users {
+    return Intl.message("Users",
+        name: 'user__save_connection_circle_users');
+  }
+
+  String get user__save_connection_circle_edit {
+    return Intl.message("Edit circle",
+        name: 'user__save_connection_circle_edit');
+  }
+
+  String get user__save_connection_circle_create {
+    return Intl.message("Create circle",
+        name: 'user__save_connection_circle_create');
+  }
+
+  String get user__save_connection_circle_save {
+    return Intl.message("Save",
+        name: 'user__save_connection_circle_save');
+  }
+
+  String get user__update_connection_circle_save {
+    return Intl.message("Save",
+        name: 'user__update_connection_circle_save');
+  }
+
+  String get user__update_connection_circle_updated {
+    return Intl.message("Connection updated",
+        name: 'user__update_connection_circle_updated');
+  }
+
+  String get user__update_connection_circles_title {
+    return Intl.message("Update connection circles",
+        name: 'user__update_connection_circles_title');
+  }
+
+  String user__confirm_connection_with(String userName) {
+    return Intl.message("Confirm connection with $userName",
+        args: [userName],
+        name: 'user__confirm_connection_with');
+  }
+
+  String get user__confirm_connection_add_connection {
+    return Intl.message("Add connection to circle",
+        name: 'user__confirm_connection_add_connection');
+  }
+
+  String get user__confirm_connection_connection_confirmed {
+    return Intl.message("Connection confirmed",
+        name: 'user__confirm_connection_connection_confirmed');
+  }
+
+  String get user__confirm_connection_confirm_text {
+    return Intl.message("Confirm",
+        name: 'user__confirm_connection_confirm_text');
+  }
+
+  String user__connect_to_user_connect_with_username (String userName) {
+    return Intl.message("Connect with $userName",
+        args: [userName],
+        name: 'user__connect_to_user_connect_with_username');
+  }
+
+  String get user__connect_to_user_add_connection {
+    return Intl.message("Add connection to circle",
+        name: 'user__connect_to_user_add_connection');
+  }
+
+  String get user__connect_to_user_done {
+    return Intl.message("Done",
+        name: 'user__connect_to_user_done');
+  }
+
+  String get user__connect_to_user_request_sent {
+    return Intl.message("Connection request sent",
+        name: 'user__connect_to_user_request_sent');
+  }
+
+  String get user__remove_account_from_list {
+    return Intl.message("Remove account from lists",
+        name: 'user__remove_account_from_list');
+  }
+
+  String get user__remove_account_from_list_success {
+    return Intl.message("Success",
+        name: 'user__remove_account_from_list_success');
+  }
+
+  String get user__confirm_block_user_title {
+    return Intl.message("Confirmation",
+        name: 'user__confirm_block_user_title');
+  }
+
+  String get user__confirm_block_user_info {
+    return Intl.message("You won't see each other posts nor be able to interact in any way.",
+        name: 'user__confirm_block_user_info');
+  }
+
+  String get user__confirm_block_user_yes {
+    return Intl.message("Yes",
+        name: 'user__confirm_block_user_yes');
+  }
+
+  String get user__confirm_block_user_no {
+    return Intl.message("No",
+        name: 'user__confirm_block_user_no');
+  }
+
+  String get user__confirm_block_user_blocked {
+    return Intl.message("User blocked.",
+        name: 'user__confirm_block_user_blocked');
+  }
+
+  String user__confirm_block_user_question(String username) {
+    return Intl.message("Are you sure you want to block @$username?",
+        args: [username],
+        name: 'user__confirm_block_user_question');
+  }
+
+  String user__save_connection_circle_name_taken(String takenConnectionsCircleName) {
+    return Intl.message("Circle name '$takenConnectionsCircleName' is taken",
+        args: [takenConnectionsCircleName],
+        name: 'user__save_connection_circle_name_taken');
+  }
+
+  String get user__timeline_filters_title {
+    return Intl.message("Timeline filters",
+        name: 'user__timeline_filters_title');
+  }
+
+  String get user__timeline_filters_search_desc {
+    return Intl.message("Search for circles and lists...",
+        name: 'user__timeline_filters_search_desc');
+  }
+
+  String get user__timeline_filters_clear_all {
+    return Intl.message("Clear all",
+        name: 'user__timeline_filters_clear_all');
+  }
+
+  String get user__timeline_filters_apply_all {
+    return Intl.message("Apply filters",
+        name: 'user__timeline_filters_apply_all');
+  }
+
+  String get user__timeline_filters_circles {
+    return Intl.message("Circles",
+        name: 'user__timeline_filters_circles');
+  }
+
+  String get user__timeline_filters_lists {
+    return Intl.message("Lists",
+        name: 'user__timeline_filters_lists');
+  }
+
+  String get user__delete_account_title {
+    return Intl.message("Delete account",
+        name: 'user__delete_account_title');
+  }
+
+  String get user__delete_account_current_pwd {
+    return Intl.message("Current Password",
+        name: 'user__delete_account_current_pwd');
+  }
+
+  String get user__delete_account_current_pwd_hint {
+    return Intl.message("Enter your current password",
+        name: 'user__delete_account_current_pwd_hint');
+  }
+
+  String get user__delete_account_next {
+    return Intl.message("Next",
+        name: 'user__delete_account_next');
+  }
+
+  String get user__delete_account_confirmation_title {
+    return Intl.message("Confirmation",
+        name: 'user__delete_account_confirmation_title');
+  }
+
+  String get user__delete_account_confirmation_desc {
+    return Intl.message("Are you sure you want to delete your account?",
+        name: 'user__delete_account_confirmation_desc');
+  }
+
+  String get user__delete_account_confirmation_desc_info {
+    return Intl.message("This is a permanent action and can't be undone.",
+        name: 'user__delete_account_confirmation_desc_info');
+  }
+
+  String get user__delete_account_confirmation_no {
+    return Intl.message("No",
+        name: 'user__delete_account_confirmation_no');
+  }
+
+  String get user__delete_account_confirmation_yes {
+    return Intl.message("Yes",
+        name: 'user__delete_account_confirmation_yes');
+  }
+
+  String get user__delete_account_confirmation_goodbye {
+    return Intl.message("Goodbye 😢",
+        name: 'user__delete_account_confirmation_goodbye');
+  }
+
+  String get user__invites_create_create_title {
+    return Intl.message("Create invite",
+        name: 'user__invites_create_create_title');
+  }
+
+  String get user__invites_create_edit_title {
+    return Intl.message("Edit invite",
+        name: 'user__invites_create_edit_title');
+  }
+
+  String get user__invites_create_save {
+    return Intl.message("Save",
+        name: 'user__invites_create_save');
+  }
+
+  String get user__invites_create_create {
+    return Intl.message("Create",
+        name: 'user__invites_create_create');
+  }
+
+  String get user__invites_create_name_title {
+    return Intl.message("Nickname",
+        name: 'user__invites_create_name_title');
+  }
+
+  String get user__invites_create_name_hint {
+    return Intl.message("e.g. Jane Doe",
+        name: 'user__invites_create_name_hint');
+  }
+
+  String get user__invites_pending {
+    return Intl.message("Pending",
+        name: 'user__invites_pending');
+  }
+
+  String get user__invites_delete {
+    return Intl.message("Delete",
+        name: 'user__invites_delete');
+  }
+
+  String get user__invites_invite_text {
+    return Intl.message("Invite",
+        name: 'user__invites_invite_text');
+  }
+
+  String get user__invites_share_yourself {
+    return Intl.message("Share invite yourself",
+        name: 'user__invites_share_yourself');
+  }
+
+  String get user__invites_share_yourself_desc {
+    return Intl.message("Choose from messaging apps, etc.",
+        name: 'user__invites_share_yourself_desc');
+  }
+
+  String get user__invites_share_email {
+    return Intl.message("Share invite by email",
+        name: 'user__invites_share_email');
+  }
+
+  String get user__invites_email_text {
+    return Intl.message("Email",
+        name: 'user__invites_email_text');
+  }
+
+  String get user__invites_email_hint {
+    return Intl.message("e.g. janedoe@email.com",
+        name: 'user__invites_email_hint');
+  }
+
+  String get user__invites_email_invite_text {
+    return Intl.message("Email invite",
+        name: 'user__invites_email_invite_text');
+  }
+
+  String get user__invites_email_send_text {
+    return Intl.message("Send",
+        name: 'user__invites_email_send_text');
+  }
+
+  String get user__invites_email_sent_text {
+    return Intl.message("Invite email sent",
+        name: 'user__invites_email_sent_text');
+  }
+
+  String get user__invites_share_email_desc {
+    return Intl.message("We will send an invitation email with instructions on your behalf",
+        name: 'user__invites_share_email_desc');
+  }
+
+  String get user__invites_edit_text {
+    return Intl.message("Edit",
+        name: 'user__invites_edit_text');
+  }
+
+  String get user__language_settings_title {
+    return Intl.message("Language settings", name: 'user__language_settings_title');
+  }
+
+  String get user__language_settings_save {
+    return Intl.message("Save", name: 'user__language_settings_save');
+  }
+
+  String get user__language_settings_saved_success {
+    return Intl.message("Language changed successfully", name: 'user__language_settings_saved_success');
+  }
+
+  String user__invites_joined_with(String username) {
+    return Intl.message("Joined with username @$username",
+        args: [username],
+        name: 'user__invites_joined_with');
+  }
+
+  String user__invites_pending_email(String email) {
+    return Intl.message("Pending, invite email sent to $email",
+        args: [email],
+        name: 'user__invites_pending_email');
+  }
+
+  String user__timeline_filters_no_match(String searchQuery) {
+    return Intl.message("No match for '$searchQuery'.",
+        args: [searchQuery],
+        name: 'user__timeline_filters_no_match');
+  }
+
+  String get user__clear_application_cache_text {
+    return Intl.message("Clear cache", name: 'user__clear_application_cache_text');
+  }
+
+  String get user__clear_application_cache_desc {
+    return Intl.message("Clear cached posts, accounts, images & more.", name: 'user__clear_application_cache_desc');
+  }
+
+  String get user__clear_application_cache_success {
+    return Intl.message("Cleared cache successfully", name: 'user__clear_application_cache_success');
+  }
+
+  String get user__clear_application_cache_failure {
+    return Intl.message("Could not clear cache", name: 'user__clear_application_cache_failure');
+  }
+
+  String get user__confirm_guidelines_reject_title {
+    return Intl.message("Guidelines Rejection", name: 'user__confirm_guidelines_reject_title');
+  }
+
+  String get user__confirm_guidelines_reject_info {
+    return Intl.message("You can't use Openspace until you accept the guidelines.",
+        name: 'user__confirm_guidelines_reject_info');
+  }
+
+  String get user__confirm_guidelines_reject_chat_with_team {
+    return Intl.message("Chat with the team.",
+        name: 'user__confirm_guidelines_reject_chat_with_team');
+  }
+
+  String get user__confirm_guidelines_reject_chat_immediately {
+    return Intl.message("Start a chat immediatly.",
+        name: 'user__confirm_guidelines_reject_chat_immediately');
+  }
+
+  String get user__confirm_guidelines_reject_chat_community {
+    return Intl.message("Chat with the community.",
+        name: 'user__confirm_guidelines_reject_chat_community');
+  }
+
+  String get user__confirm_guidelines_reject_join_slack{
+    return Intl.message("Join the Slack channel.",
+        name: 'user__confirm_guidelines_reject_join_slack');
+  }
+
+  String get user__confirm_guidelines_reject_go_back{
+    return Intl.message("Go back",
+        name: 'user__confirm_guidelines_reject_go_back');
+  }
+
+  String get user__confirm_guidelines_reject_delete_account{
+    return Intl.message("Delete account",
+        name: 'user__confirm_guidelines_reject_delete_account');
+  }
+
+  String get user__guidelines_desc {
+    return Intl.message("Please take a moment to read and accept our guidelines.",
+        name: 'user__guidelines_desc');
+  }
+
+  String get user__guidelines_accept {
+    return Intl.message("Accept",
+        name: 'user__guidelines_accept');
+  }
+
+  String get user__guidelines_reject {
+    return Intl.message("Reject",
+        name: 'user__guidelines_reject');
+  }
+
+  String get user__change_email_title {
+    return Intl.message("Change Email",
+        name: 'user__change_email_title');
+  }
+
+  String get user__change_email_email_text {
+    return Intl.message("Email",
+        name: 'user__change_email_email_text');
+  }
+
+  String get user__change_email_hint_text {
+    return Intl.message("Enter your new email",
+        name: 'user__change_email_hint_text');
+  }
+
+  String get user__change_email_error {
+    return Intl.message("Email is already registered",
+        name: 'user__change_email_error');
+  }
+
+  String get user__change_email_save {
+    return Intl.message("Save",
+        name: 'user__change_email_save');
+  }
+
+  String get user__change_email_success_info {
+    return Intl.message("We've sent a confirmation link to your new email address, click it to verify your new email",
+        name: 'user__change_email_success_info');
+  }
+
+  String get user__clear_app_preferences_title {
+    return Intl.message("Clear preferences",
+        name: 'user__clear_app_preferences_title');
+  }
+
+  String get user__clear_app_preferences_desc {
+    return Intl.message("Clear the application preferences. Currently this is only the preferred order of comments.",
+        name: 'user__clear_app_preferences_desc');
+  }
+
+  String get user__clear_app_preferences_cleared_successfully {
+    return Intl.message("Cleared preferences successfully",
+        name: 'user__clear_app_preferences_cleared_successfully');
+  }
+
+  String get user__clear_app_preferences_error {
+    return Intl.message("Could not clear preferences",
+        name: 'user__clear_app_preferences_error');
+  }
+
+  String get notifications__settings_title {
+    return Intl.message("Notifications settings",
+        name: 'notifications__settings_title');
+  }
+
+  String get notifications__general_title {
+    return Intl.message("Notifications",
+        name: 'notifications__general_title');
+  }
+
+  String get notifications__general_desc {
+    return Intl.message("Be notified when something happens",
+        name: 'notifications__general_desc');
+  }
+
+  String get notifications__follow_title {
+    return Intl.message("Follow",
+        name: 'notifications__follow_title');
+  }
+
+  String get notifications__follow_desc {
+    return Intl.message("Be notified when someone starts following you",
+        name: 'notifications__follow_desc');
+  }
+
+  String get notifications__connection_title {
+    return Intl.message("Connection request",
+        name: 'notifications__connection_title');
+  }
+
+  String get notifications__connection_desc {
+    return Intl.message("Be notified when someone wants to connect with you",
+        name: 'notifications__connection_desc');
+  }
+
+  String get notifications__comment_title {
+    return Intl.message("Post comment",
+        name: 'notifications__comment_title');
+  }
+
+  String get notifications__comment_desc {
+    return Intl.message("Be notified when someone comments on one of your posts or one you also commented.",
+        name: 'notifications__comment_desc');
+  }
+
+  String get notifications__comment_reply_title {
+    return Intl.message("Post comment",
+        name: 'notifications__comment_reply_title');
+  }
+
+  String get notifications__comment_reply_desc {
+    return Intl.message("Be notified when someone replies to one of your comments or one you also replied to.",
+        name: 'notifications__comment_reply_desc');
+  }
+
+  String get notifications__comment_reaction_title {
+    return Intl.message("Post comment reaction",
+        name: 'notifications__comment_reaction_title');
+  }
+
+  String get notifications__comment_reaction_desc {
+    return Intl.message("Be notified when someone reacts on one of your post commments.",
+        name: 'notifications__comment_reaction_desc');
+  }
+
+  String get notifications__post_reaction_title {
+    return Intl.message("Post reaction",
+        name: 'notifications__post_reaction_title');
+  }
+
+  String get notifications__post_reaction_desc {
+    return Intl.message("Be notified when someone reacts on one of your post.",
+        name: 'notifications__post_reaction_desc');
+  }
+
+  String get notifications__community_invite_title {
+    return Intl.message("Community invite",
+        name: 'notifications__community_invite_title');
+  }
+
+  String get notifications__community_invite_desc {
+    return Intl.message("Be notified when someone invites you to join a community.",
+        name: 'notifications__community_invite_desc');
+  }
+
+  String get moderation__filters_title {
+    return Intl.message("Moderation Filters",
+        name: 'moderation__filters_title');
+  }
+
+  String get moderation__filters_reset {
+    return Intl.message("Reset",
+        name: 'moderation__filters_reset');
+  }
+
+  String get moderation__filters_verified {
+    return Intl.message("Verified",
+        name: 'moderation__filters_verified');
+  }
+
+  String get moderation__filters_apply {
+    return Intl.message("Apply filters",
+        name: 'moderation__filters_apply');
+  }
+
+  String get moderation__filters_type {
+    return Intl.message("Type",
+        name: 'moderation__filters_type');
+  }
+
+  String get moderation__filters_status {
+    return Intl.message("Status",
+        name: 'moderation__filters_status');
+  }
+
+  String get moderation__filters_other {
+    return Intl.message("Other",
+        name: 'moderation__filters_other');
+  }
+
+  String get moderation__actions_review {
+    return Intl.message("Review",
+        name: 'moderation__actions_review');
+  }
+
+  String get moderation__actions_chat_with_team {
+    return Intl.message("Chat with the team",
+        name: 'moderation__actions_chat_with_team');
+  }
+
+  String get moderation__update_category_title {
+    return Intl.message("Update category",
+        name: 'moderation__update_category_title');
+  }
+
+  String get moderation__update_category_save {
+    return Intl.message("Save",
+        name: 'moderation__update_category_save');
+  }
+
+  String get moderation__update_description_save {
+    return Intl.message("Save",
+        name: 'moderation__update_description_save');
+  }
+
+  String get moderation__update_description_title {
+    return Intl.message("Edit description",
+        name: 'moderation__update_description_title');
+  }
+
+  String get moderation__update_description_report_desc {
+    return Intl.message("Report description",
+        name: 'moderation__update_description_report_desc');
+  }
+
+  String get moderation__update_description_report_hint_text {
+    return Intl.message("e.g. The report item was found to...",
+        name: 'moderation__update_description_report_hint_text');
+  }
+
+  String get moderation__update_status_save {
+    return Intl.message("Save",
+        name: 'moderation__update_status_save');
+  }
+
+  String get moderation__update_status_title {
+    return Intl.message("Update status",
+        name: 'moderation__update_status_title');
+  }
+
+  String get moderation__community_review_title {
+    return Intl.message("Review moderated object",
+        name: 'moderation__community_review_title');
+  }
+
+  String get moderation__community_review_object {
+    return Intl.message("Object",
+        name: 'moderation__community_review_object');
+  }
+
+  String get moderation__community_review_approve {
+    return Intl.message("Approve",
+        name: 'moderation__community_review_approve');
+  }
+
+  String get moderation__community_review_reject {
+    return Intl.message("reject",
+        name: 'moderation__community_review_reject');
+  }
+
+  String get moderation__community_review_item_verified {
+    return Intl.message("This item has been verified",
+        name: 'moderation__community_review_item_verified');
+  }
+
+  String get moderation__global_review_title {
+    return Intl.message("Review moderated object",
+        name: 'moderation__global_review_title');
+  }
+
+  String get moderation__global_review_object_text {
+    return Intl.message("Object",
+        name: 'moderation__global_review_object_text');
+  }
+
+  String get moderation__global_review_verify_text {
+    return Intl.message("Verify",
+        name: 'moderation__global_review_verify_text');
+  }
+
+  String get moderation__global_review_unverify_text {
+    return Intl.message("Unverify",
+        name: 'moderation__global_review_unverify_text');
+  }
+
+  String get moderation__confirm_report_title {
+    return Intl.message("Submit report",
+        name: 'moderation__confirm_report_title');
+  }
+
+  String get moderation__confirm_report_provide_details {
+    return Intl.message("Can you provide extra details that might be relevant to the report?",
+        name: 'moderation__confirm_report_provide_details');
+  }
+
+  String get moderation__confirm_report_provide_optional_info {
+    return Intl.message("(Optional)",
+        name: 'moderation__confirm_report_provide_optional_info');
+  }
+
+  String get moderation__confirm_report_provide_optional_hint_text {
+    return Intl.message("Type here...",
+        name: 'moderation__confirm_report_provide_optional_hint_text');
+  }
+
+  String get moderation__confirm_report_provide_happen_next {
+    return Intl.message("Here's what will happen next:",
+        name: 'moderation__confirm_report_provide_happen_next');
+  }
+
+  String get moderation__confirm_report_provide_happen_next_desc {
+    return Intl.message("- Your report will be submitted anonymously. \n"
+    "- If you are reporting a post or comment, the report will be sent to the Openspace staff and the community moderators if applicable and the post will be hidden from your feed \n"
+        "- If you are reporting an account or community, it will be sent to the Openspace staff. \n"
+        "- We'll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from deletion of account to hours of suspension depending on the severity of the report. \n"
+        "- If the report is found to be made in an attempt to damage another member or community in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
+        name: 'moderation__confirm_report_provide_happen_next_desc');
+  }
+
+  String get moderation__confirm_report_submit {
+    return Intl.message("I understand, submit.",
+        name: 'moderation__confirm_report_submit');
+  }
+
+  String moderation__confirm_report_object_reported(String objectType) {
+    return Intl.message("$objectType reported",
+        name: 'moderation__confirm_report_object_reported');
+  }
+
 
   Locale getLocale() {
     return locale;

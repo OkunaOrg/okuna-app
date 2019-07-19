@@ -16,6 +16,7 @@ class OBPostActionComment extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var navigationService = openbookProvider.navigationService;
+    var localizationService = openbookProvider.localizationService;
 
     return OBButton(
         type: OBButtonType.highlight,
@@ -29,7 +30,7 @@ class OBPostActionComment extends StatelessWidget {
             const SizedBox(
               width: 10.0,
             ),
-            const OBText('Comment'),
+            OBText(localizationService.trans('post__action_comment')),
           ],
         ),
         onPressed: () {
