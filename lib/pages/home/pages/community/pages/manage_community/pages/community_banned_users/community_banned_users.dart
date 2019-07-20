@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
@@ -37,6 +38,7 @@ class OBCommunityBannedUsersPageState
   ModalService _modalService;
   NavigationService _navigationService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -55,13 +57,14 @@ class OBCommunityBannedUsersPageState
       _userService = provider.userService;
       _modalService = provider.modalService;
       _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
       _toastService = provider.toastService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Banned users',
+        title: _localizationService.community__banned_users_title,
         trailing: OBIconButton(
           OBIcons.add,
           themeColor: OBIconThemeColor.primaryAccent,
@@ -76,8 +79,8 @@ class OBCommunityBannedUsersPageState
           listRefresher: _refreshCommunityBannedUsers,
           listOnScrollLoader: _loadMoreCommunityBannedUsers,
           listSearcher: _searchCommunityBannedUsers,
-          resourceSingularName: 'banned user',
-          resourcePluralName: 'banned users',
+          resourceSingularName: _localizationService.community__banned_user_text,
+          resourcePluralName: _localizationService.community__banned_users_text,
         ),
       ),
     );
@@ -93,7 +96,7 @@ class OBCommunityBannedUsersPageState
           isLoggedInUser ? null : _onCommunityBannedUserListItemDeleted,
       trailing: isLoggedInUser
           ? OBText(
-              'You',
+              _localizationService.community__user_you_text,
               style: TextStyle(fontWeight: FontWeight.bold),
             )
           : null,
@@ -123,7 +126,7 @@ class OBCommunityBannedUsersPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

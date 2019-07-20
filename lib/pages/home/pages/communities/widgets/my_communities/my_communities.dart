@@ -3,6 +3,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/widgets/my_communities_group.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
@@ -29,6 +30,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
   OBMyCommunitiesGroupController _moderatedCommunitiesGroupController;
   OBMyCommunitiesGroupController _administratedCommunitiesGroupController;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
   UserService _userService;
   bool _needsBootstrap;
   bool _refreshInProgress;
@@ -52,6 +54,7 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _navigationService = openbookProvider.navigationService;
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -69,9 +72,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                 OBMyCommunitiesGroup(
                   key: Key('FavoriteCommunitiesGroup'),
                   controller: _favoriteCommunitiesGroupController,
-                  title: 'Favorites',
-                  groupName: 'favorite communities',
-                  groupItemName: 'favorite community',
+                  title: _localizationService.community__favorites_title,
+                  groupName: _localizationService.community__favorite_communities,
+                  groupItemName: _localizationService.community__favorite_community,
                   maxGroupListPreviewItems: 5,
                   communityGroupListItemBuilder:
                       _buildFavoriteCommunityListItem,
@@ -82,9 +85,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                 OBMyCommunitiesGroup(
                     key: Key('AdministratedCommunitiesGroup'),
                     controller: _administratedCommunitiesGroupController,
-                    title: 'Administrated',
-                    groupName: 'administrated communities',
-                    groupItemName: 'administrated community',
+                    title: _localizationService.community__adminstrated_title,
+                    groupName: _localizationService.community__adminstrated_communities,
+                    groupItemName: _localizationService.community__adminstrated_community,
                     maxGroupListPreviewItems: 5,
                     communityGroupListItemBuilder:
                         _buildAdministratedCommunityListItem,
@@ -95,9 +98,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                 OBMyCommunitiesGroup(
                   key: Key('ModeratedCommunitiesGroup'),
                   controller: _moderatedCommunitiesGroupController,
-                  title: 'Moderated',
-                  groupName: 'moderated communities',
-                  groupItemName: 'moderated community',
+                  title: _localizationService.community__moderated_title,
+                  groupName: _localizationService.community__moderated_communities,
+                  groupItemName: _localizationService.community__moderated_community,
                   maxGroupListPreviewItems: 5,
                   communityGroupListItemBuilder:
                       _buildModeratedCommunityListItem,
@@ -108,9 +111,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                 OBMyCommunitiesGroup(
                   key: Key('JoinedCommunitiesGroup'),
                   controller: _joinedCommunitiesGroupController,
-                  title: 'Joined',
-                  groupName: 'joined communities',
-                  groupItemName: 'joined community',
+                  title: _localizationService.community__joined_title,
+                  groupName: _localizationService.community__joined_communities,
+                  groupItemName: _localizationService.community__joined_community,
                   maxGroupListPreviewItems: 5,
                   communityGroupListItemBuilder: _buildJoinedCommunityListItem,
                   communityGroupListRefresher: _refreshJoinedCommunities,
@@ -187,9 +190,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
   Widget _buildNoJoinedCommunitiesFallback(
       BuildContext context, OBMyCommunitiesGroupRetry retry) {
     return OBButtonAlert(
-      text: 'Join communities to see this tab come to life!',
+      text: _localizationService.community__join_communities_desc,
       onPressed: _refreshAllGroups,
-      buttonText: 'Refresh',
+      buttonText:_localizationService.community__refresh_text,
       buttonIcon: OBIcons.refresh,
       isLoading: _refreshInProgress,
       assetImage: 'assets/images/stickers/got-it.png',

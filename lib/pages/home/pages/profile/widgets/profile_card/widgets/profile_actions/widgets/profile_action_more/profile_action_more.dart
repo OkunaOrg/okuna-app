@@ -6,6 +6,7 @@ import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/p
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/remove_account_from_lists_tile.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/update_connection_with_user_tile.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -21,6 +22,7 @@ class OBProfileActionMore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    LocalizationService localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: user.updateSubject,
@@ -59,7 +61,7 @@ class OBProfileActionMore extends StatelessWidget {
                 !user.isPendingConnectionConfirmation) {
               moreTiles.add(OBDisconnectFromUserTile(user,
                   onDisconnectedFromUser: _dismissModalBottomSheet,
-                  title: 'Cancel connection request'));
+                  title: localizationService.user__profile_action_cancel_connection));
               moreTiles.add(OBUpdateConnectionWithUserTile(user,
                   onWillShowModalBottomSheet: _dismissModalBottomSheet));
             } else if (user.isPendingConnectionConfirmation) {
@@ -69,7 +71,7 @@ class OBProfileActionMore extends StatelessWidget {
               ));
               moreTiles.add(OBDisconnectFromUserTile(user,
                   onDisconnectedFromUser: _dismissModalBottomSheet,
-                  title: 'Deny connection request'));
+                  title: localizationService.user__profile_action_deny_connection));
             } else if (user.isFullyConnected) {
               moreTiles.add(OBUpdateConnectionWithUserTile(user,
                   onWillShowModalBottomSheet: _dismissModalBottomSheet));
@@ -92,13 +94,13 @@ class OBProfileActionMore extends StatelessWidget {
                   // Bottom sheet
                   Navigator.pop(context);
                   openbookProvider.toastService
-                      .success(message: 'User blocked', context: context);
+                      .success(message: localizationService.user__profile_action_user_blocked, context: context);
                 },
                 onUnblockedUser: () {
                   // Bottom sheet
                   Navigator.pop(context);
                   openbookProvider.toastService
-                      .success(message: 'User unblocked', context: context);
+                      .success(message: localizationService.user__profile_action_user_unblocked, context: context);
                 },
               ));
             }

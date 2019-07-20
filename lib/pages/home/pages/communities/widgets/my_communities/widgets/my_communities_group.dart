@@ -2,6 +2,7 @@ import 'package:Openbook/libs/str_utils.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/widgets/http_list.dart';
@@ -46,6 +47,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   bool _needsBootstrap;
   ToastService _toastService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
   List<Community> _communityGroupList;
   bool _refreshInProgress;
   CancelableOperation _refreshOperation;
@@ -65,6 +67,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       var openbookProvider = OpenbookProvider.of(context);
       _toastService = openbookProvider.toastService;
       _navigationService = openbookProvider.navigationService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -181,7 +184,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

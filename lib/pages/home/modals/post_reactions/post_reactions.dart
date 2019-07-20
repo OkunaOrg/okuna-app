@@ -3,6 +3,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/reactions_emoji_count.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/widgets/post_reaction_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
@@ -58,6 +59,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
       var openbookProvider = OpenbookProvider.of(context);
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
+      LocalizationService localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -69,7 +71,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
         .colors[1];
 
     return OBCupertinoPageScaffold(
-        navigationBar: _buildNavigationBar(),
+        navigationBar: _buildNavigationBar(localizationService),
         child: OBPrimaryColorContainer(
           child: Column(
             children: <Widget>[
@@ -108,9 +110,9 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
     }).toList();
   }
 
-  Widget _buildNavigationBar() {
+  Widget _buildNavigationBar(LocalizationService localizationService) {
     return OBThemedNavigationBar(
-        title: 'Post reactions');
+        title: localizationService.post__post_reactions_title);
   }
 
   void _bootstrap() async {

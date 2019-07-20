@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/buttons/actions/invite_user_to_community.dart';
 import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -28,6 +29,7 @@ class OBInviteToCommunityModal extends StatefulWidget {
 
 class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
   UserService _userService;
+  LocalizationService _localizationService;
 
   bool _needsBootstrap;
 
@@ -42,12 +44,13 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Invite to community',
+        title: _localizationService.community__invite_to_community_title,
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
@@ -57,8 +60,8 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
           listRefresher: _refreshLinkedUsers,
           listOnScrollLoader: _loadMoreLinkedUsers,
           listSearcher: _searchLinkedUsers,
-          resourceSingularName: 'connection or follower',
-          resourcePluralName: 'connections and followers',
+          resourceSingularName: _localizationService.community__invite_to_community_resource_singular,
+          resourcePluralName: _localizationService.community__invite_to_community_resource_plural,
         ),
       ),
     );
