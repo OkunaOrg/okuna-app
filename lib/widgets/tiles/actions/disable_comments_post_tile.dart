@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -28,6 +29,7 @@ class OBDisableCommentsPostTile extends StatefulWidget {
 class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -41,6 +43,7 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.post.updateSubject,
@@ -54,8 +57,8 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
           enabled: !_requestInProgress,
           leading: OBIcon(areCommentsEnabled ? OBIcons.disableComments : OBIcons.enableComments),
           title: OBText(areCommentsEnabled
-              ? 'Disable post comments'
-              : 'Enable post comments'),
+              ? _localizationService.post__disable_post_comments
+              : _localizationService.post__enable_post_comments),
           onTap: areCommentsEnabled ? _disableComments : _enableComments,
         );
       },
@@ -67,7 +70,7 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
     try {
       await _userService.enableCommentsForPost(widget.post);
       if (widget.onDisableComments != null) widget.onDisableComments();
-      _toastService.success(message: 'Comments enabled for post', context: context);
+      _toastService.success(message: _localizationService.post__comments_enabled_message, context: context);
     } catch (e) {
       _onError(e);
     } finally {
@@ -80,7 +83,7 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
     try {
       await _userService.disableCommentsForPost(widget.post);
       if (widget.onEnableComments != null) widget.onEnableComments();
-      _toastService.success(message: 'Comments disabled for post', context: context);
+      _toastService.success(message: _localizationService.post__comments_disabled_message, context: context);
     } catch (e) {
       _onError(e);
     } finally {
@@ -96,7 +99,7 @@ class OBDisableCommentsPostTileState extends State<OBDisableCommentsPostTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

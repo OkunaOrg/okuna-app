@@ -1,5 +1,6 @@
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -38,6 +39,7 @@ class OBReportPostCommentTileState extends State<OBReportPostCommentTile> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _navigationService = openbookProvider.navigationService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.postComment.updateSubject,
@@ -51,7 +53,7 @@ class OBReportPostCommentTileState extends State<OBReportPostCommentTile> {
           isLoading: _requestInProgress || isReported,
           leading: OBIcon(OBIcons.report),
           title: OBText(
-              isReported ? 'You have reported this comment' : 'Report comment'),
+              isReported ? _localizationService.moderation__you_have_reported_comment_text : _localizationService.moderation__report_comment_text),
           onTap: isReported ? () {} : _reportPostComment,
         );
       },

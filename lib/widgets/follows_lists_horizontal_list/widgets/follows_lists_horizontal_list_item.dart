@@ -1,10 +1,13 @@
 import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/checkbox.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/follows_lists_horizontal_list/follows_lists_horizontal_list.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../provider.dart';
 
 class OBFollowsListHorizontalListItem extends StatelessWidget {
   final bool isSelected;
@@ -19,6 +22,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     int usersCount = followsList.followsCount;
 
     if (wasPreviouslySelected) {
@@ -65,7 +69,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
             OBText(
-              prettyUsersCount + ' ' + (usersCount <= 1 ? 'Account' : 'Accounts'),
+              prettyUsersCount + ' ' + (usersCount <= 1 ? _localizationService.user__follows_lists_account : _localizationService.user__follows_lists_accounts),
               maxLines: 1,
               size: OBTextSize.extraSmall,
               style: TextStyle(
