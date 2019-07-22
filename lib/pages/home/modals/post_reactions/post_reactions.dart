@@ -40,6 +40,7 @@ class OBPostReactionsModal extends StatefulWidget {
 class OBPostReactionsModalState extends State<OBPostReactionsModal>
     with TickerProviderStateMixin {
   ThemeService _themeService;
+  LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   bool _needsBootstrap;
 
@@ -59,7 +60,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
       var openbookProvider = OpenbookProvider.of(context);
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
-      LocalizationService localizationService = openbookProvider.localizationService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -71,7 +72,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
         .colors[1];
 
     return OBCupertinoPageScaffold(
-        navigationBar: _buildNavigationBar(localizationService),
+        navigationBar: _buildNavigationBar(_localizationService),
         child: OBPrimaryColorContainer(
           child: Column(
             children: <Widget>[

@@ -84,7 +84,6 @@ class OBPostCommentReplyExpandedModalState
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _validationService = openbookProvider.validationService;
-    _navigationService = openbookProvider.navigationService;
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
