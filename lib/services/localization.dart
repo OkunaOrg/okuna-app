@@ -777,6 +777,11 @@ class LocalizationService {
         name: 'community__add_administrators_title');
   }
 
+  String get community__community_members {
+    return Intl.message("Community members",
+        name: 'community__community_members');
+  }
+
   String get community__member {
     return Intl.message("member",
         name: 'community__member');
@@ -794,7 +799,7 @@ class LocalizationService {
 
   String get community__administrator_text {
     return Intl.message("administrator",
-        name: 'community__administrators_text');
+        name: 'community__administrator_text');
   }
 
   String get community__administrator_plural {
@@ -1205,6 +1210,26 @@ class LocalizationService {
         name: 'user_search__no_users_for');
   }
 
+  String get post__open_post {
+    return Intl.message("Open post",
+        name: 'post__open_post');
+  }
+
+  String get post__close_post {
+    return Intl.message("Close post",
+        name: 'post__close_post');
+  }
+
+  String get post__post_opened {
+    return Intl.message("Post opened",
+        name: 'post__post_opened');
+  }
+
+  String get post__post_closed {
+    return Intl.message("Post closed ",
+        name: 'post__post_closed');
+  }
+
   String get post__timeline_posts_all_loaded {
     return Intl.message("🎉  All posts loaded",
         name: 'post__timeline_posts_all_loaded');
@@ -1264,6 +1289,26 @@ class LocalizationService {
   String get post__share_to_circles {
     return Intl.message("Share to circles",
         name: 'post__share_to_circles');
+  }
+
+  String get post__profile_counts_post {
+    return Intl.message(" Post",
+        name: 'post__profile_counts_post');
+  }
+
+  String get post__profile_counts_posts {
+    return Intl.message(" Posts",
+        name: 'post__profile_counts_posts');
+  }
+
+  String get post__profile_counts_followers {
+    return Intl.message(" Followers",
+        name: 'post__profile_counts_followers');
+  }
+
+  String get post__profile_counts_follower {
+    return Intl.message(" Follower",
+        name: 'post__profile_counts_follower');
   }
 
   String get post__action_comment {
@@ -1437,7 +1482,7 @@ class LocalizationService {
         name: 'post__trending_posts_refresh');
   }
 
-  String post__comments_view_all_comments(String commentsCount) {
+  String post__comments_view_all_comments(int commentsCount) {
     return Intl.message("View all $commentsCount comments",
         args: [commentsCount],
         name: 'post__comments_view_all_comments');
@@ -1453,6 +1498,18 @@ class LocalizationService {
     return Intl.message(" also replied: $postCommentText",
         args: [postCommentText],
         name: 'post__comment_reply_notification_tile_user_also_replied');
+  }
+
+  String post__comment_comment_notification_tile_user_commented(String postCommentText) {
+    return Intl.message(" commented on your post: $postCommentText",
+        args: [postCommentText],
+        name: 'post__comment_comment_notification_tile_user_commented');
+  }
+
+  String post__comment_comment_notification_tile_user_also_commented(String postCommentText) {
+    return Intl.message(" also commented: $postCommentText",
+        args: [postCommentText],
+        name: 'post__comment_comment_notification_tile_user_also_commented');
   }
 
   String get post__comments_closed_post {
@@ -1488,7 +1545,7 @@ class LocalizationService {
   String post__user_has_not_shared_anything(String name) {
     return Intl.message("$name has not shared anything yet.",
         args: [name],
-        name: 'post__have_not_shared_anything');
+        name: 'post__user_has_not_shared_anything');
   }
 
   String get post__comments_header_newest_replies {
@@ -1571,12 +1628,65 @@ class LocalizationService {
         name: 'post__comments_header_be_the_first_comments');
   }
 
+  String get post__disable_post_comments {
+    return Intl.message("Disable post comments",
+        name: 'post__disable_post_comments');
+  }
+
+  String get post__enable_post_comments {
+    return Intl.message("Enable post comments",
+        name: 'post__enable_post_comments');
+  }
+
+  String get post__comments_enabled_message {
+    return Intl.message("Comments enabled for post",
+        name: 'post__comments_enabled_message');
+  }
+
+  String get post__comments_disabled_message {
+    return Intl.message("Comments disabled for post",
+        name: 'post__comments_disabled_message');
+  }
+
+  String get post__actions_delete_comment {
+    return Intl.message("Delete comment",
+        name: 'post__actions_delete_comment');
+  }
+
+  String get post__actions_edit_comment {
+    return Intl.message("Edit comment",
+        name: 'post__actions_edit_comment');
+  }
+
+  String get post__actions_comment_deleted {
+    return Intl.message("Comment deleted",
+        name: 'post__actions_comment_deleted');
+  }
+
+  String get post__actions_report_text {
+    return Intl.message("Report",
+        name: 'post__actions_report_text');
+  }
+
+  String get post__actions_reported_text {
+    return Intl.message("Reported",
+        name: 'post__actions_reported_text');
+  }
+
   String get user__translate_see_translation {
     return Intl.message("See translation", name: 'user__translate_see_translation');
   }
 
   String get user__translate_show_original {
     return Intl.message("Show original", name: 'user__translate_show_original');
+  }
+
+  String get user__follows_lists_account {
+    return Intl.message("Account", name: 'user__follows_lists_account');
+  }
+
+  String get user__follows_lists_accounts {
+    return Intl.message("Accounts", name: 'user__follows_lists_accounts');
   }
 
   String user__edit_profile_user_name_taken(String username) {
@@ -1608,6 +1718,36 @@ class LocalizationService {
   String get user__edit_profile_username {
     return Intl.message("Username",
         name: 'user__edit_profile_username');
+  }
+
+  String get user__add_account_update_account_lists {
+    return Intl.message("Update account lists",
+        name: 'user__add_account_update_account_lists');
+  }
+
+  String get user__add_account_to_lists {
+    return Intl.message("Add account to list",
+        name: 'user__add_account_to_lists');
+  }
+
+  String get user__add_account_update_lists {
+    return Intl.message("Update lists",
+        name: 'user__add_account_update_lists');
+  }
+
+  String get user__add_account_save {
+    return Intl.message("Save",
+        name: 'user__add_account_save');
+  }
+
+  String get user__add_account_done {
+    return Intl.message("Done",
+        name: 'user__add_account_done');
+  }
+
+  String get user__add_account_success {
+    return Intl.message("Success",
+        name: 'user__add_account_success');
   }
 
   String get user__emoji_field_none_selected {
@@ -1945,6 +2085,21 @@ class LocalizationService {
   String get user__timeline_filters_lists {
     return Intl.message("Lists",
         name: 'user__timeline_filters_lists');
+  }
+
+  String get user__followers_title {
+    return Intl.message("Followers",
+        name: 'user__followers_title');
+  }
+
+  String get user__follower_singular {
+    return Intl.message("follower",
+        name: 'user__follower_singular');
+  }
+
+  String get user__follower_plural {
+    return Intl.message("followers",
+        name: 'user__follower_plural');
   }
 
   String get user__delete_account_title {
@@ -2302,6 +2457,27 @@ class LocalizationService {
         name: 'user__clear_app_preferences_error');
   }
 
+  String get user__disconnect_from_user_success {
+    return Intl.message("Disconnected successfully",
+        name: 'user__disconnect_from_user_success');
+  }
+
+  String get user__block_user {
+    return Intl.message("Block user",
+        name: 'user__block_user');
+  }
+
+  String get user__unblock_user {
+    return Intl.message("Unblock user",
+        name: 'user__unblock_user');
+  }
+
+  String user__disconnect_from_user(String userName) {
+    return Intl.message("Disconnect from $userName",
+        args: [userName],
+        name: 'user__disconnect_from_user');
+  }
+
   String get notifications__settings_title {
     return Intl.message("Notifications settings",
         name: 'notifications__settings_title');
@@ -2385,6 +2561,26 @@ class LocalizationService {
   String get notifications__community_invite_desc {
     return Intl.message("Be notified when someone invites you to join a community.",
         name: 'notifications__community_invite_desc');
+  }
+
+  String get notifications__mute_post_turn_on_post_notifications {
+    return Intl.message("Turn on post notifications",
+        name: 'notifications__mute_post_turn_on_post_notifications');
+  }
+
+  String get notifications__mute_post_turn_off_post_notifications {
+    return Intl.message("Turn off post notifications",
+        name: 'notifications__mute_post_turn_off_post_notifications');
+  }
+
+  String get notifications__mute_post_turn_on_post_comment_notifications {
+    return Intl.message("Turn on post comment notifications",
+        name: 'notifications__mute_post_turn_on_post_comment_notifications');
+  }
+
+  String get notifications__mute_post_turn_off_post_comment_notifications {
+    return Intl.message("Turn off post comment notifications",
+        name: 'notifications__mute_post_turn_off_post_comment_notifications');
   }
 
   String get moderation__filters_title {
@@ -2477,6 +2673,41 @@ class LocalizationService {
         name: 'moderation__community_review_title');
   }
 
+  String get moderation__moderated_object_title {
+    return Intl.message("Object",
+        name: 'moderation__moderated_object_title');
+  }
+
+  String get moderation__moderated_object_status {
+    return Intl.message("Status",
+        name: 'moderation__moderated_object_status');
+  }
+
+  String get moderation__moderated_object_reports_count {
+    return Intl.message("Reports count",
+        name: 'moderation__moderated_object_reports_count');
+  }
+
+  String get moderation__moderated_object_verified_by_staff {
+    return Intl.message("Verified by Openspace staff",
+        name: 'moderation__moderated_object_verified_by_staff');
+  }
+
+  String get moderation__moderated_object_verified {
+    return Intl.message("Verified",
+        name: 'moderation__moderated_object_verified');
+  }
+
+  String get moderation__moderated_object_true_text {
+    return Intl.message("True",
+        name: 'moderation__moderated_object_true_text');
+  }
+
+  String get moderation__moderated_object_false_text {
+    return Intl.message("False",
+        name: 'moderation__moderated_object_false_text');
+  }
+
   String get moderation__community_review_object {
     return Intl.message("Object",
         name: 'moderation__community_review_object');
@@ -2558,6 +2789,7 @@ class LocalizationService {
 
   String moderation__confirm_report_object_reported(String objectType) {
     return Intl.message("$objectType reported",
+        args: [objectType],
         name: 'moderation__confirm_report_object_reported');
   }
 
@@ -2574,6 +2806,46 @@ class LocalizationService {
   String get moderation__tap_to_retry {
     return Intl.message("Tap to retry loading items",
         name: 'moderation__tap_to_retry');
+  }
+
+  String get moderation__report_post_text {
+    return Intl.message("Report post",
+        name: 'moderation__report_post_text');
+  }
+
+  String get moderation__you_have_reported_post_text {
+    return Intl.message("You have reported this post",
+        name: 'moderation__you_have_reported_post_text');
+  }
+
+  String get moderation__report_account_text {
+    return Intl.message("Report account",
+        name: 'moderation__report_account_text');
+  }
+
+  String get moderation__you_have_reported_account_text {
+    return Intl.message("You have reported this account",
+        name: 'moderation__you_have_reported_account_text');
+  }
+
+  String get moderation__report_community_text {
+    return Intl.message("Report community",
+        name: 'moderation__report_community_text');
+  }
+
+  String get moderation__you_have_reported_community_text {
+    return Intl.message("You have reported this community",
+        name: 'moderation__you_have_reported_community_text');
+  }
+
+  String get moderation__report_comment_text {
+    return Intl.message("Report comment",
+        name: 'moderation__report_comment_text');
+  }
+
+  String get moderation__you_have_reported_comment_text {
+    return Intl.message("You have reported this comment",
+        name: 'moderation__you_have_reported_comment_text');
   }
 
 
