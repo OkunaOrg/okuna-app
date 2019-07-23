@@ -662,7 +662,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_follows_list_name_taken" : m27,
     "user__save_follows_list_save" : MessageLookupByLibrary.simpleMessage("Save"),
     "user__save_follows_list_users" : MessageLookupByLibrary.simpleMessage("Users"),
-    "user__themes_white_gold" : MessageLookupByLibrary.simpleMessage("White Gold"),
     "user__tile_delete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "user__tile_following" : MessageLookupByLibrary.simpleMessage(" · Following"),
     "user__timeline_filters_apply_all" : MessageLookupByLibrary.simpleMessage("Apply filters"),
