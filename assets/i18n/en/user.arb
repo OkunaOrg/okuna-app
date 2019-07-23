@@ -1,9 +1,4 @@
 {
-  "themes_white_gold": "White Gold",
-  "@themes_white_gold": {
-    "type": "text",
-    "placeholders": {}
-  },
   "translate_see_translation": "See translation",
   "@translate_see_translation": {
     "type": "text",
