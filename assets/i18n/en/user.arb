@@ -46,6 +46,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "follow_button_follow_text": "Follow",
+  "@follow_button_follow_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "follow_button_unfollow_text": "Unfollow",
+  "@follow_button_unfollow_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "edit_profile_username": "Username",
   "@edit_profile_username": {
     "type": "text",

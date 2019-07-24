@@ -116,11 +116,13 @@
   },
   "moderated_object_true_text": "True",
   "@moderated_object_true_text": {
+    "description": "Eg. Moderated object verified by staff? true / false",
     "type": "text",
     "placeholders": {}
   },
   "moderated_object_false_text": "False",
   "@moderated_object_false_text": {
+    "description": "Eg. Moderated object verified by staff? true / false",
     "type": "text",
     "placeholders": {}
   },

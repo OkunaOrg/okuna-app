@@ -209,11 +209,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "create_acc__password_characters": "(10-100 characters)",
-  "@create_acc__password_characters": {
-    "type": "text",
-    "placeholders": {}
-  },
   "create_acc__what_avatar": "Choose a profile picture",
   "@create_acc__what_avatar": {
     "type": "text",

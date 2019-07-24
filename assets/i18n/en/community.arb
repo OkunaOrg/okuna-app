@@ -100,13 +100,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "moderators_desc": "You won't see it's posts in your timeline nor will be able to post to it anymore.",
-  "@moderators_desc": {
+  "leave_desc": "You won't see it's posts in your timeline nor will be able to post to it anymore.",
+  "@leave_desc": {
     "type": "text",
     "placeholders": {}
   },
-  "moderators_confirmation": "Are you sure you want to leave the community?",
-  "@moderators_confirmation": {
+  "leave_confirmation": "Are you sure you want to leave the community?",
+  "@leave_confirmation": {
     "type": "text",
     "placeholders": {}
   },
