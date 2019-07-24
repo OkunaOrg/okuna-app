@@ -182,6 +182,15 @@ Not a flavor but Flutter's way to profile the app. [Read more here](https://flut
 flutter run --profile
 ````
 
+### 7.b Adding new Locale strings
+
+1. Add localization string get method to `openbook_app/lib/services/localizations.dart`
+2. Run `make generate_locale`
+3. Upload assets/i18n/en folder's contents to crowdin
+4. Apply the translations on crowdin, then build and download
+5. Copy the contents of the downloaded archive to assets/i18n 
+6. Run `make build_locale`
+
 ### 8. Contribute! 
 
 Help us keep Openbook going! Please look into our open issues. All contribution, no matter how small, makes a big difference.

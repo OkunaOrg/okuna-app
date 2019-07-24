@@ -14,6 +14,8 @@ import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'language.dart';
+
 class Post extends UpdatableModel<Post> {
   final int id;
   final String uuid;
@@ -29,6 +31,7 @@ class Post extends UpdatableModel<Post> {
   bool areCommentsEnabled;
   bool publicReactions;
   String text;
+  Language language;
   PostImage image;
   PostVideo video;
   PostCommentList commentsList;
@@ -59,6 +62,7 @@ class Post extends UpdatableModel<Post> {
       this.image,
       this.video,
       this.creator,
+      this.language,
       this.reactionsCount,
       this.commentsCount,
       this.commentsList,
@@ -93,6 +97,10 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('public_reactions'))
       publicReactions = json['public_reactions'];
+
+    if (json.containsKey('language')) {
+      language = factory.parseLanguage(json['language']);
+    }
 
     if (json.containsKey('text')) text = json['text'];
 
@@ -158,6 +166,10 @@ class Post extends UpdatableModel<Post> {
     return text != null && text.length > 0;
   }
 
+  bool hasLanguage() {
+    return language != null;
+  }
+
   bool hasComments() {
     return commentsList != null && commentsList.comments.length > 0;
   }
@@ -216,6 +228,10 @@ class Post extends UpdatableModel<Post> {
 
   String getVideo() {
     return video.video;
+  }
+
+  Language getLanguage() {
+    return language;
   }
 
   String getRelativeCreated() {
@@ -304,6 +320,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         creatorId: json['creator_id'],
         created: parseCreated(json['created']),
         text: json['text'],
+        language: parseLanguage(json['language']),
         circles: parseCircles(json['circles']),
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
@@ -373,5 +390,10 @@ class PostFactory extends UpdatableModelFactory<Post> {
   CirclesList parseCircles(List circlesData) {
     if (circlesData == null) return null;
     return CirclesList.fromJson(circlesData);
+  }
+
+  Language parseLanguage(Map languageData) {
+    if (languageData == null) return null;
+    return Language.fromJson(languageData);
   }
 }

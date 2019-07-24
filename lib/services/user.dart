@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:Openbook/models/categories_list.dart';
 import 'package:Openbook/models/category.dart';
@@ -16,6 +17,8 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/language.dart';
+import 'package:Openbook/models/language_list.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderated_object_list.dart';
 import 'package:Openbook/models/moderation/moderated_object_log_list.dart';
@@ -50,6 +53,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
@@ -58,6 +62,7 @@ import 'package:Openbook/services/user_invites_api.dart';
 import 'package:Openbook/services/waitlist_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -86,6 +91,7 @@ class UserService {
   DevicesApiService _devicesApiService;
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
+  LocalizationService _localizationService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -169,6 +175,11 @@ class UserService {
     _waitlistApiService = waitlistApiService;
   }
 
+  void setLocalizationsService(LocalizationService localizationService) {
+    _localizationService = localizationService;
+  }
+
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -244,6 +255,10 @@ class UserService {
 
   User getLoggedInUser() {
     return _loggedInUser;
+  }
+
+  Language getUserLanguage() {
+    return _loggedInUser.language;
   }
 
   bool isLoggedInUser(User user) {
@@ -658,6 +673,20 @@ class UserService {
     _checkResponseIsOk(response);
 
     return EmojiGroupList.fromJson(json.decode(response.body));
+  }
+
+  Future<LanguagesList> getAllLanguages() async {
+    HttpieResponse response = await this._authApiService.getAllLanguages();
+
+    _checkResponseIsOk(response);
+
+    return LanguagesList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> setNewLanguage(Language newLanguage) async {
+    HttpieResponse response = await this._authApiService.setNewLanguage(newLanguage);
+    _checkResponseIsOk(response);
+    await refreshUser();
   }
 
   Future<User> getUserWithUsername(String username) async {
@@ -1731,6 +1760,28 @@ class UserService {
     return ModerationCategoriesList.fromJson(json.decode(response.body));
   }
 
+  Future<String> getTranslatedPostText({@required String postUuid}) async {
+    HttpieResponse response =
+    await _postsApiService.translatePost(postUuid: postUuid);
+
+    _checkResponseIsOk(response);
+
+    return json.decode(response.body)['translated_text'];
+  }
+
+  Future<String> getTranslatedPostCommentText({
+    @required String postUuid,
+    @required int postCommentId}) async {
+    HttpieResponse response =
+    await _postsApiService.translatePostComment(
+        postUuid: postUuid, postCommentId: postCommentId
+    );
+
+    _checkResponseIsOk(response);
+
+    return json.decode(response.body)['translated_text'];
+  }
+
   Future<String> _getDeviceName() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
@@ -1775,6 +1826,22 @@ class UserService {
     _setLoggedInUser(user);
     await _storeUserData(userData);
     return user;
+  }
+
+  Future<void> setLanguageFromDefaults() async {
+    Locale currentLocale = _localizationService.getLocale();
+    LanguagesList languageList =  await getAllLanguages();
+    Language deviceLanguage = languageList.languages.firstWhere((Language language) {
+      return language.code.toLowerCase() == currentLocale.languageCode.toLowerCase();
+    });
+
+    if (deviceLanguage != null) {
+      print('Setting language from defaults ${currentLocale.languageCode}');
+      return await setNewLanguage(deviceLanguage);
+    } else {
+      Language english = languageList.languages.firstWhere((Language language) => language.code.toLowerCase() == 'en');
+      return await setNewLanguage(english);
+    }
   }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {

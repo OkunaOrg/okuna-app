@@ -1,8 +1,11 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/models/post.dart';
+import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/collapsible_smart_text.dart';
+import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,16 +25,24 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   static const int MAX_LENGTH_LIMIT = 1300;
 
   ToastService _toastService;
+  UserService _userService;
+  LocalizationService _localizationService;
   BuildContext _context;
+  String _translatedText;
+  bool _translationInProgress;
 
   @override
   void initState() {
     super.initState();
+    _translationInProgress = false;
+    _translatedText = null;
   }
 
   @override
   Widget build(BuildContext context) {
     _toastService = OpenbookProvider.of(context).toastService;
+    _userService = OpenbookProvider.of(context).userService;
+    _localizationService = OpenbookProvider.of(context).localizationService;
     _context = context;
 
     return GestureDetector(
@@ -49,25 +60,99 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         });
   }
 
+  Future<String> _translatePostText() async {
+    String translatedText;
+    try {
+      _setTranslationInProgress(true);
+      translatedText = await _userService.getTranslatedPostText(postUuid: widget._post.uuid);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setTranslationInProgress(false);
+    }
+    return translatedText;
+  }
+
   Widget _buildActionablePostText() {
     if (widget._post.isEdited != null && widget._post.isEdited) {
       return OBCollapsibleSmartText(
-        text: widget._post.text,
+        text: _translatedText != null ? _translatedText : widget._post.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
         maxlength: MAX_LENGTH_LIMIT,
+        getChild: _buildTranslationButton,
       );
     } else {
       return OBCollapsibleSmartText(
-        text: widget._post.text,
+        text: _translatedText != null ? _translatedText : widget._post.text,
         maxlength: MAX_LENGTH_LIMIT,
+        getChild: _buildTranslationButton,
       );
     }
+  }
+
+  Widget _buildTranslationButton() {
+    if (!_userService.getLoggedInUser().canTranslatePost(widget._post)) {
+      return SizedBox();
+    }
+
+    if (_translationInProgress) {
+      return Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Container(
+          width: 10.0,
+          height: 10.0,
+          child: CircularProgressIndicator(strokeWidth: 2.0),
+        )
+      );
+    }
+
+    return GestureDetector(
+      onTap: () async {
+        if (_translatedText == null) {
+          String translatedText = await _translatePostText();
+          _setTranslatedText(translatedText);
+        } else {
+          _setTranslatedText(null);
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: _translatedText != null ?
+        OBSecondaryText(_localizationService.trans('translate__show_original'), size: OBTextSize.large):
+        OBSecondaryText(_localizationService.trans('translate__see_translation'), size: OBTextSize.large),
+      ),
+    );
   }
 
   void _copyText() {
     Clipboard.setData(ClipboardData(text: widget._post.text));
     _toastService.toast(
         message: 'Text copied!', context: _context, type: ToastType.info);
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(message: 'Unknown error', context: context);
+      throw error;
+    }
+  }
+
+  void _setTranslationInProgress(bool translationInProgress) {
+    setState(() {
+      _translationInProgress = translationInProgress;
+    });
+  }
+
+  void _setTranslatedText(String translatedText) {
+    setState(() {
+      _translatedText = translatedText;
+    });
   }
 }
 

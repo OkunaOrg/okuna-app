@@ -64,6 +64,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.7.0
+  intl_translation: ^0.17.1
 
 flutter_icons:
   android: true
@@ -104,6 +105,7 @@ flutter:
     - assets/images/confetti-background.gif
     - assets/lang/es.json
     - assets/lang/en.json
+    - assets/lang/nl.json
     - assets/images/icons/gif-icon.png
     - assets/images/icons/profile-icon.png
     - assets/images/icons/connections-icon.png

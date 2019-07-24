@@ -107,7 +107,7 @@ class OBAuthVerifyPasswordPageState extends State<OBAuthVerifyPasswordPage> {
   }
 
   Widget _buildNextButton(BuildContext context) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('auth__create_acc__next');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -120,7 +120,7 @@ class OBAuthVerifyPasswordPageState extends State<OBAuthVerifyPasswordPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -148,7 +148,7 @@ class OBAuthVerifyPasswordPageState extends State<OBAuthVerifyPasswordPage> {
 
   Widget _buildPasteRegisterLink({@required BuildContext context}) {
     String pasteLinkText =
-    _localizationService.trans('AUTH.CREATE_ACC.PASTE_PASSWORD_RESET_LINK');
+    _localizationService.trans('auth__create_acc__paste_password_reset_link');
 
     return Column(
       children: <Widget>[

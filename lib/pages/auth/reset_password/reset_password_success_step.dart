@@ -85,7 +85,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
 
   Widget _buildNextButton({@required BuildContext context}) {
     String buttonText =
-    localizationService.trans('AUTH.CREATE_ACC.DONE_CONTINUE');
+    localizationService.trans('auth__create_acc__done_continue');
 
     return OBSuccessButton(
       minWidth: double.infinity,

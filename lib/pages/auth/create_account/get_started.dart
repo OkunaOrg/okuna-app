@@ -9,12 +9,12 @@ class OBAuthGetStartedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var localizationService = LocalizationService.of(context);
     String letsGetStartedText =
-        localizationService.trans('AUTH.CREATE_ACC.LETS_GET_STARTED');
+        localizationService.trans('auth__create_acc.lets_get_started');
     String welcomeToAlphaText =
-        localizationService.trans('AUTH.CREATE_ACC.WELCOME_TO_ALPHA');
+        localizationService.trans('auth__create_acc.welcome_to_alpha');
 
-    String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
-    String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String previousText = localizationService.trans('auth__create_acc.previous');
+    String nextText = localizationService.trans('auth__create_acc.next');
 
     return Scaffold(
       backgroundColor: Color(0xFF151726),

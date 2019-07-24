@@ -14,6 +14,8 @@ class OBAccountSettingsPage extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = openbookProvider.localizationService;
     var navigationService = openbookProvider.navigationService;
+    var userService = openbookProvider.userService;
+    String currentUserLanguage = userService.getUserLanguage() != null ? userService.getUserLanguage().name : null;
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
@@ -26,7 +28,7 @@ class OBAccountSettingsPage extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const OBIcon(OBIcons.email),
-              title: OBText(localizationService.trans('SETTINGS.CHANGE_EMAIL')),
+              title: OBText(localizationService.trans('settings__change_email')),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,
@@ -38,7 +40,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ListTile(
               leading: const OBIcon(OBIcons.lock),
               title:
-                  OBText(localizationService.trans('SETTINGS.CHANGE_PASSWORD')),
+                  OBText(localizationService.trans('settings__change_password')),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,
@@ -52,6 +54,14 @@ class OBAccountSettingsPage extends StatelessWidget {
               title: OBText('Notifications'),
               onTap: () {
                 navigationService.navigateToNotificationsSettings(
+                    context: context);
+              },
+            ),
+            ListTile(
+              leading: const OBIcon(OBIcons.language),
+              title: OBText(currentUserLanguage != null ? 'Language ($currentUserLanguage)' : 'Language'),
+              onTap: () {
+                navigationService.navigateToLanguageSettings(
                     context: context);
               },
             ),

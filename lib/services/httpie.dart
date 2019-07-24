@@ -530,6 +530,8 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
         if (parsedError.isNotEmpty) {
           if (parsedError.containsKey('detail')) {
             return parsedError['detail'];
+          } else if (parsedError.containsKey('message')) {
+            return parsedError['message'];
           } else {
             dynamic mapFirstValue = parsedError.values.toList().first;
             dynamic value = mapFirstValue is List ? mapFirstValue[0] : null;
