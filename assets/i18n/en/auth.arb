@@ -249,11 +249,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "create_acc__enter": "Enter",
-  "@create_acc__enter": {
-    "type": "text",
-    "placeholders": {}
-  },
   "create_acc__submit_loading_title": "Hang in there!",
   "@create_acc__submit_loading_title": {
     "type": "text",

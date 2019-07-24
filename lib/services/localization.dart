@@ -203,9 +203,6 @@ class LocalizationService {
   String get auth__create_acc__done_created {
     return Intl.message("Your account has been created with username ", name: 'auth__create_acc__done_created');
   }
-  String get auth__create_acc__enter {
-    return Intl.message("Enter", name: 'auth__create_acc__enter');
-  }
   String get auth__create_acc__submit_loading_title {
     return Intl.message("Hang in there!", name: 'auth__create_acc__submit_loading_title');
   }
@@ -1196,13 +1193,13 @@ class LocalizationService {
   }
 
   String user_search__no_communities_for(String searchQuery) {
-    return Intl.message("'No communities found for '$searchQuery'.",
+    return Intl.message("No communities found for '$searchQuery'.",
         args: [searchQuery],
         name: 'user_search__no_communities_for');
   }
 
   String user_search__no_users_for(String searchQuery) {
-    return Intl.message("'No users found for '$searchQuery'.",
+    return Intl.message("No users found for '$searchQuery'.",
         args: [searchQuery],
         name: 'user_search__no_users_for');
   }

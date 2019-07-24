@@ -53,14 +53,14 @@
       "searchQuery": {}
     }
   },
-  "no_communities_for": "'No communities found for '{searchQuery}'.",
+  "no_communities_for": "No communities found for '{searchQuery}'.",
   "@no_communities_for": {
     "type": "text",
     "placeholders": {
       "searchQuery": {}
     }
   },
-  "no_users_for": "'No users found for '{searchQuery}'.",
+  "no_users_for": "No users found for '{searchQuery}'.",
   "@no_users_for": {
     "type": "text",
     "placeholders": {
