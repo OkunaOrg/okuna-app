@@ -129,7 +129,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     String whatPasswordText =
         localizationService.trans('auth__create_acc__what_password');
     String passwordCharactersText =
-    localizationService.trans('auth__create_acc__password_characters');
+    localizationService.auth__create_acc_password_hint_text;
 
     return Column(
       children: <Widget>[

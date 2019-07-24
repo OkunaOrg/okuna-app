@@ -179,9 +179,6 @@ class LocalizationService {
   String get auth__create_acc__password_length_error {
     return Intl.message("😅 A password must be between 8 and 64 characters.", name: 'auth__create_acc__password_length_error');
   }
-  String get auth__create_acc__password_characters {
-    return Intl.message("(10-100 characters)", name: 'auth__create_acc__password_characters');
-  }
   String get auth__create_acc__what_avatar {
     return Intl.message("Choose a profile picture", name: 'auth__create_acc__what_avatar');
   }
@@ -587,14 +584,14 @@ class LocalizationService {
         name: 'community__moderators_title');
   }
 
-  String get community__moderators_desc {
+  String get community__leave_desc {
     return Intl.message("You won't see it's posts in your timeline nor will be able to post to it anymore.",
-        name: 'community__moderators_desc');
+        name: 'community__leave_desc');
   }
 
-  String get community__moderators_confirmation {
+  String get community__leave_confirmation {
     return Intl.message("Are you sure you want to leave the community?",
-        name: 'community__moderators_confirmation');
+        name: 'community__leave_confirmation');
   }
 
   String get community__moderator_resource_name {
@@ -1715,6 +1712,16 @@ class LocalizationService {
         name: 'user__profile_action_cancel_connection');
   }
 
+  String get user__follow_button_follow_text {
+    return Intl.message("Follow",
+        name: 'user__follow_button_follow_text');
+  }
+
+  String get user__follow_button_unfollow_text {
+    return Intl.message("Unfollow",
+        name: 'user__follow_button_unfollow_text');
+  }
+
   String get user__edit_profile_username {
     return Intl.message("Username",
         name: 'user__edit_profile_username');
@@ -2700,11 +2707,13 @@ class LocalizationService {
 
   String get moderation__moderated_object_true_text {
     return Intl.message("True",
+        desc: 'Eg. Moderated object verified by staff? true / false',
         name: 'moderation__moderated_object_true_text');
   }
 
   String get moderation__moderated_object_false_text {
     return Intl.message("False",
+        desc: 'Eg. Moderated object verified by staff? true / false',
         name: 'moderation__moderated_object_false_text');
   }
 

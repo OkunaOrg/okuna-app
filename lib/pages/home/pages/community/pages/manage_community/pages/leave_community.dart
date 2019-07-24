@@ -47,7 +47,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
+        navigationBar: OBThemedNavigationBar(title: _localizationService.community__confirmation_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -67,7 +67,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    OBText(_localizationService.trans('community__moderators_desc'),
+                    OBText(_localizationService.community__leave_confirmation,
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -75,7 +75,7 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    OBText(_localizationService.trans('community__moderators_desc'))
+                    OBText(_localizationService.community__leave_desc)
                   ],
                 ),
               ),
