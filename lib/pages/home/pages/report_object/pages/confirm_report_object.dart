@@ -189,8 +189,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
         widget.object.setIsReported(true);
       }
       _toastService.success(
-          message:
-          _localizationService.moderation__confirm_report_object_reported(modelTypeToString(widget.object, capitalize: true)),
+          message: _getSuccessMessageForObject(widget.object),
           context: context);
       Navigator.of(context).pop(true);
     } catch (error) {
@@ -198,6 +197,22 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
     } finally {
       _setConfirmationInProgress(false);
     }
+  }
+
+  String _getSuccessMessageForObject(dynamic modelInstance) {
+    String result;
+    if (modelInstance is Post) {
+      result = _localizationService.moderation__confirm_report_post_reported;
+    } else if (modelInstance is PostComment) {
+      result = _localizationService.moderation__confirm_report_post_comment_reported;
+    } else if (modelInstance is Community) {
+      result = _localizationService.moderation__confirm_report_community_reported;
+    } else if (modelInstance is User) {
+      result = _localizationService.moderation__confirm_report_user_reported;
+    } else {
+      result = _localizationService.moderation__confirm_report_item_reported;
+    }
+    return result;
   }
 
   void _onError(error) async {

@@ -201,12 +201,30 @@
     "type": "text",
     "placeholders": {}
   },
-  "confirm_report_object_reported": "{objectType} reported",
-  "@confirm_report_object_reported": {
+  "confirm_report_user_reported": "User reported",
+  "@confirm_report_user_reported": {
     "type": "text",
-    "placeholders": {
-      "objectType": {}
-    }
+    "placeholders": {}
+  },
+  "confirm_report_community_reported": "Community reported",
+  "@confirm_report_community_reported": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm_report_post_reported": "Post reported",
+  "@confirm_report_post_reported": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm_report_post_comment_reported": "Post comment reported",
+  "@confirm_report_post_comment_reported": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm_report_item_reported": "Item reported",
+  "@confirm_report_item_reported": {
+    "type": "text",
+    "placeholders": {}
   },
   "community_moderated_objects": "Community moderated objects",
   "@community_moderated_objects": {

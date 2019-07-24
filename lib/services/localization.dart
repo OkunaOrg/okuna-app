@@ -2796,10 +2796,29 @@ class LocalizationService {
         name: 'moderation__confirm_report_submit');
   }
 
-  String moderation__confirm_report_object_reported(String objectType) {
-    return Intl.message("$objectType reported",
-        args: [objectType],
-        name: 'moderation__confirm_report_object_reported');
+  String get moderation__confirm_report_user_reported {
+    return Intl.message("User reported",
+        name: 'moderation__confirm_report_user_reported');
+  }
+
+  String get moderation__confirm_report_community_reported {
+    return Intl.message("Community reported",
+        name: 'moderation__confirm_report_community_reported');
+  }
+
+  String get moderation__confirm_report_post_reported {
+    return Intl.message("Post reported",
+        name: 'moderation__confirm_report_post_reported');
+  }
+
+  String get moderation__confirm_report_post_comment_reported {
+    return Intl.message("Post comment reported",
+        name: 'moderation__confirm_report_post_comment_reported');
+  }
+
+  String get moderation__confirm_report_item_reported {
+    return Intl.message("Item reported",
+        name: 'moderation__confirm_report_item_reported');
   }
 
   String get moderation__community_moderated_objects {
