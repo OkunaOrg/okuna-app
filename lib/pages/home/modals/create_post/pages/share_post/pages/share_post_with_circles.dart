@@ -51,8 +51,6 @@ class OBSharePostWithCirclesPageState
   @override
   void initState() {
     super.initState();
-    _fakeWorldCircle =
-        Circle(id: 1, name: _localizationService.trans('post__world_circle_name'), color: '#023ca7', usersCount: 7700000000);
     _fakeWorldCircleSelected = false;
     _isCreatePostInProgress = false;
     _circles = [];
@@ -72,6 +70,8 @@ class OBSharePostWithCirclesPageState
 
     if (_needsBootstrap) {
       _bootstrap();
+      _fakeWorldCircle =
+          Circle(id: 1, name: _localizationService.trans('post__world_circle_name'), color: '#023ca7', usersCount: 7700000000);
       _needsBootstrap = false;
     }
 
