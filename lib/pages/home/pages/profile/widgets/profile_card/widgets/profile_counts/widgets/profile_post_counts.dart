@@ -16,12 +16,11 @@ class OBProfilePostsCount extends StatelessWidget {
 
     if (postsCount == null || postsCount == 0) return const SizedBox();
 
-    String count = getPrettyCount(postsCount);
-
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
     LocalizationService _localizationService = openbookProvider.localizationService;
+    String count = getPrettyCount(postsCount, _localizationService);
 
     return StreamBuilder(
         stream: themeService.themeChange,

@@ -17,7 +17,7 @@ class OBCommunityMembersCount extends StatelessWidget {
 
     if (membersCount == null || membersCount == 0) return const SizedBox();
 
-    String count = getPrettyCount(membersCount);
+    String count = getPrettyCount(membersCount, localizationService);
 
     String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
     String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;

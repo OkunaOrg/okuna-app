@@ -57,6 +57,27 @@ class LocalizationService {
   String get auth__login {
     return Intl.message("Log in", name: 'auth__login');
   }
+  String get auth__email_empty_error {
+    return Intl.message("Email cannot be empty.",
+        name: 'auth__email_empty_error');
+  }
+  String get auth__email_invalid_error {
+    return Intl.message("Please provide a valid email.",
+        name: 'auth__email_invalid_error');
+  }
+  String get auth__username_empty_error {
+    return Intl.message("Username cannot be empty.",
+        name: 'auth__username_empty_error');
+  }
+  String get auth__username_characters_error {
+    return Intl.message("A username can only contain alphanumeric characters and underscores.",
+        name: 'auth__username_characters_error');
+  }
+  String auth__username_maxlength_error(int maxLength) {
+    return Intl.message("A username can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'auth__username_maxlength_error');
+  }
   String get auth__create_account {
     return Intl.message("Sign up", name: 'auth__create_account');
   }
@@ -83,6 +104,41 @@ class LocalizationService {
   }
   String get auth__create_acc__paste_link_help_text {
     return Intl.message("Use the link from the Join Openbook button in your invitation email.", name: 'auth__create_acc__paste_link_help_text');
+  }
+  String get auth__create_acc__link_empty_error {
+    return Intl.message("Link cannot be empty.",
+        name: 'auth__create_acc__link_empty_error');
+  }
+  String get auth__create_acc__link_invalid_error {
+    return Intl.message("This link appears to be invalid.",
+        name: 'auth__create_acc__link_invalid_error');
+  }
+  String get auth__password_empty_error {
+    return Intl.message("Password cannot be empty.",
+        name: 'auth__password_empty_error');
+  }
+  String auth__password_range_error(int minLength, int maxLength) {
+    return Intl.message("Password must be between $minLength and $maxLength characters.",
+        args: [minLength, maxLength],
+        name: 'auth__password_range_error');
+  }
+  String get auth__name_empty_error {
+    return Intl.message("Name cannot be empty.",
+        name: 'auth__name_empty_error');
+  }
+  String auth__name_range_error(int minLength, int maxLength) {
+    return Intl.message("Name must be between $minLength and $maxLength characters.",
+        args: [minLength, maxLength],
+        name: 'auth__name_range_error');
+  }
+  String get auth__description_empty_error {
+    return Intl.message("Description cannot be empty.",
+        name: 'auth__description_empty_error');
+  }
+  String auth__description_range_error(int minLength, int maxLength) {
+    return Intl.message("Description must be between $minLength and $maxLength characters.",
+        args: [minLength, maxLength],
+        name: 'auth__description_range_error');
   }
   String get auth__reset_password_success_title {
     return Intl.message("All set!",
@@ -1140,6 +1196,57 @@ class LocalizationService {
         name: 'community__rules_text');
   }
 
+  String get community__name_characters_error {
+    return Intl.message("Name can only contain alphanumeric characters and underscores.",
+        name: 'community__name_characters_error');
+  }
+
+  String community__name_range_error(int maxLength) {
+    return Intl.message("Name can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'community__name_range_error');
+  }
+
+  String get community__name_empty_error {
+    return Intl.message("Name cannot be empty.",
+        name: 'community__name_empty_error');
+  }
+
+  String community__title_range_error(int maxLength) {
+    return Intl.message("Title can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'community__title_range_error');
+  }
+
+  String get community__title_empty_error {
+    return Intl.message("Title cannot be empty.",
+        name: 'community__title_empty_error');
+  }
+
+  String community__rules_range_error(int maxLength) {
+    return Intl.message("Rules can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'community__rules_range_error');
+  }
+
+  String get community__rules_empty_error {
+    return Intl.message("Rules cannot be empty.",
+        name: 'community__rules_empty_error');
+  }
+
+  String community__description_range_error(int maxLength) {
+    return Intl.message("Description can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'community__description_range_error');
+  }
+
+  String community__adjectives_range_error(int maxLength) {
+    return Intl.message("Adjectives can't be longer than $maxLength characters.",
+        args: [maxLength],
+        desc: 'This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers',
+        name: 'community__adjectives_range_error');
+  }
+
   String get user_search__communities {
     return Intl.message("Communities",
         name: 'user_search__communities');
@@ -1178,24 +1285,6 @@ class LocalizationService {
   String get user_search__cancel {
     return Intl.message("Cancel",
         name: 'user_search__cancel');
-  }
-
-  String get user__thousand_postfix {
-    return Intl.message("k",
-        desc: 'For eg. communty has 3k members',
-        name: 'user__thousand_postfix');
-  }
-
-  String get user__million_postfix {
-    return Intl.message("m",
-        desc: 'For eg. user has 3m followers',
-        name: 'user__million_postfix');
-  }
-
-  String get user__billion_postfix {
-    return Intl.message("b",
-        desc: 'For eg. World circle has 7.5b people',
-        name: 'user__billion_postfix');
   }
 
   String user_search__searching_for(String searchQuery) {
@@ -1240,6 +1329,17 @@ class LocalizationService {
   String get post__post_closed {
     return Intl.message("Post closed ",
         name: 'post__post_closed');
+  }
+
+  String get post__comment_required_error {
+    return Intl.message("Comment cannot be empty.",
+        name: 'post__comment_required_error');
+  }
+
+  String post__comment_maxlength_error(int maxLength) {
+    return Intl.message("A comment can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'post__comment_maxlength_error');
   }
 
   String get post__timeline_posts_all_loaded {
@@ -1685,6 +1785,24 @@ class LocalizationService {
         name: 'post__actions_reported_text');
   }
 
+  String get user__thousand_postfix {
+    return Intl.message("k",
+        desc: 'For eg. communty has 3k members',
+        name: 'user__thousand_postfix');
+  }
+
+  String get user__million_postfix {
+    return Intl.message("m",
+        desc: 'For eg. user has 3m followers',
+        name: 'user__million_postfix');
+  }
+
+  String get user__billion_postfix {
+    return Intl.message("b",
+        desc: 'For eg. World circle has 7.5b people',
+        name: 'user__billion_postfix');
+  }
+
   String get user__translate_see_translation {
     return Intl.message("See translation", name: 'user__translate_see_translation');
   }
@@ -1729,6 +1847,23 @@ class LocalizationService {
   String get user__profile_action_cancel_connection {
     return Intl.message("Cancel connection request",
         name: 'user__profile_action_cancel_connection');
+  }
+
+  String get user__profile_url_invalid_error {
+    return Intl.message("Please provide a valid url.",
+        name: 'user__profile_url_invalid_error');
+  }
+
+  String user__profile_location_length_error(int maxLength) {
+    return Intl.message("Location can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'user__profile_location_length_error');
+  }
+
+  String user__profile_bio_length_error(int maxLength) {
+    return Intl.message("Bio can't be longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'user__profile_bio_length_error');
   }
 
   String get user__follow_button_follow_text {
@@ -1785,6 +1920,28 @@ class LocalizationService {
     return Intl.message("No emoji found matching '$searchQuery'.",
         args: [searchQuery],
         name: 'user__emoji_search_none_found');
+  }
+
+  String get user__list_name_empty_error {
+    return Intl.message("List name cannot be empty.",
+        name: 'user__list_name_empty_error');
+  }
+
+  String user__list_name_range_error(int maxLength) {
+    return Intl.message("List name must be no longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'user__list_name_range_error');
+  }
+
+  String get user__circle_name_empty_error {
+    return Intl.message("Circle name cannot be empty.",
+        name: 'user__circle_name_empty_error');
+  }
+
+  String user__circle_name_range_error(int maxLength) {
+    return Intl.message("Circle name must be no longer than $maxLength characters.",
+        args: [maxLength],
+        name: 'user__circle_name_range_error');
   }
 
   String get user__save_follows_list_name {
@@ -1937,6 +2094,11 @@ class LocalizationService {
   String get user__connection_circle_edit {
     return Intl.message("Edit",
         name: 'user__connection_circle_edit');
+  }
+
+  String get user__connections_circle_delete {
+    return Intl.message("Delete",
+        name: 'user__connections_circle_delete');
   }
 
   String get user__save_connection_circle_name {
@@ -2502,6 +2664,18 @@ class LocalizationService {
     return Intl.message("Disconnect from $userName",
         args: [userName],
         name: 'user__disconnect_from_user');
+  }
+
+  String user__circle_peoples_count(String prettyUsersCount) {
+    return Intl.message("$prettyUsersCount people",
+        args: [prettyUsersCount],
+        name: 'user__circle_peoples_count');
+  }
+
+  String user__follows_list_accounts_count(String prettyUsersCount) {
+    return Intl.message("$prettyUsersCount accounts",
+        args: [prettyUsersCount],
+        name: 'user__follows_list_accounts_count');
   }
 
   String get notifications__settings_title {

@@ -19,14 +19,13 @@ class OBProfileFollowersCount extends StatelessWidget {
         user.getProfileFollowersCountVisible() == false)
       return const SizedBox();
 
-    String count = getPrettyCount(followersCount);
-
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
     var userService = openbookProvider.userService;
     var navigationService = openbookProvider.navigationService;
     LocalizationService _localizationService = openbookProvider.localizationService;
+    String count = getPrettyCount(followersCount, _localizationService);
 
     return StreamBuilder(
         stream: themeService.themeChange,

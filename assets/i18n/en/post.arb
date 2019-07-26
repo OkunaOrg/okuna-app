@@ -19,6 +19,18 @@
     "type": "text",
     "placeholders": {}
   },
+  "comment_required_error": "Comment cannot be empty.",
+  "@comment_required_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment_maxlength_error": "A comment can't be longer than {maxLength} characters.",
+  "@comment_maxlength_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
   "timeline_posts_all_loaded": "🎉  All posts loaded",
   "@timeline_posts_all_loaded": {
     "type": "text",

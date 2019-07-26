@@ -2,6 +2,7 @@ import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileFollowingCount extends StatelessWidget {
@@ -12,10 +13,11 @@ class OBProfileFollowingCount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int followingCount = user.followingCount;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     if (followingCount == null || followingCount == 0) return const SizedBox();
 
-    String count = getPrettyCount(followingCount);
+    String count = getPrettyCount(followingCount, localizationService);
 
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;

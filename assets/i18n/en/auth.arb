@@ -9,6 +9,33 @@
     "type": "text",
     "placeholders": {}
   },
+  "email_empty_error": "Email cannot be empty.",
+  "@email_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "email_invalid_error": "Please provide a valid email.",
+  "@email_invalid_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "username_empty_error": "Username cannot be empty.",
+  "@username_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "username_characters_error": "A username can only contain alphanumeric characters and underscores.",
+  "@username_characters_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "username_maxlength_error": "A username can't be longer than {maxLength} characters.",
+  "@username_maxlength_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
   "create_account": "Sign up",
   "@create_account": {
     "type": "text",
@@ -53,6 +80,55 @@
   "@create_acc__paste_link_help_text": {
     "type": "text",
     "placeholders": {}
+  },
+  "create_acc__link_empty_error": "Link cannot be empty.",
+  "@create_acc__link_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__link_invalid_error": "This link appears to be invalid.",
+  "@create_acc__link_invalid_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "password_empty_error": "Password cannot be empty.",
+  "@password_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "password_range_error": "Password must be between {minLength} and {maxLength} characters.",
+  "@password_range_error": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {},
+      "maxLength": {}
+    }
+  },
+  "name_empty_error": "Name cannot be empty.",
+  "@name_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "name_range_error": "Name must be between {minLength} and {maxLength} characters.",
+  "@name_range_error": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {},
+      "maxLength": {}
+    }
+  },
+  "description_empty_error": "Description cannot be empty.",
+  "@description_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "description_range_error": "Description must be between {minLength} and {maxLength} characters.",
+  "@description_range_error": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {},
+      "maxLength": {}
+    }
   },
   "reset_password_success_title": "All set!",
   "@reset_password_success_title": {

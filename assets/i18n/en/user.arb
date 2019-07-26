@@ -67,6 +67,25 @@
     "type": "text",
     "placeholders": {}
   },
+  "profile_url_invalid_error": "Please provide a valid url.",
+  "@profile_url_invalid_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_location_length_error": "Location can't be longer than {maxLength} characters.",
+  "@profile_location_length_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
+  "profile_bio_length_error": "Bio can't be longer than {maxLength} characters.",
+  "@profile_bio_length_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
   "follow_button_follow_text": "Follow",
   "@follow_button_follow_text": {
     "type": "text",
@@ -122,6 +141,30 @@
     "type": "text",
     "placeholders": {
       "searchQuery": {}
+    }
+  },
+  "list_name_empty_error": "List name cannot be empty.",
+  "@list_name_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "list_name_range_error": "List name must be no longer than {maxLength} characters.",
+  "@list_name_range_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
+  "circle_name_empty_error": "Circle name cannot be empty.",
+  "@circle_name_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "circle_name_range_error": "Circle name must be no longer than {maxLength} characters.",
+  "@circle_name_range_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
     }
   },
   "save_follows_list_name": "Name",
@@ -275,6 +318,11 @@
   },
   "connection_circle_edit": "Edit",
   "@connection_circle_edit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "connections_circle_delete": "Delete",
+  "@connections_circle_delete": {
     "type": "text",
     "placeholders": {}
   },
@@ -857,6 +905,20 @@
     "type": "text",
     "placeholders": {
       "userName": {}
+    }
+  },
+  "circle_peoples_count": "{prettyUsersCount} people",
+  "@circle_peoples_count": {
+    "type": "text",
+    "placeholders": {
+      "prettyUsersCount": {}
+    }
+  },
+  "follows_list_accounts_count": "{prettyUsersCount} accounts",
+  "@follows_list_accounts_count": {
+    "type": "text",
+    "placeholders": {
+      "prettyUsersCount": {}
     }
   }
 }

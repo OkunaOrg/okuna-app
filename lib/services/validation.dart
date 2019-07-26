@@ -7,11 +7,14 @@ import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/image_picker.dart';
 import 'package:validators/validators.dart' as validators;
 
+import 'localization.dart';
+
 class ValidationService {
   AuthApiService _authApiService;
   CommunitiesApiService _communitiesApiService;
   FollowsListsApiService _followsListsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
+  LocalizationService _localizationService;
 
   static const int USERNAME_MAX_LENGTH = 30;
   static const int COMMUNITY_NAME_MAX_LENGTH = 32;
@@ -28,6 +31,7 @@ class ValidationService {
   static const int LIST_MAX_LENGTH = 100;
   static const int PROFILE_NAME_MAX_LENGTH = 192;
   static const int MODERATED_OBJECT_DESCRIPTION_MAX_LENGTH = 1000;
+  static const int MODERATED_OBJECT_DESCRIPTION_MIN_LENGTH = 1;
   static const int PROFILE_NAME_MIN_LENGTH = 1;
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
   static const int PROFILE_BIO_MAX_LENGTH = 1000;
@@ -46,6 +50,11 @@ class ValidationService {
   void setFollowsListsApiService(
       FollowsListsApiService followsListsApiService) {
     _followsListsApiService = followsListsApiService;
+  }
+
+  void setLocalizationService(
+      LocalizationService localizationService) {
+    _localizationService = localizationService;
   }
 
   void setConnectionsCirclesApiService(
@@ -247,13 +256,12 @@ class ValidationService {
     String errorMsg;
 
     if (username.length == 0) {
-      errorMsg = 'Username cannot be empty.';
+      errorMsg = _localizationService.auth__username_empty_error;
     } else if (!isUsernameAllowedLength(username)) {
-      errorMsg =
-          'A username can\'t be longer than $USERNAME_MAX_LENGTH characters.';
+      errorMsg = _localizationService.auth__username_maxlength_error(USERNAME_MAX_LENGTH);
     } else if (!isUsernameAllowedCharacters(username)) {
       errorMsg =
-          'A username can only contain alphanumeric characters and underscores.';
+         _localizationService.auth__username_characters_error;
     }
 
     return errorMsg;
@@ -265,10 +273,9 @@ class ValidationService {
     String errorMsg;
 
     if (postComment.length == 0) {
-      errorMsg = 'Comment cannot be empty.';
+      errorMsg = _localizationService.post__comment_required_error;
     } else if (!isPostCommentAllowedLength(postComment)) {
-      errorMsg =
-          'A comment can\'t be longer than $POST_COMMENT_MAX_LENGTH characters.';
+      errorMsg = _localizationService.post__comment_maxlength_error(POST_COMMENT_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -280,9 +287,9 @@ class ValidationService {
     String errorMsg;
 
     if (email.length == 0) {
-      errorMsg = 'Email cannot be empty.';
+      errorMsg = _localizationService.auth__email_empty_error;
     } else if (!isQualifiedEmail(email)) {
-      errorMsg = 'Please provide a valid email.';
+      errorMsg = _localizationService.auth__email_invalid_error;
     }
 
     return errorMsg;
@@ -294,9 +301,9 @@ class ValidationService {
     String errorMsg;
 
     if (link.length == 0) {
-      errorMsg = 'Link cannot be empty.';
+      errorMsg = _localizationService.auth__create_acc__link_empty_error;
     } else if (!isQualifiedLink(link)) {
-      errorMsg = 'This link appears to be invalid';
+      errorMsg = _localizationService.auth__create_acc__link_invalid_error;
     }
 
     return errorMsg;
@@ -308,10 +315,9 @@ class ValidationService {
     String errorMsg;
 
     if (password.length == 0) {
-      errorMsg = 'Password can\'t be empty.';
+      errorMsg = _localizationService.auth__password_empty_error;
     } else if (!isPasswordAllowedLength(password)) {
-      errorMsg =
-          'Password must be between $PASSWORD_MIN_LENGTH and $PASSWORD_MAX_LENGTH characters.';
+      errorMsg = _localizationService.auth__password_range_error(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -323,10 +329,9 @@ class ValidationService {
     String errorMsg;
 
     if (name.isEmpty) {
-      errorMsg = 'Name can\'t be empty.';
+      errorMsg = _localizationService.auth__name_empty_error;
     } else if (!isNameAllowedLength(name)) {
-      errorMsg =
-          'Name must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
+      errorMsg = _localizationService.auth__name_range_error(PROFILE_NAME_MIN_LENGTH, PROFILE_NAME_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -337,10 +342,10 @@ class ValidationService {
     String errorMsg;
 
     if (description.isEmpty) {
-      errorMsg = 'Description can\'t be empty.';
+      errorMsg = _localizationService.auth__description_empty_error;
     } else if (!isModeratedObjectDescriptionAllowedLength(description)) {
       errorMsg =
-          'Description must be between $PROFILE_NAME_MIN_LENGTH and $PROFILE_NAME_MAX_LENGTH characters.';
+          _localizationService.auth__description_range_error(MODERATED_OBJECT_DESCRIPTION_MIN_LENGTH, MODERATED_OBJECT_DESCRIPTION_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -353,7 +358,7 @@ class ValidationService {
     String errorMsg;
 
     if (!isUrl(url)) {
-      errorMsg = 'Please provide a valid url.';
+      errorMsg = _localizationService.user__profile_url_invalid_error;
     }
 
     return errorMsg;
@@ -367,8 +372,7 @@ class ValidationService {
     String errorMsg;
 
     if (!isLocationAllowedLength(location)) {
-      errorMsg =
-          'Location can\'t be longer than $PROFILE_LOCATION_MAX_LENGTH characters.';
+      errorMsg = _localizationService.user__profile_location_length_error(PROFILE_LOCATION_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -382,8 +386,7 @@ class ValidationService {
     String errorMsg;
 
     if (!isBioAllowedLength(bio)) {
-      errorMsg =
-          'Bio can\'t be longer than $PROFILE_BIO_MAX_LENGTH characters.';
+      errorMsg = _localizationService.user__profile_bio_length_error(PROFILE_BIO_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -395,10 +398,9 @@ class ValidationService {
     String errorMsg;
 
     if (name.length == 0) {
-      errorMsg = 'List name cannot be empty.';
+      errorMsg = _localizationService.user__list_name_empty_error;
     } else if (!isFollowsListNameAllowedLength(name)) {
-      errorMsg =
-          'List name must be no longer than $LIST_MAX_LENGTH characters.';
+      errorMsg = _localizationService.user__list_name_range_error(LIST_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -410,10 +412,9 @@ class ValidationService {
     String errorMsg;
 
     if (name.length == 0) {
-      errorMsg = 'List name cannot be empty.';
+      errorMsg = _localizationService.user__circle_name_empty_error;
     } else if (!isConnectionsCircleNameAllowedLength(name)) {
-      errorMsg =
-          'List name must be no longer than $LIST_MAX_LENGTH characters.';
+      errorMsg = _localizationService.user__circle_name_range_error(CIRCLE_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -425,13 +426,11 @@ class ValidationService {
     String errorMsg;
 
     if (name.length == 0) {
-      errorMsg = 'Name cannot be empty.';
+      errorMsg = _localizationService.community__name_empty_error;
     } else if (!isCommunityNameAllowedLength(name)) {
-      errorMsg =
-          'Name can\'t be longer than $COMMUNITY_NAME_MAX_LENGTH characters.';
+      errorMsg = _localizationService.community__name_range_error(COMMUNITY_NAME_MAX_LENGTH);
     } else if (!isCommunityNameAllowedCharacters(name)) {
-      errorMsg =
-          'Name can only contain alphanumeric characters and underscores.';
+      errorMsg = _localizationService.community__name_characters_error;
     }
 
     return errorMsg;
@@ -443,10 +442,9 @@ class ValidationService {
     String errorMsg;
 
     if (title.length == 0) {
-      errorMsg = 'Title cannot be empty.';
+      errorMsg = _localizationService.community__title_empty_error;
     } else if (!isCommunityTitleAllowedLength(title)) {
-      errorMsg =
-          'Title can\'t be longer than $COMMUNITY_TITLE_MAX_LENGTH characters.';
+      errorMsg = _localizationService.community__title_range_error(COMMUNITY_TITLE_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -459,10 +457,9 @@ class ValidationService {
     String errorMsg;
 
     if (rules.length == 0) {
-      errorMsg = 'Rules cannot be empty.';
+      errorMsg = _localizationService.community__rules_empty_error;
     } else if (!isCommunityRulesAllowedLength(rules)) {
-      errorMsg =
-          'Rules can\'t be longer than $COMMUNITY_RULES_MAX_LENGTH characters.';
+      errorMsg = _localizationService.community__rules_range_error(COMMUNITY_RULES_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -475,8 +472,7 @@ class ValidationService {
     String errorMsg;
 
     if (!isCommunityDescriptionAllowedLength(description)) {
-      errorMsg =
-          'Description can\'t be longer than $COMMUNITY_DESCRIPTION_MAX_LENGTH characters.';
+      errorMsg = _localizationService.community__description_range_error(COMMUNITY_DESCRIPTION_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -489,8 +485,7 @@ class ValidationService {
     String errorMsg;
 
     if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
-      errorMsg =
-          'Adjectives can\'t be longer than $COMMUNITY_USER_ADJECTIVE_MAX_LENGTH characters.';
+      errorMsg = _localizationService.community__adjectives_range_error(COMMUNITY_USER_ADJECTIVE_MAX_LENGTH);
     }
 
     return errorMsg;

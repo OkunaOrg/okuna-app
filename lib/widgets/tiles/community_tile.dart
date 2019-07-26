@@ -90,7 +90,7 @@ class OBCommunityTile extends StatelessWidget {
     String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
     String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;
     String membersPrettyCount = community.membersCount != null
-        ? getPrettyCount(community.membersCount)
+        ? getPrettyCount(community.membersCount, localizationService)
         : null;
     String finalAdjective =
         community.membersCount == 1 ? userAdjective : usersAdjective;

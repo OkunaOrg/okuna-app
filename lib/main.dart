@@ -197,6 +197,7 @@ class _MyAppState extends State<MyApp> {
     UniversalLinksService universalLinksService =
         openbookProvider.universalLinksService;
     universalLinksService.digestLinksWithContext(context);
+    openbookProvider.validationService.setLocalizationService(localizationService);
   }
 
 }

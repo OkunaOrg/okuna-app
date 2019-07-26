@@ -662,5 +662,61 @@
   "@rules_text": {
     "type": "text",
     "placeholders": {}
+  },
+  "name_characters_error": "Name can only contain alphanumeric characters and underscores.",
+  "@name_characters_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "name_range_error": "Name can't be longer than {maxLength} characters.",
+  "@name_range_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
+  "name_empty_error": "Name cannot be empty.",
+  "@name_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "title_range_error": "Title can't be longer than {maxLength} characters.",
+  "@title_range_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
+  "title_empty_error": "Title cannot be empty.",
+  "@title_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rules_range_error": "Rules can't be longer than {maxLength} characters.",
+  "@rules_range_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
+  "rules_empty_error": "Rules cannot be empty.",
+  "@rules_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "description_range_error": "Description can't be longer than {maxLength} characters.",
+  "@description_range_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
+  "adjectives_range_error": "Adjectives can't be longer than {maxLength} characters.",
+  "@adjectives_range_error": {
+    "description": "This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers",
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
   }
 }

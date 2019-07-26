@@ -85,6 +85,7 @@ class EditPostModalState extends State<EditPostModal> {
     _validationService = openbookProvider.validationService;
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
