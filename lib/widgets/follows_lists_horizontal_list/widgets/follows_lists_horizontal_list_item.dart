@@ -32,7 +32,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
     } else if (isSelected) {
       usersCount = usersCount + 1;
     }
-    String prettyUsersCount = getPrettyCount(usersCount);
+    String prettyUsersCount = getPrettyCount(usersCount, _localizationService);
 
     return GestureDetector(
       onTap: () {
@@ -68,8 +68,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
-            OBText(
-              prettyUsersCount + ' ' + (usersCount <= 1 ? _localizationService.user__follows_lists_account : _localizationService.user__follows_lists_accounts),
+            OBText((usersCount == 1 ? _localizationService.user__follows_lists_account : _localizationService.user__follows_lists_accounts(prettyUsersCount)),
               maxLines: 1,
               size: OBTextSize.extraSmall,
               style: TextStyle(

@@ -1180,6 +1180,24 @@ class LocalizationService {
         name: 'user_search__cancel');
   }
 
+  String get user__thousand_postfix {
+    return Intl.message("k",
+        desc: 'For eg. communty has 3k members',
+        name: 'user__thousand_postfix');
+  }
+
+  String get user__million_postfix {
+    return Intl.message("m",
+        desc: 'For eg. user has 3m followers',
+        name: 'user__million_postfix');
+  }
+
+  String get user__billion_postfix {
+    return Intl.message("b",
+        desc: 'For eg. World circle has 7.5b people',
+        name: 'user__billion_postfix');
+  }
+
   String user_search__searching_for(String searchQuery) {
     return Intl.message("Searching for '$searchQuery'",
         args: [searchQuery],
@@ -1676,11 +1694,15 @@ class LocalizationService {
   }
 
   String get user__follows_lists_account {
-    return Intl.message("Account", name: 'user__follows_lists_account');
+    return Intl.message("1 Account",
+    name: 'user__follows_lists_account');
   }
 
-  String get user__follows_lists_accounts {
-    return Intl.message("Accounts", name: 'user__follows_lists_accounts');
+  String user__follows_lists_accounts(String prettyUsersCount) {
+    return Intl.message("$prettyUsersCount Accounts",
+        args: [prettyUsersCount],
+        desc: 'prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts',
+        name: 'user__follows_lists_accounts');
   }
 
   String user__edit_profile_user_name_taken(String username) {
@@ -1782,7 +1804,7 @@ class LocalizationService {
   }
 
   String get user__save_follows_list_emoji {
-    return Intl.message("Emoji is required",
+    return Intl.message("Emoji",
         name: 'user__save_follows_list_emoji');
   }
 
@@ -1807,7 +1829,7 @@ class LocalizationService {
   }
 
   String get user__save_follows_list_emoji_required_error {
-    return Intl.message("Emoji",
+    return Intl.message("Emoji is required",
         name: 'user__save_follows_list_emoji_required_error');
   }
 

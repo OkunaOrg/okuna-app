@@ -1,4 +1,22 @@
 {
+  "thousand_postfix": "k",
+  "@thousand_postfix": {
+    "description": "For eg. communty has 3k members",
+    "type": "text",
+    "placeholders": {}
+  },
+  "million_postfix": "m",
+  "@million_postfix": {
+    "description": "For eg. user has 3m followers",
+    "type": "text",
+    "placeholders": {}
+  },
+  "billion_postfix": "b",
+  "@billion_postfix": {
+    "description": "For eg. World circle has 7.5b people",
+    "type": "text",
+    "placeholders": {}
+  },
   "translate_see_translation": "See translation",
   "@translate_see_translation": {
     "type": "text",
@@ -9,15 +27,18 @@
     "type": "text",
     "placeholders": {}
   },
-  "follows_lists_account": "Account",
+  "follows_lists_account": "1 Account",
   "@follows_lists_account": {
     "type": "text",
     "placeholders": {}
   },
-  "follows_lists_accounts": "Accounts",
+  "follows_lists_accounts": "{prettyUsersCount} Accounts",
   "@follows_lists_accounts": {
+    "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
     "type": "text",
-    "placeholders": {}
+    "placeholders": {
+      "prettyUsersCount": {}
+    }
   },
   "edit_profile_user_name_taken": "Username @{username} is taken",
   "@edit_profile_user_name_taken": {
@@ -120,7 +141,7 @@
       "listName": {}
     }
   },
-  "save_follows_list_emoji": "Emoji is required",
+  "save_follows_list_emoji": "Emoji",
   "@save_follows_list_emoji": {
     "type": "text",
     "placeholders": {}
@@ -145,7 +166,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "save_follows_list_emoji_required_error": "Emoji",
+  "save_follows_list_emoji_required_error": "Emoji is required",
   "@save_follows_list_emoji_required_error": {
     "type": "text",
     "placeholders": {}
