@@ -1257,19 +1257,18 @@ class LocalizationService {
         name: 'user_search__users');
   }
 
-  String get user_search__list_search_text {
-    return Intl.message("Search ",
+  String user_search__list_search_text(String resourcePluralName) {
+    return Intl.message("Search $resourcePluralName ...",
+        args: [resourcePluralName],
+        desc: 'resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.',
         name: 'user_search__list_search_text');
   }
 
-  String get user_search__list_no_text {
-    return Intl.message("No ",
-        name: 'user_search__list_no_text');
-  }
-
-  String get user_search__list_found_text {
-    return Intl.message(" found.",
-        name: 'user_search__list_found_text');
+  String user_search__list_no_results_found(String resourcePluralName) {
+    return Intl.message("No $resourcePluralName found.",
+        args: [resourcePluralName],
+        desc: 'Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ',
+        name: 'user_search__list_no_results_found');
   }
 
   String get user_search__list_refresh_text {
@@ -2447,6 +2446,7 @@ class LocalizationService {
 
   String get user__invites_accepted_group_name {
     return Intl.message("accepted invites",
+        desc: 'Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ',
         name: 'user__invites_accepted_group_name');
   }
 
@@ -2495,6 +2495,13 @@ class LocalizationService {
 
   String get user__language_settings_saved_success {
     return Intl.message("Language changed successfully", name: 'user__language_settings_saved_success');
+  }
+
+  String user__groups_see_all(String groupName) {
+    return Intl.message("See all $groupName",
+        args: [groupName],
+        desc: 'Can be, See all joined communities, See all pending invites, See all moderated communities etc. ',
+        name: 'user__groups_see_all');
   }
 
   String user__invites_joined_with(String username) {
@@ -2546,7 +2553,7 @@ class LocalizationService {
   }
 
   String get user__confirm_guidelines_reject_chat_immediately {
-    return Intl.message("Start a chat immediatly.",
+    return Intl.message("Start a chat immediately.",
         name: 'user__confirm_guidelines_reject_chat_immediately');
   }
 

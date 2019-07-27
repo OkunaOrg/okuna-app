@@ -129,8 +129,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBSecondaryText(
-              'See all ' + widget.groupName,
+            OBSecondaryText(_localizationService.user__groups_see_all(widget.groupName),
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(

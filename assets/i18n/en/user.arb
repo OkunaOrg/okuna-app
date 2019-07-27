@@ -676,6 +676,7 @@
   },
   "invites_accepted_group_name": "accepted invites",
   "@invites_accepted_group_name": {
+    "description": "Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ",
     "type": "text",
     "placeholders": {}
   },
@@ -728,6 +729,14 @@
   "@language_settings_saved_success": {
     "type": "text",
     "placeholders": {}
+  },
+  "groups_see_all": "See all {groupName}",
+  "@groups_see_all": {
+    "description": "Can be, See all joined communities, See all pending invites, See all moderated communities etc. ",
+    "type": "text",
+    "placeholders": {
+      "groupName": {}
+    }
   },
   "invites_joined_with": "Joined with username @{username}",
   "@invites_joined_with": {
@@ -785,7 +794,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "confirm_guidelines_reject_chat_immediately": "Start a chat immediatly.",
+  "confirm_guidelines_reject_chat_immediately": "Start a chat immediately.",
   "@confirm_guidelines_reject_chat_immediately": {
     "type": "text",
     "placeholders": {}

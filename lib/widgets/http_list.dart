@@ -144,7 +144,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       columnItems.add(SizedBox(
           child: OBSearchBar(
         onSearch: _onSearch,
-        hintText: _localizationService.trans('user_search__list_search_text') + widget.resourcePluralName + '...',
+        hintText: _localizationService.user_search__list_search_text(widget.resourcePluralName),
       )));
     }
 
@@ -245,9 +245,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
-          text: _localizationService.trans('user_search__list_no_text') +
-              widget.resourcePluralName +
-              _localizationService.trans('user_search__list_found_text'),
+          text: _localizationService.user_search__list_no_results_found(widget.resourcePluralName),
           onPressed: _refreshList,
           buttonText: _localizationService.trans('user_search__list_refresh_text'),
           buttonIcon: OBIcons.refresh,

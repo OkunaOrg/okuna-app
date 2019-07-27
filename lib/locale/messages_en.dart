@@ -94,29 +94,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m36(prettyUsersCount) => "${prettyUsersCount} Accounts";
 
-  static m37(username) => "Joined with username @${username}";
+  static m37(groupName) => "See all ${groupName}";
 
-  static m38(email) => "Pending, invite email sent to ${email}";
+  static m38(username) => "Joined with username @${username}";
 
-  static m39(maxLength) => "List name must be no longer than ${maxLength} characters.";
+  static m39(email) => "Pending, invite email sent to ${email}";
 
-  static m40(maxLength) => "Bio can\'t be longer than ${maxLength} characters.";
+  static m40(maxLength) => "List name must be no longer than ${maxLength} characters.";
 
-  static m41(maxLength) => "Location can\'t be longer than ${maxLength} characters.";
+  static m41(maxLength) => "Bio can\'t be longer than ${maxLength} characters.";
 
-  static m42(takenConnectionsCircleName) => "Circle name \'${takenConnectionsCircleName}\' is taken";
+  static m42(maxLength) => "Location can\'t be longer than ${maxLength} characters.";
 
-  static m43(listName) => "List name \'${listName}\' is taken";
+  static m43(takenConnectionsCircleName) => "Circle name \'${takenConnectionsCircleName}\' is taken";
 
-  static m44(searchQuery) => "No match for \'${searchQuery}\'.";
+  static m44(listName) => "List name \'${listName}\' is taken";
 
-  static m45(searchQuery) => "No communities found for \'${searchQuery}\'.";
+  static m45(searchQuery) => "No match for \'${searchQuery}\'.";
 
-  static m46(searchQuery) => "No results for \'${searchQuery}\'.";
+  static m46(resourcePluralName) => "No ${resourcePluralName} found.";
 
-  static m47(searchQuery) => "No users found for \'${searchQuery}\'.";
+  static m47(resourcePluralName) => "Search ${resourcePluralName} ...";
 
-  static m48(searchQuery) => "Searching for \'${searchQuery}\'";
+  static m48(searchQuery) => "No communities found for \'${searchQuery}\'.";
+
+  static m49(searchQuery) => "No results for \'${searchQuery}\'.";
+
+  static m50(searchQuery) => "No users found for \'${searchQuery}\'.";
+
+  static m51(searchQuery) => "Searching for \'${searchQuery}\'";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -611,7 +617,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_connection_connection_confirmed" : MessageLookupByLibrary.simpleMessage("Connection confirmed"),
     "user__confirm_connection_with" : m29,
     "user__confirm_guidelines_reject_chat_community" : MessageLookupByLibrary.simpleMessage("Chat with the community."),
-    "user__confirm_guidelines_reject_chat_immediately" : MessageLookupByLibrary.simpleMessage("Start a chat immediatly."),
+    "user__confirm_guidelines_reject_chat_immediately" : MessageLookupByLibrary.simpleMessage("Start a chat immediately."),
     "user__confirm_guidelines_reject_chat_with_team" : MessageLookupByLibrary.simpleMessage("Chat with the team."),
     "user__confirm_guidelines_reject_delete_account" : MessageLookupByLibrary.simpleMessage("Delete account"),
     "user__confirm_guidelines_reject_go_back" : MessageLookupByLibrary.simpleMessage("Go back"),
@@ -665,6 +671,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__follows_list_header_title" : MessageLookupByLibrary.simpleMessage("Users"),
     "user__follows_lists_account" : MessageLookupByLibrary.simpleMessage("1 Account"),
     "user__follows_lists_accounts" : m36,
+    "user__groups_see_all" : m37,
     "user__guidelines_accept" : MessageLookupByLibrary.simpleMessage("Accept"),
     "user__guidelines_desc" : MessageLookupByLibrary.simpleMessage("Please take a moment to read and accept our guidelines."),
     "user__guidelines_reject" : MessageLookupByLibrary.simpleMessage("Reject"),
@@ -688,11 +695,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__invites_email_text" : MessageLookupByLibrary.simpleMessage("Email"),
     "user__invites_invite_a_friend" : MessageLookupByLibrary.simpleMessage("Invite a friend"),
     "user__invites_invite_text" : MessageLookupByLibrary.simpleMessage("Invite"),
-    "user__invites_joined_with" : m37,
+    "user__invites_joined_with" : m38,
     "user__invites_none_left" : MessageLookupByLibrary.simpleMessage("You have no invites available."),
     "user__invites_none_used" : MessageLookupByLibrary.simpleMessage("Looks like you haven\'t used any invite."),
     "user__invites_pending" : MessageLookupByLibrary.simpleMessage("Pending"),
-    "user__invites_pending_email" : m38,
+    "user__invites_pending_email" : m39,
     "user__invites_pending_group_item_name" : MessageLookupByLibrary.simpleMessage("pending invite"),
     "user__invites_pending_group_name" : MessageLookupByLibrary.simpleMessage("pending invites"),
     "user__invites_refresh" : MessageLookupByLibrary.simpleMessage("Refresh"),
@@ -705,14 +712,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__language_settings_saved_success" : MessageLookupByLibrary.simpleMessage("Language changed successfully"),
     "user__language_settings_title" : MessageLookupByLibrary.simpleMessage("Language settings"),
     "user__list_name_empty_error" : MessageLookupByLibrary.simpleMessage("List name cannot be empty."),
-    "user__list_name_range_error" : m39,
+    "user__list_name_range_error" : m40,
     "user__million_postfix" : MessageLookupByLibrary.simpleMessage("m"),
     "user__profile_action_cancel_connection" : MessageLookupByLibrary.simpleMessage("Cancel connection request"),
     "user__profile_action_deny_connection" : MessageLookupByLibrary.simpleMessage("Deny connection request"),
     "user__profile_action_user_blocked" : MessageLookupByLibrary.simpleMessage("User blocked"),
     "user__profile_action_user_unblocked" : MessageLookupByLibrary.simpleMessage("User unblocked"),
-    "user__profile_bio_length_error" : m40,
-    "user__profile_location_length_error" : m41,
+    "user__profile_bio_length_error" : m41,
+    "user__profile_location_length_error" : m42,
     "user__profile_url_invalid_error" : MessageLookupByLibrary.simpleMessage("Please provide a valid url."),
     "user__remove_account_from_list" : MessageLookupByLibrary.simpleMessage("Remove account from lists"),
     "user__remove_account_from_list_success" : MessageLookupByLibrary.simpleMessage("Success"),
@@ -722,7 +729,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Edit circle"),
     "user__save_connection_circle_hint" : MessageLookupByLibrary.simpleMessage("e.g. Friends, Family, Work."),
     "user__save_connection_circle_name" : MessageLookupByLibrary.simpleMessage("Name"),
-    "user__save_connection_circle_name_taken" : m42,
+    "user__save_connection_circle_name_taken" : m43,
     "user__save_connection_circle_save" : MessageLookupByLibrary.simpleMessage("Save"),
     "user__save_connection_circle_users" : MessageLookupByLibrary.simpleMessage("Users"),
     "user__save_follows_list_create" : MessageLookupByLibrary.simpleMessage("Create list"),
@@ -731,7 +738,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_follows_list_emoji_required_error" : MessageLookupByLibrary.simpleMessage("Emoji is required"),
     "user__save_follows_list_hint_text" : MessageLookupByLibrary.simpleMessage("e.g. Travel, Photography"),
     "user__save_follows_list_name" : MessageLookupByLibrary.simpleMessage("Name"),
-    "user__save_follows_list_name_taken" : m43,
+    "user__save_follows_list_name_taken" : m44,
     "user__save_follows_list_save" : MessageLookupByLibrary.simpleMessage("Save"),
     "user__save_follows_list_users" : MessageLookupByLibrary.simpleMessage("Users"),
     "user__thousand_postfix" : MessageLookupByLibrary.simpleMessage("k"),
@@ -741,7 +748,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__timeline_filters_circles" : MessageLookupByLibrary.simpleMessage("Circles"),
     "user__timeline_filters_clear_all" : MessageLookupByLibrary.simpleMessage("Clear all"),
     "user__timeline_filters_lists" : MessageLookupByLibrary.simpleMessage("Lists"),
-    "user__timeline_filters_no_match" : m44,
+    "user__timeline_filters_no_match" : m45,
     "user__timeline_filters_search_desc" : MessageLookupByLibrary.simpleMessage("Search for circles and lists..."),
     "user__timeline_filters_title" : MessageLookupByLibrary.simpleMessage("Timeline filters"),
     "user__translate_see_translation" : MessageLookupByLibrary.simpleMessage("See translation"),
@@ -753,15 +760,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__update_connection_circles_title" : MessageLookupByLibrary.simpleMessage("Update connection circles"),
     "user_search__cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "user_search__communities" : MessageLookupByLibrary.simpleMessage("Communities"),
-    "user_search__list_found_text" : MessageLookupByLibrary.simpleMessage(" found."),
-    "user_search__list_no_text" : MessageLookupByLibrary.simpleMessage("No "),
+    "user_search__list_no_results_found" : m46,
     "user_search__list_refresh_text" : MessageLookupByLibrary.simpleMessage("Refresh"),
     "user_search__list_retry" : MessageLookupByLibrary.simpleMessage("Tap to retry."),
-    "user_search__list_search_text" : MessageLookupByLibrary.simpleMessage("Search "),
-    "user_search__no_communities_for" : m45,
-    "user_search__no_results_for" : m46,
-    "user_search__no_users_for" : m47,
-    "user_search__searching_for" : m48,
+    "user_search__list_search_text" : m47,
+    "user_search__no_communities_for" : m48,
+    "user_search__no_results_for" : m49,
+    "user_search__no_users_for" : m50,
+    "user_search__searching_for" : m51,
     "user_search__users" : MessageLookupByLibrary.simpleMessage("Users")
   };
 }

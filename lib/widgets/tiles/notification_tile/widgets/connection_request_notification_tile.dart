@@ -1,6 +1,7 @@
 import 'package:Openbook/models/notifications/connection_request_notification.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -27,6 +28,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
         connectionRequestNotification.connectionRequester.username;
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     var navigateToRequesterProfile = () {
       if (onPressed != null) onPressed();

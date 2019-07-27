@@ -9,20 +9,21 @@
     "type": "text",
     "placeholders": {}
   },
-  "list_search_text": "Search ",
+  "list_search_text": "Search {resourcePluralName} ...",
   "@list_search_text": {
+    "description": "resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.",
     "type": "text",
-    "placeholders": {}
+    "placeholders": {
+      "resourcePluralName": {}
+    }
   },
-  "list_no_text": "No ",
-  "@list_no_text": {
+  "list_no_results_found": "No {resourcePluralName} found.",
+  "@list_no_results_found": {
+    "description": "Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ",
     "type": "text",
-    "placeholders": {}
-  },
-  "list_found_text": " found.",
-  "@list_found_text": {
-    "type": "text",
-    "placeholders": {}
+    "placeholders": {
+      "resourcePluralName": {}
+    }
   },
   "list_refresh_text": "Refresh",
   "@list_refresh_text": {
