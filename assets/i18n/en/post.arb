@@ -292,34 +292,6 @@
       "commentsCount": {}
     }
   },
-  "comment_reply_notification_tile_user_replied": " replied: {postCommentText}",
-  "@comment_reply_notification_tile_user_replied": {
-    "type": "text",
-    "placeholders": {
-      "postCommentText": {}
-    }
-  },
-  "comment_reply_notification_tile_user_also_replied": " also replied: {postCommentText}",
-  "@comment_reply_notification_tile_user_also_replied": {
-    "type": "text",
-    "placeholders": {
-      "postCommentText": {}
-    }
-  },
-  "comment_comment_notification_tile_user_commented": " commented on your post: {postCommentText}",
-  "@comment_comment_notification_tile_user_commented": {
-    "type": "text",
-    "placeholders": {
-      "postCommentText": {}
-    }
-  },
-  "comment_comment_notification_tile_user_also_commented": " also commented: {postCommentText}",
-  "@comment_comment_notification_tile_user_also_commented": {
-    "type": "text",
-    "placeholders": {
-      "postCommentText": {}
-    }
-  },
   "comments_closed_post": "Closed post",
   "@comments_closed_post": {
     "type": "text",

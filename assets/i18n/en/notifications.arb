@@ -103,5 +103,72 @@
   "@mute_post_turn_off_post_comment_notifications": {
     "type": "text",
     "placeholders": {}
+  },
+  "connection_request_tile": "[name] [username] wants to connect with you.",
+  "@connection_request_tile": {
+    "description": "Eg.: James @jamest wants to connect with you.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "accepted_connection_request_tile": "[name] [username] accepted your connection request.",
+  "@accepted_connection_request_tile": {
+    "description": "Eg.: James @jamest accepted your connection request.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "reacted_to_post_tile": "[name] [username] reacted to your post.",
+  "@reacted_to_post_tile": {
+    "description": "Eg.: James @jamest reacted to your post.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "reacted_to_post_comment_tile": "[name] [username] reacted to your post comment.",
+  "@reacted_to_post_comment_tile": {
+    "description": "Eg.: James @jamest reacted to your post comment.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "following_you_tile": "[name] [username] is now following you.",
+  "@following_you_tile": {
+    "description": "Eg.: James @jamest is now following you.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "user_community_invite_tile": "[name] [username] has invited you to join community /c/{communityName}.",
+  "@user_community_invite_tile": {
+    "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
+    "type": "text",
+    "placeholders": {
+      "communityName": {}
+    }
+  },
+  "comment_reply_notification_tile_user_replied": "[name] [username] replied: {postCommentText}",
+  "@comment_reply_notification_tile_user_replied": {
+    "description": "For.eg. James @jamest replied.",
+    "type": "text",
+    "placeholders": {
+      "postCommentText": {}
+    }
+  },
+  "comment_reply_notification_tile_user_also_replied": "name] [username] also replied: {postCommentText}",
+  "@comment_reply_notification_tile_user_also_replied": {
+    "type": "text",
+    "placeholders": {
+      "postCommentText": {}
+    }
+  },
+  "comment_comment_notification_tile_user_commented": "[name] [username] commented on your post: {postCommentText}",
+  "@comment_comment_notification_tile_user_commented": {
+    "type": "text",
+    "placeholders": {
+      "postCommentText": {}
+    }
+  },
+  "comment_comment_notification_tile_user_also_commented": "[name] [username] also commented: {postCommentText}",
+  "@comment_comment_notification_tile_user_also_commented": {
+    "type": "text",
+    "placeholders": {
+      "postCommentText": {}
+    }
   }
 }

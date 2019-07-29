@@ -78,8 +78,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         user: postComment.commenter,
         text: TextSpan(
             text: isOwnPostNotification
-                ? _localizationService.post__comment_comment_notification_tile_user_commented(postCommentText)
-                : _localizationService.post__comment_comment_notification_tile_user_also_commented(postCommentText)),
+                ? _localizationService.notifications__comment_comment_notification_tile_user_commented(postCommentText)
+                : _localizationService.notifications__comment_comment_notification_tile_user_also_commented(postCommentText)),
       ),
       trailing: postImagePreview,
       subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),

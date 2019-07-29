@@ -50,7 +50,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
           onUsernamePressed: navigateToRequesterProfile,
           user: connectionRequestNotification.connectionRequester,
           text: TextSpan(
-            text: ' wants to connect with you.',
+            text: _localizationService.notifications__connection_request_tile,
           )),
       subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );

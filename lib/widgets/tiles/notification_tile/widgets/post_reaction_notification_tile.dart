@@ -3,6 +3,7 @@ import 'package:Openbook/models/notifications/post_reaction_notification.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -46,6 +47,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
     }
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     Function navigateToReactorProfile = () {
       openbookProvider.navigationService
@@ -65,7 +67,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
         avatarUrl: postReaction.reactor.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
-        text: TextSpan(text: ' reacted to your post'),
+        text: TextSpan(text: _localizationService.notifications__reacted_to_post_tile),
         onUsernamePressed: navigateToReactorProfile,
         user: postReaction.reactor,
       ),

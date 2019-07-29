@@ -4,6 +4,7 @@ import 'package:Openbook/models/notifications/community_invite_notification.dart
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/community_avatar.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
@@ -43,6 +44,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
       openbookProvider.navigationService
           .navigateToUserProfile(user: inviteCreator, context: context);
     };
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: () {
@@ -61,7 +63,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         user: inviteCreator,
         onUsernamePressed: navigateToInviteCreatorProfile,
         text: TextSpan(
-            text: ' has invited you to join community /c/$communityName .'),
+            text: _localizationService.notifications__user_community_invite_tile(communityName)),
       ),
       trailing: OBCommunityAvatar(
         community: community,

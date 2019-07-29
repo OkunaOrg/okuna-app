@@ -1599,30 +1599,6 @@ class LocalizationService {
         name: 'post__comments_view_all_comments');
   }
 
-  String post__comment_reply_notification_tile_user_replied(String postCommentText) {
-    return Intl.message(" replied: $postCommentText",
-        args: [postCommentText],
-        name: 'post__comment_reply_notification_tile_user_replied');
-  }
-
-  String post__comment_reply_notification_tile_user_also_replied(String postCommentText) {
-    return Intl.message(" also replied: $postCommentText",
-        args: [postCommentText],
-        name: 'post__comment_reply_notification_tile_user_also_replied');
-  }
-
-  String post__comment_comment_notification_tile_user_commented(String postCommentText) {
-    return Intl.message(" commented on your post: $postCommentText",
-        args: [postCommentText],
-        name: 'post__comment_comment_notification_tile_user_commented');
-  }
-
-  String post__comment_comment_notification_tile_user_also_commented(String postCommentText) {
-    return Intl.message(" also commented: $postCommentText",
-        args: [postCommentText],
-        name: 'post__comment_comment_notification_tile_user_also_commented');
-  }
-
   String get post__comments_closed_post {
     return Intl.message("Closed post",
         name: 'post__comments_closed_post');
@@ -2788,6 +2764,68 @@ class LocalizationService {
   String get notifications__mute_post_turn_off_post_comment_notifications {
     return Intl.message("Turn off post comment notifications",
         name: 'notifications__mute_post_turn_off_post_comment_notifications');
+  }
+
+  String get notifications__connection_request_tile {
+    return Intl.message("[name] [username] wants to connect with you.",
+        desc: "Eg.: James @jamest wants to connect with you.",
+        name: 'notifications__connection_request_tile');
+  }
+
+  String get notifications__accepted_connection_request_tile {
+    return Intl.message("[name] [username] accepted your connection request.",
+        desc: "Eg.: James @jamest accepted your connection request.",
+        name: 'notifications__accepted_connection_request_tile');
+  }
+
+  String get notifications__reacted_to_post_tile {
+    return Intl.message("[name] [username] reacted to your post.",
+        desc: "Eg.: James @jamest reacted to your post.",
+        name: 'notifications__reacted_to_post_tile');
+  }
+
+  String get notifications__reacted_to_post_comment_tile {
+    return Intl.message("[name] [username] reacted to your post comment.",
+        desc: "Eg.: James @jamest reacted to your post comment.",
+        name: 'notifications__reacted_to_post_comment_tile');
+  }
+
+  String get notifications__following_you_tile {
+    return Intl.message("[name] [username] is now following you.",
+        desc: "Eg.: James @jamest is now following you.",
+        name: 'notifications__following_you_tile');
+  }
+
+  String notifications__user_community_invite_tile(String communityName) {
+    return Intl.message("[name] [username] has invited you to join community /c/$communityName.",
+        args: [communityName],
+        desc: "Eg.: James @jamest has invited you to join community /c/okuna.",
+        name: 'notifications__user_community_invite_tile');
+  }
+
+  String notifications__comment_reply_notification_tile_user_replied(String postCommentText) {
+    return Intl.message("[name] [username] replied: $postCommentText",
+        desc: 'For.eg. James @jamest replied.',
+        args: [postCommentText],
+        name: 'notifications__comment_reply_notification_tile_user_replied');
+  }
+
+  String notifications__comment_reply_notification_tile_user_also_replied(String postCommentText) {
+    return Intl.message("name] [username] also replied: $postCommentText",
+        args: [postCommentText],
+        name: 'notifications__comment_reply_notification_tile_user_also_replied');
+  }
+
+  String notifications__comment_comment_notification_tile_user_commented(String postCommentText) {
+    return Intl.message("[name] [username] commented on your post: $postCommentText",
+        args: [postCommentText],
+        name: 'notifications__comment_comment_notification_tile_user_commented');
+  }
+
+  String notifications__comment_comment_notification_tile_user_also_commented(String postCommentText) {
+    return Intl.message("[name] [username] also commented: $postCommentText",
+        args: [postCommentText],
+        name: 'notifications__comment_comment_notification_tile_user_also_commented');
   }
 
   String get moderation__filters_title {

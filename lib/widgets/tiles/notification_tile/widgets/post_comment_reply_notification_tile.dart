@@ -79,8 +79,8 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
       title: OBNotificationTileTitle(
         text: TextSpan(
             text: isOwnPostNotification
-                ? localizationService.post__comment_reply_notification_tile_user_replied(postCommentText)
-                : localizationService.post__comment_reply_notification_tile_user_also_replied(postCommentText)),
+                ? localizationService.notifications__comment_reply_notification_tile_user_replied(postCommentText)
+                : localizationService.notifications__comment_reply_notification_tile_user_also_replied(postCommentText)),
         onUsernamePressed: navigateToCommenterProfile,
         user: postComment.commenter,
       ),

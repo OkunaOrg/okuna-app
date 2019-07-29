@@ -4,6 +4,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_reaction.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
@@ -53,6 +54,7 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
       openbookProvider.navigationService.navigateToUserProfile(
           user: postCommentReaction.reactor, context: context);
     };
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: () {
@@ -76,7 +78,7 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
         avatarUrl: postCommentReaction.reactor.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
-        text: TextSpan(text: ' reacted to your comment'),
+        text: TextSpan(text: _localizationService.notifications__reacted_to_post_comment_tile),
         onUsernamePressed: navigateToReactorProfile,
         user: postCommentReaction.reactor,
       ),
