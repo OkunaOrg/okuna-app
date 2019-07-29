@@ -45,7 +45,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       'Take a look at what we\'re currently working on'),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://github.com/orgs/OpenbookOrg/projects/3');
+                        'https://github.com/orgs/OkunaOrg/projects/3');
                   },
                 ),
                 ListTile(
