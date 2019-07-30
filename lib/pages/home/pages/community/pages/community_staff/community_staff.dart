@@ -3,9 +3,7 @@ import 'package:Openbook/pages/home/pages/community/pages/community_staff/widget
 import 'package:Openbook/pages/home/pages/community/pages/community_staff/widgets/community_moderators.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityStaffPage extends StatelessWidget {
@@ -25,11 +23,14 @@ class OBCommunityStaffPage extends StatelessWidget {
           stream: community.updateSubject,
           initialData: community,
           builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-            return Column(
-              children: <Widget>[
-                OBCommunityAdministrators(community),
-                OBCommunityModerators(community),
-              ],
+            return SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                children: <Widget>[
+                  OBCommunityAdministrators(community),
+                  OBCommunityModerators(community),
+                ],
+              ),
             );
           },
         ),
