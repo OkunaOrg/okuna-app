@@ -5,19 +5,19 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Openspace</string>
+	<string>Okuna</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-    <key>CFBundleLocalizations</key>
-    <array>
-      <string>English</string>
-      <string>nl</string>
-      <string>es</string>
-    </array>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>English</string>
+		<string>nl</string>
+		<string>es</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>openbook</string>
 	<key>CFBundlePackageType</key>

@@ -25,7 +25,7 @@
          FlutterApplication and put your custom class here. -->
     <application
             android:name="io.flutter.app.FlutterApplication"
-            android:label="Openspace"
+            android:label="Okuna"
             android:icon="@mipmap/ic_launcher">
         <activity
                 android:name=".MainActivity"
@@ -49,6 +49,15 @@
                 <data
                         android:scheme="https"
                         android:host="www.openbook.social"
+                        android:pathPrefix="/api/auth/"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                        android:scheme="https"
+                        android:host="www.okuna.io"
                         android:pathPrefix="/api/auth/"/>
             </intent-filter>
             <intent-filter>
