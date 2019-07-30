@@ -489,6 +489,7 @@ class User extends UpdatableModel<User> {
   bool canTranslatePost(Post post) {
     User loggedInUser = this;
     return post.hasLanguage() &&
+        !post.isEncircledPost() &&
         post.getLanguage().code != loggedInUser.language.code;
   }
 
