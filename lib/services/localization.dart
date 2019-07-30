@@ -2811,7 +2811,7 @@ class LocalizationService {
   }
 
   String notifications__comment_reply_notification_tile_user_also_replied(String postCommentText) {
-    return Intl.message("name] [username] also replied: $postCommentText",
+    return Intl.message("[name] [username] also replied: $postCommentText",
         args: [postCommentText],
         name: 'notifications__comment_reply_notification_tile_user_also_replied');
   }

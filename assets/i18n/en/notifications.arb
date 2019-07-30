@@ -150,7 +150,7 @@
       "postCommentText": {}
     }
   },
-  "comment_reply_notification_tile_user_also_replied": "name] [username] also replied: {postCommentText}",
+  "comment_reply_notification_tile_user_also_replied": "[name] [username] also replied: {postCommentText}",
   "@comment_reply_notification_tile_user_also_replied": {
     "type": "text",
     "placeholders": {

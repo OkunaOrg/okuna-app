@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m18(postCommentText) => "[name] [username] commented on your post: ${postCommentText}";
 
-  static m19(postCommentText) => "name] [username] also replied: ${postCommentText}";
+  static m19(postCommentText) => "[name] [username] also replied: ${postCommentText}";
 
   static m20(postCommentText) => "[name] [username] replied: ${postCommentText}";
 
