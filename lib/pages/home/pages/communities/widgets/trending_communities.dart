@@ -2,6 +2,7 @@ import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -31,6 +32,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
   List<Community> _trendingCommunities;
   bool _refreshInProgress;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
@@ -51,6 +53,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
       _navigationService = openbookProvider.navigationService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -74,9 +77,9 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
 
   Widget _buildNoTrendingCommunities() {
     return OBButtonAlert(
-      text: 'No trending communities found. Try again in a few minutes.',
+      text: _localizationService.community__trending_none_found,
       onPressed: _refreshTrendingCommunities,
-      buttonText: 'Refresh',
+      buttonText: _localizationService.community__trending_refresh,
       buttonIcon: OBIcons.refresh,
       assetImage: 'assets/images/stickers/perplexed-owl.png',
       isLoading: _refreshInProgress,
@@ -94,8 +97,8 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: OBText(
             hasCategory
-                ? 'Trending in ' + widget.category.title
-                : 'Trending in all categories',
+                ? _localizationService.community__trending_in_category(widget.category.title)
+                : _localizationService.community__trending_in_all,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
         ),
@@ -157,7 +160,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

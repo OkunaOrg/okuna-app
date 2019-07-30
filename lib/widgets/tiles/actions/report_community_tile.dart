@@ -1,5 +1,6 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -38,6 +39,7 @@ class OBReportCommunityTileState extends State<OBReportCommunityTile> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _navigationService = openbookProvider.navigationService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.community.updateSubject,
@@ -51,8 +53,8 @@ class OBReportCommunityTileState extends State<OBReportCommunityTile> {
           isLoading: _requestInProgress || isReported,
           leading: OBIcon(OBIcons.report),
           title: OBText(isReported
-              ? 'You have reported this community'
-              : 'Report community'),
+              ? _localizationService.moderation__you_have_reported_community_text
+              : _localizationService.moderation__report_community_text),
           onTap: isReported ? () {} : _reportCommunity,
         );
       },

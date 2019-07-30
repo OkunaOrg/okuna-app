@@ -26,7 +26,7 @@ class OBMainMenuPage extends StatelessWidget {
 
     return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Menu',
+        title: localizationService.drawer__menu_title,
       ),
       child: OBPrimaryColorContainer(
         child: Column(
@@ -54,11 +54,11 @@ class OBMainMenuPage extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       children: <Widget>[
                         OBTileGroupTitle(
-                          title: 'My Openspace',
+                          title: localizationService.drawer__main_title,
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.circles),
-                          title: const OBText('My circles'),
+                          title: OBText(localizationService.drawer__my_circles),
                           onTap: () {
                             navigationService.navigateToConnectionsCircles(
                                 context: context);
@@ -66,7 +66,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.lists),
-                          title: const OBText('My lists'),
+                          title: OBText(localizationService.drawer__my_lists),
                           onTap: () {
                             navigationService.navigateToFollowsLists(
                                 context: context);
@@ -74,7 +74,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.followers),
-                          title: const OBText('My followers'),
+                          title: OBText(localizationService.drawer__my_followers),
                           onTap: () {
                             navigationService.navigateToFollowersPage(
                                 context: context);
@@ -82,7 +82,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.following),
-                          title: const OBText('My following'),
+                          title: OBText(localizationService.drawer__my_following),
                           onTap: () {
                             navigationService.navigateToFollowingPage(
                                 context: context);
@@ -90,7 +90,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.invite),
-                          title: const OBText('My invites'),
+                          title: OBText(localizationService.drawer__my_invites),
                           onTap: () {
                             navigationService.navigateToUserInvites(
                                 context: context);
@@ -98,7 +98,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.communityModerators),
-                          title: OBText('My pending moderation tasks'),
+                          title: OBText(localizationService.drawer__my_pending_mod_tasks),
                           onTap: () async {
                             await navigationService
                                 .navigateToMyModerationTasksPage(
@@ -112,7 +112,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.moderationPenalties),
-                          title: OBText('My moderation penalties'),
+                          title: OBText(localizationService.drawer__my_mod_penalties),
                           onTap: () async {
                             await navigationService
                                 .navigateToMyModerationPenaltiesPage(
@@ -125,11 +125,11 @@ class OBMainMenuPage extends StatelessWidget {
                           ),
                         ),
                         OBTileGroupTitle(
-                          title: 'App & Account',
+                          title: localizationService.drawer__app_account_text,
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.settings),
-                          title: OBText('Settings'),
+                          title: OBText(localizationService.drawer__settings),
                           onTap: () {
                             navigationService.navigateToSettingsPage(
                                 context: context);
@@ -137,7 +137,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.themes),
-                          title: OBText('Themes'),
+                          title: OBText(localizationService.drawer__themes),
                           onTap: () {
                             navigationService.navigateToThemesPage(
                                 context: context);
@@ -175,7 +175,7 @@ class OBMainMenuPage extends StatelessWidget {
 
                             return ListTile(
                               leading: const OBIcon(OBIcons.globalModerator),
-                              title: OBText('Global moderation'),
+                              title: OBText(localizationService.drawer__global_moderation),
                               onTap: () async {
                                 navigationService
                                     .navigateToGlobalModeratedObjects(
@@ -186,7 +186,7 @@ class OBMainMenuPage extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const OBIcon(OBIcons.link),
-                          title: OBText('Useful links'),
+                          title: OBText(localizationService.drawer__useful_links_title),
                           onTap: () {
                             navigationService.navigateToUsefulLinksPage(
                                 context: context);

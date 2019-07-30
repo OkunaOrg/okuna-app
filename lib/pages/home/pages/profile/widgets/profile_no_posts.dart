@@ -1,5 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -13,14 +14,16 @@ class OBProfileNoPosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserService _userService = OpenbookProvider.of(context).userService;
+    var provider = OpenbookProvider.of(context);
+    UserService _userService = provider.userService;
     bool isLoggedInUser = _userService.isLoggedInUser(user);
+    LocalizationService localizationService = provider.localizationService;
     String name = user.getProfileName();
 
     return OBButtonAlert(
-      text: isLoggedInUser ? 'You have not shared anything yet.': '$name has not shared anything yet.',
+      text: isLoggedInUser ? localizationService.post__have_not_shared_anything: localizationService.post__user_has_not_shared_anything(name),
       onPressed: onWantsToRefreshProfile,
-      buttonText: 'Refresh',
+      buttonText: localizationService.post__trending_posts_refresh,
       buttonIcon: OBIcons.refresh,
       assetImage: 'assets/images/stickers/perplexed-owl.png',
     );

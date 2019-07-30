@@ -128,6 +128,8 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   Widget _buildWhatYourPassword({@required BuildContext context}) {
     String whatPasswordText =
         localizationService.trans('auth__create_acc__what_password');
+    String passwordCharactersText =
+    localizationService.auth__create_acc_password_hint_text;
 
     return Column(
       children: <Widget>[
@@ -147,7 +149,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
         SizedBox(
           height: 10.0,
         ),
-        Text('(10-100 characters)',
+        Text(passwordCharactersText,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20.0,

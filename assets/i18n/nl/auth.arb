@@ -54,6 +54,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "reset_password_success_title": "All set!",
+  "@reset_password_success_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reset_password_success_info": "Your password has been updated successfully",
+  "@reset_password_success_info": {
+    "type": "text",
+    "placeholders": {}
+  },
   "create_acc__request_invite": "No invite? Request one here.",
   "@create_acc__request_invite": {
     "type": "text",
@@ -179,6 +189,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_acc_password_hint_text": "(10-100 characters)",
+  "@create_acc_password_hint_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "create_acc__what_password_subtext": "(min 10 chars.)",
   "@create_acc__what_password_subtext": {
     "type": "text",
@@ -191,6 +206,11 @@
   },
   "create_acc__password_length_error": "😅 A password must be between 8 and 64 characters.",
   "@create_acc__password_length_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__password_characters": "(10-100 characters)",
+  "@create_acc__password_characters": {
     "type": "text",
     "placeholders": {}
   },
@@ -221,6 +241,16 @@
   },
   "create_acc__done": "Create account",
   "@create_acc__done": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__done_subtext": "You can change this in your profile settings.",
+  "@create_acc__done_subtext": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__done_created": "Your account has been created with username ",
+  "@create_acc__done_created": {
     "type": "text",
     "placeholders": {}
   },
@@ -276,6 +306,21 @@
   },
   "create_acc__done_continue": "Login",
   "@create_acc__done_continue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__one_last_thing": "One last thing...",
+  "@create_acc__one_last_thing": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__register": "Register",
+  "@create_acc__register": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__are_you_legal_age": "Are you older than 16 years?",
+  "@create_acc__are_you_legal_age": {
     "type": "text",
     "placeholders": {}
   },
@@ -366,6 +411,51 @@
   },
   "login__connection_error": "We can't reach our servers. Are you connected to the internet?",
   "@login__connection_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_title": "Change password",
+  "@change_password_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_current_pwd": "Current password",
+  "@change_password_current_pwd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_current_pwd_hint": "Enter your current password",
+  "@change_password_current_pwd_hint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_current_pwd_incorrect": "Entered password was incorrect",
+  "@change_password_current_pwd_incorrect": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_new_pwd": "New password",
+  "@change_password_new_pwd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_new_pwd_hint": "Enter your new password",
+  "@change_password_new_pwd_hint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_new_pwd_error": "Please ensure password is between 10 and 100 characters long",
+  "@change_password_new_pwd_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_save_text": "Save",
+  "@change_password_save_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_save_success": "All good! Your password has been updated",
+  "@change_password_save_success": {
     "type": "text",
     "placeholders": {}
   }

@@ -19,7 +19,7 @@ class OBAccountSettingsPage extends StatelessWidget {
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
-      navigationBar: OBThemedNavigationBar(title: 'Settings'),
+      navigationBar: OBThemedNavigationBar(title: localizationService.drawer__settings),
       child: OBPrimaryColorContainer(
         child: ListView(
           physics: const ClampingScrollPhysics(),
@@ -28,7 +28,7 @@ class OBAccountSettingsPage extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const OBIcon(OBIcons.email),
-              title: OBText(localizationService.trans('settings__change_email')),
+              title: OBText(localizationService.drawer__account_settings_change_email),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,
@@ -40,7 +40,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ListTile(
               leading: const OBIcon(OBIcons.lock),
               title:
-                  OBText(localizationService.trans('settings__change_password')),
+                  OBText(localizationService.drawer__account_settings_change_password),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,
@@ -51,7 +51,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ),
             ListTile(
               leading: const OBIcon(OBIcons.notifications),
-              title: OBText('Notifications'),
+              title: OBText(localizationService.drawer__account_settings_notifications),
               onTap: () {
                 navigationService.navigateToNotificationsSettings(
                     context: context);
@@ -59,7 +59,8 @@ class OBAccountSettingsPage extends StatelessWidget {
             ),
             ListTile(
               leading: const OBIcon(OBIcons.language),
-              title: OBText(currentUserLanguage != null ? 'Language ($currentUserLanguage)' : 'Language'),
+              title: OBText(currentUserLanguage != null ? localizationService.drawer__account_settings_language(currentUserLanguage):
+              localizationService.drawer__account_settings_language_text),
               onTap: () {
                 navigationService.navigateToLanguageSettings(
                     context: context);
@@ -67,7 +68,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ),
             ListTile(
               leading: const OBIcon(OBIcons.block),
-              title: OBText('Blocked users'),
+              title: OBText(localizationService.drawer__account_settings_blocked_users),
               onTap: () {
                 navigationService.navigateToBlockedUsers(
                     context: context);
@@ -75,7 +76,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ),
             ListTile(
               leading: const OBIcon(OBIcons.deleteCommunity),
-              title: OBText('Delete account'),
+              title: OBText(localizationService.drawer__account_settings_delete_account),
               onTap: () {
                 navigationService.navigateToDeleteAccount(context: context);
               },

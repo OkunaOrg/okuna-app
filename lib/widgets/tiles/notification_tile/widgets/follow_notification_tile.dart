@@ -1,6 +1,7 @@
 import 'package:Openbook/models/notifications/follow_notification.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
@@ -31,6 +32,7 @@ class OBFollowNotificationTile extends StatelessWidget {
       openbookProvider.navigationService.navigateToUserProfile(
           user: followNotification.follower, context: context);
     };
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: navigateToFollowerProfile,
@@ -41,7 +43,7 @@ class OBFollowNotificationTile extends StatelessWidget {
       title: OBNotificationTileTitle(
         onUsernamePressed: navigateToFollowerProfile,
         user: followNotification.follower,
-        text: TextSpan(text: ' is now following you.'),
+        text: TextSpan(text: _localizationService.notifications__following_you_tile),
       ),
       subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );

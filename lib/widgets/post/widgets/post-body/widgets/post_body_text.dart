@@ -118,8 +118,8 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       child: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: _translatedText != null ?
-        OBSecondaryText(_localizationService.trans('translate__show_original'), size: OBTextSize.large):
-        OBSecondaryText(_localizationService.trans('translate__see_translation'), size: OBTextSize.large),
+        OBSecondaryText(_localizationService.trans('user__translate_show_original'), size: OBTextSize.large):
+        OBSecondaryText(_localizationService.trans('user__translate_see_translation'), size: OBTextSize.large),
       ),
     );
   }
@@ -127,7 +127,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   void _copyText() {
     Clipboard.setData(ClipboardData(text: widget._post.text));
     _toastService.toast(
-        message: 'Text copied!', context: _context, type: ToastType.info);
+        message: _localizationService.post__text_copied, context: _context, type: ToastType.info);
   }
 
   void _onError(error) async {
@@ -138,7 +138,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

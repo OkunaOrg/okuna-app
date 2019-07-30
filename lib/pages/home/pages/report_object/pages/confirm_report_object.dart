@@ -5,6 +5,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/alerts/alert.dart';
@@ -39,6 +40,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
   TextEditingController _descriptionController;
 
@@ -66,11 +68,12 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: 'Submit report'),
+        navigationBar: OBThemedNavigationBar(title: _localizationService.moderation__confirm_report_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -84,7 +87,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBText(
-                      'Can you provide extra details that might be relevant to the report?',
+                     _localizationService.moderation__confirm_report_provide_details,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -92,7 +95,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                       height: 10,
                     ),
                     OBSecondaryText(
-                      '(Optional)',
+                     _localizationService.moderation__confirm_report_provide_optional_info,
                     ),
                     const SizedBox(
                       height: 10,
@@ -103,8 +106,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                         controller: _descriptionController,
                         maxLines: 3,
                         hasBorder: false,
-                        decoration: const InputDecoration(
-                          hintText: 'Type here...',
+                        decoration: InputDecoration(
+                          hintText: _localizationService.moderation__confirm_report_provide_optional_hint_text,
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 10),
                         ),
@@ -114,7 +117,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                       height: 40,
                     ),
                     OBText(
-                      'Here\'s what will happen next:',
+                      _localizationService.moderation__confirm_report_provide_happen_next,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -123,11 +126,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                     ),
                     OBMarkdown(
                         onlyBody: true,
-                        data: '- Your report will be submitted anonymously. \n '
-                            '- If you are reporting a post or comment, the report will be sent to the Openspace staff and the community moderators if applicable and the post will be hidden from your feed \n'
-                            '- If you are reporting an account or community, it will be sent to the Openspace staff. \n'
-                            '- We\'ll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from deletion of account to hours of suspension depending on the severity of the report. \n'
-                            '- If the report is found to be made in an attempt to damage another member or community in the platform with no infringement of the stated reason, penalties will be applied to you. \n')
+                        data: _localizationService.moderation__confirm_report_provide_happen_next_desc)
                   ],
                 ),
               ),
@@ -139,7 +138,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text('I understand, submit.'),
+                      child: Text(_localizationService.moderation__confirm_report_submit),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -190,8 +189,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
         widget.object.setIsReported(true);
       }
       _toastService.success(
-          message:
-              modelTypeToString(widget.object, capitalize: true) + ' reported',
+          message: _getSuccessMessageForObject(widget.object),
           context: context);
       Navigator.of(context).pop(true);
     } catch (error) {
@@ -199,6 +197,22 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
     } finally {
       _setConfirmationInProgress(false);
     }
+  }
+
+  String _getSuccessMessageForObject(dynamic modelInstance) {
+    String result;
+    if (modelInstance is Post) {
+      result = _localizationService.moderation__confirm_report_post_reported;
+    } else if (modelInstance is PostComment) {
+      result = _localizationService.moderation__confirm_report_post_comment_reported;
+    } else if (modelInstance is Community) {
+      result = _localizationService.moderation__confirm_report_community_reported;
+    } else if (modelInstance is User) {
+      result = _localizationService.moderation__confirm_report_user_reported;
+    } else {
+      result = _localizationService.moderation__confirm_report_item_reported;
+    }
+    return result;
   }
 
   void _onError(error) async {
@@ -209,7 +223,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

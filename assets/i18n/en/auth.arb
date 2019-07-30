@@ -9,6 +9,33 @@
     "type": "text",
     "placeholders": {}
   },
+  "email_empty_error": "Email cannot be empty.",
+  "@email_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "email_invalid_error": "Please provide a valid email.",
+  "@email_invalid_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "username_empty_error": "Username cannot be empty.",
+  "@username_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "username_characters_error": "A username can only contain alphanumeric characters and underscores.",
+  "@username_characters_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "username_maxlength_error": "A username can't be longer than {maxLength} characters.",
+  "@username_maxlength_error": {
+    "type": "text",
+    "placeholders": {
+      "maxLength": {}
+    }
+  },
   "create_account": "Sign up",
   "@create_account": {
     "type": "text",
@@ -51,6 +78,65 @@
   },
   "create_acc__paste_link_help_text": "Use the link from the Join Openbook button in your invitation email.",
   "@create_acc__paste_link_help_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__link_empty_error": "Link cannot be empty.",
+  "@create_acc__link_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__link_invalid_error": "This link appears to be invalid.",
+  "@create_acc__link_invalid_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "password_empty_error": "Password cannot be empty.",
+  "@password_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "password_range_error": "Password must be between {minLength} and {maxLength} characters.",
+  "@password_range_error": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {},
+      "maxLength": {}
+    }
+  },
+  "name_empty_error": "Name cannot be empty.",
+  "@name_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "name_range_error": "Name must be between {minLength} and {maxLength} characters.",
+  "@name_range_error": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {},
+      "maxLength": {}
+    }
+  },
+  "description_empty_error": "Description cannot be empty.",
+  "@description_empty_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "description_range_error": "Description must be between {minLength} and {maxLength} characters.",
+  "@description_range_error": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {},
+      "maxLength": {}
+    }
+  },
+  "reset_password_success_title": "All set!",
+  "@reset_password_success_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reset_password_success_info": "Your password has been updated successfully",
+  "@reset_password_success_info": {
     "type": "text",
     "placeholders": {}
   },
@@ -179,6 +265,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_acc_password_hint_text": "(10-100 characters)",
+  "@create_acc_password_hint_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "create_acc__what_password_subtext": "(min 10 chars.)",
   "@create_acc__what_password_subtext": {
     "type": "text",
@@ -224,8 +315,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "create_acc__enter": "Enter",
-  "@create_acc__enter": {
+  "create_acc__done_subtext": "You can change this in your profile settings.",
+  "@create_acc__done_subtext": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__done_created": "Your account has been created with username ",
+  "@create_acc__done_created": {
     "type": "text",
     "placeholders": {}
   },
@@ -276,6 +372,21 @@
   },
   "create_acc__done_continue": "Login",
   "@create_acc__done_continue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__one_last_thing": "One last thing...",
+  "@create_acc__one_last_thing": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__register": "Register",
+  "@create_acc__register": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_acc__are_you_legal_age": "Are you older than 16 years?",
+  "@create_acc__are_you_legal_age": {
     "type": "text",
     "placeholders": {}
   },
@@ -366,6 +477,51 @@
   },
   "login__connection_error": "We can't reach our servers. Are you connected to the internet?",
   "@login__connection_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_title": "Change password",
+  "@change_password_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_current_pwd": "Current password",
+  "@change_password_current_pwd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_current_pwd_hint": "Enter your current password",
+  "@change_password_current_pwd_hint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_current_pwd_incorrect": "Entered password was incorrect",
+  "@change_password_current_pwd_incorrect": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_new_pwd": "New password",
+  "@change_password_new_pwd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_new_pwd_hint": "Enter your new password",
+  "@change_password_new_pwd_hint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_new_pwd_error": "Please ensure password is between 10 and 100 characters long",
+  "@change_password_new_pwd_error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_save_text": "Save",
+  "@change_password_save_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "change_password_save_success": "All good! Your password has been updated",
+  "@change_password_save_success": {
     "type": "text",
     "placeholders": {}
   }

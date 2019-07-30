@@ -1,5 +1,6 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
@@ -27,6 +28,7 @@ class OBCommunityTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String communityHexColor = community.color;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
     Color communityColor =
@@ -85,10 +87,10 @@ class OBCommunityTile extends StatelessWidget {
       );
     }
 
-    String userAdjective = community.userAdjective ?? 'Member';
-    String usersAdjective = community.usersAdjective ?? 'Members';
+    String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
+    String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;
     String membersPrettyCount = community.membersCount != null
-        ? getPrettyCount(community.membersCount)
+        ? getPrettyCount(community.membersCount, localizationService)
         : null;
     String finalAdjective =
         community.membersCount == 1 ? userAdjective : usersAdjective;

@@ -1,4 +1,5 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -30,6 +31,7 @@ class OBModeratedObjectUpdateStatusModal extends StatefulWidget {
 class OBModeratedObjectUpdateStatusModalState
     extends State<OBModeratedObjectUpdateStatusModal> {
   UserService _userService;
+  LocalizationService _localizationService;
   ToastService _toastService;
   List<ModeratedObjectStatus> _moderationStatuses = [
     ModeratedObjectStatus.rejected,
@@ -55,6 +57,7 @@ class OBModeratedObjectUpdateStatusModalState
       var openbookProvider = OpenbookProvider.of(context);
       _toastService = openbookProvider.toastService;
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -184,19 +187,19 @@ class OBModeratedObjectUpdateStatusModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Update status',
+      title: _localizationService.trans('moderation__update_status_title'),
       trailing: OBButton(
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _saveModerationStatus,
-        child: Text('Save'),
+        child: Text(_localizationService.trans('moderation__update_status_save')),
       ),
     );
   }

@@ -1,8 +1,11 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../provider.dart';
 
 // The sheet is stateful as there is a stupid bug that makes CupertinoPicker
 // pretty much useless without the bootstrap hack
@@ -30,13 +33,14 @@ class OBCommunityTypePickerBottomSheetState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _needsBootstrap = true;
   }
 
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    LocalizationService _localizationService = openbookProvider.localizationService;
     // Hack.
     if (_needsBootstrap) {
       Future.delayed(Duration(milliseconds: 0), () {
@@ -56,7 +60,8 @@ class OBCommunityTypePickerBottomSheetState
             widget.onTypeChanged(newType);
           },
           itemExtent: 32,
-          children: <Widget>[OBText('Public'), OBText('Private')],
+          children: <Widget>[OBText(_localizationService.trans('community__type_public')),
+          OBText(_localizationService.trans('community__type_private'))],
         ),
       ),
     );

@@ -47,17 +47,44 @@ class OBNotificationTileTitle extends StatelessWidget {
           GestureRecognizer usernameTapGestureRecognizer =
               TapGestureRecognizer()..onTap = onUsernamePressed;
 
-          List<TextSpan> textItems = [
-            TextSpan(
-                text: '$commenterName',
-                recognizer: usernameTapGestureRecognizer,
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            TextSpan(
-                text: ' @$commenterUsername',
-                recognizer: usernameTapGestureRecognizer,
-                style: TextStyle(color: secondaryTextColor)),
-            text
-          ];
+          // String text = 'asds [name] asds [username] sdalskdasldj /c/assad';
+          List<String> plainTextItems = text.text.split(' ');
+          List<TextSpan> textItems = [];
+
+          plainTextItems.asMap().forEach((index, item) {
+            if (item == '[name]') {
+              textItems.add(
+                  TextSpan(
+                  text: '$commenterName',
+                  recognizer: usernameTapGestureRecognizer,
+                  style: TextStyle(fontWeight: FontWeight.bold)));
+            } else if (item == '[username]') {
+              textItems.add(TextSpan(
+                  text: ' @$commenterUsername',
+                  recognizer: usernameTapGestureRecognizer,
+                  style: TextStyle(color: secondaryTextColor)));
+            } else if (index < plainTextItems.length - 1) {
+              textItems.add(TextSpan(
+                text: item
+              ));
+            }
+            //add space after word
+            textItems.add(TextSpan(
+              text: ' ',
+            ));
+          });
+
+//          List<TextSpan> textItems = [
+//            TextSpan(
+//                text: '$commenterName',
+//                recognizer: usernameTapGestureRecognizer,
+//                style: TextStyle(fontWeight: FontWeight.bold)),
+//            TextSpan(
+//                text: ' @$commenterUsername',
+//                recognizer: usernameTapGestureRecognizer,
+//                style: TextStyle(color: secondaryTextColor)),
+//            text
+//          ];
 
           return Row(
             mainAxisSize: MainAxisSize.max,

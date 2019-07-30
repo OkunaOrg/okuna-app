@@ -3,6 +3,7 @@ import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/moderated_object_category.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_actions.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -10,6 +11,8 @@ import 'package:Openbook/widgets/tile_group_title.dart';
 import 'package:Openbook/widgets/tiles/moderated_object_status_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../provider.dart';
 
 class OBModeratedObject extends StatelessWidget {
   final ModeratedObject moderatedObject;
@@ -21,12 +24,13 @@ class OBModeratedObject extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBTileGroupTitle(
-          title: 'Object',
+          title: _localizationService.moderation__moderated_object_title,
         ),
         OBModeratedObjectPreview(
           moderatedObject: moderatedObject,
@@ -46,7 +50,7 @@ class OBModeratedObject extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   OBTileGroupTitle(
-                    title: 'Status',
+                    title: _localizationService.moderation__moderated_object_status,
                   ),
                   OBModeratedObjectStatusTile(
                     moderatedObject: moderatedObject,
@@ -60,7 +64,7 @@ class OBModeratedObject extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   OBTileGroupTitle(
-                    title: 'Reports count',
+                    title: _localizationService.moderation__moderated_object_reports_count,
                   ),
                   ListTile(
                       title: OBText(moderatedObject.reportsCount.toString())),
@@ -70,7 +74,7 @@ class OBModeratedObject extends StatelessWidget {
           ],
         ),
         OBTileGroupTitle(
-          title: community != null ? 'Verified by Openspace staff' : 'Verified',
+          title: community != null ? _localizationService.moderation__moderated_object_verified_by_staff : _localizationService.moderation__moderated_object_verified,
         ),
         StreamBuilder(
           stream: moderatedObject.updateSubject,
@@ -91,7 +95,7 @@ class OBModeratedObject extends StatelessWidget {
                     width: 10,
                   ),
                   OBText(
-                    moderatedObject.verified ? 'True' : 'False',
+                    moderatedObject.verified ? _localizationService.moderation__moderated_object_true_text : _localizationService.moderation__moderated_object_false_text,
                   )
                 ],
               ),

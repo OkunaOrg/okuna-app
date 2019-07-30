@@ -4,6 +4,7 @@ import 'package:Openbook/models/moderation/moderated_object_list.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/moderated_object.dart';
 import 'package:Openbook/pages/home/pages/moderated_objects/widgets/no_moderated_objects.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -45,6 +46,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
   UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
+  LocalizationService _localizationService;
 
   CancelableOperation _loadMoreOperation;
   CancelableOperation _refreshModeratedObjectsOperation;
@@ -82,6 +84,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -90,8 +93,8 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
           title: widget.community != null
-              ? 'Community moderated objects'
-              : 'Globally moderated objects',
+              ? _localizationService.moderation__community_moderated_objects
+              : _localizationService.moderation__globally_moderated_objects,
           trailing: _buildFiltersButton(),
         ),
         child: OBPrimaryColorContainer(
@@ -314,7 +317,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

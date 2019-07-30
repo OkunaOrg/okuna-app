@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -30,6 +31,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
   bool _needsBootstrap;
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   @override
   void initState() {
@@ -43,6 +45,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _navigationService = openbookProvider.navigationService;
       _bootstrap();
       _needsBootstrap = false;
@@ -73,9 +76,9 @@ class OBSharePostPageState extends State<OBSharePostPage> {
               List<Widget> shareToTiles = [
                 ListTile(
                   leading: const OBIcon(OBIcons.circles),
-                  title: const OBText('My circles'),
-                  subtitle: const OBText(
-                    'Share the post to one or multiple of your circles.',
+                  title: OBText(_localizationService.trans('post__my_circles')),
+                  subtitle: OBText(
+                    _localizationService.trans('post__my_circles_desc'),
                     style: shareToTilesSubtitleStyle,
                   ),
                   onTap: _onWantsToSharePostToCircles,
@@ -85,9 +88,9 @@ class OBSharePostPageState extends State<OBSharePostPage> {
               if (latestUser.isMemberOfCommunities) {
                 shareToTiles.add(ListTile(
                   leading: const OBIcon(OBIcons.communities),
-                  title: const OBText('A community'),
-                  subtitle: const OBText(
-                    'Share the post to a community you\'re part of.',
+                  title: OBText(_localizationService.trans('post__share_community_title')),
+                  subtitle: OBText(
+                    _localizationService.trans('post__share_community_desc'),
                     style: shareToTilesSubtitleStyle,
                   ),
                   onTap: _onWantsToSharePostToCommunity,
@@ -110,7 +113,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Share to',
+      title: _localizationService.trans('post__share_to'),
     );
   }
 

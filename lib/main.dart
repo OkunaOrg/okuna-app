@@ -69,6 +69,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
               // initialise locale from device
+              if (deviceLocale == null)return this.locale;
               if (deviceLocale != null && this.locale == null && supportedLanguages.contains(deviceLocale.languageCode)) {
                   Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == deviceLocale.languageCode);
                   this.locale = supportedMatchedLocale;
@@ -196,6 +197,7 @@ class _MyAppState extends State<MyApp> {
     UniversalLinksService universalLinksService =
         openbookProvider.universalLinksService;
     universalLinksService.digestLinksWithContext(context);
+    openbookProvider.validationService.setLocalizationService(localizationService);
   }
 
 }

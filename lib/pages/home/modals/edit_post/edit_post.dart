@@ -4,6 +4,7 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/post_community_pr
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/services/validation.dart';
@@ -32,6 +33,7 @@ class EditPostModalState extends State<EditPostModal> {
   ValidationService _validationService;
   ToastService _toastService;
   UserService _userService;
+  LocalizationService _localizationService;
 
   TextEditingController _textController;
   FocusNode _focusNode;
@@ -83,6 +85,7 @@ class EditPostModalState extends State<EditPostModal> {
     _validationService = openbookProvider.validationService;
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
@@ -105,7 +108,7 @@ class EditPostModalState extends State<EditPostModal> {
           Navigator.pop(context);
         },
       ),
-      title: 'Edit post',
+      title:_localizationService.post__edit_title,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -114,7 +117,7 @@ class EditPostModalState extends State<EditPostModal> {
   Widget _buildPrimaryActionButton({bool isEnabled}) {
     return OBButton(
         type: OBButtonType.primary,
-        child: Text('Save'),
+        child: Text(_localizationService.post__edit_save),
         size: OBButtonSize.small,
         onPressed: _onWantsToSavePost,
         isDisabled: !isEnabled,
@@ -207,7 +210,7 @@ class EditPostModalState extends State<EditPostModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

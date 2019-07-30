@@ -154,7 +154,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
 
   Widget _buildWhatYourPassword({@required BuildContext context}) {
     String whatPasswordText =
-    localizationService.trans('auth__create_acc__what_password');
+    localizationService.auth__create_acc__what_password;
 
     return Column(
       children: <Widget>[
@@ -174,7 +174,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
         SizedBox(
           height: 10.0,
         ),
-        Text('(10-100 characters)',
+        Text(localizationService.auth__create_acc_password_hint_text,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20.0,

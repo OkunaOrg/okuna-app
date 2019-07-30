@@ -2,6 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -46,6 +47,7 @@ class OBUserSearchResults extends StatefulWidget {
 class OBUserSearchResultsState extends State<OBUserSearchResults>
     with TickerProviderStateMixin {
   TabController _tabController;
+  LocalizationService _localizationService;
 
   @override
   void initState() {
@@ -75,6 +77,7 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
   Widget build(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     ThemeService _themeService = openbookProvider.themeService;
+    _localizationService = openbookProvider.localizationService;
     ThemeValueParserService _themeValueParser =
         openbookProvider.themeValueParserService;
     OBTheme theme = _themeService.getActiveTheme();
@@ -91,11 +94,11 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
           tabs: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
-              child: Tab(text: 'Users'),
+              child: Tab(text: _localizationService.trans('user_search__users')),
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
-              child: Tab(text: 'Communities'),
+              child: Tab(text: _localizationService.trans('user_search__communities')),
             )
           ],
           isScrollable: false,
@@ -129,12 +132,12 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
                 // Search in progress
                 return ListTile(
                     leading: OBProgressIndicator(),
-                    title: OBText('Searching for $searchQuery'));
+                    title: OBText(_localizationService.user_search__searching_for(searchQuery)));
               } else if (widget.userResults.isEmpty) {
                 // Results were empty
                 return ListTile(
                     leading: OBIcon(OBIcons.sad),
-                    title: OBText('No users found for $searchQuery.'));
+                    title: OBText(_localizationService.user_search__no_users_for(searchQuery)));
               } else {
                 return SizedBox();
               }
@@ -172,12 +175,12 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
                 // Search in progress
                 return ListTile(
                     leading: OBProgressIndicator(),
-                    title: OBText('Searching for $searchQuery'));
+                    title: OBText(_localizationService.user_search__searching_for(searchQuery)));
               } else if (widget.communityResults.isEmpty) {
                 // Results were empty
                 return ListTile(
                     leading: OBIcon(OBIcons.sad),
-                    title: OBText('No communities found for $searchQuery.'));
+                    title: OBText(_localizationService.user_search__no_communities_for(searchQuery)));
               } else {
                 return SizedBox();
               }

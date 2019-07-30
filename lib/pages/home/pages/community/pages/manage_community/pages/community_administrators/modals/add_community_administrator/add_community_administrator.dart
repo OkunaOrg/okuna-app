@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -30,6 +31,7 @@ class OBAddCommunityAdministratorModalState
     extends State<OBAddCommunityAdministratorModal> {
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   bool _needsBootstrap;
 
@@ -45,12 +47,13 @@ class OBAddCommunityAdministratorModalState
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Add administrator',
+        title: _localizationService.community__add_administrators_title,
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
@@ -59,8 +62,8 @@ class OBAddCommunityAdministratorModalState
           listRefresher: _refreshCommunityMembers,
           listOnScrollLoader: _loadMoreCommunityMembers,
           listSearcher: _searchCommunityMembers,
-          resourceSingularName: 'member',
-          resourcePluralName: 'members',
+          resourceSingularName: _localizationService.community__member,
+          resourcePluralName: _localizationService.community__member_plural,
         ),
       ),
     );

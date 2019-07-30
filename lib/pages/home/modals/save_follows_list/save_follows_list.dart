@@ -2,6 +2,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/modals/save_follows_list/pages/pick_follows_list_emoji.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -38,6 +39,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
+  LocalizationService _localizationService;
 
   bool _requestInProgress;
   bool _formWasSubmitted;
@@ -77,6 +79,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     _validationService = openbookProvider.validationService;
 
     return Scaffold(
@@ -100,15 +103,15 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                                 autofocus: widget.autofocusNameTextField,
                                 controller: _nameController,
                                 decoration: InputDecoration(
-                                    labelText: 'Name',
-                                    hintText: 'e.g. Travel, Photography'),
+                                    labelText: _localizationService.user__save_follows_list_name,
+                                    hintText: _localizationService.user__save_follows_list_hint_text),
                                 validator: (String followsListName) {
                                   if (!_formWasSubmitted) return null;
 
                                   if (_takenFollowsListName != null &&
                                       _takenFollowsListName ==
                                           followsListName) {
-                                    return 'List name "$_takenFollowsListName" is taken';
+                                    return _localizationService.user__save_follows_list_name_taken(_takenFollowsListName);
                                   }
 
                                   return _validationService
@@ -118,9 +121,9 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                                 emoji: _emoji,
                                 onEmojiFieldTapped: (Emoji emoji) =>
                                     _onWantsToPickEmoji(),
-                                labelText: 'Emoji',
+                                labelText: _localizationService.user__save_follows_list_emoji,
                                 errorText: _formWasSubmitted && _emoji == null
-                                    ? 'Emoji is required'
+                                    ? _localizationService.user__save_follows_list_emoji_required_error
                                     : null),
                           ],
                         )),
@@ -128,8 +131,8 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                         ? Padding(
                             padding: EdgeInsets.only(
                                 left: 20, top: 20, bottom: 20.0),
-                            child: const OBText(
-                              'Users',
+                            child: OBText(
+                              _localizationService.user__save_follows_list_users,
                               style: TextStyle(fontWeight: FontWeight.bold),
                               size: OBTextSize.large,
                             ),
@@ -161,13 +164,14 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
             Navigator.pop(context);
           },
         ),
-        title: _hasExistingList ? 'Edit list' : 'Create list',
+        title: _hasExistingList ? _localizationService.user__save_follows_list_edit :
+        _localizationService.user__save_follows_list_create,
         trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
           size: OBButtonSize.small,
           onPressed: _submitForm,
-          child: Text('Save'),
+          child: Text(_localizationService.user__save_follows_list_save),
         ));
   }
 
@@ -226,7 +230,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

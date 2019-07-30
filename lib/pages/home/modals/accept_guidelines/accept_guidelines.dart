@@ -1,4 +1,5 @@
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -23,6 +24,7 @@ class OBAcceptGuidelinesModal extends StatefulWidget {
 class OBAcceptGuidelinesModalState extends State {
   NavigationService _navigationService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   UserService _userService;
   String _guidelinesText;
   bool _needsBootstrap;
@@ -60,6 +62,7 @@ class OBAcceptGuidelinesModalState extends State {
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _userService = openbookProvider.userService;
       _navigationService = openbookProvider.navigationService;
       _bootstrap();
@@ -78,7 +81,7 @@ class OBAcceptGuidelinesModalState extends State {
                 child: Padding(
                   padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                   child: OBText(
-                    'Please take a moment to read and accept our guidelines.',
+                    _localizationService.user__guidelines_desc,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -140,7 +143,7 @@ class OBAcceptGuidelinesModalState extends State {
       type: OBButtonType.success,
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      child: Text('Accept', style: TextStyle(fontSize: 18.0)),
+      child: Text(_localizationService.user__guidelines_accept, style: TextStyle(fontSize: 18.0)),
       isDisabled: !_acceptButtonEnabled && _guidelinesText.isNotEmpty,
       isLoading: _acceptGuidelinesInProgress,
       onPressed: _acceptGuidelines,
@@ -155,7 +158,7 @@ class OBAcceptGuidelinesModalState extends State {
       child: Row(
         children: <Widget>[
           Text(
-            'Reject',
+           _localizationService.user__guidelines_reject,
             style: TextStyle(fontSize: 18.0, color: Colors.white),
           )
         ],
@@ -204,7 +207,7 @@ class OBAcceptGuidelinesModalState extends State {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

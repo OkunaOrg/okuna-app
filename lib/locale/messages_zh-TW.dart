@@ -102,10 +102,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__lists" : MessageLookupByLibrary.simpleMessage("My lists"),
     "drawer__logout" : MessageLookupByLibrary.simpleMessage("Log out"),
     "drawer__profile" : MessageLookupByLibrary.simpleMessage("Profile"),
-    "drawer__settings" : MessageLookupByLibrary.simpleMessage("Account Settings"),
-    "settings__change_email" : MessageLookupByLibrary.simpleMessage("Change Email"),
-    "settings__change_password" : MessageLookupByLibrary.simpleMessage("Change Password"),
-    "translate__see_translation" : MessageLookupByLibrary.simpleMessage("See translation"),
-    "translate__show_original" : MessageLookupByLibrary.simpleMessage("Show original")
+    "drawer__settings" : MessageLookupByLibrary.simpleMessage("Account Settings")
   };
 }

@@ -2,6 +2,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
@@ -38,6 +39,7 @@ class OBPostCommentMoreActionsBottomSheetState
   ToastService _toastService;
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
   ModalService _modalService;
   bool _requestInProgress;
   CancelableOperation _requestOperation;
@@ -60,6 +62,7 @@ class OBPostCommentMoreActionsBottomSheetState
     _toastService = provider.toastService;
     _userService = provider.userService;
     _navigationService = provider.navigationService;
+    _localizationService = provider.localizationService;
     _modalService = provider.modalService;
 
     return OBPrimaryColorContainer(
@@ -87,8 +90,8 @@ class OBPostCommentMoreActionsBottomSheetState
       actionTiles.add(
         ListTile(
           leading: const OBIcon(OBIcons.deletePost),
-          title: const OBText(
-            'Delete comment',
+          title: OBText(
+            _localizationService.post__actions_delete_comment,
           ),
           onTap: _deletePostComment,
         ),
@@ -102,7 +105,7 @@ class OBPostCommentMoreActionsBottomSheetState
           child: ListTile(
             leading: const OBIcon(OBIcons.report),
             title: OBText(
-                widget.postComment.isReported ?? false ? 'Reported' : 'Report'),
+                widget.postComment.isReported ?? false ? _localizationService.post__actions_reported_text : _localizationService.post__actions_report_text),
             onTap: _reportPostComment,
           ),
         ),
@@ -113,8 +116,8 @@ class OBPostCommentMoreActionsBottomSheetState
       actionTiles.add(
         ListTile(
           leading: const OBIcon(OBIcons.edit),
-          title: const OBText(
-            'Edit comment',
+          title: OBText(
+            _localizationService.post__actions_edit_comment,
           ),
           onTap: _editPostComment,
         ),
@@ -148,7 +151,7 @@ class OBPostCommentMoreActionsBottomSheetState
       await _requestOperation.value;
       if (widget.postComment.parentComment == null)
         widget.post.decreaseCommentsCount();
-      _toastService.success(message: 'Comment deleted', context: context);
+      _toastService.success(message: _localizationService.post__actions_comment_deleted, context: context);
       if (widget.onPostCommentDeleted != null) {
         widget.onPostCommentDeleted(widget.postComment);
       }
@@ -173,7 +176,7 @@ class OBPostCommentMoreActionsBottomSheetState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

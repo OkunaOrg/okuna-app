@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -29,6 +30,7 @@ class OBClosePostTile extends StatefulWidget {
 class OBClosePostTileState extends State<OBClosePostTile> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -42,6 +44,7 @@ class OBClosePostTileState extends State<OBClosePostTile> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.post.updateSubject,
@@ -55,8 +58,8 @@ class OBClosePostTileState extends State<OBClosePostTile> {
           isLoading: _requestInProgress,
           leading: OBIcon(isPostClosed ? OBIcons.openPost : OBIcons.closePost),
           title: OBText(isPostClosed
-              ? 'Open post'
-              : 'Close post'),
+              ? _localizationService.post__open_post
+              : _localizationService.post__close_post),
           onTap: isPostClosed ? _openPost : _closePost,
         );
       },
@@ -68,7 +71,7 @@ class OBClosePostTileState extends State<OBClosePostTile> {
     try {
       await _userService.openPost(widget.post);
       if (widget.onClosePost != null) widget.onClosePost();
-      _toastService.success(message: 'Post opened', context: context);
+      _toastService.success(message: _localizationService.post__post_opened, context: context);
     } catch (e) {
       _onError(e);
     } finally {
@@ -81,7 +84,7 @@ class OBClosePostTileState extends State<OBClosePostTile> {
     try {
       await _userService.closePost(widget.post);
       if (widget.onOpenPost != null) widget.onOpenPost();
-      _toastService.success(message: 'Post closed', context: context);
+      _toastService.success(message: _localizationService.post__post_closed, context: context);
     } catch (e) {
       _onError(e);
     } finally {
@@ -97,7 +100,7 @@ class OBClosePostTileState extends State<OBClosePostTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

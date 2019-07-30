@@ -1,5 +1,6 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/fields/color_field.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -36,6 +37,7 @@ class OBSaveConnectionsCircleModalState
 
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   ValidationService _validationService;
 
   bool _requestInProgress;
@@ -76,6 +78,7 @@ class OBSaveConnectionsCircleModalState
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     _validationService = openbookProvider.validationService;
     var themeService = openbookProvider.themeService;
 
@@ -102,15 +105,15 @@ class OBSaveConnectionsCircleModalState
                                 autofocus: widget.autofocusNameTextField,
                                 controller: _nameController,
                                 decoration: InputDecoration(
-                                    labelText: 'Name',
-                                    hintText: 'e.g. Friends, Family, Work.'),
+                                    labelText: _localizationService.trans('user__save_connection_circle_name'),
+                                    hintText: _localizationService.trans('user__save_connection_circle_hint')),
                                 validator: (String connectionsCircleName) {
                                   if (!_formWasSubmitted) return null;
 
                                   if (_takenConnectionsCircleName != null &&
                                       _takenConnectionsCircleName ==
                                           connectionsCircleName) {
-                                    return 'Circle name "$_takenConnectionsCircleName" is taken';
+                                    return _localizationService.user__save_connection_circle_name_taken(_takenConnectionsCircleName);
                                   }
 
                                   return _validationService
@@ -120,8 +123,8 @@ class OBSaveConnectionsCircleModalState
                             OBColorField(
                               initialColor: _color,
                               onNewColor: _onNewColor,
-                              labelText: 'Color',
-                              hintText: '(Tap to change)',
+                              labelText: _localizationService.trans('user__save_connection_circle_color_name'),
+                              hintText: _localizationService.trans('user__save_connection_circle_color_hint'),
                             ),
                           ],
                         )),
@@ -129,8 +132,8 @@ class OBSaveConnectionsCircleModalState
                         ? Padding(
                             padding: EdgeInsets.only(
                                 left: 20, top: 20, bottom: 20.0),
-                            child: const OBText(
-                              'Users',
+                            child: OBText(
+                              _localizationService.trans('user__save_connection_circle_users'),
                               style: TextStyle(fontWeight: FontWeight.bold),
                               size: OBTextSize.large,
                             ),
@@ -162,13 +165,14 @@ class OBSaveConnectionsCircleModalState
             Navigator.pop(context);
           },
         ),
-        title: _hasExistingCircle ? 'Edit circle' : 'Create circle',
+        title: _hasExistingCircle ? _localizationService.trans('user__save_connection_circle_edit'):
+        _localizationService.trans('user__save_connection_circle_create'),
         trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
           size: OBButtonSize.small,
           onPressed: _submitForm,
-          child: Text('Save'),
+          child: Text(_localizationService.trans('user__save_connection_circle_save')),
         ));
   }
 
@@ -227,7 +231,7 @@ class OBSaveConnectionsCircleModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }
