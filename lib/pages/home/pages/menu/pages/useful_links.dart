@@ -84,7 +84,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       'A place to discuss everything about Openspace'),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://join.slack.com/t/openspacesocial/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
+                        'https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
                   },
                 ),
               ],
