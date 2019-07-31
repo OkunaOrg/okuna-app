@@ -18,7 +18,7 @@ class OBPostIsClosed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isClosed = _post.isClosed ?? false;
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     if (isClosed) {
       return Padding(
