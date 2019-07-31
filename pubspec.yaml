@@ -29,17 +29,17 @@ dependencies:
   tinycolor: ^1.0.2
   onesignalflutter:
     git: git://github.com/jmrobles/OneSignal-Flutter-SDK.git
-  flutter_advanced_networkimage: ^0.4.13
+  flutter_advanced_networkimage: ^0.5.0
   dcache: ^0.1.0
   validators: ^1.0.0+1
   url_launcher: ^4.0.1
   uni_links: ^0.1.4
   flutter_slidable: "^0.4.9"
-  flutter_cache_manager: ^0.3.2
-  cached_network_image: ^0.7.0
+  flutter_cache_manager: ^1.1.1
+  cached_network_image: ^1.1.1
   timeago: ^2.0.9
   pigment: ^1.0.3
-  photo_view: ^0.1.0
+  photo_view: ^0.4.2
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
