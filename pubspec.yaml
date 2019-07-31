@@ -16,7 +16,7 @@ dependencies:
   scroll_to_index: ^1.0.1
   expandable: ^2.2.2+3
   uuid: ^2.0.1
-  multi_image_picker: ^4.3.3
+  multi_image_picker: ^4.3.6
   flutter_exif_rotation: ^0.2.2
   shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0
@@ -47,7 +47,7 @@ dependencies:
   rxdart: ^0.18.1
   video_player: ^0.10.0
   sprintf: "^4.0.0"
-  image_picker: 0.5.0+3
+  image_picker: 0.6.1
   image_cropper: ^1.0.1
   shimmer: ^1.0.0
   share: ^0.6.1

@@ -23,7 +23,7 @@ PODS:
   - intercom_flutter (1.0.7):
     - Flutter
     - Intercom
-  - multi_image_picker (4.3.4):
+  - multi_image_picker (4.3.6):
     - BSImagePicker (~> 2.10.0)
     - Flutter
   - OneSignal (2.10.0)
@@ -120,10 +120,10 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 0c5779648ff644110e507909b77a57e620cbbf8b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: f25bdfbf1ef970c9a0a0f78306fb6a0aaac7229e
-  image_picker: a211f28b95a560433c00f5cd3773f4710a20404d
+  image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   Intercom: d189cf8cc8591e7e63dbb10ee4401a70a7fdc9d6
   intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
-  multi_image_picker: de50bcd6a42fff1a9282768eee98e2a2590f7d85
+  multi_image_picker: 3a6afea72a3271d9b0bcc67d8888d38c4ff53efd
   OneSignal: 0f5ff711d9f25da54885e4ab06ef0abc221a46ef
   onesignalflutter: 2d33b06e798bafd6535bc96a2fb1a92a604b4004
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
