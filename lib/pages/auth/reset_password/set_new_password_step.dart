@@ -24,6 +24,8 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
   ValidationService validationService;
   UserService userService;
   ToastService toastService;
+  static const passwordMaxLength = ValidationService.PASSWORD_MAX_LENGTH;
+  static const passwordMinLength = ValidationService.PASSWORD_MIN_LENGTH;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _requestInProgress;
 
@@ -174,7 +176,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
         SizedBox(
           height: 10.0,
         ),
-        Text(localizationService.auth__create_acc_password_hint_text,
+        Text(localizationService.auth__create_acc_password_hint_text(passwordMinLength, passwordMaxLength),
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20.0,

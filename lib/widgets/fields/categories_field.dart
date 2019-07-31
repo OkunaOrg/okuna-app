@@ -88,8 +88,12 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
 
   Widget _buildErrorMsg() {
     int min = widget.min;
-    String errorMsg = _localizationService.community__pick_atleast_min(min) +
-        (min == 1 ? _localizationService.trans('community__category') : _localizationService.trans('community__categories'));
+    String errorMsg;
+    if (min == 1) {
+      errorMsg = _localizationService.community__pick_atleast_min_category(min);
+    } else {
+      errorMsg = _localizationService.community__pick_atleast_min_categories(min);
+    }
 
     return Padding(
       padding: EdgeInsets.only(bottom: 10, top: 20),

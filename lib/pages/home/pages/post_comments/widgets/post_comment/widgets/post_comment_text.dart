@@ -96,8 +96,8 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
       return GestureDetector(
         onTap: _toggleTranslatePostComment,
         child: _translatedText != null ?
-          OBSecondaryText(_localizationService.trans('translate__show_original'), size: OBTextSize.large):
-          OBSecondaryText(_localizationService.trans('translate__see_translation'), size: OBTextSize.large),
+          OBSecondaryText(_localizationService.user__translate_show_original, size: OBTextSize.large):
+          OBSecondaryText(_localizationService.user__translate_see_translation, size: OBTextSize.large),
 
       );
     } else {

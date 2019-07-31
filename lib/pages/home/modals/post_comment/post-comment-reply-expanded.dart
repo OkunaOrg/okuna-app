@@ -66,10 +66,6 @@ class OBPostCommentReplyExpandedModalState
     _textController.addListener(_onPostCommentTextChanged);
     _charactersCount = 0;
     _isPostCommentTextAllowedLength = false;
-    String hintText = _localizationService.post__comment_reply_expanded_reply_hint_text;
-    _postCommentItemsWidgets = [
-      OBCreatePostText(controller: _textController, hintText: hintText)
-    ];
     _requestInProgress = false;
   }
 
@@ -87,6 +83,10 @@ class OBPostCommentReplyExpandedModalState
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
+    String hintText = _localizationService.post__comment_reply_expanded_reply_hint_text;
+    _postCommentItemsWidgets = [
+      OBCreatePostText(controller: _textController, hintText: hintText)
+    ];
 
     //Scroll to bottom
     Future.delayed(Duration(milliseconds: 0), () {
