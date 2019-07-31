@@ -30,10 +30,18 @@ class OBNotificationFilter extends StatelessWidget {
             : OBIconThemeColor.primaryText),
         onPressed: () => _toggleFilter(null),
       ),
-      _createFilterButton([NotificationType.postReaction, NotificationType.postCommentReaction]),
-      _createFilterButton(
-          [NotificationType.postComment, NotificationType.postCommentReply]),
-      _createFilterButton([NotificationType.connectionRequest, NotificationType.connectionConfirmed]),
+      _createFilterButton([
+        NotificationType.postReaction,
+        NotificationType.postCommentReaction
+      ]),
+      _createFilterButton([
+        NotificationType.postComment,
+        NotificationType.postCommentReply
+      ]),
+      _createFilterButton([
+        NotificationType.connectionRequest,
+        NotificationType.connectionConfirmed
+      ]),
       _createFilterButton([NotificationType.follow]),
       _createFilterButton([NotificationType.communityInvite]),
     ];
@@ -51,23 +59,21 @@ class OBNotificationFilter extends StatelessWidget {
     );
   }
 
-  OBIconData _getIcon(NotificationType value) {
-    switch (value) {
-      case NotificationType.postReaction:
-      case NotificationType.postCommentReaction:
+  OBIconData _getIcon(NotificationType type) {
+    NotificationCategory category = NotificationFilter.getCategory(type);
+    switch (category) {
+      case NotificationCategory.Reaction:
         return OBIcons.react;
-      case NotificationType.postComment:
-      case NotificationType.postCommentReply:
+      case NotificationCategory.Comment:
         return OBIcons.comment;
-      case NotificationType.connectionRequest:
-      case NotificationType.connectionConfirmed:
-      return OBIcons.connections;
-      case NotificationType.follow:
+      case NotificationCategory.Connection:
+        return OBIcons.connections;
+      case NotificationCategory.Follow:
         return OBIcons.follow;
-      case NotificationType.communityInvite:
+      case NotificationCategory.Invite:
         return OBIcons.communityInvites;
       default:
-        print("Unsupported notification type: $value");
+        print("Unsupported notification type: $type");
         return OBIcons.close;
     }
   }
@@ -83,16 +89,52 @@ class OBNotificationFilter extends StatelessWidget {
   }
 }
 
+enum NotificationCategory { Reaction, Comment, Connection, Follow, Invite }
 
 class NotificationFilter {
   List<NotificationType> lastFilters = [];
   List<NotificationType> activeFilters = [];
 
+  static NotificationCategory getCategory(NotificationType value) {
+    switch (value) {
+      case NotificationType.postReaction:
+      case NotificationType.postCommentReaction:
+        return NotificationCategory.Reaction;
+      case NotificationType.postComment:
+      case NotificationType.postCommentReply:
+        return NotificationCategory.Comment;
+      case NotificationType.connectionRequest:
+      case NotificationType.connectionConfirmed:
+        return NotificationCategory.Connection;
+      case NotificationType.follow:
+        return NotificationCategory.Follow;
+      case NotificationType.communityInvite:
+        return NotificationCategory.Invite;
+      default:
+        print("Unsupported notification type: $value");
+        return null;
+    }
+  }
+
   bool hasFilter() => activeFilters.isNotEmpty;
 
-  bool isActive(NotificationType type) => !hasFilter() || activeFilters.contains(type);
+  bool isActive(NotificationType type) =>
+      !hasFilter() || activeFilters.contains(type);
 
   List<NotificationType> getActive() => activeFilters;
+
+  List<NotificationCategory> getActiveCategories() {
+    var list = <NotificationCategory>[];
+
+    for (NotificationType type in activeFilters) {
+      var category = getCategory(type);
+      if (!list.contains(category)) {
+        list.add(category);
+      }
+    }
+
+    return list;
+  }
 
   void toggle(List<NotificationType> types) {
     for (var type in types) {
@@ -109,8 +151,7 @@ class NotificationFilter {
       lastFilters.clear();
       lastFilters.addAll(activeFilters);
       activeFilters.clear();
-    }
-    else if (lastFilters.isNotEmpty) {
+    } else if (lastFilters.isNotEmpty) {
       activeFilters.addAll(lastFilters);
     }
   }
