@@ -30,7 +30,6 @@ import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
-import 'package:Openbook/pages/home/pages/language/language_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/community_guidelines.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
@@ -44,6 +43,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_penalties/my_
 import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_tasks/my_moderation_tasks.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
@@ -547,14 +547,14 @@ class NavigationService {
             widget: OBNotificationsSettingsPage()));
   }
 
-  Future<void> navigateToLanguageSettings({
+  Future<void> navigateToUserLanguageSettings({
     @required BuildContext context,
   }) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obLanguageSettingsPage'),
-            widget: OBLanguageSettingsPage()));
+            widget: OBUserLanguageSettingsPage()));
   }
 
   Future<void> navigateToBlockedUsers({
