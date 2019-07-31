@@ -784,7 +784,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "confirm_guidelines_reject_info": "You can't use Openspace until you accept the guidelines.",
+  "confirm_guidelines_reject_info": "You can't use Okuna until you accept the guidelines.",
   "@confirm_guidelines_reject_info": {
     "type": "text",
     "placeholders": {}

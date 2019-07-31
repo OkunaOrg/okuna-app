@@ -39,17 +39,17 @@
     "type": "text",
     "placeholders": {}
   },
-  "comment_desc": "Be notified when someone comments on one of your posts or one you also commented.",
+  "comment_desc": "Be notified when someone comments on one of your posts or one you also commented",
   "@comment_desc": {
     "type": "text",
     "placeholders": {}
   },
-  "comment_reply_title": "Post comment",
+  "comment_reply_title": "Post comment reply",
   "@comment_reply_title": {
     "type": "text",
     "placeholders": {}
   },
-  "comment_reply_desc": "Be notified when someone replies to one of your comments or one you also replied to.",
+  "comment_reply_desc": "Be notified when someone replies to one of your comments or one you also replied to",
   "@comment_reply_desc": {
     "type": "text",
     "placeholders": {}
@@ -59,7 +59,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "comment_reaction_desc": "Be notified when someone reacts on one of your post commments.",
+  "comment_reaction_desc": "Be notified when someone reacts to one of your post commments",
   "@comment_reaction_desc": {
     "type": "text",
     "placeholders": {}
@@ -69,7 +69,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "post_reaction_desc": "Be notified when someone reacts on one of your post.",
+  "post_reaction_desc": "Be notified when someone reacts to one of your posts",
   "@post_reaction_desc": {
     "type": "text",
     "placeholders": {}
@@ -79,7 +79,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "community_invite_desc": "Be notified when someone invites you to join a community.",
+  "community_invite_desc": "Be notified when someone invites you to join a community",
   "@community_invite_desc": {
     "type": "text",
     "placeholders": {}

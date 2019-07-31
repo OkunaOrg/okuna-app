@@ -20,6 +20,8 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
   ValidationService validationService;
+  static const passwordMaxLength = ValidationService.PASSWORD_MAX_LENGTH;
+  static const passwordMinLength = ValidationService.PASSWORD_MIN_LENGTH;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController _passwordController = TextEditingController();
@@ -36,6 +38,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     localizationService = openbookProvider.localizationService;
     validationService = openbookProvider.validationService;
     createAccountBloc = openbookProvider.createAccountBloc;
+
 
     return Scaffold(
       body: Center(
@@ -129,7 +132,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     String whatPasswordText =
         localizationService.trans('auth__create_acc__what_password');
     String passwordCharactersText =
-    localizationService.auth__create_acc_password_hint_text;
+    localizationService.auth__create_acc_password_hint_text(passwordMinLength, passwordMaxLength);
 
     return Column(
       children: <Widget>[

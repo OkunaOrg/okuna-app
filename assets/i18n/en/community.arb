@@ -100,7 +100,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "leave_desc": "You won't see it's posts in your timeline nor will be able to post to it anymore.",
+  "leave_desc": "You won't see its posts in your timeline nor will be able to post to it anymore.",
   "@leave_desc": {
     "type": "text",
     "placeholders": {}
@@ -285,7 +285,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "add_administrators_title": "Add administrator.",
+  "add_administrators_title": "Add administrator",
   "@add_administrators_title": {
     "type": "text",
     "placeholders": {}
@@ -297,11 +297,13 @@
   },
   "member": "member",
   "@member": {
+    "description": "Currently not used in app, reserved for potential use. Could be used as: Showing 1 member",
     "type": "text",
     "placeholders": {}
   },
   "member_plural": "members",
   "@member_plural": {
+    "description": "See all members ,Search all members",
     "type": "text",
     "placeholders": {}
   },
@@ -312,11 +314,13 @@
   },
   "administrator_text": "administrator",
   "@administrator_text": {
+    "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrator",
     "type": "text",
     "placeholders": {}
   },
   "administrator_plural": "administrators",
   "@administrator_plural": {
+    "description": "Egs. Search administrators, See list_search_text in user_search.arb ",
     "type": "text",
     "placeholders": {}
   },
@@ -337,8 +341,17 @@
       "max": {}
     }
   },
-  "pick_atleast_min": "You must pick at least {min} ",
-  "@pick_atleast_min": {
+  "pick_atleast_min_category": "You must pick at least {min} category.",
+  "@pick_atleast_min_category": {
+    "description": "You must pick at least 1 category",
+    "type": "text",
+    "placeholders": {
+      "min": {}
+    }
+  },
+  "pick_atleast_min_categories": "You must pick at least {min} categories.",
+  "@pick_atleast_min_categories": {
+    "description": "Eg. Variable min will be 3-5. You must pick at least (3-5) categories",
     "type": "text",
     "placeholders": {
       "min": {}
@@ -356,11 +369,13 @@
   },
   "banned_user_text": "banned user",
   "@banned_user_text": {
+    "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 banned user",
     "type": "text",
     "placeholders": {}
   },
   "banned_users_text": "banned users",
   "@banned_users_text": {
+    "description": "Egs. Search banned users, See list_search_text in user_search.arb ",
     "type": "text",
     "placeholders": {}
   },
@@ -371,26 +386,30 @@
   },
   "favorite_community": "favorite community",
   "@favorite_community": {
+    "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
     "type": "text",
     "placeholders": {}
   },
   "favorite_communities": "favorite communities",
   "@favorite_communities": {
+    "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
     "type": "text",
     "placeholders": {}
   },
-  "adminstrated_title": "Adminstrated",
-  "@adminstrated_title": {
+  "administrated_title": "Administrated",
+  "@administrated_title": {
     "type": "text",
     "placeholders": {}
   },
-  "adminstrated_community": "adminstrated community",
-  "@adminstrated_community": {
+  "administrated_community": "administrated community",
+  "@administrated_community": {
+    "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community",
     "type": "text",
     "placeholders": {}
   },
-  "adminstrated_communities": "adminstrated communities",
-  "@adminstrated_communities": {
+  "administrated_communities": "administrated communities",
+  "@administrated_communities": {
+    "description": "Egs. Search administrated communities, See list_search_text in user_search.arb ",
     "type": "text",
     "placeholders": {}
   },
@@ -401,11 +420,13 @@
   },
   "moderated_community": "moderated community",
   "@moderated_community": {
+    "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community",
     "type": "text",
     "placeholders": {}
   },
   "moderated_communities": "moderated communities",
   "@moderated_communities": {
+    "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
     "type": "text",
     "placeholders": {}
   },
@@ -416,11 +437,13 @@
   },
   "joined_community": "joined community",
   "@joined_community": {
+    "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 joined community",
     "type": "text",
     "placeholders": {}
   },
   "joined_communities": "joined communities",
   "@joined_communities": {
+    "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
     "type": "text",
     "placeholders": {}
   },
@@ -483,11 +506,13 @@
   },
   "invite_to_community_resource_singular": "connection or follower",
   "@invite_to_community_resource_singular": {
+    "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower",
     "type": "text",
     "placeholders": {}
   },
   "invite_to_community_resource_plural": "connections and followers",
   "@invite_to_community_resource_plural": {
+    "description": "Egs. Search connections and followers, See list_search_text in user_search.arb ",
     "type": "text",
     "placeholders": {}
   },

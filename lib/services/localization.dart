@@ -223,8 +223,10 @@ class LocalizationService {
   String get auth__create_acc__what_password {
     return Intl.message("Choose a password", name: 'auth__create_acc__what_password');
   }
-  String get auth__create_acc_password_hint_text {
-    return Intl.message("(10-100 characters)", name: 'auth__create_acc_password_hint_text');
+  String auth__create_acc_password_hint_text(int minLength, int maxLength) {
+    return Intl.message("($minLength-$maxLength characters)",
+        args: [minLength, maxLength],
+        name: 'auth__create_acc_password_hint_text');
   }
   String get auth__create_acc__what_password_subtext {
     return Intl.message("(min 10 chars.)", name: 'auth__create_acc__what_password_subtext');
@@ -531,7 +533,7 @@ class LocalizationService {
         name: 'drawer__useful_links_guidelines_handbook_desc');
   }
   String get drawer__useful_links_slack_channel {
-    return Intl.message("Community slack channel",
+    return Intl.message("Community Slack channel",
         name: 'drawer__useful_links_slack_channel');
   }
   String get drawer__useful_links_slack_channel_desc {
@@ -638,7 +640,7 @@ class LocalizationService {
   }
 
   String get community__leave_desc {
-    return Intl.message("You won't see it's posts in your timeline nor will be able to post to it anymore.",
+    return Intl.message("You won't see its posts in your timeline nor will be able to post to it anymore.",
         name: 'community__leave_desc');
   }
 
@@ -823,7 +825,7 @@ class LocalizationService {
   }
 
   String get community__add_administrators_title {
-    return Intl.message("Add administrator.",
+    return Intl.message("Add administrator",
         name: 'community__add_administrators_title');
   }
 
@@ -834,11 +836,13 @@ class LocalizationService {
 
   String get community__member {
     return Intl.message("member",
+        desc: 'Currently not used in app, reserved for potential use. Could be used as: Showing 1 member',
         name: 'community__member');
   }
 
   String get community__member_plural {
     return Intl.message("members",
+        desc: 'See all members ,Search all members',
         name: 'community__member_plural');
   }
 
@@ -849,11 +853,13 @@ class LocalizationService {
 
   String get community__administrator_text {
     return Intl.message("administrator",
+        desc: 'Currently unsused, reserved for potential use. Could be used as Showing 1 administrator',
         name: 'community__administrator_text');
   }
 
   String get community__administrator_plural {
     return Intl.message("administrators",
+        desc: 'Egs. Search administrators, See list_search_text in user_search.arb ',
         name: 'community__administrator_plural');
   }
 
@@ -873,10 +879,18 @@ class LocalizationService {
         name: 'community__pick_upto_max');
   }
 
-  String community__pick_atleast_min(int min) {
-    return Intl.message("You must pick at least $min ",
+  String community__pick_atleast_min_category(int min) {
+    return Intl.message("You must pick at least $min category.",
         args:[min],
-        name: 'community__pick_atleast_min');
+        desc: 'You must pick at least 1 category',
+        name: 'community__pick_atleast_min_category');
+  }
+
+  String community__pick_atleast_min_categories(int min) {
+    return Intl.message("You must pick at least $min categories.",
+        args:[min],
+        desc: 'Eg. Variable min will be 3-5. You must pick at least (3-5) categories',
+        name: 'community__pick_atleast_min_categories');
   }
 
   String get community__ban_user_title {
@@ -891,11 +905,13 @@ class LocalizationService {
 
   String get community__banned_user_text {
     return Intl.message("banned user",
+        desc: 'Currently unsused, reserved for potential use. Could be used as Showing 1 banned user',
         name: 'community__banned_user_text');
   }
 
   String get community__banned_users_text {
     return Intl.message("banned users",
+        desc: 'Egs. Search banned users, See list_search_text in user_search.arb ',
         name: 'community__banned_users_text');
   }
 
@@ -906,27 +922,31 @@ class LocalizationService {
 
   String get community__favorite_community {
     return Intl.message("favorite community",
+        desc: 'Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community',
         name: 'community__favorite_community');
   }
 
   String get community__favorite_communities {
     return Intl.message("favorite communities",
+        desc: 'Egs. Search favorite communities, See list_search_text in user_search.arb ',
         name: 'community__favorite_communities');
   }
 
-  String get community__adminstrated_title {
-    return Intl.message("Adminstrated",
-        name: 'community__adminstrated_title');
+  String get community__administrated_title {
+    return Intl.message("Administrated",
+        name: 'community__administrated_title');
   }
 
-  String get community__adminstrated_community {
-    return Intl.message("adminstrated community",
-        name: 'community__adminstrated_community');
+  String get community__administrated_community {
+    return Intl.message("administrated community",
+        desc: 'Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community',
+        name: 'community__administrated_community');
   }
 
-  String get community__adminstrated_communities {
-    return Intl.message("adminstrated communities",
-        name: 'community__adminstrated_communities');
+  String get community__administrated_communities {
+    return Intl.message("administrated communities",
+        desc: 'Egs. Search administrated communities, See list_search_text in user_search.arb ',
+        name: 'community__administrated_communities');
   }
 
   String get community__moderated_title {
@@ -936,11 +956,13 @@ class LocalizationService {
 
   String get community__moderated_community {
     return Intl.message("moderated community",
+        desc: 'Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community',
         name: 'community__moderated_community');
   }
 
   String get community__moderated_communities {
     return Intl.message("moderated communities",
+        desc: 'Egs. Search moderated communities, See list_search_text in user_search.arb ',
         name: 'community__moderated_communities');
   }
 
@@ -951,11 +973,13 @@ class LocalizationService {
 
   String get community__joined_community {
     return Intl.message("joined community",
+        desc: 'Currently unsused, reserved for potential use. Could be used as Showing 1 joined community',
         name: 'community__joined_community');
   }
 
   String get community__joined_communities {
     return Intl.message("joined communities",
+        desc: 'Egs. Search joined communities, See list_search_text in user_search.arb ',
         name: 'community__joined_communities');
   }
 
@@ -1017,11 +1041,13 @@ class LocalizationService {
 
   String get community__invite_to_community_resource_singular {
     return Intl.message("connection or follower",
+        desc: 'Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower',
         name: 'community__invite_to_community_resource_singular');
   }
 
   String get community__invite_to_community_resource_plural {
     return Intl.message("connections and followers",
+        desc: 'Egs. Search connections and followers, See list_search_text in user_search.arb ',
         name: 'community__invite_to_community_resource_plural');
   }
 
@@ -1392,7 +1418,7 @@ class LocalizationService {
   }
 
   String post__no_circles_for(String circlesSearchQuery) {
-    return Intl.message("'No circles found matching '$circlesSearchQuery'.",
+    return Intl.message("No circles found matching '$circlesSearchQuery'.",
         args: [circlesSearchQuery],
         name: 'post__no_circles_for');
   }
@@ -1449,6 +1475,7 @@ class LocalizationService {
 
   String get post__shared_privately_on {
     return Intl.message("Shared privately on",
+        desc: 'Eg. Shared privately on @shantanu\'s circles. See following string, usernames_circles . Will combine this in future, needs refactoring.',
         name: 'post__shared_privately_on');
   }
 
@@ -1544,12 +1571,12 @@ class LocalizationService {
   }
 
   String get post__commenter_expanded_join_conversation {
-    return Intl.message("Join the conversation..",
+    return Intl.message("Join the conversation...",
         name: 'post__commenter_expanded_join_conversation');
   }
 
   String get post__commenter_expanded_start_conversation {
-    return Intl.message("Start the conversation..",
+    return Intl.message("Start the conversation...",
         name: 'post__commenter_expanded_start_conversation');
   }
 
@@ -1564,7 +1591,7 @@ class LocalizationService {
   }
 
   String get post__comment_reply_expanded_reply_comment {
-    return Intl.message("Reply comment",
+    return Intl.message("Reply to comment",
         name: 'post__comment_reply_expanded_reply_comment');
   }
 
@@ -2702,17 +2729,17 @@ class LocalizationService {
   }
 
   String get notifications__comment_desc {
-    return Intl.message("Be notified when someone comments on one of your posts or one you also commented.",
+    return Intl.message("Be notified when someone comments on one of your posts or one you also commented",
         name: 'notifications__comment_desc');
   }
 
   String get notifications__comment_reply_title {
-    return Intl.message("Post comment",
+    return Intl.message("Post comment reply",
         name: 'notifications__comment_reply_title');
   }
 
   String get notifications__comment_reply_desc {
-    return Intl.message("Be notified when someone replies to one of your comments or one you also replied to.",
+    return Intl.message("Be notified when someone replies to one of your comments or one you also replied to",
         name: 'notifications__comment_reply_desc');
   }
 
@@ -2722,7 +2749,7 @@ class LocalizationService {
   }
 
   String get notifications__comment_reaction_desc {
-    return Intl.message("Be notified when someone reacts on one of your post commments.",
+    return Intl.message("Be notified when someone reacts to one of your post commments",
         name: 'notifications__comment_reaction_desc');
   }
 
@@ -2732,7 +2759,7 @@ class LocalizationService {
   }
 
   String get notifications__post_reaction_desc {
-    return Intl.message("Be notified when someone reacts on one of your post.",
+    return Intl.message("Be notified when someone reacts to one of your posts",
         name: 'notifications__post_reaction_desc');
   }
 
@@ -2742,7 +2769,7 @@ class LocalizationService {
   }
 
   String get notifications__community_invite_desc {
-    return Intl.message("Be notified when someone invites you to join a community.",
+    return Intl.message("Be notified when someone invites you to join a community",
         name: 'notifications__community_invite_desc');
   }
 
@@ -3025,7 +3052,7 @@ class LocalizationService {
     "- If you are reporting a post or comment, the report will be sent to the Okuna staff and the community moderators if applicable and the post will be hidden from your feed. \n"
         "- If you are reporting an account or community, it will be sent to the Okuna staff. \n"
         "- We'll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from a temporary suspension to deletion of the account depending on the severity of the transgression. \n"
-        "- If the report is found to be made in an attempt to damage another member or community in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
+        "- If the report is found to be made in an attempt to damage the reputation of another member or community in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
         name: 'moderation__confirm_report_provide_happen_next_desc');
   }
 

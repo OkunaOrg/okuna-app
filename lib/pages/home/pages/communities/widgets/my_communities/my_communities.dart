@@ -85,9 +85,9 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                 OBMyCommunitiesGroup(
                     key: Key('AdministratedCommunitiesGroup'),
                     controller: _administratedCommunitiesGroupController,
-                    title: _localizationService.community__adminstrated_title,
-                    groupName: _localizationService.community__adminstrated_communities,
-                    groupItemName: _localizationService.community__adminstrated_community,
+                    title: _localizationService.community__administrated_title,
+                    groupName: _localizationService.community__administrated_communities,
+                    groupItemName: _localizationService.community__administrated_community,
                     maxGroupListPreviewItems: 5,
                     communityGroupListItemBuilder:
                         _buildAdministratedCommunityListItem,
