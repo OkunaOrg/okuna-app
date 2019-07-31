@@ -81,7 +81,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "no_circles_for": "'No circles found matching '{circlesSearchQuery}'.",
+  "no_circles_for": "No circles found matching '{circlesSearchQuery}'.",
   "@no_circles_for": {
     "type": "text",
     "placeholders": {
@@ -140,6 +140,7 @@
   },
   "shared_privately_on": "Shared privately on",
   "@shared_privately_on": {
+    "description": "Eg. Shared privately on @shantanu's circles. See following string, usernames_circles . Will combine this in future, needs refactoring.",
     "type": "text",
     "placeholders": {}
   },
@@ -235,12 +236,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "commenter_expanded_join_conversation": "Join the conversation..",
+  "commenter_expanded_join_conversation": "Join the conversation...",
   "@commenter_expanded_join_conversation": {
     "type": "text",
     "placeholders": {}
   },
-  "commenter_expanded_start_conversation": "Start the conversation..",
+  "commenter_expanded_start_conversation": "Start the conversation...",
   "@commenter_expanded_start_conversation": {
     "type": "text",
     "placeholders": {}
@@ -255,7 +256,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "comment_reply_expanded_reply_comment": "Reply comment",
+  "comment_reply_expanded_reply_comment": "Reply to comment",
   "@comment_reply_expanded_reply_comment": {
     "type": "text",
     "placeholders": {}

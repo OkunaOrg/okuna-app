@@ -4,7 +4,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "main_title": "My openspace",
+  "main_title": "My Okuna",
   "@main_title": {
     "type": "text",
     "placeholders": {}
@@ -146,7 +146,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "useful_links_guidelines": "Openspace guidelines",
+  "useful_links_guidelines": "Okuna guidelines",
   "@useful_links_guidelines": {
     "type": "text",
     "placeholders": {}
@@ -186,7 +186,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "useful_links_guidelines_handbook": "Openspace handbook",
+  "useful_links_guidelines_handbook": "Okuna handbook",
   "@useful_links_guidelines_handbook": {
     "type": "text",
     "placeholders": {}
@@ -196,12 +196,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "useful_links_slack_channel": "Community slack channel",
+  "useful_links_slack_channel": "Community Slack channel",
   "@useful_links_slack_channel": {
     "type": "text",
     "placeholders": {}
   },
-  "useful_links_slack_channel_desc": "A place to discuss everything about Openspace",
+  "useful_links_slack_channel_desc": "A place to discuss everything about Okuna",
   "@useful_links_slack_channel_desc": {
     "type": "text",
     "placeholders": {}

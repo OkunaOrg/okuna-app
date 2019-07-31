@@ -265,10 +265,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "create_acc_password_hint_text": "(10-100 characters)",
+  "create_acc_password_hint_text": "({minLength}-{maxLength} characters)",
   "@create_acc_password_hint_text": {
     "type": "text",
-    "placeholders": {}
+    "placeholders": {
+      "minLength": {},
+      "maxLength": {}
+    }
   },
   "create_acc__what_password_subtext": "(min 10 chars.)",
   "@create_acc__what_password_subtext": {
