@@ -11,15 +11,15 @@ typedef NS_ENUM(NSInteger, TargetFormat) {
 };
 
 @implementation ImageConverterPlugin
-+ (void) registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-    FlutterMethodChannel* channel =
-        [FlutterMethodChannel methodChannelWithName:@"openspace.social/image_converter"
-                binaryMessenger:[registrar messenger]];
-    ImageConverterPlugin* instance = [[ImageConverterPlugin alloc] init];
++ (void)registerWithRegistrar:(NSObject <FlutterPluginRegistrar> *)registrar {
+    FlutterMethodChannel *channel =
+            [FlutterMethodChannel methodChannelWithName:@"openspace.social/image_converter"
+                                        binaryMessenger:[registrar messenger]];
+    ImageConverterPlugin *instance = [[ImageConverterPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
--(void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
+- (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:@"convertImage"]) {
         [self convertImageFromMethodCall:call result:result];
     } else {
@@ -28,8 +28,8 @@ typedef NS_ENUM(NSInteger, TargetFormat) {
 }
 
 - (void)convertImageFromMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSData* imageData = [call.arguments[@"imageData"] data];
-    NSString* formatString = call.arguments[@"format"];
+    NSData *imageData = [call.arguments[@"imageData"] data];
+    NSString *formatString = call.arguments[@"format"];
     TargetFormat format;
     if ([formatString isEqualToString:@"JPEG"]) {
         format = TargetFormatJPEG;
@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, TargetFormat) {
                       details:formatString]);
         return;
     }
-    UIImage* image = [UIImage imageWithData:imageData];
+    UIImage *image = [UIImage imageWithData:imageData];
     if (image == nil) {
         result([FlutterError
                 errorWithCode:@"bad_data"
