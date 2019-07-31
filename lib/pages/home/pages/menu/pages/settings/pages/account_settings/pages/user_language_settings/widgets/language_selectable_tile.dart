@@ -1,9 +1,6 @@
-import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/language.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
 import 'package:Openbook/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
-import 'package:pigment/pigment.dart';
 
 class OBLanguageSelectableTile extends StatelessWidget {
   final Language language;
