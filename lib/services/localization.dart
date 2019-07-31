@@ -394,7 +394,7 @@ class LocalizationService {
         name: 'drawer__menu_title');
   }
   String get drawer__main_title {
-    return Intl.message("My openspace",
+    return Intl.message("My Okuna",
         name: 'drawer__main_title');
   }
   String get drawer__my_circles {
@@ -491,7 +491,7 @@ class LocalizationService {
     return Intl.message("Useful links", name: 'drawer__useful_links_title');
   }
   String get drawer__useful_links_guidelines {
-    return Intl.message("Openspace guidelines",
+    return Intl.message("Okuna guidelines",
         name: 'drawer__useful_links_guidelines');
   }
   String get drawer__useful_links_guidelines_desc {
@@ -523,7 +523,7 @@ class LocalizationService {
         name: 'drawer__useful_links_guidelines_bug_tracker_desc');
   }
   String get drawer__useful_links_guidelines_handbook {
-    return Intl.message("Openspace handbook",
+    return Intl.message("Okuna user guide",
         name: 'drawer__useful_links_guidelines_handbook');
   }
   String get drawer__useful_links_guidelines_handbook_desc {
@@ -535,7 +535,7 @@ class LocalizationService {
         name: 'drawer__useful_links_slack_channel');
   }
   String get drawer__useful_links_slack_channel_desc {
-    return Intl.message("A place to discuss everything about Openspace",
+    return Intl.message("A place to discuss everything about Okuna",
         name: 'drawer__useful_links_slack_channel_desc');
   }
 
@@ -2519,7 +2519,7 @@ class LocalizationService {
   }
 
   String get user__confirm_guidelines_reject_info {
-    return Intl.message("You can't use Openspace until you accept the guidelines.",
+    return Intl.message("You can't use Okuna until you accept the guidelines.",
         name: 'user__confirm_guidelines_reject_info');
   }
 
@@ -2934,7 +2934,7 @@ class LocalizationService {
   }
 
   String get moderation__moderated_object_verified_by_staff {
-    return Intl.message("Verified by Openspace staff",
+    return Intl.message("Verified by Okuna staff",
         name: 'moderation__moderated_object_verified_by_staff');
   }
 
@@ -3022,8 +3022,8 @@ class LocalizationService {
 
   String get moderation__confirm_report_provide_happen_next_desc {
     return Intl.message("- Your report will be submitted anonymously. \n"
-    "- If you are reporting a post or comment, the report will be sent to the Openspace staff and the community moderators if applicable and the post will be hidden from your feed. \n"
-        "- If you are reporting an account or community, it will be sent to the Openspace staff. \n"
+    "- If you are reporting a post or comment, the report will be sent to the Okuna staff and the community moderators if applicable and the post will be hidden from your feed. \n"
+        "- If you are reporting an account or community, it will be sent to the Okuna staff. \n"
         "- We'll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from a temporary suspension to deletion of the account depending on the severity of the transgression. \n"
         "- If the report is found to be made in an attempt to damage another member or community in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
         name: 'moderation__confirm_report_provide_happen_next_desc');
