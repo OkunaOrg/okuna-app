@@ -62,7 +62,7 @@ class OBAccountSettingsPage extends StatelessWidget {
               title: OBText(currentUserLanguage != null ? localizationService.drawer__account_settings_language(currentUserLanguage):
               localizationService.drawer__account_settings_language_text),
               onTap: () {
-                navigationService.navigateToLanguageSettings(
+                navigationService.navigateToUserLanguageSettings(
                     context: context);
               },
             ),

@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
               }
               return this.locale;
             },
-            title: 'Openspace',
+            title: 'Okuna',
             supportedLocales: supportedLocales,
             localizationsDelegates: [
               const LocalizationServiceDelegate(),

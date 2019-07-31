@@ -179,7 +179,6 @@ class UserService {
     _localizationService = localizationService;
   }
 
-
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -684,7 +683,8 @@ class UserService {
   }
 
   Future<void> setNewLanguage(Language newLanguage) async {
-    HttpieResponse response = await this._authApiService.setNewLanguage(newLanguage);
+    HttpieResponse response =
+        await this._authApiService.setNewLanguage(newLanguage);
     _checkResponseIsOk(response);
     await refreshUser();
   }
@@ -1760,22 +1760,19 @@ class UserService {
     return ModerationCategoriesList.fromJson(json.decode(response.body));
   }
 
-  Future<String> getTranslatedPostText({@required String postUuid}) async {
+  Future<String> translatePost({@required Post post}) async {
     HttpieResponse response =
-    await _postsApiService.translatePost(postUuid: postUuid);
+        await _postsApiService.translatePost(postUuid: post.uuid);
 
     _checkResponseIsOk(response);
 
     return json.decode(response.body)['translated_text'];
   }
 
-  Future<String> getTranslatedPostCommentText({
-    @required String postUuid,
-    @required int postCommentId}) async {
-    HttpieResponse response =
-    await _postsApiService.translatePostComment(
-        postUuid: postUuid, postCommentId: postCommentId
-    );
+  Future<String> translatePostComment(
+      {@required Post post, @required PostComment postComment}) async {
+    HttpieResponse response = await _postsApiService.translatePostComment(
+        postUuid: post.uuid, postCommentId: postComment.id);
 
     _checkResponseIsOk(response);
 
@@ -1830,16 +1827,19 @@ class UserService {
 
   Future<void> setLanguageFromDefaults() async {
     Locale currentLocale = _localizationService.getLocale();
-    LanguagesList languageList =  await getAllLanguages();
-    Language deviceLanguage = languageList.languages.firstWhere((Language language) {
-      return language.code.toLowerCase() == currentLocale.languageCode.toLowerCase();
+    LanguagesList languageList = await getAllLanguages();
+    Language deviceLanguage =
+        languageList.languages.firstWhere((Language language) {
+      return language.code.toLowerCase() ==
+          currentLocale.languageCode.toLowerCase();
     });
 
     if (deviceLanguage != null) {
       print('Setting language from defaults ${currentLocale.languageCode}');
       return await setNewLanguage(deviceLanguage);
     } else {
-      Language english = languageList.languages.firstWhere((Language language) => language.code.toLowerCase() == 'en');
+      Language english = languageList.languages.firstWhere(
+          (Language language) => language.code.toLowerCase() == 'en');
       return await setNewLanguage(english);
     }
   }

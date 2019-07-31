@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
-		30C0AB83114DC50252134799 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2F8A8BC5DC89A5ADEF49D1 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84D9CFE5F0718635252D7379 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2F8A8BC5DC89A5ADEF49D1 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		89ABAE522203425900049DFB /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89ABAE512203425900049DFB /* NotificationService.m */; };
 		89ABAE562203425900049DFB /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 89ABAE4E2203425900049DFB /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		89C7784522F1E19F00ED03F2 /* BSGridCollectionViewLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B81DB422A7F41F00B3E9E0 /* BSGridCollectionViewLayout.framework */; };
+		89C7786522F1E1BF00ED03F2 /* BSImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B81DB622A7F41F00B3E9E0 /* BSImagePicker.framework */; };
+		89C7788522F1E1F300ED03F2 /* multi_image_picker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B81DBC22A7F41F00B3E9E0 /* multi_image_picker.framework */; };
 		9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
 		9705A1C71CF904A300538489 /* Flutter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */; };
@@ -130,13 +133,6 @@
 			remoteGlobalIDString = F223BD1D37BD4412AC0C0C61C7615399;
 			remoteInfo = video_player;
 		};
-		8986A1FD22A7F7E7009824AF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B71D6799C47D234A25EDBDA75F0C660D;
-			remoteInfo = onesignalflutter;
-		};
 		89ABAE542203425900049DFB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
@@ -178,6 +174,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = BFBFB5926D8AB35D39D19DC735F22517;
 			remoteInfo = multi_image_picker;
+		};
+		89C777D222F1DBF400ED03F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 87AFA9365143B556BDEA226DA98755D4;
+			remoteInfo = onesignalflutter;
 		};
 		89CF474322419BFD001BC50D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -286,7 +289,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30C0AB83114DC50252134799 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
+				89C7788522F1E1F300ED03F2 /* multi_image_picker.framework in Frameworks */,
+				89C7786522F1E1BF00ED03F2 /* BSImagePicker.framework in Frameworks */,
+				89C7784522F1E19F00ED03F2 /* BSGridCollectionViewLayout.framework in Frameworks */,
+				84D9CFE5F0718635252D7379 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +369,7 @@
 				898053A222047AAF00E47AD9 /* image_picker.framework */,
 				8902A1062236D5BF005F914D /* intercom_flutter.framework */,
 				89B81DBC22A7F41F00B3E9E0 /* multi_image_picker.framework */,
-				8986A1FE22A7F7E7009824AF /* onesignalflutter.framework */,
+				89C777D322F1DBF400ED03F2 /* onesignalflutter.framework */,
 				898053A622047AAF00E47AD9 /* path_provider.framework */,
 				898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */,
 				898053AA22047AAF00E47AD9 /* Pods_Runner.framework */,
@@ -677,13 +683,6 @@
 			remoteRef = 898053B522047AAF00E47AD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8986A1FE22A7F7E7009824AF /* onesignalflutter.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = onesignalflutter.framework;
-			remoteRef = 8986A1FD22A7F7E7009824AF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		89B81DB422A7F41F00B3E9E0 /* BSGridCollectionViewLayout.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -717,6 +716,13 @@
 			fileType = wrapper.framework;
 			path = multi_image_picker.framework;
 			remoteRef = 89B81DBB22A7F41F00B3E9E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89C777D322F1DBF400ED03F2 /* onesignalflutter.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = onesignalflutter.framework;
+			remoteRef = 89C777D222F1DBF400ED03F2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		89CF474422419BFD001BC50D /* flutter_exif_rotation.framework */ = {
@@ -795,7 +801,7 @@
 				"${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/BSImageView/BSImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
 				"${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/device_info/device_info.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_exif_rotation/flutter_exif_rotation.framework",

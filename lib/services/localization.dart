@@ -525,7 +525,7 @@ class LocalizationService {
         name: 'drawer__useful_links_guidelines_bug_tracker_desc');
   }
   String get drawer__useful_links_guidelines_handbook {
-    return Intl.message("Okuna handbook",
+    return Intl.message("Okuna user guide",
         name: 'drawer__useful_links_guidelines_handbook');
   }
   String get drawer__useful_links_guidelines_handbook_desc {

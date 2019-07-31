@@ -111,9 +111,9 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
         _setRequestInProgress(true);
         CancelableOperation<String> _getTranslationOperation =
         CancelableOperation.fromFuture(
-            _userService.getTranslatedPostCommentText(
-                postCommentId: widget.postComment.id,
-                postUuid: widget.post.uuid,
+            _userService.translatePostComment(
+                postComment: widget.postComment,
+                post: widget.post,
               )
         );
 

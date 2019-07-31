@@ -64,7 +64,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     String translatedText;
     try {
       _setTranslationInProgress(true);
-      translatedText = await _userService.getTranslatedPostText(postUuid: widget._post.uuid);
+      translatedText = await _userService.translatePost(post: widget._post);
     } catch (error) {
       _onError(error);
     } finally {
