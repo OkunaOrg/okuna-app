@@ -1,5 +1,6 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/theming/text.dart';
@@ -38,6 +39,7 @@ class OBReportUserTileState extends State<OBReportUserTile> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _navigationService = openbookProvider.navigationService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -51,7 +53,7 @@ class OBReportUserTileState extends State<OBReportUserTile> {
           isLoading: _requestInProgress || isReported,
           leading: OBIcon(OBIcons.report),
           title: OBText(
-              isReported ? 'You have reported this account' : 'Report account'),
+              isReported ? _localizationService.moderation__you_have_reported_account_text : _localizationService.moderation__report_account_text),
           onTap: isReported ? () {} : _reportUser,
         );
       },

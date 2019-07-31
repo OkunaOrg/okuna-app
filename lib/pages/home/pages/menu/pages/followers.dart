@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/widgets/buttons/actions/follow_button.dart';
 import 'package:Openbook/widgets/http_list.dart';
@@ -24,6 +25,7 @@ class OBFollowersPage extends StatefulWidget {
 class OBFollowersPageState extends State<OBFollowersPage> {
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -41,12 +43,13 @@ class OBFollowersPageState extends State<OBFollowersPage> {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Followers',
+        title: _localizationService.user__followers_title,
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
@@ -56,8 +59,8 @@ class OBFollowersPageState extends State<OBFollowersPage> {
           listRefresher: _refreshFollowers,
           listOnScrollLoader: _loadMoreFollowers,
           listSearcher: _searchFollowers,
-          resourceSingularName: 'follower',
-          resourcePluralName: 'followers',
+          resourceSingularName: _localizationService.user__follower_singular,
+          resourcePluralName: _localizationService.user__follower_plural,
         ),
       ),
     );

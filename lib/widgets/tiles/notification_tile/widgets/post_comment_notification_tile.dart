@@ -3,11 +3,15 @@ import 'package:Openbook/models/notifications/post_comment_notification.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
+
+import 'notification_tile_skeleton.dart';
+import 'notification_tile_title.dart';
 
 class OBPostCommentNotificationTile extends StatelessWidget {
   final OBNotification notification;
@@ -18,7 +22,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
   const OBPostCommentNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.postCommentNotification, this.onPressed})
+      @required this.postCommentNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -27,11 +32,13 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     Post post = postComment.post;
     String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
+    String postCommenterName = postComment.getCommenterName();
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     bool isOwnPostNotification =
         openbookProvider.userService.getLoggedInUser().id == postCreatorId;
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
     Widget postImagePreview;
     if (post.hasImage()) {
@@ -46,14 +53,14 @@ class OBPostCommentNotificationTile extends StatelessWidget {
       );
     }
 
-    Function navigateToCommenterProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
 
+    Function navigateToCommenterProfile = () {
       openbookProvider.navigationService
           .navigateToUserProfile(user: postComment.commenter, context: context);
     };
 
-    return ListTile(
+    return OBNotificationTileSkeleton(
       onTap: () {
         if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -66,13 +73,16 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
-      title: OBActionableSmartText(
-        text: isOwnPostNotification
-            ? '@$postCommenterUsername commented: $postCommentText'
-            : '@$postCommenterUsername also commented: $postCommentText',
+      title: OBNotificationTileTitle(
+        onUsernamePressed: navigateToCommenterProfile,
+        user: postComment.commenter,
+        text: TextSpan(
+            text: isOwnPostNotification
+                ? _localizationService.notifications__comment_comment_notification_tile_user_commented(postCommentText)
+                : _localizationService.notifications__comment_comment_notification_tile_user_also_commented(postCommentText)),
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

@@ -1,8 +1,11 @@
 import 'package:Openbook/models/emoji.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:Openbook/widgets/theming/divider.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../provider.dart';
 
 class OBEmojiField extends StatelessWidget {
   final Emoji emoji;
@@ -22,6 +25,7 @@ class OBEmojiField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     return Column(
       children: <Widget>[
         MergeSemantics(
@@ -33,7 +37,7 @@ class OBEmojiField extends StatelessWidget {
               subtitle: errorText != null
                   ? Text(errorText, style: TextStyle(color: Colors.red))
                   : null,
-              trailing: emoji == null ? OBText('No emoji selected') : OBEmoji(emoji),
+              trailing: emoji == null ? OBText(_localizationService.user__emoji_field_none_selected) : OBEmoji(emoji),
               onTap: () {
                 if (onEmojiFieldTapped != null) onEmojiFieldTapped(emoji);
               }),

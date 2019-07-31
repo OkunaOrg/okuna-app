@@ -14,10 +14,12 @@ class OBAccountSettingsPage extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = openbookProvider.localizationService;
     var navigationService = openbookProvider.navigationService;
+    var userService = openbookProvider.userService;
+    String currentUserLanguage = userService.getUserLanguage() != null ? userService.getUserLanguage().name : null;
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
-      navigationBar: OBThemedNavigationBar(title: 'Settings'),
+      navigationBar: OBThemedNavigationBar(title: localizationService.drawer__settings),
       child: OBPrimaryColorContainer(
         child: ListView(
           physics: const ClampingScrollPhysics(),
@@ -26,7 +28,7 @@ class OBAccountSettingsPage extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const OBIcon(OBIcons.email),
-              title: OBText(localizationService.trans('SETTINGS.CHANGE_EMAIL')),
+              title: OBText(localizationService.drawer__account_settings_change_email),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,
@@ -38,7 +40,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ListTile(
               leading: const OBIcon(OBIcons.lock),
               title:
-                  OBText(localizationService.trans('SETTINGS.CHANGE_PASSWORD')),
+                  OBText(localizationService.drawer__account_settings_change_password),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<bool>(
                     fullscreenDialog: true,
@@ -49,15 +51,24 @@ class OBAccountSettingsPage extends StatelessWidget {
             ),
             ListTile(
               leading: const OBIcon(OBIcons.notifications),
-              title: OBText('Notifications'),
+              title: OBText(localizationService.drawer__account_settings_notifications),
               onTap: () {
                 navigationService.navigateToNotificationsSettings(
                     context: context);
               },
             ),
             ListTile(
+              leading: const OBIcon(OBIcons.language),
+              title: OBText(currentUserLanguage != null ? localizationService.drawer__account_settings_language(currentUserLanguage):
+              localizationService.drawer__account_settings_language_text),
+              onTap: () {
+                navigationService.navigateToUserLanguageSettings(
+                    context: context);
+              },
+            ),
+            ListTile(
               leading: const OBIcon(OBIcons.block),
-              title: OBText('Blocked users'),
+              title: OBText(localizationService.drawer__account_settings_blocked_users),
               onTap: () {
                 navigationService.navigateToBlockedUsers(
                     context: context);
@@ -65,7 +76,7 @@ class OBAccountSettingsPage extends StatelessWidget {
             ),
             ListTile(
               leading: const OBIcon(OBIcons.deleteCommunity),
-              title: OBText('Delete account'),
+              title: OBText(localizationService.drawer__account_settings_delete_account),
               onTap: () {
                 navigationService.navigateToDeleteAccount(context: context);
               },

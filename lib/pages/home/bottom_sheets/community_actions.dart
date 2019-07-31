@@ -1,6 +1,7 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -38,6 +39,7 @@ class OBCommunityActionsBottomSheetState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _modalService = openbookProvider.modalService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     List<Widget> communityActions = [
       OBFavoriteCommunityTile(
@@ -58,8 +60,8 @@ class OBCommunityActionsBottomSheetState
     if (communityHasInvitesEnabled && isMemberOfCommunity) {
       communityActions.add(ListTile(
         leading: const OBIcon(OBIcons.communityInvites),
-        title: const OBText(
-          'Invite people to community',
+        title: OBText(
+          _localizationService.community__actions_invite_people_title,
         ),
         onTap: _onWantsToInvitePeople,
       ));
@@ -87,11 +89,6 @@ class OBCommunityActionsBottomSheetState
     _dismiss();
     _modalService.openInviteToCommunity(
         context: context, community: widget.community);
-  }
-
-  void _onWantsToReportCommunity() async {
-    _toastService.error(message: 'Not implemented yet', context: context);
-    _dismiss();
   }
 
   void _dismiss() {

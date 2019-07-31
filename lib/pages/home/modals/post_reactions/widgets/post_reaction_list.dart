@@ -2,6 +2,7 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -30,6 +31,7 @@ class OBPostReactionListState extends State<OBPostReactionList> {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   List<PostReaction> _postReactions;
 
@@ -53,6 +55,7 @@ class OBPostReactionListState extends State<OBPostReactionList> {
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
       _navigationService = openbookProvider.navigationService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -63,7 +66,7 @@ class OBPostReactionListState extends State<OBPostReactionList> {
         child: LoadMore(
             whenEmptyLoad: false,
             isFinish: _loadMoreFinished,
-            delegate: OBPostReactionListLoadMoreDelegate(),
+            delegate: OBPostReactionListLoadMoreDelegate(_localizationService),
             child: ListView.builder(
                 physics: const ClampingScrollPhysics(),
                 padding: EdgeInsets.all(0),
@@ -121,7 +124,7 @@ class OBPostReactionListState extends State<OBPostReactionList> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }
@@ -155,7 +158,8 @@ class OBPostReactionListState extends State<OBPostReactionList> {
 }
 
 class OBPostReactionListLoadMoreDelegate extends LoadMoreDelegate {
-  const OBPostReactionListLoadMoreDelegate();
+  LocalizationService localizationService;
+  OBPostReactionListLoadMoreDelegate(this.localizationService);
 
   @override
   Widget buildChild(LoadMoreStatus status,
@@ -172,7 +176,7 @@ class OBPostReactionListLoadMoreDelegate extends LoadMoreDelegate {
             const SizedBox(
               width: 10.0,
             ),
-            Text('Tap to retry loading reactions.')
+            Text(localizationService.trans('post__reaction_list_tap_retry'))
           ],
         ),
       );

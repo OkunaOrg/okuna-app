@@ -7,6 +7,7 @@ import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -42,6 +43,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   UserService _userService;
   ToastService _toastService;
   StreamSubscription _loggedInUserChangeSubscription;
+  LocalizationService _localizationService;
   ScrollController _postsScrollController;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -78,6 +80,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _toastService = provider.toastService;
+      _localizationService = provider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -145,7 +148,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
               postWidget,
               ListTile(
                 title: OBSecondaryText(
-                  '🎉  All posts loaded',
+                 _localizationService.post__timeline_posts_all_loaded,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -166,22 +169,22 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
     switch (_status) {
       case OBTimelinePostsStatus.refreshingPosts:
-        drHooTitle = 'Hang in there!';
-        drHooSubtitle = 'Loading your timeline.';
+        drHooTitle = _localizationService.post__timeline_posts_refreshing_drhoo_title;
+        drHooSubtitle = _localizationService.post__timeline_posts_refreshing_drhoo_subtitle;
         break;
       case OBTimelinePostsStatus.noMorePostsToLoad:
-        drHooTitle = 'Your timeline is empty.';
-        drHooSubtitle = 'Follow users or join a community to get started!';
+        drHooTitle = _localizationService.post__timeline_posts_no_more_drhoo_title;
+        drHooSubtitle = _localizationService.post__timeline_posts_no_more_drhoo_subtitle;
         break;
       case OBTimelinePostsStatus.loadingMorePostsFailed:
-        drHooTitle = 'Could not load your timeline.';
-        drHooSubtitle = 'Try again in a couple seconds';
+        drHooTitle = _localizationService.post__timeline_posts_failed_drhoo_title;
+        drHooSubtitle = _localizationService.post__timeline_posts_failed_drhoo_subtitle;
         refreshFunction = _bootstrapPosts;
         hasRefreshButton = true;
         break;
       default:
-        drHooTitle = 'Something\'s not right.';
-        drHooSubtitle = 'Try refreshing the timeline.';
+        drHooTitle =_localizationService.post__timeline_posts_default_drhoo_title;
+        drHooSubtitle = _localizationService.post__timeline_posts_default_drhoo_subtitle;
         hasRefreshButton = true;
     }
 
@@ -221,7 +224,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             size: OBIconSize.small,
           ),
           type: OBButtonType.highlight,
-          child: const OBText('Refresh posts'),
+          child: OBText(_localizationService.post__timeline_posts_refresh_posts),
           onPressed: refreshFunction,
           isLoading: _timelineRequest != null,
         )
@@ -398,7 +401,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

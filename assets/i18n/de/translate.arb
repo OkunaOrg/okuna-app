@@ -1,0 +1,12 @@
+{
+  "see_translation": "See translation",
+  "@see_translation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "show_original": "Show original",
+  "@show_original": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

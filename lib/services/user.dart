@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:Openbook/models/categories_list.dart';
 import 'package:Openbook/models/category.dart';
@@ -9,7 +10,6 @@ import 'package:Openbook/models/communities_list.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/device.dart';
 import 'package:Openbook/models/devices_list.dart';
-import 'package:Openbook/models/emoji_group.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/connection.dart';
@@ -17,6 +17,8 @@ import 'package:Openbook/models/emoji.dart';
 import 'package:Openbook/models/emoji_group_list.dart';
 import 'package:Openbook/models/follow.dart';
 import 'package:Openbook/models/follows_list.dart';
+import 'package:Openbook/models/language.dart';
+import 'package:Openbook/models/language_list.dart';
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderated_object_list.dart';
 import 'package:Openbook/models/moderation/moderated_object_log_list.dart';
@@ -29,9 +31,11 @@ import 'package:Openbook/models/notifications/notifications_list.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/models/post_comment_list.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
+import 'package:Openbook/models/post_comment_reaction_list.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/models/post_reaction_list.dart';
-import 'package:Openbook/models/post_reactions_emoji_count_list.dart';
+import 'package:Openbook/models/reactions_emoji_count_list.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
@@ -49,6 +53,7 @@ import 'package:Openbook/services/emojis_api.dart';
 import 'package:Openbook/services/follows_api.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/follows_lists_api.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/moderation_api.dart';
 import 'package:Openbook/services/notifications_api.dart';
 import 'package:Openbook/services/posts_api.dart';
@@ -57,6 +62,7 @@ import 'package:Openbook/services/user_invites_api.dart';
 import 'package:Openbook/services/waitlist_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -85,6 +91,7 @@ class UserService {
   DevicesApiService _devicesApiService;
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
+  LocalizationService _localizationService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -168,6 +175,10 @@ class UserService {
     _waitlistApiService = waitlistApiService;
   }
 
+  void setLocalizationsService(LocalizationService localizationService) {
+    _localizationService = localizationService;
+  }
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -229,7 +240,8 @@ class UserService {
   }
 
   Future<int> subscribeToBetaWaitlist({String email}) async {
-    HttpieResponse response = await _waitlistApiService.subscribeToBetaWaitlist(email: email);
+    HttpieResponse response =
+        await _waitlistApiService.subscribeToBetaWaitlist(email: email);
     _checkResponseIsOk(response);
     Map<String, dynamic> parsedJson = json.decode(response.body);
     return parsedJson['count'];
@@ -242,6 +254,10 @@ class UserService {
 
   User getLoggedInUser() {
     return _loggedInUser;
+  }
+
+  Language getUserLanguage() {
+    return _loggedInUser.language;
   }
 
   bool isLoggedInUser(User user) {
@@ -447,11 +463,9 @@ class UserService {
   }
 
   Future<PostReaction> reactToPost(
-      {@required Post post,
-      @required Emoji emoji,
-      @required EmojiGroup emojiGroup}) async {
+      {@required Post post, @required Emoji emoji}) async {
     HttpieResponse response = await _postsApiService.reactToPost(
-        postUuid: post.uuid, emojiId: emoji.id, emojiGroupId: emojiGroup.id);
+        postUuid: post.uuid, emojiId: emoji.id);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }
@@ -474,14 +488,67 @@ class UserService {
     return PostReactionList.fromJson(json.decode(response.body));
   }
 
-  Future<PostReactionsEmojiCountList> getReactionsEmojiCountForPost(
+  Future<ReactionsEmojiCountList> getReactionsEmojiCountForPost(
       Post post) async {
     HttpieResponse response =
         await _postsApiService.getReactionsEmojiCountForPostWithUuid(post.uuid);
 
     _checkResponseIsOk(response);
 
-    return PostReactionsEmojiCountList.fromJson(json.decode(response.body));
+    return ReactionsEmojiCountList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostCommentReaction> reactToPostComment(
+      {@required Post post,
+      @required PostComment postComment,
+      @required Emoji emoji}) async {
+    HttpieResponse response = await _postsApiService.reactToPostComment(
+      postCommentId: postComment.id,
+      postUuid: post.uuid,
+      emojiId: emoji.id,
+    );
+    _checkResponseIsCreated(response);
+    return PostCommentReaction.fromJson(json.decode(response.body));
+  }
+
+  Future<void> deletePostCommentReaction(
+      {@required PostCommentReaction postCommentReaction,
+      @required PostComment postComment,
+      @required Post post}) async {
+    HttpieResponse response = await _postsApiService.deletePostCommentReaction(
+        postCommentReactionId: postCommentReaction.id,
+        postUuid: post.uuid,
+        postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+  }
+
+  Future<PostCommentReactionList> getReactionsForPostComment(
+      {PostComment postComment,
+      Post post,
+      int count,
+      int maxId,
+      Emoji emoji}) async {
+    HttpieResponse response = await _postsApiService.getReactionsForPostComment(
+        postUuid: post.uuid,
+        postCommentId: postComment.id,
+        count: count,
+        maxId: maxId,
+        emojiId: emoji.id);
+
+    _checkResponseIsOk(response);
+
+    return PostCommentReactionList.fromJson(json.decode(response.body));
+  }
+
+  Future<ReactionsEmojiCountList> getReactionsEmojiCountForPostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.getReactionsEmojiCountForPostComment(
+            postCommentId: postComment.id, postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+
+    return ReactionsEmojiCountList.fromJson(json.decode(response.body));
   }
 
   Future<PostComment> commentPost(
@@ -531,6 +598,22 @@ class UserService {
         await _postsApiService.unmutePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<PostComment> mutePostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.mutePostComment(
+        postUuid: post.uuid, postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
+  }
+
+  Future<PostComment> unmutePostComment(
+      {@required PostComment postComment, @required Post post}) async {
+    HttpieResponse response = await _postsApiService.unmutePostComment(
+        postCommentId: postComment.id, postUuid: post.uuid);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
   }
 
   Future<PostCommentList> getCommentsForPost(Post post,
@@ -589,6 +672,21 @@ class UserService {
     _checkResponseIsOk(response);
 
     return EmojiGroupList.fromJson(json.decode(response.body));
+  }
+
+  Future<LanguagesList> getAllLanguages() async {
+    HttpieResponse response = await this._authApiService.getAllLanguages();
+
+    _checkResponseIsOk(response);
+
+    return LanguagesList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> setNewLanguage(Language newLanguage) async {
+    HttpieResponse response =
+        await this._authApiService.setNewLanguage(newLanguage);
+    _checkResponseIsOk(response);
+    await refreshUser();
   }
 
   Future<User> getUserWithUsername(String username) async {
@@ -1448,6 +1546,8 @@ class UserService {
   Future<UserNotificationsSettings>
       updateAuthenticatedUserNotificationsSettings({
     bool postCommentNotifications,
+    bool postCommentReplyNotifications,
+    bool postCommentReactionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
@@ -1457,6 +1557,8 @@ class UserService {
     HttpieResponse response =
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
             postCommentNotifications: postCommentNotifications,
+            postCommentReplyNotifications: postCommentReplyNotifications,
+            postCommentReactionNotifications: postCommentReactionNotifications,
             postReactionNotifications: postReactionNotifications,
             followNotifications: followNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
@@ -1658,6 +1760,25 @@ class UserService {
     return ModerationCategoriesList.fromJson(json.decode(response.body));
   }
 
+  Future<String> translatePost({@required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.translatePost(postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+
+    return json.decode(response.body)['translated_text'];
+  }
+
+  Future<String> translatePostComment(
+      {@required Post post, @required PostComment postComment}) async {
+    HttpieResponse response = await _postsApiService.translatePostComment(
+        postUuid: post.uuid, postCommentId: postComment.id);
+
+    _checkResponseIsOk(response);
+
+    return json.decode(response.body)['translated_text'];
+  }
+
   Future<String> _getDeviceName() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
@@ -1702,6 +1823,25 @@ class UserService {
     _setLoggedInUser(user);
     await _storeUserData(userData);
     return user;
+  }
+
+  Future<void> setLanguageFromDefaults() async {
+    Locale currentLocale = _localizationService.getLocale();
+    LanguagesList languageList = await getAllLanguages();
+    Language deviceLanguage =
+        languageList.languages.firstWhere((Language language) {
+      return language.code.toLowerCase() ==
+          currentLocale.languageCode.toLowerCase();
+    });
+
+    if (deviceLanguage != null) {
+      print('Setting language from defaults ${currentLocale.languageCode}');
+      return await setNewLanguage(deviceLanguage);
+    } else {
+      Language english = languageList.languages.firstWhere(
+          (Language language) => language.code.toLowerCase() == 'en');
+      return await setNewLanguage(english);
+    }
   }
 
   void _checkResponseIsCreated(HttpieBaseResponse response) {

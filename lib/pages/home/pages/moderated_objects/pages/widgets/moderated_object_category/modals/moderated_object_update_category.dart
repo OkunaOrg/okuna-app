@@ -1,6 +1,7 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/moderation/moderation_category_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -32,6 +33,7 @@ class OBModeratedObjectUpdateCategoryModalState
     extends State<OBModeratedObjectUpdateCategoryModal> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   List<ModerationCategory> _moderationCategories = [];
   ModerationCategory _selectedModerationCategory;
   bool _needsBootstrap;
@@ -51,6 +53,7 @@ class OBModeratedObjectUpdateCategoryModalState
       var openbookProvider = OpenbookProvider.of(context);
       _toastService = openbookProvider.toastService;
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -146,19 +149,19 @@ class OBModeratedObjectUpdateCategoryModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Update category',
+      title: _localizationService.trans('moderation__update_category_title'),
       trailing: OBButton(
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _saveModerationCategory,
-        child: Text('Save'),
+        child: Text(_localizationService.trans('moderation__update_category_save')),
       ),
     );
   }

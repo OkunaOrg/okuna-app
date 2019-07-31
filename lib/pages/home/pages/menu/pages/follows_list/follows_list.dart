@@ -1,6 +1,7 @@
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/provider.dart';
@@ -26,6 +27,7 @@ class OBFollowsListPage extends StatefulWidget {
 class OBFollowsListPageState extends State<OBFollowsListPage> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   bool _needsBootstrap;
@@ -42,6 +44,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     var modalService = openbookProvider.modalService;
 
     if (_needsBootstrap) {
@@ -57,7 +60,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
               modalService.openEditFollowsList(
                   followsList: widget.followsList, context: context);
             },
-            child: OBPrimaryAccentText('Edit'),
+            child: OBPrimaryAccentText(_localizationService.user__follows_list_edit),
           ),
         ),
         child: RefreshIndicator(
@@ -98,7 +101,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

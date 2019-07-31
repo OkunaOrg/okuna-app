@@ -60,7 +60,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   }
 
   Widget _buildLogo() {
-    String headlineText = localizationService.trans('AUTH.HEADLINE');
+    String headlineText = localizationService.trans('auth__headline');
 
     return Column(
       children: <Widget>[
@@ -79,7 +79,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   }
 
   Widget _buildLoginButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.LOGIN');
+    String buttonText = localizationService.trans('auth__login');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -100,7 +100,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   }
 
   Widget _buildCreateAccountButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACCOUNT');
+    String buttonText = localizationService.trans('auth__create_account');
 
     return OBSecondaryButton(
       isLarge: true,

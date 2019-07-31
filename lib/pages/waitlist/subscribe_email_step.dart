@@ -109,7 +109,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
   }
 
   Widget _buildNextButton(BuildContext context) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.SUBSCRIBE');
+    String buttonText = _localizationService.trans('auth__create_acc__subscribe');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -123,7 +123,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -151,7 +151,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
 
   Widget _buildSubscribeEmailText({@required BuildContext context}) {
     String subscribeEmailText = _localizationService
-        .trans('AUTH.CREATE_ACC.SUBSCRIBE_TO_WAITLIST_TEXT');
+        .trans('auth__create_acc__subscribe_to_waitlist_text');
 
     return Column(
       children: <Widget>[
@@ -174,7 +174,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
 
   Widget _buildEmailForm() {
     String emailInputPlaceholder =
-        _localizationService.trans('AUTH.CREATE_ACC.EMAIL_PLACEHOLDER');
+        _localizationService.trans('auth__create_acc__email_placeholder');
 
     return Form(
       key: _formKey,

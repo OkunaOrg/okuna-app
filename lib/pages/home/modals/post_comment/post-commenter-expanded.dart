@@ -6,6 +6,7 @@ import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_ch
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -39,6 +40,7 @@ class OBPostCommenterExpandedModalState
   ValidationService _validationService;
   ToastService _toastService;
   UserService _userService;
+  LocalizationService _localizationService;
 
   TextEditingController _textController;
   int _charactersCount;
@@ -61,8 +63,8 @@ class OBPostCommenterExpandedModalState
     _isPostCommentTextOriginal = false;
     _originalText = widget.postComment.text;
     String hintText = widget.post.commentsCount > 0
-        ? 'Join the conversation..'
-        : 'Start the conversation..';
+        ? _localizationService.post__commenter_expanded_join_conversation
+        : _localizationService.post__commenter_expanded_start_conversation;
     _postCommentItemsWidgets = [
       OBCreatePostText(controller: _textController, hintText: hintText)
     ];
@@ -82,6 +84,7 @@ class OBPostCommenterExpandedModalState
     _validationService = openbookProvider.validationService;
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
@@ -104,7 +107,7 @@ class OBPostCommenterExpandedModalState
           Navigator.pop(context);
         },
       ),
-      title: 'Edit comment',
+      title:_localizationService.post__commenter_expanded_edit_comment,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -116,7 +119,7 @@ class OBPostCommenterExpandedModalState
       isLoading: _requestInProgress,
       size: OBButtonSize.small,
       onPressed: _onWantsToSaveComment,
-      child: Text('Save'),
+      child: Text(_localizationService.post__commenter_expanded_save),
     );
   }
 
@@ -195,7 +198,7 @@ class OBPostCommenterExpandedModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

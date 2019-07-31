@@ -2,6 +2,7 @@ import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/theme.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityMembersCount extends StatelessWidget {
@@ -12,13 +13,14 @@ class OBCommunityMembersCount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int membersCount = community.membersCount;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     if (membersCount == null || membersCount == 0) return const SizedBox();
 
-    String count = getPrettyCount(membersCount);
+    String count = getPrettyCount(membersCount, localizationService);
 
-    String userAdjective = community.userAdjective ?? 'Member';
-    String usersAdjective = community.usersAdjective ?? 'Members';
+    String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
+    String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;
 
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;

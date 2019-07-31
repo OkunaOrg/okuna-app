@@ -3,6 +3,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -26,6 +27,7 @@ class OBAddAccountToList extends StatefulWidget {
 class OBAddAccountToListState extends State<OBAddAccountToList> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   BottomSheetService _bottomSheetService;
 
   @override
@@ -33,13 +35,14 @@ class OBAddAccountToListState extends State<OBAddAccountToList> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     _bottomSheetService = openbookProvider.bottomSheetService;
 
     bool hasFollowLists = widget.user.hasFollowLists();
 
     return ListTile(
         title: OBText(
-            hasFollowLists ? 'Update account lists' : 'Add account to list'),
+            hasFollowLists ? _localizationService.user__add_account_update_account_lists : _localizationService.user__add_account_to_lists),
         leading: OBIcon(hasFollowLists ? OBIcons.lists : OBIcons.addToList),
         onTap: _displayAddConnectionToFollowsListsBottomSheet);
   }
@@ -54,8 +57,8 @@ class OBAddAccountToListState extends State<OBAddAccountToList> {
 
     var pickedFollowsLists = await _bottomSheetService.showFollowsListsPicker(
         context: context,
-        title: hasFollowLists ? 'Update lists' : 'Add account to list',
-        actionLabel: hasFollowLists ? 'Save' : 'Done',
+        title: hasFollowLists ? _localizationService.user__add_account_update_lists : _localizationService.user__add_account_to_lists,
+        actionLabel: hasFollowLists ? _localizationService.user__add_account_save : _localizationService.user__add_account_done,
         initialPickedFollowsLists: initialPickedLists);
 
     if (pickedFollowsLists != null)
@@ -78,7 +81,7 @@ class OBAddAccountToListState extends State<OBAddAccountToList> {
       if (!isAlreadyFollowingUser) {
         widget.user.incrementFollowersCount();
       }
-      _toastService.success(message: 'Success', context: context);
+      _toastService.success(message: _localizationService.user__add_account_success, context: context);
     } catch (error) {
       _onError(error);
     }
@@ -92,7 +95,7 @@ class OBAddAccountToListState extends State<OBAddAccountToList> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

@@ -2,9 +2,10 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_tile.dart';
+import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -17,7 +18,6 @@ import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
 import 'package:Openbook/widgets/theming/post_divider.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,8 +45,8 @@ class OBPostCommentReplyExpandedModal extends StatefulWidget {
 class OBPostCommentReplyExpandedModalState
     extends State<OBPostCommentReplyExpandedModal> {
   ValidationService _validationService;
-  NavigationService _navigationService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   UserService _userService;
 
   TextEditingController _textController;
@@ -66,7 +66,7 @@ class OBPostCommentReplyExpandedModalState
     _textController.addListener(_onPostCommentTextChanged);
     _charactersCount = 0;
     _isPostCommentTextAllowedLength = false;
-    String hintText = 'Your reply...';
+    String hintText = _localizationService.post__comment_reply_expanded_reply_hint_text;
     _postCommentItemsWidgets = [
       OBCreatePostText(controller: _textController, hintText: hintText)
     ];
@@ -84,8 +84,8 @@ class OBPostCommentReplyExpandedModalState
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _validationService = openbookProvider.validationService;
-    _navigationService = openbookProvider.navigationService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
 
     //Scroll to bottom
@@ -117,7 +117,7 @@ class OBPostCommentReplyExpandedModalState
           Navigator.pop(context);
         },
       ),
-      title: 'Reply comment',
+      title: _localizationService.post__comment_reply_expanded_reply_comment,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -129,7 +129,7 @@ class OBPostCommentReplyExpandedModalState
       isLoading: _requestInProgress,
       size: OBButtonSize.small,
       onPressed: _onWantsToReplyComment,
-      child: Text('Post'),
+      child: Text(_localizationService.post__comment_reply_expanded_post),
     );
   }
 
@@ -157,57 +157,61 @@ class OBPostCommentReplyExpandedModalState
   Widget _buildPostCommentContent() {
     return Expanded(
         child: SingleChildScrollView(
-          controller: _scrollController,
-          padding: EdgeInsets.only(left: 0.0, top: 0.0),
-          child: Padding(
-              padding: EdgeInsets.only(left: 0.0, top: 20.0),
-              child: Column(
-                children: <Widget>[
-                  OBPostCommentTile(
-                      post: widget.post, postComment: widget.postComment),
-                  OBPostDivider(),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 20.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      controller: _scrollController,
+      padding: EdgeInsets.only(left: 0.0, top: 0.0),
+      child: Padding(
+          padding: EdgeInsets.only(left: 0.0, top: 20.0),
+          child: Column(
+            children: <Widget>[
+              OBPostComment(
+                post: widget.post,
+                postComment: widget.postComment,
+                showActions: false,
+                showReactions: false,
+                showReplies: false,
+                padding: EdgeInsets.all(15),
+              ),
+              OBPostDivider(),
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
                       children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            OBLoggedInUserAvatar(
-                              size: OBAvatarSize.medium,
-                            ),
-                            const SizedBox(
-                              height: 12.0,
-                            ),
-                            OBRemainingPostCharacters(
-                              maxCharacters:
-                              ValidationService.POST_COMMENT_MAX_LENGTH,
-                              currentCharacters: _charactersCount,
-                            ),
-                          ],
+                        OBLoggedInUserAvatar(
+                          size: OBAvatarSize.medium,
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            physics: const ClampingScrollPhysics(),
-                            child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.0,
-                                    right: 20.0,
-                                    bottom: 30.0,
-                                    top: 0.0),
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: _postCommentItemsWidgets)),
-                          ),
-                        )
+                        const SizedBox(
+                          height: 12.0,
+                        ),
+                        OBRemainingPostCharacters(
+                          maxCharacters:
+                              ValidationService.POST_COMMENT_MAX_LENGTH,
+                          currentCharacters: _charactersCount,
+                        ),
                       ],
                     ),
-                  )
-                ],
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 20.0,
+                                right: 20.0,
+                                bottom: 30.0,
+                                top: 0.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: _postCommentItemsWidgets)),
+                      ),
+                    )
+                  ],
+                ),
               )
-          ),
-        )
-    );
+            ],
+          )),
+    ));
   }
 
   void _onPostCommentTextChanged() {
@@ -227,7 +231,7 @@ class OBPostCommentReplyExpandedModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -237,5 +241,4 @@ class OBPostCommentReplyExpandedModalState
       _requestInProgress = requestInProgress;
     });
   }
-
 }

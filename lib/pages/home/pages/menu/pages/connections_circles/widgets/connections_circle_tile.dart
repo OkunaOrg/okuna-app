@@ -1,6 +1,7 @@
 import 'package:Openbook/libs/pretty_count.dart';
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
@@ -34,6 +35,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   @override
   void initState() {
@@ -47,6 +49,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
     _userService = provider.userService;
     _toastService = provider.toastService;
     _navigationService = provider.navigationService;
+    _localizationService = provider.localizationService;
 
     Widget tile = _buildTile();
 
@@ -58,7 +61,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
       child: tile,
       secondaryActions: <Widget>[
         IconSlideAction(
-            caption: 'Delete',
+            caption: _localizationService.user__connections_circle_delete,
             color: Colors.red,
             icon: Icons.delete,
             onTap: _deleteConnectionsCircle),
@@ -72,7 +75,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
   }
 
   Widget _buildTile() {
-    String prettyCount = getPrettyCount(widget.connectionsCircle.usersCount);
+    String prettyCount = getPrettyCount(widget.connectionsCircle.usersCount, _localizationService);
 
     return ListTile(
         onTap: () {
@@ -87,7 +90,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
           widget.connectionsCircle.name,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        subtitle: OBSecondaryText(prettyCount + ' people'));
+        subtitle: OBSecondaryText(_localizationService.user__circle_peoples_count(prettyCount)));
   }
 
   void _deleteConnectionsCircle() async {
@@ -114,7 +117,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

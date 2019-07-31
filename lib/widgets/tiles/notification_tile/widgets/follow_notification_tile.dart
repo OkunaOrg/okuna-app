@@ -1,10 +1,14 @@
 import 'package:Openbook/models/notifications/follow_notification.dart';
 import 'package:Openbook/models/notifications/notification.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
+
+import 'notification_tile_skeleton.dart';
+import 'notification_tile_title.dart';
 
 class OBFollowNotificationTile extends StatelessWidget {
   final OBNotification notification;
@@ -12,28 +16,36 @@ class OBFollowNotificationTile extends StatelessWidget {
   final VoidCallback onPressed;
 
   const OBFollowNotificationTile(
-      {Key key, @required this.notification, @required this.followNotification, this.onPressed})
+      {Key key,
+      @required this.notification,
+      @required this.followNotification,
+      this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String followerUsername = followNotification.follower.username;
-    return ListTile(
-      onTap: () {
-        if (onPressed != null) onPressed();
-        OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
 
-        openbookProvider.navigationService.navigateToUserProfile(
-            user: followNotification.follower, context: context);
-      },
+    var navigateToFollowerProfile = () {
+      if (onPressed != null) onPressed();
+      openbookProvider.navigationService.navigateToUserProfile(
+          user: followNotification.follower, context: context);
+    };
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+
+    return OBNotificationTileSkeleton(
+      onTap: navigateToFollowerProfile,
       leading: OBAvatar(
         size: OBAvatarSize.medium,
         avatarUrl: followNotification.follower.getProfileAvatar(),
       ),
-      title: OBActionableSmartText(
-        text: '@$followerUsername is now following you.',
+      title: OBNotificationTileTitle(
+        onUsernamePressed: navigateToFollowerProfile,
+        user: followNotification.follower,
+        text: TextSpan(text: _localizationService.notifications__following_you_tile),
       ),
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -33,6 +34,7 @@ class OBSharePostWithCirclesPageState
     extends State<OBSharePostWithCirclesPage> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _isCreatePostInProgress;
 
   bool _needsBootstrap;
@@ -41,8 +43,7 @@ class OBSharePostWithCirclesPageState
   List<Circle> _circleSearchResults;
   List<Circle> _selectedCircles;
   List<Circle> _disabledCircles;
-  Circle _fakeWorldCircle =
-      Circle(id: 1, name: 'World', color: '#023ca7', usersCount: 7700000000);
+  Circle _fakeWorldCircle;
   bool _fakeWorldCircleSelected;
 
   String _circleSearchQuery;
@@ -65,9 +66,12 @@ class OBSharePostWithCirclesPageState
     var openbookProvider = OpenbookProvider.of(context);
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
 
     if (_needsBootstrap) {
       _bootstrap();
+      _fakeWorldCircle =
+          Circle(id: 1, name: _localizationService.trans('post__world_circle_name'), color: '#023ca7', usersCount: 7700000000);
       _needsBootstrap = false;
     }
 
@@ -85,7 +89,7 @@ class OBSharePostWithCirclesPageState
       children: <Widget>[
         OBSearchBar(
           onSearch: _onSearch,
-          hintText: 'Search circles...',
+          hintText: _localizationService.trans('post__search_circles'),
         ),
         Expanded(
             child: _circleSearchResults.length == 0 &&
@@ -98,14 +102,14 @@ class OBSharePostWithCirclesPageState
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Share to circles',
+      title: _localizationService.trans('post__share_to_circles'),
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,
         isLoading: _isCreatePostInProgress,
         isDisabled: _selectedCircles.length == 0 && !_fakeWorldCircleSelected,
         onPressed: createPost,
-        child: Text('Share'),
+        child: Text(_localizationService.trans('post__share')),
       ),
     );
   }
@@ -141,7 +145,7 @@ class OBSharePostWithCirclesPageState
                 height: 20.0,
               ),
               OBText(
-                'No circle found matching \'$_circleSearchQuery\'.',
+                _localizationService.post__no_circles_for(_circleSearchQuery),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
@@ -195,7 +199,7 @@ class OBSharePostWithCirclesPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

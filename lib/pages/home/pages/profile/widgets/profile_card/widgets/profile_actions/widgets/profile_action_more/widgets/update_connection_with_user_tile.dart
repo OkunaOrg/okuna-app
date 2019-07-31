@@ -3,6 +3,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -27,6 +28,7 @@ class OBUpdateConnectionWithUserTileState
     extends State<OBUpdateConnectionWithUserTile> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   BottomSheetService _bottomSheetService;
 
   @override
@@ -34,10 +36,11 @@ class OBUpdateConnectionWithUserTileState
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     _bottomSheetService = openbookProvider.bottomSheetService;
 
     return ListTile(
-        title: const OBText('Update connection circles'),
+        title: OBText(_localizationService.trans('user__update_connection_circles_title')),
         leading: const OBIcon(OBIcons.circles),
         onTap: _displayAddConnectionToCirclesBottomSheet);
   }
@@ -50,8 +53,8 @@ class OBUpdateConnectionWithUserTileState
 
     _bottomSheetService.showConnectionsCirclesPicker(
         context: context,
-        title: 'Update connection circles',
-        actionLabel: 'Save',
+        title: _localizationService.trans('user__update_connection_circles_title'),
+        actionLabel: _localizationService.trans('user__update_connection_circle_save'),
         initialPickedCircles: connectedCircles,
         onPickedCircles: _onWantsToUpdateConnectionCircles);
   }
@@ -65,7 +68,7 @@ class OBUpdateConnectionWithUserTileState
       await _userService.updateConnectionWithUsername(widget.user.username,
           circles: circles);
       if (!widget.user.isFollowing) widget.user.incrementFollowersCount();
-      _toastService.success(message: 'Connection updated', context: context);
+      _toastService.success(message: _localizationService.trans('user__update_connection_circle_updated'), context: context);
     } catch (error) {
       _onError(error);
     }
@@ -79,7 +82,7 @@ class OBUpdateConnectionWithUserTileState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

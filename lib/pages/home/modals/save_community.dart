@@ -4,6 +4,7 @@ import 'package:Openbook/models/category.dart';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/services/bottom_sheet.dart';
 import 'package:Openbook/services/image_picker.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/avatars/letter_avatar.dart';
@@ -44,6 +45,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   ToastService _toastService;
   ValidationService _validationService;
   ImagePickerService _imagePickerService;
+  LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
 
   bool _requestInProgress;
@@ -122,6 +124,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _toastService = openbookProvider.toastService;
     _validationService = openbookProvider.validationService;
     _imagePickerService = openbookProvider.imagePickerService;
+    _localizationService = openbookProvider.localizationService;
     _themeValueParserService = openbookProvider.themeValueParserService;
     var themeService = openbookProvider.themeService;
 
@@ -172,8 +175,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 size: OBTextFormFieldSize.medium,
                                 controller: _titleController,
                                 decoration: InputDecoration(
-                                  labelText: 'Title',
-                                  hintText: 'e.g. Travel, Photography, Gaming.',
+                                  labelText: _localizationService.community__save_community_label_title,
+                                  hintText: _localizationService.community__save_community_label_title_hint_text,
                                   prefixIcon: const OBIcon(OBIcons.communities),
                                 ),
                                 validator: (String communityTitle) {
@@ -187,14 +190,14 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 autocorrect: false,
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(OBIcons.shortText),
-                                    labelText: 'Name',
+                                    labelText: _localizationService.community__save_community_name_title,
                                     prefixText: '/c/',
                                     hintText:
-                                        ' e.g. travel, photography, gaming.'),
+                                    _localizationService.community__save_community_name_title_hint_text),
                                 validator: (String communityName) {
                                   if (_takenName != null &&
                                       _takenName == communityName) {
-                                    return 'Community name "$_takenName" is taken';
+                                    return _localizationService.community__save_community_name_taken(_takenName);
                                   }
 
                                   return _validationService
@@ -203,13 +206,13 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                             OBColorField(
                               initialColor: _color,
                               onNewColor: _onNewColor,
-                              labelText: 'Color',
-                              hintText: '(Tap to change)',
+                              labelText: _localizationService.community__save_community_name_label_color,
+                              hintText: _localizationService.community__save_community_name_label_color_hint_text,
                             ),
                             OBCommunityTypeField(
                               value: _type,
-                              title: 'Type',
-                              hintText: '(Tap to change)',
+                              title: _localizationService.community__save_community_name_label_type,
+                              hintText: _localizationService.community__save_community_name_label_type_hint_text,
                               onChanged: (CommunityType type) {
                                 setState(() {
                                   _type = type;
@@ -217,11 +220,11 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                               },
                             ),
                             _type == CommunityType.private
-                                ? OBToggleField(
+                              ? OBToggleField(
                                     value: _invitesEnabled,
-                                    title: 'Member Invites',
+                                    title: _localizationService.community__save_community_name_member_invites,
                                     subtitle: OBText(
-                                        'Members can invite people to the community'),
+                                        _localizationService.community__save_community_name_member_invites_subtitle),
                                     onChanged: (bool value) {
                                       setState(() {
                                         _invitesEnabled = value;
@@ -235,7 +238,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                   )
                                 : const SizedBox(),
                             OBCategoriesField(
-                              title: 'Category',
+                              title: _localizationService.community__save_community_name_category,
                               min: 1,
                               max: 3,
                               controller: _categoriesFieldController,
@@ -253,8 +256,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(
                                         OBIcons.communityDescription),
-                                    labelText: 'Description · Optional',
-                                    hintText: 'What is your community about?'),
+                                    labelText: _localizationService.community__save_community_name_label_desc_optional,
+                                    hintText: _localizationService.community__save_community_name_label_desc_optional_hint_text),
                                 validator: (String communityDescription) {
                                   return _validationService
                                       .validateCommunityDescription(
@@ -267,9 +270,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                               decoration: InputDecoration(
                                   prefixIcon:
                                       const OBIcon(OBIcons.communityRules),
-                                  labelText: 'Rules · Optional',
+                                  labelText: _localizationService.community__save_community_name_label_rules_optional,
                                   hintText:
-                                      'Is there something you would like your users to know?'),
+                                  _localizationService.community__save_community_name_label_rules_optional_hint_text),
                               validator: (String communityRules) {
                                 return _validationService
                                     .validateCommunityRules(communityRules);
@@ -286,9 +289,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 decoration: InputDecoration(
                                     prefixIcon:
                                         const OBIcon(OBIcons.communityMember),
-                                    labelText: 'Member adjective · Optional',
+                                    labelText: _localizationService.community__save_community_name_label_member_adjective,
                                     hintText:
-                                        'e.g. traveler, photographer, gamer.'),
+                                        _localizationService.community__save_community_name_label_member_adjective_hint_text),
                                 validator: (String communityUserAdjective) {
                                   return _validationService
                                       .validateCommunityUserAdjective(
@@ -302,9 +305,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 decoration: InputDecoration(
                                     prefixIcon:
                                         const OBIcon(OBIcons.communityMembers),
-                                    labelText: 'Members adjective · Optional',
+                                    labelText: _localizationService.community__save_community_name_label_members_adjective,
                                     hintText:
-                                        'e.g. travelers, photographers, gamers.'),
+                                        _localizationService.community__save_community_name_label_members_adjective_hint_text),
                                 validator: (String communityUsersAdjective) {
                                   return _validationService
                                       .validateCommunityUserAdjective(
@@ -335,7 +338,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
           },
         ),
         title:
-            _isEditingExistingCommunity ? 'Edit community' : 'Create community',
+            _isEditingExistingCommunity ? _localizationService.community__save_community_edit_community : _localizationService.community__save_community_create_community,
         trailing: _requestInProgress
             ? OBProgressIndicator(color: actionsColor)
             : OBButton(
@@ -343,7 +346,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                 isLoading: _requestInProgress,
                 size: OBButtonSize.small,
                 onPressed: _submitForm,
-                child: Text(_isEditingExistingCommunity ? 'Save' : 'Create'),
+                child: Text(_isEditingExistingCommunity ? _localizationService.community__save_community_save_text : _localizationService.community__save_community_create_text),
               ));
   }
 
@@ -534,7 +537,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

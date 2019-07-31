@@ -2,6 +2,7 @@ import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/posts_list.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/http_list.dart';
 import 'package:Openbook/widgets/post/post.dart';
@@ -29,6 +30,7 @@ class OBCommunityPosts extends StatefulWidget {
 
 class OBCommunityPostsState extends State<OBCommunityPosts> {
   UserService _userService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -45,6 +47,7 @@ class OBCommunityPostsState extends State<OBCommunityPosts> {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -56,8 +59,8 @@ class OBCommunityPostsState extends State<OBCommunityPosts> {
       listOnScrollLoader: _loadMoreCommunityPosts,
       secondaryRefresher: widget.httpListSecondaryRefresher,
       prependedItems: widget.prependedItems,
-      resourceSingularName: 'post',
-      resourcePluralName: 'posts',
+      resourceSingularName: _localizationService.community__post_singular,
+      resourcePluralName: _localizationService.community__post_plural,
     );
   }
 

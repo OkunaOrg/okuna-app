@@ -3,6 +3,7 @@ import 'package:Openbook/models/circles_list.dart';
 import 'package:Openbook/models/follows_list.dart';
 import 'package:Openbook/models/follows_lists_list.dart';
 import 'package:Openbook/pages/home/pages/timeline/timeline.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -31,6 +32,7 @@ class OBTimelineFiltersModal extends StatefulWidget {
 
 class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   UserService _userService;
+  LocalizationService _localizationService;
 
   bool _requestInProgress;
   bool _needsBootstrap;
@@ -64,6 +66,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -75,7 +78,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
           children: <Widget>[
             OBSearchBar(
               onSearch: _onSearch,
-              hintText: 'Search for circles and lists...',
+              hintText: _localizationService.trans('user__timeline_filters_search_desc'),
             ),
             Expanded(
               child: _circlesSearchResults.isNotEmpty ||
@@ -92,7 +95,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('Clear all'),
+                      child: Text(_localizationService.trans('user__timeline_filters_clear_all')),
                       onPressed: _onWantsToClearFilters,
                     ),
                   ),
@@ -115,7 +118,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   }
 
   Widget _buildApplyFiltersText() {
-    String text = 'Apply filters';
+    String text = _localizationService.trans('user__timeline_filters_apply_all');
     int filterCount = _selectedCircles.length + _selectedFollowsLists.length;
     if (filterCount > 0) {
       String friendlyCount = filterCount.toString();
@@ -146,7 +149,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   OBTileGroupTitle(
-                    title: 'Circles',
+                    title: _localizationService.trans('user__timeline_filters_circles'),
                   ),
                   circleTile
                 ],
@@ -171,7 +174,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 OBTileGroupTitle(
-                  title: 'Lists',
+                  title: _localizationService.trans('user__timeline_filters_lists'),
                 ),
                 listTile
               ],
@@ -194,7 +197,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
                 height: 20.0,
               ),
               OBText(
-                'No match for \'$_searchQuery\'.',
+                _localizationService.user__timeline_filters_no_match(_searchQuery),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
@@ -216,7 +219,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
             Navigator.pop(context);
           },
         ),
-        title: 'Timeline filters');
+        title: _localizationService.trans('user__timeline_filters_title'));
   }
 
   void _onWantsToApplyFilters() async {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/widgets/alerts/button_alert.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -53,6 +54,7 @@ class OBHttpList<T> extends StatefulWidget {
 
 class OBHttpListState<T> extends State<OBHttpList<T>> {
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   GlobalKey<RefreshIndicatorState> _listRefreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -130,6 +132,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
+      _localizationService = provider.localizationService;
       _toastService = provider.toastService;
       _bootstrap();
       _needsBootstrap = false;
@@ -141,7 +144,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       columnItems.add(SizedBox(
           child: OBSearchBar(
         onSearch: _onSearch,
-        hintText: 'Search ' + widget.resourcePluralName + '...',
+        hintText: _localizationService.user_search__list_search_text(widget.resourcePluralName),
       )));
     }
 
@@ -188,12 +191,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
         // Search in progress
         return ListTile(
             leading: const OBProgressIndicator(),
-            title: OBText('Searching for $searchQuery'));
+            title: OBText(_localizationService.user_search__searching_for(searchQuery)));
       } else if (_listSearchResults.isEmpty) {
         // Results were empty
         return ListTile(
             leading: const OBIcon(OBIcons.sad),
-            title: OBText('No results for $searchQuery.'));
+            title: OBText(_localizationService.user_search__no_results_for(searchQuery)));
       } else {
         return const SizedBox();
       }
@@ -212,7 +215,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
             : LoadMore(
                 whenEmptyLoad: false,
                 isFinish: _loadingFinished,
-                delegate: const OBHttpListLoadMoreDelegate(),
+                delegate: OBHttpListLoadMoreDelegate(_localizationService),
                 child: widget.separatorBuilder != null
                     ? ListView.separated(
                         separatorBuilder: widget.separatorBuilder,
@@ -242,9 +245,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
-          text: 'No ' + widget.resourcePluralName + ' found.',
+          text: _localizationService.user_search__list_no_results_found(widget.resourcePluralName),
           onPressed: _refreshList,
-          buttonText: 'Refresh',
+          buttonText: _localizationService.trans('user_search__list_refresh_text'),
           buttonIcon: OBIcons.refresh,
           assetImage: 'assets/images/stickers/perplexed-owl.png',
         )
@@ -431,7 +434,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }
@@ -488,7 +491,8 @@ typedef Future OBHttpListSecondaryRefresher<T>();
 typedef Future<List<T>> OBHttpListOnScrollLoader<T>(List<T> currentList);
 
 class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {
-  const OBHttpListLoadMoreDelegate();
+  final LocalizationService localizationService;
+  const OBHttpListLoadMoreDelegate(this.localizationService);
 
   @override
   Widget buildChild(LoadMoreStatus status,
@@ -503,7 +507,7 @@ class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {
             const SizedBox(
               width: 10.0,
             ),
-            OBText('Tap to retry.')
+            OBText(localizationService.trans('user_search__list_retry'))
           ],
         ),
       );

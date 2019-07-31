@@ -1,4 +1,5 @@
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/validation.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -19,6 +20,7 @@ class OBDeleteAccountPage extends StatefulWidget {
 class OBDeleteAccountPageState extends State<OBDeleteAccountPage> {
   ValidationService _validationService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   static const double INPUT_ICONS_SIZE = 16;
   static const EdgeInsetsGeometry INPUT_CONTENT_PADDING =
@@ -43,6 +45,7 @@ class OBDeleteAccountPageState extends State<OBDeleteAccountPage> {
     var openbookProvider = OpenbookProvider.of(context);
     _validationService = openbookProvider.validationService;
     _navigationService = openbookProvider.navigationService;
+    _localizationService = openbookProvider.localizationService;
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -60,8 +63,8 @@ class OBDeleteAccountPageState extends State<OBDeleteAccountPage> {
                       obscureText: true,
                       controller: _currentPasswordController,
                       decoration: InputDecoration(
-                        labelText: 'Current Password',
-                        hintText: 'Enter your current password',
+                        labelText: _localizationService.user__delete_account_current_pwd,
+                        hintText: _localizationService.user__delete_account_current_pwd_hint,
                       ),
                       validator: (String password) {
                         if (!_formWasSubmitted) return null;
@@ -78,12 +81,12 @@ class OBDeleteAccountPageState extends State<OBDeleteAccountPage> {
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Delete account',
+      title: _localizationService.user__delete_account_title,
       trailing: OBButton(
         isDisabled: !_formValid,
         size: OBButtonSize.small,
         onPressed: _submitForm,
-        child: Text('Next'),
+        child: Text(_localizationService.user__delete_account_next),
       ),
     );
   }

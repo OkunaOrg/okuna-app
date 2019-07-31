@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/toast.dart';
@@ -36,6 +37,7 @@ class OBCommunityModeratorsPageState
   UserService _userService;
   ModalService _modalService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
   ToastService _toastService;
 
   OBHttpListController _httpListController;
@@ -56,12 +58,13 @@ class OBCommunityModeratorsPageState
       _modalService = provider.modalService;
       _navigationService = provider.navigationService;
       _toastService = provider.toastService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Moderators',
+        title: _localizationService.trans('community__moderators_title'),
         trailing: OBIconButton(
           OBIcons.add,
           themeColor: OBIconThemeColor.primaryAccent,
@@ -76,8 +79,8 @@ class OBCommunityModeratorsPageState
           listRefresher: _refreshCommunityModerators,
           listOnScrollLoader: _loadMoreCommunityModerators,
           listSearcher: _searchCommunityModerators,
-          resourceSingularName: 'moderator',
-          resourcePluralName: 'moderators',
+          resourceSingularName: _localizationService.trans('community__moderator_resource_name'),
+          resourcePluralName: _localizationService.trans('community__moderators_resource_name'),
         ),
       ),
     );
@@ -91,7 +94,8 @@ class OBCommunityModeratorsPageState
       onUserTilePressed: _onCommunityModeratorListItemPressed,
       onUserTileDeleted:
           isLoggedInUser ? null : _onCommunityModeratorListItemDeleted,
-      trailing: isLoggedInUser ? OBText('You', style: TextStyle(fontWeight: FontWeight.bold),) : null,
+      trailing: isLoggedInUser ? OBText(_localizationService.trans('community__moderators_you'),
+        style: TextStyle(fontWeight: FontWeight.bold),) : null,
     );
   }
 
@@ -119,7 +123,7 @@ class OBCommunityModeratorsPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

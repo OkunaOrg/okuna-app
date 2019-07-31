@@ -1,4 +1,5 @@
 import 'package:Openbook/models/community.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -6,6 +7,8 @@ import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/primary_color_container.dart';
 import 'package:Openbook/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../provider.dart';
 
 class OBCommunityRulesPage extends StatelessWidget {
   final Community community;
@@ -15,9 +18,11 @@ class OBCommunityRulesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Community rules',
+        title: _localizationService.community__rules_title,
       ),
       child: OBPrimaryColorContainer(
         child: StreamBuilder(
@@ -33,34 +38,38 @@ class OBCommunityRulesPage extends StatelessWidget {
                 communityRules.isEmpty ||
                 communityColor == null) return const SizedBox();
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      OBIcon(
-                        OBIcons.rules,
-                        size: OBIconSize.medium,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OBText(
-                        'Rules',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 24),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  OBActionableSmartText(text: community.rules)
-                ],
+            return SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        OBIcon(
+                          OBIcons.rules,
+                          size: OBIconSize.medium,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        OBText(
+                          _localizationService.community__rules_text,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 24),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    OBActionableSmartText(text: community.rules)
+                  ],
+                ),
               ),
             );
           },

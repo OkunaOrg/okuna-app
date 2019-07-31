@@ -1,6 +1,7 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -29,6 +30,8 @@ class OBMutePostTile extends StatefulWidget {
 class OBMutePostTileState extends State<OBMutePostTile> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
+
   bool _requestInProgress;
 
   @override
@@ -42,6 +45,7 @@ class OBMutePostTileState extends State<OBMutePostTile> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.post.updateSubject,
@@ -55,8 +59,8 @@ class OBMutePostTileState extends State<OBMutePostTile> {
           isLoading: _requestInProgress,
           leading: OBIcon(isMuted ? OBIcons.unmutePost : OBIcons.mutePost),
           title: OBText(isMuted
-              ? 'Turn on post notifications'
-              : 'Turn off post notifications'),
+              ? _localizationService.notifications__mute_post_turn_on_post_notifications
+              : _localizationService.notifications__mute_post_turn_off_post_notifications),
           onTap: isMuted ? _unmutePost : _mutePost,
         );
       },
@@ -95,7 +99,7 @@ class OBMutePostTileState extends State<OBMutePostTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

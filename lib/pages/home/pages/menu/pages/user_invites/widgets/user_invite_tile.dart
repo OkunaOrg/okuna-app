@@ -1,5 +1,6 @@
 import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/icon.dart';
@@ -29,6 +30,7 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   CancelableOperation _deleteOperation;
 
@@ -50,6 +52,7 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
     var provider = OpenbookProvider.of(context);
     _userService = provider.userService;
     _toastService = provider.toastService;
+    _localizationService = provider.localizationService;
     var navigationService = provider.navigationService;
     Widget tile;
 
@@ -86,7 +89,7 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
             subtitle: _buildActionableSecondaryText()),
         secondaryActions: <Widget>[
           new IconSlideAction(
-              caption: 'Delete',
+              caption: _localizationService.user__invites_delete,
               color: Colors.red,
               icon: Icons.delete,
               onTap: _deleteUserInvite),
@@ -104,10 +107,10 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
     if (widget.userInvite.createdUser != null) {
       return OBActionableSmartText(
         size: OBTextSize.mediumSecondary,
-        text: 'Joined with username @${widget.userInvite.createdUser.username}',
+        text: _localizationService.user__invites_joined_with(widget.userInvite.createdUser.username),
       );
     } else {
-      return OBSecondaryText('Pending');
+      return OBSecondaryText(_localizationService.user__invites_pending);
     }
   }
 
@@ -136,7 +139,7 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

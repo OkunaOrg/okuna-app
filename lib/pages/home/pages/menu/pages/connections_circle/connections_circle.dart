@@ -1,6 +1,7 @@
 import 'package:Openbook/models/circle.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_header/connections_circle_header.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_users.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/widgets/page_scaffold.dart';
@@ -30,6 +31,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
   UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
+  LocalizationService _localizationService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   bool _needsBootstrap;
@@ -49,6 +51,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
     _userService = provider.userService;
     _toastService = provider.toastService;
     _modalService = provider.modalService;
+    _localizationService = provider.localizationService;
 
     if (_needsBootstrap) {
       _bootstrap();
@@ -88,7 +91,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
         _modalService.openEditConnectionsCircle(
             connectionsCircle: widget.connectionsCircle, context: context);
       },
-      child: OBPrimaryAccentText('Edit'),
+      child: OBPrimaryAccentText(_localizationService.trans('user__connection_circle_edit')),
     );
   }
 
@@ -117,7 +120,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

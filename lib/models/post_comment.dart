@@ -1,9 +1,15 @@
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment_list.dart';
+import 'package:Openbook/models/post_comment_reaction.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count_list.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:Openbook/models/updatable_model.dart';
+
+import 'emoji.dart';
+import 'language.dart';
 
 class PostComment extends UpdatableModel<PostComment> {
   final int id;
@@ -11,12 +17,17 @@ class PostComment extends UpdatableModel<PostComment> {
   int repliesCount;
   DateTime created;
   String text;
+  Language language;
   User commenter;
   PostComment parentComment;
   PostCommentList replies;
+  ReactionsEmojiCountList reactionsEmojiCounts;
+  PostCommentReaction reaction;
+
   Post post;
   bool isEdited;
   bool isReported;
+  bool isMuted;
 
   static convertPostCommentSortTypeToString(PostCommentsSortType type) {
     String result;
@@ -50,19 +61,22 @@ class PostComment extends UpdatableModel<PostComment> {
     factory.clearCache();
   }
 
-  PostComment({
-    this.id,
-    this.created,
-    this.text,
-    this.creatorId,
-    this.commenter,
-    this.post,
-    this.isEdited,
-    this.isReported,
-    this.parentComment,
-    this.replies,
-    this.repliesCount,
-  });
+  PostComment(
+      {this.id,
+      this.created,
+      this.text,
+      this.language,
+      this.creatorId,
+      this.commenter,
+      this.post,
+      this.isEdited,
+      this.isReported,
+      this.isMuted,
+      this.parentComment,
+      this.replies,
+      this.repliesCount,
+      this.reactionsEmojiCounts,
+      this.reaction});
 
   static final factory = PostCommentFactory();
 
@@ -88,12 +102,20 @@ class PostComment extends UpdatableModel<PostComment> {
       isEdited = json['is_edited'];
     }
 
+    if (json.containsKey('is_muted')) {
+      isMuted = json['is_muted'];
+    }
+
     if (json.containsKey('is_reported')) {
       isReported = json['is_reported'];
     }
 
     if (json.containsKey('text')) {
       text = json['text'];
+    }
+
+    if (json.containsKey('language')) {
+      language = factory.parseLanguage(json['language']);
     }
 
     if (json.containsKey('post')) {
@@ -111,6 +133,12 @@ class PostComment extends UpdatableModel<PostComment> {
     if (json.containsKey('replies')) {
       replies = factory.parseCommentReplies(json['replies']);
     }
+
+    if (json.containsKey('reactions_emoji_counts'))
+      reactionsEmojiCounts =
+          factory.parseReactionsEmojiCounts(json['reactions_emoji_counts']);
+    if (json.containsKey('reaction'))
+      reaction = factory.parseReaction(json['reaction']);
   }
 
   String getRelativeCreated() {
@@ -133,6 +161,10 @@ class PostComment extends UpdatableModel<PostComment> {
     return repliesCount != null && repliesCount > 0 && replies != null;
   }
 
+  bool hasLanguage() {
+    return language != null;
+  }
+
   List<PostComment> getPostCommentReplies() {
     if (replies == null) return [];
     return replies.comments;
@@ -146,9 +178,79 @@ class PostComment extends UpdatableModel<PostComment> {
     return post.getCreatorId();
   }
 
+  Language getLanguage() {
+    return this.language;
+  }
+
   void setIsReported(isReported) {
     this.isReported = isReported;
     notifyUpdate();
+  }
+
+  void setIsMuted(isMuted) {
+    this.isMuted = isMuted;
+    notifyUpdate();
+  }
+
+  void clearReaction() {
+    this.setReaction(null);
+  }
+
+  bool isReactionEmoji(Emoji emoji) {
+    return hasReaction() && reaction.getEmojiId() == emoji.id;
+  }
+
+  void setReaction(PostCommentReaction newReaction) {
+    bool hasReaction = this.hasReaction();
+
+    if (!hasReaction && newReaction == null) {
+      throw 'Trying to remove no reaction';
+    }
+
+    var newEmojiCounts = reactionsEmojiCounts.counts.toList();
+
+    if (hasReaction) {
+      var currentReactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
+        return emojiCount.getEmojiId() == reaction.getEmojiId();
+      });
+
+      if (currentReactionEmojiCount.count > 1) {
+        // Decrement emoji reaction counts
+        currentReactionEmojiCount.count -= 1;
+      } else {
+        // Remove emoji reaction count
+        newEmojiCounts.remove(currentReactionEmojiCount);
+      }
+    }
+
+    if (newReaction != null) {
+      var reactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
+        return emojiCount.getEmojiId() == newReaction.getEmojiId();
+      }, orElse: () {});
+
+      if (reactionEmojiCount != null) {
+        // Up existing count
+        reactionEmojiCount.count += 1;
+      } else {
+        // Add new emoji count
+        newEmojiCounts
+            .add(ReactionsEmojiCount(emoji: newReaction.emoji, count: 1));
+      }
+    }
+
+    this.reaction = newReaction;
+    this._setReactionsEmojiCounts(
+        ReactionsEmojiCountList(counts: newEmojiCounts));
+
+    this.notifyUpdate();
+  }
+
+  void _setReactionsEmojiCounts(ReactionsEmojiCountList emojiCounts) {
+    reactionsEmojiCounts = emojiCounts;
+  }
+
+  bool hasReaction() {
+    return reaction != null;
   }
 }
 
@@ -169,8 +271,13 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         replies: parseCommentReplies(json['replies']),
         parentComment: parseParentComment(json['parent_comment']),
         isEdited: json['is_edited'],
+        isMuted: json['is_muted'],
         isReported: json['is_reported'],
-        text: json['text']);
+        text: json['text'],
+        language: parseLanguage(json['language']),
+        reaction: parseReaction(json['reaction']),
+        reactionsEmojiCounts:
+            parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }
 
   Post parsePost(Map post) {
@@ -198,6 +305,20 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
     return PostCommentList.fromJson(repliesData);
   }
 
+  PostCommentReaction parseReaction(Map postCommentReaction) {
+    if (postCommentReaction == null) return null;
+    return PostCommentReaction.fromJson(postCommentReaction);
+  }
+
+  ReactionsEmojiCountList parseReactionsEmojiCounts(List reactionsEmojiCounts) {
+    if (reactionsEmojiCounts == null) return null;
+    return ReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
+  }
+
+  Language parseLanguage(Map languageData) {
+    if (languageData == null) return null;
+    return Language.fromJson(languageData);
+  }
 }
 
 enum PostCommentsSortType { asc, dec }

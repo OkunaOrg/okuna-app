@@ -6,9 +6,9 @@ import 'package:Openbook/services/utils_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:http_parser/http_parser.dart';
 export 'package:http/http.dart';
-import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 
 class HttpieService {
   LocalizationService _localizationService;
@@ -16,6 +16,14 @@ class HttpieService {
   String authorizationToken;
   String magicHeaderName;
   String magicHeaderValue;
+  Client client;
+
+  HttpieService() {
+    var httpClient = HttpClient();
+    // This doesn't pick up proxy settings on Android and iOS
+    httpClient.findProxy = HttpClient.findProxyFromEnvironment;
+    client = IOClient(httpClient);
+  }
 
   void setAuthorizationToken(String token) {
     authorizationToken = token;
@@ -52,7 +60,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await http.post(url,
+      response = await client.post(url,
           headers: finalHeaders, body: body, encoding: encoding);
     } catch (error) {
       _handleRequestError(error);
@@ -75,7 +83,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await http.put(url,
+      response = await client.put(url,
           headers: finalHeaders, body: body, encoding: encoding);
     } catch (error) {
       _handleRequestError(error);
@@ -97,7 +105,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await http.patch(url,
+      response = await client.patch(url,
           headers: finalHeaders, body: body, encoding: encoding);
     } catch (error) {
       _handleRequestError(error);
@@ -118,7 +126,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await http.delete(url, headers: finalHeaders);
+      response = await client.delete(url, headers: finalHeaders);
     } catch (error) {
       _handleRequestError(error);
     }
@@ -203,7 +211,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await http.get(url, headers: finalHeaders);
+      response = await client.get(url, headers: finalHeaders);
     } catch (error) {
       _handleRequestError(error);
     }
@@ -312,7 +320,7 @@ class HttpieService {
     var response;
 
     try {
-      response = await request.send();
+      response = await client.send(request);
     } catch (error) {
       _handleRequestError(error);
     }
@@ -530,6 +538,8 @@ class HttpieRequestError<T extends HttpieBaseResponse> implements Exception {
         if (parsedError.isNotEmpty) {
           if (parsedError.containsKey('detail')) {
             return parsedError['detail'];
+          } else if (parsedError.containsKey('message')) {
+            return parsedError['message'];
           } else {
             dynamic mapFirstValue = parsedError.values.toList().first;
             dynamic value = mapFirstValue is List ? mapFirstValue[0] : null;

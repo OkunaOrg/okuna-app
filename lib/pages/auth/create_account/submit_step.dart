@@ -94,7 +94,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
 
   Widget _buildStatusError(BuildContext context, String errorFeedback) {
     var errorTitle =
-        localizationService.trans('AUTH.CREATE_ACC.SUBMIT_ERROR_TITLE');
+        localizationService.trans('auth__create_acc__submit_error_title');
 
     var errorDescription = errorFeedback;
 
@@ -129,10 +129,10 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
 
   Widget _buildStatusLoading(BuildContext context) {
     var loadingTitle =
-        localizationService.trans('AUTH.CREATE_ACC.SUBMIT_LOADING_TITLE');
+        localizationService.trans('auth__create_acc__submit_loading_title');
 
     var loadingDescription =
-        localizationService.trans('AUTH.CREATE_ACC.SUBMIT_LOADING_DESC');
+        localizationService.trans('auth__create_acc__submit_loading_desc');
 
     return Column(
       children: <Widget>[
@@ -164,7 +164,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,

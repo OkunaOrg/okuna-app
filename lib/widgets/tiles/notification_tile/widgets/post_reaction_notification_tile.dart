@@ -3,12 +3,15 @@ import 'package:Openbook/models/notifications/post_reaction_notification.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_reaction.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/avatars/avatar.dart';
 import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
 import 'package:Openbook/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
+
+import 'notification_tile_skeleton.dart';
+import 'notification_tile_title.dart';
 
 class OBPostReactionNotificationTile extends StatelessWidget {
   final OBNotification notification;
@@ -27,29 +30,31 @@ class OBPostReactionNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     PostReaction postReaction = postReactionNotification.postReaction;
     Post post = postReaction.post;
-    String postReactorUsername = postReaction.getReactorUsername();
 
     Widget postImagePreview;
     if (post.hasImage()) {
-      postImagePreview = ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Image(
-          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
-          height: postImagePreviewSize,
-          width: postImagePreviewSize,
-          fit: BoxFit.cover,
-        ),
-      );
+      postImagePreview = Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image(
+                image:
+                    AdvancedNetworkImage(post.getImage(), useDiskCache: true),
+                height: postImagePreviewSize,
+                width: postImagePreviewSize,
+                fit: BoxFit.cover,
+              )));
     }
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    var utilsService = openbookProvider.utilsService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     Function navigateToReactorProfile = () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-
       openbookProvider.navigationService
           .navigateToUserProfile(user: postReaction.reactor, context: context);
     };
 
-    return ListTile(
+    return OBNotificationTileSkeleton(
       onTap: () {
         if (onPressed != null) onPressed();
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -61,19 +66,20 @@ class OBPostReactionNotificationTile extends StatelessWidget {
         size: OBAvatarSize.medium,
         avatarUrl: postReaction.reactor.getProfileAvatar(),
       ),
-      title: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
+      title: OBNotificationTileTitle(
+        text: TextSpan(text: _localizationService.notifications__reacted_to_post_tile),
+        onUsernamePressed: navigateToReactorProfile,
+        user: postReaction.reactor,
+      ),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
+      trailing: Row(
         children: <Widget>[
-          OBActionableSmartText(
-            text: '@$postReactorUsername reacted:',
-          ),
           OBEmoji(
             postReaction.emoji,
           ),
+          postImagePreview ?? const SizedBox()
         ],
       ),
-      trailing: postImagePreview,
-      subtitle: OBSecondaryText(notification.getRelativeCreated()),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Openbook/provider.dart';
@@ -32,6 +33,7 @@ class OBModeratedObjectUpdateDescriptionModalState
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
+  LocalizationService _localizationService;
 
   bool _requestInProgress;
   bool _formWasSubmitted;
@@ -68,6 +70,7 @@ class OBModeratedObjectUpdateDescriptionModalState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _validationService = openbookProvider.validationService;
+    _localizationService = openbookProvider.localizationService;
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -90,9 +93,9 @@ class OBModeratedObjectUpdateDescriptionModalState
                                 autofocus: true,
                                 controller: _descriptionController,
                                 decoration: InputDecoration(
-                                    labelText: 'Report description',
+                                    labelText: _localizationService.trans('moderation__update_description_report_desc'),
                                     hintText:
-                                        'e.g. The report item was found to...'),
+                                        _localizationService.trans('moderation__update_description_report_hint_text')),
                                 validator: (String description) {
                                   if (!_formWasSubmitted) return null;
                                   return _validationService
@@ -109,13 +112,13 @@ class OBModeratedObjectUpdateDescriptionModalState
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-        title: 'Edit description',
+        title: _localizationService.trans('moderation__update_description_title'),
         trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
           size: OBButtonSize.small,
           onPressed: _submitForm,
-          child: Text('Save'),
+          child: Text(_localizationService.trans('moderation__update_description_save')),
         ));
   }
 
@@ -159,7 +162,7 @@ class OBModeratedObjectUpdateDescriptionModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

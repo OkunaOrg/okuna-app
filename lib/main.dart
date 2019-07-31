@@ -24,6 +24,7 @@ import 'package:Openbook/plugins/desktop/error-reporting.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/universal_links/universal_links.dart';
 import 'package:Openbook/widgets/toast.dart';
+import 'package:Openbook/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
@@ -31,22 +32,55 @@ import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   final openbookProviderKey = new GlobalKey<OpenbookProviderState>();
+
+  @override
+  _MyAppState createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState state =
+    context.ancestorStateOfType(TypeMatcher<_MyAppState>());
+
+    state.setState(() {
+      state.locale = newLocale;
+    });
+  }
+
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale locale;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var textTheme = _defaultTextTheme();
     return OpenbookProvider(
-      key: openbookProviderKey,
+      key: widget.openbookProviderKey,
       child: OBToast(
         child: MaterialApp(
+            locale: this.locale,
             debugShowCheckedModeBanner: false,
-            title: 'Openbook',
-            supportedLocales: [
-              const Locale('en', 'US'),
-              const Locale('es', 'ES'),
-            ],
+            localeResolutionCallback: (deviceLocale, supportedLocales) {
+              // initialise locale from device
+              if (deviceLocale == null)return this.locale;
+              if (deviceLocale != null && this.locale == null && supportedLanguages.contains(deviceLocale.languageCode)) {
+                  Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == deviceLocale.languageCode);
+                  this.locale = supportedMatchedLocale;
+              } else if (this.locale == null) {
+                print('Locale ${deviceLocale.languageCode} not supported, defaulting to en');
+                this.locale = Locale('en', 'US');
+              }
+              return this.locale;
+            },
+            title: 'Okuna',
+            supportedLocales: supportedLocales,
             localizationsDelegates: [
               const LocalizationServiceDelegate(),
               GlobalMaterialLocalizations.delegate,
@@ -154,11 +188,18 @@ class MyApp extends StatelessWidget {
   void bootstrapOpenbookProviderInContext(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = LocalizationService.of(context);
+    if (this.locale.languageCode != localizationService.getLocale().languageCode) {
+      Future.delayed(Duration(milliseconds: 0), () {
+        MyApp.setLocale(context, this.locale);
+      });
+    }
     openbookProvider.setLocalizationService(localizationService);
     UniversalLinksService universalLinksService =
         openbookProvider.universalLinksService;
     universalLinksService.digestLinksWithContext(context);
+    openbookProvider.validationService.setLocalizationService(localizationService);
   }
+
 }
 
 void _setPlatformOverrideForDesktop() {

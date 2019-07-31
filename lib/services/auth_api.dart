@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Openbook/models/language.dart';
 import 'package:Openbook/services/httpie.dart';
 import 'package:Openbook/services/string_template.dart';
 import 'package:meta/meta.dart';
@@ -15,6 +16,8 @@ class AuthApiService {
   static const UPDATE_EMAIL_PATH = 'api/auth/user/settings/';
   static const VERIFY_EMAIL_TOKEN = 'api/auth/email/verify/';
   static const ACCEPT_GUIDELINES = 'api/auth/user/accept-guidelines/';
+  static const SET_NEW_LANGUAGE = 'api/auth/user/languages/';
+  static const GET_NEW_LANGUAGE = 'api/auth/user/languages/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
   static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
@@ -291,6 +294,7 @@ class AuthApiService {
 
   Future<HttpieResponse> loginWithCredentials(
       {@required String username, @required String password}) {
+    print('$apiURL$LOGIN_PATH');
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
   }
@@ -322,6 +326,8 @@ class AuthApiService {
 
   Future<HttpieResponse> updateAuthenticatedUserNotificationsSettings({
     bool postCommentNotifications,
+    bool postCommentReplyNotifications,
+    bool postCommentReactionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
@@ -332,6 +338,13 @@ class AuthApiService {
 
     if (postCommentNotifications != null)
       body['post_comment_notifications'] = postCommentNotifications;
+
+    if (postCommentReplyNotifications != null)
+      body['post_comment_reply_notifications'] = postCommentReplyNotifications;
+
+    if (postCommentReactionNotifications != null)
+      body['post_comment_reaction_notifications'] =
+          postCommentReactionNotifications;
 
     if (postReactionNotifications != null)
       body['post_reaction_notifications'] = postReactionNotifications;
@@ -359,6 +372,19 @@ class AuthApiService {
     return this
         ._httpService
         .post('$apiURL$ACCEPT_GUIDELINES', appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getAllLanguages() {
+    String url = _makeApiUrl(GET_NEW_LANGUAGE);
+    return _httpService.get(url, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> setNewLanguage(Language language) {
+
+    Map<String, String> body = {'language_id': language.id.toString()};
+    return this
+        ._httpService
+        .post('$apiURL$SET_NEW_LANGUAGE', body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> reportUserWithUsername(

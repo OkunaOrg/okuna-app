@@ -6,7 +6,7 @@ import 'package:Openbook/models/moderation/moderated_object.dart';
 import 'package:Openbook/models/moderation/moderation_category.dart';
 import 'package:Openbook/models/post.dart';
 import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_reactions_emoji_count.dart';
+import 'package:Openbook/models/reactions_emoji_count.dart';
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/modals/accept_guidelines/pages/confirm_reject_guidelines.dart';
@@ -14,6 +14,7 @@ import 'package:Openbook/pages/home/modals/confirm_block_user.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
+import 'package:Openbook/pages/home/modals/post_comment_reactions/post_comment_reactions.dart';
 import 'package:Openbook/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Openbook/pages/home/pages/community/community.dart';
 import 'package:Openbook/pages/home/pages/community/pages/community_members.dart';
@@ -42,6 +43,7 @@ import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_penalties/my_
 import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_tasks/my_moderation_tasks.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
+import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/useful_links.dart';
@@ -503,7 +505,7 @@ class NavigationService {
 
   Future<void> navigateToPostReactions(
       {@required Post post,
-      @required List<PostReactionsEmojiCount> reactionsEmojiCounts,
+      @required List<ReactionsEmojiCount> reactionsEmojiCounts,
       @required BuildContext context,
       Emoji reactionEmoji}) {
     return Navigator.push(
@@ -517,6 +519,24 @@ class NavigationService {
             )));
   }
 
+  Future<void> navigateToPostCommentReactions(
+      {@required PostComment postComment,
+      @required Post post,
+      @required List<ReactionsEmojiCount> reactionsEmojiCounts,
+      @required BuildContext context,
+      Emoji reactionEmoji}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obPostCommentReactionsModal'),
+            widget: OBPostCommentReactionsModal(
+              post: post,
+              postComment: postComment,
+              reactionsEmojiCounts: reactionsEmojiCounts,
+              reactionEmoji: reactionEmoji,
+            )));
+  }
+
   Future<void> navigateToNotificationsSettings({
     @required BuildContext context,
   }) {
@@ -525,6 +545,16 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obNotificationsSettingsPage'),
             widget: OBNotificationsSettingsPage()));
+  }
+
+  Future<void> navigateToUserLanguageSettings({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obLanguageSettingsPage'),
+            widget: OBUserLanguageSettingsPage()));
   }
 
   Future<void> navigateToBlockedUsers({

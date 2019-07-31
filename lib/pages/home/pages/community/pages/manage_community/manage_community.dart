@@ -1,5 +1,6 @@
 import 'package:Openbook/models/community.dart';
 import 'package:Openbook/models/user.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/user.dart';
@@ -23,6 +24,7 @@ class OBManageCommunityPage extends StatelessWidget {
     NavigationService navigationService = openbookProvider.navigationService;
     ModalService modalService = openbookProvider.modalService;
     UserService userService = openbookProvider.userService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     User loggedInUser = userService.getLoggedInUser();
     List<Widget> menuListTiles = [];
@@ -32,9 +34,9 @@ class OBManageCommunityPage extends StatelessWidget {
     if (loggedInUser.canChangeDetailsOfCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communities),
-        title: const OBText('Details'),
-        subtitle: const OBText(
-          'Change the title, name, avatar, cover photo and more.',
+        title: OBText(_localizationService.trans('community__manage_details_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_details_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -47,9 +49,9 @@ class OBManageCommunityPage extends StatelessWidget {
     if (loggedInUser.canAddOrRemoveAdministratorsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityAdministrators),
-        title: const OBText('Administrators'),
-        subtitle: const OBText(
-          'See, add and remove administrators.',
+        title: OBText(_localizationService.trans('community__manage_admins_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_admins_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -62,9 +64,9 @@ class OBManageCommunityPage extends StatelessWidget {
     if (loggedInUser.canAddOrRemoveModeratorsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityModerators),
-        title: const OBText('Moderators'),
-        subtitle: const OBText(
-          'See, add and remove moderators.',
+        title: OBText(_localizationService.trans('community__manage_mods_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_mods_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -77,9 +79,9 @@ class OBManageCommunityPage extends StatelessWidget {
     if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityBannedUsers),
-        title: const OBText('Banned users'),
-        subtitle: const OBText(
-          'See, add and remove banned users.',
+        title: OBText(_localizationService.trans('community__manage_banned_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_banned_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -92,9 +94,9 @@ class OBManageCommunityPage extends StatelessWidget {
     if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.communityModerators),
-        title: const OBText('Moderation reports'),
-        subtitle: const OBText(
-          'Review the community moderation reports.',
+        title: OBText(_localizationService.trans('community__manage_mod_reports_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_mod_reports_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -107,9 +109,9 @@ class OBManageCommunityPage extends StatelessWidget {
     if (loggedInUser.canCloseOrOpenPostsInCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.closePost),
-        title: const OBText('Closed posts'),
-        subtitle: const OBText(
-          'See and manage closed posts',
+        title: OBText(_localizationService.trans('community__manage_closed_posts_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_closed_posts_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -121,9 +123,8 @@ class OBManageCommunityPage extends StatelessWidget {
 
     menuListTiles.add(ListTile(
       leading: const OBIcon(OBIcons.communityInvites),
-      title: const OBText('Invite people'),
-      subtitle: const OBText(
-        'Invite your connections and followers to join the community.',
+      title: OBText(_localizationService.trans('community__manage_invite_title')),
+      subtitle: OBText(_localizationService.trans('community__manage_invite_desc'),
         style: listItemSubtitleStyle,
       ),
       onTap: () {
@@ -134,21 +135,19 @@ class OBManageCommunityPage extends StatelessWidget {
 
     menuListTiles.add(OBFavoriteCommunityTile(
         community: community,
-        favoriteSubtitle: const OBText(
-          'Add the community to your favorites',
+        favoriteSubtitle: OBText(_localizationService.trans('community__manage_add_favourite'),
           style: listItemSubtitleStyle,
         ),
-        unfavoriteSubtitle: const OBText(
-          'Remove the community to your favorites',
+        unfavoriteSubtitle: OBText(_localizationService.trans('community__manage_remove_favourite'),
           style: listItemSubtitleStyle,
         )));
 
     if (loggedInUser.isCreatorOfCommunity(community)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.deleteCommunity),
-        title: const OBText('Delete community'),
-        subtitle: const OBText(
-          'Delete the community, forever.',
+        title: OBText(_localizationService.trans('community__manage_delete_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_delete_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -159,9 +158,9 @@ class OBManageCommunityPage extends StatelessWidget {
     } else {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.leaveCommunity),
-        title: const OBText('Leave community'),
-        subtitle: const OBText(
-          'Leave the community.',
+        title: OBText(_localizationService.trans('community__manage_leave_title')),
+        subtitle: OBText(
+          _localizationService.trans('community__manage_leave_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
@@ -173,7 +172,7 @@ class OBManageCommunityPage extends StatelessWidget {
 
     return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Manage community',
+        title: _localizationService.trans('community__manage_title'),
       ),
       child: OBPrimaryColorContainer(
         child: Column(

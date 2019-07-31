@@ -4,6 +4,7 @@ import 'package:Openbook/models/post.dart';
 import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/toast.dart';
 import 'package:Openbook/services/user.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -31,6 +32,7 @@ class OBSharePostWithCommunityPageState
     extends State<OBSharePostWithCommunityPage> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _isCreatePostInProgress;
 
   Community _chosenCommunity;
@@ -46,6 +48,7 @@ class OBSharePostWithCommunityPageState
     var openbookProvider = OpenbookProvider.of(context);
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -68,8 +71,8 @@ class OBSharePostWithCommunityPageState
           listRefresher: _refreshCommunities,
           listOnScrollLoader: _loadMoreCommunities,
           listSearcher: _searchCommunities,
-          resourceSingularName: 'community',
-          resourcePluralName: 'communities',
+          resourceSingularName: _localizationService.trans('community__community'),
+          resourcePluralName: _localizationService.trans('community__communities'),
         ))
       ],
     );
@@ -77,14 +80,14 @@ class OBSharePostWithCommunityPageState
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Share to community',
+      title: _localizationService.trans('post__share_to_community'),
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,
         isLoading: _isCreatePostInProgress,
         isDisabled: _chosenCommunity == null,
         onPressed: createPost,
-        child: Text('Share'),
+        child: Text(_localizationService.trans('post__share_community')),
       ),
     );
   }
@@ -129,7 +132,7 @@ class OBSharePostWithCommunityPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

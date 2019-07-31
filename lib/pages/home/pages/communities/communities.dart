@@ -11,6 +11,7 @@ import 'package:Openbook/pages/home/pages/communities/widgets/trending_communiti
 import 'package:Openbook/pages/home/pages/communities/widgets/user_avatar_tab.dart';
 import 'package:Openbook/provider.dart';
 import 'package:Openbook/services/httpie.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/services/theme.dart';
@@ -43,6 +44,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   UserService _userService;
   ToastService _toastService;
   ThemeService _themeService;
+  LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   ModalService _modalService;
   NavigationService _navigationService;
@@ -82,6 +84,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
       _modalService = openbookProvider.modalService;
+      _localizationService = openbookProvider.localizationService;
       _navigationService = openbookProvider.navigationService;
       _bootstrap();
       _needsBootstrap = false;
@@ -89,7 +92,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
-            title: 'Communities',
+            title: _localizationService.community__communities_title,
             trailing: OBIconButton(
               OBIcons.add,
               themeColor: OBIconThemeColor.primaryAccent,
@@ -106,9 +109,9 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
-          text: 'No categories found. Please try again in a few minutes.',
+          text: _localizationService.community__communities_no_category_found,
           onPressed: _refreshCategories,
-          buttonText: 'Refresh',
+          buttonText: _localizationService.community__communities_refresh_text,
           buttonIcon: OBIcons.refresh,
           assetImage: 'assets/images/stickers/perplexed-owl.png',
           isLoading: _refreshInProgress,
@@ -160,7 +163,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         user: loggedInUser,
       ),
       OBImageTab(
-        text: 'All',
+        text: _localizationService.community__communities_all_text,
         color: Pigment.fromString('#2d2d2d'),
         textColor: Pigment.fromString('#ffffff'),
         imageProvider:
@@ -228,7 +231,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

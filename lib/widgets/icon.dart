@@ -126,6 +126,8 @@ class OBIcons {
   static const play_arrow = OBIconData(nativeIcon: Icons.play_arrow);
   static const search = OBIconData(nativeIcon: Icons.search);
   static const notifications = OBIconData(nativeIcon: Icons.notifications);
+  static const language = OBIconData(nativeIcon: Icons.language);
+  static const translate = OBIconData(nativeIcon: Icons.translate);
   static const menu = OBIconData(nativeIcon: Icons.menu);
   static const communities = OBIconData(nativeIcon: Icons.bubble_chart);
   static const settings = OBIconData(nativeIcon: Icons.settings);
@@ -195,10 +197,12 @@ class OBIcons {
       OBIconData(nativeIcon: Icons.remove_circle);
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
+  static const mutePostComment = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const edit = OBIconData(nativeIcon: Icons.edit);
   static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
+  static const unmutePostComment = OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const account = OBIconData(nativeIcon: Icons.account_circle);
   static const application = OBIconData(nativeIcon: Icons.phone_iphone);
@@ -226,6 +230,7 @@ class OBIcons {
   static const arrowDown = OBIconData(nativeIcon: Icons.keyboard_arrow_down);
   static const rules = OBIconData(nativeIcon: Icons.book);
   static const communityStaff = OBIconData(nativeIcon: Icons.tag_faces);
+  static const reply = OBIconData(nativeIcon: Icons.reply);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

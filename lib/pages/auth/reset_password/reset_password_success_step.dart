@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 class OBAuthPasswordResetSuccessPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return OBAuthPasswordResetSuccessPageState();
   }
 }
@@ -25,7 +24,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
 
     return Scaffold(
       body: Container(
-        child: Center(child: SingleChildScrollView(child: _buildAllSet())),
+        child: Center(child: SingleChildScrollView(child: _buildAllSet(localizationService))),
       ),
       bottomNavigationBar: _buildBottomBar(),
     );
@@ -50,7 +49,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
     );
   }
 
-  Widget _buildAllSet() {
+  Widget _buildAllSet(LocalizationService localizationService) {
     return Column(
       children: <Widget>[
         Text(
@@ -60,7 +59,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
         const SizedBox(
           height: 20.0,
         ),
-        Text('All set!',
+        Text(localizationService.auth__reset_password_success_title,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24.0,
@@ -70,7 +69,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
         const SizedBox(
           height: 20.0,
         ),
-        Text('Your password has been updated successfully',
+        Text(localizationService.auth__reset_password_success_info,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20.0
@@ -85,7 +84,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
 
   Widget _buildNextButton({@required BuildContext context}) {
     String buttonText =
-    localizationService.trans('AUTH.CREATE_ACC.DONE_CONTINUE');
+    localizationService.trans('auth__create_acc__done_continue');
 
     return OBSuccessButton(
       minWidth: double.infinity,
