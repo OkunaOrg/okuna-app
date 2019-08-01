@@ -47,7 +47,6 @@ class OBNotificationTileTitle extends StatelessWidget {
           GestureRecognizer usernameTapGestureRecognizer =
               TapGestureRecognizer()..onTap = onUsernamePressed;
 
-          // String text = 'asds [name] asds [username] sdalskdasldj /c/assad';
           List<String> plainTextItems = text.text.split(' ');
           List<TextSpan> textItems = [];
 
@@ -63,28 +62,19 @@ class OBNotificationTileTitle extends StatelessWidget {
                   text: ' @$commenterUsername',
                   recognizer: usernameTapGestureRecognizer,
                   style: TextStyle(color: secondaryTextColor)));
-            } else if (index < plainTextItems.length - 1) {
+            } else if (index <= plainTextItems.length - 1) {
               textItems.add(TextSpan(
                 text: item
               ));
             }
-            //add space after word
-            textItems.add(TextSpan(
-              text: ' ',
-            ));
-          });
 
-//          List<TextSpan> textItems = [
-//            TextSpan(
-//                text: '$commenterName',
-//                recognizer: usernameTapGestureRecognizer,
-//                style: TextStyle(fontWeight: FontWeight.bold)),
-//            TextSpan(
-//                text: ' @$commenterUsername',
-//                recognizer: usernameTapGestureRecognizer,
-//                style: TextStyle(color: secondaryTextColor)),
-//            text
-//          ];
+            if (index < plainTextItems.length - 1) {
+              //add space after word
+              textItems.add(TextSpan(
+                text: ' ',
+              ));
+            }
+          });
 
           return Row(
             mainAxisSize: MainAxisSize.max,
