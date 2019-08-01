@@ -234,7 +234,9 @@ class User extends UpdatableModel<User> {
   }
 
   bool hasProfileBadges() {
-    return this.profile != null && this.profile.badges != null && this.profile.badges.length > 0;
+    return this.profile != null &&
+        this.profile.badges != null &&
+        this.profile.badges.length > 0;
   }
 
   bool hasLanguage() {
@@ -487,9 +489,10 @@ class User extends UpdatableModel<User> {
   }
 
   bool canTranslatePost(Post post) {
+    if (!post.hasCommunity() && post.isEncircledPost()) return false;
+
     User loggedInUser = this;
     return post.hasLanguage() &&
-        !post.isEncircledPost() &&
         post.getLanguage().code != loggedInUser.language.code;
   }
 
