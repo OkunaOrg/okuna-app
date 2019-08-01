@@ -195,6 +195,16 @@ flutter run --profile
 
 Help us keep Okuna going! Please look into our open issues. All contribution, no matter how small, makes a big difference.
 
+### 9. Build for production
+
+To build the android APK
+
+```flutter build appbundle --target-platform android-arm,android-arm64```
+
+To build the iOS archive
+
+```flutter build ios```
+
 ## Official work-around's list
 
 Unfourtunately, Flutter is still in it's early steps as a framework and ecosystem.
