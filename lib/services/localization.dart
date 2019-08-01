@@ -2133,6 +2133,13 @@ class LocalizationService {
         name: 'user__invite_member');
   }
 
+  String user__invite_someone_message(String iosLink, String androidLink, String inviteLink) {
+    return Intl.message("Hey, I'd like to invite you to Okuna. First, Download the app on iTunes ($iosLink) or the Play store ($androidLink). "
+        "Second, paste this personalised invite link in the 'Sign up' form in the Okuna App: $inviteLink",
+        args: [iosLink, androidLink, inviteLink],
+        name: 'user__invite_someone_message');
+  }
+
   String get user__connections_header_circle_desc {
     return Intl.message("The circle all of your connections get added to.",
         name: 'user__connections_header_circle_desc');

@@ -11,16 +11,9 @@ class UserInvite extends UpdatableModel<UserInvite> {
   final String token;
   bool isInviteEmailSent;
 
-  static getShareMessageForInviteWithToken(String token, String apiURL) {
-    const String IOS_DOWNLOAD_LINK = 'https://testflight.apple.com/join/XniAjdyF';
-    const String ANDROID_DOWNLOAD_LINK = 'https://play.google.com/apps/testing/social.openbook.app';
-    String inviteLink = apiURL + 'api/auth/invite?token=$token';
-
-    String message = 'Hey, I\'d like to invite you to Openspace. First, Download the app on iTunes ($IOS_DOWNLOAD_LINK) or the Play store ($ANDROID_DOWNLOAD_LINK). '
-        'Second, paste this personalised invite link in the \'Sign up\' form in the Openspace App: $inviteLink ';
-
-    return message;
-  }
+  static const String IOS_DOWNLOAD_LINK = 'https://testflight.apple.com/join/XniAjdyF';
+  static const String ANDROID_DOWNLOAD_LINK = 'https://play.google.com/apps/testing/social.openbook.app';
+  static const  INVITE_LINK = '{apiURL}api/auth/invite?token={token}';
 
   static convertUserInviteStatusToBool(UserInviteFilterByStatus value) {
     bool isPending;
