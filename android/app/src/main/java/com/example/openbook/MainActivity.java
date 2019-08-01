@@ -1,19 +1,13 @@
 package social.openbook.app;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.example.openbook.ImageConverter;
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
+
+import com.example.openbook.plugins.ImageConverterPlugin;
 
 public class MainActivity extends FlutterActivity {
 
@@ -37,6 +34,7 @@ public class MainActivity extends FlutterActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
+    ImageConverterPlugin.registerWith(this.registrarFor("com.example.openbook.plugins.ImageConverterPlugin"));
 
     new EventChannel(getFlutterView(), SHARE_STREAM).setStreamHandler(
       new EventChannel.StreamHandler() {
@@ -93,23 +91,16 @@ public class MainActivity extends FlutterActivity {
 
   private Uri copyImageToTempFile(Uri imageUri) {
     try {
-      InputStream inputStream;
+      byte[] data;
       if (imageUri.getScheme().equals("content")) {
-        inputStream = this.getContentResolver().openInputStream(imageUri);
+        data = ImageConverter.convertImageData(this.getContentResolver().openInputStream(imageUri), ImageConverter.TargetFormat.JPEG);
       } else {
-        inputStream = new FileInputStream(new File(imageUri.getPath()));
+        data = ImageConverter.convertImageDataFile(new File(imageUri.getPath()), ImageConverter.TargetFormat.JPEG);
       }
-      Bitmap bmp = BitmapFactory.decodeStream(inputStream);
-      inputStream.close();
-      if (bmp == null) return null;
-
-      ByteArrayOutputStream imageDataStream = new ByteArrayOutputStream();
-      bmp.compress(Bitmap.CompressFormat.JPEG, 100, imageDataStream);
 
       File imageFile = createTemporaryFile(".jpeg");
       FileOutputStream fileOutput = new FileOutputStream(imageFile);
-      fileOutput.write(imageDataStream.toByteArray());
-      inputStream.close();
+      fileOutput.write(data);
       fileOutput.close();
 
       return Uri.fromFile(imageFile);
