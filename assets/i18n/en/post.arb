@@ -108,6 +108,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "profile_counts_following": " Following",
+  "@profile_counts_following": {
+    "type": "text",
+    "placeholders": {}
+  },
   "profile_counts_follower": " Follower",
   "@profile_counts_follower": {
     "type": "text",
@@ -115,6 +120,16 @@
   },
   "action_comment": "Comment",
   "@action_comment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "action_react": "React",
+  "@action_react": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "action_reply": "Reply",
+  "@action_reply": {
     "type": "text",
     "placeholders": {}
   },
@@ -308,11 +323,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "action_react": "React",
-  "@action_react": {
-    "type": "text",
-    "placeholders": {}
-  },
   "post_reactions_title": "Post reactions",
   "@post_reactions_title": {
     "type": "text",
@@ -410,6 +420,36 @@
     "type": "text",
     "placeholders": {}
   },
+  "comments_page_title": "Post comments",
+  "@comments_page_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comments_page_no_more_to_load": "No more comments to load",
+  "@comments_page_no_more_to_load": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comments_page_tap_to_retry": "Tap to retry loading comments.",
+  "@comments_page_tap_to_retry": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comments_page_tap_to_retry_replies": "Tap to retry loading replies.",
+  "@comments_page_tap_to_retry_replies": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comments_page_no_more_replies_to_load": "No more replies to load",
+  "@comments_page_no_more_replies_to_load": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comments_page_replies_title": "Post replies",
+  "@comments_page_replies_title": {
+    "type": "text",
+    "placeholders": {}
+  },
   "disable_post_comments": "Disable post comments",
   "@disable_post_comments": {
     "type": "text",
@@ -427,6 +467,16 @@
   },
   "comments_disabled_message": "Comments disabled for post",
   "@comments_disabled_message": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "actions_delete": "Delete post",
+  "@actions_delete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "actions_deleted": "Post deleted",
+  "@actions_deleted": {
     "type": "text",
     "placeholders": {}
   },

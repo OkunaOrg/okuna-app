@@ -2,6 +2,7 @@ import 'package:Openbook/models/user_invite.dart';
 import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_detail_header.dart';
 import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
+import 'package:Openbook/services/string_template.dart';
 import 'package:Openbook/services/user_invites_api.dart';
 import 'package:Openbook/widgets/icon.dart';
 import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
@@ -38,6 +39,7 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
   ModalService _modalService;
   LocalizationService _localizationService;
   UserInvitesApiService _userInvitesApiService;
+  StringTemplateService _stringTemplateService;
   bool _needsBootstrap;
 
   @override
@@ -53,6 +55,7 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
     _modalService = provider.modalService;
     _localizationService = provider.localizationService;
     _userInvitesApiService = provider.userInvitesApiService;
+    _stringTemplateService = provider.stringTemplateService;
 
     if (_needsBootstrap) {
       _needsBootstrap = false;
@@ -100,7 +103,7 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
         onTap: () {
           String apiURL = _userInvitesApiService.apiURL;
           String token = widget.userInvite.token;
-          Share.share(UserInvite.getShareMessageForInviteWithToken(token, apiURL));
+          Share.share(getShareMessageForInviteWithToken(token, apiURL));
         },
       ),
       ListTile(
@@ -119,6 +122,15 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
     ];
   }
 
+  String getShareMessageForInviteWithToken(String token, String apiURL) {
+    const IOS_DOWNLOAD_LINK = UserInvite.IOS_DOWNLOAD_LINK;
+    const ANDROID_DOWNLOAD_LINK = UserInvite.ANDROID_DOWNLOAD_LINK;
+    String inviteLink = _stringTemplateService.parse(UserInvite.INVITE_LINK, {'token': token, 'apiURL': apiURL});
+
+    String message = _localizationService.user__invite_someone_message(IOS_DOWNLOAD_LINK, ANDROID_DOWNLOAD_LINK, inviteLink);
+
+    return message;
+  }
 
   Widget _buildNavigationBarTrailingItem() {
     if (!widget.showEdit) return const SizedBox();

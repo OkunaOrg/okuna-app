@@ -1,4 +1,9 @@
 {
+  "search_text": "Search...",
+  "@search_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "communities": "Communities",
   "@communities": {
     "type": "text",

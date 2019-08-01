@@ -1273,6 +1273,11 @@ class LocalizationService {
         name: 'community__adjectives_range_error');
   }
 
+  String get user_search__search_text {
+    return Intl.message("Search...",
+        name: 'user_search__search_text');
+  }
+
   String get user_search__communities {
     return Intl.message("Communities",
         name: 'user_search__communities');
@@ -1443,6 +1448,11 @@ class LocalizationService {
         name: 'post__profile_counts_followers');
   }
 
+  String get post__profile_counts_following {
+    return Intl.message(" Following",
+        name: 'post__profile_counts_following');
+  }
+
   String get post__profile_counts_follower {
     return Intl.message(" Follower",
         name: 'post__profile_counts_follower');
@@ -1451,6 +1461,16 @@ class LocalizationService {
   String get post__action_comment {
     return Intl.message("Comment",
         name: 'post__action_comment');
+  }
+
+  String get post__action_react {
+    return Intl.message("React",
+        name: 'post__action_react');
+  }
+
+  String get post__action_reply {
+    return Intl.message("Reply",
+        name: 'post__action_reply');
   }
 
   String get post__share {
@@ -1641,11 +1661,6 @@ class LocalizationService {
         name: 'post__text_copied');
   }
 
-  String get post__action_react {
-    return Intl.message("React",
-        name: 'post__action_react');
-  }
-
   String get post__post_reactions_title {
     return Intl.message("Post reactions",
         name: 'post__post_reactions_title');
@@ -1742,6 +1757,36 @@ class LocalizationService {
         name: 'post__comments_header_be_the_first_comments');
   }
 
+  String get post__comments_page_title {
+    return Intl.message("Post comments",
+        name: 'post__comments_page_title');
+  }
+
+  String get post__comments_page_no_more_to_load {
+    return Intl.message("No more comments to load",
+        name: 'post__comments_page_no_more_to_load');
+  }
+
+  String get post__comments_page_tap_to_retry {
+    return Intl.message("Tap to retry loading comments.",
+        name: 'post__comments_page_tap_to_retry');
+  }
+
+  String get post__comments_page_tap_to_retry_replies {
+    return Intl.message("Tap to retry loading replies.",
+        name: 'post__comments_page_tap_to_retry_replies');
+  }
+
+  String get post__comments_page_no_more_replies_to_load {
+    return Intl.message("No more replies to load",
+        name: 'post__comments_page_no_more_replies_to_load');
+  }
+
+  String get post__comments_page_replies_title {
+    return Intl.message("Post replies",
+        name: 'post__comments_page_replies_title');
+  }
+
   String get post__disable_post_comments {
     return Intl.message("Disable post comments",
         name: 'post__disable_post_comments');
@@ -1760,6 +1805,16 @@ class LocalizationService {
   String get post__comments_disabled_message {
     return Intl.message("Comments disabled for post",
         name: 'post__comments_disabled_message');
+  }
+
+  String get post__actions_delete {
+    return Intl.message("Delete post",
+        name: 'post__actions_delete');
+  }
+
+  String get post__actions_deleted {
+    return Intl.message("Post deleted",
+        name: 'post__actions_deleted');
   }
 
   String get post__actions_delete_comment {
@@ -2076,6 +2131,13 @@ class LocalizationService {
   String get user__invite_member {
     return Intl.message("Member",
         name: 'user__invite_member');
+  }
+
+  String user__invite_someone_message(String iosLink, String androidLink, String inviteLink) {
+    return Intl.message("Hey, I'd like to invite you to Okuna. First, Download the app on iTunes ($iosLink) or the Play store ($androidLink). "
+        "Second, paste this personalised invite link in the 'Sign up' form in the Okuna App: $inviteLink",
+        args: [iosLink, androidLink, inviteLink],
+        name: 'user__invite_someone_message');
   }
 
   String get user__connections_header_circle_desc {
