@@ -106,7 +106,7 @@
 
         }
     },
-    "create_acc__paste_link_help_text": "Benutze den Link von dem \"Join Openspace\" Button in deiner Einladungs-E-Mail.",
+    "create_acc__paste_link_help_text": "Benutze den Link von dem \"Join Okuna\" Button in deiner Einladungs-E-Mail.",
     "@create_acc__paste_link_help_text": {
         "type": "text",
         "placeholders": {

@@ -146,7 +146,7 @@
 
         }
     },
-    "moderated_object_verified_by_staff": "Verifiziert durch Openspace-Mitarbeiter",
+    "moderated_object_verified_by_staff": "Verifiziert durch Okuna-Mitarbeiter",
     "@moderated_object_verified_by_staff": {
         "type": "text",
         "placeholders": {

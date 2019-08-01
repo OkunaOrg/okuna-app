@@ -413,6 +413,21 @@
 
         }
     },
+    "invite_someone_message": "Hey, I'd like to invite you to Okuna. First, Download the app on iTunes ({iosLink}) or the Play store ({androidLink}). Second, paste this personalised invite link in the 'Sign up' form in the Okuna App: {inviteLink}",
+    "@invite_someone_message": {
+        "type": "text",
+        "placeholders": {
+            "iosLink": {
+
+            },
+            "androidLink": {
+
+            },
+            "inviteLink": {
+
+            }
+        }
+    },
     "connections_header_circle_desc": "Der Kreis, bei dem alle deine Verbindungen hinzugefügt werden.",
     "@connections_header_circle_desc": {
         "type": "text",
