@@ -170,6 +170,11 @@ flutter:
           style: normal
         - asset: assets/fonts/VisbyRoundCF-Bold.otf
           style: italic
+    # Generic name to allow changing the emoji font later on
+    - family: Emoji
+      fonts:
+        - asset: assets/fonts/Twemoji.ttf
+          style: normal
     - family: ''
       fonts:
         - asset: assets/fonts/NunitoSans-Regular.ttf
