@@ -1,6 +1,7 @@
 import 'package:Openbook/models/user.dart';
 import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
 import 'package:Openbook/provider.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/modal_service.dart';
 import 'package:Openbook/widgets/buttons/actions/block_button.dart';
 import 'package:Openbook/widgets/buttons/button.dart';
@@ -17,6 +18,7 @@ class OBProfileActions extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var userService = openbookProvider.userService;
     var modalService = openbookProvider.modalService;
+    LocalizationService localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: user.updateSubject,
@@ -31,7 +33,7 @@ class OBProfileActions extends StatelessWidget {
             // The margin compensates for the height of the (missing) OBProfileActionMore
             // Fixes cut-off Edit profile button, and level out layout distances
             padding: EdgeInsets.only(top: 6.5, bottom: 6.5),
-            child: _buildEditButton(modalService, context),
+            child: _buildEditButton(modalService, localizationService, context),
           ));
         } else {
           bool isBlocked = user.isBlocked ?? false;
@@ -58,10 +60,10 @@ class OBProfileActions extends StatelessWidget {
     );
   }
 
-  _buildEditButton(ModalService modalService, context) {
+  _buildEditButton(ModalService modalService, LocalizationService localizationService, context) {
     return OBButton(
         child: Text(
-          'Edit profile',
+          localizationService.user__edit_profile_title,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onPressed: () {

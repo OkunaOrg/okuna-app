@@ -51,7 +51,7 @@ class OBProfileFollowingCount extends StatelessWidget {
                             color: themeValueParserService
                                 .parseColor(theme.primaryTextColor))),
                     TextSpan(
-                        text: ' Following',
+                        text: localizationService.post__profile_counts_following,
                         style: TextStyle(
                             color: themeValueParserService
                                 .parseColor(theme.secondaryTextColor)))

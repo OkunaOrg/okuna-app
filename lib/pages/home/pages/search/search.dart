@@ -5,6 +5,7 @@ import 'package:Openbook/models/user.dart';
 import 'package:Openbook/models/users_list.dart';
 import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/trending_posts.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/navigation_service.dart';
 import 'package:Openbook/pages/home/pages/search/widgets/user_search_results.dart';
 import 'package:Openbook/provider.dart';
@@ -31,6 +32,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   bool _hasSearch;
   bool _userSearchRequestInProgress;
@@ -65,6 +67,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _navigationService = openbookProvider.navigationService;
+    _localizationService = openbookProvider.localizationService;
 
     Widget currentWidget;
 
@@ -96,7 +99,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
                 bottom: false,
                 child: OBSearchBar(
                   onSearch: _onSearch,
-                  hintText: 'Search...',
+                  hintText: _localizationService.user_search__search_text,
                 ),
               ),
               Expanded(child: currentWidget),
@@ -173,7 +176,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

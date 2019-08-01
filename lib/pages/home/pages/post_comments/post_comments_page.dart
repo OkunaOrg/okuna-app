@@ -5,6 +5,7 @@ import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.d
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
 import 'package:Openbook/pages/home/pages/post_comments/widgets/post_preview.dart';
+import 'package:Openbook/services/localization.dart';
 import 'package:Openbook/services/theme.dart';
 import 'package:Openbook/services/theme_value_parser.dart';
 import 'package:Openbook/services/user_preferences.dart';
@@ -54,6 +55,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   UserPreferencesService _userPreferencesService;
   ToastService _toastService;
   ThemeService _themeService;
+  LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   Post _post;
   AnimationController _animationController;
@@ -96,18 +98,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       HEIGHT_SIZED_BOX +
       HEIGHT_POST_DIVIDER;
 
-  static const PAGE_COMMENTS_TEXT_MAP = {
-    'TITLE': 'Post comments',
-    'NO_MORE_TO_LOAD': 'No more comments to load',
-    'TAP_TO_RETRY': 'Tap to retry loading comments.',
-  };
-
-  static const PAGE_REPLIES_TEXT_MAP = {
-    'TITLE': 'Post replies',
-    'NO_MORE_TO_LOAD': 'No more replies to load',
-    'TAP_TO_RETRY': 'Tap to retry loading replies.',
-  };
-
   CancelableOperation _refreshPostOperation;
 
   @override
@@ -115,11 +105,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     super.initState();
     if (widget.linkedPostComment != null) _post = widget.linkedPostComment.post;
     if (widget.post != null) _post = widget.post;
-    if (widget.pageType == PostCommentsPageType.comments) {
-      _pageTextMap = PAGE_COMMENTS_TEXT_MAP;
-    } else {
-      _pageTextMap = PAGE_REPLIES_TEXT_MAP;
-    }
     _needsBootstrap = true;
     _postComments = [];
     _noMoreBottomItemsToLoad = true;
@@ -145,8 +130,15 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       _toastService = provider.toastService;
       _themeValueParserService = provider.themeValueParserService;
       _themeService = provider.themeService;
+      _localizationService = provider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
+    }
+
+    if (widget.pageType == PostCommentsPageType.comments) {
+      _pageTextMap = this.getPageCommentsMap(_localizationService);
+    } else {
+      _pageTextMap = this.getPageRepliesMap(_localizationService);
     }
 
     return OBCupertinoPageScaffold(
@@ -560,6 +552,22 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       _toastService.error(message: 'Unknown error', context: context);
       throw error;
     }
+  }
+
+  Map<String, String> getPageCommentsMap(LocalizationService _localizationService) {
+    return {
+      'TITLE': _localizationService.post__comments_page_title,
+      'NO_MORE_TO_LOAD': _localizationService.post__comments_page_no_more_to_load,
+      'TAP_TO_RETRY': _localizationService.post__comments_page_tap_to_retry,
+    };
+  }
+
+  Map<String, String> getPageRepliesMap(LocalizationService _localizationService) {
+    return  {
+      'TITLE': _localizationService.post__comments_page_replies_title,
+      'NO_MORE_TO_LOAD': _localizationService.post__comments_page_no_more_replies_to_load,
+      'TAP_TO_RETRY': _localizationService.post__comments_page_tap_to_retry_replies,
+    };
   }
 
   double _calculatePositionTopCommentSection() {
