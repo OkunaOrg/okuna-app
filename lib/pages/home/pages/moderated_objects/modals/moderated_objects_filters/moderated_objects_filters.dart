@@ -1,13 +1,13 @@
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/moderated_objects.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/fields/checkbox_field.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/moderated_object_status_circle.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/tile_group_title.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/moderated_objects.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/fields/checkbox_field.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/moderated_object_status_circle.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/tile_group_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

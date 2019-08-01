@@ -1,5 +1,5 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileBio extends StatelessWidget {

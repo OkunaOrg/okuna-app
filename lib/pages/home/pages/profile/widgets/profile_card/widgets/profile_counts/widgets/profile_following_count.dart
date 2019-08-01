@@ -1,8 +1,8 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileFollowingCount extends StatelessWidget {

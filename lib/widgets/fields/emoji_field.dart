@@ -1,8 +1,8 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../provider.dart';

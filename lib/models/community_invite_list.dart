@@ -1,4 +1,4 @@
-import 'package:Openbook/models/community_invite.dart';
+import 'package:Okuna/models/community_invite.dart';
 
 class CommunityInviteList {
   final List<CommunityInvite> communityInvites;

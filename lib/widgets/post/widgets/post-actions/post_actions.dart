@@ -1,7 +1,7 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
-import 'package:Openbook/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
+import 'package:Okuna/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:flutter/material.dart';
 
 class OBPostActions extends StatelessWidget {

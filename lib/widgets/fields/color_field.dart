@@ -1,9 +1,9 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/dialog.dart';
-import 'package:Openbook/services/theme.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/dialog.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 

@@ -1,12 +1,12 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment_list.dart';
-import 'package:Openbook/models/post_comment_reaction.dart';
-import 'package:Openbook/models/reactions_emoji_count.dart';
-import 'package:Openbook/models/reactions_emoji_count_list.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment_list.dart';
+import 'package:Okuna/models/post_comment_reaction.dart';
+import 'package:Okuna/models/reactions_emoji_count.dart';
+import 'package:Okuna/models/reactions_emoji_count_list.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:Openbook/models/updatable_model.dart';
+import 'package:Okuna/models/updatable_model.dart';
 
 import 'emoji.dart';
 import 'language.dart';

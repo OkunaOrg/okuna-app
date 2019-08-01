@@ -1,4 +1,4 @@
-import 'package:Openbook/models/moderation/moderation_penalty.dart';
+import 'package:Okuna/models/moderation/moderation_penalty.dart';
 
 class ModerationPenaltiesList {
   final List<ModerationPenalty> moderationPenalties;

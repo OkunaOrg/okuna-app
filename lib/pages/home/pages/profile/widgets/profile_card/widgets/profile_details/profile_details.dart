@@ -1,6 +1,6 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_location.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_url.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_location.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_url.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileDetails extends StatelessWidget {

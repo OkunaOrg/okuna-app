@@ -1,7 +1,7 @@
-import 'package:Openbook/models/category.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
+import 'package:Okuna/models/category.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

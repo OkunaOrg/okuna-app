@@ -1,7 +1,7 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

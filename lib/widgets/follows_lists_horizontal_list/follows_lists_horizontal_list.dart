@@ -1,6 +1,6 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/widgets/follows_lists_horizontal_list/widgets/follows_lists_horizontal_list_item.dart';
-import 'package:Openbook/widgets/follows_lists_horizontal_list/widgets/new_follows_list_horizontal_list_item.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/widgets/follows_lists_horizontal_list/widgets/follows_lists_horizontal_list_item.dart';
+import 'package:Okuna/widgets/follows_lists_horizontal_list/widgets/new_follows_list_horizontal_list_item.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowsListsHorizontalList extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
 
 enum OBIconSize { small, medium, large, extraLarge }

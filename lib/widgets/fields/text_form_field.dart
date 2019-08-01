@@ -1,6 +1,6 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -1,4 +1,4 @@
-import 'package:Openbook/services/localization.dart';
+import 'package:Okuna/services/localization.dart';
 
 String getPrettyCount(int value, LocalizationService localizationService) {
   String postfix;

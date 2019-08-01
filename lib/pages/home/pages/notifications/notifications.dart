@@ -1,20 +1,20 @@
 import 'dart:async';
 
-import 'package:Openbook/models/notifications/notification.dart';
-import 'package:Openbook/models/notifications/notifications_list.dart';
-import 'package:Openbook/models/push_notification.dart';
-import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/push_notifications/push_notifications.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/icon_button.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/tiles/notification_tile/notification_tile.dart';
+import 'package:Okuna/models/notifications/notification.dart';
+import 'package:Okuna/models/notifications/notifications_list.dart';
+import 'package:Okuna/models/push_notification.dart';
+import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/push_notifications/push_notifications.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/icon_button.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/notification_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

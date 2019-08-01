@@ -1,9 +1,9 @@
-import 'package:Openbook/models/categories_list.dart';
-import 'package:Openbook/models/community_membership.dart';
-import 'package:Openbook/models/community_membership_list.dart';
-import 'package:Openbook/models/updatable_model.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/users_list.dart';
+import 'package:Okuna/models/categories_list.dart';
+import 'package:Okuna/models/community_membership.dart';
+import 'package:Okuna/models/community_membership_list.dart';
+import 'package:Okuna/models/updatable_model.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/models/users_list.dart';
 import 'package:dcache/dcache.dart';
 
 class Community extends UpdatableModel<Community> {

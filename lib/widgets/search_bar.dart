@@ -1,9 +1,9 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/fields/text_field.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBSearchBar extends StatefulWidget {

@@ -1,6 +1,6 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/cirles_wrap.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/widgets/cirles_wrap.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileConnectedIn extends StatelessWidget {

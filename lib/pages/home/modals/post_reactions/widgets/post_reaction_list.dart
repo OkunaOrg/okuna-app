@@ -1,16 +1,16 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_reaction.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/tiles/post_reaction_tile.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_reaction.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/tiles/post_reaction_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/widgets/load_more.dart';
+import 'package:Okuna/widgets/load_more.dart';
 
 class OBPostReactionList extends StatefulWidget {
   // The emoji to show reactions of

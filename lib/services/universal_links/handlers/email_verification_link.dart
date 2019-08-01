@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/auth_api.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/universal_links/universal_links.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/auth_api.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/universal_links/universal_links.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:flutter/material.dart';
 
 import '../../localization.dart';

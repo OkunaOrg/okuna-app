@@ -1,5 +1,5 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/badges_list.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/badges_list.dart';
 
 class UserProfile {
   final int id;

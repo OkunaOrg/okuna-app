@@ -1,4 +1,4 @@
-import 'package:Openbook/models/post_comment.dart';
+import 'package:Okuna/models/post_comment.dart';
 
 class PostCommentNotification {
   final int id;

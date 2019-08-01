@@ -1,8 +1,8 @@
-import 'package:Openbook/models/category.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/categories_picker.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/category.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/categories_picker.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

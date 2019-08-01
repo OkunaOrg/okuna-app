@@ -1,15 +1,15 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/circle_color_preview.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class OBConnectionsCircleTile extends StatefulWidget {

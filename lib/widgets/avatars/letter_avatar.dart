@@ -1,8 +1,8 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
-export 'package:Openbook/widgets/avatars/avatar.dart';
+export 'package:Okuna/widgets/avatars/avatar.dart';
 
 class OBLetterAvatar extends StatelessWidget {
   final OBAvatarSize size;

@@ -1,4 +1,4 @@
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBTileGroupTitle extends StatelessWidget {

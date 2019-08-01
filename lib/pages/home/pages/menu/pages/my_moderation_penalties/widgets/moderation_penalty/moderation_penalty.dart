@@ -1,10 +1,10 @@
-import 'package:Openbook/models/moderation/moderation_penalty.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/my_moderation_penalties/widgets/moderation_penalty/widgets/moderation_penalty_actions.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/moderated_object_category.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tile_group_title.dart';
-import 'package:Openbook/widgets/tiles/moderated_object_status_tile.dart';
+import 'package:Okuna/models/moderation/moderation_penalty.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/my_moderation_penalties/widgets/moderation_penalty/widgets/moderation_penalty_actions.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/moderated_object_category.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tile_group_title.dart';
+import 'package:Okuna/widgets/tiles/moderated_object_status_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBModerationPenaltyTile extends StatelessWidget {

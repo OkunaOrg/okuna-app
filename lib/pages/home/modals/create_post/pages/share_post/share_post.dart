@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBSharePostPage extends StatefulWidget {

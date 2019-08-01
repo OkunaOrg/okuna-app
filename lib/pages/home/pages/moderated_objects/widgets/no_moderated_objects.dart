@@ -1,5 +1,5 @@
-import 'package:Openbook/widgets/alerts/button_alert.dart';
-import 'package:Openbook/widgets/icon.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class OBNoModeratedObjects extends StatelessWidget {

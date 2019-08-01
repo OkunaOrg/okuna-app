@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/widgets/alerts/button_alert.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/load_more.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/search_bar.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/load_more.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/search_bar.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

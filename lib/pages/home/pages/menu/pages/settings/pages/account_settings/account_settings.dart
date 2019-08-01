@@ -1,10 +1,10 @@
-import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/modals/change-password/change_password.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/settings/pages/account_settings/modals/change_email/change_email.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/modals/change-password/change_password.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/modals/change_email/change_email.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

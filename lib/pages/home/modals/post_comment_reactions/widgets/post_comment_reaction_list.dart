@@ -1,13 +1,13 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_comment_reaction.dart';
-import 'package:Openbook/models/post_comment_reaction_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/tiles/post_comment_reaction_tile.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/post_comment_reaction.dart';
+import 'package:Okuna/models/post_comment_reaction_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/tiles/post_comment_reaction_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';

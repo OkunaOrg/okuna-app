@@ -1,8 +1,8 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/fields/checkbox_field.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/circle_color_preview.dart';
+import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
 
 import '../../provider.dart';

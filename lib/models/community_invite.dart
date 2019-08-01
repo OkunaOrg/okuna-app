@@ -1,5 +1,5 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/user.dart';
 
 class CommunityInvite {
   final int id;

@@ -1,18 +1,18 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/circles_list.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/community_invite.dart';
-import 'package:Openbook/models/community_invite_list.dart';
-import 'package:Openbook/models/community_membership.dart';
-import 'package:Openbook/models/community_membership_list.dart';
-import 'package:Openbook/models/follows_lists_list.dart';
-import 'package:Openbook/models/language.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/updatable_model.dart';
-import 'package:Openbook/models/user_notifications_settings.dart';
-import 'package:Openbook/models/user_profile.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/circles_list.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/community_invite.dart';
+import 'package:Okuna/models/community_invite_list.dart';
+import 'package:Okuna/models/community_membership.dart';
+import 'package:Okuna/models/community_membership_list.dart';
+import 'package:Okuna/models/follows_lists_list.dart';
+import 'package:Okuna/models/language.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/updatable_model.dart';
+import 'package:Okuna/models/user_notifications_settings.dart';
+import 'package:Okuna/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
 
 class User extends UpdatableModel<User> {

@@ -1,11 +1,11 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/widgets/buttons/actions/block_button.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/actions/follow_button.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/widgets/buttons/actions/block_button.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/actions/follow_button.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {

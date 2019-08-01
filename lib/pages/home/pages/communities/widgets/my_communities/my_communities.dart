@@ -1,14 +1,14 @@
-import 'package:Openbook/models/communities_list.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/widgets/my_communities_group.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/alerts/button_alert.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/tiles/community_tile.dart';
+import 'package:Okuna/models/communities_list.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/my_communities/widgets/my_communities_group.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

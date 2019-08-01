@@ -1,14 +1,14 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/post/widgets/post_header/widgets/user_post_header/widgets/post_creator_identifier.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/user_badge.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/post/widgets/post_header/widgets/user_post_header/widgets/post_creator_identifier.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/user_badge.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

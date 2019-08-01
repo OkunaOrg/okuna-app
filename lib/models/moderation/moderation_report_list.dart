@@ -1,4 +1,4 @@
-import 'package:Openbook/models/moderation/moderation_report.dart';
+import 'package:Okuna/models/moderation/moderation_report.dart';
 
 class ModerationReportsList {
   final List<ModerationReport> moderationReports;

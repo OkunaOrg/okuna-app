@@ -1,10 +1,10 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/tiles/circle_selectable_tile.dart';
-import 'package:Openbook/widgets/checkbox.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/tiles/circle_selectable_tile.dart';
+import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/circle_color_preview.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../provider.dart';

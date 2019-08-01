@@ -1,4 +1,4 @@
-import 'package:Openbook/models/language.dart';
+import 'package:Okuna/models/language.dart';
 
 class LanguagesList {
   final List<Language> languages;

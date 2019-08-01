@@ -1,8 +1,8 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_comment_list.dart';
-import 'package:Openbook/services/user_preferences.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/post_comment_list.dart';
+import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +65,7 @@ class OBPostCommentsPageController {
   }) {
     this.bootstrapController();
   }
-  
+
   Future bootstrapController() async {
     if (this.linkedPostComment != null) {
       await this.refreshCommentsSlice();

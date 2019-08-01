@@ -1,11 +1,11 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthLoginPage extends StatefulWidget {

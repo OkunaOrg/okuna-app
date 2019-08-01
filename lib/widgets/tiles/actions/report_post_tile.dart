@@ -1,10 +1,10 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/loading_tile.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBReportPostTile extends StatefulWidget {

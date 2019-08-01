@@ -1,7 +1,7 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/tiles/user_tile.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowsListUsers extends StatelessWidget {

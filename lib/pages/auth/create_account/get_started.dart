@@ -1,7 +1,7 @@
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthGetStartedPage extends StatelessWidget {

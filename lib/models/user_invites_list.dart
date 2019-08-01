@@ -1,4 +1,4 @@
-import 'package:Openbook/models/user_invite.dart';
+import 'package:Okuna/models/user_invite.dart';
 
 class UserInvitesList {
   final List<UserInvite> invites;

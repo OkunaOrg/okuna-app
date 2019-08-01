@@ -1,7 +1,7 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/services/theme.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/pages/home/modals/zoomable_photo.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/pages/home/modals/zoomable_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tinycolor/tinycolor.dart';

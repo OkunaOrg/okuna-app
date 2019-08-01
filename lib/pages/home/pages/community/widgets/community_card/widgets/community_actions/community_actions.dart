@@ -1,12 +1,12 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_actions/widgets/community_action_more/community_action_more.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/actions/join_community_button.dart';
-import 'package:Openbook/widgets/buttons/community_button.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_actions/widgets/community_action_more/community_action_more.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/actions/join_community_button.dart';
+import 'package:Okuna/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityActions extends StatelessWidget {

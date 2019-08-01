@@ -1,7 +1,7 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/home/bottom_sheets/post_actions.dart';
-import 'package:Openbook/widgets/post/widgets/post_header/widgets/community_post_header/community_post_header.dart';
-import 'package:Openbook/widgets/post/widgets/post_header/widgets/user_post_header/user_post_header.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
+import 'package:Okuna/widgets/post/widgets/post_header/widgets/community_post_header/community_post_header.dart';
+import 'package:Okuna/widgets/post/widgets/post_header/widgets/user_post_header/user_post_header.dart';
 import 'package:flutter/material.dart';
 
 class OBPostHeader extends StatelessWidget {

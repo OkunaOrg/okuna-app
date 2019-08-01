@@ -1,4 +1,4 @@
-import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class OBLoadingIndicatorTile extends StatelessWidget {

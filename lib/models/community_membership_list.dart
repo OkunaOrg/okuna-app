@@ -1,4 +1,4 @@
-import 'package:Openbook/models/community_membership.dart';
+import 'package:Okuna/models/community_membership.dart';
 
 class CommunityMembershipList {
   final List<CommunityMembership> communityMemberships;

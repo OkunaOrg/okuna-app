@@ -1,6 +1,6 @@
-import 'package:Openbook/models/updatable_model.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/users_list.dart';
+import 'package:Okuna/models/updatable_model.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/models/users_list.dart';
 import 'package:dcache/dcache.dart';
 
 class Circle extends UpdatableModel<Circle> {

@@ -1,5 +1,5 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileUsername extends StatelessWidget {

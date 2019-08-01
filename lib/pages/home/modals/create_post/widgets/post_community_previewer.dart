@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/avatars/community_avatar.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/community_tile.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/avatars/community_avatar.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/community_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../provider.dart';

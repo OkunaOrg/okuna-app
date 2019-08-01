@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:Openbook/provider.dart';
+import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 

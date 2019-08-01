@@ -1,5 +1,5 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/cover.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/widgets/cover.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBProfileCover extends StatelessWidget {

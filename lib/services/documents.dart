@@ -1,4 +1,4 @@
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 
 class DocumentsService {
   HttpieService _httpService;

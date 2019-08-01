@@ -1,10 +1,10 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/checkbox.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/follows_lists_horizontal_list/follows_lists_horizontal_list.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/follows_lists_horizontal_list/follows_lists_horizontal_list.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../provider.dart';

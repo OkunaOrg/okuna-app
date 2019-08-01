@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:Openbook/services/auth_api.dart';
-import 'package:Openbook/services/communities_api.dart';
-import 'package:Openbook/services/connections_circles_api.dart';
-import 'package:Openbook/services/follows_lists_api.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/image_picker.dart';
+import 'package:Okuna/services/auth_api.dart';
+import 'package:Okuna/services/communities_api.dart';
+import 'package:Okuna/services/connections_circles_api.dart';
+import 'package:Okuna/services/follows_lists_api.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/image_picker.dart';
 import 'package:validators/validators.dart' as validators;
 
 import 'localization.dart';

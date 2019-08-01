@@ -1,7 +1,7 @@
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/smart_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/smart_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 

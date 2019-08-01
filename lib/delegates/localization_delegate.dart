@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/translation/constants.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
 
 class LocalizationServiceDelegate

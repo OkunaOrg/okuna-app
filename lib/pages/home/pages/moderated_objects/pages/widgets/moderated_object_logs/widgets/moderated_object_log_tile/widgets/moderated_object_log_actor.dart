@@ -1,8 +1,8 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectLogActor extends StatelessWidget {

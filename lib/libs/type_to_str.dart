@@ -1,8 +1,8 @@
-import 'package:Openbook/libs/str_utils.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/libs/str_utils.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/user.dart';
 
 String modelTypeToString(dynamic modelInstance, {bool capitalize = false}) {
   String result;

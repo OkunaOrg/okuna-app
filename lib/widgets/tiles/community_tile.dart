@@ -1,11 +1,11 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/avatars/letter_avatar.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/avatars/letter_avatar.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/libs/pretty_count.dart';
+import 'package:Okuna/libs/pretty_count.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
 

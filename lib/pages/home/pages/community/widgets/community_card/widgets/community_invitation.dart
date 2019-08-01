@@ -1,7 +1,7 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/buttons/actions/join_community_button.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/buttons/actions/join_community_button.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityInvitation extends StatelessWidget {
