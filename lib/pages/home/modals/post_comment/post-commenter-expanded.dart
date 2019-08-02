@@ -49,6 +49,7 @@ class OBPostCommenterExpandedModalState
   List<Widget> _postCommentItemsWidgets;
   String _originalText;
   bool _requestInProgress;
+  bool _needsBootstrap;
 
   CancelableOperation _postCommentOperation;
 
@@ -62,13 +63,8 @@ class OBPostCommenterExpandedModalState
     _isPostCommentTextAllowedLength = false;
     _isPostCommentTextOriginal = false;
     _originalText = widget.postComment.text;
-    String hintText = widget.post.commentsCount > 0
-        ? _localizationService.post__commenter_expanded_join_conversation
-        : _localizationService.post__commenter_expanded_start_conversation;
-    _postCommentItemsWidgets = [
-      OBCreatePostText(controller: _textController, hintText: hintText)
-    ];
     _requestInProgress = false;
+    _needsBootstrap = true;
   }
 
   @override
@@ -85,6 +81,16 @@ class OBPostCommenterExpandedModalState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _localizationService = openbookProvider.localizationService;
+
+    if(_needsBootstrap){
+      String hintText = widget.post.commentsCount > 0
+          ? _localizationService.post__commenter_expanded_join_conversation
+          : _localizationService.post__commenter_expanded_start_conversation;
+      _postCommentItemsWidgets = [
+        OBCreatePostText(controller: _textController, hintText: hintText)
+      ];
+      _needsBootstrap = false;
+    }
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
