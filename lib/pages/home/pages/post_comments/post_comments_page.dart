@@ -190,6 +190,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   void dispose() {
     super.dispose();
     _animation.removeStatusListener(_onAnimationStatusChanged);
+    if(_refreshPostOperation != null) _refreshPostOperation.cancel();
     _commentsPageController.dispose();
   }
 
