@@ -83,8 +83,9 @@ class _MyAppState extends State<MyApp> {
             supportedLocales: supportedLocales,
             localizationsDelegates: [
               const LocalizationServiceDelegate(),
+              GlobalCupertinoLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate
+              GlobalWidgetsLocalizations.delegate,
             ],
             theme: new ThemeData(
                 buttonTheme: ButtonThemeData(
