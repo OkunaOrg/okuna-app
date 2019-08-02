@@ -92,7 +92,7 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
     }
 
     User loggedInUser = _userService.getLoggedInUser();
-    if (loggedInUser.canTranslatePostComment(widget.postComment)) {
+    if (loggedInUser.canTranslatePostComment(widget.postComment, widget.post)) {
       return GestureDetector(
         onTap: _toggleTranslatePostComment,
         child: _translatedText != null ?
