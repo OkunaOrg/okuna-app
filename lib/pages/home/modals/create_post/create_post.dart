@@ -8,7 +8,6 @@ import 'package:Okuna/pages/home/modals/create_post/widgets/post_image_previewer
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_video_previewer.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/image_picker.dart';
 import 'package:Okuna/services/localization.dart';

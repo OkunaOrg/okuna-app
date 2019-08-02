@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class OBCreatePostText extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
-  String hintText;
+  final String hintText;
 
   OBCreatePostText({this.controller, this.focusNode, this.hintText});
 
