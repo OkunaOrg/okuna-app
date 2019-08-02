@@ -3,7 +3,7 @@ import 'package:Okuna/services/httpie.dart';
 class DocumentsService {
   HttpieService _httpService;
 
-  static const guidelinesUrl = 'https://okuna.github.io/okuna-api/COMMUNITY_GUIDELINES.md';
+  static const guidelinesUrl = 'https://okunaorg.github.io/okuna-api/COMMUNITY_GUIDELINES.md';
 
   void setHttpService(HttpieService httpService) {
     _httpService = httpService;
