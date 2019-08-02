@@ -183,7 +183,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   bool isEncircledPost() {
-    return isEncircled || false;
+    return isEncircled;
   }
 
   List<PostComment> getPostComments() {
