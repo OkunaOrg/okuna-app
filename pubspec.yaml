@@ -170,6 +170,10 @@ flutter:
           style: normal
         - asset: assets/fonts/VisbyRoundCF-Bold.otf
           style: italic
+    - family: CogogooseProSemilight
+      fonts:
+        - asset: assets/fonts/Cocogoose-Pro-Semilight.ttf
+          style: normal
     - family: ''
       fonts:
         - asset: assets/fonts/NunitoSans-Regular.ttf
