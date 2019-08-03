@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.49+55
+version: 0.0.50+55
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -102,9 +102,6 @@ flutter:
     - assets/images/openbook-o-logo.png
     - assets/images/pixel-universe.jpg
     - assets/images/confetti-background.gif
-    - assets/lang/es.json
-    - assets/lang/en.json
-    - assets/lang/nl.json
     - assets/images/icons/gif-icon.png
     - assets/images/icons/profile-icon.png
     - assets/images/icons/connections-icon.png
