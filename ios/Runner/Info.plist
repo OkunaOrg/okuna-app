@@ -19,15 +19,15 @@
 		<string>es</string>
 	</array>
 	<key>CFBundleName</key>
-	<string>okuna</string>
+	<string>Okuna</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.49</string>
+	<string>0.0.51</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>49</string>
+	<string>51</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
