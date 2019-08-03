@@ -373,15 +373,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.6"
-  onesignalflutter:
+  onesignal_flutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: fb4bd2da344db58f2073d314ff1e363556804673
-      url: "git://github.com/jmrobles/OneSignal-Flutter-SDK.git"
-    source: git
-    version: "1.1.0"
+      name: onesignal_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   package_config:
     dependency: transitive
     description:
