@@ -176,12 +176,12 @@
 			remoteGlobalIDString = BFBFB5926D8AB35D39D19DC735F22517;
 			remoteInfo = multi_image_picker;
 		};
-		89C777D222F1DBF400ED03F2 /* PBXContainerItemProxy */ = {
+		89CB943622F5B45B004F2969 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 87AFA9365143B556BDEA226DA98755D4;
-			remoteInfo = onesignalflutter;
+			remoteGlobalIDString = 7FACDD2ED69BB96907B509538EEA0AE0;
+			remoteInfo = onesignal_flutter;
 		};
 		89CF474322419BFD001BC50D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -372,7 +372,7 @@
 				898053A222047AAF00E47AD9 /* image_picker.framework */,
 				8902A1062236D5BF005F914D /* intercom_flutter.framework */,
 				89B81DBC22A7F41F00B3E9E0 /* multi_image_picker.framework */,
-				89C777D322F1DBF400ED03F2 /* onesignalflutter.framework */,
+				89CB943722F5B45B004F2969 /* onesignal_flutter.framework */,
 				898053A622047AAF00E47AD9 /* path_provider.framework */,
 				898053A822047AAF00E47AD9 /* Pods_OneSignalNotificationServiceExtension.framework */,
 				898053AA22047AAF00E47AD9 /* Pods_Runner.framework */,
@@ -723,11 +723,11 @@
 			remoteRef = 89B81DBB22A7F41F00B3E9E0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		89C777D322F1DBF400ED03F2 /* onesignalflutter.framework */ = {
+		89CB943722F5B45B004F2969 /* onesignal_flutter.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = onesignalflutter.framework;
-			remoteRef = 89C777D222F1DBF400ED03F2 /* PBXContainerItemProxy */;
+			path = onesignal_flutter.framework;
+			remoteRef = 89CB943622F5B45B004F2969 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		89CF474422419BFD001BC50D /* flutter_exif_rotation.framework */ = {
@@ -806,7 +806,7 @@
 				"${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/BSImageView/BSImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
 				"${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/device_info/device_info.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_exif_rotation/flutter_exif_rotation.framework",

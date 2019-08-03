@@ -27,7 +27,7 @@ PODS:
     - BSImagePicker (~> 2.10.0)
     - Flutter
   - OneSignal (2.10.0)
-  - onesignalflutter (1.0.5):
+  - onesignal_flutter (2.0.0):
     - Flutter
     - OneSignal (< 3.0, >= 2.9.5)
   - path_provider (0.0.1):
@@ -49,7 +49,7 @@ PODS:
 
 DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -57,7 +57,7 @@ DEPENDENCIES:
   - intercom_flutter (from `.symlinks/plugins/intercom_flutter/ios`)
   - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
   - OneSignal (< 3.0, >= 2.9.5)
-  - onesignalflutter (from `.symlinks/plugins/onesignalflutter/ios`)
+  - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -80,7 +80,7 @@ EXTERNAL SOURCES:
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_exif_rotation:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_secure_storage:
@@ -93,8 +93,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/intercom_flutter/ios"
   multi_image_picker:
     :path: ".symlinks/plugins/multi_image_picker/ios"
-  onesignalflutter:
-    :path: ".symlinks/plugins/onesignalflutter/ios"
+  onesignal_flutter:
+    :path: ".symlinks/plugins/onesignal_flutter/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   share:
@@ -125,7 +125,7 @@ SPEC CHECKSUMS:
   intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
   multi_image_picker: 3a6afea72a3271d9b0bcc67d8888d38c4ff53efd
   OneSignal: 0f5ff711d9f25da54885e4ab06ef0abc221a46ef
-  onesignalflutter: 2d33b06e798bafd6535bc96a2fb1a92a604b4004
+  onesignal_flutter: 9f295af4ef4a987342bb374c5988392e076ccafd
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523

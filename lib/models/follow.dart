@@ -1,5 +1,5 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/models/user.dart';
 
 class Follow {
   final int id;

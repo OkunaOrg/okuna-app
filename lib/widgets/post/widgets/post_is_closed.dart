@@ -1,10 +1,10 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/cirles_wrap.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/cirles_wrap.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

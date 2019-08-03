@@ -1,9 +1,9 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/alerts/button_alert.dart';
-import 'package:Openbook/widgets/icon.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileNoPosts extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:Openbook/widgets/checkbox.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

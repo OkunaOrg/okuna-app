@@ -1,10 +1,10 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/emoji_group.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/emoji_picker/emoji_picker.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/emoji_group.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/emoji_picker/emoji_picker.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

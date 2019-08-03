@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:Openbook/models/language.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/string_template.dart';
+import 'package:Okuna/models/language.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/string_template.dart';
 import 'package:meta/meta.dart';
 
 class AuthApiService {

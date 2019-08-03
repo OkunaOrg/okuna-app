@@ -1,18 +1,18 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/circles_list.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/community_invite.dart';
-import 'package:Openbook/models/community_invite_list.dart';
-import 'package:Openbook/models/community_membership.dart';
-import 'package:Openbook/models/community_membership_list.dart';
-import 'package:Openbook/models/follows_lists_list.dart';
-import 'package:Openbook/models/language.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/updatable_model.dart';
-import 'package:Openbook/models/user_notifications_settings.dart';
-import 'package:Openbook/models/user_profile.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/circles_list.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/community_invite.dart';
+import 'package:Okuna/models/community_invite_list.dart';
+import 'package:Okuna/models/community_membership.dart';
+import 'package:Okuna/models/community_membership_list.dart';
+import 'package:Okuna/models/follows_lists_list.dart';
+import 'package:Okuna/models/language.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/updatable_model.dart';
+import 'package:Okuna/models/user_notifications_settings.dart';
+import 'package:Okuna/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
 
 class User extends UpdatableModel<User> {
@@ -234,7 +234,9 @@ class User extends UpdatableModel<User> {
   }
 
   bool hasProfileBadges() {
-    return this.profile != null && this.profile.badges != null && this.profile.badges.length > 0;
+    return this.profile != null &&
+        this.profile.badges != null &&
+        this.profile.badges.length > 0;
   }
 
   bool hasLanguage() {
@@ -480,17 +482,19 @@ class User extends UpdatableModel<User> {
     return loggedInUserIsPostCreator && !post.isClosed;
   }
 
-  bool canTranslatePostComment(PostComment postComment) {
-    User loggedInUser = this;
+  bool canTranslatePostComment(PostComment postComment, Post post) {
+    if ((!post.hasCommunity() && post.isEncircledPost()) ||
+        language?.code == null) return false;
+
     return postComment.hasLanguage() &&
-        postComment.getLanguage().code != loggedInUser.language.code;
+        postComment.getLanguage().code != language.code;
   }
 
   bool canTranslatePost(Post post) {
-    User loggedInUser = this;
-    return post.hasLanguage() &&
-        !post.isEncircledPost() &&
-        post.getLanguage().code != loggedInUser.language.code;
+    if ((!post.hasCommunity() && post.isEncircledPost()) ||
+        language?.code == null) return false;
+
+    return post.hasLanguage() && post.getLanguage().code != language.code;
   }
 
   bool canEditPostComment(PostComment postComment, Post post) {

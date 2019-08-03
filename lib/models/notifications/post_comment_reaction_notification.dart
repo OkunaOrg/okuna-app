@@ -1,4 +1,4 @@
-import 'package:Openbook/models/post_comment_reaction.dart';
+import 'package:Okuna/models/post_comment_reaction.dart';
 
 class PostCommentReactionNotification {
   final int id;

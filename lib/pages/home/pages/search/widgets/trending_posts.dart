@@ -1,15 +1,15 @@
 import 'dart:async';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/posts_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/alerts/button_alert.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/posts_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/post/post.dart';
+import 'package:Okuna/widgets/theming/primary_accent_text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 

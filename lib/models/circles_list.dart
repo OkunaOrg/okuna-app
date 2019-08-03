@@ -1,4 +1,4 @@
-import 'package:Openbook/models/circle.dart';
+import 'package:Okuna/models/circle.dart';
 
 class CirclesList {
   final List<Circle> circles;

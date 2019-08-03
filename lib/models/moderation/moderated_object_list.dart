@@ -1,4 +1,4 @@
-import 'package:Openbook/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
 
 class ModeratedObjectsList {
   final List<ModeratedObject> moderatedObjects;

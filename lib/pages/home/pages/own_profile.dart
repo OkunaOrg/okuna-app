@@ -1,7 +1,7 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
-import 'package:Openbook/pages/home/pages/profile/profile.dart';
-import 'package:Openbook/provider.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
+import 'package:Okuna/pages/home/pages/profile/profile.dart';
+import 'package:Okuna/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

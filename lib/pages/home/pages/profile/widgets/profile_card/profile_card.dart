@@ -1,19 +1,19 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_connected_in.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_connection_request.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_counts/profile_counts.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_in_lists.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/user_badge.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_connected_in.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_connection_request.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_counts/profile_counts.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_in_lists.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {

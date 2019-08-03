@@ -1,4 +1,4 @@
-name: Openbook
+name: Okuna
 description: Social Network
 
 # The following defines the version and build number for your application.
@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.46+50
+version: 0.0.50+55
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -27,8 +27,7 @@ dependencies:
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
-  onesignalflutter:
-    git: git://github.com/jmrobles/OneSignal-Flutter-SDK.git
+  onesignal_flutter: ^2.0.1
   flutter_advanced_networkimage: ^0.5.0
   dcache: ^0.1.0
   validators: ^1.0.0+1
@@ -103,9 +102,6 @@ flutter:
     - assets/images/openbook-o-logo.png
     - assets/images/pixel-universe.jpg
     - assets/images/confetti-background.gif
-    - assets/lang/es.json
-    - assets/lang/en.json
-    - assets/lang/nl.json
     - assets/images/icons/gif-icon.png
     - assets/images/icons/profile-icon.png
     - assets/images/icons/connections-icon.png
@@ -170,6 +166,10 @@ flutter:
           style: normal
         - asset: assets/fonts/VisbyRoundCF-Bold.otf
           style: italic
+    - family: CogogooseProSemilight
+      fonts:
+        - asset: assets/fonts/Cocogoose-Pro-Semilight.ttf
+          style: normal
     - family: ''
       fonts:
         - asset: assets/fonts/NunitoSans-Regular.ttf

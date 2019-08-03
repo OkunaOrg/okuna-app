@@ -1,11 +1,11 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthNameStepPage extends StatefulWidget {

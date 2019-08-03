@@ -1,10 +1,10 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/pages/home/pages/community/pages/community_staff/widgets/community_administrators.dart';
-import 'package:Openbook/pages/home/pages/community/pages/community_staff/widgets/community_moderators.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/community_administrators.dart';
+import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/community_moderators.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../provider.dart';

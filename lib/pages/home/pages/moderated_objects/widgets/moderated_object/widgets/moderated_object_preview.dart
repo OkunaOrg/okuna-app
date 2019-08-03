@@ -1,12 +1,12 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/post/widgets/post-body/post_body.dart';
-import 'package:Openbook/widgets/post/widgets/post_header/post_header.dart';
-import 'package:Openbook/widgets/tiles/community_tile.dart';
-import 'package:Openbook/widgets/tiles/user_tile.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/post/widgets/post-body/post_body.dart';
+import 'package:Okuna/widgets/post/widgets/post_header/post_header.dart';
+import 'package:Okuna/widgets/tiles/community_tile.dart';
+import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectPreview extends StatelessWidget {

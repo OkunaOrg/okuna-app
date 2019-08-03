@@ -1,11 +1,11 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/posts_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/post/post.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/posts_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityPosts extends StatefulWidget {

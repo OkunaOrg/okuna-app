@@ -1,4 +1,4 @@
-import 'package:Openbook/models/circle.dart';
+import 'package:Okuna/models/circle.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 

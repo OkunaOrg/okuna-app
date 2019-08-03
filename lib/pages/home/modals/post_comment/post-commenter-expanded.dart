@@ -1,23 +1,23 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/bottom_sheet.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +49,7 @@ class OBPostCommenterExpandedModalState
   List<Widget> _postCommentItemsWidgets;
   String _originalText;
   bool _requestInProgress;
+  bool _needsBootstrap;
 
   CancelableOperation _postCommentOperation;
 
@@ -62,13 +63,8 @@ class OBPostCommenterExpandedModalState
     _isPostCommentTextAllowedLength = false;
     _isPostCommentTextOriginal = false;
     _originalText = widget.postComment.text;
-    String hintText = widget.post.commentsCount > 0
-        ? _localizationService.post__commenter_expanded_join_conversation
-        : _localizationService.post__commenter_expanded_start_conversation;
-    _postCommentItemsWidgets = [
-      OBCreatePostText(controller: _textController, hintText: hintText)
-    ];
     _requestInProgress = false;
+    _needsBootstrap = true;
   }
 
   @override
@@ -85,6 +81,16 @@ class OBPostCommenterExpandedModalState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _localizationService = openbookProvider.localizationService;
+
+    if(_needsBootstrap){
+      String hintText = widget.post.commentsCount > 0
+          ? _localizationService.post__commenter_expanded_join_conversation
+          : _localizationService.post__commenter_expanded_start_conversation;
+      _postCommentItemsWidgets = [
+        OBCreatePostText(controller: _textController, hintText: hintText)
+      ];
+      _needsBootstrap = false;
+    }
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,

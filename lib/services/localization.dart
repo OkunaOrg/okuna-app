@@ -2,13 +2,13 @@
 
 import 'dart:async';
 
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/translation/constants.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:Openbook/locale/messages_all.dart';
+import 'package:Okuna/locale/messages_all.dart';
 
 import '../main.dart';
 

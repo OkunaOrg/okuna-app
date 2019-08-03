@@ -1,13 +1,13 @@
-import 'package:Openbook/pages/waitlist/subscribe_done_step.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
+import 'package:Okuna/pages/waitlist/subscribe_done_step.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBWaitlistSubscribePage extends StatefulWidget {

@@ -1,9 +1,9 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/user_tile.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBConnectionsCircleUsers extends StatelessWidget {

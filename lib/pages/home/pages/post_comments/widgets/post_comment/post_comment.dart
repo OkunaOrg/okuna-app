@@ -1,15 +1,15 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_actions.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_commenter_identifier.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_reactions.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_text.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/user_preferences.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_actions.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_commenter_identifier.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_reactions.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/widgets/post_comment_text.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 

@@ -1,10 +1,10 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/user_badge.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 

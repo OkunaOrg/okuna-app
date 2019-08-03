@@ -1,11 +1,11 @@
-import 'package:Openbook/models/moderation/moderated_object_log.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_category_changed_log_tile.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_description_changed_log_tile.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_log_actor.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_status_changed_log_tile.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_verified_changed_log_tile.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/moderation/moderated_object_log.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_category_changed_log_tile.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_description_changed_log_tile.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_log_actor.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_status_changed_log_tile.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/widgets/moderated_object_verified_changed_log_tile.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectLogTile extends StatelessWidget {

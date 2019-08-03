@@ -1,7 +1,7 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/emoji_preview.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/widgets/emoji_preview.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileInLists extends StatelessWidget {

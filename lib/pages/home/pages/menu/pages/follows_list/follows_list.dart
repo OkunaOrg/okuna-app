@@ -1,17 +1,17 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/primary_accent_text.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 
 class OBFollowsListPage extends StatefulWidget {
   final FollowsList followsList;

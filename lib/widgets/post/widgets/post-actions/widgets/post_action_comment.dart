@@ -1,8 +1,8 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

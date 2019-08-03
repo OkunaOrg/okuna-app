@@ -1,14 +1,14 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_comment_reaction.dart';
-import 'package:Openbook/models/reactions_emoji_count.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/reaction_emoji_count.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/post_comment_reaction.dart';
+import 'package:Okuna/models/reactions_emoji_count.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/reaction_emoji_count.dart';
 import 'package:flutter/material.dart';
 
 class OBPostCommentReactions extends StatefulWidget {

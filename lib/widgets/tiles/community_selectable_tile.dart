@@ -1,6 +1,6 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/checkbox.dart';
-import 'package:Openbook/widgets/tiles/community_tile.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBCommunitySelectableTile extends StatelessWidget {

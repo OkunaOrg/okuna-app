@@ -1,5 +1,5 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/widgets/icon.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

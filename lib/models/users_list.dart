@@ -1,4 +1,4 @@
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/models/user.dart';
 
 class UsersList {
   final List<User> users;

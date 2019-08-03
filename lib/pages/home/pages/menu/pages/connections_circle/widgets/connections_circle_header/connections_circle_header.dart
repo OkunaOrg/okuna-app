@@ -1,8 +1,8 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_header/widgets/connections_circle_name.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_header/widgets/connections_circle_name.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/circle_color_preview.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../provider.dart';

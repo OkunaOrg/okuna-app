@@ -1,4 +1,4 @@
-import 'package:Openbook/models/follows_list.dart';
+import 'package:Okuna/models/follows_list.dart';
 
 // This f'ing NAME!!!!!
 

@@ -1,10 +1,10 @@
-import 'package:Openbook/libs/str_utils.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/moderation/moderation_category.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/updatable_model.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/libs/str_utils.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/moderation/moderation_category.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/updatable_model.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:meta/meta.dart';
 

@@ -1,12 +1,12 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/theme.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/floating_action_button.dart';
-import 'package:Openbook/widgets/icon.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/floating_action_button.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 

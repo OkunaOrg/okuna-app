@@ -1,6 +1,6 @@
-import 'package:Openbook/models/emoji_group.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/emoji_group.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/models/emoji_group.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/emoji_group.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:flutter/material.dart';
 
 class OBEmojiGroups extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 import '../icon.dart';

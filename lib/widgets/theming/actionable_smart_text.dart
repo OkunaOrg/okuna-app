@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/url_launcher.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/theming/smart_text.dart';
-export 'package:Openbook/widgets/theming/smart_text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/url_launcher.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/smart_text.dart';
+export 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 
 class OBActionableSmartText extends StatefulWidget {

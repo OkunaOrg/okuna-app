@@ -1,6 +1,6 @@
-import 'package:Openbook/models/post_comment_reaction.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/post_comment_reaction.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBPostCommentReactionTile extends StatelessWidget {

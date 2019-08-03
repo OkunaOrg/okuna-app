@@ -1,4 +1,4 @@
-import 'package:Openbook/models/reactions_emoji_count.dart';
+import 'package:Okuna/models/reactions_emoji_count.dart';
 
 class ReactionsEmojiCountList {
   final List<ReactionsEmojiCount> counts;

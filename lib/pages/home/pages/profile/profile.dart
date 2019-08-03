@@ -1,21 +1,21 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_cover.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_nav_bar.dart';
-import 'package:Openbook/pages/home/pages/profile/widgets/profile_no_posts.dart';
-import 'package:Openbook/widgets/loadmore/loadmore_delegate.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_cover.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_nav_bar.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_no_posts.dart';
+import 'package:Okuna/widgets/loadmore/loadmore_delegate.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/post/post.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/widgets/load_more.dart';
+import 'package:Okuna/widgets/load_more.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;

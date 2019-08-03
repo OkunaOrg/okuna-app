@@ -1,14 +1,14 @@
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderated_object_log.dart';
-import 'package:Openbook/models/moderation/moderated_object_log_list.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/moderated_object_log_tile.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/tile_group_title.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderated_object_log.dart';
+import 'package:Okuna/models/moderation/moderated_object_log_list.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/widgets/moderated_object_log_tile/moderated_object_log_tile.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 

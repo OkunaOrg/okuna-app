@@ -1,7 +1,7 @@
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthSubmitPage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/utils_service.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;

@@ -1,7 +1,7 @@
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/universal_links/universal_links.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/universal_links/universal_links.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountLinkHandler extends UniversalLinkHandler {

@@ -1,16 +1,16 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/circles_list.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/post_comment_list.dart';
-import 'package:Openbook/models/post_image.dart';
-import 'package:Openbook/models/post_reaction.dart';
-import 'package:Openbook/models/reactions_emoji_count.dart';
-import 'package:Openbook/models/reactions_emoji_count_list.dart';
-import 'package:Openbook/models/updatable_model.dart';
-import 'package:Openbook/models/post_video.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/circles_list.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/post_comment_list.dart';
+import 'package:Okuna/models/post_image.dart';
+import 'package:Okuna/models/post_reaction.dart';
+import 'package:Okuna/models/reactions_emoji_count.dart';
+import 'package:Okuna/models/reactions_emoji_count_list.dart';
+import 'package:Okuna/models/updatable_model.dart';
+import 'package:Okuna/models/post_video.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -183,7 +183,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   bool isEncircledPost() {
-    return isEncircled;
+    return isEncircled || false;
   }
 
   List<PostComment> getPostComments() {

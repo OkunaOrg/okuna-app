@@ -53,7 +53,7 @@ Cyber-hero? Check out our [Vulnerability Disclosure page](https://www.okuna.io/e
 
 #### Other issues
 
-We're available almost 24/7 in the Okuna slack channel. [Join us!](https://join.slack.com/t/openspacesocial/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY)
+We're available almost 24/7 in the Okuna slack channel. [Join us!](https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY)
 
 #### Git commit message conventions
 
@@ -194,6 +194,16 @@ flutter run --profile
 ### 8. Contribute! 
 
 Help us keep Okuna going! Please look into our open issues. All contribution, no matter how small, makes a big difference.
+
+### 9. Build for production
+
+To build the android APK
+
+```flutter build appbundle --target-platform android-arm,android-arm64```
+
+To build the iOS archive
+
+```flutter build ios```
 
 ## Official work-around's list
 

@@ -1,8 +1,8 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/widgets/follows_list_name.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/widgets/follows_list_name.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../provider.dart';

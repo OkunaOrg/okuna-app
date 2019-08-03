@@ -1,15 +1,15 @@
-import 'package:Openbook/libs/str_utils.dart';
-import 'package:Openbook/models/user_invite.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_tile.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/libs/str_utils.dart';
+import 'package:Okuna/models/user_invite.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/user_invites/widgets/user_invite_tile.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -170,7 +170,7 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
   void _bootstrap() {
     _refreshInvites();
   }
-  
+
   void _removeUserInvite(UserInvite userInvite) {
     setState(() {
       _inviteGroupList.remove(userInvite);

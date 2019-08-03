@@ -1,4 +1,4 @@
-import 'package:Openbook/models/emoji_group.dart';
+import 'package:Okuna/models/emoji_group.dart';
 
 class EmojiGroupList {
   final List<EmojiGroup> emojisGroups;

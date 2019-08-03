@@ -1,12 +1,12 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class OBFollowsListTile extends StatefulWidget {

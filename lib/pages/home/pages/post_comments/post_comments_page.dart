@@ -1,26 +1,26 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/pages/post_comments/post_comments_page_controller.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post-commenter.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_preview.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/theme.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/services/user_preferences.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/theming/post_divider.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controller.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post-commenter.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/post_divider.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/widgets/load_more.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/widgets/load_more.dart';
+import 'package:Okuna/services/httpie.dart';
 
 class OBPostCommentsPage extends StatefulWidget {
   final PostComment linkedPostComment;
@@ -190,6 +190,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   void dispose() {
     super.dispose();
     _animation.removeStatusListener(_onAnimationStatusChanged);
+    if(_refreshPostOperation != null) _refreshPostOperation.cancel();
     _commentsPageController.dispose();
   }
 

@@ -1,12 +1,12 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/user_badge.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 
 class OBPostCommentCommenterIdentifier extends StatelessWidget {
@@ -81,9 +81,9 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
   Widget _buildBadge() {
     User postCommenter = postComment.commenter;
 
-    if (postCommenter.hasProfileBadges()) return _buildProfileBadge();
+    List<Widget> badges = [];
 
-    Post post = this.post;
+    if (postCommenter.hasProfileBadges()) badges.add(_buildProfileBadge());
 
     if (post.hasCommunity()) {
       Community postCommunity = post.community;
@@ -92,18 +92,18 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
           postCommenter.isAdministratorOfCommunity(postCommunity);
 
       if (isCommunityAdministrator) {
-        return _buildCommunityAdministratorBadge();
+        badges.add(_buildCommunityAdministratorBadge());
       }
 
       bool isCommunityModerator =
           postCommenter.isModeratorOfCommunity(postCommunity);
 
       if (isCommunityModerator) {
-        return _buildCommunityModeratorBadge();
+        badges.add(_buildCommunityModeratorBadge());
       }
     }
 
-    return const SizedBox();
+    return badges.isNotEmpty ? Row(children: badges,) : const SizedBox();
   }
 
   Widget _buildCommunityAdministratorBadge() {
@@ -118,11 +118,13 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
   }
 
   Widget _buildCommunityModeratorBadge() {
-    return const OBIcon(
-      OBIcons.communityModerators,
-      size: OBIconSize.small,
-      themeColor: OBIconThemeColor.primaryAccent,
-    );
+    return const Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 1),
+        child: OBIcon(
+          OBIcons.communityModerators,
+          size: OBIconSize.small,
+          themeColor: OBIconThemeColor.primaryAccent,
+        ));
   }
 
   Widget _buildProfileBadge() {

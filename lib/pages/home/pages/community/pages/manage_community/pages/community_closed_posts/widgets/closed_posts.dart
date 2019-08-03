@@ -1,17 +1,17 @@
 import 'dart:async';
 
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/posts_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/post/post.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/loading_indicator_tile.dart';
-import 'package:Openbook/widgets/tiles/retry_tile.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/posts_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/post/post.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/loading_indicator_tile.dart';
+import 'package:Okuna/widgets/tiles/retry_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 

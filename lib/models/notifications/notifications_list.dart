@@ -1,4 +1,4 @@
-import 'package:Openbook/models/notifications/notification.dart';
+import 'package:Okuna/models/notifications/notification.dart';
 
 class NotificationsList {
   final List<OBNotification> notifications;

@@ -1,7 +1,7 @@
-import 'package:Openbook/models/category.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/tabs/image_tab.dart';
+import 'package:Okuna/models/category.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/tabs/image_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 

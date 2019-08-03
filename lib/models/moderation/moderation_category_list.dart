@@ -1,4 +1,4 @@
-import 'package:Openbook/models/moderation/moderation_category.dart';
+import 'package:Okuna/models/moderation/moderation_category.dart';
 
 class ModerationCategoriesList {
   final List<ModerationCategory> moderationCategories;

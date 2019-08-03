@@ -1,19 +1,19 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/fields/text_form_field.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 
 class OBPostCommenter extends StatefulWidget {
   final Post post;

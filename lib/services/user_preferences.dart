@@ -1,5 +1,5 @@
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/services/storage.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/services/storage.dart';
 
 class UserPreferencesService {
   OBStorage _storage;

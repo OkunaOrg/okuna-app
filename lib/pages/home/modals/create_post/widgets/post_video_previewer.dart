@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:Openbook/widgets/video_player/aspect_ratio_video.dart';
-import 'package:Openbook/widgets/video_player/network_player_lifecycle.dart';
+import 'package:Okuna/widgets/video_player/aspect_ratio_video.dart';
+import 'package:Okuna/widgets/video_player/network_player_lifecycle.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

@@ -1,8 +1,8 @@
-import 'package:Openbook/models/categories_list.dart';
-import 'package:Openbook/models/category.dart';
-import 'package:Openbook/widgets/category_badge.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Okuna/models/categories_list.dart';
+import 'package:Okuna/models/category.dart';
+import 'package:Okuna/widgets/category_badge.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

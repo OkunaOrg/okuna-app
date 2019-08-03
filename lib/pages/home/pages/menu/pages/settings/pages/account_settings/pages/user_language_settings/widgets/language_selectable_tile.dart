@@ -1,5 +1,5 @@
-import 'package:Openbook/models/language.dart';
-import 'package:Openbook/widgets/fields/checkbox_field.dart';
+import 'package:Okuna/models/language.dart';
+import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
 
 class OBLanguageSelectableTile extends StatelessWidget {

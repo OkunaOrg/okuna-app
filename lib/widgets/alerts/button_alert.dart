@@ -1,7 +1,7 @@
-import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBButtonAlert extends StatelessWidget {
