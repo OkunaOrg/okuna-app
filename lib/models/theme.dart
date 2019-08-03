@@ -1,4 +1,4 @@
-import 'package:Openbook/models/updatable_model.dart';
+import 'package:Okuna/models/updatable_model.dart';
 import 'package:dcache/dcache.dart';
 
 class OBTheme extends UpdatableModel<OBTheme> {

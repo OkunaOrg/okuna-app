@@ -1,4 +1,4 @@
-import 'package:Openbook/models/post.dart';
+import 'package:Okuna/models/post.dart';
 
 class PostsList {
   final List<Post> posts;

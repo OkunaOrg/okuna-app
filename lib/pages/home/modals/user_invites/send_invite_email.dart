@@ -1,16 +1,17 @@
-import 'package:Openbook/models/user_invite.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/user_invite.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/fields/text_form_field.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class OBSendUserInviteEmailModalState
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
+  LocalizationService _localizationService;
 
   CancelableOperation _emailOperation;
 
@@ -71,6 +73,7 @@ class OBSendUserInviteEmailModalState
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     _validationService = openbookProvider.validationService;
 
     return OBCupertinoPageScaffold(
@@ -94,8 +97,8 @@ class OBSendUserInviteEmailModalState
                                 autofocus: widget.autofocusEmailTextField,
                                 controller: _emailController,
                                 decoration: InputDecoration(
-                                    labelText: 'Email',
-                                    hintText: 'e.g. janedoe@email.com'),
+                                    labelText: _localizationService.user__invites_email_text,
+                                    hintText: _localizationService.user__invites_email_hint),
                                 validator: (String email) {
                                   if (!_formWasSubmitted) return null;
                                   return _validationService.validateUserEmail(email);
@@ -116,13 +119,13 @@ class OBSendUserInviteEmailModalState
             Navigator.pop(context);
           },
         ),
-        title: 'Email invite',
+        title: _localizationService.user__invites_email_invite_text,
         trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
           size: OBButtonSize.small,
           onPressed: _submitForm,
-          child: Text('Send'),
+          child: Text(_localizationService.user__invites_email_send_text),
         ));
   }
 
@@ -159,7 +162,7 @@ class OBSendUserInviteEmailModalState
   }
 
   void _showUserInviteSent() {
-    _toastService.success(message: 'Invite email sent', context: context);
+    _toastService.success(message: _localizationService.user__invites_email_sent_text, context: context);
   }
 
   void _onError(error) async {
@@ -170,7 +173,7 @@ class OBSendUserInviteEmailModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

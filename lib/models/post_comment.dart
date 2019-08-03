@@ -1,14 +1,15 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment_list.dart';
-import 'package:Openbook/models/post_comment_reaction.dart';
-import 'package:Openbook/models/reactions_emoji_count.dart';
-import 'package:Openbook/models/reactions_emoji_count_list.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment_list.dart';
+import 'package:Okuna/models/post_comment_reaction.dart';
+import 'package:Okuna/models/reactions_emoji_count.dart';
+import 'package:Okuna/models/reactions_emoji_count_list.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:Openbook/models/updatable_model.dart';
+import 'package:Okuna/models/updatable_model.dart';
 
 import 'emoji.dart';
+import 'language.dart';
 
 class PostComment extends UpdatableModel<PostComment> {
   final int id;
@@ -16,6 +17,7 @@ class PostComment extends UpdatableModel<PostComment> {
   int repliesCount;
   DateTime created;
   String text;
+  Language language;
   User commenter;
   PostComment parentComment;
   PostCommentList replies;
@@ -63,6 +65,7 @@ class PostComment extends UpdatableModel<PostComment> {
       {this.id,
       this.created,
       this.text,
+      this.language,
       this.creatorId,
       this.commenter,
       this.post,
@@ -111,6 +114,10 @@ class PostComment extends UpdatableModel<PostComment> {
       text = json['text'];
     }
 
+    if (json.containsKey('language')) {
+      language = factory.parseLanguage(json['language']);
+    }
+
     if (json.containsKey('post')) {
       post = factory.parsePost(json['post']);
     }
@@ -154,6 +161,10 @@ class PostComment extends UpdatableModel<PostComment> {
     return repliesCount != null && repliesCount > 0 && replies != null;
   }
 
+  bool hasLanguage() {
+    return language != null;
+  }
+
   List<PostComment> getPostCommentReplies() {
     if (replies == null) return [];
     return replies.comments;
@@ -165,6 +176,10 @@ class PostComment extends UpdatableModel<PostComment> {
 
   int getPostCreatorId() {
     return post.getCreatorId();
+  }
+
+  Language getLanguage() {
+    return this.language;
   }
 
   void setIsReported(isReported) {
@@ -259,6 +274,7 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         isMuted: json['is_muted'],
         isReported: json['is_reported'],
         text: json['text'],
+        language: parseLanguage(json['language']),
         reaction: parseReaction(json['reaction']),
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
@@ -297,6 +313,11 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
   ReactionsEmojiCountList parseReactionsEmojiCounts(List reactionsEmojiCounts) {
     if (reactionsEmojiCounts == null) return null;
     return ReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
+  }
+
+  Language parseLanguage(Map languageData) {
+    if (languageData == null) return null;
+    return Language.fromJson(languageData);
   }
 }
 

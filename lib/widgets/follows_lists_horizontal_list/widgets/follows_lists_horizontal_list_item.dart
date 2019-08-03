@@ -1,10 +1,13 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/widgets/checkbox.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/follows_lists_horizontal_list/follows_lists_horizontal_list.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/follows_lists_horizontal_list/follows_lists_horizontal_list.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../provider.dart';
 
 class OBFollowsListHorizontalListItem extends StatelessWidget {
   final bool isSelected;
@@ -19,6 +22,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     int usersCount = followsList.followsCount;
 
     if (wasPreviouslySelected) {
@@ -28,7 +32,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
     } else if (isSelected) {
       usersCount = usersCount + 1;
     }
-    String prettyUsersCount = getPrettyCount(usersCount);
+    String prettyUsersCount = getPrettyCount(usersCount, _localizationService);
 
     return GestureDetector(
       onTap: () {
@@ -64,8 +68,7 @@ class OBFollowsListHorizontalListItem extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             ),
-            OBText(
-              prettyUsersCount + ' ' + (usersCount <= 1 ? 'Account' : 'Accounts'),
+            OBText((usersCount == 1 ? _localizationService.user__follows_lists_account : _localizationService.user__follows_lists_accounts(prettyUsersCount)),
               maxLines: 1,
               size: OBTextSize.extraSmall,
               style: TextStyle(

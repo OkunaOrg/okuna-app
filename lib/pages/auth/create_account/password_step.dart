@@ -1,11 +1,11 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthPasswordStepPage extends StatefulWidget {
@@ -20,6 +20,8 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   CreateAccountBloc createAccountBloc;
   LocalizationService localizationService;
   ValidationService validationService;
+  static const passwordMaxLength = ValidationService.PASSWORD_MAX_LENGTH;
+  static const passwordMinLength = ValidationService.PASSWORD_MIN_LENGTH;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController _passwordController = TextEditingController();
@@ -36,6 +38,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
     localizationService = openbookProvider.localizationService;
     validationService = openbookProvider.validationService;
     createAccountBloc = openbookProvider.createAccountBloc;
+
 
     return Scaffold(
       body: Center(
@@ -74,7 +77,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = localizationService.trans('auth__create_acc__next');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -99,7 +102,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -127,7 +130,9 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
 
   Widget _buildWhatYourPassword({@required BuildContext context}) {
     String whatPasswordText =
-        localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
+        localizationService.trans('auth__create_acc__what_password');
+    String passwordCharactersText =
+    localizationService.auth__create_acc_password_hint_text(passwordMinLength, passwordMaxLength);
 
     return Column(
       children: <Widget>[
@@ -147,7 +152,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
         SizedBox(
           height: 10.0,
         ),
-        Text('(10-100 characters)',
+        Text(passwordCharactersText,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20.0,

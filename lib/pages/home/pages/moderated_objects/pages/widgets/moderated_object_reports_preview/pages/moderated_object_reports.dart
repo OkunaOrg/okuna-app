@@ -1,10 +1,10 @@
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderation_report.dart';
-import 'package:Openbook/models/moderation/moderation_report_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderation_report.dart';
+import 'package:Okuna/models/moderation/moderation_report_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityFavorite extends StatelessWidget {

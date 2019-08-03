@@ -1,0 +1,236 @@
+{
+    "settings_title": "Benachrichtigungseinstellungen",
+    "@settings_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "general_title": "Benachrichtigungen",
+    "@general_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "general_desc": "Werde benachrichtigt wenn etwas passiert",
+    "@general_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_title": "Folgen",
+    "@follow_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_desc": "Werde benachrichtigt, wenn dir jemand folgt",
+    "@follow_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_title": "Verbindungsanfrage",
+    "@connection_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_desc": "Werde benachrichtigt, wenn sich jemand mit dir verbinden möchte",
+    "@connection_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_title": "Kommentar posten",
+    "@comment_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Beiträge oder einen auf den du ebenfalls kommentiert hast, kommentiert.",
+    "@comment_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reply_title": "Kommentar-Antwort posten",
+    "@comment_reply_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reply_desc": "Werde benachrichtigt, wenn jemand auf deinen Kommentar, oder auf einen, auf den du auch geantwortet hast, antwortet.",
+    "@comment_reply_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reaction_title": "Kommentar-Reaktion posten",
+    "@comment_reaction_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reaction_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Kommentare antwortet.",
+    "@comment_reaction_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_reaction_title": "Reaktion posten",
+    "@post_reaction_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_reaction_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Beiträge reagiert.",
+    "@post_reaction_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_invite_title": "Community-Einladung",
+    "@community_invite_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_invite_desc": "Werde benachrichtigt, wenn dich jemand einlädt, einer Community beizutreten.",
+    "@community_invite_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_on_post_notifications": "Beitrag-Benachrichtigungen aktivieren",
+    "@mute_post_turn_on_post_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_off_post_notifications": "Beitrag-Benachrichtigungen deaktivieren",
+    "@mute_post_turn_off_post_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_on_post_comment_notifications": "Beitragskommentar-Benachrichtigungen aktivieren",
+    "@mute_post_turn_on_post_comment_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_off_post_comment_notifications": "Beitragskommentar-Benachrichtigungen deaktivieren",
+    "@mute_post_turn_off_post_comment_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_request_tile": "[name] [username] möchte sich mit dir verbinden.",
+    "@connection_request_tile": {
+        "description": "Eg.: James @jamest wants to connect with you.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "accepted_connection_request_tile": "[name] [username] hat deine Verbindungsanfrage angenommen.",
+    "@accepted_connection_request_tile": {
+        "description": "Eg.: James @jamest accepted your connection request.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reacted_to_post_tile": "[name] [username] hat auf deinen Beitrag reagiert.",
+    "@reacted_to_post_tile": {
+        "description": "Eg.: James @jamest reacted to your post.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reacted_to_post_comment_tile": "[name] [username] hat auf deinen Kommentar reagiert.",
+    "@reacted_to_post_comment_tile": {
+        "description": "Eg.: James @jamest reacted to your post comment.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "following_you_tile": "[name] [username] folgt dir jetzt.",
+    "@following_you_tile": {
+        "description": "Eg.: James @jamest is now following you.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "user_community_invite_tile": "[name] [username] hat dich eingeladen, der Community \/c\/{communityName} beizutreten.",
+    "@user_community_invite_tile": {
+        "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
+        "type": "text",
+        "placeholders": {
+            "communityName": {
+
+            }
+        }
+    },
+    "comment_reply_notification_tile_user_replied": "[name] [username] antwortete: {postCommentText}",
+    "@comment_reply_notification_tile_user_replied": {
+        "description": "For.eg. James @jamest replied.",
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    },
+    "comment_reply_notification_tile_user_also_replied": "[name] [username] antwortete auch: {postCommentText}",
+    "@comment_reply_notification_tile_user_also_replied": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    },
+    "comment_comment_notification_tile_user_commented": "[name] [username] kommentierte deinen Beitrag: {postCommentText}",
+    "@comment_comment_notification_tile_user_commented": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    },
+    "comment_comment_notification_tile_user_also_commented": "[name] [username] kommentierte auch: {postCommentText}",
+    "@comment_comment_notification_tile_user_also_commented": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    }
+}

@@ -1,16 +1,17 @@
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/follows_list/widgets/follows_list_header/follows_list_header.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/follows_list/widgets/follows_list_users.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/primary_accent_text.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 
 class OBFollowsListPage extends StatefulWidget {
   final FollowsList followsList;
@@ -26,6 +27,7 @@ class OBFollowsListPage extends StatefulWidget {
 class OBFollowsListPageState extends State<OBFollowsListPage> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   bool _needsBootstrap;
@@ -42,6 +44,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     var modalService = openbookProvider.modalService;
 
     if (_needsBootstrap) {
@@ -57,7 +60,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
               modalService.openEditFollowsList(
                   followsList: widget.followsList, context: context);
             },
-            child: OBPrimaryAccentText('Edit'),
+            child: OBPrimaryAccentText(_localizationService.user__follows_list_edit),
           ),
         ),
         child: RefreshIndicator(
@@ -98,7 +101,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

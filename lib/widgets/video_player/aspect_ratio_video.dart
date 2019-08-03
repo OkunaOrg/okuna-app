@@ -1,5 +1,5 @@
-import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/video_player/play_pause_state.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/video_player/play_pause_state.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

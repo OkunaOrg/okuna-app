@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
 
 class OBLoggedInUserAvatar extends StatefulWidget {

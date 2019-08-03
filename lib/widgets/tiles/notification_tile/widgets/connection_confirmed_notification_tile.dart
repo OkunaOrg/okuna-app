@@ -1,9 +1,10 @@
-import 'package:Openbook/models/notifications/connection_confirmed_notification.dart';
-import 'package:Openbook/models/notifications/notification.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/notifications/connection_confirmed_notification.dart';
+import 'package:Okuna/models/notifications/notification.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 import 'notification_tile_skeleton.dart';
@@ -29,11 +30,11 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
     var navigateToConfirmatorProfile = () {
       if (onPressed != null) onPressed();
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-
       openbookProvider.navigationService.navigateToUserProfile(
           user: connectionConfirmedNotification.connectionConfirmator,
           context: context);
     };
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: navigateToConfirmatorProfile,
@@ -45,7 +46,7 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
       title: OBNotificationTileTitle(
         onUsernamePressed: navigateToConfirmatorProfile,
         user: connectionConfirmedNotification.connectionConfirmator,
-        text: TextSpan(text: ' accepted your connection request.'),
+        text: TextSpan(text: _localizationService.notifications__accepted_connection_request_tile),
       ),
       subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
     );

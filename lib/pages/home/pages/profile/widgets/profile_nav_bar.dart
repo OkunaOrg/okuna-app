@@ -1,5 +1,5 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

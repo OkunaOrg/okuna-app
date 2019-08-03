@@ -1,8 +1,11 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/fields/checkbox_field.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/circle_color_preview.dart';
+import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
+
+import '../../provider.dart';
 
 class OBCircleSelectableTile extends StatelessWidget {
   final Circle circle;
@@ -17,13 +20,14 @@ class OBCircleSelectableTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int usersCount = circle.usersCount;
-
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    String prettyCount =  getPrettyCount(usersCount, localizationService);
     return OBCheckboxField(
       isDisabled: isDisabled,
       value: isSelected,
       title: circle.name,
       subtitle:
-          usersCount != null ? getPrettyCount(usersCount) + ' people' : null,
+          usersCount != null ? localizationService.user__circle_peoples_count(prettyCount) : null,
       onTap: () {
         onCirclePressed(circle);
       },

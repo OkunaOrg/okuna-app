@@ -1,18 +1,19 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/fields/text_form_field.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 
 class OBPostCommenter extends StatefulWidget {
   final Post post;
@@ -47,6 +48,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
+  LocalizationService _localizationService;
 
   CancelableOperation _submitFormOperation;
 
@@ -78,6 +80,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _userService = provider.userService;
       _toastService = provider.toastService;
       _validationService = provider.validationService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -146,7 +149,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
               onPressed: _submitForm,
-              child: Text('Post'),
+              child: Text(_localizationService.trans('post__commenter_post_text')),
             ),
           )
         ],
@@ -170,7 +173,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       maxLines: maxLines,
       style: style,
       decoration: InputDecoration(
-        hintText: 'Write something...',
+        hintText: _localizationService.trans('post__commenter_write_something'),
         contentPadding: inputContentPadding,
       ),
       hasBorder: false,
@@ -241,7 +244,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

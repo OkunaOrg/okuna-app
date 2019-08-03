@@ -1,6 +1,6 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityActionMore extends StatelessWidget {

@@ -1,13 +1,13 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/circles_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/circles_horizontal_list/circles_horizontal_list.dart';
-import 'package:Openbook/widgets/search_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/circles_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/circles_horizontal_list/circles_horizontal_list.dart';
+import 'package:Okuna/widgets/search_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBConnectionCirclesPickerBottomSheet extends StatefulWidget {

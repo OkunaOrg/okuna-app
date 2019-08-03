@@ -1,9 +1,12 @@
-import 'package:Openbook/models/category.dart';
-import 'package:Openbook/widgets/categories_picker.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/category.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/categories_picker.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../provider.dart';
 
 class OBCategoriesField extends StatefulWidget {
   final OBCategoriesFieldController controller;
@@ -33,6 +36,7 @@ class OBCategoriesField extends StatefulWidget {
 
 class OBCategoriesFieldState extends State<OBCategoriesField> {
   bool _isValid;
+  LocalizationService _localizationService;
 
   @override
   void initState() {
@@ -48,6 +52,8 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
   @override
   Widget build(BuildContext context) {
     int max = widget.max;
+    var openbookProvider = OpenbookProvider.of(context);
+    _localizationService = openbookProvider.localizationService;
 
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +69,7 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
             ),
             subtitle: Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: OBText('Pick up to $max categories'),
+              child: OBText(_localizationService.community__pick_upto_max(max)),
             ),
           ),
           OBCategoriesPicker(
@@ -82,8 +88,12 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
 
   Widget _buildErrorMsg() {
     int min = widget.min;
-    String errorMsg = 'You must pick at least $min ' +
-        (min == 1 ? 'category.' : 'categories.');
+    String errorMsg;
+    if (min == 1) {
+      errorMsg = _localizationService.community__pick_atleast_min_category(min);
+    } else {
+      errorMsg = _localizationService.community__pick_atleast_min_categories(min);
+    }
 
     return Padding(
       padding: EdgeInsets.only(bottom: 10, top: 20),

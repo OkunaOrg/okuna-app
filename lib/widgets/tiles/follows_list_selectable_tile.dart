@@ -1,8 +1,11 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/follows_list.dart';
-import 'package:Openbook/widgets/emoji_preview.dart';
-import 'package:Openbook/widgets/fields/checkbox_field.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/emoji_preview.dart';
+import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
+
+import '../../provider.dart';
 
 class OBFollowsListSelectableTile extends StatelessWidget {
   final FollowsList followsList;
@@ -20,13 +23,15 @@ class OBFollowsListSelectableTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int usersCount = followsList.followsCount;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    String prettyCount = getPrettyCount(usersCount, localizationService);
 
     return OBCheckboxField(
       isDisabled: isDisabled,
       value: isSelected,
       title: followsList.name,
       subtitle:
-          usersCount != null ? getPrettyCount(usersCount) + ' accounts' : null,
+          usersCount != null ?  localizationService.user__follows_list_accounts_count(prettyCount) : null,
       onTap: () {
         onFollowsListPressed(followsList);
       },

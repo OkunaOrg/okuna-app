@@ -1,13 +1,15 @@
 import 'dart:async';
 
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/auth_api.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/universal_links/universal_links.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/auth_api.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/universal_links/universal_links.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:flutter/material.dart';
+
+import '../../localization.dart';
 
 class EmailVerificationLinkHandler extends UniversalLinkHandler {
   static const String verifyEmailLink = '/api/auth/email/verify';
@@ -21,6 +23,7 @@ class EmailVerificationLinkHandler extends UniversalLinkHandler {
       UserService userService = openbookProvider.userService;
       ToastService toastService = openbookProvider.toastService;
       AuthApiService authApiService = openbookProvider.authApiService;
+      LocalizationService localizationService = openbookProvider.localizationService;
 
       _onLoggedInUserChangeSubscription =
           userService.loggedInUserChange.listen((User newUser) async {
@@ -31,17 +34,17 @@ class EmailVerificationLinkHandler extends UniversalLinkHandler {
               await authApiService.verifyEmailWithToken(token);
           if (response.isOk()) {
             toastService.success(
-                message: 'Awesome! Your email is now verified', context: context);
+                message: localizationService.user__email_verification_successful, context: context);
           } else if (response.isBadRequest()) {
             toastService.error(
                 message:
-                'Oops! Your token was not valid or expired, please try again',
+                localizationService.user__email_verification_error,
                 context: context);
           }
         } on HttpieConnectionRefusedError {
-          toastService.error(message: 'No internet connection', context: null);
+          toastService.error(message: localizationService.error__no_internet_connection, context: null);
         } catch (e) {
-          toastService.error(message: 'Unknown error.', context: null);
+          toastService.error(message: localizationService.error__unknown_error, context: null);
           rethrow;
         }
       });

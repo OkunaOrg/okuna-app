@@ -1,12 +1,13 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,9 +41,10 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
     }
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    LocalizationService localizationService = openbookProvider.localizationService;
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: 'Guidelines Rejection'),
+        navigationBar: OBThemedNavigationBar(title:localizationService.user__confirm_guidelines_reject_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -63,7 +65,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                       height: 20,
                     ),
                     OBText(
-                      'You can\'t use Openspace until you accept the guidelines.',
+                     localizationService.user__confirm_guidelines_reject_info,
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -73,21 +75,21 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                     ),
                     ListTile(
                       leading: const OBIcon(OBIcons.chat),
-                      title: OBText('Chat with the team.'),
+                      title: OBText(localizationService.user__confirm_guidelines_reject_chat_with_team),
                       subtitle: OBSecondaryText(
-                          'Start a chat immediatly.'),
+                          localizationService.user__confirm_guidelines_reject_chat_immediately),
                       onTap: () async {
                         openbookProvider.intercomService.displayMessenger();
                       },
                     ),
                     ListTile(
                       leading: const OBIcon(OBIcons.slackChannel),
-                      title: OBText('Chat with the community.'),
+                      title: OBText(localizationService.user__confirm_guidelines_reject_chat_community),
                       subtitle: OBSecondaryText(
-                          'Join the Slack channel.'),
+                          localizationService.user__confirm_guidelines_reject_join_slack),
                       onTap: () {
                         openbookProvider.urlLauncherService.launchUrl(
-                            'https://join.slack.com/t/openspacesocial/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
+                            'https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
                       },
                     ),
                   ],
@@ -102,7 +104,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('Go back'),
+                      child: Text(localizationService.user__confirm_guidelines_reject_go_back),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -115,7 +117,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.danger,
-                      child: Text('Delete account'),
+                      child: Text(localizationService.user__confirm_guidelines_reject_delete_account),
                       onPressed: () {
                         OpenbookProviderState openbookProvider =
                             OpenbookProvider.of(context);

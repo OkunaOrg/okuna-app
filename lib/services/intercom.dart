@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 import 'package:intercom_flutter/intercom_flutter.dart';

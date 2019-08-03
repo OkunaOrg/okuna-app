@@ -1,20 +1,21 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/pages/community/pages/community_staff/widgets/community_administrators.dart';
-import 'package:Openbook/pages/home/pages/community/pages/community_staff/widgets/community_moderators.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_card/community_card.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_cover.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_nav_bar.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_posts.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/buttons/community_floating_action_button.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/community_administrators.dart';
+import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/community_moderators.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_card/community_card.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_cover.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_nav_bar.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_posts.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/buttons/community_floating_action_button.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
   Community _community;
   OBHttpListController _httpListController;
   UserService _userService;
+  LocalizationService _localizationService;
 
   bool _needsBootstrap;
 
@@ -63,6 +65,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -151,7 +154,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
           child: OBAlert(
             child: Column(
               children: <Widget>[
-                OBText('This community is private.',
+                OBText(_localizationService.trans('community__is_private'),
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     textAlign: TextAlign.center),
                 const SizedBox(
@@ -159,8 +162,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
                 ),
                 OBText(
                   communityHasInvitesEnabled
-                      ? 'You must be invited by a member.'
-                      : 'You must be invited by a moderator.',
+                      ? _localizationService.trans('community__invited_by_member')
+                      :_localizationService.trans('community__invited_by_moderator'),
                   textAlign: TextAlign.center,
                 )
               ],
@@ -177,7 +180,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     if (_refreshCommunityOperation != null) _refreshCommunityOperation.cancel();
     _refreshCommunityOperation = CancelableOperation.fromFuture(
         _userService.getCommunityWithName(_community.name));
-    debugPrint('Refreshing community');
+    debugPrint(_localizationService.trans('community__refreshing'));
     var community = await _refreshCommunityOperation.value;
     _setCommunity(community);
   }
@@ -211,6 +214,7 @@ class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
+    var localizationService = openbookProvider.localizationService;
     var themeValueParserService = openbookProvider.themeValueParserService;
 
     return StreamBuilder(
@@ -230,8 +234,8 @@ class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
               indicatorColor: themePrimaryTextColor,
               labelColor: themePrimaryTextColor,
               tabs: <Widget>[
-                const Tab(text: 'Posts'),
-                const Tab(text: 'About'),
+                Tab(text: localizationService.trans('community__posts')),
+                Tab(text: localizationService.trans('community__about')),
               ],
             ),
           );

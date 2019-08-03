@@ -1,4 +1,4 @@
-import 'package:Openbook/models/badge.dart';
+import 'package:Okuna/models/badge.dart';
 
 class BadgesList {
   final List<Badge> badges;

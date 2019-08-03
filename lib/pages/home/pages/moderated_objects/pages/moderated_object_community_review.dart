@@ -1,20 +1,21 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderation_category.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/moderated_object_category.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/moderated_object_description.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/moderated_object_logs.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/moderated_object_reports_preview.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/moderated_object_status.dart';
-import 'package:Openbook/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/tile_group_title.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderation_category.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/moderated_object_category.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/moderated_object_description.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_logs/moderated_object_logs.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_reports_preview/moderated_object_reports_preview.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/moderated_object_status.dart';
+import 'package:Okuna/pages/home/pages/moderated_objects/widgets/moderated_object/widgets/moderated_object_preview.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class OBModeratedObjectCommunityReviewPageState
 
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
 
   CancelableOperation _requestOperation;
@@ -64,13 +66,14 @@ class OBModeratedObjectCommunityReviewPageState
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Review moderated object',
+        title: _localizationService.trans('moderation__community_review_title'),
       ),
       child: OBPrimaryColorContainer(
           child: Column(
@@ -79,7 +82,7 @@ class OBModeratedObjectCommunityReviewPageState
             child: ListView(
               children: <Widget>[
                 OBTileGroupTitle(
-                  title: 'Object',
+                  title:  _localizationService.trans('moderation__community_review_object'),
                 ),
                 OBModeratedObjectPreview(
                   moderatedObject: widget.moderatedObject,
@@ -151,7 +154,7 @@ class OBModeratedObjectCommunityReviewPageState
       child: OBButton(
         size: OBButtonSize.large,
         type: OBButtonType.danger,
-        child: Text('Reject'),
+        child: Text(_localizationService.trans('moderation__community_review_reject')),
         onPressed: _onWantsToRejectModeratedObject,
         isLoading: _requestInProgress,
       ),
@@ -162,7 +165,7 @@ class OBModeratedObjectCommunityReviewPageState
     return Expanded(
       child: OBButton(
         size: OBButtonSize.large,
-        child: Text('Approve'),
+        child: Text(_localizationService.trans('moderation__community_review_approve')),
         type: OBButtonType.success,
         onPressed: _onWantsToApproveModeratedObject,
         isLoading: _requestInProgress,
@@ -175,7 +178,7 @@ class OBModeratedObjectCommunityReviewPageState
       child: OBButton(
         size: OBButtonSize.large,
         type: OBButtonType.highlight,
-        child: Text('This item has been verified'),
+        child: Text(_localizationService.trans('moderation__community_review_item_verified')),
         onPressed: null,
       ),
     );
@@ -251,7 +254,7 @@ class OBModeratedObjectCommunityReviewPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

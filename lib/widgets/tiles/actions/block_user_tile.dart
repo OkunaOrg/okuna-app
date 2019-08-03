@@ -1,11 +1,12 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/loading_tile.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBBlockUserTile extends StatefulWidget {
@@ -29,6 +30,7 @@ class OBBlockUserTile extends StatefulWidget {
 class OBBlockUserTileState extends State<OBBlockUserTile> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -42,6 +44,7 @@ class OBBlockUserTileState extends State<OBBlockUserTile> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -55,8 +58,8 @@ class OBBlockUserTileState extends State<OBBlockUserTile> {
           isLoading: _requestInProgress,
           leading: OBIcon(isBlocked ? OBIcons.block : OBIcons.block),
           title: OBText(isBlocked
-              ? 'Unblock user'
-              : 'Block user'),
+              ? _localizationService.user__unblock_user
+              : _localizationService.user__block_user),
           onTap: isBlocked ? _unblockUser : _blockUser,
         );
       },
@@ -95,7 +98,7 @@ class OBBlockUserTileState extends State<OBBlockUserTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

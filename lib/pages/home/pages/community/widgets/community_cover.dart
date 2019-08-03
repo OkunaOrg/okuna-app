@@ -1,5 +1,5 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/cover.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/widgets/cover.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBCommunityCover extends StatelessWidget {

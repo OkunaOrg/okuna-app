@@ -1,8 +1,9 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/loading_tile.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBClearApplicationPreferencesTile extends StatefulWidget {
@@ -24,25 +25,26 @@ class OBClearApplicationPreferencesTileState
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
     return OBLoadingTile(
       leading: OBIcon(OBIcons.clear),
-      title: OBText('Clear preferences'),
+      title: OBText(localizationService.user__clear_app_preferences_title),
       subtitle: OBSecondaryText(
-          'Clear the application preferences. Currently this is only the preferred order of comments.'),
+          localizationService.user__clear_app_preferences_desc),
       isLoading: _inProgress,
-      onTap: _clearApplicationPreferences,
+      onTap: () => _clearApplicationPreferences(localizationService),
     );
   }
 
-  Future _clearApplicationPreferences() async {
+  Future _clearApplicationPreferences(LocalizationService localizationService) async {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     try {
       await openbookProvider.userPreferencesService.clear();
       openbookProvider.toastService.success(
-          message: 'Cleared preferences successfully', context: context);
+          message: localizationService.user__clear_app_preferences_cleared_successfully, context: context);
     } catch (error) {
       openbookProvider.toastService
-          .error(message: 'Could not clear preferences', context: context);
+          .error(message: localizationService.user__clear_app_preferences_error, context: context);
       rethrow;
     } finally {
       _setInProgress(false);

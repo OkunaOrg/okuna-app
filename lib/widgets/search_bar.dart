@@ -1,8 +1,9 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/fields/text_field.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/fields/text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBSearchBar extends StatefulWidget {
@@ -36,6 +37,7 @@ class OBSearchBarState extends State<OBSearchBar> {
   @override
   Widget build(BuildContext context) {
     bool hasText = _textController.text.length > 0;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     EdgeInsetsGeometry inputContentPadding = EdgeInsets.only(
         top: 8.0, bottom: 8.0, left: 20, right: hasText ? 40 : 20);
@@ -102,7 +104,7 @@ class OBSearchBarState extends State<OBSearchBar> {
                 hasText
                     ? FlatButton(
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        child: const OBText('Cancel'),
+                        child: OBText(localizationService.user_search__cancel),
                         onPressed: _cancelSearch,
                       )
                     : const SizedBox(

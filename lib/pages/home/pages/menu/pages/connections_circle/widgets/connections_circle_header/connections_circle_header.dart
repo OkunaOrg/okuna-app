@@ -1,8 +1,11 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_header/widgets/connections_circle_name.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/connections_circle/widgets/connections_circle_header/widgets/connections_circle_name.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/circle_color_preview.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../../../provider.dart';
 
 class OBConnectionsCircleHeader extends StatelessWidget {
   final Circle connectionsCircle;
@@ -18,14 +21,15 @@ class OBConnectionsCircleHeader extends StatelessWidget {
         initialData: connectionsCircle,
         builder: (BuildContext context, AsyncSnapshot<Circle> snapshot) {
           var connectionsCircle = snapshot.data;
+          LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
           List<Widget> columnItems = [_buildCircleName(connectionsCircle)];
 
           if (isConnectionsCircle) {
-            columnItems.add(_buildConnectionsCircleDescription());
+            columnItems.add(_buildConnectionsCircleDescription(_localizationService));
           }
 
-          columnItems.add(_buildUsersHeader());
+          columnItems.add(_buildUsersHeader(_localizationService));
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,21 +56,21 @@ class OBConnectionsCircleHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildConnectionsCircleDescription() {
+  Widget _buildConnectionsCircleDescription(LocalizationService _localizationService) {
     return Padding(
       padding: EdgeInsets.only(left: 20.0, right: 20, top: 10.0, bottom: 20),
       child: Column(
         children: <Widget>[
-          const OBText('The circle all of your connections get added to.'),
+          OBText(_localizationService.trans('user__connections_header_circle_desc')),
         ],
       ),
     );
   }
 
-  Widget _buildUsersHeader() {
+  Widget _buildUsersHeader(LocalizationService _localizationService) {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
-      child: const OBText('Users',
+      child: OBText(_localizationService.trans('user__connections_header_users'),
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
     );
   }

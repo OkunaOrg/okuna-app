@@ -1,4 +1,4 @@
-import 'package:Openbook/models/emoji.dart';
+import 'package:Okuna/models/emoji.dart';
 
 class EmojisList {
   final List<Emoji> emojis;

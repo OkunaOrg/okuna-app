@@ -1,17 +1,18 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/communities_list.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/tiles/community_selectable_tile.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/communities_list.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/tiles/community_selectable_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,7 @@ class OBSharePostWithCommunityPageState
     extends State<OBSharePostWithCommunityPage> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _isCreatePostInProgress;
 
   Community _chosenCommunity;
@@ -46,6 +48,7 @@ class OBSharePostWithCommunityPageState
     var openbookProvider = OpenbookProvider.of(context);
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -68,8 +71,8 @@ class OBSharePostWithCommunityPageState
           listRefresher: _refreshCommunities,
           listOnScrollLoader: _loadMoreCommunities,
           listSearcher: _searchCommunities,
-          resourceSingularName: 'community',
-          resourcePluralName: 'communities',
+          resourceSingularName: _localizationService.trans('community__community'),
+          resourcePluralName: _localizationService.trans('community__communities'),
         ))
       ],
     );
@@ -77,14 +80,14 @@ class OBSharePostWithCommunityPageState
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Share to community',
+      title: _localizationService.trans('post__share_to_community'),
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,
         isLoading: _isCreatePostInProgress,
         isDisabled: _chosenCommunity == null,
         onPressed: createPost,
-        child: Text('Share'),
+        child: Text(_localizationService.trans('post__share_community')),
       ),
     );
   }
@@ -129,7 +132,7 @@ class OBSharePostWithCommunityPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

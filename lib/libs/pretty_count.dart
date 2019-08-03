@@ -1,4 +1,6 @@
-String getPrettyCount(int value) {
+import 'package:Okuna/services/localization.dart';
+
+String getPrettyCount(int value, LocalizationService localizationService) {
   String postfix;
   double finalValue;
 
@@ -7,13 +9,13 @@ String getPrettyCount(int value) {
   } else if (value < 1000) {
     return value.toString();
   } else if (value < 1000000) {
-    postfix = 'k';
+    postfix = localizationService.user__thousand_postfix;
     finalValue = value / 1000;
   } else if (value < 1000000000) {
-    postfix = 'm';
+    postfix = localizationService.user__million_postfix;
     finalValue = value / 1000000;
   } else if (value < 1000000000000) {
-    postfix = 'b';
+    postfix = localizationService.user__billion_postfix;
     finalValue = value / 1000000000;
   }
 

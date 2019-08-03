@@ -1,8 +1,8 @@
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthDonePage extends StatefulWidget {
@@ -58,7 +58,9 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
   }
 
   Widget _buildHooray() {
-    var title = localizationService.trans('AUTH.CREATE_ACC.DONE_TITLE');
+    String title = localizationService.trans('auth__create_acc__done_title');
+    String usernameSubtext = localizationService.trans('auth__create_acc__done_subtext');
+    String accCreated = localizationService.trans('auth__create_acc__done_created');
 
     String username = createAccountBloc.getUsername();
 
@@ -89,7 +91,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
                 color: Colors.black,
               ),
               children: [
-                TextSpan(text: 'Your account has been created with username '),
+                TextSpan(text: accCreated),
                 TextSpan(
                     text: '@$username',
                     style: TextStyle(fontWeight: FontWeight.bold)),
@@ -99,7 +101,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         const SizedBox(
           height: 20.0,
         ),
-        Text('You can change this in your profile settings.',
+        Text(usernameSubtext,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16
                 //color: Colors.white
@@ -110,7 +112,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
 
   Widget _buildNextButton({@required BuildContext context}) {
     String buttonText =
-        localizationService.trans('AUTH.CREATE_ACC.DONE_CONTINUE');
+        localizationService.trans('auth__create_acc__done_continue');
 
     return OBSuccessButton(
       minWidth: double.infinity,

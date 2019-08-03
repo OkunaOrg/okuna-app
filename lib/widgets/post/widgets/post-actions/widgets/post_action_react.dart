@@ -1,11 +1,12 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_reaction.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_reaction.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class OBPostActionReact extends StatefulWidget {
 class OBPostActionReactState extends State<OBPostActionReact> {
   CancelableOperation _clearPostReactionOperation;
   bool _clearPostReactionInProgress;
+  LocalizationService _localizationService;
 
   @override
   void initState() {
@@ -40,6 +42,9 @@ class OBPostActionReactState extends State<OBPostActionReact> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = OpenbookProvider.of(context);
+    _localizationService = provider.localizationService;
+
     return StreamBuilder(
       stream: widget.post.updateSubject,
       initialData: widget.post,
@@ -70,7 +75,7 @@ class OBPostActionReactState extends State<OBPostActionReact> {
               width: 10.0,
             ),
             OBText(
-              hasReaction ? reaction.getEmojiKeyword() : 'React',
+              hasReaction ? reaction.getEmojiKeyword() : _localizationService.post__action_react,
               style: TextStyle(
                 color: hasReaction ? Colors.white : null,
                 fontWeight: hasReaction ? FontWeight.bold : FontWeight.normal,
@@ -137,7 +142,7 @@ class OBPostActionReactState extends State<OBPostActionReact> {
       String errorMessage = await error.toHumanReadableMessage();
       toastService.error(message: errorMessage, context: context);
     } else {
-      toastService.error(message: 'Unknown error', context: context);
+      toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

@@ -1,10 +1,10 @@
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/fields/checkbox_field.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthLegalAgeStepPage extends StatefulWidget {
@@ -81,7 +81,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
           height: 20.0,
         ),
         Text(
-          'One last thing...',
+          _localizationService.trans('auth__create_acc__one_last_thing'),
           style: TextStyle(
               fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
           textAlign: TextAlign.center,
@@ -106,7 +106,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
                 });
               },
               leading: Container(
-                child: Text('Are you older than 16 years?',
+                child: Text(_localizationService.trans('auth__create_acc__are_you_legal_age'),
                     style: TextStyle(fontSize: 16.0, color: Colors.white)),
               ),
             )
@@ -118,7 +118,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      child: Text('Register', style: TextStyle(fontSize: 18.0)),
+      child: Text(_localizationService.trans('auth__create_acc__register'), style: TextStyle(fontSize: 18.0)),
       isDisabled: !_isAgeConfirmed,
       onPressed: () {
         Navigator.pushNamed(context, '/auth/submit_step');
@@ -127,7 +127,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,

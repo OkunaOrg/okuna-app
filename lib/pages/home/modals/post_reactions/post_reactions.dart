@@ -1,15 +1,16 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/reactions_emoji_count.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/pages/home/modals/post_reactions/widgets/post_reaction_list.dart';
-import 'package:Openbook/services/theme.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/reactions_emoji_count.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/pages/home/modals/post_reactions/widgets/post_reaction_list.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class OBPostReactionsModal extends StatefulWidget {
 class OBPostReactionsModalState extends State<OBPostReactionsModal>
     with TickerProviderStateMixin {
   ThemeService _themeService;
+  LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   bool _needsBootstrap;
 
@@ -58,6 +60,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
       var openbookProvider = OpenbookProvider.of(context);
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -69,7 +72,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
         .colors[1];
 
     return OBCupertinoPageScaffold(
-        navigationBar: _buildNavigationBar(),
+        navigationBar: _buildNavigationBar(_localizationService),
         child: OBPrimaryColorContainer(
           child: Column(
             children: <Widget>[
@@ -108,9 +111,9 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
     }).toList();
   }
 
-  Widget _buildNavigationBar() {
+  Widget _buildNavigationBar(LocalizationService localizationService) {
     return OBThemedNavigationBar(
-        title: 'Post reactions');
+        title: localizationService.post__post_reactions_title);
   }
 
   void _bootstrap() async {

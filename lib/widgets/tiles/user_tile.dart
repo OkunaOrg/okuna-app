@@ -1,11 +1,14 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/user_badge.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+import '../../provider.dart';
 
 class OBUserTile extends StatelessWidget {
   final User user;
@@ -24,6 +27,8 @@ class OBUserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    LocalizationService _localizationService = openbookProvider.localizationService;
     Widget tile = ListTile(
       onTap: () {
         if (onUserTilePressed != null) onUserTilePressed(user);
@@ -44,7 +49,7 @@ class OBUserTile extends StatelessWidget {
         children: [
           OBSecondaryText(user.getProfileName()),
           showFollowing && user.isFollowing != null && user.isFollowing
-              ? OBSecondaryText(' · Following')
+              ? OBSecondaryText(_localizationService.trans('user__tile_following'))
               : const SizedBox()
         ],
       ),
@@ -57,7 +62,7 @@ class OBUserTile extends StatelessWidget {
         child: tile,
         secondaryActions: <Widget>[
           new IconSlideAction(
-            caption: 'Delete',
+            caption: _localizationService.trans('user__tile_delete'),
             color: Colors.red,
             icon: Icons.delete,
             onTap: () {

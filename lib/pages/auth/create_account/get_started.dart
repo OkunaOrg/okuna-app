@@ -1,7 +1,7 @@
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthGetStartedPage extends StatelessWidget {
@@ -9,12 +9,12 @@ class OBAuthGetStartedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var localizationService = LocalizationService.of(context);
     String letsGetStartedText =
-        localizationService.trans('AUTH.CREATE_ACC.LETS_GET_STARTED');
+        localizationService.auth__create_acc__lets_get_started;
     String welcomeToAlphaText =
-        localizationService.trans('AUTH.CREATE_ACC.WELCOME_TO_ALPHA');
+        localizationService.auth__create_acc__welcome_to_alpha;
 
-    String previousText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
-    String nextText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String previousText = localizationService.auth__create_acc__previous;
+    String nextText = localizationService.auth__create_acc__next;
 
     return Scaffold(
       backgroundColor: Color(0xFF151726),

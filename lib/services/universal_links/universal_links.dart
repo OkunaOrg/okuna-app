@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:Openbook/services/universal_links/handlers/create_account_link.dart';
-import 'package:Openbook/services/universal_links/handlers/email_verification_link.dart';
-import 'package:Openbook/services/universal_links/handlers/password_reset_link.dart';
+import 'package:Okuna/services/universal_links/handlers/create_account_link.dart';
+import 'package:Okuna/services/universal_links/handlers/email_verification_link.dart';
+import 'package:Okuna/services/universal_links/handlers/password_reset_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uni_links/uni_links.dart';
 

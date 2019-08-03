@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:Openbook/pages/home/widgets/bottom-tab-bar.dart';
+import 'package:Okuna/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:flutter/widgets.dart';
 
 /// Implements a tabbed iOS application's root layout and behavior structure.
@@ -284,7 +284,7 @@ class _TabSwitchingViewState extends State<_TabSwitchingView> {
   @override
   void dispose() {
     for (FocusScopeNode focusScopeNode in tabFocusNodes) {
-      focusScopeNode.detach();
+      focusScopeNode.dispose();
     }
     super.dispose();
   }

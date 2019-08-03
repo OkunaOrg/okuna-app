@@ -1,13 +1,14 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/community_invite.dart';
-import 'package:Openbook/models/notifications/community_invite_notification.dart';
-import 'package:Openbook/models/notifications/notification.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/avatars/community_avatar.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/community_invite.dart';
+import 'package:Okuna/models/notifications/community_invite_notification.dart';
+import 'package:Okuna/models/notifications/notification.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/avatars/community_avatar.dart';
+import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 import 'notification_tile_skeleton.dart';
@@ -43,6 +44,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
       openbookProvider.navigationService
           .navigateToUserProfile(user: inviteCreator, context: context);
     };
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: () {
@@ -61,7 +63,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         user: inviteCreator,
         onUsernamePressed: navigateToInviteCreatorProfile,
         text: TextSpan(
-            text: ' has invited you to join community /c/$communityName .'),
+            text: _localizationService.notifications__user_community_invite_tile(communityName)),
       ),
       trailing: OBCommunityAvatar(
         community: community,

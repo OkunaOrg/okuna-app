@@ -1,0 +1,16 @@
+{
+    "unknown_error": "Unbekannter Fehler",
+    "@unknown_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "no_internet_connection": "Keine Internetverbindung",
+    "@no_internet_connection": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

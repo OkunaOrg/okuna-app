@@ -1,10 +1,11 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-export 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+export 'package:Okuna/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
 class OBFollowButton extends StatefulWidget {
@@ -25,6 +26,7 @@ class OBFollowButton extends StatefulWidget {
 class OBFollowButtonState extends State<OBFollowButton> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -38,6 +40,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -56,7 +59,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
     return OBButton(
       size: widget.size,
       child: Text(
-        'Follow',
+        _localizationService.user__follow_button_follow_text,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,
@@ -68,7 +71,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
     return OBButton(
       size: widget.size,
       child: Text(
-        'Unfollow',
+        _localizationService.user__follow_button_unfollow_text,
       ),
       isLoading: _requestInProgress,
       onPressed: _unFollowUser,
@@ -108,7 +111,7 @@ class OBFollowButtonState extends State<OBFollowButton> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

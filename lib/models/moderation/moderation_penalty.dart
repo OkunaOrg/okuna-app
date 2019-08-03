@@ -1,7 +1,7 @@
-import 'package:Openbook/libs/str_utils.dart';
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderation_category.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/libs/str_utils.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderation_category.dart';
+import 'package:Okuna/models/user.dart';
 
 class ModerationPenalty {
   static String moderationPenaltyTypeSuspension = 'S';

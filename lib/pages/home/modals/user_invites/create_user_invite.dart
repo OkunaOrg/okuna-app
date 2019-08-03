@@ -1,16 +1,17 @@
-import 'package:Openbook/models/user_invite.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/user_invite.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/fields/text_form_field.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class OBCreateUserInviteModalState extends State<OBCreateUserInviteModal> {
   ToastService _toastService;
   NavigationService _navigationService;
   ValidationService _validationService;
+  LocalizationService _localizationService;
 
   bool _requestInProgress;
   bool _formWasSubmitted;
@@ -72,6 +74,7 @@ class OBCreateUserInviteModalState extends State<OBCreateUserInviteModal> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
     _validationService = openbookProvider.validationService;
     _navigationService = openbookProvider.navigationService;
 
@@ -96,8 +99,8 @@ class OBCreateUserInviteModalState extends State<OBCreateUserInviteModal> {
                                 autofocus: widget.autofocusNameTextField,
                                 controller: _nicknameController,
                                 decoration: InputDecoration(
-                                    labelText: 'Nickname',
-                                    hintText: 'e.g. Jane Doe'),
+                                    labelText: _localizationService.user__invites_create_name_title,
+                                    hintText: _localizationService.user__invites_create_name_hint),
                                 validator: (String userInviteNickname) {
                                   if (!_formWasSubmitted) return null;
                                   return _validationService
@@ -120,13 +123,15 @@ class OBCreateUserInviteModalState extends State<OBCreateUserInviteModal> {
             Navigator.pop(context);
           },
         ),
-        title: _hasExistingUserInvite ? 'Edit invite' : 'Create invite',
+        title: _hasExistingUserInvite ? _localizationService.user__invites_create_edit_title :
+        _localizationService.user__invites_create_create_title,
         trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
           size: OBButtonSize.small,
           onPressed: _submitForm,
-          child: _hasExistingUserInvite ? Text('Save') : Text('Create'),
+          child: _hasExistingUserInvite ? Text(_localizationService.user__invites_create_save):
+          Text(_localizationService.user__invites_create_create),
         ));
   }
 
@@ -186,7 +191,7 @@ class OBCreateUserInviteModalState extends State<OBCreateUserInviteModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

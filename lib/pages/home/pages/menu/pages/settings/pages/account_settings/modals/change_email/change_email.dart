@@ -1,15 +1,16 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/fields/text_form_field.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   ValidationService _validationService;
   ToastService _toastService;
   UserService _userService;
+  LocalizationService _localizationService;
   static const double INPUT_ICONS_SIZE = 16;
   static const EdgeInsetsGeometry INPUT_CONTENT_PADDING =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
@@ -58,6 +60,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     _validationService = openbookProvider.validationService;
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -74,8 +77,8 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
                       autofocus: true,
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your new email',
+                        labelText:_localizationService.user__change_email_email_text,
+                        hintText:_localizationService.user__change_email_hint_text,
                       ),
                       validator: (String email) {
                         if (!_formWasSubmitted) return null;
@@ -83,7 +86,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
                             _validationService.validateUserEmail(email);
                         if (validateEmail != null) return validateEmail;
                         if (_changedEmailTaken != null && _changedEmailTaken) {
-                          return 'Email is already registered';
+                          return _localizationService.user__change_email_error;
                         }
                       },
                     ),
@@ -101,13 +104,13 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
           Navigator.pop(context);
         },
       ),
-      title: 'Change Email',
+      title: _localizationService.user__change_email_title,
       trailing: OBButton(
         isDisabled: !_formValid,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _submitForm,
-        child: Text('Save'),
+        child: Text(_localizationService.user__change_email_save),
       ),
     );
   }
@@ -135,7 +138,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
       await _requestOperation.value;
       _toastService.success(
           message:
-              'We\'ve sent a confirmation link to your new email address, click it to verify your new email',
+              _localizationService.user__change_email_success_info,
           context: context);
       Navigator.of(context).pop();
     } catch (error) {
@@ -154,7 +157,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

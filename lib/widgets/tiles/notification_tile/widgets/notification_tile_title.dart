@@ -1,12 +1,12 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/user_badge.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/user_badge.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -47,17 +47,34 @@ class OBNotificationTileTitle extends StatelessWidget {
           GestureRecognizer usernameTapGestureRecognizer =
               TapGestureRecognizer()..onTap = onUsernamePressed;
 
-          List<TextSpan> textItems = [
-            TextSpan(
-                text: '$commenterName',
-                recognizer: usernameTapGestureRecognizer,
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            TextSpan(
-                text: ' @$commenterUsername',
-                recognizer: usernameTapGestureRecognizer,
-                style: TextStyle(color: secondaryTextColor)),
-            text
-          ];
+          List<String> plainTextItems = text.text.split(' ');
+          List<TextSpan> textItems = [];
+
+          plainTextItems.asMap().forEach((index, item) {
+            if (item == '[name]') {
+              textItems.add(
+                  TextSpan(
+                  text: '$commenterName',
+                  recognizer: usernameTapGestureRecognizer,
+                  style: TextStyle(fontWeight: FontWeight.bold)));
+            } else if (item == '[username]') {
+              textItems.add(TextSpan(
+                  text: ' @$commenterUsername',
+                  recognizer: usernameTapGestureRecognizer,
+                  style: TextStyle(color: secondaryTextColor)));
+            } else if (index <= plainTextItems.length - 1) {
+              textItems.add(TextSpan(
+                text: item
+              ));
+            }
+
+            if (index < plainTextItems.length - 1) {
+              //add space after word
+              textItems.add(TextSpan(
+                text: ' ',
+              ));
+            }
+          });
 
           return Row(
             mainAxisSize: MainAxisSize.max,

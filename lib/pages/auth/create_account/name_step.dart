@@ -1,11 +1,11 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthNameStepPage extends StatefulWidget {
@@ -72,7 +72,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = _localizationService.trans('auth__create_acc__next');
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
@@ -97,7 +97,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -125,7 +125,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
 
   Widget _buildWhatYourName({@required BuildContext context}) {
     String whatNameText =
-        _localizationService.trans('AUTH.CREATE_ACC.WHAT_NAME');
+        _localizationService.trans('auth__create_acc__what_name');
 
     return Column(
       children: <Widget>[
@@ -149,7 +149,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   Widget _buildNameForm() {
 
     String nameInputPlaceholder =
-        _localizationService.trans('AUTH.CREATE_ACC.NAME_PLACEHOLDER');
+        _localizationService.trans('auth__create_acc__name_placeholder');
 
     return Form(
       key: _formKey,

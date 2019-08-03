@@ -1,4 +1,4 @@
-import 'package:Openbook/models/device.dart';
+import 'package:Okuna/models/device.dart';
 
 class DevicesList {
   final List<Device> devices;

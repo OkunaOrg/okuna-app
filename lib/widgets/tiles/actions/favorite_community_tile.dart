@@ -1,10 +1,11 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBFavoriteCommunityTile extends StatefulWidget {
@@ -32,6 +33,7 @@ class OBFavoriteCommunityTile extends StatefulWidget {
 class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -45,6 +47,7 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.community.updateSubject,
@@ -60,7 +63,7 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
               ? OBIcons.unfavoriteCommunity
               : OBIcons.favoriteCommunity),
           title: OBText(
-              isFavorite ? 'Unfavorite community' : 'Favorite community'),
+              isFavorite ? _localizationService.community__unfavorite_action : _localizationService.community__favorite_action),
           onTap: isFavorite ? _unfavoriteCommunity : _favoriteCommunity,
           subtitle:
               isFavorite ? widget.unfavoriteSubtitle : widget.favoriteSubtitle,
@@ -102,7 +105,7 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

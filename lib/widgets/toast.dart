@@ -1,4 +1,4 @@
-import 'package:Openbook/services/toast.dart';
+import 'package:Okuna/services/toast.dart';
 import 'package:flutter/material.dart';
 
 // TODO Queue toasts.

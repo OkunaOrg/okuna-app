@@ -1,28 +1,28 @@
 import 'dart:io';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/pages/home/modals/create_post/pages/share_post/share_post.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/post_community_previewer.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/post_image_previewer.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/post_video_previewer.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/bottom_sheet.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/image_picker.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/pill_button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/post_community_previewer.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/post_image_previewer.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/post_video_previewer.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/pill_button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -46,6 +46,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   NavigationService _navigationService;
   ImagePickerService _imagePickerService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   UserService _userService;
 
   TextEditingController _textController;
@@ -109,6 +110,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     _navigationService = openbookProvider.navigationService;
     _imagePickerService = openbookProvider.imagePickerService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
 
     return CupertinoPageScaffold(
@@ -133,7 +135,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           Navigator.pop(context);
         },
       ),
-      title: 'New post',
+      title: _localizationService.trans('post__create_new'),
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -145,7 +147,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (widget.community != null) {
       return OBButton(
           type: OBButtonType.primary,
-          child: Text('Share'),
+          child: Text(_localizationService.trans('post__share')),
           size: OBButtonSize.small,
           onPressed: _createCommunityPost,
           isDisabled: !isEnabled || _isCreateCommunityPostInProgress,
@@ -154,12 +156,12 @@ class CreatePostModalState extends State<CreatePostModal> {
       if (isEnabled) {
         nextButton = GestureDetector(
           onTap: _onWantsToGoNext,
-          child: const OBText('Next'),
+          child: OBText(_localizationService.trans('post__create_next')),
         );
       } else {
         nextButton = Opacity(
           opacity: 0.5,
-          child: const OBText('Next'),
+          child: OBText(_localizationService.trans('post__create_next')),
         );
       }
     }
@@ -259,7 +261,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   List<Widget> _getImagePostActions() {
     return [
       OBPillButton(
-        text: 'Photo',
+        text: _localizationService.trans('post__create_photo'),
         color: Pigment.fromString('#FCC14B'),
         icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
@@ -349,7 +351,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

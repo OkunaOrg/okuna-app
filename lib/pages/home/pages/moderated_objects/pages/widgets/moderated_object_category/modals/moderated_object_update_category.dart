@@ -1,17 +1,18 @@
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderation_category.dart';
-import 'package:Openbook/models/moderation/moderation_category_list.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/checkbox.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderation_category.dart';
+import 'package:Okuna/models/moderation/moderation_category_list.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,7 @@ class OBModeratedObjectUpdateCategoryModalState
     extends State<OBModeratedObjectUpdateCategoryModal> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   List<ModerationCategory> _moderationCategories = [];
   ModerationCategory _selectedModerationCategory;
   bool _needsBootstrap;
@@ -51,6 +53,7 @@ class OBModeratedObjectUpdateCategoryModalState
       var openbookProvider = OpenbookProvider.of(context);
       _toastService = openbookProvider.toastService;
       _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -146,19 +149,19 @@ class OBModeratedObjectUpdateCategoryModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: 'Update category',
+      title: _localizationService.trans('moderation__update_category_title'),
       trailing: OBButton(
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _saveModerationCategory,
-        child: Text('Save'),
+        child: Text(_localizationService.trans('moderation__update_category_save')),
       ),
     );
   }

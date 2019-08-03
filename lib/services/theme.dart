@@ -1,5 +1,5 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/services/storage.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/services/storage.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math';
 

@@ -4,8 +4,8 @@
 
 import 'dart:ui' show ImageFilter;
 
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 

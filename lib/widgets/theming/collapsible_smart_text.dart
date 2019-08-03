@@ -1,7 +1,7 @@
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/smart_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/smart_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +14,7 @@ class OBCollapsibleSmartText extends StatefulWidget {
   final TextOverflow overflow;
   final TextOverflow lengthOverflow;
   final SmartTextElement trailingSmartTextElement;
+  final Function getChild;
 
   const OBCollapsibleSmartText(
       {Key key,
@@ -22,6 +23,7 @@ class OBCollapsibleSmartText extends StatefulWidget {
       this.size = OBTextSize.medium,
       this.overflow = TextOverflow.clip,
       this.lengthOverflow = TextOverflow.ellipsis,
+      this.getChild,
       this.trailingSmartTextElement})
       : super(key: key);
 
@@ -69,21 +71,25 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      OBSecondaryText(
-                        'Show more',
-                        size: widget.size,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      widget.getChild(),
+                      Row(
+                        children: <Widget>[
+                          OBSecondaryText(
+                            'Show more',
+                            size: widget.size,
+                            textAlign: TextAlign.start,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          OBIcon(
+                            OBIcons.arrowDown,
+                            themeColor: OBIconThemeColor.secondaryText,
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OBIcon(
-                        OBIcons.arrowDown,
-                        themeColor: OBIconThemeColor.secondaryText,
-                      )
                     ],
                   ),
                 ));
@@ -98,12 +104,29 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
   }
 
   Widget _buildActionableSmartText({int maxLength}) {
-    return OBActionableSmartText(
-      text: widget.text,
-      maxlength: maxLength,
-      size: widget.size,
-      lengthOverflow: widget.lengthOverflow,
-      trailingSmartTextElement: widget.trailingSmartTextElement,
+    Widget translateButton;
+
+    if (maxLength != null) {
+      translateButton = SizedBox();
+    } else {
+      translateButton = Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: widget.getChild(),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        OBActionableSmartText(
+          text: widget.text,
+          maxlength: maxLength,
+          size: widget.size,
+          lengthOverflow: widget.lengthOverflow,
+          trailingSmartTextElement: widget.trailingSmartTextElement,
+        ),
+        translateButton
+      ],
     );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:Openbook/widgets/load_more.dart';
-import 'package:Openbook/widgets/tiles/loading_indicator_tile.dart';
-import 'package:Openbook/widgets/tiles/retry_tile.dart';
+import 'package:Okuna/widgets/load_more.dart';
+import 'package:Okuna/widgets/tiles/loading_indicator_tile.dart';
+import 'package:Okuna/widgets/tiles/retry_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBHomePostsLoadMoreDelegate extends LoadMoreDelegate {

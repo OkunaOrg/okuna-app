@@ -1,10 +1,10 @@
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/splash_logo.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/splash_logo.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthSplashPage extends StatefulWidget {
@@ -60,7 +60,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   }
 
   Widget _buildLogo() {
-    String headlineText = localizationService.trans('AUTH.HEADLINE');
+    String headlineText = localizationService.trans('auth__headline');
 
     return Column(
       children: <Widget>[
@@ -79,7 +79,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   }
 
   Widget _buildLoginButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.LOGIN');
+    String buttonText = localizationService.trans('auth__login');
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -100,7 +100,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
   }
 
   Widget _buildCreateAccountButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACCOUNT');
+    String buttonText = localizationService.trans('auth__create_account');
 
     return OBSecondaryButton(
       isLarge: true,

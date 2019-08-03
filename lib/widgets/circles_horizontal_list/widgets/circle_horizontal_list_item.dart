@@ -1,10 +1,13 @@
-import 'package:Openbook/libs/pretty_count.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/widgets/tiles/circle_selectable_tile.dart';
-import 'package:Openbook/widgets/checkbox.dart';
-import 'package:Openbook/widgets/circle_color_preview.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/tiles/circle_selectable_tile.dart';
+import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/circle_color_preview.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../provider.dart';
 
 class OBCircleHorizontalListItem extends StatelessWidget {
   final bool isSelected;
@@ -22,6 +25,7 @@ class OBCircleHorizontalListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int usersCount = circle.usersCount;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     if (wasPreviouslySelected) {
       if (!isSelected) {
@@ -30,7 +34,7 @@ class OBCircleHorizontalListItem extends StatelessWidget {
     } else if (isSelected) {
       usersCount = usersCount + 1;
     }
-    String prettyUsersCount = getPrettyCount(usersCount);
+    String prettyUsersCount = getPrettyCount(usersCount, localizationService);
 
     Widget item = GestureDetector(
       onTap: () {

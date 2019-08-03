@@ -1,22 +1,23 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/create_post_text.dart';
-import 'package:Openbook/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Openbook/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/logged_in_user_avatar.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/widgets/theming/post_divider.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
+import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/theming/post_divider.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +45,8 @@ class OBPostCommentReplyExpandedModal extends StatefulWidget {
 class OBPostCommentReplyExpandedModalState
     extends State<OBPostCommentReplyExpandedModal> {
   ValidationService _validationService;
-  NavigationService _navigationService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   UserService _userService;
 
   TextEditingController _textController;
@@ -65,10 +66,6 @@ class OBPostCommentReplyExpandedModalState
     _textController.addListener(_onPostCommentTextChanged);
     _charactersCount = 0;
     _isPostCommentTextAllowedLength = false;
-    String hintText = 'Your reply...';
-    _postCommentItemsWidgets = [
-      OBCreatePostText(controller: _textController, hintText: hintText)
-    ];
     _requestInProgress = false;
   }
 
@@ -83,9 +80,13 @@ class OBPostCommentReplyExpandedModalState
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _validationService = openbookProvider.validationService;
-    _navigationService = openbookProvider.navigationService;
     _userService = openbookProvider.userService;
+    _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
+    String hintText = _localizationService.post__comment_reply_expanded_reply_hint_text;
+    _postCommentItemsWidgets = [
+      OBCreatePostText(controller: _textController, hintText: hintText)
+    ];
 
     //Scroll to bottom
     Future.delayed(Duration(milliseconds: 0), () {
@@ -116,7 +117,7 @@ class OBPostCommentReplyExpandedModalState
           Navigator.pop(context);
         },
       ),
-      title: 'Reply comment',
+      title: _localizationService.post__comment_reply_expanded_reply_comment,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -128,7 +129,7 @@ class OBPostCommentReplyExpandedModalState
       isLoading: _requestInProgress,
       size: OBButtonSize.small,
       onPressed: _onWantsToReplyComment,
-      child: Text('Post'),
+      child: Text(_localizationService.post__comment_reply_expanded_post),
     );
   }
 
@@ -230,7 +231,7 @@ class OBPostCommentReplyExpandedModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

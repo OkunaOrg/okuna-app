@@ -1,5 +1,5 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/provider.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
 
 enum OBIconSize { small, medium, large, extraLarge }
@@ -126,6 +126,8 @@ class OBIcons {
   static const play_arrow = OBIconData(nativeIcon: Icons.play_arrow);
   static const search = OBIconData(nativeIcon: Icons.search);
   static const notifications = OBIconData(nativeIcon: Icons.notifications);
+  static const language = OBIconData(nativeIcon: Icons.language);
+  static const translate = OBIconData(nativeIcon: Icons.translate);
   static const menu = OBIconData(nativeIcon: Icons.menu);
   static const communities = OBIconData(nativeIcon: Icons.bubble_chart);
   static const settings = OBIconData(nativeIcon: Icons.settings);

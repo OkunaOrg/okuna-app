@@ -1,10 +1,11 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/bottom_sheet.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/divider.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/primary_accent_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class OBCommunityTypeField extends StatelessWidget {
   Widget build(BuildContext context) {
     BottomSheetService bottomSheetService =
         OpenbookProvider.of(context).bottomSheetService;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     Widget typeIcon;
     String typeName;
@@ -34,12 +36,12 @@ class OBCommunityTypeField extends StatelessWidget {
           OBIcons.publicCommunity,
           themeColor: OBIconThemeColor.primaryAccent,
         );
-        typeName = 'Public';
+        typeName = localizationService.community__type_public;
         break;
       case CommunityType.private:
         typeIcon = OBIcon(OBIcons.privateCommunity,
             themeColor: OBIconThemeColor.primaryAccent);
-        typeName = 'Private';
+        typeName = localizationService.community__type_private;
         break;
     }
 

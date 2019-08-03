@@ -6,6 +6,8 @@ import 'package:mime/mime.dart';
 /// Temporal until https://github.com/dart-lang/mime/issues/13 hits
 import 'package:mime/src/default_extension_map.dart';
 
+import 'localization.dart';
+
 class UtilsService {
   Future<bool> fileHasImageMimeType(File file) async {
     String fileMimeType =
@@ -35,7 +37,7 @@ class UtilsService {
 
     return mimeType;
   }
-
+  // LocalizationService localizationService
   String timeAgo(DateTime date) {
     /// Originally from https://gist.github.com/DineshKachhot/bc8cee616f30c323c1dd1e63a4bf65df
     final now = DateTime.now();

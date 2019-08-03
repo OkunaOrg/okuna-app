@@ -1,11 +1,12 @@
-import 'package:Openbook/models/notifications/notification.dart';
-import 'package:Openbook/models/notifications/post_comment_notification.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/notifications/notification.dart';
+import 'package:Okuna/models/notifications/post_comment_notification.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -37,6 +38,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     bool isOwnPostNotification =
         openbookProvider.userService.getLoggedInUser().id == postCreatorId;
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
     Widget postImagePreview;
     if (post.hasImage()) {
@@ -76,8 +78,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         user: postComment.commenter,
         text: TextSpan(
             text: isOwnPostNotification
-                ? ' commented on your post: $postCommentText'
-                : ' also commented: $postCommentText'),
+                ? _localizationService.notifications__comment_comment_notification_tile_user_commented(postCommentText)
+                : _localizationService.notifications__comment_comment_notification_tile_user_also_commented(postCommentText)),
       ),
       trailing: postImagePreview,
       subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),

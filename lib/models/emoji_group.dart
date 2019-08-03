@@ -1,5 +1,5 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/emoji_list.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/emoji_list.dart';
 
 class EmojiGroup {
   final String keyword;

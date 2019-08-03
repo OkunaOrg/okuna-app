@@ -1,28 +1,29 @@
 import 'dart:async';
-import 'package:Openbook/models/categories_list.dart';
-import 'package:Openbook/models/category.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/pages/home/lib/poppable_page_controller.dart';
-import 'package:Openbook/pages/home/pages/communities/widgets/category_tab.dart';
-import 'package:Openbook/pages/home/pages/communities/widgets/my_communities/my_communities.dart';
-import 'package:Openbook/pages/home/pages/communities/widgets/trending_communities.dart';
-import 'package:Openbook/pages/home/pages/communities/widgets/user_avatar_tab.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/theme.dart';
-import 'package:Openbook/services/theme_value_parser.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/alerts/button_alert.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/icon_button.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/tabs/image_tab.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/categories_list.dart';
+import 'package:Okuna/models/category.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/category_tab.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/my_communities/my_communities.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/trending_communities.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/user_avatar_tab.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/icon_button.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/tabs/image_tab.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -43,6 +44,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   UserService _userService;
   ToastService _toastService;
   ThemeService _themeService;
+  LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   ModalService _modalService;
   NavigationService _navigationService;
@@ -82,6 +84,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
       _modalService = openbookProvider.modalService;
+      _localizationService = openbookProvider.localizationService;
       _navigationService = openbookProvider.navigationService;
       _bootstrap();
       _needsBootstrap = false;
@@ -89,7 +92,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
-            title: 'Communities',
+            title: _localizationService.community__communities_title,
             trailing: OBIconButton(
               OBIcons.add,
               themeColor: OBIconThemeColor.primaryAccent,
@@ -106,9 +109,9 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
-          text: 'No categories found. Please try again in a few minutes.',
+          text: _localizationService.community__communities_no_category_found,
           onPressed: _refreshCategories,
-          buttonText: 'Refresh',
+          buttonText: _localizationService.community__communities_refresh_text,
           buttonIcon: OBIcons.refresh,
           assetImage: 'assets/images/stickers/perplexed-owl.png',
           isLoading: _refreshInProgress,
@@ -160,7 +163,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         user: loggedInUser,
       ),
       OBImageTab(
-        text: 'All',
+        text: _localizationService.community__communities_all_text,
         color: Pigment.fromString('#2d2d2d'),
         textColor: Pigment.fromString('#ffffff'),
         imageProvider:
@@ -228,7 +231,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

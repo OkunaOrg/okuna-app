@@ -1,13 +1,13 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/pages/auth/create_account/widgets/auth_text_field.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthSetNewPasswordPage extends StatefulWidget {
@@ -24,6 +24,8 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
   ValidationService validationService;
   UserService userService;
   ToastService toastService;
+  static const passwordMaxLength = ValidationService.PASSWORD_MAX_LENGTH;
+  static const passwordMinLength = ValidationService.PASSWORD_MIN_LENGTH;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _requestInProgress;
 
@@ -82,7 +84,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
   }
 
   Widget _buildNextButton() {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.NEXT');
+    String buttonText = localizationService.trans('auth__create_acc__next');
 
     return OBSuccessButton(
       isLoading: _requestInProgress,
@@ -118,7 +120,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
         _showErrorMessage(errorMessage);
       }
       if (error is HttpieConnectionRefusedError) {
-        _showErrorMessage(localizationService.trans('AUTH.LOGIN.CONNECTION_ERROR'));
+        _showErrorMessage(localizationService.trans('auth__login__connection_error'));
       }
     } finally {
       _setRequestInProgress(false);
@@ -126,7 +128,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -154,7 +156,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
 
   Widget _buildWhatYourPassword({@required BuildContext context}) {
     String whatPasswordText =
-    localizationService.trans('AUTH.CREATE_ACC.WHAT_PASSWORD');
+    localizationService.auth__create_acc__what_password;
 
     return Column(
       children: <Widget>[
@@ -174,7 +176,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
         SizedBox(
           height: 10.0,
         ),
-        Text('(10-100 characters)',
+        Text(localizationService.auth__create_acc_password_hint_text(passwordMinLength, passwordMaxLength),
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20.0,

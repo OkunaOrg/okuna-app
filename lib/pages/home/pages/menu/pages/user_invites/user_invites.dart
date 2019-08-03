@@ -1,22 +1,23 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/user_invite.dart';
-import 'package:Openbook/models/user_invites_list.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/my_invite_group.dart';
-import 'package:Openbook/pages/home/pages/menu/pages/user_invites/widgets/user_invite_count.dart';
-import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/widgets/alerts/button_alert.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/icon_button.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/models/user_invite.dart';
+import 'package:Okuna/models/user_invites_list.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/user_invites/widgets/my_invite_group.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/user_invites/widgets/user_invite_count.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/icon_button.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Openbook/services/httpie.dart';
+import 'package:Okuna/services/httpie.dart';
 
 class OBUserInvitesPage extends StatefulWidget {
   @override
@@ -29,6 +30,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
+  LocalizationService _localizationService;
 
   User _user;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
@@ -70,6 +72,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       _userService = provider.userService;
       _toastService = provider.toastService;
       _modalService = provider.modalService;
+      _localizationService = provider.localizationService;
       _user = _userService.getLoggedInUser();
       _bootstrap();
       _needsBootstrap = false;
@@ -78,7 +81,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
-          title: 'My Invites',
+          title: _localizationService.user__invites_title,
           trailing: Opacity(
             opacity: _user.inviteCount == 0 ? 0.5 : 1.0,
             child: Row(
@@ -132,9 +135,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
                   OBMyInvitesGroup(
                     key: Key('AcceptedInvitesGroup'),
                     controller: _acceptedInvitesGroupController,
-                    title: 'Accepted',
-                    groupName: 'accepted invites',
-                    groupItemName: 'accepted invite',
+                    title: _localizationService.user__invites_accepted_title,
+                    groupName: _localizationService.user__invites_accepted_group_name,
+                    groupItemName: _localizationService.user__invites_accepted_group_item_name,
                     maxGroupListPreviewItems: 5,
                     inviteListSearcher: _searchAcceptedUserInvites,
                     inviteGroupListItemDeleteCallback:
@@ -145,9 +148,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
                   OBMyInvitesGroup(
                     key: Key('PendingInvitesGroup'),
                     controller: _pendingInvitesGroupController,
-                    title: 'Pending',
-                    groupName: 'pending invites',
-                    groupItemName: 'pending invite',
+                    title: _localizationService.user__invites_pending,
+                    groupName: _localizationService.user__invites_pending_group_name,
+                    groupItemName: _localizationService.user__invites_pending_group_item_name,
                     maxGroupListPreviewItems: 5,
                     inviteListSearcher: _searchPendingUserInvites,
                     inviteGroupListItemDeleteCallback:
@@ -167,8 +170,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     bool hasInvites = _user.inviteCount > 0;
 
     String message = hasInvites
-        ? 'Looks like you haven\'t used any invite.'
-        : 'You have no invites available.';
+        ? _localizationService.user__invites_none_used
+        : _localizationService.user__invites_none_left;
 
     String assetImage = hasInvites
         ? 'assets/images/stickers/perplexed-owl.png'
@@ -179,8 +182,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
         : _refreshInvites;
 
     String buttonText = hasInvites
-        ? 'Invite a friend'
-        : 'Refresh';
+        ? _localizationService.user__invites_invite_a_friend
+        : _localizationService.user__invites_refresh;
 
     return OBButtonAlert(
       text: message,
@@ -282,7 +285,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -300,7 +303,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   void _showNoInvitesLeft() {
-    _toastService.error(message: 'You have no invites available', context: context);
+    _toastService.error(message: _localizationService.user__invites_none_left, context: context);
   }
 
   void _onUserInviteCreated(UserInvite createdUserInvite) {

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

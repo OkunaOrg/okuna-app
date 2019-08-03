@@ -1,4 +1,4 @@
-import 'package:Openbook/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
 class OBFloatingActionButton extends StatelessWidget {

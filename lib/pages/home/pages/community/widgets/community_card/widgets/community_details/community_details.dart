@@ -1,7 +1,7 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_favorite.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_members_count.dart';
-import 'package:Openbook/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_type.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_favorite.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_members_count.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_type.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityDetails extends StatelessWidget {

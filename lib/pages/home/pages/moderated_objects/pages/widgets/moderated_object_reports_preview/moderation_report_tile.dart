@@ -1,8 +1,8 @@
-import 'package:Openbook/models/moderation/moderation_report.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/moderation/moderation_report.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBModerationReportTile extends StatelessWidget {

@@ -1,10 +1,11 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderation_penalty.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderation_penalty.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBModerationPenaltyActions extends StatelessWidget {
@@ -14,6 +15,8 @@ class OBModerationPenaltyActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+
     List<Widget> moderationPenaltyActions = [
       Expanded(
           child: OBButton(
@@ -28,7 +31,7 @@ class OBModerationPenaltyActions extends StatelessWidget {
                   const SizedBox(
                     width: 10.0,
                   ),
-                  const OBText('Chat with the team'),
+                  OBText(_localizationService.trans('moderation__actions_chat_with_team')),
                 ],
               ),
               onPressed: () {

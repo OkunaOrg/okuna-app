@@ -1,17 +1,18 @@
 import 'dart:async';
 
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/users_list.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/buttons/actions/follow_button.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/tiles/user_tile.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/models/users_list.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/widgets/buttons/actions/follow_button.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class OBCommunityMembersPage extends StatefulWidget {
 class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -47,12 +49,13 @@ class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
-    String title = widget.community.usersAdjective ?? 'Community Members';
-    String singularName = widget.community.userAdjective ?? 'member';
-    String pluralName = widget.community.usersAdjective ?? 'members';
+    String title = widget.community.usersAdjective ?? _localizationService.community__community_members;
+    String singularName = widget.community.userAdjective ?? _localizationService.community__member;
+    String pluralName = widget.community.usersAdjective ?? _localizationService.community__member_plural;
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(

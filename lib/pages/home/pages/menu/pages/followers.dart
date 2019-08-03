@@ -1,16 +1,17 @@
 import 'dart:async';
 
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/models/users_list.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/widgets/buttons/actions/follow_button.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/page_scaffold.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/tiles/user_tile.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/models/users_list.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/widgets/buttons/actions/follow_button.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class OBFollowersPage extends StatefulWidget {
 class OBFollowersPageState extends State<OBFollowersPage> {
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -41,12 +43,13 @@ class OBFollowersPageState extends State<OBFollowersPage> {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Followers',
+        title: _localizationService.user__followers_title,
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
@@ -56,8 +59,8 @@ class OBFollowersPageState extends State<OBFollowersPage> {
           listRefresher: _refreshFollowers,
           listOnScrollLoader: _loadMoreFollowers,
           listSearcher: _searchFollowers,
-          resourceSingularName: 'follower',
-          resourcePluralName: 'followers',
+          resourceSingularName: _localizationService.user__follower_singular,
+          resourcePluralName: _localizationService.user__follower_plural,
         ),
       ),
     );

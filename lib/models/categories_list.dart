@@ -1,4 +1,4 @@
-import 'package:Openbook/models/category.dart';
+import 'package:Okuna/models/category.dart';
 
 class CategoriesList {
   final List<Category> categories;

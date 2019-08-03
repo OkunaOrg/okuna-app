@@ -1,6 +1,6 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/user.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostCommentReaction {

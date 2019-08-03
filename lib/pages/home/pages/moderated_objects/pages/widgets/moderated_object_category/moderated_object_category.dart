@@ -1,10 +1,10 @@
-import 'package:Openbook/models/moderation/moderated_object.dart';
-import 'package:Openbook/models/moderation/moderation_category.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tile_group_title.dart';
-import 'package:Openbook/widgets/tiles/moderation_category_tile.dart';
+import 'package:Okuna/models/moderation/moderated_object.dart';
+import 'package:Okuna/models/moderation/moderation_category.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tile_group_title.dart';
+import 'package:Okuna/widgets/tiles/moderation_category_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectCategory extends StatelessWidget {

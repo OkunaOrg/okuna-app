@@ -1,16 +1,16 @@
-import 'package:Openbook/models/theme.dart';
-import 'package:Openbook/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/documents.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/widgets/alerts/alert.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/markdown.dart';
-import 'package:Openbook/widgets/progress_indicator.dart';
+import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/documents.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/markdown.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
@@ -66,7 +66,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
           Padding(
             padding: EdgeInsets.only(top: 30, left: 20, right: 20),
             child: Text(
-              'Please take a moment to read and accept our guidelines.',
+              _localizationService.user__guidelines_desc,
               style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -160,7 +160,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -177,7 +177,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      child: Text('Accept', style: TextStyle(fontSize: 18.0)),
+      child: Text(_localizationService.user__guidelines_accept, style: TextStyle(fontSize: 18.0)),
       isDisabled: !_acceptButtonEnabled &&
           !_createAccountBloc.areGuidelinesAccepted() &&
           _communityGuidelines.isNotEmpty,
@@ -189,7 +189,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.CREATE_ACC.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,

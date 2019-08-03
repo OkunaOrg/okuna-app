@@ -1,10 +1,13 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/widgets/cirles_wrap.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/cirles_wrap.dart';
+import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../provider.dart';
 
 class OBPostCircles extends StatelessWidget {
   final Post _post;
@@ -13,6 +16,7 @@ class OBPostCircles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     if (_post.hasCircles()) {
       return SizedBox(
         height: 26.0,
@@ -25,7 +29,7 @@ class OBPostCircles extends StatelessWidget {
             return OBCirclesWrap(
                 textSize: OBTextSize.small,
                 circlePreviewSize: OBCircleColorPreviewSize.extraSmall,
-                leading: const OBText('You shared with', size: OBTextSize.small),
+                leading: OBText(_localizationService.trans('post__you_shared_with'), size: OBTextSize.small),
                 circles: _post.getPostCircles()
             );
           },
@@ -39,7 +43,7 @@ class OBPostCircles extends StatelessWidget {
         child: Row(
           children: <Widget>[
             OBText(
-              'Shared privately on',
+              _localizationService.trans('post__shared_privately_on'),
               size: OBTextSize.small,
             ),
             SizedBox(
@@ -54,7 +58,7 @@ class OBPostCircles extends StatelessWidget {
             ),
             Flexible(
               child: OBActionableSmartText(
-                text: '@$postCreatorUsername \'s circles',
+                text: _localizationService.post__usernames_circles(postCreatorUsername),
                 size: OBTextSize.small,
                 overflow: TextOverflow.ellipsis,
               ),

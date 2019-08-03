@@ -1,17 +1,18 @@
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/actions/close_post_tile.dart';
-import 'package:Openbook/widgets/tiles/actions/disable_comments_post_tile.dart';
-import 'package:Openbook/widgets/tiles/actions/mute_post_tile.dart';
-import 'package:Openbook/widgets/tiles/actions/report_post_tile.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/actions/close_post_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/disable_comments_post_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/mute_post_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/report_post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +38,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   UserService _userService;
   ModalService _modalService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
     _userService = openbookProvider.userService;
     _modalService = openbookProvider.modalService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     User loggedInUser = _userService.getLoggedInUser();
 
@@ -79,8 +82,8 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           if (loggedInUser.canEditPost(post)) {
             postActions.add(ListTile(
               leading: const OBIcon(OBIcons.editPost),
-              title: const OBText(
-                'Edit post',
+              title: OBText(
+               _localizationService.post__edit_title,
               ),
               onTap: _onWantsToEditPost,
             ));
@@ -89,8 +92,8 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           if (loggedInUser.canDeletePost(post)) {
             postActions.add(ListTile(
               leading: const OBIcon(OBIcons.deletePost),
-              title: const OBText(
-                'Delete post',
+              title: OBText(
+                _localizationService.post__actions_delete,
               ),
               onTap: _onWantsToDeletePost,
             ));
@@ -115,7 +118,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   Future _onWantsToDeletePost() async {
     try {
       await _userService.deletePost(widget.post);
-      _toastService.success(message: 'Post deleted', context: context);
+      _toastService.success(message: _localizationService.post__actions_deleted, context: context);
       widget.onPostDeleted(widget.post);
       Navigator.pop(context);
     } catch (error) {
@@ -140,7 +143,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

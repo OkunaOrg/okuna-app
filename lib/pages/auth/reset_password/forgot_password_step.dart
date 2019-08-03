@@ -1,11 +1,11 @@
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/localization.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/buttons/success_button.dart';
-import 'package:Openbook/widgets/buttons/secondary_button.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/success_button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthForgotPasswordPage extends StatefulWidget {
@@ -106,7 +106,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
   }
 
   Widget _buildContinueButton(BuildContext context) {
-    String buttonText = _localizationService.trans('AUTH.LOGIN.LOGIN');
+    String buttonText = _localizationService.trans('auth__login__login');
 
     return OBSuccessButton(
       isLoading: _requestInProgress,
@@ -139,7 +139,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
       }
       if (error is HttpieConnectionRefusedError) {
         _setErrorFeedback(
-            _localizationService.trans('AUTH.LOGIN.CONNECTION_ERROR'));
+            _localizationService.trans('auth__login__connection_error'));
       }
     } finally {
       _setRequestInProgress(false);
@@ -147,7 +147,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('AUTH.LOGIN.PREVIOUS');
+    String buttonText = _localizationService.trans('auth__login__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -171,8 +171,8 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
   }
 
   Widget _buildHeading({@required BuildContext context}) {
-    String titleText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD');
-    String subtitleText = _localizationService.trans('AUTH.LOGIN.FORGOT_PASSWORD_SUBTITLE');
+    String titleText = _localizationService.trans('auth__login__forgot_password');
+    String subtitleText = _localizationService.trans('auth__login__forgot_password_subtitle');
 
     return Column(
       children: <Widget>[
@@ -201,13 +201,13 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     String usernameInputLabel =
-    _localizationService.trans('AUTH.LOGIN.USERNAME_LABEL');
+    _localizationService.trans('auth__login__username_label');
 
     String emailInputLabel =
-    _localizationService.trans('AUTH.LOGIN.EMAIL_LABEL');
+    _localizationService.trans('auth__login__email_label');
 
     String orText =
-    _localizationService.trans('AUTH.LOGIN.OR_TEXT');
+    _localizationService.trans('auth__login__or_text');
 
     EdgeInsetsGeometry inputContentPadding =
     EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);

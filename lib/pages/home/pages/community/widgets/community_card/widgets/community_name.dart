@@ -1,5 +1,5 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBCommunityName extends StatelessWidget {

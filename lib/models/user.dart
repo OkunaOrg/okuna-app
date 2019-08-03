@@ -1,17 +1,18 @@
-import 'package:Openbook/models/badge.dart';
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/models/circles_list.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/community_invite.dart';
-import 'package:Openbook/models/community_invite_list.dart';
-import 'package:Openbook/models/community_membership.dart';
-import 'package:Openbook/models/community_membership_list.dart';
-import 'package:Openbook/models/follows_lists_list.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/models/updatable_model.dart';
-import 'package:Openbook/models/user_notifications_settings.dart';
-import 'package:Openbook/models/user_profile.dart';
+import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/models/circles_list.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/community_invite.dart';
+import 'package:Okuna/models/community_invite_list.dart';
+import 'package:Okuna/models/community_membership.dart';
+import 'package:Okuna/models/community_membership_list.dart';
+import 'package:Okuna/models/follows_lists_list.dart';
+import 'package:Okuna/models/language.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/updatable_model.dart';
+import 'package:Okuna/models/user_notifications_settings.dart';
+import 'package:Okuna/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
 
 class User extends UpdatableModel<User> {
@@ -20,6 +21,7 @@ class User extends UpdatableModel<User> {
   int connectionsCircleId;
   String email;
   String username;
+  Language language;
   UserProfile profile;
   UserNotificationsSettings notificationsSettings;
   int followersCount;
@@ -81,6 +83,7 @@ class User extends UpdatableModel<User> {
       this.username,
       this.email,
       this.profile,
+      this.language,
       this.notificationsSettings,
       this.followersCount,
       this.followingCount,
@@ -114,6 +117,9 @@ class User extends UpdatableModel<User> {
       } else {
         profile = navigationUsersFactory.parseUserProfile(json['profile']);
       }
+    }
+    if (json.containsKey('language')) {
+      language = navigationUsersFactory.parseLanguage(json['language']);
     }
     if (json.containsKey('notifications_settings')) {
       if (notificationsSettings != null) {
@@ -228,7 +234,13 @@ class User extends UpdatableModel<User> {
   }
 
   bool hasProfileBadges() {
-    return this.profile != null && this.profile.badges != null && this.profile.badges.length > 0;
+    return this.profile != null &&
+        this.profile.badges != null &&
+        this.profile.badges.length > 0;
+  }
+
+  bool hasLanguage() {
+    return this.language != null;
   }
 
   bool isConnectionsCircle(Circle circle) {
@@ -470,6 +482,21 @@ class User extends UpdatableModel<User> {
     return loggedInUserIsPostCreator && !post.isClosed;
   }
 
+  bool canTranslatePostComment(PostComment postComment, Post post) {
+    if ((!post.hasCommunity() && post.isEncircledPost()) ||
+        language?.code == null) return false;
+
+    return postComment.hasLanguage() &&
+        postComment.getLanguage().code != language.code;
+  }
+
+  bool canTranslatePost(Post post) {
+    if ((!post.hasCommunity() && post.isEncircledPost()) ||
+        language?.code == null) return false;
+
+    return post.hasLanguage() && post.getLanguage().code != language.code;
+  }
+
   bool canEditPostComment(PostComment postComment, Post post) {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
@@ -542,6 +569,7 @@ class UserFactory extends UpdatableModelFactory<User> {
             json['active_moderation_penalties_count'],
         email: json['email'],
         username: json['username'],
+        language: parseLanguage(json['language']),
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isConnected: json['is_connected'],
@@ -587,5 +615,10 @@ class UserFactory extends UpdatableModelFactory<User> {
   FollowsListsList parseFollowsLists(List followsListsData) {
     if (followsListsData == null) return null;
     return FollowsListsList.fromJson(followsListsData);
+  }
+
+  Language parseLanguage(Map languageData) {
+    if (languageData == null) return null;
+    return Language.fromJson(languageData);
   }
 }

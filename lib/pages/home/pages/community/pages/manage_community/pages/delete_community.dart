@@ -1,12 +1,13 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBDeleteCommunityPage<T> extends StatefulWidget {
@@ -25,6 +26,7 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _needsBootstrap;
 
   @override
@@ -40,11 +42,12 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: 'Confirmation'),
+        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -65,7 +68,7 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
                       height: 20,
                     ),
                     OBText(
-                      'Are you sure you want to delete the community?',
+                      _localizationService.trans('community__delete_confirmation'),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -73,8 +76,8 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    const OBText(
-                        'You won\'t see it\'s posts in your timeline nor will be able to post to it anymore.')
+                    OBText(
+                        _localizationService.trans('community__delete_desc'))
                   ],
                 ),
               ),
@@ -87,7 +90,7 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text('No'),
+                      child: Text(_localizationService.trans('community__no')),
                       onPressed: _onCancel,
                     ),
                   ),
@@ -97,7 +100,7 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text('Yes'),
+                      child: Text(_localizationService.trans('community__yes')),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -134,7 +137,7 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
       throw error;
     }
   }

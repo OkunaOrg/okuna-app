@@ -1,20 +1,21 @@
 import 'dart:io';
 
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/image_picker.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/services/validation.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/buttons/button.dart';
-import 'package:Openbook/widgets/cover.dart';
-import 'package:Openbook/widgets/fields/text_form_field.dart';
-import 'package:Openbook/widgets/fields/toggle_field.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/cover.dart';
+import 'package:Okuna/widgets/fields/text_form_field.dart';
+import 'package:Okuna/widgets/fields/toggle_field.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   ToastService _toastService;
   ImagePickerService _imagePickerService;
   ValidationService _validationService;
+  LocalizationService _localizationService;
 
   bool _requestInProgress;
   bool _formWasSubmitted;
@@ -87,6 +89,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _toastService = openbookProvider.toastService;
     _imagePickerService = openbookProvider.imagePickerService;
     _validationService = openbookProvider.validationService;
+    _localizationService = openbookProvider.localizationService;
 
     return Scaffold(
         appBar: _buildNavigationBar(),
@@ -132,12 +135,12 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                               if (!_formWasSubmitted) return null;
                               if (_takenUsername != null &&
                                   _takenUsername == username)
-                                return 'Username @$_takenUsername is taken';
+                                return _localizationService.user__edit_profile_user_name_taken(_takenUsername);
                               return _validationService
                                   .validateUserUsername(username);
                             },
                             decoration: InputDecoration(
-                              labelText: 'Username',
+                              labelText: _localizationService.user__edit_profile_username,
                               prefixIcon: const OBIcon(OBIcons.email),
                             ),
                           ),
@@ -149,7 +152,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                                   .validateUserProfileName(profileName);
                             },
                             decoration: InputDecoration(
-                              labelText: 'Name',
+                              labelText: _localizationService.user__edit_profile_name,
                               prefixIcon: const OBIcon(OBIcons.name),
                             ),
                           ),
@@ -162,7 +165,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             },
                             decoration: InputDecoration(
                               prefixIcon: const OBIcon(OBIcons.link),
-                              labelText: 'Url',
+                              labelText: _localizationService.user__edit_profile_url,
                             ),
                           ),
                           OBTextFormField(
@@ -173,7 +176,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                                   .validateUserProfileLocation(profileLocation);
                             },
                             decoration: InputDecoration(
-                              labelText: 'Location',
+                              labelText: _localizationService.user__edit_profile_location,
                               prefixIcon: const OBIcon(OBIcons.location),
                             ),
                           ),
@@ -187,14 +190,14 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             keyboardType: TextInputType.multiline,
                             maxLines: 3,
                             decoration: InputDecoration(
-                              labelText: 'Bio',
+                              labelText: _localizationService.user__edit_profile_bio,
                               prefixIcon: const OBIcon(OBIcons.bio),
                             ),
                             textInputAction: TextInputAction.newline,
                           ),
                           OBToggleField(
                             value: _followersCountVisible,
-                            title: 'Followers count',
+                            title: _localizationService.user__edit_profile_followers_count,
                             leading: const OBIcon(OBIcons.followers),
                             onChanged: (bool value) {
                               setState(() {
@@ -227,13 +230,13 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
           Navigator.pop(context);
         },
       ),
-      title: 'Edit profile',
+      title: _localizationService.user__edit_profile_title,
       trailing: OBButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,
         size: OBButtonSize.small,
         onPressed: _submitForm,
-        child: Text('Save'),
+        child: Text(_localizationService.user__edit_profile_save_text),
       ),
     );
   }
@@ -316,7 +319,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
           List<Widget> listTiles = [
             new ListTile(
               leading: new Icon(Icons.photo_library),
-              title: new Text('Pick image'),
+              title: new Text(_localizationService.user__edit_profile_pick_image),
               onTap: () async {
                 try {
                   var image =
@@ -326,7 +329,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                 } on ImageTooLargeException catch (e) {
                   int limit = e.getLimitInMB();
                   toastService.error(
-                      message: 'Image too large (limit: $limit MB)',
+                      message: _localizationService.user__edit_profile_pick_image_error_too_large(limit),
                       context: context);
                 }
                 Navigator.pop(context);
@@ -339,7 +342,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               if (_coverUrl != null || _coverFile != null) {
                 listTiles.add(ListTile(
                   leading: new Icon(Icons.delete),
-                  title: new Text('Delete'),
+                  title: new Text(_localizationService.user__edit_profile_delete),
                   onTap: () async {
                     _clearCover();
                     Navigator.pop(context);
@@ -351,7 +354,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               if (_avatarUrl != null || _avatarFile != null) {
                 listTiles.add(ListTile(
                   leading: new Icon(Icons.delete),
-                  title: new Text('Delete'),
+                  title: new Text(_localizationService.user__edit_profile_delete),
                   onTap: () async {
                     _clearAvatar();
                     Navigator.pop(context);
@@ -424,7 +427,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

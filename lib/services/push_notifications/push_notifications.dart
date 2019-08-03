@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:Openbook/models/device.dart';
-import 'package:Openbook/models/push_notification.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/services/user.dart';
+import 'package:Okuna/models/device.dart';
+import 'package:Okuna/models/push_notification.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:crypto/crypto.dart';
-import 'package:onesignalflutter/onesignalflutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PushNotificationsService {

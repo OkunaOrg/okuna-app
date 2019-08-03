@@ -1,11 +1,11 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/emoji_group.dart';
-import 'package:Openbook/models/emoji_group_list.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/emoji_groups.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_search_results.dart';
-import 'package:Openbook/widgets/search_bar.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/emoji_group.dart';
+import 'package:Okuna/models/emoji_group_list.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/emoji_groups.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_search_results.dart';
+import 'package:Okuna/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

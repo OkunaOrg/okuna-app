@@ -1,14 +1,15 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/modal_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/primary_color_container.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/tiles/actions/favorite_community_tile.dart';
-import 'package:Openbook/widgets/tiles/actions/report_community_tile.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/actions/favorite_community_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/report_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,7 @@ class OBCommunityActionsBottomSheetState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _modalService = openbookProvider.modalService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     List<Widget> communityActions = [
       OBFavoriteCommunityTile(
@@ -58,8 +60,8 @@ class OBCommunityActionsBottomSheetState
     if (communityHasInvitesEnabled && isMemberOfCommunity) {
       communityActions.add(ListTile(
         leading: const OBIcon(OBIcons.communityInvites),
-        title: const OBText(
-          'Invite people to community',
+        title: OBText(
+          _localizationService.community__actions_invite_people_title,
         ),
         onTap: _onWantsToInvitePeople,
       ));
@@ -87,11 +89,6 @@ class OBCommunityActionsBottomSheetState
     _dismiss();
     _modalService.openInviteToCommunity(
         context: context, community: widget.community);
-  }
-
-  void _onWantsToReportCommunity() async {
-    _toastService.error(message: 'Not implemented yet', context: context);
-    _dismiss();
   }
 
   void _dismiss() {

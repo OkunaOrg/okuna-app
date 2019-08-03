@@ -1,12 +1,13 @@
-import 'package:Openbook/models/notifications/notification.dart';
-import 'package:Openbook/models/notifications/post_comment_notification.dart';
-import 'package:Openbook/models/notifications/post_comment_reply_notification.dart';
-import 'package:Openbook/models/post.dart';
-import 'package:Openbook/models/post_comment.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/widgets/avatars/avatar.dart';
-import 'package:Openbook/widgets/theming/actionable_smart_text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/notifications/notification.dart';
+import 'package:Okuna/models/notifications/post_comment_notification.dart';
+import 'package:Okuna/models/notifications/post_comment_reply_notification.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -35,6 +36,8 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    LocalizationService localizationService = openbookProvider.localizationService;
+
     bool isOwnPostNotification =
         openbookProvider.userService.getLoggedInUser().id == postCreatorId;
 
@@ -76,8 +79,8 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
       title: OBNotificationTileTitle(
         text: TextSpan(
             text: isOwnPostNotification
-                ? ' replied: $postCommentText'
-                : ' also replied: $postCommentText'),
+                ? localizationService.notifications__comment_reply_notification_tile_user_replied(postCommentText)
+                : localizationService.notifications__comment_reply_notification_tile_user_also_replied(postCommentText)),
         onUsernamePressed: navigateToCommenterProfile,
         user: postComment.commenter,
       ),

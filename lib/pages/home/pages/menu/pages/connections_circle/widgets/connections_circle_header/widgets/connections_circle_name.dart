@@ -1,7 +1,7 @@
-import 'package:Openbook/models/circle.dart';
-import 'package:Openbook/widgets/theming/primary_accent_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
+import 'package:Okuna/models/circle.dart';
+import 'package:Okuna/widgets/theming/primary_accent_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBConnectionsCircleName extends StatelessWidget {

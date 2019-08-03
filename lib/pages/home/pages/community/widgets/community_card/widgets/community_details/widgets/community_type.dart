@@ -1,7 +1,10 @@
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../../../../provider.dart';
 
 class OBCommunityType extends StatelessWidget {
   final Community community;
@@ -11,6 +14,7 @@ class OBCommunityType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CommunityType type = community.type;
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
     if (type == null) {
       return const SizedBox();
@@ -29,7 +33,7 @@ class OBCommunityType extends StatelessWidget {
         ),
         Flexible(
           child: OBText(
-            type == CommunityType.private ? 'Private' : 'Public',
+            type == CommunityType.private ? localizationService.community__type_private : localizationService.community__type_public,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

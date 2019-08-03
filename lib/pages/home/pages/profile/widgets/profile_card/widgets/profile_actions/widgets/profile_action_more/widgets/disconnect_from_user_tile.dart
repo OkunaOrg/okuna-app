@@ -1,10 +1,11 @@
-import 'package:Openbook/models/user.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/services/user.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBDisconnectFromUserTile extends StatefulWidget {
@@ -25,17 +26,19 @@ class OBDisconnectFromUserTile extends StatefulWidget {
 class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     String userName = widget.user.getProfileName();
 
     return ListTile(
-        title: OBText(widget.title ?? 'Disconnect from $userName'),
+        title: OBText(widget.title ?? _localizationService.user__disconnect_from_user(userName)),
         leading: const OBIcon(OBIcons.disconnect),
         onTap: () async {
           await _disconnectFromUser();
@@ -48,7 +51,7 @@ class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
       await _userService.disconnectFromUserWithUsername(widget.user.username);
       widget.user.decrementFollowersCount();
       _toastService.success(
-          message: 'Disconnected successfully', context: context);
+          message: _localizationService.user__disconnect_from_user_success, context: context);
     } catch (error) {
       _onError(error);
     }
@@ -62,7 +65,7 @@ class OBDisconnectFromUserTileState extends State<OBDisconnectFromUserTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

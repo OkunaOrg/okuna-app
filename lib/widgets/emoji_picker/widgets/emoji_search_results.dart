@@ -1,11 +1,14 @@
-import 'package:Openbook/models/emoji.dart';
-import 'package:Openbook/models/emoji_group.dart';
-import 'package:Openbook/widgets/emoji_picker/emoji_picker.dart';
-import 'package:Openbook/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/emoji_group.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/widgets/emoji_picker/emoji_picker.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
+import '../../../provider.dart';
 
 class OBEmojiSearchResults extends StatelessWidget {
   final List<EmojiGroupSearchResults> results;
@@ -18,7 +21,8 @@ class OBEmojiSearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return results.length > 0 ? _buildSearchResults() : _buildNoResults();
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    return results.length > 0 ? _buildSearchResults() : _buildNoResults(localizationService);
   }
 
   Widget _buildSearchResults() {
@@ -57,7 +61,7 @@ class OBEmojiSearchResults extends StatelessWidget {
         });
   }
 
-  Widget _buildNoResults() {
+  Widget _buildNoResults(LocalizationService localizationService) {
     return SizedBox(
       child: Center(
         child: ConstrainedBox(
@@ -70,7 +74,7 @@ class OBEmojiSearchResults extends StatelessWidget {
                 height: 20.0,
               ),
               OBText(
-                'No emoji found matching \'$searchQuery\'.',
+                localizationService.user__emoji_search_none_found(searchQuery),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,

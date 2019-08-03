@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/string_template.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/string_template.dart';
 import 'package:meta/meta.dart';
 
 class PostsApiService {
@@ -25,6 +25,9 @@ class PostsApiService {
   static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
   static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
   static const REPORT_POST_PATH = 'api/posts/{postUuid}/report/';
+  static const TRANSLATE_POST_PATH = 'api/posts/{postUuid}/translate/';
+  static const TRANSLATE_POST_COMMENT_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/translate/';
   static const DELETE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
   static const REPORT_POST_COMMENT_PATH =
@@ -413,6 +416,18 @@ class PostsApiService {
         body: body, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> translatePost({@required String postUuid}) {
+    String path = _makeTranslatePostPath(postUuid: postUuid);
+
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> translatePostComment({@required String postUuid, @required int postCommentId}) {
+    String path = _makeTranslatePostCommentPath(postUuid: postUuid, postCommentId: postCommentId);
+
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   String _makePostPath(String postUuid) {
     return _stringTemplateService.parse(POST_PATH, {'postUuid': postUuid});
   }
@@ -552,6 +567,16 @@ class PostsApiService {
   String _makeReportPostPath({@required postUuid}) {
     return _stringTemplateService
         .parse(REPORT_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeTranslatePostPath({@required postUuid}) {
+    return _stringTemplateService
+        .parse(TRANSLATE_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeTranslatePostCommentPath({@required postUuid, @required postCommentId}) {
+    return _stringTemplateService
+        .parse(TRANSLATE_POST_COMMENT_PATH, {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 
   String _makeApiUrl(String string) {

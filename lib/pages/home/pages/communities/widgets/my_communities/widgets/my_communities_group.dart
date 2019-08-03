@@ -1,13 +1,14 @@
-import 'package:Openbook/libs/str_utils.dart';
-import 'package:Openbook/models/community.dart';
-import 'package:Openbook/provider.dart';
-import 'package:Openbook/services/httpie.dart';
-import 'package:Openbook/services/navigation_service.dart';
-import 'package:Openbook/services/toast.dart';
-import 'package:Openbook/widgets/http_list.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/theming/secondary_text.dart';
-import 'package:Openbook/widgets/theming/text.dart';
+import 'package:Okuna/libs/str_utils.dart';
+import 'package:Okuna/models/community.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   bool _needsBootstrap;
   ToastService _toastService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
   List<Community> _communityGroupList;
   bool _refreshInProgress;
   CancelableOperation _refreshOperation;
@@ -65,6 +67,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       var openbookProvider = OpenbookProvider.of(context);
       _toastService = openbookProvider.toastService;
       _navigationService = openbookProvider.navigationService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -126,8 +129,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBSecondaryText(
-              'See all ' + widget.groupName,
+            OBSecondaryText(_localizationService.user__groups_see_all(widget.groupName),
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(
@@ -181,7 +183,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
