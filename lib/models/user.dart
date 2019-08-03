@@ -483,18 +483,18 @@ class User extends UpdatableModel<User> {
   }
 
   bool canTranslatePostComment(PostComment postComment, Post post) {
-    User loggedInUser = this;
+    if ((!post.hasCommunity() && post.isEncircledPost()) ||
+        language?.code == null) return false;
+
     return postComment.hasLanguage() &&
-        !post.isEncircledPost() &&
-        postComment.getLanguage().code != loggedInUser.language.code;
+        postComment.getLanguage().code != language.code;
   }
 
   bool canTranslatePost(Post post) {
-    if (!post.hasCommunity() && post.isEncircledPost()) return false;
+    if ((!post.hasCommunity() && post.isEncircledPost()) ||
+        language?.code == null) return false;
 
-    User loggedInUser = this;
-    return post.hasLanguage() &&
-        post.getLanguage().code != loggedInUser.language.code;
+    return post.hasLanguage() && post.getLanguage().code != language.code;
   }
 
   bool canEditPostComment(PostComment postComment, Post post) {
