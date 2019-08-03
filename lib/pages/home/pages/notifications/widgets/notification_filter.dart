@@ -1,6 +1,6 @@
-import 'package:Openbook/models/notifications/notification.dart';
-import 'package:Openbook/widgets/icon.dart';
-import 'package:Openbook/widgets/icon_button.dart';
+import 'package:Okuna/models/notifications/notification.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
