@@ -308,9 +308,9 @@
     "type": "text",
     "placeholders": {}
   },
-  "following_resource_name": "following users",
+  "following_resource_name": "followed users",
   "@following_resource_name": {
-    "description": "Eg: Search following users.., No following users found. etc ",
+    "description": "Eg: Search followed users.., No followed users found. etc ",
     "type": "text",
     "placeholders": {}
   },
