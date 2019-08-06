@@ -2,6 +2,7 @@ import 'package:Okuna/models/moderation/moderated_object.dart';
 import 'package:Okuna/models/moderation/moderation_report.dart';
 import 'package:Okuna/models/moderation/moderation_report_list.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
@@ -40,6 +41,7 @@ class OBModeratedObjectReportsPreviewState
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   CancelableOperation _refreshReportsOperation;
   bool _refreshInProgress;
@@ -66,6 +68,7 @@ class OBModeratedObjectReportsPreviewState
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
       _navigationService = openbookProvider.navigationService;
+      _localizationService = openbookProvider.localizationService;
       _refreshReports();
       _needsBootstrap = false;
       _refreshInProgress = true;
@@ -75,7 +78,7 @@ class OBModeratedObjectReportsPreviewState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         OBTileGroupTitle(
-          title: 'Reports',
+          title: _localizationService.moderation__reports_preview_title
         ),
         OBDivider(),
         _refreshInProgress
@@ -101,7 +104,7 @@ class OBModeratedObjectReportsPreviewState
         OBSeeAllButton(
           previewedResourcesCount: _reports.length,
           resourcesCount: widget.moderatedObject.reportsCount,
-          resourceName: 'reports',
+          resourceName: _localizationService.moderation__reports_preview_resource_reports,
           onPressed: _onWantsToSeeAllReports,
         )
       ],
@@ -154,7 +157,7 @@ class OBModeratedObjectReportsPreviewState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

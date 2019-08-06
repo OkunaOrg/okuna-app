@@ -84,8 +84,8 @@ class LocalizationService {
   String get auth__create_acc__lets_get_started {
     return Intl.message("Let's get started", name: 'auth__create_acc__lets_get_started');
   }
-  String get auth__create_acc__welcome_to_alpha {
-    return Intl.message("Welcome to the Alpha!", name: 'auth__create_acc__welcome_to_alpha');
+  String get auth__create_acc__welcome_to_beta {
+    return Intl.message("Welcome to the Beta!", name: 'auth__create_acc__welcome_to_beta');
   }
   String get auth__create_acc__previous {
     return Intl.message("Back", name: 'auth__create_acc__previous');
@@ -531,6 +531,14 @@ class LocalizationService {
   String get drawer__useful_links_guidelines_handbook_desc {
     return Intl.message("A book with everything there is to know about using the platform",
         name: 'drawer__useful_links_guidelines_handbook_desc');
+  }
+  String get drawer__useful_links_support {
+    return Intl.message("Support Okuna",
+        name: 'drawer__useful_links_support');
+  }
+  String get drawer__useful_links_support_desc {
+    return Intl.message("Find a way you can support us on our journey!",
+        name: 'drawer__useful_links_support_desc');
   }
   String get drawer__useful_links_slack_channel {
     return Intl.message("Community Slack channel",
@@ -1842,6 +1850,12 @@ class LocalizationService {
         name: 'post__actions_reported_text');
   }
 
+  String get post__actions_show_more_text {
+    return Intl.message("Show more",
+        desc: 'Shown for posts with long text to expand the entire text.',
+        name: 'post__actions_show_more_text');
+  }
+
   String get user__thousand_postfix {
     return Intl.message("k",
         desc: 'For eg. communty has 3k members',
@@ -1979,6 +1993,27 @@ class LocalizationService {
         name: 'user__emoji_search_none_found');
   }
 
+  String get user__follow_lists_title {
+    return Intl.message("My lists",
+        name: 'user__follow_lists_title');
+  }
+
+  String get user__follow_lists_search_for {
+    return Intl.message("Search for a list...",
+        name: 'user__follow_lists_search_for');
+  }
+
+  String get user__follow_lists_no_list_found {
+    return Intl.message("No lists found.",
+        name: 'user__follow_lists_no_list_found');
+  }
+
+  String user__follow_lists_no_list_found_for(String searchQuery) {
+    return Intl.message("No list found for '$searchQuery'",
+        args: [searchQuery],
+        name: 'user__follow_lists_no_list_found_for');
+  }
+
   String get user__list_name_empty_error {
     return Intl.message("List name cannot be empty.",
         name: 'user__list_name_empty_error');
@@ -2111,6 +2146,17 @@ class LocalizationService {
   String get user__tile_following {
     return Intl.message(" · Following",
         name: 'user__tile_following');
+  }
+
+  String get user__following_text {
+    return Intl.message("Following",
+        name: 'user__following_text');
+  }
+
+  String get user__following_resource_name {
+    return Intl.message("followed users",
+        desc: 'Eg: Search followed users.., No followed users found. etc ',
+        name: 'user__following_resource_name');
   }
 
   String get user__tile_delete {
@@ -3203,6 +3249,80 @@ class LocalizationService {
         name: 'moderation__you_have_reported_comment_text');
   }
 
+  String get moderation__description_text {
+    return Intl.message("Description",
+        name: 'moderation__description_text');
+  }
+
+  String get moderation__no_description_text {
+    return Intl.message("No description",
+        name: 'moderation__no_description_text');
+  }
+
+  String get moderation__category_text {
+    return Intl.message("Category",
+        name: 'moderation__category_text');
+  }
+
+  String get moderation__reporter_text {
+    return Intl.message("Reporter",
+        name: 'moderation__reporter_text');
+  }
+
+  String get moderation__reports_preview_title {
+    return Intl.message("Reports",
+        name: 'moderation__reports_preview_title');
+  }
+
+  String get moderation__reports_preview_resource_reports {
+    return Intl.message("reports",
+        desc: 'Usage: See all reports..',
+        name: 'moderation__reports_preview_resource_reports');
+  }
+
+  String moderation__reports_see_all(int resourceCount, String resourceName) {
+    return Intl.message("See all $resourceCount $resourceName",
+        desc: 'Usage: See all 4 reports.',
+        args: [resourceCount, resourceName],
+        name: 'moderation__reports_see_all');
+  }
+
+  String get moderation__object_status_title {
+    return Intl.message("Status",
+        name: 'moderation__object_status_title');
+  }
+
+  String get moderation__my_moderation_tasks_title {
+    return Intl.message("Pending moderation tasks",
+        name: 'moderation__my_moderation_tasks_title');
+  }
+
+  String get moderation__pending_moderation_tasks_singular {
+    return Intl.message("pending moderation task",
+        name: 'moderation__pending_moderation_tasks_singular');
+  }
+
+  String get moderation__pending_moderation_tasks_plural {
+    return Intl.message("pending moderation tasks",
+        desc: 'Eg. No pending moderation tasks found',
+        name: 'moderation__pending_moderation_tasks_plural');
+  }
+
+  String get moderation__my_moderation_penalties_title {
+    return Intl.message("Moderation penalties",
+        name: 'moderation__my_moderation_penalties_title');
+  }
+
+  String get moderation__my_moderation_penalties_resouce_singular {
+    return Intl.message("moderation penalty",
+        name: 'moderation__my_moderation_penalties_resouce_singular');
+  }
+
+  String get moderation__my_moderation_penalties_resource_plural {
+    return Intl.message("moderation penalties",
+        desc: "See all moderation penalties, No moderation penalties found etc..",
+        name: 'moderation__my_moderation_penalties_resource_plural');
+  }
 
   Locale getLocale() {
     return locale;

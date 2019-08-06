@@ -88,6 +88,15 @@ class OBUsefulLinksPage extends StatelessWidget {
                         'https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
                   },
                 ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.support),
+                  title: OBText(_localizationService.drawer__useful_links_support),
+                  subtitle: OBSecondaryText(
+                      _localizationService.drawer__useful_links_support_desc),
+                  onTap: () {
+                    urlLauncherService.launchUrl('https://www.okuna.io/en/faq');
+                  },
+                )
               ],
             )),
           ],

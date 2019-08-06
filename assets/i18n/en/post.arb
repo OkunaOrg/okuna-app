@@ -504,5 +504,11 @@
   "@actions_reported_text": {
     "type": "text",
     "placeholders": {}
+  },
+  "actions_show_more_text": "Show more",
+  "@actions_show_more_text": {
+    "description": "Shown for posts with long text to expand the entire text.",
+    "type": "text",
+    "placeholders": {}
   }
 }

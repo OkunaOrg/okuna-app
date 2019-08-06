@@ -280,5 +280,82 @@
   "@you_have_reported_comment_text": {
     "type": "text",
     "placeholders": {}
+  },
+  "description_text": "Description",
+  "@description_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "no_description_text": "No description",
+  "@no_description_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "category_text": "Category",
+  "@category_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reporter_text": "Reporter",
+  "@reporter_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reports_preview_title": "Reports",
+  "@reports_preview_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reports_preview_resource_reports": "reports",
+  "@reports_preview_resource_reports": {
+    "description": "Usage: See all reports..",
+    "type": "text",
+    "placeholders": {}
+  },
+  "reports_see_all": "See all {resourceCount} {resourceName}",
+  "@reports_see_all": {
+    "description": "Usage: See all 4 reports.",
+    "type": "text",
+    "placeholders": {
+      "resourceCount": {},
+      "resourceName": {}
+    }
+  },
+  "object_status_title": "Status",
+  "@object_status_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "my_moderation_tasks_title": "Pending moderation tasks",
+  "@my_moderation_tasks_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pending_moderation_tasks_singular": "pending moderation task",
+  "@pending_moderation_tasks_singular": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pending_moderation_tasks_plural": "pending moderation tasks",
+  "@pending_moderation_tasks_plural": {
+    "description": "Eg. No pending moderation tasks found",
+    "type": "text",
+    "placeholders": {}
+  },
+  "my_moderation_penalties_title": "Moderation penalties",
+  "@my_moderation_penalties_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "my_moderation_penalties_resouce_singular": "moderation penalty",
+  "@my_moderation_penalties_resouce_singular": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "my_moderation_penalties_resource_plural": "moderation penalties",
+  "@my_moderation_penalties_resource_plural": {
+    "description": "See all moderation penalties, No moderation penalties found etc..",
+    "type": "text",
+    "placeholders": {}
   }
 }
