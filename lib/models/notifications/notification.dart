@@ -5,7 +5,9 @@ import 'package:Okuna/models/notifications/follow_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reaction_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reply_notification.dart';
+import 'package:Okuna/models/notifications/post_comment_user_mention_notification.dart';
 import 'package:Okuna/models/notifications/post_reaction_notification.dart';
+import 'package:Okuna/models/notifications/post_user_mention_notification.dart';
 import 'package:Okuna/models/updatable_model.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
@@ -38,6 +40,8 @@ class OBNotification extends UpdatableModel<OBNotification> {
   static final connectionConfirmed = 'CC';
   static final follow = 'F';
   static final communityInvite = 'CI';
+  static final postCommentUserMention = 'PCUM';
+  static final postUserMention = 'PUM';
 
   factory OBNotification.fromJSON(Map<String, dynamic> json) {
     return factory.fromJson(json);
@@ -113,6 +117,10 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       notificationType = NotificationType.postCommentReply;
     } else if (notificationTypeStr == OBNotification.postCommentReaction) {
       notificationType = NotificationType.postCommentReaction;
+    } else if (notificationTypeStr == OBNotification.postCommentUserMention) {
+      notificationType = NotificationType.postCommentUserMention;
+    } else if (notificationTypeStr == OBNotification.postUserMention) {
+      notificationType = NotificationType.postUserMention;
     } else if (notificationTypeStr == OBNotification.connectionRequest) {
       notificationType = NotificationType.connectionRequest;
     } else if (notificationTypeStr == OBNotification.connectionConfirmed) {
@@ -160,6 +168,13 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
         contentObject =
             PostCommentReactionNotification.fromJson(contentObjectData);
         break;
+      case NotificationType.postCommentUserMention:
+        contentObject =
+            PostCommentUserMentionNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.postUserMention:
+        contentObject = PostUserMentionNotification.fromJson(contentObjectData);
+        break;
       case NotificationType.communityInvite:
         contentObject = CommunityInviteNotification.fromJson(contentObjectData);
         break;
@@ -181,5 +196,7 @@ enum NotificationType {
   connectionRequest,
   connectionConfirmed,
   follow,
-  communityInvite
+  communityInvite,
+  postCommentUserMention,
+  postUserMention,
 }
