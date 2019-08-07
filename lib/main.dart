@@ -68,9 +68,13 @@ class _MyAppState extends State<MyApp> {
             locale: this.locale,
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
+              // if no deviceLocale use english
+              if (deviceLocale == null) {
+                this.locale = Locale('en', 'US');
+                return this.locale;
+              }
               // initialise locale from device
-              if (deviceLocale == null)return this.locale;
-              if (deviceLocale != null && this.locale == null && supportedLanguages.contains(deviceLocale.languageCode)) {
+              if (deviceLocale != null && supportedLanguages.contains(deviceLocale.languageCode) && this.locale == null) {
                   Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == deviceLocale.languageCode);
                   this.locale = supportedMatchedLocale;
               } else if (this.locale == null) {
