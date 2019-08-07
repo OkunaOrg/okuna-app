@@ -29,6 +29,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
     var utilsService = openbookProvider.utilsService;
+    var localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -41,7 +42,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
 
           String commenterUsername = postComment.commenter.username;
           String commenterName = postComment.commenter.getProfileName();
-          String created = utilsService.timeAgo(postComment.created);
+          String created = utilsService.timeAgo(postComment.created, localizationService);
 
           return Opacity(
             opacity: 0.8,

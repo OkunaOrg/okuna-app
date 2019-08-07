@@ -1856,6 +1856,78 @@ class LocalizationService {
         name: 'post__actions_show_more_text');
   }
 
+  String get post__time_short_years {
+    return Intl.message("y",
+        desc: 'Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3y. Keep it as short as possible',
+        name: 'post__time_short_years');
+  }
+
+  String get post__time_short_one_year {
+    return Intl.message("1y",
+        desc: "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        name: 'post__time_short_one_year');
+  }
+
+  String get post__time_short_weeks {
+    return Intl.message("w",
+        desc: 'Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 5w.Keep it as short as possible ',
+        name: 'post__time_short_weeks');
+  }
+
+  String get post__time_short_one_week {
+    return Intl.message("1w",
+        desc: "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        name: 'post__time_short_one_week');
+  }
+
+  String get post__time_short_days {
+    return Intl.message("d",
+        desc: 'Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3d. Keep it as short as possible ',
+        name: 'post__time_short_days');
+  }
+
+  String get post__time_short_one_day {
+    return Intl.message("1d",
+        desc: "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        name: 'post__time_short_one_day');
+  }
+
+  String get post__time_short_hours {
+    return Intl.message("h",
+        desc: 'Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3h.Keep it as short as possible ',
+        name: 'post__time_short_hours');
+  }
+
+  String get post__time_short_one_hour {
+    return Intl.message("1h",
+        desc: "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        name: 'post__time_short_one_hour');
+  }
+
+  String get post__time_short_minutes {
+    return Intl.message("m",
+        desc: 'Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13m.Keep it as short as possible ',
+        name: 'post__time_short_minutes');
+  }
+
+  String get post__time_short_seconds {
+    return Intl.message("s",
+        desc: 'Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13s Keep it as short as possible ',
+        name: 'post__time_short_seconds');
+  }
+
+  String get post__time_short_one_minute {
+    return Intl.message("1m",
+        desc: "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        name: 'post__time_short_one_minute');
+  }
+
+  String get post__time_short_now_text {
+    return Intl.message("now",
+        desc: "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
+        name: 'post__time_short_now_text');
+  }
+
   String get user__thousand_postfix {
     return Intl.message("k",
         desc: 'For eg. communty has 3k members',

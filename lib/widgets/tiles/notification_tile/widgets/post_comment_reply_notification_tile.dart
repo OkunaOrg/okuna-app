@@ -85,7 +85,7 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
         user: postComment.commenter,
       ),
       subtitle: OBSecondaryText(
-        utilsService.timeAgo(notification.created),
+        utilsService.timeAgo(notification.created, localizationService),
         size: OBTextSize.small,
       ),
       trailing: postImagePreview ?? const SizedBox(),
