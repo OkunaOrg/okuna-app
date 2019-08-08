@@ -31,7 +31,6 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   @override
   void initState() {
     _emailCheckInProgress = false;
-    _emailTaken = false;
     super.initState();
   }
 
@@ -106,11 +105,11 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   }
 
   void onPressedNextStep(BuildContext context) async {
-    await _checkEmailAvailable(_emailController.text, context);
+    await _checkEmailAvailable(_emailController.text.trim(), context);
     bool isEmailValid = _validateForm();
     if (isEmailValid && !_emailTaken) {
       setState(() {
-        _createAccountBloc.setEmail(_emailController.text);
+        _createAccountBloc.setEmail(_emailController.text.trim());
         Navigator.pushNamed(context, '/auth/password_step');
       });
     }
@@ -197,7 +196,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
                 autocorrect: false,
                 hintText: emailInputPlaceholder,
                 validator: (String email) {
-                  String validateEMail = _validationService.validateUserEmail(email);
+                  String validateEMail = _validationService.validateUserEmail(email.trim());
                   if (validateEMail != null) return validateEMail;
                   if (_emailTaken != null && _emailTaken) {
                     return errorEmailTaken;
