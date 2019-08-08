@@ -20,12 +20,16 @@ class OBPostCommenter extends StatefulWidget {
   final PostComment postComment;
   final bool autofocus;
   final FocusNode commentTextFieldFocusNode;
-  final OnPostCommentCreatedCallback onPostCommentCreated;
-  final OnPostCommentWillBeCreatedCallback onPostCommentWillBeCreated;
+  final ValueChanged<PostComment> onPostCommentCreated;
+  final VoidCallback onPostCommentWillBeCreated;
+  final OBPostCommenterController controller;
+  final ValueChanged<String> onWantsToSearchAccount;
 
   OBPostCommenter(this.post,
       {this.postComment,
       this.autofocus = false,
+      this.controller,
+      this.onWantsToSearchAccount,
       this.commentTextFieldFocusNode,
       this.onPostCommentCreated,
       this.onPostCommentWillBeCreated});
@@ -41,6 +45,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   bool _commentInProgress;
   bool _formWasSubmitted;
   bool _needsBootstrap;
+  bool _isSearchingAccount;
 
   int _charactersCount;
   bool _isMultiline;
@@ -63,8 +68,10 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _needsBootstrap = true;
     _charactersCount = 0;
     _isMultiline = false;
-
+    _isSearchingAccount = false;
     _textController.addListener(_onPostCommentChanged);
+
+    if (widget.controller != null) widget.controller.attach(this);
   }
 
   @override
@@ -149,7 +156,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
               isLoading: _commentInProgress,
               size: OBButtonSize.small,
               onPressed: _submitForm,
-              child: Text(_localizationService.trans('post__commenter_post_text')),
+              child:
+                  Text(_localizationService.trans('post__commenter_post_text')),
             ),
           )
         ],
@@ -202,14 +210,18 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       String commentText = _textController.text;
       if (widget.postComment != null) {
         _submitFormOperation = CancelableOperation.fromFuture(
-            _userService.replyPostComment(text: commentText, post: widget.post, postComment: widget.postComment));
+            _userService.replyPostComment(
+                text: commentText,
+                post: widget.post,
+                postComment: widget.postComment));
       } else {
         _submitFormOperation = CancelableOperation.fromFuture(
             _userService.commentPost(text: commentText, post: widget.post));
       }
 
       PostComment createdPostComment = await _submitFormOperation.value;
-      if (createdPostComment.parentComment == null) widget.post.incrementCommentsCount();
+      if (createdPostComment.parentComment == null)
+        widget.post.incrementCommentsCount();
       _textController.clear();
       _setFormWasSubmitted(false);
       _validateForm();
@@ -227,6 +239,20 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   void _onPostCommentChanged() {
     int charactersCount = _textController.text.length;
     _setCharactersCount(charactersCount);
+
+    String lastWord = _textController.text.split(' ').last;
+    if (lastWord.length > 1 && lastWord.startsWith('@')) {
+      String searchQuery = lastWord.substring(1);
+      debugPrint('Wants to search account with searchQuery:$searchQuery');
+      _setIsSearchingAccount(true);
+      if (widget.onWantsToSearchAccount != null) {
+        widget.onWantsToSearchAccount(searchQuery);
+      }
+    } else if (_isSearchingAccount) {
+      debugPrint('Finished searching account');
+      _setIsSearchingAccount(false);
+    }
+
     if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
     _validateForm();
@@ -234,6 +260,18 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
   bool _validateForm() {
     return _formKey.currentState.validate();
+  }
+
+  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
+    if (!_isSearchingAccount) {
+      debugPrint(
+          'Tried to autocomplete found account username but was not searching account');
+      return;
+    }
+    String lastWord = _textController.text.split(' ').last;
+    setState(() {
+      _textController.text.replaceAll(lastWord, '@$foundAccountUsername ');
+    });
   }
 
   void _onError(error) async {
@@ -244,7 +282,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }
@@ -252,6 +292,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   void _setCommentInProgress(bool commentInProgress) {
     setState(() {
       _commentInProgress = commentInProgress;
+    });
+  }
+
+  void _setIsSearchingAccount(bool isSearchingAccount) {
+    setState(() {
+      _isSearchingAccount = isSearchingAccount;
     });
   }
 
@@ -268,5 +314,14 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 }
 
-typedef void OnPostCommentCreatedCallback(PostComment createdPostComment);
-typedef Future OnPostCommentWillBeCreatedCallback();
+class OBPostCommenterController {
+  OBPostCommenterState _state;
+
+  void attach(OBPostCommenterState state) {
+    _state = state;
+  }
+
+  void autocompleteFoundAccountUsername(String foundAccountUsername) {
+    _state._autocompleteFoundAccountUsername(foundAccountUsername);
+  }
+}
