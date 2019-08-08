@@ -1,7 +1,7 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controller.dart';
-import 'package:Okuna/pages/home/pages/post_comments/widgets/post-commenter.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';

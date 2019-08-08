@@ -239,19 +239,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   void _onPostCommentChanged() {
     int charactersCount = _textController.text.length;
     _setCharactersCount(charactersCount);
-
-    String lastWord = _textController.text.split(' ').last;
-    if (lastWord.length > 1 && lastWord.startsWith('@')) {
-      String searchQuery = lastWord.substring(1);
-      debugPrint('Wants to search account with searchQuery:$searchQuery');
-      _setIsSearchingAccount(true);
-      if (widget.onWantsToSearchAccount != null) {
-        widget.onWantsToSearchAccount(searchQuery);
-      }
-    } else if (_isSearchingAccount) {
-      debugPrint('Finished searching account');
-      _setIsSearchingAccount(false);
-    }
+    _checkAutocomplete();
 
     if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
@@ -286,6 +274,21 @@ class OBPostCommenterState extends State<OBPostCommenter> {
           message: _localizationService.trans('error__unknown_error'),
           context: context);
       throw error;
+    }
+  }
+
+  void _checkAutocomplete() {
+    String lastWord = _textController.text.split(' ').last;
+    if (lastWord.length > 1 && lastWord.startsWith('@')) {
+      String searchQuery = lastWord.substring(1);
+      debugPrint('Wants to search account with searchQuery:$searchQuery');
+      _setIsSearchingAccount(true);
+      if (widget.onWantsToSearchAccount != null) {
+        widget.onWantsToSearchAccount(searchQuery);
+      }
+    } else if (_isSearchingAccount) {
+      debugPrint('Finished searching account');
+      _setIsSearchingAccount(false);
     }
   }
 
