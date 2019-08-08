@@ -447,7 +447,7 @@ class PostsApiService {
 
   Future<HttpieResponse> searchPostParticipants(
       {@required String postUuid, @required String query, int count}) {
-    String path = _makeGetPostParticipantsPath(postUuid);
+    String path = _makeSearchPostParticipantsPath(postUuid);
 
     Map<String, dynamic> body = {'query': query};
 

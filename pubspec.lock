@@ -84,7 +84,7 @@ packages:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.1.1+1"
   csslib:
     dependency: transitive
     description:
@@ -152,14 +152,14 @@ packages:
       name: flutter_colorpicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.5"
+    version: "0.2.6"
   flutter_exif_rotation:
     dependency: "direct main"
     description:
       name: flutter_exif_rotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.2.4"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -358,7 +358,7 @@ packages:
       name: multi_image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.6"
+    version: "4.4.1"
   multi_server_socket:
     dependency: transitive
     description:
@@ -713,7 +713,7 @@ packages:
       name: vm_service_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.6+2"
+    version: "0.2.6+3"
   watcher:
     dependency: transitive
     description:
@@ -744,4 +744,4 @@ packages:
     version: "2.1.16"
 sdks:
   dart: ">=2.4.0 <3.0.0"
-  flutter: ">=1.6.0 <2.0.0"
+  flutter: ">=1.7.8 <2.0.0"

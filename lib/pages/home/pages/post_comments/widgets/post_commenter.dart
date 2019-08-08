@@ -24,6 +24,7 @@ class OBPostCommenter extends StatefulWidget {
   final VoidCallback onPostCommentWillBeCreated;
   final OBPostCommenterController controller;
   final ValueChanged<String> onWantsToSearchAccount;
+  final VoidCallback onFinishedSearchingAccount;
 
   OBPostCommenter(this.post,
       {this.postComment,
@@ -32,7 +33,8 @@ class OBPostCommenter extends StatefulWidget {
       this.onWantsToSearchAccount,
       this.commentTextFieldFocusNode,
       this.onPostCommentCreated,
-      this.onPostCommentWillBeCreated});
+      this.onPostCommentWillBeCreated,
+      this.onFinishedSearchingAccount});
 
   @override
   State<StatefulWidget> createState() {
@@ -57,6 +59,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
   CancelableOperation _submitFormOperation;
 
+  String _beganSearchingAccount;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -70,6 +74,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _isMultiline = false;
     _isSearchingAccount = false;
     _textController.addListener(_onPostCommentChanged);
+    _beganSearchingAccount = null;
 
     if (widget.controller != null) widget.controller.attach(this);
   }
@@ -240,7 +245,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     int charactersCount = _textController.text.length;
     _setCharactersCount(charactersCount);
     _checkAutocomplete();
-
     if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
     _validateForm();
@@ -251,6 +255,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _autocompleteFoundAccountUsername(String foundAccountUsername) {
+    print(foundAccountUsername);
     if (!_isSearchingAccount) {
       debugPrint(
           'Tried to autocomplete found account username but was not searching account');
@@ -258,7 +263,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     }
     String lastWord = _textController.text.split(' ').last;
     setState(() {
-      _textController.text.replaceAll(lastWord, '@$foundAccountUsername ');
+      _textController.text =
+          _textController.text.replaceAll(lastWord, '@$foundAccountUsername ');
+      _textController.selection = TextSelection.collapsed(offset: _textController.text.length);
     });
   }
 
@@ -279,7 +286,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
   void _checkAutocomplete() {
     String lastWord = _textController.text.split(' ').last;
-    if (lastWord.length > 1 && lastWord.startsWith('@')) {
+
+    if (lastWord.startsWith('@')) {
       String searchQuery = lastWord.substring(1);
       debugPrint('Wants to search account with searchQuery:$searchQuery');
       _setIsSearchingAccount(true);
@@ -288,6 +296,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       }
     } else if (_isSearchingAccount) {
       debugPrint('Finished searching account');
+      if (widget.onFinishedSearchingAccount != null)
+        widget.onFinishedSearchingAccount();
       _setIsSearchingAccount(false);
     }
   }

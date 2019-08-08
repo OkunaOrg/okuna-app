@@ -3203,6 +3203,16 @@ class LocalizationService {
         name: 'moderation__you_have_reported_comment_text');
   }
 
+  String get post__comments_page_search_post_participant {
+    return Intl.message("post participant",
+        name: 'post__comments_page_search_post_participant');
+  }
+
+  String get post__comments_page_search_post_participants {
+    return Intl.message("post participants",
+        name: 'post__comments_page_search_post_participants');
+  }
+
 
   Locale getLocale() {
     return locale;
