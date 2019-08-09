@@ -265,7 +265,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     String lastWord = _textController.text.split(' ').last;
     setState(() {
       _textController.text =
-          _textController.text.replaceAll(lastWord, '@$foundAccountUsername ');
+          _textController.text.substring(0, _textController.text.length - lastWord.length) + '@$foundAccountUsername ';
       _textController.selection =
           TextSelection.collapsed(offset: _textController.text.length);
     });
