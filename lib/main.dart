@@ -32,6 +32,8 @@ import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 
+import 'delegates/pt_br_material_localizations_delegate.dart';
+
 
 class MyApp extends StatefulWidget {
   final openbookProviderKey = new GlobalKey<OpenbookProviderState>();
@@ -90,6 +92,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
+              const MaterialLocalizationPtBRDelegate(),
             ],
             theme: new ThemeData(
                 buttonTheme: ButtonThemeData(
