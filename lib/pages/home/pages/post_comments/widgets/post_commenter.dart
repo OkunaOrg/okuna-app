@@ -255,17 +255,19 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _autocompleteFoundAccountUsername(String foundAccountUsername) {
-    print(foundAccountUsername);
     if (!_isSearchingAccount) {
-      debugPrint(
+      debugLog(
           'Tried to autocomplete found account username but was not searching account');
       return;
     }
+
+    debugLog('Autocompleting with username:$foundAccountUsername');
     String lastWord = _textController.text.split(' ').last;
     setState(() {
       _textController.text =
           _textController.text.replaceAll(lastWord, '@$foundAccountUsername ');
-      _textController.selection = TextSelection.collapsed(offset: _textController.text.length);
+      _textController.selection =
+          TextSelection.collapsed(offset: _textController.text.length);
     });
   }
 
@@ -289,13 +291,13 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
     if (lastWord.startsWith('@')) {
       String searchQuery = lastWord.substring(1);
-      debugPrint('Wants to search account with searchQuery:$searchQuery');
+      debugLog('Wants to search account with searchQuery:$searchQuery');
       _setIsSearchingAccount(true);
       if (widget.onWantsToSearchAccount != null) {
         widget.onWantsToSearchAccount(searchQuery);
       }
     } else if (_isSearchingAccount) {
-      debugPrint('Finished searching account');
+      debugLog('Finished searching account');
       if (widget.onFinishedSearchingAccount != null)
         widget.onFinishedSearchingAccount();
       _setIsSearchingAccount(false);
@@ -324,6 +326,10 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     setState(() {
       _charactersCount = charactersCount;
     });
+  }
+
+  void debugLog(String log) {
+    debugPrint('OBPostCommenter:$log');
   }
 }
 

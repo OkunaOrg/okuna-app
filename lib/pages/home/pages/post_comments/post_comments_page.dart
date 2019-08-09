@@ -5,7 +5,7 @@ import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controll
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
-import 'package:Okuna/pages/home/pages/post_comments/widgets/post_participants_search_box/post_participants_search_box.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_participants_search_box.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
@@ -315,22 +315,24 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           onRefresh: () => _commentsPageController.onWantsToRefreshComments())
     ];
 
-    if (_postCommenterIsSearchingAccount) {
-      postCommentsStackItems.add(
-        Positioned(
-          child: OBPostParticipantsSearchBox(
-            post: widget.post,
-            controller: _postParticipantsSearchBoxController,
-            onPostParticipantPressed:
-                _onPostParticipantsSearchBoxParticipantPressed,
-          ),
-          left: 0,
-          right: 0,
-          bottom: 0,
-          top: 0,
-        ),
-      );
-    }
+    postCommentsStackItems.add(Positioned(
+      child: IgnorePointer(
+        ignoring: !_postCommenterIsSearchingAccount,
+        child: Opacity(
+            opacity: _postCommenterIsSearchingAccount ? 1 : 0,
+            child: OBPostParticipantsSearchBox(
+              key: Key('postCommentsParticipantsSearchBox'),
+              post: widget.post,
+              controller: _postParticipantsSearchBoxController,
+              onPostParticipantPressed:
+                  _onPostParticipantsSearchBoxParticipantPressed,
+            )),
+      ),
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: 0,
+    ));
 
     return Expanded(
       child: Stack(
@@ -357,11 +359,12 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
   void _onPostCommenterWantsToSearchAccount(String query) {
     _setPostCommenterIsSearchingAccount(true);
-    _postParticipantsSearchBoxController.searchPostParticipants(query);
+    _postParticipantsSearchBoxController.search(query);
   }
 
   void _onFinishedSearchingAccount() {
     _setPostCommenterIsSearchingAccount(false);
+    _postParticipantsSearchBoxController.clearSearch();
   }
 
   void _onPostCommentCreated(PostComment createdPostComment) {
