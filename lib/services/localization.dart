@@ -16,10 +16,18 @@ class LocalizationService {
   LocalizationService(this.locale);
 
   final Locale locale;
+  /// See README 7.c for a word on localizedLocales.
+  /// These are locales where we have custom crowdin language codes like pt-BR
+  /// to support Brazilian Portuguese with a particular country, say Brazil.
+  static const localizedLocales = ['pt-BR'];
 
   Future<LocalizationService> load() {
     final String name = locale.countryCode == null ? locale.languageCode : locale.toString();
-    final String localeName = Intl.canonicalizedLocale(name);
+    String localeName = Intl.canonicalizedLocale(name);
+
+    if(localizedLocales.contains(locale.languageCode)) {
+      localeName = locale.languageCode;
+    }
 
     return initializeMessages(localeName).then((bool _) {
       Intl.defaultLocale = localeName;
