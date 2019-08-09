@@ -1,0 +1,236 @@
+{
+    "settings_title": "Aviseringsinställningar",
+    "@settings_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "general_title": "Aviseringar",
+    "@general_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "general_desc": "Bli meddelad när något händer",
+    "@general_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_title": "Följare",
+    "@follow_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_desc": "Bli meddelad när någon börjar följa dig",
+    "@follow_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_title": "Kontaktförfrågan",
+    "@connection_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_desc": "Bli meddelad när någon vill ha dig som kontakt",
+    "@connection_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_title": "Kommentar på inlägg",
+    "@comment_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_desc": "Bli meddelad när någon kommenterar på ett av dina inlägg eller ett inlägg du också kommenterat på.",
+    "@comment_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reply_title": "Svar på kommentar på inlägg",
+    "@comment_reply_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reply_desc": "Bli meddelad när någon svarar på en av dina kommentarer eller en kommentar du också svarat på.",
+    "@comment_reply_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reaction_title": "Reaktion på kommentar",
+    "@comment_reaction_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reaction_desc": "Bli meddelad när någon reagerar på en av dina inläggskommentarer.",
+    "@comment_reaction_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_reaction_title": "Reaktion på inlägg",
+    "@post_reaction_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_reaction_desc": "Bli meddelad när någon reagerar på ett av dina inlägg.",
+    "@post_reaction_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_invite_title": "Gemenskapsinbjudan",
+    "@community_invite_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_invite_desc": "Bli meddelad när någon bjuder in dig till en gemenskap.",
+    "@community_invite_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_on_post_notifications": "Aktivera aviseringar för inlägg",
+    "@mute_post_turn_on_post_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_off_post_notifications": "Inaktivera aviseringar för inlägg",
+    "@mute_post_turn_off_post_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_on_post_comment_notifications": "Aktivera aviseringar för inläggskommentarer",
+    "@mute_post_turn_on_post_comment_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mute_post_turn_off_post_comment_notifications": "Inaktivera aviseringar för inläggskommentarer",
+    "@mute_post_turn_off_post_comment_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_request_tile": "[name] [username] vill knyta kontakt med dig.",
+    "@connection_request_tile": {
+        "description": "Eg.: James @jamest wants to connect with you.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "accepted_connection_request_tile": "[name] [username] accepterade din kontaktförfrågan.",
+    "@accepted_connection_request_tile": {
+        "description": "Eg.: James @jamest accepted your connection request.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reacted_to_post_tile": "[name] [username] reagerade på ditt inlägg.",
+    "@reacted_to_post_tile": {
+        "description": "Eg.: James @jamest reacted to your post.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reacted_to_post_comment_tile": "[name] [username] reagerade på din inläggskommentar.",
+    "@reacted_to_post_comment_tile": {
+        "description": "Eg.: James @jamest reacted to your post comment.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "following_you_tile": "[name] [username] har börjat följa dig.",
+    "@following_you_tile": {
+        "description": "Eg.: James @jamest is now following you.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "user_community_invite_tile": "[name] [username] har bjudit in dig till gemenskapen \/c\/{communityName}.",
+    "@user_community_invite_tile": {
+        "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
+        "type": "text",
+        "placeholders": {
+            "communityName": {
+
+            }
+        }
+    },
+    "comment_reply_notification_tile_user_replied": "[name] [username] svarade: {postCommentText}",
+    "@comment_reply_notification_tile_user_replied": {
+        "description": "For.eg. James @jamest replied.",
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    },
+    "comment_reply_notification_tile_user_also_replied": "[name] [username] svarade också: {postCommentText}",
+    "@comment_reply_notification_tile_user_also_replied": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    },
+    "comment_comment_notification_tile_user_commented": "[name] [username] kommenterade på ditt inlägg: {postCommentText}",
+    "@comment_comment_notification_tile_user_commented": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    },
+    "comment_comment_notification_tile_user_also_commented": "[name] [username] kommenterade också: {postCommentText}",
+    "@comment_comment_notification_tile_user_also_commented": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {
+
+            }
+        }
+    }
+}

@@ -1,0 +1,745 @@
+{
+    "headline": "Daha iyi sosyal.",
+    "@headline": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login": "Oturum aç",
+    "@login": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "email_empty_error": "Eposta boş bırakılamaz.",
+    "@email_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "email_invalid_error": "Lütfen geçerli bir e-posta adresi girin.",
+    "@email_invalid_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "username_empty_error": "Kullanıcı adı boş olamaz.",
+    "@username_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "username_characters_error": "Bir kullanıcı ismi yalnızca alfasayısal karakterler ve alt çizgiler içerebilir.",
+    "@username_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "username_maxlength_error": "Bir kullanıcı adı {maxLength} karakterden daha uzun olamaz.",
+    "@username_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "create_account": "Kayıt ol",
+    "@create_account": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__lets_get_started": "Haydi başlayalım",
+    "@create_acc__lets_get_started": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__welcome_to_beta": "Betaya hoş geldiniz!",
+    "@create_acc__welcome_to_beta": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__previous": "Geri",
+    "@create_acc__previous": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__next": "İleri",
+    "@create_acc__next": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__create_account": "Hesap oluştur",
+    "@create_acc__create_account": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__paste_link": "Kayıt bağlantınızı aşağıya yapıştırın",
+    "@create_acc__paste_link": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__paste_password_reset_link": "Şifre sıfırlama bağlantınızı aşağıya yapıştırın",
+    "@create_acc__paste_password_reset_link": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__paste_link_help_text": "Davet e-postanızdaki Openbook'a Katıl düğmesini tıklayın.",
+    "@create_acc__paste_link_help_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__link_empty_error": "Link boş olamaz.",
+    "@create_acc__link_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__link_invalid_error": "Bu bağlantı geçersiz görünüyor.",
+    "@create_acc__link_invalid_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "password_empty_error": "Parola boş bırakılamaz.",
+    "@password_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "password_range_error": "Parola karakter sayısı {minLength} ve {maxLength} uzunluğu arasında olmalıdır.",
+    "@password_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "name_empty_error": "İsim boş olamaz.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "name_range_error": "İsim karakter sayısı {minLength} ve {maxLength} uzunluğu arasında olmalıdır.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "description_empty_error": "Açıklama boş olamaz.",
+    "@description_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "description_range_error": "Açıklama karakter sayısı {minLength} ve {maxLength} uzunluğu arasında olmalıdır.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "reset_password_success_title": "Her şey tamam!",
+    "@reset_password_success_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reset_password_success_info": "Şifreniz başarıyla güncellendi",
+    "@reset_password_success_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__request_invite": "Davet yok mu? Buradan bir tane isteyin.",
+    "@create_acc__request_invite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__subscribe": "İste",
+    "@create_acc__subscribe": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__subscribe_to_waitlist_text": "Davet et!",
+    "@create_acc__subscribe_to_waitlist_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__congratulations": "Tebrikler!",
+    "@create_acc__congratulations": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__your_subscribed": "{0}. bekleme listesindesin.",
+    "@create_acc__your_subscribed": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__almost_there": "Neredeyse tamamlandı...",
+    "@create_acc__almost_there": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_name": "İsminiz nedir?",
+    "@create_acc__what_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_placeholder": "James Bond",
+    "@create_acc__name_placeholder": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_empty_error": "😱 İsim kısmı boş olamaz.",
+    "@create_acc__name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_length_error": "😱 Adınız 50 karakterden uzun olamaz. (Öyleyse, çok üzgünüz.)",
+    "@create_acc__name_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_characters_error": "😅 Bir isim sadece alfanümerik karakterler içerebilir (şimdilik).",
+    "@create_acc__name_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_username": "Bir kullanıcı adı seç",
+    "@create_acc__what_username": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_placeholder": "pablopicasso",
+    "@create_acc__username_placeholder": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_empty_error": "😱 Kullanıcı ismi boş olamaz.",
+    "@create_acc__username_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_length_error": "😅 Bir kullanıcı ismi 30 karakterden uzun olamaz.",
+    "@create_acc__username_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_characters_error": "😅 Bir kullanıcı ismi yalnızca alfasayısal karakterler ve alt çizgiler içerebilir.",
+    "@create_acc__username_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_taken_error": "😩 @%s kullanıcı ismi daha önce alınmıştır.",
+    "@create_acc__username_taken_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_server_error": "😭 Sunucularımızla ilgili sorunlar yaşıyoruz, lütfen birkaç dakika içinde tekrar deneyin.",
+    "@create_acc__username_server_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_email": "E-posta adresin nedir?",
+    "@create_acc__what_email": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_placeholder": "john_travolta@mail.com",
+    "@create_acc__email_placeholder": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_empty_error": "😱 E-posta kısmı boş olamaz",
+    "@create_acc__email_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_invalid_error": "😅 Lütfen geçerli bir e-posta adresi girin.",
+    "@create_acc__email_invalid_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_taken_error": "🤔 Bu e-postaya kayıtlı zaten bir hesap bulunuyor.",
+    "@create_acc__email_taken_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_server_error": "😭 Sunucularımızla ilgili sorunlar yaşıyoruz, lütfen birkaç dakika içinde tekrar deneyin.",
+    "@create_acc__email_server_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_password": "Bir parola seçin",
+    "@create_acc__what_password": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc_password_hint_text": "({minLength}-{maxLength} karakter)",
+    "@create_acc_password_hint_text": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "create_acc__what_password_subtext": "(en az 10 karakter)",
+    "@create_acc__what_password_subtext": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__password_empty_error": "😱 Şifre kısmı boş bırakılamaz",
+    "@create_acc__password_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__password_length_error": "😅 Bir şifre 8 ile 64 karakter arasında olmalıdır.",
+    "@create_acc__password_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_avatar": "Profil fotoğrafı seçin",
+    "@create_acc__what_avatar": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_tap_to_change": "Değiştirmek için dokunun",
+    "@create_acc__avatar_tap_to_change": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_choose_camera": "Bir fotoğraf çekin",
+    "@create_acc__avatar_choose_camera": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_choose_gallery": "Mevcut bir fotoğrafı kullan",
+    "@create_acc__avatar_choose_gallery": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_remove_photo": "Fotoğrafı sil",
+    "@create_acc__avatar_remove_photo": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done": "Hesap oluştur",
+    "@create_acc__done": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_subtext": "Bunu profil ayarlarından değiştirebilirsiniz.",
+    "@create_acc__done_subtext": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_created": "Hesabınız kullanıcı adıyla oluşturuldu ",
+    "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_loading_title": "Az kaldı!",
+    "@create_acc__submit_loading_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_loading_desc": "Hesabınızı yaratıyoruz.",
+    "@create_acc__submit_loading_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_error_title": "Oh hayır...",
+    "@create_acc__submit_error_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_error_desc_server": "😭 Sunucularımızla ilgili sorunlar yaşıyoruz, lütfen birkaç dakika içinde tekrar deneyin.",
+    "@create_acc__submit_error_desc_server": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_error_desc_validation": "😅 Bazı bilgiler doğru değil gibi görünüyor, lütfen kontrol edin ve tekrar deneyin.",
+    "@create_acc__submit_error_desc_validation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_title": "Yaşasın!",
+    "@create_acc__done_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_description": "Hesabınız oluşturuldu.",
+    "@create_acc__done_description": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__your_username_is": "Kullanıcı adınız ",
+    "@create_acc__your_username_is": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__can_change_username": "İsterseniz profil sayfanızdan istediğiniz zaman değiştirebilirsiniz.",
+    "@create_acc__can_change_username": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_continue": "Oturum aç",
+    "@create_acc__done_continue": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__one_last_thing": "Son bir şey...",
+    "@create_acc__one_last_thing": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__register": "Kayıt Ol",
+    "@create_acc__register": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__are_you_legal_age": "16 yaşından büyük müsünüz?",
+    "@create_acc__are_you_legal_age": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__login": "Devam et",
+    "@login__login": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__previous": "Önceki",
+    "@login__previous": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__title": "Tekrar Hoşgeldin!",
+    "@login__title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__subtitle": "Devam etmek için kimlik bilgilerinizi girin.",
+    "@login__subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__forgot_password": "Şifreyi unuttum",
+    "@login__forgot_password": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__forgot_password_subtitle": "Kullanıcı adınızı veya e-posta adresinizi girin",
+    "@login__forgot_password_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_label": "Kullanıcı ismi",
+    "@login__username_label": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__password_label": "Şifre",
+    "@login__password_label": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__email_label": "E-Posta",
+    "@login__email_label": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__or_text": "ya da",
+    "@login__or_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__password_empty_error": "Şifre gereklidir.",
+    "@login__password_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__password_length_error": "Şifre 8 ile 64 karakter arasında olmalıdır.",
+    "@login__password_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_empty_error": "Kullanıcı adı gereklidir.",
+    "@login__username_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_length_error": "Kullanıcı adı 30 karakterden uzun olamaz.",
+    "@login__username_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_characters_error": "Kullanıcı adı yalnızca alfasayısal karakterler ve alt çizgiler içerebilir.",
+    "@login__username_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__credentials_mismatch_error": "Verdiğiniz kimlik bilgileri uyuşmuyor.",
+    "@login__credentials_mismatch_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__server_error": "Ah.. Sunucu sorunları yaşıyoruz. Lütfen birkaç dakika içinde tekrar deneyin.",
+    "@login__server_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__connection_error": "Sunucularımıza ulaşamıyoruz. İnternete bağlı mısınız?",
+    "@login__connection_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_title": "Şifreyi değiştir",
+    "@change_password_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_current_pwd": "Şimdiki şifreniz",
+    "@change_password_current_pwd": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_current_pwd_hint": "Geçerli şifrenizi giriniz",
+    "@change_password_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_current_pwd_incorrect": "Girilen şifre hatalı",
+    "@change_password_current_pwd_incorrect": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_new_pwd": "Yeni şifre",
+    "@change_password_new_pwd": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_new_pwd_hint": "Yeni şifrenizi girin",
+    "@change_password_new_pwd_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_new_pwd_error": "Lütfen şifrenizin 10 ila 100 karakter uzunluğunda olduğundan emin olun",
+    "@change_password_new_pwd_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_save_text": "Kaydet",
+    "@change_password_save_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_save_success": "Hepsi iyi! şifreniz güncellenmiştir",
+    "@change_password_save_success": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

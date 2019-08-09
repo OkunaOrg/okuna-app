@@ -1,0 +1,810 @@
+{
+    "open_post": "Gönderiyi aç",
+    "@open_post": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "close_post": "Gönderiyi kapat",
+    "@close_post": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_opened": "Gönderi açıldı",
+    "@post_opened": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_closed": "Gönderi kapatıldı ",
+    "@post_closed": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_required_error": "Yorum kısmı boş bırakılamaz.",
+    "@comment_required_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_maxlength_error": "Yorum kısmı {maxLength} karakterden daha uzun olamaz.",
+    "@comment_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "timeline_posts_all_loaded": "🎉 Tüm gönderiler yüklendi",
+    "@timeline_posts_all_loaded": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_refreshing_drhoo_title": "Az kaldı!",
+    "@timeline_posts_refreshing_drhoo_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_refreshing_drhoo_subtitle": "Zaman Tüneliniz yükleniyor.",
+    "@timeline_posts_refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_no_more_drhoo_title": "Zaman Tüneliniz boş.",
+    "@timeline_posts_no_more_drhoo_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_no_more_drhoo_subtitle": "Başlamak için kullanıcıları takip edin veya bir topluluğa katılın!",
+    "@timeline_posts_no_more_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_failed_drhoo_title": "Zaman Tüneliniz yüklenemedi.",
+    "@timeline_posts_failed_drhoo_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_failed_drhoo_subtitle": "Birkaç saniye sonra tekrar deneyin",
+    "@timeline_posts_failed_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_default_drhoo_title": "Bir şeyler doğru değil.",
+    "@timeline_posts_default_drhoo_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_default_drhoo_subtitle": "Zaman Tünelini yenilemeyi deneyin.",
+    "@timeline_posts_default_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_posts_refresh_posts": "Gönderileri yenile",
+    "@timeline_posts_refresh_posts": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "no_circles_for": "'''{circlesSearchQuery}' ile eşleşen hiçbir çevre bulunamadı.",
+    "@no_circles_for": {
+        "type": "text",
+        "placeholders": {
+            "circlesSearchQuery": {
+
+            }
+        }
+    },
+    "share_to_circles": "Çevreleri paylaş",
+    "@share_to_circles": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_counts_post": " Gönderi",
+    "@profile_counts_post": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_counts_posts": " Gönderiler",
+    "@profile_counts_posts": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_counts_followers": " Takipçiler",
+    "@profile_counts_followers": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_counts_following": " Takip edilen",
+    "@profile_counts_following": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_counts_follower": " Takipçi",
+    "@profile_counts_follower": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "action_comment": "Yorum",
+    "@action_comment": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "action_react": "Tepki",
+    "@action_react": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "action_reply": "Cevapla",
+    "@action_reply": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "share": "Paylaş",
+    "@share": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "share_to": "Paylaşın",
+    "@share_to": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "sharing_post_to": "Gönderinin paylaşılması",
+    "@sharing_post_to": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_shared_with": "İle paylaştı",
+    "@you_shared_with": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "shared_privately_on": "Özel olarak paylaşıldı",
+    "@shared_privately_on": {
+        "description": "Eg. Shared privately on @shantanu's circles. See following string, usernames_circles . Will combine this in future, needs refactoring.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "usernames_circles": "@{postCreatorUsername} adlı kullanıcının çevreleri",
+    "@usernames_circles": {
+        "type": "text",
+        "placeholders": {
+            "postCreatorUsername": {
+
+            }
+        }
+    },
+    "share_community": "Paylaş",
+    "@share_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "share_to_community": "Toplulukta paylaş",
+    "@share_to_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "share_community_title": "Bir toplulukta",
+    "@share_community_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "share_community_desc": "Gönderiyi parçası olduğunuz bir toplulukta paylaşın.",
+    "@share_community_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_circles": "Çevrelerim",
+    "@my_circles": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_circles_desc": "Gönderiyi çevrelerinizden birine veya çoğunluğa paylaşın.",
+    "@my_circles_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "world_circle_name": "Dünya",
+    "@world_circle_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "search_circles": "Çevreleri ara...",
+    "@search_circles": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reaction_list_tap_retry": "Yükleme tepkilerini yeniden denemek için dokunun.",
+    "@reaction_list_tap_retry": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_new": "Yeni gönderi",
+    "@create_new": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_next": "Sonraki",
+    "@create_next": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_photo": "Fotoğraf",
+    "@create_photo": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "commenter_post_text": "Gönderi",
+    "@commenter_post_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "commenter_write_something": "Bir şey yaz...",
+    "@commenter_write_something": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_title": "Gönderiyi düzenle",
+    "@edit_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_save": "Kaydet",
+    "@edit_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "commenter_expanded_save": "Kaydet",
+    "@commenter_expanded_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "commenter_expanded_join_conversation": "Sohbete katıl..",
+    "@commenter_expanded_join_conversation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "commenter_expanded_start_conversation": "Sohbeti başlat..",
+    "@commenter_expanded_start_conversation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "commenter_expanded_edit_comment": "Yorumu düzenle",
+    "@commenter_expanded_edit_comment": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "is_closed": "Yorumu kapat",
+    "@is_closed": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reply_expanded_reply_comment": "Yorumu cevapla",
+    "@comment_reply_expanded_reply_comment": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reply_expanded_post": "Gönderi",
+    "@comment_reply_expanded_post": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_reply_expanded_reply_hint_text": "Cevabınız...",
+    "@comment_reply_expanded_reply_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_posts_title": "Popüler gönderiler",
+    "@trending_posts_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_posts_no_trending_posts": "Popüler gönderiler yok. Birkaç saniye içinde yenilemeyi deneyin.",
+    "@trending_posts_no_trending_posts": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_posts_refresh": "Yenile",
+    "@trending_posts_refresh": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_view_all_comments": "{commentsCount} yorumun tümünü görüntüle",
+    "@comments_view_all_comments": {
+        "type": "text",
+        "placeholders": {
+            "commentsCount": {
+
+            }
+        }
+    },
+    "comments_closed_post": "Gönderi kapatıldı",
+    "@comments_closed_post": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_disabled": "Yorumlar devre dışı",
+    "@comments_disabled": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "text_copied": "Metin kopyalandı!",
+    "@text_copied": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_reactions_title": "Gönderi tepkileri",
+    "@post_reactions_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "have_not_shared_anything": "Henüz hiçbir şey paylaşmadınız.",
+    "@have_not_shared_anything": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "user_has_not_shared_anything": "{name} henüz bir şey paylaşmadı.",
+    "@user_has_not_shared_anything": {
+        "type": "text",
+        "placeholders": {
+            "name": {
+
+            }
+        }
+    },
+    "comments_header_newest_replies": "En yeni cevaplar",
+    "@comments_header_newest_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_newer": "Daha yeni",
+    "@comments_header_newer": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_view_newest_replies": "En yeni cevapları görüntüle",
+    "@comments_header_view_newest_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_see_newest_replies": "En yeni cevaplara bakın",
+    "@comments_header_see_newest_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_oldest_replies": "En eski cevaplar",
+    "@comments_header_oldest_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_older": "Daha eski",
+    "@comments_header_older": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_view_oldest_replies": "En eski cevapları görüntüle",
+    "@comments_header_view_oldest_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_see_oldest_replies": "En eski cevaplara bakın",
+    "@comments_header_see_oldest_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_be_the_first_replies": "İlk cevaplayan siz olun",
+    "@comments_header_be_the_first_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_newest_comments": "En yeni yorumlar",
+    "@comments_header_newest_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_view_newest_comments": "En yeni yorumları görüntüle",
+    "@comments_header_view_newest_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_see_newest_comments": "En yeni yorumları görün",
+    "@comments_header_see_newest_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_oldest_comments": "En eski yorumlar",
+    "@comments_header_oldest_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_view_oldest_comments": "En eski yorumları görüntüle",
+    "@comments_header_view_oldest_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_see_oldest_comments": "En eski yorumları görün",
+    "@comments_header_see_oldest_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_header_be_the_first_comments": "İlk yorumu siz yapın",
+    "@comments_header_be_the_first_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_page_title": "Gönderi yorumları",
+    "@comments_page_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_page_no_more_to_load": "Yüklenecek yorum yok",
+    "@comments_page_no_more_to_load": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_page_tap_to_retry": "Yorumları yüklemeyi yeniden denemek için dokunun.",
+    "@comments_page_tap_to_retry": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_page_tap_to_retry_replies": "Cevapları tekrar yüklemek için dokunun.",
+    "@comments_page_tap_to_retry_replies": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_page_no_more_replies_to_load": "Yüklenecek cevap yok",
+    "@comments_page_no_more_replies_to_load": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_page_replies_title": "Cevap yaz",
+    "@comments_page_replies_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "disable_post_comments": "Yorum gönderilmesini devre dışı bırakın",
+    "@disable_post_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "enable_post_comments": "Yorum gönderilmesini etkinleştirin",
+    "@enable_post_comments": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_enabled_message": "Gönderi için yorumlar etkin",
+    "@comments_enabled_message": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comments_disabled_message": "Gönderi için yorumlar devre dışı",
+    "@comments_disabled_message": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_delete": "Gönderiyi sil",
+    "@actions_delete": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_deleted": "Gönderi silindi",
+    "@actions_deleted": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_delete_comment": "Yorumu sil",
+    "@actions_delete_comment": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_edit_comment": "Yorumu düzenle",
+    "@actions_edit_comment": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_comment_deleted": "Yorum silindi",
+    "@actions_comment_deleted": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_report_text": "Bildir",
+    "@actions_report_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_reported_text": "Bildirildi",
+    "@actions_reported_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_show_more_text": "Daha fazla göster",
+    "@actions_show_more_text": {
+        "description": "Shown for posts with long text to expand the entire text.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_years": "y",
+    "@time_short_years": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3y. Keep it as short as possible",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_year": "1y",
+    "@time_short_one_year": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_weeks": "h",
+    "@time_short_weeks": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 5w.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_week": "1h",
+    "@time_short_one_week": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_days": "g",
+    "@time_short_days": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3d. Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_day": "1g",
+    "@time_short_one_day": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_hours": "s",
+    "@time_short_hours": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3h.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_hour": "1s",
+    "@time_short_one_hour": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_minutes": "dk",
+    "@time_short_minutes": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13m.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_seconds": "sn",
+    "@time_short_seconds": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13s Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_minute": "1d",
+    "@time_short_one_minute": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_now_text": "şimdi",
+    "@time_short_now_text": {
+        "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

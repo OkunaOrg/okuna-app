@@ -546,7 +546,7 @@
 
         }
     },
-    "administrated_title": "Administrados",
+    "administrated_title": "Administradas",
     "@administrated_title": {
         "type": "text",
         "placeholders": {
