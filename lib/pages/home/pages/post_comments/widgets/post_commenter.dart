@@ -3,6 +3,7 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
@@ -56,10 +57,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   ToastService _toastService;
   ValidationService _validationService;
   LocalizationService _localizationService;
+  TextAccountAutocompletionService _textAccountAutocompletionService;
 
   CancelableOperation _submitFormOperation;
-
-  String _beganSearchingAccount;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -74,7 +74,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _isMultiline = false;
     _isSearchingAccount = false;
     _textController.addListener(_onPostCommentChanged);
-    _beganSearchingAccount = null;
 
     if (widget.controller != null) widget.controller.attach(this);
   }
@@ -93,6 +92,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _toastService = provider.toastService;
       _validationService = provider.validationService;
       _localizationService = provider.localizationService;
+      _textAccountAutocompletionService =
+          provider.textAccountAutocompletionService;
       _needsBootstrap = false;
     }
 
@@ -262,10 +263,10 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     }
 
     debugLog('Autocompleting with username:$foundAccountUsername');
-    String lastWord = _textController.text.split(' ').last;
     setState(() {
       _textController.text =
-          _textController.text.substring(0, _textController.text.length - lastWord.length) + '@$foundAccountUsername ';
+          _textAccountAutocompletionService.autocompleteTextWithUsername(
+              _textController.text, foundAccountUsername);
       _textController.selection =
           TextSelection.collapsed(offset: _textController.text.length);
     });
@@ -287,14 +288,15 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _checkAutocomplete() {
-    String lastWord = _textController.text.split(' ').last;
+    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+        .checkTextForAutocompletion(_textController.text);
 
-    if (lastWord.startsWith('@')) {
-      String searchQuery = lastWord.substring(1);
-      debugLog('Wants to search account with searchQuery:$searchQuery');
+    if (result.isAutocompleting) {
+      debugLog('Wants to search account with searchQuery:' +
+          result.autocompleteQuery);
       _setIsSearchingAccount(true);
       if (widget.onWantsToSearchAccount != null) {
-        widget.onWantsToSearchAccount(searchQuery);
+        widget.onWantsToSearchAccount(result.autocompleteQuery);
       }
     } else if (_isSearchingAccount) {
       debugLog('Finished searching account');

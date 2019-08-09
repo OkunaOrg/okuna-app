@@ -8,6 +8,7 @@ import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
@@ -50,6 +51,8 @@ class OBPostCommenterExpandedModalState
   String _originalText;
   bool _requestInProgress;
   bool _needsBootstrap;
+  bool _isSearchingAccount;
+  TextAccountAutocompletionService _textAccountAutocompletionService;
 
   CancelableOperation _postCommentOperation;
 
@@ -64,6 +67,7 @@ class OBPostCommenterExpandedModalState
     _isPostCommentTextOriginal = false;
     _originalText = widget.postComment.text;
     _requestInProgress = false;
+    _isSearchingAccount = false;
     _needsBootstrap = true;
   }
 
@@ -76,13 +80,15 @@ class OBPostCommenterExpandedModalState
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _validationService = openbookProvider.validationService;
-    _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
-    _localizationService = openbookProvider.localizationService;
+    if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _validationService = openbookProvider.validationService;
+      _userService = openbookProvider.userService;
+      _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
+      _textAccountAutocompletionService =
+          openbookProvider.textAccountAutocompletionService;
 
-    if(_needsBootstrap){
       String hintText = widget.post.commentsCount > 0
           ? _localizationService.post__commenter_expanded_join_conversation
           : _localizationService.post__commenter_expanded_start_conversation;
@@ -113,7 +119,7 @@ class OBPostCommenterExpandedModalState
           Navigator.pop(context);
         },
       ),
-      title:_localizationService.post__commenter_expanded_edit_comment,
+      title: _localizationService.post__commenter_expanded_edit_comment,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -188,11 +194,49 @@ class OBPostCommenterExpandedModalState
 
   void _onPostCommentTextChanged() {
     String text = _textController.text;
+    _checkAutocomplete();
     setState(() {
       _charactersCount = text.length;
       _isPostCommentTextAllowedLength =
           _validationService.isPostCommentAllowedLength(text);
       _isPostCommentTextOriginal = _originalText == _textController.text;
+    });
+  }
+
+  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
+    if (!_isSearchingAccount) {
+      debugLog(
+          'Tried to autocomplete found account username but was not searching account');
+      return;
+    }
+
+    debugLog('Autocompleting with username:$foundAccountUsername');
+    setState(() {
+      _textController.text =
+          _textAccountAutocompletionService.autocompleteTextWithUsername(
+              _textController.text, foundAccountUsername);
+      _textController.selection =
+          TextSelection.collapsed(offset: _textController.text.length);
+    });
+  }
+
+  void _checkAutocomplete() {
+    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+        .checkTextForAutocompletion(_textController.text);
+
+    if (result.isAutocompleting) {
+      debugLog('Wants to search account with searchQuery:' +
+          result.autocompleteQuery);
+      _setIsSearchingAccount(true);
+    } else if (_isSearchingAccount) {
+      debugLog('Finished searching account');
+      _setIsSearchingAccount(false);
+    }
+  }
+
+  void _setIsSearchingAccount(bool isSearchingAccount) {
+    setState(() {
+      _isSearchingAccount = isSearchingAccount;
     });
   }
 
@@ -204,7 +248,8 @@ class OBPostCommenterExpandedModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -213,5 +258,9 @@ class OBPostCommenterExpandedModalState
     setState(() {
       _requestInProgress = requestInProgress;
     });
+  }
+
+  void debugLog(String log) {
+    debugPrint('OBPostCommenterExpandedModal:$log');
   }
 }
