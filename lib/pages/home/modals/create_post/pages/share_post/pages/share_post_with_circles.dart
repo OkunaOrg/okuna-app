@@ -225,7 +225,7 @@ class OBSharePostWithCirclesPageState
         // Enable all other circles
         _setDisabledCircles([]);
         _setSelectedCircles([]);
-        _setFakeWorlCircleSelected(false);
+        _setFakeWorldCircleSelected(false);
       } else if (pressedCircle == _connectionsCircle) {
         _setDisabledCircles([]);
         _setSelectedCircles([]);
@@ -240,7 +240,7 @@ class OBSharePostWithCirclesPageState
         var disabledCircles = _circles.toList();
         disabledCircles.remove(_fakeWorldCircle);
         _setDisabledCircles(disabledCircles);
-        _setFakeWorlCircleSelected(true);
+        _setFakeWorldCircleSelected(true);
       } else if (pressedCircle == _connectionsCircle) {
         var circles = _circles.toList();
         circles.remove(_fakeWorldCircle);
@@ -333,7 +333,7 @@ class OBSharePostWithCirclesPageState
     });
   }
 
-  void _setFakeWorlCircleSelected(bool fakeWorldCircleSelected) {
+  void _setFakeWorldCircleSelected(bool fakeWorldCircleSelected) {
     setState(() {
       _fakeWorldCircleSelected = fakeWorldCircleSelected;
     });
