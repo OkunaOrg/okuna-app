@@ -17,7 +17,6 @@ import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/widgets/theming/post_divider.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
