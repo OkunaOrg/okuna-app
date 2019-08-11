@@ -2879,6 +2879,18 @@ class LocalizationService {
         name: 'notifications__reacted_to_post_comment_tile');
   }
 
+  String get notifications__mentioned_in_post_comment_tile {
+    return Intl.message("[name] [username] mentioned you on a comment.",
+        desc: "Eg.: James @jamest mentioned you on a comment.",
+        name: 'notifications__mentioned_in_post_comment_tile');
+  }
+
+  String get notifications__mentioned_in_post_tile {
+    return Intl.message("[name] [username] mentioned you on a post.",
+        desc: "Eg.: James @jamest mentioned you on a post.",
+        name: 'notifications__mentioned_in_post_tile');
+  }
+
   String get notifications__following_you_tile {
     return Intl.message("[name] [username] is now following you.",
         desc: "Eg.: James @jamest is now following you.",

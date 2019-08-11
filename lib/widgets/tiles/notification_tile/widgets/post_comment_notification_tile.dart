@@ -30,9 +30,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     PostComment postComment = postCommentNotification.postComment;
     Post post = postComment.post;
-    String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
-    String postCommenterName = postComment.getCommenterName();
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
