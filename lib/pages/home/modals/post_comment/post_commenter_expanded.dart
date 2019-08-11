@@ -187,6 +187,7 @@ class OBPostCommenterExpandedModalState
           post: widget.post,
           controller: _contextualAccountSearchBoxController,
           onPostParticipantPressed: _onAccountSearchBoxUserPressed,
+          initialSearchQuery: _contextualAccountSearchBoxController.getLastSearchQuery(),
         ));
   }
 

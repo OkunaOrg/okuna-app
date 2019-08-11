@@ -17,12 +17,14 @@ class OBContextualAccountSearchBox extends StatefulWidget {
   final ValueChanged<User> onPostParticipantPressed;
   final Post post;
   final OBContextualAccountSearchBoxController controller;
+  final String initialSearchQuery;
 
   const OBContextualAccountSearchBox(
       {Key key,
       this.onPostParticipantPressed,
       @required this.post,
-      this.controller})
+      this.controller,
+      this.initialSearchQuery})
       : super(key: key);
 
   @override
@@ -74,6 +76,14 @@ class OBContextualAccountSearchBoxState
       _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
+      if (widget.initialSearchQuery != null &&
+          widget.initialSearchQuery.isNotEmpty) {
+        _searchQuery = widget.initialSearchQuery;
+        _searchInProgress = true;
+        Future.delayed(Duration(milliseconds: 0), () {
+          search(widget.initialSearchQuery);
+        });
+      }
     }
 
     return OBPrimaryColorContainer(
@@ -137,6 +147,7 @@ class OBContextualAccountSearchBoxState
 
     return OBUserTile(
       _searchResults[index],
+      key: Key(_searchResults[index].id.toString()),
       onUserTilePressed: widget.onPostParticipantPressed,
     );
   }
@@ -144,6 +155,7 @@ class OBContextualAccountSearchBoxState
   Widget _buildAllItem(BuildContext context, int index) {
     return OBUserTile(
       _all[index],
+      key: Key(_all[index].id.toString()),
       onUserTilePressed: widget.onPostParticipantPressed,
     );
   }
@@ -181,7 +193,7 @@ class OBContextualAccountSearchBoxState
 
     debugLog('Searching post participants with query:$searchQuery');
 
-    if (searchQuery.isEmpty) {
+    if (searchQuery == null || searchQuery.isEmpty) {
       clearSearch();
       return null;
     }
@@ -210,8 +222,7 @@ class OBContextualAccountSearchBoxState
       _toastService.error(message: errorMessage, context: context);
     } else {
       _toastService.error(
-          message: _localizationService.trans('error__unknown_error'),
-          context: context);
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -240,7 +251,6 @@ class OBContextualAccountSearchBoxState
     });
   }
 
-
   void _setGetAllInProgress(bool getAllInProgress) {
     setState(() {
       _getAllInProgress = getAllInProgress;
@@ -250,7 +260,8 @@ class OBContextualAccountSearchBoxState
   void clearSearch() {
     debugLog('Clearing search');
     setState(() {
-      if (_searchParticipantsOperation != null) _searchParticipantsOperation.cancel();
+      if (_searchParticipantsOperation != null)
+        _searchParticipantsOperation.cancel();
       _searchInProgress = false;
       _searchQuery = '';
       _searchResults = [];
@@ -264,12 +275,15 @@ class OBContextualAccountSearchBoxState
 
 class OBContextualAccountSearchBoxController {
   OBContextualAccountSearchBoxState _state;
+  String _lastSearchQuery;
 
   void attach(OBContextualAccountSearchBoxState state) {
     _state = state;
   }
 
   Future search(String searchQuery) async {
+    _lastSearchQuery = searchQuery;
+
     if (_state == null || !_state.mounted) {
       debugLog('Tried to search without mounted state');
       return null;
@@ -279,7 +293,12 @@ class OBContextualAccountSearchBoxController {
   }
 
   void clearSearch() {
+    _lastSearchQuery = null;
     _state.clearSearch();
+  }
+
+  String getLastSearchQuery() {
+    return _lastSearchQuery;
   }
 
   void debugLog(String log) {
