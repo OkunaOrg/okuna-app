@@ -717,7 +717,7 @@ class UserService {
       int count,
       Community withCommunity}) async {
     HttpieResponse response = await _authApiService.getLinkedUsers(
-        count: count, withCommunity: withCommunity.name, maxId: maxId);
+        count: count, withCommunity: withCommunity?.name, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }
