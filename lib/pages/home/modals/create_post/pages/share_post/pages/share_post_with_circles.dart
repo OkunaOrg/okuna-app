@@ -245,7 +245,7 @@ class OBSharePostWithCirclesPageState
         var circles = _circles.toList();
         circles.remove(_fakeWorldCircle);
         _setSelectedCircles(circles);
-        circles = new List<Circle>.from(circles);
+        circles = circles.toList();
         circles.remove(_connectionsCircle);
         _setDisabledCircles(circles);
       } else {
