@@ -145,7 +145,7 @@ class OBPostCommenterExpandedModalState
 
   Widget _buildPostCommentEditor() {
     return Expanded(
-        flex: _isSearchingAccount ? 3 : null,
+        flex: _isSearchingAccount ? 3 : 10,
         child: Padding(
           padding: EdgeInsets.only(left: 20.0, top: 20.0),
           child: Row(

@@ -114,17 +114,27 @@ class OBPostCommentReplyExpandedModalState
       _needsBootstrap = false;
     }
 
+    List<Widget> bodyItems = [
+      Expanded(
+        flex: _isSearchingAccount ? 3 : 10,
+        child: _buildPostCommentEditor(),
+      )
+    ];
+
+    if(_isSearchingAccount){
+      bodyItems.add(Expanded(
+          flex: _isSearchingAccount ? 7 : null,
+          child: _buildAccountSearchBox()
+      ));
+    }
+
     return OBCupertinoPageScaffold(
         backgroundColor: Colors.transparent,
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
-              children: <Widget>[
-                _buildPostCommentEditor(),
-                _isSearchingAccount
-                    ? _buildAccountSearchBox()
-                    : const SizedBox()
-              ],
+              mainAxisSize: MainAxisSize.max,
+              children: bodyItems
             )));
   }
 
@@ -177,73 +187,70 @@ class OBPostCommentReplyExpandedModalState
   }
 
   Widget _buildPostCommentEditor() {
-    return Expanded(
-        flex: _isSearchingAccount ? 3 : null,
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: <Widget>[
-              OBPostComment(
-                post: widget.post,
-                postComment: widget.postComment,
-                showActions: false,
-                showReactions: false,
-                showReplies: false,
-                padding: EdgeInsets.all(15),
-              ),
-              OBPostDivider(),
-              Padding(
-                padding: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 20.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return SingleChildScrollView(
+      controller: _scrollController,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          OBPostComment(
+            post: widget.post,
+            postComment: widget.postComment,
+            showActions: false,
+            showReactions: false,
+            showReplies: false,
+            padding: EdgeInsets.all(15),
+          ),
+          OBPostDivider(),
+          Padding(
+            padding: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
                   children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        OBLoggedInUserAvatar(
-                          size: OBAvatarSize.medium,
-                        ),
-                        const SizedBox(
-                          height: 12.0,
-                        ),
-                        OBRemainingPostCharacters(
-                          maxCharacters:
-                          ValidationService.POST_COMMENT_MAX_LENGTH,
-                          currentCharacters: _charactersCount,
-                        ),
-                      ],
+                    OBLoggedInUserAvatar(
+                      size: OBAvatarSize.medium,
                     ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: const ClampingScrollPhysics(),
-                        child: Padding(
-                            padding: EdgeInsets.only(
-                                left: 20.0,
-                                right: 20.0,
-                                bottom: 30.0,
-                                top: 0.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: _postCommentItemsWidgets)),
-                      ),
-                    )
+                    const SizedBox(
+                      height: 12.0,
+                    ),
+                    OBRemainingPostCharacters(
+                      maxCharacters:
+                      ValidationService.POST_COMMENT_MAX_LENGTH,
+                      currentCharacters: _charactersCount,
+                    ),
                   ],
                 ),
-              )
-            ],
-          ),
-        ));
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Padding(
+                        padding: EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                            bottom: 30.0,
+                            top: 0.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: _postCommentItemsWidgets)),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget _buildAccountSearchBox() {
-    return Expanded(
-        flex: 7,
-        child: OBContextualAccountSearchBox(
-          post: widget.post,
-          controller: _contextualAccountSearchBoxController,
-          onPostParticipantPressed: _onAccountSearchBoxUserPressed,
-          initialSearchQuery:
-          _contextualAccountSearchBoxController.getLastSearchQuery(),
-        ));
+    return OBContextualAccountSearchBox(
+      post: widget.post,
+      controller: _contextualAccountSearchBoxController,
+      onPostParticipantPressed: _onAccountSearchBoxUserPressed,
+      initialSearchQuery:
+      _contextualAccountSearchBoxController.getLastSearchQuery(),
+    );
   }
 
   void _onPostCommentTextChanged() {
