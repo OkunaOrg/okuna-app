@@ -5,8 +5,6 @@ class TextAccountAutocompletionService {
     String lastWord = textController.text.replaceAll('\n', ' ').split(' ').last;
     int cursorPosition = textController.selection.baseOffset;
 
-    print('Last word: $lastWord cursorPosition:' + cursorPosition.toString() + ' textLength:' + textController.text.length.toString());
-
     if (lastWord.startsWith('@') && cursorPosition == textController.text.length) {
       String searchQuery = lastWord.substring(1);
       return TextAccountAutocompletionResult(
