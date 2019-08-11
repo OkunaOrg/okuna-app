@@ -5,7 +5,7 @@ import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controll
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
-import 'package:Okuna/pages/home/pages/post_comments/widgets/post_participants_search_box.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
@@ -78,7 +78,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   Map<String, String> _pageTextMap;
 
   OBPostCommenterController _postCommenterController;
-  OBPostParticipantsSearchBoxController _postParticipantsSearchBoxController;
+  OBContextualAccountSearchBoxController _postParticipantsSearchBoxController;
   bool _postCommenterIsSearchingAccount;
 
   static const int MAX_POST_TEXT_LENGTH_LIMIT = 1300;
@@ -127,7 +127,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     _animation.addStatusListener(_onAnimationStatusChanged);
     _postCommenterController = OBPostCommenterController();
     _postParticipantsSearchBoxController =
-        OBPostParticipantsSearchBoxController();
+        OBContextualAccountSearchBoxController();
     _postCommenterIsSearchingAccount = false;
   }
 
@@ -320,7 +320,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         ignoring: !_postCommenterIsSearchingAccount,
         child: Opacity(
             opacity: _postCommenterIsSearchingAccount ? 1 : 0,
-            child: OBPostParticipantsSearchBox(
+            child: OBContextualAccountSearchBox(
               key: Key('postCommentsParticipantsSearchBox'),
               post: widget.post,
               controller: _postParticipantsSearchBoxController,

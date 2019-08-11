@@ -1,8 +1,10 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/httpie.dart';
@@ -53,6 +55,7 @@ class OBPostCommenterExpandedModalState
   bool _needsBootstrap;
   bool _isSearchingAccount;
   TextAccountAutocompletionService _textAccountAutocompletionService;
+  OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
 
   CancelableOperation _postCommentOperation;
 
@@ -69,6 +72,7 @@ class OBPostCommenterExpandedModalState
     _requestInProgress = false;
     _isSearchingAccount = false;
     _needsBootstrap = true;
+    _contextualAccountSearchBoxController = OBContextualAccountSearchBoxController();
   }
 
   @override
@@ -103,7 +107,10 @@ class OBPostCommenterExpandedModalState
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
-          children: <Widget>[_buildPostCommentContent()],
+          children: <Widget>[
+            _buildPostCommentEditor(),
+            _isSearchingAccount ? _buildAccountSearchBox() : const SizedBox()
+          ],
         )));
   }
 
@@ -135,61 +142,52 @@ class OBPostCommenterExpandedModalState
     );
   }
 
-  void _onWantsToSaveComment() async {
-    if (_requestInProgress) return;
-    _setRequestInProgress(true);
-    try {
-      _postCommentOperation = CancelableOperation.fromFuture(
-          _userService.editPostComment(
-              post: widget.post,
-              postComment: widget.postComment,
-              text: _textController.text));
-
-      PostComment comment = await _postCommentOperation.value;
-      Navigator.pop(context, comment);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _setRequestInProgress(false);
-      _postCommentOperation = null;
-    }
-  }
-
-  Widget _buildPostCommentContent() {
+  Widget _buildPostCommentEditor() {
     return Expanded(
+        flex: _isSearchingAccount ? 3 : null,
         child: Padding(
-      padding: EdgeInsets.only(left: 20.0, top: 20.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
+          padding: EdgeInsets.only(left: 20.0, top: 20.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              OBLoggedInUserAvatar(
-                size: OBAvatarSize.medium,
+              Column(
+                children: <Widget>[
+                  OBLoggedInUserAvatar(
+                    size: OBAvatarSize.medium,
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  OBRemainingPostCharacters(
+                    maxCharacters: ValidationService.POST_COMMENT_MAX_LENGTH,
+                    currentCharacters: _charactersCount,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              OBRemainingPostCharacters(
-                maxCharacters: ValidationService.POST_COMMENT_MAX_LENGTH,
-                currentCharacters: _charactersCount,
-              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: Padding(
+                      padding: EdgeInsets.only(
+                          left: 20.0, right: 20.0, bottom: 30.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _postCommentItemsWidgets)),
+                ),
+              )
             ],
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _postCommentItemsWidgets)),
-            ),
-          )
-        ],
-      ),
-    ));
+        ));
+  }
+
+  Widget _buildAccountSearchBox() {
+    return Expanded(
+        flex: 7,
+        child: OBContextualAccountSearchBox(
+          post: widget.post,
+          controller: _contextualAccountSearchBoxController,
+          onPostParticipantPressed: _onAccountSearchBoxUserPressed,
+        ));
   }
 
   void _onPostCommentTextChanged() {
@@ -222,22 +220,47 @@ class OBPostCommenterExpandedModalState
 
   void _checkAutocomplete() {
     TextAccountAutocompletionResult result = _textAccountAutocompletionService
-        .checkTextForAutocompletion(_textController.text);
+        .checkTextForAutocompletion(_textController);
 
     if (result.isAutocompleting) {
       debugLog('Wants to search account with searchQuery:' +
           result.autocompleteQuery);
       _setIsSearchingAccount(true);
+      _contextualAccountSearchBoxController.search(result.autocompleteQuery);
     } else if (_isSearchingAccount) {
-      debugLog('Finished searching account');
+      debugLog('Finished searching accoun');
       _setIsSearchingAccount(false);
     }
+  }
+
+  void _onAccountSearchBoxUserPressed(User user) {
+    _autocompleteFoundAccountUsername(user.username);
   }
 
   void _setIsSearchingAccount(bool isSearchingAccount) {
     setState(() {
       _isSearchingAccount = isSearchingAccount;
     });
+  }
+
+  void _onWantsToSaveComment() async {
+    if (_requestInProgress) return;
+    _setRequestInProgress(true);
+    try {
+      _postCommentOperation = CancelableOperation.fromFuture(
+          _userService.editPostComment(
+              post: widget.post,
+              postComment: widget.postComment,
+              text: _textController.text));
+
+      PostComment comment = await _postCommentOperation.value;
+      Navigator.pop(context, comment);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRequestInProgress(false);
+      _postCommentOperation = null;
+    }
   }
 
   void _onError(error) async {

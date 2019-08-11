@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
 class TextAccountAutocompletionService {
-  TextAccountAutocompletionResult checkTextForAutocompletion(String text) {
-    String lastWord = text.split(' ').last;
+  TextAccountAutocompletionResult checkTextForAutocompletion(TextEditingController textController) {
+    String lastWord = textController.text.replaceAll('\n', ' ').split(' ').last;
+    int cursorPosition = textController.selection.baseOffset;
 
-    if (lastWord.startsWith('@')) {
+    print('Last word: $lastWord cursorPosition:' + cursorPosition.toString() + ' textLength:' + textController.text.length.toString());
+
+    if (lastWord.startsWith('@') && cursorPosition == textController.text.length) {
       String searchQuery = lastWord.substring(1);
       return TextAccountAutocompletionResult(
           isAutocompleting: true, autocompleteQuery: searchQuery);

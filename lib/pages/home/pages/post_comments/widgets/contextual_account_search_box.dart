@@ -13,12 +13,12 @@ import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
-class OBPostParticipantsSearchBox extends StatefulWidget {
+class OBContextualAccountSearchBox extends StatefulWidget {
   final ValueChanged<User> onPostParticipantPressed;
   final Post post;
-  final OBPostParticipantsSearchBoxController controller;
+  final OBContextualAccountSearchBoxController controller;
 
-  const OBPostParticipantsSearchBox(
+  const OBContextualAccountSearchBox(
       {Key key,
       this.onPostParticipantPressed,
       @required this.post,
@@ -26,13 +26,13 @@ class OBPostParticipantsSearchBox extends StatefulWidget {
       : super(key: key);
 
   @override
-  OBPostParticipantsSearchBoxState createState() {
-    return OBPostParticipantsSearchBoxState();
+  OBContextualAccountSearchBoxState createState() {
+    return OBContextualAccountSearchBoxState();
   }
 }
 
-class OBPostParticipantsSearchBoxState
-    extends State<OBPostParticipantsSearchBox> {
+class OBContextualAccountSearchBoxState
+    extends State<OBContextualAccountSearchBox> {
   UserService _userService;
   LocalizationService _localizationService;
   ToastService _toastService;
@@ -262,10 +262,10 @@ class OBPostParticipantsSearchBoxState
   }
 }
 
-class OBPostParticipantsSearchBoxController {
-  OBPostParticipantsSearchBoxState _state;
+class OBContextualAccountSearchBoxController {
+  OBContextualAccountSearchBoxState _state;
 
-  void attach(OBPostParticipantsSearchBoxState state) {
+  void attach(OBContextualAccountSearchBoxState state) {
     _state = state;
   }
 

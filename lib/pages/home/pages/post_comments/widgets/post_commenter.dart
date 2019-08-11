@@ -289,7 +289,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
   void _checkAutocomplete() {
     TextAccountAutocompletionResult result = _textAccountAutocompletionService
-        .checkTextForAutocompletion(_textController.text);
+        .checkTextForAutocompletion(_textController);
 
     if (result.isAutocompleting) {
       debugLog('Wants to search account with searchQuery:' +
