@@ -4,7 +4,7 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
-import 'package:Okuna/pages/home/pages/post_comments/widgets/contextual_account_search_box.dart';
+import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/httpie.dart';
@@ -72,7 +72,8 @@ class OBPostCommenterExpandedModalState
     _requestInProgress = false;
     _isSearchingAccount = false;
     _needsBootstrap = true;
-    _contextualAccountSearchBoxController = OBContextualAccountSearchBoxController();
+    _contextualAccountSearchBoxController =
+        OBContextualAccountSearchBoxController();
   }
 
   @override
@@ -187,7 +188,8 @@ class OBPostCommenterExpandedModalState
           post: widget.post,
           controller: _contextualAccountSearchBoxController,
           onPostParticipantPressed: _onAccountSearchBoxUserPressed,
-          initialSearchQuery: _contextualAccountSearchBoxController.getLastSearchQuery(),
+          initialSearchQuery:
+              _contextualAccountSearchBoxController.getLastSearchQuery(),
         ));
   }
 
@@ -199,23 +201,6 @@ class OBPostCommenterExpandedModalState
       _isPostCommentTextAllowedLength =
           _validationService.isPostCommentAllowedLength(text);
       _isPostCommentTextOriginal = _originalText == _textController.text;
-    });
-  }
-
-  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
-    if (!_isSearchingAccount) {
-      debugLog(
-          'Tried to autocomplete found account username but was not searching account');
-      return;
-    }
-
-    debugLog('Autocompleting with username:$foundAccountUsername');
-    setState(() {
-      _textController.text =
-          _textAccountAutocompletionService.autocompleteTextWithUsername(
-              _textController.text, foundAccountUsername);
-      _textController.selection =
-          TextSelection.collapsed(offset: _textController.text.length);
     });
   }
 
@@ -236,6 +221,23 @@ class OBPostCommenterExpandedModalState
 
   void _onAccountSearchBoxUserPressed(User user) {
     _autocompleteFoundAccountUsername(user.username);
+  }
+
+  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
+    if (!_isSearchingAccount) {
+      debugLog(
+          'Tried to autocomplete found account username but was not searching account');
+      return;
+    }
+
+    debugLog('Autocompleting with username:$foundAccountUsername');
+    setState(() {
+      _textController.text =
+          _textAccountAutocompletionService.autocompleteTextWithUsername(
+              _textController.text, foundAccountUsername);
+      _textController.selection =
+          TextSelection.collapsed(offset: _textController.text.length);
+    });
   }
 
   void _setIsSearchingAccount(bool isSearchingAccount) {

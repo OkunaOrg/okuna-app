@@ -22,7 +22,8 @@ class OBContextualAccountSearchBox extends StatefulWidget {
   const OBContextualAccountSearchBox(
       {Key key,
       this.onPostParticipantPressed,
-      @required this.post,
+      // If passed, searches for post participants, if not all users using the global search API
+      this.post,
       this.controller,
       this.initialSearchQuery})
       : super(key: key);
@@ -41,7 +42,7 @@ class OBContextualAccountSearchBoxState
 
   bool _needsBootstrap;
 
-  CancelableOperation _getAllParticipantsOperation;
+  CancelableOperation _getAllOperation;
   CancelableOperation _searchParticipantsOperation;
 
   String _searchQuery;
@@ -49,10 +50,12 @@ class OBContextualAccountSearchBoxState
   bool _getAllInProgress;
   List<User> _searchResults;
   bool _searchInProgress;
+  bool _isInPostContext;
 
   @override
   void initState() {
     super.initState();
+    _isInPostContext = widget.post != null;
     _needsBootstrap = true;
     if (widget.controller != null) widget.controller.attach(this);
     _all = [];
@@ -103,13 +106,15 @@ class OBContextualAccountSearchBoxState
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
         ),
-        Expanded(
-          child: ListView.builder(
-            itemBuilder: _buildAllItem,
-            itemCount: _all.length,
-            padding: const EdgeInsets.all(0),
-          ),
-        )
+        _all.isNotEmpty && !_getAllInProgress
+            ? Expanded(
+                child: ListView.builder(
+                  itemBuilder: _buildAllItem,
+                  itemCount: _all.length,
+                  padding: const EdgeInsets.all(0),
+                ),
+              )
+            : _buildProgressIndicator()
       ],
     );
   }
@@ -121,6 +126,7 @@ class OBContextualAccountSearchBoxState
           child: ListView.builder(
             itemBuilder: _buildResultItem,
             itemCount: _searchResults.length + 1,
+            padding: const EdgeInsets.all(0),
           ),
         )
       ],
@@ -160,29 +166,36 @@ class OBContextualAccountSearchBoxState
     );
   }
 
+  Widget _buildProgressIndicator() {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Center(child: OBProgressIndicator()),
+    );
+  }
+
   void _bootstrap() {
     debugLog('Bootstrapping');
     refreshAll();
   }
 
   Future refreshAll() async {
-    if (_getAllParticipantsOperation != null)
-      _getAllParticipantsOperation.cancel();
+    if (_getAllOperation != null) _getAllOperation.cancel();
 
     _setGetAllInProgress(true);
 
-    debugLog('Refreshing all post participants');
+    debugLog('Refreshing all accounts');
 
     try {
-      _getAllParticipantsOperation = CancelableOperation.fromFuture(
-          _userService.getPostParticipants(post: widget.post));
-      UsersList all = await _getAllParticipantsOperation.value;
+      _getAllOperation = CancelableOperation.fromFuture(_isInPostContext
+          ? _userService.getPostParticipants(post: widget.post)
+          : _userService.getLinkedUsers());
+      UsersList all = await _getAllOperation.value;
       _setAll(all.users);
     } catch (error) {
       _onError(error);
     } finally {
       _setGetAllInProgress(false);
-      _getAllParticipantsOperation = null;
+      _getAllOperation = null;
     }
   }
 
@@ -201,8 +214,11 @@ class OBContextualAccountSearchBoxState
     _setSearchQuery(searchQuery);
 
     try {
-      _searchParticipantsOperation = CancelableOperation.fromFuture(_userService
-          .searchPostParticipants(query: searchQuery, post: widget.post));
+      _searchParticipantsOperation = CancelableOperation.fromFuture(
+          _isInPostContext
+              ? _userService.searchPostParticipants(
+                  query: searchQuery, post: widget.post)
+              : _userService.getUsersWithQuery(searchQuery));
       UsersList searchResults = await _searchParticipantsOperation.value;
       _setSearchResults(searchResults.users);
     } catch (error) {
@@ -302,6 +318,6 @@ class OBContextualAccountSearchBoxController {
   }
 
   void debugLog(String log) {
-    debugPrint('OBPostParticipantsSearchBoxController:$log');
+    debugPrint('OBContextualAccountSearchBox:$log');
   }
 }
