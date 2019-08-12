@@ -56,7 +56,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       _localizationService.drawer__useful_links_guidelines_feature_requests_desc),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://openbook.canny.io/feature-requests');
+                        'https://okuna.canny.io/feature-requests');
                   },
                 ),
                 ListTile(
@@ -66,7 +66,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       OBSecondaryText(_localizationService.drawer__useful_links_guidelines_bug_tracker_desc),
                   onTap: () {
                     urlLauncherService
-                        .launchUrl('https://openbook.canny.io/bugs');
+                        .launchUrl('https://okuna.canny.io/bugs');
                   },
                 ),
                 ListTile(
