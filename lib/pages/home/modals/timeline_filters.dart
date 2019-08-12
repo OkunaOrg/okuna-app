@@ -41,7 +41,9 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
 
   List<Circle> _circles;
   List<Circle> _selectedCircles;
+  List<Circle> _disabledCircles;
   List<Circle> _circlesSearchResults;
+  Circle _connectionsCircle;
 
   List<FollowsList> _followsLists;
   List<FollowsList> _selectedFollowsLists;
@@ -137,10 +139,12 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
           if (isCircle) {
             Circle circle = _circlesSearchResults[index];
             bool isSelected = _selectedCircles.contains(circle);
+            bool isDisabled = _disabledCircles.contains(circle);
 
             Widget circleTile = OBCircleSelectableTile(
               circle,
               isSelected: isSelected,
+              isDisabled: isDisabled,
               onCirclePressed: _onCirclePressed,
             );
 
@@ -274,11 +278,33 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   void _onCirclePressed(Circle pressedCircle) {
     if (_selectedCircles.contains(pressedCircle)) {
       // Remove
-      _removeSelectedCircle(pressedCircle);
+      if (pressedCircle == _connectionsCircle) {
+        _setSelectedCircles([]);
+        _updateDisabledCircles();
+      } else {
+        _removeSelectedCircle(pressedCircle);
+      }
     } else {
       // Add
-      _addSelectedCircle(pressedCircle);
+      if (pressedCircle == _connectionsCircle) {
+        _setSelectedCircles(_circles.toList());
+        _updateDisabledCircles();
+      } else {
+        _addSelectedCircle(pressedCircle);
+      }
     }
+  }
+
+  void _setDisabledCircles(List<Circle> disabledCircles) {
+    setState(() {
+      _disabledCircles = disabledCircles;
+    });
+  }
+
+  void _setSelectedCircles(List<Circle> selectedCircles) {
+    setState(() {
+      _selectedCircles = selectedCircles;
+    });
   }
 
   void _addSelectedCircle(Circle circle) {
@@ -294,8 +320,14 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
   }
 
   void _setCircles(List<Circle> circles) {
+    var user = _userService.getLoggedInUser();
     setState(() {
       _circles = circles;
+      // Find connections circle and move it to the top
+      _connectionsCircle = _circles
+          .firstWhere((circle) => circle.id == user.connectionsCircleId);
+      _circles.remove(_connectionsCircle);
+      _circles.insert(0, _connectionsCircle);
     });
   }
 
@@ -352,6 +384,17 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
     });
   }
 
+  void _updateDisabledCircles() {
+    if (_selectedCircles.contains(_connectionsCircle)) {
+      var circles = _circles.toList();
+      circles.remove(_connectionsCircle);
+      _setDisabledCircles(circles);
+    }
+    else {
+      _setDisabledCircles([]);
+    }
+  }
+
   void _bootstrap() async {
     _setRequestInProgress(true);
     var results = await Future.wait(
@@ -362,6 +405,7 @@ class OBTimelineFiltersModalState extends State<OBTimelineFiltersModal> {
 
     _setCircles(circlesList.circles);
     _setCirclesSearchResults(circlesList.circles);
+    _updateDisabledCircles();
     _setFollowsLists(followsList.lists);
     _setFollowsListsSearchResults(followsList.lists);
     _setRequestInProgress(false);

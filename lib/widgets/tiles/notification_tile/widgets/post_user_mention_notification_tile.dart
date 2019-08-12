@@ -71,7 +71,7 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
         user: postUserMention.post.creator,
       ),
       subtitle: OBSecondaryText(
-        utilsService.timeAgo(notification.created),
+        utilsService.timeAgo(notification.created, _localizationService),
         size: OBTextSize.small,
       ),
     );

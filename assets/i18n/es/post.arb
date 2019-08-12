@@ -702,5 +702,109 @@
         "placeholders": {
 
         }
+    },
+    "actions_show_more_text": "Ver más",
+    "@actions_show_more_text": {
+        "description": "Shown for posts with long text to expand the entire text.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_years": "a",
+    "@time_short_years": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3y. Keep it as short as possible",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_year": "1a",
+    "@time_short_one_year": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_weeks": "s",
+    "@time_short_weeks": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 5w.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_week": "1s",
+    "@time_short_one_week": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_days": "d",
+    "@time_short_days": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3d. Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_day": "1d",
+    "@time_short_one_day": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_hours": "h",
+    "@time_short_hours": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3h.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_hour": "1h",
+    "@time_short_one_hour": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_minutes": "m",
+    "@time_short_minutes": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13m.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_seconds": "s",
+    "@time_short_seconds": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13s Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_minute": "1m",
+    "@time_short_one_minute": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_now_text": "ahora",
+    "@time_short_now_text": {
+        "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
+        "type": "text",
+        "placeholders": {
+
+        }
     }
 }

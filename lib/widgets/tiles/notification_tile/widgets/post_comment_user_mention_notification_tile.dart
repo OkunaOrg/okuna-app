@@ -82,7 +82,7 @@ class OBPostCommentUserMentionNotificationTile extends StatelessWidget {
         user: postCommentUserMention.postComment.commenter,
       ),
       subtitle: OBSecondaryText(
-        utilsService.timeAgo(notification.created),
+        utilsService.timeAgo(notification.created, _localizationService),
         size: OBTextSize.small,
       ),
     );

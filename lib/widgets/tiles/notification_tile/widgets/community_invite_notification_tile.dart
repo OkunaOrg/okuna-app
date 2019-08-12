@@ -69,7 +69,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         community: community,
         size: OBAvatarSize.medium,
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

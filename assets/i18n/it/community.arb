@@ -1,0 +1,1027 @@
+{
+    "no": "No",
+    "@no": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "yes": "Sì",
+    "@yes": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "button_staff": "Addetti",
+    "@button_staff": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "button_rules": "Regole",
+    "@button_rules": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community": "comunità",
+    "@community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities": "comunità",
+    "@communities": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "type_public": "Pubblico",
+    "@type_public": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "type_private": "Privato",
+    "@type_private": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "member_capitalized": "Membro",
+    "@member_capitalized": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "members_capitalized": "Membri",
+    "@members_capitalized": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "admin_desc": "Questo permetterà al membro di modificare i dettagli della comunità, gli amministratori, i moderatori e gli utenti bannati.",
+    "@admin_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirmation_title": "Conferma",
+    "@confirmation_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "admin_add_confirmation": "Sei sicuro di voler aggiungere @{username} come amministratore della comunità?",
+    "@admin_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "ban_confirmation": "Sei sicuro di voler bloccare @{username}?",
+    "@ban_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "ban_desc": "Questo rimuoverà l'utente dalla comunità e gli impedirà di unirsi nuovamente.",
+    "@ban_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderator_add_confirmation": "Sei sicuro di voler aggiungere @{username} come moderatore della comunità?",
+    "@moderator_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "moderator_desc": "Questo permetterà al membro di modificare i dettagli della comunità, i moderatori e gli utenti bloccati.",
+    "@moderator_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderators_you": "Tu",
+    "@moderators_you": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderators_title": "Moderatori",
+    "@moderators_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "leave_desc": "Non ne vedrai i post sulla tua timeline né potrai più postare.",
+    "@leave_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "leave_confirmation": "Sei sicuro di voler lasciare la comunità?",
+    "@leave_confirmation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderator_resource_name": "moderatore",
+    "@moderator_resource_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderators_resource_name": "moderatori",
+    "@moderators_resource_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_moderator_title": "Aggiungi moderatore",
+    "@add_moderator_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_confirmation": "Sei sicuro di voler eliminare la comunità?",
+    "@delete_confirmation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_desc": "Non ne vedrai i post sulla tua timeline né potrai più postare.",
+    "@delete_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_manage_text": "Gestisci",
+    "@actions_manage_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_title": "Gestisci comunità",
+    "@manage_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_details_title": "Dettagli",
+    "@manage_details_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_details_desc": "Cambia il titolo, nome, avatar, foto di copertina e altro ancora.",
+    "@manage_details_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_admins_title": "Amministratori",
+    "@manage_admins_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_admins_desc": "Vedi, aggiungi e rimuovi amministratori.",
+    "@manage_admins_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mods_title": "Moderatori",
+    "@manage_mods_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mods_desc": "Vedi, aggiungi e rimuovi moderatori.",
+    "@manage_mods_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_banned_title": "Utenti Bloccati",
+    "@manage_banned_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_banned_desc": "Vedi, aggiungi e rimuovi gli utenti bloccati.",
+    "@manage_banned_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mod_reports_title": "Segnalazioni moderazione",
+    "@manage_mod_reports_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mod_reports_desc": "Controlla le segnalazioni di moderazione della comunità.",
+    "@manage_mod_reports_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_closed_posts_title": "Post chiusi",
+    "@manage_closed_posts_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_closed_posts_desc": "Vedi e gestisci i post chiusi",
+    "@manage_closed_posts_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_invite_title": "Invita persone",
+    "@manage_invite_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_invite_desc": "Invita le tue connessioni e i tuoi follower a unirsi alla comunità.",
+    "@manage_invite_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_delete_title": "Elimina comunità",
+    "@manage_delete_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_delete_desc": "Elimina la comunità, per sempre.",
+    "@manage_delete_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_leave_title": "Lascia comunità",
+    "@manage_leave_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_leave_desc": "Lascia la comunità.",
+    "@manage_leave_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_add_favourite": "Aggiungi la comunità ai tuoi preferiti",
+    "@manage_add_favourite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_remove_favourite": "Rimuovi la comunità dai tuoi preferiti",
+    "@manage_remove_favourite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "is_private": "Questa comunità è privata.",
+    "@is_private": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invited_by_member": "Devi essere invitato da un membro.",
+    "@invited_by_member": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invited_by_moderator": "Devi essere invitato da un moderatore.",
+    "@invited_by_moderator": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "refreshing": "Aggiornando la comunità",
+    "@refreshing": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "posts": "Post",
+    "@posts": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "about": "Informazioni",
+    "@about": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "category": "categoria.",
+    "@category": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "categories": "categorie.",
+    "@categories": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_administrators_title": "Aggiungi amministratore",
+    "@add_administrators_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_members": "Membri della comunità",
+    "@community_members": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "member": "membro",
+    "@member": {
+        "description": "Currently not used in app, reserved for potential use. Could be used as: Showing 1 member",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "member_plural": "membri",
+    "@member_plural": {
+        "description": "See all members ,Search all members",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrators_title": "Amministratori",
+    "@administrators_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrator_text": "amministratore",
+    "@administrator_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrator",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrator_plural": "amministratori",
+    "@administrator_plural": {
+        "description": "Egs. Search administrators, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrator_you": "Tu",
+    "@administrator_you": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "user_you_text": "Tu",
+    "@user_you_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "pick_upto_max": "Scegli fino a {max} categorie",
+    "@pick_upto_max": {
+        "type": "text",
+        "placeholders": {
+            "max": {
+
+            }
+        }
+    },
+    "pick_atleast_min_category": "Devi scegliere almeno {min} categoria\/e.",
+    "@pick_atleast_min_category": {
+        "description": "You must pick at least 1 category",
+        "type": "text",
+        "placeholders": {
+            "min": {
+
+            }
+        }
+    },
+    "pick_atleast_min_categories": "Devi scegliere almeno {min} categoria\/e.",
+    "@pick_atleast_min_categories": {
+        "description": "Eg. Variable min will be 3-5. You must pick at least (3-5) categories",
+        "type": "text",
+        "placeholders": {
+            "min": {
+
+            }
+        }
+    },
+    "ban_user_title": "Blocca utente",
+    "@ban_user_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "banned_users_title": "Utenti Bloccati",
+    "@banned_users_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "banned_user_text": "utente bloccato",
+    "@banned_user_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 banned user",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "banned_users_text": "utenti bloccati",
+    "@banned_users_text": {
+        "description": "Egs. Search banned users, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorites_title": "Preferiti",
+    "@favorites_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorite_community": "comunità preferita",
+    "@favorite_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorite_communities": "comunità preferite",
+    "@favorite_communities": {
+        "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrated_title": "Amministrate",
+    "@administrated_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrated_community": "comunità amministrata",
+    "@administrated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrated_communities": "comunità amministrate",
+    "@administrated_communities": {
+        "description": "Egs. Search administrated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_title": "Moderate",
+    "@moderated_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_community": "comunità moderata",
+    "@moderated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_communities": "comunità moderate",
+    "@moderated_communities": {
+        "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "joined_title": "Iscritto",
+    "@joined_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "joined_community": "comunità di cui fai parte",
+    "@joined_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 joined community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "joined_communities": "comunità di cui fai parte",
+    "@joined_communities": {
+        "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "join_communities_desc": "Unisciti a qualche comunità per vedere questa scheda prendere vita!",
+    "@join_communities_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "refresh_text": "Aggiorna",
+    "@refresh_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_none_found": "Nessuna comunità di tendenza trovata. Riprova tra qualche minuto.",
+    "@trending_none_found": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_refresh": "Aggiorna",
+    "@trending_refresh": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_in_all": "Di tendenza in tutte le categorie",
+    "@trending_in_all": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_in_category": "Di tendenza in {categoryName}",
+    "@trending_in_category": {
+        "type": "text",
+        "placeholders": {
+            "categoryName": {
+
+            }
+        }
+    },
+    "communities_title": "Comunità",
+    "@communities_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities_no_category_found": "Nessuna categoria trovata. Riprova tra qualche minuto.",
+    "@communities_no_category_found": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities_refresh_text": "Aggiorna",
+    "@communities_refresh_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities_all_text": "Tutte",
+    "@communities_all_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_to_community_title": "Invita nella comunità",
+    "@invite_to_community_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_to_community_resource_singular": "connessione o follower",
+    "@invite_to_community_resource_singular": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_to_community_resource_plural": "connessioni e follower",
+    "@invite_to_community_resource_plural": {
+        "description": "Egs. Search connections and followers, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorite_action": "Aggiungi comunità alle preferite",
+    "@favorite_action": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "unfavorite_action": "Rimuovi la comunità dalle preferite",
+    "@unfavorite_action": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_label_title": "Titolo",
+    "@save_community_label_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_label_title_hint_text": "ad esempio Viaggi, Fotografia, Gaming.",
+    "@save_community_label_title_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_title": "Nome",
+    "@save_community_name_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_title_hint_text": " ad esempio viaggi, fotografia, gaming.",
+    "@save_community_name_title_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_taken": "Il nome '{takenName}' per la comunità è già utilizzato",
+    "@save_community_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenName": {
+
+            }
+        }
+    },
+    "save_community_name_label_color": "Colore",
+    "@save_community_name_label_color": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_color_hint_text": "(Tocca per cambiare)",
+    "@save_community_name_label_color_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_type": "Tipo",
+    "@save_community_name_label_type": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_type_hint_text": "(Tocca per cambiare)",
+    "@save_community_name_label_type_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_member_invites": "Inviti membri",
+    "@save_community_name_member_invites": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_member_invites_subtitle": "I membri possono invitare persone nella comunità",
+    "@save_community_name_member_invites_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_category": "Categoria",
+    "@save_community_name_category": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_desc_optional": "Descrizione · Opzionale",
+    "@save_community_name_label_desc_optional": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_desc_optional_hint_text": "Di cosa parla la tua comunità?",
+    "@save_community_name_label_desc_optional_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_rules_optional": "Regole · Opzionale",
+    "@save_community_name_label_rules_optional": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_rules_optional_hint_text": "C'è qualcosa che vorresti far sapere ai tuoi utenti?",
+    "@save_community_name_label_rules_optional_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_member_adjective": "Aggettivo membro · opzionale",
+    "@save_community_name_label_member_adjective": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_member_adjective_hint_text": "ad esempio viaggiatore, fotografo, gamer.",
+    "@save_community_name_label_member_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_members_adjective": "Aggettivo membri (plurale) · Opzionale",
+    "@save_community_name_label_members_adjective": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_members_adjective_hint_text": "ad esempio viaggiatori, fotografi, giocatori.",
+    "@save_community_name_label_members_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_edit_community": "Modifica comunità",
+    "@save_community_edit_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_create_community": "Crea comunità",
+    "@save_community_create_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_save_text": "Salva",
+    "@save_community_save_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_create_text": "Crea",
+    "@save_community_create_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_invite_people_title": "Invita persone nella comunità",
+    "@actions_invite_people_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "join_community": "Unisciti",
+    "@join_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "leave_community": "Lascia",
+    "@leave_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_staff": "Addetti della comunità",
+    "@community_staff": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_singular": "post",
+    "@post_singular": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_plural": "post",
+    "@post_plural": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "rules_title": "Regole della comunità",
+    "@rules_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "rules_text": "Regole",
+    "@rules_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "name_characters_error": "Il nome può contenere solo caratteri alfanumerici e trattini bassi.",
+    "@name_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "name_range_error": "Il nome non può essere più lungo di {maxLength} caratteri.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "name_empty_error": "Il nome non può essere vuoto.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "title_range_error": "Il titolo non può essere più lungo di {maxLength} caratteri.",
+    "@title_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "title_empty_error": "Il titolo non può essere vuoto.",
+    "@title_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "rules_range_error": "Le regole non possono essere più lunghe di {maxLength} caratteri.",
+    "@rules_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "rules_empty_error": "Le regole non possono essere vuote.",
+    "@rules_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "description_range_error": "La descrizione non può essere più lunga di {maxLength} caratteri.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "adjectives_range_error": "Gli aggettivi non possono essere più lunghi di {maxLength} caratteri.",
+    "@adjectives_range_error": {
+        "description": "This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers",
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    }
+}

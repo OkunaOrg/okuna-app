@@ -48,7 +48,7 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
         user: connectionConfirmedNotification.connectionConfirmator,
         text: TextSpan(text: _localizationService.notifications__accepted_connection_request_tile),
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

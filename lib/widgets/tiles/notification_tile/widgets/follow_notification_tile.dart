@@ -45,7 +45,7 @@ class OBFollowNotificationTile extends StatelessWidget {
         user: followNotification.follower,
         text: TextSpan(text: _localizationService.notifications__following_you_tile),
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

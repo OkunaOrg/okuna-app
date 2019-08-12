@@ -1,12 +1,12 @@
 {
-    "search_text": "Search...",
+    "search_text": "Suchen...",
     "@search_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "communities": "Communitys",
+    "communities": "Communities",
     "@communities": {
         "type": "text",
         "placeholders": {
@@ -88,7 +88,7 @@
             }
         }
     },
-    "no_users_for": "Keine Benutzer zu '{searchQuery}' gefunden.",
+    "no_users_for": "Keine Benutzer für '{searchQuery}' gefunden.",
     "@no_users_for": {
         "type": "text",
         "placeholders": {

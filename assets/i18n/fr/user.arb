@@ -1,0 +1,1347 @@
+{
+    "thousand_postfix": "mille",
+    "@thousand_postfix": {
+        "description": "For eg. communty has 3k members",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "million_postfix": "million",
+    "@million_postfix": {
+        "description": "For eg. user has 3m followers",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "billion_postfix": "milliard",
+    "@billion_postfix": {
+        "description": "For eg. World circle has 7.5b people",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "translate_see_translation": "Voir la traduction",
+    "@translate_see_translation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "translate_show_original": "Afficher l'original",
+    "@translate_show_original": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follows_lists_account": "1 Compte",
+    "@follows_lists_account": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follows_lists_accounts": "{prettyUsersCount} Comptes",
+    "@follows_lists_accounts": {
+        "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {
+
+            }
+        }
+    },
+    "edit_profile_user_name_taken": "Le nom d'utilisateur.trice @{username} est pris",
+    "@edit_profile_user_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "profile_action_deny_connection": "Refuser la demande de connexion",
+    "@profile_action_deny_connection": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_action_user_blocked": "Utilisateur.trice bloqué.e",
+    "@profile_action_user_blocked": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_action_user_unblocked": "Utilisateur.trice débloqué.e",
+    "@profile_action_user_unblocked": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_action_cancel_connection": "Annuler la demande de connexion",
+    "@profile_action_cancel_connection": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_url_invalid_error": "Veuillez fournir une adresse web valide.",
+    "@profile_url_invalid_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile_location_length_error": "La nom de localité ne peut pas être plus long que {maxLength} caractères.",
+    "@profile_location_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "profile_bio_length_error": "La bio ne peut pas être plus longue que {maxLength} caractères.",
+    "@profile_bio_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "follow_button_follow_text": "Suivre",
+    "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_button_unfollow_text": "Ne plus suivre",
+    "@follow_button_unfollow_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_username": "Nom d'utilisateur.trice",
+    "@edit_profile_username": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_account_update_account_lists": "Mettre à jour les listes de comptes",
+    "@add_account_update_account_lists": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_account_to_lists": "Ajouter le compte à la liste",
+    "@add_account_to_lists": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_account_update_lists": "Mettre à jour les listes",
+    "@add_account_update_lists": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_account_save": "Enregistrer",
+    "@add_account_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_account_done": "Terminé",
+    "@add_account_done": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_account_success": "Opération réussie",
+    "@add_account_success": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "emoji_field_none_selected": "Aucune émoticône sélectionnée",
+    "@emoji_field_none_selected": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "emoji_search_none_found": "Aucune émoticône trouvée correspondant à '{searchQuery}'.",
+    "@emoji_search_none_found": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {
+
+            }
+        }
+    },
+    "follow_lists_title": "Mes listes",
+    "@follow_lists_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_lists_search_for": "Rechercher une liste...",
+    "@follow_lists_search_for": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_lists_no_list_found": "Aucune liste trouvée.",
+    "@follow_lists_no_list_found": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_lists_no_list_found_for": "Aucune liste trouvée pour '{searchQuery}'",
+    "@follow_lists_no_list_found_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {
+
+            }
+        }
+    },
+    "list_name_empty_error": "Le nom de liste ne peut pas être vide.",
+    "@list_name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "list_name_range_error": "Le nom de liste ne peut pas être plus long que {maxLength} caractères.",
+    "@list_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "circle_name_empty_error": "Le nom de cercle ne peut pas être vide.",
+    "@circle_name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "circle_name_range_error": "Le nom de cercle ne peut pas être plus long que {maxLength} caractères.",
+    "@circle_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "save_follows_list_name": "Nom",
+    "@save_follows_list_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_follows_list_hint_text": "par exemple : Voyage, Photographie",
+    "@save_follows_list_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_follows_list_name_taken": "Le nom de liste '{listName}' est pris",
+    "@save_follows_list_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "listName": {
+
+            }
+        }
+    },
+    "save_follows_list_emoji": "Émoticône",
+    "@save_follows_list_emoji": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_follows_list_users": "Utilisateurs.trices",
+    "@save_follows_list_users": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_follows_list_edit": "Modifier la liste",
+    "@save_follows_list_edit": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_follows_list_create": "Créer une liste",
+    "@save_follows_list_create": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_follows_list_save": "Enregistrer",
+    "@save_follows_list_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_follows_list_emoji_required_error": "Émoticône est requise",
+    "@save_follows_list_emoji_required_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follows_list_edit": "Modifier",
+    "@follows_list_edit": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follows_list_header_title": "Utilisateurs.trices",
+    "@follows_list_header_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_name": "Nom",
+    "@edit_profile_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_url": "Site web",
+    "@edit_profile_url": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_location": "Localité",
+    "@edit_profile_location": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_bio": "Bio",
+    "@edit_profile_bio": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_followers_count": "Nombre d'abonné.e.s",
+    "@edit_profile_followers_count": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_title": "Modifier le profil",
+    "@edit_profile_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_save_text": "Enregistrer",
+    "@edit_profile_save_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_pick_image": "Choisir une image",
+    "@edit_profile_pick_image": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_delete": "Supprimer",
+    "@edit_profile_delete": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "edit_profile_pick_image_error_too_large": "Image trop grande (limite : {limit} Mo)",
+    "@edit_profile_pick_image_error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {
+
+            }
+        }
+    },
+    "tile_following": " · Abonné.e à",
+    "@tile_following": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "following_text": "Abonné.e à",
+    "@following_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "following_resource_name": "utilisateurs.trices auxquels.elles vous êtes abonné.e",
+    "@following_resource_name": {
+        "description": "Eg: Search followed users.., No followed users found. etc ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "tile_delete": "Supprimer",
+    "@tile_delete": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite": "Inviter",
+    "@invite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "uninvite": "Annuler l'invitation",
+    "@uninvite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_member": "Membre",
+    "@invite_member": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_someone_message": "Bonjour, je voudrais vous inviter à Okuna! Premièrement, téléchargez l'application sur iTunes ({iosLink}) ou le Play Store ({androidLink}). Deuxièmement, collez ce lien d'invitation personnalisé dans le formulaire \"Inscription\" dans l'application Okuna : {inviteLink}",
+    "@invite_someone_message": {
+        "type": "text",
+        "placeholders": {
+            "iosLink": {
+
+            },
+            "androidLink": {
+
+            },
+            "inviteLink": {
+
+            }
+        }
+    },
+    "connections_header_circle_desc": "Le cercle où toutes vos connexions sont ajoutées.",
+    "@connections_header_circle_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connections_header_users": "Utilisateurs.trices",
+    "@connections_header_users": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_pending": "En attente",
+    "@connection_pending": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connection_circle_edit": "Modifier",
+    "@connection_circle_edit": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connections_circle_delete": "Supprimer",
+    "@connections_circle_delete": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_name": "Nom",
+    "@save_connection_circle_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_hint": "par exemple: amis, famille, travail.",
+    "@save_connection_circle_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_color_name": "Couleur ",
+    "@save_connection_circle_color_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_color_hint": "(Appuyez pour changer)",
+    "@save_connection_circle_color_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_users": "Utilisateurs.trices",
+    "@save_connection_circle_users": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_edit": "Modifier le cercle",
+    "@save_connection_circle_edit": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_create": "Créer un cercle",
+    "@save_connection_circle_create": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_connection_circle_save": "Enregistrer",
+    "@save_connection_circle_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_connection_circle_save": "Enregistrer",
+    "@update_connection_circle_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_connection_circle_updated": "Connexion mise à jour",
+    "@update_connection_circle_updated": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_connection_circles_title": "Mettre à jour les cercles de connexions",
+    "@update_connection_circles_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_connection_with": "Confirmer la connexion avec {userName}",
+    "@confirm_connection_with": {
+        "type": "text",
+        "placeholders": {
+            "userName": {
+
+            }
+        }
+    },
+    "confirm_connection_add_connection": "Ajouter la connexion au cercle",
+    "@confirm_connection_add_connection": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_connection_connection_confirmed": "Connexion confirmée",
+    "@confirm_connection_connection_confirmed": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_connection_confirm_text": "Confirmer",
+    "@confirm_connection_confirm_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connect_to_user_connect_with_username": "Se connecter avec {userName}",
+    "@connect_to_user_connect_with_username": {
+        "type": "text",
+        "placeholders": {
+            "userName": {
+
+            }
+        }
+    },
+    "connect_to_user_add_connection": "Ajouter la connexion au cercle",
+    "@connect_to_user_add_connection": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connect_to_user_done": "Terminé",
+    "@connect_to_user_done": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connect_to_user_request_sent": "Demande de connexion envoyée",
+    "@connect_to_user_request_sent": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "remove_account_from_list": "Supprimer le compte des listes",
+    "@remove_account_from_list": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "remove_account_from_list_success": "Opération réussie",
+    "@remove_account_from_list_success": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_block_user_title": "Confirmation",
+    "@confirm_block_user_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_block_user_info": "Vous ne verrez pas vos publications respectives ni ne pourrez interagir de quelque manière que ce soit.",
+    "@confirm_block_user_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_block_user_yes": "Oui",
+    "@confirm_block_user_yes": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_block_user_no": "Non",
+    "@confirm_block_user_no": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_block_user_blocked": "Utilisateur.trice bloqué.e.",
+    "@confirm_block_user_blocked": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_block_user_question": "Êtes-vous sûr.e de vouloir bloquer @{username}?",
+    "@confirm_block_user_question": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "save_connection_circle_name_taken": "Le nom de cercle '{takenConnectionsCircleName}' est pris",
+    "@save_connection_circle_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenConnectionsCircleName": {
+
+            }
+        }
+    },
+    "timeline_filters_title": "Filtres du fil d'actualités",
+    "@timeline_filters_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_filters_search_desc": "Recherche de cercles et de listes...",
+    "@timeline_filters_search_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_filters_clear_all": "Tout effacer",
+    "@timeline_filters_clear_all": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_filters_apply_all": "Appliquer les filtres",
+    "@timeline_filters_apply_all": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_filters_circles": "Cercles",
+    "@timeline_filters_circles": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "timeline_filters_lists": "Listes",
+    "@timeline_filters_lists": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "followers_title": "Abonné.e.s",
+    "@followers_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follower_singular": "abonné.e",
+    "@follower_singular": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follower_plural": "abonné.e.s",
+    "@follower_plural": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_title": "Supprimer mon compte",
+    "@delete_account_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_current_pwd": "Mot de passe actuel",
+    "@delete_account_current_pwd": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_current_pwd_hint": "Entrez votre mot de passe actuel",
+    "@delete_account_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_next": "Suivant",
+    "@delete_account_next": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_confirmation_title": "Confirmation",
+    "@delete_account_confirmation_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_confirmation_desc": "Êtes-vous sûr.e de vouloir supprimer votre compte ?",
+    "@delete_account_confirmation_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_confirmation_desc_info": "Ceci est une action permanente et irréversible.",
+    "@delete_account_confirmation_desc_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_confirmation_no": "Non",
+    "@delete_account_confirmation_no": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_confirmation_yes": "Oui",
+    "@delete_account_confirmation_yes": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_account_confirmation_goodbye": "Au revoir 😢",
+    "@delete_account_confirmation_goodbye": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_create_create_title": "Créer une invitation",
+    "@invites_create_create_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_create_edit_title": "Modifier l'invitation",
+    "@invites_create_edit_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_create_save": "Enregistrer",
+    "@invites_create_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_create_create": "Créer",
+    "@invites_create_create": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_create_name_title": "Pseudonyme",
+    "@invites_create_name_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_create_name_hint": "par exemple : Madame Une Telle",
+    "@invites_create_name_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_pending": "En attente",
+    "@invites_pending": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_delete": "Supprimer",
+    "@invites_delete": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_invite_text": "Inviter",
+    "@invites_invite_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_share_yourself": "Partager l'invitation par vous-même",
+    "@invites_share_yourself": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_share_yourself_desc": "Choisissez parmi les applications de messagerie, etc.",
+    "@invites_share_yourself_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_share_email": "Partager l'invitation par courriel",
+    "@invites_share_email": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_email_text": "Adresse courriel",
+    "@invites_email_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_email_hint": "par exemple : madameunetelle@courriel.com",
+    "@invites_email_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_email_invite_text": "Invitation par courriel",
+    "@invites_email_invite_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_email_send_text": "Envoyer",
+    "@invites_email_send_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_email_sent_text": "Courriel d'invitation envoyé",
+    "@invites_email_sent_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_share_email_desc": "Nous enverrons en votre nom un courriel d'invitation avec des instructions",
+    "@invites_share_email_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_edit_text": "Modifier",
+    "@invites_edit_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_title": "Mes invitations",
+    "@invites_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_accepted_title": "Acceptée(s)",
+    "@invites_accepted_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_accepted_group_name": "invitation(s) acceptée(s)",
+    "@invites_accepted_group_name": {
+        "description": "Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_accepted_group_item_name": "invitation acceptée",
+    "@invites_accepted_group_item_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_pending_group_name": "invitation(s) en attente",
+    "@invites_pending_group_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_pending_group_item_name": "invitation en attente",
+    "@invites_pending_group_item_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_none_used": "Il semble que vous n'ayez utilisé aucune invitation.",
+    "@invites_none_used": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_none_left": "Vous n'avez pas d'invitations disponibles.",
+    "@invites_none_left": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_invite_a_friend": "Inviter un.e ami.e",
+    "@invites_invite_a_friend": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invites_refresh": "Actualiser",
+    "@invites_refresh": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "language_settings_title": "Paramètres de langue",
+    "@language_settings_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "language_settings_save": "Enregistrer",
+    "@language_settings_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "language_settings_saved_success": "Langue changée avec succès",
+    "@language_settings_saved_success": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "groups_see_all": "Voir tous.tes les {groupName}",
+    "@groups_see_all": {
+        "description": "Can be, See all joined communities, See all pending invites, See all moderated communities etc. ",
+        "type": "text",
+        "placeholders": {
+            "groupName": {
+
+            }
+        }
+    },
+    "invites_joined_with": "Inscrit.e avec le nom d'utilisateur.trice @{username}",
+    "@invites_joined_with": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "invites_pending_email": "En attente, courriel d'invitation envoyé à {email}",
+    "@invites_pending_email": {
+        "type": "text",
+        "placeholders": {
+            "email": {
+
+            }
+        }
+    },
+    "timeline_filters_no_match": "Aucun résultat pour '{searchQuery}'.",
+    "@timeline_filters_no_match": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {
+
+            }
+        }
+    },
+    "clear_application_cache_text": "Vider le cache",
+    "@clear_application_cache_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "clear_application_cache_desc": "Effacer les messages du cache, comptes, images et plus.",
+    "@clear_application_cache_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "clear_application_cache_success": "Cache vidé avec succès",
+    "@clear_application_cache_success": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "clear_application_cache_failure": "Le cache n'a pas pu être vidé",
+    "@clear_application_cache_failure": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_title": "Rejet des lignes directrices",
+    "@confirm_guidelines_reject_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_info": "Vous ne pouvez pas utiliser Okuna jusqu'à ce que vous acceptiez les lignes directrices.",
+    "@confirm_guidelines_reject_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_chat_with_team": "Discutez avec l'équipe.",
+    "@confirm_guidelines_reject_chat_with_team": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_chat_immediately": "Commencer une discussion immédiatement.",
+    "@confirm_guidelines_reject_chat_immediately": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_chat_community": "Discutez avec la communauté.",
+    "@confirm_guidelines_reject_chat_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_join_slack": "Rejoignez le canal Slack d'Okuna.",
+    "@confirm_guidelines_reject_join_slack": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_go_back": "Revenir en arrière",
+    "@confirm_guidelines_reject_go_back": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_guidelines_reject_delete_account": "Supprimer mon compte",
+    "@confirm_guidelines_reject_delete_account": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "guidelines_desc": "Veuillez s.v.p. prendre un moment pour lire et accepter nos lignes directrices.",
+    "@guidelines_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "guidelines_accept": "Accepter",
+    "@guidelines_accept": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "guidelines_reject": "Rejeter",
+    "@guidelines_reject": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_email_title": "Changer l'adresse courriel",
+    "@change_email_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_email_email_text": "Adresse courriel",
+    "@change_email_email_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_email_hint_text": "Entrez votre nouvelle adresse courriel",
+    "@change_email_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_email_error": "Adresse courriel déjà inscrite",
+    "@change_email_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_email_save": "Enregistrer",
+    "@change_email_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_email_success_info": "Nous avons envoyé un lien de confirmation à votre nouvelle adresse courriel, cliquez-le pour vérifier votre nouvelle adresse courriel",
+    "@change_email_success_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "clear_app_preferences_title": "Réinitialiser les préférences",
+    "@clear_app_preferences_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "clear_app_preferences_desc": "Réinitialiser les préférences de l'application. Actuellement, ce n'est que l'ordre préféré d'affichage des commentaires.",
+    "@clear_app_preferences_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "clear_app_preferences_cleared_successfully": "Préférences réinitialisées avec succès",
+    "@clear_app_preferences_cleared_successfully": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "email_verification_successful": "Super ! Votre adresse courriel est maintenant vérifiée",
+    "@email_verification_successful": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "email_verification_error": "Oups ! Votre jeton n'était pas valide ou a expiré, veuillez s.v.p. réessayer",
+    "@email_verification_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "clear_app_preferences_error": "Impossible d'effacer les préférences",
+    "@clear_app_preferences_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "disconnect_from_user_success": "Déconnecté.e avec succès",
+    "@disconnect_from_user_success": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "block_user": "Bloquer l'utilisateur.trice",
+    "@block_user": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "unblock_user": "Débloquer l'utilisateur.trice",
+    "@unblock_user": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "disconnect_from_user": "Se déconnecter de {userName}",
+    "@disconnect_from_user": {
+        "type": "text",
+        "placeholders": {
+            "userName": {
+
+            }
+        }
+    },
+    "circle_peoples_count": "{prettyUsersCount} personnes",
+    "@circle_peoples_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {
+
+            }
+        }
+    },
+    "follows_list_accounts_count": "{prettyUsersCount} comptes",
+    "@follows_list_accounts_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {
+
+            }
+        }
+    }
+}

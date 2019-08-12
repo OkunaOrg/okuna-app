@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/widgets/badges/badge.dart';
 import 'package:Okuna/widgets/http_list.dart';
@@ -24,6 +25,7 @@ class OBMyModerationTasksPage extends StatefulWidget {
 class OBMyModerationTasksPageState extends State<OBMyModerationTasksPage> {
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -41,12 +43,13 @@ class OBMyModerationTasksPageState extends State<OBMyModerationTasksPage> {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Pending moderation tasks',
+        title: _localizationService.moderation__my_moderation_tasks_title,
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<Community>(
@@ -55,8 +58,8 @@ class OBMyModerationTasksPageState extends State<OBMyModerationTasksPage> {
           listItemBuilder: _buildPendingModeratedObjectsCommunityListItem,
           listRefresher: _refreshPendingModeratedObjectsCommunities,
           listOnScrollLoader: _loadMorePendingModeratedObjectsCommunities,
-          resourceSingularName: 'pending moderation task',
-          resourcePluralName: 'pending moderation tasks',
+          resourceSingularName: _localizationService.moderation__pending_moderation_tasks_singular,
+          resourcePluralName: _localizationService.moderation__pending_moderation_tasks_plural,
         ),
       ),
     );

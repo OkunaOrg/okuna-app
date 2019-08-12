@@ -13,7 +13,7 @@
 
         }
     },
-    "button_staff": "Mitarbeiter",
+    "button_staff": "Moderatoren",
     "@button_staff": {
         "type": "text",
         "placeholders": {
@@ -34,7 +34,7 @@
 
         }
     },
-    "communities": "communitys",
+    "communities": "Communities",
     "@communities": {
         "type": "text",
         "placeholders": {
@@ -69,7 +69,7 @@
 
         }
     },
-    "admin_desc": "Dies ermöglicht dem Mitglied, die Community-Details, Administratoren, Moderatoren und gesperrte Benutzer zu bearbeiten.",
+    "admin_desc": "Dies ermöglicht dem Mitglied, folgendes zu bearbeiten: Die Community-Details, Administratoren, Moderatoren und gesperrte Benutzer.",
     "@admin_desc": {
         "type": "text",
         "placeholders": {
@@ -83,7 +83,7 @@
 
         }
     },
-    "admin_add_confirmation": "Bist du sicher, dass du @{username} als Administrator der Community hinzufügen möchtest?",
+    "admin_add_confirmation": "Bist du sicher, dass du @{username} als einen Administrator der Community hinzufügen möchtest?",
     "@admin_add_confirmation": {
         "type": "text",
         "placeholders": {
@@ -117,7 +117,7 @@
             }
         }
     },
-    "moderator_desc": "Dies ermöglicht dem Mitglied, die Community-Details, Moderatoren und gesperrte Benutzer zu bearbeiten.",
+    "moderator_desc": "Dies ermöglicht dem Mitglied, folgendes zu bearbeiten: Die Community-Details, Moderatoren und gesperrte Benutzer.",
     "@moderator_desc": {
         "type": "text",
         "placeholders": {
@@ -138,7 +138,7 @@
 
         }
     },
-    "leave_desc": "Du wirst keine Beiträge dieser Community in deiner Timeline sehen, und auch keine Beiträge mehr mit der Community teilen können.",
+    "leave_desc": "Du wirst keine Beiträge dieser Community in deiner Timeline sehen, und auch keine Beiträge mehr mit dieser Community teilen können.",
     "@leave_desc": {
         "type": "text",
         "placeholders": {
@@ -180,7 +180,7 @@
 
         }
     },
-    "delete_desc": "Du wirst keine Beiträge dieser Community in deiner Timeline sehen, und auch keine Beiträge mehr mit der Community teilen können.",
+    "delete_desc": "Du wirst keine Beiträge dieser Community in deiner Timeline sehen, und auch keine Beiträge mehr mit dieser Community teilen können.",
     "@delete_desc": {
         "type": "text",
         "placeholders": {
@@ -264,7 +264,7 @@
 
         }
     },
-    "manage_mod_reports_desc": "Überprüfe die Community-Moderationsberichte.",
+    "manage_mod_reports_desc": "Überprüfe die Meldungen an die Community.",
     "@manage_mod_reports_desc": {
         "type": "text",
         "placeholders": {
@@ -292,7 +292,7 @@
 
         }
     },
-    "manage_invite_desc": "Lade deine Verbindungen und Abonnenten ein, dieser Community beizutreten.",
+    "manage_invite_desc": "Lade deine Verbindungen und Follower ein, dieser Community beizutreten.",
     "@manage_invite_desc": {
         "type": "text",
         "placeholders": {
@@ -362,7 +362,7 @@
 
         }
     },
-    "refreshing": "Community aktualisieren",
+    "refreshing": "Community neu laden",
     "@refreshing": {
         "type": "text",
         "placeholders": {
@@ -464,7 +464,7 @@
 
         }
     },
-    "pick_upto_max": "Aufnahme von bis zu {max} Kategorien",
+    "pick_upto_max": "Wähle bis zu {max} Kategorien",
     "@pick_upto_max": {
         "type": "text",
         "placeholders": {
@@ -493,7 +493,7 @@
             }
         }
     },
-    "ban_user_title": "Benutzer sperren",
+    "ban_user_title": "Benutzer aussperren",
     "@ban_user_title": {
         "type": "text",
         "placeholders": {
@@ -530,7 +530,7 @@
 
         }
     },
-    "favorite_community": "Favorisierte Community",
+    "favorite_community": "Meine Community",
     "@favorite_community": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
         "type": "text",
@@ -538,7 +538,7 @@
 
         }
     },
-    "favorite_communities": "Favorisierte Communitys",
+    "favorite_communities": "favorisierte Communities",
     "@favorite_communities": {
         "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
         "type": "text",
@@ -584,7 +584,7 @@
 
         }
     },
-    "moderated_communities": "moderierte Communitys",
+    "moderated_communities": "moderierte Communities",
     "@moderated_communities": {
         "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
         "type": "text",
@@ -607,7 +607,7 @@
 
         }
     },
-    "joined_communities": "Beigetretene Communitys",
+    "joined_communities": "Beigetretene Communities",
     "@joined_communities": {
         "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
         "type": "text",
@@ -615,7 +615,7 @@
 
         }
     },
-    "join_communities_desc": "Werde Mitglied von Communitys und erlebe, wie diese Registerkarte zum Leben erwacht!",
+    "join_communities_desc": "Werde Mitglied von Communities und diese Registerkarte erwacht zum Leben!",
     "@join_communities_desc": {
         "type": "text",
         "placeholders": {
@@ -629,7 +629,7 @@
 
         }
     },
-    "trending_none_found": "Keine Communitys im Trend gefunden. Versuche es in ein paar Minuten erneut.",
+    "trending_none_found": "Keine angesagten Communities gefunden. Versuche es in ein paar Minuten erneut.",
     "@trending_none_found": {
         "type": "text",
         "placeholders": {
@@ -643,7 +643,7 @@
 
         }
     },
-    "trending_in_all": "In allen Kategorien angesagt",
+    "trending_in_all": "Angesagt in allen Kategorien",
     "@trending_in_all": {
         "type": "text",
         "placeholders": {
@@ -659,7 +659,7 @@
             }
         }
     },
-    "communities_title": "Communitys",
+    "communities_title": "Communities",
     "@communities_title": {
         "type": "text",
         "placeholders": {
@@ -710,7 +710,7 @@
 
         }
     },
-    "favorite_action": "Favorisierte Community",
+    "favorite_action": "Community favorisieren",
     "@favorite_action": {
         "type": "text",
         "placeholders": {
@@ -894,7 +894,7 @@
 
         }
     },
-    "actions_invite_people_title": "Personen in die Community einladen",
+    "actions_invite_people_title": "Lade jemanden in die Community ein",
     "@actions_invite_people_title": {
         "type": "text",
         "placeholders": {
@@ -915,7 +915,7 @@
 
         }
     },
-    "community_staff": "Community-Personal",
+    "community_staff": "Community-Moderatoren",
     "@community_staff": {
         "type": "text",
         "placeholders": {

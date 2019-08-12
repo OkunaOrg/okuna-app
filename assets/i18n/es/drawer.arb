@@ -274,6 +274,20 @@
 
         }
     },
+    "useful_links_support": "Soporte Okuna",
+    "@useful_links_support": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_support_desc": "Encuentra una forma de ayudarnos en nuestro viaje!",
+    "@useful_links_support_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
     "useful_links_slack_channel": "Slack de la comunidad",
     "@useful_links_slack_channel": {
         "type": "text",

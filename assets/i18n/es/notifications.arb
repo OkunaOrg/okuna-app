@@ -62,7 +62,7 @@
 
         }
     },
-    "comment_reply_title": "Respuesta al comentario del post",
+    "comment_reply_title": "Respuestas",
     "@comment_reply_title": {
         "type": "text",
         "placeholders": {

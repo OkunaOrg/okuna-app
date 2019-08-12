@@ -44,6 +44,7 @@ class OBSharePostWithCirclesPageState
   List<Circle> _selectedCircles;
   List<Circle> _disabledCircles;
   Circle _fakeWorldCircle;
+  Circle _connectionsCircle;
   bool _fakeWorldCircleSelected;
 
   String _circleSearchQuery;
@@ -164,8 +165,15 @@ class OBSharePostWithCirclesPageState
 
     Post createdPost;
 
-    List<Circle> selectedCircles =
-        _fakeWorldCircleSelected ? [] : _selectedCircles;
+    List<Circle> selectedCircles;
+
+    if (_fakeWorldCircleSelected) {
+      selectedCircles = [];
+    } else if (_selectedCircles.contains(_connectionsCircle)) {
+      selectedCircles = [ _connectionsCircle ];
+    } else {
+      selectedCircles = _selectedCircles;
+    }
 
     try {
       if (widget.sharePostData.image != null) {
@@ -217,7 +225,10 @@ class OBSharePostWithCirclesPageState
         // Enable all other circles
         _setDisabledCircles([]);
         _setSelectedCircles([]);
-        _setFakeWorlCircleSelected(false);
+        _setFakeWorldCircleSelected(false);
+      } else if (pressedCircle == _connectionsCircle) {
+        _setDisabledCircles([]);
+        _setSelectedCircles([]);
       } else {
         _removeSelectedCircle(pressedCircle);
       }
@@ -229,7 +240,14 @@ class OBSharePostWithCirclesPageState
         var disabledCircles = _circles.toList();
         disabledCircles.remove(_fakeWorldCircle);
         _setDisabledCircles(disabledCircles);
-        _setFakeWorlCircleSelected(true);
+        _setFakeWorldCircleSelected(true);
+      } else if (pressedCircle == _connectionsCircle) {
+        var circles = _circles.toList();
+        circles.remove(_fakeWorldCircle);
+        _setSelectedCircles(circles);
+        circles = circles.toList();
+        circles.remove(_connectionsCircle);
+        _setDisabledCircles(circles);
       } else {
         _addSelectedCircle(pressedCircle);
       }
@@ -268,7 +286,7 @@ class OBSharePostWithCirclesPageState
     setState(() {
       _circles = circles;
       // Move connections circle to top
-      var _connectionsCircle = _circles
+      _connectionsCircle = _circles
           .firstWhere((circle) => circle.id == user.connectionsCircleId);
       _circles.remove(_connectionsCircle);
       _circles.insert(0, _connectionsCircle);
@@ -315,7 +333,7 @@ class OBSharePostWithCirclesPageState
     });
   }
 
-  void _setFakeWorlCircleSelected(bool fakeWorldCircleSelected) {
+  void _setFakeWorldCircleSelected(bool fakeWorldCircleSelected) {
     setState(() {
       _fakeWorldCircleSelected = fakeWorldCircleSelected;
     });

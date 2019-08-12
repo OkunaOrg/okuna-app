@@ -31,6 +31,7 @@ class OBUserPostHeader extends StatelessWidget {
     var navigationService = openbookProvider.navigationService;
     var bottomSheetService = openbookProvider.bottomSheetService;
     var utilsService = openbookProvider.utilsService;
+    var localizationService = openbookProvider.localizationService;
 
     if (_post.creator == null) return const SizedBox();
 
@@ -72,7 +73,7 @@ class OBUserPostHeader extends StatelessWidget {
       ),
       subtitle: _post.created != null
           ? OBSecondaryText(
-              utilsService.timeAgo(_post.created),
+              utilsService.timeAgo(_post.created, localizationService),
               style: TextStyle(fontSize: 12.0),
             )
           : const SizedBox(),

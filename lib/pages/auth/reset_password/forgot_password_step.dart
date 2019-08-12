@@ -124,10 +124,10 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
 
   Future<void> _requestPasswordReset(BuildContext context) async {
     _setRequestInProgress(true);
-    String username = _validateUsername(_usernameController.text) == null ?  _usernameController.text : '';
+    String username = _validateUsername(_usernameController.text.trim()) == null ?  _usernameController.text.trim() : '';
     String email;
     if (username == '') {
-      email = _validateEmail(_emailController.text) == null ?  _emailController.text : '';
+      email = _validateEmail(_emailController.text.trim()) == null ?  _emailController.text.trim() : '';
     }
     try {
       await _userService.requestPasswordReset(username: username, email: email);
@@ -268,7 +268,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
 
   String _validateUsername(String value) {
     if (!_isSubmitted) return null;
-    if (_emailController.text.length > 0 && value == '') {
+    if (_emailController.text.trim().length > 0 && value == '') {
       return null;
     }
     return _validationService.validateUserUsername(value);
@@ -276,7 +276,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
 
   String _validateEmail(String value) {
     if (!_isSubmitted) return null;
-    if (_usernameController.text.length > 0) {
+    if (_usernameController.text.trim().length > 0) {
       return null;
     }
     return _validationService.validateUserEmail(value);

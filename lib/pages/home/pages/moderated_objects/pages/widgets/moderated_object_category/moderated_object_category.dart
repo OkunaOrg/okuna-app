@@ -1,6 +1,7 @@
 import 'package:Okuna/models/moderation/moderated_object.dart';
 import 'package:Okuna/models/moderation/moderation_category.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tile_group_title.dart';
@@ -21,12 +22,13 @@ class OBModeratedObjectCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBTileGroupTitle(
-          title: 'Category',
+          title: _localizationService.moderation__category_text,
         ),
         StreamBuilder(
           initialData: moderatedObject,

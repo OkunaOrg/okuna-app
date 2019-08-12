@@ -96,7 +96,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
     _setSubscribeInProgress(true);
     try {
       int count = await _userService.subscribeToBetaWaitlist(
-          email: _emailController.text);
+          email: _emailController.text.trim());
       WaitlistSubscribeArguments args =
           new WaitlistSubscribeArguments(count: count);
       Navigator.pushNamed(context, '/waitlist/subscribe_done_step',
@@ -187,7 +187,7 @@ class OBWaitlistSubscribePageState extends State<OBWaitlistSubscribePage> {
                 hintText: emailInputPlaceholder,
                 validator: (String email) {
                   String validateEMail =
-                      _validationService.validateUserEmail(email);
+                      _validationService.validateUserEmail(email.trim());
                   if (validateEMail != null) return validateEMail;
                 },
                 controller: _emailController,

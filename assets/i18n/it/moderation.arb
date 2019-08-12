@@ -1,0 +1,503 @@
+{
+    "filters_title": "Filtri moderazione",
+    "@filters_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_reset": "Azzera",
+    "@filters_reset": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_verified": "Verificato",
+    "@filters_verified": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_apply": "Applica filtri",
+    "@filters_apply": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_type": "Tipo",
+    "@filters_type": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_status": "Stato",
+    "@filters_status": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_other": "Altri",
+    "@filters_other": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_review": "Controlla",
+    "@actions_review": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_chat_with_team": "Chatta con il team",
+    "@actions_chat_with_team": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_category_title": "Aggiorna categoria",
+    "@update_category_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_category_save": "Salva",
+    "@update_category_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_save": "Salva",
+    "@update_description_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_title": "Modifica descrizione",
+    "@update_description_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_report_desc": "Segnala descrizione",
+    "@update_description_report_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_report_hint_text": "es. l'elemento segnalato è risultato...",
+    "@update_description_report_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_status_save": "Salva",
+    "@update_status_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_status_title": "Aggiorna stato",
+    "@update_status_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_title": "Rivedi elemento moderato",
+    "@community_review_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_title": "Oggetto",
+    "@moderated_object_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_status": "Stato",
+    "@moderated_object_status": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_reports_count": "Numero di segnalazioni",
+    "@moderated_object_reports_count": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_verified_by_staff": "Verificato dagli addetti Okuna",
+    "@moderated_object_verified_by_staff": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_verified": "Verificato",
+    "@moderated_object_verified": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_true_text": "Vero",
+    "@moderated_object_true_text": {
+        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_false_text": "Falso",
+    "@moderated_object_false_text": {
+        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_object": "Oggetto",
+    "@community_review_object": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_approve": "Approva",
+    "@community_review_approve": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_reject": "rifiuta",
+    "@community_review_reject": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_item_verified": "Questo elemento è stato controllato",
+    "@community_review_item_verified": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_title": "Rivedi oggetto moderato",
+    "@global_review_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_object_text": "Oggetto",
+    "@global_review_object_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_verify_text": "Verifica",
+    "@global_review_verify_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_unverify_text": "Annulla verifica",
+    "@global_review_unverify_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_title": "Invia segnalazione",
+    "@confirm_report_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_details": "Puoi fornire ulteriori dettagli che potrebbero essere utili per la segnalazione?",
+    "@confirm_report_provide_details": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_optional_info": "(Opzionale)",
+    "@confirm_report_provide_optional_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_optional_hint_text": "Digita qui...",
+    "@confirm_report_provide_optional_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_happen_next": "Ecco cosa accadrà dopo:",
+    "@confirm_report_provide_happen_next": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_happen_next_desc": "- La tua segnalazione sarà sottomessa in maniera anonima.\n- Se stai segnalando un post o commento, la segnalazione sarà inviata agli addetti Okuna e ai moderatori della comunità (dove applicabile), e il post sarà nascosto dal tuo feed.\n- Se stai segnalando un account o una comunità, sarà inviata agli addetti Okuna\n- Verificheremo la segnalazione, se approvata, il contenuto sarà eliminato e le penalizzazioni saranno assegnate alle persone coinvolte, variabili da una sospensione temporanea all'eliminazione dell'account, in base alla gravità della trasgressione. \n- Se la segnalazione risulterà fatta con lo scopo di danneggiare la reputazione di un altro membro o comunità della piattaforma, senza che le trasgressioni fossero veritiere, le penalizzazioni saranno applicate a te.\n",
+    "@confirm_report_provide_happen_next_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_submit": "Ho capito, invia la segnalazione.",
+    "@confirm_report_submit": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_user_reported": "Utente segnalato",
+    "@confirm_report_user_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_community_reported": "Comunità segnalata",
+    "@confirm_report_community_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_post_reported": "Post segnalato",
+    "@confirm_report_post_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_post_comment_reported": "Commento segnalato",
+    "@confirm_report_post_comment_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_item_reported": "Elemento segnalato",
+    "@confirm_report_item_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_moderated_objects": "Oggetti moderati dalla comunità",
+    "@community_moderated_objects": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "globally_moderated_objects": "Oggetti moderati globalmente",
+    "@globally_moderated_objects": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "tap_to_retry": "Tocca per riprovare a caricare gli elementi",
+    "@tap_to_retry": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_post_text": "Segnala post",
+    "@report_post_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_post_text": "Hai segnalato questo post",
+    "@you_have_reported_post_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_account_text": "Segnala account",
+    "@report_account_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_account_text": "Hai segnalato questo account",
+    "@you_have_reported_account_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_community_text": "Segnala comunità",
+    "@report_community_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_community_text": "Hai segnalato questa comunità",
+    "@you_have_reported_community_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_comment_text": "Segnala commento",
+    "@report_comment_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_comment_text": "Hai segnalato questo commento",
+    "@you_have_reported_comment_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "description_text": "Descrizione",
+    "@description_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "no_description_text": "Nessuna descrizione",
+    "@no_description_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "category_text": "Categoria",
+    "@category_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reporter_text": "Segnalatore",
+    "@reporter_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reports_preview_title": "Segnalazioni",
+    "@reports_preview_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reports_preview_resource_reports": "segnalazioni",
+    "@reports_preview_resource_reports": {
+        "description": "Usage: See all reports..",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reports_see_all": "Vedi tutti {resourceCount} {resourceName}",
+    "@reports_see_all": {
+        "description": "Usage: See all 4 reports.",
+        "type": "text",
+        "placeholders": {
+            "resourceCount": {
+
+            },
+            "resourceName": {
+
+            }
+        }
+    },
+    "object_status_title": "Status",
+    "@object_status_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_tasks_title": "Attività in attesa di moderazione",
+    "@my_moderation_tasks_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "pending_moderation_tasks_singular": "attività in attesa di moderazione",
+    "@pending_moderation_tasks_singular": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "pending_moderation_tasks_plural": "attività in attesa di moderazione",
+    "@pending_moderation_tasks_plural": {
+        "description": "Eg. No pending moderation tasks found",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_penalties_title": "Sanzioni moderazione",
+    "@my_moderation_penalties_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_penalties_resouce_singular": "sanzione moderazione",
+    "@my_moderation_penalties_resouce_singular": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_penalties_resource_plural": "sanzioni moderazione",
+    "@my_moderation_penalties_resource_plural": {
+        "description": "See all moderation penalties, No moderation penalties found etc..",
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

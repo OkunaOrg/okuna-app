@@ -1,0 +1,1027 @@
+{
+    "no": "Hayır",
+    "@no": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "yes": "Evet",
+    "@yes": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "button_staff": "Personel",
+    "@button_staff": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "button_rules": "Kurallar",
+    "@button_rules": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community": "topluluk",
+    "@community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities": "topluluklar",
+    "@communities": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "type_public": "Herkese Açık",
+    "@type_public": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "type_private": "Özel",
+    "@type_private": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "member_capitalized": "Üye",
+    "@member_capitalized": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "members_capitalized": "Üyeler",
+    "@members_capitalized": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "admin_desc": "Bu, üyenin topluluk ayrıntılarını, yöneticileri, moderatörleri ve engelli kullanıcıları düzenlemesini sağlar.",
+    "@admin_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirmation_title": "Onay",
+    "@confirmation_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "admin_add_confirmation": "Topluluk yöneticisi olarak @{username} adlı kullanıcıyı eklemek istediğinizden emin misiniz?",
+    "@admin_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "ban_confirmation": "@{username} adlı kullanıcıyı engellemek istediğinizden emin misiniz?",
+    "@ban_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "ban_desc": "Bu, kullanıcıyı topluluktan kaldırır ve tekrar katılmalarına izin vermez.",
+    "@ban_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderator_add_confirmation": "@{username} adlı kişiyi topluluk yöneticisi olarak eklemek istediğinden emin misin?",
+    "@moderator_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {
+
+            }
+        }
+    },
+    "moderator_desc": "Bu, üyenin topluluk ayrıntılarını, moderatörleri ve engelli kullanıcıları düzenlemesini sağlar.",
+    "@moderator_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderators_you": "Sen",
+    "@moderators_you": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderators_title": "Moderatörler",
+    "@moderators_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "leave_desc": "Bu zaman çizelgesinde mesajları göremezsiniz ya da artık yayınlamak mümkün değildir.",
+    "@leave_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "leave_confirmation": "Topluluktan ayrılmak istediğinden emin misin?",
+    "@leave_confirmation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderator_resource_name": "moderatör",
+    "@moderator_resource_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderators_resource_name": "yöneticiler",
+    "@moderators_resource_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_moderator_title": "Yönetici ekle",
+    "@add_moderator_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_confirmation": "Topluluğu silmek istediğinden emin misin?",
+    "@delete_confirmation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "delete_desc": "Bu zaman çizelgesinde mesajları göremezsiniz ya da artık yayınlamak mümkün değildir.",
+    "@delete_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_manage_text": "Yönet",
+    "@actions_manage_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_title": "Topluluğu yönet",
+    "@manage_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_details_title": "Ayrıntılar",
+    "@manage_details_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_details_desc": "Başlığı, ismi, avatarı, kapak fotoğrafını ve daha fazlasını değiştirin.",
+    "@manage_details_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_admins_title": "Yöneticiler",
+    "@manage_admins_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_admins_desc": "Yöneticileri görün, ekleyin ve kaldırın.",
+    "@manage_admins_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mods_title": "Moderatörler",
+    "@manage_mods_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mods_desc": "Moderatörleri görün, ekleyin ve kaldırın.",
+    "@manage_mods_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_banned_title": "Engellenen kullanıcılar",
+    "@manage_banned_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_banned_desc": "Engelli kullanıcıları görün, ekleyin ve kaldırın.",
+    "@manage_banned_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mod_reports_title": "Denetim raporları",
+    "@manage_mod_reports_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_mod_reports_desc": "Topluluk denetim raporlarını gözden geçirin.",
+    "@manage_mod_reports_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_closed_posts_title": "Kapalı yayınlar",
+    "@manage_closed_posts_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_closed_posts_desc": "Kapalı yayınları görün ve yönetin",
+    "@manage_closed_posts_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_invite_title": "İnsanları davet et",
+    "@manage_invite_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_invite_desc": "Bağlantılarınızı ve takipçilerinizi topluluğa katılmaya davet edin.",
+    "@manage_invite_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_delete_title": "Topluluğu sil",
+    "@manage_delete_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_delete_desc": "Sonsuza dek Topluluğu sil.",
+    "@manage_delete_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_leave_title": "Topluluktan ayrıl",
+    "@manage_leave_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_leave_desc": "Topluluktan ayrıl.",
+    "@manage_leave_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_add_favourite": "Topluluğu favorilerinize ekleyin",
+    "@manage_add_favourite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "manage_remove_favourite": "Topluluğu favorilerinizden kaldırın",
+    "@manage_remove_favourite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "is_private": "Bu topluluk özel.",
+    "@is_private": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invited_by_member": "Bir üye tarafından davet edilmelisin.",
+    "@invited_by_member": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invited_by_moderator": "Bir moderatör tarafından davet edilmen gerekiyor.",
+    "@invited_by_moderator": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "refreshing": "Ferahlatıcı topluluk",
+    "@refreshing": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "posts": "Gönderiler",
+    "@posts": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "about": "Hakkında",
+    "@about": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "category": "kategori.",
+    "@category": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "categories": "kategoriler.",
+    "@categories": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "add_administrators_title": "Yönetici ekle.",
+    "@add_administrators_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_members": "Topluluk üyeleri",
+    "@community_members": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "member": "üye",
+    "@member": {
+        "description": "Currently not used in app, reserved for potential use. Could be used as: Showing 1 member",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "member_plural": "üyeler",
+    "@member_plural": {
+        "description": "See all members ,Search all members",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrators_title": "Yöneticiler",
+    "@administrators_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrator_text": "yönetici",
+    "@administrator_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrator",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrator_plural": "yöneticiler",
+    "@administrator_plural": {
+        "description": "Egs. Search administrators, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrator_you": "Sen",
+    "@administrator_you": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "user_you_text": "Sen",
+    "@user_you_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "pick_upto_max": "{max} kategoriye kadar seç",
+    "@pick_upto_max": {
+        "type": "text",
+        "placeholders": {
+            "max": {
+
+            }
+        }
+    },
+    "pick_atleast_min_category": "En az {min} kategori seçmelisin.",
+    "@pick_atleast_min_category": {
+        "description": "You must pick at least 1 category",
+        "type": "text",
+        "placeholders": {
+            "min": {
+
+            }
+        }
+    },
+    "pick_atleast_min_categories": "En az {min} kategori seçmelisin.",
+    "@pick_atleast_min_categories": {
+        "description": "Eg. Variable min will be 3-5. You must pick at least (3-5) categories",
+        "type": "text",
+        "placeholders": {
+            "min": {
+
+            }
+        }
+    },
+    "ban_user_title": "Kullanıcıyı engelle",
+    "@ban_user_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "banned_users_title": "Engellenen kullanıcılar",
+    "@banned_users_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "banned_user_text": "engellenen kullanıcı",
+    "@banned_user_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 banned user",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "banned_users_text": "engellenen kullanıcılar",
+    "@banned_users_text": {
+        "description": "Egs. Search banned users, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorites_title": "Favoriler",
+    "@favorites_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorite_community": "favori topluluk",
+    "@favorite_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorite_communities": "favori topluluklar",
+    "@favorite_communities": {
+        "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrated_title": "Yönetilen",
+    "@administrated_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrated_community": "yönetilen topluluk",
+    "@administrated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "administrated_communities": "yönetilen topluluklar",
+    "@administrated_communities": {
+        "description": "Egs. Search administrated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_title": "Denetlediğin",
+    "@moderated_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_community": "denetlediğin topluluk",
+    "@moderated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_communities": "denetlediğin topluluklar",
+    "@moderated_communities": {
+        "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "joined_title": "Katıldın",
+    "@joined_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "joined_community": "topluluğa katıldın",
+    "@joined_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 joined community",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "joined_communities": "topluluklara katıldın",
+    "@joined_communities": {
+        "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "join_communities_desc": "Bu sekmeyi canlandırmak için topluluklara katılın!",
+    "@join_communities_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "refresh_text": "Yenile",
+    "@refresh_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_none_found": "Hiç trend olan bir topluluk bulunamadı. Birkaç dakika sonra tekrar deneyin.",
+    "@trending_none_found": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_refresh": "Yenile",
+    "@trending_refresh": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_in_all": "Tüm kategorilerdeki trendler",
+    "@trending_in_all": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "trending_in_category": "{categoryName} kategorisindeki trend",
+    "@trending_in_category": {
+        "type": "text",
+        "placeholders": {
+            "categoryName": {
+
+            }
+        }
+    },
+    "communities_title": "Topluluklar",
+    "@communities_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities_no_category_found": "Kategori bulunamadı. Lütfen birkaç dakika içinde tekrar deneyin.",
+    "@communities_no_category_found": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities_refresh_text": "Yenile",
+    "@communities_refresh_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "communities_all_text": "Tümü",
+    "@communities_all_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_to_community_title": "Topluluğa davet et",
+    "@invite_to_community_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_to_community_resource_singular": "bağlantı veya takipçi",
+    "@invite_to_community_resource_singular": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "invite_to_community_resource_plural": "bağlantılar ve takipçiler",
+    "@invite_to_community_resource_plural": {
+        "description": "Egs. Search connections and followers, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "favorite_action": "Favori topluluk",
+    "@favorite_action": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "unfavorite_action": "Topluluğu favorilerden çıkar",
+    "@unfavorite_action": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_label_title": "Başlık",
+    "@save_community_label_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_label_title_hint_text": "örneğin Seyahat, Fotoğraf, Oyun.",
+    "@save_community_label_title_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_title": "İsim",
+    "@save_community_name_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_title_hint_text": " örneğin. Seyahat, Fotoğrafçılık, Oyun.",
+    "@save_community_name_title_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_taken": "'{takenName}' olarak topluluk adı alınmış",
+    "@save_community_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenName": {
+
+            }
+        }
+    },
+    "save_community_name_label_color": "Renk",
+    "@save_community_name_label_color": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_color_hint_text": "(Değiştirmek için dokunun)",
+    "@save_community_name_label_color_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_type": "Tür",
+    "@save_community_name_label_type": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_type_hint_text": "(Değiştirmek için dokunun)",
+    "@save_community_name_label_type_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_member_invites": "Üye davetleri",
+    "@save_community_name_member_invites": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_member_invites_subtitle": "Üyeler, insanları topluluğa davet edebilir",
+    "@save_community_name_member_invites_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_category": "Kategori",
+    "@save_community_name_category": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_desc_optional": "Açıklama · İsteğe Bağlı",
+    "@save_community_name_label_desc_optional": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_desc_optional_hint_text": "Topluluğunuzun konusu nedir?",
+    "@save_community_name_label_desc_optional_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_rules_optional": "Kurallar · İsteğe Bağlı",
+    "@save_community_name_label_rules_optional": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_rules_optional_hint_text": "Kullanıcılarınızın bilmesini istediğiniz bir şey var mı?",
+    "@save_community_name_label_rules_optional_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_member_adjective": "Üye ön adı · İsteğe Bağlı",
+    "@save_community_name_label_member_adjective": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_member_adjective_hint_text": "örneğin. gezgin, fotoğrafçı, oyuncu.",
+    "@save_community_name_label_member_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_members_adjective": "Üyelerin ön adları · İsteğe Bağlı",
+    "@save_community_name_label_members_adjective": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_name_label_members_adjective_hint_text": "örneğin. gezginler, fotoğrafçılar, oyuncular.",
+    "@save_community_name_label_members_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_edit_community": "Topluluğu düzenle",
+    "@save_community_edit_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_create_community": "Topluluk oluştur",
+    "@save_community_create_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_save_text": "Kaydet",
+    "@save_community_save_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "save_community_create_text": "Oluştur",
+    "@save_community_create_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_invite_people_title": "İnsanları topluluğa davet et",
+    "@actions_invite_people_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "join_community": "Katıl",
+    "@join_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "leave_community": "Ayrıl",
+    "@leave_community": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_staff": "Topluluk kadrosu",
+    "@community_staff": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_singular": "gönderi",
+    "@post_singular": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_plural": "gönderiler",
+    "@post_plural": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "rules_title": "Topluluk kuralları",
+    "@rules_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "rules_text": "Kurallar",
+    "@rules_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "name_characters_error": "İsim yalnızca alfasayısal karakterler ve alt çizgiler içerebilir.",
+    "@name_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "name_range_error": "İsim {maxLength} karakterden daha uzun olamaz.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "name_empty_error": "İsim boş olamaz.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "title_range_error": "Başlık {maxLength} karakterden daha uzun olamaz.",
+    "@title_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "title_empty_error": "Başlık boş olamaz.",
+    "@title_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "rules_range_error": "Kurallar bölümü {maxLength} karakterden daha uzun olamaz.",
+    "@rules_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "rules_empty_error": "Kurallar bölümü boş bırakılmaz.",
+    "@rules_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "description_range_error": "Açıklama kısmı {maxLength} karakterden daha uzun olamaz.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "adjectives_range_error": "Sıfatlar kısmı {maxLength} karakterden daha uzun olamaz.",
+    "@adjectives_range_error": {
+        "description": "This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers",
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    }
+}
