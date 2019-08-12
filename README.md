@@ -186,7 +186,7 @@ flutter run --profile
 
 1. Add localization string get method to `openbook_app/lib/services/localizations.dart`
 2. Run `make generate_locale`
-3. Upload assets/i18n/en folder's contents to crowdin
+3. Upload assets/i18n/en folder's contents to https://crowdin.com/project/okuna/settings#files by pressing `Update` next to the existing files.
 4. Apply the translations on crowdin, then build and download
 5. Copy the contents of the downloaded archive to assets/i18n 
 6. Run `make build_locale`

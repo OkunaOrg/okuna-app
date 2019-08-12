@@ -170,5 +170,17 @@
     "placeholders": {
       "postCommentText": {}
     }
+  },
+  "mentioned_in_post_comment_tile": "[name] [username] mentioned you on a comment.",
+  "@mentioned_in_post_comment_tile": {
+    "description": "Eg.: James @jamest mentioned you on a comment.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "mentioned_in_post_tile": "[name] [username] mentioned you on a post.",
+  "@mentioned_in_post_tile": {
+    "description": "Eg.: James @jamest mentioned you on a post.",
+    "type": "text",
+    "placeholders": {}
   }
 }
