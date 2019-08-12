@@ -102,7 +102,7 @@ class OBContextualAccountSearchBoxState
           padding:
               const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
           child: OBText(
-            'Suggestions',
+            _localizationService.contextual_account_search_box__suggestions,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
         ),
