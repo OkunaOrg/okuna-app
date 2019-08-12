@@ -6,7 +6,9 @@ import 'package:Okuna/models/notifications/notification.dart';
 import 'package:Okuna/models/notifications/post_comment_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reaction_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reply_notification.dart';
+import 'package:Okuna/models/notifications/post_comment_user_mention_notification.dart';
 import 'package:Okuna/models/notifications/post_reaction_notification.dart';
+import 'package:Okuna/models/notifications/post_user_mention_notification.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/theme.dart';
@@ -18,7 +20,9 @@ import 'package:Okuna/widgets/tiles/notification_tile/widgets/follow_notificatio
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_reaction_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_reply_notification_tile.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_user_mention_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_reaction_notification_tile.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_user_mention_notification_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -114,6 +118,20 @@ class OBNotificationTile extends StatelessWidget {
         notificationTile = OBConnectionConfirmedNotificationTile(
           notification: notification,
           connectionConfirmedNotification: notificationContentObject,
+          onPressed: finalOnPressed,
+        );
+        break;
+      case PostCommentUserMentionNotification:
+        notificationTile = OBPostCommentUserMentionNotificationTile(
+          notification: notification,
+          postCommentUserMentionNotification: notificationContentObject,
+          onPressed: finalOnPressed,
+        );
+        break;
+      case PostUserMentionNotification:
+        notificationTile = OBPostUserMentionNotificationTile(
+          notification: notification,
+          postUserMentionNotification: notificationContentObject,
           onPressed: finalOnPressed,
         );
         break;

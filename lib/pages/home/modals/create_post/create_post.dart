@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_community_previewer.dart';
@@ -12,6 +13,7 @@ import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/image_picker.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
@@ -19,6 +21,7 @@ import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/pill_button.dart';
+import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
@@ -65,7 +68,12 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   List<Widget> _postItemsWidgets;
 
+  bool _needsBootstrap;
   bool _isCreateCommunityPostInProgress;
+
+  TextAccountAutocompletionService _textAccountAutocompletionService;
+  OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
+  bool _isSearchingAccount;
 
   @override
   void initState() {
@@ -94,6 +102,10 @@ class CreatePostModalState extends State<CreatePostModal> {
       _setPostImage(widget.image);
     }
     _isCreateCommunityPostInProgress = false;
+    _contextualAccountSearchBoxController =
+        OBContextualAccountSearchBoxController();
+    _isSearchingAccount = false;
+    _needsBootstrap = true;
   }
 
   @override
@@ -105,20 +117,47 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _validationService = openbookProvider.validationService;
-    _navigationService = openbookProvider.navigationService;
-    _imagePickerService = openbookProvider.imagePickerService;
-    _userService = openbookProvider.userService;
-    _localizationService = openbookProvider.localizationService;
-    _toastService = openbookProvider.toastService;
+    if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _validationService = openbookProvider.validationService;
+      _navigationService = openbookProvider.navigationService;
+      _imagePickerService = openbookProvider.imagePickerService;
+      _userService = openbookProvider.userService;
+      _localizationService = openbookProvider.localizationService;
+      _toastService = openbookProvider.toastService;
+      _textAccountAutocompletionService =
+          openbookProvider.textAccountAutocompletionService;
+      _needsBootstrap = false;
+    }
 
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
-          children: <Widget>[_buildNewPostContent(), _buildPostActions()],
+          children: <Widget>[
+            Expanded(
+                flex: _isSearchingAccount ? 3 : 1,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                  child: _buildNewPostContent(),
+                )),
+            _isSearchingAccount
+                ? Expanded(
+                    flex: 7,
+                    child: _buildAccountSearchBox(),
+                  )
+                : const SizedBox(),
+            _isSearchingAccount
+                ? const SizedBox()
+                : Container(
+                    height: _hasFocus == true ? 51 : 67,
+                    padding: EdgeInsets.only(
+                        top: 8.0, bottom: _hasFocus == true ? 8 : 24),
+                    color: Color.fromARGB(5, 0, 0, 0),
+                    child: _buildPostActions(),
+                  ),
+          ],
         )));
   }
 
@@ -182,40 +221,44 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _buildNewPostContent() {
-    return Expanded(
-        child: Padding(
-      padding: EdgeInsets.only(left: 20.0, top: 20.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              OBLoggedInUserAvatar(
-                size: OBAvatarSize.medium,
-              ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              OBRemainingPostCharacters(
-                maxCharacters: ValidationService.POST_MAX_LENGTH,
-                currentCharacters: _charactersCount,
-              ),
-            ],
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _postItemsWidgets)),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            OBLoggedInUserAvatar(
+              size: OBAvatarSize.medium,
             ),
-          )
-        ],
-      ),
-    ));
+            const SizedBox(
+              height: 12.0,
+            ),
+            OBRemainingPostCharacters(
+              maxCharacters: ValidationService.POST_MAX_LENGTH,
+              currentCharacters: _charactersCount,
+            ),
+          ],
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Padding(
+                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _postItemsWidgets)),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildAccountSearchBox() {
+    return OBContextualAccountSearchBox(
+      controller: _contextualAccountSearchBoxController,
+      onPostParticipantPressed: _onAccountSearchBoxUserPressed,
+      initialSearchQuery:
+          _contextualAccountSearchBoxController.getLastSearchQuery(),
+    );
   }
 
   Widget _buildPostActions() {
@@ -227,34 +270,29 @@ class CreatePostModalState extends State<CreatePostModal> {
 
     if (postActions.isEmpty) return const SizedBox();
 
-    return Container(
-      height: _hasFocus == true ? 51 : 67,
-      padding: EdgeInsets.only(top: 8.0, bottom: _hasFocus == true ? 8 : 24),
-      color: Color.fromARGB(5, 0, 0, 0),
-      child: ListView.separated(
-        physics: const ClampingScrollPhysics(),
-        itemCount: postActions.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, index) {
-          var postAction = postActions[index];
+    return ListView.separated(
+      physics: const ClampingScrollPhysics(),
+      itemCount: postActions.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (BuildContext context, index) {
+        var postAction = postActions[index];
 
-          return index == 0
-              ? Row(
-                  children: <Widget>[
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    postAction
-                  ],
-                )
-              : postAction;
-        },
-        separatorBuilder: (BuildContext context, index) {
-          return const SizedBox(
-            width: 10,
-          );
-        },
-      ),
+        return index == 0
+            ? Row(
+                children: <Widget>[
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  postAction
+                ],
+              )
+            : postAction;
+      },
+      separatorBuilder: (BuildContext context, index) {
+        return const SizedBox(
+          width: 10,
+        );
+      },
     );
   }
 
@@ -276,6 +314,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   void _onPostTextChanged() {
     String text = _textController.text;
+    _checkAutocomplete();
     setState(() {
       _charactersCount = text.length;
       _isPostTextAllowedLength =
@@ -337,6 +376,48 @@ class CreatePostModalState extends State<CreatePostModal> {
     }
   }
 
+  void _checkAutocomplete() {
+    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+        .checkTextForAutocompletion(_textController);
+
+    if (result.isAutocompleting) {
+      debugLog('Wants to search account with searchQuery:' +
+          result.autocompleteQuery);
+      _setIsSearchingAccount(true);
+      _contextualAccountSearchBoxController.search(result.autocompleteQuery);
+    } else if (_isSearchingAccount) {
+      debugLog('Finished searching accoun');
+      _setIsSearchingAccount(false);
+    }
+  }
+
+  void _onAccountSearchBoxUserPressed(User user) {
+    _autocompleteFoundAccountUsername(user.username);
+  }
+
+  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
+    if (!_isSearchingAccount) {
+      debugLog(
+          'Tried to autocomplete found account username but was not searching account');
+      return;
+    }
+
+    debugLog('Autocompleting with username:$foundAccountUsername');
+    setState(() {
+      _textController.text =
+          _textAccountAutocompletionService.autocompleteTextWithUsername(
+              _textController.text, foundAccountUsername);
+      _textController.selection =
+          TextSelection.collapsed(offset: _textController.text.length);
+    });
+  }
+
+  void _setIsSearchingAccount(bool isSearchingAccount) {
+    setState(() {
+      _isSearchingAccount = isSearchingAccount;
+    });
+  }
+
   void _setCreateCommunityPostInProgress(bool createCommunityPostInProgress) {
     setState(() {
       _isCreateCommunityPostInProgress = createCommunityPostInProgress;
@@ -351,7 +432,9 @@ class CreatePostModalState extends State<CreatePostModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }
@@ -399,5 +482,9 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   void _unfocusTextField() {
     FocusScope.of(context).requestFocus(new FocusNode());
+  }
+
+  void debugLog(String log) {
+    debugPrint('CreatePostModal:$log');
   }
 }

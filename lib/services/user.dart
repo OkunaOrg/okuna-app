@@ -717,7 +717,7 @@ class UserService {
       int count,
       Community withCommunity}) async {
     HttpieResponse response = await _authApiService.getLinkedUsers(
-        count: count, withCommunity: withCommunity.name, maxId: maxId);
+        count: count, withCommunity: withCommunity?.name, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
   }
@@ -1777,6 +1777,22 @@ class UserService {
     _checkResponseIsOk(response);
 
     return json.decode(response.body)['translated_text'];
+  }
+
+  Future<UsersList> getPostParticipants(
+      {@required Post post, int count}) async {
+    HttpieResponse response = await _postsApiService.getPostParticipants(
+        count: count, postUuid: post.uuid);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> searchPostParticipants(
+      {@required String query, @required Post post, int count}) async {
+    HttpieResponse response = await _postsApiService.searchPostParticipants(
+        query: query, count: count, postUuid: post.uuid);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
   }
 
   Future<String> _getDeviceName() async {

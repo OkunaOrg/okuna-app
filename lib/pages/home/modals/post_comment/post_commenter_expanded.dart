@@ -1,13 +1,16 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
@@ -50,6 +53,9 @@ class OBPostCommenterExpandedModalState
   String _originalText;
   bool _requestInProgress;
   bool _needsBootstrap;
+  bool _isSearchingAccount;
+  TextAccountAutocompletionService _textAccountAutocompletionService;
+  OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
 
   CancelableOperation _postCommentOperation;
 
@@ -64,7 +70,10 @@ class OBPostCommenterExpandedModalState
     _isPostCommentTextOriginal = false;
     _originalText = widget.postComment.text;
     _requestInProgress = false;
+    _isSearchingAccount = false;
     _needsBootstrap = true;
+    _contextualAccountSearchBoxController =
+        OBContextualAccountSearchBoxController();
   }
 
   @override
@@ -76,13 +85,15 @@ class OBPostCommenterExpandedModalState
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _validationService = openbookProvider.validationService;
-    _userService = openbookProvider.userService;
-    _toastService = openbookProvider.toastService;
-    _localizationService = openbookProvider.localizationService;
+    if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _validationService = openbookProvider.validationService;
+      _userService = openbookProvider.userService;
+      _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
+      _textAccountAutocompletionService =
+          openbookProvider.textAccountAutocompletionService;
 
-    if(_needsBootstrap){
       String hintText = widget.post.commentsCount > 0
           ? _localizationService.post__commenter_expanded_join_conversation
           : _localizationService.post__commenter_expanded_start_conversation;
@@ -97,7 +108,10 @@ class OBPostCommenterExpandedModalState
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
-          children: <Widget>[_buildPostCommentContent()],
+          children: <Widget>[
+            _buildPostCommentEditor(),
+            _isSearchingAccount ? _buildAccountSearchBox() : const SizedBox()
+          ],
         )));
   }
 
@@ -113,7 +127,7 @@ class OBPostCommenterExpandedModalState
           Navigator.pop(context);
         },
       ),
-      title:_localizationService.post__commenter_expanded_edit_comment,
+      title: _localizationService.post__commenter_expanded_edit_comment,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -127,6 +141,109 @@ class OBPostCommenterExpandedModalState
       onPressed: _onWantsToSaveComment,
       child: Text(_localizationService.post__commenter_expanded_save),
     );
+  }
+
+  Widget _buildPostCommentEditor() {
+    return Expanded(
+        flex: _isSearchingAccount ? 3 : 10,
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.0, top: 20.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  OBLoggedInUserAvatar(
+                    size: OBAvatarSize.medium,
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  OBRemainingPostCharacters(
+                    maxCharacters: ValidationService.POST_COMMENT_MAX_LENGTH,
+                    currentCharacters: _charactersCount,
+                  ),
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: Padding(
+                      padding: EdgeInsets.only(
+                          left: 20.0, right: 20.0, bottom: 30.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _postCommentItemsWidgets)),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  Widget _buildAccountSearchBox() {
+    return Expanded(
+        flex: 7,
+        child: OBContextualAccountSearchBox(
+          post: widget.post,
+          controller: _contextualAccountSearchBoxController,
+          onPostParticipantPressed: _onAccountSearchBoxUserPressed,
+          initialSearchQuery:
+              _contextualAccountSearchBoxController.getLastSearchQuery(),
+        ));
+  }
+
+  void _onPostCommentTextChanged() {
+    String text = _textController.text;
+    _checkAutocomplete();
+    setState(() {
+      _charactersCount = text.length;
+      _isPostCommentTextAllowedLength =
+          _validationService.isPostCommentAllowedLength(text);
+      _isPostCommentTextOriginal = _originalText == _textController.text;
+    });
+  }
+
+  void _checkAutocomplete() {
+    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+        .checkTextForAutocompletion(_textController);
+
+    if (result.isAutocompleting) {
+      debugLog('Wants to search account with searchQuery:' +
+          result.autocompleteQuery);
+      _setIsSearchingAccount(true);
+      _contextualAccountSearchBoxController.search(result.autocompleteQuery);
+    } else if (_isSearchingAccount) {
+      debugLog('Finished searching accoun');
+      _setIsSearchingAccount(false);
+    }
+  }
+
+  void _onAccountSearchBoxUserPressed(User user) {
+    _autocompleteFoundAccountUsername(user.username);
+  }
+
+  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
+    if (!_isSearchingAccount) {
+      debugLog(
+          'Tried to autocomplete found account username but was not searching account');
+      return;
+    }
+
+    debugLog('Autocompleting with username:$foundAccountUsername');
+    setState(() {
+      _textController.text =
+          _textAccountAutocompletionService.autocompleteTextWithUsername(
+              _textController.text, foundAccountUsername);
+      _textController.selection =
+          TextSelection.collapsed(offset: _textController.text.length);
+    });
+  }
+
+  void _setIsSearchingAccount(bool isSearchingAccount) {
+    setState(() {
+      _isSearchingAccount = isSearchingAccount;
+    });
   }
 
   void _onWantsToSaveComment() async {
@@ -149,53 +266,6 @@ class OBPostCommenterExpandedModalState
     }
   }
 
-  Widget _buildPostCommentContent() {
-    return Expanded(
-        child: Padding(
-      padding: EdgeInsets.only(left: 20.0, top: 20.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              OBLoggedInUserAvatar(
-                size: OBAvatarSize.medium,
-              ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              OBRemainingPostCharacters(
-                maxCharacters: ValidationService.POST_COMMENT_MAX_LENGTH,
-                currentCharacters: _charactersCount,
-              ),
-            ],
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _postCommentItemsWidgets)),
-            ),
-          )
-        ],
-      ),
-    ));
-  }
-
-  void _onPostCommentTextChanged() {
-    String text = _textController.text;
-    setState(() {
-      _charactersCount = text.length;
-      _isPostCommentTextAllowedLength =
-          _validationService.isPostCommentAllowedLength(text);
-      _isPostCommentTextOriginal = _originalText == _textController.text;
-    });
-  }
-
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
@@ -204,7 +274,8 @@ class OBPostCommenterExpandedModalState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -213,5 +284,9 @@ class OBPostCommenterExpandedModalState
     setState(() {
       _requestInProgress = requestInProgress;
     });
+  }
+
+  void debugLog(String log) {
+    debugPrint('OBPostCommenterExpandedModal:$log');
   }
 }

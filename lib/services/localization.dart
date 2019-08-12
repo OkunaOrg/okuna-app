@@ -3404,7 +3404,26 @@ class LocalizationService {
         name: 'moderation__my_moderation_penalties_resource_plural');
   }
 
-  Locale getLocale() {
+  String get notifications__mentioned_in_post_comment_tile {
+    return Intl.message("[name] [username] mentioned you on a comment.",
+        desc: "Eg.: James @jamest mentioned you on a comment.",
+        name: 'notifications__mentioned_in_post_comment_tile');
+  }
+
+  String get notifications__mentioned_in_post_tile {
+    return Intl.message("[name] [username] mentioned you on a post.",
+        desc: "Eg.: James @jamest mentioned you on a post.",
+        name: 'notifications__mentioned_in_post_tile');
+  }
+
+  String get contextual_account_search_box__suggestions {
+    return Intl.message("Suggestions",
+        desc:
+        "The title to display on the suggestions when searching for accounts when trying to mention someone.",
+        name: 'contextual_account_search_box__suggestions');
+  }
+
+    Locale getLocale() {
     return locale;
   }
 }
