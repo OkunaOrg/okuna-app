@@ -64,8 +64,8 @@
 
         }
     },
-    "create_acc__welcome_to_alpha": "¡ Bienvenido!",
-    "@create_acc__welcome_to_alpha": {
+    "create_acc__welcome_to_beta": "¡Bienvenido a la Beta!",
+    "@create_acc__welcome_to_beta": {
         "type": "text",
         "placeholders": {
 

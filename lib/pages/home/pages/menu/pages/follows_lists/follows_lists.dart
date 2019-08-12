@@ -1,5 +1,6 @@
 import 'package:Okuna/models/follows_list.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/follows_lists/widgets/follows_list_tile.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/icon_button.dart';
@@ -26,6 +27,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
   UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
+  LocalizationService _localizationService;
 
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _followsListsScrollController;
@@ -52,6 +54,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
       _userService = provider.userService;
       _toastService = provider.toastService;
       _modalService = provider.modalService;
+      _localizationService = provider.localizationService;
 
       _bootstrap();
       _needsBootstrap = false;
@@ -60,7 +63,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
     return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
-          title: 'My lists',
+          title: _localizationService.user__follow_lists_title,
           trailing: OBIconButton(
             OBIcons.add,
             themeColor: OBIconThemeColor.primaryAccent,
@@ -75,7 +78,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                 SizedBox(
                     child: OBSearchBar(
                   onSearch: _onSearch,
-                  hintText: 'Search for a list...',
+                  hintText: _localizationService.user__follow_lists_search_for,
                 )),
                 Expanded(
                   child: RefreshIndicator(
@@ -92,13 +95,12 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                                 if(_searchQuery != null){
                                   return ListTile(
                                       leading: OBIcon(OBIcons.sad),
-                                      title: OBText(
-                                          'No list found for "$_searchQuery"'));
+                                      title: OBText(_localizationService.user__follow_lists_no_list_found_for(_searchQuery)));
                                 }else{
                                   return ListTile(
                                       leading: OBIcon(OBIcons.sad),
                                       title: OBText(
-                                          'No lists found.'));
+                                         _localizationService.user__follow_lists_no_list_found));
                                 }
                               } else {
                                 return const SizedBox();
@@ -147,7 +149,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

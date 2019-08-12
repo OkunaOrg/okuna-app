@@ -32,6 +32,8 @@ import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 
+import 'delegates/pt_br_material_localizations_delegate.dart';
+
 
 class MyApp extends StatefulWidget {
   final openbookProviderKey = new GlobalKey<OpenbookProviderState>();
@@ -68,9 +70,13 @@ class _MyAppState extends State<MyApp> {
             locale: this.locale,
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
+              // if no deviceLocale use english
+              if (deviceLocale == null) {
+                this.locale = Locale('en', 'US');
+                return this.locale;
+              }
               // initialise locale from device
-              if (deviceLocale == null)return this.locale;
-              if (deviceLocale != null && this.locale == null && supportedLanguages.contains(deviceLocale.languageCode)) {
+              if (deviceLocale != null && supportedLanguages.contains(deviceLocale.languageCode) && this.locale == null) {
                   Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == deviceLocale.languageCode);
                   this.locale = supportedMatchedLocale;
               } else if (this.locale == null) {
@@ -86,6 +92,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
+              const MaterialLocalizationPtBRDelegate(),
             ],
             theme: new ThemeData(
                 buttonTheme: ButtonThemeData(

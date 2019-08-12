@@ -1,3 +1,4 @@
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
@@ -5,6 +6,7 @@ import 'package:Okuna/widgets/theming/text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
+import '../../provider.dart';
 import 'actionable_smart_text.dart';
 
 class OBCollapsibleSmartText extends StatefulWidget {
@@ -45,13 +47,14 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
   @override
   Widget build(BuildContext context) {
     bool shouldBeCollapsed = widget.text.length > widget.maxlength;
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
     return shouldBeCollapsed
-        ? _buildExpandableActionableSmartText()
+        ? _buildExpandableActionableSmartText(_localizationService)
         : _buildActionableSmartText();
   }
 
-  Widget _buildExpandableActionableSmartText() {
+  Widget _buildExpandableActionableSmartText(LocalizationService _localizationService) {
     return ExpandableNotifier(
       controller: _expandableController,
       child: Column(
@@ -77,7 +80,7 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
                       Row(
                         children: <Widget>[
                           OBSecondaryText(
-                            'Show more',
+                            _localizationService.post__actions_show_more_text,
                             size: widget.size,
                             textAlign: TextAlign.start,
                           ),

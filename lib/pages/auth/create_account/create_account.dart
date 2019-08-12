@@ -88,7 +88,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     bool isLinkValid = _validateForm();
     if (isLinkValid) {
       setState(() {
-        var token = _getTokenFromLink(_linkController.text);
+        var token = _getTokenFromLink(_linkController.text.trim());
         _createAccountBloc.setToken(token);
         Navigator.pushNamed(context, '/auth/get-started');
       });
@@ -181,7 +181,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                 autocorrect: false,
                 hintText: '',
                 validator: (String link) {
-                  String validateLink = _validationService.validateUserRegistrationLink(link);
+                  String validateLink = _validationService.validateUserRegistrationLink(link.trim());
                   if (validateLink != null) {
                     return validateLink;
                   }

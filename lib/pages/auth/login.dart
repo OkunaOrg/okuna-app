@@ -126,7 +126,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
 
   Future<void> _login(BuildContext context) async {
     _setLoginInProgress(true);
-    String username = _usernameController.text;
+    String username = _usernameController.text.trim();
     String password = _passwordController.text;
     try {
       await _userService.loginWithCredentials(
@@ -292,7 +292,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
 
   String _validateUsername(String value) {
     if (!_isSubmitted) return null;
-    return _validationService.validateUserUsername(value);
+    return _validationService.validateUserUsername(value.trim());
   }
 
   String _validatePassword(String value) {

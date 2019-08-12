@@ -1,5 +1,6 @@
 import 'package:Okuna/models/moderation/moderation_report.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
@@ -13,6 +14,7 @@ class OBModerationReportTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -22,11 +24,11 @@ class OBModerationReportTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _buildReportCategory(report),
+              _buildReportCategory(report, _localizationService),
               const SizedBox(
                 height: 5,
               ),
-              _buildReportDescription(report),
+              _buildReportDescription(report, _localizationService),
               const SizedBox(
                 height: 5,
               ),
@@ -40,6 +42,7 @@ class OBModerationReportTile extends StatelessWidget {
 
   Widget _buildReportReporter(
       {@required ModerationReport report, @required BuildContext context}) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     return GestureDetector(
         onTap: () {
           OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -50,7 +53,7 @@ class OBModerationReportTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             OBText(
-              'Reporter',
+              _localizationService.moderation__reporter_text,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Padding(
@@ -76,17 +79,16 @@ class OBModerationReportTile extends StatelessWidget {
         ));
   }
 
-  Widget _buildReportDescription(ModerationReport report) {
+  Widget _buildReportDescription(ModerationReport report, LocalizationService _localizationService) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        OBText(
-          'Description',
+        OBText(_localizationService.moderation__description_text,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         OBSecondaryText(
-          report.description != null ? report.description : 'No description',
+          report.description != null ? report.description : _localizationService.moderation__no_description_text,
           style: TextStyle(
               fontStyle: report.description == null
                   ? FontStyle.italic
@@ -96,13 +98,13 @@ class OBModerationReportTile extends StatelessWidget {
     );
   }
 
-  Widget _buildReportCategory(ModerationReport report) {
+  Widget _buildReportCategory(ModerationReport report, LocalizationService _localizationService) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBText(
-          'Category',
+          _localizationService.moderation__category_text,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         OBSecondaryText(

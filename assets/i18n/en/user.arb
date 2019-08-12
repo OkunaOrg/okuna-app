@@ -143,6 +143,28 @@
       "searchQuery": {}
     }
   },
+  "follow_lists_title": "My lists",
+  "@follow_lists_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "follow_lists_search_for": "Search for a list...",
+  "@follow_lists_search_for": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "follow_lists_no_list_found": "No lists found.",
+  "@follow_lists_no_list_found": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "follow_lists_no_list_found_for": "No list found for '{searchQuery}'",
+  "@follow_lists_no_list_found_for": {
+    "type": "text",
+    "placeholders": {
+      "searchQuery": {}
+    }
+  },
   "list_name_empty_error": "List name cannot be empty.",
   "@list_name_empty_error": {
     "type": "text",
@@ -278,6 +300,17 @@
   },
   "tile_following": " · Following",
   "@tile_following": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "following_text": "Following",
+  "@following_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "following_resource_name": "followed users",
+  "@following_resource_name": {
+    "description": "Eg: Search followed users.., No followed users found. etc ",
     "type": "text",
     "placeholders": {}
   },

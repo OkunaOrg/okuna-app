@@ -99,7 +99,7 @@
 
         }
     },
-    "timeline_posts_default_drhoo_subtitle": "Versuch die Timeline zu aktualisieren.",
+    "timeline_posts_default_drhoo_subtitle": "Versuche, die Timeline zu aktualisieren.",
     "@timeline_posts_default_drhoo_subtitle": {
         "type": "text",
         "placeholders": {
@@ -150,7 +150,7 @@
 
         }
     },
-    "profile_counts_following": " Following",
+    "profile_counts_following": " Folge ich",
     "@profile_counts_following": {
         "type": "text",
         "placeholders": {
@@ -164,7 +164,7 @@
 
         }
     },
-    "action_comment": "Kommentieren",
+    "action_comment": "Kommentar",
     "@action_comment": {
         "type": "text",
         "placeholders": {
@@ -178,7 +178,7 @@
 
         }
     },
-    "action_reply": "Reply",
+    "action_reply": "Antworten",
     "@action_reply": {
         "type": "text",
         "placeholders": {
@@ -258,7 +258,7 @@
 
         }
     },
-    "my_circles": "Meine Kreise",
+    "my_circles": "Meinen Kreisen",
     "@my_circles": {
         "type": "text",
         "placeholders": {
@@ -398,14 +398,14 @@
 
         }
     },
-    "trending_posts_title": "Trendige Beiträge",
+    "trending_posts_title": "Angesagte Beiträge",
     "@trending_posts_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "trending_posts_no_trending_posts": "Es gibt keine trendigen Beiträge. Versuche in ein paar Sekunden zu aktualisieren.",
+    "trending_posts_no_trending_posts": "Es gibt keine angesagten Beiträge. Versuche in ein paar Sekunden zu aktualisieren.",
     "@trending_posts_no_trending_posts": {
         "type": "text",
         "placeholders": {
@@ -584,42 +584,42 @@
 
         }
     },
-    "comments_page_title": "Post comments",
+    "comments_page_title": "Kommentare",
     "@comments_page_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comments_page_no_more_to_load": "No more comments to load",
+    "comments_page_no_more_to_load": "Keine weiteren Kommentare zum Laden",
     "@comments_page_no_more_to_load": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comments_page_tap_to_retry": "Tap to retry loading comments.",
+    "comments_page_tap_to_retry": "Kommentare neu laden.",
     "@comments_page_tap_to_retry": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comments_page_tap_to_retry_replies": "Tap to retry loading replies.",
+    "comments_page_tap_to_retry_replies": "Antworten neu laden.",
     "@comments_page_tap_to_retry_replies": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comments_page_no_more_replies_to_load": "No more replies to load",
+    "comments_page_no_more_replies_to_load": "Keine weiteren Antworten zum Laden",
     "@comments_page_no_more_replies_to_load": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comments_page_replies_title": "Post replies",
+    "comments_page_replies_title": "Antworten",
     "@comments_page_replies_title": {
         "type": "text",
         "placeholders": {
@@ -654,14 +654,14 @@
 
         }
     },
-    "actions_delete": "Delete post",
+    "actions_delete": "Beitrag löschen",
     "@actions_delete": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "actions_deleted": "Post deleted",
+    "actions_deleted": "Beitrag gelöscht",
     "@actions_deleted": {
         "type": "text",
         "placeholders": {
@@ -698,6 +698,110 @@
     },
     "actions_reported_text": "Gemeldet",
     "@actions_reported_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_show_more_text": "Mehr anzeigen",
+    "@actions_show_more_text": {
+        "description": "Shown for posts with long text to expand the entire text.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_years": "J.",
+    "@time_short_years": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3y. Keep it as short as possible",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_year": "1J.",
+    "@time_short_one_year": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_weeks": "W.",
+    "@time_short_weeks": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 5w.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_week": "1W.",
+    "@time_short_one_week": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_days": "Tage",
+    "@time_short_days": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3d. Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_day": "1Tag",
+    "@time_short_one_day": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_hours": "h",
+    "@time_short_hours": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3h.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_hour": "1h",
+    "@time_short_one_hour": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_minutes": "m",
+    "@time_short_minutes": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13m.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_seconds": "s",
+    "@time_short_seconds": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13s Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_one_minute": "1m",
+    "@time_short_one_minute": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "time_short_now_text": "jetzt",
+    "@time_short_now_text": {
+        "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
         "type": "text",
         "placeholders": {
 

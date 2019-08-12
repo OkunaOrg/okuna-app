@@ -1,5 +1,5 @@
 {
-    "settings_title": "Benachrichtigungseinstellungen",
+    "settings_title": "Benachrichtigungen",
     "@settings_title": {
         "type": "text",
         "placeholders": {
@@ -48,98 +48,98 @@
 
         }
     },
-    "comment_title": "Kommentar posten",
+    "comment_title": "Kommentare auf Beiträge",
     "@comment_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comment_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Beiträge oder einen auf den du ebenfalls kommentiert hast, kommentiert.",
+    "comment_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Beiträge oder einen auf den du ebenfalls kommentiert hast, kommentiert",
     "@comment_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comment_reply_title": "Kommentar-Antwort posten",
+    "comment_reply_title": "Kommentar-Antworten",
     "@comment_reply_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comment_reply_desc": "Werde benachrichtigt, wenn jemand auf deinen Kommentar, oder auf einen, auf den du auch geantwortet hast, antwortet.",
+    "comment_reply_desc": "Werde benachrichtigt, wenn jemand auf deinen Kommentar, oder auf einen, auf den du auch geantwortet hast, antwortet",
     "@comment_reply_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comment_reaction_title": "Kommentar-Reaktion posten",
+    "comment_reaction_title": "Kommentar-Reaktionen",
     "@comment_reaction_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "comment_reaction_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Kommentare antwortet.",
+    "comment_reaction_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Kommentare reagiert",
     "@comment_reaction_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "post_reaction_title": "Reaktion posten",
+    "post_reaction_title": "Reaktionen auf Beiträge",
     "@post_reaction_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "post_reaction_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Beiträge reagiert.",
+    "post_reaction_desc": "Werde benachrichtigt, wenn jemand auf einen deiner Beiträge reagiert",
     "@post_reaction_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_invite_title": "Community-Einladung",
+    "community_invite_title": "Community-Einladungen",
     "@community_invite_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_invite_desc": "Werde benachrichtigt, wenn dich jemand einlädt, einer Community beizutreten.",
+    "community_invite_desc": "Werde benachrichtigt, wenn dich jemand in eine Community einlädt",
     "@community_invite_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "mute_post_turn_on_post_notifications": "Beitrag-Benachrichtigungen aktivieren",
+    "mute_post_turn_on_post_notifications": "Beitrags-Benachrichtigungen aktivieren",
     "@mute_post_turn_on_post_notifications": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "mute_post_turn_off_post_notifications": "Beitrag-Benachrichtigungen deaktivieren",
+    "mute_post_turn_off_post_notifications": "Beitrags-Benachrichtigungen deaktivieren",
     "@mute_post_turn_off_post_notifications": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "mute_post_turn_on_post_comment_notifications": "Beitragskommentar-Benachrichtigungen aktivieren",
+    "mute_post_turn_on_post_comment_notifications": "Kommentar-Benachrichtigungen aktivieren",
     "@mute_post_turn_on_post_comment_notifications": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "mute_post_turn_off_post_comment_notifications": "Beitragskommentar-Benachrichtigungen deaktivieren",
+    "mute_post_turn_off_post_comment_notifications": "Kommentar-Benachrichtigungen deaktivieren",
     "@mute_post_turn_off_post_comment_notifications": {
         "type": "text",
         "placeholders": {
@@ -186,7 +186,7 @@
 
         }
     },
-    "user_community_invite_tile": "[name] [username] hat dich eingeladen, der Community \/c\/{communityName} beizutreten.",
+    "user_community_invite_tile": "[name] [username] hat dich in die Community \/c\/{communityName} eingeladen.",
     "@user_community_invite_tile": {
         "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
         "type": "text",
@@ -196,7 +196,7 @@
             }
         }
     },
-    "comment_reply_notification_tile_user_replied": "[name] [username] antwortete: {postCommentText}",
+    "comment_reply_notification_tile_user_replied": "[name] [username] hat geantwortet: {postCommentText}",
     "@comment_reply_notification_tile_user_replied": {
         "description": "For.eg. James @jamest replied.",
         "type": "text",
@@ -206,7 +206,7 @@
             }
         }
     },
-    "comment_reply_notification_tile_user_also_replied": "[name] [username] antwortete auch: {postCommentText}",
+    "comment_reply_notification_tile_user_also_replied": "[name] [username] hat ebenfalls geantwortet: {postCommentText}",
     "@comment_reply_notification_tile_user_also_replied": {
         "type": "text",
         "placeholders": {
@@ -215,7 +215,7 @@
             }
         }
     },
-    "comment_comment_notification_tile_user_commented": "[name] [username] kommentierte deinen Beitrag: {postCommentText}",
+    "comment_comment_notification_tile_user_commented": "[name] [username] hat deinen Beitrag kommentiert: {postCommentText}",
     "@comment_comment_notification_tile_user_commented": {
         "type": "text",
         "placeholders": {
@@ -224,7 +224,7 @@
             }
         }
     },
-    "comment_comment_notification_tile_user_also_commented": "[name] [username] kommentierte auch: {postCommentText}",
+    "comment_comment_notification_tile_user_also_commented": "[name] [username] hat ebenfalls kommentiert: {postCommentText}",
     "@comment_comment_notification_tile_user_also_commented": {
         "type": "text",
         "placeholders": {

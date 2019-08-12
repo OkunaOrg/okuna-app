@@ -83,7 +83,7 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
         user: postCommentReaction.reactor,
       ),
       subtitle: OBSecondaryText(
-        utilsService.timeAgo(notification.created),
+        utilsService.timeAgo(notification.created, _localizationService),
         size: OBTextSize.small,
       ),
       trailing: Row(

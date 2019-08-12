@@ -329,7 +329,7 @@ class HttpieService {
   }
 
   String _getLanguage() {
-    return _localizationService.getLocale().languageCode;
+    return _localizationService.getLocale().languageCode.toLowerCase();
   }
 
   Map<String, String> _getHeadersWithConfig(

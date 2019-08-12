@@ -87,7 +87,7 @@ class OBAuthVerifyPasswordPageState extends State<OBAuthVerifyPasswordPage> {
     bool isLinkValid = _validateForm();
     if (isLinkValid) {
       setState(() {
-        var passwordResetToken = _getTokenFromLink(_linkController.text);
+        var passwordResetToken = _getTokenFromLink(_linkController.text.trim());
         _createAccountBloc.setPasswordResetToken(passwordResetToken);
         Navigator.pushNamed(context, '/auth/set_new_password_step');
       });
@@ -181,7 +181,7 @@ class OBAuthVerifyPasswordPageState extends State<OBAuthVerifyPasswordPage> {
                 autocorrect: false,
                 hintText: '',
                 validator: (String link) {
-                  String validateLink = _validationService.validateUserRegistrationLink(link);
+                  String validateLink = _validationService.validateUserRegistrationLink(link.trim());
                   if (validateLink != null) {
                     return validateLink;
                   }

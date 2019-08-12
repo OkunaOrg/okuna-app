@@ -1,0 +1,745 @@
+{
+    "headline": "Uma rede social melhor.",
+    "@headline": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login": "Entrar",
+    "@login": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "email_empty_error": "O email não pode ficar vazio.",
+    "@email_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "email_invalid_error": "Por favor, forneça um email válido.",
+    "@email_invalid_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "username_empty_error": "O nome de usuário não pode ficar vazio.",
+    "@username_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "username_characters_error": "Um nome de usuário só pode conter caracteres alfanuméricos e underlines (_).",
+    "@username_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "username_maxlength_error": "Um nome de usuário não pode ser maior que {maxLength} caracteres.",
+    "@username_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {
+
+            }
+        }
+    },
+    "create_account": "Cadastrar-se",
+    "@create_account": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__lets_get_started": "Vamos começar",
+    "@create_acc__lets_get_started": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__welcome_to_beta": "Bem-vindo(a) à Beta!",
+    "@create_acc__welcome_to_beta": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__previous": "Voltar",
+    "@create_acc__previous": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__next": "Avançar",
+    "@create_acc__next": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__create_account": "Criar uma conta",
+    "@create_acc__create_account": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__paste_link": "Cole seu link de registro abaixo",
+    "@create_acc__paste_link": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__paste_password_reset_link": "Cole o link de redefinição de senha abaixo",
+    "@create_acc__paste_password_reset_link": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__paste_link_help_text": "Use o link do seu convite recebido por email.",
+    "@create_acc__paste_link_help_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__link_empty_error": "O campo de link não pode ficar vazio.",
+    "@create_acc__link_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__link_invalid_error": "Este link parece ser inválido.",
+    "@create_acc__link_invalid_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "password_empty_error": "A senha não pode ficar vazia.",
+    "@password_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "password_range_error": "A senha deve ter entre {minLength} e {maxLength} caracteres.",
+    "@password_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "name_empty_error": "O nome não pode ficar vazio.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "name_range_error": "O nome deve ter entre {minLength} e {maxLength} caracteres.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "description_empty_error": "A descrição não pode ficar vazia.",
+    "@description_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "description_range_error": "A descrição deve ter entre {minLength} e {maxLength} caracteres.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "reset_password_success_title": "Tudo pronto!",
+    "@reset_password_success_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reset_password_success_info": "Sua senha foi alterada com sucesso",
+    "@reset_password_success_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__request_invite": "Sem convite? Solicite um aqui.",
+    "@create_acc__request_invite": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__subscribe": "Solicitar",
+    "@create_acc__subscribe": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__subscribe_to_waitlist_text": "Solicitar um convite!",
+    "@create_acc__subscribe_to_waitlist_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__congratulations": "Parabéns!",
+    "@create_acc__congratulations": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__your_subscribed": "Você é o número {0} da lista de espera.",
+    "@create_acc__your_subscribed": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__almost_there": "Quase lá...",
+    "@create_acc__almost_there": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_name": "Qual é o seu nome?",
+    "@create_acc__what_name": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_placeholder": "Ayrton Senna",
+    "@create_acc__name_placeholder": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_empty_error": "😱 Seu nome não pode ficar vazio.",
+    "@create_acc__name_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_length_error": "😱 Seu nome não pode ter mais de 50 caracteres. (Se ele tem, lamentamos muito.)",
+    "@create_acc__name_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__name_characters_error": "😅 Um nome só pode conter caracteres alfanuméricos (por enquanto).",
+    "@create_acc__name_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_username": "Escolha um nome de usuário",
+    "@create_acc__what_username": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_placeholder": "santosdumont",
+    "@create_acc__username_placeholder": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_empty_error": "😱 O nome de usuário não pode ficar vazio.",
+    "@create_acc__username_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_length_error": "😅 Um nome de usuário não pode ter mais de 30 caracteres.",
+    "@create_acc__username_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_characters_error": "😅 Um nome de usuário deve conter apenas caracteres alfanuméricos e underlines (_).",
+    "@create_acc__username_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_taken_error": "😩 O nome de usuário @%s já está em uso.",
+    "@create_acc__username_taken_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__username_server_error": "😭 Estamos com problemas em nossos servidores, por favor tente novamente em alguns minutos.",
+    "@create_acc__username_server_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_email": "Qual é o seu email?",
+    "@create_acc__what_email": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_placeholder": "gisele_bundchen@mail.com",
+    "@create_acc__email_placeholder": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_empty_error": "😱 Seu email não pode ficar vazio",
+    "@create_acc__email_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_invalid_error": "😅 Por favor, forneça um endereço de email válido.",
+    "@create_acc__email_invalid_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_taken_error": "🤔 Já existe uma conta associada a esse email.",
+    "@create_acc__email_taken_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__email_server_error": "😭 Estamos com problemas em nossos servidores, por favor tente novamente em alguns minutos.",
+    "@create_acc__email_server_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_password": "Escolha uma senha",
+    "@create_acc__what_password": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc_password_hint_text": "({minLength}-{maxLength} caracteres)",
+    "@create_acc_password_hint_text": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {
+
+            },
+            "maxLength": {
+
+            }
+        }
+    },
+    "create_acc__what_password_subtext": "(mín. 10 caracteres)",
+    "@create_acc__what_password_subtext": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__password_empty_error": "😱 Sua senha não pode ficar vazia",
+    "@create_acc__password_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__password_length_error": "😅 Uma senha precisa ter entre 8 e 64 caracteres.",
+    "@create_acc__password_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__what_avatar": "Escolha uma imagem de perfil",
+    "@create_acc__what_avatar": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_tap_to_change": "Toque para alterar",
+    "@create_acc__avatar_tap_to_change": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_choose_camera": "Tirar uma foto",
+    "@create_acc__avatar_choose_camera": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_choose_gallery": "Usar uma foto existente",
+    "@create_acc__avatar_choose_gallery": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__avatar_remove_photo": "Remover foto",
+    "@create_acc__avatar_remove_photo": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done": "Criar conta",
+    "@create_acc__done": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_subtext": "Você pode mudar isso nas configurações de perfil.",
+    "@create_acc__done_subtext": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_created": "Sua conta foi criada com o nome de usuário ",
+    "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_loading_title": "Segura aí!",
+    "@create_acc__submit_loading_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_loading_desc": "Estamos criando sua conta.",
+    "@create_acc__submit_loading_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_error_title": "Ah não...",
+    "@create_acc__submit_error_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_error_desc_server": "😭 Estamos com problemas em nossos servidores, por favor tente novamente em alguns minutos.",
+    "@create_acc__submit_error_desc_server": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__submit_error_desc_validation": "😅 Parece que algumas das informações não estavam corretas, por favor, verifique e tente novamente.",
+    "@create_acc__submit_error_desc_validation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_title": "Aeee!",
+    "@create_acc__done_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_description": "Sua conta foi criada com sucesso.",
+    "@create_acc__done_description": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__your_username_is": "Seu nome de usuário é ",
+    "@create_acc__your_username_is": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__can_change_username": "Se desejar, você pode alterá-lo a qualquer momento através da sua página de perfil.",
+    "@create_acc__can_change_username": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__done_continue": "Entrar",
+    "@create_acc__done_continue": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__one_last_thing": "Uma última coisa...",
+    "@create_acc__one_last_thing": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__register": "Criar uma conta",
+    "@create_acc__register": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "create_acc__are_you_legal_age": "Você tem mais de 16 anos?",
+    "@create_acc__are_you_legal_age": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__login": "Continuar",
+    "@login__login": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__previous": "Voltar",
+    "@login__previous": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__title": "Bem-vindo(a) de volta!",
+    "@login__title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__subtitle": "Insira suas credenciais para continuar.",
+    "@login__subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__forgot_password": "Esqueci a senha",
+    "@login__forgot_password": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__forgot_password_subtitle": "Digite seu nome de usuário ou email",
+    "@login__forgot_password_subtitle": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_label": "Nome de usuário",
+    "@login__username_label": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__password_label": "Senha",
+    "@login__password_label": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__email_label": "Email",
+    "@login__email_label": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__or_text": "Ou",
+    "@login__or_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__password_empty_error": "A senha é necessária.",
+    "@login__password_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__password_length_error": "Sua senha deve ter entre 8 e 64 caracteres.",
+    "@login__password_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_empty_error": "O nome de usuário é necessário.",
+    "@login__username_empty_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_length_error": "O nome de usuário não pode ter mais de 30 caracteres.",
+    "@login__username_length_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__username_characters_error": "O nome de usuário só pode conter caracteres alfanuméricos e underlines (_).",
+    "@login__username_characters_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__credentials_mismatch_error": "As credenciais fornecidas não coincidem.",
+    "@login__credentials_mismatch_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__server_error": "Ops... Estamos passando por problemas em nossos servidores. Por favor, tente novamente em alguns minutos.",
+    "@login__server_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "login__connection_error": "Não conseguimos alcançar nossos servidores. Você está conectado à internet?",
+    "@login__connection_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_title": "Alterar senha",
+    "@change_password_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_current_pwd": "Senha atual",
+    "@change_password_current_pwd": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_current_pwd_hint": "Digite a sua senha atual",
+    "@change_password_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_current_pwd_incorrect": "A senha inserida está incorreta",
+    "@change_password_current_pwd_incorrect": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_new_pwd": "Nova senha",
+    "@change_password_new_pwd": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_new_pwd_hint": "Digite a sua nova senha",
+    "@change_password_new_pwd_hint": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_new_pwd_error": "Por favor, certifique-se de que a senha tenha entre 10 e 100 caracteres",
+    "@change_password_new_pwd_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_save_text": "Salvar",
+    "@change_password_save_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "change_password_save_success": "Tudo certo! Sua senha foi atualizada",
+    "@change_password_save_success": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

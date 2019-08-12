@@ -11,7 +11,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
     String letsGetStartedText =
         localizationService.auth__create_acc__lets_get_started;
     String welcomeToAlphaText =
-        localizationService.auth__create_acc__welcome_to_alpha;
+        localizationService.auth__create_acc__welcome_to_beta;
 
     String previousText = localizationService.auth__create_acc__previous;
     String nextText = localizationService.auth__create_acc__next;
