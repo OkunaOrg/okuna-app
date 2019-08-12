@@ -12,14 +12,8 @@ class OBToggleField extends StatelessWidget {
   final Widget subtitle;
   final bool hasDivider;
 
-  OBToggleField(
-      {@required this.value,
-      this.onChanged,
-      this.onTap,
-      this.leading,
-      @required this.title,
-      this.hasDivider = true,
-      this.subtitle});
+  const OBToggleField({Key key, @required this.value, this.onChanged, this.onTap, this.leading, @required this.title, this.subtitle, this.hasDivider}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

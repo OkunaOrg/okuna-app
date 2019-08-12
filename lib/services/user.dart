@@ -1548,6 +1548,8 @@ class UserService {
     bool postCommentNotifications,
     bool postCommentReplyNotifications,
     bool postCommentReactionNotifications,
+    bool postCommentUserMentionNotifications,
+    bool postUserMentionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
@@ -1558,6 +1560,8 @@ class UserService {
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
             postCommentNotifications: postCommentNotifications,
             postCommentReplyNotifications: postCommentReplyNotifications,
+            postCommentUserMentionNotifications: postCommentUserMentionNotifications,
+            postUserMentionNotifications: postUserMentionNotifications,
             postCommentReactionNotifications: postCommentReactionNotifications,
             postReactionNotifications: postReactionNotifications,
             followNotifications: followNotifications,

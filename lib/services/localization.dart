@@ -2931,6 +2931,26 @@ class LocalizationService {
         name: 'notifications__comment_reply_desc');
   }
 
+  String get notifications__comment_user_mention_title {
+    return Intl.message("Post comment mention",
+        name: 'notifications__comment_user_mention_title');
+  }
+
+  String get notifications__comment_user_mention_desc {
+    return Intl.message("Be notified when someone mentions you on one of their comments",
+        name: 'notifications__comment_user_mention_desc');
+  }
+
+  String get notifications__post_user_mention_title {
+    return Intl.message("Post mention",
+        name: 'notifications__post_user_mention_title');
+  }
+
+  String get notifications__post_user_mention_desc {
+    return Intl.message("Be notified when someone mentions you on one of their posts",
+        name: 'notifications__post_user_mention_desc');
+  }
+
   String get notifications__comment_reaction_title {
     return Intl.message("Post comment reaction",
         name: 'notifications__comment_reaction_title');

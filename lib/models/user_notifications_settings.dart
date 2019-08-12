@@ -3,6 +3,8 @@ class UserNotificationsSettings {
   bool postCommentNotifications;
   bool postCommentReactionNotifications;
   bool postCommentReplyNotifications;
+  bool postCommentUserMentionNotifications;
+  bool postUserMentionNotifications;
   bool postReactionNotifications;
   bool followNotifications;
   bool connectionRequestNotifications;
@@ -16,6 +18,8 @@ class UserNotificationsSettings {
       this.followNotifications,
       this.postCommentNotifications,
       this.postCommentReactionNotifications,
+      this.postCommentUserMentionNotifications,
+      this.postUserMentionNotifications,
       this.postCommentReplyNotifications,
       this.postReactionNotifications,
       this.communityInviteNotifications});
@@ -33,6 +37,10 @@ class UserNotificationsSettings {
           parsedJson['post_comment_reaction_notifications'],
       postCommentReplyNotifications:
           parsedJson['post_comment_reply_notifications'],
+      postCommentUserMentionNotifications:
+          parsedJson['post_comment_user_mention_notifications'],
+      postUserMentionNotifications:
+          parsedJson['post_user_mention_notifications'],
       postReactionNotifications: parsedJson['post_reaction_notifications'],
       communityInviteNotifications:
           parsedJson['community_invite_notifications'],
@@ -56,6 +64,12 @@ class UserNotificationsSettings {
 
     if (json.containsKey('post_comment_reply_notifications'))
       postCommentReplyNotifications = json['post_comment_reply_notifications'];
+
+    if (json.containsKey('post_comment_user_mention_notifications'))
+      postCommentUserMentionNotifications = json['post_comment_user_mention_notifications'];
+
+    if (json.containsKey('post_user_mention_notifications'))
+      postUserMentionNotifications = json['post_user_mention_notifications'];
 
     if (json.containsKey('post_reaction_notifications'))
       postReactionNotifications = json['post_reaction_notifications'];

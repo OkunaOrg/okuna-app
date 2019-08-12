@@ -38,6 +38,8 @@ class OBNotificationsSettingsPageState
   bool _postCommentNotifications;
   bool _postCommentReactionNotifications;
   bool _postCommentReplyNotifications;
+  bool _postCommentUserMentionNotifications;
+  bool _postUserMentionNotifications;
   bool _postReactionNotifications;
   bool _followNotifications;
   bool _connectionRequestNotifications;
@@ -57,6 +59,8 @@ class OBNotificationsSettingsPageState
     _followNotifications = true;
     _connectionRequestNotifications = true;
     _communityInviteNotifications = true;
+    _postUserMentionNotifications = true;
+    _postCommentUserMentionNotifications = true;
   }
 
   @override
@@ -107,9 +111,11 @@ class OBNotificationsSettingsPageState
 
     List<Widget> toggles = [
       OBToggleField(
+        key: Key('All'),
         value: _pushNotifications,
         title: _localizationService.trans('notifications__general_title'),
-        subtitle: OBText(_localizationService.trans('notifications__general_desc')),
+        subtitle:
+            OBText(_localizationService.trans('notifications__general_desc')),
         onChanged: _setPushNotifications,
         onTap: _togglePushNotifications,
         hasDivider: false,
@@ -120,36 +126,42 @@ class OBNotificationsSettingsPageState
       toggles.addAll([
         OBDivider(),
         OBToggleField(
+          key: Key('Follow'),
           value: _followNotifications,
           title: _localizationService.trans('notifications__follow_title'),
-          subtitle: OBText(_localizationService.trans('notifications__follow_desc')),
+          subtitle:
+              OBText(_localizationService.trans('notifications__follow_desc')),
           onChanged: _setFollowNotifications,
           onTap: _toggleFollowNotifications,
           hasDivider: false,
         ),
         listItemSeparator,
         OBToggleField(
+          key: Key('Connection request'),
           value: _connectionRequestNotifications,
           title: _localizationService.trans('notifications__connection_title'),
-          subtitle:
-              OBText(_localizationService.trans('notifications__connection_desc')),
+          subtitle: OBText(
+              _localizationService.trans('notifications__connection_desc')),
           onChanged: _setConnectionRequestNotifications,
           onTap: _toggleConnectionRequestNotifications,
           hasDivider: false,
         ),
         listItemSeparator,
         OBToggleField(
+          key: Key('Post comments'),
           value: _postCommentNotifications,
           title: _localizationService.trans('notifications__comment_title'),
-          subtitle: OBText(
-              _localizationService.trans('notifications__comment_desc')),
+          subtitle:
+              OBText(_localizationService.trans('notifications__comment_desc')),
           onChanged: _setPostCommentNotifications,
           onTap: _togglePostCommentNotifications,
           hasDivider: false,
         ),
         OBToggleField(
+          key: Key('Post comments replies'),
           value: _postCommentReplyNotifications,
-          title: _localizationService.trans('notifications__comment_reply_title'),
+          title:
+              _localizationService.trans('notifications__comment_reply_title'),
           subtitle: OBText(
               _localizationService.trans('notifications__comment_reply_desc')),
           onChanged: _setPostCommentReplyNotifications,
@@ -157,29 +169,56 @@ class OBNotificationsSettingsPageState
           hasDivider: false,
         ),
         OBToggleField(
-          value: _postCommentReactionNotifications,
-          title: _localizationService.trans('notifications__comment_reaction_title'),
+          key: Key('Post comment user mentions'),
+          value: _postCommentUserMentionNotifications,
+          title: _localizationService.notifications__comment_user_mention_title,
           subtitle: OBText(
-              _localizationService.trans('notifications__comment_reaction_desc')),
+              _localizationService.notifications__comment_user_mention_desc),
+          onChanged: _setPostCommentUserMentionNotifications,
+          onTap: _togglePostCommentUserMentionNotifications,
+          hasDivider: false,
+        ),
+        OBToggleField(
+          key: Key('Post user mentions'),
+          value: _postUserMentionNotifications,
+          title: _localizationService.notifications__post_user_mention_title,
+          subtitle: OBText(
+              _localizationService.notifications__post_user_mention_desc),
+          onChanged: _setPostUserMentionNotifications,
+          onTap: _togglePostUserMentionNotifications,
+          hasDivider: false,
+        ),
+        OBToggleField(
+          key: Key('Post comment reactions'),
+          value: _postCommentReactionNotifications,
+          title: _localizationService
+              .trans('notifications__comment_reaction_title'),
+          subtitle: OBText(_localizationService
+              .trans('notifications__comment_reaction_desc')),
           onChanged: _setPostCommentReactionNotifications,
           onTap: _togglePostCommentReactionNotifications,
           hasDivider: false,
         ),
         listItemSeparator,
         OBToggleField(
+          key: Key('Post reaction'),
           value: _postReactionNotifications,
-          title: _localizationService.trans('notifications__post_reaction_title'),
-          subtitle:
-              OBText(_localizationService.trans('notifications__post_reaction_desc'),),
+          title:
+              _localizationService.trans('notifications__post_reaction_title'),
+          subtitle: OBText(
+            _localizationService.trans('notifications__post_reaction_desc'),
+          ),
           onChanged: _setPostReactionNotifications,
           onTap: _togglePostReactionNotifications,
           hasDivider: false,
         ),
         OBToggleField(
+          key: Key('Community invite'),
           value: _communityInviteNotifications,
-          title: _localizationService.trans('notifications__community_invite_title'),
-          subtitle: OBText(
-              _localizationService.trans('notifications__community_invite_desc')),
+          title: _localizationService
+              .trans('notifications__community_invite_title'),
+          subtitle: OBText(_localizationService
+              .trans('notifications__community_invite_desc')),
           onChanged: _setCommunityInviteNotifications,
           onTap: _toggleCommunityInviteNotifications,
           hasDivider: false,
@@ -283,6 +322,31 @@ class OBNotificationsSettingsPageState
     _submitNotificationsSettings();
   }
 
+  void _togglePostCommentUserMentionNotifications() {
+    _setPostCommentUserMentionNotifications(
+        !_postCommentUserMentionNotifications);
+  }
+
+  void _setPostCommentUserMentionNotifications(bool newValue) {
+    setState(() {
+      _postCommentUserMentionNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
+  void _togglePostUserMentionNotifications() {
+    _setPostUserMentionNotifications(!_postUserMentionNotifications);
+  }
+
+  void _setPostUserMentionNotifications(bool newValue) {
+    setState(() {
+      _postUserMentionNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
   void _togglePostReactionNotifications() {
     _setPostReactionNotifications(!_postReactionNotifications);
   }
@@ -329,6 +393,8 @@ class OBNotificationsSettingsPageState
           followNotifications: _followNotifications,
           postCommentNotifications: _postCommentNotifications,
           postCommentReplyNotifications: _postCommentReplyNotifications,
+          postCommentUserMentionNotifications: _postCommentUserMentionNotifications,
+          postUserMentionNotifications: _postUserMentionNotifications,
           postCommentReactionNotifications: _postCommentReactionNotifications,
           postReactionNotifications: _postReactionNotifications,
           connectionRequestNotifications: _connectionRequestNotifications,
@@ -346,7 +412,9 @@ class OBNotificationsSettingsPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }
@@ -359,6 +427,10 @@ class OBNotificationsSettingsPageState
       _postCommentNotifications = notificationSettings.postCommentNotifications;
       _postCommentReactionNotifications =
           notificationSettings.postCommentReactionNotifications;
+      _postCommentUserMentionNotifications =
+          notificationSettings.postCommentUserMentionNotifications;
+      _postUserMentionNotifications =
+          notificationSettings.postUserMentionNotifications;
       _postCommentReplyNotifications =
           notificationSettings.postCommentReplyNotifications;
       _postReactionNotifications =
