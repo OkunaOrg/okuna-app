@@ -54,6 +54,26 @@
     "type": "text",
     "placeholders": {}
   },
+  "comment_user_mention_title": "Post comment mention",
+  "@comment_user_mention_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment_user_mention_desc": "Be notified when someone mentions you on one of their comments",
+  "@comment_user_mention_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "post_user_mention_title": "Post mention",
+  "@post_user_mention_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "post_user_mention_desc": "Be notified when someone mentions you on one of their posts",
+  "@post_user_mention_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
   "comment_reaction_title": "Post comment reaction",
   "@comment_reaction_title": {
     "type": "text",
