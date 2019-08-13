@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a pt_BR locale. All the
+// This is a library that provides messages for a sv_SE locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,7 +18,7 @@ final _keepAnalysisHappy = Intl.defaultLocale;
 typedef MessageIfAbsent(String message_str, List args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  get localeName => 'pt_BR';
+  get localeName => 'sv_SE';
 
   static m0(minLength, maxLength) => "(${minLength}-${maxLength} tecken)";
 
@@ -212,7 +212,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__description_range_error" : m1,
     "auth__email_empty_error" : MessageLookupByLibrary.simpleMessage("Du måste ange en e-postadress."),
     "auth__email_invalid_error" : MessageLookupByLibrary.simpleMessage("Vänligen ange en giltig e-postadress."),
-    "auth__headline" : MessageLookupByLibrary.simpleMessage("Better social."),
+    "auth__headline" : MessageLookupByLibrary.simpleMessage("Bättre socialt."),
     "auth__login" : MessageLookupByLibrary.simpleMessage("Logga in"),
     "auth__login__connection_error" : MessageLookupByLibrary.simpleMessage("Vi kan inte nå våra servrar. Är du uppkopplad mot internet?"),
     "auth__login__credentials_mismatch_error" : MessageLookupByLibrary.simpleMessage("De angivna uppgifterna matchar inte."),
@@ -381,7 +381,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__unfavorite_action" : MessageLookupByLibrary.simpleMessage("Ta bort gemenskap från favoriter"),
     "community__user_you_text" : MessageLookupByLibrary.simpleMessage("Du"),
     "community__yes" : MessageLookupByLibrary.simpleMessage("Ja"),
-    "contextual_account_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Förslag"),
     "drawer__account_settings" : MessageLookupByLibrary.simpleMessage("Kontoinställningar"),
     "drawer__account_settings_blocked_users" : MessageLookupByLibrary.simpleMessage("Blockerade användare"),
     "drawer__account_settings_change_email" : MessageLookupByLibrary.simpleMessage("Ändra e-post"),
@@ -506,10 +505,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon svarar på en av dina kommentarer eller en kommentar du också svarat på."),
     "notifications__comment_reply_notification_tile_user_also_replied" : m22,
     "notifications__comment_reply_notification_tile_user_replied" : m23,
-    "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Svar på kommentar"),
+    "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Svar på kommentar på inlägg"),
     "notifications__comment_title" : MessageLookupByLibrary.simpleMessage("Kommentar på inlägg"),
-    "notifications__comment_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon nämner dig i en av sina kommentarer"),
-    "notifications__comment_user_mention_title" : MessageLookupByLibrary.simpleMessage("Omnämnande i kommentar"),
     "notifications__community_invite_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon bjuder in dig till en gemenskap."),
     "notifications__community_invite_title" : MessageLookupByLibrary.simpleMessage("Gemenskapsinbjudan"),
     "notifications__connection_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon vill ha dig som kontakt"),
@@ -520,16 +517,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__following_you_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] har börjat följa dig."),
     "notifications__general_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när något händer"),
     "notifications__general_title" : MessageLookupByLibrary.simpleMessage("Aviseringar"),
-    "notifications__mentioned_in_post_comment_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] nämnde dig i en kommentar."),
-    "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] nämnde dig i ett inlägg."),
     "notifications__mute_post_turn_off_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Inaktivera aviseringar för inläggskommentarer"),
     "notifications__mute_post_turn_off_post_notifications" : MessageLookupByLibrary.simpleMessage("Inaktivera aviseringar för inlägg"),
     "notifications__mute_post_turn_on_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Aktivera aviseringar för inläggskommentarer"),
     "notifications__mute_post_turn_on_post_notifications" : MessageLookupByLibrary.simpleMessage("Aktivera aviseringar för inlägg"),
     "notifications__post_reaction_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon reagerar på ett av dina inlägg."),
     "notifications__post_reaction_title" : MessageLookupByLibrary.simpleMessage("Reaktion på inlägg"),
-    "notifications__post_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon nämner dig i ett av sina inlägg"),
-    "notifications__post_user_mention_title" : MessageLookupByLibrary.simpleMessage("Omnämnande i inlägg"),
     "notifications__reacted_to_post_comment_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagerade på din inläggskommentar."),
     "notifications__reacted_to_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagerade på ditt inlägg."),
     "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Aviseringsinställningar"),
@@ -751,7 +744,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__invite_someone_message" : m43,
     "user__invites_accepted_group_item_name" : MessageLookupByLibrary.simpleMessage("accepterad inbjudan"),
     "user__invites_accepted_group_name" : MessageLookupByLibrary.simpleMessage("accepterade inbjudningar"),
-    "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Accepterade"),
+    "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Accepterad"),
     "user__invites_create_create" : MessageLookupByLibrary.simpleMessage("Skapa"),
     "user__invites_create_create_title" : MessageLookupByLibrary.simpleMessage("Skapa inbjudan"),
     "user__invites_create_edit_title" : MessageLookupByLibrary.simpleMessage("Redigera inbjudan"),
