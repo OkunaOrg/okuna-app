@@ -1,26 +1,26 @@
 {
-    "search_text": "Pesquisar...",
+    "search_text": "Sök...",
     "@search_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "communities": "Comunidades",
+    "communities": "Gemenskaper",
     "@communities": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "users": "Usuários",
+    "users": "Användare",
     "@users": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "list_search_text": "Pesquisar {resourcePluralName} ...",
+    "list_search_text": "Sök {resourcePluralName} ...",
     "@list_search_text": {
         "description": "resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.",
         "type": "text",
@@ -30,7 +30,7 @@
             }
         }
     },
-    "list_no_results_found": "Sem {resourcePluralName}.",
+    "list_no_results_found": "Inga {resourcePluralName} hittades.",
     "@list_no_results_found": {
         "description": "Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ",
         "type": "text",
@@ -40,28 +40,28 @@
             }
         }
     },
-    "list_refresh_text": "Atualizar",
+    "list_refresh_text": "Uppdatera",
     "@list_refresh_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "list_retry": "Toque para tentar novamente.",
+    "list_retry": "Tryck för att försöka igen.",
     "@list_retry": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "cancel": "Cancelar",
+    "cancel": "Avbryt",
     "@cancel": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "searching_for": "Procurando por '{searchQuery}'",
+    "searching_for": "Söker efter '{searchQuery}'",
     "@searching_for": {
         "type": "text",
         "placeholders": {
@@ -70,7 +70,7 @@
             }
         }
     },
-    "no_results_for": "Nenhum resultado para '{searchQuery}'.",
+    "no_results_for": "Inga resultat hittades för '{searchQuery}'.",
     "@no_results_for": {
         "type": "text",
         "placeholders": {
@@ -79,7 +79,7 @@
             }
         }
     },
-    "no_communities_for": "Nenhuma comunidade encontrada para '{searchQuery}'.",
+    "no_communities_for": "Inga gemenskaper hittades för '{searchQuery}'.",
     "@no_communities_for": {
         "type": "text",
         "placeholders": {
@@ -88,7 +88,7 @@
             }
         }
     },
-    "no_users_for": "Nenhum usuário encontrado para '{searchQuery}'.",
+    "no_users_for": "Inga användare hittades för '{searchQuery}'.",
     "@no_users_for": {
         "type": "text",
         "placeholders": {

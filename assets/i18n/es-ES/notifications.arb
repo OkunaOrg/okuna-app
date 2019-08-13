@@ -76,6 +76,34 @@
 
         }
     },
+    "comment_user_mention_title": "Menciónes en comentarios",
+    "@comment_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_user_mention_desc": "Ser notificado cuando alguien te mencione en uno de sus comentarios",
+    "@comment_user_mention_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_title": "Menciónes en posts",
+    "@post_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_desc": "Ser notificado cuando alguien te mencione en uno de sus mensajes",
+    "@post_user_mention_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
     "comment_reaction_title": "Reacción a comentario",
     "@comment_reaction_title": {
         "type": "text",
@@ -231,6 +259,22 @@
             "postCommentText": {
 
             }
+        }
+    },
+    "mentioned_in_post_comment_tile": "[name] [username] te mencionó en un comentario.",
+    "@mentioned_in_post_comment_tile": {
+        "description": "Eg.: James @jamest mentioned you on a comment.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mentioned_in_post_tile": "[name] [username] te mencionó en un post.",
+    "@mentioned_in_post_tile": {
+        "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {
+
         }
     }
 }

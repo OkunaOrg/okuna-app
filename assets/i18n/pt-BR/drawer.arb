@@ -1,159 +1,159 @@
 {
-    "menu_title": "Menu",
+    "menu_title": "Meny",
     "@menu_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "main_title": "Minha Okuna",
+    "main_title": "Mitt Okuna",
     "@main_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_circles": "Meus círculos",
+    "my_circles": "Mina cirklar",
     "@my_circles": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_lists": "Minhas listas",
+    "my_lists": "Mina listor",
     "@my_lists": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_followers": "Meus seguidores",
+    "my_followers": "Mina följare",
     "@my_followers": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_following": "Meus seguidos",
+    "my_following": "Mitt följande",
     "@my_following": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_invites": "Meus convites",
+    "my_invites": "Mina inbjudningar",
     "@my_invites": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_pending_mod_tasks": "Minhas tarefas de moderação pendentes",
+    "my_pending_mod_tasks": "Mina väntande modereringsuppgifter",
     "@my_pending_mod_tasks": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_mod_penalties": "Minhas penalidades",
+    "my_mod_penalties": "Mina modereringsstraff",
     "@my_mod_penalties": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "app_account_text": "Aplicativo & Conta",
+    "app_account_text": "App & Konto",
     "@app_account_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "themes": "Temas",
+    "themes": "Teman",
     "@themes": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "global_moderation": "Moderação global",
+    "global_moderation": "Global moderering",
     "@global_moderation": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "profile": "Perfil",
+    "profile": "Profil",
     "@profile": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "connections": "Minhas conexões",
+    "connections": "Mina kontakter",
     "@connections": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "lists": "Minhas listas",
+    "lists": "Mina listor",
     "@lists": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "settings": "Configurações",
+    "settings": "Inställningar",
     "@settings": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "application_settings": "Configurações do aplicativo",
+    "application_settings": "Programinställningar",
     "@application_settings": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings": "Configurações da conta",
+    "account_settings": "Kontoinställningar",
     "@account_settings": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_change_email": "Alterar Email",
+    "account_settings_change_email": "Ändra e-post",
     "@account_settings_change_email": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_change_password": "Alterar Senha",
+    "account_settings_change_password": "Ändra lösenord",
     "@account_settings_change_password": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_notifications": "Notificações",
+    "account_settings_notifications": "Aviseringar",
     "@account_settings_notifications": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_language_text": "Idioma",
+    "account_settings_language_text": "Språk",
     "@account_settings_language_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_language": "Idioma ({currentUserLanguage})",
+    "account_settings_language": "Språk ({currentUserLanguage})",
     "@account_settings_language": {
         "type": "text",
         "placeholders": {
@@ -162,140 +162,140 @@
             }
         }
     },
-    "account_settings_blocked_users": "Usuários bloqueados",
+    "account_settings_blocked_users": "Blockerade användare",
     "@account_settings_blocked_users": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_delete_account": "Excluir a minha conta",
+    "account_settings_delete_account": "Ta bort konto",
     "@account_settings_delete_account": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "help": "Suporte e Feedback",
+    "help": "Hjälp och feedback",
     "@help": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "customize": "Personalizar",
+    "customize": "Anpassa",
     "@customize": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "logout": "Sair",
+    "logout": "Logga ut",
     "@logout": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_title": "Links úteis",
+    "useful_links_title": "Användbara länkar",
     "@useful_links_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines": "Diretrizes da Okuna",
+    "useful_links_guidelines": "Okunas riktlinjer",
     "@useful_links_guidelines": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_desc": "As diretrizes que todos esperamos seguir para uma coexistência saudável e amigável.",
+    "useful_links_guidelines_desc": "Riktlinjerna vi alla förväntas att följa för en hälsosam och vänlig samvaro.",
     "@useful_links_guidelines_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_github": "Projeto no Github",
+    "useful_links_guidelines_github": "Projekttavla på Github",
     "@useful_links_guidelines_github": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_github_desc": "Dê uma olhada no que estamos trabalhando atualmente",
+    "useful_links_guidelines_github_desc": "Ta en titt på vad vi arbetar på just nu",
     "@useful_links_guidelines_github_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_feature_requests": "Sugestões de recursos",
+    "useful_links_guidelines_feature_requests": "Funktionsförslag",
     "@useful_links_guidelines_feature_requests": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_feature_requests_desc": "Sugerir um recurso ou votar em sugestões existentes",
+    "useful_links_guidelines_feature_requests_desc": "Föreslå en ny funktion eller rösta för existerande förslag",
     "@useful_links_guidelines_feature_requests_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_bug_tracker": "Rastreador de bugs",
+    "useful_links_guidelines_bug_tracker": "Felrapportering",
     "@useful_links_guidelines_bug_tracker": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_bug_tracker_desc": "Reportar um bug ou votar em bugs existentes",
+    "useful_links_guidelines_bug_tracker_desc": "Rapportera ett fel eller rösta för existerande rapporter",
     "@useful_links_guidelines_bug_tracker_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_handbook": "Manual da Okuna",
+    "useful_links_guidelines_handbook": "Okunas handbok",
     "@useful_links_guidelines_handbook": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_handbook_desc": "Um livro com tudo o que há para saber sobre usar a plataforma",
+    "useful_links_guidelines_handbook_desc": "En bok med allt du behöver veta om att använda plattformen",
     "@useful_links_guidelines_handbook_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_support": "Apoie a Okuna",
+    "useful_links_support": "Stöd Okuna",
     "@useful_links_support": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_support_desc": "Encontre uma maneira de nos apoiar em nossa jornada!",
+    "useful_links_support_desc": "Hitta ett sätt på vilket du kan hjälpa oss under vår resa!",
     "@useful_links_support_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_slack_channel": "Canal da comunidade no Slack",
+    "useful_links_slack_channel": "Gemenskapens Slack-kanal",
     "@useful_links_slack_channel": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_slack_channel_desc": "Um lugar para discutir tudo sobre a Okuna",
+    "useful_links_slack_channel_desc": "En plats för diskussioner om allt om Okuna",
     "@useful_links_slack_channel_desc": {
         "type": "text",
         "placeholders": {

@@ -34,7 +34,7 @@
 
         }
     },
-    "comment_maxlength_error": "Ein Kommentar darf nicht mehr als {maxLength} Zeichen haben.",
+    "comment_maxlength_error": "Ein Kommentar darf nicht länger als {maxLength} Zeichen lang sein.",
     "@comment_maxlength_error": {
         "type": "text",
         "placeholders": {
@@ -99,7 +99,7 @@
 
         }
     },
-    "timeline_posts_default_drhoo_subtitle": "Versuche, die Timeline zu aktualisieren.",
+    "timeline_posts_default_drhoo_subtitle": "Versuche die Timeline zu aktualisieren.",
     "@timeline_posts_default_drhoo_subtitle": {
         "type": "text",
         "placeholders": {
@@ -711,7 +711,7 @@
 
         }
     },
-    "time_short_years": "J.",
+    "time_short_years": "J",
     "@time_short_years": {
         "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3y. Keep it as short as possible",
         "type": "text",
@@ -719,7 +719,7 @@
 
         }
     },
-    "time_short_one_year": "1J.",
+    "time_short_one_year": "1J",
     "@time_short_one_year": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
@@ -727,7 +727,7 @@
 
         }
     },
-    "time_short_weeks": "W.",
+    "time_short_weeks": "Wo.",
     "@time_short_weeks": {
         "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 5w.Keep it as short as possible ",
         "type": "text",
@@ -735,7 +735,7 @@
 
         }
     },
-    "time_short_one_week": "1W.",
+    "time_short_one_week": "1Wo",
     "@time_short_one_week": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
@@ -743,7 +743,7 @@
 
         }
     },
-    "time_short_days": "Tage",
+    "time_short_days": "Tg",
     "@time_short_days": {
         "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3d. Keep it as short as possible ",
         "type": "text",
@@ -751,7 +751,7 @@
 
         }
     },
-    "time_short_one_day": "1Tag",
+    "time_short_one_day": "1Tg",
     "@time_short_one_day": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
@@ -759,7 +759,7 @@
 
         }
     },
-    "time_short_hours": "h",
+    "time_short_hours": "Std",
     "@time_short_hours": {
         "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3h.Keep it as short as possible ",
         "type": "text",
@@ -775,7 +775,7 @@
 
         }
     },
-    "time_short_minutes": "m",
+    "time_short_minutes": "Min.",
     "@time_short_minutes": {
         "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13m.Keep it as short as possible ",
         "type": "text",
@@ -783,7 +783,7 @@
 
         }
     },
-    "time_short_seconds": "s",
+    "time_short_seconds": "Sek",
     "@time_short_seconds": {
         "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13s Keep it as short as possible ",
         "type": "text",
@@ -791,7 +791,7 @@
 
         }
     },
-    "time_short_one_minute": "1m",
+    "time_short_one_minute": "1Min.",
     "@time_short_one_minute": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",

@@ -13,7 +13,7 @@
 
         }
     },
-    "general_desc": "Werde benachrichtigt wenn etwas passiert",
+    "general_desc": "Werde benachrichtigt, wenn etwas passiert",
     "@general_desc": {
         "type": "text",
         "placeholders": {
@@ -71,6 +71,34 @@
     },
     "comment_reply_desc": "Werde benachrichtigt, wenn jemand auf deinen Kommentar, oder auf einen, auf den du auch geantwortet hast, antwortet",
     "@comment_reply_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_user_mention_title": "Erwähnungen in Kommentaren",
+    "@comment_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_user_mention_desc": "Werde benachrichtigt, wenn dich jemand in einem Kommentar erwähnt",
+    "@comment_user_mention_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_title": "Erwähnungen in Beiträgen",
+    "@post_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_desc": "Werde benachrichtigt, wenn dich jemand in einem Beitrag erwähnt",
+    "@post_user_mention_desc": {
         "type": "text",
         "placeholders": {
 
@@ -231,6 +259,22 @@
             "postCommentText": {
 
             }
+        }
+    },
+    "mentioned_in_post_comment_tile": "[name] [username] hat dich in einem Kommentar erwähnt.",
+    "@mentioned_in_post_comment_tile": {
+        "description": "Eg.: James @jamest mentioned you on a comment.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mentioned_in_post_tile": "[name] [username] hat dich in einem Beitrag erwähnt.",
+    "@mentioned_in_post_tile": {
+        "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {
+
         }
     }
 }

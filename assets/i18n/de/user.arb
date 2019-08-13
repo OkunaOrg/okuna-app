@@ -15,7 +15,7 @@
 
         }
     },
-    "billion_postfix": "Mrd",
+    "billion_postfix": " Mrd.",
     "@billion_postfix": {
         "description": "For eg. World circle has 7.5b people",
         "type": "text",
@@ -733,7 +733,7 @@
 
         }
     },
-    "timeline_filters_apply_all": "Filtern",
+    "timeline_filters_apply_all": "Anwenden",
     "@timeline_filters_apply_all": {
         "type": "text",
         "placeholders": {
@@ -1212,7 +1212,7 @@
 
         }
     },
-    "change_email_title": "E-Mail-Adresse ändern",
+    "change_email_title": "E-Mail ändern",
     "@change_email_title": {
         "type": "text",
         "placeholders": {
@@ -1226,7 +1226,7 @@
 
         }
     },
-    "change_email_hint_text": "Gib deine neue E-Mail-Adresse ein",
+    "change_email_hint_text": "Gib deine neue E-Mail ein",
     "@change_email_hint_text": {
         "type": "text",
         "placeholders": {

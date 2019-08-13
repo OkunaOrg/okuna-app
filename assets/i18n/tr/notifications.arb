@@ -76,6 +76,34 @@
 
         }
     },
+    "comment_user_mention_title": "Gönderi yorumunda bahsedilmesi",
+    "@comment_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_user_mention_desc": "Birisi sizden yorumlarından birinde bahsettiğinde haberdar olun",
+    "@comment_user_mention_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_title": "Gönderide bahsedilmesi",
+    "@post_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_desc": "Birisi gönderilerinden birinde sizden bahsettiğinde haberdar olun",
+    "@post_user_mention_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
     "comment_reaction_title": "Yorum tepkisi gönderisi",
     "@comment_reaction_title": {
         "type": "text",
@@ -231,6 +259,22 @@
             "postCommentText": {
 
             }
+        }
+    },
+    "mentioned_in_post_comment_tile": "[name] [username] bir yorumda sizden bahsetti.",
+    "@mentioned_in_post_comment_tile": {
+        "description": "Eg.: James @jamest mentioned you on a comment.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mentioned_in_post_tile": "[name] [username] bir gönderide sizden bahsetti.",
+    "@mentioned_in_post_tile": {
+        "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {
+
         }
     }
 }

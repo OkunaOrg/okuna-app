@@ -13,7 +13,7 @@
 
         }
     },
-    "button_staff": "Moderatoren",
+    "button_staff": "Team",
     "@button_staff": {
         "type": "text",
         "placeholders": {
@@ -493,7 +493,7 @@
             }
         }
     },
-    "ban_user_title": "Benutzer aussperren",
+    "ban_user_title": "Benutzer bannen",
     "@ban_user_title": {
         "type": "text",
         "placeholders": {
@@ -530,7 +530,7 @@
 
         }
     },
-    "favorite_community": "Meine Community",
+    "favorite_community": "favorisierte Community",
     "@favorite_community": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
         "type": "text",
@@ -915,7 +915,7 @@
 
         }
     },
-    "community_staff": "Community-Moderatoren",
+    "community_staff": "Community-Team",
     "@community_staff": {
         "type": "text",
         "placeholders": {

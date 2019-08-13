@@ -76,6 +76,34 @@
 
         }
     },
+    "comment_user_mention_title": "Mention sur un commentaire d'une publication",
+    "@comment_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "comment_user_mention_desc": "Soyez averti.e lorsque quelqu'un vous mentionne sur l'un de leurs commentaires",
+    "@comment_user_mention_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_title": "Mention sur une publication",
+    "@post_user_mention_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "post_user_mention_desc": "Soyez averti.e lorsque quelqu'un vous mentionne sur l'une de leurs publications",
+    "@post_user_mention_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
     "comment_reaction_title": "Réaction à l'un de vos commentaires sur une publication",
     "@comment_reaction_title": {
         "type": "text",
@@ -231,6 +259,22 @@
             "postCommentText": {
 
             }
+        }
+    },
+    "mentioned_in_post_comment_tile": "[name] [username] vous a mentionné.e sur un commentaire.",
+    "@mentioned_in_post_comment_tile": {
+        "description": "Eg.: James @jamest mentioned you on a comment.",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "mentioned_in_post_tile": "[name] [username] vous a mentionné.e sur une publication.",
+    "@mentioned_in_post_tile": {
+        "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {
+
         }
     }
 }

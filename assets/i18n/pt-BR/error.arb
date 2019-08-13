@@ -1,12 +1,12 @@
 {
-    "unknown_error": "Erro desconhecido",
+    "unknown_error": "Okänt fel",
     "@unknown_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "no_internet_connection": "Sem conexão com a internet",
+    "no_internet_connection": "Ingen internetuppkoppling",
     "@no_internet_connection": {
         "type": "text",
         "placeholders": {
