@@ -1,33 +1,33 @@
 {
-    "filters_title": "Modereringsfilter",
+    "filters_title": "Filtros de moderação",
     "@filters_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "filters_reset": "Återställ",
+    "filters_reset": "Redefinir",
     "@filters_reset": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "filters_verified": "Verifierad",
+    "filters_verified": "Verificado",
     "@filters_verified": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "filters_apply": "Applicera filter",
+    "filters_apply": "Aplicar filtros",
     "@filters_apply": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "filters_type": "Typ",
+    "filters_type": "Tipo",
     "@filters_type": {
         "type": "text",
         "placeholders": {
@@ -41,91 +41,91 @@
 
         }
     },
-    "filters_other": "Övrigt",
+    "filters_other": "Outros",
     "@filters_other": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "actions_review": "Granska",
+    "actions_review": "Revisar",
     "@actions_review": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "actions_chat_with_team": "Chatta med teamet",
+    "actions_chat_with_team": "Converse com a equipe",
     "@actions_chat_with_team": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_category_title": "Uppdatera kategori",
+    "update_category_title": "Atualizar categoria",
     "@update_category_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_category_save": "Spara",
+    "update_category_save": "Salvar",
     "@update_category_save": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_description_save": "Spara",
+    "update_description_save": "Salvar",
     "@update_description_save": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_description_title": "Redigera beskrivning",
+    "update_description_title": "Editar descrição",
     "@update_description_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_description_report_desc": "Anmäl beskrivning",
+    "update_description_report_desc": "Descrição da denúncia",
     "@update_description_report_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_description_report_hint_text": "t. ex. anmälan var...",
+    "update_description_report_hint_text": "ex: O motivo da denúncia é...",
     "@update_description_report_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_status_save": "Spara",
+    "update_status_save": "Salvar",
     "@update_status_save": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "update_status_title": "Uppdatera status",
+    "update_status_title": "Atualizar status",
     "@update_status_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_review_title": "Granska modererat objekt",
+    "community_review_title": "Revisar objeto moderado",
     "@community_review_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderated_object_title": "Objekt",
+    "moderated_object_title": "Objeto",
     "@moderated_object_title": {
         "type": "text",
         "placeholders": {
@@ -139,28 +139,28 @@
 
         }
     },
-    "moderated_object_reports_count": "Antal anmälningar",
+    "moderated_object_reports_count": "Número de denúncias",
     "@moderated_object_reports_count": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderated_object_verified_by_staff": "Verifierad av Okunas personal",
+    "moderated_object_verified_by_staff": "Verificado pela equipe da Okuna",
     "@moderated_object_verified_by_staff": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderated_object_verified": "Verifierad",
+    "moderated_object_verified": "Verificado",
     "@moderated_object_verified": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderated_object_true_text": "Sant",
+    "moderated_object_true_text": "Verdadeiro",
     "@moderated_object_true_text": {
         "description": "Eg. Moderated object verified by staff? true \/ false",
         "type": "text",
@@ -168,7 +168,7 @@
 
         }
     },
-    "moderated_object_false_text": "Falskt",
+    "moderated_object_false_text": "Falso",
     "@moderated_object_false_text": {
         "description": "Eg. Moderated object verified by staff? true \/ false",
         "type": "text",
@@ -176,259 +176,259 @@
 
         }
     },
-    "community_review_object": "Objekt",
+    "community_review_object": "Objeto",
     "@community_review_object": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_review_approve": "Godkänn",
+    "community_review_approve": "Aprovar",
     "@community_review_approve": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_review_reject": "avvisa",
+    "community_review_reject": "rejeitar",
     "@community_review_reject": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_review_item_verified": "Den här anmälan har verifierats",
+    "community_review_item_verified": "Este item foi verificado",
     "@community_review_item_verified": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "global_review_title": "Granska modererat objekt",
+    "global_review_title": "Revisar objeto moderado",
     "@global_review_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "global_review_object_text": "Objekt",
+    "global_review_object_text": "Objeto",
     "@global_review_object_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "global_review_verify_text": "Verifiera",
+    "global_review_verify_text": "Verificar",
     "@global_review_verify_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "global_review_unverify_text": "Av-verifiera",
+    "global_review_unverify_text": "Desverificar",
     "@global_review_unverify_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_title": "Skicka anmälan",
+    "confirm_report_title": "Enviar denúncia",
     "@confirm_report_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_provide_details": "Kan du delge extra information som kan vara relevant för anmälan?",
+    "confirm_report_provide_details": "Você pode fornecer mais detalhes relevantes para a denúncia?",
     "@confirm_report_provide_details": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_provide_optional_info": "(Valfritt)",
+    "confirm_report_provide_optional_info": "(Opcional)",
     "@confirm_report_provide_optional_info": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_provide_optional_hint_text": "Skriv här...",
+    "confirm_report_provide_optional_hint_text": "Digite aqui...",
     "@confirm_report_provide_optional_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_provide_happen_next": "Detta kommer hända härnäst:",
+    "confirm_report_provide_happen_next": "Aqui está o que acontecerá a seguir:",
     "@confirm_report_provide_happen_next": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_provide_happen_next_desc": "- Din anmälan skickas in anonymt.\n- Om du anmäler ett inlägg eller en kommentar så kommer anmälan skickas till Okunas personal och, om tillämpligt, gemenskapens moderatorer, och inlägget kommer döljas från ditt flöde.\n- Om du anmäler ett konto eller en gemenskap kommer anmälan skickas till Okunas personal.\n- Vi granskar anmälan och om den godkänns kommer innehållet tas bort och straff utmätas till de som är inblandade, från tillfällig avstängning till borttagning av konto beroende på hur allvarlig överträdelsen var.\n- Om anmälan bedöms vara gjord för att försöka skada en annan medlem eller gemenskap på plattformen utan att den angivna överträdelsen har skett kommer straff istället utmätas mot dig. \n",
+    "confirm_report_provide_happen_next_desc": "- Sua denúncia será enviada anonimamente. \n- Se você estiver denunciando uma publicação ou comentário, a denúncia será enviada à equipe da Okuna e aos moderadores da comunidade (se aplicável), e o conteúdo denunciado ficará oculto do seu feed. \n- Se você estiver denunciando uma conta ou comunidade, a denúncia será enviada para a equipe da Okuna. \n- Vamos analisar a denúncia e, se aprovada, o conteúdo será excluído e as penalidades serão aplicadas às pessoas envolvidas, desde uma suspensão temporária até a exclusão da conta, dependendo da gravidade da transgressão. \n- Se a denúncia for apenas uma tentativa de prejudicar um membro ou comunidade que não cometeu a infração apontada por você, as penalidades serão aplicadas a você. \n",
     "@confirm_report_provide_happen_next_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_submit": "Jag förstår, skicka.",
+    "confirm_report_submit": "Eu entendo, envie.",
     "@confirm_report_submit": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_user_reported": "Användare anmäld",
+    "confirm_report_user_reported": "Usuário denunciado",
     "@confirm_report_user_reported": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_community_reported": "Gemenskap anmäld",
+    "confirm_report_community_reported": "Comunidade denunciada",
     "@confirm_report_community_reported": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_post_reported": "Inlägg anmält",
+    "confirm_report_post_reported": "Publicação denunciada",
     "@confirm_report_post_reported": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_post_comment_reported": "Inläggskommentar anmäld",
+    "confirm_report_post_comment_reported": "Comentário denunciado",
     "@confirm_report_post_comment_reported": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirm_report_item_reported": "Objekt anmält",
+    "confirm_report_item_reported": "Item denunciado",
     "@confirm_report_item_reported": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_moderated_objects": "Gemenskapens modererade objekt",
+    "community_moderated_objects": "Itens moderados por comunidades",
     "@community_moderated_objects": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "globally_moderated_objects": "Globalt modererade objekt",
+    "globally_moderated_objects": "Itens moderados globalmente",
     "@globally_moderated_objects": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "tap_to_retry": "Tryck för att försöka läsa in poster igen",
+    "tap_to_retry": "Toque para tentar carregar os itens novamente",
     "@tap_to_retry": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "report_post_text": "Anmäl inlägg",
+    "report_post_text": "Denunciar publicação",
     "@report_post_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "you_have_reported_post_text": "Du har anmält det här inlägget",
+    "you_have_reported_post_text": "Você denunciou esta publicação",
     "@you_have_reported_post_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "report_account_text": "Anmäl konto",
+    "report_account_text": "Denunciar conta",
     "@report_account_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "you_have_reported_account_text": "Du har anmält det här kontot",
+    "you_have_reported_account_text": "Você denunciou esta conta",
     "@you_have_reported_account_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "report_community_text": "Anmäl gemenskap",
+    "report_community_text": "Denunciar comunidade",
     "@report_community_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "you_have_reported_community_text": "Du har anmält den här gemenskapen",
+    "you_have_reported_community_text": "Você denunciou esta comunidade",
     "@you_have_reported_community_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "report_comment_text": "Anmäl kommentar",
+    "report_comment_text": "Denunciar comentário",
     "@report_comment_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "you_have_reported_comment_text": "Du har anmält den här kommentaren",
+    "you_have_reported_comment_text": "Você denunciou este comentário",
     "@you_have_reported_comment_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "description_text": "Beskrivning",
+    "description_text": "Descrição",
     "@description_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "no_description_text": "Ingen beskrivning",
+    "no_description_text": "Sem descrição",
     "@no_description_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "category_text": "Kategori",
+    "category_text": "Categoria",
     "@category_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "reporter_text": "Anmälare",
+    "reporter_text": "Denunciante",
     "@reporter_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "reports_preview_title": "Anmälningar",
+    "reports_preview_title": "Denúncias",
     "@reports_preview_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "reports_preview_resource_reports": "anmälningar",
+    "reports_preview_resource_reports": "denúncias",
     "@reports_preview_resource_reports": {
         "description": "Usage: See all reports..",
         "type": "text",
@@ -436,7 +436,7 @@
 
         }
     },
-    "reports_see_all": "Visa alla {resourceCount} {resourceName}",
+    "reports_see_all": "Ver todas as {resourceCount} {resourceName}",
     "@reports_see_all": {
         "description": "Usage: See all 4 reports.",
         "type": "text",
@@ -456,21 +456,21 @@
 
         }
     },
-    "my_moderation_tasks_title": "Väntande modereringsuppgifter",
+    "my_moderation_tasks_title": "Tarefas de moderação pendentes",
     "@my_moderation_tasks_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "pending_moderation_tasks_singular": "väntande modereringsuppgift",
+    "pending_moderation_tasks_singular": "tarefa de moderação pendente",
     "@pending_moderation_tasks_singular": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "pending_moderation_tasks_plural": "väntande modereringsuppgifter",
+    "pending_moderation_tasks_plural": "tarefas de moderação pendentes",
     "@pending_moderation_tasks_plural": {
         "description": "Eg. No pending moderation tasks found",
         "type": "text",
@@ -478,21 +478,21 @@
 
         }
     },
-    "my_moderation_penalties_title": "Modereringsstraff",
+    "my_moderation_penalties_title": "Penalidades de moderação",
     "@my_moderation_penalties_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_moderation_penalties_resouce_singular": "modereringsstraff",
+    "my_moderation_penalties_resouce_singular": "penalidade de moderação",
     "@my_moderation_penalties_resouce_singular": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_moderation_penalties_resource_plural": "modereringsstraff",
+    "my_moderation_penalties_resource_plural": "penalidades de moderação",
     "@my_moderation_penalties_resource_plural": {
         "description": "See all moderation penalties, No moderation penalties found etc..",
         "type": "text",

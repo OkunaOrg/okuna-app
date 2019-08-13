@@ -1,5 +1,5 @@
 {
-    "suggestions": "Förslag",
+    "suggestions": "Sugestões",
     "@suggestions": {
         "description": "The title to display on the suggestions when searching for accounts when trying to mention someone.",
         "type": "text",

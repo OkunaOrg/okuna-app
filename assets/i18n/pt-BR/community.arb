@@ -1,89 +1,89 @@
 {
-    "no": "Nej",
+    "no": "Não",
     "@no": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "yes": "Ja",
+    "yes": "Sim",
     "@yes": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "button_staff": "Personal",
+    "button_staff": "Equipe",
     "@button_staff": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "button_rules": "Regler",
+    "button_rules": "Regras",
     "@button_rules": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community": "gemenskap",
+    "community": "comunidade",
     "@community": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "communities": "gemenskaper",
+    "communities": "comunidades",
     "@communities": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "type_public": "Offentlig",
+    "type_public": "Pública",
     "@type_public": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "type_private": "Privat",
+    "type_private": "Privada",
     "@type_private": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "member_capitalized": "Medlem",
+    "member_capitalized": "Membro",
     "@member_capitalized": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "members_capitalized": "Medlemmar",
+    "members_capitalized": "Membros",
     "@members_capitalized": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "admin_desc": "Detta kommer tillåta medlemmen att redigera gemenskapens information, administratörer, moderatorer och bannade användare.",
+    "admin_desc": "Isso permitirá que o membro edite os detalhes da comunidade, administradores, moderadores e usuários banidos.",
     "@admin_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "confirmation_title": "Bekräftelse",
+    "confirmation_title": "Confirmação",
     "@confirmation_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "admin_add_confirmation": "Är du säker på att du vill lägga till @{username} som administratör för gemenskapen?",
+    "admin_add_confirmation": "Você tem certeza de que deseja adicionar @{username} como administrador da comunidade?",
     "@admin_add_confirmation": {
         "type": "text",
         "placeholders": {
@@ -92,7 +92,7 @@
             }
         }
     },
-    "ban_confirmation": "Är du säker på att du vill banna @{username}?",
+    "ban_confirmation": "Você tem certeza de que deseja banir @{username}?",
     "@ban_confirmation": {
         "type": "text",
         "placeholders": {
@@ -101,14 +101,14 @@
             }
         }
     },
-    "ban_desc": "Detta kommer ta bort användaren från gemenskapen och hindra dem från att gå med igen.",
+    "ban_desc": "Isso removerá o usuário da comunidade e impedirá que ele entre novamente.",
     "@ban_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderator_add_confirmation": "Är du säker på att du vill lägga till @{username} som gemenskapsmoderator?",
+    "moderator_add_confirmation": "Você tem certeza de que deseja adicionar @{username} como moderador da comunidade?",
     "@moderator_add_confirmation": {
         "type": "text",
         "placeholders": {
@@ -117,301 +117,301 @@
             }
         }
     },
-    "moderator_desc": "Detta kommer tillåta medlemmen att redigera gemenskapens information, moderatorer och bannade användare.",
+    "moderator_desc": "Isso permitirá que o membro edite os detalhes da comunidade, moderadores e usuários banidos.",
     "@moderator_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderators_you": "Du",
+    "moderators_you": "Você",
     "@moderators_you": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderators_title": "Moderatorer",
+    "moderators_title": "Moderadores",
     "@moderators_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "leave_desc": "Du kommer inte se dess inlägg i din tidslinje eller kunna skapa nya inlägg i den längre.",
+    "leave_desc": "Você não poderá mais ver as publicações desta comunidade, nem publicar nela.",
     "@leave_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "leave_confirmation": "Är du säker på att du vill lämna gemenskapen?",
+    "leave_confirmation": "Você tem certeza de que deseja sair da comunidade?",
     "@leave_confirmation": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderator_resource_name": "moderator",
+    "moderator_resource_name": "moderador",
     "@moderator_resource_name": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderators_resource_name": "moderatorer",
+    "moderators_resource_name": "moderadores",
     "@moderators_resource_name": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "add_moderator_title": "Lägg till moderator",
+    "add_moderator_title": "Adicionar moderador",
     "@add_moderator_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "delete_confirmation": "Är du säker på att du vill ta bort gemenskapen?",
+    "delete_confirmation": "Você tem certeza de que deseja excluir a comunidade?",
     "@delete_confirmation": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "delete_desc": "Du kommer inte se dess inlägg i din tidslinje eller kunna skapa nya inlägg i den längre.",
+    "delete_desc": "Você não poderá mais ver as publicações desta comunidade, nem publicar nela.",
     "@delete_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "actions_manage_text": "Hantera",
+    "actions_manage_text": "Gerenciar",
     "@actions_manage_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_title": "Hantera gemenskap",
+    "manage_title": "Gerenciar comunidade",
     "@manage_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_details_title": "Detaljer",
+    "manage_details_title": "Detalhes",
     "@manage_details_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_details_desc": "Ändra titel, namn, avatar, omslagsfoto och mer.",
+    "manage_details_desc": "Alterar título, nome, avatar, foto de capa e mais.",
     "@manage_details_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_admins_title": "Administratörer",
+    "manage_admins_title": "Administradores",
     "@manage_admins_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_admins_desc": "Se, lägg till och ta bort administratörer.",
+    "manage_admins_desc": "Ver, adicionar e remover administradores.",
     "@manage_admins_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_mods_title": "Moderatorer",
+    "manage_mods_title": "Moderadores",
     "@manage_mods_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_mods_desc": "Se, lägg till och ta bort moderatorer.",
+    "manage_mods_desc": "Ver, adicionar e remover moderadores.",
     "@manage_mods_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_banned_title": "Bannade användare",
+    "manage_banned_title": "Usuários banidos",
     "@manage_banned_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_banned_desc": "Se, lägg till och ta bort bannade användare.",
+    "manage_banned_desc": "Ver, adicionar e remover usuários banidos.",
     "@manage_banned_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_mod_reports_title": "Anmälningar",
+    "manage_mod_reports_title": "Reportado à moderação",
     "@manage_mod_reports_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_mod_reports_desc": "Granska gemenskapens anmälningar.",
+    "manage_mod_reports_desc": "Revise as denúncias à moderação da comunidade.",
     "@manage_mod_reports_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_closed_posts_title": "Stängda inlägg",
+    "manage_closed_posts_title": "Posts fechados",
     "@manage_closed_posts_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_closed_posts_desc": "Se och hantera stängda inlägg",
+    "manage_closed_posts_desc": "Ver e gerenciar os posts fechados",
     "@manage_closed_posts_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_invite_title": "Bjud in folk",
+    "manage_invite_title": "Convidar pessoas",
     "@manage_invite_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_invite_desc": "Bjud in dina kontakter och följare till gemenskapen.",
+    "manage_invite_desc": "Convide suas conexões e seguidores para se juntar à comunidade.",
     "@manage_invite_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_delete_title": "Ta bort gemenskapen",
+    "manage_delete_title": "Excluir comunidade",
     "@manage_delete_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_delete_desc": "Ta bort gemenskapen, för alltid.",
+    "manage_delete_desc": "Excluir a comunidade, para sempre.",
     "@manage_delete_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_leave_title": "Lämna gemenskapen",
+    "manage_leave_title": "Sair da comunidade",
     "@manage_leave_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_leave_desc": "Lämna gemenskapen.",
+    "manage_leave_desc": "Sair da comunidade.",
     "@manage_leave_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_add_favourite": "Lägg till gemenskapen bland dina favoriter",
+    "manage_add_favourite": "Adicionar a comunidade às suas favoritas",
     "@manage_add_favourite": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "manage_remove_favourite": "Ta bort gemenskapen från dina favoriter",
+    "manage_remove_favourite": "Remover a comunidade de suas favoritas",
     "@manage_remove_favourite": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "is_private": "Den här gemenskapen är privat.",
+    "is_private": "Essa comunidade é privada.",
     "@is_private": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "invited_by_member": "Du måste bli inbjuden av en medlem.",
+    "invited_by_member": "Você deve ser convidado(a) por um membro.",
     "@invited_by_member": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "invited_by_moderator": "Du måste bli inbjuden av en moderator.",
+    "invited_by_moderator": "Você deve ser convidado(a) por um moderador.",
     "@invited_by_moderator": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "refreshing": "Uppdaterar gemenskap",
+    "refreshing": "Atualizando a comunidade",
     "@refreshing": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "posts": "Inlägg",
+    "posts": "Posts",
     "@posts": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "about": "Om",
+    "about": "Sobre",
     "@about": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "category": "kategori.",
+    "category": "categoria.",
     "@category": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "categories": "kategorier.",
+    "categories": "categorias.",
     "@categories": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "add_administrators_title": "Lägg till administratör.",
+    "add_administrators_title": "Adicionar administrador.",
     "@add_administrators_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_members": "Gemenskapens medlemmar",
+    "community_members": "Membros da comunidade",
     "@community_members": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "member": "medlem",
+    "member": "membro",
     "@member": {
         "description": "Currently not used in app, reserved for potential use. Could be used as: Showing 1 member",
         "type": "text",
@@ -419,7 +419,7 @@
 
         }
     },
-    "member_plural": "medlemmar",
+    "member_plural": "membros",
     "@member_plural": {
         "description": "See all members ,Search all members",
         "type": "text",
@@ -427,14 +427,14 @@
 
         }
     },
-    "administrators_title": "Administratörer",
+    "administrators_title": "Administradores",
     "@administrators_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "administrator_text": "administratör",
+    "administrator_text": "administrador",
     "@administrator_text": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrator",
         "type": "text",
@@ -442,7 +442,7 @@
 
         }
     },
-    "administrator_plural": "administratörer",
+    "administrator_plural": "administradores",
     "@administrator_plural": {
         "description": "Egs. Search administrators, See list_search_text in user_search.arb ",
         "type": "text",
@@ -450,21 +450,21 @@
 
         }
     },
-    "administrator_you": "Du",
+    "administrator_you": "Você",
     "@administrator_you": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "user_you_text": "Du",
+    "user_you_text": "Você",
     "@user_you_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "pick_upto_max": "Välj upp till {max} kategorier",
+    "pick_upto_max": "Escolha até {max} categorias",
     "@pick_upto_max": {
         "type": "text",
         "placeholders": {
@@ -473,7 +473,7 @@
             }
         }
     },
-    "pick_atleast_min_category": "Du måste välja åtminstone {min} kategori.",
+    "pick_atleast_min_category": "Você deve escolher pelo menos {min} categoria.",
     "@pick_atleast_min_category": {
         "description": "You must pick at least 1 category",
         "type": "text",
@@ -483,7 +483,7 @@
             }
         }
     },
-    "pick_atleast_min_categories": "Du måste välja åtminstone {min} kategorier.",
+    "pick_atleast_min_categories": "Você deve escolher pelo menos {min} categorias.",
     "@pick_atleast_min_categories": {
         "description": "Eg. Variable min will be 3-5. You must pick at least (3-5) categories",
         "type": "text",
@@ -493,21 +493,21 @@
             }
         }
     },
-    "ban_user_title": "Banna användare",
+    "ban_user_title": "Banir usuário",
     "@ban_user_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "banned_users_title": "Bannade användare",
+    "banned_users_title": "Usuários banidos",
     "@banned_users_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "banned_user_text": "bannad användare",
+    "banned_user_text": "usuário banido",
     "@banned_user_text": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 banned user",
         "type": "text",
@@ -515,7 +515,7 @@
 
         }
     },
-    "banned_users_text": "bannade användare",
+    "banned_users_text": "usuários banidos",
     "@banned_users_text": {
         "description": "Egs. Search banned users, See list_search_text in user_search.arb ",
         "type": "text",
@@ -523,14 +523,14 @@
 
         }
     },
-    "favorites_title": "Favoriter",
+    "favorites_title": "Favoritas",
     "@favorites_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "favorite_community": "favoritgemenskap",
+    "favorite_community": "comunidade favorita",
     "@favorite_community": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
         "type": "text",
@@ -538,7 +538,7 @@
 
         }
     },
-    "favorite_communities": "favoritgemenskaper",
+    "favorite_communities": "comunidades favoritas",
     "@favorite_communities": {
         "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
         "type": "text",
@@ -546,14 +546,14 @@
 
         }
     },
-    "administrated_title": "Administrerade",
+    "administrated_title": "Administradas",
     "@administrated_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "administrated_community": "administrerad gemenskap",
+    "administrated_community": "comunidade administrada",
     "@administrated_community": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community",
         "type": "text",
@@ -561,7 +561,7 @@
 
         }
     },
-    "administrated_communities": "administrerade gemenskaper",
+    "administrated_communities": "comunidades administradas",
     "@administrated_communities": {
         "description": "Egs. Search administrated communities, See list_search_text in user_search.arb ",
         "type": "text",
@@ -569,14 +569,14 @@
 
         }
     },
-    "moderated_title": "Modererade",
+    "moderated_title": "Moderadas",
     "@moderated_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "moderated_community": "modererad gemenskap",
+    "moderated_community": "comunidade moderada",
     "@moderated_community": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community",
         "type": "text",
@@ -584,7 +584,7 @@
 
         }
     },
-    "moderated_communities": "modererade gemenskaper",
+    "moderated_communities": "comunidades moderadas",
     "@moderated_communities": {
         "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
         "type": "text",
@@ -592,14 +592,14 @@
 
         }
     },
-    "joined_title": "Medlem i",
+    "joined_title": "Ingressadas",
     "@joined_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "joined_community": "gemenskap du är medlem i",
+    "joined_community": "comunidade ingressada",
     "@joined_community": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 joined community",
         "type": "text",
@@ -607,7 +607,7 @@
 
         }
     },
-    "joined_communities": "gemenskaper du är medlem i",
+    "joined_communities": "comunidades ingressadas",
     "@joined_communities": {
         "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
         "type": "text",
@@ -615,42 +615,42 @@
 
         }
     },
-    "join_communities_desc": "Gå med i gemenskaper för att se den här fliken komma till liv!",
+    "join_communities_desc": "Entre nas comunidades para ver esta aba ganhar vida!",
     "@join_communities_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "refresh_text": "Uppdatera",
+    "refresh_text": "Atualizar",
     "@refresh_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "trending_none_found": "Inga trendiga gemenskaper hittades. Försök igen om några minuter.",
+    "trending_none_found": "Nenhuma comunidade em alta encontrada. Tente novamente em alguns minutos.",
     "@trending_none_found": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "trending_refresh": "Uppdatera",
+    "trending_refresh": "Atualizar",
     "@trending_refresh": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "trending_in_all": "Trendiga från alla kategorier",
+    "trending_in_all": "Em alta em todas as categorias",
     "@trending_in_all": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "trending_in_category": "Trendiga i {categoryName}",
+    "trending_in_category": "Em alta em {categoryName}",
     "@trending_in_category": {
         "type": "text",
         "placeholders": {
@@ -659,42 +659,42 @@
             }
         }
     },
-    "communities_title": "Gemenskaper",
+    "communities_title": "Comunidades",
     "@communities_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "communities_no_category_found": "Inga kategorier hittades. Vänligen försök igen om några minuter.",
+    "communities_no_category_found": "Nenhuma categoria encontrada. Por favor, tente novamente em alguns minutos.",
     "@communities_no_category_found": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "communities_refresh_text": "Uppdatera",
+    "communities_refresh_text": "Atualizar",
     "@communities_refresh_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "communities_all_text": "Alla",
+    "communities_all_text": "Todas",
     "@communities_all_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "invite_to_community_title": "Bjud in till gemenskapen",
+    "invite_to_community_title": "Convidar para a comunidade",
     "@invite_to_community_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "invite_to_community_resource_singular": "kontakt eller följare",
+    "invite_to_community_resource_singular": "conexão ou seguidor",
     "@invite_to_community_resource_singular": {
         "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower",
         "type": "text",
@@ -702,7 +702,7 @@
 
         }
     },
-    "invite_to_community_resource_plural": "kontakter och följare",
+    "invite_to_community_resource_plural": "conexões e seguidores",
     "@invite_to_community_resource_plural": {
         "description": "Egs. Search connections and followers, See list_search_text in user_search.arb ",
         "type": "text",
@@ -710,49 +710,49 @@
 
         }
     },
-    "favorite_action": "Markera gemenskap som favorit",
+    "favorite_action": "Favoritar comunidade",
     "@favorite_action": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "unfavorite_action": "Ta bort gemenskap från favoriter",
+    "unfavorite_action": "Desfavoritar comunidade",
     "@unfavorite_action": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_label_title": "Titel",
+    "save_community_label_title": "Título",
     "@save_community_label_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_label_title_hint_text": "t. ex. Resor, Fotografering, Datorspel.",
+    "save_community_label_title_hint_text": "ex: Viagem, Fotografia, Jogos.",
     "@save_community_label_title_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_title": "Namn",
+    "save_community_name_title": "Nome",
     "@save_community_name_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_title_hint_text": " t. ex. resor, fotografering, datorspel.",
+    "save_community_name_title_hint_text": " ex: viagem, fotografia, jogos.",
     "@save_community_name_title_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_taken": "Gemenskapsnamnet '{takenName}' är upptaget",
+    "save_community_name_taken": "O nome de comunidade '{takenName}' já está em uso",
     "@save_community_name_taken": {
         "type": "text",
         "placeholders": {
@@ -761,203 +761,203 @@
             }
         }
     },
-    "save_community_name_label_color": "Färg",
+    "save_community_name_label_color": "Cor",
     "@save_community_name_label_color": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_color_hint_text": "(Tryck för att ändra)",
+    "save_community_name_label_color_hint_text": "(Toque para alterar)",
     "@save_community_name_label_color_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_type": "Typ",
+    "save_community_name_label_type": "Tipo",
     "@save_community_name_label_type": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_type_hint_text": "(Tryck för att ändra)",
+    "save_community_name_label_type_hint_text": "(Toque para alterar)",
     "@save_community_name_label_type_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_member_invites": "Medlemsinbjudningar",
+    "save_community_name_member_invites": "Convites de membros",
     "@save_community_name_member_invites": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_member_invites_subtitle": "Medlemmar kan bjuda in folk till gemenskapen",
+    "save_community_name_member_invites_subtitle": "Membros podem convidar pessoas para a comunidade",
     "@save_community_name_member_invites_subtitle": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_category": "Kategori",
+    "save_community_name_category": "Categoria",
     "@save_community_name_category": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_desc_optional": "Beskrivning · Valfri",
+    "save_community_name_label_desc_optional": "Descrição · Opcional",
     "@save_community_name_label_desc_optional": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_desc_optional_hint_text": "Vad handlar din gemenskap om?",
+    "save_community_name_label_desc_optional_hint_text": "Sobre o que é a sua comunidade?",
     "@save_community_name_label_desc_optional_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_rules_optional": "Regler · Valfritt",
+    "save_community_name_label_rules_optional": "Regras · Opcional",
     "@save_community_name_label_rules_optional": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_rules_optional_hint_text": "Finns det något som du vill att dina användare känner till?",
+    "save_community_name_label_rules_optional_hint_text": "Há algo que você gostaria que seus usuários soubessem?",
     "@save_community_name_label_rules_optional_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_member_adjective": "Medlem-adjektiv · Valfritt",
+    "save_community_name_label_member_adjective": "Adjetivo para membro · Opcional",
     "@save_community_name_label_member_adjective": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_member_adjective_hint_text": "t. ex. resenär, fotograf, gamer.",
+    "save_community_name_label_member_adjective_hint_text": "ex: viajante, fotógrafo, gamer.",
     "@save_community_name_label_member_adjective_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_members_adjective": "Medlemmar-adjektiv · Valfritt",
+    "save_community_name_label_members_adjective": "Adjetivo para membros · Opcional",
     "@save_community_name_label_members_adjective": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_name_label_members_adjective_hint_text": "t. ex. resenärer, fotografer, gamers.",
+    "save_community_name_label_members_adjective_hint_text": "ex: viajantes, fotógrafos, gamers.",
     "@save_community_name_label_members_adjective_hint_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_edit_community": "Redigera gemenskap",
+    "save_community_edit_community": "Editar comunidade",
     "@save_community_edit_community": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_create_community": "Skapa gemenskap",
+    "save_community_create_community": "Criar comunidade",
     "@save_community_create_community": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_save_text": "Spara",
+    "save_community_save_text": "Salvar",
     "@save_community_save_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "save_community_create_text": "Skapa",
+    "save_community_create_text": "Criar",
     "@save_community_create_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "actions_invite_people_title": "Bjud in folk till gemenskapen",
+    "actions_invite_people_title": "Convide pessoas para a comunidade",
     "@actions_invite_people_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "join_community": "Gå med",
+    "join_community": "Entrar",
     "@join_community": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "leave_community": "Lämna",
+    "leave_community": "Sair",
     "@leave_community": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "community_staff": "Gemenskapens personal",
+    "community_staff": "Equipe da comunidade",
     "@community_staff": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "post_singular": "inlägg",
+    "post_singular": "post",
     "@post_singular": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "post_plural": "inlägg",
+    "post_plural": "posts",
     "@post_plural": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "rules_title": "Gemenskapens regler",
+    "rules_title": "Regras da comunidade",
     "@rules_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "rules_text": "Regler",
+    "rules_text": "Regras",
     "@rules_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "name_characters_error": "Ett namn kan bara innehålla alfanumeriska tecken och understreck.",
+    "name_characters_error": "O nome só pode conter caracteres alfanuméricos e underlines (_).",
     "@name_characters_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "name_range_error": "Namnet får inte vara längre än {maxLength} tecken.",
+    "name_range_error": "O nome não pode ser maior que {maxLength} caracteres.",
     "@name_range_error": {
         "type": "text",
         "placeholders": {
@@ -966,14 +966,14 @@
             }
         }
     },
-    "name_empty_error": "Du måste ange ett namn.",
+    "name_empty_error": "O nome não pode ficar vazio.",
     "@name_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "title_range_error": "Titeln får inte vara längre än {maxLength} tecken.",
+    "title_range_error": "O título não pode ser maior que {maxLength} caracteres.",
     "@title_range_error": {
         "type": "text",
         "placeholders": {
@@ -982,14 +982,14 @@
             }
         }
     },
-    "title_empty_error": "Du måste ange en titel.",
+    "title_empty_error": "O título não pode ficar vazio.",
     "@title_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "rules_range_error": "Reglerna får inte vara längre än {maxLength} tecken.",
+    "rules_range_error": "As regras não podem ser maiores que {maxLength} caracteres.",
     "@rules_range_error": {
         "type": "text",
         "placeholders": {
@@ -998,14 +998,14 @@
             }
         }
     },
-    "rules_empty_error": "Regelfältet kan inte vara tomt.",
+    "rules_empty_error": "As regras não podem ficar vazias.",
     "@rules_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "description_range_error": "Beskrivningen kan inte vara längre än {maxLength} tecken.",
+    "description_range_error": "A descrição não pode ser maior que {maxLength} caracteres.",
     "@description_range_error": {
         "type": "text",
         "placeholders": {
@@ -1014,7 +1014,7 @@
             }
         }
     },
-    "adjectives_range_error": "Adjektiv får inte vara längre än {maxLength} tecken.",
+    "adjectives_range_error": "Os adjetivos não podem ser mais longos que {maxLength} caracteres.",
     "@adjectives_range_error": {
         "description": "This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers",
         "type": "text",
