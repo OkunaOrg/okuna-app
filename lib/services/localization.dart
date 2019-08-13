@@ -19,7 +19,7 @@ class LocalizationService {
   /// See README 7.c for a word on localizedLocales.
   /// These are locales where we have custom crowdin language codes like pt-BR
   /// to support Brazilian Portuguese with a particular country, say Brazil.
-  static const localizedLocales = ['pt-BR'];
+  static const localizedLocales = ['pt-BR', 'es-ES', 'sv-SE'];
 
   Future<LocalizationService> load() {
     final String name = locale.countryCode == null ? locale.languageCode : locale.toString();

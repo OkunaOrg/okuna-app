@@ -27,3 +27,16 @@ generate_locale:
 build_locale:
 	node bin/buildLocales
 	flutter pub pub run intl_translation:generate_from_arb --output-dir=lib/locale --no-use-deferred-loading lib/services/localization.dart assets/i18n/intl_*.arb
+
+upload_crowdin_locales:
+    crowdin upload sources
+
+download_crowdin_locales:
+    crowdin download -l de
+    crowdin download -l es-ES
+    crowdin download -l fr
+    crowdin download -l it
+    crowdin download -l pt-BR
+    crowdin download -l sv-SE
+    crowdin download -l tr
+
