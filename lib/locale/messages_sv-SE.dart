@@ -68,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m23(postCommentText) => "[name] [username] svarade: ${postCommentText}";
 
+  static m24(postCommentText) => "[name] [username] nämnde dig i en kommentar: ${postCommentText}";
+
   static m25(communityName) => "[name] [username] har bjudit in dig till gemenskapen /c/${communityName}.";
 
   static m26(maxLength) => "En kommentar kan inte vara längre än ${maxLength} tecken.";
@@ -505,8 +507,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon svarar på en av dina kommentarer eller en kommentar du också svarat på."),
     "notifications__comment_reply_notification_tile_user_also_replied" : m22,
     "notifications__comment_reply_notification_tile_user_replied" : m23,
-    "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Svar på kommentar på inlägg"),
+    "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Svar på kommentar"),
     "notifications__comment_title" : MessageLookupByLibrary.simpleMessage("Kommentar på inlägg"),
+    "notifications__comment_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon nämner dig i en av sina kommentarer"),
+    "notifications__comment_user_mention_title" : MessageLookupByLibrary.simpleMessage("Omnämnande i kommentar"),
     "notifications__community_invite_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon bjuder in dig till en gemenskap."),
     "notifications__community_invite_title" : MessageLookupByLibrary.simpleMessage("Gemenskapsinbjudan"),
     "notifications__connection_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon vill ha dig som kontakt"),
@@ -517,12 +521,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__following_you_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] har börjat följa dig."),
     "notifications__general_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när något händer"),
     "notifications__general_title" : MessageLookupByLibrary.simpleMessage("Aviseringar"),
+    "notifications__mentioned_in_post_comment_tile" : m24,
+    "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] nämnde dig i ett inlägg."),
     "notifications__mute_post_turn_off_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Inaktivera aviseringar för inläggskommentarer"),
     "notifications__mute_post_turn_off_post_notifications" : MessageLookupByLibrary.simpleMessage("Inaktivera aviseringar för inlägg"),
     "notifications__mute_post_turn_on_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Aktivera aviseringar för inläggskommentarer"),
     "notifications__mute_post_turn_on_post_notifications" : MessageLookupByLibrary.simpleMessage("Aktivera aviseringar för inlägg"),
     "notifications__post_reaction_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon reagerar på ett av dina inlägg."),
     "notifications__post_reaction_title" : MessageLookupByLibrary.simpleMessage("Reaktion på inlägg"),
+    "notifications__post_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon nämner dig i ett av sina inlägg"),
+    "notifications__post_user_mention_title" : MessageLookupByLibrary.simpleMessage("Omnämnande i inlägg"),
     "notifications__reacted_to_post_comment_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagerade på din inläggskommentar."),
     "notifications__reacted_to_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagerade på ditt inlägg."),
     "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Aviseringsinställningar"),

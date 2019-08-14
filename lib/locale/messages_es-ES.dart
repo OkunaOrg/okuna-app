@@ -68,7 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m23(postCommentText) => "[name] [username] respondió: ${postCommentText}";
 
-  static m24(postCommentText) => "[name] [username] te mencionó en un comentario.";
+  static m24(postCommentText) => "[name] [username] te mencionó en un comentario: ${postCommentText}";
 
   static m25(communityName) => "[name] [username] te ha invitado a unirte a la comunidad /c/${communityName}.";
 
