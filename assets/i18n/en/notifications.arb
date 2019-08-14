@@ -191,11 +191,13 @@
       "postCommentText": {}
     }
   },
-  "mentioned_in_post_comment_tile": "[name] [username] mentioned you on a comment.",
+  "mentioned_in_post_comment_tile": "[name] [username] mentioned you on a comment: {postCommentText}",
   "@mentioned_in_post_comment_tile": {
-    "description": "Eg.: James @jamest mentioned you on a comment.",
+    "description": "Eg.: James @jamest mentioned you on a comment: hello @jamest",
     "type": "text",
-    "placeholders": {}
+    "placeholders": {
+      "postCommentText": {}
+    }
   },
   "mentioned_in_post_tile": "[name] [username] mentioned you on a post.",
   "@mentioned_in_post_tile": {

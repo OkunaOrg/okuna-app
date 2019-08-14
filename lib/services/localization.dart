@@ -3424,9 +3424,10 @@ class LocalizationService {
         name: 'moderation__my_moderation_penalties_resource_plural');
   }
 
-  String get notifications__mentioned_in_post_comment_tile {
-    return Intl.message("[name] [username] mentioned you on a comment.",
-        desc: "Eg.: James @jamest mentioned you on a comment.",
+  String notifications__mentioned_in_post_comment_tile(String postCommentText) {
+    return Intl.message("[name] [username] mentioned you on a comment: $postCommentText",
+        args: [postCommentText],
+        desc: "Eg.: James @jamest mentioned you on a comment: hello @jamest",
         name: 'notifications__mentioned_in_post_comment_tile');
   }
 
