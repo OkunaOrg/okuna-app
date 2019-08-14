@@ -44,15 +44,15 @@ class OBPostCreatorIdentifier extends StatelessWidget {
                     child: RichText(
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(
-                          style: TextStyle(
-                              color: secondaryTextColor, fontSize: 14),
+                          style: themeService.getTextStyle(TextStyle(
+                              color: secondaryTextColor, fontSize: 14)),
                           children: [
                             TextSpan(
                                 text: '$commenterName',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: themeService.getTextStyle(TextStyle(fontWeight: FontWeight.bold))),
                             TextSpan(
                                 text: ' @$commenterUsername',
-                                style: TextStyle(fontSize: 12)),
+                                style: themeService.getTextStyle(TextStyle(fontSize: 12))),
                           ]),
                     ),
                   ),
