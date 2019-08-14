@@ -28,16 +28,15 @@ class OBPrimaryAccentText extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          TextStyle finalStyle = style;
-          TextStyle themedTextStyle = TextStyle(
-              foreground: Paint()
-                ..shader = themeValueParserService
-                    .parseGradient(theme.primaryAccentColor).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)));
+          TextStyle finalStyle = themeService.getDefaultTextStyle().merge(
+              TextStyle(
+                  foreground: Paint()
+                    ..shader = themeValueParserService
+                        .parseGradient(theme.primaryAccentColor)
+                        .createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))));
 
-          if (finalStyle != null) {
-            finalStyle = finalStyle.merge(themedTextStyle);
-          } else {
-            finalStyle = themedTextStyle;
+          if (style != null) {
+            finalStyle = style.merge(finalStyle);
           }
 
           return OBText(

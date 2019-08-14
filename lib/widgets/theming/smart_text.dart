@@ -380,13 +380,9 @@ class OBSmartText extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
         OBTheme theme = snapshot.data;
 
-        Color primaryTextColor =
-            themeValueParserService.parseColor(theme.primaryTextColor);
-
-        TextStyle textStyle = TextStyle(
-            color: primaryTextColor,
-            fontSize: fontSize,
-            fontFamilyFallback: ['NunitoSans']);
+        TextStyle textStyle = themeService
+            .getThemedTextStyle(theme)
+            .merge(TextStyle(fontSize: fontSize));
 
         TextStyle secondaryTextStyle;
 
@@ -395,21 +391,18 @@ class OBSmartText extends StatelessWidget {
           Color secondaryTextColor =
               themeValueParserService.parseColor(theme.secondaryTextColor);
           secondaryTextColor = TinyColor(secondaryTextColor).lighten(10).color;
-          secondaryTextStyle = TextStyle(
-              color: secondaryTextColor,
-              fontSize: fontSize * 0.8,
-              fontFamilyFallback: ['NunitoSans']);
+          secondaryTextStyle = textStyle.merge(
+              TextStyle(color: secondaryTextColor, fontSize: fontSize * 0.8));
         }
 
         Color actionsForegroundColor = themeValueParserService
             .parseGradient(theme.primaryAccentColor)
             .colors[1];
 
-        TextStyle smartItemsStyle = TextStyle(
+        TextStyle smartItemsStyle = textStyle.merge(TextStyle(
           color: actionsForegroundColor,
-          fontSize: fontSize,
           fontWeight: FontWeight.bold,
-        );
+        ));
 
         return RichText(
           overflow: overflow,

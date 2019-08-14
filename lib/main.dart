@@ -315,10 +315,13 @@ TextTheme _defaultTextTheme() {
   // This text theme is merged with the default theme in the `TextData`
   // constructor. This makes sure that the emoji font is used as fallback for
   // every text that uses the default theme.
-  var style;
+
+  // Make sure this is the same as in lib/services/theme.dart ThemeService()
+  var fontFamilyFallback = ['NunitoSans', 'DejavuSans'];
   if (isOnDesktop) {
-    style = new TextStyle(fontFamilyFallback: ['Emoji']);
+    fontFamilyFallback = ['NunitoSans', 'Emoji', 'DejavuSans'];
   }
+  var style = new TextStyle(fontFamilyFallback: fontFamilyFallback);
   return new TextTheme(
     body1: style,
     body2: style,

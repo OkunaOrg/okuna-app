@@ -124,13 +124,13 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 child: DefaultTextStyle(
                   // Default with the inactive state.
-                  style: TextStyle(
+                  style: themeService.getDefaultTextStyle().merge(TextStyle(
                     fontFamily: '.SF UI Text',
                     fontSize: 10.0,
                     letterSpacing: 0.1,
                     fontWeight: FontWeight.w400,
                     color: inactiveColor,
-                  ),
+                  )),
                   child: Padding(
                     padding: EdgeInsets.only(bottom: bottomPadding),
                     child: Row(

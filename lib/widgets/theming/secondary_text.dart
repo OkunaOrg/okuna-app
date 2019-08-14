@@ -25,15 +25,13 @@ class OBSecondaryText extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          TextStyle finalStyle = style;
-          TextStyle themedTextStyle = TextStyle(
-              color:
-                  themeValueParserService.parseColor(theme.secondaryTextColor));
+          TextStyle finalStyle = themeService.getDefaultTextStyle().merge(
+              TextStyle(
+                  color: themeValueParserService
+                      .parseColor(theme.secondaryTextColor)));
 
-          if (finalStyle != null) {
-            finalStyle = finalStyle.merge(themedTextStyle);
-          } else {
-            finalStyle = themedTextStyle;
+          if (style != null) {
+            finalStyle = style.merge(finalStyle);
           }
 
           return OBText(

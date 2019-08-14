@@ -27,7 +27,7 @@ class OBRemainingPostCharacters extends StatelessWidget {
 
           return Text(
             remainingCharacters.toString(),
-            style: TextStyle(
+            style: themeService.getDefaultTextStyle().merge(TextStyle(
                 fontSize: 12.0,
                 color: exceededMaxCharacters
                     ? themeValueParserService.parseColor(theme.dangerColor)
@@ -35,7 +35,7 @@ class OBRemainingPostCharacters extends StatelessWidget {
                         .parseColor(theme.primaryTextColor),
                 fontWeight: exceededMaxCharacters
                     ? FontWeight.bold
-                    : FontWeight.normal),
+                    : FontWeight.normal)),
           );
         });
   }

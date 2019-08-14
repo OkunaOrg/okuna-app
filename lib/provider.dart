@@ -162,6 +162,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     validationService
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
+    themeService.setThemeValueParserService(themeValueParserService);
     pushNotificationsService.setUserService(userService);
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
