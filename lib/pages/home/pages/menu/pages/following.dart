@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/users_list.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/widgets/buttons/actions/follow_button.dart';
 import 'package:Okuna/widgets/http_list.dart';
@@ -24,6 +25,7 @@ class OBFollowingPage extends StatefulWidget {
 class OBFollowingPageState extends State<OBFollowingPage> {
   UserService _userService;
   NavigationService _navigationService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -41,12 +43,13 @@ class OBFollowingPageState extends State<OBFollowingPage> {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
       _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Following',
+        title: _localizationService.user__following_text,
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
@@ -56,8 +59,8 @@ class OBFollowingPageState extends State<OBFollowingPage> {
           listRefresher: _refreshFollowing,
           listOnScrollLoader: _loadMoreFollowing,
           listSearcher: _searchFollowing,
-          resourceSingularName: 'following',
-          resourcePluralName: 'following',
+          resourceSingularName: _localizationService.user__following_resource_name,
+          resourcePluralName: _localizationService.user__following_resource_name,
         ),
       ),
     );

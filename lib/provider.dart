@@ -13,6 +13,7 @@ import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
+import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/services/emoji_picker.dart';
 import 'package:Okuna/services/emojis_api.dart';
@@ -102,6 +103,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
   DocumentsService documentsService = DocumentsService();
+  TextAccountAutocompletionService textAccountAutocompletionService =
+      TextAccountAutocompletionService();
 
   SentryClient sentryClient;
 
@@ -187,7 +190,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
-    waitlistApiService.setOpenbookSocialApiURL(environment.openbookSocialApiUrl);
+    waitlistApiService
+        .setOpenbookSocialApiURL(environment.openbookSocialApiUrl);
     intercomService.bootstrap(
         iosApiKey: environment.intercomIosKey,
         androidApiKey: environment.intercomAndroidKey,

@@ -1,5 +1,4 @@
 import 'package:Okuna/models/notifications/notification.dart';
-import 'package:Okuna/models/notifications/post_comment_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reply_notification.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
@@ -85,7 +84,7 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
         user: postComment.commenter,
       ),
       subtitle: OBSecondaryText(
-        utilsService.timeAgo(notification.created),
+        utilsService.timeAgo(notification.created, localizationService),
         size: OBTextSize.small,
       ),
       trailing: postImagePreview ?? const SizedBox(),

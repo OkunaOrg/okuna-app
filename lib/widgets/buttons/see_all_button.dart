@@ -1,6 +1,8 @@
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
+import '../../provider.dart';
 import '../icon.dart';
 
 class OBSeeAllButton extends StatelessWidget {
@@ -20,6 +22,7 @@ class OBSeeAllButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int remainingResourcesToDisplay = resourcesCount - previewedResourcesCount;
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
     if (previewedResourcesCount == 0 || remainingResourcesToDisplay <= 0) return const SizedBox();
 
@@ -31,7 +34,7 @@ class OBSeeAllButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             OBSecondaryText(
-              'See all $resourcesCount $resourceName',
+              _localizationService.moderation__reports_see_all(resourcesCount, resourceName),
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(

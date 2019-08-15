@@ -1,47 +1,47 @@
 {
-    "headline": "🕊 Una red social mejor.",
+    "headline": "Un meilleur réseau social.",
     "@headline": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login": "Entrar",
+    "login": "Ouvrir une session",
     "@login": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "email_empty_error": "Correo electrónico no puede estar vacío.",
+    "email_empty_error": "Le courriel ne peut pas être vide.",
     "@email_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "email_invalid_error": "Ingresa un email válido.",
+    "email_invalid_error": "Veuillez fournir une adresse courriel valide.",
     "@email_invalid_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "username_empty_error": "El nombre de usuario no puede estar vacío.",
+    "username_empty_error": "Le nom d'utilisateur.trice ne peut pas être vide.",
     "@username_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "username_characters_error": "Un nombre de usuario sólo puede contener caracteres alfanuméricos y guiones bajos.",
+    "username_characters_error": "Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des soulignements.",
     "@username_characters_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "username_maxlength_error": "El nombre de usuario no puede tener más de {maxLength} caracteres.",
+    "username_maxlength_error": "Un nom d'utilisateur.trice ne peut pas être plus long que {maxLength} caractères.",
     "@username_maxlength_error": {
         "type": "text",
         "placeholders": {
@@ -50,91 +50,91 @@
             }
         }
     },
-    "create_account": "Registro",
+    "create_account": "Inscription",
     "@create_account": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__lets_get_started": "¡Empecemos!",
+    "create_acc__lets_get_started": "Commençons",
     "@create_acc__lets_get_started": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__welcome_to_alpha": "¡ Bienvenido!",
-    "@create_acc__welcome_to_alpha": {
+    "create_acc__welcome_to_beta": "Bienvenue sur la version bêta !",
+    "@create_acc__welcome_to_beta": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__previous": "Atrás",
+    "create_acc__previous": "Précédent",
     "@create_acc__previous": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__next": "Siguiente",
+    "create_acc__next": "Suivant",
     "@create_acc__next": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__create_account": "Crear cuenta",
+    "create_acc__create_account": "Créer un compte",
     "@create_acc__create_account": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__paste_link": "Pega el enlace de registro a continuación",
+    "create_acc__paste_link": "Collez votre lien d'inscription ci-dessous",
     "@create_acc__paste_link": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__paste_password_reset_link": "Pega el enlace de restablecimiento de contraseña a continuación",
+    "create_acc__paste_password_reset_link": "Coller votre lien de réinitialisation de mot de passe ci-dessous",
     "@create_acc__paste_password_reset_link": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__paste_link_help_text": "Utiliza el link en tu correo de invitación a Okuna.",
+    "create_acc__paste_link_help_text": "Utilisez le lien du bouton « Rejoignez Okuna » dans votre courriel d'invitation.",
     "@create_acc__paste_link_help_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__link_empty_error": "La dirección no puede estar vacía.",
+    "create_acc__link_empty_error": "Le lien ne peut pas être vide.",
     "@create_acc__link_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__link_invalid_error": "Este enlace parece ser inválido.",
+    "create_acc__link_invalid_error": "Ce lien semble invalide.",
     "@create_acc__link_invalid_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "password_empty_error": "La contraseña no puede estar vacía.",
+    "password_empty_error": "Le mot de passe ne peut pas être vide.",
     "@password_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "password_range_error": "La contraseña debe tener entre {minLength} y {maxLength} caracteres.",
+    "password_range_error": "Le mot de passe doit comporter entre {minLength} et {maxLength} caractères.",
     "@password_range_error": {
         "type": "text",
         "placeholders": {
@@ -146,14 +146,14 @@
             }
         }
     },
-    "name_empty_error": "El nombre no puede estar vacío.",
+    "name_empty_error": "Le nom ne peut pas être vide.",
     "@name_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "name_range_error": "El nombre debe tener entre {minLength} y {maxLength} caracteres.",
+    "name_range_error": "Le nom doit comporter entre {minLength} et {maxLength} caractères.",
     "@name_range_error": {
         "type": "text",
         "placeholders": {
@@ -165,14 +165,14 @@
             }
         }
     },
-    "description_empty_error": "La descripción no puede estar vacía.",
+    "description_empty_error": "La description ne peut pas être vide.",
     "@description_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "description_range_error": "La descripción debe tener entre {minLength} y {maxLength} caracteres.",
+    "description_range_error": "Le description doit comporter entre {minLength} et {maxLength} caractères.",
     "@description_range_error": {
         "type": "text",
         "placeholders": {
@@ -184,196 +184,196 @@
             }
         }
     },
-    "reset_password_success_title": "¡Todo Listo!",
+    "reset_password_success_title": "Tout est prêt !",
     "@reset_password_success_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "reset_password_success_info": "Su contraseña ha sido actualizada correctamente",
+    "reset_password_success_info": "Votre mot de passe a été mis à jour avec succès",
     "@reset_password_success_info": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__request_invite": "¿No tienes invitación? Solicita una aquí.",
+    "create_acc__request_invite": "Pas d'invitation ? Demandez-en une ici.",
     "@create_acc__request_invite": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__subscribe": "Solicitar",
+    "create_acc__subscribe": "Demander",
     "@create_acc__subscribe": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__subscribe_to_waitlist_text": "¡Solicitar una invitación!",
+    "create_acc__subscribe_to_waitlist_text": "Demandez une invitation !",
     "@create_acc__subscribe_to_waitlist_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__congratulations": "¡Felicidades!",
+    "create_acc__congratulations": "Félicitations !",
     "@create_acc__congratulations": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__your_subscribed": "Eres el número {0} en la lista de espera.",
+    "create_acc__your_subscribed": "Vous êtes à la position {0} sur la liste d'attente.",
     "@create_acc__your_subscribed": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__almost_there": "¡Ya casi!",
+    "create_acc__almost_there": "Presque fini...",
     "@create_acc__almost_there": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__what_name": "Como te llamas?",
+    "create_acc__what_name": "Quel est votre nom ?",
     "@create_acc__what_name": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__name_placeholder": "Luis Miguel",
+    "create_acc__name_placeholder": "Céline Dion",
     "@create_acc__name_placeholder": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__name_empty_error": "😱 Tu nombre no puede estar vacío.",
+    "create_acc__name_empty_error": "😱 Votre nom ne peut pas être vide.",
     "@create_acc__name_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__name_length_error": "😱 Tu nombre no puede tener más de 50 caracteres. (Si es así, lo sentimos)",
+    "create_acc__name_length_error": "😱 Votre nom ne peut pas dépasser 50 caractères. (Si c'est le cas, nous sommes sincèrement désolé.e.s.)",
     "@create_acc__name_length_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__name_characters_error": "😅 Un nombre sólo puede contener caracteres alfanuméricos (por ahora).",
+    "create_acc__name_characters_error": "😅 Un nom ne peut contenir que des caractères alphanumériques (pour l'instant).",
     "@create_acc__name_characters_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__what_username": "Que usuario te gustaria tener?",
+    "create_acc__what_username": "Choisissez un nom d'utilisateur.trice",
     "@create_acc__what_username": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__username_placeholder": "juanga",
+    "create_acc__username_placeholder": "armandvaillancourt",
     "@create_acc__username_placeholder": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__username_empty_error": "😱 El nombre de usuario no puede estar vacío.",
+    "create_acc__username_empty_error": "😱 Le nom d'utilisateur.trice ne peut pas être vide.",
     "@create_acc__username_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__username_length_error": "😅 Un nombre de usuario no puede tener más de 30 caracteres.",
+    "create_acc__username_length_error": "😅 Un nom d'utilisateur.trice ne peut pas être plus long que 30 caractères.",
     "@create_acc__username_length_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__username_characters_error": "😅 Un nombre de usuario sólo puede contener caracteres alfanuméricos y guiones bajos.",
+    "create_acc__username_characters_error": "😅 Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des soulignements.",
     "@create_acc__username_characters_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__username_taken_error": "😩 El nombre de usuario @%s ya está tomado.",
+    "create_acc__username_taken_error": "😩 Le nom d'utilisateur.trice @%s est pris.",
     "@create_acc__username_taken_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__username_server_error": "😭 Estamos experimentando problemas con nuestros servidores, por favor inténtalo de nuevo en un par de minutos.",
+    "create_acc__username_server_error": "😭 Nous éprouvons des problèmes avec nos serveurs, veuillez s.v.p. réessayer dans quelques minutes.",
     "@create_acc__username_server_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__what_email": "¿Cuál es tu correo electrónico?",
+    "create_acc__what_email": "Quelle est votre adresse courriel?",
     "@create_acc__what_email": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__email_placeholder": "marc_anthony@salsa.com",
+    "create_acc__email_placeholder": "karine_vanasse@courriel.com",
     "@create_acc__email_placeholder": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__email_empty_error": "😱 Tu correo electrónico no puede estar vacío",
+    "create_acc__email_empty_error": "😱 Votre adresse courriel ne peut pas être vide",
     "@create_acc__email_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__email_invalid_error": "😅 Por favor, proporcione una dirección de correo electrónico válida.",
+    "create_acc__email_invalid_error": "😅 Veuillez fournir une adresse courriel valide.",
     "@create_acc__email_invalid_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__email_taken_error": "🤔 Una cuenta ya existe para ese correo electrónico.",
+    "create_acc__email_taken_error": "🤔 Un compte existe déjà pour cette adresse courriel.",
     "@create_acc__email_taken_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__email_server_error": "😭 Estamos experimentando problemas con nuestros servidores, por favor inténtalo de nuevo en un par de minutos.",
+    "create_acc__email_server_error": "😭 Nous éprouvons des problèmes avec nos serveurs, veuillez s.v.p. réessayer dans quelques minutes.",
     "@create_acc__email_server_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__what_password": "Elige una contraseña",
+    "create_acc__what_password": "Choisissez un mot de passe",
     "@create_acc__what_password": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc_password_hint_text": "({minLength}-{maxLength} caracteres)",
+    "create_acc_password_hint_text": "({minLength}-{maxLength} caractères)",
     "@create_acc_password_hint_text": {
         "type": "text",
         "placeholders": {
@@ -385,357 +385,357 @@
             }
         }
     },
-    "create_acc__what_password_subtext": "(min 10 caracteres)",
+    "create_acc__what_password_subtext": "(minimum 8 caractères.)",
     "@create_acc__what_password_subtext": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__password_empty_error": "😱 La contraseña no puede estar vacía",
+    "create_acc__password_empty_error": "😱 Votre mot de passe ne peut pas être vide",
     "@create_acc__password_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__password_length_error": "😅 La contraseña debe tener entre 8 y 64 caracteres.",
+    "create_acc__password_length_error": "😅 Un mot de passe doit comporter entre 8 et 64 caractères.",
     "@create_acc__password_length_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__what_avatar": "Sube una foto de perfil",
+    "create_acc__what_avatar": "Choisissez une photo de profil",
     "@create_acc__what_avatar": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__avatar_tap_to_change": "Tocar para cambiar",
+    "create_acc__avatar_tap_to_change": "Appuyer pour changer",
     "@create_acc__avatar_tap_to_change": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__avatar_choose_camera": "Toma una foto",
+    "create_acc__avatar_choose_camera": "Prendre une photo",
     "@create_acc__avatar_choose_camera": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__avatar_choose_gallery": "Usar una foto existente",
+    "create_acc__avatar_choose_gallery": "Utiliser une photo existante",
     "@create_acc__avatar_choose_gallery": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__avatar_remove_photo": "Eliminar foto",
+    "create_acc__avatar_remove_photo": "Supprimer la photo",
     "@create_acc__avatar_remove_photo": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__done": "Crear cuenta",
+    "create_acc__done": "Créer un compte",
     "@create_acc__done": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__done_subtext": "Puedes cambiar esto en cualquier momento en la configuración de tu perfil.",
+    "create_acc__done_subtext": "Vous pouvez le changer plus tard dans vos praramètres de profil.",
     "@create_acc__done_subtext": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__done_created": "Tu cuenta ha sido creada con el nombre de usuario ",
+    "create_acc__done_created": "Votre compte a été créé avec le nom d'utilisateur.trice suivant :",
     "@create_acc__done_created": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__submit_loading_title": "¡Ya casi!",
+    "create_acc__submit_loading_title": "Tenez bon !",
     "@create_acc__submit_loading_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__submit_loading_desc": "Estamos creando tu cuenta.",
+    "create_acc__submit_loading_desc": "Nous sommes en train de créer votre compte.",
     "@create_acc__submit_loading_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__submit_error_title": "Oh no...",
+    "create_acc__submit_error_title": "Ah non...",
     "@create_acc__submit_error_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__submit_error_desc_server": "😭 Estamos experimentando problemas con nuestros servidores, por favor inténtalo de nuevo en un par de minutos.",
+    "create_acc__submit_error_desc_server": "😭 Nous éprouvons des difficultés avec nos serveurs, veuillez s.v.p. réessayer dans quelques minutes.",
     "@create_acc__submit_error_desc_server": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__submit_error_desc_validation": "😅 Parece que algunos de los datos no son correctos, por favor comprueba e intenta de nuevo.",
+    "create_acc__submit_error_desc_validation": "😭 Il semble que certaines informations n'étaient pas correctes, veuillez s.v.p. vérifier et réessayer.",
     "@create_acc__submit_error_desc_validation": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__done_title": "¡Wohoo!",
+    "create_acc__done_title": "Hourra !",
     "@create_acc__done_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__done_description": "Tu cuenta ha sido creada.",
+    "create_acc__done_description": "Votre compte a été créé.",
     "@create_acc__done_description": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__your_username_is": "Tu nombre de usuario es ",
+    "create_acc__your_username_is": "Votre nom d'utilisateur.trice est :",
     "@create_acc__your_username_is": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__can_change_username": "Puedes cambiarlo en cualquier momento en la configuración de tu perfil.",
+    "create_acc__can_change_username": "Si vous le souhaitez, vous pouvez le changer à tout moment via votre page de profil.",
     "@create_acc__can_change_username": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__done_continue": "Entrar",
+    "create_acc__done_continue": "Ouverture de session",
     "@create_acc__done_continue": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__one_last_thing": "Una última cosa...",
+    "create_acc__one_last_thing": "Une dernière chose...",
     "@create_acc__one_last_thing": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__register": "Registro",
+    "create_acc__register": "Inscription",
     "@create_acc__register": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__are_you_legal_age": "¿Tienes más de 16 años?",
+    "create_acc__are_you_legal_age": "Êtes-vous agé.e de plus 16 ans ?",
     "@create_acc__are_you_legal_age": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__login": "Continuar",
+    "login__login": "Continuer",
     "@login__login": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__previous": "Anterior",
+    "login__previous": "Précédent",
     "@login__previous": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__title": "¡Bienvenido de nuevo!",
+    "login__title": "Bon retour !",
     "@login__title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__subtitle": "Introduce tus credenciales para continuar.",
+    "login__subtitle": "Entrez vos informations d'identification afin de continuer.",
     "@login__subtitle": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__forgot_password": "Olvidé mi contraseña",
+    "login__forgot_password": "Mot de passe oublié ",
     "@login__forgot_password": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__forgot_password_subtitle": "Introduce tu nombre de usuario o email",
+    "login__forgot_password_subtitle": "Entrez votre nom d'utilisateur.trice ou votre adresse courriel",
     "@login__forgot_password_subtitle": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__username_label": "Usuario",
+    "login__username_label": "Nom d'utilisateur.trice",
     "@login__username_label": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__password_label": "Contraseña",
+    "login__password_label": "Mot de passe",
     "@login__password_label": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__email_label": "Correo electrónico",
+    "login__email_label": "Adresse courriel",
     "@login__email_label": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__or_text": "O",
+    "login__or_text": "Ou",
     "@login__or_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__password_empty_error": "La contraseña es requerida.",
+    "login__password_empty_error": "Le mot de passe est requis.",
     "@login__password_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__password_length_error": "La contraseña debe tener entre 8 y 64 caracteres.",
+    "login__password_length_error": "Le mot de passe doit comporter entre 8 et 64 caractères.",
     "@login__password_length_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__username_empty_error": "El nombre de usuario es requerido.",
+    "login__username_empty_error": "Le nom d’utilisateur.trice est requis.",
     "@login__username_empty_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__username_length_error": "El nombre de usuario no puede tener más de 30 caracteres.",
+    "login__username_length_error": "Le nom d'utilisateur.trice ne peut pas être plus long que 30 caractères.",
     "@login__username_length_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__username_characters_error": "El nombre de usuario sólo puede contener caracteres alfanuméricos y guiones bajos.",
+    "login__username_characters_error": "Le nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des soulignements.",
     "@login__username_characters_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__credentials_mismatch_error": "Las credenciales proporcionadas no coinciden.",
+    "login__credentials_mismatch_error": "Les informations d'identification fournies ne correspondent pas.",
     "@login__credentials_mismatch_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__server_error": "Uh oh.. Estamos experimentando problemas del servidor. Por favor, inténtalo de nuevo en unos minutos.",
+    "login__server_error": "Oh oh... Nous éprouvons des problèmes de serveur. Veuillez s.v.p. réessayer dans quelques minutes.",
     "@login__server_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "login__connection_error": "No podemos llegar a nuestros servidores. ¿Estás conectado a Internet?",
+    "login__connection_error": "Nous ne pouvons pas établir de connexion avec nos serveurs. Êtes-vous connecté.e à Internet ?",
     "@login__connection_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_title": "Cambiar contraseña",
+    "change_password_title": "Changer le mot de passe",
     "@change_password_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_current_pwd": "Contraseña actual",
+    "change_password_current_pwd": "Mot de passe actuel",
     "@change_password_current_pwd": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_current_pwd_hint": "Introduce tu contraseña actual",
+    "change_password_current_pwd_hint": "Entrez votre mot de passe actuel",
     "@change_password_current_pwd_hint": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_current_pwd_incorrect": "La contraseña introducida fue incorrecta",
+    "change_password_current_pwd_incorrect": "Le mot de passe entré est incorrect",
     "@change_password_current_pwd_incorrect": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_new_pwd": "Nueva contraseña",
+    "change_password_new_pwd": "Nouveau mot de passe",
     "@change_password_new_pwd": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_new_pwd_hint": "Introduzca su nueva contraseña",
+    "change_password_new_pwd_hint": "Entrez votre nouveau mot de passe",
     "@change_password_new_pwd_hint": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_new_pwd_error": "Por favor, asegúrate de que la contraseña tenga entre 10 y 100 caracteres",
+    "change_password_new_pwd_error": "Veuillez vous assurer que le mot de passe comporte entre 10 et 100 caractères",
     "@change_password_new_pwd_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_save_text": "Guardar",
+    "change_password_save_text": "Enregistrer",
     "@change_password_save_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "change_password_save_success": "¡Todo bien! Tu contraseña ha sido actualizada",
+    "change_password_save_success": "C'est fait ! Votre mot de passe a été mis à jour",
     "@change_password_save_success": {
         "type": "text",
         "placeholders": {

@@ -52,7 +52,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
           text: TextSpan(
             text: _localizationService.notifications__connection_request_tile,
           )),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

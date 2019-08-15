@@ -31,7 +31,6 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   @override
   void initState() {
     _emailCheckInProgress = false;
-    _emailTaken = false;
     super.initState();
   }
 
@@ -90,25 +89,27 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     });
   }
 
-  void _checkEmailAvailable(String email, BuildContext context) async {
+  Future<bool> _checkEmailAvailable(String email, BuildContext context) async {
     _setEmailCheckInProgress(true);
+    bool isEmailTaken = false;
     try {
-      var isEmailTaken = await _validationService.isEmailTaken(email);
-      _setEmailTaken(isEmailTaken);
+     isEmailTaken = await _validationService.isEmailTaken(email);
+     _setEmailTaken(isEmailTaken);
     } catch (error) {
       String errorFeedback = _localizationService.trans('auth__create_acc__email_server_error');
       _toastService.error(message: errorFeedback, context: context);
     } finally {
       _setEmailCheckInProgress(false);
     }
+    return isEmailTaken;
   }
 
-  void onPressedNextStep(BuildContext context) {
+  void onPressedNextStep(BuildContext context) async {
+    await _checkEmailAvailable(_emailController.text.trim(), context);
     bool isEmailValid = _validateForm();
-    _checkEmailAvailable(_emailController.text, context);
     if (isEmailValid && !_emailTaken) {
       setState(() {
-        _createAccountBloc.setEmail(_emailController.text);
+        _createAccountBloc.setEmail(_emailController.text.trim());
         Navigator.pushNamed(context, '/auth/password_step');
       });
     }
@@ -195,7 +196,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
                 autocorrect: false,
                 hintText: emailInputPlaceholder,
                 validator: (String email) {
-                  String validateEMail = _validationService.validateUserEmail(email);
+                  String validateEMail = _validationService.validateUserEmail(email.trim());
                   if (validateEMail != null) return validateEMail;
                   if (_emailTaken != null && _emailTaken) {
                     return errorEmailTaken;

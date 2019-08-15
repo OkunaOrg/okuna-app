@@ -1,159 +1,159 @@
 {
-    "menu_title": "Menú",
+    "menu_title": "Menu",
     "@menu_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "main_title": "Mi Okuna",
+    "main_title": "Mon Okuna",
     "@main_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_circles": "Mis círculos",
+    "my_circles": "Mes cercles",
     "@my_circles": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_lists": "Mis listas",
+    "my_lists": "Mes listes",
     "@my_lists": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_followers": "Mis seguidores",
+    "my_followers": "Mes abonné.e.s",
     "@my_followers": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_following": "Mis seguidos",
+    "my_following": "Abonnements",
     "@my_following": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_invites": "Mis invitaciones",
+    "my_invites": "Mes invitations",
     "@my_invites": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_pending_mod_tasks": "Mis tareas de moderación pendientes",
+    "my_pending_mod_tasks": "Mes tâches de modération en attente",
     "@my_pending_mod_tasks": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_mod_penalties": "Mis penalizaciones de moderación",
+    "my_mod_penalties": "Mes pénalités de modération",
     "@my_mod_penalties": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "app_account_text": "App & cuenta",
+    "app_account_text": "Application et Compte",
     "@app_account_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "themes": "Temas",
+    "themes": "Thèmes",
     "@themes": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "global_moderation": "Moderación global",
+    "global_moderation": "Modération globale",
     "@global_moderation": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "profile": "Perfil",
+    "profile": "Profil",
     "@profile": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "connections": "Mis conexiones",
+    "connections": "Mes connexions",
     "@connections": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "lists": "Mis listas",
+    "lists": "Mes listes",
     "@lists": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "settings": "Configuración",
+    "settings": "Paramètres",
     "@settings": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "application_settings": "Configuración de la aplicación",
+    "application_settings": "Paramètres de l'application",
     "@application_settings": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings": "Configuración de cuenta",
+    "account_settings": "Paramètres du compte",
     "@account_settings": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_change_email": "Cambiar email",
+    "account_settings_change_email": "Changer l'adresse courriel",
     "@account_settings_change_email": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_change_password": "Cambiar contraseña",
+    "account_settings_change_password": "Changer le mot de passe",
     "@account_settings_change_password": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_notifications": "Notificaciones",
+    "account_settings_notifications": "Notifications",
     "@account_settings_notifications": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_language_text": "Idioma",
+    "account_settings_language_text": "Langue",
     "@account_settings_language_text": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_language": "Idioma ({currentUserLanguage})",
+    "account_settings_language": "Langue ({currentUserLanguage})",
     "@account_settings_language": {
         "type": "text",
         "placeholders": {
@@ -162,126 +162,140 @@
             }
         }
     },
-    "account_settings_blocked_users": "Usuarios bloqueados",
+    "account_settings_blocked_users": "Utilisateurs.trices bloqué.e.s",
     "@account_settings_blocked_users": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "account_settings_delete_account": "Eliminar cuenta",
+    "account_settings_delete_account": "Supprimer mon compte",
     "@account_settings_delete_account": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "help": "Asistencia y comentarios",
+    "help": "Assistance et commentaires",
     "@help": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "customize": "Personalizar",
+    "customize": "Personnaliser",
     "@customize": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "logout": "Cerrar sesión",
+    "logout": "Fermer la session",
     "@logout": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_title": "Enlaces útiles",
+    "useful_links_title": "Liens utiles",
     "@useful_links_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines": "Reglas de Okuna",
+    "useful_links_guidelines": "Lignes directrices d'Okuna",
     "@useful_links_guidelines": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_desc": "Las reglas que todos esperamos sigan para una coexistencia sana y amistosa.",
+    "useful_links_guidelines_desc": "Les lignes directrices dont on s'attend que nous suivions tous.tes pour une coexistence saine et amicale.",
     "@useful_links_guidelines_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_github": "Tabla de proyectos Github",
+    "useful_links_guidelines_github": "Tableau de projet Github",
     "@useful_links_guidelines_github": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_github_desc": "Echa un vistazo a lo que estamos trabajando actualmente",
+    "useful_links_guidelines_github_desc": "Regardez ce sur quoi nous travaillons actuellement",
     "@useful_links_guidelines_github_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_feature_requests": "Solicitudes de funcionalidad",
+    "useful_links_guidelines_feature_requests": "Demandes de fonctionnalités",
     "@useful_links_guidelines_feature_requests": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_feature_requests_desc": "Solicitar una función o votar peticiones existentes",
+    "useful_links_guidelines_feature_requests_desc": "Demander une fonctionnalité ou voter sur les demandes existantes",
     "@useful_links_guidelines_feature_requests_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_bug_tracker": "Rastreador de errores",
+    "useful_links_guidelines_bug_tracker": "Outil de suivi des bogues",
     "@useful_links_guidelines_bug_tracker": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_bug_tracker_desc": "Reportar un error o votar errores existentes",
+    "useful_links_guidelines_bug_tracker_desc": "Signaler un bogue ou voter sur les bogues existants",
     "@useful_links_guidelines_bug_tracker_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_handbook": "Manual de usuario",
+    "useful_links_guidelines_handbook": "Manuel d'Okuna",
     "@useful_links_guidelines_handbook": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_handbook_desc": "Un libro con todo lo que hay que saber sobre el uso de la plataforma",
+    "useful_links_guidelines_handbook_desc": "Un manuel avec tout ce qu'il y a à savoir sur l'utilisation de la plateforme",
     "@useful_links_guidelines_handbook_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_slack_channel": "Slack de la comunidad",
+    "useful_links_support": "Supporter Okuna",
+    "@useful_links_support": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_support_desc": "Trouvez un moyen de nous aider dans notre voyage !",
+    "@useful_links_support_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_slack_channel": "Chaîne communautaire sur Slack",
     "@useful_links_slack_channel": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_slack_channel_desc": "Un lugar para discutir todo sobre Okuna",
+    "useful_links_slack_channel_desc": "Un endroit pour discuter de tout à propos d'Okuna",
     "@useful_links_slack_channel_desc": {
         "type": "text",
         "placeholders": {

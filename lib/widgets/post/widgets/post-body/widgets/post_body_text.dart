@@ -91,7 +91,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   }
 
   Widget _buildTranslationButton() {
-    if (!_userService.getLoggedInUser().canTranslatePost(widget._post)) {
+    if (_userService.getLoggedInUser() != null && !_userService.getLoggedInUser().canTranslatePost(widget._post)) {
       return SizedBox();
     }
 

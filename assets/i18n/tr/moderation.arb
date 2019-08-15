@@ -1,0 +1,503 @@
+{
+    "filters_title": "Denetim Filtreleri",
+    "@filters_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_reset": "Sıfırla",
+    "@filters_reset": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_verified": "Doğrulanmış",
+    "@filters_verified": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_apply": "Filtreleri uygula",
+    "@filters_apply": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_type": "Tür",
+    "@filters_type": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_status": "Durum",
+    "@filters_status": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "filters_other": "Diğer",
+    "@filters_other": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_review": "Detaylı",
+    "@actions_review": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "actions_chat_with_team": "Ekiple sohbet et",
+    "@actions_chat_with_team": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_category_title": "Kategoriyi güncelle",
+    "@update_category_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_category_save": "Kaydet",
+    "@update_category_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_save": "Kaydet",
+    "@update_description_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_title": "Açıklamayı düzenle",
+    "@update_description_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_report_desc": "Açıklama raporu",
+    "@update_description_report_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_description_report_hint_text": "örneğin Raporun öğesi bulundu...",
+    "@update_description_report_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_status_save": "Kaydet",
+    "@update_status_save": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "update_status_title": "Durumu güncelle",
+    "@update_status_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_title": "Yönetilen nesneyi gözden geçir",
+    "@community_review_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_title": "Nesne",
+    "@moderated_object_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_status": "Durum",
+    "@moderated_object_status": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_reports_count": "Rapor sayısı",
+    "@moderated_object_reports_count": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_verified_by_staff": "Openspace çalışanı tarafından doğrulandı",
+    "@moderated_object_verified_by_staff": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_verified": "Doğrulanmış",
+    "@moderated_object_verified": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_true_text": "Doğru",
+    "@moderated_object_true_text": {
+        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "moderated_object_false_text": "Yanlış",
+    "@moderated_object_false_text": {
+        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_object": "Nesne",
+    "@community_review_object": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_approve": "Onaylı",
+    "@community_review_approve": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_reject": "reddedildi",
+    "@community_review_reject": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_review_item_verified": "Bu madde doğrulandı",
+    "@community_review_item_verified": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_title": "Yönetilen nesneyi gözden geçir",
+    "@global_review_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_object_text": "Nesne",
+    "@global_review_object_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_verify_text": "Doğrulanmış",
+    "@global_review_verify_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_review_unverify_text": "Doğrulanmamış",
+    "@global_review_unverify_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_title": "Rapor gönder",
+    "@confirm_report_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_details": "Raporla alakalı olabilecek ilave detaylar verebilir misiniz?",
+    "@confirm_report_provide_details": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_optional_info": "(İsteğe Bağlı)",
+    "@confirm_report_provide_optional_info": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_optional_hint_text": "Buraya yaz...",
+    "@confirm_report_provide_optional_hint_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_happen_next": "İşte bundan sonra ne olacak:",
+    "@confirm_report_provide_happen_next": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_provide_happen_next_desc": "-Raporunuz isimsiz olarak gönderilecektir. \n-Bir gönderi veya yorum bildiriyorsanız, rapor Openspace çalışanına ve varsa topluluk moderatörlerine gönderilecek ve gönderi yayınınızdan gizlenecektir \n- Bir hesap veya topluluğu rapor ediyorsanız, Openspace çalışanına gönderilir. \n- Onaylanırsa, içerik silinecek ve hesabın silinmesinden raporun ciddiyetine bağlı olarak belirli saatlere kadar askıya alınmasına karar verilir ve kişilere verilen cezalar gözden geçirilir. \n- Raporun platformdaki başka bir üyeye veya topluluğa zarar vermek amacıyla belirtilen nedenle herhangi bir ihlal yapılmadığı tespit edilirse, cezalar size uygulanacaktır.\n",
+    "@confirm_report_provide_happen_next_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_submit": "Anladım, gönder.",
+    "@confirm_report_submit": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_user_reported": "Kullanıcı bildirildi",
+    "@confirm_report_user_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_community_reported": "Topluluk bildirildi",
+    "@confirm_report_community_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_post_reported": "Gönderi bildirildi",
+    "@confirm_report_post_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_post_comment_reported": "Gönderideki yorum bildirildi",
+    "@confirm_report_post_comment_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "confirm_report_item_reported": "Öğe bildirildi",
+    "@confirm_report_item_reported": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "community_moderated_objects": "Toplulukta denetlenen nesneler",
+    "@community_moderated_objects": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "globally_moderated_objects": "Global olarak yönetilen nesneler",
+    "@globally_moderated_objects": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "tap_to_retry": "Öğeleri yüklemeyi yeniden denemek için dokunun",
+    "@tap_to_retry": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_post_text": "Gönderiyi bildir",
+    "@report_post_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_post_text": "Bu yayını bildirdin",
+    "@you_have_reported_post_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_account_text": "Hesabı bildir",
+    "@report_account_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_account_text": "Bu hesabı bildirdin",
+    "@you_have_reported_account_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_community_text": "Topluluğu bildir",
+    "@report_community_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_community_text": "Bu topluluğu bildirdin",
+    "@you_have_reported_community_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "report_comment_text": "Yorumu bildir",
+    "@report_comment_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "you_have_reported_comment_text": "Bu yorumu bildirdin",
+    "@you_have_reported_comment_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "description_text": "Açıklama",
+    "@description_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "no_description_text": "Açıklama Yok",
+    "@no_description_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "category_text": "Kategori",
+    "@category_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reporter_text": "Raporlayıcı",
+    "@reporter_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reports_preview_title": "Raporlar",
+    "@reports_preview_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reports_preview_resource_reports": "raporlar",
+    "@reports_preview_resource_reports": {
+        "description": "Usage: See all reports..",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "reports_see_all": "Hepsini gör {resourceCount} {resourceName}",
+    "@reports_see_all": {
+        "description": "Usage: See all 4 reports.",
+        "type": "text",
+        "placeholders": {
+            "resourceCount": {
+
+            },
+            "resourceName": {
+
+            }
+        }
+    },
+    "object_status_title": "Durum",
+    "@object_status_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_tasks_title": "Bekleyen moderasyon görevleri",
+    "@my_moderation_tasks_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "pending_moderation_tasks_singular": "bekleyen moderasyon görevi",
+    "@pending_moderation_tasks_singular": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "pending_moderation_tasks_plural": "bekleyen moderasyon görevleri",
+    "@pending_moderation_tasks_plural": {
+        "description": "Eg. No pending moderation tasks found",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_penalties_title": "Moderasyon cezaları",
+    "@my_moderation_penalties_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_penalties_resouce_singular": "moderasyon cezası",
+    "@my_moderation_penalties_resouce_singular": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_moderation_penalties_resource_plural": "moderasyon cezaları",
+    "@my_moderation_penalties_resource_plural": {
+        "description": "See all moderation penalties, No moderation penalties found etc..",
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

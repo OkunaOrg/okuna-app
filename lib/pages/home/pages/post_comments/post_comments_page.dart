@@ -1,9 +1,11 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controller.dart';
-import 'package:Okuna/pages/home/pages/post_comments/widgets/post-commenter.dart';
+import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
+import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
@@ -75,6 +77,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   OBPostCommentsPageController _commentsPageController;
   Map<String, String> _pageTextMap;
 
+  OBPostCommenterController _postCommenterController;
+  OBContextualAccountSearchBoxController _postParticipantsSearchBoxController;
+  bool _postCommenterIsSearchingAccount;
+
   static const int MAX_POST_TEXT_LENGTH_LIMIT = 1300;
   static const int MAX_COMMENT_TEXT_LENGTH_LIMIT = 500;
 
@@ -119,6 +125,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         duration: const Duration(milliseconds: 300), vsync: this);
     _animation = new Tween(begin: 1.0, end: 0.0).animate(_animationController);
     _animation.addStatusListener(_onAnimationStatusChanged);
+    _postCommenterController = OBPostCommenterController();
+    _postParticipantsSearchBoxController =
+        OBContextualAccountSearchBoxController();
+    _postCommenterIsSearchingAccount = false;
   }
 
   @override
@@ -190,7 +200,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   void dispose() {
     super.dispose();
     _animation.removeStatusListener(_onAnimationStatusChanged);
-    if(_refreshPostOperation != null) _refreshPostOperation.cancel();
+    if (_refreshPostOperation != null) _refreshPostOperation.cancel();
     _commentsPageController.dispose();
   }
 
@@ -210,12 +220,12 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
     if (_shouldHideStackedLoadingScreen) {
       _stackChildren.add(Column(
-        children: _getColumnChildren(),
+        children: _buildPostPageContentItems(),
       ));
     } else {
       _stackChildren.addAll([
         Column(
-          children: _getColumnChildren(),
+          children: _buildPostPageContentItems(),
         ),
         Positioned(
           top: 0.0,
@@ -242,80 +252,127 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     return _stackChildren;
   }
 
-  List<Widget> _getColumnChildren() {
-    List<Widget> _columnChildren = [];
+  List<Widget> _buildPostPageContentItems() {
+    List<Widget> _contentItems = [];
     _postCommentsScrollController = ScrollController(
         initialScrollOffset: _calculatePositionTopCommentSection());
-    _columnChildren.addAll([
-      Expanded(
-        child: RefreshIndicator(
-            key: _refreshIndicatorKey,
-            child: GestureDetector(
-              onTap: _unfocusCommentInput,
-              child: LoadMore(
-                  whenEmptyLoad: false,
-                  isFinish: _noMoreBottomItemsToLoad,
-                  delegate:
-                      OBInfinitePostCommentsLoadMoreDelegate(_pageTextMap),
-                  child: new ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      controller: _postCommentsScrollController,
-                      padding: EdgeInsets.all(0),
-                      itemCount: _postComments.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          if (_postComments.length > 0) {
-                            _beginAnimations();
-                          }
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              _getPostPreview(),
-                              _getCommentPreview(),
-                              _getDivider(),
-                              OBPostCommentsHeaderBar(
-                                  pageType: widget.pageType,
-                                  noMoreTopItemsToLoad: _noMoreTopItemsToLoad,
-                                  postComments: _postComments,
-                                  currentSort: _currentSort,
-                                  onWantsToToggleSortComments: () =>
-                                      _commentsPageController
-                                          .onWantsToToggleSortComments(),
-                                  loadMoreTopComments: () =>
-                                      _commentsPageController
-                                          .loadMoreTopComments(),
-                                  onWantsToRefreshComments: () =>
-                                      _commentsPageController
-                                          .onWantsToRefreshComments()),
-                            ],
-                          );
-                        } else {
-                          return _getCommentTile(index);
+
+    _contentItems.addAll([_buildPostComments(), _buildPostCommenter()]);
+
+    return _contentItems;
+  }
+
+  Widget _buildPostComments() {
+    List<Widget> postCommentsStackItems = [
+      RefreshIndicator(
+          key: _refreshIndicatorKey,
+          child: GestureDetector(
+            onTap: _unfocusCommentInput,
+            child: LoadMore(
+                whenEmptyLoad: false,
+                isFinish: _noMoreBottomItemsToLoad,
+                delegate: OBInfinitePostCommentsLoadMoreDelegate(_pageTextMap),
+                child: new ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    controller: _postCommentsScrollController,
+                    padding: EdgeInsets.all(0),
+                    itemCount: _postComments.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        if (_postComments.length > 0) {
+                          _beginAnimations();
                         }
-                      }),
-                  onLoadMore: () =>
-                      _commentsPageController.loadMoreBottomComments()),
-            ),
-            onRefresh: () =>
-                _commentsPageController.onWantsToRefreshComments()),
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            _getPostPreview(),
+                            _getCommentPreview(),
+                            _getDivider(),
+                            OBPostCommentsHeaderBar(
+                                pageType: widget.pageType,
+                                noMoreTopItemsToLoad: _noMoreTopItemsToLoad,
+                                postComments: _postComments,
+                                currentSort: _currentSort,
+                                onWantsToToggleSortComments: () =>
+                                    _commentsPageController
+                                        .onWantsToToggleSortComments(),
+                                loadMoreTopComments: () =>
+                                    _commentsPageController
+                                        .loadMoreTopComments(),
+                                onWantsToRefreshComments: () =>
+                                    _commentsPageController
+                                        .onWantsToRefreshComments()),
+                          ],
+                        );
+                      } else {
+                        return _getCommentTile(index);
+                      }
+                    }),
+                onLoadMore: () =>
+                    _commentsPageController.loadMoreBottomComments()),
+          ),
+          onRefresh: () => _commentsPageController.onWantsToRefreshComments())
+    ];
+
+    postCommentsStackItems.add(Positioned(
+      child: IgnorePointer(
+        ignoring: !_postCommenterIsSearchingAccount,
+        child: Opacity(
+            opacity: _postCommenterIsSearchingAccount ? 1 : 0,
+            child: OBContextualAccountSearchBox(
+              key: Key('postCommentsParticipantsSearchBox'),
+              post: widget.post,
+              controller: _postParticipantsSearchBoxController,
+              onPostParticipantPressed:
+                  _onPostParticipantsSearchBoxParticipantPressed,
+            )),
       ),
-      OBPostCommenter(
-        _post,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: 0,
+    ));
+
+    return Expanded(
+      child: Stack(
+        children: postCommentsStackItems,
+      ),
+    );
+  }
+
+  void _onPostParticipantsSearchBoxParticipantPressed(User postParticipant) {
+    _postCommenterController
+        .autocompleteFoundAccountUsername(postParticipant.username);
+  }
+
+  Widget _buildPostCommenter() {
+    return OBPostCommenter(_post,
         postComment: widget.postComment,
         autofocus: widget.autofocusCommentInput,
         commentTextFieldFocusNode: _commentInputFocusNode,
-        onPostCommentCreated: (PostComment createdPostComment) {
-          _commentsPageController
-              .refreshCommentsWithCreatedPostCommentVisible(createdPostComment);
-          if (widget.onCommentAdded != null) {
-            widget.onCommentAdded(createdPostComment);
-          }
-        },
-      )
-    ]);
+        controller: _postCommenterController,
+        onPostCommentCreated: _onPostCommentCreated,
+        onWantsToSearchAccount: _onPostCommenterWantsToSearchAccount,
+        onFinishedSearchingAccount: _onFinishedSearchingAccount);
+  }
 
-    return _columnChildren;
+  void _onPostCommenterWantsToSearchAccount(String query) {
+    _setPostCommenterIsSearchingAccount(true);
+    _postParticipantsSearchBoxController.search(query);
+  }
+
+  void _onFinishedSearchingAccount() {
+    _setPostCommenterIsSearchingAccount(false);
+    _postParticipantsSearchBoxController.clearSearch();
+  }
+
+  void _onPostCommentCreated(PostComment createdPostComment) {
+    _commentsPageController
+        .refreshCommentsWithCreatedPostCommentVisible(createdPostComment);
+    if (widget.onCommentAdded != null) {
+      widget.onCommentAdded(createdPostComment);
+    }
   }
 
   void _beginAnimations() {
@@ -416,20 +473,21 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
 
     bool _showViewAllCommentsAction = true;
 
-    if ((widget.pageType == PostCommentsPageType.replies && widget.linkedPostComment == null)
-        || (widget.pageType == PostCommentsPageType.comments)) {
+    if ((widget.pageType == PostCommentsPageType.replies &&
+            widget.linkedPostComment == null) ||
+        (widget.pageType == PostCommentsPageType.comments)) {
       _showViewAllCommentsAction = false;
     }
 
     return OBPostPreview(
-      post: _post,
-      onPostDeleted: _onPostDeleted,
-      focusCommentInput: _focusCommentInput,
-      showViewAllCommentsAction: _showViewAllCommentsAction
-    );
+        post: _post,
+        onPostDeleted: _onPostDeleted,
+        focusCommentInput: _focusCommentInput,
+        showViewAllCommentsAction: _showViewAllCommentsAction);
   }
 
   void _scrollToTop() {
+    if (!_postCommentsScrollController.hasListeners) return;
     Future.delayed(Duration(milliseconds: 0), () {
       _postCommentsScrollController.animateTo(
         0.0,
@@ -522,6 +580,12 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         context: context, message: _pageTextMap['NO_MORE_TO_LOAD']);
   }
 
+  void _setPostCommenterIsSearchingAccount(postCommenterIsSearchingAccount) {
+    setState(() {
+      _postCommenterIsSearchingAccount = postCommenterIsSearchingAccount;
+    });
+  }
+
   void _setCurrentSortValue(PostCommentsSortType newSortValue) {
     setState(() {
       _currentSort = newSortValue;
@@ -555,19 +619,24 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     }
   }
 
-  Map<String, String> getPageCommentsMap(LocalizationService _localizationService) {
+  Map<String, String> getPageCommentsMap(
+      LocalizationService _localizationService) {
     return {
       'TITLE': _localizationService.post__comments_page_title,
-      'NO_MORE_TO_LOAD': _localizationService.post__comments_page_no_more_to_load,
+      'NO_MORE_TO_LOAD':
+          _localizationService.post__comments_page_no_more_to_load,
       'TAP_TO_RETRY': _localizationService.post__comments_page_tap_to_retry,
     };
   }
 
-  Map<String, String> getPageRepliesMap(LocalizationService _localizationService) {
-    return  {
+  Map<String, String> getPageRepliesMap(
+      LocalizationService _localizationService) {
+    return {
       'TITLE': _localizationService.post__comments_page_replies_title,
-      'NO_MORE_TO_LOAD': _localizationService.post__comments_page_no_more_replies_to_load,
-      'TAP_TO_RETRY': _localizationService.post__comments_page_tap_to_retry_replies,
+      'NO_MORE_TO_LOAD':
+          _localizationService.post__comments_page_no_more_replies_to_load,
+      'TAP_TO_RETRY':
+          _localizationService.post__comments_page_tap_to_retry_replies,
     };
   }
 

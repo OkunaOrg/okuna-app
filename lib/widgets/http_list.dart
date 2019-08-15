@@ -28,6 +28,7 @@ class OBHttpList<T> extends StatefulWidget {
   final ScrollPhysics physics;
   final List<Widget> prependedItems;
   final OBHttpListSecondaryRefresher secondaryRefresher;
+  final bool hasSearchBar;
 
   const OBHttpList(
       {Key key,
@@ -43,6 +44,7 @@ class OBHttpList<T> extends StatefulWidget {
       this.controller,
       this.separatorBuilder,
       this.prependedItems,
+      this.hasSearchBar = true,
       this.secondaryRefresher})
       : super(key: key);
 
@@ -140,11 +142,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
     List<Widget> columnItems = [];
 
-    if (widget.listSearcher != null) {
+    if (widget.listSearcher != null && widget.hasSearchBar) {
       columnItems.add(SizedBox(
           child: OBSearchBar(
         onSearch: _onSearch,
-        hintText: _localizationService.user_search__list_search_text(widget.resourcePluralName),
+        hintText: _localizationService
+            .user_search__list_search_text(widget.resourcePluralName),
       )));
     }
 
@@ -191,12 +194,14 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
         // Search in progress
         return ListTile(
             leading: const OBProgressIndicator(),
-            title: OBText(_localizationService.user_search__searching_for(searchQuery)));
+            title: OBText(
+                _localizationService.user_search__searching_for(searchQuery)));
       } else if (_listSearchResults.isEmpty) {
         // Results were empty
         return ListTile(
             leading: const OBIcon(OBIcons.sad),
-            title: OBText(_localizationService.user_search__no_results_for(searchQuery)));
+            title: OBText(
+                _localizationService.user_search__no_results_for(searchQuery)));
       } else {
         return const SizedBox();
       }
@@ -245,9 +250,11 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
-          text: _localizationService.user_search__list_no_results_found(widget.resourcePluralName),
+          text: _localizationService
+              .user_search__list_no_results_found(widget.resourcePluralName),
           onPressed: _refreshList,
-          buttonText: _localizationService.trans('user_search__list_refresh_text'),
+          buttonText:
+              _localizationService.trans('user_search__list_refresh_text'),
           buttonIcon: OBIcons.refresh,
           assetImage: 'assets/images/stickers/perplexed-owl.png',
         )
@@ -344,17 +351,18 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     return false;
   }
 
-  void _onSearch(String query) {
+  Future _onSearch(String query) {
     _setSearchQuery(query);
     if (query.isEmpty) {
       _setHasSearch(false);
+      return Future.value();
     } else {
       _setHasSearch(true);
-      _searchWithQuery(query);
+      return _searchWithQuery(query);
     }
   }
 
-  void _searchWithQuery(String query) async {
+  Future _searchWithQuery(String query) async {
     if (_searchOperation != null) _searchOperation.cancel();
 
     _setSearchRequestInProgress(true);
@@ -434,7 +442,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }
@@ -471,6 +481,14 @@ class OBHttpListController<T> {
         shouldUseRefreshIndicator: shouldUseRefreshIndicator);
   }
 
+  Future search(String query) {
+    return _state._onSearch(query);
+  }
+
+  Future clearSearch() {
+    return _state._onSearch('');
+  }
+
   bool hasItems() {
     return _state._list.isNotEmpty;
   }
@@ -492,6 +510,7 @@ typedef Future<List<T>> OBHttpListOnScrollLoader<T>(List<T> currentList);
 
 class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {
   final LocalizationService localizationService;
+
   const OBHttpListLoadMoreDelegate(this.localizationService);
 
   @override

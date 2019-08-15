@@ -30,9 +30,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     PostComment postComment = postCommentNotification.postComment;
     Post post = postComment.post;
-    String postCommenterUsername = postComment.getCommenterUsername();
     String postCommentText = postComment.text;
-    String postCommenterName = postComment.getCommenterName();
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -82,7 +80,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
                 : _localizationService.notifications__comment_comment_notification_tile_user_also_commented(postCommentText)),
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

@@ -71,7 +71,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
         onUsernamePressed: navigateToReactorProfile,
         user: postReaction.reactor,
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created)),
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
       trailing: Row(
         children: <Widget>[
           OBEmoji(

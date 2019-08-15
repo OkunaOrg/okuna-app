@@ -328,6 +328,8 @@ class AuthApiService {
     bool postCommentNotifications,
     bool postCommentReplyNotifications,
     bool postCommentReactionNotifications,
+    bool postCommentUserMentionNotifications,
+    bool postUserMentionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
@@ -341,6 +343,13 @@ class AuthApiService {
 
     if (postCommentReplyNotifications != null)
       body['post_comment_reply_notifications'] = postCommentReplyNotifications;
+
+    if (postCommentUserMentionNotifications != null)
+      body['post_comment_user_mention_notifications'] =
+          postCommentUserMentionNotifications;
+
+    if (postUserMentionNotifications != null)
+      body['post_user_mention_notifications'] = postUserMentionNotifications;
 
     if (postCommentReactionNotifications != null)
       body['post_comment_reaction_notifications'] =
@@ -380,11 +389,9 @@ class AuthApiService {
   }
 
   Future<HttpieResponse> setNewLanguage(Language language) {
-
     Map<String, String> body = {'language_id': language.id.toString()};
-    return this
-        ._httpService
-        .post('$apiURL$SET_NEW_LANGUAGE', body: body, appendAuthorizationToken: true);
+    return this._httpService.post('$apiURL$SET_NEW_LANGUAGE',
+        body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> reportUserWithUsername(

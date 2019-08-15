@@ -1,0 +1,305 @@
+{
+    "menu_title": "Menu",
+    "@menu_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "main_title": "Okuna",
+    "@main_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_circles": "Cerchie",
+    "@my_circles": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_lists": "Liste",
+    "@my_lists": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_followers": "Follower",
+    "@my_followers": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_following": "Seguiti",
+    "@my_following": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_invites": "Inviti",
+    "@my_invites": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_pending_mod_tasks": "I miei incarichi di moderazione in attesa",
+    "@my_pending_mod_tasks": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "my_mod_penalties": "Le mie penalità di moderazione",
+    "@my_mod_penalties": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "app_account_text": "App & Account",
+    "@app_account_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "themes": "Temi",
+    "@themes": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "global_moderation": "Moderazione globale",
+    "@global_moderation": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "profile": "Profilo",
+    "@profile": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "connections": "Connessioni",
+    "@connections": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "lists": "Liste",
+    "@lists": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "settings": "Impostazioni",
+    "@settings": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "application_settings": "Impostazioni Applicazione",
+    "@application_settings": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "account_settings": "Impostazioni Account",
+    "@account_settings": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "account_settings_change_email": "Cambia Email",
+    "@account_settings_change_email": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "account_settings_change_password": "Cambia Password",
+    "@account_settings_change_password": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "account_settings_notifications": "Notifiche",
+    "@account_settings_notifications": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "account_settings_language_text": "Lingua",
+    "@account_settings_language_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "account_settings_language": "Lingua ({currentUserLanguage})",
+    "@account_settings_language": {
+        "type": "text",
+        "placeholders": {
+            "currentUserLanguage": {
+
+            }
+        }
+    },
+    "account_settings_blocked_users": "Utenti bloccati",
+    "@account_settings_blocked_users": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "account_settings_delete_account": "Elimina account",
+    "@account_settings_delete_account": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "help": "Assistenza & Feedback",
+    "@help": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "customize": "Personalizza",
+    "@customize": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "logout": "Disconnetti",
+    "@logout": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_title": "Link utili",
+    "@useful_links_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines": "Regolamento Openspace",
+    "@useful_links_guidelines": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_desc": "Le regole che ci aspettiamo tutti seguiranno per una convivenza sana e amichevole.",
+    "@useful_links_guidelines_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_github": "Scheda del progetto su Github",
+    "@useful_links_guidelines_github": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_github_desc": "Dai un'occhiata a ciò a cui stiamo lavorando",
+    "@useful_links_guidelines_github_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_feature_requests": "Richiedi Funzionalità",
+    "@useful_links_guidelines_feature_requests": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_feature_requests_desc": "Richiedi una nuova funzionalità o vota le richieste esistenti",
+    "@useful_links_guidelines_feature_requests_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_bug_tracker": "Segnalazione Bug",
+    "@useful_links_guidelines_bug_tracker": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_bug_tracker_desc": "Segnala un bug o vota bug esistenti",
+    "@useful_links_guidelines_bug_tracker_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_handbook": "Manuale Openspace",
+    "@useful_links_guidelines_handbook": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_guidelines_handbook_desc": "Un manuale con tutto quello che c'è da sapere sull'utilizzo della piattaforma",
+    "@useful_links_guidelines_handbook_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_support": "Sostieni Okuna",
+    "@useful_links_support": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_support_desc": "Trova un modo per sostenerci nel nostro viaggio!",
+    "@useful_links_support_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_slack_channel": "Canale Slack della comunità",
+    "@useful_links_slack_channel": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_slack_channel_desc": "Un luogo dove discutere tutto riguardo Openspace",
+    "@useful_links_slack_channel_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

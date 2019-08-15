@@ -58,6 +58,10 @@ class PostsApiService {
       'api/posts/{postUuid}/comments/{postCommentId}/notifications/mute/';
   static const UNMUTE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/notifications/unmute/';
+  static const GET_POST_PARTICIPANTS_PATH =
+      'api/posts/{postUuid}/participants/';
+  static const SEARCH_POST_PARTICIPANTS_PATH =
+      'api/posts/{postUuid}/participants/search/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -422,10 +426,35 @@ class PostsApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> translatePostComment({@required String postUuid, @required int postCommentId}) {
-    String path = _makeTranslatePostCommentPath(postUuid: postUuid, postCommentId: postCommentId);
+  Future<HttpieResponse> translatePostComment(
+      {@required String postUuid, @required int postCommentId}) {
+    String path = _makeTranslatePostCommentPath(
+        postUuid: postUuid, postCommentId: postCommentId);
 
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getPostParticipants(
+      {@required String postUuid, int count}) {
+    String path = _makeGetPostParticipantsPath(postUuid);
+
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> searchPostParticipants(
+      {@required String postUuid, @required String query, int count}) {
+    String path = _makeSearchPostParticipantsPath(postUuid);
+
+    Map<String, dynamic> body = {'query': query};
+
+    if (count != null) body['count'] = count;
+
+    return _httpService.post(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
   }
 
   String _makePostPath(String postUuid) {
@@ -512,6 +541,16 @@ class PostsApiService {
         .parse(REACT_TO_POST_PATH, {'postUuid': postUuid});
   }
 
+  String _makeGetPostParticipantsPath(String postUuid) {
+    return _stringTemplateService
+        .parse(GET_POST_PARTICIPANTS_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeSearchPostParticipantsPath(String postUuid) {
+    return _stringTemplateService
+        .parse(SEARCH_POST_PARTICIPANTS_PATH, {'postUuid': postUuid});
+  }
+
   String _makeGetPostReactionsPath(String postUuid) {
     return _stringTemplateService
         .parse(GET_POST_REACTIONS_PATH, {'postUuid': postUuid});
@@ -574,9 +613,10 @@ class PostsApiService {
         .parse(TRANSLATE_POST_PATH, {'postUuid': postUuid});
   }
 
-  String _makeTranslatePostCommentPath({@required postUuid, @required postCommentId}) {
-    return _stringTemplateService
-        .parse(TRANSLATE_POST_COMMENT_PATH, {'postUuid': postUuid, 'postCommentId': postCommentId});
+  String _makeTranslatePostCommentPath(
+      {@required postUuid, @required postCommentId}) {
+    return _stringTemplateService.parse(TRANSLATE_POST_COMMENT_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 
   String _makeApiUrl(String string) {

@@ -15,7 +15,7 @@
 
         }
     },
-    "billion_postfix": "Mrd",
+    "billion_postfix": " Mrd.",
     "@billion_postfix": {
         "description": "For eg. World circle has 7.5b people",
         "type": "text",
@@ -23,28 +23,28 @@
 
         }
     },
-    "translate_see_translation": "Übersetzung anzeigen",
+    "translate_see_translation": "Übersetzen",
     "@translate_see_translation": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "translate_show_original": "Original anzeigen",
+    "translate_show_original": "Originaltext",
     "@translate_show_original": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "follows_lists_account": "1 Konto",
+    "follows_lists_account": "1 Account",
     "@follows_lists_account": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "follows_lists_accounts": "{prettyUsersCount} Konten",
+    "follows_lists_accounts": "{prettyUsersCount} Accounts",
     "@follows_lists_accounts": {
         "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
         "type": "text",
@@ -91,14 +91,14 @@
 
         }
     },
-    "profile_url_invalid_error": "Bitte gib eine gültige Url an.",
+    "profile_url_invalid_error": "Bitte verwende eine gültige URL.",
     "@profile_url_invalid_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "profile_location_length_error": "Ort kann nicht länger als {maxLength} Zeichen sein.",
+    "profile_location_length_error": "Ort darf nicht länger als {maxLength} Zeichen lang sein.",
     "@profile_location_length_error": {
         "type": "text",
         "placeholders": {
@@ -107,7 +107,7 @@
             }
         }
     },
-    "profile_bio_length_error": "'Über mich' darf nicht länger als {maxLength} Zeichen sein.",
+    "profile_bio_length_error": "'Über mich' darf nicht länger als {maxLength} Zeichen lang sein.",
     "@profile_bio_length_error": {
         "type": "text",
         "placeholders": {
@@ -195,6 +195,36 @@
             }
         }
     },
+    "follow_lists_title": "Meine Listen",
+    "@follow_lists_title": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_lists_search_for": "Suche nach Liste...",
+    "@follow_lists_search_for": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_lists_no_list_found": "Keine Listen gefunden.",
+    "@follow_lists_no_list_found": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "follow_lists_no_list_found_for": "Keine Liste zu '{searchQuery}' gefunden",
+    "@follow_lists_no_list_found_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {
+
+            }
+        }
+    },
     "list_name_empty_error": "Die Listenname kann nicht leer sein.",
     "@list_name_empty_error": {
         "type": "text",
@@ -202,7 +232,7 @@
 
         }
     },
-    "list_name_range_error": "Der Listenname darf nicht länger als {maxLength} Zeichen sein.",
+    "list_name_range_error": "Der Listenname darf nicht länger als {maxLength} Zeichen lang sein.",
     "@list_name_range_error": {
         "type": "text",
         "placeholders": {
@@ -218,7 +248,7 @@
 
         }
     },
-    "circle_name_range_error": "Der Kreisname darf nicht mehr als {maxLength} Zeichen haben.",
+    "circle_name_range_error": "Der Name des Kreises darf nicht länger als {maxLength} Zeichen lang sein.",
     "@circle_name_range_error": {
         "type": "text",
         "placeholders": {
@@ -241,7 +271,7 @@
 
         }
     },
-    "save_follows_list_name_taken": "Listenname {listName} wurde schon vergeben",
+    "save_follows_list_name_taken": "Name der Liste {listName} bereits vergeben",
     "@save_follows_list_name_taken": {
         "type": "text",
         "placeholders": {
@@ -250,7 +280,7 @@
             }
         }
     },
-    "save_follows_list_emoji": "Emoji ist erforderlich",
+    "save_follows_list_emoji": "Emoji",
     "@save_follows_list_emoji": {
         "type": "text",
         "placeholders": {
@@ -285,7 +315,7 @@
 
         }
     },
-    "save_follows_list_emoji_required_error": "Emoji",
+    "save_follows_list_emoji_required_error": "Emoji ist erforderlich",
     "@save_follows_list_emoji_required_error": {
         "type": "text",
         "placeholders": {
@@ -313,7 +343,7 @@
 
         }
     },
-    "edit_profile_url": "Url",
+    "edit_profile_url": "URL",
     "@edit_profile_url": {
         "type": "text",
         "placeholders": {
@@ -385,6 +415,21 @@
 
         }
     },
+    "following_text": "Folge ich",
+    "@following_text": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "following_resource_name": "Nutzer, denen ich folge",
+    "@following_resource_name": {
+        "description": "Eg: Search followed users.., No followed users found. etc ",
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
     "tile_delete": "Löschen",
     "@tile_delete": {
         "type": "text",
@@ -399,7 +444,7 @@
 
         }
     },
-    "uninvite": "Ausladen",
+    "uninvite": "Einladung stornieren",
     "@uninvite": {
         "type": "text",
         "placeholders": {
@@ -413,7 +458,7 @@
 
         }
     },
-    "invite_someone_message": "Hey, I'd like to invite you to Okuna. First, Download the app on iTunes ({iosLink}) or the Play store ({androidLink}). Second, paste this personalised invite link in the 'Sign up' form in the Okuna App: {inviteLink}",
+    "invite_someone_message": "Hey, ich möchte dich zu Okuna einladen. Erstens, lade die App auf iTunes ({iosLink}) oder im Play Store ({androidLink}) herunter. Zweitens, füge den personalisierten Einladungslink in das Formular \"Anmelden\" in der Okuna App ein: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
@@ -621,7 +666,7 @@
 
         }
     },
-    "confirm_block_user_info": "Ihr werdet gegenseitig keine Beiträge von dem anderen sehen und auch nicht in der Lage sein, in irgendeiner Weise zu interagieren.",
+    "confirm_block_user_info": "Ihr werdet gegenseitig keine Beiträge des anderen mehr sehen. Außerdem werdet ihr in keiner Weise mehr miteinander in Kontakt treten können.",
     "@confirm_block_user_info": {
         "type": "text",
         "placeholders": {
@@ -649,7 +694,7 @@
 
         }
     },
-    "confirm_block_user_question": "Bist du dir sicher, dass du @{username} blockieren willst?",
+    "confirm_block_user_question": "Bist du dir sicher, dass du @{username} blockieren möchtest?",
     "@confirm_block_user_question": {
         "type": "text",
         "placeholders": {
@@ -658,7 +703,7 @@
             }
         }
     },
-    "save_connection_circle_name_taken": "Kreisname '{takenConnectionsCircleName}' wurde schon verwendet",
+    "save_connection_circle_name_taken": "Kreisname '{takenConnectionsCircleName}' bereits vergeben",
     "@save_connection_circle_name_taken": {
         "type": "text",
         "placeholders": {
@@ -674,21 +719,21 @@
 
         }
     },
-    "timeline_filters_search_desc": "Nach Kreisen und Listen suchern...",
+    "timeline_filters_search_desc": "Nach Kreisen und Listen suchen...",
     "@timeline_filters_search_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "timeline_filters_clear_all": "Alle zurücksetzen",
+    "timeline_filters_clear_all": "Alle aufheben",
     "@timeline_filters_clear_all": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "timeline_filters_apply_all": "Filter anwenden",
+    "timeline_filters_apply_all": "Anwenden",
     "@timeline_filters_apply_all": {
         "type": "text",
         "placeholders": {
@@ -716,14 +761,14 @@
 
         }
     },
-    "follower_singular": "follower",
+    "follower_singular": "Follower",
     "@follower_singular": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "follower_plural": "follower",
+    "follower_plural": "Follower",
     "@follower_plural": {
         "type": "text",
         "placeholders": {
@@ -891,7 +936,7 @@
 
         }
     },
-    "invites_email_hint": "z.B. fritz_fantom@mail.com",
+    "invites_email_hint": "z.B. fritz_fantom@mail.de",
     "@invites_email_hint": {
         "type": "text",
         "placeholders": {
@@ -1083,7 +1128,7 @@
 
         }
     },
-    "clear_application_cache_failure": "Zischenspeicher konnte nicht gelöscht werden",
+    "clear_application_cache_failure": "Zwischenspeicher konnte nicht gelöscht werden",
     "@clear_application_cache_failure": {
         "type": "text",
         "placeholders": {
@@ -1097,7 +1142,7 @@
 
         }
     },
-    "confirm_guidelines_reject_info": "Du kannst Okuna nicht benutzen, bevor du die Richtlinien nicht akzeptierst.",
+    "confirm_guidelines_reject_info": "Du kannst Okuna nicht benutzen, wenn du die Richtlinien nicht akzeptierst.",
     "@confirm_guidelines_reject_info": {
         "type": "text",
         "placeholders": {
@@ -1167,7 +1212,7 @@
 
         }
     },
-    "change_email_title": "E-Mail Adresse ändern",
+    "change_email_title": "E-Mail ändern",
     "@change_email_title": {
         "type": "text",
         "placeholders": {
@@ -1181,7 +1226,7 @@
 
         }
     },
-    "change_email_hint_text": "Gib deine neue E-Mail Adresse ein",
+    "change_email_hint_text": "Gib deine neue E-Mail ein",
     "@change_email_hint_text": {
         "type": "text",
         "placeholders": {
@@ -1258,14 +1303,14 @@
 
         }
     },
-    "block_user": "Benutzer blocken",
+    "block_user": "Benutzer blockieren",
     "@block_user": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "unblock_user": "Benutzer Blockierung aufheben",
+    "unblock_user": "Blockierung aufheben",
     "@unblock_user": {
         "type": "text",
         "placeholders": {
@@ -1281,7 +1326,7 @@
             }
         }
     },
-    "circle_peoples_count": "{prettyUsersCount} Menschen",
+    "circle_peoples_count": "{prettyUsersCount} Personen",
     "@circle_peoples_count": {
         "type": "text",
         "placeholders": {

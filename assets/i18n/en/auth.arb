@@ -46,8 +46,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "create_acc__welcome_to_alpha": "Welcome to the Alpha!",
-  "@create_acc__welcome_to_alpha": {
+  "create_acc__welcome_to_beta": "Welcome to the Beta!",
+  "@create_acc__welcome_to_beta": {
     "type": "text",
     "placeholders": {}
   },

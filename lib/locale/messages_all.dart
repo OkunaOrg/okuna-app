@@ -11,7 +11,12 @@ import 'package:intl/src/intl_helpers.dart';
 
 import 'messages_de.dart' as messages_de;
 import 'messages_en.dart' as messages_en;
-import 'messages_es.dart' as messages_es;
+import 'messages_es-ES.dart' as messages_es_es;
+import 'messages_fr.dart' as messages_fr;
+import 'messages_it.dart' as messages_it;
+import 'messages_pt-BR.dart' as messages_pt_br;
+import 'messages_sv-SE.dart' as messages_sv_se;
+import 'messages_tr.dart' as messages_tr;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
@@ -20,7 +25,17 @@ Map<String, LibraryLoader> _deferredLibraries = {
 // ignore: unnecessary_new
   'en': () => new Future.value(null),
 // ignore: unnecessary_new
-  'es': () => new Future.value(null),
+  'es_ES': () => new Future.value(null),
+// ignore: unnecessary_new
+  'fr': () => new Future.value(null),
+// ignore: unnecessary_new
+  'it': () => new Future.value(null),
+// ignore: unnecessary_new
+  'pt_BR': () => new Future.value(null),
+// ignore: unnecessary_new
+  'sv_SE': () => new Future.value(null),
+// ignore: unnecessary_new
+  'tr': () => new Future.value(null),
 };
 
 MessageLookupByLibrary _findExact(localeName) {
@@ -29,8 +44,18 @@ MessageLookupByLibrary _findExact(localeName) {
       return messages_de.messages;
     case 'en':
       return messages_en.messages;
-    case 'es':
-      return messages_es.messages;
+    case 'es_ES':
+      return messages_es_es.messages;
+    case 'fr':
+      return messages_fr.messages;
+    case 'it':
+      return messages_it.messages;
+    case 'pt_BR':
+      return messages_pt_br.messages;
+    case 'sv_SE':
+      return messages_sv_se.messages;
+    case 'tr':
+      return messages_tr.messages;
     default:
       return null;
   }
