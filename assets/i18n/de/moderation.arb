@@ -267,7 +267,7 @@
 
         }
     },
-    "confirm_report_provide_happen_next_desc": "- Dein Bericht wird anonym übermittelt. \n- Wenn du einen Beitrag oder Kommentar meldest, wird der Bericht an die Okuna-Mitarbeiter und ggf. an die Community-Moderatoren gesendet und der Beitrag wird in deinem Feed ausgeblendet. \n- Wenn du ein Konto oder eine Community meldest, wird dies an die Okuna-Mitarbeiter gesendet. \n- Wir werden das überprüfen und wenn es bestätigt wird, werden die Inhalte gelöscht und Strafen für die betroffenen Personen verhängt. Diese reichen von einer vorübergehenden Sperrung bis zur Löschung des Kontos - je nach Schwere der Überschreitung. \n- Wenn sich herausstellt, dass die Meldung in dem Versuch erstellt wurde, einem anderen Mitglied oder einer Community auf der Plattform ohne Verletzung des angegebenen Grundes Schaden zuzufügen, werden Strafen gegenüber dir verhängt.\n",
+    "confirm_report_provide_happen_next_desc": "- Dein Bericht wird anonym übermittelt. \n- Wenn du einen Beitrag oder Kommentar meldest, wird der Bericht an die Okuna-Mitarbeiter und ggf. an die Community-Moderatoren gesendet und der Beitrag wird in deinem Feed ausgeblendet. \n- Wenn du ein Account oder eine Community meldest, wird dies an die Okuna-Mitarbeiter gesendet. \n- Wir werden das überprüfen und wenn es bestätigt wird, werden die Inhalte gelöscht und Strafen für die betroffenen Personen verhängt. Diese reichen von einer vorübergehenden Sperrung bis zur Löschung des Accounts - je nach Schwere der Überschreitung. \n- Wenn sich herausstellt, dass die Meldung in dem Versuch erstellt wurde, einem anderen Mitglied oder einer Community auf der Plattform ohne Verletzung des angegebenen Grundes Schaden zuzufügen, werden Strafen gegenüber dir verhängt.\n",
     "@confirm_report_provide_happen_next_desc": {
         "type": "text",
         "placeholders": {
@@ -316,7 +316,7 @@
 
         }
     },
-    "community_moderated_objects": "Community moderierte Objekte",
+    "community_moderated_objects": "Moderierte Objekte",
     "@community_moderated_objects": {
         "type": "text",
         "placeholders": {
@@ -456,21 +456,21 @@
 
         }
     },
-    "my_moderation_tasks_title": "Offene Moderationsaufgaben",
+    "my_moderation_tasks_title": "Offene Moderatoraufgaben",
     "@my_moderation_tasks_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "pending_moderation_tasks_singular": "offene Moderationsaufgaben",
+    "pending_moderation_tasks_singular": "offene Moderatoraufgabe",
     "@pending_moderation_tasks_singular": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "pending_moderation_tasks_plural": "offene Moderationsaufgaben",
+    "pending_moderation_tasks_plural": "offene Moderatoraufgaben",
     "@pending_moderation_tasks_plural": {
         "description": "Eg. No pending moderation tasks found",
         "type": "text",
@@ -478,14 +478,14 @@
 
         }
     },
-    "my_moderation_penalties_title": "Gegen mich verhängte Strafen",
+    "my_moderation_penalties_title": "Meine Strafen",
     "@my_moderation_penalties_title": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_moderation_penalties_resouce_singular": "gegen mich verhängte Strafen",
+    "my_moderation_penalties_resouce_singular": "gegen mich verhängte Strafe",
     "@my_moderation_penalties_resouce_singular": {
         "type": "text",
         "placeholders": {

@@ -55,6 +55,7 @@ class OBPostCommentUserMentionNotificationTile extends StatelessWidget {
     };
     LocalizationService _localizationService = openbookProvider.localizationService;
 
+    String postCommentText = postComment.text;
     return OBNotificationTileSkeleton(
       onTap: () {
         if (onPressed != null) onPressed();
@@ -77,7 +78,7 @@ class OBPostCommentUserMentionNotificationTile extends StatelessWidget {
         avatarUrl: postCommentUserMention.postComment.commenter.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
-        text: TextSpan(text: _localizationService.notifications__mentioned_in_post_comment_tile),
+        text: TextSpan(text: _localizationService.notifications__mentioned_in_post_comment_tile(postCommentText)),
         onUsernamePressed: navigateToMentionerProfile,
         user: postCommentUserMention.postComment.commenter,
       ),

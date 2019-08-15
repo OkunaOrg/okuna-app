@@ -57,7 +57,7 @@
 
         }
     },
-    "create_acc__lets_get_started": "Fangen wir an",
+    "create_acc__lets_get_started": "Los geht's",
     "@create_acc__lets_get_started": {
         "type": "text",
         "placeholders": {
@@ -261,7 +261,7 @@
 
         }
     },
-    "create_acc__name_length_error": "😱 Dein Name darf maximal 50 Zeichen haben. (Falls er länger ist, tut es uns sehr Leid)",
+    "create_acc__name_length_error": "😱 Dein Name darf nicht länger als 50 Zeichen lang sein. (Wenn er das tatsächlich ist, tut uns das sehr leid.)",
     "@create_acc__name_length_error": {
         "type": "text",
         "placeholders": {
@@ -317,14 +317,14 @@
 
         }
     },
-    "create_acc__username_server_error": "😭 Wir haben derzeit Probleme mit unseren Servern, versuch es in ein paar Minuten erneut.",
+    "create_acc__username_server_error": "😭 Ein Serverproblem ist aufgetreten, bitte versuche es später noch einmal.",
     "@create_acc__username_server_error": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__what_email": "Wie lautet deine E-Mail-Adresse?",
+    "create_acc__what_email": "Wie lautet deine E-Mail?",
     "@create_acc__what_email": {
         "type": "text",
         "placeholders": {
@@ -483,14 +483,14 @@
 
         }
     },
-    "create_acc__submit_error_desc_server": "😭 Wir haben derzeit Probleme mit unseren Servern, versuch es in ein paar Minuten erneut.",
+    "create_acc__submit_error_desc_server": "😭 Ein Serverproblem ist aufgetreten, bitte versuche es später noch einmal.",
     "@create_acc__submit_error_desc_server": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "create_acc__submit_error_desc_validation": "😅 Es sieht so aus, als ob einige Informationen nicht korrekt waren, überprüfe diese und versuch es erneut.",
+    "create_acc__submit_error_desc_validation": "😅 Es sieht so aus, als ob einige Informationen nicht korrekt waren. Überprüfe diese und versuche es noch einmal.",
     "@create_acc__submit_error_desc_validation": {
         "type": "text",
         "placeholders": {
@@ -518,7 +518,7 @@
 
         }
     },
-    "create_acc__can_change_username": "Wenn du möchtest, kannst du es jederzeit über deine Profilseite ändern.",
+    "create_acc__can_change_username": "Wenn du möchtest, kannst du ihn jederzeit über deine Profilseite ändern.",
     "@create_acc__can_change_username": {
         "type": "text",
         "placeholders": {
@@ -644,7 +644,7 @@
 
         }
     },
-    "login__username_length_error": "Benutzername darf nicht länger als 30 Zeichen sein.",
+    "login__username_length_error": "Benutzername darf nicht länger als 30 Zeichen lang sein.",
     "@login__username_length_error": {
         "type": "text",
         "placeholders": {

@@ -19,7 +19,7 @@ class LocalizationService {
   /// See README 7.c for a word on localizedLocales.
   /// These are locales where we have custom crowdin language codes like pt-BR
   /// to support Brazilian Portuguese with a particular country, say Brazil.
-  static const localizedLocales = ['pt-BR'];
+  static const localizedLocales = ['pt-BR', 'es-ES', 'sv-SE'];
 
   Future<LocalizationService> load() {
     final String name = locale.countryCode == null ? locale.languageCode : locale.toString();
@@ -2931,6 +2931,26 @@ class LocalizationService {
         name: 'notifications__comment_reply_desc');
   }
 
+  String get notifications__comment_user_mention_title {
+    return Intl.message("Post comment mention",
+        name: 'notifications__comment_user_mention_title');
+  }
+
+  String get notifications__comment_user_mention_desc {
+    return Intl.message("Be notified when someone mentions you on one of their comments",
+        name: 'notifications__comment_user_mention_desc');
+  }
+
+  String get notifications__post_user_mention_title {
+    return Intl.message("Post mention",
+        name: 'notifications__post_user_mention_title');
+  }
+
+  String get notifications__post_user_mention_desc {
+    return Intl.message("Be notified when someone mentions you on one of their posts",
+        name: 'notifications__post_user_mention_desc');
+  }
+
   String get notifications__comment_reaction_title {
     return Intl.message("Post comment reaction",
         name: 'notifications__comment_reaction_title');
@@ -3404,9 +3424,10 @@ class LocalizationService {
         name: 'moderation__my_moderation_penalties_resource_plural');
   }
 
-  String get notifications__mentioned_in_post_comment_tile {
-    return Intl.message("[name] [username] mentioned you on a comment.",
-        desc: "Eg.: James @jamest mentioned you on a comment.",
+  String notifications__mentioned_in_post_comment_tile(String postCommentText) {
+    return Intl.message("[name] [username] mentioned you on a comment: $postCommentText",
+        args: [postCommentText],
+        desc: "Eg.: James @jamest mentioned you on a comment: hello @jamest",
         name: 'notifications__mentioned_in_post_comment_tile');
   }
 

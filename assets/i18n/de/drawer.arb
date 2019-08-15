@@ -55,7 +55,7 @@
 
         }
     },
-    "my_mod_penalties": "Gegen mich verhängte Strafen",
+    "my_mod_penalties": "Meine Strafen",
     "@my_mod_penalties": {
         "type": "text",
         "placeholders": {
@@ -260,14 +260,14 @@
 
         }
     },
-    "useful_links_guidelines_handbook": "Okuna Bedienungsanleitung",
+    "useful_links_guidelines_handbook": "Okuna Benutzerhandbuch",
     "@useful_links_guidelines_handbook": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_handbook_desc": "Eine Anleitung mit allem, was man wissen muss, um das Okuna-Netzwerk zu nutzen",
+    "useful_links_guidelines_handbook_desc": "Ein Benutzerhandbuch mit allem, was man wissen muss, um Okuna zu nutzen",
     "@useful_links_guidelines_handbook_desc": {
         "type": "text",
         "placeholders": {

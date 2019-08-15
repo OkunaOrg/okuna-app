@@ -2,198 +2,164 @@
     "settings_title": "Bildirim ayarları",
     "@settings_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "general_title": "Bildirimler",
     "@general_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "general_desc": "Bir şey olduğunda haberdar olun",
     "@general_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_title": "Takip et",
     "@follow_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_desc": "Birisi sizi takip etmeye başladığında haberdar olun",
     "@follow_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connection_title": "Bağlantı isteği",
     "@connection_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connection_desc": "Birisi sizinle bağlantı kurmak istediğinde haberdar olun",
     "@connection_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_title": "Gönderi yorumu",
     "@comment_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_desc": "Birisi gönderilerinizden biriyle veya bir yorumunuzla ilgili yorum yazdığında haberdar olun.",
     "@comment_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_title": "Gönderideki cevap bildirildi",
     "@comment_reply_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_desc": "Birisi yorumlarınızdan birini veya yanıtladığınız birini yanıtladığında haberdar olun.",
     "@comment_reply_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "comment_user_mention_title": "Gönderi yorumunda bahsedilmesi",
+    "@comment_user_mention_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_user_mention_desc": "Birisi sizden yorumlarından birinde bahsettiğinde haberdar olun",
+    "@comment_user_mention_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_user_mention_title": "Gönderide bahsedilmesi",
+    "@post_user_mention_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_user_mention_desc": "Birisi gönderilerinden birinde sizden bahsettiğinde haberdar olun",
+    "@post_user_mention_desc": {
+        "type": "text",
+        "placeholders": {}
     },
     "comment_reaction_title": "Yorum tepkisi gönderisi",
     "@comment_reaction_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reaction_desc": "Birisi yorumlarınızdan birine tepki verdiğinde haberdar olun.",
     "@comment_reaction_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_reaction_title": "Gönderi tepkisi",
     "@post_reaction_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_reaction_desc": "Birisi gönderinize yanıt verdiğinde haberdar olun.",
     "@post_reaction_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_invite_title": "Topluluk daveti",
     "@community_invite_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_invite_desc": "Birisi sizi bir topluluğa katılmaya davet ettiğinde haberdar olun.",
     "@community_invite_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "mute_post_turn_on_post_notifications": "Gönderi bildirimlerini aç",
     "@mute_post_turn_on_post_notifications": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "mute_post_turn_off_post_notifications": "Gönderi bildirimlerini kapat",
     "@mute_post_turn_off_post_notifications": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "mute_post_turn_on_post_comment_notifications": "Gönderi yorumlarının bildirimlerini aç",
     "@mute_post_turn_on_post_comment_notifications": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "mute_post_turn_off_post_comment_notifications": "Gönderi yorumlarının bildirimlerini kapat",
     "@mute_post_turn_off_post_comment_notifications": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connection_request_tile": "[name] sizinle [username] kullanıcı adı ile bağlantı kurmak istiyor.",
     "@connection_request_tile": {
         "description": "Eg.: James @jamest wants to connect with you.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "accepted_connection_request_tile": "[name] [username] bağlantı isteğinizi kabul etti.",
     "@accepted_connection_request_tile": {
         "description": "Eg.: James @jamest accepted your connection request.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reacted_to_post_tile": "[name] [username] gönderinize yanıt verdi.",
     "@reacted_to_post_tile": {
         "description": "Eg.: James @jamest reacted to your post.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reacted_to_post_comment_tile": "[name] [username] yorumunuza tepki verdi.",
     "@reacted_to_post_comment_tile": {
         "description": "Eg.: James @jamest reacted to your post comment.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "following_you_tile": "[name] [username] seni şimdi takip ediyor.",
     "@following_you_tile": {
         "description": "Eg.: James @jamest is now following you.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "user_community_invite_tile": "[name] [username] sizi \/c\/{communityName} topluluğuna davet etti.",
     "@user_community_invite_tile": {
         "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
         "type": "text",
         "placeholders": {
-            "communityName": {
-
-            }
+            "communityName": {}
         }
     },
     "comment_reply_notification_tile_user_replied": "[name] [username] yanıtladı: {postCommentText}",
@@ -201,36 +167,42 @@
         "description": "For.eg. James @jamest replied.",
         "type": "text",
         "placeholders": {
-            "postCommentText": {
-
-            }
+            "postCommentText": {}
         }
     },
     "comment_reply_notification_tile_user_also_replied": "ayrıca [name] [username] yanıtladı: {postCommentText}",
     "@comment_reply_notification_tile_user_also_replied": {
         "type": "text",
         "placeholders": {
-            "postCommentText": {
-
-            }
+            "postCommentText": {}
         }
     },
     "comment_comment_notification_tile_user_commented": "[name] [username] gönderinize yorum yaptı: {postCommentText}",
     "@comment_comment_notification_tile_user_commented": {
         "type": "text",
         "placeholders": {
-            "postCommentText": {
-
-            }
+            "postCommentText": {}
         }
     },
     "comment_comment_notification_tile_user_also_commented": "Ayrıca [name] [username] yorum yaptı: {postCommentText}",
     "@comment_comment_notification_tile_user_also_commented": {
         "type": "text",
         "placeholders": {
-            "postCommentText": {
-
-            }
+            "postCommentText": {}
         }
+    },
+    "mentioned_in_post_comment_tile": "[name] [username] bir yorumda sizden bahsetti: {postCommentText}",
+    "@mentioned_in_post_comment_tile": {
+        "description": "Eg.: James @jamest mentioned you on a comment: hello @jamest",
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {}
+        }
+    },
+    "mentioned_in_post_tile": "[name] [username] bir gönderide sizden bahsetti.",
+    "@mentioned_in_post_tile": {
+        "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {}
     }
 }

@@ -5,7 +5,6 @@ import 'package:Okuna/models/post_user_mention.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
-import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -53,27 +52,27 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
     };
     LocalizationService _localizationService = openbookProvider.localizationService;
 
+    Function onTileTapped = (){
+      if (onPressed != null) onPressed();
+      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+      openbookProvider.navigationService
+          .navigateToPost(post: postUserMention.post, context: context);
+    };
     return OBNotificationTileSkeleton(
-      onTap: () {
-        if (onPressed != null) onPressed();
-        OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-        openbookProvider.navigationService
-            .navigateToPost(post: postUserMention.post, context: context);
-      },
+      onTap: onTileTapped,
       leading: OBAvatar(
         onPressed: navigateToMentionerProfile,
         size: OBAvatarSize.medium,
         avatarUrl: postUserMention.post.creator.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
-        text: TextSpan(text: _localizationService.notifications__mentioned_in_post_tile),
         onUsernamePressed: navigateToMentionerProfile,
         user: postUserMention.post.creator,
+        text: TextSpan(
+            text: _localizationService.notifications__mentioned_in_post_tile),
       ),
-      subtitle: OBSecondaryText(
-        utilsService.timeAgo(notification.created, _localizationService),
-        size: OBTextSize.small,
-      ),
+      trailing: postImagePreview,
+      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

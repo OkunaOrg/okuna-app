@@ -3,7 +3,7 @@ import 'dart:ui';
 
 const supportedLocales = [
   const Locale('en', 'US'),
-  const Locale('es', 'ES'),
+  const Locale('es-ES', 'ES'),
 // const Locale('nl', 'NL'),
 // const Locale('ar', 'SA'),
 // const Locale('zh', 'CN'),
@@ -25,7 +25,7 @@ const supportedLocales = [
 // const Locale('pl', 'PL'),
  const Locale('pt-BR', 'BR'),
 // const Locale('ru', 'RU'),
- const Locale('sv', 'SE'),
+ const Locale('sv-SE', 'SE'),
  const Locale('tr', 'TR'),
 ];
 

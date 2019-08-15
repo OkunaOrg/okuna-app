@@ -186,7 +186,7 @@ flutter run --profile
 
 1. Add localization string get method to `openbook_app/lib/services/localizations.dart`
 2. Run `make generate_locale`
-3. Upload assets/i18n/en folder's contents to crowdin
+3. Upload assets/i18n/en folder's contents to https://crowdin.com/project/okuna/settings#files by pressing `Update` next to the existing files.
 4. Apply the translations on crowdin, then build and download
 5. Copy the contents of the downloaded archive to assets/i18n 
 6. Run `make build_locale`
@@ -214,10 +214,14 @@ localization service to only pass along `pt_BR`to `intl` when it encounters a lo
 In addition,a small note, we convert the `Accept-language` header in `httpie.dart` to lowercase since django expects it like that and this header is case sensitive. So django will not recognise
 `pt-BR` but recognises `pt-br`. 
 
-To summarise, in order to onboard a new localized locale, 
+## To onboard a new language
+
 1. Create a folder in i18n with the localized language code, for.eg `pt-BR` and store the arb files there.
-2. Add the localized locale code to the `localizedLocales` list in `localization.dart`.
-3. Run `make build_locale` as is standard. 
+2. Add the localized locale in lib/translation/constants.dart
+3. If the language code contains 2 parts (e.g. language_country), add the localized locale code to the `localizedLocales` list in `localization.dart`.
+4. If the language code contains 2 parts (e.g. language_country), create a `lang_country_localization_delegate.dart`. See `lib/delegates/pt_br_material_localizations.dart` for example.
+4.2 Add the delegate in the main.dart file
+5. Run `make build_locale` as is standard. 
 
 ### 8. Contribute! 
 
