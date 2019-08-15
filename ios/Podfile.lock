@@ -23,13 +23,13 @@ PODS:
   - intercom_flutter (1.0.7):
     - Flutter
     - Intercom
-  - multi_image_picker (4.3.6):
+  - multi_image_picker (4.5.0):
     - BSImagePicker (~> 2.10.0)
     - Flutter
-  - OneSignal (2.10.0)
-  - onesignal_flutter (2.0.0):
+  - OneSignal (2.10.1)
+  - onesignal_flutter (2.0.2):
     - Flutter
-    - OneSignal (< 3.0, >= 2.9.5)
+    - OneSignal (= 2.10.1)
   - path_provider (0.0.1):
     - Flutter
   - share (0.5.2):
@@ -49,7 +49,7 @@ PODS:
 
 DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -80,7 +80,7 @@ EXTERNAL SOURCES:
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_exif_rotation:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_secure_storage:
@@ -123,9 +123,9 @@ SPEC CHECKSUMS:
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   Intercom: d189cf8cc8591e7e63dbb10ee4401a70a7fdc9d6
   intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
-  multi_image_picker: 3a6afea72a3271d9b0bcc67d8888d38c4ff53efd
-  OneSignal: 0f5ff711d9f25da54885e4ab06ef0abc221a46ef
-  onesignal_flutter: 9f295af4ef4a987342bb374c5988392e076ccafd
+  multi_image_picker: d6e8f30e690884434ad13f1417567edb21da8547
+  OneSignal: 8fb749fa07f88006403c9b659a570fb7fb74519a
+  onesignal_flutter: f0eab25765dd95978c19dc64a87a8a33387909fa
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
