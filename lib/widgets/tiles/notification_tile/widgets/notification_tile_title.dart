@@ -50,18 +50,20 @@ class OBNotificationTileTitle extends StatelessWidget {
           List<String> plainTextItems = text.text.split(' ');
           List<TextSpan> textItems = [];
 
+          TextStyle baseStyle = themeService.getDefaultTextStyle();
+
           plainTextItems.asMap().forEach((index, item) {
             if (item == '[name]') {
               textItems.add(
                   TextSpan(
                   text: '$commenterName',
                   recognizer: usernameTapGestureRecognizer,
-                  style: TextStyle(fontWeight: FontWeight.bold)));
+                  style: baseStyle.merge(TextStyle(fontWeight: FontWeight.bold))));
             } else if (item == '[username]') {
               textItems.add(TextSpan(
                   text: ' @$commenterUsername',
                   recognizer: usernameTapGestureRecognizer,
-                  style: TextStyle(color: secondaryTextColor)));
+                  style: baseStyle.merge(TextStyle(color: secondaryTextColor))));
             } else if (index <= plainTextItems.length - 1) {
               textItems.add(TextSpan(
                 text: item
@@ -82,7 +84,7 @@ class OBNotificationTileTitle extends StatelessWidget {
               Flexible(
                 child: RichText(
                   text: TextSpan(
-                      style: TextStyle(color: primaryTextColor, fontSize: 16),
+                      style: baseStyle.merge(TextStyle(color: primaryTextColor, fontSize: 16)),
                       children: textItems),
                 ),
               ),
