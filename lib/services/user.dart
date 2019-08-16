@@ -297,6 +297,7 @@ class UserService {
     String url,
     String password,
     bool followersCountVisible,
+    bool communityPostsVisible,
     String bio,
     String location,
   }) async {
@@ -307,6 +308,7 @@ class UserService {
         username: username,
         url: url,
         followersCountVisible: followersCountVisible,
+        communityPostsVisible: communityPostsVisible,
         bio: bio,
         location: location);
 
