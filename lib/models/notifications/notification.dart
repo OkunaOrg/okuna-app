@@ -186,27 +186,14 @@ class NotificationType {
     if (string == null) return null;
 
     NotificationType notificationType;
-    if (string == postReaction.code) {
-      notificationType = postReaction;
-    } else if (string == postComment.code) {
-      notificationType = postComment;
-    } else if (string == postCommentReply.code) {
-      notificationType = postCommentReply;
-    } else if (string == postCommentReaction.code) {
-      notificationType = postCommentReaction;
-    } else if (string == connectionRequest.code) {
-      notificationType = connectionRequest;
-    } else if (string == connectionConfirmed.code) {
-      notificationType = connectionConfirmed;
-    } else if (string == follow.code) {
-      notificationType = follow;
-    } else if (string == communityInvite.code) {
-      notificationType = communityInvite;
-    } else if (string == postCommentUserMention.code) {
-      notificationType = postCommentUserMention;
-    } else if (string == postUserMention.code) {
-      notificationType = postUserMention;
-    } else {
+    for (var type in _values) {
+      if (string == type.code) {
+        notificationType = type;
+        break;
+      }
+    }
+
+    if (notificationType == null) {
       // Don't throw as we might introduce new notifications on the API which might not be yet in code
       print('Unsupported notification type');
     }
