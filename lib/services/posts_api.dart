@@ -25,6 +25,7 @@ class PostsApiService {
   static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
   static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
   static const REPORT_POST_PATH = 'api/posts/{postUuid}/report/';
+  static const PREVIEW_POST_DATA_PATH = 'api/posts/{postUuid}/link-preview/';
   static const TRANSLATE_POST_PATH = 'api/posts/{postUuid}/translate/';
   static const TRANSLATE_POST_COMMENT_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/translate/';
@@ -422,6 +423,12 @@ class PostsApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> getPreviewDataForPostUuid({@required String postUuid}) {
+    String path = _makePreviewPostDataPath(postUuid: postUuid);
+
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> translatePostComment({@required String postUuid, @required int postCommentId}) {
     String path = _makeTranslatePostCommentPath(postUuid: postUuid, postCommentId: postCommentId);
 
@@ -572,6 +579,11 @@ class PostsApiService {
   String _makeTranslatePostPath({@required postUuid}) {
     return _stringTemplateService
         .parse(TRANSLATE_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makePreviewPostDataPath({@required postUuid}) {
+    return _stringTemplateService
+        .parse(PREVIEW_POST_DATA_PATH, {'postUuid': postUuid});
   }
 
   String _makeTranslatePostCommentPath({@required postUuid, @required postCommentId}) {
