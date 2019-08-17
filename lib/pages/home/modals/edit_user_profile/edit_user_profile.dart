@@ -57,6 +57,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   File _avatarFile;
   File _coverFile;
   bool _followersCountVisible;
+  bool _communityPostsVisible;
 
   @override
   void initState() {
@@ -66,6 +67,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _formWasSubmitted = false;
 
     _followersCountVisible = widget.user.getProfileFollowersCountVisible();
+    _communityPostsVisible = widget.user.getProfileCommunityPostsVisible();
     _usernameController = TextEditingController(text: widget.user.username);
     _nameController = TextEditingController(text: widget.user.getProfileName());
     _urlController = TextEditingController(text: widget.user.getProfileUrl());
@@ -211,6 +213,24 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                               });
                             },
                           ),
+                          OBToggleField(
+                            hasDivider: false,
+                            value: _communityPostsVisible,
+                            title: _localizationService.user__edit_profile_community_posts,
+                            leading: const OBIcon(OBIcons.communities),
+                            onChanged: (bool value) {
+                              setState(() {
+                                _communityPostsVisible = value;
+                              });
+                            },
+                            onTap: () {
+                              setState(() {
+                                _communityPostsVisible =
+                                !_communityPostsVisible;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 20,),
                         ],
                       ),
                     )
@@ -408,6 +428,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         username: _usernameController.text,
         url: _urlController.text,
         followersCountVisible: _followersCountVisible,
+        communityPostsVisible: _communityPostsVisible,
         bio: _bioController.text,
         location: _locationController.text,
       );

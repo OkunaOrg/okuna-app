@@ -217,6 +217,10 @@ class User extends UpdatableModel<User> {
     return this.profile.followersCountVisible;
   }
 
+  bool getProfileCommunityPostsVisible() {
+    return this.profile.communityPostsVisible;
+  }
+
   String getProfileUrl() {
     return this.profile.url;
   }
