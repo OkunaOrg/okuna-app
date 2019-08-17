@@ -99,7 +99,9 @@ class _MyAppState extends State<MyApp> {
               const MaterialLocalizationPtBRDelegate(),
               const CupertinoLocalizationPtBRDelegate(),
               const MaterialLocalizationEsESDelegate(),
+              const CupertinoLocalizationEsESDelegate(),
               const MaterialLocalizationSvSEDelegate(),
+              const CupertinoLocalizationSvSEDelegate(),
             ],
             theme: new ThemeData(
                 buttonTheme: ButtonThemeData(
