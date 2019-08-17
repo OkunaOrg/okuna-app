@@ -36,7 +36,6 @@ class MaterialLocalizationPtBRDelegate extends LocalizationsDelegate<MaterialLoc
 
   @override
   Future<MaterialLocalizationPtBR> load(Locale locale) {
-    print('called');
     intl.DateFormat fullYearFormat;
     intl.DateFormat mediumDateFormat;
     intl.DateFormat longDateFormat;
