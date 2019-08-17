@@ -41,6 +41,7 @@ class OBProfilePageState extends State<OBProfilePage> {
   ToastService _toastService;
   ScrollController _scrollController;
   bool _refreshPostsInProgress;
+  bool _profileCommunityPostsVisible;
 
   CancelableOperation _loadMoreOperation;
   CancelableOperation _refreshUserOperation;
@@ -59,6 +60,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     _posts = [];
     _refreshPostsInProgress = false;
     if (widget.controller != null) widget.controller.attach(this);
+    _profileCommunityPostsVisible = widget.user.getProfileCommunityPostsVisible();
   }
 
   @override
@@ -128,6 +130,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                                     OBProfileCover(_user),
                                     OBProfileCard(
                                       _user,
+                                      onUserProfileUpdated: _onUserProfileUpdated,
                                     ),
                                     postsItem
                                   ],
@@ -148,6 +151,12 @@ class OBProfilePageState extends State<OBProfilePage> {
             ],
           ),
         ));
+  }
+
+  void _onUserProfileUpdated(){
+    if(_profileCommunityPostsVisible != _user.getProfileCommunityPostsVisible()){
+      _refreshPosts();
+    }
   }
 
   void scrollToTop() {
