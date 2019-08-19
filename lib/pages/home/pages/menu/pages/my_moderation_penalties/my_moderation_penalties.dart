@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Okuna/models/moderation/moderation_penalty_list.dart';
 import 'package:Okuna/models/moderation/moderation_penalty.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/my_moderation_penalties/widgets/moderation_penalty/moderation_penalty.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/http_list.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
@@ -22,6 +23,7 @@ class OBMyModerationPenaltiesPage extends StatefulWidget {
 class OBMyModerationPenaltiesPageState
     extends State<OBMyModerationPenaltiesPage> {
   UserService _userService;
+  LocalizationService _localizationService;
 
   OBHttpListController _httpListController;
   bool _needsBootstrap;
@@ -38,12 +40,13 @@ class OBMyModerationPenaltiesPageState
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
       _userService = provider.userService;
+      _localizationService = provider.localizationService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Moderation penalties',
+        title: _localizationService.moderation__my_moderation_penalties_title,
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<ModerationPenalty>(
@@ -52,8 +55,8 @@ class OBMyModerationPenaltiesPageState
           listItemBuilder: _buildModerationPenaltyListItem,
           listRefresher: _refreshModerationPenalties,
           listOnScrollLoader: _loadMoreModerationPenalties,
-          resourceSingularName: 'moderation penalty',
-          resourcePluralName: 'moderation penalties',
+          resourceSingularName: _localizationService.moderation__my_moderation_penalties_resouce_singular,
+          resourcePluralName: _localizationService.moderation__my_moderation_penalties_resource_plural,
         ),
       ),
     );

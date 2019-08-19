@@ -196,6 +196,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "useful_links_support": "Support Okuna",
+  "@useful_links_support": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "useful_links_support_desc": "Find a way you can support us on our journey!",
+  "@useful_links_support_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
   "useful_links_slack_channel": "Community Slack channel",
   "@useful_links_slack_channel": {
     "type": "text",

@@ -48,21 +48,21 @@
 
         }
     },
-    "my_pending_mod_tasks": "Meine ausstehenden Moderationsaufgaben",
+    "my_pending_mod_tasks": "Meine offenen Moderatoraufgaben",
     "@my_pending_mod_tasks": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "my_mod_penalties": "Meine Moderationsstrafen",
+    "my_mod_penalties": "Meine Strafen",
     "@my_mod_penalties": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "app_account_text": "App & Konto",
+    "app_account_text": "App & Account",
     "@app_account_text": {
         "type": "text",
         "placeholders": {
@@ -211,7 +211,7 @@
 
         }
     },
-    "useful_links_guidelines_desc": "Die Richtlinien, die wir alle für ein gesundes und freundliches Zusammenleben befolgen müssen.",
+    "useful_links_guidelines_desc": "Regeln, die wir alle für ein gutes und freundliches Miteinander befolgen sollten.",
     "@useful_links_guidelines_desc": {
         "type": "text",
         "placeholders": {
@@ -239,7 +239,7 @@
 
         }
     },
-    "useful_links_guidelines_feature_requests_desc": "Fordere ein Feature an oder stimme bestehende Anfragen hoch",
+    "useful_links_guidelines_feature_requests_desc": "Schlage neue Funktionen vor oder stimme für bestehende Vorschläge ab",
     "@useful_links_guidelines_feature_requests_desc": {
         "type": "text",
         "placeholders": {
@@ -253,22 +253,36 @@
 
         }
     },
-    "useful_links_guidelines_bug_tracker_desc": "Melde einen Fehler oder stimme bestehende Fehler hoch",
+    "useful_links_guidelines_bug_tracker_desc": "Melde einen Fehler oder gib bereits gemeldeten Fehlern mehr Priorität",
     "@useful_links_guidelines_bug_tracker_desc": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_handbook": "Okuna Handbuch",
+    "useful_links_guidelines_handbook": "Okuna Benutzerhandbuch",
     "@useful_links_guidelines_handbook": {
         "type": "text",
         "placeholders": {
 
         }
     },
-    "useful_links_guidelines_handbook_desc": "Ein Buch mit allem, was man über die Nutzung der Plattform wissen muss",
+    "useful_links_guidelines_handbook_desc": "Ein Benutzerhandbuch mit allem, was man wissen muss, um Okuna zu nutzen",
     "@useful_links_guidelines_handbook_desc": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_support": "Okuna unterstützen",
+    "@useful_links_support": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "useful_links_support_desc": "Finde einen Weg, wie Du uns auf unserer Reise unterstützen kannst!",
+    "@useful_links_support_desc": {
         "type": "text",
         "placeholders": {
 
@@ -281,7 +295,7 @@
 
         }
     },
-    "useful_links_slack_channel_desc": "Ein Ort, um alles über Okuna zu diskutieren",
+    "useful_links_slack_channel_desc": "Hier kann man sich über Okuna austauschen",
     "@useful_links_slack_channel_desc": {
         "type": "text",
         "placeholders": {

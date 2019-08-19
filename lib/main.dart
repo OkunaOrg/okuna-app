@@ -32,6 +32,9 @@ import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 
+import 'delegates/es_es_material_localizations_delegate.dart';
+import 'delegates/pt_br_material_localizations_delegate.dart';
+import 'delegates/sv_se_material_localizations_delegate.dart';
 
 class MyApp extends StatefulWidget {
   final openbookProviderKey = new GlobalKey<OpenbookProviderState>();
@@ -40,14 +43,12 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 
   static void setLocale(BuildContext context, Locale newLocale) {
-    _MyAppState state =
-    context.ancestorStateOfType(TypeMatcher<_MyAppState>());
+    _MyAppState state = context.ancestorStateOfType(TypeMatcher<_MyAppState>());
 
     state.setState(() {
       state.locale = newLocale;
     });
   }
-
 }
 
 class _MyAppState extends State<MyApp> {
@@ -68,13 +69,22 @@ class _MyAppState extends State<MyApp> {
             locale: this.locale,
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
+              // if no deviceLocale use english
+              if (deviceLocale == null) {
+                this.locale = Locale('en', 'US');
+                return this.locale;
+              }
               // initialise locale from device
-              if (deviceLocale == null)return this.locale;
-              if (deviceLocale != null && this.locale == null && supportedLanguages.contains(deviceLocale.languageCode)) {
-                  Locale supportedMatchedLocale = supportedLocales.firstWhere((Locale locale) => locale.languageCode == deviceLocale.languageCode);
-                  this.locale = supportedMatchedLocale;
+              if (deviceLocale != null &&
+                  supportedLanguages.contains(deviceLocale.languageCode) &&
+                  this.locale == null) {
+                Locale supportedMatchedLocale = supportedLocales.firstWhere(
+                    (Locale locale) =>
+                        locale.languageCode == deviceLocale.languageCode);
+                this.locale = supportedMatchedLocale;
               } else if (this.locale == null) {
-                print('Locale ${deviceLocale.languageCode} not supported, defaulting to en');
+                print(
+                    'Locale ${deviceLocale.languageCode} not supported, defaulting to en');
                 this.locale = Locale('en', 'US');
               }
               return this.locale;
@@ -86,6 +96,9 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
+              const MaterialLocalizationPtBRDelegate(),
+              const MaterialLocalizationEsESDelegate(),
+              const MaterialLocalizationSvSEDelegate(),
             ],
             theme: new ThemeData(
                 buttonTheme: ButtonThemeData(
@@ -178,7 +191,8 @@ class _MyAppState extends State<MyApp> {
               },
               '/waitlist/subscribe_done_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
-                WaitlistSubscribeArguments args = ModalRoute.of(context).settings.arguments;
+                WaitlistSubscribeArguments args =
+                    ModalRoute.of(context).settings.arguments;
                 return OBWaitlistSubscribeDoneStep(count: args.count);
               }
             }),
@@ -189,7 +203,8 @@ class _MyAppState extends State<MyApp> {
   void bootstrapOpenbookProviderInContext(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var localizationService = LocalizationService.of(context);
-    if (this.locale.languageCode != localizationService.getLocale().languageCode) {
+    if (this.locale.languageCode !=
+        localizationService.getLocale().languageCode) {
       Future.delayed(Duration(milliseconds: 0), () {
         MyApp.setLocale(context, this.locale);
       });
@@ -198,9 +213,9 @@ class _MyAppState extends State<MyApp> {
     UniversalLinksService universalLinksService =
         openbookProvider.universalLinksService;
     universalLinksService.digestLinksWithContext(context);
-    openbookProvider.validationService.setLocalizationService(localizationService);
+    openbookProvider.validationService
+        .setLocalizationService(localizationService);
   }
-
 }
 
 void _setPlatformOverrideForDesktop() {

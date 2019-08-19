@@ -56,7 +56,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       _localizationService.drawer__useful_links_guidelines_feature_requests_desc),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://openbook.canny.io/feature-requests');
+                        'https://okuna.canny.io/feature-requests');
                   },
                 ),
                 ListTile(
@@ -66,7 +66,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       OBSecondaryText(_localizationService.drawer__useful_links_guidelines_bug_tracker_desc),
                   onTap: () {
                     urlLauncherService
-                        .launchUrl('https://openbook.canny.io/bugs');
+                        .launchUrl('https://okuna.canny.io/bugs');
                   },
                 ),
                 ListTile(
@@ -88,6 +88,15 @@ class OBUsefulLinksPage extends StatelessWidget {
                         'https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
                   },
                 ),
+                ListTile(
+                  leading: const OBIcon(OBIcons.support),
+                  title: OBText(_localizationService.drawer__useful_links_support),
+                  subtitle: OBSecondaryText(
+                      _localizationService.drawer__useful_links_support_desc),
+                  onTap: () {
+                    urlLauncherService.launchUrl('https://www.okuna.io/en/faq');
+                  },
+                )
               ],
             )),
           ],

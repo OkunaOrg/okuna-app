@@ -38,35 +38,41 @@ class UtilsService {
     return mimeType;
   }
   // LocalizationService localizationService
-  String timeAgo(DateTime date) {
+  String timeAgo(DateTime date, LocalizationService _localizationService) {
     /// Originally from https://gist.github.com/DineshKachhot/bc8cee616f30c323c1dd1e63a4bf65df
     final now = DateTime.now();
     final difference = now.difference(date);
+    String years = _localizationService.post__time_short_years;
+    String weeks = _localizationService.post__time_short_weeks;
+    String days = _localizationService.post__time_short_days;
+    String hours = _localizationService.post__time_short_hours;
+    String mins = _localizationService.post__time_short_minutes;
+    String seconds = _localizationService.post__time_short_seconds;
 
     if ((difference.inDays / 365).floor() >= 2) {
-      return '${(difference.inDays / 365).floor()}y';
+      return '${(difference.inDays / 365).floor()}$years';
     } else if ((difference.inDays / 365).floor() >= 1) {
-      return '1y';
+      return _localizationService.post__time_short_one_year;
     } else if ((difference.inDays / 7).floor() >= 2) {
-      return '${(difference.inDays / 7).floor()}w';
+      return '${(difference.inDays / 7).floor()}$weeks';
     } else if ((difference.inDays / 7).floor() >= 1) {
-      return '1w';
+      return _localizationService.post__time_short_one_week;
     } else if (difference.inDays >= 2) {
-      return '${difference.inDays}d';
+      return '${difference.inDays}$days';
     } else if (difference.inDays >= 1) {
-      return '1d';
+      return _localizationService.post__time_short_one_day;
     } else if (difference.inHours >= 2) {
-      return '${difference.inHours}h';
+      return '${difference.inHours}$hours';
     } else if (difference.inHours >= 1) {
-      return '1h';
+      return _localizationService.post__time_short_one_hour;
     } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes}m';
+      return '${difference.inMinutes}$mins';
     } else if (difference.inMinutes >= 1) {
-      return '1m';
+      return _localizationService.post__time_short_one_minute;
     } else if (difference.inSeconds >= 3) {
-      return '${difference.inSeconds}s';
+      return '${difference.inSeconds}$seconds';
     } else {
-      return 'now';
+      return _localizationService.post__time_short_now_text;
     }
   }
 

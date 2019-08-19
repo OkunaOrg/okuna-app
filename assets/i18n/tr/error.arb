@@ -1,0 +1,16 @@
+{
+    "unknown_error": "Bilinmeyen hata",
+    "@unknown_error": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    },
+    "no_internet_connection": "İnternet bağlantısı yok",
+    "@no_internet_connection": {
+        "type": "text",
+        "placeholders": {
+
+        }
+    }
+}

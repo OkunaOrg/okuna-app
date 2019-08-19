@@ -97,7 +97,8 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: OBText(
             hasCategory
-                ? _localizationService.community__trending_in_category(widget.category.title)
+                ? _localizationService
+                    .community__trending_in_category(widget.category.title)
                 : _localizationService.community__trending_in_all,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
@@ -134,7 +135,9 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
         Duration(
           milliseconds: 0,
         ), () {
-      _refreshIndicatorKey.currentState.show();
+      if (_refreshIndicatorKey.currentState != null) {
+        _refreshIndicatorKey.currentState.show();
+      }
     });
   }
 
@@ -160,7 +163,8 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

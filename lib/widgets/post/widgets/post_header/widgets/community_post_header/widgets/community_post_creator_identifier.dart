@@ -24,6 +24,7 @@ class OBCommunityPostCreatorIdentifier extends StatelessWidget {
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
     var utilsService = openbookProvider.utilsService;
+    var localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
         stream: themeService.themeChange,
@@ -36,7 +37,7 @@ class OBCommunityPostCreatorIdentifier extends StatelessWidget {
 
           String commenterUsername = post.creator.username;
           String commenterName = post.creator.getProfileName();
-          String created = utilsService.timeAgo(post.created);
+          String created = utilsService.timeAgo(post.created, localizationService);
 
           return GestureDetector(
             onTap: onUsernamePressed,
