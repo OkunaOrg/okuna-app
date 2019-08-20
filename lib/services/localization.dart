@@ -2197,6 +2197,11 @@ class LocalizationService {
         name: 'user__edit_profile_followers_count');
   }
 
+  String get user__edit_profile_community_posts {
+    return Intl.message("Community posts",
+        name: 'user__edit_profile_community_posts');
+  }
+
   String get user__edit_profile_title {
     return Intl.message("Edit profile",
         name: 'user__edit_profile_title');

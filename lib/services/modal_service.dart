@@ -113,12 +113,12 @@ class ModalService {
   }
 
   Future<void> openEditUserProfile(
-      {@required User user, @required BuildContext context}) async {
+      {@required User user, @required BuildContext context, VoidCallback onUserProfileUpdated}) async {
     Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<PostReaction>(
             fullscreenDialog: true,
             builder: (BuildContext context) => Material(
-                  child: OBEditUserProfileModal(user),
+                  child: OBEditUserProfileModal(user, onUserProfileUpdated : onUserProfileUpdated),
                 )));
   }
 

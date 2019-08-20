@@ -10,30 +10,35 @@ class UserProfile {
   String url;
   String location;
   bool followersCountVisible;
+  bool communityPostsVisible;
   List<Badge> badges;
 
-  UserProfile(
-      {this.id,
-      this.name,
-      this.avatar,
-      this.cover,
-      this.bio,
-      this.url,
-      this.location,
-      this.badges,
-      this.followersCountVisible});
+  UserProfile({
+    this.id,
+    this.name,
+    this.avatar,
+    this.cover,
+    this.bio,
+    this.url,
+    this.location,
+    this.badges,
+    this.followersCountVisible,
+    this.communityPostsVisible,
+  });
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
     return UserProfile(
-        id: parsedJson['id'],
-        name: parsedJson['name'],
-        avatar: parsedJson['avatar'],
-        cover: parsedJson['cover'],
-        bio: parsedJson['bio'],
-        url: parsedJson['url'],
-        location: parsedJson['location'],
-        badges: parseBadges(parsedJson['badges']),
-        followersCountVisible: parsedJson['followers_count_visible']);
+      id: parsedJson['id'],
+      name: parsedJson['name'],
+      avatar: parsedJson['avatar'],
+      cover: parsedJson['cover'],
+      bio: parsedJson['bio'],
+      url: parsedJson['url'],
+      location: parsedJson['location'],
+      badges: parseBadges(parsedJson['badges']),
+      followersCountVisible: parsedJson['followers_count_visible'],
+      communityPostsVisible: parsedJson['community_posts_visible'],
+    );
   }
 
   static List<Badge> parseBadges(List<dynamic> badges) {
@@ -51,6 +56,8 @@ class UserProfile {
     if (json.containsKey('badges')) badges = parseBadges(json['badges']);
     if (json.containsKey('followers_count_visible'))
       followersCountVisible = json['followers_count_visible'];
+    if (json.containsKey('community_posts_visible'))
+      communityPostsVisible = json['community_posts_visible'];
   }
 
   bool hasLocation() {

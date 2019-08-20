@@ -98,6 +98,7 @@ class AuthApiService {
     String username,
     String url,
     bool followersCountVisible,
+    bool communityPostsVisible,
     String bio,
     String location,
   }) {
@@ -127,6 +128,9 @@ class AuthApiService {
 
     if (followersCountVisible != null)
       body['followers_count_visible'] = followersCountVisible;
+
+    if (communityPostsVisible != null)
+      body['community_posts_visible'] = communityPostsVisible;
 
     if (location != null) body['location'] = location;
 

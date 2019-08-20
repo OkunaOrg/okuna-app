@@ -10,8 +10,9 @@ import 'package:flutter/material.dart';
 
 class OBProfileActions extends StatelessWidget {
   final User user;
+  final VoidCallback onUserProfileUpdated;
 
-  OBProfileActions(this.user);
+  const OBProfileActions(this.user, {@required this.onUserProfileUpdated});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class OBProfileActions extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onPressed: () {
-          modalService.openEditUserProfile(user: user, context: context);
+          modalService.openEditUserProfile(user: user, context: context, onUserProfileUpdated: onUserProfileUpdated);
         });
   }
 }
