@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/url_launcher.dart';
@@ -40,6 +41,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
   UserService _userService;
   UrlLauncherService _urlLauncherService;
   ToastService _toastService;
+  BottomSheetService _bottomSheetService;
 
   bool _needsBootstrap;
   StreamSubscription _requestSubscription;
@@ -63,6 +65,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       _userService = openbookProvider.userService;
       _urlLauncherService = openbookProvider.urlLauncherService;
       _toastService = openbookProvider.toastService;
+      _bottomSheetService = openbookProvider.bottomSheetService;
       _needsBootstrap = false;
     }
 
@@ -109,9 +112,12 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
-  void _onLinkTapped(String link) {
+  void _onLinkTapped(String link) async {
     try {
-      _urlLauncherService.launchUrl(link);
+      var result = await _bottomSheetService.showConfirmOpenUrl(link: link, context: context);
+      if (result == true) {
+        _urlLauncherService.launchUrl(link);
+      }
     } on UrlLauncherUnsupportedUrlException {
       _toastService.info(message: 'Unsupported link', context: context);
     } catch (error) {

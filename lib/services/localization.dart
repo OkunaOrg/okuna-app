@@ -1936,6 +1936,26 @@ class LocalizationService {
         name: 'post__time_short_now_text');
   }
 
+  String get post__open_url_message {
+    return Intl.message("Do you want to open this link in your browser?",
+        name: "post__open_url_message");
+  }
+
+  String get post__open_url_continue {
+    return Intl.message("Continue",
+        name: "post__open_url_continue");
+  }
+
+  String get post__open_url_cancel {
+    return Intl.message("Cancel",
+        name: "post__open_url_cancel");
+  }
+
+  String get post__open_url_dont_ask_again {
+    return Intl.message("Don't ask again",
+        name: "post__open_url_dont_ask_again");
+  }
+
   String get user__thousand_postfix {
     return Intl.message("k",
         desc: 'For eg. communty has 3k members',

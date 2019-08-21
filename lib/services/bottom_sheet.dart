@@ -9,6 +9,7 @@ import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/confirm_open_url.dart';
 import 'package:Okuna/pages/home/bottom_sheets/connection_circles_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/follows_lists_picker.dart';
@@ -146,6 +147,19 @@ class BottomSheetService {
         context: context,
         builder: (BuildContext context) {
           return OBVideoPickerBottomSheet();
+        });
+  }
+
+  Future<bool> showConfirmOpenUrl({
+    @required BuildContext context,
+    @required String link
+  }) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBConfirmOpenUrlBottomSheet(
+            url: link
+          );
         });
   }
 }
