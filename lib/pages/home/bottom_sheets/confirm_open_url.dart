@@ -1,6 +1,5 @@
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
-import 'package:Okuna/widgets/checkbox.dart';
 import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
@@ -17,6 +16,9 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
     var localizationService = OpenbookProvider.of(context).localizationService;
     _context = context;
 
+    double screenHeight = MediaQuery.of(context).size.height;
+    double maxUrlBoxHeight = screenHeight * .5;
+
     return OBPrimaryColorContainer(
       mainAxisSize: MainAxisSize.min,
       child: Padding(
@@ -30,8 +32,13 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            OBSmartText(
-              text: url,
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: maxUrlBoxHeight),
+              child: SingleChildScrollView(
+                child: OBSmartText(
+                  text: url,
+                ),
+              ),
             ),
             const SizedBox(
               height: 10,
