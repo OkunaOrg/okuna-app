@@ -114,7 +114,13 @@ class OBActionableTextState extends State<OBActionableSmartText> {
 
   void _onLinkTapped(String link) async {
     try {
-      var result = await _bottomSheetService.showConfirmOpenUrl(link: link, context: context);
+      var result = true;
+
+      if (await _urlLauncherService.getAskToConfirmOpen()) {
+        result = await _bottomSheetService.showConfirmOpenUrl(
+            link: link, context: context);
+      }
+
       if (result == true) {
         _urlLauncherService.launchUrl(link);
       }

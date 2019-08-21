@@ -1,20 +1,47 @@
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/url_launcher.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 
-class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
+class OBConfirmOpenUrlBottomSheet extends StatefulWidget {
   final String url;
-  BuildContext _context;
 
   OBConfirmOpenUrlBottomSheet({this.url});
 
   @override
+  OBConfirmOpenUrlBottomSheetState createState() {
+    return OBConfirmOpenUrlBottomSheetState();
+  }
+}
+
+class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet> {
+  UrlLauncherService _urlLauncherService;
+  LocalizationService _localizationService;
+
+  bool _needsBootstrap;
+  bool _ask;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _needsBootstrap = true;
+    _ask = true;
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    var localizationService = OpenbookProvider.of(context).localizationService;
-    _context = context;
+    if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _urlLauncherService = openbookProvider.urlLauncherService;
+      _localizationService = openbookProvider.localizationService;
+      _needsBootstrap = false;
+    }
 
     double screenHeight = MediaQuery.of(context).size.height;
     double maxUrlBoxHeight = screenHeight * .5;
@@ -27,7 +54,7 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             OBText(
-              localizationService.post__open_url_message,
+              _localizationService.post__open_url_message,
             ),
             const SizedBox(
               height: 10,
@@ -36,7 +63,7 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
               constraints: BoxConstraints(maxHeight: maxUrlBoxHeight),
               child: SingleChildScrollView(
                 child: OBSmartText(
-                  text: url,
+                  text: widget.url,
                 ),
               ),
             ),
@@ -44,8 +71,10 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
               height: 10,
             ),
             OBCheckboxField(
-              value: false,
-              title: localizationService.post__open_url_dont_ask_again,
+              value: !_ask,
+              title: _localizationService.post__open_url_dont_ask_again,
+              onTap: _toggleDontAsk,
+              titleStyle: TextStyle(fontWeight: FontWeight.normal),
             ),
             const SizedBox(
               height: 20,
@@ -54,9 +83,10 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: OBButton(
+                    isDisabled: !_ask,
                     size: OBButtonSize.medium,
                     type: OBButtonType.highlight,
-                    child: Text(localizationService.post__open_url_cancel),
+                    child: Text(_localizationService.post__open_url_cancel),
                     onPressed: _onCancel,
                   ),
                 ),
@@ -67,7 +97,7 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
                   child: OBButton(
                     size: OBButtonSize.medium,
                     type: OBButtonType.primary,
-                    child: Text(localizationService.post__open_url_continue),
+                    child: Text(_localizationService.post__open_url_continue),
                     onPressed: _onConfirmOpen,
                   ),
                 ),
@@ -79,11 +109,18 @@ class OBConfirmOpenUrlBottomSheet extends StatelessWidget {
     );
   }
 
+  void _toggleDontAsk() {
+    setState(() {
+      _ask = !_ask;
+      _urlLauncherService.storeAskToConfirmOpen(_ask);
+    });
+  }
+
   void _onConfirmOpen() {
-    Navigator.pop(_context, true);
+    Navigator.pop(context, true);
   }
 
   void _onCancel() {
-    Navigator.pop(_context, false);
+    Navigator.pop(context, false);
   }
 }

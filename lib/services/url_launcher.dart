@@ -1,6 +1,9 @@
+import 'package:Okuna/services/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlLauncherService {
+  OBStorage _storage;
+
   Future launchUrl(String url) async {
     bool canOpenUrl = await canLaunchUrl(url);
 
@@ -13,6 +16,20 @@ class UrlLauncherService {
 
   Future<bool> canLaunchUrl(String url){
     return canLaunch(url);
+  }
+
+  void setStorageService(StorageService storageService) {
+    _storage = storageService.getSystemPreferencesStorage(namespace: 'url');
+  }
+
+  void storeAskToConfirmOpen(bool ask) {
+    _storage?.set('askToConfirmOpen', ask.toString());
+  }
+
+  Future<bool> getAskToConfirmOpen() async {
+    String ask = await _storage?.get('askToConfirmOpen');
+
+    return ask != null ? ask.toLowerCase() == "true" : true;
   }
 }
 
