@@ -66,7 +66,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   }
 
   Widget _buildFullPostText() {
-    if (widget._post.hasPreviewLink() && !widget._post.hasPreviewQueryData()) {
+    if (widget._post.hasPreviewLink() && !widget._post.hasPreviewQueryData() && _needsBootstrap) {
       this._fetchPreviewData();
     }
 
@@ -80,7 +80,12 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _requestInProgress == true ? _getPreviewLoading() : OBPostLinkPreview(post: widget._post),
+                _requestInProgress == true ?
+                _getPreviewLoading() :
+                OBPostLinkPreview(
+                    previewLinkQueryData: widget._post.previewLinkQueryData,
+                    previewLink: widget._post.getPreviewLink()
+                ),
                 _buildPostText(),
               ],
             );
@@ -124,6 +129,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     } finally {
       _fetchPreviewDataOperation = null;
       _setRequestInProgress(false);
+      _needsBootstrap = false;
     }
   }
 
@@ -189,8 +195,6 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       _toastService.error(
           message: error.toHumanReadableMessage(), context: context);
     } else if (error is HttpieRequestError) {
-      String errorMessage = await error.toHumanReadableMessage();
-      _toastService.error(message: errorMessage, context: context);
     } else {
       _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;

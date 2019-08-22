@@ -14,28 +14,28 @@ import '../../../../../provider.dart';
 import '../../../../progress_indicator.dart';
 
 class OBPostLinkPreview extends StatelessWidget {
-  final Post post;
+  final PostPreviewLinkData previewLinkQueryData;
+  final String previewLink;
 
-  const OBPostLinkPreview({this.post});
+  const OBPostLinkPreview({this.previewLinkQueryData, this.previewLink});
 
   @override
   Widget build(BuildContext context) {
-    PostPreviewLinkData data = this.post.previewLinkQueryData;
-    if (data == null) return SizedBox();
+    if (this.previewLinkQueryData == null) return SizedBox();
 
-    String previewLink = this.post.getPreviewLink();
+    // String previewLink = this.post.getPreviewLink();
     double screenWidth = MediaQuery.of(context).size.width;
     UrlLauncherService _urlLauncherService = OpenbookProvider.of(context).urlLauncherService;
 
     return GestureDetector(
       child:Column(
           children: <Widget>[
-            _buildPreviewImage(screenWidth, data),
-            _buildPreviewBar(data, context)
+            _buildPreviewImage(screenWidth, this.previewLinkQueryData),
+            _buildPreviewBar(this.previewLinkQueryData, context)
           ],
         ),
       onTap: (){
-        _urlLauncherService.launchUrl(previewLink);
+        _urlLauncherService.launchUrl(this.previewLink);
       },
     );
   }
