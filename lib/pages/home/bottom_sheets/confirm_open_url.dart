@@ -8,9 +8,9 @@ import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 
 class OBConfirmOpenUrlBottomSheet extends StatefulWidget {
-  final String url;
+  final Uri _uri;
 
-  OBConfirmOpenUrlBottomSheet({this.url});
+  OBConfirmOpenUrlBottomSheet({String url}) : _uri = Uri.parse(url);
 
   @override
   OBConfirmOpenUrlBottomSheetState createState() {
@@ -24,6 +24,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
 
   bool _needsBootstrap;
   bool _ask;
+  bool _askForHost;
 
 
   @override
@@ -31,6 +32,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
     super.initState();
     _needsBootstrap = true;
     _ask = true;
+    _askForHost = true;
   }
 
 
@@ -44,7 +46,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
     }
 
     double screenHeight = MediaQuery.of(context).size.height;
-    double maxUrlBoxHeight = screenHeight * .5;
+    double maxUrlBoxHeight = screenHeight * .3;
 
     return OBPrimaryColorContainer(
       mainAxisSize: MainAxisSize.min,
@@ -55,6 +57,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
           children: <Widget>[
             OBText(
               _localizationService.post__open_url_message,
+              textAlign: TextAlign.start,
             ),
             const SizedBox(
               height: 10,
@@ -63,12 +66,21 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
               constraints: BoxConstraints(maxHeight: maxUrlBoxHeight),
               child: SingleChildScrollView(
                 child: OBSmartText(
-                  text: widget.url,
+                  text: widget._uri.toString(),
                 ),
               ),
             ),
             const SizedBox(
               height: 10,
+            ),
+            OBCheckboxField(
+              value: !_askForHost,
+              title: _localizationService.post__open_url_dont_ask_again_for(widget._uri.host),
+              onTap: _toggleDontAskForHost,
+              titleStyle: TextStyle(fontWeight: FontWeight.normal),
+            ),
+            const SizedBox(
+              height: 5,
             ),
             OBCheckboxField(
               value: !_ask,
@@ -77,13 +89,13 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
               titleStyle: TextStyle(fontWeight: FontWeight.normal),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Row(
               children: <Widget>[
                 Expanded(
                   child: OBButton(
-                    isDisabled: !_ask,
+                    isDisabled: !_ask || !_askForHost,
                     size: OBButtonSize.medium,
                     type: OBButtonType.highlight,
                     child: Text(_localizationService.post__open_url_cancel),
@@ -107,6 +119,13 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
         ),
       ),
     );
+  }
+
+  void _toggleDontAskForHost() {
+    setState(() {
+      _askForHost = !_askForHost;
+      _urlLauncherService.storeAskToConfirmOpen(_askForHost, host: widget._uri.host);
+    });
   }
 
   void _toggleDontAsk() {

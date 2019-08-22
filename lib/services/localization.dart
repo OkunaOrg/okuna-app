@@ -1952,8 +1952,14 @@ class LocalizationService {
   }
 
   String get post__open_url_dont_ask_again {
-    return Intl.message("Don't ask again",
+    return Intl.message("Never ask again",
         name: "post__open_url_dont_ask_again");
+  }
+
+  String post__open_url_dont_ask_again_for(String url) {
+    return Intl.message("Don't ask again for $url",
+        args: [url],
+        name: "post__open_url_dont_ask_again_for");
   }
 
   String get user__thousand_postfix {
