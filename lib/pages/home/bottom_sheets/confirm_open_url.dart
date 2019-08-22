@@ -1,5 +1,8 @@
+import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/url_launcher.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/fields/checkbox_field.dart';
@@ -21,6 +24,8 @@ class OBConfirmOpenUrlBottomSheet extends StatefulWidget {
 class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet> {
   UrlLauncherService _urlLauncherService;
   LocalizationService _localizationService;
+  ThemeService _themeService;
+  ThemeValueParserService _themeValueParserService;
 
   bool _needsBootstrap;
   bool _ask;
@@ -42,11 +47,16 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
       var openbookProvider = OpenbookProvider.of(context);
       _urlLauncherService = openbookProvider.urlLauncherService;
       _localizationService = openbookProvider.localizationService;
+      _themeService = openbookProvider.themeService;
+      _themeValueParserService = openbookProvider.themeValueParserService;
       _needsBootstrap = false;
     }
 
     double screenHeight = MediaQuery.of(context).size.height;
     double maxUrlBoxHeight = screenHeight * .3;
+
+    OBTheme theme = _themeService.getActiveTheme();
+    Color secondaryTextColor = _themeValueParserService.parseColor(theme.secondaryTextColor);
 
     return OBPrimaryColorContainer(
       mainAxisSize: MainAxisSize.min,
@@ -75,9 +85,11 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
             ),
             OBCheckboxField(
               value: !_askForHost,
-              title: _localizationService.post__open_url_dont_ask_again_for(widget._uri.host),
               onTap: _toggleDontAskForHost,
+              title: _localizationService.post__open_url_dont_ask_again_for,
               titleStyle: TextStyle(fontWeight: FontWeight.normal),
+              subtitle: widget._uri.host,
+              subtitleStyle: TextStyle(color: secondaryTextColor),
             ),
             const SizedBox(
               height: 5,

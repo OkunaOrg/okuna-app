@@ -1956,9 +1956,8 @@ class LocalizationService {
         name: "post__open_url_dont_ask_again");
   }
 
-  String post__open_url_dont_ask_again_for(String url) {
-    return Intl.message("Don't ask again for $url",
-        args: [url],
+  String get post__open_url_dont_ask_again_for {
+    return Intl.message("Trust this domain",
         name: "post__open_url_dont_ask_again_for");
   }
 
