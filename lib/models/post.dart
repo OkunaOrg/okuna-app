@@ -5,6 +5,9 @@ import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_image.dart';
+import 'package:Okuna/models/post_link.dart';
+import 'package:Okuna/models/post_links_list.dart';
+import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
@@ -34,6 +37,8 @@ class Post extends UpdatableModel<Post> {
   Language language;
   PostImage image;
   PostVideo video;
+  PostLinksList postLinksList;
+  PostPreviewLinkData previewLinkQueryData;
   PostCommentList commentsList;
   Community community;
 
@@ -61,6 +66,7 @@ class Post extends UpdatableModel<Post> {
       this.creatorId,
       this.image,
       this.video,
+      this.postLinksList,
       this.creator,
       this.language,
       this.reactionsCount,
@@ -102,7 +108,10 @@ class Post extends UpdatableModel<Post> {
       language = factory.parseLanguage(json['language']);
     }
 
-    if (json.containsKey('text')) text = json['text'];
+    if (json.containsKey('text')) {
+      text = json['text'];
+      previewLinkQueryData = null;
+    }
 
     if (json.containsKey('is_muted')) isMuted = json['is_muted'];
 
@@ -118,6 +127,8 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('video')) video = factory.parseVideo(json['video']);
 
+    if (json.containsKey('post_links')) postLinksList = factory.parsePostLinksList(json['post_links']);
+
     if (json.containsKey('community'))
       community = factory.parseCommunity(json['community']);
 
@@ -132,6 +143,16 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('circles'))
       circles = factory.parseCircles(json['circles']);
+  }
+
+  void updatePreviewDataFromJson(Map json) {
+    previewLinkQueryData = PostPreviewLinkData();
+    if (json.containsKey('title')) previewLinkQueryData.title = json['title'];
+    if (json.containsKey('description')) previewLinkQueryData.description = json['description'];
+    if (json.containsKey('image_url')) previewLinkQueryData.imageUrl = json['image_url'];
+    if (json.containsKey('favicon_url')) previewLinkQueryData.faviconUrl = json['favicon_url'];
+    if (json.containsKey('domain_url')) previewLinkQueryData.domainUrl = json['domain_url'];
+    notifyUpdate();
   }
 
   bool hasReaction() {
@@ -160,6 +181,14 @@ class Post extends UpdatableModel<Post> {
 
   bool hasVideo() {
     return video != null;
+  }
+
+  bool hasPreviewLink() {
+    return postLinksList != null && postLinksList.links.length > 0;
+  }
+
+  bool hasPreviewQueryData() {
+    return previewLinkQueryData != null;
   }
 
   bool hasText() {
@@ -232,6 +261,10 @@ class Post extends UpdatableModel<Post> {
 
   String getVideo() {
     return video.video;
+  }
+
+  String getPreviewLink() {
+    return postLinksList.links[0].link;
   }
 
   Language getLanguage() {
@@ -335,6 +368,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         creator: parseCreator(json['creator']),
         image: parseImage(json['image']),
         video: parseVideo(json['video']),
+        postLinksList: parsePostLinksList(json['post_links']),
         reaction: parseReaction(json['reaction']),
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
@@ -363,6 +397,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   PostVideo parseVideo(Map video) {
     if (video == null) return null;
     return PostVideo.fromJSON(video);
+  }
+
+  PostLinksList parsePostLinksList(List linksList) {
+    if (linksList == null) return null;
+    return PostLinksList.fromJson(linksList);
   }
 
   User parseCreator(Map creator) {

@@ -12,6 +12,7 @@ import 'package:Okuna/services/documents.dart';
 import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
+import 'package:Okuna/services/preview_url_api_service.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
@@ -92,6 +93,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ModalService modalService = ModalService();
   NavigationService navigationService = NavigationService();
   WaitlistApiService waitlistApiService = WaitlistApiService();
+  PreviewUrlApiService previewUrlApiService = PreviewUrlApiService();
 
   LocalizationService localizationService;
   UniversalLinksService universalLinksService = UniversalLinksService();
@@ -147,6 +149,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setCreateAccountBlocService(createAccountBloc);
     userService.setWaitlistApiService(waitlistApiService);
     waitlistApiService.setHttpService(httpService);
+    userService.setPreviewUrlApiService(previewUrlApiService);
+    previewUrlApiService.setHttpService(httpService);
     userService.setModerationApiService(moderationApiService);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
@@ -190,6 +194,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
+    previewUrlApiService.setApiURL(environment.apiUrl);
     waitlistApiService
         .setOpenbookSocialApiURL(environment.openbookSocialApiUrl);
     intercomService.bootstrap(

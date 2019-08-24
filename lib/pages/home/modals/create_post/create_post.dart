@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
@@ -24,11 +25,14 @@ import 'package:Okuna/widgets/buttons/pill_button.dart';
 import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_link_preview.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
+import 'package:Okuna/widgets/theming/smart_text.dart';
+import 'package:async/async.dart';
 
 class CreatePostModal extends StatefulWidget {
   final Community community;
@@ -55,6 +59,8 @@ class CreatePostModalState extends State<CreatePostModal> {
   TextEditingController _textController;
   FocusNode _focusNode;
   int _charactersCount;
+  String _previewUrl;
+  PostPreviewLinkData _previewLinkQueryData;
 
   bool _isPostTextAllowedLength;
   bool _hasFocus;
@@ -70,10 +76,12 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   bool _needsBootstrap;
   bool _isCreateCommunityPostInProgress;
+  bool _previewRequestInProgress;
 
   TextAccountAutocompletionService _textAccountAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
   bool _isSearchingAccount;
+  CancelableOperation _fetchPreviewDataOperation;
 
   @override
   void initState() {
@@ -87,6 +95,8 @@ class CreatePostModalState extends State<CreatePostModal> {
     _focusNode.addListener(_onFocusNodeChanged);
     _hasFocus = false;
     _charactersCount = 0;
+    _previewUrl = '';
+    _previewRequestInProgress = false;
     _isPostTextAllowedLength = false;
     _hasImage = false;
     _hasVideo = false;
@@ -113,6 +123,9 @@ class CreatePostModalState extends State<CreatePostModal> {
     super.dispose();
     _textController.removeListener(_onPostTextChanged);
     _focusNode.removeListener(_onFocusNodeChanged);
+    if (_fetchPreviewDataOperation != null) {
+      _fetchPreviewDataOperation.cancel();
+    }
   }
 
   @override
@@ -180,6 +193,30 @@ class CreatePostModalState extends State<CreatePostModal> {
     );
   }
 
+  Widget _getPreviewWidget() {
+    if (_previewLinkQueryData != null && !_hasImage && !_hasVideo) {
+      return Container(
+        decoration: BoxDecoration(
+            color: Colors.black12,
+            borderRadius: BorderRadius.circular(10.0)),
+            child:  SizedBox(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: OBPostLinkPreview(
+                      previewLinkQueryData: _previewLinkQueryData,
+                      previewLink: _previewUrl
+                  )),
+            ),
+      );
+    } else if (_previewRequestInProgress) {
+      return const Center(
+        child: const CircularProgressIndicator(),
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+
   Widget _buildPrimaryActionButton({bool isEnabled}) {
     Widget nextButton;
 
@@ -245,11 +282,17 @@ class CreatePostModalState extends State<CreatePostModal> {
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _postItemsWidgets)),
+                    children: _getPostItemsWidgetsWithPreview())),
           ),
         )
       ],
     );
+  }
+
+  List<Widget> _getPostItemsWidgetsWithPreview() {
+    List<Widget> existingPostItemsWidgets = List.from(_postItemsWidgets);
+    existingPostItemsWidgets.add(_getPreviewWidget());
+    return existingPostItemsWidgets;
   }
 
   Widget _buildAccountSearchBox() {
@@ -315,6 +358,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   void _onPostTextChanged() {
     String text = _textController.text;
     _checkAutocomplete();
+    _checkForPreviewUrl();
     setState(() {
       _charactersCount = text.length;
       _isPostTextAllowedLength =
@@ -376,6 +420,44 @@ class CreatePostModalState extends State<CreatePostModal> {
     }
   }
 
+  void _checkForPreviewUrl() async {
+    String text = _textController.text;
+    List matches = [];
+    String previewUrl;
+    matches.addAll(linkRegex.allMatches(text).map((match){
+      return match.group(0);
+    }));
+
+    if (matches.length > 0) {
+      previewUrl = matches[0];
+      if (previewUrl != _previewUrl) {
+        _setPreviewUrl(previewUrl);
+        await _fetchPreviewData(previewUrl);
+      }
+    } else {
+      _setPreviewLinkQueryData(null);
+    }
+  }
+
+  Future _fetchPreviewData(String url) async {
+    if (_previewRequestInProgress && _fetchPreviewDataOperation != null) {
+      _fetchPreviewDataOperation.cancel();
+    }
+    _setPreviewRequestInProgress(true);
+    try {
+      _fetchPreviewDataOperation = CancelableOperation.fromFuture(
+          _userService.getPreviewDataForUrl(url: url));
+
+      Map<String, dynamic> previewData = await _fetchPreviewDataOperation.value;
+      _setPreviewLinkQueryData(previewData);
+    } catch (error) {
+      _onPreviewError(error);
+    } finally {
+      _fetchPreviewDataOperation = null;
+      _setPreviewRequestInProgress(false);
+    }
+  }
+
   void _checkAutocomplete() {
     TextAccountAutocompletionResult result = _textAccountAutocompletionService
         .checkTextForAutocompletion(_textController);
@@ -386,7 +468,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       _setIsSearchingAccount(true);
       _contextualAccountSearchBoxController.search(result.autocompleteQuery);
     } else if (_isSearchingAccount) {
-      debugLog('Finished searching accoun');
+      debugLog('Finished searching account');
       _setIsSearchingAccount(false);
     }
   }
@@ -409,6 +491,36 @@ class CreatePostModalState extends State<CreatePostModal> {
               _textController.text, foundAccountUsername);
       _textController.selection =
           TextSelection.collapsed(offset: _textController.text.length);
+    });
+  }
+
+  void _setPreviewUrl(String url) {
+    setState(() {
+      _previewUrl = url;
+    });
+  }
+
+  void _setPreviewRequestInProgress(bool previewRequestInProgress) {
+    setState(() {
+      _previewRequestInProgress = previewRequestInProgress;
+    });
+  }
+
+  void _setPreviewLinkQueryData(Map<String, dynamic> queryData) {
+    PostPreviewLinkData previewLinkQueryData;
+    if (queryData != null) {
+      previewLinkQueryData = PostPreviewLinkData();
+      if (queryData.containsKey('title')) previewLinkQueryData.title = queryData['title'];
+      if (queryData.containsKey('description')) previewLinkQueryData.description = queryData['description'];
+      if (queryData.containsKey('image_url')) previewLinkQueryData.imageUrl = queryData['image_url'];
+      if (queryData.containsKey('favicon_url')) previewLinkQueryData.faviconUrl = queryData['favicon_url'];
+      if (queryData.containsKey('domain_url')) previewLinkQueryData.domainUrl = queryData['domain_url'];
+    } else {
+      previewLinkQueryData = null;
+    }
+
+    setState(() {
+      _previewLinkQueryData = previewLinkQueryData;
     });
   }
 
@@ -436,6 +548,13 @@ class CreatePostModalState extends State<CreatePostModal> {
           message: _localizationService.trans('error__unknown_error'),
           context: context);
       throw error;
+    }
+  }
+
+  void _onPreviewError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
     }
   }
 

@@ -86,7 +86,7 @@ class SecondaryTextElement extends SmartTextElement {
   }
 }
 
-final _linkRegex = RegExp(
+final linkRegex = RegExp(
     r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
     caseSensitive: false);
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
@@ -133,7 +133,7 @@ List<SmartTextElement> _smartify(String text) {
   matches.addAll(_communityNameRegex.allMatches(text).map((m) {
     return SmartMatch(CommunityNameElement(m.group(0)), m.start, m.end);
   }));
-  matches.addAll(_linkRegex.allMatches(text).map((m) {
+  matches.addAll(linkRegex.allMatches(text).map((m) {
     return SmartMatch(LinkElement(m.group(0)), m.start, m.end);
   }));
   // matches.addAll(_tagRegex.allMatches(text).map((m) { return SmartMatch(HashTagElement(m.group(0)), m.start, m.end); }));
