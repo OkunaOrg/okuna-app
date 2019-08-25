@@ -10,7 +10,8 @@ class UserPreferencesService {
   Future _getPostCommentsSortTypeCache;
 
   void setStorageService(StorageService storageService) {
-    _storage = storageService.getSystemPreferencesStorage(namespace: 'userPreferences');
+    _storage = storageService.getSystemPreferencesStorage(
+        namespace: 'userPreferences');
   }
 
   Future setPostCommentsSortType(PostCommentsSortType type) {
@@ -42,20 +43,20 @@ class UserPreferencesService {
 
   Future setAskToConfirmOpenUrl(bool ask, {String host}) async {
     Future status;
-
     if (host == null) {
       status = _storage?.set(keyAskToConfirmOpen, ask.toString());
     } else {
-      String exceptions = await _storage?.get(keyAskToConfirmExceptions) ?? '';
+      List<String> exceptions =
+          await _storage?.getList(keyAskToConfirmExceptions) ?? <String>[];
 
-      var hasException = exceptions.contains(";$host");
+      var hasException = exceptions.contains(host);
 
       if (!hasException && !ask) {
-        exceptions += ";$host";
-        status = _storage?.set(keyAskToConfirmExceptions, exceptions);
-      } else if (hasException && ask){
-        exceptions.replaceAll(";$host", "");
-        status = _storage?.set(keyAskToConfirmExceptions, exceptions);
+        exceptions.add(host);
+        status = _storage?.setList(keyAskToConfirmExceptions, exceptions);
+      } else if (hasException && ask) {
+        exceptions.remove(host);
+        status = _storage?.setList(keyAskToConfirmExceptions, exceptions);
       }
     }
 
@@ -69,7 +70,8 @@ class UserPreferencesService {
     if (ask != null && ask.toLowerCase() == "false") {
       shouldAsk = false;
     } else if (host != null) {
-      String exceptions = await _storage?.get(keyAskToConfirmExceptions);
+      List<String> exceptions =
+          await _storage?.getList(keyAskToConfirmExceptions);
 
       if (exceptions != null && exceptions.contains(host)) {
         shouldAsk = false;
