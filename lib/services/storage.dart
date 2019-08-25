@@ -10,7 +10,7 @@ class StorageService {
   }
 
   OBStorage getSystemPreferencesStorage({String namespace}) {
-    return OBStorage(store: _SystemPreferencesStorage(), namespace: namespace);
+    return OBStorage(store: _SystemPreferencesStorage(namespace), namespace: namespace);
   }
 }
 
@@ -73,10 +73,11 @@ class _SecureStore implements _Store<String> {
 }
 
 class _SystemPreferencesStorage implements _Store<String> {
-  final storage = new FlutterSecureStorage();
-  Set<String> _storedKeys = Set();
+  final String _namespace;
 
   Future<SharedPreferences> _sharedPreferencesCache;
+
+  _SystemPreferencesStorage(String namespace) : _namespace = namespace;
 
   Future<SharedPreferences> _getSharedPreferences() async {
     if (_sharedPreferencesCache != null) return _sharedPreferencesCache;
@@ -90,20 +91,21 @@ class _SystemPreferencesStorage implements _Store<String> {
   }
 
   Future<void> set(String key, String value) async {
-    _storedKeys.add(value);
     SharedPreferences sharedPreferences = await _getSharedPreferences();
     return sharedPreferences.setString(key, value);
   }
 
   Future<void> remove(String key) async {
-    _storedKeys.remove(key);
     SharedPreferences sharedPreferences = await _getSharedPreferences();
     return sharedPreferences.remove(key);
   }
 
-  Future<void> clear() {
-    return Future.wait(
-        _storedKeys.map((String key) => storage.delete(key: key)));
+  Future<void> clear() async {
+    SharedPreferences preferences = await _getSharedPreferences();
+    return Future.wait(preferences
+        .getKeys()
+        .where((key) => key.startsWith('$_namespace.'))
+        .map((key) => preferences.remove(key)));
   }
 }
 
