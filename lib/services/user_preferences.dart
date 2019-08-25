@@ -42,10 +42,11 @@ class UserPreferencesService {
   }
 
   Future setAskToConfirmOpenUrl(bool ask, {String host}) async {
-    Future status;
+    Future status = Future.value(true);
     if (host == null) {
       status = _storage?.set(keyAskToConfirmOpen, ask.toString());
     } else {
+      host = host.toLowerCase();
       List<String> exceptions =
           await _storage?.getList(keyAskToConfirmExceptions) ?? <String>[];
 
@@ -79,6 +80,10 @@ class UserPreferencesService {
     }
 
     return shouldAsk;
+  }
+
+  Future<List<String>> getTrustedDomains() async {
+    return _storage?.getList(keyAskToConfirmExceptions);
   }
 
   Future clear() {

@@ -462,6 +462,32 @@ class LocalizationService {
   String get drawer__application_settings {
     return Intl.message("Application Settings", name: 'drawer__application_settings');
   }
+  String get drawer__application_settings_trusted_domains_title {
+    return Intl.message("Manage trusted domains",
+        name: 'drawer__application_settings_trusted_domains_title',
+        desc: 'Title for the Trusted Domains settings page.');
+  }
+  String get drawer__application_settings_trusted_domains_text {
+    return Intl.message("Trusted domains",
+        name: 'drawer__application_settings_trusted_domains_text',
+        desc: 'Text on the button to the Trusted Domains settings page.');
+  }
+  String get drawer__application_settings_trusted_domains_desc {
+    return Intl.message("Manage web domains you have marked as trusted.",
+        name: 'drawer__application_settings_trusted_domains_desc');
+  }
+  String get drawer__application_settings_trusted_domains_resource {
+    return Intl.message("trusted domains",
+        name: 'drawer__application_settings_trusted_domains_resource');
+  }
+  String get drawer__application_settings_delete_domain_failure {
+    return Intl.message("Could not delete the trusted domain",
+        name: 'drawer__application_settings_delete_domain_failure');
+  }
+  String get drawer__application_settings_ask_for_urls {
+    return Intl.message("Ask to open untrusted URLs",
+        name: 'drawer__application_settings_ask_for_urls');
+  }
   String get drawer__account_settings {
     return Intl.message("Account Settings", name: 'drawer__account_settings');
   }

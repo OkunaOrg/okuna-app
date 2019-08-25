@@ -44,7 +44,8 @@ import 'package:Okuna/pages/home/pages/menu/pages/my_moderation_tasks/my_moderat
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
-import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings/application_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings/pages/trusted_domains.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
@@ -535,6 +536,16 @@ class NavigationService {
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
             )));
+  }
+
+  Future<void> navigateToTrustedDomainsSettings({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obTrustedDomainsPage'),
+            widget: OBTrustedDomainsPage()));
   }
 
   Future<void> navigateToNotificationsSettings({
