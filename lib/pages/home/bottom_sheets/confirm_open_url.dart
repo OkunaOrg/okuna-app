@@ -3,7 +3,7 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
-import 'package:Okuna/services/url_launcher.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
@@ -22,7 +22,7 @@ class OBConfirmOpenUrlBottomSheet extends StatefulWidget {
 }
 
 class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet> {
-  UrlLauncherService _urlLauncherService;
+  UserPreferencesService _preferencesService;
   LocalizationService _localizationService;
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
@@ -45,7 +45,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
-      _urlLauncherService = openbookProvider.urlLauncherService;
+      _preferencesService = openbookProvider.userPreferencesService;
       _localizationService = openbookProvider.localizationService;
       _themeService = openbookProvider.themeService;
       _themeValueParserService = openbookProvider.themeValueParserService;
@@ -136,14 +136,14 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
   void _toggleDontAskForHost() {
     setState(() {
       _askForHost = !_askForHost;
-      _urlLauncherService.storeAskToConfirmOpen(_askForHost, host: widget._uri.host);
+      _preferencesService.setAskToConfirmOpenUrl(_askForHost, host: widget._uri.host);
     });
   }
 
   void _toggleDontAsk() {
     setState(() {
       _ask = !_ask;
-      _urlLauncherService.storeAskToConfirmOpen(_ask);
+      _preferencesService.setAskToConfirmOpenUrl(_ask);
     });
   }
 

@@ -8,6 +8,7 @@ import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/url_launcher.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 export 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
   NavigationService _navigationService;
   UserService _userService;
   UrlLauncherService _urlLauncherService;
+  UserPreferencesService _preferencesService;
   ToastService _toastService;
   BottomSheetService _bottomSheetService;
 
@@ -64,6 +66,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       _navigationService = openbookProvider.navigationService;
       _userService = openbookProvider.userService;
       _urlLauncherService = openbookProvider.urlLauncherService;
+      _preferencesService = openbookProvider.userPreferencesService;
       _toastService = openbookProvider.toastService;
       _bottomSheetService = openbookProvider.bottomSheetService;
       _needsBootstrap = false;
@@ -117,7 +120,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       var result = true;
       var uri = Uri.parse(link);
 
-      if (await _urlLauncherService.getAskToConfirmOpen(host: uri.host)) {
+      if (await _preferencesService.getAskToConfirmOpenUrl(host: uri.host)) {
         result = await _bottomSheetService.showConfirmOpenUrl(
             link: link, context: context);
       }
