@@ -122,7 +122,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
                     size: OBButtonSize.medium,
                     type: OBButtonType.primary,
                     child: Text(_localizationService.post__open_url_continue),
-                    onPressed: _onConfirmOpen,
+                    onPressed: _onConfirmTapped,
                   ),
                 ),
               ],
@@ -136,15 +136,25 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
   void _toggleDontAskForHost() {
     setState(() {
       _askForHost = !_askForHost;
-      _preferencesService.setAskToConfirmOpenUrl(_askForHost, host: widget._uri.host);
     });
   }
 
   void _toggleDontAsk() {
     setState(() {
       _ask = !_ask;
-      _preferencesService.setAskToConfirmOpenUrl(_ask);
     });
+  }
+
+  void _onConfirmTapped() async {
+    if (!_askForHost) {
+      await _preferencesService.setAskToConfirmOpenUrl(
+          _askForHost, host: widget._uri.host);
+    }
+    if (!_ask) {
+      await _preferencesService.setAskToConfirmOpenUrl(_ask);
+    }
+
+    _onConfirmOpen();
   }
 
   void _onConfirmOpen() {
