@@ -46,6 +46,24 @@ class _SecureStore implements _Store<String> {
   final storage = new FlutterSecureStorage();
   Set<String> _storedKeys = Set();
 
+  _SecureStore() {
+    _loadPreviouslyStoredKeys();
+  }
+
+  void _loadPreviouslyStoredKeys() async {
+    // Storing the previous keys in a list in preferences instead of obtaining
+    // them using storage.readAll(). For one thing, readAll() would decrypt all
+    // stored data and send it back, which is unnecessary. On top of that,
+    // readAll() doesn't work on iOS (https://github.com/mogol/flutter_secure_storage/issues/70).
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _storedKeys.addAll(preferences.getStringList('secure_store.keylist'));
+  }
+
+  void _saveStoredKeys() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setStringList('secure_store.keylist', _storedKeys.toList());
+  }
+
   Future<String> get(String key) async {
     try {
       return storage.read(key: key);
@@ -57,12 +75,16 @@ class _SecureStore implements _Store<String> {
   }
 
   Future<void> set(String key, String value) {
-    _storedKeys.add(value);
+    if (_storedKeys.add(key)) {
+      _saveStoredKeys();
+    }
     return storage.write(key: key, value: value);
   }
 
   Future<void> remove(String key) {
-    _storedKeys.remove(key);
+    if (_storedKeys.remove(key)) {
+      _saveStoredKeys();
+    }
     return storage.delete(key: key);
   }
 
