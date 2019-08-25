@@ -2881,6 +2881,16 @@ class LocalizationService {
         name: 'user__follows_list_accounts_count');
   }
 
+  String notifications__tab_general() {
+    return Intl.message("General",
+        name: 'notifications__tab_general');
+  }
+
+  String notifications__tab_requests() {
+    return Intl.message("Requests",
+        name: 'notifications__tab_requests');
+  }
+
   String get notifications__settings_title {
     return Intl.message("Notifications settings",
         name: 'notifications__settings_title');
