@@ -117,17 +117,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
 
   void _onLinkTapped(String link) async {
     try {
-      var result = true;
-      var uri = Uri.parse(link);
-
-      if (await _preferencesService.getAskToConfirmOpenUrl(host: uri.host)) {
-        result = await _bottomSheetService.showConfirmOpenUrl(
-            link: link, context: context);
-      }
-
-      if (result == true) {
-        _urlLauncherService.launchUrl(link);
-      }
+      _urlLauncherService.launchUrlWithConfirmation(link, context);
     } on UrlLauncherUnsupportedUrlException {
       _toastService.info(message: 'Unsupported link', context: context);
     } catch (error) {

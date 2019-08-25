@@ -108,6 +108,7 @@ class OBAcceptGuidelinesModalState extends State {
                               )
                             : OBMarkdown(
                                 onlyBody: true,
+                                linksRequireConfirmation: false,
                                 data: _guidelinesText,
                               )
                       ],

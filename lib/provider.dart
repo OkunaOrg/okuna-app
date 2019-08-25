@@ -174,6 +174,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
+    urlLauncherService.setBottomSheetService(bottomSheetService);
+    urlLauncherService.setUserPreferencesService(userPreferencesService);
   }
 
   void initAsyncState() async {

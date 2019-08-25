@@ -58,6 +58,7 @@ class OBCommunityGuidelinesPageState extends State {
           children: <Widget>[
             Expanded(
                 child: OBMarkdown(
+              linksRequireConfirmation: false,
               data: _guidelinesText,
             )),
           ],

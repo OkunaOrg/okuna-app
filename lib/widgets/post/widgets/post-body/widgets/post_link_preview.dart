@@ -35,7 +35,7 @@ class OBPostLinkPreview extends StatelessWidget {
           ],
         ),
       onTap: (){
-        _urlLauncherService.launchUrl(this.previewLink);
+        _urlLauncherService.launchUrlWithConfirmation(this.previewLink, context);
       },
     );
   }

@@ -20,7 +20,7 @@ class OBProfileUrl extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-        openbookProvider.urlLauncherService.launchUrl(url);
+        openbookProvider.urlLauncherService.launchUrlWithConfirmation(url, context);
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
