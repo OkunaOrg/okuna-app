@@ -84,6 +84,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
               height: 10,
             ),
             OBCheckboxField(
+              isDisabled: !_ask,
               value: !_askForHost,
               onTap: _toggleDontAskForHost,
               title: _localizationService.post__open_url_dont_ask_again_for,
@@ -142,6 +143,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
   void _toggleDontAsk() {
     setState(() {
       _ask = !_ask;
+      _askForHost = true;
     });
   }
 
