@@ -10,7 +10,7 @@ class StorageService {
   }
 
   OBStorage getSystemPreferencesStorage({String namespace}) {
-    return OBStorage(store: _SystemPreferencesStorage(), namespace: namespace);
+    return OBStorage(store: _SystemPreferencesStorage(namespace), namespace: namespace);
   }
 }
 
@@ -46,6 +46,24 @@ class _SecureStore implements _Store<String> {
   final storage = new FlutterSecureStorage();
   Set<String> _storedKeys = Set();
 
+  _SecureStore() {
+    _loadPreviouslyStoredKeys();
+  }
+
+  void _loadPreviouslyStoredKeys() async {
+    // Storing the previous keys in a list in preferences instead of obtaining
+    // them using storage.readAll(). For one thing, readAll() would decrypt all
+    // stored data and send it back, which is unnecessary. On top of that,
+    // readAll() doesn't work on iOS (https://github.com/mogol/flutter_secure_storage/issues/70).
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _storedKeys.addAll(preferences.getStringList('secure_store.keylist'));
+  }
+
+  void _saveStoredKeys() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setStringList('secure_store.keylist', _storedKeys.toList());
+  }
+
   Future<String> get(String key) async {
     try {
       return storage.read(key: key);
@@ -57,12 +75,16 @@ class _SecureStore implements _Store<String> {
   }
 
   Future<void> set(String key, String value) {
-    _storedKeys.add(value);
+    if (_storedKeys.add(key)) {
+      _saveStoredKeys();
+    }
     return storage.write(key: key, value: value);
   }
 
   Future<void> remove(String key) {
-    _storedKeys.remove(key);
+    if (_storedKeys.remove(key)) {
+      _saveStoredKeys();
+    }
     return storage.delete(key: key);
   }
 
@@ -73,10 +95,11 @@ class _SecureStore implements _Store<String> {
 }
 
 class _SystemPreferencesStorage implements _Store<String> {
-  final storage = new FlutterSecureStorage();
-  Set<String> _storedKeys = Set();
+  final String _namespace;
 
   Future<SharedPreferences> _sharedPreferencesCache;
+
+  _SystemPreferencesStorage(String namespace) : _namespace = namespace;
 
   Future<SharedPreferences> _getSharedPreferences() async {
     if (_sharedPreferencesCache != null) return _sharedPreferencesCache;
@@ -90,20 +113,21 @@ class _SystemPreferencesStorage implements _Store<String> {
   }
 
   Future<void> set(String key, String value) async {
-    _storedKeys.add(value);
     SharedPreferences sharedPreferences = await _getSharedPreferences();
     return sharedPreferences.setString(key, value);
   }
 
   Future<void> remove(String key) async {
-    _storedKeys.remove(key);
     SharedPreferences sharedPreferences = await _getSharedPreferences();
     return sharedPreferences.remove(key);
   }
 
-  Future<void> clear() {
-    return Future.wait(
-        _storedKeys.map((String key) => storage.delete(key: key)));
+  Future<void> clear() async {
+    SharedPreferences preferences = await _getSharedPreferences();
+    return Future.wait(preferences
+        .getKeys()
+        .where((key) => key.startsWith('$_namespace.'))
+        .map((key) => preferences.remove(key)));
   }
 }
 
