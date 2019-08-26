@@ -57,18 +57,26 @@ class OBTimelinePageState extends State<OBTimelinePage> {
               Positioned(
                   bottom: 20.0,
                   right: 20.0,
-                  child: OBFloatingActionButton(
-                      type: OBButtonType.primary,
-                      onPressed: () async {
-                        Post createdPost = await _modalService.openCreatePost(
-                            context: context);
-                        if (createdPost != null) {
-                          _timelinePostsController.addPostToTop(createdPost);
-                          _timelinePostsController.scrollToTop();
-                        }
-                      },
-                      child: const OBIcon(OBIcons.createPost,
-                          size: OBIconSize.large, color: Colors.white)))
+                  child: Semantics(
+                    button: true,
+                    label: 'Create new post',
+                    child: OBFloatingActionButton(
+                        type: OBButtonType.primary,
+                        onPressed: () async {
+                          Post createdPost = await _modalService.openCreatePost(
+                              context: context);
+                          if (createdPost != null) {
+                            _timelinePostsController.addPostToTop(createdPost);
+                            _timelinePostsController.scrollToTop();
+                          }
+                        },
+                        child: const OBIcon(OBIcons.createPost,
+                            size: OBIconSize.large, color: Colors.white)
+                    )
+                  )
+
+
+                  )
             ],
           ),
         ));

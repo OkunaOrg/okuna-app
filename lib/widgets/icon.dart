@@ -10,6 +10,7 @@ class OBIcon extends StatelessWidget {
   final double customSize;
   final Color color;
   final OBIconThemeColor themeColor;
+  final String semanticLabel;
 
   static const double EXTRA_LARGE = 45.0;
   static const double LARGE_SIZE = 30.0;
@@ -17,7 +18,7 @@ class OBIcon extends StatelessWidget {
   static const double SMALL_SIZE = 15.0;
 
   const OBIcon(this.iconData,
-      {this.size, this.customSize, this.color, this.themeColor})
+      {this.size, this.customSize, this.color, this.themeColor, this.semanticLabel})
       : assert(!(color != null && themeColor != null));
 
   @override
@@ -95,6 +96,7 @@ class OBIcon extends StatelessWidget {
                 iconData.nativeIcon,
                 size: iconSize,
                 color: iconColor,
+                semanticLabel: semanticLabel ?? 'Close',
               );
             } else {
               icon = ShaderMask(

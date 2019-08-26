@@ -182,7 +182,7 @@ class CreatePostModalState extends State<CreatePostModal> {
 
     return OBThemedNavigationBar(
       leading: GestureDetector(
-        child: const OBIcon(OBIcons.close),
+        child: const OBIcon(OBIcons.close, semanticLabel: 'Close create new post'),
         onTap: () {
           Navigator.pop(context);
         },
