@@ -657,10 +657,10 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         aspectRatio = _post.getImageWidth() / _post.getImageHeight();
         finalMediaScreenHeight = screenWidth / aspectRatio;
       }
-      if (_post.hasVideo()) {
+/*      if (_post.hasVideo()) {
         aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
         finalMediaScreenHeight = screenWidth / aspectRatio;
-      }
+      }*/
 
       if (_post.hasText()) {
         TextStyle style = TextStyle(fontSize: 16.0);

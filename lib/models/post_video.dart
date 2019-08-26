@@ -1,14 +1,34 @@
+import 'package:Okuna/models/video_format.dart';
+
 class PostVideo {
-  final String video;
+  final int id;
   final double width;
   final double height;
+  final double duration;
+  final String file;
+  final List<VideoFormat> formatSet;
 
-  PostVideo({this.video, this.width, this.height});
+  const PostVideo(
+      {this.id,
+      this.width,
+      this.height,
+      this.duration,
+      this.file,
+      this.formatSet});
 
   factory PostVideo.fromJSON(Map<String, dynamic> parsedJson) {
+    List<Map> formatSetRawData = parsedJson['format_set'];
+
+    List<VideoFormat> formatSet =
+        formatSetRawData.map((Map formatSetItemRawData) {
+      return VideoFormat.fromJSON(formatSetItemRawData);
+    }).toList();
+
     return PostVideo(
-        video: parsedJson['video'],
-        width: parsedJson['width']?.toDouble(),
-        height: parsedJson['height']?.toDouble());
+        width: parsedJson['width'],
+        height: parsedJson['height'],
+        duration: parsedJson['duration'],
+        file: parsedJson['file'],
+        formatSet: formatSet);
   }
 }

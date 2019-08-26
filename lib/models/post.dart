@@ -5,8 +5,9 @@ import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_image.dart';
-import 'package:Okuna/models/post_link.dart';
 import 'package:Okuna/models/post_links_list.dart';
+import 'package:Okuna/models/post_media.dart';
+import 'package:Okuna/models/post_media_list.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
@@ -35,8 +36,11 @@ class Post extends UpdatableModel<Post> {
   bool publicReactions;
   String text;
   Language language;
+
+  // Deprecation incoming
   PostImage image;
-  PostVideo video;
+
+  PostMediaList media;
   PostLinksList postLinksList;
   PostPreviewLinkData previewLinkQueryData;
   PostCommentList commentsList;
@@ -65,7 +69,7 @@ class Post extends UpdatableModel<Post> {
       this.text,
       this.creatorId,
       this.image,
-      this.video,
+      this.media,
       this.postLinksList,
       this.creator,
       this.language,
@@ -125,9 +129,10 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('image')) image = factory.parseImage(json['image']);
 
-    if (json.containsKey('video')) video = factory.parseVideo(json['video']);
+    if (json.containsKey('media')) media = factory.parseMedia(json['media']);
 
-    if (json.containsKey('post_links')) postLinksList = factory.parsePostLinksList(json['post_links']);
+    if (json.containsKey('post_links'))
+      postLinksList = factory.parsePostLinksList(json['post_links']);
 
     if (json.containsKey('community'))
       community = factory.parseCommunity(json['community']);
@@ -148,10 +153,14 @@ class Post extends UpdatableModel<Post> {
   void updatePreviewDataFromJson(Map json) {
     previewLinkQueryData = PostPreviewLinkData();
     if (json.containsKey('title')) previewLinkQueryData.title = json['title'];
-    if (json.containsKey('description')) previewLinkQueryData.description = json['description'];
-    if (json.containsKey('image_url')) previewLinkQueryData.imageUrl = json['image_url'];
-    if (json.containsKey('favicon_url')) previewLinkQueryData.faviconUrl = json['favicon_url'];
-    if (json.containsKey('domain_url')) previewLinkQueryData.domainUrl = json['domain_url'];
+    if (json.containsKey('description'))
+      previewLinkQueryData.description = json['description'];
+    if (json.containsKey('image_url'))
+      previewLinkQueryData.imageUrl = json['image_url'];
+    if (json.containsKey('favicon_url'))
+      previewLinkQueryData.faviconUrl = json['favicon_url'];
+    if (json.containsKey('domain_url'))
+      previewLinkQueryData.domainUrl = json['domain_url'];
     notifyUpdate();
   }
 
@@ -179,8 +188,8 @@ class Post extends UpdatableModel<Post> {
     return community != null;
   }
 
-  bool hasVideo() {
-    return video != null;
+  bool hasMedia() {
+    return media != null;
   }
 
   bool hasPreviewLink() {
@@ -251,16 +260,8 @@ class Post extends UpdatableModel<Post> {
     return image.width;
   }
 
-  double getVideoHeight() {
-    return video.height;
-  }
-
-  double getVideoWidth() {
-    return video.width;
-  }
-
-  String getVideo() {
-    return video.video;
+  List<PostMedia> getMedia() {
+    return media.postMedia;
   }
 
   String getPreviewLink() {
@@ -367,7 +368,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
         image: parseImage(json['image']),
-        video: parseVideo(json['video']),
+        media: parseMedia(json['media']),
         postLinksList: parsePostLinksList(json['post_links']),
         reaction: parseReaction(json['reaction']),
         community: parseCommunity(json['community']),
@@ -394,9 +395,9 @@ class PostFactory extends UpdatableModelFactory<Post> {
     return PostImage.fromJSON(image);
   }
 
-  PostVideo parseVideo(Map video) {
-    if (video == null) return null;
-    return PostVideo.fromJSON(video);
+  PostMediaList parseMedia(List mediaRawData) {
+    if (mediaRawData == null) return null;
+    return PostMediaList.fromJson(mediaRawData);
   }
 
   PostLinksList parsePostLinksList(List linksList) {
@@ -419,8 +420,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
     return Community.fromJSON(communityData);
   }
 
-  ReactionsEmojiCountList parseReactionsEmojiCounts(
-      List reactionsEmojiCounts) {
+  ReactionsEmojiCountList parseReactionsEmojiCounts(List reactionsEmojiCounts) {
     if (reactionsEmojiCounts == null) return null;
     return ReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
   }

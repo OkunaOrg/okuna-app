@@ -1,8 +1,5 @@
 import 'package:Okuna/models/post.dart';
-import 'package:Okuna/widgets/video_player/aspect_ratio_video.dart';
-import 'package:Okuna/widgets/video_player/network_player_lifecycle.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
 class OBPostBodyVideo extends StatelessWidget {
   final Post post;
@@ -11,12 +8,6 @@ class OBPostBodyVideo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String videoUrl = post.getVideo();
-    return Center(
-        child: NetworkPlayerLifeCycle(
-      videoUrl,
-      (BuildContext context, VideoPlayerController controller) =>
-          OBAspectRatioVideo(controller),
-    ));
+    return Container();
   }
 }

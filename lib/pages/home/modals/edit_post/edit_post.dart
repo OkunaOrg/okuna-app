@@ -67,9 +67,9 @@ class EditPostModalState extends State<EditPostModal> {
     if (widget.post.hasImage()) {
       _setPostImage(widget.post.getImage());
     }
-    if (widget.post.hasVideo()) {
+/*    if (widget.post.hasVideo()) {
       _setPostImage(widget.post.getVideo());
-    }
+    }*/
     _isSaveInProgress = false;
   }
 
