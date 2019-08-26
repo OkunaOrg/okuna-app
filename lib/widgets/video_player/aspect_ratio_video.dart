@@ -36,12 +36,10 @@ class OBAspectRatioVideoState extends State<OBAspectRatioVideo> {
   @override
   Widget build(BuildContext context) {
     if (initialized) {
-      return Center(
-        child: AspectRatio(
-          aspectRatio:
-              controller.value.size.width / controller.value.size.height,
-          child: VideoPlayPause(controller),
-        ),
+      return AspectRatio(
+        aspectRatio:
+        controller.value.size.width / controller.value.size.height,
+        child: VideoPlayPause(controller),
       );
     } else {
       return OBProgressIndicator();
