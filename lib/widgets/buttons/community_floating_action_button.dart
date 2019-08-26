@@ -68,18 +68,22 @@ class OBCommunityNewPostButton extends StatelessWidget {
           communityColor = TinyColor(communityColor).lighten(10).color;
         }
 
-        return OBFloatingActionButton(
-            color: communityColor,
-            textColor: textColor,
-            onPressed: () async {
-              OpenbookProviderState openbookProvider =
-                  OpenbookProvider.of(context);
-              Post post = await openbookProvider.modalService
-                  .openCreatePost(context: context, community: community);
-              if (post != null && onPostCreated != null) onPostCreated(post);
-            },
-            child: OBIcon(OBIcons.createPost,
-                size: OBIconSize.large, color: textColor));
+        return Semantics(
+          button: true,
+          label: 'Create new community post',
+          child: OBFloatingActionButton(
+              color: communityColor,
+              textColor: textColor,
+              onPressed: () async {
+                OpenbookProviderState openbookProvider =
+                OpenbookProvider.of(context);
+                Post post = await openbookProvider.modalService
+                    .openCreatePost(context: context, community: community);
+                if (post != null && onPostCreated != null) onPostCreated(post);
+              },
+              child: OBIcon(OBIcons.createPost,
+                  size: OBIconSize.large, color: textColor)),
+        );
       },
     );
   }
