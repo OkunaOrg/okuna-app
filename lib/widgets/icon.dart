@@ -96,7 +96,7 @@ class OBIcon extends StatelessWidget {
                 iconData.nativeIcon,
                 size: iconSize,
                 color: iconColor,
-                semanticLabel: semanticLabel ?? 'Close',
+                semanticLabel: semanticLabel,
               );
             } else {
               icon = ShaderMask(

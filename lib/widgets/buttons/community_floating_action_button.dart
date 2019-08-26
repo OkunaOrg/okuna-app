@@ -2,6 +2,7 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
@@ -34,6 +35,7 @@ class OBCommunityNewPostButton extends StatelessWidget {
   });
 
   Widget build(BuildContext context) {
+    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     return StreamBuilder(
       stream: community.updateSubject,
       initialData: community,
@@ -70,7 +72,7 @@ class OBCommunityNewPostButton extends StatelessWidget {
 
         return Semantics(
           button: true,
-          label: 'Create new community post',
+          label: _localizationService.post__create_new_community_post_label,
           child: OBFloatingActionButton(
               color: communityColor,
               textColor: textColor,
