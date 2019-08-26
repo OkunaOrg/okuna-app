@@ -1,4 +1,7 @@
 import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_image.dart';
+import 'package:Okuna/models/post_media.dart';
+import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_community_previewer.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
@@ -64,12 +67,20 @@ class EditPostModalState extends State<EditPostModal> {
         community: widget.post.community,
       ));
 
-    if (widget.post.hasImage()) {
-      _setPostImage(widget.post.getImage());
+    if (widget.post.hasMedia()) {
+      PostMedia postMediaFirstItem = widget.post.getFirstMedia();
+
+      switch (postMediaFirstItem.contentObject.runtimeType) {
+        case PostImage:
+          _setPostImage(postMediaFirstItem.contentObject.image);
+          break;
+        case PostVideo:
+          //_setPostVideo(postMediaFirstItem.contentObject.file);
+          break;
+        default:
+      }
     }
-/*    if (widget.post.hasVideo()) {
-      _setPostImage(widget.post.getVideo());
-    }*/
+
     _isSaveInProgress = false;
   }
 
@@ -108,7 +119,7 @@ class EditPostModalState extends State<EditPostModal> {
           Navigator.pop(context);
         },
       ),
-      title:_localizationService.post__edit_title,
+      title: _localizationService.post__edit_title,
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -210,7 +221,8 @@ class EditPostModalState extends State<EditPostModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

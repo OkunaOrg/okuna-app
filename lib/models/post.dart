@@ -10,10 +10,10 @@ import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_media_list.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/post_reaction.dart';
+import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/updatable_model.dart';
-import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -32,6 +32,8 @@ class Post extends UpdatableModel<Post> {
   PostReaction reaction;
   int reactionsCount;
   int commentsCount;
+  int mediaHeight;
+  int mediaWidth;
   bool areCommentsEnabled;
   bool publicReactions;
   String text;
@@ -75,6 +77,8 @@ class Post extends UpdatableModel<Post> {
       this.language,
       this.reactionsCount,
       this.commentsCount,
+      this.mediaHeight,
+      this.mediaWidth,
       this.commentsList,
       this.reaction,
       this.reactionsEmojiCounts,
@@ -107,6 +111,10 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('public_reactions'))
       publicReactions = json['public_reactions'];
+
+    if (json.containsKey('media_height')) mediaHeight = json['media_height'];
+
+    if (json.containsKey('media_width')) mediaWidth = json['media_width'];
 
     if (json.containsKey('language')) {
       language = factory.parseLanguage(json['language']);
@@ -180,10 +188,6 @@ class Post extends UpdatableModel<Post> {
     return publicReactions && areCommentsEnabled;
   }
 
-  bool hasImage() {
-    return image != null;
-  }
-
   bool isCommunityPost() {
     return community != null;
   }
@@ -248,20 +252,28 @@ class Post extends UpdatableModel<Post> {
     return creator.profile.avatar;
   }
 
-  String getImage() {
-    return image.image;
-  }
-
-  double getImageHeight() {
-    return image.height;
-  }
-
-  double getImageWidth() {
-    return image.width;
-  }
-
   List<PostMedia> getMedia() {
     return media.postMedia;
+  }
+
+  PostMedia getFirstMedia() {
+    return media.postMedia.first;
+  }
+
+  String getMediaPreviewImage() {
+    PostMedia firstMedia = getFirstMedia();
+    String mediaPreviewImage;
+    switch (firstMedia.contentObject.runtimeType) {
+      case PostVideo:
+        mediaPreviewImage = firstMedia.contentObject.thumbnail;
+        break;
+      case PostImage:
+        mediaPreviewImage = firstMedia.contentObject.image;
+        break;
+      default:
+    }
+
+    return mediaPreviewImage;
   }
 
   String getPreviewLink() {
@@ -362,6 +374,8 @@ class PostFactory extends UpdatableModelFactory<Post> {
         circles: parseCircles(json['circles']),
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
+        mediaHeight: json['media_height'],
+        mediaWidth: json['media_width'],
         isMuted: json['is_muted'],
         isReported: json['is_reported'],
         areCommentsEnabled: json['comments_enabled'],

@@ -7,7 +7,6 @@ import 'package:Okuna/widgets/post/widgets/post_comments/post_comments.dart';
 import 'package:Okuna/widgets/post/widgets/post_header/post_header.dart';
 import 'package:Okuna/widgets/post/widgets/post_reactions.dart';
 import 'package:Okuna/widgets/theming/post_divider.dart';
-import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBPost extends StatelessWidget {

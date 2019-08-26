@@ -41,11 +41,11 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
         openbookProvider.userService.getLoggedInUser().id == postCreatorId;
 
     Widget postImagePreview;
-    if (post.hasImage()) {
+    if (post.hasMedia()) {
       postImagePreview = ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Image(
-          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
+          image: AdvancedNetworkImage(post.getMediaPreviewImage(), useDiskCache: true),
           height: postImagePreviewSize,
           width: postImagePreviewSize,
           fit: BoxFit.cover,

@@ -34,18 +34,6 @@ class OBPostCommentUserMentionNotificationTile extends StatelessWidget {
     PostComment postComment = postCommentUserMention.postComment;
     Post post = postComment.post;
 
-    Widget postCommentImagePreview;
-    if (post.hasImage()) {
-      postCommentImagePreview = ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Image(
-          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
-          height: postCommentImagePreviewSize,
-          width: postCommentImagePreviewSize,
-          fit: BoxFit.cover,
-        ),
-      );
-    }
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
 

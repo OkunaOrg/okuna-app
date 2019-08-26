@@ -32,11 +32,12 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
     Post post = postUserMention.post;
 
     Widget postImagePreview;
-    if (post.hasImage()) {
+    if (post.hasMedia()) {
       postImagePreview = ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Image(
-          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
+          image: AdvancedNetworkImage(post.getMediaPreviewImage(),
+              useDiskCache: true),
           height: postImagePreviewSize,
           width: postImagePreviewSize,
           fit: BoxFit.cover,
@@ -50,9 +51,10 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
       openbookProvider.navigationService.navigateToUserProfile(
           user: postUserMention.post.creator, context: context);
     };
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
-    Function onTileTapped = (){
+    Function onTileTapped = () {
       if (onPressed != null) onPressed();
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       openbookProvider.navigationService
@@ -72,7 +74,8 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
             text: _localizationService.notifications__mentioned_in_post_tile),
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/icon.dart';
@@ -8,18 +8,18 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class OBPostBodyImage extends StatelessWidget {
-  final Post post;
+  final PostImage postImage;
 
-  const OBPostBodyImage({Key key, this.post}) : super(key: key);
+  const OBPostBodyImage({Key key, this.postImage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = post.getImage();
+    String imageUrl = postImage.image;
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     double maxBoxHeight = screenHeight * .75;
 
-    double imageAspectRatio = post.getImageWidth() / post.getImageHeight();
+    double imageAspectRatio = postImage.width / postImage.height;
     double imageHeight = (screenWidth / imageAspectRatio);
     double boxHeight = min(imageHeight, maxBoxHeight);
 
