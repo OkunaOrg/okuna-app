@@ -403,7 +403,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
   void _pickNewAvatar() async {
     File newAvatar =
-        await _imagePickerService.pickImage(imageType: OBImageType.avatar);
+        await _imagePickerService.pickImage(imageType: OBImageType.avatar, context: context);
     if (newAvatar != null) _setAvatarFile(newAvatar);
   }
 
@@ -447,7 +447,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
   void _pickNewCover() async {
     File newCover =
-        await _imagePickerService.pickImage(imageType: OBImageType.cover);
+        await _imagePickerService.pickImage(imageType: OBImageType.cover, context: context);
     if (newCover != null) _setCoverFile(newCover);
   }
 

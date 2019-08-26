@@ -265,7 +265,7 @@ class Post extends UpdatableModel<Post> {
     String mediaPreviewImage;
     switch (firstMedia.contentObject.runtimeType) {
       case PostVideo:
-        mediaPreviewImage = firstMedia.contentObject.thumbnail;
+        mediaPreviewImage = firstMedia.contentObject._thumbnail;
         break;
       case PostImage:
         mediaPreviewImage = firstMedia.contentObject.image;

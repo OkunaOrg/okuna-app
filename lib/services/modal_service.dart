@@ -12,6 +12,7 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/pages/home/modals/accept_guidelines/accept_guidelines.dart';
 import 'package:Okuna/pages/home/modals/edit_post/edit_post.dart';
+import 'package:Okuna/pages/home/modals/media_picker/media_picker.dart';
 import 'package:Okuna/pages/home/modals/invite_to_community.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_comment_reply_expanded.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_commenter_expanded.dart';
@@ -34,8 +35,17 @@ import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated
 import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_manager/photo_manager.dart';
+
+import 'localization.dart';
 
 class ModalService {
+  LocalizationService localizationService;
+
+  void setLocalizationService(localizationService) {
+    this.localizationService = localizationService;
+  }
+
   Future<Post> openCreatePost(
       {@required BuildContext context,
       Community community,
@@ -113,12 +123,15 @@ class ModalService {
   }
 
   Future<void> openEditUserProfile(
-      {@required User user, @required BuildContext context, VoidCallback onUserProfileUpdated}) async {
+      {@required User user,
+      @required BuildContext context,
+      VoidCallback onUserProfileUpdated}) async {
     Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<PostReaction>(
             fullscreenDialog: true,
             builder: (BuildContext context) => Material(
-                  child: OBEditUserProfileModal(user, onUserProfileUpdated : onUserProfileUpdated),
+                  child: OBEditUserProfileModal(user,
+                      onUserProfileUpdated: onUserProfileUpdated),
                 )));
   }
 
@@ -394,6 +407,21 @@ class ModalService {
           return OBModeratedObjectUpdateStatusModal(
             moderatedObject: moderatedObject,
           );
+        }));
+  }
+
+  Future<List<AssetEntity>> openMediaPicker(
+      {@required BuildContext context}) async {
+    var result = await PhotoManager.requestPermission();
+    if (!result) {
+      throw OBMediaPickerPermissionDenied(
+          localizationService.media_picker__permission_denied_error);
+    }
+
+    return Navigator.of(context).push(CupertinoPageRoute<List<AssetEntity>>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return OBMediaPickerModal();
         }));
   }
 }

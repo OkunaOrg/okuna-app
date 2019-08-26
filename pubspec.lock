@@ -352,13 +352,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
-  multi_image_picker:
-    dependency: "direct main"
-    description:
-      name: multi_image_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.5.0+2"
   multi_server_socket:
     dependency: transitive
     description:
@@ -436,6 +429,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  photo_manager:
+    dependency: "direct main"
+    description:
+      name: photo_manager
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.5"
   photo_view:
     dependency: "direct main"
     description:
@@ -744,4 +744,4 @@ packages:
     version: "2.1.16"
 sdks:
   dart: ">=2.4.0 <3.0.0"
-  flutter: ">=1.7.8 <2.0.0"
+  flutter: ">=1.6.0 <2.0.0"

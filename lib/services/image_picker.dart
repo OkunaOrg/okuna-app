@@ -5,11 +5,12 @@ import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
-import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/validation.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
+
+import '../provider.dart';
+import 'modal_service.dart';
 export 'package:image_picker/image_picker.dart';
 
 class ImagePickerService {
@@ -27,47 +28,10 @@ class ImagePickerService {
   }
 
   Future<File> pickImage(
-      {@required OBImageType imageType}) async {
-    List<Asset> pickedAssets =
-        await MultiImagePicker.pickImages(maxImages: 1, enableCamera: true);
-
-    if (pickedAssets.isEmpty) {
-      return null;
-    }
-
-    Asset pickedAsset = pickedAssets.first;
-
-    String tmpImageName = uuid.v4() + '.jpg';
-    final path = await _getTempPath();
-    final file = File('$path/$tmpImageName');
-    ByteData byteData = await pickedAsset.requestOriginal();
-    List<int> imageData = byteData.buffer.asUint8List();
-    imageData = await ImageConverter.convertImage(imageData);
-    file.writeAsBytesSync(imageData);
-
-    if (!await _validationService.isImageAllowedSize(file, imageType)) {
-      throw ImageTooLargeException(
-          _validationService.getAllowedImageSize(imageType));
-    }
-
-    File processedImage = await processImage(file);
-
-    double ratioX =
-        imageType != OBImageType.post ? IMAGE_RATIOS[imageType]['x'] : null;
-    double ratioY =
-        imageType != OBImageType.post ? IMAGE_RATIOS[imageType]['y'] : null;
-
-    File croppedFile = await ImageCropper.cropImage(
-      toolbarTitle: 'Edit image',
-      toolbarColor: Colors.black,
-      statusBarColor: Colors.black,
-      toolbarWidgetColor: Colors.white,
-      sourcePath: processedImage.path,
-      ratioX: ratioX,
-      ratioY: ratioY,
-    );
-
-    return croppedFile;
+      {@required OBImageType imageType, @required BuildContext context}) async {
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    ModalService modalService = openbookProvider.modalService;
+    modalService.openMediaPicker(context: context);
   }
 
   Future<File> pickVideo({ImageSource source = ImageSource.gallery}) async {
@@ -79,7 +43,7 @@ class ImagePickerService {
   Future<File> processImage(File image) async {
     /// Fix rotation issue on android
     if (Platform.isAndroid)
-      return FlutterExifRotation.rotateImage(path: image.path);
+      return await FlutterExifRotation.rotateImage(path: image.path);
     return image;
   }
 

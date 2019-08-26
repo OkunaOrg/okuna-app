@@ -16,7 +16,7 @@ dependencies:
   scroll_to_index: ^1.0.1
   expandable: ^2.2.2+3
   uuid: ^2.0.1
-  multi_image_picker: ^4.3.6
+  photo_manager: ^0.3.5
   flutter_exif_rotation: ^0.2.2
   shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0

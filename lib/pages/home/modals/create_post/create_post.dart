@@ -348,7 +348,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         onPressed: () async {
           _unfocusTextField();
           File pickedPhoto =
-              await _imagePickerService.pickImage(imageType: OBImageType.post);
+              await _imagePickerService.pickImage(imageType: OBImageType.post, context: context);
           if (pickedPhoto != null) _setPostImage(pickedPhoto);
         },
       ),
