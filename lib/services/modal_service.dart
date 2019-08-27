@@ -420,7 +420,9 @@ class ModalService {
     return Navigator.of(context).push(CupertinoPageRoute<AssetEntity>(
         fullscreenDialog: true,
         builder: (BuildContext context) {
-          return OBMediaPickerModal();
+          return Material(
+            child: OBMediaPickerModal(),
+          );
         }));
   }
 }

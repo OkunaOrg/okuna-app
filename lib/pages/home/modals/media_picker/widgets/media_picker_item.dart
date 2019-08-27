@@ -40,11 +40,52 @@ class OBMediaPickerItemState extends State<OBMediaPickerItem> {
         ? const SizedBox()
         : GestureDetector(
             onTap: _onPressed,
-            child: Image.memory(
-              _thumbnailData,
-              fit: BoxFit.cover,
-            ),
-          );
+            child: _type == AssetType.image
+                ? _buildImageThumbnail()
+                : _buildVideoThumbnail());
+  }
+
+  Widget _buildImageThumbnail() {
+    return Image.memory(
+      _thumbnailData,
+      fit: BoxFit.cover,
+    );
+  }
+
+  Widget _buildVideoThumbnail() {
+
+    String durationMinutes = _duration.inMinutes.toString();
+    String durationSeconds = _duration.inSeconds.toString();
+
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: MemoryImage(_thumbnailData),
+          fit: BoxFit.cover,
+        ),
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                decoration: BoxDecoration(
+                    color: Colors.black87,
+                    borderRadius: BorderRadius.circular(3)),
+                child: Text(
+                  _getStringifiedDuration(_duration),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold),
+                )),
+          )
+        ],
+      ),
+    );
   }
 
   void _onPressed() {
@@ -64,5 +105,16 @@ class OBMediaPickerItemState extends State<OBMediaPickerItem> {
       _thumbnailData = thumbnailBytes;
       _duration = duration;
     });
+  }
+
+  String _getStringifiedDuration(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
   }
 }
