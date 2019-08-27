@@ -18,7 +18,7 @@ class OBPostBody extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> bodyItems = [];
 
-    if (post.hasMedia()) {
+    if (post.hasMediaThumbnail()) {
       PostMedia postMediaFirstItem = post.getFirstMedia();
       Widget mediaWidget;
 

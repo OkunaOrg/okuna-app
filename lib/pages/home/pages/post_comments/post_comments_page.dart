@@ -653,7 +653,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     double screenWidth = MediaQuery.of(context).size.width;
 
     if (widget.showPostPreview && widget.post != null) {
-      if (_post.hasMedia()) {
+      if (_post.hasMediaThumbnail()) {
         aspectRatio = _post.mediaWidth / _post.mediaHeight;
         finalMediaScreenHeight = screenWidth / aspectRatio;
       }

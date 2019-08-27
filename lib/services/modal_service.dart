@@ -410,15 +410,14 @@ class ModalService {
         }));
   }
 
-  Future<List<AssetEntity>> openMediaPicker(
-      {@required BuildContext context}) async {
+  Future<AssetEntity> openMediaPicker({@required BuildContext context}) async {
     var result = await PhotoManager.requestPermission();
     if (!result) {
       throw OBMediaPickerPermissionDenied(
           localizationService.media_picker__permission_denied_error);
     }
 
-    return Navigator.of(context).push(CupertinoPageRoute<List<AssetEntity>>(
+    return Navigator.of(context).push(CupertinoPageRoute<AssetEntity>(
         fullscreenDialog: true,
         builder: (BuildContext context) {
           return OBMediaPickerModal();

@@ -67,7 +67,7 @@ class EditPostModalState extends State<EditPostModal> {
         community: widget.post.community,
       ));
 
-    if (widget.post.hasMedia()) {
+    if (widget.post.hasMediaThumbnail()) {
       PostMedia postMediaFirstItem = widget.post.getFirstMedia();
 
       switch (postMediaFirstItem.contentObject.runtimeType) {

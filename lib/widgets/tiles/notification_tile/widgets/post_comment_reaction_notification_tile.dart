@@ -36,11 +36,11 @@ class OBPostCommentReactionNotificationTile extends StatelessWidget {
     Post post = postComment.post;
 
     Widget postCommentImagePreview;
-    if (post.hasMedia()) {
+    if (post.hasMediaThumbnail()) {
       postCommentImagePreview = ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Image(
-          image: AdvancedNetworkImage(post.getMediaPreviewImage(), useDiskCache: true),
+          image: AdvancedNetworkImage(post.mediaThumbnail, useDiskCache: true),
           height: postCommentImagePreviewSize,
           width: postCommentImagePreviewSize,
           fit: BoxFit.cover,

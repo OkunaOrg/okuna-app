@@ -1,6 +1,7 @@
 import 'package:Okuna/pages/home/modals/media_picker/widgets/media_picker_item.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class OBMediaPickerModal extends StatefulWidget {
 
 class OBMediaPickerModalState extends State {
   LocalizationService _localizationService;
+  NavigationService _navigationService;
   bool _needsBootstrap;
 
   List<AssetEntity> _mediaAssets;
@@ -32,6 +34,7 @@ class OBMediaPickerModalState extends State {
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _localizationService = openbookProvider.localizationService;
+      _navigationService = openbookProvider.navigationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -66,7 +69,22 @@ class OBMediaPickerModalState extends State {
     AssetEntity mediaAsset = _mediaAssets[index];
     return OBMediaPickerItem(
       mediaAsset: mediaAsset,
+      onPressed: _onMediaPickerItemPressed,
     );
+  }
+
+  void _onMediaPickerItemPressed(AssetEntity mediaAsset) async {
+    AssetEntity result =
+        await _navigationService.navigateToMediaPickerPreviewPage(
+            context: context, mediaAsset: mediaAsset);
+
+    if (result == null) {
+      // No confirm, do nothing
+      return;
+    }
+
+    // Pop the picker with the picked result
+    Navigator.pop(context, result);
   }
 
   void _bootstrap() async {

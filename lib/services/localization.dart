@@ -3559,6 +3559,10 @@ class LocalizationService {
     return Intl.message("Pick media", name: 'media_picker__title');
   }
 
+  String get media_picker__choose_action {
+    return Intl.message("Choose", name: 'media_picker__choose_action');
+  }
+
   Locale getLocale() {
     return locale;
   }

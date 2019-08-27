@@ -32,11 +32,11 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
     Post post = postUserMention.post;
 
     Widget postImagePreview;
-    if (post.hasMedia()) {
+    if (post.hasMediaThumbnail()) {
       postImagePreview = ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Image(
-          image: AdvancedNetworkImage(post.getMediaPreviewImage(),
+          image: AdvancedNetworkImage(post.mediaThumbnail,
               useDiskCache: true),
           height: postImagePreviewSize,
           width: postImagePreviewSize,

@@ -32,14 +32,14 @@ class OBPostReactionNotificationTile extends StatelessWidget {
     Post post = postReaction.post;
 
     Widget postImagePreview;
-    if (post.hasMedia()) {
+    if (post.hasMediaThumbnail()) {
       postImagePreview = Padding(
           padding: const EdgeInsets.only(left: 10),
           child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image(
                 image:
-                    AdvancedNetworkImage(post.getMediaPreviewImage(), useDiskCache: true),
+                    AdvancedNetworkImage(post.mediaThumbnail, useDiskCache: true),
                 height: postImagePreviewSize,
                 width: postImagePreviewSize,
                 fit: BoxFit.cover,

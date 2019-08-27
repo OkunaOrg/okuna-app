@@ -5,8 +5,9 @@ import 'package:photo_manager/photo_manager.dart';
 
 class OBMediaPickerItem extends StatefulWidget {
   final AssetEntity mediaAsset;
+  final ValueChanged<AssetEntity> onPressed;
 
-  const OBMediaPickerItem({Key key, @required this.mediaAsset})
+  const OBMediaPickerItem({Key key, @required this.mediaAsset, this.onPressed})
       : super(key: key);
 
   @override
@@ -37,11 +38,17 @@ class OBMediaPickerItemState extends State<OBMediaPickerItem> {
 
     return _thumbnailData == null
         ? const SizedBox()
-        : Container(
-            padding: const EdgeInsets.all(10),
-            color: Colors.blue,
-            child: Image.memory(_thumbnailData),
+        : GestureDetector(
+            onTap: _onPressed,
+            child: Image.memory(
+              _thumbnailData,
+              fit: BoxFit.cover,
+            ),
           );
+  }
+
+  void _onPressed() {
+    if (widget.onPressed != null) widget.onPressed(widget.mediaAsset);
   }
 
   void _bootstrap() async {

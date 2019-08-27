@@ -34,13 +34,11 @@ class Post extends UpdatableModel<Post> {
   int commentsCount;
   int mediaHeight;
   int mediaWidth;
+  String mediaThumbnail;
   bool areCommentsEnabled;
   bool publicReactions;
   String text;
   Language language;
-
-  // Deprecation incoming
-  PostImage image;
 
   PostMediaList media;
   PostLinksList postLinksList;
@@ -70,7 +68,7 @@ class Post extends UpdatableModel<Post> {
       this.created,
       this.text,
       this.creatorId,
-      this.image,
+      this.mediaThumbnail,
       this.media,
       this.postLinksList,
       this.creator,
@@ -135,7 +133,7 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('is_reported')) isReported = json['is_reported'];
 
-    if (json.containsKey('image')) image = factory.parseImage(json['image']);
+    if (json.containsKey('media_thumbnail')) mediaThumbnail = json['media_thumbnail'];
 
     if (json.containsKey('media')) media = factory.parseMedia(json['media']);
 
@@ -192,8 +190,8 @@ class Post extends UpdatableModel<Post> {
     return community != null;
   }
 
-  bool hasMedia() {
-    return media != null;
+  bool hasMediaThumbnail() {
+    return mediaThumbnail != null;
   }
 
   bool hasPreviewLink() {
@@ -258,22 +256,6 @@ class Post extends UpdatableModel<Post> {
 
   PostMedia getFirstMedia() {
     return media.postMedia.first;
-  }
-
-  String getMediaPreviewImage() {
-    PostMedia firstMedia = getFirstMedia();
-    String mediaPreviewImage;
-    switch (firstMedia.contentObject.runtimeType) {
-      case PostVideo:
-        mediaPreviewImage = firstMedia.contentObject._thumbnail;
-        break;
-      case PostImage:
-        mediaPreviewImage = firstMedia.contentObject.image;
-        break;
-      default:
-    }
-
-    return mediaPreviewImage;
   }
 
   String getPreviewLink() {
@@ -381,7 +363,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         areCommentsEnabled: json['comments_enabled'],
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
-        image: parseImage(json['image']),
+        mediaThumbnail: json['media_thumbnail'],
         media: parseMedia(json['media']),
         postLinksList: parsePostLinksList(json['post_links']),
         reaction: parseReaction(json['reaction']),
@@ -402,11 +384,6 @@ class PostFactory extends UpdatableModelFactory<Post> {
   DateTime parseCreated(String created) {
     if (created == null) return null;
     return DateTime.parse(created).toLocal();
-  }
-
-  PostImage parseImage(Map image) {
-    if (image == null) return null;
-    return PostImage.fromJSON(image);
   }
 
   PostMediaList parseMedia(List mediaRawData) {
