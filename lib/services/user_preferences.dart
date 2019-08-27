@@ -1,5 +1,6 @@
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/services/storage.dart';
+import 'package:public_suffix/public_suffix.dart';
 
 class UserPreferencesService {
   static const keyAskToConfirmOpen = 'askToConfirmOpen';
@@ -41,22 +42,25 @@ class UserPreferencesService {
     return PostCommentsSortType.asc;
   }
 
-  Future setAskToConfirmOpenUrl(bool ask, {String host}) async {
+  Future setAskToConfirmOpenUrl(bool ask,
+      {PublicSuffix host, String hostAsString}) async {
+    var domain = (host != null ? host.domain : hostAsString);
+    domain = domain?.toLowerCase();
+
     Future status = Future.value(true);
-    if (host == null) {
+    if (host == null && hostAsString == null) {
       status = _storage?.set(keyAskToConfirmOpen, ask.toString());
-    } else {
-      host = host.toLowerCase();
+    } else if (domain != null) {
       List<String> exceptions =
           await _storage?.getList(keyAskToConfirmExceptions) ?? <String>[];
 
-      var hasException = exceptions.contains(host);
+      var hasException = exceptions.contains(domain);
 
       if (!hasException && !ask) {
-        exceptions.add(host);
+        exceptions.add(domain);
         status = _storage?.setList(keyAskToConfirmExceptions, exceptions);
       } else if (hasException && ask) {
-        exceptions.remove(host);
+        exceptions.remove(domain);
         status = _storage?.setList(keyAskToConfirmExceptions, exceptions);
       }
     }
@@ -64,17 +68,18 @@ class UserPreferencesService {
     return status;
   }
 
-  Future<bool> getAskToConfirmOpenUrl({String host}) async {
+  Future<bool> getAskToConfirmOpenUrl({PublicSuffix host}) async {
     String ask = await _storage?.get(keyAskToConfirmOpen);
     bool shouldAsk = true;
 
     if (ask != null && ask.toLowerCase() == "false") {
       shouldAsk = false;
-    } else if (host != null) {
+    } else if (host != null && host.domain != null) {
       List<String> exceptions =
           await _storage?.getList(keyAskToConfirmExceptions);
 
-      if (exceptions != null && exceptions.contains(host)) {
+      if (exceptions != null &&
+          exceptions.contains(host.domain.toLowerCase())) {
         shouldAsk = false;
       }
     }

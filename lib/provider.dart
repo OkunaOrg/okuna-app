@@ -33,6 +33,7 @@ import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/url_launcher.dart';
+import 'package:Okuna/services/url_parser.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/user_invites_api.dart';
 import 'package:Okuna/services/user_preferences.dart';
@@ -101,6 +102,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   PushNotificationsService pushNotificationsService =
       PushNotificationsService();
   UrlLauncherService urlLauncherService = UrlLauncherService();
+  UrlParserService urlParserService = UrlParserService();
   IntercomService intercomService = IntercomService();
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
@@ -176,6 +178,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     moderationApiService.setHttpieService(httpService);
     urlLauncherService.setBottomSheetService(bottomSheetService);
     urlLauncherService.setUserPreferencesService(userPreferencesService);
+    urlLauncherService.setUrlParserService(urlParserService);
   }
 
   void initAsyncState() async {
@@ -197,6 +200,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
     previewUrlApiService.setApiURL(environment.apiUrl);
+    urlParserService.loadSuffixRules();
     waitlistApiService
         .setOpenbookSocialApiURL(environment.openbookSocialApiUrl);
     intercomService.bootstrap(

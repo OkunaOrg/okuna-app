@@ -1,6 +1,7 @@
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/url_parser.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/fields/toggle_field.dart';
 import 'package:Okuna/widgets/icon.dart';
@@ -24,6 +25,7 @@ class OBTrustedDomainsPage extends StatefulWidget {
 class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
   LocalizationService _localizationService;
   UserPreferencesService _preferencesService;
+  UrlParserService _urlParserService;
   ToastService _toastService;
 
   bool _alwaysAsk;
@@ -52,6 +54,7 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
       var provider = OpenbookProvider.of(context);
       _localizationService = provider.localizationService;
       _preferencesService = provider.userPreferencesService;
+      _urlParserService = provider.urlParserService;
       _toastService = provider.toastService;
       _bootstrap();
       _needsBootstrap = false;
@@ -135,8 +138,8 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
   }
 
   void _deleteDomain(String domain) async {
-    bool wasDeleted =
-        await _preferencesService.setAskToConfirmOpenUrl(true, host: domain);
+    bool wasDeleted = await _preferencesService.setAskToConfirmOpenUrl(true,
+        hostAsString: domain);
 
     if (wasDeleted) {
       setState(() {

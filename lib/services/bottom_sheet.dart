@@ -20,6 +20,7 @@ import 'package:Okuna/pages/home/bottom_sheets/react_to_post_comment.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
+import 'package:public_suffix/public_suffix.dart';
 
 class BottomSheetService {
   Future<PostReaction> showReactToPost(
@@ -150,15 +151,13 @@ class BottomSheetService {
         });
   }
 
-  Future<bool> showConfirmOpenUrl({
-    @required BuildContext context,
-    @required String link
-  }) {
+  Future<bool> showConfirmOpenUrl(
+      {@required BuildContext context, @required PublicSuffix link}) {
     return showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBConfirmOpenUrlBottomSheet(
-            url: link
+            urlInfo: link,
           );
         });
   }

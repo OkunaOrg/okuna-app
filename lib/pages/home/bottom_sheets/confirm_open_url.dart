@@ -9,11 +9,12 @@ import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
+import 'package:public_suffix/public_suffix.dart';
 
 class OBConfirmOpenUrlBottomSheet extends StatefulWidget {
-  final Uri _uri;
+  final PublicSuffix _urlInfo;
 
-  OBConfirmOpenUrlBottomSheet({String url}) : _uri = Uri.parse(url);
+  OBConfirmOpenUrlBottomSheet({PublicSuffix urlInfo}) : _urlInfo = urlInfo;
 
   @override
   OBConfirmOpenUrlBottomSheetState createState() {
@@ -76,7 +77,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
               constraints: BoxConstraints(maxHeight: maxUrlBoxHeight),
               child: SingleChildScrollView(
                 child: OBSmartText(
-                  text: widget._uri.toString(),
+                  text: widget._urlInfo.sourceUri.toString(),
                 ),
               ),
             ),
@@ -89,7 +90,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
               onTap: _toggleDontAskForHost,
               title: _localizationService.post__open_url_dont_ask_again_for,
               titleStyle: TextStyle(fontWeight: FontWeight.normal),
-              subtitle: widget._uri.host,
+              subtitle: widget._urlInfo.domain,
               subtitleStyle: TextStyle(color: secondaryTextColor),
             ),
             const SizedBox(
@@ -150,7 +151,7 @@ class OBConfirmOpenUrlBottomSheetState extends State<OBConfirmOpenUrlBottomSheet
   void _onConfirmTapped() async {
     if (!_askForHost) {
       await _preferencesService.setAskToConfirmOpenUrl(
-          _askForHost, host: widget._uri.host);
+          _askForHost, host: widget._urlInfo);
     }
     if (!_ask) {
       await _preferencesService.setAskToConfirmOpenUrl(_ask);
