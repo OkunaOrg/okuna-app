@@ -2875,7 +2875,7 @@ class LocalizationService {
   }
 
   String get user__clear_app_preferences_desc {
-    return Intl.message("Clear the application preferences. Currently this is only the preferred order of comments.",
+    return Intl.message("Clear the application preferences. Currently only the preferred order of comments and the trusted domains.",
         name: 'user__clear_app_preferences_desc');
   }
 
