@@ -6,6 +6,7 @@ import 'package:Okuna/services/media_picker.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class OBVideoPickerBottomSheet extends StatelessWidget {
@@ -24,9 +25,8 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
           localizationService.video_picker__from_gallery,
         ),
         onTap: () async {
-          File pickedVideo =
-          await ImagePicker.pickVideo(source: ImageSource.gallery);
-          Navigator.pop(context, pickedVideo);
+          File file = await FilePicker.getFile(type: FileType.VIDEO);
+          Navigator.pop(context, file);
         },
       ),
       ListTile(

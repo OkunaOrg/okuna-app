@@ -3,7 +3,6 @@ import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:path_provider/path_provider.dart';

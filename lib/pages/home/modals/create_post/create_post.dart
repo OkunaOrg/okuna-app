@@ -161,7 +161,7 @@ class CreatePostModalState extends State<CreatePostModal> {
                     child: _buildAccountSearchBox(),
                   )
                 : const SizedBox(),
-            _isSearchingAccount
+            _isSearchingAccount || (_hasImage || _hasVideo)
                 ? const SizedBox()
                 : Container(
                     height: _hasFocus == true ? 51 : 67,
@@ -258,6 +258,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _buildNewPostContent() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Column(
           children: <Widget>[
@@ -279,8 +280,9 @@ class CreatePostModalState extends State<CreatePostModal> {
             child: Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _getPostItemsWidgetsWithPreview())),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _getPostItemsWidgetsWithPreview(),
+                )),
           ),
         )
       ],
@@ -356,7 +358,8 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: const OBIcon(OBIcons.video),
         onPressed: () async {
           _unfocusTextField();
-          File pickedVideo = await _imagePickerService.pickVideo(context: context);
+          File pickedVideo =
+              await _imagePickerService.pickVideo(context: context);
           if (pickedVideo != null) _setPostVideo(pickedVideo);
         },
       ),
@@ -387,6 +390,10 @@ class CreatePostModalState extends State<CreatePostModal> {
         _postImage,
         onRemove: () {
           _removePostImage();
+        },
+        onPostImageEdited: (File editedImage) {
+          _removePostImage();
+          _setPostImage(editedImage);
         },
       );
 

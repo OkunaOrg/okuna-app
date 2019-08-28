@@ -1,63 +1,101 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class OBPostImagePreviewer extends StatelessWidget {
   final File postImage;
   final VoidCallback onRemove;
 
-  OBPostImagePreviewer(this.postImage, {this.onRemove});
+  final ValueChanged<File> onPostImageEdited;
+
+  final double buttonSize = 30.0;
+
+  OBPostImagePreviewer(this.postImage,
+      {this.onRemove, @required this.onPostImageEdited});
 
   @override
   Widget build(BuildContext context) {
     double avatarBorderRadius = 10.0;
 
-    var imagePreview = Container(
+    var imagePreview = SizedBox(
       height: 200.0,
-      width: 200.0,
-      decoration: BoxDecoration(
-          color: Colors.black12,
-          borderRadius: BorderRadius.circular(avatarBorderRadius)),
-      child: SizedBox(
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(avatarBorderRadius),
-            child: DecoratedBox(
-              child: null,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: FileImage(postImage), fit: BoxFit.cover)),
-            )),
+      width: 200,
+      child: ClipRRect(
+        borderRadius: new BorderRadius.circular(avatarBorderRadius),
+        child: Image.file(
+          postImage,
+          fit: BoxFit.cover,
+        ),
       ),
     );
 
     if (onRemove == null) return imagePreview;
 
-    double buttonSize = 30.0;
-
     return Stack(
-      overflow: Overflow.visible,
       children: <Widget>[
         imagePreview,
         Positioned(
-            right: -10.0,
-            top: -10.0,
-            child: GestureDetector(
-              onTap: onRemove,
-              child: SizedBox(
-                width: buttonSize,
-                height: buttonSize,
-                child: FloatingActionButton(
-                  onPressed: onRemove,
-                  backgroundColor: Colors.black87,
-                  child: Icon(
-                    Icons.clear,
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-                ),
-              ),
-            )),
+          top: 10,
+          right: 10,
+          child: _buildRemoveButton(),
+        ),
+        Positioned(
+          bottom: 10,
+          left: 10,
+          child: _buildEditButton(),
+        ),
       ],
     );
+  }
+
+  Widget _buildRemoveButton() {
+    return GestureDetector(
+      onTap: onRemove,
+      child: SizedBox(
+        width: buttonSize,
+        height: buttonSize,
+        child: FloatingActionButton(
+          onPressed: onRemove,
+          backgroundColor: Colors.black54,
+          child: Icon(
+            Icons.clear,
+            color: Colors.white,
+            size: 20.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEditButton() {
+    return GestureDetector(
+      onTap: _onWantsToEditImage,
+      child: SizedBox(
+        width: buttonSize,
+        height: buttonSize,
+        child: FloatingActionButton(
+          onPressed: _onWantsToEditImage,
+          backgroundColor: Colors.black54,
+          child: Icon(
+            Icons.edit,
+            color: Colors.white,
+            size: 20.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onWantsToEditImage() async {
+    File croppedFile = await ImageCropper.cropImage(
+      toolbarTitle: 'Edit image',
+      toolbarColor: Colors.black,
+      statusBarColor: Colors.black,
+      toolbarWidgetColor: Colors.white,
+      sourcePath: postImage.path,
+    );
+
+    if (croppedFile != null) onPostImageEdited(croppedFile);
   }
 }
