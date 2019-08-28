@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:Okuna/models/category.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media_picker.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
@@ -44,7 +44,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
-  ImagePickerService _imagePickerService;
+  MediaPickerService _imagePickerService;
   LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
 

@@ -53,10 +53,6 @@ class OBMediaPickerItemState extends State<OBMediaPickerItem> {
   }
 
   Widget _buildVideoThumbnail() {
-
-    String durationMinutes = _duration.inMinutes.toString();
-    String durationSeconds = _duration.inSeconds.toString();
-
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -64,7 +60,7 @@ class OBMediaPickerItemState extends State<OBMediaPickerItem> {
           fit: BoxFit.cover,
         ),
       ),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       child: Stack(
         children: <Widget>[
           Positioned(

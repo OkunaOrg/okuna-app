@@ -9,13 +9,18 @@ import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class OBMediaPickerModal extends StatefulWidget {
+  final OBMediaPickerMode mode;
+
+  const OBMediaPickerModal({Key key, this.mode = OBMediaPickerMode.all})
+      : super(key: key);
+
   @override
   OBMediaPickerModalState createState() {
     return OBMediaPickerModalState();
   }
 }
 
-class OBMediaPickerModalState extends State {
+class OBMediaPickerModalState extends State<OBMediaPickerModal> {
   LocalizationService _localizationService;
   NavigationService _navigationService;
   bool _needsBootstrap;
@@ -74,27 +79,30 @@ class OBMediaPickerModalState extends State {
   }
 
   void _onMediaPickerItemPressed(AssetEntity mediaAsset) async {
-    AssetEntity result =
-        await _navigationService.navigateToMediaPickerPreviewPage(
-            context: context, mediaAsset: mediaAsset);
-
-    if (result == null) {
-      // No confirm, do nothing
-      return;
-    }
-
     // Pop the picker with the picked result
-    Navigator.pop(context, result);
+    Navigator.pop(context, mediaAsset);
   }
 
   void _bootstrap() async {
-    List<AssetPathEntity> availableMediaCategories =
-        await PhotoManager.getAssetPathList();
+    List<AssetPathEntity> availableMediaCategories;
+
+    switch (widget.mode) {
+      case OBMediaPickerMode.all:
+        availableMediaCategories = await PhotoManager.getAssetPathList();
+        break;
+      case OBMediaPickerMode.images:
+        availableMediaCategories = await PhotoManager.getImageAsset();
+        break;
+      case OBMediaPickerMode.videos:
+        availableMediaCategories = await PhotoManager.getVideoAsset();
+        break;
+      default:
+        throw Exception('Unkown mode for OBMediaPicker');
+    }
 
     AssetPathEntity allMediaCategoryList = availableMediaCategories[0];
     List<AssetEntity> mediaAssets = await allMediaCategoryList.assetList;
 
-    print(mediaAssets);
     _setMediaAssets(mediaAssets);
   }
 
@@ -110,3 +118,5 @@ class OBMediaPickerPermissionDenied implements Exception {
 
   OBMediaPickerPermissionDenied(this.cause);
 }
+
+enum OBMediaPickerMode { images, videos, all }

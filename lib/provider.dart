@@ -21,7 +21,7 @@ import 'package:Okuna/services/emojis_api.dart';
 import 'package:Okuna/services/environment_loader.dart';
 import 'package:Okuna/services/follows_api.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media_picker.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
@@ -76,7 +76,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
-  ImagePickerService imagePickerService = ImagePickerService();
+  MediaPickerService imagePickerService = MediaPickerService();
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
@@ -171,6 +171,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
     imagePickerService.setValidationService(validationService);
+    imagePickerService.setModalService(modalService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);

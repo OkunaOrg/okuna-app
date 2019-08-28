@@ -338,6 +338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.5"
+  media_picker_builder:
+    dependency: "direct main"
+    description:
+      name: media_picker_builder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0+2"
   meta:
     dependency: transitive
     description:

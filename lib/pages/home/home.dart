@@ -19,7 +19,7 @@ import 'package:Okuna/plugins/share/receive_share_state.dart';
 import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media_picker.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
@@ -48,7 +48,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   ValidationService _validationService;
-  ImagePickerService _imagePickerService;
+  MediaPickerService _imagePickerService;
 
   int _currentIndex;
   int _lastIndex;
