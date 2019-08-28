@@ -88,7 +88,8 @@ class UserPreferencesService {
   }
 
   Future<List<String>> getTrustedDomains() async {
-    return _storage?.getList(keyAskToConfirmExceptions);
+    var domains = await _storage?.getList(keyAskToConfirmExceptions);
+    return domains ?? <String>[];
   }
 
   Future clear() {
