@@ -5,6 +5,7 @@ import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
 import 'package:Okuna/services/validation.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -73,7 +74,13 @@ class MediaPickerService {
   Future<File> pickVideo({@required BuildContext context}) async {
     File pickedVideo =
         await _bottomSheetService.showVideoPicker(context: context);
-    return pickedVideo;
+    String videoExtension = basename(pickedVideo.path);
+    String tmpImageName = uuid.v4() + videoExtension;
+    final path = await _getTempPath();
+    final String pickedVideoCopyPath = '$path/$tmpImageName';
+    File pickedVideoCopy = await pickedVideo.copy(pickedVideoCopyPath);
+
+    return pickedVideoCopy;
   }
 
   Future<File> processImage(File image) async {

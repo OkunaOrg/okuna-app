@@ -416,7 +416,7 @@ packages:
     source: hosted
     version: "1.0.10"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -672,6 +672,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.5"
+  thumbnails:
+    dependency: "direct main"
+    description:
+      name: thumbnails
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   timeago:
     dependency: "direct main"
     description:
@@ -742,6 +749,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.2"
+  video_thumbnail:
+    dependency: "direct main"
+    description:
+      name: video_thumbnail
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5+1"
   vm_service_client:
     dependency: transitive
     description:

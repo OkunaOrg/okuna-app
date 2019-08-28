@@ -1,79 +1,101 @@
 import 'dart:io';
-import 'package:Okuna/widgets/video_player/aspect_ratio_video.dart';
-import 'package:Okuna/widgets/video_player/network_player_lifecycle.dart';
+
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:thumbnails/thumbnails.dart';
 
-class OBPostVideoPreviewer extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _OBPostVideoPreviewerState();
-  }
-
+class OBPostVideoPreviewer extends StatelessWidget {
   final File postVideo;
   final VoidCallback onRemove;
 
+  final double buttonSize = 30.0;
+
   OBPostVideoPreviewer(this.postVideo, {this.onRemove});
-}
-
-class _OBPostVideoPreviewerState extends State<OBPostVideoPreviewer> {
-
-  Widget _assetPlayer;
-
-  @override
-  void initState() {
-    super.initState();
-    _assetPlayer =  AssetPlayerLifeCycle(widget.postVideo,
-            (BuildContext context, VideoPlayerController controller) => OBAspectRatioVideo(controller)
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     double avatarBorderRadius = 10.0;
 
-    var videoPreview = DecoratedBox(
-      decoration: BoxDecoration(
-          color: Colors.black12,
-          borderRadius: BorderRadius.circular(avatarBorderRadius)),
-      child: SizedBox(
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(avatarBorderRadius),
-            child: SizedBox(
-              child: _assetPlayer,
-            )),
-      ),
-    );
+    Widget videoPreview = FutureBuilder<String>(
+        future: Thumbnails.getThumbnail(
+            // creates the specified path if it doesnt exist
+            videoFile: postVideo.path,
+            imageType: ThumbFormat.JPEG,
+            quality: 30),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.data == null) return const SizedBox();
 
-    if (widget.onRemove == null) return videoPreview;
+          return SizedBox(
+            height: 200.0,
+            width: 200,
+            child: ClipRRect(
+              borderRadius: new BorderRadius.circular(avatarBorderRadius),
+              child: Image.file(
+                File(snapshot.data),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        });
 
-    double buttonSize = 30.0;
+    if (onRemove == null) return videoPreview;
 
     return Stack(
-      overflow: Overflow.visible,
       children: <Widget>[
         videoPreview,
         Positioned(
-            right: -10.0,
-            top: -10.0,
-            child: GestureDetector(
-              onTap: widget.onRemove,
-              child: SizedBox(
-                width: buttonSize,
-                height: buttonSize,
-                child: FloatingActionButton(
-                  onPressed: widget.onRemove,
-                  backgroundColor: Colors.black87,
-                  child: Icon(
-                    Icons.clear,
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-                ),
-              ),
-            )),
+          top: 10,
+          right: 10,
+          child: _buildRemoveButton(),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          left: 0,
+          bottom: 0,
+          child: Center(
+            child: _buildPlayButton(),
+          ),
+        ),
       ],
     );
   }
-}
 
+  Widget _buildRemoveButton() {
+    return GestureDetector(
+      onTap: onRemove,
+      child: SizedBox(
+        width: buttonSize,
+        height: buttonSize,
+        child: FloatingActionButton(
+          onPressed: onRemove,
+          backgroundColor: Colors.black54,
+          child: Icon(
+            Icons.clear,
+            color: Colors.white,
+            size: 20.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlayButton() {
+    return GestureDetector(
+      onTap: _onWantsToPlay,
+      child: SizedBox(
+          width: 100,
+          height: 100,
+          child: Center(
+            child: Icon(
+              Icons.play_circle_filled,
+              color: Colors.white,
+              size: 50,
+            ),
+          )),
+    );
+  }
+
+  void _onWantsToPlay() {
+    print('Play');
+  }
+}
