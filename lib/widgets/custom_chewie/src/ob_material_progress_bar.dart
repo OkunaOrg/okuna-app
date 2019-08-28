@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:video_player/video_player.dart';
 
-class MaterialVideoProgressBar extends StatefulWidget {
+class OBVideoProgressBar extends StatefulWidget {
   final VideoPlayerController controller;
   final ChewieProgressColors colors;
   final Function() onDragStart;
   final Function() onDragEnd;
   final Function() onDragUpdate;
 
-  MaterialVideoProgressBar(
+  OBVideoProgressBar(
     this.controller, {
     ChewieProgressColors colors,
     this.onDragEnd,
@@ -24,7 +24,7 @@ class MaterialVideoProgressBar extends StatefulWidget {
   }
 }
 
-class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
+class _VideoProgressBarState extends State<OBVideoProgressBar> {
   VoidCallback listener;
 
   bool _controllerWasPlaying = false;

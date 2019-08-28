@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:Okuna/widgets/custom_chewie/src/material_controls.dart';
+import 'package:Okuna/widgets/custom_chewie/src/ob_controls.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -62,12 +62,7 @@ class OBVideoDialogState extends State<OBVideoDialog> {
                   double aspectRatio = _playerController.value.aspectRatio;
                   _chewieController = ChewieController(
                       videoPlayerController: _playerController,
-                      customControls: MaterialControls(
-                        autoPlay: true,
-                        controller: _playerController,
-                        fullScreen: true,
-                        onExpandCollapse: () async {},
-                        progressColors: ChewieProgressColors(),
+                      customControls: OBControls(
                       ),
                       aspectRatio: aspectRatio,
                       autoPlay: true,
