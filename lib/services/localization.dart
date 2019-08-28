@@ -1756,6 +1756,10 @@ class LocalizationService {
     return Intl.message("Photo", name: 'post__create_photo');
   }
 
+  String get post__create_video {
+    return Intl.message("Video", name: 'post__create_video');
+  }
+
   String get post__commenter_post_text {
     return Intl.message("Post", name: 'post__commenter_post_text');
   }

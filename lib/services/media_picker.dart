@@ -32,9 +32,9 @@ class MediaPickerService {
   }
 
   Future<File> pickImage(
-      {@required OBImageType imageType,
-      @required BuildContext context}) async {
-    File pickedImage = await _bottomSheetService.showImagePicker(context: context);
+      {@required OBImageType imageType, @required BuildContext context}) async {
+    File pickedImage =
+        await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) return null;
 
@@ -71,10 +71,10 @@ class MediaPickerService {
     return croppedFile;
   }
 
-  Future<File> pickVideo({ImageSource source = ImageSource.gallery}) async {
-    var video = await ImagePicker.pickVideo(source: source);
-
-    return video;
+  Future<File> pickVideo({@required BuildContext context}) async {
+    File pickedVideo =
+        await _bottomSheetService.showVideoPicker(context: context);
+    return pickedVideo;
   }
 
   Future<File> processImage(File image) async {
