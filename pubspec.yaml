@@ -17,8 +17,10 @@ dependencies:
   expandable: ^2.2.2+3
   uuid: ^2.0.1
   photo_manager: ^0.3.5
-  media_picker_builder: ^1.2.0+2
   flutter_exif_rotation: ^0.2.2
+  flutter_android_pip: ^0.0.2
+  chewie: ^0.9.7
+  open_iconic_flutter: ^0.3.0
   shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0
   sentry: ^2.2.0
