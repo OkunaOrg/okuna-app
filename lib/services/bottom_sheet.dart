@@ -10,6 +10,7 @@ import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/connection_circles_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
@@ -19,6 +20,8 @@ import 'package:Okuna/pages/home/bottom_sheets/react_to_post_comment.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
+
+import 'media_picker.dart';
 
 class BottomSheetService {
   Future<PostReaction> showReactToPost(
@@ -146,6 +149,14 @@ class BottomSheetService {
         context: context,
         builder: (BuildContext context) {
           return OBVideoPickerBottomSheet();
+        });
+  }
+
+  Future<File> showImagePicker({@required BuildContext context}) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBImagePickerBottomSheet();
         });
   }
 }

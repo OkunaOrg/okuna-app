@@ -171,7 +171,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
     imagePickerService.setValidationService(validationService);
-    imagePickerService.setModalService(modalService);
+    imagePickerService.setBottomSheetService(bottomSheetService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);

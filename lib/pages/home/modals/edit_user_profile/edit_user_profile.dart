@@ -357,7 +357,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               onTap: () async {
                 try {
                   var image =
-                      await _imagePickerService.pickImage(imageType: imageType, context: context);
+                      await _imagePickerService.pickImage(imageType: imageType);
 
                   _onUserImageSelected(image: image, imageType: imageType);
                 } on ImageTooLargeException catch (e) {

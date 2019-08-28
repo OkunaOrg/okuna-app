@@ -197,16 +197,14 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (_previewLinkQueryData != null && !_hasImage && !_hasVideo) {
       return Container(
         decoration: BoxDecoration(
-            color: Colors.black12,
-            borderRadius: BorderRadius.circular(10.0)),
-            child:  SizedBox(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: OBPostLinkPreview(
-                      previewLinkQueryData: _previewLinkQueryData,
-                      previewLink: _previewUrl
-                  )),
-            ),
+            color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
+        child: SizedBox(
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: OBPostLinkPreview(
+                  previewLinkQueryData: _previewLinkQueryData,
+                  previewLink: _previewUrl)),
+        ),
       );
     } else if (_previewRequestInProgress) {
       return const Center(
@@ -347,8 +345,8 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
           _unfocusTextField();
-          File pickedPhoto =
-              await _imagePickerService.pickImage(imageType: OBImageType.post, context: context);
+          File pickedPhoto = await _imagePickerService.pickImage(
+              imageType: OBImageType.post, context: context);
           if (pickedPhoto != null) _setPostImage(pickedPhoto);
         },
       ),
@@ -424,7 +422,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     String text = _textController.text;
     List matches = [];
     String previewUrl;
-    matches.addAll(linkRegex.allMatches(text).map((match){
+    matches.addAll(linkRegex.allMatches(text).map((match) {
       return match.group(0);
     }));
 
@@ -510,11 +508,16 @@ class CreatePostModalState extends State<CreatePostModal> {
     PostPreviewLinkData previewLinkQueryData;
     if (queryData != null) {
       previewLinkQueryData = PostPreviewLinkData();
-      if (queryData.containsKey('title')) previewLinkQueryData.title = queryData['title'];
-      if (queryData.containsKey('description')) previewLinkQueryData.description = queryData['description'];
-      if (queryData.containsKey('image_url')) previewLinkQueryData.imageUrl = queryData['image_url'];
-      if (queryData.containsKey('favicon_url')) previewLinkQueryData.faviconUrl = queryData['favicon_url'];
-      if (queryData.containsKey('domain_url')) previewLinkQueryData.domainUrl = queryData['domain_url'];
+      if (queryData.containsKey('title'))
+        previewLinkQueryData.title = queryData['title'];
+      if (queryData.containsKey('description'))
+        previewLinkQueryData.description = queryData['description'];
+      if (queryData.containsKey('image_url'))
+        previewLinkQueryData.imageUrl = queryData['image_url'];
+      if (queryData.containsKey('favicon_url'))
+        previewLinkQueryData.faviconUrl = queryData['favicon_url'];
+      if (queryData.containsKey('domain_url'))
+        previewLinkQueryData.domainUrl = queryData['domain_url'];
     } else {
       previewLinkQueryData = null;
     }

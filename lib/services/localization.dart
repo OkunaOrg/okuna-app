@@ -3563,6 +3563,23 @@ class LocalizationService {
     return Intl.message("Choose", name: 'media_picker__choose_action');
   }
 
+  String get image_picker__from_gallery {
+    return Intl.message("From gallery", name: 'image_picker__from_gallery');
+  }
+
+  String get image_picker__from_camera {
+    return Intl.message("From camera", name: 'image_picker__from_camera');
+  }
+
+  String get video_picker__from_gallery {
+    return Intl.message("From gallery", name: 'video_picker__from_gallery');
+  }
+
+  String get video_picker__from_camera {
+    return Intl.message("From camera", name: 'video_picker__from_camera');
+  }
+
+
   Locale getLocale() {
     return locale;
   }

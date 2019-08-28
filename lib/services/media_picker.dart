@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:Okuna/pages/home/modals/media_picker/media_picker.dart';
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
@@ -8,10 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:uuid/uuid.dart';
 
-import 'modal_service.dart';
+import 'bottom_sheet.dart';
 export 'package:image_picker/image_picker.dart';
 
 class MediaPickerService {
@@ -23,31 +21,20 @@ class MediaPickerService {
   };
 
   ValidationService _validationService;
-  ModalService _modalService;
+  BottomSheetService _bottomSheetService;
 
   void setValidationService(ValidationService validationService) {
     _validationService = validationService;
   }
 
-  void setModalService(ModalService modalService) {
-    _modalService = modalService;
-  }
-
-  Future<File> pickMedia(
-      {@required BuildContext context,
-      OBMediaPickerMode mode = OBMediaPickerMode.all}) async {
-    AssetEntity pickedMediaItem =
-        await _modalService.openMediaPicker(context: context);
-    if (pickedMediaItem == null) return null;
-    return pickedMediaItem.file;
+  void setBottomSheetService(BottomSheetService modalService) {
+    _bottomSheetService = modalService;
   }
 
   Future<File> pickImage(
-      {@required OBImageType imageType, @required BuildContext context}) async {
-    File pickedImage =
-        await pickMedia(context: context, mode: OBMediaPickerMode.images);
-
-    return pickedImage;
+      {@required OBImageType imageType,
+      @required BuildContext context}) async {
+    File pickedImage = await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) return null;
 
@@ -63,8 +50,6 @@ class MediaPickerService {
       throw ImageTooLargeException(
           _validationService.getAllowedImageSize(imageType));
     }
-
-    return file;
 
     File processedImage = await processImage(file);
 

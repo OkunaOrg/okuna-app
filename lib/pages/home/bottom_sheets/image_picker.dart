@@ -8,8 +8,8 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBVideoPickerBottomSheet extends StatelessWidget {
-  const OBVideoPickerBottomSheet({Key key}) : super(key: key);
+class OBImagePickerBottomSheet extends StatelessWidget {
+  const OBImagePickerBottomSheet({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +17,27 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
 
     LocalizationService localizationService = provider.localizationService;
 
-    List<Widget> videoPickerActions = [
+    List<Widget> imagePickerActions = [
       ListTile(
         leading: const OBIcon(OBIcons.gallery),
         title: OBText(
-          localizationService.video_picker__from_gallery,
+          localizationService.image_picker__from_gallery,
         ),
         onTap: () async {
-          File pickedVideo =
-          await ImagePicker.pickVideo(source: ImageSource.gallery);
-          Navigator.pop(context, pickedVideo);
+          File pickedImage =
+              await ImagePicker.pickImage(source: ImageSource.gallery);
+          Navigator.pop(context, pickedImage);
         },
       ),
       ListTile(
         leading: const OBIcon(OBIcons.camera),
         title: OBText(
-          localizationService.video_picker__from_camera,
+          localizationService.image_picker__from_camera,
         ),
         onTap: () async {
-          File pickedVideo =
-          await ImagePicker.pickVideo(source: ImageSource.camera);
-          Navigator.pop(context, pickedVideo);
+          File pickedImage =
+              await ImagePicker.pickImage(source: ImageSource.camera);
+          Navigator.pop(context, pickedImage);
         },
       )
     ];
@@ -47,7 +47,7 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(bottom: 16),
           child: Column(
-            children: videoPickerActions,
+            children: imagePickerActions,
             mainAxisSize: MainAxisSize.min,
           ),
         ));
