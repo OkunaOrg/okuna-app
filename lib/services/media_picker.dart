@@ -74,6 +74,8 @@ class MediaPickerService {
   Future<File> pickVideo({@required BuildContext context}) async {
     File pickedVideo =
         await _bottomSheetService.showVideoPicker(context: context);
+
+    if (pickedVideo == null) return null;
     String videoExtension = basename(pickedVideo.path);
     String tmpImageName = uuid.v4() + videoExtension;
     final path = await _getTempPath();
@@ -91,7 +93,7 @@ class MediaPickerService {
   }
 
   Future<String> _getTempPath() async {
-    final directory = await getTemporaryDirectory();
+    final directory = await getApplicationDocumentsDirectory();
 
     return directory.path;
   }

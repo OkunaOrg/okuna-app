@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:thumbnails/thumbnails.dart';
 
@@ -53,7 +54,7 @@ class OBPostVideoPreviewer extends StatelessWidget {
           left: 0,
           bottom: 0,
           child: Center(
-            child: _buildPlayButton(),
+            child: _buildPlayButton(context),
           ),
         ),
       ],
@@ -79,9 +80,11 @@ class OBPostVideoPreviewer extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayButton() {
+  Widget _buildPlayButton(BuildContext context) {
     return GestureDetector(
-      onTap: _onWantsToPlay,
+      onTap: () {
+        _onWantsToPlay(context);
+      },
       child: SizedBox(
           width: 100,
           height: 100,
@@ -95,7 +98,9 @@ class OBPostVideoPreviewer extends StatelessWidget {
     );
   }
 
-  void _onWantsToPlay() {
-    print('Play');
+  void _onWantsToPlay(BuildContext context) {
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    openbookProvider.dialogService
+        .showVideo(context: context, video: postVideo);
   }
 }

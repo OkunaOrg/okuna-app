@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/pages/home/dialogs/video_dialog.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/pages/home/modals/zoomable_photo.dart';
@@ -46,26 +49,51 @@ class DialogService {
           Animation<double> secondaryAnimation) {
         final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
         final Widget pageChild = OBZoomablePhotoModal(imageUrl);
-        return Builder(
-            builder: (BuildContext context) {
-              return theme != null
-                  ? Theme(data: theme, child: pageChild)
-                  : pageChild;
-            }
-        );
+        return Builder(builder: (BuildContext context) {
+          return theme != null
+              ? Theme(data: theme, child: pageChild)
+              : pageChild;
+        });
       },
       barrierDismissible: true,
-      barrierLabel: MaterialLocalizations
-          .of(context)
-          .modalBarrierDismissLabel,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black87,
       transitionDuration: const Duration(milliseconds: 100),
       transitionBuilder: _buildMaterialDialogTransitions,
     );
   }
 
-  Widget _buildMaterialDialogTransitions(BuildContext context,
-      Animation<double> animation, Animation<double> secondaryAnimation,
+  Future<void> showVideo(
+      {String videoUrl, File video, @required BuildContext context}) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext buildContext, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+        final Widget pageChild = Material(
+          child: OBVideoDialog(
+            video: video,
+            videoUrl: videoUrl,
+          ),
+        );
+        return Builder(builder: (BuildContext context) {
+          return theme != null
+              ? Theme(data: theme, child: pageChild)
+              : pageChild;
+        });
+      },
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black,
+      transitionDuration: const Duration(milliseconds: 100),
+      transitionBuilder: _buildMaterialDialogTransitions,
+    );
+  }
+
+  Widget _buildMaterialDialogTransitions(
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
       Widget child) {
     return FadeTransition(
       opacity: CurvedAnimation(
