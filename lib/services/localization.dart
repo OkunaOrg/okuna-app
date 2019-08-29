@@ -3583,6 +3583,21 @@ class LocalizationService {
     return Intl.message("From camera", name: 'video_picker__from_camera');
   }
 
+  String get post_uploader__generic_upload_error {
+    return Intl.message("Upload error", name: 'post_uploader__generic_upload_error');
+  }
+
+  String get post_uploader__creating_post {
+    return Intl.message("Creating post...", name: 'post_uploader__creating_post');
+  }
+
+  String get post_uploader__uploading_media {
+    return Intl.message("Uploading media...", name: 'post_uploader__uploading_media');
+  }
+
+  String get post_uploader__success {
+    return Intl.message("Success!", name: 'post_uploader__success');
+  }
 
   Locale getLocale() {
     return locale;
