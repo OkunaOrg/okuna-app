@@ -39,6 +39,7 @@ class Post extends UpdatableModel<Post> {
   bool publicReactions;
   String text;
   Language language;
+  OBPostStatus status;
 
   PostMediaList media;
   PostLinksList postLinksList;
@@ -83,6 +84,7 @@ class Post extends UpdatableModel<Post> {
       this.areCommentsEnabled,
       this.circles,
       this.community,
+      this.status,
       this.publicReactions,
       this.isMuted,
       this.isEncircled,
@@ -97,6 +99,8 @@ class Post extends UpdatableModel<Post> {
           factory.parseReactionsEmojiCounts(json['reactions_emoji_counts']);
     if (json.containsKey('reaction'))
       reaction = factory.parseReaction(json['reaction']);
+
+    if (json.containsKey('status')) status = OBPostStatus.parse(json['status']);
 
     if (json.containsKey('reactions_count'))
       reactionsCount = json['reactions_count'];
@@ -133,7 +137,8 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('is_reported')) isReported = json['is_reported'];
 
-    if (json.containsKey('media_thumbnail')) mediaThumbnail = json['media_thumbnail'];
+    if (json.containsKey('media_thumbnail'))
+      mediaThumbnail = json['media_thumbnail'];
 
     if (json.containsKey('media')) media = factory.parseMedia(json['media']);
 
@@ -334,6 +339,11 @@ class Post extends UpdatableModel<Post> {
     notifyUpdate();
   }
 
+  void setStatus(OBPostStatus status) {
+    this.status = status;
+    this.notifyUpdate();
+  }
+
   void _setReactionsEmojiCounts(ReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
   }
@@ -351,6 +361,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         uuid: json['uuid'],
         creatorId: json['creator_id'],
         created: parseCreated(json['created']),
+        status: OBPostStatus.parse(json['created']),
         text: json['text'],
         language: parseLanguage(json['language']),
         circles: parseCircles(json['circles']),
@@ -429,5 +440,40 @@ class PostFactory extends UpdatableModelFactory<Post> {
   Language parseLanguage(Map languageData) {
     if (languageData == null) return null;
     return Language.fromJson(languageData);
+  }
+}
+
+class OBPostStatus {
+  final String code;
+
+  const OBPostStatus._internal(this.code);
+
+  toString() => code;
+
+  static const draft = const OBPostStatus._internal('D');
+  static const processing = const OBPostStatus._internal('PG');
+  static const published = const OBPostStatus._internal('P');
+
+  static const _values = const <OBPostStatus>[draft, processing, published];
+
+  static values() => _values;
+
+  static OBPostStatus parse(String string) {
+    if (string == null) return null;
+
+    OBPostStatus postStatus;
+    for (var type in _values) {
+      if (string == type.code) {
+        postStatus = type;
+        break;
+      }
+    }
+
+    if (postStatus == null) {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported post status type');
+    }
+
+    return postStatus;
   }
 }

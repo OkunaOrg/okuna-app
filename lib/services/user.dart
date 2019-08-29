@@ -401,23 +401,58 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String text,
-      List<Circle> circles = const [],
-      File image,
-      File video}) async {
+      {String text, List<Circle> circles = const [], bool isDraft}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
         text: text,
         circleIds: circles.map((circle) => circle.id).toList(),
-        video: video,
-        image: image);
+        isDraft: isDraft);
 
     _checkResponseIsCreated(response);
 
-    // Post counts have changed
+    // Post counts may have changed
     refreshUser();
 
     String responseBody = await response.readAsString();
     return Post.fromJson(json.decode(responseBody));
+  }
+
+  Future<void> addMediaToPost(
+      {@required File file, @required Post post}) async {
+    HttpieStreamedResponse response =
+        await _postsApiService.addMediaToPost(file: file, postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+  }
+
+  Future<void> getMediaForPost({@required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.getPostMedia(postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+
+    return PostCommentList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> publishPost({@required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.publishPost(postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+  }
+
+  Future<OBPostStatus> getPostStatus({@required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.getPostWithUuidStatus(post.uuid);
+
+    _checkResponseIsOk(response);
+
+    Map<String, dynamic> responseJson = response.parseJsonBody();
+
+    OBPostStatus status = responseJson['status'];
+
+    post.setStatus(status);
+
+    return status;
   }
 
   Future<Post> editPost({String postUuid, String text}) async {
@@ -1417,7 +1452,8 @@ class UserService {
     return CategoriesList.fromJson(json.decode(response.body));
   }
 
-  Future<NotificationsList> getNotifications({int maxId, int count, List<NotificationType> types}) async {
+  Future<NotificationsList> getNotifications(
+      {int maxId, int count, List<NotificationType> types}) async {
     HttpieResponse response = await _notificationsApiService.getNotifications(
         maxId: maxId, count: count, types: types);
     _checkResponseIsOk(response);
@@ -1431,9 +1467,10 @@ class UserService {
     return OBNotification.fromJSON(json.decode(response.body));
   }
 
-  Future<void> readNotifications({int maxId, List<NotificationType> types}) async {
-    HttpieResponse response =
-        await _notificationsApiService.readNotifications(maxId: maxId, types: types);
+  Future<void> readNotifications(
+      {int maxId, List<NotificationType> types}) async {
+    HttpieResponse response = await _notificationsApiService.readNotifications(
+        maxId: maxId, types: types);
     _checkResponseIsOk(response);
   }
 
@@ -1568,7 +1605,8 @@ class UserService {
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
             postCommentNotifications: postCommentNotifications,
             postCommentReplyNotifications: postCommentReplyNotifications,
-            postCommentUserMentionNotifications: postCommentUserMentionNotifications,
+            postCommentUserMentionNotifications:
+                postCommentUserMentionNotifications,
             postUserMentionNotifications: postUserMentionNotifications,
             postCommentReactionNotifications: postCommentReactionNotifications,
             postReactionNotifications: postReactionNotifications,
@@ -1793,7 +1831,7 @@ class UserService {
 
   Future getPreviewDataForPost({@required Post post}) async {
     HttpieResponse response =
-    await _postsApiService.getPreviewDataForPostUuid(postUuid: post.uuid);
+        await _postsApiService.getPreviewDataForPostUuid(postUuid: post.uuid);
 
     _checkResponseIsOk(response);
 
@@ -1802,7 +1840,7 @@ class UserService {
 
   Future getPreviewDataForUrl({@required String url}) async {
     HttpieResponse response =
-    await _previewUrlApiService.getPreviewDataForUrl(url: url);
+        await _previewUrlApiService.getPreviewDataForUrl(url: url);
 
     _checkResponseIsOk(response);
 
