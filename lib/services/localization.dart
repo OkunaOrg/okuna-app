@@ -3583,8 +3583,8 @@ class LocalizationService {
     return Intl.message("From camera", name: 'video_picker__from_camera');
   }
 
-  String get post_uploader__generic_upload_error {
-    return Intl.message("Upload error", name: 'post_uploader__generic_upload_error');
+  String get post_uploader__generic_upload_failed {
+    return Intl.message("Upload failed", name: 'post_uploader__generic_upload_failed');
   }
 
   String get post_uploader__creating_post {
@@ -3597,6 +3597,14 @@ class LocalizationService {
 
   String get post_uploader__success {
     return Intl.message("Success!", name: 'post_uploader__success');
+  }
+
+  String get post_uploader__cancelling {
+    return Intl.message("Cancelling", name: 'post_uploader__cancelling');
+  }
+
+  String get post_uploader__cancelled {
+    return Intl.message("Cancelled!", name: 'post_uploader__cancelled');
   }
 
   Locale getLocale() {

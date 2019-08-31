@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import 'icon.dart';
 
 class OBPostUploader extends StatefulWidget {
   final OBPostUploaderUploadData uploadData;
@@ -19,7 +23,6 @@ class OBPostUploader extends StatefulWidget {
 }
 
 class OBPostUploaderState extends State<OBPostUploader> {
-  ToastService _toastService;
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -31,6 +34,9 @@ class OBPostUploaderState extends State<OBPostUploader> {
   Post _createdDraftPost;
   List<File> _remainingMediaToUpload;
   List<File> _mediaToUpload;
+  File _mediaPreview;
+
+  static double mediaPreviewSize = 40;
 
   @override
   void initState() {
@@ -39,15 +45,16 @@ class OBPostUploaderState extends State<OBPostUploader> {
     _status = OBPostUploaderStatus.idle;
     _mediaToUpload = widget.uploadData.getMedia();
     _remainingMediaToUpload = widget.uploadData.getMedia();
+    _mediaPreview = widget.uploadData.mediaPreview;
   }
 
   @override
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-      _toastService = openbookProvider.toastService;
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
+      _bootstrap();
       _needsBootstrap = false;
     }
 
@@ -110,7 +117,7 @@ class OBPostUploaderState extends State<OBPostUploader> {
         _setStatusMessage(errorMessage);
       } else {
         _setStatusMessage(
-            _localizationService.post_uploader__generic_upload_error);
+            _localizationService.post_uploader__generic_upload_failed);
         throw error;
       }
       _setStatus(OBPostUploaderStatus.failed);
@@ -134,18 +141,61 @@ class OBPostUploaderState extends State<OBPostUploader> {
   }
 
   Widget _buildProgressBar() {
+    if (_status != OBPostUploaderStatus.addingPostMedia &&
+        _status != OBPostUploaderStatus.creatingPost) return const SizedBox();
     return LinearProgressIndicator();
   }
 
-  Widget _buildMediaPreview() {}
+  Widget _buildMediaPreview() {
+    if (_mediaPreview == null) return const SizedBox();
 
-  Widget _buildStatusText() {}
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: Image(
+        image: FileImage(_mediaPreview),
+        height: mediaPreviewSize,
+        width: mediaPreviewSize,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
 
-  Widget _buildActionButtons() {}
+  Widget _buildStatusText() {
+    return OBText(_statusMessage);
+  }
 
-  Widget _buildCancelButton() {}
+  Widget _buildActionButtons() {
+    List<Widget> activeActions = [];
 
-  Widget _buildRetryButton() {}
+    switch (_status) {
+      case OBPostUploaderStatus.creatingPost:
+      case OBPostUploaderStatus.addingPostMedia:
+        activeActions.add(_buildCancelButton());
+        break;
+      case OBPostUploaderStatus.failed:
+        activeActions.add(_buildRetryButton());
+        break;
+      default:
+    }
+
+    return Row(
+      children: activeActions,
+    );
+  }
+
+  Widget _buildCancelButton() {
+    return GestureDetector(
+      onTap: _onWantsToCancel,
+      child: OBIcon(OBIcons.cancel),
+    );
+  }
+
+  Widget _buildRetryButton() {
+    return GestureDetector(
+      onTap: _onWantsToRetry,
+      child: OBIcon(OBIcons.retry),
+    );
+  }
 
   void _onWantsToRetry() async {
     if (_status == OBPostUploaderStatus.creatingPost ||
@@ -159,7 +209,8 @@ class OBPostUploaderState extends State<OBPostUploader> {
     _setStatus(OBPostUploaderStatus.cancelling);
     // Delete post
     if (_createdDraftPost != null) {
-      await _userService.deletePost(_createdDraftPost);
+      // If it doesnt work, will get cleaned up by a scheduled job
+      _userService.deletePost(_createdDraftPost);
     }
 
     _deleteMediaFiles();
@@ -188,8 +239,16 @@ class OBPostUploaderState extends State<OBPostUploader> {
 class OBPostUploaderUploadData {
   final String text;
   final List<File> media;
+  final File mediaPreview;
+  final Community community;
+  final List<int> circlesIds;
 
-  OBPostUploaderUploadData({@required this.text, @required this.media});
+  OBPostUploaderUploadData(
+      {this.text,
+      this.media,
+      this.community,
+      this.circlesIds,
+      this.mediaPreview});
 
   bool hasMedia() {
     return media != null && media.isNotEmpty;
