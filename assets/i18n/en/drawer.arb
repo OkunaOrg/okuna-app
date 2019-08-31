@@ -141,6 +141,18 @@
     "type": "text",
     "placeholders": {}
   },
+  "about": "About",
+  "@about": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "about_version": "Version: {version}",
+  "@about_version": {
+    "type": "text",
+    "placeholders": {
+      "version": {}
+    }
+  },
   "logout": "Log out",
   "@logout": {
     "type": "text",

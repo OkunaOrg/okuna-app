@@ -705,6 +705,15 @@ class LocalizationService {
     return Intl.message("Customize", name: 'drawer__customize');
   }
 
+  String get drawer__about {
+    return Intl.message("About", name: 'drawer__about');
+  }
+  String drawer__about_version(String version) {
+    return Intl.message("Version: $version",
+      args: [version],
+      name: 'drawer__about_version');
+  }
+
   String get drawer__logout {
     return Intl.message("Log out", name: 'drawer__logout');
   }

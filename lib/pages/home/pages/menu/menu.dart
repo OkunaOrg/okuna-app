@@ -193,6 +193,14 @@ class OBMainMenuPage extends StatelessWidget {
                           },
                         ),
                         ListTile(
+                          leading: const OBIcon(OBIcons.nativeInfo),
+                          title: OBText(localizationService.drawer__about),
+                          onTap: () {
+                            navigationService.navigateToAboutPage(
+                              context: context);
+                          },
+                        ),
+                        ListTile(
                           leading: const OBIcon(OBIcons.logout),
                           title: OBText(
                               localizationService.trans('drawer__logout')),
