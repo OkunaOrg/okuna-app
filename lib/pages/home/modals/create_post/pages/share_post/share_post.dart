@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
@@ -9,15 +6,16 @@ import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/post_uploader.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBSharePostPage extends StatefulWidget {
-  final SharePostData sharePostData;
+  final OBCreatePostData createPostData;
 
-  const OBSharePostPage({Key key, @required this.sharePostData})
+  const OBSharePostPage({Key key, @required this.createPostData})
       : super(key: key);
 
   @override
@@ -88,7 +86,8 @@ class OBSharePostPageState extends State<OBSharePostPage> {
               if (latestUser.isMemberOfCommunities) {
                 shareToTiles.add(ListTile(
                   leading: const OBIcon(OBIcons.communities),
-                  title: OBText(_localizationService.trans('post__share_community_title')),
+                  title: OBText(_localizationService
+                      .trans('post__share_community_title')),
                   subtitle: OBText(
                     _localizationService.trans('post__share_community_desc'),
                     style: shareToTilesSubtitleStyle,
@@ -130,22 +129,16 @@ class OBSharePostPageState extends State<OBSharePostPage> {
   }
 
   void _onWantsToSharePostToCircles() async {
-    Post sharedPost = await _navigationService.navigateToSharePostWithCircles(
-        context: context, sharePostData: widget.sharePostData);
-    if (sharedPost != null) Navigator.pop(context, sharedPost);
+    OBCreatePostData createPostData =
+        await _navigationService.navigateToSharePostWithCircles(
+            context: context, createPostData: widget.createPostData);
+    if (createPostData != null) Navigator.pop(context, createPostData);
   }
 
   void _onWantsToSharePostToCommunity() async {
-    Post sharedPost = await _navigationService.navigateToSharePostWithCommunity(
-        context: context, sharePostData: widget.sharePostData);
-    if (sharedPost != null) Navigator.pop(context, sharedPost);
+    OBCreatePostData createPostData =
+        await _navigationService.navigateToSharePostWithCommunity(
+            context: context, createPostData: widget.createPostData);
+    if (createPostData != null) Navigator.pop(context, createPostData);
   }
-}
-
-class SharePostData {
-  String text;
-  File image;
-  File video;
-
-  SharePostData({@required this.text, this.image, this.video});
 }

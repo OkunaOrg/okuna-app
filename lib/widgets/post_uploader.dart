@@ -1,18 +1,20 @@
 import 'dart:io';
 
+import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+import 'package:mime/mime.dart';
+import 'package:thumbnails/thumbnails.dart';
 
 import 'icon.dart';
 
 class OBPostUploader extends StatefulWidget {
-  final OBPostUploaderUploadData uploadData;
+  final OBCreatePostData uploadData;
 
   const OBPostUploader({Key key, @required this.uploadData}) : super(key: key);
 
@@ -34,7 +36,6 @@ class OBPostUploaderState extends State<OBPostUploader> {
   Post _createdDraftPost;
   List<File> _remainingMediaToUpload;
   List<File> _mediaToUpload;
-  File _mediaPreview;
 
   static double mediaPreviewSize = 40;
 
@@ -45,7 +46,6 @@ class OBPostUploaderState extends State<OBPostUploader> {
     _status = OBPostUploaderStatus.idle;
     _mediaToUpload = widget.uploadData.getMedia();
     _remainingMediaToUpload = widget.uploadData.getMedia();
-    _mediaPreview = widget.uploadData.mediaPreview;
   }
 
   @override
@@ -125,8 +125,18 @@ class OBPostUploaderState extends State<OBPostUploader> {
   }
 
   Future _createPost() async {
-    Post draftPost =
-        await _userService.createPost(text: widget.uploadData.text);
+    Post draftPost;
+
+    if (widget.uploadData.community != null) {
+      draftPost = await _userService.createPostForCommunity(
+          widget.uploadData.community,
+          text: widget.uploadData.text);
+    } else {
+      draftPost = await _userService.createPost(
+          text: widget.uploadData.text,
+          circles: widget.uploadData.getCircles());
+    }
+
     this._createdDraftPost = draftPost;
   }
 
@@ -147,17 +157,48 @@ class OBPostUploaderState extends State<OBPostUploader> {
   }
 
   Widget _buildMediaPreview() {
-    if (_mediaPreview == null) return const SizedBox();
+    if (_mediaToUpload.isEmpty) return const SizedBox();
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: Image(
-        image: FileImage(_mediaPreview),
-        height: mediaPreviewSize,
-        width: mediaPreviewSize,
-        fit: BoxFit.cover,
-      ),
+    return FutureBuilder(
+      future: _getMediaThumbnail(),
+      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+        if (snapshot.data == null) return const SizedBox();
+
+        File mediaThumbnail = snapshot.data;
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image(
+            image: FileImage(mediaThumbnail),
+            height: mediaPreviewSize,
+            width: mediaPreviewSize,
+            fit: BoxFit.cover,
+          ),
+        );
+      },
     );
+  }
+
+  Future<File> _getMediaThumbnail() async {
+    File mediaToPreview = _mediaToUpload.first;
+    File mediaThumbnail;
+
+    String mediaMime = lookupMimeType(mediaToPreview.path);
+    String mediaMimeType = mediaMime.split('/')[0];
+
+    if (mediaMimeType == 'image') {
+      mediaThumbnail = mediaToPreview;
+    } else if (mediaMimeType == 'video') {
+      String mediaThumbnailPath = await Thumbnails.getThumbnail(
+          // creates the specified path if it doesnt exist
+          videoFile: mediaToPreview.path,
+          imageType: ThumbFormat.JPEG,
+          quality: 30);
+      mediaThumbnail = File(mediaThumbnailPath);
+    } else {
+      print('Unsupported media type');
+    }
+
+    return mediaThumbnail;
   }
 
   Widget _buildStatusText() {
@@ -236,19 +277,13 @@ class OBPostUploaderState extends State<OBPostUploader> {
   }
 }
 
-class OBPostUploaderUploadData {
-  final String text;
-  final List<File> media;
-  final File mediaPreview;
-  final Community community;
-  final List<int> circlesIds;
+class OBCreatePostData {
+  String text;
+  List<File> media;
+  Community community;
+  List<Circle> circles;
 
-  OBPostUploaderUploadData(
-      {this.text,
-      this.media,
-      this.community,
-      this.circlesIds,
-      this.mediaPreview});
+  OBCreatePostData({this.text, this.media, this.community, this.circles});
 
   bool hasMedia() {
     return media != null && media.isNotEmpty;
@@ -256,6 +291,18 @@ class OBPostUploaderUploadData {
 
   List<File> getMedia() {
     return hasMedia() ? media.toList() : [];
+  }
+
+  void setCircles(List<Circle> circles) {
+    this.circles = circles;
+  }
+
+  void setCommunity(Community community) {
+    this.community = community;
+  }
+
+  List<Circle> getCircles() {
+    return circles.toList();
   }
 }
 

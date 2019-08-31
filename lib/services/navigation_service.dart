@@ -63,6 +63,7 @@ import 'package:Okuna/pages/home/pages/profile/profile.dart';
 import 'package:Okuna/pages/home/pages/report_object/pages/confirm_report_object.dart';
 import 'package:Okuna/pages/home/pages/report_object/report_object.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/post_uploader.dart';
 import 'package:Okuna/widgets/routes/slide_right_route.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -410,36 +411,39 @@ class NavigationService {
             widget: OBConfirmRejectGuidelines()));
   }
 
-  Future<Post> navigateToSharePost(
-      {@required BuildContext context, @required SharePostData sharePostData}) {
+  Future<OBCreatePostData> navigateToSharePost(
+      {@required BuildContext context,
+      @required OBCreatePostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostPage'),
             widget: OBSharePostPage(
-              sharePostData: sharePostData,
+              createPostData: createPostData,
             )));
   }
 
-  Future<Post> navigateToSharePostWithCircles(
-      {@required BuildContext context, @required SharePostData sharePostData}) {
+  Future<OBCreatePostData> navigateToSharePostWithCircles(
+      {@required BuildContext context,
+      @required OBCreatePostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostWithCirclesPage'),
             widget: OBSharePostWithCirclesPage(
-              sharePostData: sharePostData,
+              createPostData: createPostData,
             )));
   }
 
-  Future<Post> navigateToSharePostWithCommunity(
-      {@required BuildContext context, @required SharePostData sharePostData}) {
+  Future<OBCreatePostData> navigateToSharePostWithCommunity(
+      {@required BuildContext context,
+      @required OBCreatePostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostWithCommunityPage'),
             widget: OBSharePostWithCommunityPage(
-              sharePostData: sharePostData,
+              createPostData: createPostData,
             )));
   }
 
@@ -688,7 +692,8 @@ class NavigationService {
   }
 
   Future<AssetEntity> navigateToMediaPickerPreviewPage(
-      {@required BuildContext context, @required AssetEntity mediaAsset}) async {
+      {@required BuildContext context,
+      @required AssetEntity mediaAsset}) async {
     return Navigator.push(
         context,
         OBSlideRightRoute(

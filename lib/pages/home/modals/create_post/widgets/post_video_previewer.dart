@@ -4,13 +4,13 @@ import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:thumbnails/thumbnails.dart';
 
-class OBPostVideoPreviewer extends StatelessWidget {
+class OBPostVideoPreview extends StatelessWidget {
   final File postVideo;
   final VoidCallback onRemove;
-
   final double buttonSize = 30.0;
+  final double size ;
 
-  OBPostVideoPreviewer(this.postVideo, {this.onRemove});
+  OBPostVideoPreview(this.postVideo, {this.onRemove, this.size=100});
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +86,8 @@ class OBPostVideoPreviewer extends StatelessWidget {
         _onWantsToPlay(context);
       },
       child: SizedBox(
-          width: 100,
-          height: 100,
+          width: size,
+          height: size,
           child: Center(
             child: Icon(
               Icons.play_circle_filled,

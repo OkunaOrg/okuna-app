@@ -3,7 +3,6 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_community_previewer.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_image_previewer.dart';
@@ -26,6 +25,7 @@ import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_link_preview.dart';
+import 'package:Okuna/widgets/post_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -244,14 +244,14 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _onWantsToGoNext() async {
-    Post sharedPost = await _navigationService.navigateToSharePost(
+    OBCreatePostData createPostData = await _navigationService.navigateToSharePost(
         context: context,
-        sharePostData:
-            SharePostData(text: _textController.text, image: _postImage));
+        createPostData:
+            OBCreatePostData(text: _textController.text, media: [_postImage]));
 
-    if (sharedPost != null) {
+    if (createPostData != null) {
       // Remove modal
-      Navigator.pop(context, sharedPost);
+      Navigator.pop(context, createPostData);
     }
   }
 
@@ -406,7 +406,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       this._postVideo = video;
       _hasVideo = true;
 
-      var postVideoWidget = OBPostVideoPreviewer(
+      var postVideoWidget = OBPostVideoPreview(
         _postVideo,
         onRemove: () {
           _removePostVideo();

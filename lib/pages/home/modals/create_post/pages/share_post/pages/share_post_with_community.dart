@@ -1,7 +1,6 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/post.dart';
-import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
@@ -11,15 +10,16 @@ import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/http_list.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/post_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/tiles/community_selectable_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBSharePostWithCommunityPage extends StatefulWidget {
-  final SharePostData sharePostData;
+  final OBCreatePostData createPostData;
 
-  const OBSharePostWithCommunityPage({Key key, @required this.sharePostData})
+  const OBSharePostWithCommunityPage({Key key, @required this.createPostData})
       : super(key: key);
 
   @override
@@ -31,22 +31,18 @@ class OBSharePostWithCommunityPage extends StatefulWidget {
 class OBSharePostWithCommunityPageState
     extends State<OBSharePostWithCommunityPage> {
   UserService _userService;
-  ToastService _toastService;
   LocalizationService _localizationService;
-  bool _isCreatePostInProgress;
 
   Community _chosenCommunity;
 
   @override
   void initState() {
     super.initState();
-    _isCreatePostInProgress = false;
   }
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
 
@@ -84,7 +80,6 @@ class OBSharePostWithCommunityPageState
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,
-        isLoading: _isCreatePostInProgress,
         isDisabled: _chosenCommunity == null,
         onPressed: createPost,
         child: Text(_localizationService.trans('post__share_community')),
@@ -107,34 +102,9 @@ class OBSharePostWithCommunityPageState
   }
 
   Future<void> createPost() async {
-    _setCreatePostInProgress(true);
+    widget.createPostData.setCommunity(_chosenCommunity);
 
-    try {
-      Post createdPost = await _userService.createPostForCommunity(
-          _chosenCommunity,
-          text: widget.sharePostData.text,
-          image: widget.sharePostData.image,
-          video: widget.sharePostData.video);
-      // Remove modal
-      Navigator.pop(context, createdPost);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _setCreatePostInProgress(false);
-    }
-  }
-
-  void _onError(error) async {
-    if (error is HttpieConnectionRefusedError) {
-      _toastService.error(
-          message: error.toHumanReadableMessage(), context: context);
-    } else if (error is HttpieRequestError) {
-      String errorMessage = await error.toHumanReadableMessage();
-      _toastService.error(message: errorMessage, context: context);
-    } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
-      throw error;
-    }
+    Navigator.pop(context, widget.createPostData);
   }
 
   Future<List<Community>> _refreshCommunities() async {
@@ -158,12 +128,6 @@ class OBSharePostWithCommunityPageState
         await _userService.searchJoinedCommunities(query: query);
 
     return results.communities;
-  }
-
-  void _setCreatePostInProgress(bool createPostInProgress) {
-    setState(() {
-      _isCreatePostInProgress = createPostInProgress;
-    });
   }
 
   void _onCommunityPressed(Community pressedCommunity) {

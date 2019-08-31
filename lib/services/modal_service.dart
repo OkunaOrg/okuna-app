@@ -33,6 +33,7 @@ import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/modals/moderated_object_update_description.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/modals/moderated_object_update_status.dart';
 import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
+import 'package:Okuna/widgets/post_uploader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -46,25 +47,26 @@ class ModalService {
     this.localizationService = localizationService;
   }
 
-  Future<Post> openCreatePost(
+  Future<OBCreatePostData> openCreatePost(
       {@required BuildContext context,
       Community community,
       String text,
       File image}) async {
-    Post createdPost = await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<Post>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return Material(
-                child: CreatePostModal(
-                  community: community,
-                  text: text,
-                  image: image,
-                ),
-              );
-            }));
+    OBCreatePostData createPostData =
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<OBCreatePostData>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: CreatePostModal(
+                      community: community,
+                      text: text,
+                      image: image,
+                    ),
+                  );
+                }));
 
-    return createdPost;
+    return createPostData;
   }
 
   Future<Post> openEditPost(
