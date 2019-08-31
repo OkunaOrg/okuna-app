@@ -708,10 +708,17 @@ class LocalizationService {
   String get drawer__about {
     return Intl.message("About", name: 'drawer__about');
   }
-  String drawer__about_version(String version) {
-    return Intl.message("Version: $version",
-      args: [version],
+
+  String drawer__about_version(String name, String version) {
+    return Intl.message("$name v$version",
+      args: [name, version],
       name: 'drawer__about_version');
+  }
+
+  String drawer__about_platform(String platform) {
+    return Intl.message("Running on $platform",
+      args: [platform],
+      name: 'drawer__about_platform');
   }
 
   String get drawer__logout {

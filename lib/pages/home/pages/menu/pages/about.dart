@@ -7,6 +7,7 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_version/get_version.dart';
+import 'package:package_info/package_info.dart';
 
 class OBAboutPage extends StatefulWidget {
   @override
@@ -16,7 +17,9 @@ class OBAboutPage extends StatefulWidget {
 }
 
 class OBAboutPageState extends State<OBAboutPage> {
+  String _appName = '';
   String _appVersion = '';
+  String _platformVersion = '';
 
   @override
   void initState() {
@@ -25,11 +28,14 @@ class OBAboutPageState extends State<OBAboutPage> {
   }
 
   void initStateAsync() async {
-    var appVersion = await GetVersion.projectVersion;
+    var pi = await PackageInfo.fromPlatform();
+    var platformVersion = await GetVersion.platformVersion;
 
     if (!mounted) return;
     setState(() {
-      _appVersion = appVersion;
+      _appName = pi.appName;
+      _appVersion = pi.version;
+      _platformVersion = platformVersion;
     });
   }
 
@@ -48,9 +54,15 @@ class OBAboutPageState extends State<OBAboutPage> {
             ListTile(
               leading: OBIcon(OBIcons.nativeInfo),
               title: OBText(
-                _localizationService.drawer__about_version(_appVersion),
+                _localizationService.drawer__about_version(_appName, _appVersion),
               ),
-            )
+            ),
+            ListTile(
+              leading: OBIcon(OBIcons.nativeInfo),
+              title: OBText(
+                _localizationService.drawer__about_platform(_platformVersion),
+              ),
+            ),
           ],
         ),
       ),
