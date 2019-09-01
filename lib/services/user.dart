@@ -50,6 +50,7 @@ import 'package:Okuna/services/communities_api.dart';
 import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/connections_api.dart';
 import 'package:Okuna/services/devices_api.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/emojis_api.dart';
 import 'package:Okuna/services/follows_api.dart';
 import 'package:Okuna/services/httpie.dart';
@@ -93,6 +94,7 @@ class UserService {
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
   LocalizationService _localizationService;
+  DraftService _draftService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -180,6 +182,10 @@ class UserService {
     _localizationService = localizationService;
   }
 
+  void setDraftService(DraftService draftService) {
+    _draftService = draftService;
+  }
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -191,6 +197,7 @@ class UserService {
     await _removeStoredUserData();
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
+    _draftService.clear();
     _removeLoggedInUser();
     await clearCache();
     User.clearSessionCache();
