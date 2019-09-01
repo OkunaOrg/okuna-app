@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:Okuna/models/circle.dart';
@@ -10,21 +11,25 @@ import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:mime/mime.dart';
 import 'package:thumbnails/thumbnails.dart';
+import 'package:async/async.dart';
 
 import 'icon.dart';
 
-class OBPostUploader extends StatefulWidget {
-  final OBCreatePostData uploadData;
+class OBNewPostDataUploader extends StatefulWidget {
+  final OBNewPostData data;
+  final ValueChanged<Post> onPostUploaded;
 
-  const OBPostUploader({Key key, @required this.uploadData}) : super(key: key);
+  const OBNewPostDataUploader(
+      {Key key, @required this.data, @required this.onPostUploaded})
+      : super(key: key);
 
   @override
-  OBPostUploaderState createState() {
-    return OBPostUploaderState();
+  OBNewPostDataUploaderState createState() {
+    return OBNewPostDataUploaderState();
   }
 }
 
-class OBPostUploaderState extends State<OBPostUploader> {
+class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -34,18 +39,30 @@ class OBPostUploaderState extends State<OBPostUploader> {
   String _statusMessage;
 
   Post _createdDraftPost;
+  OBPostStatus _createdDraftPostStatus;
   List<File> _remainingMediaToUpload;
   List<File> _mediaToUpload;
 
   static double mediaPreviewSize = 40;
+
+  Timer _checkPostStatusTimer;
+
+  CancelableOperation _getPostStatusOperation;
 
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
     _status = OBPostUploaderStatus.idle;
-    _mediaToUpload = widget.uploadData.getMedia();
-    _remainingMediaToUpload = widget.uploadData.getMedia();
+    _mediaToUpload = widget.data.getMedia();
+    _remainingMediaToUpload = widget.data.getMedia();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _ensurePostStatusTimerIsCancelled();
+    if (_getPostStatusOperation != null) _getPostStatusOperation.cancel();
   }
 
   @override
@@ -60,7 +77,7 @@ class OBPostUploaderState extends State<OBPostUploader> {
 
     List<Widget> rowItems = [];
 
-    if (widget.uploadData.hasMedia()) {
+    if (widget.data.hasMedia()) {
       rowItems.addAll([
         _buildMediaPreview(),
         const SizedBox(
@@ -107,8 +124,27 @@ class OBPostUploaderState extends State<OBPostUploader> {
         _setStatus(OBPostUploaderStatus.addingPostMedia);
         await _addPostMedia();
       }
-      _setStatusMessage(_localizationService.post_uploader__success);
-      _setStatus(OBPostUploaderStatus.success);
+      _setStatusMessage(_localizationService.post_uploader__processing);
+      _setStatus(OBPostUploaderStatus.processing);
+      _ensurePostStatusTimerIsCancelled();
+
+      if (_createdDraftPostStatus == null ||
+          _createdDraftPostStatus != OBPostStatus.published) {
+        _checkPostStatusTimer =
+            Timer.periodic(new Duration(seconds: 1), (timer) async {
+          if (_getPostStatusOperation != null) return;
+          _getPostStatusOperation = CancelableOperation.fromFuture(
+              _userService.getPostStatus(post: _createdDraftPost));
+          OBPostStatus status = await _getPostStatusOperation.value;
+          _createdDraftPostStatus = status;
+          if (_createdDraftPostStatus == OBPostStatus.published) {
+            _checkPostStatusTimer.cancel();
+            _getPublishedPost();
+          }
+        });
+      } else {
+        _getPublishedPost();
+      }
     } catch (error) {
       if (error is HttpieConnectionRefusedError) {
         _setStatusMessage(error.toHumanReadableMessage());
@@ -127,17 +163,22 @@ class OBPostUploaderState extends State<OBPostUploader> {
   Future _createPost() async {
     Post draftPost;
 
-    if (widget.uploadData.community != null) {
+    if (widget.data.community != null) {
       draftPost = await _userService.createPostForCommunity(
-          widget.uploadData.community,
-          text: widget.uploadData.text);
+          widget.data.community,
+          text: widget.data.text);
     } else {
       draftPost = await _userService.createPost(
-          text: widget.uploadData.text,
-          circles: widget.uploadData.getCircles());
+          text: widget.data.text, circles: widget.data.getCircles());
     }
 
     this._createdDraftPost = draftPost;
+  }
+
+  Future _getPublishedPost() async {
+    Post publishedPost =
+        await _userService.getPostWithUuid(_createdDraftPost.uuid);
+    widget.onPostUploaded(publishedPost);
   }
 
   Future _addPostMedia() {
@@ -275,15 +316,20 @@ class OBPostUploaderState extends State<OBPostUploader> {
       _statusMessage = statusMessage;
     });
   }
+
+  void _ensurePostStatusTimerIsCancelled() {
+    if (_checkPostStatusTimer != null && _checkPostStatusTimer.isActive)
+      _checkPostStatusTimer.cancel();
+  }
 }
 
-class OBCreatePostData {
+class OBNewPostData {
   String text;
   List<File> media;
   Community community;
   List<Circle> circles;
 
-  OBCreatePostData({this.text, this.media, this.community, this.circles});
+  OBNewPostData({this.text, this.media, this.community, this.circles});
 
   bool hasMedia() {
     return media != null && media.isNotEmpty;
@@ -310,6 +356,7 @@ enum OBPostUploaderStatus {
   idle,
   creatingPost,
   addingPostMedia,
+  processing,
   success,
   failed,
   cancelling,

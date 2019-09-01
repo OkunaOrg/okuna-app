@@ -12,8 +12,9 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/alerts/alert.dart';
-import 'package:Okuna/widgets/buttons/community_floating_action_button.dart';
+import 'package:Okuna/widgets/buttons/community_new_post_button.dart';
 import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
@@ -42,15 +43,18 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   CancelableOperation _refreshCommunityOperation;
 
+  List<OBNewPostData> _newPostDataItems;
+
   @override
   void initState() {
     super.initState();
     _httpListController = OBHttpListController();
     _needsBootstrap = true;
     _community = widget.community;
+    _newPostDataItems = [];
   }
 
-  void _onPostCreated(Post post) {
+  void _onWantsToUploadPost(OBNewPostData createPostData) {
     _httpListController.insertListItem(post);
   }
 
@@ -106,17 +110,25 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Widget _buildCommunityContent() {
+    List<Widget> prependedItems = [
+      OBCommunityCover(_community),
+      OBCommunityCard(
+        _community,
+      )
+    ];
+
+    if (_newPostDataItems.isNotEmpty) {
+      prependedItems.addAll(_newPostDataItems.map((OBNewPostData newPostData) {
+        return _buildNewPostDataUploader(newPostData);
+      }).toList());
+    }
+
     List<Widget> stackItems = [
       OBCommunityPosts(
         httpListController: _httpListController,
         community: _community,
         httpListSecondaryRefresher: _refreshCommunity,
-        prependedItems: <Widget>[
-          OBCommunityCover(_community),
-          OBCommunityCard(
-            _community,
-          )
-        ],
+        prependedItems: prependedItems,
       )
     ];
 
@@ -130,12 +142,18 @@ class OBCommunityPageState extends State<OBCommunityPage>
           right: 20.0,
           child: OBCommunityNewPostButton(
             community: _community,
-            onPostCreated: _onPostCreated,
+            onWantsToUploadPost: _onWantsToUploadPost,
           )));
     }
 
     return Stack(
       children: stackItems,
+    );
+  }
+
+  Widget _buildNewPostDataUploader(OBNewPostData newPostData) {
+    return OBNewPostDataUploader(
+      data: newPostData,
     );
   }
 
@@ -162,8 +180,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
                 ),
                 OBText(
                   communityHasInvitesEnabled
-                      ? _localizationService.trans('community__invited_by_member')
-                      :_localizationService.trans('community__invited_by_moderator'),
+                      ? _localizationService
+                          .trans('community__invited_by_member')
+                      : _localizationService
+                          .trans('community__invited_by_moderator'),
                   textAlign: TextAlign.center,
                 )
               ],

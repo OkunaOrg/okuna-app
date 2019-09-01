@@ -13,6 +13,7 @@ import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/post/post.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/loading_indicator_tile.dart';
@@ -35,6 +36,7 @@ class OBTimelinePosts extends StatefulWidget {
 
 class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<Post> _posts;
+  List<OBNewPostData> _postUploadersData;
   List<Circle> _filteredCircles;
   List<FollowsList> _filteredFollowsLists;
   bool _needsBootstrap;
@@ -57,6 +59,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _posts = [];
+    _postUploadersData = [];
     _filteredCircles = [];
     _filteredFollowsLists = [];
     _needsBootstrap = true;
@@ -85,9 +88,10 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       _needsBootstrap = false;
     }
 
-    Widget timelinePostsWidget = _posts.isEmpty && _cacheLoadAttempted
-        ? _buildDrHoo()
-        : _buildTimelinePosts();
+    Widget timelinePostsWidget =
+        _posts.isEmpty && _postUploadersData.isEmpty && _cacheLoadAttempted
+            ? _buildDrHoo()
+            : _buildTimelineItems();
 
     return RefreshIndicator(
       key: _refreshIndicatorKey,
@@ -96,18 +100,31 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     );
   }
 
-  Widget _buildTimelinePosts() {
+  Widget _buildTimelineItems() {
     return ListView.builder(
         controller: _postsScrollController,
         physics: const ClampingScrollPhysics(),
         cacheExtent: 30,
         padding: const EdgeInsets.all(0),
-        itemCount: _posts.length,
-        itemBuilder: _buildTimelinePost);
+        itemCount: _posts.length + _postUploadersData.length,
+        itemBuilder: _buildTimelineItem);
   }
 
-  Widget _buildTimelinePost(BuildContext context, int index) {
-    Post post = _posts[index];
+  Widget _buildTimelineItem(BuildContext context, int index) {
+    int postUploadersDataCount = _postUploadersData.length;
+    bool hasPostUploadersData = _postUploadersData.isNotEmpty;
+
+    if (hasPostUploadersData && index < postUploadersDataCount) {
+      OBNewPostData postUploaderData = _postUploadersData[index];
+      return OBNewPostDataUploader(
+        data: postUploaderData,
+      );
+    }
+
+    int postsIndex =
+        hasPostUploadersData ? index - _postUploadersData.length - 1 : index;
+
+    Post post = _posts[postsIndex];
 
     OBPost postWidget = OBPost(
       post,
@@ -148,7 +165,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
               postWidget,
               ListTile(
                 title: OBSecondaryText(
-                 _localizationService.post__timeline_posts_all_loaded,
+                  _localizationService.post__timeline_posts_all_loaded,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -169,22 +186,30 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
 
     switch (_status) {
       case OBTimelinePostsStatus.refreshingPosts:
-        drHooTitle = _localizationService.post__timeline_posts_refreshing_drhoo_title;
-        drHooSubtitle = _localizationService.post__timeline_posts_refreshing_drhoo_subtitle;
+        drHooTitle =
+            _localizationService.post__timeline_posts_refreshing_drhoo_title;
+        drHooSubtitle =
+            _localizationService.post__timeline_posts_refreshing_drhoo_subtitle;
         break;
       case OBTimelinePostsStatus.noMorePostsToLoad:
-        drHooTitle = _localizationService.post__timeline_posts_no_more_drhoo_title;
-        drHooSubtitle = _localizationService.post__timeline_posts_no_more_drhoo_subtitle;
+        drHooTitle =
+            _localizationService.post__timeline_posts_no_more_drhoo_title;
+        drHooSubtitle =
+            _localizationService.post__timeline_posts_no_more_drhoo_subtitle;
         break;
       case OBTimelinePostsStatus.loadingMorePostsFailed:
-        drHooTitle = _localizationService.post__timeline_posts_failed_drhoo_title;
-        drHooSubtitle = _localizationService.post__timeline_posts_failed_drhoo_subtitle;
+        drHooTitle =
+            _localizationService.post__timeline_posts_failed_drhoo_title;
+        drHooSubtitle =
+            _localizationService.post__timeline_posts_failed_drhoo_subtitle;
         refreshFunction = _bootstrapPosts;
         hasRefreshButton = true;
         break;
       default:
-        drHooTitle =_localizationService.post__timeline_posts_default_drhoo_title;
-        drHooSubtitle = _localizationService.post__timeline_posts_default_drhoo_subtitle;
+        drHooTitle =
+            _localizationService.post__timeline_posts_default_drhoo_title;
+        drHooSubtitle =
+            _localizationService.post__timeline_posts_default_drhoo_subtitle;
         hasRefreshButton = true;
     }
 
@@ -224,7 +249,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
             size: OBIconSize.small,
           ),
           type: OBButtonType.highlight,
-          child: OBText(_localizationService.post__timeline_posts_refresh_posts),
+          child:
+              OBText(_localizationService.post__timeline_posts_refresh_posts),
           onPressed: refreshFunction,
           isLoading: _timelineRequest != null,
         )
@@ -261,6 +287,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void addPostToTop(Post post) {
     setState(() {
       this._posts.insert(0, post);
+    });
+  }
+
+  void addPostUploadersData(OBNewPostData postUploaderData) {
+    setState(() {
+      this._postUploadersData.insert(0, postUploaderData);
     });
   }
 
@@ -401,7 +433,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -454,6 +487,10 @@ class OBTimelinePostsController {
 
   bool isAttached() {
     return _homePostsState != null;
+  }
+
+  void addPostUploadersData(OBNewPostData postUploaderData) {
+    _homePostsState.addPostUploadersData(postUploaderData);
   }
 
   Future<void> setFilters(

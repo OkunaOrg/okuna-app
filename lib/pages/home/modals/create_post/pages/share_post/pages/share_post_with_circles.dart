@@ -7,7 +7,7 @@ import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
-import 'package:Okuna/widgets/post_uploader.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/search_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBSharePostWithCirclesPage extends StatefulWidget {
-  final OBCreatePostData createPostData;
+  final OBNewPostData createPostData;
 
   const OBSharePostWithCirclesPage({Key key, @required this.createPostData})
       : super(key: key);

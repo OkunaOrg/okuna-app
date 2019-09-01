@@ -6,14 +6,14 @@ import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
-import 'package:Okuna/widgets/post_uploader.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBSharePostPage extends StatefulWidget {
-  final OBCreatePostData createPostData;
+  final OBNewPostData createPostData;
 
   const OBSharePostPage({Key key, @required this.createPostData})
       : super(key: key);
@@ -129,14 +129,14 @@ class OBSharePostPageState extends State<OBSharePostPage> {
   }
 
   void _onWantsToSharePostToCircles() async {
-    OBCreatePostData createPostData =
+    OBNewPostData createPostData =
         await _navigationService.navigateToSharePostWithCircles(
             context: context, createPostData: widget.createPostData);
     if (createPostData != null) Navigator.pop(context, createPostData);
   }
 
   void _onWantsToSharePostToCommunity() async {
-    OBCreatePostData createPostData =
+    OBNewPostData createPostData =
         await _navigationService.navigateToSharePostWithCommunity(
             context: context, createPostData: widget.createPostData);
     if (createPostData != null) Navigator.pop(context, createPostData);

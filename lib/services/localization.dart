@@ -3584,15 +3584,22 @@ class LocalizationService {
   }
 
   String get post_uploader__generic_upload_failed {
-    return Intl.message("Upload failed", name: 'post_uploader__generic_upload_failed');
+    return Intl.message("Upload failed",
+        name: 'post_uploader__generic_upload_failed');
   }
 
   String get post_uploader__creating_post {
-    return Intl.message("Creating post...", name: 'post_uploader__creating_post');
+    return Intl.message("Creating post...",
+        name: 'post_uploader__creating_post');
   }
 
   String get post_uploader__uploading_media {
-    return Intl.message("Uploading media...", name: 'post_uploader__uploading_media');
+    return Intl.message("Uploading media...",
+        name: 'post_uploader__uploading_media');
+  }
+
+  String get post_uploader__processing {
+    return Intl.message("Processing...", name: 'post_uploader__processing');
   }
 
   String get post_uploader__success {

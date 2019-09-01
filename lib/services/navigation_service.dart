@@ -63,7 +63,7 @@ import 'package:Okuna/pages/home/pages/profile/profile.dart';
 import 'package:Okuna/pages/home/pages/report_object/pages/confirm_report_object.dart';
 import 'package:Okuna/pages/home/pages/report_object/report_object.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Okuna/widgets/post_uploader.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/routes/slide_right_route.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -411,9 +411,9 @@ class NavigationService {
             widget: OBConfirmRejectGuidelines()));
   }
 
-  Future<OBCreatePostData> navigateToSharePost(
+  Future<OBNewPostData> navigateToSharePost(
       {@required BuildContext context,
-      @required OBCreatePostData createPostData}) {
+      @required OBNewPostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
@@ -423,9 +423,9 @@ class NavigationService {
             )));
   }
 
-  Future<OBCreatePostData> navigateToSharePostWithCircles(
+  Future<OBNewPostData> navigateToSharePostWithCircles(
       {@required BuildContext context,
-      @required OBCreatePostData createPostData}) {
+      @required OBNewPostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
@@ -435,9 +435,9 @@ class NavigationService {
             )));
   }
 
-  Future<OBCreatePostData> navigateToSharePostWithCommunity(
+  Future<OBNewPostData> navigateToSharePostWithCommunity(
       {@required BuildContext context,
-      @required OBCreatePostData createPostData}) {
+      @required OBNewPostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(

@@ -1,8 +1,7 @@
 import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/follows_list.dart';
-import 'package:Okuna/models/post.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
-import 'package:Okuna/pages/home/pages/timeline/widgets/timeline-posts.dart';
+import 'package:Okuna/pages/home/pages/timeline/widgets/timeline_posts.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/widgets/badges/badge.dart';
@@ -12,6 +11,7 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,10 +60,11 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                   child: OBFloatingActionButton(
                       type: OBButtonType.primary,
                       onPressed: () async {
-                        Post createdPost = await _modalService.openCreatePost(
-                            context: context);
-                        if (createdPost != null) {
-                          _timelinePostsController.addPostToTop(createdPost);
+                        OBNewPostData createPostData = await _modalService
+                            .openCreatePost(context: context);
+                        if (createPostData != null) {
+                          _timelinePostsController
+                              .addPostUploadersData(createPostData);
                           _timelinePostsController.scrollToTop();
                         }
                       },

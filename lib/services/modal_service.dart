@@ -33,7 +33,7 @@ import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/modals/moderated_object_update_description.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/modals/moderated_object_update_status.dart';
 import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
-import 'package:Okuna/widgets/post_uploader.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -47,14 +47,14 @@ class ModalService {
     this.localizationService = localizationService;
   }
 
-  Future<OBCreatePostData> openCreatePost(
+  Future<OBNewPostData> openCreatePost(
       {@required BuildContext context,
       Community community,
       String text,
       File image}) async {
-    OBCreatePostData createPostData =
+    OBNewPostData createPostData =
         await Navigator.of(context, rootNavigator: true)
-            .push(CupertinoPageRoute<OBCreatePostData>(
+            .push(CupertinoPageRoute<OBNewPostData>(
                 fullscreenDialog: true,
                 builder: (BuildContext context) {
                   return Material(

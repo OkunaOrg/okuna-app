@@ -25,7 +25,7 @@ import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_link_preview.dart';
-import 'package:Okuna/widgets/post_uploader.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -244,10 +244,10 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _onWantsToGoNext() async {
-    OBCreatePostData createPostData = await _navigationService.navigateToSharePost(
+    OBNewPostData createPostData = await _navigationService.navigateToSharePost(
         context: context,
         createPostData:
-            OBCreatePostData(text: _textController.text, media: [_postImage]));
+            OBNewPostData(text: _textController.text, media: [_postImage]));
 
     if (createPostData != null) {
       // Remove modal

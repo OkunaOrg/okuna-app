@@ -10,14 +10,14 @@ import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/http_list.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
-import 'package:Okuna/widgets/post_uploader.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/tiles/community_selectable_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBSharePostWithCommunityPage extends StatefulWidget {
-  final OBCreatePostData createPostData;
+  final OBNewPostData createPostData;
 
   const OBSharePostWithCommunityPage({Key key, @required this.createPostData})
       : super(key: key);

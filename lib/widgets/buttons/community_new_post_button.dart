@@ -1,5 +1,4 @@
 import 'package:Okuna/models/community.dart';
-import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/theme.dart';
@@ -7,6 +6,7 @@ import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/floating_action_button.dart';
 import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 
@@ -19,7 +19,7 @@ class OBCommunityNewPostButton extends StatelessWidget {
   final EdgeInsets padding;
   final OBButtonType type;
   final Community community;
-  final ValueChanged<Post> onPostCreated;
+  final ValueChanged<OBNewPostData> onWantsToUploadPost;
 
   const OBCommunityNewPostButton({
     this.type = OBButtonType.primary,
@@ -30,7 +30,7 @@ class OBCommunityNewPostButton extends StatelessWidget {
     this.padding,
     this.minWidth,
     this.community,
-    this.onPostCreated,
+    this.onWantsToUploadPost,
   });
 
   Widget build(BuildContext context) {
@@ -74,9 +74,11 @@ class OBCommunityNewPostButton extends StatelessWidget {
             onPressed: () async {
               OpenbookProviderState openbookProvider =
                   OpenbookProvider.of(context);
-              Post post = await openbookProvider.modalService
+              OBNewPostData createPostData = await openbookProvider
+                  .modalService
                   .openCreatePost(context: context, community: community);
-              if (post != null && onPostCreated != null) onPostCreated(post);
+              if (createPostData != null && onWantsToUploadPost != null)
+                onWantsToUploadPost(createPostData);
             },
             child: OBIcon(OBIcons.createPost,
                 size: OBIconSize.large, color: textColor));
