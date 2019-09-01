@@ -1,54 +1,66 @@
 import 'package:Okuna/services/draft.dart';
 import 'package:flutter/material.dart';
 
-class DraftTextEditingController extends TextEditingController {
-  final int postId;
-  final int commentId;
-  final int communityId;
+abstract class DraftTextEditingController extends TextEditingController {
   final DraftService _draftService;
 
-  DraftTextEditingController.comment(this.postId,
-      {int commentId, String text, @required DraftService draftService})
-      : this._draftService = draftService,
-        this.commentId = commentId ?? -1,
-        communityId = -1,
-        super(text: text) {
+  DraftTextEditingController(this._draftService) {
+    addListener(_textChanged);
+  }
+
+  factory DraftTextEditingController.comment(int postId,
+      {int commentId, String text, @required DraftService draftService}) {
+    return _CommentDraftEditingController(
+        postId, commentId, text, draftService);
+  }
+
+  factory DraftTextEditingController.post(
+      {int communityId, String text, @required DraftService draftService}) {
+    return _PostDraftEditingController(communityId, text, draftService);
+  }
+
+  void _textChanged();
+
+  void clearDraft();
+}
+
+class _CommentDraftEditingController extends DraftTextEditingController {
+  final int postId;
+  final int commentId;
+
+  _CommentDraftEditingController(
+      this.postId, this.commentId, String text, DraftService draftService)
+      : super(draftService) {
     if (text == null) {
       this.text = _draftService.getCommentDraft(postId, commentId);
     }
-
-    addListener(_textChanged);
-  }
-
-  DraftTextEditingController.post(
-      {int communityId, String text, @required DraftService draftService})
-      : postId = -1,
-        commentId = -1,
-        communityId = communityId ?? -1,
-        this._draftService = draftService,
-        super(text: text) {
-    if (text == null) {
-      this.text = _draftService.getPostDraft(communityId);
-    }
-
-    addListener(_textChanged);
   }
 
   void _textChanged() {
-    if (postId != -1) {
-      _draftService.setCommentDraft(
-          text, postId, commentId != -1 ? commentId : null);
-    } else {
-      _draftService.setPostDraft(text, communityId != -1 ? communityId : null);
-    }
+    _draftService.setCommentDraft(text, postId, commentId);
   }
 
   void clearDraft() {
-    if (postId != -1) {
-      _draftService.removeCommentDraft(
-          postId, commentId != -1 ? commentId : null);
-    } else {
-      _draftService.removePostDraft(communityId != -1 ? communityId : null);
+    _draftService.removeCommentDraft(postId, commentId);
+  }
+}
+
+class _PostDraftEditingController extends DraftTextEditingController {
+  final int communityId;
+
+  _PostDraftEditingController(
+      this.communityId, String text, DraftService draftService)
+      : super(draftService) {
+    if (text == null) {
+      this.text = _draftService.getPostDraft(communityId);
     }
+  }
+
+  void _textChanged() {
+    _draftService.setPostDraft(text, communityId);
+  }
+
+  void clearDraft() {
+    _draftService.removePostDraft(communityId);
   }
 }

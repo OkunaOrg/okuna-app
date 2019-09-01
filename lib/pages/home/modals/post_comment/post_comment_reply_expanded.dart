@@ -97,9 +97,8 @@ class OBPostCommentReplyExpandedModalState
       _draftService = openbookProvider.draftService;
 
       _textController = DraftTextEditingController.comment(widget.post.id,
-          commentId: (widget.postComment != null
-              ? widget.postComment.id
-              : null), draftService: _draftService);
+          commentId: widget.postComment != null ? widget.postComment.id : null,
+          draftService: _draftService);
       _textController.addListener(_onPostCommentTextChanged);
 
       _textAccountAutocompletionService =
