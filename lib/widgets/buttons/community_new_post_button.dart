@@ -19,7 +19,7 @@ class OBCommunityNewPostButton extends StatelessWidget {
   final EdgeInsets padding;
   final OBButtonType type;
   final Community community;
-  final ValueChanged<OBNewPostData> onWantsToUploadPost;
+  final ValueChanged<OBNewPostData> onWantsToUploadNewPostData;
 
   const OBCommunityNewPostButton({
     this.type = OBButtonType.primary,
@@ -30,7 +30,7 @@ class OBCommunityNewPostButton extends StatelessWidget {
     this.padding,
     this.minWidth,
     this.community,
-    this.onWantsToUploadPost,
+    this.onWantsToUploadNewPostData,
   });
 
   Widget build(BuildContext context) {
@@ -77,8 +77,8 @@ class OBCommunityNewPostButton extends StatelessWidget {
               OBNewPostData createPostData = await openbookProvider
                   .modalService
                   .openCreatePost(context: context, community: community);
-              if (createPostData != null && onWantsToUploadPost != null)
-                onWantsToUploadPost(createPostData);
+              if (createPostData != null && onWantsToUploadNewPostData != null)
+                onWantsToUploadNewPostData(createPostData);
             },
             child: OBIcon(OBIcons.createPost,
                 size: OBIconSize.large, color: textColor));

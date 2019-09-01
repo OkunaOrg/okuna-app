@@ -17,10 +17,10 @@ import 'icon.dart';
 
 class OBNewPostDataUploader extends StatefulWidget {
   final OBNewPostData data;
-  final ValueChanged<Post> onPostUploaded;
+  final ValueChanged<Post> onPostPublished;
 
   const OBNewPostDataUploader(
-      {Key key, @required this.data, @required this.onPostUploaded})
+      {Key key, @required this.data, @required this.onPostPublished})
       : super(key: key);
 
   @override
@@ -178,7 +178,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   Future _getPublishedPost() async {
     Post publishedPost =
         await _userService.getPostWithUuid(_createdDraftPost.uuid);
-    widget.onPostUploaded(publishedPost);
+    widget.onPostPublished(publishedPost);
   }
 
   Future _addPostMedia() {

@@ -64,7 +64,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                             .openCreatePost(context: context);
                         if (createPostData != null) {
                           _timelinePostsController
-                              .addPostUploadersData(createPostData);
+                              .addNewPostData(createPostData);
                           _timelinePostsController.scrollToTop();
                         }
                       },

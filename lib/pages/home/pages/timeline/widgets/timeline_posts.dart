@@ -36,7 +36,7 @@ class OBTimelinePosts extends StatefulWidget {
 
 class OBTimelinePostsState extends State<OBTimelinePosts> {
   List<Post> _posts;
-  List<OBNewPostData> _postUploadersData;
+  List<OBNewPostData> _newPostsData;
   List<Circle> _filteredCircles;
   List<FollowsList> _filteredFollowsLists;
   bool _needsBootstrap;
@@ -59,7 +59,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _posts = [];
-    _postUploadersData = [];
+    _newPostsData = [];
     _filteredCircles = [];
     _filteredFollowsLists = [];
     _needsBootstrap = true;
@@ -89,7 +89,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
 
     Widget timelinePostsWidget =
-        _posts.isEmpty && _postUploadersData.isEmpty && _cacheLoadAttempted
+        _posts.isEmpty && _newPostsData.isEmpty && _cacheLoadAttempted
             ? _buildDrHoo()
             : _buildTimelineItems();
 
@@ -106,23 +106,23 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         physics: const ClampingScrollPhysics(),
         cacheExtent: 30,
         padding: const EdgeInsets.all(0),
-        itemCount: _posts.length + _postUploadersData.length,
+        itemCount: _posts.length + _newPostsData.length,
         itemBuilder: _buildTimelineItem);
   }
 
   Widget _buildTimelineItem(BuildContext context, int index) {
-    int postUploadersDataCount = _postUploadersData.length;
-    bool hasPostUploadersData = _postUploadersData.isNotEmpty;
+    int newPostsDataCount = _newPostsData.length;
+    bool hasNewPostsData = _newPostsData.isNotEmpty;
 
-    if (hasPostUploadersData && index < postUploadersDataCount) {
-      OBNewPostData postUploaderData = _postUploadersData[index];
+    if (hasNewPostsData && index < newPostsDataCount) {
+      OBNewPostData newPostData = _newPostsData[index];
       return OBNewPostDataUploader(
-        data: postUploaderData,
+        data: newPostData,
+        onPostPublished: _addPostToTop,
       );
     }
 
-    int postsIndex =
-        hasPostUploadersData ? index - _postUploadersData.length - 1 : index;
+    int postsIndex = hasNewPostsData ? index - _newPostsData.length - 1 : index;
 
     Post post = _posts[postsIndex];
 
@@ -284,15 +284,15 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
   }
 
-  void addPostToTop(Post post) {
+  void _addPostToTop(Post post) {
     setState(() {
       this._posts.insert(0, post);
     });
   }
 
-  void addPostUploadersData(OBNewPostData postUploaderData) {
+  void addNewPostData(OBNewPostData postUploaderData) {
     setState(() {
-      this._postUploadersData.insert(0, postUploaderData);
+      this._newPostsData.insert(0, postUploaderData);
     });
   }
 
@@ -473,10 +473,6 @@ class OBTimelinePostsController {
     _homePostsState = homePostsState;
   }
 
-  void addPostToTop(Post post) {
-    _homePostsState.addPostToTop(post);
-  }
-
   void scrollToTop() {
     _homePostsState.scrollToTop();
   }
@@ -489,8 +485,8 @@ class OBTimelinePostsController {
     return _homePostsState != null;
   }
 
-  void addPostUploadersData(OBNewPostData postUploaderData) {
-    _homePostsState.addPostUploadersData(postUploaderData);
+  void addNewPostData(OBNewPostData newPostData) {
+    _homePostsState.addNewPostData(newPostData);
   }
 
   Future<void> setFilters(

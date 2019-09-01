@@ -43,7 +43,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   CancelableOperation _refreshCommunityOperation;
 
-  List<OBNewPostData> _newPostDataItems;
+  List<OBNewPostData> _newPostsData;
 
   @override
   void initState() {
@@ -51,11 +51,11 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _httpListController = OBHttpListController();
     _needsBootstrap = true;
     _community = widget.community;
-    _newPostDataItems = [];
+    _newPostsData = [];
   }
 
-  void _onWantsToUploadPost(OBNewPostData createPostData) {
-    _httpListController.insertListItem(post);
+  void _onWantsToUploadNewPostData(OBNewPostData newPostData) {
+    _insertNewPostData(newPostData);
   }
 
   @override
@@ -117,8 +117,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
       )
     ];
 
-    if (_newPostDataItems.isNotEmpty) {
-      prependedItems.addAll(_newPostDataItems.map((OBNewPostData newPostData) {
+    if (_newPostsData.isNotEmpty) {
+      prependedItems.addAll(_newPostsData.map((OBNewPostData newPostData) {
         return _buildNewPostDataUploader(newPostData);
       }).toList());
     }
@@ -142,7 +142,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
           right: 20.0,
           child: OBCommunityNewPostButton(
             community: _community,
-            onWantsToUploadPost: _onWantsToUploadPost,
+            onWantsToUploadNewPostData: _onWantsToUploadNewPostData,
           )));
     }
 
@@ -154,7 +154,12 @@ class OBCommunityPageState extends State<OBCommunityPage>
   Widget _buildNewPostDataUploader(OBNewPostData newPostData) {
     return OBNewPostDataUploader(
       data: newPostData,
+      onPostPublished: _onPostPublished,
     );
+  }
+
+  void _onPostPublished(Post publishedPost) {
+    _httpListController.insertListItem(publishedPost);
   }
 
   Widget _buildPrivateCommunityContent() {
@@ -209,6 +214,12 @@ class OBCommunityPageState extends State<OBCommunityPage>
     setState(() {
       _community = community;
     });
+  }
+
+  void _insertNewPostData(OBNewPostData newPostData) {
+    setState() {
+      _newPostsData.insert(0, newPostData);
+    }
   }
 }
 
