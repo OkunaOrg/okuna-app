@@ -2,6 +2,7 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
@@ -53,11 +54,15 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   int _charactersCount;
   bool _isMultiline;
 
+  int _postId;
+  int _commentId;
+
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
   LocalizationService _localizationService;
   TextAccountAutocompletionService _textAccountAutocompletionService;
+  DraftService _draftService;
 
   CancelableOperation _submitFormOperation;
 
@@ -74,6 +79,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _isMultiline = false;
     _isSearchingAccount = false;
     _textController.addListener(_onPostCommentChanged);
+    _postId = widget.post.id;
+    if (widget.postComment != null) _commentId = widget.postComment.id;
 
     if (widget.controller != null) widget.controller.attach(this);
   }
@@ -94,6 +101,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _localizationService = provider.localizationService;
       _textAccountAutocompletionService =
           provider.textAccountAutocompletionService;
+      _draftService = provider.draftService;
+      _textController.text = _draftService.getCommentDraft(_postId, _commentId);
       _needsBootstrap = false;
     }
 
@@ -238,6 +247,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _onError(error);
     } finally {
       _submitFormOperation = null;
+      _draftService.removeCommentDraft(_postId, _commentId);
       _setCommentInProgress(false);
     }
   }
@@ -246,6 +256,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     int charactersCount = _textController.text.length;
     _setCharactersCount(charactersCount);
     _checkAutocomplete();
+    _draftService.setCommentDraft(_textController.text, _postId, _commentId);
     if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
     _validateForm();
