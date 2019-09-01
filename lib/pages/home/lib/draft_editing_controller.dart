@@ -18,13 +18,33 @@ class DraftTextEditingController extends TextEditingController {
     addListener(_textChanged);
   }
 
+  DraftTextEditingController.post(DraftService draftService, {String text})
+      : postId = -1,
+        commentId = -1,
+        this._draftService = draftService,
+        super(text: text) {
+    if (text == null) {
+      this.text = _draftService.getPostDraft();
+    }
+
+    addListener(_textChanged);
+  }
+
   void _textChanged() {
-    _draftService.setCommentDraft(
-        text, postId, commentId != -1 ? commentId : null);
+    if (postId != -1) {
+      _draftService.setCommentDraft(
+          text, postId, commentId != -1 ? commentId : null);
+    } else {
+      _draftService.setPostDraft(text);
+    }
   }
 
   void clearDraft() {
-    _draftService.removeCommentDraft(
-        postId, commentId != -1 ? commentId : null);
+    if (postId != -1) {
+      _draftService.removeCommentDraft(
+          postId, commentId != -1 ? commentId : null);
+    } else {
+      _draftService.setPostDraft(null);
+    }
   }
 }

@@ -4,9 +4,12 @@ class DraftService {
   static const _maxSavedDrafts = 25;
 
   LinkedHashMap<String, String> _commentDrafts = LinkedHashMap();
+  String _postDraft;
 
   String getCommentDraft(int postId, [int commentId]) =>
       _commentDrafts[_buildKey(postId, commentId)] ?? '';
+
+  String getPostDraft() => _postDraft ?? '';
 
   void setCommentDraft(String text, int postId, [int commentId]) {
     if (text.trim().isNotEmpty) {
@@ -25,8 +28,11 @@ class DraftService {
     _commentDrafts.remove(_buildKey(postId, commentId));
   }
 
+  void setPostDraft(String text) => _postDraft = text;
+
   void clear() {
     _commentDrafts.clear();
+    _postDraft = '';
   }
 
   String _buildKey(int postId, int commentId) => '$postId|${commentId ?? "-1"}';

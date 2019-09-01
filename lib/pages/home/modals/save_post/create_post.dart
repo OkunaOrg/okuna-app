@@ -10,7 +10,9 @@ import 'package:Okuna/pages/home/modals/save_post/widgets/post_community_preview
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_image_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_video_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/media.dart';
@@ -62,6 +64,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   ToastService _toastService;
   LocalizationService _localizationService;
   LinkPreviewService _linkPreviewService;
+  DraftService _draftService;
 
   TextEditingController _textController;
   FocusNode _focusNode;
@@ -103,17 +106,24 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     super.initState();
     _isEditingPost = widget.post != null;
 
-    _textController = TextEditingController();
     _focusNode = FocusNode();
     _hasFocus = false;
     _linkPreviewUrl = '';
-    _postItemsWidgets = [
-      OBCreatePostText(controller: _textController, focusNode: _focusNode)
-    ];
+    _isPostTextAllowedLength = false;
+    _isCreateCommunityPostInProgress = false;
+    _contextualAccountSearchBoxController =
+        OBContextualAccountSearchBoxController();
+    _isSearchingAccount = false;
+    _needsBootstrap = true;
+
+    _focusNode.addListener(_onFocusNodeChanged);
+  }
+
+  void _bootstrap() {
 
     if (_isEditingPost) {
       _saveInProgress = false;
-      _textController.text = widget.post?.text ?? '';
+      _textController = TextEditingController(text: widget.post?.text ?? '');
       if (widget.post.hasMedia()) {
         PostMedia postMedia = widget.post.getFirstMedia();
         if (postMedia.type == PostMediaType.video) {
@@ -128,15 +138,9 @@ class OBSavePostModalState extends State<OBSavePostModal> {
         _hasImage = false;
       }
     } else {
-      if (widget.text != null) {
-        _textController.text = widget.text;
-      }
+      _textController = DraftTextEditingController.post(_draftService, text: widget.text);
       _hasImage = false;
       _hasVideo = false;
-      if (widget.community != null)
-        _postItemsWidgets.add(OBPostCommunityPreviewer(
-          community: widget.community,
-        ));
       if (widget.image != null) {
         _setPostImageFile(widget.image);
       }
@@ -145,20 +149,17 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       }
     }
 
-    _isPostTextAllowedLength = false;
-    _charactersCount = _textController.text.length;
+    _postItemsWidgets = [
+      OBCreatePostText(controller: _textController, focusNode: _focusNode)
+    ];
 
-    _isCreateCommunityPostInProgress = false;
-    _contextualAccountSearchBoxController =
-        OBContextualAccountSearchBoxController();
-    _isSearchingAccount = false;
-    _needsBootstrap = true;
+    if (!_isEditingPost && widget.community != null)
+      _postItemsWidgets.add(OBPostCommunityPreviewer(
+        community: widget.community,
+      ));
 
     _textController.addListener(_onPostTextChanged);
-    _focusNode.addListener(_onFocusNodeChanged);
-  }
-
-  void _bootstrap() {
+    _charactersCount = _textController.text.length;
     _isPostTextAllowedLength =
         _validationService.isPostTextAllowedLength(_textController.text);
   }
@@ -184,6 +185,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       _textAccountAutocompletionService =
           openbookProvider.textAccountAutocompletionService;
       _userService = openbookProvider.userService;
+      _draftService = openbookProvider.draftService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -284,6 +286,9 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     if (createPostData != null) {
       // Remove modal
       Navigator.pop(context, createPostData);
+      if (_textController is DraftTextEditingController) {
+        (_textController as DraftTextEditingController).clearDraft();
+      }
     }
   }
 
@@ -510,6 +515,9 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       _onError(error);
     } finally {
       _setSaveInProgress(false);
+      if (_textController is DraftTextEditingController) {
+        (_textController as DraftTextEditingController).clearDraft();
+      }
     }
   }
 
