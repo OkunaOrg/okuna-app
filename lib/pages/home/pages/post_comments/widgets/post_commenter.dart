@@ -1,6 +1,7 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/localization.dart';
@@ -45,7 +46,7 @@ class OBPostCommenter extends StatefulWidget {
 }
 
 class OBPostCommenterState extends State<OBPostCommenter> {
-  TextEditingController _textController;
+  DraftTextEditingController _textController;
   bool _commentInProgress;
   bool _formWasSubmitted;
   bool _needsBootstrap;
@@ -71,14 +72,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
     _commentInProgress = false;
     _formWasSubmitted = false;
     _needsBootstrap = true;
     _charactersCount = 0;
     _isMultiline = false;
     _isSearchingAccount = false;
-    _textController.addListener(_onPostCommentChanged);
     _postId = widget.post.id;
     if (widget.postComment != null) _commentId = widget.postComment.id;
 
@@ -102,7 +101,10 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _textAccountAutocompletionService =
           provider.textAccountAutocompletionService;
       _draftService = provider.draftService;
-      _textController.text = _draftService.getCommentDraft(_postId, _commentId);
+
+      _textController = DraftTextEditingController.comment(_postId,
+          commentId: _commentId, draftService: _draftService);
+      _textController.addListener(_onPostCommentChanged);
       _needsBootstrap = false;
     }
 
@@ -247,7 +249,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _onError(error);
     } finally {
       _submitFormOperation = null;
-      _draftService.removeCommentDraft(_postId, _commentId);
+      _textController.clearDraft();
       _setCommentInProgress(false);
     }
   }
@@ -256,7 +258,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     int charactersCount = _textController.text.length;
     _setCharactersCount(charactersCount);
     _checkAutocomplete();
-    _draftService.setCommentDraft(_textController.text, _postId, _commentId);
     if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
     _validateForm();
