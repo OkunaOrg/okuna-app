@@ -138,7 +138,10 @@ class OBSavePostModalState extends State<OBSavePostModal> {
         _hasImage = false;
       }
     } else {
-      _textController = DraftTextEditingController.post(_draftService, text: widget.text);
+      _textController = DraftTextEditingController.post(
+          text: widget.text,
+          communityId: widget.community != null ? widget.community.id : null,
+          draftService: _draftService);
       _hasImage = false;
       _hasVideo = false;
       if (widget.image != null) {

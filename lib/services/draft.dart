@@ -3,37 +3,53 @@ import 'dart:collection';
 class DraftService {
   static const _maxSavedDrafts = 25;
 
-  LinkedHashMap<String, String> _commentDrafts = LinkedHashMap();
-  String _postDraft;
+  Map<String, String> _drafts = LinkedHashMap();
 
   String getCommentDraft(int postId, [int commentId]) =>
-      _commentDrafts[_buildKey(postId, commentId)] ?? '';
+      _drafts[_buildCommentKey(postId, commentId)] ?? '';
 
-  String getPostDraft() => _postDraft ?? '';
+  String getPostDraft([int communityId]) =>
+      _drafts[_buildPostKey(communityId)] ?? '';
+
+  void _set(String key, String text) {
+    _drafts.update(key, (e) => text, ifAbsent: () => text);
+    _trimDraftsIfNeeded();
+  }
 
   void setCommentDraft(String text, int postId, [int commentId]) {
     if (text.trim().isNotEmpty) {
-      String key = _buildKey(postId, commentId);
-      _commentDrafts.update(key, (e) => text, ifAbsent: () => text);
-
-      if (_commentDrafts.length > _maxSavedDrafts) {
-        _commentDrafts.remove(_commentDrafts.keys.first);
-      }
+      _set(_buildCommentKey(postId, commentId), text);
     } else {
       removeCommentDraft(postId, commentId);
     }
   }
 
-  void removeCommentDraft(int postId, [commentId]) {
-    _commentDrafts.remove(_buildKey(postId, commentId));
+  void setPostDraft(String text, [int communityId]) {
+    if (text.trim().isNotEmpty) {
+      _set(_buildPostKey(communityId), text);
+    } else {
+      removePostDraft(communityId);
+    }
   }
 
-  void setPostDraft(String text) => _postDraft = text;
+  void removeCommentDraft(int postId, [commentId]) =>
+      _drafts.remove(_buildCommentKey(postId, commentId));
+
+  void removePostDraft([int communityId]) =>
+      _drafts.remove(_buildPostKey(communityId));
+
+  void _trimDraftsIfNeeded() {
+    if (_drafts.length > _maxSavedDrafts) {
+      _drafts.remove(_drafts.keys.first);
+    }
+  }
 
   void clear() {
-    _commentDrafts.clear();
-    _postDraft = '';
+    _drafts.clear();
   }
 
-  String _buildKey(int postId, int commentId) => '$postId|${commentId ?? "-1"}';
+  String _buildCommentKey(int postId, int commentId) =>
+      'c|$postId|${commentId ?? "-1"}';
+
+  String _buildPostKey(int communityId) => 'p|${communityId ?? "-1"}';
 }
