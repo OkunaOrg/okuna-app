@@ -3,6 +3,7 @@ import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_image.dart';
+import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_text.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_video.dart';
 import 'package:flutter/material.dart';
@@ -19,23 +20,9 @@ class OBPostBody extends StatelessWidget {
     List<Widget> bodyItems = [];
 
     if (post.hasMediaThumbnail()) {
-      PostMedia postMediaFirstItem = post.getFirstMedia();
-      Widget mediaWidget;
-
-      switch (postMediaFirstItem.contentObject.runtimeType) {
-        case PostImage:
-          mediaWidget = OBPostBodyImage(
-            postImage: postMediaFirstItem.contentObject,
-          );
-          break;
-        case PostVideo:
-          mediaWidget =
-              OBPostBodyVideo(postVideo: postMediaFirstItem.contentObject);
-          break;
-        default:
-      }
-
-      if (mediaWidget != null) bodyItems.add(mediaWidget);
+      bodyItems.add(OBPostBodyMedia(
+        post: post,
+      ));
     }
 
     if (post.hasText()) {

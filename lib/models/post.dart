@@ -32,8 +32,8 @@ class Post extends UpdatableModel<Post> {
   PostReaction reaction;
   int reactionsCount;
   int commentsCount;
-  int mediaHeight;
-  int mediaWidth;
+  double mediaHeight;
+  double mediaWidth;
   String mediaThumbnail;
   bool areCommentsEnabled;
   bool publicReactions;
@@ -199,6 +199,10 @@ class Post extends UpdatableModel<Post> {
     return mediaThumbnail != null;
   }
 
+  bool hasMedia() {
+    return media != null && media.postMedia.isNotEmpty;
+  }
+
   bool hasPreviewLink() {
     return postLinksList != null && postLinksList.links.length > 0;
   }
@@ -282,6 +286,11 @@ class Post extends UpdatableModel<Post> {
 
   void decreaseCommentsCount() {
     this.commentsCount -= 1;
+    this.notifyUpdate();
+  }
+
+  void setMedia(List mediaRawData) {
+    this.media = factory.parseMedia(mediaRawData);
     this.notifyUpdate();
   }
 

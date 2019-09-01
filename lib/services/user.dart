@@ -33,6 +33,7 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/post_comment_reaction_list.dart';
+import 'package:Okuna/models/post_media_list.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/post_reaction_list.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
@@ -424,13 +425,13 @@ class UserService {
     _checkResponseIsOk(response);
   }
 
-  Future<void> getMediaForPost({@required Post post}) async {
+  Future<PostMediaList> getMediaForPost({@required Post post}) async {
     HttpieResponse response =
         await _postsApiService.getPostMedia(postUuid: post.uuid);
 
     _checkResponseIsOk(response);
 
-    return PostCommentList.fromJson(json.decode(response.body));
+    return PostMediaList.fromJson(json.decode(response.body));
   }
 
   Future<void> publishPost({@required Post post}) async {

@@ -1,7 +1,7 @@
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/video_format.dart';
-import 'package:Okuna/widgets/video_player/aspect_ratio_video.dart';
-import 'package:Okuna/widgets/video_player/network_player_lifecycle.dart';
+import 'package:Okuna/widgets/custom_chewie/src/video_player_life_cycle.dart';
+import 'package:Okuna/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -17,11 +17,11 @@ class OBPostBodyVideo extends StatelessWidget {
 
     String videoUrl = videoFormat.file;
 
-    return Center(
-        child: NetworkPlayerLifeCycle(
+    return NetworkPlayerLifeCycle(
       videoUrl,
-      (BuildContext context, VideoPlayerController controller) =>
-          OBAspectRatioVideo(controller),
-    ));
+      (BuildContext context, VideoPlayerController controller) => OBVideoPlayer(
+        videoPlayerController: controller,
+      ),
+    );
   }
 }

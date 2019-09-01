@@ -3614,6 +3614,11 @@ class LocalizationService {
     return Intl.message("Cancelled!", name: 'post_uploader__cancelled');
   }
 
+  String get post_body_media__unsupported {
+    return Intl.message("Unsupported media type",
+        name: 'post_body_media__unsupported');
+  }
+
   Locale getLocale() {
     return locale;
   }
