@@ -118,7 +118,8 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       OBNewPostData newPostData = _newPostsData[index];
       return OBNewPostDataUploader(
         data: newPostData,
-        onPostPublished: _addPostToTop,
+        onPostPublished: _onNewPostDataUploaderPostPublished,
+        onCancelled: _onNewPostDataUploaderCancelled,
       );
     }
 
@@ -284,6 +285,16 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     }
   }
 
+  void _onNewPostDataUploaderCancelled(OBNewPostData newPostData) {
+    _removeNewPostData(newPostData);
+  }
+
+  void _onNewPostDataUploaderPostPublished(
+      Post publishedPost, OBNewPostData newPostData) {
+    _addPostToTop(publishedPost);
+    _removeNewPostData(newPostData);
+  }
+
   void _addPostToTop(Post post) {
     setState(() {
       this._posts.insert(0, post);
@@ -293,6 +304,12 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
   void addNewPostData(OBNewPostData postUploaderData) {
     setState(() {
       this._newPostsData.insert(0, postUploaderData);
+    });
+  }
+
+  void _removeNewPostData(OBNewPostData postUploaderData) {
+    setState(() {
+      this._newPostsData.remove(postUploaderData);
     });
   }
 

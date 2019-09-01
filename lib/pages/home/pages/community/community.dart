@@ -154,11 +154,18 @@ class OBCommunityPageState extends State<OBCommunityPage>
   Widget _buildNewPostDataUploader(OBNewPostData newPostData) {
     return OBNewPostDataUploader(
       data: newPostData,
-      onPostPublished: _onPostPublished,
+      onPostPublished: _onNewPostDataUploaderPostPublished,
+      onCancelled: _onNewPostDataUploaderCancelled,
     );
   }
 
-  void _onPostPublished(Post publishedPost) {
+  void _onNewPostDataUploaderCancelled(OBNewPostData newPostData) {
+    _removeNewPostData(newPostData);
+  }
+
+  void _onNewPostDataUploaderPostPublished(
+      Post publishedPost, OBNewPostData newPostData) {
+    _removeNewPostData(newPostData);
     _httpListController.insertListItem(publishedPost);
   }
 
@@ -217,9 +224,15 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   void _insertNewPostData(OBNewPostData newPostData) {
-    setState() {
+    setState(() {
       _newPostsData.insert(0, newPostData);
-    }
+    });
+  }
+
+  void _removeNewPostData(OBNewPostData newPostData) {
+    setState(() {
+      _newPostsData.remove(newPostData);
+    });
   }
 }
 
