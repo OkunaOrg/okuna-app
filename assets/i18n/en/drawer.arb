@@ -84,6 +84,38 @@
     "type": "text",
     "placeholders": {}
   },
+  "application_settings_trusted_domains_title": "Manage trusted domains",
+  "@application_settings_trusted_domains_title": {
+    "description": "Title for the Trusted Domains settings page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "application_settings_trusted_domains_text": "Trusted domains",
+  "@application_settings_trusted_domains_text": {
+    "description": "Text on the button to the Trusted Domains settings page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "application_settings_trusted_domains_desc": "Manage web domains you have marked as trusted.",
+  "@application_settings_trusted_domains_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "application_settings_trusted_domains_resource": "trusted domains",
+  "@application_settings_trusted_domains_resource": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "application_settings_delete_domain_failure": "Could not delete the trusted domain",
+  "@application_settings_delete_domain_failure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "application_settings_ask_for_urls": "Ask to open untrusted URLs",
+  "@application_settings_ask_for_urls": {
+    "type": "text",
+    "placeholders": {}
+  },
   "account_settings": "Account Settings",
   "@account_settings": {
     "type": "text",

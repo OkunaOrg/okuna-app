@@ -582,5 +582,30 @@
     "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
     "type": "text",
     "placeholders": {}
+  },
+  "open_url_message": "Do you want to open this link in your browser?",
+  "@open_url_message": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "open_url_continue": "Continue",
+  "@open_url_continue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "open_url_cancel": "Cancel",
+  "@open_url_cancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "open_url_dont_ask_again": "Never ask again",
+  "@open_url_dont_ask_again": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "open_url_dont_ask_again_for": "Trust this domain",
+  "@open_url_dont_ask_again_for": {
+    "type": "text",
+    "placeholders": {}
   }
 }
