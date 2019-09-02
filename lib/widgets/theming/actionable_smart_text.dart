@@ -41,9 +41,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
   NavigationService _navigationService;
   UserService _userService;
   UrlLauncherService _urlLauncherService;
-  UserPreferencesService _preferencesService;
   ToastService _toastService;
-  BottomSheetService _bottomSheetService;
 
   bool _needsBootstrap;
   StreamSubscription _requestSubscription;
@@ -66,9 +64,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       _navigationService = openbookProvider.navigationService;
       _userService = openbookProvider.userService;
       _urlLauncherService = openbookProvider.urlLauncherService;
-      _preferencesService = openbookProvider.userPreferencesService;
       _toastService = openbookProvider.toastService;
-      _bottomSheetService = openbookProvider.bottomSheetService;
       _needsBootstrap = false;
     }
 
