@@ -10,12 +10,25 @@ class OBPostBodyVideo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double imageAspectRatio = postVideo.width / postVideo.height;
+    double imageHeight = (screenWidth / imageAspectRatio);
+
     OBVideoFormat videoFormat =
         postVideo.getVideoFormatOfType(OBVideoFormatType.mp4SD);
 
     String videoUrl = videoFormat.file;
 
-    return OBVideoPlayer(
-        videoUrl: videoUrl, isDismissable: false);
+    return SizedBox(
+      height: imageHeight,
+      width: screenWidth,
+      child: OBVideoPlayer(
+        videoUrl: videoUrl,
+        isDismissable: false,
+        thumbnailUrl: postVideo.thumbnail,
+      ),
+    );
   }
 }

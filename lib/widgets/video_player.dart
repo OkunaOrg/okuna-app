@@ -11,6 +11,7 @@ import 'package:video_player/video_player.dart';
 class OBVideoPlayer extends StatefulWidget {
   final File video;
   final String videoUrl;
+  final String thumbnailUrl;
   final bool isDismissable;
   final bool openInDialog;
 
@@ -19,7 +20,8 @@ class OBVideoPlayer extends StatefulWidget {
       this.video,
       this.videoUrl,
       this.isDismissable = true,
-      this.openInDialog = false})
+      this.openInDialog = false,
+      this.thumbnailUrl})
       : super(key: key);
 
   @override
@@ -90,7 +92,22 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         } else {
           // If the VideoPlayerController is still initializing, show a
           // loading spinner.
-          return Center(child: CircularProgressIndicator());
+          return Stack(
+            children: <Widget>[
+              widget.thumbnailUrl != null
+                  ? Image(
+                      image: NetworkImage(widget.thumbnailUrl),
+                    )
+                  : const SizedBox(),
+              Positioned(
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: Center(child: CircularProgressIndicator()),
+              )
+            ],
+          );
         }
       },
     );
