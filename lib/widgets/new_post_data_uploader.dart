@@ -37,7 +37,8 @@ class OBNewPostDataUploader extends StatefulWidget {
   }
 }
 
-class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
+class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
+    with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -125,9 +126,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   }
 
   void _bootstrap() {
-    Future.delayed(Duration(milliseconds: 100), () {
-      _uploadPost();
-    });
+    _uploadPost();
   }
 
   Future _uploadPost() async {
@@ -406,6 +405,9 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   void debugLog(String log) {
     debugPrint('OBNewPostDataUploader:$log');
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class OBNewPostData {
@@ -462,7 +464,6 @@ class OBNewPostData {
     var digest = sha256.convert(bytes);
 
     _cachedKey = digest.toString();
-    print(_cachedKey);
 
     return _cachedKey;
   }
