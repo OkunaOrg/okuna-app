@@ -1,7 +1,7 @@
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter/material.dart';
@@ -57,9 +57,11 @@ class OBPostBodyImage extends StatelessWidget {
           fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
           retryLimit: 3,
           timeoutDuration: const Duration(minutes: 1)),
-      placeholder: Center(
-        child: const OBProgressIndicator(),
-      ),
+      placeholder: postImage.thumbnail != null
+          ? Image(image: AdvancedNetworkImage(postImage.thumbnail))
+          : Center(
+              child: const OBProgressIndicator(),
+            ),
       duration: const Duration(milliseconds: 300),
     );
   }

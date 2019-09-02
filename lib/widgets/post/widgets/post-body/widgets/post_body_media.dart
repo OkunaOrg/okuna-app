@@ -73,7 +73,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.black87,
                     borderRadius: BorderRadius.circular(3)),
                 child: Text(
                   _errorMessage,
