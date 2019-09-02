@@ -8,8 +8,8 @@ class PostVideo {
   final double duration;
   final String file;
   final String thumbnail;
-  final int thumbnailHeight;
-  final int thumbnailWidth;
+  final double thumbnailHeight;
+  final double thumbnailWidth;
   final OBVideoFormatsList formatSet;
 
   const PostVideo({
@@ -32,14 +32,14 @@ class PostVideo {
 
   factory PostVideo.fromJSON(Map<String, dynamic> parsedJson) {
     return PostVideo(
-      width: parsedJson['width'],
-      height: parsedJson['height'],
+      width: parsedJson['width']?.toDouble(),
+      height: parsedJson['height']?.toDouble(),
       duration: parsedJson['duration'],
       file: parsedJson['file'],
       formatSet: parseFormatSet(parsedJson['format_set']),
       thumbnail: parsedJson['thumbnail'],
-      thumbnailWidth: parsedJson['thumbnail_width'],
-      thumbnailHeight: parsedJson['thumbnail_height'],
+      thumbnailHeight: parsedJson['thumbnail_height']?.toDouble(),
+      thumbnailWidth: parsedJson['thumbnail_width']?.toDouble(),
     );
   }
 

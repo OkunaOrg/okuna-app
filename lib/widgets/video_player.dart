@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/custom_chewie/src/ob_controls.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,10 +11,15 @@ import 'package:video_player/video_player.dart';
 class OBVideoPlayer extends StatefulWidget {
   final File video;
   final String videoUrl;
-  final VideoPlayerController videoPlayerController;
+  final bool isDismissable;
+  final bool openInDialog;
 
   const OBVideoPlayer(
-      {Key key, this.video, this.videoUrl, this.videoPlayerController})
+      {Key key,
+      this.video,
+      this.videoUrl,
+      this.isDismissable = true,
+      this.openInDialog = false})
       : super(key: key);
 
   @override
@@ -38,11 +44,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       _playerController = VideoPlayerController.network(widget.videoUrl);
     } else if (widget.video != null) {
       _playerController = VideoPlayerController.file(widget.video);
-    } else if (widget.videoPlayerController != null) {
-      _playerController = widget.videoPlayerController;
     } else {
-      throw Exception(
-          'Video dialog requires video,videoUrl or videoPlayerController.');
+      throw Exception('Video dialog requires video or videoUrl.');
     }
 
     _initializeVideoPlayerFuture = _playerController.initialize();
@@ -70,7 +73,11 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
             double aspectRatio = _playerController.value.aspectRatio;
             _chewieController = ChewieController(
                 videoPlayerController: _playerController,
-                customControls: OBControls(),
+                allowFullScreen: false,
+                customControls: OBControls(
+                  isDismissable: widget.isDismissable,
+                  onExpandCollapse: widget.openInDialog ? _openInDialog : null,
+                ),
                 aspectRatio: aspectRatio,
                 autoPlay: true,
                 looping: true);
@@ -87,5 +94,11 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         }
       },
     );
+  }
+
+  void _openInDialog() {
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    openbookProvider.dialogService.showVideo(
+        context: context, video: widget.video, videoUrl: widget.videoUrl);
   }
 }

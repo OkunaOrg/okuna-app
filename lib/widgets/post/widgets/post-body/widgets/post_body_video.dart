@@ -1,9 +1,7 @@
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/video_format.dart';
-import 'package:Okuna/widgets/custom_chewie/src/video_player_life_cycle.dart';
 import 'package:Okuna/widgets/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
 class OBPostBodyVideo extends StatelessWidget {
   final PostVideo postVideo;
@@ -17,11 +15,7 @@ class OBPostBodyVideo extends StatelessWidget {
 
     String videoUrl = videoFormat.file;
 
-    return NetworkPlayerLifeCycle(
-      videoUrl,
-      (BuildContext context, VideoPlayerController controller) => OBVideoPlayer(
-        videoPlayerController: controller,
-      ),
-    );
+    return OBVideoPlayer(
+        videoUrl: videoUrl, isDismissable: false);
   }
 }

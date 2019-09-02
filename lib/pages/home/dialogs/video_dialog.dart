@@ -6,15 +6,13 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:video_player/video_player.dart';
 
 class OBVideoDialog extends StatelessWidget {
   final File video;
   final String videoUrl;
-  final VideoPlayerController videoPlayerController;
 
   const OBVideoDialog(
-      {Key key, this.video, this.videoUrl, this.videoPlayerController})
+      {Key key, this.video, this.videoUrl})
       : super(key: key);
 
   @override
@@ -31,7 +29,6 @@ class OBVideoDialog extends StatelessWidget {
               child: OBVideoPlayer(
             video: video,
             videoUrl: videoUrl,
-            videoPlayerController: videoPlayerController,
           ))),
     );
   }

@@ -244,10 +244,14 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _onWantsToGoNext() async {
+    List<File> media = [];
+    if (_postImage != null) media.add(_postImage);
+    if (_postVideo != null) media.add(_postVideo);
+
     OBNewPostData createPostData = await _navigationService.navigateToSharePost(
         context: context,
         createPostData:
-            OBNewPostData(text: _textController.text, media: [_postImage]));
+            OBNewPostData(text: _textController.text, media: media));
 
     if (createPostData != null) {
       // Remove modal

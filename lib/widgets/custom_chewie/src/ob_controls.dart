@@ -10,15 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class OBControls extends StatefulWidget {
-  const OBControls({Key key}) : super(key: key);
+  final bool isDismissable;
+  final VoidCallback onExpandCollapse;
+
+  const OBControls({Key key, this.isDismissable = true, this.onExpandCollapse})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _OBControlsState();
+    return OBControlsState();
   }
 }
 
-class _OBControlsState extends State<OBControls> {
+class OBControlsState extends State<OBControls> {
   VideoPlayerValue _latestValue;
   double _latestVolume;
   bool _hideStuff = true;
@@ -81,11 +85,11 @@ class _OBControlsState extends State<OBControls> {
           _buildBottomBar(context, controller),
         ],
       ),
-      _hideStuff
+      _hideStuff || !widget.isDismissable
           ? new Container()
           : new IconButton(
               icon: new Icon(
-                Icons.arrow_back,
+                Icons.close,
                 color: Colors.white,
               ),
               onPressed: () async {
@@ -140,7 +144,9 @@ class _OBControlsState extends State<OBControls> {
             _buildPosition(Colors.white),
             _buildProgressBar(),
             _buildMuteButton(controller),
-            _buildExpandButton(),
+            chewieController.allowFullScreen
+                ? _buildExpandButton()
+                : const SizedBox(),
           ],
         ),
       ),
@@ -149,7 +155,9 @@ class _OBControlsState extends State<OBControls> {
 
   GestureDetector _buildExpandButton() {
     return new GestureDetector(
-      onTap: _onExpandCollapse,
+      onTap: widget.onExpandCollapse != null
+          ? widget.onExpandCollapse
+          : _onExpandCollapse,
       child: new AnimatedOpacity(
         opacity: _hideStuff ? 0.0 : 1.0,
         duration: new Duration(milliseconds: 300),

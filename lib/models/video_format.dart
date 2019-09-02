@@ -7,15 +7,16 @@ class OBVideoFormat {
 
   OBVideoFormatType type;
 
-  OBVideoFormat({this.id, this.progress, this.duration, this.format, this.file}) {
+  OBVideoFormat(
+      {this.id, this.progress, this.duration, this.format, this.file}) {
     type = OBVideoFormatType.parse(format);
   }
 
   factory OBVideoFormat.fromJSON(Map<String, dynamic> json) {
     return OBVideoFormat(
       id: json['int'],
-      progress: json['progress'],
-      duration: json['duration'],
+      progress: json['progress']?.toDouble(),
+      duration: json['duration']?.toDouble(),
       format: json['format'],
       file: json['file'],
     );
