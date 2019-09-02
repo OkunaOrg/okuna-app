@@ -136,7 +136,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       ),
     );
 
-    bool isLastItem = index == _posts.length - 1;
+    bool isLastItem = postsIndex == _posts.length - 1;
 
     if (isLastItem && _status != OBTimelinePostsStatus.idle) {
       switch (_status) {
