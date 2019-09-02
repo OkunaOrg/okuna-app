@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:mime/mime.dart';
 import 'package:thumbnails/thumbnails.dart';
 import 'package:async/async.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 import 'icon.dart';
 import 'linear_progress_indicator.dart';
@@ -42,28 +44,21 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   bool _needsBootstrap;
   OBPostUploaderStatus _status;
 
-  String _statusMessage;
-
-  Post _createdDraftPost;
-  OBPostStatus _createdDraftPostStatus;
-  List<File> _remainingMediaToUpload;
-  List<File> _mediaToUpload;
-  bool _postPublishRequested;
+  String _statusMessage = '';
 
   static double mediaPreviewSize = 40;
 
   Timer _checkPostStatusTimer;
 
   CancelableOperation _getPostStatusOperation;
+  OBNewPostData _data;
 
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
+    _data = widget.data;
     _status = OBPostUploaderStatus.idle;
-    _mediaToUpload = widget.data.getMedia();
-    _remainingMediaToUpload = widget.data.getMedia();
-    _postPublishRequested = false;
   }
 
   @override
@@ -85,7 +80,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
 
     List<Widget> rowItems = [];
 
-    if (widget.data.hasMedia()) {
+    if (_data.hasMedia()) {
       rowItems.addAll([
         _buildMediaPreview(),
         const SizedBox(
@@ -130,46 +125,48 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   }
 
   void _bootstrap() {
-    _uploadPost();
+    Future.delayed(Duration(milliseconds: 100), () {
+      _uploadPost();
+    });
   }
 
   Future _uploadPost() async {
     try {
-      if (_createdDraftPost == null) {
+      if (_data.createdDraftPost == null) {
         _setStatus(OBPostUploaderStatus.creatingPost);
         _setStatusMessage(_localizationService.post_uploader__creating_post);
-        _createdDraftPost = await _createPost();
+        _data.createdDraftPost = await _createPost();
       }
 
-      if (_remainingMediaToUpload.isNotEmpty) {
+      if (_data.remainingMediaToUpload.isNotEmpty) {
         _setStatusMessage(_localizationService.post_uploader__uploading_media);
         _setStatus(OBPostUploaderStatus.addingPostMedia);
         await _addPostMedia();
       }
 
-      if (!_postPublishRequested) {
+      if (!_data.postPublishRequested) {
         _setStatusMessage(_localizationService.post_uploader__publishing);
         _setStatus(OBPostUploaderStatus.publishing);
         await _publishPost();
-        _postPublishRequested = true;
+        _data.postPublishRequested = true;
       }
 
       _setStatusMessage(_localizationService.post_uploader__processing);
       _setStatus(OBPostUploaderStatus.processing);
       _ensurePostStatusTimerIsCancelled();
 
-      if (_createdDraftPostStatus == null ||
-          _createdDraftPostStatus != OBPostStatus.published) {
+      if (_data.createdDraftPostStatus == null ||
+          _data.createdDraftPostStatus != OBPostStatus.published) {
         _checkPostStatusTimer =
             Timer.periodic(new Duration(seconds: 1), (timer) async {
           if (_getPostStatusOperation != null) return;
           _getPostStatusOperation = CancelableOperation.fromFuture(
-              _userService.getPostStatus(post: _createdDraftPost));
+              _userService.getPostStatus(post: _data.createdDraftPost));
           OBPostStatus status = await _getPostStatusOperation.value;
           debugLog(
               'Polling for post published status, got status: ${status.toString()}');
-          _createdDraftPostStatus = status;
-          if (_createdDraftPostStatus == OBPostStatus.published) {
+          _data.createdDraftPostStatus = status;
+          if (_data.createdDraftPostStatus == OBPostStatus.published) {
             debugLog('Received post status is published');
             _checkPostStatusTimer.cancel();
             _getPublishedPost();
@@ -197,20 +194,16 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   Future _createPost() async {
     Post draftPost;
 
-    if (widget.data.community != null) {
+    if (_data.community != null) {
       debugLog('Creating community post');
 
-      draftPost = await _userService.createPostForCommunity(
-          widget.data.community,
-          text: widget.data.text,
-          isDraft: true);
+      draftPost = await _userService.createPostForCommunity(_data.community,
+          text: _data.text, isDraft: true);
     } else {
       debugLog('Creating circles post');
 
       draftPost = await _userService.createPost(
-          text: widget.data.text,
-          circles: widget.data.getCircles(),
-          isDraft: true);
+          text: _data.text, circles: _data.getCircles(), isDraft: true);
     }
 
     debugLog('Post created successfully');
@@ -222,7 +215,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
     debugLog('Retrieving the published post');
 
     Post publishedPost =
-        await _userService.getPostWithUuid(_createdDraftPost.uuid);
+        await _userService.getPostWithUuid(_data.createdDraftPost.uuid);
     widget.onPostPublished(publishedPost, widget.data);
   }
 
@@ -230,12 +223,12 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
     debugLog('Adding post media');
 
     return Future.wait(
-        _remainingMediaToUpload.map(_uploadPostMediaItem).toList());
+        _data.remainingMediaToUpload.map(_uploadPostMediaItem).toList());
   }
 
   Future _uploadPostMediaItem(File file) async {
-    await _userService.addMediaToPost(file: file, post: _createdDraftPost);
-    _remainingMediaToUpload.remove(file);
+    await _userService.addMediaToPost(file: file, post: _data.createdDraftPost);
+    _data.remainingMediaToUpload.remove(file);
   }
 
   Widget _buildProgressBar() {
@@ -246,8 +239,6 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   }
 
   Widget _buildMediaPreview() {
-    if (_mediaToUpload.isEmpty) return const SizedBox();
-
     return FutureBuilder(
       future: _getMediaThumbnail(),
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
@@ -268,7 +259,9 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   }
 
   Future<File> _getMediaThumbnail() async {
-    File mediaToPreview = _mediaToUpload.first;
+    if (_data.mediaThumbnail != null) return _data.mediaThumbnail;
+
+    File mediaToPreview = _data.media.first;
     File mediaThumbnail;
 
     String mediaMime = lookupMimeType(mediaToPreview.path);
@@ -286,6 +279,8 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
     } else {
       debugLog('Unsupported media type for preview thumbnail');
     }
+
+    _data.mediaThumbnail = mediaThumbnail;
 
     return mediaThumbnail;
   }
@@ -360,10 +355,10 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
     debugLog('Cancelling');
 
     // Delete post
-    if (_createdDraftPost != null) {
+    if (_data.createdDraftPost != null) {
       debugLog('Deleting post');
       try {
-        await _userService.deletePost(_createdDraftPost);
+        await _userService.deletePost(_data.createdDraftPost);
         debugLog('Successfully deleted post');
       } catch (error) {
         // If it doesnt work, will get cleaned up by a scheduled job
@@ -371,7 +366,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
       }
     }
 
-    if (_mediaToUpload.isNotEmpty) {
+    if (_data.media.isNotEmpty) {
       debugLog('Deleting local post media files');
       _deleteMediaFiles();
     }
@@ -382,11 +377,11 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
 
   Future _publishPost() async {
     debugLog('Publishing post');
-    return _userService.publishPost(post: _createdDraftPost);
+    return _userService.publishPost(post: _data.createdDraftPost);
   }
 
   void _deleteMediaFiles() async {
-    _mediaToUpload.forEach((File mediaFile) {
+    _data.media.forEach((File mediaFile) {
       mediaFile.delete();
     });
   }
@@ -419,7 +414,18 @@ class OBNewPostData {
   Community community;
   List<Circle> circles;
 
-  OBNewPostData({this.text, this.media, this.community, this.circles});
+  // State persistence variables
+  Post createdDraftPost;
+  OBPostStatus createdDraftPostStatus;
+  List<File> remainingMediaToUpload;
+  bool postPublishRequested = false;
+  File mediaThumbnail;
+
+  String _cachedKey;
+
+  OBNewPostData({this.text, this.media, this.community, this.circles}) {
+    remainingMediaToUpload = media.toList();
+  }
 
   bool hasMedia() {
     return media != null && media.isNotEmpty;
@@ -442,6 +448,8 @@ class OBNewPostData {
   }
 
   String getUniqueKey() {
+    if (_cachedKey != null) return _cachedKey;
+
     String key = '';
     if (text != null) key += text;
     if (hasMedia()) {
@@ -449,7 +457,14 @@ class OBNewPostData {
         key += mediaItem.path;
       });
     }
-    return key;
+
+    var bytes = utf8.encode(key);
+    var digest = sha256.convert(bytes);
+
+    _cachedKey = digest.toString();
+    print(_cachedKey);
+
+    return _cachedKey;
   }
 }
 
