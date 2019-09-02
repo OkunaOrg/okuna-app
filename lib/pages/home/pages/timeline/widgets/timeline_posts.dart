@@ -117,6 +117,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     if (hasNewPostsData && index < newPostsDataCount) {
       OBNewPostData newPostData = _newPostsData[index];
       return OBNewPostDataUploader(
+        key: Key(newPostData.getUniqueKey()),
         data: newPostData,
         onPostPublished: _onNewPostDataUploaderPostPublished,
         onCancelled: _onNewPostDataUploaderCancelled,
@@ -271,9 +272,9 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     );
   }
 
-  void scrollToTop() {
+  void scrollToTop({bool skipRefresh = false}) {
     if (_postsScrollController.hasClients) {
-      if (_postsScrollController.offset == 0) {
+      if (_postsScrollController.offset == 0 && !skipRefresh) {
         _refreshIndicatorKey.currentState.show();
       }
 
@@ -490,8 +491,8 @@ class OBTimelinePostsController {
     _homePostsState = homePostsState;
   }
 
-  void scrollToTop() {
-    _homePostsState.scrollToTop();
+  void scrollToTop({bool skipRefresh = false}) {
+    _homePostsState.scrollToTop(skipRefresh: skipRefresh);
   }
 
   void refreshPosts() {

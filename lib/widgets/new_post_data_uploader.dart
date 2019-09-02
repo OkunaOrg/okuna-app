@@ -440,6 +440,17 @@ class OBNewPostData {
   List<Circle> getCircles() {
     return circles.toList();
   }
+
+  String getUniqueKey() {
+    String key = '';
+    if (text != null) key += text;
+    if (hasMedia()) {
+      media.forEach((File mediaItem) {
+        key += mediaItem.path;
+      });
+    }
+    return key;
+  }
 }
 
 enum OBPostUploaderStatus {
