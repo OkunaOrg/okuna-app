@@ -3598,8 +3598,13 @@ class LocalizationService {
         name: 'post_uploader__uploading_media');
   }
 
+  String get post_uploader__publishing {
+    return Intl.message("Publishing post...", name: 'post_uploader__publishing');
+  }
+
+
   String get post_uploader__processing {
-    return Intl.message("Processing...", name: 'post_uploader__processing');
+    return Intl.message("Processing post...", name: 'post_uploader__processing');
   }
 
   String get post_uploader__success {

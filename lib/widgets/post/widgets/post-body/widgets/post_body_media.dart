@@ -61,11 +61,27 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   }
 
   Widget _buildErrorMessage() {
-    return Container(
-      padding: EdgeInsets.all(30),
-      child: Center(
-        child: OBText(_errorMessage),
-      ),
+    return Stack(
+      children: <Widget>[
+        _buildPostMediaItemsThumbnail(),
+        Positioned(
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(3)),
+                child: Text(
+                  _errorMessage,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ))
+      ],
     );
   }
 
@@ -146,7 +162,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
       _retrievePostMediaOperation = CancelableOperation.fromFuture(
           _userService.getMediaForPost(post: widget.post));
       PostMediaList mediaList = await _retrievePostMediaOperation.value;
-      widget.post.setMedia(mediaList.postMedia);
+      widget.post.setMedia(mediaList);
     } catch (error) {
       _onError(error);
     } finally {

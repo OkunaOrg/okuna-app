@@ -7,6 +7,7 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:mime/mime.dart';
@@ -14,6 +15,7 @@ import 'package:thumbnails/thumbnails.dart';
 import 'package:async/async.dart';
 
 import 'icon.dart';
+import 'linear_progress_indicator.dart';
 
 class OBNewPostDataUploader extends StatefulWidget {
   final OBNewPostData data;
@@ -46,6 +48,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   OBPostStatus _createdDraftPostStatus;
   List<File> _remainingMediaToUpload;
   List<File> _mediaToUpload;
+  bool _postPublishRequested;
 
   static double mediaPreviewSize = 40;
 
@@ -60,6 +63,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
     _status = OBPostUploaderStatus.idle;
     _mediaToUpload = widget.data.getMedia();
     _remainingMediaToUpload = widget.data.getMedia();
+    _postPublishRequested = false;
   }
 
   @override
@@ -92,19 +96,33 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
 
     rowItems.addAll([_buildStatusText(), _buildActionButtons()]);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return OBHighlightedBox(
+      child: Stack(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Row(children: rowItems),
-              _status == OBPostUploaderStatus.creatingPost ||
-                      _status == OBPostUploaderStatus.addingPostMedia
-                  ? _buildProgressBar()
-                  : const SizedBox()
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Row(children: rowItems),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: -3,
+            left: 0,
+            right: 0,
+            child: _status == OBPostUploaderStatus.creatingPost ||
+                    _status == OBPostUploaderStatus.addingPostMedia ||
+                    _status == OBPostUploaderStatus.processing
+                ? _buildProgressBar()
+                : const SizedBox(),
           )
         ],
       ),
@@ -128,6 +146,14 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
         _setStatus(OBPostUploaderStatus.addingPostMedia);
         await _addPostMedia();
       }
+
+      if (!_postPublishRequested) {
+        _setStatusMessage(_localizationService.post_uploader__publishing);
+        _setStatus(OBPostUploaderStatus.publishing);
+        await _publishPost();
+        _postPublishRequested = true;
+      }
+
       _setStatusMessage(_localizationService.post_uploader__processing);
       _setStatus(OBPostUploaderStatus.processing);
       _ensurePostStatusTimerIsCancelled();
@@ -140,11 +166,15 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
           _getPostStatusOperation = CancelableOperation.fromFuture(
               _userService.getPostStatus(post: _createdDraftPost));
           OBPostStatus status = await _getPostStatusOperation.value;
+          debugLog(
+              'Polling for post published status, got status: ${status.toString()}');
           _createdDraftPostStatus = status;
           if (_createdDraftPostStatus == OBPostStatus.published) {
+            debugLog('Received post status is published');
             _checkPostStatusTimer.cancel();
             _getPublishedPost();
           }
+          _getPostStatusOperation = null;
         });
       } else {
         _getPublishedPost();
@@ -168,24 +198,37 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
     Post draftPost;
 
     if (widget.data.community != null) {
+      debugLog('Creating community post');
+
       draftPost = await _userService.createPostForCommunity(
           widget.data.community,
-          text: widget.data.text);
+          text: widget.data.text,
+          isDraft: true);
     } else {
+      debugLog('Creating circles post');
+
       draftPost = await _userService.createPost(
-          text: widget.data.text, circles: widget.data.getCircles());
+          text: widget.data.text,
+          circles: widget.data.getCircles(),
+          isDraft: true);
     }
 
-    this._createdDraftPost = draftPost;
+    debugLog('Post created successfully');
+
+    return draftPost;
   }
 
   Future _getPublishedPost() async {
+    debugLog('Retrieving the published post');
+
     Post publishedPost =
         await _userService.getPostWithUuid(_createdDraftPost.uuid);
     widget.onPostPublished(publishedPost, widget.data);
   }
 
   Future _addPostMedia() {
+    debugLog('Adding post media');
+
     return Future.wait(
         _remainingMediaToUpload.map(_uploadPostMediaItem).toList());
   }
@@ -197,8 +240,9 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
 
   Widget _buildProgressBar() {
     if (_status != OBPostUploaderStatus.addingPostMedia &&
-        _status != OBPostUploaderStatus.creatingPost) return const SizedBox();
-    return LinearProgressIndicator();
+        _status != OBPostUploaderStatus.creatingPost &&
+        _status != OBPostUploaderStatus.processing) return const SizedBox();
+    return OBLinearProgressIndicator();
   }
 
   Widget _buildMediaPreview() {
@@ -240,14 +284,24 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
           quality: 30);
       mediaThumbnail = File(mediaThumbnailPath);
     } else {
-      print('Unsupported media type');
+      debugLog('Unsupported media type for preview thumbnail');
     }
 
     return mediaThumbnail;
   }
 
   Widget _buildStatusText() {
-    return OBText(_statusMessage);
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          OBText(
+            _statusMessage,
+            textAlign: TextAlign.left,
+          )
+        ],
+      ),
+    );
   }
 
   Widget _buildActionButtons() {
@@ -259,6 +313,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
         activeActions.add(_buildCancelButton());
         break;
       case OBPostUploaderStatus.failed:
+        activeActions.add(_buildCancelButton());
         activeActions.add(_buildRetryButton());
         break;
       default:
@@ -272,14 +327,20 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   Widget _buildCancelButton() {
     return GestureDetector(
       onTap: _onWantsToCancel,
-      child: OBIcon(OBIcons.cancel),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: OBIcon(OBIcons.cancel),
+      ),
     );
   }
 
   Widget _buildRetryButton() {
     return GestureDetector(
       onTap: _onWantsToRetry,
-      child: OBIcon(OBIcons.retry),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: OBIcon(OBIcons.retry),
+      ),
     );
   }
 
@@ -287,21 +348,41 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
     if (_status == OBPostUploaderStatus.creatingPost ||
         _status == OBPostUploaderStatus.addingPostMedia) return;
 
+    debugLog('Retrying');
+
     _uploadPost();
   }
 
   void _onWantsToCancel() async {
     if (_status == OBPostUploaderStatus.cancelling) return;
     _setStatus(OBPostUploaderStatus.cancelling);
+
+    debugLog('Cancelling');
+
     // Delete post
     if (_createdDraftPost != null) {
-      // If it doesnt work, will get cleaned up by a scheduled job
-      _userService.deletePost(_createdDraftPost);
+      debugLog('Deleting post');
+      try {
+        await _userService.deletePost(_createdDraftPost);
+        debugLog('Successfully deleted post');
+      } catch (error) {
+        // If it doesnt work, will get cleaned up by a scheduled job
+        debugLog('Failed to delete post wit error: ${error.toString()}');
+      }
     }
 
-    _deleteMediaFiles();
+    if (_mediaToUpload.isNotEmpty) {
+      debugLog('Deleting local post media files');
+      _deleteMediaFiles();
+    }
+
     _setStatus(OBPostUploaderStatus.cancelled);
     widget.onCancelled(widget.data);
+  }
+
+  Future _publishPost() async {
+    debugLog('Publishing post');
+    return _userService.publishPost(post: _createdDraftPost);
   }
 
   void _deleteMediaFiles() async {
@@ -325,6 +406,10 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader> {
   void _ensurePostStatusTimerIsCancelled() {
     if (_checkPostStatusTimer != null && _checkPostStatusTimer.isActive)
       _checkPostStatusTimer.cancel();
+  }
+
+  void debugLog(String log) {
+    debugPrint('OBNewPostDataUploader:$log');
   }
 }
 
@@ -361,6 +446,7 @@ enum OBPostUploaderStatus {
   idle,
   creatingPost,
   addingPostMedia,
+  publishing,
   processing,
   success,
   failed,

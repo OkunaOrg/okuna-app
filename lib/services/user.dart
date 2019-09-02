@@ -449,7 +449,7 @@ class UserService {
 
     Map<String, dynamic> responseJson = response.parseJsonBody();
 
-    OBPostStatus status = responseJson['status'];
+    OBPostStatus status = OBPostStatus.parse(responseJson['status']);
 
     post.setStatus(status);
 
@@ -1033,10 +1033,10 @@ class UserService {
   }
 
   Future<Post> createPostForCommunity(Community community,
-      {String text, File image, File video}) async {
+      {String text, File image, File video, bool isDraft}) async {
     HttpieStreamedResponse response = await _communitiesApiService
         .createPostForCommunityWithId(community.name,
-            text: text, image: image, video: video);
+            text: text, image: image, video: video, isDraft: isDraft);
     _checkResponseIsCreated(response);
 
     String responseBody = await response.readAsString();

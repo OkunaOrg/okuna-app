@@ -56,6 +56,7 @@ class OBPostImagePreviewer extends StatelessWidget {
         width: buttonSize,
         height: buttonSize,
         child: FloatingActionButton(
+          heroTag: Key('postImagePreviewerRemoveButton'),
           onPressed: onRemove,
           backgroundColor: Colors.black54,
           child: Icon(
@@ -75,6 +76,7 @@ class OBPostImagePreviewer extends StatelessWidget {
         width: buttonSize,
         height: buttonSize,
         child: FloatingActionButton(
+          heroTag: Key('postImagePreviewerEditButton'),
           onPressed: _onWantsToEditImage,
           backgroundColor: Colors.black54,
           child: Icon(

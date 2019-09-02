@@ -378,6 +378,7 @@ class HttpieService {
           errorCode == 104 ||
           errorCode == 51 ||
           errorCode == 8 ||
+          errorCode == 113 ||
           errorCode == 7 ||
           errorCode == 64) {
         // Connection refused.

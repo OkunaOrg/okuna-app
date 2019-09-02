@@ -114,9 +114,11 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('public_reactions'))
       publicReactions = json['public_reactions'];
 
-    if (json.containsKey('media_height')) mediaHeight = json['media_height'];
+    if (json.containsKey('media_height'))
+      mediaHeight = factory.parseMediaHeight(json['media_height']);
 
-    if (json.containsKey('media_width')) mediaWidth = json['media_width'];
+    if (json.containsKey('media_width'))
+      mediaWidth = factory.parseMediaWidth(json['media_width']);
 
     if (json.containsKey('language')) {
       language = factory.parseLanguage(json['language']);
@@ -289,8 +291,8 @@ class Post extends UpdatableModel<Post> {
     this.notifyUpdate();
   }
 
-  void setMedia(List mediaRawData) {
-    this.media = factory.parseMedia(mediaRawData);
+  void setMedia(PostMediaList media) {
+    this.media = media;
     this.notifyUpdate();
   }
 
@@ -370,14 +372,14 @@ class PostFactory extends UpdatableModelFactory<Post> {
         uuid: json['uuid'],
         creatorId: json['creator_id'],
         created: parseCreated(json['created']),
-        status: OBPostStatus.parse(json['created']),
+        status: OBPostStatus.parse(json['status']),
         text: json['text'],
         language: parseLanguage(json['language']),
         circles: parseCircles(json['circles']),
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
-        mediaHeight: json['media_height'],
-        mediaWidth: json['media_width'],
+        mediaHeight: parseMediaHeight(json['media_height']),
+        mediaWidth: parseMediaWidth(json['media_width']),
         isMuted: json['is_muted'],
         isReported: json['is_reported'],
         areCommentsEnabled: json['comments_enabled'],
@@ -450,6 +452,18 @@ class PostFactory extends UpdatableModelFactory<Post> {
     if (languageData == null) return null;
     return Language.fromJson(languageData);
   }
+
+  double parseMediaWidth(dynamic mediaWidth) {
+    if (mediaWidth == null) return null;
+    if (mediaWidth is int) return mediaWidth.toDouble();
+    if (mediaWidth is double) return mediaWidth;
+  }
+
+  double parseMediaHeight(dynamic mediaHeight) {
+    if (mediaHeight == null) return null;
+    if (mediaHeight is int) return mediaHeight.toDouble();
+    if (mediaHeight is double) return mediaHeight;
+  }
 }
 
 class OBPostStatus {
@@ -480,7 +494,7 @@ class OBPostStatus {
 
     if (postStatus == null) {
       // Don't throw as we might introduce new notifications on the API which might not be yet in code
-      print('Unsupported post status type');
+      print('Unsupported post status type: ' + string);
     }
 
     return postStatus;

@@ -135,20 +135,20 @@ class PostsApiService {
 
     String path = _makeAddPostMediaPath(postUuid: postUuid);
 
-    return _httpService.putMultiform(path,
+    return _httpService.putMultiform(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> getPostMedia({@required String postUuid}) {
     String path = _makeGetPostMediaPath(postUuid: postUuid);
 
-    return _httpService.get(path, appendAuthorizationToken: true);
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> publishPost({@required String postUuid}) {
     String path = _makePublishPostPath(postUuid: postUuid);
 
-    return _httpService.post(path);
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> getPostWithUuidStatus(String postUuid) {

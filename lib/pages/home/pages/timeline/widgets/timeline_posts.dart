@@ -123,7 +123,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
       );
     }
 
-    int postsIndex = hasNewPostsData ? index - _newPostsData.length - 1 : index;
+    int postsIndex = hasNewPostsData ? index - _newPostsData.length : index;
 
     Post post = _posts[postsIndex];
 
