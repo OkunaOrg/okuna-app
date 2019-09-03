@@ -12,7 +12,6 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/pages/home/modals/accept_guidelines/accept_guidelines.dart';
 import 'package:Okuna/pages/home/modals/edit_post/edit_post.dart';
-import 'package:Okuna/pages/home/modals/media_picker/media_picker.dart';
 import 'package:Okuna/pages/home/modals/invite_to_community.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_comment_reply_expanded.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_commenter_expanded.dart';
@@ -408,22 +407,6 @@ class ModalService {
         builder: (BuildContext context) {
           return OBModeratedObjectUpdateStatusModal(
             moderatedObject: moderatedObject,
-          );
-        }));
-  }
-
-  Future<AssetEntity> openMediaPicker({@required BuildContext context}) async {
-    var result = await PhotoManager.requestPermission();
-    if (!result) {
-      throw OBMediaPickerPermissionDenied(
-          localizationService.media_picker__permission_denied_error);
-    }
-
-    return Navigator.of(context).push(CupertinoPageRoute<AssetEntity>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBMediaPickerModal(),
           );
         }));
   }

@@ -13,13 +13,10 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  scroll_to_index: ^1.0.1
   expandable: ^2.2.2+3
   uuid: ^2.0.1
   http_retry: ^0.1.1+3
-  photo_manager: ^0.3.5
   flutter_exif_rotation: ^0.2.2
-  flutter_android_pip: ^0.0.2
   chewie:
     git:
       url: git@github.com:OkunaOrg/chewie.git

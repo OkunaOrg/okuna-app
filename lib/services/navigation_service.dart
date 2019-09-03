@@ -14,7 +14,6 @@ import 'package:Okuna/pages/home/modals/confirm_block_user.dart';
 import 'package:Okuna/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Okuna/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
-import 'package:Okuna/pages/home/modals/media_picker/pages/media_picker_preview.dart';
 import 'package:Okuna/pages/home/modals/post_comment_reactions/post_comment_reactions.dart';
 import 'package:Okuna/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Okuna/pages/home/pages/community/community.dart';
@@ -689,18 +688,6 @@ class NavigationService {
         OBSlideRightRoute(
             key: Key('obMyModerationPenaltiesPage'),
             widget: OBMyModerationPenaltiesPage()));
-  }
-
-  Future<AssetEntity> navigateToMediaPickerPreviewPage(
-      {@required BuildContext context,
-      @required AssetEntity mediaAsset}) async {
-    return Navigator.push(
-        context,
-        OBSlideRightRoute(
-            key: Key('obMediaPickerPreviewPage'),
-            widget: OBMediaPickerPreviewPage(
-              mediaAsset: mediaAsset,
-            )));
   }
 
   Future<void> navigateToBlankPageWithWidget(
