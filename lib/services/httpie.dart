@@ -17,13 +17,10 @@ class HttpieService {
   String authorizationToken;
   String magicHeaderName;
   String magicHeaderValue;
-  String proxy;
   Client client;
 
   HttpieService() {
-    var httpClient = HttpClient();
-    httpClient.findProxy = _findProxy;
-    client = IOClient(httpClient);
+    client = IOClient();
     client = RetryClient(client,
         when: _retryWhenResponse, whenError: _retryWhenError);
   }
@@ -34,14 +31,6 @@ class HttpieService {
 
   bool _retryWhenError(error, StackTrace stackTrace) {
     return error is SocketException || error is ClientException;
-  }
-
-  String _findProxy(Uri url) {
-    if (proxy == null) {
-      return HttpClient.findProxyFromEnvironment(url);
-    } else {
-      return proxy;
-    }
   }
 
   void setAuthorizationToken(String token) {
@@ -70,7 +59,10 @@ class HttpieService {
   }
 
   void setProxy(String proxy) {
-    this.proxy = proxy;
+    var overrides = HttpOverrides.current as HttpieOverrides;
+    if (overrides != null) {
+      overrides.setProxy(proxy);
+    }
   }
 
   Future<HttpieResponse> post(url,
@@ -612,4 +604,32 @@ class HttpieArgumentsError implements Exception {
   const HttpieArgumentsError(this.msg);
 
   String toString() => 'HttpieArgumentsError: $msg';
+}
+
+// These overrides are used by the standard dart:http/HttpClient to change how
+// it behaves. All settings changed here will apply to every single HttpClient
+// used by any other package, as long as they're running inside a zone with
+// these set.
+class HttpieOverrides extends HttpOverrides {
+  String _proxy;
+  final HttpOverrides _previous = HttpOverrides.current;
+
+  HttpieOverrides();
+
+  void setProxy(String proxy) {
+    _proxy = proxy;
+  }
+
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    if (_previous != null) return _previous.createHttpClient(context);
+    return super.createHttpClient(context);
+  }
+
+  @override
+  String findProxyFromEnvironment(Uri uri, Map<String, String> environment) {
+    if (_proxy != null) return _proxy;
+    if (_previous != null) return _previous.findProxyFromEnvironment(uri, environment);
+    return super.findProxyFromEnvironment(uri, environment);
+  }
 }

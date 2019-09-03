@@ -21,6 +21,7 @@ import 'package:Okuna/pages/waitlist/subscribe_email_step.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/pages/auth/create_account/name_step.dart';
 import 'package:Okuna/plugins/desktop/error-reporting.dart';
+import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/widgets/toast.dart';
@@ -266,10 +267,11 @@ Future<Null> main() async {
   // - https://www.dartlang.org/articles/libraries/zones
 
   MyApp app;
-  runZoned<Future<Null>>(() async {
+  // run the entire app with our own HttpieOverride
+  HttpOverrides.runWithHttpOverrides<Future<Null>>(() async {
     app = MyApp();
     runApp(app);
-  }, onError: (error, stackTrace) async {
+  }, HttpieOverrides(), onError: (error, stackTrace) async {
     if (isOnDesktop) {
       DesktopErrorReporting.reportError(error, stackTrace);
       return;
