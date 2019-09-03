@@ -1,4 +1,5 @@
 import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/plugins/proxy_settings.dart';
 import 'package:Okuna/services/auth_api.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/categories_api.dart';
@@ -186,6 +187,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         await EnvironmentLoader(environmentPath: ".env.json").load();
     httpService.setMagicHeader(
         environment.magicHeaderName, environment.magicHeaderValue);
+    httpService
+        .setProxy(await ProxySettings.findProxy(Uri.parse(environment.apiUrl)));
     authApiService.setApiURL(environment.apiUrl);
     postsApiService.setApiURL(environment.apiUrl);
     emojisApiService.setApiURL(environment.apiUrl);

@@ -17,12 +17,12 @@ class HttpieService {
   String authorizationToken;
   String magicHeaderName;
   String magicHeaderValue;
+  String proxy;
   Client client;
 
   HttpieService() {
     var httpClient = HttpClient();
-    // This doesn't pick up proxy settings on Android and iOS
-    httpClient.findProxy = HttpClient.findProxyFromEnvironment;
+    httpClient.findProxy = _findProxy;
     client = IOClient(httpClient);
     client = RetryClient(client,
         when: _retryWhenResponse, whenError: _retryWhenError);
@@ -34,6 +34,14 @@ class HttpieService {
 
   bool _retryWhenError(error, StackTrace stackTrace) {
     return error is SocketException || error is ClientException;
+  }
+
+  String _findProxy(Uri url) {
+    if (proxy == null) {
+      return HttpClient.findProxyFromEnvironment(url);
+    } else {
+      return proxy;
+    }
   }
 
   void setAuthorizationToken(String token) {
@@ -59,6 +67,10 @@ class HttpieService {
   void setMagicHeader(String name, String value) {
     magicHeaderName = name;
     magicHeaderValue = value;
+  }
+
+  void setProxy(String proxy) {
+    this.proxy = proxy;
   }
 
   Future<HttpieResponse> post(url,
