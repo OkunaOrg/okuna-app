@@ -35,7 +35,6 @@ import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 import 'localization.dart';
 

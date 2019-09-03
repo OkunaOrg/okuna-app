@@ -67,7 +67,6 @@ import 'package:Okuna/widgets/routes/slide_right_route.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 class NavigationService {
   void navigateToUserProfile(

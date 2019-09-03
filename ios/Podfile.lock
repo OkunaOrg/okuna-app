@@ -1,10 +1,7 @@
 PODS:
-  - BSGridCollectionViewLayout (1.2.3)
-  - BSImagePicker (2.10.0):
-    - BSGridCollectionViewLayout (= 1.2.3)
-    - BSImageView (= 1.0.3)
-  - BSImageView (1.0.3)
   - device_info (0.0.1):
+    - Flutter
+  - file_picker (0.0.1):
     - Flutter
   - Flutter (1.0.0)
   - flutter_exif_rotation (0.0.1):
@@ -23,14 +20,13 @@ PODS:
   - intercom_flutter (1.0.7):
     - Flutter
     - Intercom
-  - multi_image_picker (4.5.0):
-    - BSImagePicker (~> 2.10.0)
-    - Flutter
   - OneSignal (2.10.1)
   - onesignal_flutter (2.0.2):
     - Flutter
     - OneSignal (= 2.10.1)
   - path_provider (0.0.1):
+    - Flutter
+  - screen (0.0.1):
     - Flutter
   - share (0.5.2):
     - Flutter
@@ -39,6 +35,8 @@ PODS:
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
+  - thumbnails (0.0.1):
+    - Flutter
   - TOCropViewController (2.5.1)
   - uni_links (0.0.1):
     - Flutter
@@ -49,28 +47,27 @@ PODS:
 
 DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - file_picker (from `.symlinks/plugins/file_picker/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - intercom_flutter (from `.symlinks/plugins/intercom_flutter/ios`)
-  - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
   - OneSignal (< 3.0, >= 2.9.5)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - screen (from `.symlinks/plugins/screen/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - thumbnails (from `.symlinks/plugins/thumbnails/ios`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - BSGridCollectionViewLayout
-    - BSImagePicker
-    - BSImageView
     - FMDB
     - Intercom
     - OneSignal
@@ -79,8 +76,10 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
+  file_picker:
+    :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_exif_rotation:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_secure_storage:
@@ -91,18 +90,20 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker/ios"
   intercom_flutter:
     :path: ".symlinks/plugins/intercom_flutter/ios"
-  multi_image_picker:
-    :path: ".symlinks/plugins/multi_image_picker/ios"
   onesignal_flutter:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  screen:
+    :path: ".symlinks/plugins/screen/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  thumbnails:
+    :path: ".symlinks/plugins/thumbnails/ios"
   uni_links:
     :path: ".symlinks/plugins/uni_links/ios"
   url_launcher:
@@ -111,10 +112,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_player/ios"
 
 SPEC CHECKSUMS:
-  BSGridCollectionViewLayout: 568273e113fbc815f868f1898ef0465aee68f955
-  BSImagePicker: fa0c15b6740e8aa7a7b7f0fe38a71ad4cfa0ec4a
-  BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   device_info: 3ebad48f726348f69abd802f3334a8d1ed795fbd
+  file_picker: 408623be2125b79a4539cf703be3d4b3abe5e245
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   flutter_exif_rotation: 093dd59f20679d71ce9ae186f2b86c01307b9a6a
   flutter_secure_storage: 0c5779648ff644110e507909b77a57e620cbbf8b
@@ -123,13 +122,14 @@ SPEC CHECKSUMS:
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   Intercom: d189cf8cc8591e7e63dbb10ee4401a70a7fdc9d6
   intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
-  multi_image_picker: d6e8f30e690884434ad13f1417567edb21da8547
   OneSignal: 8fb749fa07f88006403c9b659a570fb7fb74519a
   onesignal_flutter: f0eab25765dd95978c19dc64a87a8a33387909fa
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
+  screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
+  thumbnails: bb4f4e9bb4b51c8ae4e6ad9a2fa81373f9b634ad
   TOCropViewController: 00dc36c4e4a0f4a45efa91adbf22df8a4fae01d3
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
