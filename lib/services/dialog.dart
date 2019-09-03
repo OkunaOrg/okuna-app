@@ -5,6 +5,7 @@ import 'package:Okuna/pages/home/dialogs/video_dialog.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/pages/home/modals/zoomable_photo.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -68,6 +69,7 @@ class DialogService {
       {String videoUrl,
       File video,
       VideoPlayerController videoPlayerController,
+        ChewieController chewieController,
       @required BuildContext context}) {
     return showGeneralDialog(
       context: context,
@@ -78,6 +80,8 @@ class DialogService {
           child: OBVideoDialog(
             video: video,
             videoUrl: videoUrl,
+            videoPlayerController: videoPlayerController,
+              chewieController: chewieController,
           ),
         );
         return Builder(builder: (BuildContext context) {

@@ -9,27 +9,28 @@ import 'package:chewie/src/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class OBControls extends StatefulWidget {
-  final bool isDismissable;
-  final VoidCallback onExpandCollapse;
+class OBVideoPlayerControls extends StatefulWidget {
+  final Function(Function) onExpandCollapse;
+  final OBVideoPlayerControlsController controller;
 
-  const OBControls({Key key, this.isDismissable = true, this.onExpandCollapse})
+  const OBVideoPlayerControls({Key key, this.onExpandCollapse, this.controller})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return OBControlsState();
+    return OBVideoPlayerControlsState();
   }
 }
 
-class OBControlsState extends State<OBControls> {
+class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
   VideoPlayerValue _latestValue;
   double _latestVolume;
   bool _hideStuff = true;
   Timer _hideTimer;
-  Timer _showTimer;
+  Timer _initTimer;
   Timer _showAfterExpandCollapseTimer;
   bool _dragging = false;
+  bool _isDismissable;
 
   final barHeight = 48.0;
   final marginSize = 5.0;
@@ -85,7 +86,7 @@ class OBControlsState extends State<OBControls> {
           _buildBottomBar(context, controller),
         ],
       ),
-      _hideStuff || !widget.isDismissable
+      _hideStuff || !_isDismissable
           ? new Container()
           : new IconButton(
               icon: new Icon(
@@ -102,6 +103,13 @@ class OBControlsState extends State<OBControls> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _isDismissable = false;
+    //widget.controller.attach(this);
+  }
+
+  @override
   void dispose() {
     _dispose();
     super.dispose();
@@ -110,7 +118,7 @@ class OBControlsState extends State<OBControls> {
   void _dispose() {
     controller.removeListener(_updateState);
     _hideTimer?.cancel();
-    _showTimer?.cancel();
+    _initTimer?.cancel();
     _showAfterExpandCollapseTimer?.cancel();
   }
 
@@ -156,7 +164,9 @@ class OBControlsState extends State<OBControls> {
   GestureDetector _buildExpandButton() {
     return new GestureDetector(
       onTap: widget.onExpandCollapse != null
-          ? widget.onExpandCollapse
+          ? () {
+              widget.onExpandCollapse(_onExpandCollapse);
+            }
           : _onExpandCollapse,
       child: new AnimatedOpacity(
         opacity: _hideStuff ? 0.0 : 1.0,
@@ -318,11 +328,13 @@ class OBControlsState extends State<OBControls> {
       _startHideTimer();
     }
 
-    _showTimer = Timer(Duration(milliseconds: 200), () {
-      setState(() {
-        _hideStuff = false;
+    if (chewieController.showControlsOnInitialize) {
+      _initTimer = Timer(Duration(milliseconds: 200), () {
+        setState(() {
+          _hideStuff = false;
+        });
       });
-    });
+    }
   }
 
   void _onExpandCollapse() {
@@ -372,6 +384,14 @@ class OBControlsState extends State<OBControls> {
     });
   }
 
+  void setIsDismissible(bool isDismissible) {
+    debugLog('Setting isDismissible to ${isDismissible.toString()}');
+
+    setState(() {
+      _isDismissable = isDismissible;
+    });
+  }
+
   Widget _buildProgressBar() {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     OBTheme activeTheme = openbookProvider.themeService.getActiveTheme();
@@ -407,5 +427,25 @@ class OBControlsState extends State<OBControls> {
         ),
       ),
     );
+  }
+
+  void debugLog(String log) {
+    debugPrint('OBVideoPlayerControls:$log');
+  }
+}
+
+class OBVideoPlayerControlsController {
+  OBVideoPlayerControlsState _state;
+  bool isDismissable;
+
+  OBVideoPlayerControlsController({this.isDismissable});
+
+  void attach(state) {
+    _state = state;
+  }
+
+  void setIsDismissible(bool isDismissible) {
+    _state.setIsDismissible(isDismissible);
+    this.isDismissable = isDismissible;
   }
 }

@@ -67,9 +67,11 @@ packages:
   chewie:
     dependency: "direct main"
     description:
-      name: chewie
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "5851cd6030c9abe70de24a68a8830fd233d81d3b"
+      url: "git@github.com:OkunaOrg/chewie.git"
+    source: git
     version: "0.9.7"
   collection:
     dependency: transitive

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/widgets/custom_chewie/src/ob_controls.dart';
+import 'package:Okuna/widgets/custom_chewie/src/ob_video_player_controls.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +12,20 @@ class OBVideoPlayer extends StatefulWidget {
   final File video;
   final String videoUrl;
   final String thumbnailUrl;
+  final bool expandInDialog;
   final bool isDismissable;
-  final bool openInDialog;
+  final ChewieController chewieController;
+  final VideoPlayerController videoPlayerController;
 
   const OBVideoPlayer(
       {Key key,
       this.video,
       this.videoUrl,
-      this.isDismissable = true,
-      this.openInDialog = false,
-      this.thumbnailUrl})
+      this.expandInDialog = false,
+      this.thumbnailUrl,
+      this.chewieController,
+      this.videoPlayerController,
+      this.isDismissable = false})
       : super(key: key);
 
   @override
@@ -33,31 +37,45 @@ class OBVideoPlayer extends StatefulWidget {
 class OBVideoPlayerState extends State<OBVideoPlayer> {
   VideoPlayerController _playerController;
   ChewieController _chewieController;
+  OBVideoPlayerControlsController _obVideoPlayerControlsController;
 
   Future _initializeVideoPlayerFuture;
 
   bool _needsChewieBootstrap;
 
+  bool _isVideoHandover;
+  bool _hasVideoOpenedInDialog;
+
   @override
   void initState() {
     super.initState();
+    _hasVideoOpenedInDialog = false;
     _needsChewieBootstrap = true;
+
+    _isVideoHandover =
+        widget.videoPlayerController != null && widget.chewieController != null;
+
     if (widget.videoUrl != null) {
       _playerController = VideoPlayerController.network(widget.videoUrl);
     } else if (widget.video != null) {
       _playerController = VideoPlayerController.file(widget.video);
+    } else if (widget.videoPlayerController != null) {
+      _playerController = widget.videoPlayerController;
     } else {
       throw Exception('Video dialog requires video or videoUrl.');
     }
 
-    _initializeVideoPlayerFuture = _playerController.initialize();
+    _initializeVideoPlayerFuture =
+        _isVideoHandover ? Future.value() : _playerController.initialize();
   }
 
   @override
   void dispose() {
     super.dispose();
-    if (_playerController.hasListeners) _playerController.dispose();
-    _playerController.dispose();
+    if (!_isVideoHandover) {
+      _playerController.dispose();
+      _chewieController.dispose();
+    }
   }
 
   @override
@@ -72,17 +90,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (_needsChewieBootstrap) {
-            double aspectRatio = _playerController.value.aspectRatio;
-            _chewieController = ChewieController(
-                videoPlayerController: _playerController,
-                allowFullScreen: false,
-                customControls: OBControls(
-                  isDismissable: widget.isDismissable,
-                  onExpandCollapse: widget.openInDialog ? _openInDialog : null,
-                ),
-                aspectRatio: aspectRatio,
-                autoPlay: true,
-                looping: true);
+            _chewieController = _getChewieController();
             _needsChewieBootstrap = false;
           }
 
@@ -113,9 +121,37 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     );
   }
 
-  void _openInDialog() {
+  void _openInDialog(Function originalExpandFunction) async {
+    if (_hasVideoOpenedInDialog) {
+      originalExpandFunction();
+      return;
+    }
+
+    _hasVideoOpenedInDialog = true;
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    openbookProvider.dialogService.showVideo(
-        context: context, video: widget.video, videoUrl: widget.videoUrl);
+    await openbookProvider.dialogService.showVideo(
+        context: context,
+        video: widget.video,
+        videoUrl: widget.videoUrl,
+        videoPlayerController: _playerController,
+        chewieController: _chewieController);
+    _hasVideoOpenedInDialog = false;
+  }
+
+// Return back to config
+
+  ChewieController _getChewieController() {
+    if (widget.chewieController != null) return widget.chewieController;
+    double aspectRatio = _playerController.value.aspectRatio;
+    return ChewieController(
+        videoPlayerController: _playerController,
+        showControlsOnInitialize: false,
+        customControls: OBVideoPlayerControls(
+          controller: _obVideoPlayerControlsController,
+          onExpandCollapse: widget.expandInDialog ? _openInDialog : null,
+        ),
+        aspectRatio: aspectRatio,
+        autoPlay: true,
+        looping: true);
   }
 }

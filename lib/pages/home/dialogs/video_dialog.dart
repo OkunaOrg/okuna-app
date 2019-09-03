@@ -1,18 +1,25 @@
 import 'dart:io';
 
-import 'package:Okuna/widgets/custom_chewie/src/ob_controls.dart';
+import 'package:Okuna/widgets/custom_chewie/src/ob_video_player_controls.dart';
 import 'package:Okuna/widgets/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:video_player/video_player.dart';
 
 class OBVideoDialog extends StatelessWidget {
   final File video;
   final String videoUrl;
+  final ChewieController chewieController;
+  final VideoPlayerController videoPlayerController;
 
   const OBVideoDialog(
-      {Key key, this.video, this.videoUrl})
+      {Key key,
+      this.video,
+      this.videoUrl,
+      this.chewieController,
+      this.videoPlayerController})
       : super(key: key);
 
   @override
@@ -29,6 +36,8 @@ class OBVideoDialog extends StatelessWidget {
               child: OBVideoPlayer(
             video: video,
             videoUrl: videoUrl,
+            videoPlayerController: videoPlayerController,
+            chewieController: chewieController,
           ))),
     );
   }
