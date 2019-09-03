@@ -7,6 +7,7 @@ import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/pages/home/modals/zoomable_photo.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:video_player/video_player.dart';
@@ -70,8 +71,9 @@ class DialogService {
       File video,
       VideoPlayerController videoPlayerController,
         ChewieController chewieController,
-      @required BuildContext context}) {
-    return showGeneralDialog(
+      @required BuildContext context}) async {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    await showGeneralDialog(
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,
           Animation<double> secondaryAnimation) {
@@ -96,6 +98,7 @@ class DialogService {
       transitionDuration: const Duration(milliseconds: 100),
       transitionBuilder: _buildMaterialDialogTransitions,
     );
+    SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top, SystemUiOverlay.bottom]);
   }
 
   Widget _buildMaterialDialogTransitions(

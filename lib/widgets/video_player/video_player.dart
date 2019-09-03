@@ -79,11 +79,6 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.black, // navigation bar color
-      statusBarColor: Colors.black, // status bar color
-    ));
-
     return FutureBuilder(
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {

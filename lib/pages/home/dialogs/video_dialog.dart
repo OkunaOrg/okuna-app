@@ -4,7 +4,6 @@ import 'package:Okuna/widgets/video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class OBVideoDialog extends StatelessWidget {
@@ -23,11 +22,6 @@ class OBVideoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.black, // navigation bar color
-      statusBarColor: Colors.black, // status bar color
-    ));
-
     return SafeArea(
       child: CupertinoPageScaffold(
           backgroundColor: Colors.black,

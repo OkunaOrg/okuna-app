@@ -1,5 +1,7 @@
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/services/storage.dart';
+import 'package:flutter/services.dart';
+import 'package:pigment/pigment.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math';
 
@@ -128,7 +130,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-        'assets/images/theme-previews/theme-preview-light-royale.png'),
+            'assets/images/theme-previews/theme-preview-light-royale.png'),
     OBTheme(
         id: 10,
         name: 'Space Royale',
@@ -141,7 +143,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-        'assets/images/theme-previews/theme-preview-space-royale.png'),
+            'assets/images/theme-previews/theme-preview-space-royale.png'),
     OBTheme(
         id: 11,
         name: 'Light Cinnabar',
@@ -182,6 +184,8 @@ class ThemeService {
   void setActiveTheme(OBTheme theme) {
     _setActiveTheme(theme);
     _storeActiveThemeId(theme.id);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Pigment.fromString(theme.primaryColor)));
   }
 
   void _bootstrap() async {
