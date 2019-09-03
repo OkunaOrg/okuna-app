@@ -4,6 +4,7 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/pages/home/pages/timeline/widgets/timeline-posts.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/widgets/badges/badge.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
@@ -44,6 +45,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _modalService = openbookProvider.modalService;
+    LocalizationService _localizationService = openbookProvider.localizationService;
 
     return OBCupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
@@ -57,18 +59,26 @@ class OBTimelinePageState extends State<OBTimelinePage> {
               Positioned(
                   bottom: 20.0,
                   right: 20.0,
-                  child: OBFloatingActionButton(
-                      type: OBButtonType.primary,
-                      onPressed: () async {
-                        Post createdPost = await _modalService.openCreatePost(
-                            context: context);
-                        if (createdPost != null) {
-                          _timelinePostsController.addPostToTop(createdPost);
-                          _timelinePostsController.scrollToTop();
-                        }
-                      },
-                      child: const OBIcon(OBIcons.createPost,
-                          size: OBIconSize.large, color: Colors.white)))
+                  child: Semantics(
+                    button: true,
+                    label: _localizationService.post__create_new_post_label,
+                    child: OBFloatingActionButton(
+                        type: OBButtonType.primary,
+                        onPressed: () async {
+                          Post createdPost = await _modalService.openCreatePost(
+                              context: context);
+                          if (createdPost != null) {
+                            _timelinePostsController.addPostToTop(createdPost);
+                            _timelinePostsController.scrollToTop();
+                          }
+                        },
+                        child: const OBIcon(OBIcons.createPost,
+                            size: OBIconSize.large, color: Colors.white)
+                    )
+                  )
+
+
+                  )
             ],
           ),
         ));
