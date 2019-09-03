@@ -27,7 +27,6 @@ def parse_KV_file(file, separator='=')
 end
 
 target 'Runner' do
-  use_frameworks!
   # Prepare symlinks folder. We use symlinks to avoid having Podfile.lock
   # referring to absolute paths on developers' machines.
   system('rm -rf .symlinks')
@@ -56,7 +55,6 @@ target 'Runner' do
 end
 
 target 'OneSignalNotificationServiceExtension' do
-  use_frameworks!
   pod 'OneSignal', '>= 2.9.5', '< 3.0'
 end
 
