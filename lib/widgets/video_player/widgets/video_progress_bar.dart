@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 class OBVideoProgressBar extends StatefulWidget {
   final VideoPlayerController controller;
   final ChewieProgressColors colors;
+
   final Function() onDragStart;
   final Function() onDragEnd;
   final Function() onDragUpdate;

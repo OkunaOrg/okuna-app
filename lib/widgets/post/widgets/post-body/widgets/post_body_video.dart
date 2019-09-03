@@ -1,7 +1,6 @@
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/video_format.dart';
-import 'package:Okuna/widgets/custom_chewie/src/ob_video_player_controls.dart';
-import 'package:Okuna/widgets/video_player.dart';
+import 'package:Okuna/widgets/video_player/video_player.dart';
 import 'package:flutter/material.dart';
 
 class OBPostBodyVideo extends StatelessWidget {
@@ -27,7 +26,6 @@ class OBPostBodyVideo extends StatelessWidget {
       child: OBVideoPlayer(
         videoUrl: videoUrl,
         thumbnailUrl: postVideo.thumbnail,
-        expandInDialog: true,
       ),
     );
   }

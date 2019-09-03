@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/widgets/custom_chewie/src/ob_video_player_controls.dart';
+import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,20 +12,18 @@ class OBVideoPlayer extends StatefulWidget {
   final File video;
   final String videoUrl;
   final String thumbnailUrl;
-  final bool expandInDialog;
-  final bool isDismissable;
   final ChewieController chewieController;
   final VideoPlayerController videoPlayerController;
+  final bool isInDialog;
 
   const OBVideoPlayer(
       {Key key,
       this.video,
       this.videoUrl,
-      this.expandInDialog = false,
       this.thumbnailUrl,
       this.chewieController,
       this.videoPlayerController,
-      this.isDismissable = false})
+      this.isInDialog = false})
       : super(key: key);
 
   @override
@@ -49,7 +47,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   @override
   void initState() {
     super.initState();
-    _hasVideoOpenedInDialog = false;
+    _obVideoPlayerControlsController = OBVideoPlayerControlsController();
+    _hasVideoOpenedInDialog = widget.isInDialog ?? false;
     _needsChewieBootstrap = true;
 
     _isVideoHandover =
@@ -121,9 +120,10 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     );
   }
 
-  void _openInDialog(Function originalExpandFunction) async {
+  void _onExpandCollapse(Function originalExpandFunction) async {
     if (_hasVideoOpenedInDialog) {
-      originalExpandFunction();
+      _obVideoPlayerControlsController.pop();
+      _hasVideoOpenedInDialog = false;
       return;
     }
 
@@ -147,9 +147,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         videoPlayerController: _playerController,
         showControlsOnInitialize: false,
         customControls: OBVideoPlayerControls(
-          controller: _obVideoPlayerControlsController,
-          onExpandCollapse: widget.expandInDialog ? _openInDialog : null,
-        ),
+            controller: _obVideoPlayerControlsController,
+            onExpandCollapse: _onExpandCollapse),
         aspectRatio: aspectRatio,
         autoPlay: true,
         looping: true);

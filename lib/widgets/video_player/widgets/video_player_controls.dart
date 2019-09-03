@@ -106,7 +106,7 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
   void initState() {
     super.initState();
     _isDismissable = false;
-    //widget.controller.attach(this);
+    if (widget.controller != null) widget.controller.attach(this);
   }
 
   @override
@@ -436,9 +436,8 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
 
 class OBVideoPlayerControlsController {
   OBVideoPlayerControlsState _state;
-  bool isDismissable;
 
-  OBVideoPlayerControlsController({this.isDismissable});
+  OBVideoPlayerControlsController();
 
   void attach(state) {
     _state = state;
@@ -446,6 +445,9 @@ class OBVideoPlayerControlsController {
 
   void setIsDismissible(bool isDismissible) {
     _state.setIsDismissible(isDismissible);
-    this.isDismissable = isDismissible;
+  }
+
+  void pop() {
+    Navigator.of(_state.context).pop();
   }
 }
