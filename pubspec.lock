@@ -660,13 +660,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.5"
-  thumbnails:
-    dependency: "direct main"
-    description:
-      name: thumbnails
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   timeago:
     dependency: "direct main"
     description:

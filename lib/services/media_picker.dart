@@ -13,7 +13,7 @@ import 'bottom_sheet.dart';
 export 'package:image_picker/image_picker.dart';
 
 class MediaPickerService {
-  static Uuid uuid = new Uuid();
+  static Uuid _uuid = new Uuid();
 
   static const Map IMAGE_RATIOS = {
     OBImageType.avatar: {'x': 1.0, 'y': 1.0},
@@ -41,7 +41,7 @@ class MediaPickerService {
     List<int> convertedImageData =
         await ImageConverter.convertImage(pickedImage.readAsBytesSync());
 
-    String tmpImageName = uuid.v4() + '.jpg';
+    String tmpImageName = _uuid.v4() + '.jpg';
     final path = await _getTempPath();
     final file = File('$path/$tmpImageName');
     file.writeAsBytesSync(convertedImageData);
@@ -77,7 +77,7 @@ class MediaPickerService {
 
     if (pickedVideo == null) return null;
     String videoExtension = basename(pickedVideo.path);
-    String tmpImageName = uuid.v4() + videoExtension;
+    String tmpImageName = _uuid.v4() + videoExtension;
     final path = await _getTempPath();
     final String pickedVideoCopyPath = '$path/$tmpImageName';
     File pickedVideoCopy = await pickedVideo.copy(pickedVideoCopyPath);
@@ -96,6 +96,19 @@ class MediaPickerService {
     final directory = await getApplicationDocumentsDirectory();
 
     return directory.path;
+  }
+
+  Future<File> getVideoThumbnail(File videoFile) async {
+    return videoFile;
+
+//    String videoExtension = basename(videoFile.path);
+//    String tmpImageName = 'thumbnail_' + _uuid.v4() + videoExtension;
+//    final tempPath = await _getTempPath();
+//    final String thumbnailPath = '$tempPath/$tmpImageName';
+//    final file = File(thumbnailPath);
+//    file.writeAsBytesSync(thumbnailData);
+//
+//    return file;
   }
 }
 

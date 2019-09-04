@@ -123,7 +123,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _validationService = openbookProvider.validationService;
-    _imagePickerService = openbookProvider.imagePickerService;
+    _imagePickerService = openbookProvider.mediaPickerService;
     _localizationService = openbookProvider.localizationService;
     _themeValueParserService = openbookProvider.themeValueParserService;
     var themeService = openbookProvider.themeService;

@@ -91,7 +91,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
-    _imagePickerService = openbookProvider.imagePickerService;
+    _imagePickerService = openbookProvider.mediaPickerService;
     _validationService = openbookProvider.validationService;
     _localizationService = openbookProvider.localizationService;
 

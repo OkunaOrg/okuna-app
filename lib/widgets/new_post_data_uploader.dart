@@ -6,12 +6,12 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media_picker.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:mime/mime.dart';
-import 'package:thumbnails/thumbnails.dart';
 import 'package:async/async.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
@@ -41,6 +41,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
+  MediaPickerService _mediaPickerService;
 
   bool _needsBootstrap;
   OBPostUploaderStatus _status;
@@ -75,6 +76,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
+      _mediaPickerService = openbookProvider.mediaPickerService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -269,12 +271,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     if (mediaMimeType == 'image') {
       mediaThumbnail = mediaToPreview;
     } else if (mediaMimeType == 'video') {
-      String mediaThumbnailPath = await Thumbnails.getThumbnail(
-          // creates the specified path if it doesnt exist
-          videoFile: mediaToPreview.path,
-          imageType: ThumbFormat.JPEG,
-          quality: 30);
-      mediaThumbnail = File(mediaThumbnailPath);
+      mediaThumbnail = await _mediaPickerService.getVideoThumbnail(mediaToPreview);
     } else {
       debugLog('Unsupported media type for preview thumbnail');
     }

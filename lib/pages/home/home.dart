@@ -113,7 +113,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _validationService = openbookProvider.validationService;
-      _imagePickerService = openbookProvider.imagePickerService;
+      _imagePickerService = openbookProvider.mediaPickerService;
       _bootstrap();
       _needsBootstrap = false;
     }

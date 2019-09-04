@@ -134,7 +134,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       var openbookProvider = OpenbookProvider.of(context);
       _validationService = openbookProvider.validationService;
       _navigationService = openbookProvider.navigationService;
-      _imagePickerService = openbookProvider.imagePickerService;
+      _imagePickerService = openbookProvider.mediaPickerService;
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;

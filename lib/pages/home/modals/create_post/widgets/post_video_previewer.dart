@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:thumbnails/thumbnails.dart';
 
 class OBPostVideoPreview extends StatelessWidget {
   final File postVideo;
@@ -16,13 +15,15 @@ class OBPostVideoPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     double avatarBorderRadius = 10.0;
 
-    Widget videoPreview = FutureBuilder<String>(
-        future: Thumbnails.getThumbnail(
-            // creates the specified path if it doesnt exist
-            videoFile: postVideo.path,
-            imageType: ThumbFormat.JPEG,
-            quality: 30),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+
+
+    Widget videoPreview = FutureBuilder<File>(
+        future: openbookProvider.mediaPickerService.getVideoThumbnail(postVideo),
+        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+
+          print(snapshot.data);
+
           if (snapshot.data == null) return const SizedBox();
 
           return SizedBox(
@@ -31,7 +32,7 @@ class OBPostVideoPreview extends StatelessWidget {
             child: ClipRRect(
               borderRadius: new BorderRadius.circular(avatarBorderRadius),
               child: Image.file(
-                File(snapshot.data),
+                snapshot.data,
                 fit: BoxFit.cover,
               ),
             ),
