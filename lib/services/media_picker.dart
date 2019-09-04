@@ -119,7 +119,17 @@ class MediaPickerService {
   }
 
   Future<File> compressVideo(File video) async {
-    return video;
+    final FlutterFFmpeg _flutterFFmpeg = new FlutterFFmpeg();
+
+    String resultFileName = _uuid.v4() + '.mp4';
+    final path = await _getTempPath();
+    final String resultFilePath = '$path/$resultFileName';
+    var arguments = ["-i", video.path, resultFilePath];
+    await _flutterFFmpeg.executeWithArguments(arguments);
+
+    File resultFile = File(resultFilePath);
+
+    return resultFile;
   }
 }
 
