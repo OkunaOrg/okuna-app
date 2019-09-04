@@ -22,17 +22,16 @@ class OBVideoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: CupertinoPageScaffold(
-          backgroundColor: Colors.black,
-          child: Center(
-              child: OBVideoPlayer(
-            video: video,
-            videoUrl: videoUrl,
-            videoPlayerController: videoPlayerController,
-            chewieController: chewieController,
-            isInDialog: true,
-          ))),
-    );
+    return CupertinoPageScaffold(
+        backgroundColor: Colors.black,
+        child: SafeArea(
+            child: Center(
+                child: OBVideoPlayer(
+          video: video,
+          videoUrl: videoUrl,
+          videoPlayerController: videoPlayerController,
+          chewieController: chewieController,
+          isInDialog: true,
+        ))));
   }
 }
