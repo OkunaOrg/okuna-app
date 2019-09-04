@@ -3593,18 +3593,24 @@ class LocalizationService {
         name: 'post_uploader__creating_post');
   }
 
+  String get post_uploader__compressing_media {
+    return Intl.message("Compressing media...",
+        name: 'post_uploader__compressing_media');
+  }
+
   String get post_uploader__uploading_media {
     return Intl.message("Uploading media...",
         name: 'post_uploader__uploading_media');
   }
 
   String get post_uploader__publishing {
-    return Intl.message("Publishing post...", name: 'post_uploader__publishing');
+    return Intl.message("Publishing post...",
+        name: 'post_uploader__publishing');
   }
 
-
   String get post_uploader__processing {
-    return Intl.message("Processing post...", name: 'post_uploader__processing');
+    return Intl.message("Processing post...",
+        name: 'post_uploader__processing');
   }
 
   String get post_uploader__success {

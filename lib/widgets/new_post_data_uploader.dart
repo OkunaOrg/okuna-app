@@ -117,6 +117,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
             left: 0,
             right: 0,
             child: _status == OBPostUploaderStatus.creatingPost ||
+                    _status == OBPostUploaderStatus.compressingPostMedia ||
                     _status == OBPostUploaderStatus.addingPostMedia ||
                     _status == OBPostUploaderStatus.processing
                 ? _buildProgressBar()
@@ -139,7 +140,14 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
         _data.createdDraftPost = await _createPost();
       }
 
-      if (_data.remainingMediaToUpload.isNotEmpty) {
+      if (_data.remainingMediaToCompress.isNotEmpty) {
+        _setStatusMessage(
+            _localizationService.post_uploader__compressing_media);
+        _setStatus(OBPostUploaderStatus.compressingPostMedia);
+        await _compressPostMedia();
+      }
+
+      if (_data.remainingCompressedMediaToUpload.isNotEmpty) {
         _setStatusMessage(_localizationService.post_uploader__uploading_media);
         _setStatus(OBPostUploaderStatus.addingPostMedia);
         await _addPostMedia();
@@ -220,22 +228,44 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     widget.onPostPublished(publishedPost, widget.data);
   }
 
+  Future _compressPostMedia() {
+    debugLog('Compressing post media');
+
+    return Future.wait(
+        _data.remainingMediaToCompress.map(_compressPostMediaItem).toList());
+  }
+
+  Future _compressPostMediaItem(File postMediaItem) async {
+    String mediaMime = lookupMimeType(postMediaItem.path);
+    String mediaMimeType = mediaMime.split('/')[0];
+
+    if (mediaMimeType == 'image') {
+      _data.remainingCompressedMediaToUpload.add(postMediaItem);
+    } else if (mediaMimeType == 'video') {
+      File compressedVideo =
+          await _mediaPickerService.compressVideo(postMediaItem);
+      _data.remainingCompressedMediaToUpload.add(compressedVideo);
+    } else {
+      debugLog('Unsupported media type for compression');
+    }
+
+    _data.remainingMediaToCompress.remove(postMediaItem);
+  }
+
   Future _addPostMedia() {
     debugLog('Adding post media');
 
-    return Future.wait(
-        _data.remainingMediaToUpload.map(_uploadPostMediaItem).toList());
+    return Future.wait(_data.remainingCompressedMediaToUpload
+        .map(_uploadPostMediaItem)
+        .toList());
   }
 
   Future _uploadPostMediaItem(File file) async {
     await _userService.addMediaToPost(file: file, post: _data.createdDraftPost);
-    _data.remainingMediaToUpload.remove(file);
+    _data.remainingCompressedMediaToUpload.remove(file);
   }
 
   Widget _buildProgressBar() {
-    if (_status != OBPostUploaderStatus.addingPostMedia &&
-        _status != OBPostUploaderStatus.creatingPost &&
-        _status != OBPostUploaderStatus.processing) return const SizedBox();
     return OBLinearProgressIndicator();
   }
 
@@ -271,7 +301,8 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     if (mediaMimeType == 'image') {
       mediaThumbnail = mediaToPreview;
     } else if (mediaMimeType == 'video') {
-      mediaThumbnail = await _mediaPickerService.getVideoThumbnail(mediaToPreview);
+      mediaThumbnail =
+          await _mediaPickerService.getVideoThumbnail(mediaToPreview);
     } else {
       debugLog('Unsupported media type for preview thumbnail');
     }
@@ -416,14 +447,15 @@ class OBNewPostData {
   // State persistence variables
   Post createdDraftPost;
   OBPostStatus createdDraftPostStatus;
-  List<File> remainingMediaToUpload;
+  List<File> remainingMediaToCompress;
+  List<File> remainingCompressedMediaToUpload = [];
   bool postPublishRequested = false;
   File mediaThumbnail;
 
   String _cachedKey;
 
   OBNewPostData({this.text, this.media, this.community, this.circles}) {
-    remainingMediaToUpload = media.toList();
+    remainingMediaToCompress = media.toList();
   }
 
   bool hasMedia() {
@@ -469,6 +501,7 @@ class OBNewPostData {
 enum OBPostUploaderStatus {
   idle,
   creatingPost,
+  compressingPostMedia,
   addingPostMedia,
   publishing,
   processing,

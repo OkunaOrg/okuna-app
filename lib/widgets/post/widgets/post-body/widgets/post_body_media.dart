@@ -104,6 +104,8 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     double mediaHeight = widget.post.mediaHeight;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    print('Post with id ${widget.post.id} has mediaWidth: ${mediaWidth} and mediaHeight: ${mediaHeight}');
+
     double thumbnailAspectRatio = mediaWidth / mediaHeight;
     double thumbnailHeight = (screenWidth / thumbnailAspectRatio);
 

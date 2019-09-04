@@ -228,6 +228,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_video_compress:
+    dependency: "direct main"
+    description:
+      name: flutter_video_compress
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.7+8"
   front_end:
     dependency: transitive
     description:
@@ -730,6 +737,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.2"
+  video_thumbnail:
+    dependency: "direct main"
+    description:
+      name: video_thumbnail
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5+1"
   vm_service_client:
     dependency: transitive
     description:

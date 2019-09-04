@@ -5,7 +5,6 @@ import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class OBVideoPlayer extends StatefulWidget {
@@ -71,9 +70,9 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   @override
   void dispose() {
     super.dispose();
-    if (!_isVideoHandover) {
-      _playerController.dispose();
-      _chewieController.dispose();
+    if (!_isVideoHandover && mounted) {
+      if(_playerController != null ) _playerController.dispose();
+      if(_chewieController != null) _chewieController.dispose();
     }
   }
 
