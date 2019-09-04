@@ -18,7 +18,7 @@ dependencies:
   http_retry: ^0.1.1+3
   flutter_exif_rotation: ^0.2.2
   video_thumbnail: ^0.1.5+1
-  flutter_video_compress: ^0.3.7+8
+  flutter_ffmpeg: ^0.2.7
   chewie:
     git:
       url: git@github.com:OkunaOrg/chewie.git
