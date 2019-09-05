@@ -100,7 +100,6 @@ class PushNotificationsService {
   }
 
   void _onSubscriptionChanged(OSSubscriptionStateChanges changes) {
-
     OSSubscriptionState toState = changes.to;
     OSSubscriptionState fromState = changes.from;
     if (!fromState.subscribed && toState.subscribed) {

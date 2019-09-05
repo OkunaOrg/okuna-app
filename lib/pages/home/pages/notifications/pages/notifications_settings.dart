@@ -366,11 +366,8 @@ class OBNotificationsSettingsPageState
   }
 
   Future _refreshPushNotifications() async {
-    print('calling');
     bool isSubscribedToPushNotifications =
         await _pushNotificationsService.isSubscribedToPushNotifications();
-
-    print(isSubscribedToPushNotifications);
 
     setState(() {
       _pushNotifications = isSubscribedToPushNotifications;
