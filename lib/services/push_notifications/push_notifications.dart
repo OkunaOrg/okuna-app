@@ -22,7 +22,7 @@ class PushNotificationsService {
   final _pushNotificationOpenedSubject =
       PublishSubject<PushNotificationOpenedResult>();
 
-  void bootstrap() {
+  void bootstrap() async {
     OneSignal.shared.init(oneSignalAppId, iOSSettings: {
       OSiOSSettings.autoPrompt: false,
       OSiOSSettings.inAppLaunchUrl: true
@@ -34,6 +34,10 @@ class PushNotificationsService {
     OneSignal.shared.setNotificationReceivedHandler(_onNotificationReceived);
     OneSignal.shared.setNotificationOpenedHandler(_onNotificationOpened);
     OneSignal.shared.setSubscriptionObserver(_onSubscriptionChanged);
+    var isSubscribed = await this.isSubscribedToPushNotifications();
+    if (isSubscribed) {
+      this.enablePushNotifications();
+    }
   }
 
   Future<bool> isSubscribedToPushNotifications() async {
@@ -96,6 +100,7 @@ class PushNotificationsService {
   }
 
   void _onSubscriptionChanged(OSSubscriptionStateChanges changes) {
+
     OSSubscriptionState toState = changes.to;
     OSSubscriptionState fromState = changes.from;
     if (!fromState.subscribed && toState.subscribed) {
@@ -130,7 +135,7 @@ class PushNotificationsService {
   Future _untagDeviceFromPushNotifications() {
     return Future.wait([
       OneSignal.shared.deleteTag('user_id'),
-      OneSignal.shared.deleteTag('user_uuid')
+      OneSignal.shared.deleteTag('device_uuid')
     ]);
   }
 

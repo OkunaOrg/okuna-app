@@ -48,10 +48,8 @@ class OBNotificationsSettingsPageState
   @override
   void initState() {
     super.initState();
-    _pushNotifications = true;
     _needsBootstrap = true;
     _bootstrapInProgress = true;
-    _pushNotifications = true;
     _postCommentNotifications = true;
     _postCommentReactionNotifications = true;
     _postCommentReplyNotifications = true;
@@ -368,8 +366,11 @@ class OBNotificationsSettingsPageState
   }
 
   Future _refreshPushNotifications() async {
+    print('calling');
     bool isSubscribedToPushNotifications =
         await _pushNotificationsService.isSubscribedToPushNotifications();
+
+    print(isSubscribedToPushNotifications);
 
     setState(() {
       _pushNotifications = isSubscribedToPushNotifications;
