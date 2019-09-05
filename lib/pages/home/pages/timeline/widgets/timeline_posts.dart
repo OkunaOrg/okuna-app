@@ -20,6 +20,7 @@ import 'package:Okuna/widgets/tiles/loading_indicator_tile.dart';
 import 'package:Okuna/widgets/tiles/retry_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:inview_notifier_list/inview_notifier_list.dart';
 
 class OBTimelinePosts extends StatefulWidget {
   final OBTimelinePostsController controller;
@@ -100,7 +101,7 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
     );
   }
 
-  Widget _buildTimelineItems() {
+  Widget _buildTimelineItemss() {
     return ListView.builder(
         controller: _postsScrollController,
         physics: const ClampingScrollPhysics(),
@@ -108,6 +109,36 @@ class OBTimelinePostsState extends State<OBTimelinePosts> {
         padding: const EdgeInsets.all(0),
         itemCount: _posts.length + _newPostsData.length,
         itemBuilder: _buildTimelineItem);
+  }
+
+  Widget _buildTimelineItems() {
+    return InViewNotifierList(
+      isInViewPortCondition: _checkTimelineItemIsInViewport,
+      children: _buildTimelinePostsItems(),
+    );
+  }
+
+  List<Widget> _buildTimelinePostsItems() {
+    return _posts.map(_buildTimelinePostItem).toList();
+  }
+
+  Widget _buildTimelinePostItem(Post post) {
+    return OBPost(
+      post,
+      onPostDeleted: _onPostDeleted,
+      key: Key(
+        post.id.toString(),
+      ),
+    );
+  }
+
+  bool _checkTimelineItemIsInViewport(
+    double deltaTop,
+    double deltaBottom,
+    double viewPortDimension,
+  ) {
+    return deltaTop < (0.5 * viewPortDimension) &&
+        deltaBottom > (0.5 * viewPortDimension);
   }
 
   Widget _buildTimelineItem(BuildContext context, int index) {

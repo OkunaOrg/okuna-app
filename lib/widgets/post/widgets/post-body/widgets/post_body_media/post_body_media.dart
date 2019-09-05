@@ -6,8 +6,8 @@ import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
-import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_image.dart';
-import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_video.dart';
+import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_image.dart';
+import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_video.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
@@ -15,8 +15,9 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBPostBodyMedia extends StatefulWidget {
   final Post post;
+  final String inViewId;
 
-  const OBPostBodyMedia({this.post});
+  const OBPostBodyMedia({this.post, this.inViewId});
 
   @override
   OBPostBodyMediaState createState() {
@@ -104,8 +105,6 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     double mediaHeight = widget.post.mediaHeight;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    print('Post with id ${widget.post.id} has mediaWidth: ${mediaWidth} and mediaHeight: ${mediaHeight}');
-
     double thumbnailAspectRatio = mediaWidth / mediaHeight;
     double thumbnailHeight = (screenWidth / thumbnailAspectRatio);
 
@@ -138,8 +137,10 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
         );
         break;
       case PostVideo:
-        postMediaItemWidget =
-            OBPostBodyVideo(postVideo: postMediaItemContentObject);
+        postMediaItemWidget = OBPostBodyVideo(
+            postVideo: postMediaItemContentObject,
+            post: widget.post,
+            inViewId: widget.inViewId);
         break;
       default:
         postMediaItemWidget = Center(

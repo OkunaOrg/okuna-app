@@ -3630,6 +3630,41 @@ class LocalizationService {
         name: 'post_body_media__unsupported');
   }
 
+  String get posts_stream__all_loaded {
+    return Intl.message("🎉  All posts loaded",
+        name: 'posts_stream__all_loaded');
+  }
+
+  String get posts_stream__refreshing_drhoo_title {
+    return Intl.message("Hang in there!",
+        name: 'posts_stream__refreshing_drhoo_title');
+  }
+
+  String get posts_stream__refreshing_drhoo_subtitle {
+    return Intl.message("Loading your timeline.",
+        name: 'posts_stream__refreshing_drhoo_subtitle');
+  }
+
+  String get posts_stream__empty_drhoo_title {
+    return Intl.message("This stream is empty.",
+        name: 'posts_stream__no_more_drhoo_title');
+  }
+
+  String get posts_stream__empty_drhoo_subtitle {
+    return Intl.message("Try refreshing in a couple of seconds.",
+        name: 'posts_stream__empty_drhoo_subtitle');
+  }
+
+  String get posts_stream__failed_drhoo_title {
+    return Intl.message("Could not load the stream.",
+        name: 'posts_stream__failed_drhoo_title');
+  }
+
+  String get posts_stream__failed_drhoo_subtitle {
+    return Intl.message("Try again in a couple seconds",
+        name: 'posts_stream__failed_drhoo_subtitle');
+  }
+
   Locale getLocale() {
     return locale;
   }
