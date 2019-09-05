@@ -6,7 +6,7 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/media_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/text.dart';
@@ -41,7 +41,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
-  MediaPickerService _mediaPickerService;
+  MediaService _mediaPickerService;
 
   bool _needsBootstrap;
   OBPostUploaderStatus _status;
@@ -240,11 +240,15 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     String mediaMimeType = mediaMime.split('/')[0];
 
     if (mediaMimeType == 'image') {
-      _data.remainingCompressedMediaToUpload.add(postMediaItem);
+      File compressedImage =
+          await _mediaPickerService.compressImage(postMediaItem);
+      _data.remainingCompressedMediaToUpload.add(compressedImage);
+      debugLog('Compressed image from ${postMediaItem.lengthSync()} to ${compressedImage.lengthSync()}');
     } else if (mediaMimeType == 'video') {
       File compressedVideo =
           await _mediaPickerService.compressVideo(postMediaItem);
       _data.remainingCompressedMediaToUpload.add(compressedVideo);
+      debugLog('Compressed video from ${postMediaItem.lengthSync()} to ${compressedVideo.lengthSync()}');
     } else {
       debugLog('Unsupported media type for compression');
     }

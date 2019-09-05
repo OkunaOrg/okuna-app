@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
 import 'package:Okuna/services/validation.dart';
@@ -14,7 +15,7 @@ import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'bottom_sheet.dart';
 export 'package:image_picker/image_picker.dart';
 
-class MediaPickerService {
+class MediaService {
   static Uuid _uuid = new Uuid();
 
   static const Map IMAGE_RATIOS = {
@@ -130,6 +131,22 @@ class MediaPickerService {
     File resultFile = File(resultFilePath);
 
     return resultFile;
+  }
+
+  Future<File> compressImage(File image) async {
+    List<int> compressedImageData = await FlutterImageCompress.compressWithFile(
+      image.absolute.path,
+      quality: 80,
+    );
+
+    String imageExtension = basename(image.path);
+    String tmpImageName = 'compressed_image_' + _uuid.v4() + imageExtension;
+    final tempPath = await _getTempPath();
+    final String thumbnailPath = '$tempPath/$tmpImageName';
+    final file = File(thumbnailPath);
+    file.writeAsBytesSync(compressedImageData);
+
+    return file;
   }
 }
 

@@ -10,7 +10,7 @@ import 'package:Okuna/pages/home/modals/create_post/widgets/post_video_previewer
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/media_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
@@ -51,7 +51,7 @@ class CreatePostModal extends StatefulWidget {
 class CreatePostModalState extends State<CreatePostModal> {
   ValidationService _validationService;
   NavigationService _navigationService;
-  MediaPickerService _imagePickerService;
+  MediaService _imagePickerService;
   ToastService _toastService;
   LocalizationService _localizationService;
   UserService _userService;

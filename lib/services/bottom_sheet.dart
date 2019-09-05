@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
 
-import 'media_picker.dart';
+import 'media.dart';
 
 class BottomSheetService {
   Future<PostReaction> showReactToPost(

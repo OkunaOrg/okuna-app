@@ -4,7 +4,7 @@ import 'package:Okuna/services/communities_api.dart';
 import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/media_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:validators/validators.dart' as validators;
 
 import 'localization.dart';
