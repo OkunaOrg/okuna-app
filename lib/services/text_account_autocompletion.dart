@@ -15,7 +15,7 @@ class TextAccountAutocompletionService {
   }
 
   String autocompleteTextWithUsername(String text, String username){
-    String lastWord = text.split(' ').last;
+    String lastWord = text.split(RegExp(r'\s')).last;
 
     if(!lastWord.startsWith('@')){
       throw 'Tried to autocomplete text with username without @';
