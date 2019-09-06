@@ -4,7 +4,8 @@ import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
-import 'package:Okuna/widgets/posts_stream/widgets/stream_post.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/posts_stream/widgets/posts_stream_post.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/loading_indicator_tile.dart';
@@ -12,8 +13,6 @@ import 'package:Okuna/widgets/tiles/retry_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
-
-import '../icon.dart';
 
 class OBPostsStream extends StatefulWidget {
   final List<Widget> prependedItems;
@@ -23,6 +22,7 @@ class OBPostsStream extends StatefulWidget {
   final List<Post> initialPosts;
   final String streamIdentifier;
   final ValueChanged<List<Post>> onPostsRefreshed;
+  final bool refreshOnCreate;
 
   const OBPostsStream(
       {Key key,
@@ -32,7 +32,8 @@ class OBPostsStream extends StatefulWidget {
       this.controller,
       this.initialPosts,
       @required this.streamIdentifier,
-      this.onPostsRefreshed})
+      this.onPostsRefreshed,
+      this.refreshOnCreate = true})
       : super(key: key);
 
   @override
@@ -80,7 +81,13 @@ class OBPostsStreamState extends State<OBPostsStream> {
     _streamScrollController.removeListener(_onScroll);
   }
 
-  void _bootstrap() {}
+  void _bootstrap() {
+    if (widget.refreshOnCreate) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        _refresh();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +103,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: _refresh,
+      onRefresh: _refreshPosts,
       child: postsStreamWidget,
     );
   }
@@ -109,6 +116,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
     if (_status != OBPostsStreamStatus.idle)
       streamItems.add(_buildStatusTile());
     return InViewNotifierList(
+      controller: _streamScrollController,
       isInViewPortCondition: _checkTimelineItemIsInViewport,
       children: streamItems,
     );
@@ -119,7 +127,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   Widget _buildStreamPost(Post post) {
-    return OBStreamPost(
+    return OBPostsStreamPost(
       key: Key(post.id.toString()),
       post: post,
       streamIdentifier: widget.streamIdentifier,
@@ -294,10 +302,11 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   Future _refresh() {
-    _refreshIndicatorKey.currentState.show();
+    return _refreshIndicatorKey.currentState.show();
   }
 
   Future<void> _refreshPosts() async {
+    debugLog('Refreshing posts');
     _ensureNoRefreshPostsInProgress();
     _setStatus(OBPostsStreamStatus.refreshing);
     try {
@@ -324,6 +333,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   Future _loadMorePosts() async {
     if (_status == OBPostsStreamStatus.refreshing ||
         _status == OBPostsStreamStatus.noMoreToLoad) return null;
+    debugLog('Loading more posts');
     _ensureNoLoadMoreInProgress();
     _setStatus(OBPostsStreamStatus.loadingMore);
 
@@ -394,9 +404,9 @@ class OBPostsStreamController {
   OBPostsStreamState _state;
 
   /// Register the OBHomePostsState to the controller
-  void attach(OBPostsStreamState homePostsState) {
-    assert(homePostsState != null, 'Cannot attach to empty state');
-    _state = homePostsState;
+  void attach(OBPostsStreamState state) {
+    assert(state != null, 'Cannot attach to empty state');
+    _state = state;
   }
 
   void scrollToTop({bool skipRefresh = false}) {
@@ -407,8 +417,8 @@ class OBPostsStreamController {
     _state._addPostToTop(post);
   }
 
-  void refreshPosts() {
-    _state._refreshPosts();
+  Future refreshPosts() {
+    return _state._refreshPosts();
   }
 
   bool isAttached() {

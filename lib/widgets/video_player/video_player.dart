@@ -17,6 +17,7 @@ class OBVideoPlayer extends StatefulWidget {
   final ChewieController chewieController;
   final VideoPlayerController videoPlayerController;
   final bool isInDialog;
+  final bool autoPlay;
 
   const OBVideoPlayer(
       {Key key,
@@ -26,6 +27,7 @@ class OBVideoPlayer extends StatefulWidget {
       this.chewieController,
       this.videoPlayerController,
       this.isInDialog = false,
+      this.autoPlay = false,
       this.visibilityKey})
       : super(key: key);
 
@@ -117,10 +119,13 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
           return Stack(
             children: <Widget>[
               widget.thumbnailUrl != null
-                  ? Image(
-                      fit: BoxFit.cover,
-                      image: AdvancedNetworkImage(widget.thumbnailUrl,
-                          useDiskCache: true),
+                  ? Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                        image: AdvancedNetworkImage(widget.thumbnailUrl,
+                            useDiskCache: true),
+                      )),
                     )
                   : const SizedBox(),
               Positioned(
@@ -167,7 +172,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
             controller: _obVideoPlayerControlsController,
             onExpandCollapse: _onExpandCollapse),
         aspectRatio: aspectRatio,
-        autoPlay: true,
+        autoPlay: widget.autoPlay,
         looping: true);
   }
 

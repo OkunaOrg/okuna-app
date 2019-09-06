@@ -25,7 +25,7 @@ class OBPostBodyVideo extends StatelessWidget {
 
     String videoUrl = videoFormat.file;
 
-    if (inViewId != null) {
+    if (inViewId == null) {
       return SizedBox(
         height: imageHeight,
         width: screenWidth,
@@ -42,6 +42,8 @@ class OBPostBodyVideo extends StatelessWidget {
       animation: state,
       builder: (BuildContext context, Widget child) {
         final bool inView = state.inView(inViewId);
+
+        print('Post with id ${post.id.toString()} is in view: ${inView}');
 
         return SizedBox(
           height: imageHeight,

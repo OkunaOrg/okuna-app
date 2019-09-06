@@ -3,12 +3,12 @@ import 'package:Okuna/widgets/post/post.dart';
 import 'package:flutter/material.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 
-class OBStreamPost extends StatefulWidget {
+class OBPostsStreamPost extends StatefulWidget {
   final Post post;
   final String streamIdentifier;
   final ValueChanged<Post> onPostDeleted;
 
-  const OBStreamPost(
+  const OBPostsStreamPost(
       {Key key,
       @required this.post,
       @required this.streamIdentifier,
@@ -16,12 +16,12 @@ class OBStreamPost extends StatefulWidget {
       : super(key: key);
 
   @override
-  OBStreamPostState createState() {
-    return OBStreamPostState();
+  OBPostsStreamPostState createState() {
+    return OBPostsStreamPostState();
   }
 }
 
-class OBStreamPostState extends State<OBStreamPost> {
+class OBPostsStreamPostState extends State<OBPostsStreamPost> {
   @override
   Widget build(BuildContext context) {
     InViewState state = InViewNotifierList.of(context);
@@ -31,7 +31,7 @@ class OBStreamPostState extends State<OBStreamPost> {
     return OBPost(
       widget.post,
       onPostDeleted: widget.onPostDeleted,
-
+      inViewId: inViewId,
     );
   }
 }

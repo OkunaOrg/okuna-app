@@ -375,7 +375,6 @@ class UserService {
       int maxId,
       int count,
       String username,
-      bool areFirstPosts = false,
       bool cachePosts = false}) async {
     HttpieResponse response = await _postsApiService.getTimelinePosts(
         circleIds: circles.map((circle) => circle.id).toList(),
