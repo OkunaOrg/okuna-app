@@ -18,6 +18,7 @@ class OBVideoPlayer extends StatefulWidget {
   final Key visibilityKey;
   final ChewieController chewieController;
   final VideoPlayerController videoPlayerController;
+  final ValueChanged<ChewieController> onChewieControllerCreated;
   final bool isInDialog;
   final bool autoPlay;
 
@@ -30,7 +31,8 @@ class OBVideoPlayer extends StatefulWidget {
       this.videoPlayerController,
       this.isInDialog = false,
       this.autoPlay = false,
-      this.visibilityKey})
+      this.visibilityKey,
+      this.onChewieControllerCreated})
       : super(key: key);
 
   @override
@@ -170,7 +172,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   ChewieController _getChewieController() {
     if (widget.chewieController != null) return widget.chewieController;
     double aspectRatio = _playerController.value.aspectRatio;
-    return ChewieController(
+    ChewieController chewieController = ChewieController(
         videoPlayerController: _playerController,
         showControlsOnInitialize: false,
         customControls: OBVideoPlayerControls(
@@ -179,6 +181,9 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         aspectRatio: aspectRatio,
         autoPlay: widget.autoPlay,
         looping: true);
+    if (widget.onChewieControllerCreated != null)
+      widget.onChewieControllerCreated(chewieController);
+    return chewieController;
   }
 
   void _onVisibilityChanged(VisibilityInfo visibilityInfo) {
@@ -193,7 +198,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         _chewieController.play();
         _pausedDueToVisibilityChange = false;
       }
-    }else if(_playerController.value.isPlaying){
+    } else if (_playerController.value.isPlaying) {
       debugLog('Its not visible and the video is playing. Now pausing. .');
       _pausedDueToVisibilityChange = true;
       _chewieController.pause();
