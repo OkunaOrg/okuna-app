@@ -5,7 +5,7 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/posts_stream/widgets/posts_stream_post.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/loading_indicator_tile.dart';
@@ -127,11 +127,13 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   Widget _buildStreamPost(Post post) {
-    return OBPostsStreamPost(
+    String inViewId = '${widget.streamIdentifier}_${post.id.toString()}';
+
+    return OBPost(
+      post,
       key: Key(post.id.toString()),
-      post: post,
-      streamIdentifier: widget.streamIdentifier,
       onPostDeleted: _onPostDeleted,
+      inViewId: inViewId,
     );
   }
 

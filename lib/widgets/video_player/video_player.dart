@@ -9,6 +9,8 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_widgets/flutter_widgets.dart';
 import 'package:video_player/video_player.dart';
 
+import '../progress_indicator.dart';
+
 class OBVideoPlayer extends StatefulWidget {
   final File video;
   final String videoUrl;
@@ -122,7 +124,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
                   ? Container(
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            fit: BoxFit.cover,
+                        fit: BoxFit.cover,
                         image: AdvancedNetworkImage(widget.thumbnailUrl,
                             useDiskCache: true),
                       )),
@@ -133,7 +135,10 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
                 bottom: 0,
                 right: 0,
                 left: 0,
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(
+                    child: OBProgressIndicator(
+                  color: Colors.white,
+                )),
               )
             ],
           );
@@ -178,16 +183,25 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   void _onVisibilityChanged(VisibilityInfo visibilityInfo) {
     if (_hasVideoOpenedInDialog) return;
-    bool isVisible = visibilityInfo.visibleFraction > 0.9;
+    bool isVisible = visibilityInfo.visibleFraction != 0;
 
-    if (_pausedDueToVisibilityChange) {
-      if (isVisible) {
+    debugLog('isVisible: ${isVisible.toString()}');
+
+    if (isVisible) {
+      if (_pausedDueToVisibilityChange) {
+        debugLog('Was paused due to visibility change, now unpausing.');
         _chewieController.play();
         _pausedDueToVisibilityChange = false;
       }
-    } else if (!isVisible && _playerController.value.isPlaying) {
+    }else if(_playerController.value.isPlaying){
+      debugLog('Its not visible and the video is playing. Now pausing. .');
       _pausedDueToVisibilityChange = true;
       _chewieController.pause();
     }
+  }
+
+  void debugLog(String log) {
+    ValueKey<String> key = _visibilityKey;
+    debugPrint('OBVideoPlayer:${key.value}: $log');
   }
 }
