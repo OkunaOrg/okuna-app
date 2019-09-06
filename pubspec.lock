@@ -343,9 +343,11 @@ packages:
   inview_notifier_list:
     dependency: "direct main"
     description:
-      name: inview_notifier_list
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
+      resolved-ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
+      url: "git@github.com:OkunaOrg/inview_notifier_list.git"
+    source: git
     version: "0.0.2"
   io:
     dependency: transitive

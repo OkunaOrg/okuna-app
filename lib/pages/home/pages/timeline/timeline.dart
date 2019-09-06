@@ -74,7 +74,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
 
   @override
   Widget build(BuildContext context) {
-    if(_needsBootstrap){
+    if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _modalService = openbookProvider.modalService;
       _userService = openbookProvider.userService;
@@ -88,13 +88,16 @@ class OBTimelinePageState extends State<OBTimelinePage> {
         child: OBPrimaryColorContainer(
           child: Stack(
             children: <Widget>[
-              _loggedInUserBootstrapped ? OBPostsStream(
-                controller: _timelinePostsStreamController,
-                prependedItems: _buildPostsStreamPrependedItems(),
-                streamIdentifier: 'timeline',
-                onScrollLoader: _postsStreamOnScrollLoader,
-                refresher: _postsStreamRefresher,
-              ) : const SizedBox(),
+              _loggedInUserBootstrapped
+                  ? OBPostsStream(
+                      controller: _timelinePostsStreamController,
+                      prependedItems: _buildPostsStreamPrependedItems(),
+                      streamIdentifier: 'timeline',
+                      onScrollLoader: _postsStreamOnScrollLoader,
+                      refresher: _postsStreamRefresher,
+                      initialPosts: _initialPosts,
+                    )
+                  : const SizedBox(),
               Positioned(
                   bottom: 20.0,
                   right: 20.0,
@@ -116,6 +119,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   }
 
   List<Widget> _buildPostsStreamPrependedItems() {
+    print('Building post stream prepended items');
     return _buildNewPostDataUploaders();
   }
 
@@ -257,14 +261,12 @@ class OBTimelinePageController extends PoppablePageController {
 
   Future<void> setPostFilters(
       {List<Circle> circles, List<FollowsList> followsLists}) async {
-    return _state
-        .setFilters(circles: circles, followsLists: followsLists);
+    return _state.setFilters(circles: circles, followsLists: followsLists);
   }
 
   Future<void> clearPostFilters(
       {List<Circle> circles, List<FollowsList> followsLists}) async {
-    return _state
-        .setFilters(circles: circles, followsLists: followsLists);
+    return _state.setFilters(circles: circles, followsLists: followsLists);
   }
 
   List<Circle> getFilteredCircles() {

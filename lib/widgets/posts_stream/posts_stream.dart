@@ -44,7 +44,6 @@ class OBPostsStream extends StatefulWidget {
 
 class OBPostsStreamState extends State<OBPostsStream> {
   List<Post> _posts;
-  List<Widget> _prependedItems;
   bool _needsBootstrap;
   bool _isFirstLoad;
   ToastService _toastService;
@@ -65,8 +64,6 @@ class OBPostsStreamState extends State<OBPostsStream> {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _posts = widget.initialPosts != null ? widget.initialPosts.toList() : [];
-    _prependedItems =
-        widget.prependedItems != null ? widget.prependedItems.toList() : [];
     _needsBootstrap = true;
     _isFirstLoad = true;
     _status = OBPostsStreamStatus.refreshing;
@@ -110,12 +107,15 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   Widget _buildStream() {
     List<Widget> streamItems = [];
-    streamItems.addAll(_prependedItems);
+    if(widget.prependedItems != null) streamItems.addAll(widget.prependedItems);
+
     streamItems.addAll(_buildStreamPosts());
 
     if (_status != OBPostsStreamStatus.idle)
       streamItems.add(_buildStatusTile());
     return InViewNotifierList(
+      physics: const ClampingScrollPhysics(),
+      padding: const EdgeInsets.all(0),
       controller: _streamScrollController,
       isInViewPortCondition: _checkTimelineItemIsInViewport,
       children: streamItems,

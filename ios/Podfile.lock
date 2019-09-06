@@ -143,7 +143,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   device_info: 3ebad48f726348f69abd802f3334a8d1ed795fbd
   file_picker: 408623be2125b79a4539cf703be3d4b3abe5e245
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   flutter_exif_rotation: 093dd59f20679d71ce9ae186f2b86c01307b9a6a
   flutter_ffmpeg: 05ee218287a2b55a13df8f7970aab1a52094083e
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
