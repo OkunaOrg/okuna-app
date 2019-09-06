@@ -4,13 +4,8 @@ class TextAccountAutocompletionService {
   TextAccountAutocompletionResult checkTextForAutocompletion(TextEditingController textController) {
     int cursorPosition = textController.selection.baseOffset;
 
-    //FIXME(komposten): No need to split the full string when we can just find the first "\s" before the cursorPosition.
     if (cursorPosition >= 0) {
-      String lastWord = textController.text
-          .substring(0, cursorPosition)
-          .replaceAll('\n', ' ')
-          .split(' ')
-          .last;
+      String lastWord = _getWordBeforeCursor(textController.text, cursorPosition);
 
       if (lastWord.startsWith('@')) {
         String searchQuery = lastWord.substring(1);
@@ -25,9 +20,7 @@ class TextAccountAutocompletionService {
   void autocompleteTextWithUsername(TextEditingController textController, String username){
     String text = textController.text;
     int cursorPosition = textController.selection.baseOffset;
-
-    //FIXME(komposten): No need to split the full string when we can just find the first "\s" before the cursorPosition.
-    String lastWord = text.substring(0, cursorPosition).split(RegExp(r'\s')).last;
+    String lastWord = _getWordBeforeCursor(text, cursorPosition);
 
     if(!lastWord.startsWith('@')){
       throw 'Tried to autocomplete text with username without @';
@@ -37,6 +30,15 @@ class TextAccountAutocompletionService {
     var newSelection = TextSelection.collapsed(offset: cursorPosition - lastWord.length + username.length + 1);
 
     textController.value = TextEditingValue(text: newText, selection: newSelection);
+  }
+
+  String _getWordBeforeCursor(String text, int cursorPosition) {
+    if (text.isNotEmpty) {
+      var start = text.lastIndexOf(RegExp(r'\s'), cursorPosition - 1);
+      return text.substring(start + 1, cursorPosition);
+    } else {
+      return text;
+    }
   }
 }
 
