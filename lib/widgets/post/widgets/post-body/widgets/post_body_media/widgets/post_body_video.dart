@@ -68,6 +68,7 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   }
 
   void _onInViewStateChanged(bool isVideoInView) {
+    if (_obVideoPlayerController.hasVideoOpenedInDialog()) return;
     debugLog('Is in View: ${isVideoInView.toString()}');
     if (isVideoInView) {
       debugLog('Playing');
@@ -79,7 +80,6 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   }
 
   void debugLog(String log) {
-    debugPrint(
-        'OBPostBodyVideo:${_obVideoPlayerController.getIdentifier()}: $log');
+    debugPrint('OBPostBodyVideo: $log');
   }
 }

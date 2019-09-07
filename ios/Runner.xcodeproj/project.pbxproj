@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05F9D17DFF8DDCFCDC8165C9 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21814CF3B0391E7DC244D795 /* libPods-OneSignalNotificationServiceExtension.a */; };
-		0E2094054C9F20492522C47C /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7DF2A99130AA70B5DC39C6D /* libPods-Runner.a */; };
+		13C5641E33EAFA070080AD69 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7DF2A99130AA70B5DC39C6D /* libPods-Runner.a */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		316331A2E69B0E059951E0A9 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21814CF3B0391E7DC244D795 /* libPods-OneSignalNotificationServiceExtension.a */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -206,6 +206,20 @@
 			remoteGlobalIDString = C9753D7E828995FC13548AB75309010D;
 			remoteInfo = shared_preferences;
 		};
+		89FE1BA42323BCA0007C6904 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2A617D469C33D86199664B769B253D0A;
+			remoteInfo = flutter_image_compress;
+		};
+		89FE1BA62323BCA0007C6904 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6BCD3E077861DE8917A0FFFBC6BD96CF;
+			remoteInfo = Mantle;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -299,7 +313,7 @@
 				89FE1ABF232023A4007C6904 /* liblibwebp.a in Frameworks */,
 				89FE1A9E23202382007C6904 /* libimage_cropper.a in Frameworks */,
 				89E6848F2320235F00E0855B /* libTOCropViewController.a in Frameworks */,
-				05F9D17DFF8DDCFCDC8165C9 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
+				316331A2E69B0E059951E0A9 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,7 +323,7 @@
 			files = (
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
-				0E2094054C9F20492522C47C /* libPods-Runner.a in Frameworks */,
+				13C5641E33EAFA070080AD69 /* libPods-Runner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,12 +382,14 @@
 				89E684862320235F00E0855B /* libfile_picker.a */,
 				89CF474422419BFD001BC50D /* libflutter_exif_rotation.a */,
 				89E684882320235F00E0855B /* libflutter_ffmpeg.a */,
+				89FE1BA52323BCA0007C6904 /* libflutter_image_compress.a */,
 				8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */,
 				8928E31E22356450001DB32A /* libFMDB.a */,
 				898053A022047AAF00E47AD9 /* libimage_cropper.a */,
 				898053A222047AAF00E47AD9 /* libimage_picker.a */,
 				8902A1062236D5BF005F914D /* libintercom_flutter.a */,
 				89E6848A2320235F00E0855B /* liblibwebp.a */,
+				89FE1BA72323BCA0007C6904 /* libMantle.a */,
 				89CB943722F5B45B004F2969 /* libonesignal_flutter.a */,
 				898053A622047AAF00E47AD9 /* libpath_provider.a */,
 				898053A822047AAF00E47AD9 /* libPods-OneSignalNotificationServiceExtension.a */,
@@ -753,6 +769,20 @@
 			fileType = archive.ar;
 			path = libshared_preferences.a;
 			remoteRef = 89EE3232227B56510094ACB0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89FE1BA52323BCA0007C6904 /* libflutter_image_compress.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libflutter_image_compress.a;
+			remoteRef = 89FE1BA42323BCA0007C6904 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89FE1BA72323BCA0007C6904 /* libMantle.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMantle.a;
+			remoteRef = 89FE1BA62323BCA0007C6904 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

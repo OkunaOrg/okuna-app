@@ -221,7 +221,7 @@ class OBVideoPlayerController {
       debugLog('State is not ready. Wont pause.');
       return;
     }
-    _state._chewieController.pause();
+    _state._playerController.pause();
   }
 
   void play() {
@@ -229,30 +229,29 @@ class OBVideoPlayerController {
       debugLog('State is not ready. Wont play.');
       return;
     }
-    _state._chewieController.play();
+    _state._playerController.play();
   }
 
   bool isPlaying() {
-    if (!isReady()) {
-      debugLog('State is not ready. Obviously not playing.');
-      return false;
-    }
+    if (!isReady()) return false;
 
     return _state._playerController.value.isPlaying;
   }
 
   bool isReady() {
-    return _state != null &&
-        _state.mounted &&
-        _state._playerController != null &&
-        _state._playerController.value != null &&
-        _state._chewieController != null;
+    return _state != null && _state.mounted && _state._playerController != null;
+  }
+
+  bool hasVideoOpenedInDialog() {
+    if (!isReady()) return false;
+
+    return _state._hasVideoOpenedInDialog;
   }
 
   String getIdentifier() {
     if (!isReady()) {
       debugLog('State is not ready. Can not get identifier.');
-      return null;
+      return 'unknown';
     }
 
     return _state._playerController.dataSource;
