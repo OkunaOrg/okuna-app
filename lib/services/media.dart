@@ -125,11 +125,11 @@ class MediaService {
     String resultFileName = _uuid.v4() + '.mp4';
     final path = await _getTempPath();
     final String resultFilePath = '$path/$resultFileName';
-    var arguments = ["-i", video.path, resultFilePath];
-    await _flutterFFmpeg.executeWithArguments(arguments);
+    await _flutterFFmpeg.execute(
+        '-i ${video.path} -filter:v scale=720:-1 -vcodec libx264 -crf 20 -preset veryfast ${resultFilePath}');
 
     File resultFile = File(resultFilePath);
-
+    
     return resultFile;
   }
 

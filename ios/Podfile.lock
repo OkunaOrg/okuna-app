@@ -6,9 +6,9 @@ PODS:
   - Flutter (1.0.0)
   - flutter_exif_rotation (0.0.1):
     - Flutter
-  - flutter_ffmpeg/min-lts (0.2.7):
+  - flutter_ffmpeg/min-gpl-lts (0.2.7):
     - Flutter
-    - mobile-ffmpeg-min (= 4.2.2.LTS)
+    - mobile-ffmpeg-min-gpl (= 4.2.2.LTS)
   - flutter_image_compress (0.0.1):
     - Flutter
     - Mantle
@@ -38,7 +38,7 @@ PODS:
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
-  - mobile-ffmpeg-min (4.2.2.LTS)
+  - mobile-ffmpeg-min-gpl (4.2.2.LTS)
   - OneSignal (2.10.1)
   - onesignal_flutter (2.0.2):
     - Flutter
@@ -70,7 +70,7 @@ DEPENDENCIES:
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
-  - flutter_ffmpeg/min-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
+  - flutter_ffmpeg/min-gpl-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -94,7 +94,7 @@ SPEC REPOS:
     - Intercom
     - libwebp
     - Mantle
-    - mobile-ffmpeg-min
+    - mobile-ffmpeg-min-gpl
     - OneSignal
     - TOCropViewController
 
@@ -155,7 +155,7 @@ SPEC CHECKSUMS:
   intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
-  mobile-ffmpeg-min: 05ebe3998721155274ae50466b5223d3637a92ab
+  mobile-ffmpeg-min-gpl: f59b5fbd75ed9a6c8690dd271f50db44d3b5733c
   OneSignal: 8fb749fa07f88006403c9b659a570fb7fb74519a
   onesignal_flutter: f0eab25765dd95978c19dc64a87a8a33387909fa
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
@@ -169,6 +169,6 @@ SPEC CHECKSUMS:
   video_player: 3964090a33353060ed7f58aa6427c7b4b208ec21
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
 
-PODFILE CHECKSUM: 1cb7506f26666883efe7911e9c9cb306e63c6857
+PODFILE CHECKSUM: 370b8f62135e8c712c90919136f2bb5bc54d372e
 
 COCOAPODS: 1.7.5

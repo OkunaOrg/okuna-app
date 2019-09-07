@@ -38,3 +38,7 @@ subprojects {
         }
     }
 }
+
+ext {
+    flutterFFmpegPackage  = "min-gpl-lts"
+}

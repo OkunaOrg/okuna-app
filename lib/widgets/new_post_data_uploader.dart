@@ -194,9 +194,9 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       } else {
         _setStatusMessage(
             _localizationService.post_uploader__generic_upload_failed);
-        throw error;
       }
       _setStatus(OBPostUploaderStatus.failed);
+      throw error;
     }
   }
 
