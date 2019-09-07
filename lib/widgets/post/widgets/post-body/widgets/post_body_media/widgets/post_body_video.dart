@@ -76,7 +76,6 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
         _obVideoPlayerController.play();
       }
     } else if (_obVideoPlayerController.isPlaying()) {
-      debugLog('Pausing');
       _obVideoPlayerController.pause();
     }
   }
