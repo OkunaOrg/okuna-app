@@ -104,24 +104,32 @@ class OBPostsStreamState extends State<OBPostsStream> {
       _needsBootstrap = false;
     }
 
-    Widget postsStreamWidget = _posts.isEmpty ? _buildDrHoo() : _buildStream();
-
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _refreshPosts,
-      child: postsStreamWidget,
+      child: _buildStream(),
     );
   }
 
   Widget _buildStream() {
     List<Widget> streamItems = [];
-    if (widget.prependedItems != null)
-      streamItems.addAll(widget.prependedItems);
+    bool hasPrependedItems = widget.prependedItems != null;
+    if(hasPrependedItems) streamItems.addAll(widget.prependedItems);
 
-    streamItems.addAll(_buildStreamPosts());
+    if (_posts.isEmpty) {
+      if (hasPrependedItems) {
+        streamItems.add(_buildStatusTile());
+        print('Building status tile!');
+        print(_status);
+      } else {
+        streamItems.add(_buildDrHoo());
+      }
+    } else {
+      streamItems.addAll(_buildStreamPosts());
+      if (_status != OBPostsStreamStatus.idle)
+        streamItems.add(_buildStatusTile());
+    }
 
-    if (_status != OBPostsStreamStatus.idle)
-      streamItems.add(_buildStatusTile());
     return InViewNotifierList(
       physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.all(0),
@@ -151,7 +159,10 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
     switch (_status) {
       case OBPostsStreamStatus.loadingMore:
-        return OBLoadingIndicatorTile();
+        return const Padding(
+          padding: const EdgeInsets.all(20),
+          child: const OBLoadingIndicatorTile(),
+        );
         break;
       case OBPostsStreamStatus.loadingMoreFailed:
         return OBRetryTile(
