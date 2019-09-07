@@ -108,7 +108,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                             .openCreatePost(context: context);
                         if (createPostData != null) {
                           addNewPostData(createPostData);
-                          _timelinePostsStreamController.scrollToTop();
+                          _timelinePostsStreamController.scrollToTop(skipRefresh: true);
                         }
                       },
                       child: const OBIcon(OBIcons.createPost,
