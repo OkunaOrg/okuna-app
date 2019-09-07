@@ -2,10 +2,8 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/video_format.dart';
 import 'package:Okuna/widgets/video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
-import 'package:video_player/video_player.dart';
 
 class OBPostBodyVideo extends StatefulWidget {
   final Post post;
@@ -21,21 +19,12 @@ class OBPostBodyVideo extends StatefulWidget {
 }
 
 class OBPostVideoState extends State<OBPostBodyVideo> {
-  VideoPlayerController _playerController;
-  ChewieController _chewieController;
-
-  void initState() {
-    super.initState();
-    OBVideoFormat videoFormat =
-        widget.postVideo.getVideoFormatOfType(OBVideoFormatType.mp4SD);
-
-    String videoUrl = videoFormat.file;
-    _playerController = VideoPlayerController.network(videoUrl);
-  }
+  OBVideoPlayerController _obVideoPlayerController;
 
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    super.initState();
+    _obVideoPlayerController = OBVideoPlayerController();
   }
 
   @override
@@ -63,36 +52,34 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     double imageAspectRatio = widget.postVideo.width / widget.postVideo.height;
     double imageHeight = (screenWidth / imageAspectRatio);
 
+    OBVideoFormat videoFormat =
+        widget.postVideo.getVideoFormatOfType(OBVideoFormatType.mp4SD);
+
+    String videoUrl = videoFormat.file;
+
     return SizedBox(
         height: imageHeight,
         width: screenWidth,
         child: OBVideoPlayer(
-          videoPlayerController: _playerController,
+          videoUrl: videoUrl,
           thumbnailUrl: widget.postVideo.thumbnail,
-          onChewieControllerCreated: _onChewieControllerCreated,
+          controller: _obVideoPlayerController,
         ));
   }
 
   void _onInViewStateChanged(bool isVideoInView) {
     debugLog('Is in View: ${isVideoInView.toString()}');
-    bool videoIsInitialized =
-        _playerController != null && _playerController.value != null && _chewieController != null;
-    if (isVideoInView &&
-        videoIsInitialized &&
-        !_playerController.value.isPlaying) {
+    if (isVideoInView) {
       debugLog('Playing');
-      _chewieController.play();
-    } else if (videoIsInitialized && _playerController.value.isPlaying) {
+      _obVideoPlayerController.play();
+    } else if (_obVideoPlayerController.isPlaying()) {
       debugLog('Pausing');
-      _chewieController.pause();
+      _obVideoPlayerController.pause();
     }
   }
 
   void debugLog(String log) {
-    debugPrint('OBPostBodyVideo:${_playerController.dataSource}: $log');
-  }
-
-  void _onChewieControllerCreated(chewieController) {
-    _chewieController = chewieController;
+    debugPrint(
+        'OBPostBodyVideo:${_obVideoPlayerController.getIdentifier()}: $log');
   }
 }

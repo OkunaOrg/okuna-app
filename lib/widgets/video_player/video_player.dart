@@ -18,9 +18,9 @@ class OBVideoPlayer extends StatefulWidget {
   final Key visibilityKey;
   final ChewieController chewieController;
   final VideoPlayerController videoPlayerController;
-  final ValueChanged<ChewieController> onChewieControllerCreated;
   final bool isInDialog;
   final bool autoPlay;
+  final OBVideoPlayerController controller;
 
   const OBVideoPlayer(
       {Key key,
@@ -32,7 +32,7 @@ class OBVideoPlayer extends StatefulWidget {
       this.isInDialog = false,
       this.autoPlay = false,
       this.visibilityKey,
-      this.onChewieControllerCreated})
+      this.controller})
       : super(key: key);
 
   @override
@@ -60,6 +60,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   @override
   void initState() {
     super.initState();
+    if (widget.controller != null) widget.controller.attach(this);
     _obVideoPlayerControlsController = OBVideoPlayerControlsController();
     _hasVideoOpenedInDialog = widget.isInDialog ?? false;
     _needsChewieBootstrap = true;
@@ -172,7 +173,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   ChewieController _getChewieController() {
     if (widget.chewieController != null) return widget.chewieController;
     double aspectRatio = _playerController.value.aspectRatio;
-    ChewieController chewieController = ChewieController(
+    return ChewieController(
         videoPlayerController: _playerController,
         showControlsOnInitialize: false,
         customControls: OBVideoPlayerControls(
@@ -181,9 +182,6 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         aspectRatio: aspectRatio,
         autoPlay: widget.autoPlay,
         looping: true);
-    if (widget.onChewieControllerCreated != null)
-      widget.onChewieControllerCreated(chewieController);
-    return chewieController;
   }
 
   void _onVisibilityChanged(VisibilityInfo visibilityInfo) {
@@ -208,5 +206,59 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   void debugLog(String log) {
     ValueKey<String> key = _visibilityKey;
     debugPrint('OBVideoPlayer:${key.value}: $log');
+  }
+}
+
+class OBVideoPlayerController {
+  OBVideoPlayerState _state;
+
+  void attach(state) {
+    _state = state;
+  }
+
+  void pause() {
+    if (!isReady()) {
+      debugLog('State is not ready. Wont pause.');
+      return;
+    }
+    _state._chewieController.pause();
+  }
+
+  void play() {
+    if (!isReady()) {
+      debugLog('State is not ready. Wont play.');
+      return;
+    }
+    _state._chewieController.play();
+  }
+
+  bool isPlaying() {
+    if (!isReady()) {
+      debugLog('State is not ready. Obviously not playing.');
+      return false;
+    }
+
+    return _state._playerController.value.isPlaying;
+  }
+
+  bool isReady() {
+    return _state != null &&
+        _state.mounted &&
+        _state._playerController != null &&
+        _state._playerController.value != null &&
+        _state._chewieController != null;
+  }
+
+  String getIdentifier() {
+    if (!isReady()) {
+      debugLog('State is not ready. Can not get identifier.');
+      return null;
+    }
+
+    return _state._playerController.dataSource;
+  }
+
+  void debugLog(String log) {
+    debugPrint('OBVideoPlayerController: $log');
   }
 }
