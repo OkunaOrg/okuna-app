@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
@@ -13,6 +15,8 @@ import 'package:Okuna/widgets/tiles/retry_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
+
+var rng = new Random();
 
 class OBPostsStream extends StatefulWidget {
   final List<Widget> prependedItems;
@@ -114,7 +118,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   Widget _buildStream() {
     List<Widget> streamItems = [];
     bool hasPrependedItems = widget.prependedItems != null;
-    if(hasPrependedItems) streamItems.addAll(widget.prependedItems);
+    if (hasPrependedItems) streamItems.addAll(widget.prependedItems);
 
     if (_posts.isEmpty) {
       if (hasPrependedItems) {
@@ -144,7 +148,9 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   Widget _buildStreamPost(Post post) {
-    String inViewId = '${widget.streamIdentifier}_${post.id.toString()}';
+    int randomNumber = rng.nextInt(100);
+    String inViewId =
+        '${widget.streamIdentifier}_${post.id.toString()}_${randomNumber.toString()}';
 
     return OBPost(
       post,
@@ -342,8 +348,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
     _ensureNoRefreshPostsInProgress();
     _setStatus(OBPostsStreamStatus.refreshing);
     try {
-      _refreshOperation =
-          await CancelableOperation.fromFuture(widget.refresher());
+      _refreshOperation = CancelableOperation.fromFuture(widget.refresher());
 
       List<Future> refreshFutures = [_refreshOperation.value];
 
