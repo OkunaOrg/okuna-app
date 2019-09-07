@@ -23,6 +23,7 @@ import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
@@ -49,6 +50,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   ModalService _modalService;
   ValidationService _validationService;
   MediaService _imagePickerService;
+  UserPreferencesService _userPreferencesService;
 
   int _currentIndex;
   int _lastIndex;
@@ -114,6 +116,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _modalService = openbookProvider.modalService;
       _validationService = openbookProvider.validationService;
       _imagePickerService = openbookProvider.mediaPickerService;
+      _userPreferencesService = openbookProvider.userPreferencesService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -412,6 +415,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
+      _userPreferencesService.setVideoSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
       _pushNotificationsService.enablePushNotifications();
       _intercomService.enableIntercom();
