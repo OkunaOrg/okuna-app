@@ -107,7 +107,8 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   Widget _buildStream() {
     List<Widget> streamItems = [];
-    if(widget.prependedItems != null) streamItems.addAll(widget.prependedItems);
+    if (widget.prependedItems != null)
+      streamItems.addAll(widget.prependedItems);
 
     streamItems.addAll(_buildStreamPosts());
 
