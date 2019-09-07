@@ -52,7 +52,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   bool _isVideoHandover;
   bool _hasVideoOpenedInDialog;
-  bool _isPaused;
+  bool _isPausedDueToInvisibility;
+  bool _isPausedByUser;
 
   Key _visibilityKey;
 
@@ -63,7 +64,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     _obVideoPlayerControlsController = OBVideoPlayerControlsController();
     _hasVideoOpenedInDialog = widget.isInDialog ?? false;
     _needsChewieBootstrap = true;
-    _isPaused = false;
+    _isPausedDueToInvisibility = false;
+    _isPausedByUser = false;
 
     _isVideoHandover =
         widget.videoPlayerController != null && widget.chewieController != null;
@@ -149,15 +151,15 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     );
   }
 
-  void _onPlay(Function originalPlayFunction) {
-    debugLog('Unpausing');
-    _isPaused = false;
+  void _onControlsPlay(Function originalPlayFunction) {
+    debugLog('User is playing');
+    _isPausedByUser = false;
     originalPlayFunction();
   }
 
-  void _onPause(Function originalPauseFunction) {
-    debugLog('Pausing');
-    _isPaused = true;
+  void _onControlsPause(Function originalPauseFunction) {
+    debugLog('User is pausing');
+    _isPausedByUser = true;
     originalPauseFunction();
   }
 
@@ -190,8 +192,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         customControls: OBVideoPlayerControls(
             controller: _obVideoPlayerControlsController,
             onExpandCollapse: _onExpandCollapse,
-            onPause: _onPause,
-            onPlay: _onPlay),
+            onPause: _onControlsPause,
+            onPlay: _onControlsPlay),
         aspectRatio: aspectRatio,
         autoPlay: widget.autoPlay,
         looping: true);
@@ -205,17 +207,20 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
     if (!isVisible && _playerController.value.isPlaying) {
       debugLog('Its not visible and the video is playing. Now pausing. .');
+      _isPausedDueToInvisibility = true;
       _pause();
     }
   }
 
   void _pause() {
-    _isPaused = true;
     _playerController.pause();
+    _isPausedByUser = false;
+    _isPausedDueToInvisibility = false;
   }
 
   void _play() {
-    _isPaused = false;
+    _isPausedDueToInvisibility = false;
+    _isPausedByUser = false;
     _playerController.play();
   }
 
@@ -264,9 +269,14 @@ class OBVideoPlayerController {
     return _state._hasVideoOpenedInDialog;
   }
 
-  bool isPaused() {
-    if (!isReady()) return true;
-    return _state._isPaused;
+  bool isPausedByUser() {
+    if (!isReady()) return false;
+    return _state._isPausedByUser;
+  }
+
+  bool isPausedDueToInvisibility() {
+    if (!isReady()) return false;
+    return _state._isPausedDueToInvisibility;
   }
 
   String getIdentifier() {

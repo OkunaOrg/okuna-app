@@ -71,7 +71,7 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     if (_obVideoPlayerController.hasVideoOpenedInDialog()) return;
     debugLog('Is in View: ${isVideoInView.toString()}');
     if (isVideoInView) {
-      if (!_obVideoPlayerController.isPaused()) {
+      if (!_obVideoPlayerController.isPausedDueToInvisibility() && !_obVideoPlayerController.isPausedByUser()) {
         debugLog('Video was not paused, playing as item is in view.');
         _obVideoPlayerController.play();
       }
