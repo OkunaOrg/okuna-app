@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class OBProfileNoPosts extends StatelessWidget {
   final User user;
-  final VoidCallback onWantsToRefreshProfile;
+  final OBProfileNoPostsProfileRefresher onWantsToRefreshProfile;
 
   OBProfileNoPosts(this.user, {@required this.onWantsToRefreshProfile});
 
@@ -21,11 +21,17 @@ class OBProfileNoPosts extends StatelessWidget {
     String name = user.getProfileName();
 
     return OBButtonAlert(
-      text: isLoggedInUser ? localizationService.post__have_not_shared_anything: localizationService.post__user_has_not_shared_anything(name),
-      onPressed: onWantsToRefreshProfile,
+      text: isLoggedInUser
+          ? localizationService.post__have_not_shared_anything
+          : localizationService.post__user_has_not_shared_anything(name),
+      onPressed: () {
+        onWantsToRefreshProfile();
+      },
       buttonText: localizationService.post__trending_posts_refresh,
       buttonIcon: OBIcons.refresh,
       assetImage: 'assets/images/stickers/perplexed-owl.png',
     );
   }
 }
+
+typedef Future OBProfileNoPostsProfileRefresher();

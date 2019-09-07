@@ -24,6 +24,7 @@ class OBPostsStream extends StatefulWidget {
   final ValueChanged<List<Post>> onPostsRefreshed;
   final bool refreshOnCreate;
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
+  final WidgetBuilder statusTileEmptyBuilder;
 
   const OBPostsStream(
       {Key key,
@@ -35,7 +36,8 @@ class OBPostsStream extends StatefulWidget {
       @required this.streamIdentifier,
       this.onPostsRefreshed,
       this.refreshOnCreate = true,
-      this.secondaryRefresher})
+      this.secondaryRefresher,
+      this.statusTileEmptyBuilder})
       : super(key: key);
 
   @override
@@ -159,7 +161,17 @@ class OBPostsStreamState extends State<OBPostsStream> {
       case OBPostsStreamStatus.noMoreToLoad:
         return ListTile(
           title: OBSecondaryText(
-            _localizationService.post__timeline_posts_all_loaded,
+            _localizationService.posts_stream__status_tile_no_more_to_load,
+            textAlign: TextAlign.center,
+          ),
+        );
+      case OBPostsStreamStatus.empty:
+        if (widget.statusTileEmptyBuilder != null)
+          return widget.statusTileEmptyBuilder(context);
+
+        return ListTile(
+          title: OBSecondaryText(
+            _localizationService.posts_stream__status_tile_empty,
             textAlign: TextAlign.center,
           ),
         );
@@ -334,7 +346,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
       List<Post> posts = results[0];
 
       if (posts.length == 0) {
-        _setStatus(OBPostsStreamStatus.noMoreToLoad);
+        _setStatus(OBPostsStreamStatus.empty);
       } else {
         _setStatus(OBPostsStreamStatus.idle);
       }
@@ -450,6 +462,7 @@ enum OBPostsStreamStatus {
   loadingMore,
   loadingMoreFailed,
   noMoreToLoad,
+  empty,
   idle
 }
 

@@ -3665,6 +3665,16 @@ class LocalizationService {
         name: 'posts_stream__failed_drhoo_subtitle');
   }
 
+  String get posts_stream__status_tile_empty {
+    return Intl.message("No posts found",
+        name: 'posts_stream__status_tile_empty');
+  }
+
+  String get posts_stream__status_tile_no_more_to_load {
+    return Intl.message("🎉  All posts loaded",
+        name: 'posts_stream__status_tile_no_more_to_load');
+  }
+
   Locale getLocale() {
     return locale;
   }
