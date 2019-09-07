@@ -55,8 +55,6 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   Key _visibilityKey;
 
-  bool _pausedDueToVisibilityChange;
-
   @override
   void initState() {
     super.initState();
@@ -64,7 +62,6 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     _obVideoPlayerControlsController = OBVideoPlayerControlsController();
     _hasVideoOpenedInDialog = widget.isInDialog ?? false;
     _needsChewieBootstrap = true;
-    _pausedDueToVisibilityChange = false;
 
     _isVideoHandover =
         widget.videoPlayerController != null && widget.chewieController != null;
@@ -190,15 +187,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
     debugLog('isVisible: ${isVisible.toString()}');
 
-    if (isVisible) {
-      if (_pausedDueToVisibilityChange) {
-        debugLog('Was paused due to visibility change, now unpausing.');
-        _chewieController.play();
-        _pausedDueToVisibilityChange = false;
-      }
-    } else if (_playerController.value.isPlaying) {
+  if (!isVisible && _playerController.value.isPlaying) {
       debugLog('Its not visible and the video is playing. Now pausing. .');
-      _pausedDueToVisibilityChange = true;
       _chewieController.pause();
     }
   }
