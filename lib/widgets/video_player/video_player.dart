@@ -52,6 +52,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   bool _isVideoHandover;
   bool _hasVideoOpenedInDialog;
+  bool _isPaused;
 
   Key _visibilityKey;
 
@@ -62,6 +63,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     _obVideoPlayerControlsController = OBVideoPlayerControlsController();
     _hasVideoOpenedInDialog = widget.isInDialog ?? false;
     _needsChewieBootstrap = true;
+    _isPaused = false;
 
     _isVideoHandover =
         widget.videoPlayerController != null && widget.chewieController != null;
@@ -147,6 +149,18 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     );
   }
 
+  void _onPlay(Function originalPlayFunction) {
+    debugLog('Unpausing');
+    _isPaused = false;
+    originalPlayFunction();
+  }
+
+  void _onPause(Function originalPauseFunction) {
+    debugLog('Pausing');
+    _isPaused = true;
+    originalPauseFunction();
+  }
+
   void _onExpandCollapse(Function originalExpandFunction) async {
     if (_hasVideoOpenedInDialog) {
       _obVideoPlayerControlsController.pop();
@@ -175,7 +189,9 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         showControlsOnInitialize: false,
         customControls: OBVideoPlayerControls(
             controller: _obVideoPlayerControlsController,
-            onExpandCollapse: _onExpandCollapse),
+            onExpandCollapse: _onExpandCollapse,
+            onPause: _onPause,
+            onPlay: _onPlay),
         aspectRatio: aspectRatio,
         autoPlay: widget.autoPlay,
         looping: true);
@@ -187,10 +203,20 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
     debugLog('isVisible: ${isVisible.toString()}');
 
-  if (!isVisible && _playerController.value.isPlaying) {
+    if (!isVisible && _playerController.value.isPlaying) {
       debugLog('Its not visible and the video is playing. Now pausing. .');
-      _chewieController.pause();
+      _pause();
     }
+  }
+
+  void _pause() {
+    _isPaused = true;
+    _playerController.pause();
+  }
+
+  void _play() {
+    _isPaused = false;
+    _playerController.play();
   }
 
   void debugLog(String log) {
@@ -211,7 +237,7 @@ class OBVideoPlayerController {
       debugLog('State is not ready. Wont pause.');
       return;
     }
-    _state._playerController.pause();
+    _state._pause();
   }
 
   void play() {
@@ -219,7 +245,7 @@ class OBVideoPlayerController {
       debugLog('State is not ready. Wont play.');
       return;
     }
-    _state._playerController.play();
+    _state._play();
   }
 
   bool isPlaying() {
@@ -236,6 +262,11 @@ class OBVideoPlayerController {
     if (!isReady()) return false;
 
     return _state._hasVideoOpenedInDialog;
+  }
+
+  bool isPaused() {
+    if (!isReady()) return true;
+    return _state._isPaused;
   }
 
   String getIdentifier() {

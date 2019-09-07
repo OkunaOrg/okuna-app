@@ -11,9 +11,12 @@ import 'package:video_player/video_player.dart';
 
 class OBVideoPlayerControls extends StatefulWidget {
   final Function(Function) onExpandCollapse;
+  final Function(Function) onPause;
+  final Function(Function) onPlay;
   final OBVideoPlayerControlsController controller;
 
-  const OBVideoPlayerControls({Key key, this.onExpandCollapse, this.controller})
+  const OBVideoPlayerControls(
+      {Key key, this.onExpandCollapse, this.controller, this.onPause, this.onPlay})
       : super(key: key);
 
   @override
@@ -353,21 +356,37 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
   void _playPause() {
     setState(() {
       if (controller.value.isPlaying) {
-        _hideStuff = false;
-        _hideTimer?.cancel();
-        controller.pause();
-      } else {
-        _cancelAndRestartTimer();
-
-        if (!controller.value.initialized) {
-          controller.initialize().then((_) {
-            controller.play();
-          });
+        if (widget.onPause != null) {
+          widget.onPause(_pause);
         } else {
-          controller.play();
+          _pause();
+        }
+      } else {
+        if (widget.onPlay != null) {
+          widget.onPlay(_play);
+        } else {
+          _play();
         }
       }
     });
+  }
+
+  void _pause() {
+    _hideStuff = false;
+    _hideTimer?.cancel();
+    controller.pause();
+  }
+
+  void _play() {
+    _cancelAndRestartTimer();
+
+    if (!controller.value.initialized) {
+      controller.initialize().then((_) {
+        controller.play();
+      });
+    } else {
+      controller.play();
+    }
   }
 
   void _startHideTimer() {
