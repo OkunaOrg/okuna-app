@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:chewie/src/chewie_player.dart';
 import 'package:chewie/src/chewie_progress_colors.dart';
 import 'package:chewie/src/material_progress_bar.dart';
@@ -16,7 +17,11 @@ class OBVideoPlayerControls extends StatefulWidget {
   final OBVideoPlayerControlsController controller;
 
   const OBVideoPlayerControls(
-      {Key key, this.onExpandCollapse, this.controller, this.onPause, this.onPlay})
+      {Key key,
+      this.onExpandCollapse,
+      this.controller,
+      this.onPause,
+      this.onPlay})
       : super(key: key);
 
   @override
@@ -55,7 +60,9 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
     if (isLoading) {
       mainWidget = Expanded(
         child: Center(
-          child: CircularProgressIndicator(),
+          child: OBProgressIndicator(
+            color: Colors.white,
+          ),
         ),
       );
     } else if (hasError) {

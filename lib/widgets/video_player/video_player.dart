@@ -225,8 +225,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   }
 
   void debugLog(String log) {
-    ValueKey<String> key = _visibilityKey;
-    debugPrint('OBVideoPlayer:${key.value}: $log');
+    //ValueKey<String> key = _visibilityKey;
+    //debugPrint('OBVideoPlayer:${key.value}: $log');
   }
 }
 
