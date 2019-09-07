@@ -1,5 +1,6 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/posts_list.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/community_administrators.dart';
@@ -7,14 +8,13 @@ import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/c
 import 'package:Okuna/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_cover.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_nav_bar.dart';
-import 'package:Okuna/pages/home/pages/community/widgets/community_posts.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/alerts/alert.dart';
 import 'package:Okuna/widgets/buttons/community_new_post_button.dart';
-import 'package:Okuna/widgets/http_list.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
+import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
@@ -35,7 +35,7 @@ class OBCommunityPage extends StatefulWidget {
 class OBCommunityPageState extends State<OBCommunityPage>
     with TickerProviderStateMixin {
   Community _community;
-  OBHttpListController _httpListController;
+  OBPostsStreamController _obPostsStreamController;
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -48,7 +48,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
   @override
   void initState() {
     super.initState();
-    _httpListController = OBHttpListController();
+    _obPostsStreamController = OBPostsStreamController();
     _needsBootstrap = true;
     _community = widget.community;
     _newPostsData = [];
@@ -124,12 +124,13 @@ class OBCommunityPageState extends State<OBCommunityPage>
     }
 
     List<Widget> stackItems = [
-      OBCommunityPosts(
-        httpListController: _httpListController,
-        community: _community,
-        httpListSecondaryRefresher: _refreshCommunity,
+      OBPostsStream(
+        onScrollLoader: _loadMoreCommunityPosts,
+        refresher: _refreshCommunityPosts,
         prependedItems: prependedItems,
-      )
+        streamIdentifier: 'community_' + widget.community.name,
+        secondaryRefresher: _refreshCommunity,
+      ),
     ];
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -166,7 +167,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
   void _onNewPostDataUploaderPostPublished(
       Post publishedPost, OBNewPostData newPostData) {
     _removeNewPostData(newPostData);
-    _httpListController.insertListItem(publishedPost);
+    _obPostsStreamController.addPostToTop(publishedPost);
   }
 
   Widget _buildPrivateCommunityContent() {
@@ -215,6 +216,27 @@ class OBCommunityPageState extends State<OBCommunityPage>
     debugPrint(_localizationService.trans('community__refreshing'));
     var community = await _refreshCommunityOperation.value;
     _setCommunity(community);
+  }
+
+  Future<List<Post>> _refreshCommunityPosts() async {
+    debugPrint('Refreshing community posts');
+    PostsList communityPosts =
+        await _userService.getPostsForCommunity(widget.community);
+    return communityPosts.posts;
+  }
+
+  Future<List<Post>> _loadMoreCommunityPosts(
+      List<Post> communityPostsList) async {
+    debugPrint('Loading more community posts');
+    var lastCommunityPost = communityPostsList.last;
+    var lastCommunityPostId = lastCommunityPost.id;
+    var moreCommunityPosts = (await _userService.getPostsForCommunity(
+      widget.community,
+      maxId: lastCommunityPostId,
+      count: 10,
+    ))
+        .posts;
+    return moreCommunityPosts;
   }
 
   void _setCommunity(Community community) {

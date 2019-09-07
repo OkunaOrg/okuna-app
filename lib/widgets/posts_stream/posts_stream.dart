@@ -23,6 +23,7 @@ class OBPostsStream extends StatefulWidget {
   final String streamIdentifier;
   final ValueChanged<List<Post>> onPostsRefreshed;
   final bool refreshOnCreate;
+  final OBPostsStreamSecondaryRefresher secondaryRefresher;
 
   const OBPostsStream(
       {Key key,
@@ -33,7 +34,8 @@ class OBPostsStream extends StatefulWidget {
       this.initialPosts,
       @required this.streamIdentifier,
       this.onPostsRefreshed,
-      this.refreshOnCreate = true})
+      this.refreshOnCreate = true,
+      this.secondaryRefresher})
       : super(key: key);
 
   @override
@@ -56,6 +58,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   OBPostsStreamStatus _status;
 
   CancelableOperation _refreshOperation;
+  CancelableOperation _secondaryRefresherOperation;
   bool _refreshInProgress;
   CancelableOperation _loadMoreOperation;
 
@@ -76,6 +79,9 @@ class OBPostsStreamState extends State<OBPostsStream> {
   void dispose() {
     super.dispose();
     _streamScrollController.removeListener(_onScroll);
+    _secondaryRefresherOperation?.cancel();
+    _refreshOperation?.cancel();
+    _loadMoreOperation?.cancel();
   }
 
   void _bootstrap() {
@@ -316,7 +322,16 @@ class OBPostsStreamState extends State<OBPostsStream> {
       _refreshOperation =
           await CancelableOperation.fromFuture(widget.refresher());
 
-      List<Post> posts = await _refreshOperation.value;
+      List<Future> refreshFutures = [_refreshOperation.value];
+
+      if (widget.secondaryRefresher != null) {
+        _secondaryRefresherOperation =
+            CancelableOperation.fromFuture(widget.secondaryRefresher());
+        refreshFutures.add(_secondaryRefresherOperation.value);
+      }
+
+      List<dynamic> results = await Future.wait(refreshFutures);
+      List<Post> posts = results[0];
 
       if (posts.length == 0) {
         _setStatus(OBPostsStreamStatus.noMoreToLoad);
@@ -330,6 +345,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
       _onError(error);
     } finally {
       _refreshOperation = null;
+      _secondaryRefresherOperation = null;
     }
   }
 
@@ -439,3 +455,4 @@ enum OBPostsStreamStatus {
 
 typedef Future<List<Post>> OBPostsStreamRefresher<Post>();
 typedef Future<List<Post>> OBPostsStreamOnScrollLoader<T>(List<Post> posts);
+typedef Future OBPostsStreamSecondaryRefresher();
