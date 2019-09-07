@@ -20,6 +20,7 @@ class OBVideoPlayer extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final bool isInDialog;
   final bool autoPlay;
+  final bool isMuted;
   final OBVideoPlayerController controller;
 
   const OBVideoPlayer(
@@ -31,6 +32,7 @@ class OBVideoPlayer extends StatefulWidget {
       this.videoPlayerController,
       this.isInDialog = false,
       this.autoPlay = false,
+      this.isMuted = false,
       this.visibilityKey,
       this.controller})
       : super(key: key);
@@ -83,6 +85,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     } else {
       throw Exception('Video dialog requires video or videoUrl.');
     }
+
+    if (widget.isMuted) _playerController.setVolume(0);
 
     _visibilityKey = widget.visibilityKey != null
         ? widget.visibilityKey
