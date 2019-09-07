@@ -14,12 +14,16 @@ class OBVideoPlayerControls extends StatefulWidget {
   final Function(Function) onExpandCollapse;
   final Function(Function) onPause;
   final Function(Function) onPlay;
+  final Function(Function) onMute;
+  final Function(Function) onUnmute;
   final OBVideoPlayerControlsController controller;
 
   const OBVideoPlayerControls(
       {Key key,
       this.onExpandCollapse,
       this.controller,
+      this.onMute,
+      this.onUnmute,
       this.onPause,
       this.onPlay})
       : super(key: key);
@@ -258,10 +262,17 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
         _cancelAndRestartTimer();
 
         if (_latestValue.volume == 0) {
-          controller.setVolume(_latestVolume ?? 0.5);
+          if (widget.onUnmute != null) {
+            widget.onUnmute(_unMute);
+          } else {
+            _unMute();
+          }
         } else {
-          _latestVolume = controller.value.volume;
-          controller.setVolume(0.0);
+          if (widget.onMute != null) {
+            widget.onMute(_mute);
+          } else {
+            _mute();
+          }
         }
       },
       child: new AnimatedOpacity(
@@ -286,6 +297,15 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
         ),
       ),
     );
+  }
+
+  void _mute() {
+    _latestVolume = controller.value.volume;
+    controller.setVolume(0.0);
+  }
+
+  void _unMute() {
+    controller.setVolume(_latestVolume ?? 0.5);
   }
 
   GestureDetector _buildPlayPause(VideoPlayerController controller) {

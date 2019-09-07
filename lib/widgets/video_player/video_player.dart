@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +22,6 @@ class OBVideoPlayer extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final bool isInDialog;
   final bool autoPlay;
-  final bool isMuted;
   final OBVideoPlayerController controller;
 
   const OBVideoPlayer(
@@ -32,7 +33,6 @@ class OBVideoPlayer extends StatefulWidget {
       this.videoPlayerController,
       this.isInDialog = false,
       this.autoPlay = false,
-      this.isMuted = false,
       this.visibilityKey,
       this.controller})
       : super(key: key);
@@ -47,6 +47,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   VideoPlayerController _playerController;
   ChewieController _chewieController;
   OBVideoPlayerControlsController _obVideoPlayerControlsController;
+  UserPreferencesService _userPreferencesService;
 
   Future _initializeVideoPlayerFuture;
 
@@ -56,8 +57,11 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   bool _hasVideoOpenedInDialog;
   bool _isPausedDueToInvisibility;
   bool _isPausedByUser;
+  bool _needsBootstrap;
 
   Key _visibilityKey;
+
+  StreamSubscription _videosSoundSettingsChangeSubscription;
 
   @override
   void initState() {
@@ -68,6 +72,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     _needsChewieBootstrap = true;
     _isPausedDueToInvisibility = false;
     _isPausedByUser = false;
+    _needsBootstrap = true;
 
     _isVideoHandover =
         widget.videoPlayerController != null && widget.chewieController != null;
@@ -86,7 +91,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       throw Exception('Video dialog requires video or videoUrl.');
     }
 
-    if (widget.isMuted) _playerController.setVolume(0);
+    _playerController.setVolume(0);
 
     _visibilityKey = widget.visibilityKey != null
         ? widget.visibilityKey
@@ -99,14 +104,41 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   @override
   void dispose() {
     super.dispose();
+    _videosSoundSettingsChangeSubscription?.cancel();
     if (!_isVideoHandover && mounted) {
       if (_playerController != null) _playerController.dispose();
       if (_chewieController != null) _chewieController.dispose();
     }
   }
 
+  void _onUserPreferencesVideosSoundSettingsChange(
+      VideosSoundSetting newVideosSoundSettings) {
+    if (newVideosSoundSettings == VideosSoundSetting.enabled) {
+      _playerController.setVolume(100);
+    } else {
+      _playerController.setVolume(0);
+    }
+  }
+
+  void _bootstrap() async {
+    VideosSoundSetting videosSoundSetting =
+        await _userPreferencesService.getVideoSoundSetting();
+    _onUserPreferencesVideosSoundSettingsChange(videosSoundSetting);
+
+    _videosSoundSettingsChangeSubscription = _userPreferencesService
+        .videosSoundSettingChange
+        .listen(_onUserPreferencesVideosSoundSettingsChange);
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_needsBootstrap) {
+      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+      _userPreferencesService = openbookProvider.userPreferencesService;
+      _bootstrap();
+      _needsBootstrap = false;
+    }
+
     return FutureBuilder(
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
@@ -167,6 +199,14 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     originalPauseFunction();
   }
 
+  void _onControlsMute(Function originalMuteFunction) {
+    _userPreferencesService.setVideoSoundSetting(VideosSoundSetting.disabled);
+  }
+
+  void _onControlsUnmute(Function originalUnmuteFunction) {
+    _userPreferencesService.setVideoSoundSetting(VideosSoundSetting.enabled);
+  }
+
   void _onExpandCollapse(Function originalExpandFunction) async {
     if (_hasVideoOpenedInDialog) {
       _obVideoPlayerControlsController.pop();
@@ -194,10 +234,13 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         videoPlayerController: _playerController,
         showControlsOnInitialize: false,
         customControls: OBVideoPlayerControls(
-            controller: _obVideoPlayerControlsController,
-            onExpandCollapse: _onExpandCollapse,
-            onPause: _onControlsPause,
-            onPlay: _onControlsPlay),
+          controller: _obVideoPlayerControlsController,
+          onExpandCollapse: _onExpandCollapse,
+          onPause: _onControlsPause,
+          onPlay: _onControlsPlay,
+          onMute: _onControlsMute,
+          onUnmute: _onControlsUnmute,
+        ),
         aspectRatio: aspectRatio,
         autoPlay: widget.autoPlay,
         looping: true);

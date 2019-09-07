@@ -1,5 +1,7 @@
 import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/services/storage.dart';
+import 'package:rxdart/rxdart.dart';
 
 class UserPreferencesService {
   OBStorage _storage;
@@ -7,6 +9,12 @@ class UserPreferencesService {
   static const videoAutoPlaySettingStorageKey = 'videoAutoPlaySetting';
   static const videoSoundSettingStorageKey = 'videoSoundSetting';
   Future _getPostCommentsSortTypeCache;
+
+  Stream<VideosSoundSetting> get videosSoundSettingChange =>
+      _videosSoundSettingChangeSubject.stream;
+
+  final _videosSoundSettingChangeSubject =
+  BehaviorSubject<VideosSoundSetting>();
 
   void setStorageService(StorageService storageService) {
     _storage = storageService.getSystemPreferencesStorage(
@@ -19,12 +27,14 @@ class UserPreferencesService {
   }
 
   Future<VideosAutoPlaySetting> getVideoAutoPlaySetting() async {
-    String rawValue = await _storage.get(videoAutoPlaySettingStorageKey, defaultValue: VideosAutoPlaySetting.wifiOnly.toString());
+    String rawValue = await _storage.get(videoAutoPlaySettingStorageKey,
+        defaultValue: VideosAutoPlaySetting.wifiOnly.toString());
     return VideosAutoPlaySetting.parse(rawValue);
   }
 
   Future setVideoSoundSetting(VideosSoundSetting videoSoundSetting) {
     String rawValue = videoSoundSetting.toString();
+    _videosSoundSettingChangeSubject.add(videoSoundSetting);
     return _storage.set(videoSoundSettingStorageKey, rawValue);
   }
 

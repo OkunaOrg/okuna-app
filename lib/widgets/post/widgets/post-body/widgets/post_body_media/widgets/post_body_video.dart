@@ -64,7 +64,6 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
           videoUrl: videoUrl,
           thumbnailUrl: widget.postVideo.thumbnail,
           controller: _obVideoPlayerController,
-          isMuted: true,
         ));
   }
 
