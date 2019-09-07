@@ -154,7 +154,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
     return OBPost(
       post,
-      key: Key(post.id.toString()),
+      key: Key(inViewId),
       onPostDeleted: _onPostDeleted,
       inViewId: inViewId,
     );

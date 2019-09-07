@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 class UserPreferencesService {
   OBStorage _storage;
   static const postCommentsSortTypeStorageKey = 'postCommentsSortType';
-  static const videoAutoPlaySettingStorageKey = 'videoAutoPlaySetting';
+  static const videosAutoPlaySettingStorageKey = 'videosAutoPlaySetting';
   static const videoSoundSettingStorageKey = 'videoSoundSetting';
   Future _getPostCommentsSortTypeCache;
 
@@ -14,20 +14,27 @@ class UserPreferencesService {
       _videosSoundSettingChangeSubject.stream;
 
   final _videosSoundSettingChangeSubject =
-  BehaviorSubject<VideosSoundSetting>();
+      BehaviorSubject<VideosSoundSetting>();
+
+  Stream<VideosAutoPlaySetting> get videosAutoPlaySettingChange =>
+      _videosAutoPlaySettingChangeSubject.stream;
+
+  final _videosAutoPlaySettingChangeSubject =
+      BehaviorSubject<VideosAutoPlaySetting>();
 
   void setStorageService(StorageService storageService) {
     _storage = storageService.getSystemPreferencesStorage(
         namespace: 'userPreferences');
   }
 
-  Future setVideoAutoPlaySetting(VideosAutoPlaySetting videoAutoPlaySetting) {
-    String rawValue = videoAutoPlaySetting.toString();
-    return _storage.set(videoAutoPlaySettingStorageKey, rawValue);
+  Future setVideosAutoPlaySetting(VideosAutoPlaySetting videosAutoPlaySetting) {
+    String rawValue = videosAutoPlaySetting.toString();
+    _videosAutoPlaySettingChangeSubject.add(videosAutoPlaySetting);
+    return _storage.set(videosAutoPlaySettingStorageKey, rawValue);
   }
 
-  Future<VideosAutoPlaySetting> getVideoAutoPlaySetting() async {
-    String rawValue = await _storage.get(videoAutoPlaySettingStorageKey,
+  Future<VideosAutoPlaySetting> getVideosAutoPlaySetting() async {
+    String rawValue = await _storage.get(videosAutoPlaySettingStorageKey,
         defaultValue: VideosAutoPlaySetting.wifiOnly.toString());
     return VideosAutoPlaySetting.parse(rawValue);
   }
