@@ -160,6 +160,23 @@ flutter:
           style: normal
         - asset: assets/fonts/NunitoSans-Bold.ttf
           style: italic
+    - family: DejaVuSans
+      fonts:
+        - asset: assets/fonts/DejaVuSans.ttf
+          style: normal
+          weight: 400
+        - asset: assets/fonts/DejaVuSans-Oblique.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/DejaVuSans-Bold.ttf
+          style: normal
+          weight: 700
+        - asset: assets/fonts/DejaVuSans-BoldOblique.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/DejaVuSans-ExtraLight.ttf
+          style: normal
+          weight: 200
     - family: VisbyRoundCF
       fonts:
         - asset: assets/fonts/VisbyRoundCF-Regular.otf

@@ -6,6 +6,7 @@ import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/alerts/alert.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/tabs/image_tab.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBUserAvatarTab extends StatelessWidget {
@@ -53,7 +54,7 @@ class OBUserAvatarTab extends StatelessWidget {
                                   Radius.circular(OBImageTab.borderRadius),
                               bottomRight:
                                   Radius.circular(OBImageTab.borderRadius))),
-                      child: Text(
+                      child: OBText(
                         'You',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white, fontSize: 16),

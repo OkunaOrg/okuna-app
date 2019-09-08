@@ -29,16 +29,15 @@ class OBCreatePostText extends StatelessWidget {
             textCapitalization: TextCapitalization.sentences,
             keyboardType: TextInputType.multiline,
             maxLines: null,
-            style: TextStyle(
-                color: themeValueParserService.parseColor(theme.primaryTextColor),
-                fontSize: 18.0),
+            style: themeService.getThemedTextStyle(theme).merge(TextStyle(
+                fontSize: 18.0)),
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: this.hintText != null ? this.hintText : 'What\'s going on?',
-                hintStyle: TextStyle(
+                hintStyle: themeService.getDefaultTextStyle().merge(TextStyle(
                     color: themeValueParserService
                         .parseColor(theme.secondaryTextColor),
-                    fontSize: 18.0)),
+                    fontSize: 18.0))),
             autocorrect: true,
           );
         });

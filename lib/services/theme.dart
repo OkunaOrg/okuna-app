@@ -1,5 +1,8 @@
+import 'package:Okuna/main.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/services/storage.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math';
 
@@ -12,6 +15,9 @@ class ThemeService {
   OBTheme _activeTheme;
 
   OBStorage _storage;
+  ThemeValueParserService _themeValueParserService;
+
+  TextStyle _defaultTextStyle;
 
   List<OBTheme> _themes = [
     OBTheme(
@@ -172,11 +178,26 @@ class ThemeService {
 
   ThemeService() {
     _setActiveTheme(_themes[2]);
+    // Make sure this is the same as in lib/main.dart _getDefaultTextTheme()
+    var fontFamilyFallback = ['NunitoSans', 'DejaVuSans'];
+    if (isOnDesktop) {
+      fontFamilyFallback = ['NunitoSans', 'Emoji', 'DejaVuSans'];
+    }
+    _defaultTextStyle = TextStyle(
+        fontFamily: 'NunitoSans',
+        fontFamilyFallback: fontFamilyFallback,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.normal);
   }
 
   void setStorageService(StorageService storageService) {
     _storage = storageService.getSystemPreferencesStorage(namespace: 'theme');
     this._bootstrap();
+  }
+
+  void setThemeValueParserService(
+      ThemeValueParserService themeValueParserService) {
+    _themeValueParserService = themeValueParserService;
   }
 
   void setActiveTheme(OBTheme theme) {
@@ -230,5 +251,18 @@ class ThemeService {
     String hex = '#';
     while (length-- > 0) hex += chars[(random.nextInt(16)) | 0];
     return hex;
+  }
+
+  TextStyle getDefaultTextStyle() {
+    return _defaultTextStyle;
+  }
+
+  TextStyle getTextStyle(TextStyle custom) {
+    return _defaultTextStyle.merge(custom);
+  }
+
+  TextStyle getThemedTextStyle(OBTheme theme) {
+    return getTextStyle(TextStyle(
+        color: _themeValueParserService.parseColor(theme.primaryTextColor)));
   }
 }

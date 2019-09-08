@@ -31,14 +31,16 @@ class OBBadge extends StatelessWidget {
                 gradient: primaryAccentColor,
                 borderRadius: BorderRadius.circular(50)),
             child: Center(
-              child: count != null ? Text(
-                count.toString(),
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: count < 10 ? 12 : 10,
-                    fontWeight: FontWeight.bold),
-              ) : const SizedBox()
-            ),
+                child: count != null
+                    ? Text(
+                        count.toString(),
+                        style: themeService.getDefaultTextStyle().merge(
+                            TextStyle(
+                                color: Colors.white,
+                                fontSize: count < 10 ? 12 : 10,
+                                fontWeight: FontWeight.bold)),
+                      )
+                    : const SizedBox()),
           );
         });
   }

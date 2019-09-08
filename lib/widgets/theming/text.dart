@@ -47,7 +47,6 @@ class OBText extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
 
     double fontSize = getTextSize(size);
 
@@ -57,12 +56,12 @@ class OBText extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          TextStyle themedTextStyle = TextStyle(
-              color: themeValueParserService.parseColor(theme.primaryTextColor),
-              fontFamilyFallback: ['NunitoSans'],
-              fontSize: (style != null && style.fontSize != null)
-                  ? style.fontSize
-                  : fontSize);
+          TextStyle themedTextStyle = themeService
+              .getThemedTextStyle(theme)
+              .merge(TextStyle(
+                  fontSize: (style != null && style.fontSize != null)
+                      ? style.fontSize
+                      : fontSize));
 
           if (style != null) {
             themedTextStyle = themedTextStyle.merge(style);
