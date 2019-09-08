@@ -44,7 +44,8 @@ import 'package:Okuna/pages/home/pages/menu/pages/my_moderation_tasks/my_moderat
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
-import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/modals/application_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
@@ -372,12 +373,12 @@ class NavigationService {
             widget: OBAccountSettingsPage()));
   }
 
-  Future navigateToApplicationSettingsPage({@required BuildContext context}) {
+  Future navigateToDeveloperSettingsPage({@required BuildContext context}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
-            key: Key('obApplicationSettingsPage'),
-            widget: OBApplicationSettingsPage()));
+            key: Key('obDeveloperSettingsPage'),
+            widget: OBDeveloperSettingsPage()));
   }
 
   Future navigateToThemesPage({@required BuildContext context}) {

@@ -657,6 +657,11 @@ class LocalizationService {
     return Intl.message("Account Settings", name: 'drawer__account_settings');
   }
 
+  String get drawer__developer_settings {
+    return Intl.message("Developer Settings",
+        name: 'drawer__developer_settings');
+  }
+
   String get drawer__account_settings_change_email {
     return Intl.message("Change Email",
         name: 'drawer__account_settings_change_email');
@@ -3673,6 +3678,41 @@ class LocalizationService {
   String get posts_stream__status_tile_no_more_to_load {
     return Intl.message("🎉  All posts loaded",
         name: 'posts_stream__status_tile_no_more_to_load');
+  }
+
+  String get application_settings__videos_autoplay_always {
+    return Intl.message("Always",
+        name: 'application_settings__videos_autoplay_always');
+  }
+
+  String get application_settings__videos_autoplay_wifi_only {
+    return Intl.message("Wifi only",
+        name: 'application_settings__videos_autoplay_wifi_only');
+  }
+
+  String get application_settings__videos_autoplay_never {
+    return Intl.message("Never",
+        name: 'application_settings__videos_autoplay_never');
+  }
+
+  String get application_settings__videos_sound_enabled {
+    return Intl.message("Enabled",
+        name: 'application_settings__videos_sound_enabled');
+  }
+
+  String get application_settings__videos_sound_disabled {
+    return Intl.message("Disabled",
+        name: 'application_settings__videos_sound_disabled');
+  }
+
+  String get application_settings__comment_sort_newest_first {
+    return Intl.message("Newest first",
+        name: 'application_settings__comment_sort_newest_first');
+  }
+
+  String get application_settings__comment_sort_oldest_first {
+    return Intl.message("Oldest first",
+        name: 'application_settings__comment_sort_oldest_first');
   }
 
   Locale getLocale() {

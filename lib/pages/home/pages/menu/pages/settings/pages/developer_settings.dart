@@ -8,13 +8,15 @@ import 'package:Okuna/widgets/tiles/actions/clear_application_preferences_tile.d
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBApplicationSettingsPage extends StatelessWidget {
+class OBDeveloperSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
-      navigationBar: OBThemedNavigationBar(title: _localizationService.drawer__application_settings),
+      navigationBar: OBThemedNavigationBar(
+          title: _localizationService.drawer__application_settings),
       child: OBPrimaryColorContainer(
         child: ListView(
           physics: const ClampingScrollPhysics(),
@@ -22,7 +24,6 @@ class OBApplicationSettingsPage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             OBClearApplicationCacheTile(),
-            OBClearApplicationPreferencesTile(),
           ],
         ),
       ),
