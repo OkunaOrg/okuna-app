@@ -31,9 +31,9 @@ class OBApplicationSettingsPage extends StatelessWidget {
             ListTile(
               leading: const OBIcon(OBIcons.link),
               title: OBText(_localizationService
-                  .drawer__application_settings_trusted_domains_text),
+                  .application_settings__trusted_domains_text),
               subtitle: OBSecondaryText(_localizationService
-                  .drawer__application_settings_trusted_domains_desc),
+                  .application_settings__trusted_domains_desc),
               onTap: () {
                 _navigationService.navigateToTrustedDomainsSettings(
                     context: context);

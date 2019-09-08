@@ -1,0 +1,34 @@
+{
+  "trusted_domains_title": "Manage trusted domains",
+  "@trusted_domains_title": {
+    "description": "Title for the Trusted Domains settings page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "trusted_domains_text": "Trusted domains",
+  "@trusted_domains_text": {
+    "description": "Text on the button to the Trusted Domains settings page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "trusted_domains_desc": "Manage web domains you have marked as trusted.",
+  "@trusted_domains_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "trusted_domains_resource": "trusted domains",
+  "@trusted_domains_resource": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete_domain_failure": "Could not delete the trusted domain",
+  "@delete_domain_failure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ask_for_urls": "Ask to open untrusted URLs",
+  "@ask_for_urls": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

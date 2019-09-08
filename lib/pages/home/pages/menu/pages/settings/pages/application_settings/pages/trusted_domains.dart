@@ -63,7 +63,7 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
         title: _localizationService
-            .drawer__application_settings_trusted_domains_title,
+            .application_settings__trusted_domains_title,
       ),
       child: OBPrimaryColorContainer(
         child: _bootstrapInProgress
@@ -98,7 +98,7 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
             key: Key('alwaysAsk'),
             value: _alwaysAsk,
             title:
-                _localizationService.drawer__application_settings_ask_for_urls,
+                _localizationService.application_settings__ask_for_urls,
             onTap: _toggleAlwaysAsk,
             onChanged: _setAlwaysAsk,
           ),
@@ -107,7 +107,7 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
           onSearch: _onSearch,
           hintText: _localizationService.user_search__list_search_text(
               _localizationService
-                  .drawer__application_settings_trusted_domains_resource),
+                  .application_settings__trusted_domains_resource),
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -148,7 +148,7 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
     } else {
       _toastService.error(
           message: _localizationService
-              .drawer__application_settings_delete_domain_failure,
+              .application_settings__delete_domain_failure,
           context: context);
     }
   }
