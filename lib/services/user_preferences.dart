@@ -92,6 +92,11 @@ class UserPreferencesService {
     return domains ?? <String>[];
   }
 
+  Future clearUrlConfirmationPreferences() async {
+    _storage?.setList(keyAskToConfirmExceptions, null);
+    _storage?.set(keyAskToConfirmOpen, null);
+  }
+
   Future clear() {
     return _storage.clear();
   }

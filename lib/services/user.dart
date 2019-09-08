@@ -60,6 +60,7 @@ import 'package:Okuna/services/posts_api.dart';
 import 'package:Okuna/services/preview_url_api_service.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:Okuna/services/user_invites_api.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/services/waitlist_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
@@ -94,6 +95,7 @@ class UserService {
   WaitlistApiService _waitlistApiService;
   PreviewUrlApiService _previewUrlApiService;
   LocalizationService _localizationService;
+  UserPreferencesService _preferenceService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -185,6 +187,10 @@ class UserService {
     _localizationService = localizationService;
   }
 
+  void setUserPreferenceService(UserPreferencesService preferenceService) {
+    _preferenceService = preferenceService;
+  }
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -196,6 +202,7 @@ class UserService {
     await _removeStoredUserData();
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
+    await _preferenceService.clearUrlConfirmationPreferences();
     _removeLoggedInUser();
     await clearCache();
     User.clearSessionCache();
