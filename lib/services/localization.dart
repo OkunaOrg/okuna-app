@@ -843,6 +843,11 @@ class LocalizationService {
     return Intl.message("Confirmation", name: 'community__confirmation_title');
   }
 
+  String get community__retry_loading_posts {
+    return Intl.message("Tap to retry",
+        name: 'community__retry_loading_posts');
+  }
+
   String community__admin_add_confirmation(String username) {
     return Intl.message(
         "Are you sure you want to add @$username as a community administrator?",

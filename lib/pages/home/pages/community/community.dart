@@ -8,6 +8,7 @@ import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/c
 import 'package:Okuna/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_cover.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_nav_bar.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
@@ -130,6 +131,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
         prependedItems: prependedItems,
         streamIdentifier: 'community_' + widget.community.name,
         secondaryRefresher: _refreshCommunity,
+        statusIndicatorBuilder: _buildPostsStreamStatusIndicator,
       ),
     ];
 
@@ -150,6 +152,17 @@ class OBCommunityPageState extends State<OBCommunityPage>
     return Stack(
       children: stackItems,
     );
+  }
+
+  Widget _buildPostsStreamStatusIndicator(
+      {BuildContext context,
+      OBPostsStreamStatus streamStatus,
+      List<Widget> streamPrependedItems,
+      Function streamRefresher}) {
+    return OBCommunityPostsStreamStatusIndicator(
+        streamRefresher: streamRefresher,
+        streamPrependedItems: streamPrependedItems,
+        streamStatus: streamStatus);
   }
 
   Widget _buildNewPostDataUploader(OBNewPostData newPostData) {
