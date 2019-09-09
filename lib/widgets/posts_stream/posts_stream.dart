@@ -8,6 +8,7 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/post/post.dart';
+import 'package:Okuna/widgets/posts_stream/widgets/dr_hoo.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
@@ -54,7 +55,6 @@ class OBPostsStream extends StatefulWidget {
 class OBPostsStreamState extends State<OBPostsStream> {
   List<Post> _posts;
   bool _needsBootstrap;
-  bool _isFirstLoad;
   ToastService _toastService;
   LocalizationService _localizationService;
   ScrollController _streamScrollController;
@@ -74,7 +74,6 @@ class OBPostsStreamState extends State<OBPostsStream> {
     if (widget.controller != null) widget.controller.attach(this);
     _posts = widget.initialPosts != null ? widget.initialPosts.toList() : [];
     _needsBootstrap = true;
-    _isFirstLoad = true;
     _status = OBPostsStreamStatus.refreshing;
     _streamScrollController = ScrollController();
     _streamScrollController.addListener(_onScroll);
@@ -121,11 +120,11 @@ class OBPostsStreamState extends State<OBPostsStream> {
     if (hasPrependedItems) streamItems.addAll(widget.prependedItems);
 
     if (_posts.isEmpty) {
-      if (hasPrependedItems) {
-        streamItems.add(_buildStatusTile());
-      } else {
-        streamItems.add(_buildDrHoo());
-      }
+      streamItems.add(OBPostsStreamDrHoo(
+        streamStatus: _status,
+        onWantsToRefresh: _refresh,
+        streamPrependedItems: widget.prependedItems,
+      ));
     } else {
       streamItems.addAll(_buildStreamPosts());
       if (_status != OBPostsStreamStatus.idle)
@@ -205,106 +204,6 @@ class OBPostsStreamState extends State<OBPostsStream> {
         deltaBottom > (0.5 * viewPortDimension);
   }
 
-  Widget _buildDrHoo() {
-    String drHooTitle;
-    String drHooSubtitle;
-    bool hasRefreshButton = !_isFirstLoad;
-    Function refreshFunction = _refreshPosts;
-
-    switch (_status) {
-      case OBPostsStreamStatus.refreshing:
-        drHooTitle = _localizationService.posts_stream__refreshing_drhoo_title;
-        drHooSubtitle =
-            _localizationService.posts_stream__refreshing_drhoo_subtitle;
-        break;
-      case OBPostsStreamStatus.noMoreToLoad:
-        drHooTitle = _localizationService.posts_stream__empty_drhoo_title;
-        drHooSubtitle = _localizationService.posts_stream__empty_drhoo_subtitle;
-        break;
-      case OBPostsStreamStatus.loadingMoreFailed:
-        drHooTitle =
-            _localizationService.post__timeline_posts_failed_drhoo_title;
-        drHooSubtitle =
-            _localizationService.post__timeline_posts_failed_drhoo_subtitle;
-        refreshFunction = _refresh;
-        hasRefreshButton = true;
-        break;
-      case OBPostsStreamStatus.empty:
-        drHooTitle = _localizationService.posts_stream__empty_drhoo_title;
-        drHooSubtitle = _localizationService.posts_stream__empty_drhoo_subtitle;
-        refreshFunction = _refresh;
-        hasRefreshButton = true;
-        break;
-      default:
-        drHooTitle =
-            _localizationService.post__timeline_posts_default_drhoo_title;
-        drHooSubtitle =
-            _localizationService.post__timeline_posts_default_drhoo_subtitle;
-        hasRefreshButton = true;
-    }
-
-    List<Widget> drHooColumnItems = [
-      Image.asset(
-        'assets/images/stickers/owl-instructor.png',
-        height: 100,
-      ),
-      const SizedBox(
-        height: 20.0,
-      ),
-      OBText(
-        drHooTitle,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 18.0,
-        ),
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(
-        height: 10.0,
-      ),
-      OBText(
-        drHooSubtitle,
-        textAlign: TextAlign.center,
-      )
-    ];
-
-    if (hasRefreshButton) {
-      drHooColumnItems.addAll([
-        const SizedBox(
-          height: 30,
-        ),
-        OBButton(
-          icon: const OBIcon(
-            OBIcons.refresh,
-            size: OBIconSize.small,
-          ),
-          type: OBButtonType.highlight,
-          child:
-              OBText(_localizationService.post__timeline_posts_refresh_posts),
-          onPressed: refreshFunction,
-          isLoading: _status == OBPostsStreamStatus.refreshing,
-        )
-      ]);
-    }
-
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: OBHighlightedBox(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal:20),
-        borderRadius: BorderRadius.circular(10),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 200),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: drHooColumnItems,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   void _scrollToTop({bool skipRefresh = false}) {
     if (_streamScrollController.hasClients) {
       if (_streamScrollController.offset == 0 && !skipRefresh) {
@@ -322,6 +221,8 @@ class OBPostsStreamState extends State<OBPostsStream> {
   void _addPostToTop(Post post) {
     setState(() {
       this._posts.insert(0, post);
+      if (this._status == OBPostsStreamStatus.empty)
+        _setStatus(OBPostsStreamStatus.idle);
     });
   }
 
@@ -388,7 +289,9 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   Future _loadMorePosts() async {
     if (_status == OBPostsStreamStatus.refreshing ||
-        _status == OBPostsStreamStatus.noMoreToLoad) return null;
+        _status == OBPostsStreamStatus.noMoreToLoad ||
+        _status == OBPostsStreamStatus.loadingMore ||
+        _posts.isEmpty) return null;
     debugLog('Loading more posts');
     _ensureNoLoadMoreInProgress();
     _setStatus(OBPostsStreamStatus.loadingMore);
