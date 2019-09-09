@@ -64,9 +64,9 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     ConnectivityService connectivityService =
         openbookProvider.connectivityService;
 
-    _connectivity = connectivityService.getConnectivity();
-    _connectivityChangeSubscription =
-        connectivityService.onConnectivityChange(_onConnectivityChange);
+    //_connectivity = connectivityService.getConnectivity();
+    //_connectivityChangeSubscription =
+    //    connectivityService.onConnectivityChange(_onConnectivityChange);
   }
 
   @override
@@ -126,12 +126,8 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     if (isVideoInView) {
       if (!_obVideoPlayerController.isPausedDueToInvisibility() &&
           !_obVideoPlayerController.isPausedByUser()) {
-        if (_currentVideosAutoPlaySetting == VideosAutoPlaySetting.always ||
-            (_currentVideosAutoPlaySetting == VideosAutoPlaySetting.wifiOnly &&
-                _connectivity == ConnectivityResult.wifi)) {
-          debugLog('Playing as item is in view and allowed by user.');
-          _obVideoPlayerController.play();
-        }
+        debugLog('Playing as item is in view and allowed by user.');
+        _obVideoPlayerController.play();
       }
     } else if (_obVideoPlayerController.isPlaying()) {
       _obVideoPlayerController.pause();
