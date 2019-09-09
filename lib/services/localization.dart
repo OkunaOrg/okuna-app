@@ -1601,16 +1601,6 @@ class LocalizationService {
         name: 'post__timeline_posts_refreshing_drhoo_title');
   }
 
-  String get post__timeline_posts_refreshing_drhoo_subtitle {
-    return Intl.message("Loading your timeline.",
-        name: 'post__timeline_posts_refreshing_drhoo_subtitle');
-  }
-
-  String get post__timeline_posts_no_more_drhoo_title {
-    return Intl.message("Your timeline is empty.",
-        name: 'post__timeline_posts_no_more_drhoo_title');
-  }
-
   String get post__timeline_posts_no_more_drhoo_subtitle {
     return Intl.message("Follow users or join a community to get started!",
         name: 'post__timeline_posts_no_more_drhoo_subtitle');
@@ -3633,7 +3623,7 @@ class LocalizationService {
   }
 
   String get posts_stream__refreshing_drhoo_subtitle {
-    return Intl.message("Loading your timeline.",
+    return Intl.message("Refreshing the stream.",
         name: 'posts_stream__refreshing_drhoo_subtitle');
   }
 

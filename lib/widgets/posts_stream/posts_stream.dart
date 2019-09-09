@@ -8,6 +8,7 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/post/post.dart';
+import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/loading_indicator_tile.dart';
@@ -65,7 +66,6 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   CancelableOperation _refreshOperation;
   CancelableOperation _secondaryRefresherOperation;
-  bool _refreshInProgress;
   CancelableOperation _loadMoreOperation;
 
   @override
@@ -78,7 +78,6 @@ class OBPostsStreamState extends State<OBPostsStream> {
     _status = OBPostsStreamStatus.refreshing;
     _streamScrollController = ScrollController();
     _streamScrollController.addListener(_onScroll);
-    _refreshInProgress = false;
   }
 
   @override
@@ -117,14 +116,13 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   Widget _buildStream() {
     List<Widget> streamItems = [];
-    bool hasPrependedItems = widget.prependedItems != null;
+    bool hasPrependedItems =
+        widget.prependedItems != null && widget.prependedItems.isNotEmpty;
     if (hasPrependedItems) streamItems.addAll(widget.prependedItems);
 
     if (_posts.isEmpty) {
       if (hasPrependedItems) {
         streamItems.add(_buildStatusTile());
-        print('Building status tile!');
-        print(_status);
       } else {
         streamItems.add(_buildDrHoo());
       }
@@ -231,6 +229,12 @@ class OBPostsStreamState extends State<OBPostsStream> {
         refreshFunction = _refresh;
         hasRefreshButton = true;
         break;
+      case OBPostsStreamStatus.empty:
+        drHooTitle = _localizationService.posts_stream__empty_drhoo_title;
+        drHooSubtitle = _localizationService.posts_stream__empty_drhoo_subtitle;
+        refreshFunction = _refresh;
+        hasRefreshButton = true;
+        break;
       default:
         drHooTitle =
             _localizationService.post__timeline_posts_default_drhoo_title;
@@ -278,18 +282,23 @@ class OBPostsStreamState extends State<OBPostsStream> {
           child:
               OBText(_localizationService.post__timeline_posts_refresh_posts),
           onPressed: refreshFunction,
-          isLoading: _refreshInProgress != null,
+          isLoading: _status == OBPostsStreamStatus.refreshing,
         )
       ]);
     }
 
-    return SizedBox(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 200),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: drHooColumnItems,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: OBHighlightedBox(
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal:20),
+        borderRadius: BorderRadius.circular(10),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 200),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: drHooColumnItems,
+            ),
           ),
         ),
       ),
@@ -407,6 +416,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   void _onPostDeleted(Post deletedPost) {
     setState(() {
       _posts.remove(deletedPost);
+      if (_posts.isEmpty) _setStatus(OBPostsStreamStatus.empty);
     });
   }
 

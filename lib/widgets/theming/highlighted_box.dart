@@ -4,8 +4,15 @@ import 'package:flutter/material.dart';
 
 class OBHighlightedBox extends StatelessWidget {
   final Widget child;
+  final EdgeInsets padding;
+  final BorderRadius borderRadius;
 
-  const OBHighlightedBox({Key key, this.child}) : super(key: key);
+  const OBHighlightedBox(
+      {Key key,
+      this.child,
+      this.padding,
+      this.borderRadius})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +31,10 @@ class OBHighlightedBox extends StatelessWidget {
           final bool isDarkPrimaryColor =
               primaryColor.computeLuminance() < 0.179;
 
-          return DecoratedBox(
+          return Container(
+            padding: padding,
             decoration: BoxDecoration(
+              borderRadius: borderRadius,
               color: isDarkPrimaryColor
                   ? Color.fromARGB(30, 255, 255, 255)
                   : Color.fromARGB(20, 0, 0, 0),
