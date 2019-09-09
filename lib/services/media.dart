@@ -50,7 +50,7 @@ class MediaService {
     file.writeAsBytesSync(convertedImageData);
 
     if (!await _validationService.isImageAllowedSize(file, imageType)) {
-      throw ImageTooLargeException(
+      throw FileTooLargeException(
           _validationService.getAllowedImageSize(imageType));
     }
 
@@ -79,11 +79,16 @@ class MediaService {
         await _bottomSheetService.showVideoPicker(context: context);
 
     if (pickedVideo == null) return null;
+
     String videoExtension = basename(pickedVideo.path);
     String tmpImageName = _uuid.v4() + videoExtension;
     final path = await _getTempPath();
     final String pickedVideoCopyPath = '$path/$tmpImageName';
     File pickedVideoCopy = await pickedVideo.copy(pickedVideoCopyPath);
+
+    if (!await _validationService.isVideoAllowedSize(pickedVideoCopy)) {
+      throw FileTooLargeException(_validationService.getAllowedVideoSize());
+    }
 
     return pickedVideoCopy;
   }
@@ -150,10 +155,10 @@ class MediaService {
   }
 }
 
-class ImageTooLargeException implements Exception {
+class FileTooLargeException implements Exception {
   final int limit;
 
-  const ImageTooLargeException(this.limit);
+  const FileTooLargeException(this.limit);
 
   String toString() =>
       'ImageToLargeException: Images can\'t be larger than $limit';
