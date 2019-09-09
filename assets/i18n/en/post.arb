@@ -226,6 +226,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_video": "Video",
+  "@create_video": {
+    "type": "text",
+    "placeholders": {}
+  },
   "commenter_post_text": "Post",
   "@commenter_post_text": {
     "type": "text",

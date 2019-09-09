@@ -1,0 +1,12 @@
+{
+    "unknown_error": "Ismeretlen hiba",
+    "@unknown_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_internet_connection": "Nincs internetkapcsolat",
+    "@no_internet_connection": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

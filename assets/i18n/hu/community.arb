@@ -1,0 +1,747 @@
+{
+    "no": "Nem",
+    "@no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "yes": "Igen",
+    "@yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "button_staff": "Staff",
+    "@button_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "button_rules": "Szabályok",
+    "@button_rules": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community": "közösség",
+    "@community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities": "közösség",
+    "@communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "type_public": "Nyilvános",
+    "@type_public": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "type_private": "Zárt",
+    "@type_private": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "member_capitalized": "tag",
+    "@member_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "members_capitalized": "tag",
+    "@members_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "admin_desc": "Ezáltal a tag módosíthatja a közösség beállításait, adminisztrátorait, moderátorait és letiltott felhasználóit.",
+    "@admin_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirmation_title": "Megerősítés",
+    "@confirmation_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "admin_add_confirmation": "Biztosan ki szeretnéd nevezni @{username}-t a közösség adminisztrátoraként?",
+    "@admin_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "ban_confirmation": "Biztosan le szeretnéd tiltani @{username}-t?",
+    "@ban_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "ban_desc": "Ezáltal a felhasználó közösségi tagsága törölve lesz és nem kérelmezhet újat.",
+    "@ban_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderator_add_confirmation": "Biztosan ki szeretnéd nevezni @{username}-t a közösség moderátoraként?",
+    "@moderator_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "moderator_desc": "Ezáltal a tag módosíthatja a közösség beállításait, moderátorait és letiltott felhasználóit.",
+    "@moderator_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_you": "Te",
+    "@moderators_you": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_title": "Moderátorok",
+    "@moderators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_desc": "Nem láthatod a bejegyzéseit többé a hírfolyamodban és nem hozhatsz létre több bejegyzést benne.",
+    "@leave_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_confirmation": "Biztosan ki szeretnél lépni a közösségből?",
+    "@leave_confirmation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderator_resource_name": "moderátor",
+    "@moderator_resource_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_resource_name": "moderátor",
+    "@moderators_resource_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_moderator_title": "Moderátor hozzáadása",
+    "@add_moderator_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_confirmation": "Biztosan törölni szeretnéd ezt a közösséget?",
+    "@delete_confirmation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_desc": "Nem láthatod a bejegyzéseit többé a hírfolyamodban és nem hozhatsz létre több bejegyzést benne.",
+    "@delete_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_manage_text": "Kezelés",
+    "@actions_manage_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_title": "Közösség kezelése",
+    "@manage_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_details_title": "Részletek",
+    "@manage_details_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_details_desc": "Cím, név, ikonkép, borítókép, stb. módosítása.",
+    "@manage_details_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_admins_title": "Adminisztrátorok",
+    "@manage_admins_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_admins_desc": "Adminisztrátorok megtekintése, hozzáadása és törlése.",
+    "@manage_admins_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mods_title": "Moderátorok",
+    "@manage_mods_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mods_desc": "Moderátorok megtekintése, hozzáadása és törlése.",
+    "@manage_mods_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_banned_title": "Letiltott felhasználók",
+    "@manage_banned_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_banned_desc": "Letiltott felhasználók megtekintése, hozzáadása és törlése.",
+    "@manage_banned_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mod_reports_title": "Moderálási jelentések",
+    "@manage_mod_reports_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mod_reports_desc": "A közösségen belül létrehozott moderálási jelentések áttekintése.",
+    "@manage_mod_reports_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_closed_posts_title": "Zárt bejegyzések",
+    "@manage_closed_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_closed_posts_desc": "Zárt bejegyzések megtekintése és kezelése",
+    "@manage_closed_posts_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_invite_title": "Emberek meghívása",
+    "@manage_invite_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_invite_desc": "Hívd meg kapcsolataidat és követőidet a közösséghez.",
+    "@manage_invite_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_delete_title": "Közösség törlése",
+    "@manage_delete_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_delete_desc": "Közösség törlése örökre.",
+    "@manage_delete_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_leave_title": "Kilépés a közösségből",
+    "@manage_leave_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_leave_desc": "Kilépés a közösségből.",
+    "@manage_leave_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_add_favourite": "Közösség hozzáadása a kedvencekhez",
+    "@manage_add_favourite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_remove_favourite": "Közösség törlése a kedvencek közül",
+    "@manage_remove_favourite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "is_private": "Ez a közösség zárt.",
+    "@is_private": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invited_by_member": "Egy közösségi tagnak meg kell hívnia.",
+    "@invited_by_member": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invited_by_moderator": "Egy moderátornak meg kell hívnia.",
+    "@invited_by_moderator": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing": "Közösség frissítése",
+    "@refreshing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "posts": "Bejegyzések",
+    "@posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about": "A közösségről",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "category": "kategória.",
+    "@category": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "categories": "kategória.",
+    "@categories": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_administrators_title": "Adminisztrátor hozzáadása",
+    "@add_administrators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_members": "Közösség tagjai",
+    "@community_members": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "member": "tag",
+    "@member": {
+        "description": "Currently not used in app, reserved for potential use. Could be used as: Showing 1 member",
+        "type": "text",
+        "placeholders": {}
+    },
+    "member_plural": "tag",
+    "@member_plural": {
+        "description": "See all members ,Search all members",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrators_title": "Adminisztrátorok",
+    "@administrators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_text": "adminisztrátor",
+    "@administrator_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrator",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_plural": "adminisztrátor",
+    "@administrator_plural": {
+        "description": "Egs. Search administrators, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_you": "Te",
+    "@administrator_you": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_you_text": "Te",
+    "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pick_upto_max": "Válassz ki legfeljebb {max} kategóriát",
+    "@pick_upto_max": {
+        "type": "text",
+        "placeholders": {
+            "max": {}
+        }
+    },
+    "pick_atleast_min_category": "Legalább {min} kategóriát kell kiválasztanod.",
+    "@pick_atleast_min_category": {
+        "description": "You must pick at least 1 category",
+        "type": "text",
+        "placeholders": {
+            "min": {}
+        }
+    },
+    "pick_atleast_min_categories": "Legalább {min} kategóriát kell kiválasztanod.",
+    "@pick_atleast_min_categories": {
+        "description": "Eg. Variable min will be 3-5. You must pick at least (3-5) categories",
+        "type": "text",
+        "placeholders": {
+            "min": {}
+        }
+    },
+    "ban_user_title": "Felhasználó tiltása",
+    "@ban_user_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_users_title": "Letiltott felhasználók",
+    "@banned_users_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_user_text": "letiltott felhasználó",
+    "@banned_user_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 banned user",
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_users_text": "letiltott felhasználó",
+    "@banned_users_text": {
+        "description": "Egs. Search banned users, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorites_title": "Kedvencek",
+    "@favorites_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_community": "kedvenc közösség",
+    "@favorite_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_communities": "kedvenc közösség",
+    "@favorite_communities": {
+        "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_title": "Adminisztrált",
+    "@administrated_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_community": "adminisztrált közösség",
+    "@administrated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_communities": "adminisztrált közösség",
+    "@administrated_communities": {
+        "description": "Egs. Search administrated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_title": "Moderált",
+    "@moderated_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_community": "moderált közösség",
+    "@moderated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_communities": "moderált közösség",
+    "@moderated_communities": {
+        "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_title": "Csatlakozott",
+    "@joined_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_community": "csatlakozott közösség",
+    "@joined_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 joined community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_communities": "csatlakozott közösség",
+    "@joined_communities": {
+        "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "join_communities_desc": "Csatlakozz közösségekhez, hogy ne legyen üres ez a fül!",
+    "@join_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refresh_text": "Frissítés",
+    "@refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_none_found": "Nem találhatóak felkapott közösségek. Próbáld újra pár perc múlva.",
+    "@trending_none_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_refresh": "Frissítés",
+    "@trending_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_in_all": "Felkapottak az összes kategóriában",
+    "@trending_in_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_in_category": "Felkapottak a(z) {categoryName} kategóriában",
+    "@trending_in_category": {
+        "type": "text",
+        "placeholders": {
+            "categoryName": {}
+        }
+    },
+    "communities_title": "Közösségek",
+    "@communities_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_no_category_found": "Nem találhatóak kategóriák. Kérünk, próbáld újra pár perc múlva.",
+    "@communities_no_category_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_refresh_text": "Frissítés",
+    "@communities_refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_all_text": "Összes",
+    "@communities_all_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_title": "Meghívás közösséghez",
+    "@invite_to_community_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_resource_singular": "kapcsolat vagy követő",
+    "@invite_to_community_resource_singular": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower",
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_resource_plural": "kapcsolatok és követők",
+    "@invite_to_community_resource_plural": {
+        "description": "Egs. Search connections and followers, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_action": "Közösség kedvencnek jelölése",
+    "@favorite_action": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "unfavorite_action": "Törlés a kedvencek közül",
+    "@unfavorite_action": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_label_title": "Cím",
+    "@save_community_label_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_label_title_hint_text": "pl.: Utazás, Fényképészet, Videojátékok.",
+    "@save_community_label_title_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_title": "Név",
+    "@save_community_name_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_title_hint_text": " pl.: utazas, fenykepeszet, videojatekok.",
+    "@save_community_name_title_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_taken": "A(z) {takenName} név már foglalt",
+    "@save_community_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenName": {}
+        }
+    },
+    "save_community_name_label_color": "Szín",
+    "@save_community_name_label_color": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_color_hint_text": "(Koppints a módosításhoz)",
+    "@save_community_name_label_color_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_type": "Típus",
+    "@save_community_name_label_type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_type_hint_text": "(Koppints a módosításhoz)",
+    "@save_community_name_label_type_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_member_invites": "Tagmeghívások",
+    "@save_community_name_member_invites": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_member_invites_subtitle": "A tagok meghívhatnak másokat a közösséghez",
+    "@save_community_name_member_invites_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_category": "Kategória",
+    "@save_community_name_category": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_desc_optional": "Leírás (nem kötelező)",
+    "@save_community_name_label_desc_optional": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_desc_optional_hint_text": "Miről szól a közösséged?",
+    "@save_community_name_label_desc_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_rules_optional": "Szabályzat (nem kötelező)",
+    "@save_community_name_label_rules_optional": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_rules_optional_hint_text": "Szeretnéd ha a tagjaid betartsanak bizonyos szabályokat?",
+    "@save_community_name_label_rules_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_member_adjective": "Tag melléknév (nem kötelező)",
+    "@save_community_name_label_member_adjective": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_member_adjective_hint_text": "pl.: utazó, fényképész, gamer.",
+    "@save_community_name_label_member_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_members_adjective": "Tag melléknév - többesszám (nem kötelező)",
+    "@save_community_name_label_members_adjective": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_members_adjective_hint_text": "pl.: utazók, fényképészek, gamerek.",
+    "@save_community_name_label_members_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_edit_community": "Közösség szerkesztése",
+    "@save_community_edit_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_create_community": "Közösség létrehozása",
+    "@save_community_create_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_save_text": "Mentés",
+    "@save_community_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_create_text": "Létrehozás",
+    "@save_community_create_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_invite_people_title": "Hívj meg embereket a közösséghez",
+    "@actions_invite_people_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "join_community": "Csatlakozás",
+    "@join_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_community": "Kilépés",
+    "@leave_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_staff": "Közösség személyzete",
+    "@community_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_singular": "bejegyzés",
+    "@post_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_plural": "bejegyzés",
+    "@post_plural": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_title": "Közösség szabályai",
+    "@rules_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_text": "Szabályok",
+    "@rules_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_characters_error": "A név csak alfanumerikus karaktereket és alulvonásokat tartalmazhat.",
+    "@name_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_range_error": "A név nem lehet {maxLength} karakternél hosszabb.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "name_empty_error": "A név mező nem lehet üres.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "title_range_error": "A cím nem lehet {maxLength} karakternél hosszabb.",
+    "@title_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "title_empty_error": "A cím nem lehet üres.",
+    "@title_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_range_error": "A szabályzat nem lehet {maxLength} karakternél hosszabb.",
+    "@rules_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "rules_empty_error": "A szabályzat nem lehet üres.",
+    "@rules_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_range_error": "A leírás nem lehet {maxLength} karakternél hosszabb.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "adjectives_range_error": "A melléknevek nem lehetnek {maxLength} karakternél hosszabbak.",
+    "@adjectives_range_error": {
+        "description": "This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers",
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    }
+}

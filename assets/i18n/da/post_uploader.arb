@@ -1,0 +1,47 @@
+{
+    "generic_upload_failed": "Upload mislykkedes",
+    "@generic_upload_failed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "creating_post": "Opretter indlæg...",
+    "@creating_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "compressing_media": "Kompresserer medier...",
+    "@compressing_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uploading_media": "Uploader medier...",
+    "@uploading_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "publishing": "Offentliggør indlæg...",
+    "@publishing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "processing": "Forarbejder indlæg...",
+    "@processing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "success": "Succes!",
+    "@success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelling": "Annullerer",
+    "@cancelling": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelled": "Annulleret!",
+    "@cancelled": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

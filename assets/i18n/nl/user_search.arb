@@ -1,0 +1,76 @@
+{
+    "search_text": "Zoeken...",
+    "@search_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities": "Communities",
+    "@communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "users": "Gebruikers",
+    "@users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_search_text": "Zoek {resourcePluralName} ...",
+    "@list_search_text": {
+        "description": "resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.",
+        "type": "text",
+        "placeholders": {
+            "resourcePluralName": {}
+        }
+    },
+    "list_no_results_found": "{resourcePluralName} niet gevonden.",
+    "@list_no_results_found": {
+        "description": "Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ",
+        "type": "text",
+        "placeholders": {
+            "resourcePluralName": {}
+        }
+    },
+    "list_refresh_text": "Ververs",
+    "@list_refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_retry": "Tik om opnieuw te proberen.",
+    "@list_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancel": "Annuleren",
+    "@cancel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "searching_for": "Zoeken naar '{searchQuery}'",
+    "@searching_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_results_for": "Geen resultaten voor '{searchQuery}' gevonden.",
+    "@no_results_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_communities_for": "Geen communities gevonden voor '{searchQuery}'.",
+    "@no_communities_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_users_for": "Geen gebruikers gevonden voor '{searchQuery}'.",
+    "@no_users_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    }
+}

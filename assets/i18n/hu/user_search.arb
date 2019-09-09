@@ -1,0 +1,76 @@
+{
+    "search_text": "Keresés...",
+    "@search_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities": "Közösségek",
+    "@communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "users": "Felhasználók",
+    "@users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_search_text": "{resourcePluralName} keresése...",
+    "@list_search_text": {
+        "description": "resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.",
+        "type": "text",
+        "placeholders": {
+            "resourcePluralName": {}
+        }
+    },
+    "list_no_results_found": "Nem találhatóak {resourcePluralName}.",
+    "@list_no_results_found": {
+        "description": "Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ",
+        "type": "text",
+        "placeholders": {
+            "resourcePluralName": {}
+        }
+    },
+    "list_refresh_text": "Frissítés",
+    "@list_refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_retry": "Koppints az újrapróbálkozáshoz.",
+    "@list_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancel": "Mégse",
+    "@cancel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "searching_for": "\"{searchQuery}\" keresése",
+    "@searching_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_results_for": "Nincs találat a(z) \"{searchQuery}\" keresésre.",
+    "@no_results_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_communities_for": "Nem található közösség a(z) \"{searchQuery}\" keresésre.",
+    "@no_communities_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_users_for": "Nem található felhasználó a(z) \"{searchQuery}\" keresésre.",
+    "@no_users_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    }
+}

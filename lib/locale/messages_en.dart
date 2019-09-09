@@ -3,22 +3,21 @@
 // messages from the main program should be duplicated here with the same
 // function name.
 
-// ignore_for_file: unnecessary_brace_in_string_interps
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-// ignore: unnecessary_new
 final messages = new MessageLookup();
 
-// ignore: unused_element
-final _keepAnalysisHappy = Intl.defaultLocale;
-
-// ignore: non_constant_identifier_names
-typedef MessageIfAbsent(String message_str, List args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  get localeName => 'en';
+  String get localeName => 'en';
 
   static m0(minLength, maxLength) => "(${minLength}-${maxLength} characters)";
 
@@ -140,6 +139,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "application_settings__comment_sort_newest_first" : MessageLookupByLibrary.simpleMessage("Newest first"),
+    "application_settings__comment_sort_oldest_first" : MessageLookupByLibrary.simpleMessage("Oldest first"),
+    "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Tap to change)"),
+    "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Videos"),
+    "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Autoplay"),
+    "application_settings__videos_autoplay_always" : MessageLookupByLibrary.simpleMessage("Always"),
+    "application_settings__videos_autoplay_never" : MessageLookupByLibrary.simpleMessage("Never"),
+    "application_settings__videos_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Wifi only"),
+    "application_settings__videos_sound" : MessageLookupByLibrary.simpleMessage("Sound"),
+    "application_settings__videos_sound_disabled" : MessageLookupByLibrary.simpleMessage("Disabled"),
+    "application_settings__videos_sound_enabled" : MessageLookupByLibrary.simpleMessage("Enabled"),
     "auth__change_password_current_pwd" : MessageLookupByLibrary.simpleMessage("Current password"),
     "auth__change_password_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Enter your current password"),
     "auth__change_password_current_pwd_incorrect" : MessageLookupByLibrary.simpleMessage("Entered password was incorrect"),
@@ -396,6 +406,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__application_settings" : MessageLookupByLibrary.simpleMessage("Application Settings"),
     "drawer__connections" : MessageLookupByLibrary.simpleMessage("My connections"),
     "drawer__customize" : MessageLookupByLibrary.simpleMessage("Customize"),
+    "drawer__developer_settings" : MessageLookupByLibrary.simpleMessage("Developer Settings"),
     "drawer__global_moderation" : MessageLookupByLibrary.simpleMessage("Global moderation"),
     "drawer__help" : MessageLookupByLibrary.simpleMessage("Support & Feedback"),
     "drawer__lists" : MessageLookupByLibrary.simpleMessage("My lists"),
@@ -429,6 +440,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__useful_links_title" : MessageLookupByLibrary.simpleMessage("Useful links"),
     "error__no_internet_connection" : MessageLookupByLibrary.simpleMessage("No internet connection"),
     "error__unknown_error" : MessageLookupByLibrary.simpleMessage("Unknown error"),
+    "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("From camera"),
+    "image_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("From gallery"),
     "moderation__actions_chat_with_team" : MessageLookupByLibrary.simpleMessage("Chat with the team"),
     "moderation__actions_review" : MessageLookupByLibrary.simpleMessage("Review"),
     "moderation__category_text" : MessageLookupByLibrary.simpleMessage("Category"),
@@ -535,6 +548,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__reacted_to_post_comment_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reacted to your post comment."),
     "notifications__reacted_to_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reacted to your post."),
     "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Notifications settings"),
+    "notifications__tab_general" : MessageLookupByLibrary.simpleMessage("General"),
+    "notifications__tab_requests" : MessageLookupByLibrary.simpleMessage("Requests"),
     "notifications__user_community_invite_tile" : m25,
     "post__action_comment" : MessageLookupByLibrary.simpleMessage("Comment"),
     "post__action_react" : MessageLookupByLibrary.simpleMessage("React"),
@@ -589,6 +604,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__create_new" : MessageLookupByLibrary.simpleMessage("New post"),
     "post__create_next" : MessageLookupByLibrary.simpleMessage("Next"),
     "post__create_photo" : MessageLookupByLibrary.simpleMessage("Photo"),
+    "post__create_video" : MessageLookupByLibrary.simpleMessage("Video"),
     "post__disable_post_comments" : MessageLookupByLibrary.simpleMessage("Disable post comments"),
     "post__edit_save" : MessageLookupByLibrary.simpleMessage("Save"),
     "post__edit_title" : MessageLookupByLibrary.simpleMessage("Edit post"),
@@ -648,6 +664,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__usernames_circles" : m30,
     "post__world_circle_name" : MessageLookupByLibrary.simpleMessage("World"),
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("You shared with"),
+    "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Unsupported media type"),
+    "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Cancelled!"),
+    "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Cancelling"),
+    "post_uploader__compressing_media" : MessageLookupByLibrary.simpleMessage("Compressing media..."),
+    "post_uploader__creating_post" : MessageLookupByLibrary.simpleMessage("Creating post..."),
+    "post_uploader__generic_upload_failed" : MessageLookupByLibrary.simpleMessage("Upload failed"),
+    "post_uploader__processing" : MessageLookupByLibrary.simpleMessage("Processing post..."),
+    "post_uploader__publishing" : MessageLookupByLibrary.simpleMessage("Publishing post..."),
+    "post_uploader__success" : MessageLookupByLibrary.simpleMessage("Success!"),
+    "post_uploader__uploading_media" : MessageLookupByLibrary.simpleMessage("Uploading media..."),
+    "posts_stream__all_loaded" : MessageLookupByLibrary.simpleMessage("🎉  All posts loaded"),
+    "posts_stream__empty_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Try refreshing in a couple of seconds."),
+    "posts_stream__empty_drhoo_title" : MessageLookupByLibrary.simpleMessage("This stream is empty."),
+    "posts_stream__failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Try again in a couple seconds"),
+    "posts_stream__failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Could not load the stream."),
+    "posts_stream__refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Loading your timeline."),
+    "posts_stream__refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Hang in there!"),
+    "posts_stream__status_tile_empty" : MessageLookupByLibrary.simpleMessage("No posts found"),
+    "posts_stream__status_tile_no_more_to_load" : MessageLookupByLibrary.simpleMessage("🎉  All posts loaded"),
     "user__add_account_done" : MessageLookupByLibrary.simpleMessage("Done"),
     "user__add_account_save" : MessageLookupByLibrary.simpleMessage("Save"),
     "user__add_account_success" : MessageLookupByLibrary.simpleMessage("Success"),
@@ -713,6 +748,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__disconnect_from_user" : m36,
     "user__disconnect_from_user_success" : MessageLookupByLibrary.simpleMessage("Disconnected successfully"),
     "user__edit_profile_bio" : MessageLookupByLibrary.simpleMessage("Bio"),
+    "user__edit_profile_community_posts" : MessageLookupByLibrary.simpleMessage("Community posts"),
     "user__edit_profile_delete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "user__edit_profile_followers_count" : MessageLookupByLibrary.simpleMessage("Followers count"),
     "user__edit_profile_location" : MessageLookupByLibrary.simpleMessage("Location"),
@@ -843,6 +879,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user_search__no_users_for" : m57,
     "user_search__search_text" : MessageLookupByLibrary.simpleMessage("Search..."),
     "user_search__searching_for" : m58,
-    "user_search__users" : MessageLookupByLibrary.simpleMessage("Users")
+    "user_search__users" : MessageLookupByLibrary.simpleMessage("Users"),
+    "video_picker__from_camera" : MessageLookupByLibrary.simpleMessage("From camera"),
+    "video_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("From gallery")
   };
 }

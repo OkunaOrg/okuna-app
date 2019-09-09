@@ -1,0 +1,12 @@
+{
+    "from_gallery": "Galériából",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Kameráról",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -1,0 +1,531 @@
+{
+    "headline": "Better social.",
+    "@headline": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login": "Aanmelden",
+    "@login": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_empty_error": "E-mail mag niet leeg zijn.",
+    "@email_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_invalid_error": "Vul een geldig e-mailadres in.",
+    "@email_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_empty_error": "Gebruikersnaam mag niet leeg zijn.",
+    "@username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_characters_error": "Een gebruikersnaam kan alleen alfanumerieke karakters en onderliggend streepje bevatten.",
+    "@username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_maxlength_error": "Een gebruikersnaam mag niet langer zijn dan {maxLength} tekens.",
+    "@username_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "create_account": "Inschrijven",
+    "@create_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__lets_get_started": "Laten we beginnen",
+    "@create_acc__lets_get_started": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__welcome_to_beta": "Welkom bij de Bèta!",
+    "@create_acc__welcome_to_beta": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__previous": "Terug",
+    "@create_acc__previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__next": "Volgende",
+    "@create_acc__next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__create_account": "Account aanmaken",
+    "@create_acc__create_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_link": "Plak uw registratie link hieronder",
+    "@create_acc__paste_link": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_password_reset_link": "Plak uw wachtwoord herstel-link hieronder",
+    "@create_acc__paste_password_reset_link": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_link_help_text": "Gebruik de link van de Join Okuna knop in uw uitnodigingsmail.",
+    "@create_acc__paste_link_help_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__link_empty_error": "Link mag niet leeg zijn.",
+    "@create_acc__link_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__link_invalid_error": "Deze link lijkt ongeldig.",
+    "@create_acc__link_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "password_empty_error": "Wachtwoord mag niet leeg zijn.",
+    "@password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "password_range_error": "Wachtwoord moet tussen {minLength} en {maxLength} tekens bevatten.",
+    "@password_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "name_empty_error": "Naam mag niet leeg zijn.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_range_error": "Naam moet tussen {minLength} en {maxLength} tekens bevatten.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "description_empty_error": "Omschrijving mag niet leeg zijn.",
+    "@description_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_range_error": "Omschrijving moet tussen {minLength} en {maxLength} tekens bevatten.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "reset_password_success_title": "Klaar!",
+    "@reset_password_success_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reset_password_success_info": "Je wachtwoord is met succes bijgewerkt",
+    "@reset_password_success_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__request_invite": "Geen uitnodiging? Vraag er hier een aan.",
+    "@create_acc__request_invite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__subscribe": "Verzoek",
+    "@create_acc__subscribe": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__subscribe_to_waitlist_text": "Een uitnodiging aanvragen!",
+    "@create_acc__subscribe_to_waitlist_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__congratulations": "Gefeliciteerd!",
+    "@create_acc__congratulations": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__your_subscribed": "Je bent {0} op de wachtlijst.",
+    "@create_acc__your_subscribed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__almost_there": "Bijna klaar...",
+    "@create_acc__almost_there": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_name": "Wat is je naam?",
+    "@create_acc__what_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_placeholder": "James Bond",
+    "@create_acc__name_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_empty_error": "😱 Je naam kan niet leeg zijn.",
+    "@create_acc__name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_length_error": "😱 Je naam kan niet langer zijn dan 50 karakters. (Als dat zo is, dan spijt dat ons zeer.)",
+    "@create_acc__name_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_characters_error": "😅 Een naam kan alleen alfanumerieke karakters bevatten (voor nu).",
+    "@create_acc__name_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_username": "Kies een gebruikersnaam",
+    "@create_acc__what_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_placeholder": "vincentvangogh",
+    "@create_acc__username_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_empty_error": "😱 De gebruikersnaam kan niet leeg zijn.",
+    "@create_acc__username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_length_error": "😅 Een gebruiksnaam kan niet langer zijn dan 30 karakters.",
+    "@create_acc__username_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_characters_error": "😅 Een gebruikersnaam kan alleen alfanumerieke karakters en onderliggend streepje bevatten.",
+    "@create_acc__username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_taken_error": "😩 De gebruikersnaam @%s is al bezet.",
+    "@create_acc__username_taken_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_server_error": "😭 We ervaren problemen met onze servers. Probeer alsjeblieft het over een paar minuten opnieuw.",
+    "@create_acc__username_server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_email": "Wat is je e-mail adres?",
+    "@create_acc__what_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_placeholder": "v.vangogh@kwasten.nl",
+    "@create_acc__email_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_empty_error": "😱 Je e-mailadres kan niet leeg zijn",
+    "@create_acc__email_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_invalid_error": "😅 Voer een geldig e-mailadres in.",
+    "@create_acc__email_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_taken_error": "🤔 Er bestaat al een account voor dat e-mailadres.",
+    "@create_acc__email_taken_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_server_error": "😭 We ervaren problemen met onze servers. Probeer het over een paar minuten alsjeblieft opnieuw.",
+    "@create_acc__email_server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_password": "Kies een wachtwoord",
+    "@create_acc__what_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc_password_hint_text": "({minLength}-{maxLength} tekens)",
+    "@create_acc_password_hint_text": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "create_acc__what_password_subtext": "(min 10 tekens)",
+    "@create_acc__what_password_subtext": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__password_empty_error": "😱 Je wachtwoord kan niet leeg zijn",
+    "@create_acc__password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__password_length_error": "😅 Een wachtwoord moet tussen 8 en 64 karakters zijn.",
+    "@create_acc__password_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_avatar": "Kies een profielfoto",
+    "@create_acc__what_avatar": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_tap_to_change": "Tik om te wijzigen",
+    "@create_acc__avatar_tap_to_change": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_choose_camera": "Neem een foto",
+    "@create_acc__avatar_choose_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_choose_gallery": "Gebruik een bestaande foto",
+    "@create_acc__avatar_choose_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_remove_photo": "Foto verwijderen",
+    "@create_acc__avatar_remove_photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done": "Account aanmaken",
+    "@create_acc__done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_subtext": "Je kunt dit wijzigen in je profielinstellingen.",
+    "@create_acc__done_subtext": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_created": "Je account is aangemaakt met gebruikersnaam ",
+    "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_loading_title": "Nog even volhouden!",
+    "@create_acc__submit_loading_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_loading_desc": "We maken je account aan.",
+    "@create_acc__submit_loading_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_title": "Oh nee...",
+    "@create_acc__submit_error_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_desc_server": "😭 We ervaren problemen met onze servers. Probeer het over een paar minuten opnieuw, a.u.b.",
+    "@create_acc__submit_error_desc_server": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_desc_validation": "😅 Het lijkt erop dat sommige informatie niet juist is, controleer en probeer het opnieuw a.u.b.",
+    "@create_acc__submit_error_desc_validation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_title": "Hoera!",
+    "@create_acc__done_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_description": "Je account is aangemaakt.",
+    "@create_acc__done_description": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__your_username_is": "Je gebruikersnaam is ",
+    "@create_acc__your_username_is": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__can_change_username": "Indien gewenst kun je dit altijd via je profielpagina wijzigen.",
+    "@create_acc__can_change_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_continue": "Inloggen",
+    "@create_acc__done_continue": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__one_last_thing": "Nog één ding...",
+    "@create_acc__one_last_thing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__register": "Registreren",
+    "@create_acc__register": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__are_you_legal_age": "Ben je ouder dan 16 jaar?",
+    "@create_acc__are_you_legal_age": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__login": "Doorgaan",
+    "@login__login": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__previous": "Vorige",
+    "@login__previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__title": "Welkom terug!",
+    "@login__title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__subtitle": "Voer uw inloggegevens in om door te gaan.",
+    "@login__subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__forgot_password": "Wachtwoord vergeten",
+    "@login__forgot_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__forgot_password_subtitle": "Voer je gebruikersnaam of email adres in",
+    "@login__forgot_password_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_label": "Gebruikersnaam",
+    "@login__username_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_label": "Wachtwoord",
+    "@login__password_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__email_label": "E-mail",
+    "@login__email_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__or_text": "Of",
+    "@login__or_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_empty_error": "Wachtwoord is vereist.",
+    "@login__password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_length_error": "Wachtwoord moet tussen 8 en 64 karakters zijn.",
+    "@login__password_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_empty_error": "Gebruikersnaam is vereist.",
+    "@login__username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_length_error": "Gebruikersnaam kan niet langer zijn dan 30 karakters.",
+    "@login__username_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_characters_error": "Gebruikersnaam kan alleen alfanumerieke karakters en underscores bevatten.",
+    "@login__username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__credentials_mismatch_error": "De versterkte inloggegevens komen niet overeen.",
+    "@login__credentials_mismatch_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__server_error": "Oh oh.. We ervaren problemen met de server. Probeer het over enkele minuten opnieuw.",
+    "@login__server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__connection_error": "We kunnen onze servers niet bereiken. Ben je verbonden met het internet?",
+    "@login__connection_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_title": "Wachtwoord wijzigen",
+    "@change_password_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd": "Huidig wachtwoord",
+    "@change_password_current_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd_hint": "Voer je huidige wachtwoord in",
+    "@change_password_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd_incorrect": "Het ingevoerde wachtwoord is onjuist",
+    "@change_password_current_pwd_incorrect": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd": "Nieuw wachtwoord",
+    "@change_password_new_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd_hint": "Voer je nieuwe wachtwoord in",
+    "@change_password_new_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd_error": "Zorg dat het wachtwoord 10 tot 100 tekens lang is",
+    "@change_password_new_pwd_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_save_text": "Opslaan",
+    "@change_password_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_save_success": "Alles goed! Je wachtwoord is bijgewerkt",
+    "@change_password_save_success": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

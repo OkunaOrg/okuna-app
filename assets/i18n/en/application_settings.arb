@@ -1,0 +1,57 @@
+{
+  "videos": "Videos",
+  "@videos": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay": "Autoplay",
+  "@videos_autoplay": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay_always": "Always",
+  "@videos_autoplay_always": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay_wifi_only": "Wifi only",
+  "@videos_autoplay_wifi_only": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay_never": "Never",
+  "@videos_autoplay_never": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_sound": "Sound",
+  "@videos_sound": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tap_to_change": "(Tap to change)",
+  "@tap_to_change": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_sound_enabled": "Enabled",
+  "@videos_sound_enabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_sound_disabled": "Disabled",
+  "@videos_sound_disabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment_sort_newest_first": "Newest first",
+  "@comment_sort_newest_first": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment_sort_oldest_first": "Oldest first",
+  "@comment_sort_oldest_first": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

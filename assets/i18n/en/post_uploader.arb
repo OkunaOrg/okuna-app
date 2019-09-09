@@ -1,0 +1,47 @@
+{
+  "generic_upload_failed": "Upload failed",
+  "@generic_upload_failed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "creating_post": "Creating post...",
+  "@creating_post": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "compressing_media": "Compressing media...",
+  "@compressing_media": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "uploading_media": "Uploading media...",
+  "@uploading_media": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "publishing": "Publishing post...",
+  "@publishing": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "processing": "Processing post...",
+  "@processing": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "success": "Success!",
+  "@success": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancelling": "Cancelling",
+  "@cancelling": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancelled": "Cancelled!",
+  "@cancelled": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

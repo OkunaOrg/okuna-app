@@ -1,0 +1,47 @@
+{
+    "generic_upload_failed": "Upload mislukt",
+    "@generic_upload_failed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "creating_post": "Bericht maken...",
+    "@creating_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "compressing_media": "Media comprimeren...",
+    "@compressing_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uploading_media": "Media uploaden...",
+    "@uploading_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "publishing": "Bericht publiceren...",
+    "@publishing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "processing": "Bericht verwerken...",
+    "@processing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "success": "Success!",
+    "@success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelling": "Bezig met annuleren",
+    "@cancelling": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelled": "Geannuleerd!",
+    "@cancelled": {
+        "type": "text",
+        "placeholders": {}
+    }
+}
