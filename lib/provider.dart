@@ -5,6 +5,7 @@ import 'package:Okuna/services/categories_api.dart';
 import 'package:Okuna/services/communities_api.dart';
 import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/connections_api.dart';
+import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/date_picker.dart';
 import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
@@ -107,6 +108,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DocumentsService documentsService = DocumentsService();
   TextAccountAutocompletionService textAccountAutocompletionService =
       TextAccountAutocompletionService();
+  ConnectivityService connectivityService = ConnectivityService();
 
   SentryClient sentryClient;
 
@@ -219,6 +221,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     super.dispose();
     universalLinksService.dispose();
     pushNotificationsService.dispose();
+    connectivityService.dispose();
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {

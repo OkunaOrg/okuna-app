@@ -3,6 +3,7 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/video_format.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/video_player/video_player.dart';
 import 'package:connectivity/connectivity.dart';
@@ -39,8 +40,6 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     super.initState();
     _needsBootstrap = true;
     _obVideoPlayerController = OBVideoPlayerController();
-    _connectivityChangeSubscription =
-        Connectivity().onConnectivityChanged.listen(_onConnectivityChange);
   }
 
   @override
@@ -51,11 +50,23 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     _digestInViewStateChangeOperation?.cancel();
   }
 
-  void _bootstrap() {
+  void _bootstrap() async {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    _videosSoundSettingsChangeSubscription = openbookProvider
-        .userPreferencesService.videosAutoPlaySettingChange
+    UserPreferencesService userPreferencesService =
+        openbookProvider.userPreferencesService;
+    _currentVideosAutoPlaySetting =
+        await userPreferencesService.getVideosAutoPlaySetting();
+
+    _videosSoundSettingsChangeSubscription = userPreferencesService
+        .videosAutoPlaySettingChange
         .listen(_onVideosAutoPlaySettingChange);
+
+    ConnectivityService connectivityService =
+        openbookProvider.connectivityService;
+
+    _connectivity = connectivityService.getConnectivity();
+    _connectivityChangeSubscription =
+        connectivityService.onConnectivityChange(_onConnectivityChange);
   }
 
   @override
