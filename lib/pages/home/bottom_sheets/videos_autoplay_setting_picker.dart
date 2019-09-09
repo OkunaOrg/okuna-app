@@ -39,17 +39,10 @@ class OBVideosAutoPlaySettingPickerBottomSheetState
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    LocalizationService _localizationService =
-        openbookProvider.localizationService;
 
-    Map<VideosAutoPlaySetting, String> localizationMap = {
-      VideosAutoPlaySetting.always:
-          _localizationService.application_settings__videos_autoplay_always,
-      VideosAutoPlaySetting.never:
-          _localizationService.application_settings__videos_autoplay_never,
-      VideosAutoPlaySetting.wifiOnly:
-          _localizationService.application_settings__videos_autoplay_wifi_only,
-    };
+    Map<VideosAutoPlaySetting, String> localizationMap = openbookProvider
+        .userPreferencesService
+        .getVideosAutoPlaySettingLocalizationMap();
 
     return OBPrimaryColorContainer(
       mainAxisSize: MainAxisSize.min,

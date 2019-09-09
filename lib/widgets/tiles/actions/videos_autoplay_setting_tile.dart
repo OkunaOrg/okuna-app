@@ -8,7 +8,7 @@ import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBVideosSoundSettingTile extends StatelessWidget {
+class OBVideosAutoPlaySettingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OpenbookProviderState provider = OpenbookProvider.of(context);
@@ -18,27 +18,27 @@ class OBVideosSoundSettingTile extends StatelessWidget {
         provider.userPreferencesService;
     BottomSheetService bottomSheetService = provider.bottomSheetService;
 
-    Map<VideosSoundSetting, String> videosSoundSettingsLocalizationMap =
-        userPreferencesService.getVideosSoundSettingLocalizationMap();
+    Map<VideosAutoPlaySetting, String> videosAutoPlaySettingsLocalizationMap =
+        userPreferencesService.getVideosAutoPlaySettingLocalizationMap();
 
     return FutureBuilder(
-      future: userPreferencesService.getVideosSoundSetting(),
+      future: userPreferencesService.getVideosAutoPlaySetting(),
       builder:
-          (BuildContext context, AsyncSnapshot<VideosSoundSetting> snapshot) {
+          (BuildContext context, AsyncSnapshot<VideosAutoPlaySetting> snapshot) {
         if (snapshot.data == null) return const SizedBox();
 
         return StreamBuilder(
-          stream: userPreferencesService.videosSoundSettingChange,
+          stream: userPreferencesService.videosAutoPlaySettingChange,
           initialData: snapshot.data,
           builder: (BuildContext context,
-              AsyncSnapshot<VideosSoundSetting> snapshot) {
-            VideosSoundSetting currentVideosSoundSetting = snapshot.data;
+              AsyncSnapshot<VideosAutoPlaySetting> snapshot) {
+            VideosAutoPlaySetting currentVideosAutoPlaySetting = snapshot.data;
 
             return MergeSemantics(
               child: ListTile(
-                leading: OBIcon(OBIcons.sound),
+                leading: OBIcon(OBIcons.play_arrow),
                   title: OBText(
-                    localizationService.application_settings__videos_sound,
+                    localizationService.application_settings__videos_autoplay,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: OBSecondaryText(
@@ -47,19 +47,19 @@ class OBVideosSoundSettingTile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       OBPrimaryAccentText(
-                        videosSoundSettingsLocalizationMap[
-                            currentVideosSoundSetting],
+                        videosAutoPlaySettingsLocalizationMap[
+                            currentVideosAutoPlaySetting],
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
                   onTap: () {
-                    bottomSheetService.showVideosSoundSettingPicker(
-                        initialValue: currentVideosSoundSetting,
+                    bottomSheetService.showVideosAutoPlaySettingPicker(
+                        initialValue: currentVideosAutoPlaySetting,
                         context: context,
-                        onChanged: (VideosSoundSetting newVideosSoundSetting) {
+                        onChanged: (VideosAutoPlaySetting newVideosAutoPlaySetting) {
                           userPreferencesService
-                              .setVideosSoundSetting(newVideosSoundSetting);
+                              .setVideosAutoPlaySetting(newVideosAutoPlaySetting);
                         });
                   }),
             );

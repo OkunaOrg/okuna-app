@@ -5,6 +5,7 @@ import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/tiles/actions/clear_application_cache_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/clear_application_preferences_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/videos_autoplay_setting_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/videos_sound_setting_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,10 @@ class OBApplicationSettingsPage extends StatelessWidget {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[OBVideosSoundSettingTile()],
+          children: <Widget>[
+            OBVideosSoundSettingTile(),
+            OBVideosAutoPlaySettingTile()
+          ],
         ),
       ),
     );

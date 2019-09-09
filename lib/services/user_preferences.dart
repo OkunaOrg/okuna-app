@@ -45,6 +45,17 @@ class UserPreferencesService {
     return VideosAutoPlaySetting.parse(rawValue);
   }
 
+  Map<VideosAutoPlaySetting, String> getVideosAutoPlaySettingLocalizationMap() {
+    return {
+      VideosAutoPlaySetting.always:
+          _localizationService.application_settings__videos_autoplay_always,
+      VideosAutoPlaySetting.never:
+          _localizationService.application_settings__videos_autoplay_never,
+      VideosAutoPlaySetting.wifiOnly:
+          _localizationService.application_settings__videos_autoplay_wifi_only
+    };
+  }
+
   Future setVideosSoundSetting(VideosSoundSetting videosSoundSetting) {
     String rawValue = videosSoundSetting.toString();
     _videosSoundSettingChangeSubject.add(videosSoundSetting);
