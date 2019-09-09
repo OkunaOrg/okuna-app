@@ -3559,19 +3559,6 @@ class LocalizationService {
         name: 'contextual_account_search_box__suggestions');
   }
 
-  String get media_picker__permission_denied_error {
-    return Intl.message("Permission to access media denied.",
-        name: 'media_picker__permission_denied_error');
-  }
-
-  String get media_picker__title {
-    return Intl.message("Pick media", name: 'media_picker__title');
-  }
-
-  String get media_picker__choose_action {
-    return Intl.message("Choose", name: 'media_picker__choose_action');
-  }
-
   String get image_picker__from_gallery {
     return Intl.message("From gallery", name: 'image_picker__from_gallery');
   }
@@ -3652,7 +3639,7 @@ class LocalizationService {
 
   String get posts_stream__empty_drhoo_title {
     return Intl.message("This stream is empty.",
-        name: 'posts_stream__no_more_drhoo_title');
+        name: 'posts_stream__empty_drhoo_title');
   }
 
   String get posts_stream__empty_drhoo_subtitle {
@@ -3680,6 +3667,15 @@ class LocalizationService {
         name: 'posts_stream__status_tile_no_more_to_load');
   }
 
+  String get application_settings__videos {
+    return Intl.message("Videos", name: 'application_settings__videos');
+  }
+
+  String get application_settings__videos_autoplay {
+    return Intl.message("Autoplay",
+        name: 'application_settings__videos_autoplay');
+  }
+
   String get application_settings__videos_autoplay_always {
     return Intl.message("Always",
         name: 'application_settings__videos_autoplay_always');
@@ -3693,6 +3689,14 @@ class LocalizationService {
   String get application_settings__videos_autoplay_never {
     return Intl.message("Never",
         name: 'application_settings__videos_autoplay_never');
+  }
+
+  String get application_settings__videos_sound {
+    return Intl.message("Sound", name: 'application_settings__videos_sound');
+  }
+
+  String get application_settings__tap_to_change {
+    return Intl.message("(Tap to change)", name: 'application_settings__tap_to_change');
   }
 
   String get application_settings__videos_sound_enabled {

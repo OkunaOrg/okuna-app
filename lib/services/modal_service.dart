@@ -26,7 +26,6 @@ import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/co
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/add_community_moderator.dart';
 import 'package:Okuna/pages/home/modals/user_invites/create_user_invite.dart';
 import 'package:Okuna/pages/home/modals/user_invites/send_invite_email.dart';
-import 'package:Okuna/pages/home/pages/menu/pages/settings/modals/application_settings.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/modals/moderated_objects_filters/moderated_objects_filters.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/moderated_objects.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/modals/moderated_object_update_category.dart';
@@ -408,16 +407,6 @@ class ModalService {
           return OBModeratedObjectUpdateStatusModal(
             moderatedObject: moderatedObject,
           );
-        }));
-  }
-
-  Future<ModeratedObjectStatus> openApplicationSettings({
-    @required BuildContext context,
-  }) async {
-    return Navigator.of(context).push(CupertinoPageRoute<ModeratedObjectStatus>(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return OBApplicationSettingsModal();
         }));
   }
 }

@@ -1,13 +1,15 @@
 import 'package:Okuna/models/post_comment.dart';
-import 'package:Okuna/models/user.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'localization.dart';
+
 class UserPreferencesService {
+  LocalizationService _localizationService;
   OBStorage _storage;
   static const postCommentsSortTypeStorageKey = 'postCommentsSortType';
   static const videosAutoPlaySettingStorageKey = 'videosAutoPlaySetting';
-  static const videoSoundSettingStorageKey = 'videoSoundSetting';
+  static const videosSoundSettingStorageKey = 'videoSoundSetting';
   Future _getPostCommentsSortTypeCache;
 
   Stream<VideosSoundSetting> get videosSoundSettingChange =>
@@ -27,6 +29,10 @@ class UserPreferencesService {
         namespace: 'userPreferences');
   }
 
+  void setLocalizationService(LocalizationService localizationService) {
+    _localizationService = localizationService;
+  }
+
   Future setVideosAutoPlaySetting(VideosAutoPlaySetting videosAutoPlaySetting) {
     String rawValue = videosAutoPlaySetting.toString();
     _videosAutoPlaySettingChangeSubject.add(videosAutoPlaySetting);
@@ -39,16 +45,25 @@ class UserPreferencesService {
     return VideosAutoPlaySetting.parse(rawValue);
   }
 
-  Future setVideoSoundSetting(VideosSoundSetting videoSoundSetting) {
-    String rawValue = videoSoundSetting.toString();
-    _videosSoundSettingChangeSubject.add(videoSoundSetting);
-    return _storage.set(videoSoundSettingStorageKey, rawValue);
+  Future setVideosSoundSetting(VideosSoundSetting videosSoundSetting) {
+    String rawValue = videosSoundSetting.toString();
+    _videosSoundSettingChangeSubject.add(videosSoundSetting);
+    return _storage.set(videosSoundSettingStorageKey, rawValue);
   }
 
-  Future<VideosSoundSetting> getVideoSoundSetting() async {
-    String rawValue = await _storage.get(videoSoundSettingStorageKey,
+  Future<VideosSoundSetting> getVideosSoundSetting() async {
+    String rawValue = await _storage.get(videosSoundSettingStorageKey,
         defaultValue: VideosSoundSetting.disabled.toString());
     return VideosSoundSetting.parse(rawValue);
+  }
+
+  Map<VideosSoundSetting, String> getVideosSoundSettingLocalizationMap() {
+    return {
+      VideosSoundSetting.disabled:
+          _localizationService.application_settings__videos_sound_disabled,
+      VideosSoundSetting.enabled:
+          _localizationService.application_settings__videos_sound_enabled
+    };
   }
 
   Future setPostCommentsSortType(PostCommentsSortType type) {

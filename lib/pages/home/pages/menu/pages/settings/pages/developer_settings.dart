@@ -16,7 +16,7 @@ class OBDeveloperSettingsPage extends StatelessWidget {
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
       navigationBar: OBThemedNavigationBar(
-          title: _localizationService.drawer__application_settings),
+          title: _localizationService.drawer__developer_settings),
       child: OBPrimaryColorContainer(
         child: ListView(
           physics: const ClampingScrollPhysics(),

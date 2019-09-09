@@ -5,10 +5,11 @@ import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/tiles/actions/clear_application_cache_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/clear_application_preferences_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/videos_sound_setting_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBApplicationSettingsModal extends StatelessWidget {
+class OBApplicationSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     LocalizationService _localizationService =
         OpenbookProvider.of(context).localizationService;
@@ -22,7 +23,7 @@ class OBApplicationSettingsModal extends StatelessWidget {
           physics: const ClampingScrollPhysics(),
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
-          children: <Widget>[],
+          children: <Widget>[OBVideosSoundSettingTile()],
         ),
       ),
     );

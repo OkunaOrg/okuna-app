@@ -234,6 +234,7 @@ class OBIcons {
   static const communityStaff = OBIconData(nativeIcon: Icons.tag_faces);
   static const reply = OBIconData(nativeIcon: Icons.reply);
   static const support = OBIconData(nativeIcon: Icons.favorite);
+  static const sound = OBIconData(nativeIcon: Icons.volume_up);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

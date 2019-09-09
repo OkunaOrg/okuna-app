@@ -415,7 +415,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
-      _userPreferencesService.setVideoSoundSetting(VideosSoundSetting.disabled);
+      _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
       _pushNotificationsService.enablePushNotifications();
       _intercomService.enableIntercom();

@@ -17,6 +17,9 @@ import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/video_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post_comment.dart';
+import 'package:Okuna/pages/home/bottom_sheets/videos_autoplay_setting_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/videos_sound_setting_picker.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
@@ -76,6 +79,30 @@ class BottomSheetService {
         builder: (BuildContext context) {
           return OBCommunityTypePickerBottomSheet(
               onTypeChanged: onChanged, initialType: initialType);
+        });
+  }
+
+  Future<void> showVideosSoundSettingPicker(
+      {@required BuildContext context,
+      ValueChanged<VideosSoundSetting> onChanged,
+      VideosSoundSetting initialValue}) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBVideosSoundSettingPickerBottomSheet(
+              onTypeChanged: onChanged, initialValue: initialValue);
+        });
+  }
+
+  Future<void> showVideosAutoPlaySettingPicker(
+      {@required BuildContext context,
+      ValueChanged<VideosAutoPlaySetting> onChanged,
+      VideosAutoPlaySetting initialValue}) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBVideosAutoPlaySettingPickerBottomSheet(
+              onTypeChanged: onChanged, initialValue: initialValue);
         });
   }
 

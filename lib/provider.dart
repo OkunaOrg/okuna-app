@@ -227,6 +227,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     httpService.setLocalizationService(localizationService);
     userService.setLocalizationsService(localizationService);
     modalService.setLocalizationService(localizationService);
+    userPreferencesService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {

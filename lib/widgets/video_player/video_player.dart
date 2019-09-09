@@ -122,7 +122,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   void _bootstrap() async {
     VideosSoundSetting videosSoundSetting =
-        await _userPreferencesService.getVideoSoundSetting();
+        await _userPreferencesService.getVideosSoundSetting();
     _onUserPreferencesVideosSoundSettingsChange(videosSoundSetting);
 
     _videosSoundSettingsChangeSubscription = _userPreferencesService
@@ -200,11 +200,11 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   }
 
   void _onControlsMute(Function originalMuteFunction) {
-    _userPreferencesService.setVideoSoundSetting(VideosSoundSetting.disabled);
+    _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
   }
 
   void _onControlsUnmute(Function originalUnmuteFunction) {
-    _userPreferencesService.setVideoSoundSetting(VideosSoundSetting.enabled);
+    _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.enabled);
   }
 
   void _onExpandCollapse(Function originalExpandFunction) async {
