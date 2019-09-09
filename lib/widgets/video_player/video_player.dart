@@ -104,8 +104,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   @override
   void dispose() {
     super.dispose();
-    _videosSoundSettingsChangeSubscription?.cancel();
-    if (!_isVideoHandover && mounted) {
+    if (!_isVideoHandover && mounted && !_hasVideoOpenedInDialog) {
+      _videosSoundSettingsChangeSubscription?.cancel();
       if (_playerController != null) _playerController.dispose();
       if (_chewieController != null) _chewieController.dispose();
     }

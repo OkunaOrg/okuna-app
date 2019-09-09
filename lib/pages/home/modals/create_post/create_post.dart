@@ -362,9 +362,13 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: const OBIcon(OBIcons.video),
         onPressed: () async {
           _unfocusTextField();
-          File pickedVideo =
-              await _imagePickerService.pickVideo(context: context);
-          if (pickedVideo != null) _setPostVideo(pickedVideo);
+          try {
+            File pickedVideo =
+                await _imagePickerService.pickVideo(context: context);
+            if (pickedVideo != null) _setPostVideo(pickedVideo);
+          } catch (error) {
+            _onError(error);
+          }
         },
       ),
     ];
@@ -567,6 +571,12 @@ class CreatePostModalState extends State<CreatePostModal> {
     } else if (error is HttpieRequestError) {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
+    } else if (error is FileTooLargeException) {
+      int limit = error.getLimitInMB();
+      _toastService.error(
+          message: _localizationService
+              .image_picker__error_too_large(limit),
+          context: context);
     } else {
       _toastService.error(
           message: _localizationService.trans('error__unknown_error'),

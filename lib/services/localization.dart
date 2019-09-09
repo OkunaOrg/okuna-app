@@ -3566,6 +3566,10 @@ class LocalizationService {
   String get image_picker__from_camera {
     return Intl.message("From camera", name: 'image_picker__from_camera');
   }
+  String image_picker__error_too_large(int limit) {
+    return Intl.message("File too large (limit: $limit MB)",
+        args: [limit], name: 'image_picker__error_too_large');
+  }
 
   String get video_picker__from_gallery {
     return Intl.message("From gallery", name: 'video_picker__from_gallery');
