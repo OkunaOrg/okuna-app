@@ -39,7 +39,6 @@ class OBVideosSoundSettingTile extends StatelessWidget {
                 leading: OBIcon(OBIcons.sound),
                   title: OBText(
                     localizationService.application_settings__videos_sound,
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: OBSecondaryText(
                       localizationService.application_settings__tap_to_change, size: OBTextSize.small,),

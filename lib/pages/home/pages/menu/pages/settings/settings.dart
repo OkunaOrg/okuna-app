@@ -42,7 +42,7 @@ class OBSettingsPage extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const OBIcon(OBIcons.account),
+              leading: const OBIcon(OBIcons.bug),
               title: OBText(localizationService.drawer__developer_settings),
               onTap: () {
                 navigationService.navigateToDeveloperSettingsPage(

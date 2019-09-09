@@ -39,7 +39,6 @@ class OBVideosAutoPlaySettingTile extends StatelessWidget {
                 leading: OBIcon(OBIcons.play_arrow),
                   title: OBText(
                     localizationService.application_settings__videos_autoplay,
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: OBSecondaryText(
                       localizationService.application_settings__tap_to_change, size: OBTextSize.small,),
