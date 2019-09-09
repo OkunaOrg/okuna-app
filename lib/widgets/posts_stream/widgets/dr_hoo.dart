@@ -8,13 +8,13 @@ import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBPostsStreamDrHoo extends StatelessWidget {
-  final VoidCallback onWantsToRefresh;
+  final VoidCallback streamRefresher;
   final OBPostsStreamStatus streamStatus;
   final List<Widget> streamPrependedItems;
 
   const OBPostsStreamDrHoo({
     Key key,
-    @required this.onWantsToRefresh,
+    @required this.streamRefresher,
     @required this.streamStatus,
     @required this.streamPrependedItems,
   }) : super(key: key);
@@ -99,7 +99,7 @@ class OBPostsStreamDrHoo extends StatelessWidget {
           ),
           type: OBButtonType.highlight,
           child: OBText(localizationService.post__timeline_posts_refresh_posts),
-          onPressed: onWantsToRefresh,
+          onPressed: streamRefresher,
           isLoading: streamStatus == OBPostsStreamStatus.refreshing,
         )
       ]);

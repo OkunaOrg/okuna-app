@@ -30,7 +30,7 @@ class OBPostsStream extends StatefulWidget {
   final ValueChanged<List<Post>> onPostsRefreshed;
   final bool refreshOnCreate;
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
-  final WidgetBuilder statusTileEmptyBuilder;
+  final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
 
   const OBPostsStream(
       {Key key,
@@ -43,7 +43,7 @@ class OBPostsStream extends StatefulWidget {
       this.onPostsRefreshed,
       this.refreshOnCreate = true,
       this.secondaryRefresher,
-      this.statusTileEmptyBuilder})
+      this.statusIndicatorBuilder})
       : super(key: key);
 
   @override
@@ -120,11 +120,17 @@ class OBPostsStreamState extends State<OBPostsStream> {
     if (hasPrependedItems) streamItems.addAll(widget.prependedItems);
 
     if (_posts.isEmpty) {
-      streamItems.add(OBPostsStreamDrHoo(
+      OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder =
+          widget.statusIndicatorBuilder ?? defaultStatusIndicatorBuilder;
+
+      streamItems.add(statusIndicatorBuilder(
+        context: context,
         streamStatus: _status,
-        onWantsToRefresh: _refresh,
+        streamRefresher: _refresh,
         streamPrependedItems: widget.prependedItems,
       ));
+
+
     } else {
       streamItems.addAll(_buildStreamPosts());
       if (_status != OBPostsStreamStatus.idle)
@@ -180,9 +186,6 @@ class OBPostsStreamState extends State<OBPostsStream> {
           ),
         );
       case OBPostsStreamStatus.empty:
-        if (widget.statusTileEmptyBuilder != null)
-          return widget.statusTileEmptyBuilder(context);
-
         return ListTile(
           title: OBSecondaryText(
             _localizationService.posts_stream__status_tile_empty,
@@ -395,6 +398,24 @@ enum OBPostsStreamStatus {
   idle
 }
 
+Widget defaultStatusIndicatorBuilder(
+    {BuildContext context,
+    OBPostsStreamStatus streamStatus,
+    List<Widget> streamPrependedItems,
+    Function streamRefresher}) {
+  return OBPostsStreamDrHoo(
+    streamStatus: streamStatus,
+    streamPrependedItems: streamPrependedItems,
+    streamRefresher: streamRefresher,
+  );
+}
+
 typedef Future<List<Post>> OBPostsStreamRefresher<Post>();
 typedef Future<List<Post>> OBPostsStreamOnScrollLoader<T>(List<Post> posts);
 typedef Future OBPostsStreamSecondaryRefresher();
+
+typedef OBPostsStreamStatusIndicatorBuilder = Widget Function(
+    {@required BuildContext context,
+    @required OBPostsStreamStatus streamStatus,
+    @required List<Widget> streamPrependedItems,
+    @required Function streamRefresher});

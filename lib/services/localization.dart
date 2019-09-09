@@ -1660,6 +1660,11 @@ class LocalizationService {
     return Intl.message(" Follower", name: 'post__profile_counts_follower');
   }
 
+  String get post__profile_retry_loading_posts {
+    return Intl.message("Tap to retry",
+        name: 'post__profile_retry_loading_posts');
+  }
+
   String get post__action_comment {
     return Intl.message("Comment", name: 'post__action_comment');
   }
@@ -3686,7 +3691,8 @@ class LocalizationService {
   }
 
   String get application_settings__tap_to_change {
-    return Intl.message("(Tap to change)", name: 'application_settings__tap_to_change');
+    return Intl.message("(Tap to change)",
+        name: 'application_settings__tap_to_change');
   }
 
   String get application_settings__videos_sound_enabled {

@@ -3,20 +3,13 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_nav_bar.dart';
-import 'package:Okuna/pages/home/pages/profile/widgets/profile_no_posts.dart';
-import 'package:Okuna/widgets/loadmore/loadmore_delegate.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
-import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
-import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
-import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Okuna/widgets/load_more.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
@@ -80,17 +73,23 @@ class OBProfilePageState extends State<OBProfilePage> {
                     secondaryRefresher: _refreshUser,
                     refresher: _refreshPosts,
                     onScrollLoader: _loadMorePosts,
-                    statusTileEmptyBuilder: _postsStreamStatusTileEmptyBuilder),
+                    statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
               )
             ],
           ),
         ));
   }
 
-  Widget _postsStreamStatusTileEmptyBuilder(BuildContext context) {
-    return OBProfileNoPosts(
-      widget.user,
-      onWantsToRefreshProfile: _obPostsStreamController.refreshPosts,
+  Widget _buildPostsStreamStatusIndicator(
+      {BuildContext context,
+      OBPostsStreamStatus streamStatus,
+      List<Widget> streamPrependedItems,
+      Function streamRefresher}) {
+    return OBProfilePostsStreamStatusIndicator(
+      user: widget.user,
+      streamRefresher: streamRefresher,
+      streamPrependedItems: streamPrependedItems,
+        streamStatus: streamStatus
     );
   }
 
