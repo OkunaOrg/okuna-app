@@ -42,7 +42,7 @@ packages:
       name: back_button_interceptor
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.7"
+    version: "4.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -64,6 +64,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  chewie:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "feature/dep-on-custom-video-player"
+      resolved-ref: "67ab6544b3a14f50c897795375bd80da3c92c5f6"
+      url: "git@github.com:OkunaOrg/chewie.git"
+    source: git
+    version: "0.9.7"
   collection:
     dependency: transitive
     description:
@@ -71,6 +80,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
+  connectivity:
+    dependency: "direct main"
+    description:
+      name: connectivity
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.4"
   convert:
     dependency: transitive
     description:
@@ -84,7 +100,7 @@ packages:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1+1"
+    version: "2.1.2"
   csslib:
     dependency: transitive
     description:
@@ -127,6 +143,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.3"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.0+1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -160,13 +183,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.4"
+  flutter_ffmpeg:
+    dependency: "direct main"
+    description:
+      name: flutter_ffmpeg
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.7"
+  flutter_image_compress:
+    dependency: "direct main"
+    description:
+      name: flutter_image_compress
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.3"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
       name: flutter_launcher_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.2+1"
+    version: "0.7.3"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -212,6 +249,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_widgets:
+    dependency: "direct main"
+    description:
+      name: flutter_widgets
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   front_end:
     dependency: transitive
     description:
@@ -254,6 +298,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.3"
+  http_retry:
+    dependency: "direct main"
+    description:
+      name: http_retry
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+3"
   image:
     dependency: transitive
     description:
@@ -295,7 +346,16 @@ packages:
       name: intl_translation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.17.5"
+    version: "0.17.7"
+  inview_notifier_list:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
+      resolved-ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
+      url: "git@github.com:OkunaOrg/inview_notifier_list.git"
+    source: git
+    version: "0.0.2"
   io:
     dependency: transitive
     description:
@@ -352,13 +412,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
-  multi_image_picker:
-    dependency: "direct main"
-    description:
-      name: multi_image_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.5.0+2"
   multi_server_socket:
     dependency: transitive
     description:
@@ -372,7 +425,7 @@ packages:
       name: node_preamble
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.6"
+    version: "1.4.7"
   onesignal_flutter:
     dependency: "direct main"
     description:
@@ -380,13 +433,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  open_iconic_flutter:
+    dependency: "direct main"
+    description:
+      name: open_iconic_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   package_config:
     dependency: transitive
     description:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.1.0"
   package_resolver:
     dependency: transitive
     description:
@@ -395,7 +455,7 @@ packages:
     source: hosted
     version: "1.0.10"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -421,7 +481,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.0"
   pedantic:
     dependency: transitive
     description:
@@ -450,6 +510,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   pool:
     dependency: transitive
     description:
@@ -478,13 +545,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.1"
-  scroll_to_index:
-    dependency: "direct main"
+  screen:
+    dependency: transitive
     description:
-      name: scroll_to_index
+      name: screen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "0.0.5"
   sentry:
     dependency: "direct main"
     description:
@@ -580,7 +647,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.6+3"
+    version: "1.1.6+4"
   stack_trace:
     dependency: transitive
     description:
@@ -595,6 +662,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  stream_transform:
+    dependency: transitive
+    description:
+      name: stream_transform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.19"
   string_scanner:
     dependency: transitive
     description:
@@ -703,10 +777,19 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      name: video_player
+      path: "packages/video_player"
+      ref: "feature/caching"
+      resolved-ref: "6b4be9514ded6a53967295db5f4dcfe142f6d459"
+      url: "git@github.com:999eagle/plugins.git"
+    source: git
+    version: "0.10.2"
+  video_thumbnail:
+    dependency: "direct main"
+    description:
+      name: video_thumbnail
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.1+6"
+    version: "0.1.5+1"
   vm_service_client:
     dependency: transitive
     description:
@@ -744,4 +827,4 @@ packages:
     version: "2.1.16"
 sdks:
   dart: ">=2.4.0 <3.0.0"
-  flutter: ">=1.7.8 <2.0.0"
+  flutter: ">=1.6.0 <2.0.0"

@@ -19,10 +19,11 @@ import 'package:Okuna/plugins/share/receive_share_state.dart';
 import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
@@ -48,7 +49,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   ValidationService _validationService;
-  ImagePickerService _imagePickerService;
+  MediaService _imagePickerService;
+  UserPreferencesService _userPreferencesService;
 
   int _currentIndex;
   int _lastIndex;
@@ -113,7 +115,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _validationService = openbookProvider.validationService;
-      _imagePickerService = openbookProvider.imagePickerService;
+      _imagePickerService = openbookProvider.mediaPickerService;
+      _userPreferencesService = openbookProvider.userPreferencesService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -412,6 +415,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
+      _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
       _pushNotificationsService.enablePushNotificationsFlagInOneSignalIfNotPrompted();
       _intercomService.enableIntercom();

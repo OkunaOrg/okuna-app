@@ -5,6 +5,7 @@ import 'package:Okuna/services/categories_api.dart';
 import 'package:Okuna/services/communities_api.dart';
 import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/connections_api.dart';
+import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/date_picker.dart';
 import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
@@ -21,7 +22,7 @@ import 'package:Okuna/services/emojis_api.dart';
 import 'package:Okuna/services/environment_loader.dart';
 import 'package:Okuna/services/follows_api.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
@@ -76,7 +77,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
-  ImagePickerService imagePickerService = ImagePickerService();
+  MediaService mediaPickerService = MediaService();
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
@@ -107,6 +108,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DocumentsService documentsService = DocumentsService();
   TextAccountAutocompletionService textAccountAutocompletionService =
       TextAccountAutocompletionService();
+  ConnectivityService connectivityService = ConnectivityService();
 
   SentryClient sentryClient;
 
@@ -170,7 +172,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
-    imagePickerService.setValidationService(validationService);
+    mediaPickerService.setValidationService(validationService);
+    mediaPickerService.setBottomSheetService(bottomSheetService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
@@ -218,6 +221,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     super.dispose();
     universalLinksService.dispose();
     pushNotificationsService.dispose();
+    connectivityService.dispose();
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {
@@ -225,6 +229,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setLocalizationService(localizationService);
     httpService.setLocalizationService(localizationService);
     userService.setLocalizationsService(localizationService);
+    modalService.setLocalizationService(localizationService);
+    userPreferencesService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {

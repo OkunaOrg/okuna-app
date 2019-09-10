@@ -45,6 +45,7 @@ import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_setting
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
@@ -62,6 +63,7 @@ import 'package:Okuna/pages/home/pages/profile/profile.dart';
 import 'package:Okuna/pages/home/pages/report_object/pages/confirm_report_object.dart';
 import 'package:Okuna/pages/home/pages/report_object/report_object.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/routes/slide_right_route.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -371,6 +373,14 @@ class NavigationService {
             widget: OBAccountSettingsPage()));
   }
 
+  Future navigateToDeveloperSettingsPage({@required BuildContext context}) {
+    return Navigator.push(
+        context,
+        OBSlideRightRoute(
+            key: Key('obDeveloperSettingsPage'),
+            widget: OBDeveloperSettingsPage()));
+  }
+
   Future navigateToApplicationSettingsPage({@required BuildContext context}) {
     return Navigator.push(
         context,
@@ -408,36 +418,39 @@ class NavigationService {
             widget: OBConfirmRejectGuidelines()));
   }
 
-  Future<Post> navigateToSharePost(
-      {@required BuildContext context, @required SharePostData sharePostData}) {
+  Future<OBNewPostData> navigateToSharePost(
+      {@required BuildContext context,
+      @required OBNewPostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostPage'),
             widget: OBSharePostPage(
-              sharePostData: sharePostData,
+              createPostData: createPostData,
             )));
   }
 
-  Future<Post> navigateToSharePostWithCircles(
-      {@required BuildContext context, @required SharePostData sharePostData}) {
+  Future<OBNewPostData> navigateToSharePostWithCircles(
+      {@required BuildContext context,
+      @required OBNewPostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostWithCirclesPage'),
             widget: OBSharePostWithCirclesPage(
-              sharePostData: sharePostData,
+              createPostData: createPostData,
             )));
   }
 
-  Future<Post> navigateToSharePostWithCommunity(
-      {@required BuildContext context, @required SharePostData sharePostData}) {
+  Future<OBNewPostData> navigateToSharePostWithCommunity(
+      {@required BuildContext context,
+      @required OBNewPostData createPostData}) {
     return Navigator.push(
         context,
         OBSlideRightRoute(
             key: Key('obSharePostWithCommunityPage'),
             widget: OBSharePostWithCommunityPage(
-              sharePostData: sharePostData,
+              createPostData: createPostData,
             )));
   }
 

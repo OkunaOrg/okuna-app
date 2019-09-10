@@ -1,0 +1,531 @@
+{
+    "headline": "Better social.",
+    "@headline": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login": "Log ind",
+    "@login": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_empty_error": "Email adresse kan ikke være tom.",
+    "@email_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_invalid_error": "Angiv venligst en gyldig email adresse.",
+    "@email_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_empty_error": "Brugernavn må ikke være tomt.",
+    "@username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_characters_error": "Et brugernavn kan kun indeholde alfanumeriske tegn og underscore.",
+    "@username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_maxlength_error": "Et brugernavn kan ikke være længere end {maxLength} tegn.",
+    "@username_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "create_account": "Tilmeld dig",
+    "@create_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__lets_get_started": "Lad os komme i gang",
+    "@create_acc__lets_get_started": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__welcome_to_beta": "Velkommen til beta!",
+    "@create_acc__welcome_to_beta": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__previous": "Tilbage",
+    "@create_acc__previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__next": "Næste",
+    "@create_acc__next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__create_account": "Opret konto",
+    "@create_acc__create_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_link": "Indsæt dit registrerings link nedenfor",
+    "@create_acc__paste_link": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_password_reset_link": "Indsæt dit link til nulstilling af adgangskode nedenfor",
+    "@create_acc__paste_password_reset_link": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_link_help_text": "Benyt linket fra tilmeld Okuna knappen i din email invitation.",
+    "@create_acc__paste_link_help_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__link_empty_error": "Link feltet må ikke være tomt.",
+    "@create_acc__link_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__link_invalid_error": "Fejl i linket.",
+    "@create_acc__link_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "password_empty_error": "Adgangskoden må ikke være tom.",
+    "@password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "password_range_error": "Adgangskoden skal være imellem {minLength} og {maxLength} tegn.",
+    "@password_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "name_empty_error": "Navn er obligatorisk.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_range_error": "Navn skal være imellem {minLength} og {maxLength} tegn.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "description_empty_error": "Beskrivelse må ikke være tom.",
+    "@description_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_range_error": "Beskrivelse skal være imellem {minLength} og {maxLength} tegn.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "reset_password_success_title": "Klar!",
+    "@reset_password_success_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reset_password_success_info": "Din adgangskode er blevet ændret",
+    "@reset_password_success_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__request_invite": "Har du ingen invitation? Anmod om en her.",
+    "@create_acc__request_invite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__subscribe": "Bestil",
+    "@create_acc__subscribe": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__subscribe_to_waitlist_text": "Anmod om en invitation!",
+    "@create_acc__subscribe_to_waitlist_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__congratulations": "Tillykke!",
+    "@create_acc__congratulations": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__your_subscribed": "Du er nr. {0} på ventelisten.",
+    "@create_acc__your_subscribed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__almost_there": "Næsten færdig...",
+    "@create_acc__almost_there": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_name": "Hvad er dit navn?",
+    "@create_acc__what_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_placeholder": "James Bond",
+    "@create_acc__name_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_empty_error": "😱 Dit navn må ikke være tomt.",
+    "@create_acc__name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_length_error": "😱 Dit navn kan ikke være længere end 50 tegn. (Hvis det er, beklager vi meget.)",
+    "@create_acc__name_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_characters_error": "😅 Et brugernavn kan kun indeholde alfanumeriske tegn (indtil vidre).",
+    "@create_acc__name_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_username": "Vælg et brugernavn",
+    "@create_acc__what_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_placeholder": "pablopicasso",
+    "@create_acc__username_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_empty_error": "😱 Brugernavnet må ikke være tomt.",
+    "@create_acc__username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_length_error": "😅 Et brugernavn kan ikke være længere end 30 tegn.",
+    "@create_acc__username_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_characters_error": "😅 Et brugernavn kan kun indeholde alfanumeriske tegn og understreg.",
+    "@create_acc__username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_taken_error": "😩 Brugernavnet @%s er allerede benyttet.",
+    "@create_acc__username_taken_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_server_error": "😭 Vi har problemer med vores servere, prøv venligst igen om et par minutter.",
+    "@create_acc__username_server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_email": "Hvad er din email?",
+    "@create_acc__what_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_placeholder": "john_travolta@mail.com",
+    "@create_acc__email_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_empty_error": "😱 Din email adresse kan ikke være tom",
+    "@create_acc__email_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_invalid_error": "😅 Angiv venligst en gyldig email adresse.",
+    "@create_acc__email_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_taken_error": "🤔 Der findes allerede en konto med denne email adresse.",
+    "@create_acc__email_taken_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_server_error": "😭 Vi har problemer med vores servere, prøv venligst igen om et par minutter.",
+    "@create_acc__email_server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_password": "Vælg en adgangskode",
+    "@create_acc__what_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc_password_hint_text": "({minLength}-{maxLength} tegn)",
+    "@create_acc_password_hint_text": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "create_acc__what_password_subtext": "(min 10 tegn.)",
+    "@create_acc__what_password_subtext": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__password_empty_error": "😱 Din adgangskode må ikke være tom",
+    "@create_acc__password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__password_length_error": "😅 Adgangskoden skal være imellem 8 og 64 tegn.",
+    "@create_acc__password_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_avatar": "Tilføj et profilbillede",
+    "@create_acc__what_avatar": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_tap_to_change": "Tryk for at ændre",
+    "@create_acc__avatar_tap_to_change": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_choose_camera": "Tag et billede",
+    "@create_acc__avatar_choose_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_choose_gallery": "Vælg et eksisterende billede",
+    "@create_acc__avatar_choose_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_remove_photo": "Fjern billede",
+    "@create_acc__avatar_remove_photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done": "Opret konto",
+    "@create_acc__done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_subtext": "Du kan ændre dette senere i profil indstillinger.",
+    "@create_acc__done_subtext": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_created": "Din konto er oprettet med brugernavn ",
+    "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_loading_title": "Hav tålmodighed!",
+    "@create_acc__submit_loading_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_loading_desc": "Vi opretter din konto.",
+    "@create_acc__submit_loading_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_title": "Åh nej...",
+    "@create_acc__submit_error_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_desc_server": "😭 Vi har problemer med vores servere, prøv venligst igen om et par minutter.",
+    "@create_acc__submit_error_desc_server": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_desc_validation": "😅 Det ser ud til at nogle af informationerne ikke var korrekte, kontroller venligst og prøv igen.",
+    "@create_acc__submit_error_desc_validation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_title": "Hurra!",
+    "@create_acc__done_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_description": "Din konto er oprettet.",
+    "@create_acc__done_description": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__your_username_is": "Dit brugernavn er ",
+    "@create_acc__your_username_is": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__can_change_username": "Hvis du ønsker, kan du altid ændre det via din profil side.",
+    "@create_acc__can_change_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_continue": "Log ind",
+    "@create_acc__done_continue": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__one_last_thing": "En sidste ting...",
+    "@create_acc__one_last_thing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__register": "Tilmeld",
+    "@create_acc__register": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__are_you_legal_age": "Er du ældre end 16 år?",
+    "@create_acc__are_you_legal_age": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__login": "Fortsæt",
+    "@login__login": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__previous": "Forrige",
+    "@login__previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__title": "Velkommen tilbage!",
+    "@login__title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__subtitle": "Indtast dine oplysninger for at fortsætte.",
+    "@login__subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__forgot_password": "Glemt adgangskode",
+    "@login__forgot_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__forgot_password_subtitle": "Angiv venligst dit brugernavn eller email",
+    "@login__forgot_password_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_label": "Brugernavn",
+    "@login__username_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_label": "Adgangskode",
+    "@login__password_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__email_label": "Email",
+    "@login__email_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__or_text": "Eller",
+    "@login__or_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_empty_error": "Adgangskode er obligatorisk.",
+    "@login__password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_length_error": "Adgangskoden skal være imellem 8 og 64 tegn.",
+    "@login__password_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_empty_error": "Brugernavnet er obligatorisk.",
+    "@login__username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_length_error": "Et brugernavn kan ikke være længere end 30 tegn.",
+    "@login__username_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_characters_error": "Et brugernavn kan kun indeholde alfanumeriske tegn og underscore.",
+    "@login__username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__credentials_mismatch_error": "De angivne oplysninger er ikke gyldige.",
+    "@login__credentials_mismatch_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__server_error": "Æh øh... Vi oplever problemer med serverne. Prøv venligst igen om nogle minutter.",
+    "@login__server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__connection_error": "Vi kan ikke forbinde til vores servere. Er du forbundet med internettet?",
+    "@login__connection_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_title": "Ændre adgangskode",
+    "@change_password_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd": "Nuværende adgangskode",
+    "@change_password_current_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd_hint": "Angiv den nuværende adgangskode",
+    "@change_password_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd_incorrect": "Den indtastede adgangskode er forkert",
+    "@change_password_current_pwd_incorrect": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd": "Ny adgangskode",
+    "@change_password_new_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd_hint": "Indtast din nye adgangskode",
+    "@change_password_new_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd_error": "Verificer venligst at adgangskoden er mellem 10 og 100 tegn lang",
+    "@change_password_new_pwd_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_save_text": "Gem",
+    "@change_password_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_save_success": "Alt vel! Din adgangskode er opdateret",
+    "@change_password_save_success": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

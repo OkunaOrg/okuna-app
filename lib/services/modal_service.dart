@@ -32,29 +32,39 @@ import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/modals/moderated_object_update_description.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/modals/moderated_object_update_status.dart';
 import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'localization.dart';
+
 class ModalService {
-  Future<Post> openCreatePost(
+  LocalizationService localizationService;
+
+  void setLocalizationService(localizationService) {
+    this.localizationService = localizationService;
+  }
+
+  Future<OBNewPostData> openCreatePost(
       {@required BuildContext context,
       Community community,
       String text,
       File image}) async {
-    Post createdPost = await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<Post>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return Material(
-                child: CreatePostModal(
-                  community: community,
-                  text: text,
-                  image: image,
-                ),
-              );
-            }));
+    OBNewPostData createPostData =
+        await Navigator.of(context, rootNavigator: true)
+            .push(CupertinoPageRoute<OBNewPostData>(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Material(
+                    child: CreatePostModal(
+                      community: community,
+                      text: text,
+                      image: image,
+                    ),
+                  );
+                }));
 
-    return createdPost;
+    return createPostData;
   }
 
   Future<Post> openEditPost(
@@ -113,12 +123,15 @@ class ModalService {
   }
 
   Future<void> openEditUserProfile(
-      {@required User user, @required BuildContext context, VoidCallback onUserProfileUpdated}) async {
+      {@required User user,
+      @required BuildContext context,
+      VoidCallback onUserProfileUpdated}) async {
     Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<PostReaction>(
             fullscreenDialog: true,
             builder: (BuildContext context) => Material(
-                  child: OBEditUserProfileModal(user, onUserProfileUpdated : onUserProfileUpdated),
+                  child: OBEditUserProfileModal(user,
+                      onUserProfileUpdated: onUserProfileUpdated),
                 )));
   }
 

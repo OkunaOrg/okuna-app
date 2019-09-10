@@ -140,6 +140,7 @@ class OBIcons {
   static const logout = OBIconData(nativeIcon: Icons.exit_to_app);
   static const help = OBIconData(nativeIcon: Icons.help);
   static const refresh = OBIconData(nativeIcon: Icons.refresh);
+  static const retry = OBIconData(nativeIcon: Icons.refresh);
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
   static const add = OBIconData(nativeIcon: Icons.add);
@@ -149,6 +150,7 @@ class OBIcons {
   static const comment = OBIconData(nativeIcon: Icons.chat_bubble_outline);
   static const chat = OBIconData(nativeIcon: Icons.chat);
   static const close = OBIconData(nativeIcon: Icons.close);
+  static const cancel = OBIconData(nativeIcon: Icons.close);
   static const sad = OBIconData(nativeIcon: Icons.sentiment_dissatisfied);
   static const location = OBIconData(nativeIcon: Icons.location_on);
   static const link = OBIconData(nativeIcon: Icons.link);
@@ -234,6 +236,7 @@ class OBIcons {
   static const communityStaff = OBIconData(nativeIcon: Icons.tag_faces);
   static const reply = OBIconData(nativeIcon: Icons.reply);
   static const support = OBIconData(nativeIcon: Icons.favorite);
+  static const sound = OBIconData(nativeIcon: Icons.volume_up);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

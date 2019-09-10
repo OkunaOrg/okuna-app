@@ -13,8 +13,11 @@ class PostsApiService {
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
+  static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';
   static const EDIT_POST_PATH = 'api/posts/{postUuid}/';
+  static const PUBLISH_POST_PATH = 'api/posts/{postUuid}/publish/';
   static const POST_PATH = 'api/posts/{postUuid}/';
+  static const GET_POST_STATUS_PATH = 'api/posts/{postUuid}/status/';
   static const OPEN_POST_PATH = 'api/posts/{postUuid}/open/';
   static const CLOSE_POST_PATH = 'api/posts/{postUuid}/close/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
@@ -107,19 +110,15 @@ class PostsApiService {
   }
 
   Future<HttpieStreamedResponse> createPost(
-      {String text, List<int> circleIds, File image, File video}) {
+      {String text, List<int> circleIds, bool isDraft = false}) {
     Map<String, dynamic> body = {};
-
-    if (image != null) {
-      body['image'] = image;
-    }
-
-    if (video != null) {
-      body['video'] = video;
-    }
 
     if (text != null && text.length > 0) {
       body['text'] = text;
+    }
+
+    if (isDraft != null) {
+      body['is_draft'] = isDraft;
     }
 
     if (circleIds != null && circleIds.length > 0) {
@@ -128,6 +127,34 @@ class PostsApiService {
 
     return _httpService.putMultiform(_makeApiUrl(CREATE_POST_PATH),
         body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieStreamedResponse> addMediaToPost(
+      {@required File file, @required String postUuid}) {
+    Map<String, dynamic> body = {'file': file};
+
+    String path = _makeAddPostMediaPath(postUuid: postUuid);
+
+    return _httpService.putMultiform(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getPostMedia({@required String postUuid}) {
+    String path = _makeGetPostMediaPath(postUuid: postUuid);
+
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> publishPost({@required String postUuid}) {
+    String path = _makePublishPostPath(postUuid: postUuid);
+
+    return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getPostWithUuidStatus(String postUuid) {
+    String path = _makeGetPostStatusPath(postUuid: postUuid);
+
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieStreamedResponse> editPost(
@@ -427,8 +454,8 @@ class PostsApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-
-  Future<HttpieResponse> getPreviewDataForPostUuid({@required String postUuid}) {
+  Future<HttpieResponse> getPreviewDataForPostUuid(
+      {@required String postUuid}) {
     String path = _makePreviewPostDataPath(postUuid: postUuid);
 
     return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
@@ -624,6 +651,26 @@ class PostsApiService {
   String _makePreviewPostDataPath({@required postUuid}) {
     return _stringTemplateService
         .parse(PREVIEW_POST_DATA_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeAddPostMediaPath({@required postUuid}) {
+    return _stringTemplateService
+        .parse(POST_MEDIA_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeGetPostMediaPath({@required postUuid}) {
+    return _stringTemplateService
+        .parse(POST_MEDIA_PATH, {'postUuid': postUuid});
+  }
+
+  String _makePublishPostPath({@required postUuid}) {
+    return _stringTemplateService
+        .parse(PUBLISH_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makeGetPostStatusPath({@required postUuid}) {
+    return _stringTemplateService
+        .parse(GET_POST_STATUS_PATH, {'postUuid': postUuid});
   }
 
   String _makeTranslatePostCommentPath(

@@ -5,7 +5,6 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
-import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -39,11 +38,11 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
 
     Widget postImagePreview;
-    if (post.hasImage()) {
+    if (post.hasMediaThumbnail()) {
       postImagePreview = ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Image(
-          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
+          image: AdvancedNetworkImage(post.mediaThumbnail, useDiskCache: true),
           height: postImagePreviewSize,
           width: postImagePreviewSize,
           fit: BoxFit.cover,

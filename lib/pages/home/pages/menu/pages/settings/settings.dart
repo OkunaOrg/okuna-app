@@ -15,7 +15,8 @@ class OBSettingsPage extends StatelessWidget {
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
-      navigationBar: OBThemedNavigationBar(title: localizationService.trans('drawer__settings')),
+      navigationBar: OBThemedNavigationBar(
+          title: localizationService.trans('drawer__settings')),
       child: OBPrimaryColorContainer(
         child: ListView(
           physics: const ClampingScrollPhysics(),
@@ -24,7 +25,8 @@ class OBSettingsPage extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const OBIcon(OBIcons.account),
-              title: OBText(localizationService.trans('drawer__account_settings')),
+              title:
+                  OBText(localizationService.trans('drawer__account_settings')),
               onTap: () {
                 navigationService.navigateToAccountSettingsPage(
                     context: context);
@@ -32,9 +34,18 @@ class OBSettingsPage extends StatelessWidget {
             ),
             ListTile(
               leading: const OBIcon(OBIcons.application),
-              title: OBText(localizationService.trans('drawer__application_settings')),
+              title: OBText(
+                  localizationService.trans('drawer__application_settings')),
               onTap: () {
                 navigationService.navigateToApplicationSettingsPage(
+                    context: context);
+              },
+            ),
+            ListTile(
+              leading: const OBIcon(OBIcons.bug),
+              title: OBText(localizationService.drawer__developer_settings),
+              onTap: () {
+                navigationService.navigateToDeveloperSettingsPage(
                     context: context);
               },
             ),

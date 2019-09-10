@@ -1,0 +1,12 @@
+{
+    "unknown_error": "Ukendt fejl",
+    "@unknown_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_internet_connection": "Ingen internetforbindelse",
+    "@no_internet_connection": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

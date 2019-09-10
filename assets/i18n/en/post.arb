@@ -41,16 +41,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "timeline_posts_refreshing_drhoo_subtitle": "Loading your timeline.",
-  "@timeline_posts_refreshing_drhoo_subtitle": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "timeline_posts_no_more_drhoo_title": "Your timeline is empty.",
-  "@timeline_posts_no_more_drhoo_title": {
-    "type": "text",
-    "placeholders": {}
-  },
   "timeline_posts_no_more_drhoo_subtitle": "Follow users or join a community to get started!",
   "@timeline_posts_no_more_drhoo_subtitle": {
     "type": "text",
@@ -115,6 +105,11 @@
   },
   "profile_counts_follower": " Follower",
   "@profile_counts_follower": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_retry_loading_posts": "Tap to retry",
+  "@profile_retry_loading_posts": {
     "type": "text",
     "placeholders": {}
   },
@@ -223,6 +218,11 @@
   },
   "create_photo": "Photo",
   "@create_photo": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_video": "Video",
+  "@create_video": {
     "type": "text",
     "placeholders": {}
   },

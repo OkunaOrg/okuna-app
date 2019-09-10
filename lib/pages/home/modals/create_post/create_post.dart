@@ -3,7 +3,6 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_community_previewer.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_image_previewer.dart';
@@ -11,7 +10,7 @@ import 'package:Okuna/pages/home/modals/create_post/widgets/post_video_previewer
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
@@ -26,6 +25,7 @@ import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_link_preview.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,7 +51,7 @@ class CreatePostModal extends StatefulWidget {
 class CreatePostModalState extends State<CreatePostModal> {
   ValidationService _validationService;
   NavigationService _navigationService;
-  ImagePickerService _imagePickerService;
+  MediaService _imagePickerService;
   ToastService _toastService;
   LocalizationService _localizationService;
   UserService _userService;
@@ -134,7 +134,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       var openbookProvider = OpenbookProvider.of(context);
       _validationService = openbookProvider.validationService;
       _navigationService = openbookProvider.navigationService;
-      _imagePickerService = openbookProvider.imagePickerService;
+      _imagePickerService = openbookProvider.mediaPickerService;
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
@@ -161,7 +161,7 @@ class CreatePostModalState extends State<CreatePostModal> {
                     child: _buildAccountSearchBox(),
                   )
                 : const SizedBox(),
-            _isSearchingAccount
+            _isSearchingAccount || (_hasImage || _hasVideo)
                 ? const SizedBox()
                 : Container(
                     height: _hasFocus == true ? 51 : 67,
@@ -197,16 +197,14 @@ class CreatePostModalState extends State<CreatePostModal> {
     if (_previewLinkQueryData != null && !_hasImage && !_hasVideo) {
       return Container(
         decoration: BoxDecoration(
-            color: Colors.black12,
-            borderRadius: BorderRadius.circular(10.0)),
-            child:  SizedBox(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: OBPostLinkPreview(
-                      previewLinkQueryData: _previewLinkQueryData,
-                      previewLink: _previewUrl
-                  )),
-            ),
+            color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
+        child: SizedBox(
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: OBPostLinkPreview(
+                  previewLinkQueryData: _previewLinkQueryData,
+                  previewLink: _previewUrl)),
+        ),
       );
     } else if (_previewRequestInProgress) {
       return const Center(
@@ -246,20 +244,19 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _onWantsToGoNext() async {
-    Post sharedPost = await _navigationService.navigateToSharePost(
-        context: context,
-        sharePostData:
-            SharePostData(text: _textController.text, image: _postImage));
+    OBNewPostData createPostData = await _navigationService.navigateToSharePost(
+        context: context, createPostData: _makeNewPostData());
 
-    if (sharedPost != null) {
+    if (createPostData != null) {
       // Remove modal
-      Navigator.pop(context, sharedPost);
+      Navigator.pop(context, createPostData);
     }
   }
 
   Widget _buildNewPostContent() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Column(
           children: <Widget>[
@@ -281,8 +278,9 @@ class CreatePostModalState extends State<CreatePostModal> {
             child: Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _getPostItemsWidgetsWithPreview())),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _getPostItemsWidgetsWithPreview(),
+                )),
           ),
         )
       ],
@@ -347,9 +345,28 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
           _unfocusTextField();
-          File pickedPhoto =
-              await _imagePickerService.pickImage(imageType: OBImageType.post);
-          if (pickedPhoto != null) _setPostImage(pickedPhoto);
+          try {
+            File pickedPhoto = await _imagePickerService.pickImage(
+                imageType: OBImageType.post, context: context);
+            if (pickedPhoto != null) _setPostImage(pickedPhoto);
+          } catch (error) {
+            _onError(error);
+          }
+        },
+      ),
+      OBPillButton(
+        text: _localizationService.post__create_video,
+        color: Pigment.fromString('#50b1f2'),
+        icon: const OBIcon(OBIcons.video),
+        onPressed: () async {
+          _unfocusTextField();
+          try {
+            File pickedVideo =
+                await _imagePickerService.pickVideo(context: context);
+            if (pickedVideo != null) _setPostVideo(pickedVideo);
+          } catch (error) {
+            _onError(error);
+          }
         },
       ),
     ];
@@ -380,6 +397,10 @@ class CreatePostModalState extends State<CreatePostModal> {
         onRemove: () {
           _removePostImage();
         },
+        onPostImageEdited: (File editedImage) {
+          _removePostImage();
+          _setPostImage(editedImage);
+        },
       );
 
       _postImageWidgetRemover = _addPostItemWidget(postImageWidget);
@@ -391,7 +412,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       this._postVideo = video;
       _hasVideo = true;
 
-      var postVideoWidget = OBPostVideoPreviewer(
+      var postVideoWidget = OBPostVideoPreview(
         _postVideo,
         onRemove: () {
           _removePostVideo();
@@ -403,28 +424,15 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Future<void> _createCommunityPost() async {
-    _setCreateCommunityPostInProgress(true);
-
-    try {
-      Post createdPost = await _userService.createPostForCommunity(
-          widget.community,
-          text: _textController.text,
-          image: _postImage,
-          video: _postVideo);
-      // Remove modal
-      Navigator.pop(context, createdPost);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _setCreateCommunityPostInProgress(false);
-    }
+    OBNewPostData newPostData = _makeNewPostData();
+    Navigator.pop(context, newPostData);
   }
 
   void _checkForPreviewUrl() async {
     String text = _textController.text;
     List matches = [];
     String previewUrl;
-    matches.addAll(linkRegex.allMatches(text).map((match){
+    matches.addAll(linkRegex.allMatches(text).map((match) {
       return match.group(0);
     }));
 
@@ -507,11 +515,16 @@ class CreatePostModalState extends State<CreatePostModal> {
     PostPreviewLinkData previewLinkQueryData;
     if (queryData != null) {
       previewLinkQueryData = PostPreviewLinkData();
-      if (queryData.containsKey('title')) previewLinkQueryData.title = queryData['title'];
-      if (queryData.containsKey('description')) previewLinkQueryData.description = queryData['description'];
-      if (queryData.containsKey('image_url')) previewLinkQueryData.imageUrl = queryData['image_url'];
-      if (queryData.containsKey('favicon_url')) previewLinkQueryData.faviconUrl = queryData['favicon_url'];
-      if (queryData.containsKey('domain_url')) previewLinkQueryData.domainUrl = queryData['domain_url'];
+      if (queryData.containsKey('title'))
+        previewLinkQueryData.title = queryData['title'];
+      if (queryData.containsKey('description'))
+        previewLinkQueryData.description = queryData['description'];
+      if (queryData.containsKey('image_url'))
+        previewLinkQueryData.imageUrl = queryData['image_url'];
+      if (queryData.containsKey('favicon_url'))
+        previewLinkQueryData.faviconUrl = queryData['favicon_url'];
+      if (queryData.containsKey('domain_url'))
+        previewLinkQueryData.domainUrl = queryData['domain_url'];
     } else {
       previewLinkQueryData = null;
     }
@@ -540,6 +553,11 @@ class CreatePostModalState extends State<CreatePostModal> {
     } else if (error is HttpieRequestError) {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
+    } else if (error is FileTooLargeException) {
+      int limit = error.getLimitInMB();
+      _toastService.error(
+          message: _localizationService.image_picker__error_too_large(limit),
+          context: context);
     } else {
       _toastService.error(
           message: _localizationService.trans('error__unknown_error'),
@@ -569,6 +587,15 @@ class CreatePostModalState extends State<CreatePostModal> {
       _hasVideo = false;
       _postVideoWidgetRemover();
     });
+  }
+
+  OBNewPostData _makeNewPostData() {
+    List<File> media = [];
+    if (_postImage != null) media.add(_postImage);
+    if (_postVideo != null) media.add(_postVideo);
+
+    return OBNewPostData(
+        text: _textController.text, media: media, community: widget.community);
   }
 
   VoidCallback _addPostItemWidget(Widget postItemWidget) {

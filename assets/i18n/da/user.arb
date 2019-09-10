@@ -1,0 +1,980 @@
+{
+    "thousand_postfix": "kilo",
+    "@thousand_postfix": {
+        "description": "For eg. communty has 3k members",
+        "type": "text",
+        "placeholders": {}
+    },
+    "million_postfix": "mega",
+    "@million_postfix": {
+        "description": "For eg. user has 3m followers",
+        "type": "text",
+        "placeholders": {}
+    },
+    "billion_postfix": "mia",
+    "@billion_postfix": {
+        "description": "For eg. World circle has 7.5b people",
+        "type": "text",
+        "placeholders": {}
+    },
+    "translate_see_translation": "Se oversættelse",
+    "@translate_see_translation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "translate_show_original": "Vis originalet",
+    "@translate_show_original": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_lists_account": "1 konto",
+    "@follows_lists_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_lists_accounts": "{prettyUsersCount} Konti",
+    "@follows_lists_accounts": {
+        "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    },
+    "edit_profile_user_name_taken": "Brugernavnet @{username} er allerede taget",
+    "@edit_profile_user_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "profile_action_deny_connection": "Afvis forespørgsel om forbindelse",
+    "@profile_action_deny_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_blocked": "Bruger blokeret",
+    "@profile_action_user_blocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_unblocked": "Blokering af bruger ophævet",
+    "@profile_action_user_unblocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_cancel_connection": "Kald forspørgsel om forbindelse tilbage",
+    "@profile_action_cancel_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_url_invalid_error": "Angiv venligst en gyldig url!",
+    "@profile_url_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_location_length_error": "Bopæl kan ikke være længere end {maxLength} tegn.",
+    "@profile_location_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "profile_bio_length_error": "Biografien kan ikke være længere end {maxLength} tegn.",
+    "@profile_bio_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "follow_button_follow_text": "Følg",
+    "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_unfollow_text": "Følg ikke længere",
+    "@follow_button_unfollow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_username": "Brugernavn",
+    "@edit_profile_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_update_account_lists": "Aktualiser konto lister",
+    "@add_account_update_account_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_to_lists": "Føj konto til liste",
+    "@add_account_to_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_update_lists": "Opdater lister",
+    "@add_account_update_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_save": "Gem",
+    "@add_account_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_done": "Færdig",
+    "@add_account_done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_success": "Succes",
+    "@add_account_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "emoji_field_none_selected": "Ingen emoji valgt",
+    "@emoji_field_none_selected": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "emoji_search_none_found": "Intet passende emoji fundet '{searchQuery}'.",
+    "@emoji_search_none_found": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "follow_lists_title": "Mine lister",
+    "@follow_lists_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_search_for": "Søg efter en liste...",
+    "@follow_lists_search_for": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_no_list_found": "Ingen liste fundet.",
+    "@follow_lists_no_list_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_no_list_found_for": "Ingen liste fundet for '{searchQuery}'",
+    "@follow_lists_no_list_found_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "list_name_empty_error": "Listenavn må ikke være tom",
+    "@list_name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_name_range_error": "Listenavn må ikke være længere end {maxLength} tegn",
+    "@list_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "circle_name_empty_error": "Kredsnavn må ikke være tom",
+    "@circle_name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "circle_name_range_error": "Kredsnavn må ikke være længere end {maxLength} tegn.",
+    "@circle_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "save_follows_list_name": "Navn",
+    "@save_follows_list_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_hint_text": "f.eks rejse, fotografi",
+    "@save_follows_list_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_name_taken": "Listenavn '{listName}' er allerede taget",
+    "@save_follows_list_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "listName": {}
+        }
+    },
+    "save_follows_list_emoji": "Emoji",
+    "@save_follows_list_emoji": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_users": "Brugere",
+    "@save_follows_list_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_edit": "Redigér liste",
+    "@save_follows_list_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_create": "Opret liste",
+    "@save_follows_list_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_save": "Gem",
+    "@save_follows_list_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_emoji_required_error": "Emoji er krævet",
+    "@save_follows_list_emoji_required_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_list_edit": "Redigér",
+    "@follows_list_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_list_header_title": "Brugere",
+    "@follows_list_header_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_name": "Navn",
+    "@edit_profile_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_url": "url",
+    "@edit_profile_url": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_location": "Bopæl",
+    "@edit_profile_location": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_bio": "Biografi",
+    "@edit_profile_bio": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_followers_count": "Antal følgere",
+    "@edit_profile_followers_count": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_community_posts": "Fællesskabsindlæg",
+    "@edit_profile_community_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_title": "Redigér profil",
+    "@edit_profile_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_save_text": "Gem",
+    "@edit_profile_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_pick_image": "Vælg billede",
+    "@edit_profile_pick_image": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_delete": "Slet",
+    "@edit_profile_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_pick_image_error_too_large": "Billede for stort (limit: {limit} MB)",
+    "@edit_profile_pick_image_error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    },
+    "tile_following": " · Følger",
+    "@tile_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "following_text": "Følger",
+    "@following_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "following_resource_name": "brugere der følger",
+    "@following_resource_name": {
+        "description": "Eg: Search followed users.., No followed users found. etc ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Slet",
+    "@tile_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite": "Indbyd",
+    "@invite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uninvite": "Kald indbydelse tilbage",
+    "@uninvite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_member": "Medlem",
+    "@invite_member": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_someone_message": "Hej, jeg vil gerne invitere dig til Okuna. Først skal du downloade app'en hos iTunes ({iosLink}) eller Play store ({androidLink}). Dernæst skal du indføje denne personlige invitationslink i 'Sign up' skemaet i Okuna app'en: {inviteLink}",
+    "@invite_someone_message": {
+        "type": "text",
+        "placeholders": {
+            "iosLink": {},
+            "androidLink": {},
+            "inviteLink": {}
+        }
+    },
+    "connections_header_circle_desc": "Kredsen som alle dine forbindelser tilføjes.",
+    "@connections_header_circle_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections_header_users": "Brugere",
+    "@connections_header_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_pending": "Verserende",
+    "@connection_pending": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_circle_edit": "Redigér",
+    "@connection_circle_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections_circle_delete": "Slet",
+    "@connections_circle_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_name": "Navn",
+    "@save_connection_circle_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_hint": "fx venner, familie, arbejde.",
+    "@save_connection_circle_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_color_name": "Farve",
+    "@save_connection_circle_color_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_color_hint": "(Tryk for at ændre)",
+    "@save_connection_circle_color_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_users": "Brugere",
+    "@save_connection_circle_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_edit": "Redigér kreds",
+    "@save_connection_circle_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_create": "Kreér kreds",
+    "@save_connection_circle_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_save": "Gem",
+    "@save_connection_circle_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circle_save": "Gem",
+    "@update_connection_circle_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circle_updated": "Kontakt opdateret",
+    "@update_connection_circle_updated": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circles_title": "Aktualisér kontakternes kredse",
+    "@update_connection_circles_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_with": "Bekræft kontakt med {userName}",
+    "@confirm_connection_with": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "confirm_connection_add_connection": "Føj kontakt til kreds",
+    "@confirm_connection_add_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_connection_confirmed": "Kontakt bekræftet",
+    "@confirm_connection_connection_confirmed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_confirm_text": "Bekræft",
+    "@confirm_connection_confirm_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_connect_with_username": "Forbind med {userName}",
+    "@connect_to_user_connect_with_username": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "connect_to_user_add_connection": "Føj kontakt til kreds",
+    "@connect_to_user_add_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_done": "Udført",
+    "@connect_to_user_done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_request_sent": "Kontaktanmodning sendt",
+    "@connect_to_user_request_sent": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "remove_account_from_list": "Slet konto fra listen",
+    "@remove_account_from_list": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "remove_account_from_list_success": "Succes",
+    "@remove_account_from_list_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_title": "Bekræftelse",
+    "@confirm_block_user_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_info": "I vil hverken se hinandens indslæg eller være i stand til at interagere på nogen måde.",
+    "@confirm_block_user_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_yes": "Ja",
+    "@confirm_block_user_yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_no": "Nej",
+    "@confirm_block_user_no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_blocked": "Bruger blokeret.",
+    "@confirm_block_user_blocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_question": "Er du sikker på, at du vil blokere @{username}?",
+    "@confirm_block_user_question": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "save_connection_circle_name_taken": "Kredsnavn '{takenConnectionsCircleName}' er allerede taget",
+    "@save_connection_circle_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenConnectionsCircleName": {}
+        }
+    },
+    "timeline_filters_title": "Tidslinjefiltre",
+    "@timeline_filters_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_search_desc": "Søger efter kredse og lister...",
+    "@timeline_filters_search_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_clear_all": "Slet alt",
+    "@timeline_filters_clear_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_apply_all": "Anvend filtre",
+    "@timeline_filters_apply_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_circles": "Kredse",
+    "@timeline_filters_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_lists": "Lister",
+    "@timeline_filters_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "followers_title": "Følgere",
+    "@followers_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follower_singular": "følger",
+    "@follower_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follower_plural": "følgere",
+    "@follower_plural": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_title": "Slet konto",
+    "@delete_account_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_current_pwd": "Nuværende adgangskode",
+    "@delete_account_current_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_current_pwd_hint": "Indtast din aktuel adgangskode",
+    "@delete_account_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_next": "Næste",
+    "@delete_account_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_title": "Bekræftelse",
+    "@delete_account_confirmation_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_desc": "Er du sikker på, at du vil slette dit konto?",
+    "@delete_account_confirmation_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_desc_info": "Det er en endegyldig aktion og kan ikke kaldes tilbage.",
+    "@delete_account_confirmation_desc_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_no": "Nej",
+    "@delete_account_confirmation_no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_yes": "Ja",
+    "@delete_account_confirmation_yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_goodbye": "Farvel",
+    "@delete_account_confirmation_goodbye": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_create_title": "Kreér indbydelse",
+    "@invites_create_create_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_edit_title": "Redigér indbydelse",
+    "@invites_create_edit_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_save": "Gem",
+    "@invites_create_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_create": "Kreér",
+    "@invites_create_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_name_title": "nickname",
+    "@invites_create_name_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_name_hint": "fx. Jane Doe",
+    "@invites_create_name_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending": "verserende",
+    "@invites_pending": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_delete": "Slet",
+    "@invites_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_invite_text": "Invitation",
+    "@invites_invite_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_yourself": "Del selv invitation",
+    "@invites_share_yourself": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_yourself_desc": "Vælg fra messaging apps etc.",
+    "@invites_share_yourself_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_email": "Del invitation per email",
+    "@invites_share_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_text": "Email",
+    "@invites_email_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_hint": "f.eks. janedoe@email.com",
+    "@invites_email_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_invite_text": "Email invitation",
+    "@invites_email_invite_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_send_text": "Send",
+    "@invites_email_send_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_sent_text": "Invitationsemail sendt",
+    "@invites_email_sent_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_email_desc": "Vi skal sende en invitationsemail med instruktioner på dine vegne",
+    "@invites_share_email_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_edit_text": "Redigér",
+    "@invites_edit_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_title": "Mine invitationer",
+    "@invites_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_title": "Accepteret",
+    "@invites_accepted_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_group_name": "accepterede invitationer",
+    "@invites_accepted_group_name": {
+        "description": "Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_group_item_name": "acceptered invitation",
+    "@invites_accepted_group_item_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending_group_name": "verserende invitationer",
+    "@invites_pending_group_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending_group_item_name": "verserende invitation",
+    "@invites_pending_group_item_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_none_used": "Du har tilsyneladende ikke brugt nogen invitation endnu.",
+    "@invites_none_used": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_none_left": "Du har ingen invitationer tilbage.",
+    "@invites_none_left": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_invite_a_friend": "Inviter en ven",
+    "@invites_invite_a_friend": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_refresh": "Opdater",
+    "@invites_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_title": "Sprogindstillinger",
+    "@language_settings_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_save": "Gem",
+    "@language_settings_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_saved_success": "Sprogændring succesfuld",
+    "@language_settings_saved_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "groups_see_all": "Se alle {groupName}",
+    "@groups_see_all": {
+        "description": "Can be, See all joined communities, See all pending invites, See all moderated communities etc. ",
+        "type": "text",
+        "placeholders": {
+            "groupName": {}
+        }
+    },
+    "invites_joined_with": "Blevet medlem med brugernavn @{username}",
+    "@invites_joined_with": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "invites_pending_email": "Verserende, invitationsemail sendt til {email}",
+    "@invites_pending_email": {
+        "type": "text",
+        "placeholders": {
+            "email": {}
+        }
+    },
+    "timeline_filters_no_match": "Ingen overensstemmelse med '{searchQuery}'.",
+    "@timeline_filters_no_match": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "clear_application_cache_text": "Tøm cache",
+    "@clear_application_cache_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_desc": "Tøm cachen for indlæg, konti, billeder & mere.",
+    "@clear_application_cache_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_success": "Cache succesfuldt tømt",
+    "@clear_application_cache_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_failure": "Kunne ikke tømme cache",
+    "@clear_application_cache_failure": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_title": "Retningslinjernes afvisning",
+    "@confirm_guidelines_reject_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_info": "Du kan ikke bruge Okuna før du accepterer retningslinjerne.",
+    "@confirm_guidelines_reject_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_with_team": "Snak med teamet.",
+    "@confirm_guidelines_reject_chat_with_team": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_immediately": "Start en samtale omgående.",
+    "@confirm_guidelines_reject_chat_immediately": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_community": "Snak med fælleskabet.",
+    "@confirm_guidelines_reject_chat_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_join_slack": "Deltag i Slack kanalen.",
+    "@confirm_guidelines_reject_join_slack": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_go_back": "Tilbage",
+    "@confirm_guidelines_reject_go_back": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_delete_account": "Slet konto",
+    "@confirm_guidelines_reject_delete_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_desc": "Tag et øjeblik til at læse og acceptere vores retningslinjer.",
+    "@guidelines_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_accept": "Accepter",
+    "@guidelines_accept": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_reject": "Afvis",
+    "@guidelines_reject": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_title": "Skift Email",
+    "@change_email_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_email_text": "Email",
+    "@change_email_email_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_hint_text": "Indtast din emailadresse",
+    "@change_email_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_error": "Email allerede registreret",
+    "@change_email_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_save": "Gem",
+    "@change_email_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_success_info": "Vi har sendt et bekræftelses link til din nye email adresse, klik det for at bekræfte din nye email",
+    "@change_email_success_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_title": "Nulstil præferencer",
+    "@clear_app_preferences_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_desc": "Nulstil app præferencer. I øjeblikket er dette den eneste foretrukne sortering af kommentarer.",
+    "@clear_app_preferences_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_cleared_successfully": "Nulstillede præferencer med succes",
+    "@clear_app_preferences_cleared_successfully": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_verification_successful": "Fantastisk! Din email er nu bekræftet",
+    "@email_verification_successful": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_verification_error": "Ups! Dit token var ikke validt, eller er udløbet. Prøv igen",
+    "@email_verification_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_error": "Kunne ikke nulstille præferencer",
+    "@clear_app_preferences_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disconnect_from_user_success": "Afbrød med succes",
+    "@disconnect_from_user_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "block_user": "Bloker bruger",
+    "@block_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "unblock_user": "Fjern blokering af bruger",
+    "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disconnect_from_user": "Fjern forbindelse med {userName}",
+    "@disconnect_from_user": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "circle_peoples_count": "{prettyUsersCount} personer",
+    "@circle_peoples_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    },
+    "follows_list_accounts_count": "{prettyUsersCount} konti",
+    "@follows_list_accounts_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    }
+}

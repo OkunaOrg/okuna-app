@@ -4,7 +4,7 @@ import 'package:Okuna/services/communities_api.dart';
 import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:validators/validators.dart' as validators;
 
 import 'localization.dart';
@@ -35,9 +35,10 @@ class ValidationService {
   static const int PROFILE_NAME_MIN_LENGTH = 1;
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
   static const int PROFILE_BIO_MAX_LENGTH = 1000;
-  static const int POST_IMAGE_MAX_SIZE = 20971520;
+  static const int POST_IMAGE_MAX_SIZE = 10971520;
   static const int AVATAR_IMAGE_MAX_SIZE = 10485760;
   static const int COVER_IMAGE_MAX_SIZE = 10485760;
+  static const int VIDEO_MAX_SIZE = 10971520;
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
@@ -52,8 +53,7 @@ class ValidationService {
     _followsListsApiService = followsListsApiService;
   }
 
-  void setLocalizationService(
-      LocalizationService localizationService) {
+  void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
   }
 
@@ -240,6 +240,15 @@ class ValidationService {
     return size <= getAllowedImageSize(type);
   }
 
+  Future<bool> isVideoAllowedSize(File video) async {
+    int size = await video.length();
+    return size <= VIDEO_MAX_SIZE;
+  }
+
+  int getAllowedVideoSize() {
+    return VIDEO_MAX_SIZE;
+  }
+
   int getAllowedImageSize(OBImageType type) {
     if (type == OBImageType.avatar) {
       return AVATAR_IMAGE_MAX_SIZE;
@@ -258,10 +267,10 @@ class ValidationService {
     if (username.length == 0) {
       errorMsg = _localizationService.auth__username_empty_error;
     } else if (!isUsernameAllowedLength(username)) {
-      errorMsg = _localizationService.auth__username_maxlength_error(USERNAME_MAX_LENGTH);
+      errorMsg = _localizationService
+          .auth__username_maxlength_error(USERNAME_MAX_LENGTH);
     } else if (!isUsernameAllowedCharacters(username)) {
-      errorMsg =
-         _localizationService.auth__username_characters_error;
+      errorMsg = _localizationService.auth__username_characters_error;
     }
 
     return errorMsg;
@@ -275,7 +284,8 @@ class ValidationService {
     if (postComment.length == 0) {
       errorMsg = _localizationService.post__comment_required_error;
     } else if (!isPostCommentAllowedLength(postComment)) {
-      errorMsg = _localizationService.post__comment_maxlength_error(POST_COMMENT_MAX_LENGTH);
+      errorMsg = _localizationService
+          .post__comment_maxlength_error(POST_COMMENT_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -317,7 +327,8 @@ class ValidationService {
     if (password.length == 0) {
       errorMsg = _localizationService.auth__password_empty_error;
     } else if (!isPasswordAllowedLength(password)) {
-      errorMsg = _localizationService.auth__password_range_error(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH);
+      errorMsg = _localizationService.auth__password_range_error(
+          PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -331,7 +342,8 @@ class ValidationService {
     if (name.isEmpty) {
       errorMsg = _localizationService.auth__name_empty_error;
     } else if (!isNameAllowedLength(name)) {
-      errorMsg = _localizationService.auth__name_range_error(PROFILE_NAME_MIN_LENGTH, PROFILE_NAME_MAX_LENGTH);
+      errorMsg = _localizationService.auth__name_range_error(
+          PROFILE_NAME_MIN_LENGTH, PROFILE_NAME_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -344,8 +356,9 @@ class ValidationService {
     if (description.isEmpty) {
       errorMsg = _localizationService.auth__description_empty_error;
     } else if (!isModeratedObjectDescriptionAllowedLength(description)) {
-      errorMsg =
-          _localizationService.auth__description_range_error(MODERATED_OBJECT_DESCRIPTION_MIN_LENGTH, MODERATED_OBJECT_DESCRIPTION_MAX_LENGTH);
+      errorMsg = _localizationService.auth__description_range_error(
+          MODERATED_OBJECT_DESCRIPTION_MIN_LENGTH,
+          MODERATED_OBJECT_DESCRIPTION_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -372,7 +385,8 @@ class ValidationService {
     String errorMsg;
 
     if (!isLocationAllowedLength(location)) {
-      errorMsg = _localizationService.user__profile_location_length_error(PROFILE_LOCATION_MAX_LENGTH);
+      errorMsg = _localizationService
+          .user__profile_location_length_error(PROFILE_LOCATION_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -386,7 +400,8 @@ class ValidationService {
     String errorMsg;
 
     if (!isBioAllowedLength(bio)) {
-      errorMsg = _localizationService.user__profile_bio_length_error(PROFILE_BIO_MAX_LENGTH);
+      errorMsg = _localizationService
+          .user__profile_bio_length_error(PROFILE_BIO_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -400,7 +415,8 @@ class ValidationService {
     if (name.length == 0) {
       errorMsg = _localizationService.user__list_name_empty_error;
     } else if (!isFollowsListNameAllowedLength(name)) {
-      errorMsg = _localizationService.user__list_name_range_error(LIST_MAX_LENGTH);
+      errorMsg =
+          _localizationService.user__list_name_range_error(LIST_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -414,7 +430,8 @@ class ValidationService {
     if (name.length == 0) {
       errorMsg = _localizationService.user__circle_name_empty_error;
     } else if (!isConnectionsCircleNameAllowedLength(name)) {
-      errorMsg = _localizationService.user__circle_name_range_error(CIRCLE_MAX_LENGTH);
+      errorMsg =
+          _localizationService.user__circle_name_range_error(CIRCLE_MAX_LENGTH);
     }
 
     return errorMsg;
@@ -428,7 +445,8 @@ class ValidationService {
     if (name.length == 0) {
       errorMsg = _localizationService.community__name_empty_error;
     } else if (!isCommunityNameAllowedLength(name)) {
-      errorMsg = _localizationService.community__name_range_error(COMMUNITY_NAME_MAX_LENGTH);
+      errorMsg = _localizationService
+          .community__name_range_error(COMMUNITY_NAME_MAX_LENGTH);
     } else if (!isCommunityNameAllowedCharacters(name)) {
       errorMsg = _localizationService.community__name_characters_error;
     }
@@ -444,7 +462,8 @@ class ValidationService {
     if (title.length == 0) {
       errorMsg = _localizationService.community__title_empty_error;
     } else if (!isCommunityTitleAllowedLength(title)) {
-      errorMsg = _localizationService.community__title_range_error(COMMUNITY_TITLE_MAX_LENGTH);
+      errorMsg = _localizationService
+          .community__title_range_error(COMMUNITY_TITLE_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -459,7 +478,8 @@ class ValidationService {
     if (rules.length == 0) {
       errorMsg = _localizationService.community__rules_empty_error;
     } else if (!isCommunityRulesAllowedLength(rules)) {
-      errorMsg = _localizationService.community__rules_range_error(COMMUNITY_RULES_MAX_LENGTH);
+      errorMsg = _localizationService
+          .community__rules_range_error(COMMUNITY_RULES_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -472,7 +492,8 @@ class ValidationService {
     String errorMsg;
 
     if (!isCommunityDescriptionAllowedLength(description)) {
-      errorMsg = _localizationService.community__description_range_error(COMMUNITY_DESCRIPTION_MAX_LENGTH);
+      errorMsg = _localizationService
+          .community__description_range_error(COMMUNITY_DESCRIPTION_MAX_LENGTH);
     }
     return errorMsg;
   }
@@ -485,7 +506,8 @@ class ValidationService {
     String errorMsg;
 
     if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
-      errorMsg = _localizationService.community__adjectives_range_error(COMMUNITY_USER_ADJECTIVE_MAX_LENGTH);
+      errorMsg = _localizationService.community__adjectives_range_error(
+          COMMUNITY_USER_ADJECTIVE_MAX_LENGTH);
     }
 
     return errorMsg;

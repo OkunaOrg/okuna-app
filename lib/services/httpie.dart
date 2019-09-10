@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:http_retry/http_retry.dart';
 export 'package:http/http.dart';
 
 class HttpieService {
@@ -23,6 +24,16 @@ class HttpieService {
     // This doesn't pick up proxy settings on Android and iOS
     httpClient.findProxy = HttpClient.findProxyFromEnvironment;
     client = IOClient(httpClient);
+    client = RetryClient(client,
+        when: _retryWhenResponse, whenError: _retryWhenError);
+  }
+
+  bool _retryWhenResponse(BaseResponse response) {
+    return response.statusCode >= 503 && response.statusCode < 600;
+  }
+
+  bool _retryWhenError(error, StackTrace stackTrace) {
+    return error is SocketException || error is ClientException;
   }
 
   void setAuthorizationToken(String token) {
@@ -367,6 +378,7 @@ class HttpieService {
           errorCode == 104 ||
           errorCode == 51 ||
           errorCode == 8 ||
+          errorCode == 113 ||
           errorCode == 7 ||
           errorCode == 64) {
         // Connection refused.

@@ -27,7 +27,6 @@ def parse_KV_file(file, separator='=')
 end
 
 target 'Runner' do
-  use_frameworks!
   # Prepare symlinks folder. We use symlinks to avoid having Podfile.lock
   # referring to absolute paths on developers' machines.
   system('rm -rf .symlinks')
@@ -51,12 +50,15 @@ target 'Runner' do
   plugin_pods.map { |p|
     symlink = File.join('.symlinks', 'plugins', p[:name])
     File.symlink(p[:path], symlink)
-    pod p[:name], :path => File.join(symlink, 'ios')
+    if p[:name] == 'flutter_ffmpeg'
+        pod p[:name]+'/min-gpl-lts', :path => File.join(symlink, 'ios')
+    else
+        pod p[:name], :path => File.join(symlink, 'ios')
+    end
   }
 end
 
 target 'OneSignalNotificationServiceExtension' do
-  use_frameworks!
   pod 'OneSignal', '>= 2.9.5', '< 3.0'
 end
 

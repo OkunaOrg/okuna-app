@@ -1,0 +1,747 @@
+{
+    "no": "Nej",
+    "@no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "yes": "Ja",
+    "@yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "button_staff": "Personale",
+    "@button_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "button_rules": "Regler",
+    "@button_rules": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community": "fællesskab",
+    "@community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities": "fælleskaber",
+    "@communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "type_public": "Offentlig",
+    "@type_public": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "type_private": "Privat",
+    "@type_private": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "member_capitalized": "Medlem",
+    "@member_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "members_capitalized": "Medlemmer",
+    "@members_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "admin_desc": "Dette vil tillade medlemmet at redigere fællesskabs detaljerne, administratorer, moderatorer og blokerede brugere.",
+    "@admin_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirmation_title": "Bekræftelse",
+    "@confirmation_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "admin_add_confirmation": "Er du sikker på at du tilføje @{username} som fællesskabs administrator?",
+    "@admin_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "ban_confirmation": "Er du sikker på, at du vil blokere @{username}?",
+    "@ban_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "ban_desc": "Dette vil fjerne brugeren fra fællesskabet og forhindre den i at blive medlem igen.",
+    "@ban_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderator_add_confirmation": "Er du sikker på at du tilføje @{username} som fællesskabs moderator?",
+    "@moderator_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "moderator_desc": "Dette vil tillade medlemmet at redigere fællesskabs detaljerne, moderatorer og blokerede brugere.",
+    "@moderator_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_you": "Dig",
+    "@moderators_you": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_title": "Moderatorer",
+    "@moderators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_desc": "Du vil ikke længere se dens opslag i din tidslinje og kan heller ikke lave opslag til den længere.",
+    "@leave_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_confirmation": "Er du sikker på at du vil forlade fællesskabet?",
+    "@leave_confirmation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderator_resource_name": "moderator",
+    "@moderator_resource_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_resource_name": "moderatorer",
+    "@moderators_resource_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_moderator_title": "Tilføj en moderator",
+    "@add_moderator_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_confirmation": "Er du sikker på at du vil slette fællesskabet?",
+    "@delete_confirmation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_desc": "Du vil ikke længere se dens opslag i din tidslinje og kan heller ikke lave opslag til den længere.",
+    "@delete_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_manage_text": "Administrere",
+    "@actions_manage_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_title": "Administrere fællesskab",
+    "@manage_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_details_title": "Detaljer",
+    "@manage_details_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_details_desc": "Ændre titel, navn, avatar, coverbillede mv.",
+    "@manage_details_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_admins_title": "Administratorer",
+    "@manage_admins_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_admins_desc": "Se, tilføje og fjerne administratorer.",
+    "@manage_admins_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mods_title": "Moderatorer",
+    "@manage_mods_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mods_desc": "Se, tilføje og fjerne moderatorer.",
+    "@manage_mods_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_banned_title": "Blokerede brugere",
+    "@manage_banned_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_banned_desc": "Se, tilføje og fjerne blokerede brugere.",
+    "@manage_banned_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mod_reports_title": "Moderations rapporter",
+    "@manage_mod_reports_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mod_reports_desc": "Gennemse fællesskabets moderations rapporter.",
+    "@manage_mod_reports_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_closed_posts_title": "Lukkede opslag",
+    "@manage_closed_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_closed_posts_desc": "Se og administrere lukkede opslag",
+    "@manage_closed_posts_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_invite_title": "Inviter personer",
+    "@manage_invite_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_invite_desc": "Inviter dine forbindelser og følgere til at slutte sig til fællesskabet.",
+    "@manage_invite_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_delete_title": "Slet fællesskab",
+    "@manage_delete_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_delete_desc": "Slet fællesskabet, for evigt.",
+    "@manage_delete_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_leave_title": "Forlad fællesskab",
+    "@manage_leave_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_leave_desc": "Forlad fællesskabet.",
+    "@manage_leave_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_add_favourite": "Føj fællesskabet til dine favoritter",
+    "@manage_add_favourite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_remove_favourite": "Fjern fællesskabet fra dine favoritter",
+    "@manage_remove_favourite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "is_private": "Dette fællesskab er privat.",
+    "@is_private": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invited_by_member": "Du skal inviteres af et medlem.",
+    "@invited_by_member": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invited_by_moderator": "Du skal inviteres af en moderator.",
+    "@invited_by_moderator": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing": "Opdaterer fællesskab",
+    "@refreshing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "posts": "Opslag",
+    "@posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about": "Om",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "category": "kategori.",
+    "@category": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "categories": "kategorier.",
+    "@categories": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_administrators_title": "Tilføj administrator.",
+    "@add_administrators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_members": "Fællesskabs medlemmer",
+    "@community_members": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "member": "medlem",
+    "@member": {
+        "description": "Currently not used in app, reserved for potential use. Could be used as: Showing 1 member",
+        "type": "text",
+        "placeholders": {}
+    },
+    "member_plural": "medlemmer",
+    "@member_plural": {
+        "description": "See all members ,Search all members",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrators_title": "Administratorer",
+    "@administrators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_text": "administrator",
+    "@administrator_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrator",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_plural": "administratorer",
+    "@administrator_plural": {
+        "description": "Egs. Search administrators, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_you": "Dig",
+    "@administrator_you": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_you_text": "Dig",
+    "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pick_upto_max": "Vælg op til {max} kategorier",
+    "@pick_upto_max": {
+        "type": "text",
+        "placeholders": {
+            "max": {}
+        }
+    },
+    "pick_atleast_min_category": "Du skal vælge mindst {min} kategori!",
+    "@pick_atleast_min_category": {
+        "description": "You must pick at least 1 category",
+        "type": "text",
+        "placeholders": {
+            "min": {}
+        }
+    },
+    "pick_atleast_min_categories": "Du skal vælge mindst {min} kategorier!",
+    "@pick_atleast_min_categories": {
+        "description": "Eg. Variable min will be 3-5. You must pick at least (3-5) categories",
+        "type": "text",
+        "placeholders": {
+            "min": {}
+        }
+    },
+    "ban_user_title": "Bloker bruger",
+    "@ban_user_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_users_title": "Blokerede brugere",
+    "@banned_users_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_user_text": "blokerede brugere",
+    "@banned_user_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 banned user",
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_users_text": "blokerede brugere",
+    "@banned_users_text": {
+        "description": "Egs. Search banned users, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorites_title": "Favoritter",
+    "@favorites_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_community": "favorit fællesskab",
+    "@favorite_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_communities": "favorit fællesskaber",
+    "@favorite_communities": {
+        "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_title": "Administreret",
+    "@administrated_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_community": "administreret fællesskab",
+    "@administrated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_communities": "administrerede fællesskaber",
+    "@administrated_communities": {
+        "description": "Egs. Search administrated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_title": "Modereret",
+    "@moderated_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_community": "modereret fællesskab",
+    "@moderated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_communities": "modererede fællesskaber",
+    "@moderated_communities": {
+        "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_title": "Tilmeldt",
+    "@joined_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_community": "tilmeldt fællesskab",
+    "@joined_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 joined community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_communities": "tilmeldte fællesskaber",
+    "@joined_communities": {
+        "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "join_communities_desc": "Tilmeld fællesskaber for at se denne tab komme til live!",
+    "@join_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refresh_text": "Opdater",
+    "@refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_none_found": "Ingen populære fællesskaber fundet. Prøv igen om få minutter.",
+    "@trending_none_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_refresh": "Opdater",
+    "@trending_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_in_all": "Populær i alle kategorier",
+    "@trending_in_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_in_category": "Populær i {categoryName}",
+    "@trending_in_category": {
+        "type": "text",
+        "placeholders": {
+            "categoryName": {}
+        }
+    },
+    "communities_title": "Fælleskaber",
+    "@communities_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_no_category_found": "Ingen kategorier fundet. Prøv igen om nogle minutter.",
+    "@communities_no_category_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_refresh_text": "Opdater",
+    "@communities_refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_all_text": "Alle",
+    "@communities_all_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_title": "Inviter til fællesskab",
+    "@invite_to_community_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_resource_singular": "forbindelse eller følger",
+    "@invite_to_community_resource_singular": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower",
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_resource_plural": "forbindelser og følgere",
+    "@invite_to_community_resource_plural": {
+        "description": "Egs. Search connections and followers, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_action": "Favorit fællesskab",
+    "@favorite_action": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "unfavorite_action": "Fjern fællesskab fra favoritter",
+    "@unfavorite_action": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_label_title": "Titel",
+    "@save_community_label_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_label_title_hint_text": "f.eks Rejse, Fotografi, Spil.",
+    "@save_community_label_title_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_title": "Navn",
+    "@save_community_name_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_title_hint_text": " f.eks rejse, fotografi, spil.",
+    "@save_community_name_title_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_taken": "Fællesskabs navn '{takenName}' er i brug",
+    "@save_community_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenName": {}
+        }
+    },
+    "save_community_name_label_color": "Farve",
+    "@save_community_name_label_color": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_color_hint_text": "(Tryk for at ændre)",
+    "@save_community_name_label_color_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_type": "Type",
+    "@save_community_name_label_type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_type_hint_text": "(Tryk for at ændre)",
+    "@save_community_name_label_type_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_member_invites": "Medlems invitationer",
+    "@save_community_name_member_invites": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_member_invites_subtitle": "Medlemmer kan invitere folk til fællesskabet",
+    "@save_community_name_member_invites_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_category": "Kategori",
+    "@save_community_name_category": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_desc_optional": "Beskrivelse · Valgfrit",
+    "@save_community_name_label_desc_optional": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_desc_optional_hint_text": "Hvad handler dit fællesskab om?",
+    "@save_community_name_label_desc_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_rules_optional": "Regler · Valgfrit",
+    "@save_community_name_label_rules_optional": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_rules_optional_hint_text": "Er der noget du vil have dine brugere skal vide?",
+    "@save_community_name_label_rules_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_member_adjective": "Medlems kaldenavn · Valgfrit",
+    "@save_community_name_label_member_adjective": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_member_adjective_hint_text": "f.eks rejsende, fotograf, gamer.",
+    "@save_community_name_label_member_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_members_adjective": "Medlems kaldenavn (flertal) · Valgfrit",
+    "@save_community_name_label_members_adjective": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_members_adjective_hint_text": "f.eks rejsende, fotografer, gamers.",
+    "@save_community_name_label_members_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_edit_community": "Rediger fællesskab",
+    "@save_community_edit_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_create_community": "Opret fællesskab",
+    "@save_community_create_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_save_text": "Gem",
+    "@save_community_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_create_text": "Opret",
+    "@save_community_create_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_invite_people_title": "Inviter til fællesskab",
+    "@actions_invite_people_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "join_community": "Deltag",
+    "@join_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_community": "Forlad",
+    "@leave_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_staff": "Fællesskabs administration",
+    "@community_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_singular": "opslag",
+    "@post_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_plural": "opslag",
+    "@post_plural": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_title": "Fællesskabs regler",
+    "@rules_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_text": "Regler",
+    "@rules_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_characters_error": "Et brugernavn kan kun indeholde alfanumeriske tegn og underscore.",
+    "@name_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_range_error": "Et brugernavn kan ikke være længere end {maxLength} tegn.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "name_empty_error": "Navn er obligatorisk.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "title_range_error": "Titlen kan ikke være længere end {maxLength} tegn.",
+    "@title_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "title_empty_error": "Titel må ikke være tom.",
+    "@title_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_range_error": "Regler kan ikke være længere end {maxLength} tegn.",
+    "@rules_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "rules_empty_error": "Regler er obligatoriske.",
+    "@rules_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_range_error": "Beskrivelsen kan ikke være længere end {maxLength} tegn.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "adjectives_range_error": "Kaldenavne kan ikke være længere end {maxLength} tegn.",
+    "@adjectives_range_error": {
+        "description": "This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers",
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    }
+}

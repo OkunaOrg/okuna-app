@@ -271,6 +271,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "edit_profile_community_posts": "Community posts",
+  "@edit_profile_community_posts": {
+    "type": "text",
+    "placeholders": {}
+  },
   "edit_profile_title": "Edit profile",
   "@edit_profile_title": {
     "type": "text",

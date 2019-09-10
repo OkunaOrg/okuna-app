@@ -1,0 +1,980 @@
+{
+    "thousand_postfix": "e",
+    "@thousand_postfix": {
+        "description": "For eg. communty has 3k members",
+        "type": "text",
+        "placeholders": {}
+    },
+    "million_postfix": "mln",
+    "@million_postfix": {
+        "description": "For eg. user has 3m followers",
+        "type": "text",
+        "placeholders": {}
+    },
+    "billion_postfix": "mld",
+    "@billion_postfix": {
+        "description": "For eg. World circle has 7.5b people",
+        "type": "text",
+        "placeholders": {}
+    },
+    "translate_see_translation": "Fordítás megtekintése",
+    "@translate_see_translation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "translate_show_original": "Eredeti megtekintése",
+    "@translate_show_original": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_lists_account": "1 fiók",
+    "@follows_lists_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_lists_accounts": "{prettyUsersCount} fiók",
+    "@follows_lists_accounts": {
+        "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    },
+    "edit_profile_user_name_taken": "A(z) @{username} felhasználónév foglalt",
+    "@edit_profile_user_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "profile_action_deny_connection": "Kapcsolódási kérelem visszautasítása",
+    "@profile_action_deny_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_blocked": "Felhasználó letiltva",
+    "@profile_action_user_blocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_unblocked": "Felhasználó tiltása törölve",
+    "@profile_action_user_unblocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_cancel_connection": "Kapcsolódási kérelem visszavonása",
+    "@profile_action_cancel_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_url_invalid_error": "Kérünk, adj meg egy érvényes URL-t.",
+    "@profile_url_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_location_length_error": "A hely nem lehet {maxLength} karakternél hosszabb.",
+    "@profile_location_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "profile_bio_length_error": "A bemutatkozás nem lehet {maxLength} karakternél hosszabb.",
+    "@profile_bio_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "follow_button_follow_text": "Követés",
+    "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_unfollow_text": "Követés törlése",
+    "@follow_button_unfollow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_username": "Felhasználónév",
+    "@edit_profile_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_update_account_lists": "Fióklisták frissítése",
+    "@add_account_update_account_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_to_lists": "Fiók hozzáadása listákhoz",
+    "@add_account_to_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_update_lists": "Listák frissítése",
+    "@add_account_update_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_save": "Mentés",
+    "@add_account_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_done": "Kész",
+    "@add_account_done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_success": "Siker",
+    "@add_account_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "emoji_field_none_selected": "Nincs kiválasztott emoji",
+    "@emoji_field_none_selected": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "emoji_search_none_found": "Nem találhatóak emojik a(z) \"{searchQuery}\" keresésre.",
+    "@emoji_search_none_found": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "follow_lists_title": "Listáim",
+    "@follow_lists_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_search_for": "Listák keresése...",
+    "@follow_lists_search_for": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_no_list_found": "Nem találhatóak listák.",
+    "@follow_lists_no_list_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_no_list_found_for": "Nem található lista a(z) \"{searchQuery}\" keresésre",
+    "@follow_lists_no_list_found_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "list_name_empty_error": "A lista neve nem lehet üres.",
+    "@list_name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_name_range_error": "A lista neve nem lehet {maxLength} karakternél hosszabb.",
+    "@list_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "circle_name_empty_error": "A kör neve nem lehet üres.",
+    "@circle_name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "circle_name_range_error": "A kör neve nem lehet {maxLength} karakternél hosszabb.",
+    "@circle_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "save_follows_list_name": "Név",
+    "@save_follows_list_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_hint_text": "pl.: Utazás, Fényképészet",
+    "@save_follows_list_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_name_taken": "A(z) '{listName}' listanév már foglalt",
+    "@save_follows_list_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "listName": {}
+        }
+    },
+    "save_follows_list_emoji": "Emoji",
+    "@save_follows_list_emoji": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_users": "Felhasználók",
+    "@save_follows_list_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_edit": "Lista szerkesztése",
+    "@save_follows_list_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_create": "Lista létrehozása",
+    "@save_follows_list_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_save": "Mentés",
+    "@save_follows_list_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_emoji_required_error": "Az emoji kötelező",
+    "@save_follows_list_emoji_required_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_list_edit": "Szerkeszt",
+    "@follows_list_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_list_header_title": "Felhasználók",
+    "@follows_list_header_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_name": "Név",
+    "@edit_profile_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_url": "URL",
+    "@edit_profile_url": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_location": "Hely",
+    "@edit_profile_location": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_bio": "Bemutatkozás",
+    "@edit_profile_bio": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_followers_count": "Követők száma",
+    "@edit_profile_followers_count": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_community_posts": "Közösségi bejegyzések",
+    "@edit_profile_community_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_title": "Profil szerkesztése",
+    "@edit_profile_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_save_text": "Mentés",
+    "@edit_profile_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_pick_image": "Kép kiválasztása",
+    "@edit_profile_pick_image": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_delete": "Törlés",
+    "@edit_profile_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_pick_image_error_too_large": "A kép túl nagy (korlát: {limit} MB)",
+    "@edit_profile_pick_image_error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    },
+    "tile_following": " · követve",
+    "@tile_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "following_text": "Követve",
+    "@following_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "following_resource_name": "követett felhasználó",
+    "@following_resource_name": {
+        "description": "Eg: Search followed users.., No followed users found. etc ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Törlés",
+    "@tile_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite": "Meghívás",
+    "@invite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uninvite": "Meghívás törlése",
+    "@uninvite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_member": "Tag",
+    "@invite_member": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_someone_message": "Szia! Meg szeretnélek hívni az Okuna közösségi hálózatra. Először is töltsd le az alkalmazást az iTunes-ról ({iosLink}) vagy a Play áruházból ({androidLink}). Utána illeszd be ezt a személyre szabott meghívó linket az Okuna alkalmazásban: {inviteLink}",
+    "@invite_someone_message": {
+        "type": "text",
+        "placeholders": {
+            "iosLink": {},
+            "androidLink": {},
+            "inviteLink": {}
+        }
+    },
+    "connections_header_circle_desc": "A kör, melyhez az összes kapcsolatot hozzá lesz adva.",
+    "@connections_header_circle_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections_header_users": "Felhasználók",
+    "@connections_header_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_pending": "Függőben",
+    "@connection_pending": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_circle_edit": "Szerkeszt",
+    "@connection_circle_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections_circle_delete": "Törlés",
+    "@connections_circle_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_name": "Név",
+    "@save_connection_circle_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_hint": "pl.: Barátok, Család, Kollégák.",
+    "@save_connection_circle_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_color_name": "Szín",
+    "@save_connection_circle_color_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_color_hint": "(Koppints a módosításhoz)",
+    "@save_connection_circle_color_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_users": "Felhasználók",
+    "@save_connection_circle_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_edit": "Kör szerkesztése",
+    "@save_connection_circle_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_create": "Kör létrehozása",
+    "@save_connection_circle_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_save": "Mentés",
+    "@save_connection_circle_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circle_save": "Mentés",
+    "@update_connection_circle_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circle_updated": "Kapcsolat frissítve",
+    "@update_connection_circle_updated": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circles_title": "Kapcsolati körök frissítése",
+    "@update_connection_circles_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_with": "Kapcsolat megerősítése vele: {userName}",
+    "@confirm_connection_with": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "confirm_connection_add_connection": "Kapcsolat hozzáadása körökhöz",
+    "@confirm_connection_add_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_connection_confirmed": "Kapcsolat megerősítve",
+    "@confirm_connection_connection_confirmed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_confirm_text": "Megerősít",
+    "@confirm_connection_confirm_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_connect_with_username": "Kapcsolódás vele: {userName}",
+    "@connect_to_user_connect_with_username": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "connect_to_user_add_connection": "Kapcsolat hozzáadása körökhöz",
+    "@connect_to_user_add_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_done": "Kész",
+    "@connect_to_user_done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_request_sent": "Kapcsolódási kérelem elküldve",
+    "@connect_to_user_request_sent": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "remove_account_from_list": "Fiók törlése a listákból",
+    "@remove_account_from_list": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "remove_account_from_list_success": "Siker",
+    "@remove_account_from_list_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_title": "Megerősítés",
+    "@confirm_block_user_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_info": "Nem láthatjátok egymás bejegyzéseit és semmilyen módon nem léphettek kapcsolatba egymással.",
+    "@confirm_block_user_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_yes": "Igen",
+    "@confirm_block_user_yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_no": "Nem",
+    "@confirm_block_user_no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_blocked": "Felhasználó letiltva.",
+    "@confirm_block_user_blocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_question": "Biztosan le szeretnéd tiltani @{username}-t?",
+    "@confirm_block_user_question": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "save_connection_circle_name_taken": "A(z) '{takenConnectionsCircleName}' körnév már foglalt",
+    "@save_connection_circle_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenConnectionsCircleName": {}
+        }
+    },
+    "timeline_filters_title": "Idővonal szűrők",
+    "@timeline_filters_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_search_desc": "Körök és listák keresése...",
+    "@timeline_filters_search_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_clear_all": "Összes törlése",
+    "@timeline_filters_clear_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_apply_all": "Szűrők alkalmazása",
+    "@timeline_filters_apply_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_circles": "Körök",
+    "@timeline_filters_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_lists": "Listák",
+    "@timeline_filters_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "followers_title": "Követők",
+    "@followers_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follower_singular": "követő",
+    "@follower_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follower_plural": "követő",
+    "@follower_plural": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_title": "Fiók törlése",
+    "@delete_account_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_current_pwd": "Jelenlegi jelszó",
+    "@delete_account_current_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_current_pwd_hint": "Írd be a jelenlegi jelszavad",
+    "@delete_account_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_next": "Következő",
+    "@delete_account_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_title": "Megerősítés",
+    "@delete_account_confirmation_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_desc": "Biztosan törölni szeretnéd a fiókodat?",
+    "@delete_account_confirmation_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_desc_info": "Ez a művelet végleges és nem visszavonható.",
+    "@delete_account_confirmation_desc_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_no": "Nem",
+    "@delete_account_confirmation_no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_yes": "Igen",
+    "@delete_account_confirmation_yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_goodbye": "Viszlát... 😢",
+    "@delete_account_confirmation_goodbye": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_create_title": "Meghívó létrehozása",
+    "@invites_create_create_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_edit_title": "Meghívó szerkesztése",
+    "@invites_create_edit_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_save": "Mentés",
+    "@invites_create_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_create": "Létrehozás",
+    "@invites_create_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_name_title": "Becenév",
+    "@invites_create_name_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_name_hint": "pl. Kovács Anna",
+    "@invites_create_name_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending": "Függőben",
+    "@invites_pending": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_delete": "Törlés",
+    "@invites_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_invite_text": "Meghívás",
+    "@invites_invite_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_yourself": "Megosztom a meghívót magam",
+    "@invites_share_yourself": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_yourself_desc": "Válassz chat alkalmazások, stb. közül",
+    "@invites_share_yourself_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_email": "Megosztom a meghívót e-mailben",
+    "@invites_share_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_text": "E-mail cím",
+    "@invites_email_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_hint": "pl.: kovacsanna@email.hu",
+    "@invites_email_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_invite_text": "E-mail meghívó",
+    "@invites_email_invite_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_send_text": "Küldés",
+    "@invites_email_send_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_sent_text": "Meghívó e-mail elküldve",
+    "@invites_email_sent_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_email_desc": "Elküldünk egy meghívó e-mailt az utasításokkal a részedről",
+    "@invites_share_email_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_edit_text": "Szerkeszt",
+    "@invites_edit_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_title": "Meghívóim",
+    "@invites_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_title": "Elfogadva",
+    "@invites_accepted_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_group_name": "elfogadott meghívók",
+    "@invites_accepted_group_name": {
+        "description": "Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_group_item_name": "elfogadott meghívó",
+    "@invites_accepted_group_item_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending_group_name": "függő meghívók",
+    "@invites_pending_group_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending_group_item_name": "függő meghívó",
+    "@invites_pending_group_item_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_none_used": "Úgy fest nem használtál egy meghívót sem.",
+    "@invites_none_used": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_none_left": "Jelenleg nem hozhatsz létre több meghívót.",
+    "@invites_none_left": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_invite_a_friend": "Ismerős meghívása",
+    "@invites_invite_a_friend": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_refresh": "Frissítés",
+    "@invites_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_title": "Nyelvi beállítások",
+    "@language_settings_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_save": "Mentés",
+    "@language_settings_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_saved_success": "Nyelv sikeresen megváltoztatva",
+    "@language_settings_saved_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "groups_see_all": "Összes {groupName} megtekintése",
+    "@groups_see_all": {
+        "description": "Can be, See all joined communities, See all pending invites, See all moderated communities etc. ",
+        "type": "text",
+        "placeholders": {
+            "groupName": {}
+        }
+    },
+    "invites_joined_with": "Regisztrált a(z) @{username} felhasználónévvel",
+    "@invites_joined_with": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "invites_pending_email": "Függőben, meghívó elküldve erre az e-mail címre: {email}",
+    "@invites_pending_email": {
+        "type": "text",
+        "placeholders": {
+            "email": {}
+        }
+    },
+    "timeline_filters_no_match": "Nincs találat a(z) \"{searchQuery}\" keresésre.",
+    "@timeline_filters_no_match": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "clear_application_cache_text": "Gyorsítótár ürítése",
+    "@clear_application_cache_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_desc": "Gyorsítótárazott bejegyzések, fiókok, képek, stb. törlése.",
+    "@clear_application_cache_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_success": "Gyorsítótár sikeresen ürítve",
+    "@clear_application_cache_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_failure": "Nem sikerült törölni a gyorsítótárat",
+    "@clear_application_cache_failure": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_title": "Irányelvek elutasítása",
+    "@confirm_guidelines_reject_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_info": "Nem használhatod az Okunát amíg nem fogadod el az irányelveket.",
+    "@confirm_guidelines_reject_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_with_team": "Beszélgess a csapattal.",
+    "@confirm_guidelines_reject_chat_with_team": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_immediately": "Azonnali beszélgetés kezdeményezése.",
+    "@confirm_guidelines_reject_chat_immediately": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_community": "Beszélgess a közösséggel.",
+    "@confirm_guidelines_reject_chat_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_join_slack": "Csatlakozz a Slack csatornánkhoz.",
+    "@confirm_guidelines_reject_join_slack": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_go_back": "Vissza",
+    "@confirm_guidelines_reject_go_back": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_delete_account": "Fiók törlése",
+    "@confirm_guidelines_reject_delete_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_desc": "Kérünk, szánj pár percet arra, hogy elolvasd és elfogadd az irányelveinket.",
+    "@guidelines_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_accept": "Elfogad",
+    "@guidelines_accept": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_reject": "Elutasít",
+    "@guidelines_reject": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_title": "E-mail cím módosítása",
+    "@change_email_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_email_text": "E-mail cím",
+    "@change_email_email_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_hint_text": "Add meg az új e-mail címedet",
+    "@change_email_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_error": "Ez az e-mail cím már regisztrálva van",
+    "@change_email_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_save": "Mentés",
+    "@change_email_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_success_info": "Elküldtünk egy visszaigazoló linket az új e-mail címedre. Kattints rá az új e-mail címed megerősítéséhez",
+    "@change_email_success_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_title": "Beállítások törlése",
+    "@clear_app_preferences_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_desc": "Az alkalmazás beállításainak törlése. Jelenleg ez az opció csak a hozzászólások megjelenítési sorrendjét vonja magába.",
+    "@clear_app_preferences_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_cleared_successfully": "Beállítások sikeresen törölve",
+    "@clear_app_preferences_cleared_successfully": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_verification_successful": "Remek! Az e-mail címed meg lett erősítve",
+    "@email_verification_successful": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_verification_error": "Hoppá! A tokened nem érvényes vagy már lejárt. Kérünk, próbáld újra",
+    "@email_verification_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_error": "Nem sikerült törölni a beállításokat",
+    "@clear_app_preferences_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disconnect_from_user_success": "Kapcsolat sikeresen törölve",
+    "@disconnect_from_user_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "block_user": "Felhasználó letiltása",
+    "@block_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "unblock_user": "Felhasználó tiltásának törlése",
+    "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disconnect_from_user": "Kapcsolat törlése vele: {userName}",
+    "@disconnect_from_user": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "circle_peoples_count": "{prettyUsersCount} ember",
+    "@circle_peoples_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    },
+    "follows_list_accounts_count": "{prettyUsersCount} fiók",
+    "@follows_list_accounts_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    }
+}

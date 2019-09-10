@@ -1,0 +1,361 @@
+{
+    "filters_title": "Moderatiefilters",
+    "@filters_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_reset": "Herstellen",
+    "@filters_reset": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_verified": "Geverifieerd",
+    "@filters_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_apply": "Pas filters toe",
+    "@filters_apply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_type": "Type",
+    "@filters_type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_status": "Status",
+    "@filters_status": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_other": "Overige",
+    "@filters_other": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_review": "Beoordelen",
+    "@actions_review": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_chat_with_team": "Met het team chatten",
+    "@actions_chat_with_team": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_category_title": "Categorie updaten",
+    "@update_category_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_category_save": "Opslaan",
+    "@update_category_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_save": "Opslaan",
+    "@update_description_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_title": "Beschrijving bewerken",
+    "@update_description_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_report_desc": "Omschrijving van de melding",
+    "@update_description_report_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_report_hint_text": "bijv. het gemelde item heeft als bevinding...",
+    "@update_description_report_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_status_save": "Opslaan",
+    "@update_status_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_status_title": "Status bijwerken",
+    "@update_status_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_title": "Beoordeel gemodereerd object",
+    "@community_review_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_title": "Object",
+    "@moderated_object_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_status": "Status",
+    "@moderated_object_status": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_reports_count": "Aantal meldingen",
+    "@moderated_object_reports_count": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_verified_by_staff": "Geverifieerd door Okuna staf",
+    "@moderated_object_verified_by_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_verified": "Geverifieerd",
+    "@moderated_object_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_true_text": "Waar",
+    "@moderated_object_true_text": {
+        "description": "Eg. Moderated object verified by staff? true / false",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_false_text": "Niet waar",
+    "@moderated_object_false_text": {
+        "description": "Eg. Moderated object verified by staff? true / false",
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_object": "Object",
+    "@community_review_object": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_approve": "Goedkeuren",
+    "@community_review_approve": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_reject": "afwijzen",
+    "@community_review_reject": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_item_verified": "Dit item is geverifieerd",
+    "@community_review_item_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_title": "Beoordeel gemodereerd object",
+    "@global_review_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_object_text": "Object",
+    "@global_review_object_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_verify_text": "Bevestigen",
+    "@global_review_verify_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_unverify_text": "Bevestiging opheffen",
+    "@global_review_unverify_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_title": "Melding indienen",
+    "@confirm_report_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_details": "Kun je aanvullende details verstrekken die wellicht relevant zijn voor de melding?",
+    "@confirm_report_provide_details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_optional_info": "(Optioneel)",
+    "@confirm_report_provide_optional_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_optional_hint_text": "Typ hier...",
+    "@confirm_report_provide_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_happen_next": "Dit is de volgende stap:",
+    "@confirm_report_provide_happen_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_happen_next_desc": "- Je melding zal anoniem ingediend worden.\n- Als je een post of commentaar meldt, zal de melding aan medewerkers van Okuna en indien van toepassing aan de community moderators gestuurd worden. De post zal niet zichtbaar zijn in je tijdlijn.\n- Als je een account of community aanmeldt, zal deze naar medewerkers van Okuna gestuurd worden.\n- We zullen het bekijken en indien mee eens, zal de content verwijderd worden. Daarnaast zullen sancties uitgedeeld worden aan de mensen die betrokken zijn. Deze sancties variëren van een tijdelijke schorsing tot het verwijderen van het account, afhankelijk van de ernst van de overtreding. \n- Als de melding wordt gedaan in een poging om de reputatie van een ander lid of een andere gemeenschap in het platform te schaden zonder dat er sprake is van een inbreuk op de vermelde grond, zullen er sancties aan u worden opgelegd. \n",
+    "@confirm_report_provide_happen_next_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_submit": "Ik begrijp het en dien in.",
+    "@confirm_report_submit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_user_reported": "Gebruiker gemeld",
+    "@confirm_report_user_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_community_reported": "Gemelde community",
+    "@confirm_report_community_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_post_reported": "Gemelde post",
+    "@confirm_report_post_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_post_comment_reported": "Gemelde post commentaar",
+    "@confirm_report_post_comment_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_item_reported": "Gemelde item",
+    "@confirm_report_item_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_moderated_objects": "Community gemodereerde objecten",
+    "@community_moderated_objects": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "globally_moderated_objects": "Globaal gemodereerde objecten",
+    "@globally_moderated_objects": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tap_to_retry": "Tik om te proberen de items opnieuw te laden",
+    "@tap_to_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_post_text": "Rapporteer bericht",
+    "@report_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_post_text": "Je hebt dit bericht gerapporteerd",
+    "@you_have_reported_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_account_text": "Rapporteer account",
+    "@report_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_account_text": "Je hebt dit account gerapporteerd",
+    "@you_have_reported_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_community_text": "Rapporteer community",
+    "@report_community_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_community_text": "Je hebt deze community gerapporteerd",
+    "@you_have_reported_community_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_comment_text": "Rapporteer commentaar",
+    "@report_comment_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_comment_text": "Je hebt dit commentaar gerapporteerd",
+    "@you_have_reported_comment_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_text": "Omschrijving",
+    "@description_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_description_text": "Geen omschrijving",
+    "@no_description_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "category_text": "Categorie",
+    "@category_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reporter_text": "Rapporteur",
+    "@reporter_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_preview_title": "Rapporten",
+    "@reports_preview_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_preview_resource_reports": "rapporten",
+    "@reports_preview_resource_reports": {
+        "description": "Usage: See all reports..",
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_see_all": "Zie alle {resourceCount} {resourceName}",
+    "@reports_see_all": {
+        "description": "Usage: See all 4 reports.",
+        "type": "text",
+        "placeholders": {
+            "resourceCount": {},
+            "resourceName": {}
+        }
+    },
+    "object_status_title": "Status",
+    "@object_status_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_tasks_title": "Wachtende moderatie-taken",
+    "@my_moderation_tasks_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pending_moderation_tasks_singular": "wachtende moderatie-taak",
+    "@pending_moderation_tasks_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pending_moderation_tasks_plural": "wachtende moderatie-taken",
+    "@pending_moderation_tasks_plural": {
+        "description": "Eg. No pending moderation tasks found",
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_title": "Strafpunten",
+    "@my_moderation_penalties_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_resouce_singular": "strafpunt",
+    "@my_moderation_penalties_resouce_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_resource_plural": "strafpunten",
+    "@my_moderation_penalties_resource_plural": {
+        "description": "See all moderation penalties, No moderation penalties found etc..",
+        "type": "text",
+        "placeholders": {}
+    }
+}

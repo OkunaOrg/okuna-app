@@ -1,0 +1,47 @@
+{
+    "generic_upload_failed": "Sikertelen feltöltés",
+    "@generic_upload_failed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "creating_post": "Bejegyzés létrehozása...",
+    "@creating_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "compressing_media": "Média tömörítése...",
+    "@compressing_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uploading_media": "Média feltöltése...",
+    "@uploading_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "publishing": "Bejegyzés közzététele...",
+    "@publishing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "processing": "Bejegyzés feldolgozása...",
+    "@processing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "success": "Siker!",
+    "@success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelling": "Megszakítás",
+    "@cancelling": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelled": "Megszakítva!",
+    "@cancelled": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

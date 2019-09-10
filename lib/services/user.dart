@@ -33,6 +33,7 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/post_comment_reaction_list.dart';
+import 'package:Okuna/models/post_media_list.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/post_reaction_list.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
@@ -374,7 +375,6 @@ class UserService {
       int maxId,
       int count,
       String username,
-      bool areFirstPosts = false,
       bool cachePosts = false}) async {
     HttpieResponse response = await _postsApiService.getTimelinePosts(
         circleIds: circles.map((circle) => circle.id).toList(),
@@ -401,23 +401,58 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String text,
-      List<Circle> circles = const [],
-      File image,
-      File video}) async {
+      {String text, List<Circle> circles = const [], bool isDraft}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
         text: text,
         circleIds: circles.map((circle) => circle.id).toList(),
-        video: video,
-        image: image);
+        isDraft: isDraft);
 
     _checkResponseIsCreated(response);
 
-    // Post counts have changed
+    // Post counts may have changed
     refreshUser();
 
     String responseBody = await response.readAsString();
     return Post.fromJson(json.decode(responseBody));
+  }
+
+  Future<void> addMediaToPost(
+      {@required File file, @required Post post}) async {
+    HttpieStreamedResponse response =
+        await _postsApiService.addMediaToPost(file: file, postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+  }
+
+  Future<PostMediaList> getMediaForPost({@required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.getPostMedia(postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+
+    return PostMediaList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> publishPost({@required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.publishPost(postUuid: post.uuid);
+
+    _checkResponseIsOk(response);
+  }
+
+  Future<OBPostStatus> getPostStatus({@required Post post}) async {
+    HttpieResponse response =
+        await _postsApiService.getPostWithUuidStatus(post.uuid);
+
+    _checkResponseIsOk(response);
+
+    Map<String, dynamic> responseJson = response.parseJsonBody();
+
+    OBPostStatus status = OBPostStatus.parse(responseJson['status']);
+
+    post.setStatus(status);
+
+    return status;
   }
 
   Future<Post> editPost({String postUuid, String text}) async {
@@ -997,10 +1032,10 @@ class UserService {
   }
 
   Future<Post> createPostForCommunity(Community community,
-      {String text, File image, File video}) async {
+      {String text, File image, File video, bool isDraft}) async {
     HttpieStreamedResponse response = await _communitiesApiService
         .createPostForCommunityWithId(community.name,
-            text: text, image: image, video: video);
+            text: text, image: image, video: video, isDraft: isDraft);
     _checkResponseIsCreated(response);
 
     String responseBody = await response.readAsString();
@@ -1417,7 +1452,8 @@ class UserService {
     return CategoriesList.fromJson(json.decode(response.body));
   }
 
-  Future<NotificationsList> getNotifications({int maxId, int count, List<NotificationType> types}) async {
+  Future<NotificationsList> getNotifications(
+      {int maxId, int count, List<NotificationType> types}) async {
     HttpieResponse response = await _notificationsApiService.getNotifications(
         maxId: maxId, count: count, types: types);
     _checkResponseIsOk(response);
@@ -1431,9 +1467,10 @@ class UserService {
     return OBNotification.fromJSON(json.decode(response.body));
   }
 
-  Future<void> readNotifications({int maxId, List<NotificationType> types}) async {
-    HttpieResponse response =
-        await _notificationsApiService.readNotifications(maxId: maxId, types: types);
+  Future<void> readNotifications(
+      {int maxId, List<NotificationType> types}) async {
+    HttpieResponse response = await _notificationsApiService.readNotifications(
+        maxId: maxId, types: types);
     _checkResponseIsOk(response);
   }
 
@@ -1568,7 +1605,8 @@ class UserService {
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
             postCommentNotifications: postCommentNotifications,
             postCommentReplyNotifications: postCommentReplyNotifications,
-            postCommentUserMentionNotifications: postCommentUserMentionNotifications,
+            postCommentUserMentionNotifications:
+                postCommentUserMentionNotifications,
             postUserMentionNotifications: postUserMentionNotifications,
             postCommentReactionNotifications: postCommentReactionNotifications,
             postReactionNotifications: postReactionNotifications,
@@ -1793,7 +1831,7 @@ class UserService {
 
   Future getPreviewDataForPost({@required Post post}) async {
     HttpieResponse response =
-    await _postsApiService.getPreviewDataForPostUuid(postUuid: post.uuid);
+        await _postsApiService.getPreviewDataForPostUuid(postUuid: post.uuid);
 
     _checkResponseIsOk(response);
 
@@ -1802,7 +1840,7 @@ class UserService {
 
   Future getPreviewDataForUrl({@required String url}) async {
     HttpieResponse response =
-    await _previewUrlApiService.getPreviewDataForUrl(url: url);
+        await _previewUrlApiService.getPreviewDataForUrl(url: url);
 
     _checkResponseIsOk(response);
 
