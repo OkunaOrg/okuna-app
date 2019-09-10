@@ -264,11 +264,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
     debugLog('Autocompleting with username:$foundAccountUsername');
     setState(() {
-      _textController.text =
-          _textAccountAutocompletionService.autocompleteTextWithUsername(
-              _textController.text, foundAccountUsername);
-      _textController.selection =
-          TextSelection.collapsed(offset: _textController.text.length);
+      _textAccountAutocompletionService.autocompleteTextWithUsername(
+          _textController, foundAccountUsername);
     });
   }
 

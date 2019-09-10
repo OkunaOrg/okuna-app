@@ -2,26 +2,43 @@ import 'package:flutter/cupertino.dart';
 
 class TextAccountAutocompletionService {
   TextAccountAutocompletionResult checkTextForAutocompletion(TextEditingController textController) {
-    String lastWord = textController.text.replaceAll('\n', ' ').split(' ').last;
     int cursorPosition = textController.selection.baseOffset;
 
-    if (lastWord.startsWith('@') && cursorPosition == textController.text.length) {
-      String searchQuery = lastWord.substring(1);
-      return TextAccountAutocompletionResult(
-          isAutocompleting: true, autocompleteQuery: searchQuery);
-    } else {
-      return TextAccountAutocompletionResult(isAutocompleting: false);
+    if (cursorPosition >= 0) {
+      String lastWord = _getWordBeforeCursor(textController.text, cursorPosition);
+
+      if (lastWord.startsWith('@')) {
+        String searchQuery = lastWord.substring(1);
+        return TextAccountAutocompletionResult(
+            isAutocompleting: true, autocompleteQuery: searchQuery);
+      }
     }
+
+    return TextAccountAutocompletionResult(isAutocompleting: false);
   }
 
-  String autocompleteTextWithUsername(String text, String username){
-    String lastWord = text.split(' ').last;
+  void autocompleteTextWithUsername(TextEditingController textController, String username){
+    String text = textController.text;
+    int cursorPosition = textController.selection.baseOffset;
+    String lastWord = _getWordBeforeCursor(text, cursorPosition);
 
     if(!lastWord.startsWith('@')){
       throw 'Tried to autocomplete text with username without @';
     }
 
-    return text.substring(0, text.length - lastWord.length) + '@$username ';
+    var newText = text.substring(0, cursorPosition - lastWord.length) + '@$username' + text.substring(cursorPosition);
+    var newSelection = TextSelection.collapsed(offset: cursorPosition - lastWord.length + username.length + 1);
+
+    textController.value = TextEditingValue(text: newText, selection: newSelection);
+  }
+
+  String _getWordBeforeCursor(String text, int cursorPosition) {
+    if (text.isNotEmpty) {
+      var start = text.lastIndexOf(RegExp(r'\s'), cursorPosition - 1);
+      return text.substring(start + 1, cursorPosition);
+    } else {
+      return text;
+    }
   }
 }
 

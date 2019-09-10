@@ -1753,6 +1753,21 @@ class LocalizationService {
     return Intl.message("New post", name: 'post__create_new');
   }
 
+  String get post__create_new_post_label {
+    return Intl.message("Create new post",
+        name: 'post__create_new_post_label');
+  }
+
+  String get post__create_new_community_post_label {
+    return Intl.message("Create new communtiy post",
+        name: 'post__create_new_community_post_label');
+  }
+
+  String get post__close_create_post_label {
+    return Intl.message("Close create new post",
+        name: 'post__close_create_post_label');
+  }
+
   String get post__create_next {
     return Intl.message("Next", name: 'post__create_next');
   }

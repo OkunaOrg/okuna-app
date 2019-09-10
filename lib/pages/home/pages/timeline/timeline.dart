@@ -6,6 +6,7 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/badges/badge.dart';
@@ -38,6 +39,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   OBPostsStreamController _timelinePostsStreamController;
   ModalService _modalService;
   UserService _userService;
+  LocalizationService _localizationService;
 
   List<Post> _initialPosts;
   List<OBNewPostData> _newPostsData;
@@ -77,10 +79,14 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _modalService = openbookProvider.modalService;
+      _localizationService =
+          openbookProvider.localizationService;
       _userService = openbookProvider.userService;
       _bootstrap();
       _needsBootstrap = false;
     }
+
+
 
     return OBCupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
@@ -101,18 +107,22 @@ class OBTimelinePageState extends State<OBTimelinePage> {
               Positioned(
                   bottom: 20.0,
                   right: 20.0,
-                  child: OBFloatingActionButton(
-                      type: OBButtonType.primary,
-                      onPressed: () async {
-                        OBNewPostData createPostData = await _modalService
-                            .openCreatePost(context: context);
-                        if (createPostData != null) {
-                          addNewPostData(createPostData);
-                          _timelinePostsStreamController.scrollToTop(skipRefresh: true);
-                        }
-                      },
-                      child: const OBIcon(OBIcons.createPost,
-                          size: OBIconSize.large, color: Colors.white)))
+                  child: Semantics(
+                      button: true,
+                      label: _localizationService.post__create_new_post_label,
+                      child: OBFloatingActionButton(
+                          type: OBButtonType.primary,
+                          onPressed: () async {
+                            OBNewPostData createPostData = await _modalService
+                                .openCreatePost(context: context);
+                            if (createPostData != null) {
+                              addNewPostData(createPostData);
+                              _timelinePostsStreamController.scrollToTop(
+                                  skipRefresh: true);
+                            }
+                          },
+                          child: const OBIcon(OBIcons.createPost,
+                              size: OBIconSize.large, color: Colors.white))))
             ],
           ),
         ));

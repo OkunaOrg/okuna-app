@@ -67,6 +67,8 @@ class OBContextualAccountSearchBoxState
 
   @override
   void dispose() {
+    _searchParticipantsOperation?.cancel();
+    _getAllOperation?.cancel();
     super.dispose();
   }
 
