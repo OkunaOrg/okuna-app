@@ -59,8 +59,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   LocalizationService _localizationService;
   ScrollController _streamScrollController;
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
 
   OBPostsStreamStatus _status;
 
@@ -68,15 +67,20 @@ class OBPostsStreamState extends State<OBPostsStream> {
   CancelableOperation _secondaryRefresherOperation;
   CancelableOperation _loadMoreOperation;
 
+  String _streamUniqueIdentifier;
+
   @override
   void initState() {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _posts = widget.initialPosts != null ? widget.initialPosts.toList() : [];
     _needsBootstrap = true;
+    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _status = OBPostsStreamStatus.refreshing;
     _streamScrollController = ScrollController();
     _streamScrollController.addListener(_onScroll);
+    _streamUniqueIdentifier =
+        '${widget.streamIdentifier}_${rng.nextInt(1000).toString()}';
   }
 
   @override
@@ -129,8 +133,6 @@ class OBPostsStreamState extends State<OBPostsStream> {
         streamRefresher: _refresh,
         streamPrependedItems: widget.prependedItems,
       ));
-
-
     } else {
       streamItems.addAll(_buildStreamPosts());
       if (_status != OBPostsStreamStatus.idle)
@@ -138,6 +140,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
     }
 
     return InViewNotifierList(
+      key: Key(_streamUniqueIdentifier),
       physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.all(0),
       controller: _streamScrollController,
@@ -151,9 +154,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   Widget _buildStreamPost(Post post) {
-    int randomNumber = rng.nextInt(100);
-    String inViewId =
-        '${widget.streamIdentifier}_${post.id.toString()}_${randomNumber.toString()}';
+    String inViewId = '${_streamUniqueIdentifier}_${post.id.toString()}';
 
     return OBPost(
       post,
@@ -165,21 +166,25 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   Widget _buildStatusTile() {
     Widget statusTile;
+    Key statusKey = Key('${_streamUniqueIdentifier}_status_tile');
 
     switch (_status) {
       case OBPostsStreamStatus.loadingMore:
-        return const Padding(
+        return Padding(
+          key: statusKey,
           padding: const EdgeInsets.all(20),
           child: const OBLoadingIndicatorTile(),
         );
         break;
       case OBPostsStreamStatus.loadingMoreFailed:
         return OBRetryTile(
+          key: statusKey,
           onWantsToRetry: _loadMorePosts,
         );
         break;
       case OBPostsStreamStatus.noMoreToLoad:
         return ListTile(
+          key: statusKey,
           title: OBSecondaryText(
             _localizationService.posts_stream__status_tile_no_more_to_load,
             textAlign: TextAlign.center,
@@ -187,6 +192,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
         );
       case OBPostsStreamStatus.empty:
         return ListTile(
+          key: statusKey,
           title: OBSecondaryText(
             _localizationService.posts_stream__status_tile_empty,
             textAlign: TextAlign.center,

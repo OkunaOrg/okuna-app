@@ -161,7 +161,7 @@ class FileTooLargeException implements Exception {
   const FileTooLargeException(this.limit);
 
   String toString() =>
-      'ImageToLargeException: Images can\'t be larger than $limit';
+      'FileToLargeException: Images can\'t be larger than $limit';
 
   int getLimitInMB() {
     return limit ~/ 1048576;

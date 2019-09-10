@@ -17,7 +17,7 @@ class OBPostBodyMedia extends StatefulWidget {
   final Post post;
   final String inViewId;
 
-  const OBPostBodyMedia({this.post, this.inViewId});
+  const OBPostBodyMedia({Key key, this.post, this.inViewId}) : super(key: key);
 
   @override
   OBPostBodyMediaState createState() {

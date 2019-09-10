@@ -128,6 +128,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
       OBPostsStream(
         onScrollLoader: _loadMoreCommunityPosts,
         refresher: _refreshCommunityPosts,
+        controller: _obPostsStreamController,
         prependedItems: prependedItems,
         streamIdentifier: 'community_' + widget.community.name,
         secondaryRefresher: _refreshCommunity,

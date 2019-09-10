@@ -244,14 +244,8 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _onWantsToGoNext() async {
-    List<File> media = [];
-    if (_postImage != null) media.add(_postImage);
-    if (_postVideo != null) media.add(_postVideo);
-
     OBNewPostData createPostData = await _navigationService.navigateToSharePost(
-        context: context,
-        createPostData:
-            OBNewPostData(text: _textController.text, media: media));
+        context: context, createPostData: _makeNewPostData());
 
     if (createPostData != null) {
       // Remove modal
@@ -351,9 +345,13 @@ class CreatePostModalState extends State<CreatePostModal> {
         icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
           _unfocusTextField();
-          File pickedPhoto = await _imagePickerService.pickImage(
-              imageType: OBImageType.post, context: context);
-          if (pickedPhoto != null) _setPostImage(pickedPhoto);
+          try {
+            File pickedPhoto = await _imagePickerService.pickImage(
+                imageType: OBImageType.post, context: context);
+            if (pickedPhoto != null) _setPostImage(pickedPhoto);
+          } catch (error) {
+            _onError(error);
+          }
         },
       ),
       OBPillButton(
@@ -426,21 +424,8 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Future<void> _createCommunityPost() async {
-    _setCreateCommunityPostInProgress(true);
-
-    try {
-      Post createdPost = await _userService.createPostForCommunity(
-          widget.community,
-          text: _textController.text,
-          image: _postImage,
-          video: _postVideo);
-      // Remove modal
-      Navigator.pop(context, createdPost);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _setCreateCommunityPostInProgress(false);
-    }
+    OBNewPostData newPostData = _makeNewPostData();
+    Navigator.pop(context, newPostData);
   }
 
   void _checkForPreviewUrl() async {
@@ -574,8 +559,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     } else if (error is FileTooLargeException) {
       int limit = error.getLimitInMB();
       _toastService.error(
-          message: _localizationService
-              .image_picker__error_too_large(limit),
+          message: _localizationService.image_picker__error_too_large(limit),
           context: context);
     } else {
       _toastService.error(
@@ -606,6 +590,15 @@ class CreatePostModalState extends State<CreatePostModal> {
       _hasVideo = false;
       _postVideoWidgetRemover();
     });
+  }
+
+  OBNewPostData _makeNewPostData() {
+    List<File> media = [];
+    if (_postImage != null) media.add(_postImage);
+    if (_postVideo != null) media.add(_postVideo);
+
+    return OBNewPostData(
+        text: _textController.text, media: media, community: widget.community);
   }
 
   VoidCallback _addPostItemWidget(Widget postItemWidget) {
