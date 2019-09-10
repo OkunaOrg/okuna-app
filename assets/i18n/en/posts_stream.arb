@@ -9,7 +9,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "refreshing_drhoo_subtitle": "Loading your timeline.",
+  "refreshing_drhoo_subtitle": "Refreshing the stream.",
   "@refreshing_drhoo_subtitle": {
     "type": "text",
     "placeholders": {}
