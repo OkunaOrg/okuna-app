@@ -125,15 +125,24 @@ class MediaService {
   }
 
   Future<File> compressVideo(File video) async {
+    File resultFile;
+
     final FlutterFFmpeg _flutterFFmpeg = new FlutterFFmpeg();
 
     String resultFileName = _uuid.v4() + '.mp4';
     final path = await _getTempPath();
     final String resultFilePath = '$path/$resultFileName';
-    await _flutterFFmpeg.execute(
+
+    int exitCode = await _flutterFFmpeg.execute(
         '-i ${video.path} -filter:v scale=720:-2 -vcodec libx264 -crf 20 -preset veryfast ${resultFilePath}');
 
-    File resultFile = File(resultFilePath);
+    if (exitCode == 0) {
+      resultFile = File(resultFilePath);
+    } else {
+      debugPrint(
+          'Failed to compress video. Using original file.');
+      resultFile = video;
+    }
 
     return resultFile;
   }
