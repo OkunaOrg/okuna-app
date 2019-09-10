@@ -16,7 +16,7 @@ class OBPostBodyVideo extends StatefulWidget {
   final PostVideo postVideo;
   final String inViewId;
 
-  const OBPostBodyVideo({this.postVideo, this.post, this.inViewId});
+  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId}) : super(key: key);
 
   @override
   OBPostVideoState createState() {
@@ -35,6 +35,8 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
 
   CancelableOperation _digestInViewStateChangeOperation;
 
+  InViewState _inViewState;
+
   @override
   void initState() {
     super.initState();
@@ -48,9 +50,18 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     _connectivityChangeSubscription?.cancel();
     _videosSoundSettingsChangeSubscription?.cancel();
     _digestInViewStateChangeOperation?.cancel();
+    _inViewState.removeListener(_onInViewStateChanged);
   }
 
   void _bootstrap() async {
+    if (widget.inViewId != null) {
+      // Subscribe for visibility changes
+      _inViewState = InViewNotifierList.of(context);
+      _inViewState.addContext(context: context, id: widget.inViewId);
+      _inViewState.addListener(_onInViewStateChanged);
+    }
+
+    // Subscribe for autoplay changes
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     UserPreferencesService userPreferencesService =
         openbookProvider.userPreferencesService;
@@ -61,36 +72,23 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
         .videosAutoPlaySettingChange
         .listen(_onVideosAutoPlaySettingChange);
 
+    // Subscribe for connectivity changes
     ConnectivityService connectivityService =
         openbookProvider.connectivityService;
 
-    //_connectivity = connectivityService.getConnectivity();
-    //_connectivityChangeSubscription =
-    //    connectivityService.onConnectivityChange(_onConnectivityChange);
+    _connectivity = connectivityService.getConnectivity();
+    _connectivityChangeSubscription =
+        connectivityService.onConnectivityChange(_onConnectivityChange);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.inViewId == null) {
-      return _buildVideoPlayer();
-    }
-
     if (_needsBootstrap) {
       _bootstrap();
       _needsBootstrap = false;
     }
 
-    InViewState state = InViewNotifierList.of(context);
-    state.addContext(context: context, id: widget.inViewId);
-
-    return AnimatedBuilder(
-      animation: state,
-      builder: (BuildContext context, Widget child) {
-        final bool inView = state.inView(widget.inViewId);
-        _onInViewStateChanged(inView);
-        return _buildVideoPlayer();
-      },
-    );
+    return _buildVideoPlayer();
   }
 
   Widget _buildVideoPlayer() {
@@ -114,7 +112,9 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
         ));
   }
 
-  void _onInViewStateChanged(bool isVideoInView) {
+  void _onInViewStateChanged() {
+    final bool isVideoInView = _inViewState.inView(widget.inViewId);
+
     _digestInViewStateChangeOperation?.cancel();
     _digestInViewStateChangeOperation = CancelableOperation.fromFuture(
         _digestInViewStateChanged(isVideoInView));
@@ -126,8 +126,12 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     if (isVideoInView) {
       if (!_obVideoPlayerController.isPausedDueToInvisibility() &&
           !_obVideoPlayerController.isPausedByUser()) {
-        debugLog('Playing as item is in view and allowed by user.');
-        _obVideoPlayerController.play();
+        if (_currentVideosAutoPlaySetting == VideosAutoPlaySetting.always ||
+            (_currentVideosAutoPlaySetting == VideosAutoPlaySetting.wifiOnly &&
+                _connectivity == ConnectivityResult.wifi)) {
+          debugLog('Playing as item is in view and allowed by user.');
+          _obVideoPlayerController.play();
+        }
       }
     } else if (_obVideoPlayerController.isPlaying()) {
       _obVideoPlayerController.pause();
