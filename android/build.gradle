@@ -28,6 +28,10 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+ext {
+    flutterFFmpegPackage  = "min-gpl-lts"
+}
+
 subprojects {
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
@@ -37,8 +41,4 @@ subprojects {
             }
         }
     }
-}
-
-ext {
-    flutterFFmpegPackage  = "min-gpl-lts"
 }

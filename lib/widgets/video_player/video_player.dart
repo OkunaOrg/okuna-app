@@ -252,7 +252,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
     debugLog('isVisible: ${isVisible.toString()}');
 
-    if (!isVisible && _playerController.value.isPlaying) {
+    if (!isVisible && _playerController.value.isPlaying && mounted) {
       debugLog('Its not visible and the video is playing. Now pausing. .');
       _isPausedDueToInvisibility = true;
       _playerController.pause();

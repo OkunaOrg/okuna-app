@@ -365,7 +365,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   void debugLog(String log) {
-    debugPrint('OBPostsStream:${widget.streamIdentifier}: $log');
+    //debugPrint('OBPostsStream:${widget.streamIdentifier}: $log');
   }
 }
 
