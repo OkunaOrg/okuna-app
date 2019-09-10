@@ -413,7 +413,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
       _pushNotificationsService.bootstrap();
-      _pushNotificationsService.enablePushNotifications();
+      _pushNotificationsService.enablePushNotificationsFlagInOneSignalIfNotPrompted();
       _intercomService.enableIntercom();
 
       _loggedInUserUpdateSubscription =
