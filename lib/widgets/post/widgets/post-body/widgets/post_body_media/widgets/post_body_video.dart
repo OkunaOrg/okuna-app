@@ -50,7 +50,7 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     _connectivityChangeSubscription?.cancel();
     _videosSoundSettingsChangeSubscription?.cancel();
     _digestInViewStateChangeOperation?.cancel();
-    _inViewState.removeListener(_onInViewStateChanged);
+    _inViewState?.removeListener(_onInViewStateChanged);
   }
 
   void _bootstrap() async {
