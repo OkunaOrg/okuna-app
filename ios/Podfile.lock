@@ -15,7 +15,7 @@ PODS:
   - flutter_image_compress (0.0.1):
     - Flutter
     - Mantle
-  - flutter_secure_storage (3.2.0):
+  - flutter_secure_storage (3.3.1):
     - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -155,11 +155,11 @@ SPEC CHECKSUMS:
   connectivity: c72716e202a1225ec4810740d5cb56b8ae3bf4cc
   device_info: 3ebad48f726348f69abd802f3334a8d1ed795fbd
   file_picker: 408623be2125b79a4539cf703be3d4b3abe5e245
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_exif_rotation: 093dd59f20679d71ce9ae186f2b86c01307b9a6a
   flutter_ffmpeg: 05ee218287a2b55a13df8f7970aab1a52094083e
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
-  flutter_secure_storage: 0c5779648ff644110e507909b77a57e620cbbf8b
+  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: f25bdfbf1ef970c9a0a0f78306fb6a0aaac7229e
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
