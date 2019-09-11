@@ -243,12 +243,14 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       File compressedImage =
           await _mediaPickerService.compressImage(postMediaItem);
       _data.remainingCompressedMediaToUpload.add(compressedImage);
-      debugLog('Compressed image from ${postMediaItem.lengthSync()} to ${compressedImage.lengthSync()}');
+      debugLog(
+          'Compressed image from ${postMediaItem.lengthSync()} to ${compressedImage.lengthSync()}');
     } else if (mediaMimeType == 'video') {
       File compressedVideo =
           await _mediaPickerService.compressVideo(postMediaItem);
       _data.remainingCompressedMediaToUpload.add(compressedVideo);
-      debugLog('Compressed video from ${postMediaItem.lengthSync()} to ${compressedVideo.lengthSync()}');
+      debugLog(
+          'Compressed video from ${postMediaItem.lengthSync()} to ${compressedVideo.lengthSync()}');
     } else {
       debugLog('Unsupported media type for compression');
     }
@@ -318,14 +320,17 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
 
   Widget _buildStatusText() {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          OBText(
-            _statusMessage,
-            textAlign: TextAlign.left,
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            OBText(
+              _statusMessage,
+              textAlign: TextAlign.left,
+            )
+          ],
+        ),
       ),
     );
   }
