@@ -25,9 +25,11 @@ class OBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    InViewState state = InViewNotifierList.of(context);
-    String postId = post.id.toString();
-    state.addContext(context: context, id: postId);
+    if (inViewId != null) {
+      InViewState state = InViewNotifierList.of(context);
+      String postId = post.id.toString();
+      state.addContext(context: context, id: postId);
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
