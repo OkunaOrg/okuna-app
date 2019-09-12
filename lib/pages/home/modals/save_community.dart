@@ -447,7 +447,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
   void _pickNewCover() async {
     File newCover =
-        await _imagePickerService.pickImage(imageType: OBImageType.cover);
+        await _imagePickerService.pickImage(imageType: OBImageType.cover, context: context);
     if (newCover != null) _setCoverFile(newCover);
   }
 
