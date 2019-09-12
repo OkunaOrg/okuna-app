@@ -4,7 +4,7 @@ class TextAccountAutocompletionService {
   TextAccountAutocompletionResult checkTextForAutocompletion(TextEditingController textController) {
     int cursorPosition = textController.selection.baseOffset;
 
-    if (cursorPosition >= 0) {
+    if (cursorPosition >= 1) {
       String lastWord = _getWordBeforeCursor(textController.text, cursorPosition);
 
       if (lastWord.startsWith('@')) {
