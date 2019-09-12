@@ -69,8 +69,8 @@ packages:
     description:
       path: "."
       ref: "feature/dep-on-custom-video-player"
-      resolved-ref: "67ab6544b3a14f50c897795375bd80da3c92c5f6"
-      url: "git@github.com:OkunaOrg/chewie.git"
+      resolved-ref: "3195c2747b9f489bac5a239c049748e3686a3834"
+      url: "https://github.com/OkunaOrg/chewie.git"
     source: git
     version: "0.9.7"
   collection:
@@ -255,7 +255,7 @@ packages:
       name: flutter_widgets
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.6-dev.2"
+    version: "0.1.6"
   front_end:
     dependency: transitive
     description:
@@ -353,7 +353,7 @@ packages:
       path: "."
       ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
       resolved-ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
-      url: "git@github.com:OkunaOrg/inview_notifier_list.git"
+      url: "https://github.com/OkunaOrg/inview_notifier_list.git"
     source: git
     version: "0.0.2"
   io:
@@ -780,7 +780,7 @@ packages:
       path: "packages/video_player"
       ref: "feature/caching"
       resolved-ref: "6b4be9514ded6a53967295db5f4dcfe142f6d459"
-      url: "git@github.com:999eagle/plugins.git"
+      url: "https://github.com/999eagle/plugins.git"
     source: git
     version: "0.10.2"
   video_thumbnail:

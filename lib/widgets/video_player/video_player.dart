@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_widgets/flutter_widgets.dart';
 import 'package:video_player/video_player.dart';
 
 import '../progress_indicator.dart';
+
+var rng = new Random();
 
 class OBVideoPlayer extends StatefulWidget {
   final File video;
@@ -90,6 +93,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     } else {
       throw Exception('Video dialog requires video or videoUrl.');
     }
+
+    visibilityKeyFallback += '-${rng.nextInt(1000)}';
 
     _playerController.setVolume(0);
 
@@ -250,7 +255,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     if (_hasVideoOpenedInDialog) return;
     bool isVisible = visibilityInfo.visibleFraction != 0;
 
-    debugLog('isVisible: ${isVisible.toString()}');
+    debugLog('isVisible: ${isVisible.toString()} with fraction ${visibilityInfo.visibleFraction}');
 
     if (!isVisible && _playerController.value.isPlaying && mounted) {
       debugLog('Its not visible and the video is playing. Now pausing. .');

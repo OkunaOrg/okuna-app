@@ -65,6 +65,7 @@ import 'package:Okuna/pages/home/pages/report_object/report_object.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/routes/slide_right_route.dart';
+import 'package:Okuna/widgets/routes/slide_right_route_2.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -266,13 +267,15 @@ class NavigationService {
       {@required Post post, @required BuildContext context}) {
     return Navigator.push(
         context,
-        OBSlideRightRoute(
-            key: Key('obSlidePostComments'),
-            widget: OBPostCommentsPage(
+        OBSlideRightRouteTwo<dynamic>(
+          builder: (BuildContext context){
+            return OBPostCommentsPage(
                 pageType: PostCommentsPageType.comments,
                 post: post,
                 showPostPreview: true,
-                autofocusCommentInput: true)));
+                autofocusCommentInput: true);
+          }
+        ));
   }
 
   Future<void> navigateToPostComments(

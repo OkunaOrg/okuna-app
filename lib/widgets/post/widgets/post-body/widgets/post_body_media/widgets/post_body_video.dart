@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Okuna/main.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/video_format.dart';
@@ -16,7 +17,8 @@ class OBPostBodyVideo extends StatefulWidget {
   final PostVideo postVideo;
   final String inViewId;
 
-  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId}) : super(key: key);
+  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId})
+      : super(key: key);
 
   @override
   OBPostVideoState createState() {
@@ -148,6 +150,6 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   }
 
   void debugLog(String log) {
-    //debugPrint('OBPostBodyVideo: $log');
+    debugPrint('OBPostBodyVideo: $log');
   }
 }
