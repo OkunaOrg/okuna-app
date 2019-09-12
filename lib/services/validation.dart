@@ -38,7 +38,7 @@ class ValidationService {
   static const int POST_IMAGE_MAX_SIZE = 10971520;
   static const int AVATAR_IMAGE_MAX_SIZE = 10485760;
   static const int COVER_IMAGE_MAX_SIZE = 10485760;
-  static const int VIDEO_MAX_SIZE = 10971520;
+  static const int VIDEO_MAX_SIZE = 2621440;
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
