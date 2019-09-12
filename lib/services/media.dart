@@ -134,7 +134,7 @@ class MediaService {
     final String resultFilePath = '$path/$resultFileName';
 
     int exitCode = await _flutterFFmpeg.execute(
-        '-i ${video.path} -filter:v scale=720:-2 -vcodec libx264 -crf 20 -preset veryfast ${resultFilePath}');
+        '-i ${video.path} -filter:v scale=720:-2 -vcodec libx264 -crf 23 -preset veryfast ${resultFilePath}');
 
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
