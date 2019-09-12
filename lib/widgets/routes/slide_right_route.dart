@@ -1,15 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-var rng = new Random();
-
 class OBSlideRightRoute<T> extends PageRoute<T> {
+
+  Key slidableKey;
+
   OBSlideRightRoute({
+    @required this.slidableKey,
     @required this.builder,
     RouteSettings settings,
-    this.maintainState = false,
+    this.maintainState = true,
     bool fullscreenDialog = false,
   })  : assert(builder != null),
         assert(maintainState != null),
@@ -59,7 +59,7 @@ class OBSlideRightRoute<T> extends PageRoute<T> {
       scopesRoute: true,
       explicitChildNodes: true,
       child: Dismissible(
-          key: Key(rng.nextInt(1000).toString()),
+          key: slidableKey,
           background: const DecoratedBox(
             decoration: const BoxDecoration(color: Colors.transparent),
           ),

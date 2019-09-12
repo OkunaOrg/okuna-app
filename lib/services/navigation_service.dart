@@ -74,11 +74,13 @@ class NavigationService {
       {@required User user, @required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBProfilePage(
-          user,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('userProfileRoute'),
+          builder: (BuildContext context) {
+            return OBProfilePage(
+              user,
+            );
+          }),
     );
   }
 
@@ -86,11 +88,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityPage(
-          community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityPage(
+              community,
+            );
+          }),
     );
   }
 
@@ -98,11 +102,13 @@ class NavigationService {
       {@required BuildContext context, @required Community community}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityStaffPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('CommunityStaffPageRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityStaffPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -110,11 +116,13 @@ class NavigationService {
       {@required BuildContext context, @required Community community}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityRulesPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityRulesPageRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityRulesPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -124,12 +132,14 @@ class NavigationService {
       @required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute(builder: (BuildContext context) {
-        return OBConfirmAddCommunityAdministrator(
-          community: community,
-          user: user,
-        );
-      }),
+      OBSlideRightRoute(
+          slidableKey: Key('confirmAddCommunityAdministratorRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmAddCommunityAdministrator(
+              community: community,
+              user: user,
+            );
+          }),
     );
   }
 
@@ -137,20 +147,24 @@ class NavigationService {
       {@required String userPassword, @required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute(builder: (BuildContext context) {
-        return OBConfirmDeleteAccount(
-          userPassword: userPassword,
-        );
-      }),
+      OBSlideRightRoute(
+          slidableKey: Key('confirmDeleteAccountRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmDeleteAccount(
+              userPassword: userPassword,
+            );
+          }),
     );
   }
 
   Future<bool> navigateToDeleteAccount({@required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute(builder: (BuildContext context) {
-        return OBDeleteAccountPage();
-      }),
+      OBSlideRightRoute(
+          slidableKey: Key('deleteAccountRoute'),
+          builder: (BuildContext context) {
+            return OBDeleteAccountPage();
+          }),
     );
   }
 
@@ -160,12 +174,14 @@ class NavigationService {
       @required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<bool>(builder: (BuildContext context) {
-        return OBConfirmAddCommunityModerator(
-          community: community,
-          user: user,
-        );
-      }),
+      OBSlideRightRoute<bool>(
+          slidableKey: Key('confirmAddCommunityModeratorPageRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmAddCommunityModerator(
+              community: community,
+              user: user,
+            );
+          }),
     );
   }
 
@@ -175,12 +191,14 @@ class NavigationService {
       @required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<bool>(builder: (BuildContext context) {
-        return OBConfirmBanCommunityUser(
-          community: community,
-          user: user,
-        );
-      }),
+      OBSlideRightRoute<bool>(
+          slidableKey: Key('confirmBanCommunityUserPageRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmBanCommunityUser(
+              community: community,
+              user: user,
+            );
+          }),
     );
   }
 
@@ -188,11 +206,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBManageCommunityPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('navigateToManageCommunityPageRoute'),
+          builder: (BuildContext context) {
+            return OBManageCommunityPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -200,11 +220,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBLeaveCommunityPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('leaveCommunityPageRoute'),
+          builder: (BuildContext context) {
+            return OBLeaveCommunityPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -212,11 +234,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBDeleteCommunityPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('deleteCommunityPageRoute'),
+          builder: (BuildContext context) {
+            return OBDeleteCommunityPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -224,11 +248,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityAdministratorsPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityAdministratorsPageRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityAdministratorsPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -236,11 +262,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityMembersPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityMembersPageRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityMembersPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -248,11 +276,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityModeratorsPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityModeratorsPageRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityModeratorsPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -260,11 +290,13 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityBannedUsersPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityBannedUsersPageRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityBannedUsersPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -272,37 +304,44 @@ class NavigationService {
       {@required Community community, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityClosedPostsPage(
-          community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityClosedPostsPageRoute'),
+          builder: (BuildContext context) {
+            return OBCommunityClosedPostsPage(
+              community,
+            );
+          }),
     );
   }
 
   Future navigateToCommentPost(
       {@required Post post, @required BuildContext context}) {
-    return Navigator.push(context,
-        OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-      return OBPostCommentsPage(
-          pageType: PostCommentsPageType.comments,
-          post: post,
-          showPostPreview: true,
-          autofocusCommentInput: true);
-    }));
+    return Navigator.push(
+        context,
+        OBSlideRightRoute<dynamic>(
+            slidableKey: Key('commentPostPageRoute'),
+            builder: (BuildContext context) {
+              return OBPostCommentsPage(
+                  pageType: PostCommentsPageType.comments,
+                  post: post,
+                  showPostPreview: true,
+                  autofocusCommentInput: true);
+            }));
   }
 
   Future<void> navigateToPostComments(
       {@required Post post, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBPostCommentsPage(
-            post: post,
-            showPostPreview: true,
-            pageType: PostCommentsPageType.comments,
-            autofocusCommentInput: false);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('postCommentsPageRoute'),
+          builder: (BuildContext context) {
+            return OBPostCommentsPage(
+                post: post,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.comments,
+                autofocusCommentInput: false);
+          }),
     );
   }
 
@@ -314,16 +353,18 @@ class NavigationService {
       Function(PostComment) onReplyAdded}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBPostCommentsPage(
-            pageType: PostCommentsPageType.replies,
-            post: post,
-            showPostPreview: true,
-            postComment: postComment,
-            onCommentDeleted: onReplyDeleted,
-            onCommentAdded: onReplyAdded,
-            autofocusCommentInput: false);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('postCommentRepliesPageRoute'),
+          builder: (BuildContext context) {
+            return OBPostCommentsPage(
+                pageType: PostCommentsPageType.replies,
+                post: post,
+                showPostPreview: true,
+                postComment: postComment,
+                onCommentDeleted: onReplyDeleted,
+                onCommentAdded: onReplyAdded,
+                autofocusCommentInput: false);
+          }),
     );
   }
 
@@ -331,14 +372,16 @@ class NavigationService {
       {@required PostComment postComment, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBPostCommentsPage(
-            post: postComment.post,
-            showPostPreview: true,
-            pageType: PostCommentsPageType.comments,
-            linkedPostComment: postComment,
-            autofocusCommentInput: false);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('postCommentsLinkedPageRoute'),
+          builder: (BuildContext context) {
+            return OBPostCommentsPage(
+                post: postComment.post,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.comments,
+                linkedPostComment: postComment,
+                autofocusCommentInput: false);
+          }),
     );
   }
 
@@ -348,105 +391,127 @@ class NavigationService {
       @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBPostCommentsPage(
-            post: postComment.post,
-            postComment: parentComment,
-            showPostPreview: true,
-            pageType: PostCommentsPageType.replies,
-            linkedPostComment: postComment,
-            autofocusCommentInput: false);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('postCommentRepliesLinkedPageRoute'),
+          builder: (BuildContext context) {
+            return OBPostCommentsPage(
+                post: postComment.post,
+                postComment: parentComment,
+                showPostPreview: true,
+                pageType: PostCommentsPageType.replies,
+                linkedPostComment: postComment,
+                autofocusCommentInput: false);
+          }),
     );
   }
 
   Future navigateToPost({@required Post post, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBPostPage(post);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('postPageRoute'),
+          builder: (BuildContext context) {
+            return OBPostPage(post);
+          }),
     );
   }
 
   Future navigateToSettingsPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBSettingsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('settingsPageRoute'),
+          builder: (BuildContext context) {
+            return OBSettingsPage();
+          }),
     );
   }
 
   Future navigateToFollowersPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBFollowersPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('followersPageRoute'),
+          builder: (BuildContext context) {
+            return OBFollowersPage();
+          }),
     );
   }
 
   Future navigateToFollowingPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBFollowingPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('followingPageRoute'),
+          builder: (BuildContext context) {
+            return OBFollowingPage();
+          }),
     );
   }
 
   Future navigateToAccountSettingsPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBAccountSettingsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('accountSettingsPageRoute'),
+          builder: (BuildContext context) {
+            return OBAccountSettingsPage();
+          }),
     );
   }
 
   Future navigateToDeveloperSettingsPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBDeveloperSettingsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('developerSettingsPageRoute'),
+          builder: (BuildContext context) {
+            return OBDeveloperSettingsPage();
+          }),
     );
   }
 
   Future navigateToApplicationSettingsPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBApplicationSettingsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('applicationSettingsPageRoute'),
+          builder: (BuildContext context) {
+            return OBApplicationSettingsPage();
+          }),
     );
   }
 
   Future navigateToThemesPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBThemesPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('themesPageRoute'),
+          builder: (BuildContext context) {
+            return OBThemesPage();
+          }),
     );
   }
 
   Future navigateToUsefulLinksPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBUsefulLinksPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('usefulLinksPageRoute'),
+          builder: (BuildContext context) {
+            return OBUsefulLinksPage();
+          }),
     );
   }
 
   Future navigateToCommunityGuidelinesPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBCommunityGuidelinesPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityGuidelinesPage'),
+          builder: (BuildContext context) {
+            return OBCommunityGuidelinesPage();
+          }),
     );
   }
 
@@ -454,9 +519,11 @@ class NavigationService {
       {@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBConfirmRejectGuidelines();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('confirmRejectGuidelinesPageRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmRejectGuidelines();
+          }),
     );
   }
 
@@ -465,11 +532,13 @@ class NavigationService {
       @required OBNewPostData createPostData}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<OBNewPostData>(builder: (BuildContext context) {
-        return OBSharePostPage(
-          createPostData: createPostData,
-        );
-      }),
+      OBSlideRightRoute<OBNewPostData>(
+          slidableKey: Key('sharePostPageRoute'),
+          builder: (BuildContext context) {
+            return OBSharePostPage(
+              createPostData: createPostData,
+            );
+          }),
     );
   }
 
@@ -478,11 +547,13 @@ class NavigationService {
       @required OBNewPostData createPostData}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<OBNewPostData>(builder: (BuildContext context) {
-        return OBSharePostWithCirclesPage(
-          createPostData: createPostData,
-        );
-      }),
+      OBSlideRightRoute<OBNewPostData>(
+          slidableKey: Key('sharePostWithCirclesPageRoute'),
+          builder: (BuildContext context) {
+            return OBSharePostWithCirclesPage(
+              createPostData: createPostData,
+            );
+          }),
     );
   }
 
@@ -491,29 +562,35 @@ class NavigationService {
       @required OBNewPostData createPostData}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<OBNewPostData>(builder: (BuildContext context) {
-        return OBSharePostWithCommunityPage(
-          createPostData: createPostData,
-        );
-      }),
+      OBSlideRightRoute<OBNewPostData>(
+          slidableKey: Key('sharePostWithCommunityPageRoute'),
+          builder: (BuildContext context) {
+            return OBSharePostWithCommunityPage(
+              createPostData: createPostData,
+            );
+          }),
     );
   }
 
   Future navigateToFollowsLists({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBFollowsListsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('navigateToFollowsLists'),
+          builder: (BuildContext context) {
+            return OBFollowsListsPage();
+          }),
     );
   }
 
   Future navigateToUserInvites({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBUserInvitesPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('userInvitesPageRoute'),
+          builder: (BuildContext context) {
+            return OBUserInvitesPage();
+          }),
     );
   }
 
@@ -521,9 +598,12 @@ class NavigationService {
       {@required BuildContext context, @required UserInvite userInvite}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBUserInviteDetailPage(userInvite: userInvite, showEdit: false);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('shareInvitePageRoute'),
+          builder: (BuildContext context) {
+            return OBUserInviteDetailPage(
+                userInvite: userInvite, showEdit: false);
+          }),
     );
   }
 
@@ -531,18 +611,23 @@ class NavigationService {
       {@required BuildContext context, @required UserInvite userInvite}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBUserInviteDetailPage(userInvite: userInvite, showEdit: true);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('inviteDetailPageRoute'),
+          builder: (BuildContext context) {
+            return OBUserInviteDetailPage(
+                userInvite: userInvite, showEdit: true);
+          }),
     );
   }
 
   Future navigateToConnectionsCircles({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBConnectionsCirclesPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('connectionsCirclesPageRoute'),
+          builder: (BuildContext context) {
+            return OBConnectionsCirclesPage();
+          }),
     );
   }
 
@@ -550,9 +635,11 @@ class NavigationService {
       {@required Circle connectionsCircle, @required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBConnectionsCirclePage(connectionsCircle);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('connectionsCirclePageRoute'),
+          builder: (BuildContext context) {
+            return OBConnectionsCirclePage(connectionsCircle);
+          }),
     );
   }
 
@@ -562,9 +649,11 @@ class NavigationService {
   }) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBFollowsListPage(followsList);
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('followsListPageRoute'),
+          builder: (BuildContext context) {
+            return OBFollowsListPage(followsList);
+          }),
     );
   }
 
@@ -575,13 +664,15 @@ class NavigationService {
       Emoji reactionEmoji}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBPostReactionsModal(
-          post: post,
-          reactionsEmojiCounts: reactionsEmojiCounts,
-          reactionEmoji: reactionEmoji,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('postReactionsPageRoute'),
+          builder: (BuildContext context) {
+            return OBPostReactionsModal(
+              post: post,
+              reactionsEmojiCounts: reactionsEmojiCounts,
+              reactionEmoji: reactionEmoji,
+            );
+          }),
     );
   }
 
@@ -593,14 +684,16 @@ class NavigationService {
       Emoji reactionEmoji}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBPostCommentReactionsModal(
-          post: post,
-          postComment: postComment,
-          reactionsEmojiCounts: reactionsEmojiCounts,
-          reactionEmoji: reactionEmoji,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('postCommentReactionsPageRoute'),
+          builder: (BuildContext context) {
+            return OBPostCommentReactionsModal(
+              post: post,
+              postComment: postComment,
+              reactionsEmojiCounts: reactionsEmojiCounts,
+              reactionEmoji: reactionEmoji,
+            );
+          }),
     );
   }
 
@@ -609,9 +702,11 @@ class NavigationService {
   }) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBNotificationsSettingsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('notificationsSettingsPageRoute'),
+          builder: (BuildContext context) {
+            return OBNotificationsSettingsPage();
+          }),
     );
   }
 
@@ -620,9 +715,11 @@ class NavigationService {
   }) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBUserLanguageSettingsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('userLanguageSettingsPageRoute'),
+          builder: (BuildContext context) {
+            return OBUserLanguageSettingsPage();
+          }),
     );
   }
 
@@ -631,9 +728,11 @@ class NavigationService {
   }) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBBlockedUsersPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('blockedUsersPageRoute'),
+          builder: (BuildContext context) {
+            return OBBlockedUsersPage();
+          }),
     );
   }
 
@@ -641,11 +740,13 @@ class NavigationService {
       {@required BuildContext context, @required User user}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBConfirmBlockUserModal(
-          user: user,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('confirmBlockUserPageRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmBlockUserModal(
+              user: user,
+            );
+          }),
     );
   }
 
@@ -656,13 +757,15 @@ class NavigationService {
       @required ModerationCategory category}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute(builder: (BuildContext context) {
-        return OBConfirmReportObject(
-          extraData: extraData,
-          object: object,
-          category: category,
-        );
-      }),
+      OBSlideRightRoute(
+          slidableKey: Key('confirmReportObjectPageRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmReportObject(
+              extraData: extraData,
+              object: object,
+              category: category,
+            );
+          }),
     );
   }
 
@@ -673,13 +776,15 @@ class NavigationService {
       ValueChanged<dynamic> onObjectReported}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBReportObjectPage(
-          object: object,
-          extraData: extraData,
-          onObjectReported: onObjectReported,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('reportObjectPageRoute'),
+          builder: (BuildContext context) {
+            return OBReportObjectPage(
+              object: object,
+              extraData: extraData,
+              onObjectReported: onObjectReported,
+            );
+          }),
     );
   }
 
@@ -687,11 +792,13 @@ class NavigationService {
       {@required BuildContext context, @required Community community}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBModeratedObjectsPage(
-          community: community,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('communityModeratedObjectsPageRoute'),
+          builder: (BuildContext context) {
+            return OBModeratedObjectsPage(
+              community: community,
+            );
+          }),
     );
   }
 
@@ -699,9 +806,11 @@ class NavigationService {
       {@required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBModeratedObjectsPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('globalModeratedObjectsPageRoute'),
+          builder: (BuildContext context) {
+            return OBModeratedObjectsPage();
+          }),
     );
   }
 
@@ -710,11 +819,13 @@ class NavigationService {
       @required ModeratedObject moderatedObject}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBModeratedObjectReportsPage(
-          moderatedObject: moderatedObject,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('moderatedObjectReports'),
+          builder: (BuildContext context) {
+            return OBModeratedObjectReportsPage(
+              moderatedObject: moderatedObject,
+            );
+          }),
     );
   }
 
@@ -723,11 +834,13 @@ class NavigationService {
       @required ModeratedObject moderatedObject}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBModeratedObjectGlobalReviewPage(
-          moderatedObject: moderatedObject,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('moderatedObjectGlobalReviewPageRoute'),
+          builder: (BuildContext context) {
+            return OBModeratedObjectGlobalReviewPage(
+              moderatedObject: moderatedObject,
+            );
+          }),
     );
   }
 
@@ -737,12 +850,14 @@ class NavigationService {
       @required ModeratedObject moderatedObject}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBModeratedObjectCommunityReviewPage(
-          community: community,
-          moderatedObject: moderatedObject,
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('moderatedObjectCommunityReviewPageRoute'),
+          builder: (BuildContext context) {
+            return OBModeratedObjectCommunityReviewPage(
+              community: community,
+              moderatedObject: moderatedObject,
+            );
+          }),
     );
   }
 
@@ -750,9 +865,11 @@ class NavigationService {
       {@required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBMyModerationTasksPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('myModerationTasksPageRoute'),
+          builder: (BuildContext context) {
+            return OBMyModerationTasksPage();
+          }),
     );
   }
 
@@ -760,9 +877,11 @@ class NavigationService {
       {@required BuildContext context}) async {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return OBMyModerationPenaltiesPage();
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('myModerationPenaltiesPageRoute'),
+          builder: (BuildContext context) {
+            return OBMyModerationPenaltiesPage();
+          }),
     );
   }
 
@@ -773,16 +892,18 @@ class NavigationService {
       @required Widget widget}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute<dynamic>(builder: (BuildContext context) {
-        return CupertinoPageScaffold(
-          navigationBar: OBThemedNavigationBar(
-            title: navBarTitle,
-          ),
-          child: OBPrimaryColorContainer(
-            child: widget,
-          ),
-        );
-      }),
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('blankPageWithWidgetPageRoute'),
+          builder: (BuildContext context) {
+            return CupertinoPageScaffold(
+              navigationBar: OBThemedNavigationBar(
+                title: navBarTitle,
+              ),
+              child: OBPrimaryColorContainer(
+                child: widget,
+              ),
+            );
+          }),
     );
   }
 }
