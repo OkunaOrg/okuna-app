@@ -38,6 +38,7 @@ import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/post_reaction_list.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/posts_list.dart';
+import 'package:Okuna/models/top_posts_list.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/models/user_invites_list.dart';
@@ -360,13 +361,17 @@ class UserService {
     return _loggedInUser != null;
   }
 
-  Future<PostsList> getTrendingPosts() async {
+  Future<TopPostsList> getTopPosts({int maxId, int minId, int count}) async {
     HttpieResponse response =
-        await _postsApiService.getTrendingPosts(authenticatedRequest: true);
+        await _postsApiService.getTopPosts(
+            maxId: maxId,
+            minId: minId,
+            count: count,
+            authenticatedRequest: true);
 
     _checkResponseIsOk(response);
 
-    return PostsList.fromJson(json.decode(response.body));
+    return TopPostsList.fromJson(json.decode(response.body));
   }
 
   Future<PostsList> getTimelinePosts(
