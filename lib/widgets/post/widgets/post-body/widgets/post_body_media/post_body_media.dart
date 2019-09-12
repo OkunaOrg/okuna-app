@@ -42,6 +42,13 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     _errorMessage = '';
   }
 
+  void didUpdateWidget(oldWidget){
+    super.didUpdateWidget(oldWidget);
+    _retrievePostMediaInProgress = true;
+    _needsBootstrap = true;
+    _errorMessage = '';
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -93,7 +100,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
             stream: widget.post.updateSubject,
             initialData: widget.post,
             builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-              List<PostMedia> postMediaItems = snapshot.data.getMedia();
+              List<PostMedia> postMediaItems = widget.post.getMedia();
               return _buildPostMediaItems(postMediaItems);
             },
           );
