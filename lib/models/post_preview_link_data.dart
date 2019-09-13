@@ -1,9 +1,14 @@
-class PostPreviewLinkData {
+class LinkPreview {
   String title;
   String description;
   String imageUrl;
   String faviconUrl;
   String domainUrl;
 
-  PostPreviewLinkData({this.title, this.description, this.imageUrl, this.faviconUrl, this.domainUrl});
+  LinkPreview(
+      {this.title,
+      this.description,
+      this.imageUrl,
+      this.faviconUrl,
+      this.domainUrl});
 }

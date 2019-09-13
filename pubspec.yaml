@@ -13,6 +13,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  html: ^0.14.0+2
   expandable: ^2.2.2+3
   uuid: ^2.0.1
   flutter_image_compress: ^0.6.3

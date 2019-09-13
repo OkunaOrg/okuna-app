@@ -11,6 +11,7 @@ import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
 import 'package:Okuna/services/intercom.dart';
+import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/preview_url_api_service.dart';
@@ -109,6 +110,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   TextAccountAutocompletionService textAccountAutocompletionService =
       TextAccountAutocompletionService();
   ConnectivityService connectivityService = ConnectivityService();
+  LinkPreviewService linkPreviewService = LinkPreviewService();
 
   SentryClient sentryClient;
 
@@ -177,6 +179,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
+    linkPreviewService.setHttpieService(httpService);
+    linkPreviewService.setValidationService(validationService);
   }
 
   void initAsyncState() async {
@@ -206,6 +210,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         appId: environment.intercomAppId);
 
     sentryClient = SentryClient(dsn: environment.sentryDsn);
+    linkPreviewService.setTrustedProxyUrl(environment.linkPreviewsTrustedProxyUrl);
   }
 
   @override

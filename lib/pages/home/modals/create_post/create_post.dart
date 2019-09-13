@@ -59,7 +59,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   FocusNode _focusNode;
   int _charactersCount;
   String _previewUrl;
-  PostPreviewLinkData _previewLinkQueryData;
+  LinkPreview _previewLinkQueryData;
 
   bool _isPostTextAllowedLength;
   bool _hasFocus;
@@ -525,9 +525,9 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _setPreviewLinkQueryData(Map<String, dynamic> queryData) {
-    PostPreviewLinkData previewLinkQueryData;
+    LinkPreview previewLinkQueryData;
     if (queryData != null) {
-      previewLinkQueryData = PostPreviewLinkData();
+      previewLinkQueryData = LinkPreview();
       if (queryData.containsKey('title'))
         previewLinkQueryData.title = queryData['title'];
       if (queryData.containsKey('description'))

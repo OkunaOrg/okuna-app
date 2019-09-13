@@ -14,7 +14,7 @@ import '../../../../../provider.dart';
 import '../../../../progress_indicator.dart';
 
 class OBPostLinkPreview extends StatelessWidget {
-  final PostPreviewLinkData previewLinkQueryData;
+  final LinkPreview previewLinkQueryData;
   final String previewLink;
 
   const OBPostLinkPreview({this.previewLinkQueryData, this.previewLink});
@@ -40,7 +40,7 @@ class OBPostLinkPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildPreviewImage(double screenWidth, PostPreviewLinkData data) {
+  Widget _buildPreviewImage(double screenWidth, LinkPreview data) {
 
     if (data.imageUrl == null) return SizedBox();
 
@@ -60,7 +60,7 @@ class OBPostLinkPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildPreviewBar(PostPreviewLinkData data, BuildContext context) {
+  Widget _buildPreviewBar(LinkPreview data, BuildContext context) {
     ThemeService themeService = OpenbookProvider.of(context).themeService;
     ThemeValueParserService themeValueParserService = OpenbookProvider.of(context).themeValueParserService;
 

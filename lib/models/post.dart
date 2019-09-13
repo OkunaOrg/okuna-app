@@ -43,7 +43,7 @@ class Post extends UpdatableModel<Post> {
 
   PostMediaList media;
   PostLinksList postLinksList;
-  PostPreviewLinkData previewLinkQueryData;
+  LinkPreview previewLinkQueryData;
   PostCommentList commentsList;
   Community community;
 
@@ -164,7 +164,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   void updatePreviewDataFromJson(Map json) {
-    previewLinkQueryData = PostPreviewLinkData();
+    previewLinkQueryData = LinkPreview();
     if (json.containsKey('title')) previewLinkQueryData.title = json['title'];
     if (json.containsKey('description'))
       previewLinkQueryData.description = json['description'];
