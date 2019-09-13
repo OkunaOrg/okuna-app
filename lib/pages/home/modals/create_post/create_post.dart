@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:Okuna/models/community.dart';
-import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
@@ -51,7 +50,7 @@ class CreatePostModal extends StatefulWidget {
 class CreatePostModalState extends State<CreatePostModal> {
   ValidationService _validationService;
   NavigationService _navigationService;
-  MediaService _imagePickerService;
+  MediaService _mediaService;
   ToastService _toastService;
   LocalizationService _localizationService;
   UserService _userService;
@@ -134,7 +133,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       var openbookProvider = OpenbookProvider.of(context);
       _validationService = openbookProvider.validationService;
       _navigationService = openbookProvider.navigationService;
-      _imagePickerService = openbookProvider.mediaPickerService;
+      _mediaService = openbookProvider.mediaPickerService;
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
@@ -182,7 +181,8 @@ class CreatePostModalState extends State<CreatePostModal> {
 
     return OBThemedNavigationBar(
       leading: GestureDetector(
-        child: OBIcon(OBIcons.close, semanticLabel: _localizationService.post__close_create_post_label),
+        child: OBIcon(OBIcons.close,
+            semanticLabel: _localizationService.post__close_create_post_label),
         onTap: () {
           Navigator.pop(context);
         },
@@ -346,9 +346,20 @@ class CreatePostModalState extends State<CreatePostModal> {
         onPressed: () async {
           _unfocusTextField();
           try {
-            File pickedPhoto = await _imagePickerService.pickImage(
-                imageType: OBImageType.post, context: context);
-            if (pickedPhoto != null) _setPostImage(pickedPhoto);
+            File pickedPhoto = await _mediaService.pickImage(
+                imageType: OBImageType.post,
+                context: context,
+                flattenGifs: false);
+            if (pickedPhoto != null) {
+              bool photoIsGif = _mediaService.isGif(pickedPhoto);
+              if (photoIsGif) {
+                File gifVideo =
+                    await _mediaService.convertGifToVideo(pickedPhoto);
+                _setPostVideo(gifVideo);
+              } else {
+                _setPostImage(pickedPhoto);
+              }
+            }
           } catch (error) {
             _onError(error);
           }
@@ -361,8 +372,7 @@ class CreatePostModalState extends State<CreatePostModal> {
         onPressed: () async {
           _unfocusTextField();
           try {
-            File pickedVideo =
-                await _imagePickerService.pickVideo(context: context);
+            File pickedVideo = await _mediaService.pickVideo(context: context);
             if (pickedVideo != null) _setPostVideo(pickedVideo);
           } catch (error) {
             _onError(error);
@@ -396,6 +406,9 @@ class CreatePostModalState extends State<CreatePostModal> {
         _postImage,
         onRemove: () {
           _removePostImage();
+        },
+        onWillEditImage: () {
+          _unfocusTextField();
         },
         onPostImageEdited: (File editedImage) {
           _removePostImage();

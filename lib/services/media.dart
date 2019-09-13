@@ -6,6 +6,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
 import 'package:Okuna/services/validation.dart';
+import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
@@ -35,28 +36,42 @@ class MediaService {
   }
 
   Future<File> pickImage(
-      {@required OBImageType imageType, @required BuildContext context}) async {
+      {@required OBImageType imageType,
+      @required BuildContext context,
+      bool flattenGifs = true}) async {
     File pickedImage =
         await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) return null;
+    final tempPath = await _getTempPath();
+    final String processedImageUuid = _uuid.v4();
+    File processedPickedImage;
 
-    List<int> convertedImageData =
-        await ImageConverter.convertImage(pickedImage.readAsBytesSync());
+    bool pickedImageIsGif = isGif(pickedImage);
 
-    String tmpImageName = _uuid.v4() + '.jpg';
-    final path = await _getTempPath();
-    final file = File('$path/$tmpImageName');
-    file.writeAsBytesSync(convertedImageData);
+    if (!pickedImageIsGif || flattenGifs) {
+      String processedImageName = processedImageUuid + '.jpg';
+      processedPickedImage = File('$tempPath/$processedImageName');
+      List<int> convertedImageData =
+          await ImageConverter.convertImage(pickedImage.readAsBytesSync());
+      processedPickedImage.writeAsBytesSync(convertedImageData);
+    } else {
+      String processedImageName = processedImageUuid + '.gif';
+      processedPickedImage =
+          pickedImage.copySync('$tempPath/$processedImageName');
+    }
 
-    if (!await _validationService.isImageAllowedSize(file, imageType)) {
+    if (!await _validationService.isImageAllowedSize(
+        processedPickedImage, imageType)) {
       throw FileTooLargeException(
           _validationService.getAllowedImageSize(imageType));
     }
 
-    File processedImage = await processImage(file);
+    processedPickedImage = !pickedImageIsGif || flattenGifs
+        ? await processImage(processedPickedImage)
+        : processedPickedImage;
 
-    if (imageType == OBImageType.post) return processedImage;
+    if (imageType == OBImageType.post) return processedPickedImage;
 
     double ratioX = IMAGE_RATIOS[imageType]['x'];
     double ratioY = IMAGE_RATIOS[imageType]['y'];
@@ -66,7 +81,7 @@ class MediaService {
       toolbarColor: Colors.black,
       statusBarColor: Colors.black,
       toolbarWidgetColor: Colors.white,
-      sourcePath: processedImage.path,
+      sourcePath: processedPickedImage.path,
       ratioX: ratioX,
       ratioY: ratioY,
     );
@@ -139,8 +154,7 @@ class MediaService {
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
     } else {
-      debugPrint(
-          'Failed to compress video. Using original file.');
+      debugPrint('Failed to compress video. Using original file.');
       resultFile = video;
     }
 
@@ -161,6 +175,38 @@ class MediaService {
     file.writeAsBytesSync(compressedImageData);
 
     return file;
+  }
+
+  Future<File> convertGifToVideo(File gif) async {
+    File resultFile;
+
+    final FlutterFFmpeg _flutterFFmpeg = new FlutterFFmpeg();
+
+    String resultFileName = _uuid.v4() + '.mp4';
+    final path = await _getTempPath();
+    final String resultFilePath = '$path/$resultFileName';
+
+    int exitCode =
+        await _flutterFFmpeg.execute('-f gif -i ${gif.path} ${resultFilePath}');
+
+    if (exitCode == 0) {
+      resultFile = File(resultFilePath);
+    } else {
+      throw (Exception('Gif couldn\'t be converted to video'));
+    }
+
+    return resultFile;
+  }
+
+  bool isGif(File file) {
+    String mediaMime = getMimeType(file);
+    String mediaMimeSubtype = mediaMime.split('/')[1];
+
+    return mediaMimeSubtype == 'gif';
+  }
+
+  String getMimeType(File file) {
+    return lookupMimeType(file.path);
   }
 }
 
