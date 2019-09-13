@@ -17,12 +17,15 @@ class OBCommunityPostHeader extends StatelessWidget {
   final OnPostDeleted onPostDeleted;
   final ValueChanged<Post> onPostReported;
   final bool hasActions;
+  final bool isTopPost;
 
   const OBCommunityPostHeader(this._post,
       {Key key,
       @required this.onPostDeleted,
       this.onPostReported,
-      this.hasActions = true})
+      this.hasActions = true,
+      this.isTopPost = false
+      })
       : super(key: key);
 
   @override
@@ -53,6 +56,7 @@ class OBCommunityPostHeader extends StatelessWidget {
                       bottomSheetService.showPostActions(
                           context: context,
                           post: _post,
+                          isTopPost: isTopPost,
                           onPostDeleted: onPostDeleted,
                           onPostReported: onPostReported);
                     })

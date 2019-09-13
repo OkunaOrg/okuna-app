@@ -31,6 +31,7 @@ class OBPostsStream extends StatefulWidget {
   final bool refreshOnCreate;
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
+  final bool isTopPostsStream;
 
   const OBPostsStream(
       {Key key,
@@ -43,6 +44,7 @@ class OBPostsStream extends StatefulWidget {
       this.onPostsRefreshed,
       this.refreshOnCreate = true,
       this.secondaryRefresher,
+      this.isTopPostsStream = false,
       this.statusIndicatorBuilder})
       : super(key: key);
 
@@ -161,6 +163,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
       key: Key(inViewId),
       onPostDeleted: _onPostDeleted,
       inViewId: inViewId,
+      isTopPost: widget.isTopPostsStream,
     );
   }
 

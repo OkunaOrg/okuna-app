@@ -211,6 +211,21 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_new_post_label": "Create new post",
+  "@create_new_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_new_community_post_label": "Create new communtiy post",
+  "@create_new_community_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "close_create_post_label": "Close create new post",
+  "@close_create_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
   "create_next": "Next",
   "@create_next": {
     "type": "text",
@@ -457,6 +472,16 @@
   },
   "enable_post_comments": "Enable post comments",
   "@enable_post_comments": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_post_community": "Don't show posts from this community in this feed",
+  "@exclude_post_community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "undo_exclude_post_community": "Show posts from this community in this feed",
+  "@undo_exclude_post_community": {
     "type": "text",
     "placeholders": {}
   },

@@ -68,6 +68,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
+      isTopPostsStream: true,
       prependedItems: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

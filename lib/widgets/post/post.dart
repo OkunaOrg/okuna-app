@@ -15,12 +15,14 @@ class OBPost extends StatelessWidget {
   final ValueChanged<Post> onPostDeleted;
   final OnTextExpandedChange onTextExpandedChange;
   final String inViewId;
+  final bool isTopPost;
 
   const OBPost(this.post,
       {Key key,
       @required this.onPostDeleted,
       this.onTextExpandedChange,
-      this.inViewId})
+      this.inViewId,
+      this.isTopPost = false})
       : super(key: key);
 
   @override
@@ -40,6 +42,7 @@ class OBPost extends StatelessWidget {
           post: post,
           onPostDeleted: onPostDeleted,
           onPostReported: onPostDeleted,
+          isTopPost: isTopPost
         ),
         OBPostBody(post,
             onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),

@@ -127,12 +127,14 @@ class BottomSheetService {
       @required Post post,
       @required OnPostDeleted onPostDeleted,
       @required ValueChanged<Post> onPostReported,
+      bool isTopPost = false,
       List<FollowsList> initialPickedFollowsLists}) {
     return showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBPostActionsBottomSheet(
             post: post,
+            isTopPost: isTopPost,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
           );

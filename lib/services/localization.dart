@@ -1996,6 +1996,16 @@ class LocalizationService {
         name: 'post__enable_post_comments');
   }
 
+  String get post__exclude_post_community {
+    return Intl.message("Don't show posts from this community",
+        name: 'post__exclude_post_community');
+  }
+
+  String get post__undo_exclude_post_community {
+    return Intl.message("Show posts from this community",
+        name: 'post__undo_exclude_post_community');
+  }
+
   String get post__comments_enabled_message {
     return Intl.message("Comments enabled for post",
         name: 'post__comments_enabled_message');

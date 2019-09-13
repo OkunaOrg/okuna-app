@@ -11,6 +11,7 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/disable_comments_post_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/exclude_community_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_post_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,12 +21,15 @@ class OBPostActionsBottomSheet extends StatefulWidget {
   final Post post;
   final ValueChanged<Post> onPostReported;
   final OnPostDeleted onPostDeleted;
+  final bool isTopPost;
 
   const OBPostActionsBottomSheet(
       {Key key,
       @required this.post,
       @required this.onPostReported,
-      @required this.onPostDeleted})
+      @required this.onPostDeleted,
+      this.isTopPost = false,
+      })
       : super(key: key);
 
   @override
@@ -56,6 +60,14 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
         builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
           Post post = snapshot.data;
           List<Widget> postActions = [];
+
+          if (widget.isTopPost) {
+            postActions.add(OBExcludeCommunityTile(
+              post: post,
+              onExcludedPostCommunity: _dismiss,
+              onUndoExcludedPostCommunity: _dismiss,
+            ));
+          }
 
           postActions.add(OBMutePostTile(
             post: post,

@@ -648,6 +648,22 @@ class UserService {
     return Post.fromJson(json.decode(response.body));
   }
 
+  Future<String> excludePostCommunityFromTopPosts(Post post) async {
+    HttpieResponse response =
+        await _communitiesApiService.excludeCommunityFromTopPosts(
+            communityName: post.community.name);
+    _checkResponseIsOk(response);
+    return json.decode(response.body);
+  }
+
+  Future<String> undoExcludePostCommunityFromTopPosts(Post post) async {
+    HttpieResponse response =
+        await _communitiesApiService.undoExcludeCommunityFromTopPosts(
+            communityName: post.community.name);
+    _checkResponseIsOk(response);
+    return json.decode(response.body);
+  }
+
   Future<PostComment> mutePostComment(
       {@required PostComment postComment, @required Post post}) async {
     HttpieResponse response = await _postsApiService.mutePostComment(
