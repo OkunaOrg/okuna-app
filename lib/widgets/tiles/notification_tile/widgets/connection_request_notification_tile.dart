@@ -3,7 +3,6 @@ import 'package:Okuna/models/notifications/notification.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
-import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +23,6 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String connectionRequesterUsername =
-        connectionRequestNotification.connectionRequester.username;
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
     LocalizationService _localizationService = openbookProvider.localizationService;
