@@ -53,6 +53,9 @@ class Post extends UpdatableModel<Post> {
   bool isClosed;
   bool isReported;
 
+  // stored only in the app
+  bool isFromExcludedCommunity = false;
+
   static final factory = PostFactory();
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -176,6 +179,12 @@ class Post extends UpdatableModel<Post> {
       previewLinkQueryData.domainUrl = json['domain_url'];
     notifyUpdate();
   }
+
+  void updateIsFromExcludedCommunity(bool isExcluded) {
+    isFromExcludedCommunity = isExcluded;
+    notifyUpdate();
+  }
+
 
   bool hasReaction() {
     return reaction != null;

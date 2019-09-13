@@ -652,16 +652,18 @@ class UserService {
     HttpieResponse response =
         await _communitiesApiService.excludeCommunityFromTopPosts(
             communityName: post.community.name);
-    _checkResponseIsOk(response);
-    return json.decode(response.body);
+    _checkResponseIsAccepted(response);
+
+    return (json.decode(response.body))['message'];
   }
 
   Future<String> undoExcludePostCommunityFromTopPosts(Post post) async {
     HttpieResponse response =
         await _communitiesApiService.undoExcludeCommunityFromTopPosts(
             communityName: post.community.name);
-    _checkResponseIsOk(response);
-    return json.decode(response.body);
+    _checkResponseIsAccepted(response);
+
+    return (json.decode(response.body))['message'];
   }
 
   Future<PostComment> mutePostComment(
@@ -1956,6 +1958,11 @@ class UserService {
 
   void _checkResponseIsOk(HttpieBaseResponse response) {
     if (response.isOk()) return;
+    throw HttpieRequestError(response);
+  }
+
+  void _checkResponseIsAccepted(HttpieBaseResponse response) {
+    if (response.isAccepted()) return;
     throw HttpieRequestError(response);
   }
 
