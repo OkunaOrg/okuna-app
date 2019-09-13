@@ -8,6 +8,7 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_image.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_video.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
@@ -124,6 +125,9 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
         width: screenWidth,
         height: thumbnailHeight,
         child: TransitionToImage(
+          loadingWidget: const Center(
+            child: const OBProgressIndicator(),
+          ),
           fit: BoxFit.cover,
           alignment: Alignment.center,
           image: AdvancedNetworkImage(thumbnailUrl,
