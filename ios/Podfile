@@ -51,7 +51,7 @@ target 'Runner' do
     symlink = File.join('.symlinks', 'plugins', p[:name])
     File.symlink(p[:path], symlink)
     if p[:name] == 'flutter_ffmpeg'
-        pod p[:name]+'/min-gpl-lts', :path => File.join(symlink, 'ios')
+        pod p[:name]+'/full-gpl-lts', :path => File.join(symlink, 'ios')
     else
         pod p[:name], :path => File.join(symlink, 'ios')
     end

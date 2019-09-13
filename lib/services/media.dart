@@ -154,8 +154,7 @@ class MediaService {
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
     } else {
-      debugPrint('Failed to compress video. Using original file.');
-      resultFile = video;
+      throw Exception('Failed to compress video');
     }
 
     return resultFile;
@@ -184,10 +183,11 @@ class MediaService {
 
     String resultFileName = _uuid.v4() + '.mp4';
     final path = await _getTempPath();
+    final String sourceFilePath = gif.path;
     final String resultFilePath = '$path/$resultFileName';
 
-    int exitCode =
-        await _flutterFFmpeg.execute('-f gif -i ${gif.path} ${resultFilePath}');
+    int exitCode = await _flutterFFmpeg.execute(
+        '-f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
 
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
