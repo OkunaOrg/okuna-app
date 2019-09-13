@@ -16,7 +16,8 @@ class OBPostBodyVideo extends StatefulWidget {
   final PostVideo postVideo;
   final String inViewId;
 
-  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId}) : super(key: key);
+  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId})
+      : super(key: key);
 
   @override
   OBPostVideoState createState() {
@@ -29,6 +30,10 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   bool _needsBootstrap;
   StreamSubscription _videosSoundSettingsChangeSubscription;
   StreamSubscription _connectivityChangeSubscription;
+  Navigator _navigator;
+  NavigatorObserver _navigatorObserver;
+  ModalRoute _route;
+  bool _wasPlaying;
 
   VideosAutoPlaySetting _currentVideosAutoPlaySetting;
   ConnectivityResult _connectivity;
@@ -51,15 +56,21 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     _videosSoundSettingsChangeSubscription?.cancel();
     _digestInViewStateChangeOperation?.cancel();
     _inViewState?.removeListener(_onInViewStateChanged);
+    _navigator.observers.remove(_navigatorObserver);
   }
 
-  void _bootstrap() async {
+  void _bootstrap(BuildContext context) async {
     if (widget.inViewId != null) {
       // Subscribe for visibility changes
       _inViewState = InViewNotifierList.of(context);
       _inViewState.addContext(context: context, id: widget.inViewId);
       _inViewState.addListener(_onInViewStateChanged);
     }
+
+    _route = ModalRoute.of(context);
+    _navigatorObserver = PostVideoNavigatorObserver(this);
+    _navigator = Navigator.of(context).widget;
+    _navigator.observers.add(_navigatorObserver);
 
     // Subscribe for autoplay changes
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -84,7 +95,7 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   @override
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
-      _bootstrap();
+      _bootstrap(context);
       _needsBootstrap = false;
     }
 
@@ -148,6 +159,37 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   }
 
   void debugLog(String log) {
-    //debugPrint('OBPostBodyVideo: $log');
+    debugPrint('OBPostBodyVideo: $log');
+  }
+}
+
+class PostVideoNavigatorObserver extends NavigatorObserver {
+  OBPostVideoState _state;
+
+  PostVideoNavigatorObserver(OBPostVideoState state) {
+    _state = state;
+  }
+
+  @override
+  void didPush(Route route, Route previousRoute) {
+    if (identical(previousRoute, _state._route)) {
+      _state._wasPlaying = _state._obVideoPlayerController.isPlaying();
+      if (_state._wasPlaying) {
+        debugLog('Pausing video due to another route opened.');
+        _state._obVideoPlayerController.pause();
+      }
+    }
+  }
+
+  @override
+  void didPop(Route route, Route previousRoute) {
+    if (identical(previousRoute, _state._route) && _state._wasPlaying) {
+      debugLog('Resuming video as blocking route has been popped.');
+      _state._obVideoPlayerController.play();
+    }
+  }
+
+  void debugLog(String log) {
+    debugPrint('PostVideoNavigatorObserver: $log');
   }
 }

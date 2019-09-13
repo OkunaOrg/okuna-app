@@ -6,13 +6,14 @@ import 'package:image_cropper/image_cropper.dart';
 class OBPostImagePreviewer extends StatelessWidget {
   final File postImage;
   final VoidCallback onRemove;
+  final VoidCallback onWillEditImage;
 
   final ValueChanged<File> onPostImageEdited;
 
   final double buttonSize = 30.0;
 
   OBPostImagePreviewer(this.postImage,
-      {this.onRemove, @required this.onPostImageEdited});
+      {this.onRemove, @required this.onPostImageEdited, this.onWillEditImage});
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +91,8 @@ class OBPostImagePreviewer extends StatelessWidget {
   }
 
   void _onWantsToEditImage() async {
+    if (onWillEditImage != null) onWillEditImage();
+
     File croppedFile = await ImageCropper.cropImage(
       toolbarTitle: 'Edit image',
       toolbarColor: Colors.black,

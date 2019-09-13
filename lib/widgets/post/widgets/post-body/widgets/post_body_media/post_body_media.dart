@@ -52,8 +52,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   @override
   void dispose() {
     super.dispose();
-    if (_retrievePostMediaOperation != null)
-      _retrievePostMediaOperation.cancel();
+    _retrievePostMediaOperation?.cancel();
   }
 
   @override
