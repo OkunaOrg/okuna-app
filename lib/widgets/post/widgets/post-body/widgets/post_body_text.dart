@@ -80,13 +80,11 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _requestInProgress == true ?
-                _getPreviewLoading() :
                 OBPostLinkPreview(
                     previewLinkQueryData: widget._post.previewLinkQueryData,
                     previewLink: widget._post.getPreviewLink()
                 ),
-                _buildPostText(),
+                _buildPostText()
               ],
             );
           }
