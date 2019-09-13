@@ -70,7 +70,8 @@ class DialogService {
       {String videoUrl,
       File video,
       VideoPlayerController videoPlayerController,
-        ChewieController chewieController,
+      ChewieController chewieController,
+      bool autoPlay: true,
       @required BuildContext context}) async {
     SystemChrome.setEnabledSystemUIOverlays([]);
     await showGeneralDialog(
@@ -80,10 +81,11 @@ class DialogService {
         final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
         final Widget pageChild = Material(
           child: OBVideoDialog(
+            autoPlay: autoPlay,
             video: video,
             videoUrl: videoUrl,
             videoPlayerController: videoPlayerController,
-              chewieController: chewieController,
+            chewieController: chewieController,
           ),
         );
         return Builder(builder: (BuildContext context) {
@@ -98,7 +100,8 @@ class DialogService {
       transitionDuration: const Duration(milliseconds: 100),
       transitionBuilder: _buildMaterialDialogTransitions,
     );
-    SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIOverlays(
+        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
   }
 
   Widget _buildMaterialDialogTransitions(

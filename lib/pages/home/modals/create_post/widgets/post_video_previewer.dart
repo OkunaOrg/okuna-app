@@ -98,7 +98,8 @@ class OBPostVideoPreview extends StatelessWidget {
 
   void _onWantsToPlay(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+
     openbookProvider.dialogService
-        .showVideo(context: context, video: postVideo);
+        .showVideo(context: context, video: postVideo, autoPlay:true);
   }
 }

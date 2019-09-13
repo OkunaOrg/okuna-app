@@ -11,11 +11,13 @@ class OBVideoDialog extends StatelessWidget {
   final String videoUrl;
   final ChewieController chewieController;
   final VideoPlayerController videoPlayerController;
+  final bool autoPlay;
 
   const OBVideoDialog(
       {Key key,
       this.video,
       this.videoUrl,
+      this.autoPlay = false,
       this.chewieController,
       this.videoPlayerController})
       : super(key: key);
@@ -27,6 +29,7 @@ class OBVideoDialog extends StatelessWidget {
         child: SafeArea(
             child: Center(
                 child: OBVideoPlayer(
+          autoPlay: autoPlay,
           video: video,
           videoUrl: videoUrl,
           videoPlayerController: videoPlayerController,
