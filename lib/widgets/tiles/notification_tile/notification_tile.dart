@@ -43,7 +43,6 @@ class OBNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        _buildNotification(notification),
         Positioned(
           top: 0,
           right: 0,
@@ -53,7 +52,8 @@ class OBNotificationTile extends StatelessWidget {
               stream: notification.updateSubject,
               initialData: notification,
               builder: _buildNotificationBackground),
-        )
+        ),
+        _buildNotification(notification),
       ],
     );
   }
