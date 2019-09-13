@@ -47,7 +47,7 @@ class OBPostBodyImage extends StatelessWidget {
   }
 
   Widget _buildImageWidget(double width, double height, String imageUrl) {
-    return TransitionToImage(
+    return Image(
       width: width,
       height: height,
       fit: BoxFit.fitWidth,
@@ -57,12 +57,6 @@ class OBPostBodyImage extends StatelessWidget {
           fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
           retryLimit: 3,
           timeoutDuration: const Duration(minutes: 1)),
-      placeholder: postImage.thumbnail != null
-          ? Image(image: AdvancedNetworkImage(postImage.thumbnail))
-          : Center(
-              child: const OBProgressIndicator(),
-            ),
-      duration: const Duration(milliseconds: 300),
     );
   }
 

@@ -12,6 +12,7 @@ import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 
 class OBPostBodyMedia extends StatefulWidget {
   final Post post;
@@ -42,7 +43,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     _errorMessage = '';
   }
 
-  void didUpdateWidget(oldWidget){
+  void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
     _retrievePostMediaInProgress = true;
     _needsBootstrap = true;
@@ -64,45 +65,50 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
       _bootstrap();
       _needsBootstrap = false;
     }
-    return _errorMessage.isEmpty ? _buildPostMedia() : _buildErrorMessage();
-  }
 
-  Widget _buildErrorMessage() {
     return Stack(
       children: <Widget>[
-        _buildPostMediaItemsThumbnail(),
         Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.black87,
-                    borderRadius: BorderRadius.circular(3)),
-                child: Text(
-                  _errorMessage,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ))
+          child: _buildPostMediaItemsThumbnail(),
+        ),
+        _errorMessage.isEmpty
+            ? _retrievePostMediaInProgress
+                ? const SizedBox()
+                : _buildMediaItems()
+            : Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: _buildErrorMessage(),
+              )
       ],
     );
   }
 
-  Widget _buildPostMedia() {
-    return _retrievePostMediaInProgress
-        ? _buildPostMediaItemsThumbnail()
-        : StreamBuilder(
-            stream: widget.post.updateSubject,
-            initialData: widget.post,
-            builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-              List<PostMedia> postMediaItems = widget.post.getMedia();
-              return _buildPostMediaItems(postMediaItems);
-            },
-          );
+  Widget _buildErrorMessage() {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+            color: Colors.black87, borderRadius: BorderRadius.circular(3)),
+        child: Text(
+          _errorMessage,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMediaItems() {
+    return StreamBuilder(
+      stream: widget.post.updateSubject,
+      initialData: widget.post,
+      builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
+        List<PostMedia> postMediaItems = widget.post.getMedia();
+        return _buildPostMediaItems(postMediaItems);
+      },
+    );
   }
 
   Widget _buildPostMediaItemsThumbnail() {
@@ -117,12 +123,16 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     return SizedBox(
         width: screenWidth,
         height: thumbnailHeight,
-        child: Image(
-            image: AdvancedNetworkImage(thumbnailUrl,
-                useDiskCache: true,
-                fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-                retryLimit: 3,
-                timeoutDuration: const Duration(seconds: 3))));
+        child: TransitionToImage(
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
+          image: AdvancedNetworkImage(thumbnailUrl,
+              useDiskCache: true,
+              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+              retryLimit: 3,
+              timeoutDuration: const Duration(seconds: 5)),
+          duration: Duration(milliseconds: 100),
+        ));
   }
 
   Widget _buildPostMediaItems(List<PostMedia> postMediaItems) {
@@ -162,6 +172,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
       _retrievePostMediaInProgress = false;
       return;
     }
+
     _retrievePostMedia();
   }
 
