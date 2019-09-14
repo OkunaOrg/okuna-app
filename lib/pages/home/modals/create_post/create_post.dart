@@ -32,7 +32,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
-import 'package:async/async.dart';
 
 class CreatePostModal extends StatefulWidget {
   final Community community;
@@ -60,7 +59,6 @@ class CreatePostModalState extends State<CreatePostModal> {
   FocusNode _focusNode;
   int _charactersCount;
   String _linkPreviewUrl;
-  LinkPreview _linkPreview;
 
   bool _isPostTextAllowedLength;
   bool _hasFocus;
@@ -71,17 +69,16 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   VoidCallback _postImageWidgetRemover;
   VoidCallback _postVideoWidgetRemover;
+  VoidCallback _linkPreviewWidgetRemover;
 
   List<Widget> _postItemsWidgets;
 
   bool _needsBootstrap;
   bool _isCreateCommunityPostInProgress;
-  bool _linkPreviewRequestInProgress;
 
   TextAccountAutocompletionService _textAccountAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
   bool _isSearchingAccount;
-  CancelableOperation _fetchLinkPreviewOperation;
 
   @override
   void initState() {
@@ -96,7 +93,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     _hasFocus = false;
     _charactersCount = 0;
     _linkPreviewUrl = '';
-    _linkPreviewRequestInProgress = false;
     _isPostTextAllowedLength = false;
     _hasImage = false;
     _hasVideo = false;
@@ -123,7 +119,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     super.dispose();
     _textController.removeListener(_onPostTextChanged);
     _focusNode.removeListener(_onFocusNodeChanged);
-    _fetchLinkPreviewOperation?.cancel();
   }
 
   @override
@@ -192,16 +187,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     );
   }
 
-  Widget _getPreviewWidget() {
-
-    Widget previewWidget = _linkPreview != null && !_hasImage && !_hasVideo ? OBLinkPreview(linkPreview: _linkPreview) : const SizedBox();
-
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      child: previewWidget
-    );
-  }
-
   Widget _buildPrimaryActionButton({bool isEnabled}) {
     Widget nextButton;
 
@@ -266,18 +251,12 @@ class CreatePostModalState extends State<CreatePostModal> {
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _getPostItemsWidgetsWithPreview(),
+                  children: _postItemsWidgets,
                 )),
           ),
         )
       ],
     );
-  }
-
-  List<Widget> _getPostItemsWidgetsWithPreview() {
-    List<Widget> existingPostItemsWidgets = List.from(_postItemsWidgets);
-    existingPostItemsWidgets.add(_getPreviewWidget());
-    return existingPostItemsWidgets;
   }
 
   Widget _buildAccountSearchBox() {
@@ -434,33 +413,9 @@ class CreatePostModalState extends State<CreatePostModal> {
     String linkPreviewUrl = _linkPreviewService.checkForLinkPreviewUrl(text);
 
     if (linkPreviewUrl != null && linkPreviewUrl != _linkPreviewUrl) {
-      _setPreviewUrl(linkPreviewUrl);
-      await _retrieveLinkPreview(linkPreviewUrl);
+      _setLinkPreviewUrl(linkPreviewUrl);
     } else {
-      _clearLinkPreview();
-    }
-  }
-
-  Future _retrieveLinkPreview(String url) async {
-    if (_linkPreviewRequestInProgress && _fetchLinkPreviewOperation != null) {
-      _fetchLinkPreviewOperation.cancel();
-    }
-
-    debugLog('Retrieving link preview for url: ${url}');
-    _setLinkPreviewRequestInProgress(true);
-    try {
-      _fetchLinkPreviewOperation =
-          CancelableOperation.fromFuture(_linkPreviewService.previewLink(url));
-
-      LinkPreview linkPreview = await _fetchLinkPreviewOperation.value;
-      _setLinkPreview(linkPreview);
-      debugLog('Retrieved link preview for url: ${url}');
-    } catch (error) {
-      debugLog('Failed to retrieve link preview for url: ${url}');
-      throw error;
-    } finally {
-      _fetchLinkPreviewOperation = null;
-      _setLinkPreviewRequestInProgress(false);
+      _clearLinkPreviewUrl();
     }
   }
 
@@ -497,26 +452,18 @@ class CreatePostModalState extends State<CreatePostModal> {
     });
   }
 
-  void _setPreviewUrl(String url) {
+  void _setLinkPreviewUrl(String url) {
     setState(() {
       _linkPreviewUrl = url;
+      _linkPreviewWidgetRemover = _addPostItemWidget(OBLinkPreview(
+        link: _linkPreviewUrl,
+      ));
     });
   }
 
-  void _setLinkPreviewRequestInProgress(bool previewRequestInProgress) {
-    setState(() {
-      _linkPreviewRequestInProgress = previewRequestInProgress;
-    });
-  }
-
-  void _clearLinkPreview() {
-    _setLinkPreview(null);
-  }
-
-  void _setLinkPreview(LinkPreview linkPreview) {
-    setState(() {
-      _linkPreview = linkPreview;
-    });
+  void _clearLinkPreviewUrl() {
+    _setLinkPreviewUrl(null);
+    if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
   }
 
   void _setIsSearchingAccount(bool isSearchingAccount) {
@@ -548,13 +495,6 @@ class CreatePostModalState extends State<CreatePostModal> {
           message: _localizationService.trans('error__unknown_error'),
           context: context);
       throw error;
-    }
-  }
-
-  void _onLinkPreviewError(error) async {
-    if (error is HttpieConnectionRefusedError) {
-      _toastService.error(
-          message: error.toHumanReadableMessage(), context: context);
     }
   }
 

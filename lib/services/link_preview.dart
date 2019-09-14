@@ -7,6 +7,26 @@ import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
 
 class LinkPreviewService {
+  // We should retrieve these and cache them from the server once in a while
+  static const allowedDomains = [
+    'apple.com',
+    'twitter.com',
+    'google.com',
+    'youtube.com',
+    'youtu.be',
+    'reddit.com',
+    'wikipedia.org',
+    'imgur.com',
+    'okuna.support',
+    'okuna.io',
+    'hackblock.nl',
+    'nasa.gov',
+    'techcrunch.com',
+    'golem.de',
+    'sz.de',
+    'www.theguardian.com',
+  ];
+
   ValidationService _validationService;
   HttpieService _httpieService;
 
@@ -24,7 +44,7 @@ class LinkPreviewService {
     _validationService = validationService;
   }
 
-  bool hasLinkPreviewUrl(String text){
+  bool hasLinkPreviewUrl(String text) {
     return checkForLinkPreviewUrl(text) != null;
   }
 
@@ -36,7 +56,9 @@ class LinkPreviewService {
     }));
 
     if (matches.length > 0) {
-      previewUrl = matches[0];
+      String foundUrl = matches[0];
+      String urlHost = Uri.parse(foundUrl).host;
+      if (allowedDomains.contains(urlHost)) previewUrl = foundUrl;
     }
     return previewUrl;
   }
@@ -47,8 +69,6 @@ class LinkPreviewService {
     if (!_validationService.isUrl(normalisedLink))
       throw InvalidLinkToPreview(normalisedLink);
 
-    // VERY DANGEROUS! PROXIES MUST BE A TRUSTED SOURCE AS THEY WILL RECEIVE
-    // THE AUTHORIZATION TOKEN FROM THE USER
     bool appendAuthorizationHeader = _trustedProxyUrl.isNotEmpty;
 
     HttpieResponse response;
@@ -138,14 +158,14 @@ class LinkPreviewService {
         faviconElement != null ? faviconElement.attributes['href'] : null;
 
     if (linkPreviewFaviconUrl == null) {
-      var shortcutIconElement =
-          document.querySelector("link[rel*='icon']");
+      var shortcutIconElement = document.querySelector("link[rel*='icon']");
       if (shortcutIconElement != null) {
         linkPreviewFaviconUrl = shortcutIconElement?.attributes['href'];
       }
     }
 
-    if(linkPreviewFaviconUrl != null) linkPreviewFaviconUrl = _normaliseLink(linkPreviewFaviconUrl);
+    if (linkPreviewFaviconUrl != null)
+      linkPreviewFaviconUrl = _normaliseLink(linkPreviewFaviconUrl);
 
     return linkPreviewFaviconUrl;
   }
@@ -153,7 +173,7 @@ class LinkPreviewService {
   String _normaliseLink(String link) {
     if (link.startsWith('http') || link.startsWith('https')) {
       return link;
-    } else if(link.startsWith('//')){
+    } else if (link.startsWith('//')) {
       return 'http:$link';
     }
 

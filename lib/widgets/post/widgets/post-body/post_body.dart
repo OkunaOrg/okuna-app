@@ -37,7 +37,10 @@ class OBPostBody extends StatelessWidget {
       if (!post.hasMediaThumbnail() &&
           openbookProvider.linkPreviewService.hasLinkPreviewUrl(post.text)) {
         bodyItems.add(
-          OBPostBodyLinkPreview(post: post),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: OBPostBodyLinkPreview(post: post),
+          ),
         );
       }
     }
