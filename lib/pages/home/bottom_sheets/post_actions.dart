@@ -22,12 +22,16 @@ class OBPostActionsBottomSheet extends StatefulWidget {
   final ValueChanged<Post> onPostReported;
   final OnPostDeleted onPostDeleted;
   final bool isTopPost;
+  final Function onCommunityExcluded;
+  final Function onUndoCommunityExcluded;
 
   const OBPostActionsBottomSheet(
       {Key key,
       @required this.post,
       @required this.onPostReported,
       @required this.onPostDeleted,
+      this.onCommunityExcluded,
+      this.onUndoCommunityExcluded,
       this.isTopPost = false,
       })
       : super(key: key);
@@ -64,8 +68,18 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           if (widget.isTopPost) {
             postActions.add(OBExcludeCommunityTile(
               post: post,
-              onExcludedPostCommunity: _dismiss,
-              onUndoExcludedPostCommunity: _dismiss,
+              onExcludedPostCommunity: () {
+                if (widget.onCommunityExcluded != null) {
+                  widget.onCommunityExcluded(post.community);
+                }
+                _dismiss();
+              },
+              onUndoExcludedPostCommunity: () {
+                if (widget.onUndoCommunityExcluded != null) {
+                  widget.onUndoCommunityExcluded(post.community);
+                }
+                _dismiss();
+              },
             ));
           }
 

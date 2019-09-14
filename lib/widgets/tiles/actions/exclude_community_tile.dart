@@ -84,8 +84,9 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
   void _undoExcludePostCommunity() async {
     _setRequestInProgress(true);
     try {
-      await _userService.undoExcludePostCommunityFromTopPosts(widget.post);
+      String message = await _userService.undoExcludePostCommunityFromTopPosts(widget.post);
       if (widget.onUndoExcludedPostCommunity != null) widget.onUndoExcludedPostCommunity();
+      _toastService.success(message: message, context: context);
       widget.post.updateIsFromExcludedCommunity(false);
     } catch (e) {
       _onError(e);

@@ -4,7 +4,7 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/users_list.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
-import 'package:Okuna/pages/home/pages/search/widgets/trending_posts.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/top_posts.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/user_search_results.dart';
@@ -41,7 +41,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   String _searchQuery;
   List<User> _userSearchResults;
   List<Community> _communitySearchResults;
-  OBTrendingPostsController _trendingPostsController;
+  OBTopPostsController _topPostsController;
 
   OBUserSearchResultsTab _selectedSearchResultsTab;
 
@@ -53,7 +53,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     super.initState();
     if (widget.controller != null)
       widget.controller.attach(context: context, state: this);
-    _trendingPostsController = OBTrendingPostsController();
+    _topPostsController = OBTopPostsController();
     _userSearchRequestInProgress = false;
     _communitySearchRequestInProgress = false;
     _hasSearch = false;
@@ -70,26 +70,26 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     _navigationService = openbookProvider.navigationService;
     _localizationService = openbookProvider.localizationService;
 
-    Widget currentWidget;
-
-    if (_hasSearch) {
-      currentWidget = OBUserSearchResults(
-        searchQuery: _searchQuery,
-        userResults: _userSearchResults,
-        userSearchInProgress: _userSearchRequestInProgress,
-        communityResults: _communitySearchResults,
-        communitySearchInProgress: _communitySearchRequestInProgress,
-        onUserPressed: _onSearchUserPressed,
-        onCommunityPressed: _onSearchCommunityPressed,
-        selectedTab: _selectedSearchResultsTab,
-        onScroll: _onScroll,
-        onTabSelectionChanged: _onSearchTabSelectionChanged,
-      );
-    } else {
-      currentWidget = OBTrendingPosts(
-        controller: _trendingPostsController,
-      );
-    }
+    Widget indexedStackWidget = IndexedStack(
+      index: _hasSearch ? 1: 0,
+      children: <Widget>[
+        OBTopPosts(
+          controller: _topPostsController,
+        ),
+        OBUserSearchResults(
+          searchQuery: _searchQuery,
+          userResults: _userSearchResults,
+          userSearchInProgress: _userSearchRequestInProgress,
+          communityResults: _communitySearchResults,
+          communitySearchInProgress: _communitySearchRequestInProgress,
+          onUserPressed: _onSearchUserPressed,
+          onCommunityPressed: _onSearchCommunityPressed,
+          selectedTab: _selectedSearchResultsTab,
+          onScroll: _onScroll,
+          onTabSelectionChanged: _onSearchTabSelectionChanged,
+        ),
+      ],
+    );
 
     return OBCupertinoPageScaffold(
         backgroundColor: Colors.white,
@@ -103,7 +103,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
                   hintText: _localizationService.user_search__search_text,
                 ),
               ),
-              Expanded(child: currentWidget),
+              Expanded(child: indexedStackWidget),
             ],
           ),
         ));
@@ -234,7 +234,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   }
 
   void scrollToTop() {
-    _trendingPostsController.scrollToTop();
+    _topPostsController.scrollToTop();
   }
 }
 
