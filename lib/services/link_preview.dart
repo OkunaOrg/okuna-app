@@ -1,6 +1,7 @@
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
@@ -23,20 +24,52 @@ class LinkPreviewService {
     _validationService = validationService;
   }
 
+  String checkForLinkPreviewUrl(String text) {
+    List matches = [];
+    String previewUrl;
+    matches.addAll(linkRegex.allMatches(text).map((match) {
+      return match.group(0);
+    }));
+
+    if (matches.length > 0) {
+      previewUrl = matches[0];
+    }
+    return previewUrl;
+  }
+
   Future<LinkPreview> previewLink(String link) async {
-    if (!_validationService.isUrl(link)) throw InvalidLinkToPreview(link);
+    String normalisedLink = _normaliseLink(link);
+
+    if (!_validationService.isUrl(normalisedLink))
+      throw InvalidLinkToPreview(normalisedLink);
 
     // VERY DANGEROUS! PROXIES MUST BE A TRUSTED SOURCE AS THEY WILL RECEIVE
     // THE AUTHORIZATION TOKEN FROM THE USER
     bool appendAuthorizationHeader = _trustedProxyUrl.isNotEmpty;
 
-    HttpieResponse response = await _httpieService.get(link,
-        appendAuthorizationToken: appendAuthorizationHeader);
+    HttpieResponse response;
 
-    String proxiedUrl = _trustedProxyUrl += link;
+    if (!normalisedLink.startsWith('https://')) {
+      try {
+        String secureLink = normalisedLink.replaceFirst('http', 'https');
+        print('Secure Link $secureLink');
+        response = await _httpieService.get(_getProxiedLink(secureLink),
+            appendAuthorizationToken: appendAuthorizationHeader);
+        normalisedLink = secureLink;
+      } on HttpieRequestError {
+        response = await _httpieService.get(_getProxiedLink(normalisedLink),
+            appendAuthorizationToken: appendAuthorizationHeader);
+      }
+    } else {
+      print('Retrieving preview from ${_getProxiedLink(normalisedLink)}');
+      response = await _httpieService.get(_getProxiedLink(normalisedLink),
+          appendAuthorizationToken: appendAuthorizationHeader);
+    }
+
+    if (response.statusCode != 200) return null;
 
     return _getLinkPreviewFromResponseBody(
-        link: proxiedUrl, responseBody: response.body);
+        link: normalisedLink, responseBody: response.body);
   }
 
   LinkPreview _getLinkPreviewFromResponseBody(
@@ -47,6 +80,7 @@ class LinkPreviewService {
     String linkPreviewTitle;
     String linkPreviewDescription;
     String linkPreviewImageUrl;
+    String linkPreviewSiteName;
     String linkPreviewDomainUrl = Uri.parse(link).host;
     // Assigned separately
     String linkPreviewFaviconUrl = _getLinkPreviewFaviconUrl(document);
@@ -54,15 +88,15 @@ class LinkPreviewService {
     var openGraphMetaTags = document.head.querySelectorAll("[property*='og:']");
 
     openGraphMetaTags.forEach((openGraphMetaTag) {
-      String ogTagName = openGraphMetaTag.attributes['property'];
+      String ogTagName =
+          openGraphMetaTag.attributes['property'].split("og:")[1];
       String ogTagValue = openGraphMetaTag.attributes['content'];
 
       if (ogTagName == 'title') {
         if (ogTagValue == null || ogTagValue.isEmpty) {
           // Title fallback
-          ogTagValue = document.head.getElementsByTagName("title")[0].text;
+          ogTagValue = document.head.getElementsByTagName("title")[0]?.text;
         }
-
         linkPreviewTitle = ogTagValue;
       } else if (ogTagName == 'description') {
         linkPreviewDescription = ogTagValue;
@@ -71,29 +105,57 @@ class LinkPreviewService {
           // Image fallback
           var imgElements = document.body.getElementsByTagName("img");
           if (imgElements.isNotEmpty)
-            ogTagValue = imgElements.first.attributes["src"];
+            ogTagValue = imgElements?.first?.attributes["src"];
         }
         linkPreviewImageUrl = ogTagValue;
+      } else if (ogTagName == 'site_name') {
+        linkPreviewSiteName = ogTagValue;
       }
     });
+
+    // This is the minimum required for a LinkPreview
+    bool hasTitle = linkPreviewTitle != null && linkPreviewSiteName != null;
+
+    print('Has title ${hasTitle}');
+
+    if (!hasTitle) return null;
 
     return LinkPreview(
         title: linkPreviewTitle,
         description: linkPreviewDescription,
         imageUrl: linkPreviewImageUrl,
         faviconUrl: linkPreviewFaviconUrl,
-        domainUrl: linkPreviewDomainUrl);
+        domainUrl: linkPreviewDomainUrl,
+        siteName: linkPreviewSiteName,
+        url: link);
   }
 
   String _getLinkPreviewFaviconUrl(Document document) {
     var faviconElement = document.querySelector("link[rel*='icon']");
-    String linkPreviewFaviconUrl = faviconElement.attributes['href'];
-    if (linkPreviewFaviconUrl == null || linkPreviewFaviconUrl.isEmpty) {
+
+    String linkPreviewFaviconUrl =
+        faviconElement != null ? faviconElement.attributes['href'] : null;
+
+    if (linkPreviewFaviconUrl == null) {
       var shortcutIconElement =
           document.querySelector("link[rel*='shortcut icon']");
-      linkPreviewFaviconUrl = shortcutIconElement.attributes['href'];
+      if (shortcutIconElement != null) {
+        linkPreviewFaviconUrl = shortcutIconElement?.attributes['href'];
+      }
     }
     return linkPreviewFaviconUrl;
+  }
+
+  String _normaliseLink(String link) {
+    if (link.startsWith('http') || link.startsWith('https')) {
+      return link;
+    }
+
+    return 'http://${link}';
+  }
+
+  String _getProxiedLink(String link) {
+    return '$_trustedProxyUrl?$link';
   }
 }
 

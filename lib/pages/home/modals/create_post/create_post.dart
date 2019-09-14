@@ -9,6 +9,7 @@ import 'package:Okuna/pages/home/modals/create_post/widgets/post_video_previewer
 import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
@@ -22,8 +23,8 @@ import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/pill_button.dart';
 import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
-import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_link_preview.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
@@ -53,13 +54,13 @@ class CreatePostModalState extends State<CreatePostModal> {
   MediaService _mediaService;
   ToastService _toastService;
   LocalizationService _localizationService;
-  UserService _userService;
+  LinkPreviewService _linkPreviewService;
 
   TextEditingController _textController;
   FocusNode _focusNode;
   int _charactersCount;
-  String _previewUrl;
-  LinkPreview _previewLinkQueryData;
+  String _linkPreviewUrl;
+  LinkPreview _linkPreview;
 
   bool _isPostTextAllowedLength;
   bool _hasFocus;
@@ -75,12 +76,12 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   bool _needsBootstrap;
   bool _isCreateCommunityPostInProgress;
-  bool _previewRequestInProgress;
+  bool _linkPreviewRequestInProgress;
 
   TextAccountAutocompletionService _textAccountAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
   bool _isSearchingAccount;
-  CancelableOperation _fetchPreviewDataOperation;
+  CancelableOperation _fetchLinkPreviewOperation;
 
   @override
   void initState() {
@@ -94,8 +95,8 @@ class CreatePostModalState extends State<CreatePostModal> {
     _focusNode.addListener(_onFocusNodeChanged);
     _hasFocus = false;
     _charactersCount = 0;
-    _previewUrl = '';
-    _previewRequestInProgress = false;
+    _linkPreviewUrl = '';
+    _linkPreviewRequestInProgress = false;
     _isPostTextAllowedLength = false;
     _hasImage = false;
     _hasVideo = false;
@@ -122,9 +123,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     super.dispose();
     _textController.removeListener(_onPostTextChanged);
     _focusNode.removeListener(_onFocusNodeChanged);
-    if (_fetchPreviewDataOperation != null) {
-      _fetchPreviewDataOperation.cancel();
-    }
+    _fetchLinkPreviewOperation?.cancel();
   }
 
   @override
@@ -134,7 +133,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       _validationService = openbookProvider.validationService;
       _navigationService = openbookProvider.navigationService;
       _mediaService = openbookProvider.mediaPickerService;
-      _userService = openbookProvider.userService;
+      _linkPreviewService = openbookProvider.linkPreviewService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
       _textAccountAutocompletionService =
@@ -194,19 +193,17 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _getPreviewWidget() {
-    if (_previewLinkQueryData != null && !_hasImage && !_hasVideo) {
+    if (_linkPreview != null && !_hasImage && !_hasVideo) {
       return Container(
         decoration: BoxDecoration(
             color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
         child: SizedBox(
           child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: OBPostLinkPreview(
-                  previewLinkQueryData: _previewLinkQueryData,
-                  previewLink: _previewUrl)),
+              child: OBLinkPreview(linkPreview: _linkPreview)),
         ),
       );
-    } else if (_previewRequestInProgress) {
+    } else if (_linkPreviewRequestInProgress) {
       return const Center(
         child: const CircularProgressIndicator(),
       );
@@ -384,8 +381,8 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   void _onPostTextChanged() {
     String text = _textController.text;
-    _checkAutocomplete();
-    _checkForPreviewUrl();
+    _checkForAutocomplete();
+    _checkForLinkPreview();
     setState(() {
       _charactersCount = text.length;
       _isPostTextAllowedLength =
@@ -441,45 +438,43 @@ class CreatePostModalState extends State<CreatePostModal> {
     Navigator.pop(context, newPostData);
   }
 
-  void _checkForPreviewUrl() async {
+  void _checkForLinkPreview() async {
     String text = _textController.text;
-    List matches = [];
-    String previewUrl;
-    matches.addAll(linkRegex.allMatches(text).map((match) {
-      return match.group(0);
-    }));
 
-    if (matches.length > 0) {
-      previewUrl = matches[0];
-      if (previewUrl != _previewUrl) {
-        _setPreviewUrl(previewUrl);
-        await _fetchPreviewData(previewUrl);
-      }
+    String linkPreviewUrl = _linkPreviewService.checkForLinkPreviewUrl(text);
+
+    if (linkPreviewUrl != null && linkPreviewUrl != _linkPreviewUrl) {
+      //_setPreviewUrl(linkPreviewUrl);
+      await _retrieveLinkPreview(linkPreviewUrl);
     } else {
-      _setPreviewLinkQueryData(null);
+      _clearLinkPreview();
     }
   }
 
-  Future _fetchPreviewData(String url) async {
-    if (_previewRequestInProgress && _fetchPreviewDataOperation != null) {
-      _fetchPreviewDataOperation.cancel();
+  Future _retrieveLinkPreview(String url) async {
+    if (_linkPreviewRequestInProgress && _fetchLinkPreviewOperation != null) {
+      _fetchLinkPreviewOperation.cancel();
     }
-    _setPreviewRequestInProgress(true);
+
+    debugLog('Retrieving link preview for url: ${url}');
+    _setLinkPreviewRequestInProgress(true);
     try {
-      _fetchPreviewDataOperation = CancelableOperation.fromFuture(
-          _userService.getPreviewDataForUrl(url: url));
+      _fetchLinkPreviewOperation =
+          CancelableOperation.fromFuture(_linkPreviewService.previewLink(url));
 
-      Map<String, dynamic> previewData = await _fetchPreviewDataOperation.value;
-      _setPreviewLinkQueryData(previewData);
+      LinkPreview linkPreview = await _fetchLinkPreviewOperation.value;
+      _setLinkPreview(linkPreview);
+      debugLog('Retrieved link preview for url: ${url}');
     } catch (error) {
-      _onPreviewError(error);
+      debugLog('Failed to retrieve link preview for url: ${url}');
+      throw error;
     } finally {
-      _fetchPreviewDataOperation = null;
-      _setPreviewRequestInProgress(false);
+      _fetchLinkPreviewOperation = null;
+      _setLinkPreviewRequestInProgress(false);
     }
   }
 
-  void _checkAutocomplete() {
+  void _checkForAutocomplete() {
     TextAccountAutocompletionResult result = _textAccountAutocompletionService
         .checkTextForAutocompletion(_textController);
 
@@ -514,36 +509,23 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   void _setPreviewUrl(String url) {
     setState(() {
-      _previewUrl = url;
+      _linkPreviewUrl = url;
     });
   }
 
-  void _setPreviewRequestInProgress(bool previewRequestInProgress) {
+  void _setLinkPreviewRequestInProgress(bool previewRequestInProgress) {
     setState(() {
-      _previewRequestInProgress = previewRequestInProgress;
+      _linkPreviewRequestInProgress = previewRequestInProgress;
     });
   }
 
-  void _setPreviewLinkQueryData(Map<String, dynamic> queryData) {
-    LinkPreview previewLinkQueryData;
-    if (queryData != null) {
-      previewLinkQueryData = LinkPreview();
-      if (queryData.containsKey('title'))
-        previewLinkQueryData.title = queryData['title'];
-      if (queryData.containsKey('description'))
-        previewLinkQueryData.description = queryData['description'];
-      if (queryData.containsKey('image_url'))
-        previewLinkQueryData.imageUrl = queryData['image_url'];
-      if (queryData.containsKey('favicon_url'))
-        previewLinkQueryData.faviconUrl = queryData['favicon_url'];
-      if (queryData.containsKey('domain_url'))
-        previewLinkQueryData.domainUrl = queryData['domain_url'];
-    } else {
-      previewLinkQueryData = null;
-    }
+  void _clearLinkPreview() {
+    _setLinkPreview(null);
+  }
 
+  void _setLinkPreview(LinkPreview linkPreview) {
     setState(() {
-      _previewLinkQueryData = previewLinkQueryData;
+      _linkPreview = linkPreview;
     });
   }
 
@@ -579,7 +561,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     }
   }
 
-  void _onPreviewError(error) async {
+  void _onLinkPreviewError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
           message: error.toHumanReadableMessage(), context: context);
