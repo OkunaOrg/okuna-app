@@ -195,14 +195,9 @@ class CreatePostModalState extends State<CreatePostModal> {
   Widget _getPreviewWidget() {
     if (_linkPreview != null && !_hasImage && !_hasVideo) {
       return Container(
-        decoration: BoxDecoration(
-            color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
-        child: SizedBox(
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: OBLinkPreview(linkPreview: _linkPreview)),
-        ),
-      );
+          decoration: BoxDecoration(
+              color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
+          child: OBLinkPreview(linkPreview: _linkPreview));
     } else if (_linkPreviewRequestInProgress) {
       return const Center(
         child: const CircularProgressIndicator(),

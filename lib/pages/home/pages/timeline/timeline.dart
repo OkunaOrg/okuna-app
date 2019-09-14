@@ -129,7 +129,6 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   }
 
   List<Widget> _buildPostsStreamPrependedItems() {
-    print('Building post stream prepended items');
     return _buildNewPostDataUploaders();
   }
 

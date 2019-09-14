@@ -24,15 +24,17 @@ class OBLinkPreview extends StatelessWidget {
     UrlLauncherService _urlLauncherService =
         OpenbookProvider.of(context).urlLauncherService;
 
-    print('Got this link preview');
-    print(linkPreview);
-
     return GestureDetector(
-      child: Column(
-        children: <Widget>[
-          _buildPreviewImage(screenWidth, this.linkPreview),
-          _buildPreviewBar(this.linkPreview, context)
-        ],
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Column(
+          children: <Widget>[
+            linkPreview.imageUrl != null
+                ? _buildPreviewImage(screenWidth, this.linkPreview)
+                : const SizedBox(),
+            _buildPreviewBar(this.linkPreview, context)
+          ],
+        ),
       ),
       onTap: () {
         _urlLauncherService.launchUrl(this.linkPreview.url);
@@ -44,7 +46,7 @@ class OBLinkPreview extends StatelessWidget {
     if (data.imageUrl == null) return SizedBox();
 
     return TransitionToImage(
-      height: 150,
+      height: 200,
       width: screenWidth,
       fit: BoxFit.cover,
       alignment: Alignment.center,
@@ -67,19 +69,20 @@ class OBLinkPreview extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-           Padding(
-             padding: EdgeInsets.symmetric(vertical: 5),
-             child:  Row(
-               mainAxisAlignment: MainAxisAlignment.start,
-               children: <Widget>[
-                 _buildFavicon(),
-                 OBSecondaryText(data.domainUrl.toUpperCase(),
-                     overflow: TextOverflow.ellipsis,
-                     maxLines: 1,
-                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12))
-               ],
-             ),
-           ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  _buildFavicon(),
+                  OBSecondaryText(data.domainUrl.toUpperCase(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12))
+                ],
+              ),
+            ),
             OBText(
               data.title,
               maxLines: 2,

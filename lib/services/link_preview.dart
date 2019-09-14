@@ -24,6 +24,10 @@ class LinkPreviewService {
     _validationService = validationService;
   }
 
+  bool hasLinkPreviewUrl(String text){
+    return checkForLinkPreviewUrl(text) != null;
+  }
+
   String checkForLinkPreviewUrl(String text) {
     List matches = [];
     String previewUrl;
@@ -61,7 +65,6 @@ class LinkPreviewService {
             appendAuthorizationToken: appendAuthorizationHeader);
       }
     } else {
-      print('Retrieving preview from ${_getProxiedLink(normalisedLink)}');
       response = await _httpieService.get(_getProxiedLink(normalisedLink),
           appendAuthorizationToken: appendAuthorizationHeader);
     }
@@ -115,8 +118,6 @@ class LinkPreviewService {
 
     // This is the minimum required for a LinkPreview
     bool hasTitle = linkPreviewTitle != null && linkPreviewSiteName != null;
-
-    print('Has title ${hasTitle}');
 
     if (!hasTitle) return null;
 

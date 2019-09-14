@@ -34,7 +34,6 @@ class OBPostBodyLinkPreviewState extends State<OBPostBodyLinkPreview> {
     super.initState();
     _needsBootstrap = true;
     _retrievePostMediaInProgress = true;
-    _postUpdateSubscription = widget.post.updateSubject.listen(_onPostUpdate);
   }
 
   void didUpdateWidget(oldWidget) {
@@ -61,8 +60,11 @@ class OBPostBodyLinkPreviewState extends State<OBPostBodyLinkPreview> {
 
     return _retrievePostMediaInProgress || _linkPreview == null
         ? const SizedBox()
-        : OBLinkPreview(
-            linkPreview: _linkPreview,
+        : Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+            child: OBLinkPreview(
+              linkPreview: _linkPreview,
+            ),
           );
   }
 
@@ -93,7 +95,7 @@ class OBPostBodyLinkPreviewState extends State<OBPostBodyLinkPreview> {
     } else {
       String newLinkPreviewUrl =
           _linkPreviewService.checkForLinkPreviewUrl(post.text);
-      if (newLinkPreviewUrl != _linkPreview.url)
+      if (newLinkPreviewUrl != _linkPreview?.url)
         _retrieveLinkPreview(newLinkPreviewUrl);
     }
   }
