@@ -131,24 +131,29 @@ class LinkPreviewService {
   }
 
   String _getLinkPreviewFaviconUrl(Document document) {
-    var faviconElement = document.querySelector("link[rel*='icon']");
+    var faviconElement = document.querySelector("link[rel*='shortcut icon']");
 
     String linkPreviewFaviconUrl =
         faviconElement != null ? faviconElement.attributes['href'] : null;
 
     if (linkPreviewFaviconUrl == null) {
       var shortcutIconElement =
-          document.querySelector("link[rel*='shortcut icon']");
+          document.querySelector("link[rel*='icon']");
       if (shortcutIconElement != null) {
         linkPreviewFaviconUrl = shortcutIconElement?.attributes['href'];
       }
     }
+
+    if(linkPreviewFaviconUrl != null) linkPreviewFaviconUrl = _normaliseLink(linkPreviewFaviconUrl);
+
     return linkPreviewFaviconUrl;
   }
 
   String _normaliseLink(String link) {
     if (link.startsWith('http') || link.startsWith('https')) {
       return link;
+    } else if(link.startsWith('//')){
+      return 'http:$link';
     }
 
     return 'http://${link}';
