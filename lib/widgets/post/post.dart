@@ -16,10 +16,14 @@ class OBPost extends StatelessWidget {
   final OnTextExpandedChange onTextExpandedChange;
   final String inViewId;
   final bool isTopPost;
+  final Function onCommunityExcluded;
+  final Function onUndoCommunityExcluded;
 
   const OBPost(this.post,
       {Key key,
       @required this.onPostDeleted,
+      this.onCommunityExcluded,
+      this.onUndoCommunityExcluded,
       this.onTextExpandedChange,
       this.inViewId,
       this.isTopPost = false})
@@ -42,7 +46,9 @@ class OBPost extends StatelessWidget {
           post: post,
           onPostDeleted: onPostDeleted,
           onPostReported: onPostDeleted,
-          isTopPost: isTopPost
+          isTopPost: isTopPost,
+          onCommunityExcluded: onCommunityExcluded,
+          onUndoCommunityExcluded: onUndoCommunityExcluded,
         ),
         OBPostBody(post,
             onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),

@@ -32,6 +32,7 @@ class OBPostsStream extends StatefulWidget {
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
   final bool isTopPostsStream;
+  final Widget Function(BuildContext, Post, String, Function(Post)) postBuilder;
 
   const OBPostsStream(
       {Key key,
@@ -45,6 +46,7 @@ class OBPostsStream extends StatefulWidget {
       this.refreshOnCreate = true,
       this.secondaryRefresher,
       this.isTopPostsStream = false,
+      this.postBuilder,
       this.statusIndicatorBuilder})
       : super(key: key);
 
@@ -152,6 +154,10 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   List<Widget> _buildStreamPosts() {
+    if (widget.postBuilder != null) {
+      return _posts.map((Post post) => widget.postBuilder(context, post, _streamUniqueIdentifier, _onPostDeleted)).toList();
+    }
+
     return _posts.map(_buildStreamPost).toList();
   }
 

@@ -10,12 +10,16 @@ class OBPostHeader extends StatelessWidget {
   final ValueChanged<Post> onPostReported;
   final bool hasActions;
   final bool isTopPost;
+  final Function onCommunityExcluded;
+  final Function onUndoCommunityExcluded;
 
   const OBPostHeader(
       {Key key,
       this.onPostDeleted,
       this.post,
       this.onPostReported,
+      this.onCommunityExcluded,
+      this.onUndoCommunityExcluded,
       this.hasActions = true,
       this.isTopPost = false,
       })
@@ -28,6 +32,8 @@ class OBPostHeader extends StatelessWidget {
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
             hasActions: hasActions,
+            onCommunityExcluded: onCommunityExcluded,
+            onUndoCommunityExcluded: onUndoCommunityExcluded,
             isTopPost: isTopPost)
         : OBUserPostHeader(post,
             onPostDeleted: onPostDeleted,

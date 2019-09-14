@@ -128,6 +128,8 @@ class BottomSheetService {
       @required OnPostDeleted onPostDeleted,
       @required ValueChanged<Post> onPostReported,
       bool isTopPost = false,
+      Function onCommunityExcluded,
+      Function onUndoCommunityExcluded,
       List<FollowsList> initialPickedFollowsLists}) {
     return showModalBottomSheetApp(
         context: context,
@@ -135,6 +137,8 @@ class BottomSheetService {
           return OBPostActionsBottomSheet(
             post: post,
             isTopPost: isTopPost,
+            onCommunityExcluded: onCommunityExcluded,
+            onUndoCommunityExcluded: onUndoCommunityExcluded,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
           );
