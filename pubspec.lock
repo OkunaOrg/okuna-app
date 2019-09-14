@@ -68,8 +68,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "5851cd6030c9abe70de24a68a8830fd233d81d3b"
+      ref: "feature/dep-on-custom-video-player"
+      resolved-ref: "3195c2747b9f489bac5a239c049748e3686a3834"
       url: "https://github.com/OkunaOrg/chewie.git"
     source: git
     version: "0.9.7"
@@ -777,10 +777,12 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      name: video_player
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.2+1"
+      path: "packages/video_player"
+      ref: "feature/caching"
+      resolved-ref: "6b4be9514ded6a53967295db5f4dcfe142f6d459"
+      url: "https://github.com/999eagle/plugins.git"
+    source: git
+    version: "0.10.2"
   video_thumbnail:
     dependency: "direct main"
     description:
