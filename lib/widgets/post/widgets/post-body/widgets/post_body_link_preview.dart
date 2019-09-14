@@ -58,14 +58,17 @@ class OBPostBodyLinkPreviewState extends State<OBPostBodyLinkPreview> {
       _needsBootstrap = false;
     }
 
-    return _retrievePostMediaInProgress || _linkPreview == null
-        ? const SizedBox()
-        : Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-            child: OBLinkPreview(
-              linkPreview: _linkPreview,
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      child: _retrievePostMediaInProgress || _linkPreview == null
+          ? const SizedBox()
+          : Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              child: OBLinkPreview(
+                linkPreview: _linkPreview,
+              ),
             ),
-          );
+    );
   }
 
   void _bootstrap() {

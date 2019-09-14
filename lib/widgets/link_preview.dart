@@ -46,6 +46,12 @@ class OBLinkPreview extends StatelessWidget {
     if (data.imageUrl == null) return SizedBox();
 
     return TransitionToImage(
+      loadingWidget: SizedBox(
+        height: 200,
+        child: Center(
+          child: const OBProgressIndicator(),
+        ),
+      ),
       height: 200,
       width: screenWidth,
       fit: BoxFit.cover,
@@ -53,11 +59,8 @@ class OBLinkPreview extends StatelessWidget {
       image: AdvancedNetworkImage(data.imageUrl,
           useDiskCache: false,
           fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-          retryLimit: 0,
+          retryLimit: 3,
           timeoutDuration: const Duration(minutes: 1)),
-      placeholder: Center(
-        child: const OBProgressIndicator(),
-      ),
       duration: const Duration(milliseconds: 300),
     );
   }

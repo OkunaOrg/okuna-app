@@ -193,18 +193,13 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   Widget _getPreviewWidget() {
-    if (_linkPreview != null && !_hasImage && !_hasVideo) {
-      return Container(
-          decoration: BoxDecoration(
-              color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
-          child: OBLinkPreview(linkPreview: _linkPreview));
-    } else if (_linkPreviewRequestInProgress) {
-      return const Center(
-        child: const CircularProgressIndicator(),
-      );
-    } else {
-      return SizedBox();
-    }
+
+    Widget previewWidget = _linkPreview != null && !_hasImage && !_hasVideo ? OBLinkPreview(linkPreview: _linkPreview) : const SizedBox();
+
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      child: previewWidget
+    );
   }
 
   Widget _buildPrimaryActionButton({bool isEnabled}) {
@@ -439,7 +434,7 @@ class CreatePostModalState extends State<CreatePostModal> {
     String linkPreviewUrl = _linkPreviewService.checkForLinkPreviewUrl(text);
 
     if (linkPreviewUrl != null && linkPreviewUrl != _linkPreviewUrl) {
-      //_setPreviewUrl(linkPreviewUrl);
+      _setPreviewUrl(linkPreviewUrl);
       await _retrieveLinkPreview(linkPreviewUrl);
     } else {
       _clearLinkPreview();
