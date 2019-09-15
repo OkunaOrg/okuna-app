@@ -13,6 +13,7 @@ class LinkPreviewService {
     'twitter.com',
     'google.com',
     'youtube.com',
+    'www.youtube.com',
     'youtu.be',
     'reddit.com',
     'wikipedia.org',

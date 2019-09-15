@@ -123,8 +123,8 @@ class SavePostModalState extends State<SavePostModal> {
           _hasVideo = false;
         }
       } else {
-        _hasVideo = true;
-        _hasImage = true;
+        _hasVideo = false;
+        _hasImage = false;
       }
     } else {
       if (widget.text != null) {
@@ -329,7 +329,7 @@ class SavePostModalState extends State<SavePostModal> {
   Widget _buildPostActions() {
     List<Widget> postActions = [];
 
-    if (!_hasImage && !_hasVideo) {
+    if (!_hasImage && !_hasVideo && !_isEditingPost) {
       postActions.addAll(_getImagePostActions());
     }
 
@@ -515,10 +515,13 @@ class SavePostModalState extends State<SavePostModal> {
 
     String linkPreviewUrl = _linkPreviewService.checkForLinkPreviewUrl(text);
 
+    if (linkPreviewUrl == null) {
+      _clearLinkPreviewUrl();
+      return;
+    }
+
     if (linkPreviewUrl != null && linkPreviewUrl != _linkPreviewUrl) {
       _setLinkPreviewUrl(linkPreviewUrl);
-    } else {
-      _clearLinkPreviewUrl();
     }
   }
 
@@ -565,8 +568,10 @@ class SavePostModalState extends State<SavePostModal> {
   }
 
   void _clearLinkPreviewUrl() {
-    _setLinkPreviewUrl(null);
-    if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
+    setState(() {
+      _linkPreviewUrl = null;
+      if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
+    });
   }
 
   void _setIsSearchingAccount(bool isSearchingAccount) {

@@ -44,7 +44,14 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
     super.initState();
     _needsBootstrap = true;
     _linkPreview = widget.linkPreview;
-    _linkPreviewRequestInProgress = false;
+    _linkPreviewRequestInProgress = true;
+  }
+
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _needsBootstrap = true;
+    _linkPreview = widget.linkPreview;
+    _linkPreviewRequestInProgress = true;
   }
 
   @override
@@ -56,6 +63,8 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   void _bootstrap() {
     if (_linkPreview == null) {
       _retrieveLinkPreview();
+    } else{
+      _linkPreviewRequestInProgress = false;
     }
   }
 
@@ -96,7 +105,13 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
     List<Widget> previewItems = [];
 
     if (_linkPreview.imageUrl != null) {
-      previewItems.add(_buildPreviewImage());
+      previewItems.add(Row(
+        children: <Widget>[
+          Expanded(
+            child: _buildPreviewImage(),
+          )
+        ],
+      ));
     }
 
     previewItems.add(_buildPreviewBar());
