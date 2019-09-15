@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
 import 'package:flutter\_localizations/flutter\_localizations.dart';
+import 'package:public_suffix/public_suffix_browser.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 
@@ -68,7 +69,7 @@ class _MyAppState extends State<MyApp> {
       key: widget.openbookProviderKey,
       child: OBToast(
         child: MaterialApp(
-          navigatorObservers: [routeObserver],
+            navigatorObservers: [routeObserver],
             locale: this.locale,
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {

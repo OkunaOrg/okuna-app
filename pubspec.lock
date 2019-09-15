@@ -531,6 +531,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.2"
+  public_suffix:
+    dependency: "direct main"
+    description:
+      name: public_suffix
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
+  punycode:
+    dependency: transitive
+    description:
+      name: punycode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   quiver:
     dependency: transitive
     description:
@@ -607,7 +621,7 @@ packages:
       name: shimmer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -717,7 +731,7 @@ packages:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.18"
+    version: "2.0.19"
   tinycolor:
     dependency: "direct main"
     description:
@@ -779,10 +793,10 @@ packages:
     description:
       path: "packages/video_player"
       ref: "feature/caching"
-      resolved-ref: "6b4be9514ded6a53967295db5f4dcfe142f6d459"
+      resolved-ref: "7655d0961e3cae431fbf3aa8a98817461708d7dc"
       url: "https://github.com/999eagle/plugins.git"
     source: git
-    version: "0.10.2"
+    version: "0.10.2+1"
   video_thumbnail:
     dependency: "direct main"
     description:

@@ -5,6 +5,9 @@ import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
+import 'package:public_suffix/public_suffix.dart';
+import 'package:public_suffix/public_suffix_browser.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class LinkPreviewService {
   // We should retrieve these and cache them from the server once in a while
@@ -33,6 +36,16 @@ class LinkPreviewService {
 
   String _trustedProxyUrl = '';
 
+  LinkPreviewService(){
+    _initPublicSuffixes();
+  }
+
+  void _initPublicSuffixes() async {
+    String publicSuffixes = await rootBundle.loadString('assets/other/public_suffix_list.dat');
+    print(publicSuffixes);
+    SuffixRules.initFromString(publicSuffixes);
+  }
+
   void setTrustedProxyUrl(String proxyUrl) {
     _trustedProxyUrl = proxyUrl;
   }
@@ -58,8 +71,8 @@ class LinkPreviewService {
 
     if (matches.length > 0) {
       String foundUrl = matches[0];
-      String urlHost = Uri.parse(foundUrl).host;
-      if (allowedDomains.contains(urlHost)) previewUrl = foundUrl;
+      PublicSuffix parsedUrl = PublicSuffix.fromString(foundUrl);
+      if (allowedDomains.contains(parsedUrl.domain)) previewUrl = foundUrl;
     }
     return previewUrl;
   }

@@ -52,6 +52,7 @@ dependencies:
   flutter_cache_manager: ^1.1.1
   cached_network_image: ^1.1.1
   timeago: ^2.0.9
+  public_suffix: ^1.2.0
   pigment: ^1.0.3
   photo_view: ^0.4.2
   flutter_svg: ^0.13.0
@@ -161,6 +162,7 @@ flutter:
     - assets/images/fallbacks/post-fallback.png
     - assets/images/fallbacks/cover-fallback.jpg
     - assets/images/fallbacks/avatar-fallback.jpg
+    - assets/other/public_suffix_list.dat
     - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
