@@ -42,7 +42,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   @override
   void initState() {
     super.initState();
-    _needsBootstrap= true;
+    _needsBootstrap = true;
     _linkPreview = widget.linkPreview;
     _linkPreviewRequestInProgress = false;
   }
@@ -76,9 +76,16 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
         child: OBHighlightedBox(
           child: AnimatedSwitcher(
             duration: Duration(milliseconds: 300),
-            child: _linkPreviewRequestInProgress
-                ? _buildRequestInProgress()
-                : _buildLinkPreview(),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: _linkPreviewRequestInProgress
+                      ? _buildRequestInProgress()
+                      : _buildLinkPreview(),
+                )
+              ],
+            ),
           ),
         ),
       ),
