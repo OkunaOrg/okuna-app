@@ -559,6 +559,8 @@ class SavePostModalState extends State<SavePostModal> {
   }
 
   void _setLinkPreviewUrl(String url) {
+    if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
+
     setState(() {
       _linkPreviewUrl = url;
       _linkPreviewWidgetRemover = _addPostItemWidget(OBLinkPreview(

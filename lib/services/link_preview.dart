@@ -13,8 +13,8 @@ class LinkPreviewService {
     'twitter.com',
     'google.com',
     'youtube.com',
-    'www.youtube.com',
     'youtu.be',
+    'github.com',
     'reddit.com',
     'wikipedia.org',
     'imgur.com',
@@ -25,7 +25,7 @@ class LinkPreviewService {
     'techcrunch.com',
     'golem.de',
     'sz.de',
-    'www.theguardian.com',
+    'theguardian.com',
   ];
 
   ValidationService _validationService;
@@ -90,7 +90,7 @@ class LinkPreviewService {
           appendAuthorizationToken: appendAuthorizationHeader);
     }
 
-    if (response.statusCode != 200) return null;
+    _checkResponseIsOk(response);
 
     return _getLinkPreviewFromResponseBody(
         link: normalisedLink, responseBody: response.body);
@@ -140,7 +140,7 @@ class LinkPreviewService {
     // This is the minimum required for a LinkPreview
     bool hasTitle = linkPreviewTitle != null && linkPreviewSiteName != null;
 
-    if (!hasTitle) return null;
+    if (!hasTitle) throw EmptyLinkToPreview(link);
 
     return LinkPreview(
         title: linkPreviewTitle,
@@ -184,6 +184,11 @@ class LinkPreviewService {
   String _getProxiedLink(String link) {
     return '$_trustedProxyUrl?$link';
   }
+
+  void _checkResponseIsOk(HttpieBaseResponse response) {
+    if (response.isOk()) return;
+    throw HttpieRequestError(response);
+  }
 }
 
 class InvalidLinkToPreview implements Exception {
@@ -193,4 +198,13 @@ class InvalidLinkToPreview implements Exception {
 
   String toString() =>
       'InvalidLinkToPreview: $link is not a valid link to preview.';
+}
+
+class EmptyLinkToPreview implements Exception {
+  String link;
+
+  EmptyLinkToPreview(this.link);
+
+  String toString() =>
+      'EmptyLinkToPreview: $link was empty, could not be previewed.';
 }

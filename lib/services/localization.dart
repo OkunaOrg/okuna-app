@@ -3641,6 +3641,11 @@ class LocalizationService {
         name: 'post_body_media__unsupported');
   }
 
+  String get post_body_link_preview__empty {
+    return Intl.message("Preview was empty",
+        name: 'post_body_link_preview__empty');
+  }
+
   String get posts_stream__all_loaded {
     return Intl.message("🎉  All posts loaded",
         name: 'posts_stream__all_loaded');

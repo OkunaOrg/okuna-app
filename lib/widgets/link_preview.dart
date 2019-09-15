@@ -1,7 +1,10 @@
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/url_launcher.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
@@ -33,11 +36,13 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   LinkPreview _linkPreview;
   LinkPreviewService _linkPreviewService;
   UrlLauncherService _urlLauncherService;
+  LocalizationService _localizationService;
 
   bool _linkPreviewRequestInProgress;
   CancelableOperation _fetchLinkPreviewOperation;
 
   bool _needsBootstrap;
+  String _errorMessage;
 
   @override
   void initState() {
@@ -63,7 +68,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   void _bootstrap() {
     if (_linkPreview == null) {
       _retrieveLinkPreview();
-    } else{
+    } else {
       _linkPreviewRequestInProgress = false;
     }
   }
@@ -74,6 +79,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _linkPreviewService = openbookProvider.linkPreviewService;
       _urlLauncherService = openbookProvider.urlLauncherService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -89,13 +95,40 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Expanded(
-                  child: _linkPreviewRequestInProgress
-                      ? _buildRequestInProgress()
+                  child: _linkPreviewRequestInProgress || _linkPreview == null
+                      ? _errorMessage != null
+                          ? _buildErrorMessage()
+                          : _buildRequestInProgress()
                       : _buildLinkPreview(),
                 )
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorMessage() {
+    return SizedBox(
+      // Estimated size of the preview bottom bar
+      height: 150,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            OBIcon(
+              OBIcons.linkOff,
+              size: OBIconSize.large,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 150),
+              child: OBText(_errorMessage, textAlign: TextAlign.center,),
+            )
+          ],
         ),
       ),
     );
@@ -231,6 +264,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   Future _retrieveLinkPreview() async {
+    _setErrorMessage(null);
     if (_fetchLinkPreviewOperation != null) return;
     _setLinkPreviewRequestInProgress(true);
 
@@ -245,15 +279,40 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       LinkPreview linkPreview = await _fetchLinkPreviewOperation.value;
       if (widget.onLinkPreviewRetrieved != null)
         widget.onLinkPreviewRetrieved(linkPreview);
-      _setLinkPreview(linkPreview);
-      debugLog('Retrieved link preview for url: $link');
+      if (linkPreview != null) {
+        _setLinkPreview(linkPreview);
+        debugLog('Retrieved link preview for url: $link');
+      } else {
+        debugLog('Retrieved empty link preview for url: $link');
+      }
     } catch (error) {
       debugLog('Failed to retrieve link preview for url: $link');
+      _onError(error);
       throw error;
     } finally {
       _fetchLinkPreviewOperation = null;
       _setLinkPreviewRequestInProgress(false);
     }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _setErrorMessage(error.toHumanReadableMessage());
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _setErrorMessage(errorMessage);
+    } else if (error is EmptyLinkToPreview) {
+      _setErrorMessage(_localizationService.post_body_link_preview__empty);
+    } else {
+      _setErrorMessage(_localizationService.error__unknown_error);
+      throw error;
+    }
+  }
+
+  void _setErrorMessage(String errorMessage) {
+    setState(() {
+      _errorMessage = errorMessage;
+    });
   }
 
   void _setLinkPreviewRequestInProgress(bool previewRequestInProgress) {
