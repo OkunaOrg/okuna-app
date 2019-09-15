@@ -86,23 +86,21 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: OBHighlightedBox(
-          child: AnimatedSwitcher(
-            duration: Duration(milliseconds: 300),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: _linkPreviewRequestInProgress || _linkPreview == null
-                      ? _errorMessage != null
-                          ? _buildErrorMessage()
-                          : _buildRequestInProgress()
-                      : _buildLinkPreview(),
-                )
-              ],
-            ),
+      child: OBHighlightedBox(
+        borderRadius: BorderRadius.circular(10),
+        child: AnimatedSwitcher(
+          duration: Duration(milliseconds: 300),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: _linkPreviewRequestInProgress || _linkPreview == null
+                    ? _errorMessage != null
+                        ? _buildErrorMessage()
+                        : _buildRequestInProgress()
+                    : _buildLinkPreview(),
+              )
+            ],
           ),
         ),
       ),
@@ -126,7 +124,10 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 150),
-              child: OBText(_errorMessage, textAlign: TextAlign.center,),
+              child: OBText(
+                _errorMessage,
+                textAlign: TextAlign.center,
+              ),
             )
           ],
         ),

@@ -35,12 +35,13 @@ class LinkPreviewService {
 
   String _trustedProxyUrl = '';
 
-  LinkPreviewService(){
+  LinkPreviewService() {
     _initPublicSuffixes();
   }
 
   void _initPublicSuffixes() async {
-    String publicSuffixes = await rootBundle.loadString('assets/other/public_suffix_list.dat');
+    String publicSuffixes =
+        await rootBundle.loadString('assets/other/public_suffix_list.dat');
     SuffixRules.initFromString(publicSuffixes);
   }
 
@@ -69,8 +70,9 @@ class LinkPreviewService {
 
     if (matches.length > 0) {
       String foundUrl = matches[0];
-      PublicSuffix parsedUrl = PublicSuffix.fromString(foundUrl);
-      if (allowedDomains.contains(parsedUrl.domain)) previewUrl = foundUrl;
+      String normalisedUrl = _normaliseLink(foundUrl);
+      PublicSuffix parsedUrl = PublicSuffix.fromString(normalisedUrl);
+      if (allowedDomains.contains(parsedUrl.domain)) previewUrl = normalisedUrl;
     }
     return previewUrl;
   }
@@ -139,7 +141,7 @@ class LinkPreviewService {
         if (ogTagValue == null || ogTagValue.isEmpty) {
           // Image fallback
           var imgElements = document.body.getElementsByTagName("img");
-          if (imgElements.isNotEmpty)
+          if (imgElements != null && imgElements.isNotEmpty)
             ogTagValue = imgElements?.first?.attributes["src"];
         }
         linkPreviewImageUrl = ogTagValue;

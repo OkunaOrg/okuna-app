@@ -15,10 +15,13 @@ class OBPostBodyLinkPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Post>(
-        stream: post.updateSubject,
-        initialData: post,
-        builder: _buildLinkPreview);
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: StreamBuilder<Post>(
+          stream: post.updateSubject,
+          initialData: post,
+          builder: _buildLinkPreview),
+    );
   }
 
   Widget _buildLinkPreview(BuildContext context, AsyncSnapshot<Post> snapshot) {
