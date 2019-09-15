@@ -35,6 +35,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
+import 'package:async/async.dart';
 
 class SavePostModal extends StatefulWidget {
   final Community community;
@@ -54,6 +55,7 @@ class SavePostModal extends StatefulWidget {
 
 class SavePostModalState extends State<SavePostModal> {
   ValidationService _validationService;
+  UserService _userService;
   NavigationService _navigationService;
   MediaService _mediaService;
   ToastService _toastService;
@@ -92,6 +94,9 @@ class SavePostModalState extends State<SavePostModal> {
   bool _isSearchingAccount;
   bool _isEditingPost;
 
+  bool _saveInProgress;
+  CancelableOperation _saveOperation;
+
   @override
   void initState() {
     super.initState();
@@ -101,12 +106,12 @@ class SavePostModalState extends State<SavePostModal> {
     _focusNode = FocusNode();
     _hasFocus = false;
     _linkPreviewUrl = '';
-
     _postItemsWidgets = [
       OBCreatePostText(controller: _textController, focusNode: _focusNode)
     ];
 
     if (_isEditingPost) {
+      _saveInProgress = false;
       _textController.text = widget.post?.text ?? '';
       if (widget.post.hasMedia()) {
         PostMedia postMedia = widget.post.getFirstMedia();
@@ -118,8 +123,8 @@ class SavePostModalState extends State<SavePostModal> {
           _hasVideo = false;
         }
       } else {
-        _hasVideo = false;
-        _hasImage = false;
+        _hasVideo = true;
+        _hasImage = true;
       }
     } else {
       if (widget.text != null) {
@@ -159,6 +164,7 @@ class SavePostModalState extends State<SavePostModal> {
     super.dispose();
     _textController.removeListener(_onPostTextChanged);
     _focusNode.removeListener(_onFocusNodeChanged);
+    _saveOperation?.cancel();
   }
 
   @override
@@ -173,6 +179,7 @@ class SavePostModalState extends State<SavePostModal> {
       _toastService = openbookProvider.toastService;
       _textAccountAutocompletionService =
           openbookProvider.textAccountAutocompletionService;
+      _userService = openbookProvider.userService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -222,7 +229,9 @@ class SavePostModalState extends State<SavePostModal> {
           Navigator.pop(context);
         },
       ),
-      title: _localizationService.trans('post__create_new'),
+      title: _isEditingPost
+          ? _localizationService.post__edit_title
+          : _localizationService.trans('post__create_new'),
       trailing:
           _buildPrimaryActionButton(isEnabled: isPrimaryActionButtonIsEnabled),
     );
@@ -231,7 +240,15 @@ class SavePostModalState extends State<SavePostModal> {
   Widget _buildPrimaryActionButton({bool isEnabled}) {
     Widget nextButton;
 
-    if (widget.community != null) {
+    if (_isEditingPost) {
+      return OBButton(
+          type: OBButtonType.primary,
+          child: Text(_localizationService.post__edit_save),
+          size: OBButtonSize.small,
+          onPressed: _savePost,
+          isDisabled: !isEnabled || _saveInProgress,
+          isLoading: _saveInProgress);
+    } else if (widget.community != null) {
       return OBButton(
           type: OBButtonType.primary,
           child: Text(_localizationService.trans('post__share')),
@@ -476,6 +493,22 @@ class SavePostModalState extends State<SavePostModal> {
     Navigator.pop(context, newPostData);
   }
 
+  void _savePost() async {
+    _setSaveInProgress(true);
+    Post editedPost;
+    try {
+      _saveOperation = CancelableOperation.fromFuture(_userService.editPost(
+          postUuid: widget.post.uuid, text: _textController.text));
+
+      editedPost = await _saveOperation.value;
+      Navigator.pop(context, editedPost);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setSaveInProgress(false);
+    }
+  }
+
   void _checkForLinkPreview() async {
     if (_hasImage || _hasVideo) return;
     String text = _textController.text;
@@ -609,6 +642,12 @@ class SavePostModalState extends State<SavePostModal> {
   void _setPostItemsWidgets(List<Widget> postItemsWidgets) {
     setState(() {
       _postItemsWidgets = postItemsWidgets;
+    });
+  }
+
+  void _setSaveInProgress(bool saveInProgress) {
+    setState(() {
+      _saveInProgress = saveInProgress;
     });
   }
 
