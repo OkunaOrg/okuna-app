@@ -162,7 +162,10 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       }
     }
 
-    _timelinePageController.createPost(text: text, image: image);
+    if (await _timelinePageController.createPost(text: text, image: image)) {
+      _timelinePageController.popUntilFirstRoute();
+      _navigateToTab(OBHomePageTabs.timeline);
+    }
   }
 
   Widget _getPageForTabIndex(int index) {
