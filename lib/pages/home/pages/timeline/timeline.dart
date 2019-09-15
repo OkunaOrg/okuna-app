@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/follows_list.dart';
@@ -112,15 +113,7 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                       label: _localizationService.post__create_new_post_label,
                       child: OBFloatingActionButton(
                           type: OBButtonType.primary,
-                          onPressed: () async {
-                            OBNewPostData createPostData = await _modalService
-                                .openCreatePost(context: context);
-                            if (createPostData != null) {
-                              addNewPostData(createPostData);
-                              _timelinePostsStreamController.scrollToTop(
-                                  skipRefresh: true);
-                            }
-                          },
+                          onPressed: _onCreatePost,
                           child: const OBIcon(OBIcons.createPost,
                               size: OBIconSize.large, color: Colors.white))))
             ],
@@ -201,6 +194,16 @@ class OBTimelinePageState extends State<OBTimelinePage> {
         .posts;
 
     return morePosts;
+  }
+
+  Future<void> _onCreatePost({String text, File image}) async {
+    OBNewPostData createPostData = await _modalService
+        .openCreatePost(text: text, image: image, context: context);
+    if (createPostData != null) {
+      addNewPostData(createPostData);
+      _timelinePostsStreamController.scrollToTop(
+          skipRefresh: true);
+    }
   }
 
   Future<void> setFilters(
@@ -284,6 +287,10 @@ class OBTimelinePageController extends PoppablePageController {
 
   List<FollowsList> getFilteredFollowsLists() {
     return _state.getFilteredFollowsLists();
+  }
+
+  Future<void> createPost({String text, File image}) {
+    return _state._onCreatePost(text: text, image: image);
   }
 
   void scrollToTop() {

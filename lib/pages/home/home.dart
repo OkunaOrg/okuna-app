@@ -161,7 +161,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         return;
       }
     }
-    _modalService.openCreatePost(context: context, text: text, image: image);
+
+    _timelinePageController.createPost(text: text, image: image);
   }
 
   Widget _getPageForTabIndex(int index) {
