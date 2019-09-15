@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
 import 'package:flutter\_localizations/flutter\_localizations.dart';
-import 'package:public_suffix/public_suffix_browser.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 

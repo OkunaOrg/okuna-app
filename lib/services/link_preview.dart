@@ -5,9 +5,8 @@ import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
-import 'package:public_suffix/public_suffix.dart';
-import 'package:public_suffix/public_suffix_browser.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:public_suffix/public_suffix_io.dart';
 
 class LinkPreviewService {
   // We should retrieve these and cache them from the server once in a while
@@ -42,7 +41,6 @@ class LinkPreviewService {
 
   void _initPublicSuffixes() async {
     String publicSuffixes = await rootBundle.loadString('assets/other/public_suffix_list.dat');
-    print(publicSuffixes);
     SuffixRules.initFromString(publicSuffixes);
   }
 
