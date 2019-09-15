@@ -5,6 +5,7 @@ import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controll
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
+import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Okuna/services/localization.dart';
@@ -57,6 +58,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   UserPreferencesService _userPreferencesService;
   ToastService _toastService;
   ThemeService _themeService;
+  LinkPreviewService _linkPreviewService;
   LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   Post _post;
@@ -141,6 +143,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       _themeValueParserService = provider.themeValueParserService;
       _themeService = provider.themeService;
       _localizationService = provider.localizationService;
+      _linkPreviewService = provider.linkPreviewService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -688,6 +691,12 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           finalTextHeight +
           finalMediaScreenHeight +
           TOTAL_FIXED_OFFSET_Y;
+
+      if (widget.post.text != null &&
+          _linkPreviewService.hasLinkPreviewUrl(widget.post.text)) {
+        // Approx height of link preview without image..
+        finalPostHeight += 150;
+      }
     }
 
     // linked comment
