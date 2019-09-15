@@ -1,51 +1,58 @@
 import 'dart:io';
 
+import 'package:Okuna/models/post_video.dart';
+import 'package:Okuna/models/video_format.dart';
 import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBPostVideoPreview extends StatelessWidget {
-  final File postVideo;
+  final File postVideoFile;
+  final PostVideo postVideo;
   final VoidCallback onRemove;
   final double buttonSize = 30.0;
-  final double size ;
+  final double playIconSize;
+  static double avatarBorderRadius = 10.0;
 
-  OBPostVideoPreview(this.postVideo, {this.onRemove, this.size=100});
+  OBPostVideoPreview(
+      {this.onRemove, this.postVideoFile, this.playIconSize, this.postVideo});
 
   @override
   Widget build(BuildContext context) {
-    double avatarBorderRadius = 10.0;
+    bool isFileVideo = postVideoFile != null;
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
+    Widget videoPreview = isFileVideo
+        ? FutureBuilder<File>(
+            future: openbookProvider.mediaPickerService
+                .getVideoThumbnail(postVideoFile),
+            builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+              if (snapshot.data == null) return const SizedBox();
 
-    Widget videoPreview = FutureBuilder<File>(
-        future: openbookProvider.mediaPickerService.getVideoThumbnail(postVideo),
-        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-          if (snapshot.data == null) return const SizedBox();
-
-          return SizedBox(
-            height: 200.0,
-            width: 200,
-            child: ClipRRect(
-              borderRadius: new BorderRadius.circular(avatarBorderRadius),
-              child: Image.file(
+              return _wrapImageWidgetForThumbnail(Image.file(
                 snapshot.data,
                 fit: BoxFit.cover,
-              ),
-            ),
-          );
-        });
-
-    if (onRemove == null) return videoPreview;
+              ));
+            })
+        : _wrapImageWidgetForThumbnail(Image(
+            fit: BoxFit.cover,
+            image: AdvancedNetworkImage(postVideo.thumbnail,
+                useDiskCache: true,
+                fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+                retryLimit: 0),
+          ));
 
     return Stack(
       children: <Widget>[
         videoPreview,
-        Positioned(
-          top: 10,
-          right: 10,
-          child: _buildRemoveButton(),
-        ),
+        onRemove != null
+            ? Positioned(
+                top: 10,
+                right: 10,
+                child: _buildRemoveButton(),
+              )
+            : const SizedBox(),
         Positioned(
           top: 0,
           right: 0,
@@ -56,6 +63,16 @@ class OBPostVideoPreview extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _wrapImageWidgetForThumbnail(Widget image) {
+    return SizedBox(
+      height: 200.0,
+      width: 200,
+      child: ClipRRect(
+          borderRadius: new BorderRadius.circular(avatarBorderRadius),
+          child: image),
     );
   }
 
@@ -84,8 +101,8 @@ class OBPostVideoPreview extends StatelessWidget {
         _onWantsToPlay(context);
       },
       child: SizedBox(
-          width: size,
-          height: size,
+          width: playIconSize,
+          height: playIconSize,
           child: Center(
             child: Icon(
               Icons.play_circle_filled,
@@ -99,7 +116,16 @@ class OBPostVideoPreview extends StatelessWidget {
   void _onWantsToPlay(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
-    openbookProvider.dialogService
-        .showVideo(context: context, video: postVideo, autoPlay:true);
+    String postVideoUrl;
+
+    if (postVideo != null)
+      postVideoUrl =
+          postVideo.getVideoFormatOfType(OBVideoFormatType.mp4SD).file;
+
+    openbookProvider.dialogService.showVideo(
+        context: context,
+        video: postVideoFile,
+        autoPlay: true,
+        videoUrl: postVideoUrl);
   }
 }

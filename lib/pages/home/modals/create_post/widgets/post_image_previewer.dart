@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:Okuna/models/post_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class OBPostImagePreviewer extends StatelessWidget {
-  final File postImage;
+  final PostImage postImage;
+  final File postImageFile;
   final VoidCallback onRemove;
   final VoidCallback onWillEditImage;
 
@@ -12,24 +15,37 @@ class OBPostImagePreviewer extends StatelessWidget {
 
   final double buttonSize = 30.0;
 
-  OBPostImagePreviewer(this.postImage,
-      {this.onRemove, @required this.onPostImageEdited, this.onWillEditImage});
+  OBPostImagePreviewer(
+      {this.onRemove,
+      @required this.onPostImageEdited,
+      this.onWillEditImage,
+      this.postImageFile,
+      this.postImage});
 
   @override
   Widget build(BuildContext context) {
     double avatarBorderRadius = 10.0;
 
+    bool isFileImage = postImageFile != null;
+
     var imagePreview = SizedBox(
-      height: 200.0,
-      width: 200,
-      child: ClipRRect(
-        borderRadius: new BorderRadius.circular(avatarBorderRadius),
-        child: Image.file(
-          postImage,
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
+        height: 200.0,
+        width: 200,
+        child: ClipRRect(
+            borderRadius: new BorderRadius.circular(avatarBorderRadius),
+            child: isFileImage
+                ? Image.file(
+                    postImageFile,
+                    fit: BoxFit.cover,
+                  )
+                : Image(
+                    fit: BoxFit.cover,
+                    image: AdvancedNetworkImage(postImage.image,
+                        useDiskCache: true,
+                        fallbackAssetImage:
+                            'assets/images/fallbacks/post-fallback.png',
+                        retryLimit: 0),
+                  )));
 
     if (onRemove == null) return imagePreview;
 
@@ -41,11 +57,13 @@ class OBPostImagePreviewer extends StatelessWidget {
           right: 10,
           child: _buildRemoveButton(),
         ),
-        Positioned(
-          bottom: 10,
-          left: 10,
-          child: _buildEditButton(),
-        ),
+        isFileImage
+            ? Positioned(
+                bottom: 10,
+                left: 10,
+                child: _buildEditButton(),
+              )
+            : const SizedBox()
       ],
     );
   }
@@ -98,7 +116,7 @@ class OBPostImagePreviewer extends StatelessWidget {
       toolbarColor: Colors.black,
       statusBarColor: Colors.black,
       toolbarWidgetColor: Colors.white,
-      sourcePath: postImage.path,
+      sourcePath: postImageFile.path,
     );
 
     if (croppedFile != null) onPostImageEdited(croppedFile);

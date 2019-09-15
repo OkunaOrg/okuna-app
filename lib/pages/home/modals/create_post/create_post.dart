@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:Okuna/models/community.dart';
-import 'package:Okuna/models/post_preview_link_data.dart';
+import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_image.dart';
+import 'package:Okuna/models/post_media.dart';
+import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/create_post/widgets/post_community_previewer.dart';
@@ -33,21 +36,23 @@ import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 
-class CreatePostModal extends StatefulWidget {
+class SavePostModal extends StatefulWidget {
   final Community community;
   final String text;
   final File image;
+  final Post post;
 
-  const CreatePostModal({Key key, this.community, this.text, this.image})
+  const SavePostModal(
+      {Key key, this.community, this.text, this.image, this.post})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return CreatePostModalState();
+    return SavePostModalState();
   }
 }
 
-class CreatePostModalState extends State<CreatePostModal> {
+class SavePostModalState extends State<SavePostModal> {
   ValidationService _validationService;
   NavigationService _navigationService;
   MediaService _mediaService;
@@ -64,8 +69,14 @@ class CreatePostModalState extends State<CreatePostModal> {
   bool _hasFocus;
   bool _hasImage;
   bool _hasVideo;
-  File _postImage;
-  File _postVideo;
+
+  // When creating a post
+  File _postImageFile;
+  File _postVideoFile;
+
+  // When editing a post
+  PostImage _postImage;
+  PostVideo _postVideo;
 
   VoidCallback _postImageWidgetRemover;
   VoidCallback _postVideoWidgetRemover;
@@ -79,39 +90,68 @@ class CreatePostModalState extends State<CreatePostModal> {
   TextAccountAutocompletionService _textAccountAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
   bool _isSearchingAccount;
+  bool _isEditingPost;
 
   @override
   void initState() {
     super.initState();
+    _isEditingPost = widget.post != null;
+
     _textController = TextEditingController();
-    if (widget.text != null) {
-      _textController.text = widget.text;
-    }
-    _textController.addListener(_onPostTextChanged);
     _focusNode = FocusNode();
-    _focusNode.addListener(_onFocusNodeChanged);
     _hasFocus = false;
-    _charactersCount = 0;
     _linkPreviewUrl = '';
-    _isPostTextAllowedLength = false;
-    _hasImage = false;
-    _hasVideo = false;
+
     _postItemsWidgets = [
       OBCreatePostText(controller: _textController, focusNode: _focusNode)
     ];
 
-    if (widget.community != null)
-      _postItemsWidgets.add(OBPostCommunityPreviewer(
-        community: widget.community,
-      ));
-    if (widget.image != null) {
-      _setPostImage(widget.image);
+    if (_isEditingPost) {
+      _textController.text = widget.post?.text ?? '';
+      if (widget.post.hasMedia()) {
+        PostMedia postMedia = widget.post.getFirstMedia();
+        if (postMedia.type == PostMediaType.video) {
+          _setPostVideo(postMedia.contentObject as PostVideo);
+          _hasImage = false;
+        } else {
+          _setPostImage(postMedia.contentObject as PostImage);
+          _hasVideo = false;
+        }
+      } else {
+        _hasVideo = false;
+        _hasImage = false;
+      }
+    } else {
+      if (widget.text != null) {
+        _textController.text = widget.text;
+      }
+      _hasImage = false;
+      _hasVideo = false;
+      if (widget.community != null)
+        _postItemsWidgets.add(OBPostCommunityPreviewer(
+          community: widget.community,
+        ));
+      if (widget.image != null) {
+        _setPostImageFile(widget.image);
+      }
     }
+
+    _isPostTextAllowedLength = false;
+    _charactersCount = _textController.text.length;
+
     _isCreateCommunityPostInProgress = false;
     _contextualAccountSearchBoxController =
         OBContextualAccountSearchBoxController();
     _isSearchingAccount = false;
     _needsBootstrap = true;
+
+    _textController.addListener(_onPostTextChanged);
+    _focusNode.addListener(_onFocusNodeChanged);
+  }
+
+  void _bootstrap() {
+    _isPostTextAllowedLength =
+        _validationService.isPostTextAllowedLength(_textController.text);
   }
 
   @override
@@ -133,6 +173,7 @@ class CreatePostModalState extends State<CreatePostModal> {
       _toastService = openbookProvider.toastService;
       _textAccountAutocompletionService =
           openbookProvider.textAccountAutocompletionService;
+      _bootstrap();
       _needsBootstrap = false;
     }
 
@@ -321,9 +362,9 @@ class CreatePostModalState extends State<CreatePostModal> {
               if (photoIsGif) {
                 File gifVideo =
                     await _mediaService.convertGifToVideo(pickedPhoto);
-                _setPostVideo(gifVideo);
+                _setPostVideoFile(gifVideo);
               } else {
-                _setPostImage(pickedPhoto);
+                _setPostImageFile(pickedPhoto);
               }
             }
           } catch (error) {
@@ -339,7 +380,7 @@ class CreatePostModalState extends State<CreatePostModal> {
           _unfocusTextField();
           try {
             File pickedVideo = await _mediaService.pickVideo(context: context);
-            if (pickedVideo != null) _setPostVideo(pickedVideo);
+            if (pickedVideo != null) _setPostVideoFile(pickedVideo);
           } catch (error) {
             _onError(error);
           }
@@ -363,43 +404,71 @@ class CreatePostModalState extends State<CreatePostModal> {
     _hasFocus = _focusNode.hasFocus;
   }
 
-  void _setPostImage(File image) {
+  void _setPostImageFile(File image) {
     setState(() {
-      this._postImage = image;
+      this._postImageFile = image;
       _hasImage = true;
 
       var postImageWidget = OBPostImagePreviewer(
-        _postImage,
+        postImageFile: _postImageFile,
         onRemove: () {
-          _removePostImage();
+          _removePostImageFile();
         },
         onWillEditImage: () {
           _unfocusTextField();
         },
         onPostImageEdited: (File editedImage) {
-          _removePostImage();
-          _setPostImage(editedImage);
+          _removePostImageFile();
+          _setPostImageFile(editedImage);
         },
       );
 
       _postImageWidgetRemover = _addPostItemWidget(postImageWidget);
     });
+
+    _clearLinkPreviewUrl();
   }
 
-  void _setPostVideo(File video) {
+  void _setPostVideoFile(File video) {
     setState(() {
-      this._postVideo = video;
+      this._postVideoFile = video;
       _hasVideo = true;
 
       var postVideoWidget = OBPostVideoPreview(
-        _postVideo,
+        postVideoFile: _postVideoFile,
         onRemove: () {
-          _removePostVideo();
+          _removePostVideoFile();
         },
       );
 
       _postVideoWidgetRemover = _addPostItemWidget(postVideoWidget);
     });
+
+    _clearLinkPreviewUrl();
+  }
+
+  void _setPostVideo(PostVideo postVideo) {
+    // To be called on init only, therefore no setState
+    _hasVideo = true;
+    _postVideo = postVideo;
+
+    var postVideoWidget = OBPostVideoPreview(
+      postVideo: _postVideo,
+    );
+
+    _addPostItemWidget(postVideoWidget);
+  }
+
+  void _setPostImage(PostImage postImage) {
+    // To be called on init only, therefore no setState
+    _hasImage = true;
+    _postImage = postImage;
+
+    var postImageWidget = OBPostImagePreviewer(
+      postImage: _postImage,
+    );
+
+    _addPostItemWidget(postImageWidget);
   }
 
   Future<void> _createCommunityPost() async {
@@ -408,6 +477,7 @@ class CreatePostModalState extends State<CreatePostModal> {
   }
 
   void _checkForLinkPreview() async {
+    if (_hasImage || _hasVideo) return;
     String text = _textController.text;
 
     String linkPreviewUrl = _linkPreviewService.checkForLinkPreviewUrl(text);
@@ -472,12 +542,6 @@ class CreatePostModalState extends State<CreatePostModal> {
     });
   }
 
-  void _setCreateCommunityPostInProgress(bool createCommunityPostInProgress) {
-    setState(() {
-      _isCreateCommunityPostInProgress = createCommunityPostInProgress;
-    });
-  }
-
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
@@ -498,17 +562,17 @@ class CreatePostModalState extends State<CreatePostModal> {
     }
   }
 
-  void _removePostImage() {
+  void _removePostImageFile() {
     setState(() {
-      if (this._postImage != null) this._postImage.delete();
+      if (this._postImageFile != null) this._postImageFile.delete();
       _hasImage = false;
       _postImageWidgetRemover();
     });
   }
 
-  void _removePostVideo() {
+  void _removePostVideoFile() {
     setState(() {
-      if (this._postVideo != null) this._postVideo.delete();
+      if (this._postVideoFile != null) this._postVideoFile.delete();
       _hasVideo = false;
       _postVideoWidgetRemover();
     });
@@ -516,8 +580,8 @@ class CreatePostModalState extends State<CreatePostModal> {
 
   OBNewPostData _makeNewPostData() {
     List<File> media = [];
-    if (_postImage != null) media.add(_postImage);
-    if (_postVideo != null) media.add(_postVideo);
+    if (_postImageFile != null) media.add(_postImageFile);
+    if (_postVideoFile != null) media.add(_postVideoFile);
 
     return OBNewPostData(
         text: _textController.text, media: media, community: widget.community);

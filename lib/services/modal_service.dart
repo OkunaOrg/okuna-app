@@ -11,7 +11,6 @@ import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/pages/home/modals/accept_guidelines/accept_guidelines.dart';
-import 'package:Okuna/pages/home/modals/edit_post/edit_post.dart';
 import 'package:Okuna/pages/home/modals/invite_to_community.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_comment_reply_expanded.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_commenter_expanded.dart';
@@ -56,7 +55,7 @@ class ModalService {
                 fullscreenDialog: true,
                 builder: (BuildContext context) {
                   return Material(
-                    child: CreatePostModal(
+                    child: SavePostModal(
                       community: community,
                       text: text,
                       image: image,
@@ -74,7 +73,7 @@ class ModalService {
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
-                child: EditPostModal(
+                child: SavePostModal(
                   post: post,
                 ),
               );
