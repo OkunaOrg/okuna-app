@@ -4,7 +4,10 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/top_post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
@@ -27,6 +30,7 @@ class OBTopPosts extends StatefulWidget {
 class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
+  NavigationService _navigationService;
   CancelableOperation _getTrendingPostsOperation;
   OBPostsStreamController _obPostsStreamController;
 
@@ -36,7 +40,6 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
 
   @override
   void initState() {
-    print('init state');
     super.initState();
     _obPostsStreamController = OBPostsStreamController();
     if (widget.controller != null) widget.controller.attach(this);
@@ -61,6 +64,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
+    _navigationService = openbookProvider.navigationService;
 
     return OBPostsStream(
       streamIdentifier: 'explorePostsTab',
@@ -72,9 +76,19 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
       prependedItems: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: OBPrimaryAccentText(
-              _localizationService.post__top_posts_title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            OBPrimaryAccentText(
+                _localizationService.post__top_posts_title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+            OBIconButton(
+              OBIcons.settings,
+              themeColor: OBIconThemeColor.primaryAccent,
+              onPressed: _onWantsToSeeExcludedCommunities,
+            )
+    ],
+          ),
         )
       ],
     );
@@ -98,6 +112,10 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
       inViewId: inViewId,
       isTopPost: true,
     );
+  }
+
+  void _onWantsToSeeExcludedCommunities() {
+    _navigationService.navigateToTopPostsExcludedCommunities(context: context);
   }
 
   void _onCommunityExcluded(Community community) {
