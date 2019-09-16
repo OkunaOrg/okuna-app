@@ -9,54 +9,54 @@ import 'dart:math';
 
 class OBPostBodyImage extends StatelessWidget {
   final PostImage postImage;
+  final bool hasExpandButton;
 
-  const OBPostBodyImage({Key key, this.postImage}) : super(key: key);
+  const OBPostBodyImage({Key key, this.postImage, this.hasExpandButton = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String imageUrl = postImage.image;
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double maxBoxHeight = screenHeight * .75;
 
-    double imageAspectRatio = postImage.width / postImage.height;
-    double imageHeight = (screenWidth / imageAspectRatio);
-    double boxHeight = min(imageHeight, maxBoxHeight);
+    List<Widget> stackItems = [_buildImageWidget(imageUrl)];
 
-    List<Widget> stackItems = [
-      _buildImageWidget(screenWidth, imageHeight, imageUrl)
-    ];
-
-    if (imageHeight > maxBoxHeight) {
+    if (hasExpandButton) {
       stackItems.add(_buildExpandIcon());
     }
 
-    return GestureDetector(
-        onTap: () {
-          var dialogService = OpenbookProvider.of(context).dialogService;
-          dialogService.showZoomablePhotoBoxView(
-              imageUrl: imageUrl, context: context);
-        },
-        child: SizedBox(
-          width: screenWidth,
-          height: boxHeight,
-          child: Stack(
-            children: stackItems,
-          ),
-        ));
+    return Row(
+      children: <Widget>[
+        Expanded(
+            child: GestureDetector(
+              child: Stack(
+                children: stackItems,
+              ),
+              onTap: () {
+                var dialogService = OpenbookProvider
+                    .of(context)
+                    .dialogService;
+                dialogService.showZoomablePhotoBoxView(
+                    imageUrl: imageUrl, context: context);
+              },
+            ))
+      ],
+    );
   }
 
-  Widget _buildImageWidget(double width, double height, String imageUrl) {
-    return Image(
-      width: width,
-      height: height,
-      fit: BoxFit.fitWidth,
-      alignment: Alignment.center,
-      image: AdvancedNetworkImage(imageUrl,
-          useDiskCache: true,
-          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-          retryLimit: 3,
-          timeoutDuration: const Duration(minutes: 1)),
+  Widget _buildImageWidget(String imageUrl) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+            child: Image(
+              fit: BoxFit.cover,
+              image: AdvancedNetworkImage(imageUrl,
+                  useDiskCache: true,
+                  fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+                  retryLimit: 3,
+                  timeoutDuration: const Duration(minutes: 1)),
+            ),
+        )
+      ],
     );
   }
 

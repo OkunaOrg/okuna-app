@@ -71,7 +71,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
 
   Widget _buildPostText() {
     return Padding(
-        padding: EdgeInsets.only(top: widget.post.media != null ? 20 : 0, left: 20, right: 20),
+        padding: EdgeInsets.only(top: widget.post.media != null ? 10 : 0, left: 20, right: 20),
         child: _buildActionablePostText());
   }
 
@@ -131,7 +131,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(bottom: 10),
         child: _translatedText != null
             ? OBSecondaryText(
                 _localizationService.trans('user__translate_show_original'),

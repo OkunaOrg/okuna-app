@@ -99,7 +99,13 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
       _needsBootstrap = false;
     }
 
-    return _buildVideoPlayer();
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: _buildVideoPlayer(),
+        )
+      ],
+    );
   }
 
   Widget _buildVideoPlayer() {
