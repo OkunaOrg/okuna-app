@@ -53,6 +53,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
   Timer _checkPostStatusTimer;
 
   CancelableOperation _getPostStatusOperation;
+  CancelableOperation _uploadPostOperation;
   OBNewPostData _data;
 
   @override
@@ -67,7 +68,8 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
   void dispose() {
     super.dispose();
     _ensurePostStatusTimerIsCancelled();
-    if (_getPostStatusOperation != null) _getPostStatusOperation.cancel();
+    _getPostStatusOperation?.cancel();
+    _uploadPostOperation?.cancel();
   }
 
   @override
@@ -129,7 +131,11 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
   }
 
   void _bootstrap() {
-    _uploadPost();
+    _startUpload();
+  }
+
+  void _startUpload() {
+    _uploadPostOperation = CancelableOperation.fromFuture(_uploadPost());
   }
 
   Future _uploadPost() async {
@@ -380,8 +386,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
         _status == OBPostUploaderStatus.addingPostMedia) return;
 
     debugLog('Retrying');
-
-    _uploadPost();
+    _startUpload();
   }
 
   void _onWantsToCancel() async {
@@ -423,15 +428,19 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
   }
 
   void _setStatus(OBPostUploaderStatus status) {
-    setState(() {
-      _status = status;
-    });
+    if (mounted) {
+      setState(() {
+        _status = status;
+      });
+    }
   }
 
   void _setStatusMessage(String statusMessage) {
-    setState(() {
-      _statusMessage = statusMessage;
-    });
+    if (mounted) {
+      setState(() {
+        _statusMessage = statusMessage;
+      });
+    }
   }
 
   void _ensurePostStatusTimerIsCancelled() {
