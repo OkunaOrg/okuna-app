@@ -162,9 +162,11 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
         break;
       case PostVideo:
         postMediaItemWidget = OBPostBodyVideo(
-            postVideo: postMediaItemContentObject,
-            post: widget.post,
-            inViewId: widget.inViewId);
+          postVideo: postMediaItemContentObject,
+          post: widget.post,
+          inViewId: widget.inViewId,
+          maxHeight: _mediaHeight,
+        );
         break;
       default:
         postMediaItemWidget = Center(

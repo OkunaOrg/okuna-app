@@ -26,6 +26,7 @@ class OBVideoPlayer extends StatefulWidget {
   final bool isInDialog;
   final bool autoPlay;
   final OBVideoPlayerController controller;
+  final double maxHeight;
 
   const OBVideoPlayer(
       {Key key,
@@ -37,6 +38,7 @@ class OBVideoPlayer extends StatefulWidget {
       this.isInDialog = false,
       this.autoPlay = false,
       this.visibilityKey,
+      this.maxHeight,
       this.controller})
       : super(key: key);
 
@@ -157,6 +159,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
             key: _visibilityKey,
             onVisibilityChanged: _onVisibilityChanged,
             child: Chewie(
+              maxHeight: widget.maxHeight,
               controller: _chewieController,
             ),
           );
@@ -255,7 +258,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     if (_hasVideoOpenedInDialog) return;
     bool isVisible = visibilityInfo.visibleFraction != 0;
 
-    debugLog('isVisible: ${isVisible.toString()} with fraction ${visibilityInfo.visibleFraction}');
+    debugLog(
+        'isVisible: ${isVisible.toString()} with fraction ${visibilityInfo.visibleFraction}');
 
     if (!isVisible && _playerController.value.isPlaying && mounted) {
       debugLog('Its not visible and the video is playing. Now pausing. .');

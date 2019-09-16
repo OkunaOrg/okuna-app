@@ -12,11 +12,12 @@ import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:async/async.dart';
 
 class OBPostBodyVideo extends StatefulWidget {
+  final double maxHeight;
   final Post post;
   final PostVideo postVideo;
   final String inViewId;
 
-  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId})
+  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId, this.maxHeight})
       : super(key: key);
 
   @override
@@ -117,6 +118,7 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     return OBVideoPlayer(
       videoUrl: videoUrl,
       thumbnailUrl: widget.postVideo.thumbnail,
+      maxHeight: widget.maxHeight,
       controller: _obVideoPlayerController,
     );
   }
