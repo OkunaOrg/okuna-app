@@ -40,6 +40,10 @@ class HttpieService {
     authorizationToken = token;
   }
 
+  String getAuthorizationToken() {
+    return authorizationToken;
+  }
+
   void removeAuthorizationToken() {
     authorizationToken = null;
   }

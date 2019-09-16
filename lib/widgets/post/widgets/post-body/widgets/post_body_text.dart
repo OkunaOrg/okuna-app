@@ -131,7 +131,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(),
         child: _translatedText != null
             ? OBSecondaryText(
                 _localizationService.trans('user__translate_show_original'),

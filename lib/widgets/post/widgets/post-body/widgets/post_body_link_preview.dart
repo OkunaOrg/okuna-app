@@ -22,8 +22,6 @@ class OBPostBodyLinkPreview extends StatelessWidget {
   }
 
   Widget _buildLinkPreview(BuildContext context, AsyncSnapshot<Post> snapshot) {
-
-    print('Rebuilding item');
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     String newLink =
         openbookProvider.linkPreviewService.checkForLinkPreviewUrl(post.text);

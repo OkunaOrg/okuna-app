@@ -4,6 +4,7 @@ import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/url_launcher.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
@@ -38,6 +39,8 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   UrlLauncherService _urlLauncherService;
   LocalizationService _localizationService;
 
+  HttpieService _httpieService;
+
   bool _linkPreviewRequestInProgress;
   CancelableOperation _fetchLinkPreviewOperation;
 
@@ -54,9 +57,10 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
 
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
-    bool hasNewLinkPreview = oldWidget.linkPreview != null && oldWidget.linkPreview != widget.linkPreview;
+    bool hasNewLinkPreview = oldWidget.linkPreview != null &&
+        oldWidget.linkPreview != widget.linkPreview;
     bool hasNewLink = oldWidget.link != null && oldWidget.link != widget.link;
-    if(hasNewLink || hasNewLinkPreview){
+    if (hasNewLink || hasNewLinkPreview) {
       _needsBootstrap = true;
       _linkPreview = widget.linkPreview;
       _linkPreviewRequestInProgress = true;
@@ -84,6 +88,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       _linkPreviewService = openbookProvider.linkPreviewService;
       _urlLauncherService = openbookProvider.urlLauncherService;
       _localizationService = openbookProvider.localizationService;
+      _httpieService = openbookProvider.httpService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -175,32 +180,27 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
         alignment: Alignment.center,
       );
     } else {
-      previewWidget = TransitionToImage(
-        loadingWidget: SizedBox(
-          child: Center(
-            child: const OBProgressIndicator(),
-          ),
+      String proxiedImageUrl =
+          _linkPreviewService.getProxiedLink(_linkPreview.imageUrl);
+      String proxyAuthToken = _httpieService.getAuthorizationToken();
+      previewWidget = Semantics(
+        label: 'Link preview image',
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AdvancedNetworkImage(proxiedImageUrl,
+                      header: {'Authorization': 'Token $proxyAuthToken'},
+                      useDiskCache: true,
+                      fallbackAssetImage:
+                          'assets/images/fallbacks/post-fallback.png',
+                      retryLimit: 3,
+                      timeoutDuration: const Duration(minutes: 1)))),
         ),
-        fit: BoxFit.cover,
-        alignment: Alignment.center,
-        image: AdvancedNetworkImage(
-          _linkPreview.imageUrl,
-          useDiskCache: false,
-          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-          retryLimit: 3,
-          timeoutDuration: const Duration(minutes: 1),
-        ),
-        duration: const Duration(milliseconds: 300),
       );
     }
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: previewWidget,
-        )
-      ],
-    );
+    return previewWidget;
   }
 
   Widget _buildPreviewBar() {

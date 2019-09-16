@@ -116,15 +116,15 @@ class LinkPreviewService {
       try {
         String secureLink = normalisedLink.replaceFirst('http', 'https');
         print('Secure Link $secureLink');
-        response = await _httpieService.get(_getProxiedLink(secureLink),
+        response = await _httpieService.get(getProxiedLink(secureLink),
             appendAuthorizationToken: appendAuthorizationHeader);
         normalisedLink = secureLink;
       } on HttpieRequestError {
-        response = await _httpieService.get(_getProxiedLink(normalisedLink),
+        response = await _httpieService.get(getProxiedLink(normalisedLink),
             appendAuthorizationToken: appendAuthorizationHeader);
       }
     } else {
-      response = await _httpieService.get(_getProxiedLink(normalisedLink),
+      response = await _httpieService.get(getProxiedLink(normalisedLink),
           appendAuthorizationToken: appendAuthorizationHeader);
     }
 
@@ -219,7 +219,7 @@ class LinkPreviewService {
     return 'http://${link}';
   }
 
-  String _getProxiedLink(String link) {
+  String getProxiedLink(String link) {
     return '$_trustedProxyUrl?$link';
   }
 
