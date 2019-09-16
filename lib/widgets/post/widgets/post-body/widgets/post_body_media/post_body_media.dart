@@ -180,7 +180,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   void _bootstrap() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double maxBoxHeight = screenHeight * .60;
+    double maxBoxHeight = screenHeight * .70;
 
     double imageAspectRatio = widget.post.mediaWidth / widget.post.mediaHeight;
     double imageHeight = (screenWidth / imageAspectRatio);
