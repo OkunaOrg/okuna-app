@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -125,8 +126,9 @@ public class MainActivity extends FlutterActivity {
 
     if (videoUri.getScheme().equals("file")) {
       result = videoUri;
-    } else {
-      File tempFile = createTemporaryFile("");
+    } else if (videoUri.getScheme().equals("content")){
+      String extension = getExtensionFromContentUri(videoUri);
+      File tempFile = createTemporaryFile("." + extension);
 
       try (InputStream in = this.getContentResolver().openInputStream(videoUri);
            OutputStream out = new FileOutputStream(tempFile)) {
@@ -143,6 +145,11 @@ public class MainActivity extends FlutterActivity {
     }
 
     return result;
+  }
+
+  private String getExtensionFromContentUri(Uri contentUri) {
+    String mime = this.getContentResolver().getType(contentUri);
+    return MimeTypeMap.getSingleton().getExtensionFromMimeType(mime);
   }
 
   private File createTemporaryFile(String extension) {
