@@ -648,19 +648,19 @@ class UserService {
     return Post.fromJson(json.decode(response.body));
   }
 
-  Future<String> excludePostCommunityFromTopPosts(Post post) async {
+  Future<String> excludePostCommunityFromTopPosts(Community community) async {
     HttpieResponse response =
         await _communitiesApiService.excludeCommunityFromTopPosts(
-            communityName: post.community.name);
+            communityName: community.name);
     _checkResponseIsAccepted(response);
 
     return (json.decode(response.body))['message'];
   }
 
-  Future<String> undoExcludePostCommunityFromTopPosts(Post post) async {
+  Future<String> undoExcludePostCommunityFromTopPosts(Community community) async {
     HttpieResponse response =
         await _communitiesApiService.undoExcludeCommunityFromTopPosts(
-            communityName: post.community.name);
+            communityName: community.name);
     _checkResponseIsAccepted(response);
 
     return (json.decode(response.body))['message'];
@@ -815,6 +815,21 @@ class UserService {
         await _authApiService.getBlockedUsers(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> searchExcludedCommunities(
+      {@required String query, int count}) async {
+    HttpieResponse response =
+        await _communitiesApiService.searchExcludedCommunities(query: query, count: count);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> getExcludedCommunities({int offset, int count}) async {
+    HttpieResponse response =
+        await _communitiesApiService.getExcludedCommunities(count: count, offset: offset);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
   }
 
   Future<UsersList> searchFollowers({@required String query, int count}) async {

@@ -46,6 +46,7 @@ import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_setting
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/top_posts_excluded_communities.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
@@ -732,6 +733,19 @@ class NavigationService {
           slidableKey: Key('blockedUsersPageRoute'),
           builder: (BuildContext context) {
             return OBBlockedUsersPage();
+          }),
+    );
+  }
+
+  Future<void> navigateToTopPostsExcludedCommunities({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('topPostsExcludedCommunitiesPageRoute'),
+          builder: (BuildContext context) {
+            return OBTopPostsExcludedCommunitiesPage();
           }),
     );
   }

@@ -1510,6 +1510,11 @@ class LocalizationService {
         name: 'community__adjectives_range_error');
   }
 
+  String get community__top_posts_excluded_communities {
+    return Intl.message("Excluded communities",
+        name: 'community__top_posts_excluded_communities');
+  }
+
   String get user_search__search_text {
     return Intl.message("Search...", name: 'user_search__search_text');
   }
