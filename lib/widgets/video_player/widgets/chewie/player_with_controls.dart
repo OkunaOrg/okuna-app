@@ -32,29 +32,30 @@ class PlayerWithControls extends StatelessWidget {
     double aspectRatio =
         chewieController.aspectRatio ?? _calculateAspectRatio(context);
 
+    double containerHeight = (screenWidth / aspectRatio);
+
     return Container(
-      height: maxHeight,
+      height: maxHeight ?? null,
       color: Colors.black,
       child: Stack(
         children: <Widget>[
           chewieController.placeholder ?? Container(),
           hasMaxHeight
               ? Positioned(
-                  top: -((screenHeight - maxHeight) / 2),
-                  height: screenHeight,
+                  top: -((containerHeight - maxHeight) / 2),
+                  height: containerHeight,
                   width: screenWidth,
-                  child: Container(
-                      color: Colors.blue,
-                      child: Hero(
-                        tag: chewieController.videoPlayerController,
-                        child: AspectRatio(
-                          aspectRatio: aspectRatio,
-                          child: Container(
-                            color: Colors.yellow,
-                            child: SizedBox(child: VideoPlayer(chewieController.videoPlayerController),),
-                          ),
-                        ),
-                      )))
+                  child: AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: Container(
+                      color: Colors.yellow,
+                      child: SizedBox(
+                        child: VideoPlayer(
+                            chewieController.videoPlayerController),
+                      ),
+                    ),
+                  ),
+                )
               : Center(
                   child: Hero(
                     tag: chewieController.videoPlayerController,
