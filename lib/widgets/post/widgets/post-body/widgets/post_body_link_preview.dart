@@ -15,16 +15,15 @@ class OBPostBodyLinkPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: StreamBuilder<Post>(
-          stream: post.updateSubject,
-          initialData: post,
-          builder: _buildLinkPreview),
-    );
+    return StreamBuilder<Post>(
+        stream: post.updateSubject,
+        initialData: post,
+        builder: _buildLinkPreview);
   }
 
   Widget _buildLinkPreview(BuildContext context, AsyncSnapshot<Post> snapshot) {
+
+    print('Rebuilding item');
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     String newLink =
         openbookProvider.linkPreviewService.checkForLinkPreviewUrl(post.text);
@@ -40,6 +39,7 @@ class OBPostBodyLinkPreview extends StatelessWidget {
   }
 
   void _onLinkPreviewRetrieved(LinkPreview linkPreview) {
+    print('Got new link, setting on post');
     post.setLinkPreview(linkPreview);
   }
 }

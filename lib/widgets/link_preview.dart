@@ -52,6 +52,17 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
     _linkPreviewRequestInProgress = true;
   }
 
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    bool hasNewLinkPreview = oldWidget.linkPreview != null && oldWidget.linkPreview != widget.linkPreview;
+    bool hasNewLink = oldWidget.link != null && oldWidget.link != widget.link;
+    if(hasNewLink || hasNewLinkPreview){
+      _needsBootstrap = true;
+      _linkPreview = widget.linkPreview;
+      _linkPreviewRequestInProgress = true;
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
