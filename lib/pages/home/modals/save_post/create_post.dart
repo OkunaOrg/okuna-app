@@ -41,10 +41,11 @@ class OBSavePostModal extends StatefulWidget {
   final Community community;
   final String text;
   final File image;
+  final File video;
   final Post post;
 
   const OBSavePostModal(
-      {Key key, this.community, this.text, this.image, this.post})
+      {Key key, this.community, this.text, this.image, this.video, this.post})
       : super(key: key);
 
   @override
@@ -138,6 +139,9 @@ class OBSavePostModalState extends State<OBSavePostModal> {
         ));
       if (widget.image != null) {
         _setPostImageFile(widget.image);
+      }
+      if (widget.video != null) {
+        _setPostVideoFile(widget.video);
       }
     }
 

@@ -196,9 +196,9 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     return morePosts;
   }
 
-  Future<bool> _onCreatePost({String text, File image}) async {
+  Future<bool> _onCreatePost({String text, File image, File video}) async {
     OBNewPostData createPostData = await _modalService
-        .openCreatePost(text: text, image: image, context: context);
+        .openCreatePost(text: text, image: image, video: video, context: context);
     if (createPostData != null) {
       addNewPostData(createPostData);
       _timelinePostsStreamController.scrollToTop(
@@ -293,8 +293,8 @@ class OBTimelinePageController extends PoppablePageController {
     return _state.getFilteredFollowsLists();
   }
 
-  Future<bool> createPost({String text, File image}) {
-    return _state._onCreatePost(text: text, image: image);
+  Future<bool> createPost({String text, File image, File video}) {
+    return _state._onCreatePost(text: text, image: image, video: video);
   }
 
   void scrollToTop() {

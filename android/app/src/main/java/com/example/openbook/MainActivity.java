@@ -7,8 +7,11 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +80,15 @@ public class MainActivity extends FlutterActivity {
       if (intent.getType().startsWith("image/")) {
         Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
         uri = copyImageToTempFile(uri);
-        args.put("path", uri.toString());
+        args.put("image", uri.toString());
+      } else if (intent.getType().startsWith("video/")) {
+        Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        uri = copyVideoToTempFileIfNeeded(uri);
+        if (uri != null) {
+          args.put("video", uri.toString());
+        } else {
+          return;
+        }
       } else if (intent.getType().startsWith("text/")) {
         args.put("text", intent.getStringExtra(Intent.EXTRA_TEXT));
       } else {
@@ -107,6 +118,31 @@ public class MainActivity extends FlutterActivity {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private Uri copyVideoToTempFileIfNeeded(Uri videoUri) {
+    Uri result = null;
+
+    if (videoUri.getScheme().equals("file")) {
+      result = videoUri;
+    } else {
+      File tempFile = createTemporaryFile("");
+
+      try (InputStream in = this.getContentResolver().openInputStream(videoUri);
+           OutputStream out = new FileOutputStream(tempFile)) {
+        byte[] data = new byte[1024];
+        int length;
+        while ((length = in.read(data)) > 0) {
+          out.write(data, 0, length);
+        }
+
+        result = Uri.fromFile(tempFile);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    return result;
   }
 
   private File createTemporaryFile(String extension) {

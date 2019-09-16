@@ -139,8 +139,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   void onShare(Share share) async {
     String text;
     File image;
-    if (share.path != null) {
-      image = File.fromUri(Uri.parse(share.path));
+    File video;
+    if (share.image != null) {
+      image = File.fromUri(Uri.parse(share.image));
       image = await _imagePickerService.processImage(image);
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {
@@ -148,6 +149,15 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
             _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
         _toastService.error(
             message: 'Image too large (limit: $limit MB)', context: context);
+        return;
+      }
+    }
+    if (share.video != null) {
+      video = File.fromUri(Uri.parse(share.video));
+      if (!await _validationService.isVideoAllowedSize(video)) {
+        int limit = _validationService.getAllowedVideoSize() ~/ 1048576;
+        _toastService.error(
+            message: 'Video too large (limit: $limit MB)', context: context);
         return;
       }
     }
@@ -162,7 +172,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       }
     }
 
-    if (await _timelinePageController.createPost(text: text, image: image)) {
+    if (await _timelinePageController.createPost(text: text, image: image, video: video)) {
       _timelinePageController.popUntilFirstRoute();
       _navigateToTab(OBHomePageTabs.timeline);
     }

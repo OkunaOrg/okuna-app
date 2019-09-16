@@ -48,7 +48,8 @@ class ModalService {
       {@required BuildContext context,
       Community community,
       String text,
-      File image}) async {
+      File image,
+      File video}) async {
     OBNewPostData createPostData =
         await Navigator.of(context, rootNavigator: true)
             .push(CupertinoPageRoute<OBNewPostData>(
@@ -59,6 +60,7 @@ class ModalService {
                       community: community,
                       text: text,
                       image: image,
+                      video: video,
                     ),
                   );
                 }));
