@@ -28,6 +28,7 @@ class LinkPreviewService {
     'golem.de',
     'sz.de',
     'theguardian.com',
+    'giphy.com',
   ];
 
   ValidationService _validationService;
@@ -70,9 +71,33 @@ class LinkPreviewService {
 
     if (matches.length > 0) {
       String foundUrl = matches[0];
-      String normalisedUrl = _normaliseLink(foundUrl);
-      PublicSuffix parsedUrl = PublicSuffix.fromString(normalisedUrl);
-      if (allowedDomains.contains(parsedUrl.domain)) previewUrl = normalisedUrl;
+      Uri parsedUri = Uri.parse(foundUrl);
+
+      bool isFileUrl;
+
+      if (parsedUri.pathSegments.isEmpty) {
+        isFileUrl = false;
+      } else {
+        String lastUrlPath = parsedUri.pathSegments.last;
+        List<String> lastUrlComponents = lastUrlPath.split('.');
+        if (lastUrlComponents.length == 1) {
+          isFileUrl = false;
+        } else {
+          String urlExtension = lastUrlComponents.last;
+          if (urlExtension.toLowerCase() != 'html') {
+            isFileUrl = true;
+          } else {
+            isFileUrl = false;
+          }
+        }
+      }
+
+      if (!isFileUrl) {
+        String normalisedUrl = _normaliseLink(foundUrl);
+        PublicSuffix parsedUrl = PublicSuffix.fromString(normalisedUrl);
+        if (allowedDomains.contains(parsedUrl.domain))
+          previewUrl = normalisedUrl;
+      }
     }
     return previewUrl;
   }

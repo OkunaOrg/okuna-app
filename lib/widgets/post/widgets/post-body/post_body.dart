@@ -23,17 +23,11 @@ class OBPostBody extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> bodyItems = [];
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-
     if (post.hasMediaThumbnail()) {
       bodyItems.add(OBPostBodyMedia(post: post, inViewId: inViewId));
     }
 
     if (post.hasText()) {
-      bodyItems.add(OBPostBodyText(
-        post,
-        onTextExpandedChange: onTextExpandedChange,
-      ));
-
       if (!post.hasMediaThumbnail() &&
           openbookProvider.linkPreviewService.hasLinkPreviewUrl(post.text)) {
         bodyItems.add(
@@ -43,6 +37,11 @@ class OBPostBody extends StatelessWidget {
           ),
         );
       }
+
+      bodyItems.add(OBPostBodyText(
+        post,
+        onTextExpandedChange: onTextExpandedChange,
+      ));
     }
 
     return Row(

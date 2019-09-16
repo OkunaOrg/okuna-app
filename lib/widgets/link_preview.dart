@@ -31,7 +31,7 @@ class OBLinkPreview extends StatefulWidget {
 
 class OBLinkPreviewState extends State<OBLinkPreview> {
   static double faviconSize = 16;
-  static double imagePreviewHeight = 200;
+  static double linkPreviewHeight = 300;
 
   LinkPreview _linkPreview;
   LinkPreviewService _linkPreviewService;
@@ -47,13 +47,6 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   @override
   void initState() {
     super.initState();
-    _needsBootstrap = true;
-    _linkPreview = widget.linkPreview;
-    _linkPreviewRequestInProgress = true;
-  }
-
-  void didUpdateWidget(oldWidget) {
-    super.didUpdateWidget(oldWidget);
     _needsBootstrap = true;
     _linkPreview = widget.linkPreview;
     _linkPreviewRequestInProgress = true;
@@ -84,36 +77,31 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       _needsBootstrap = false;
     }
 
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: OBHighlightedBox(
-          borderRadius: BorderRadius.circular(10),
-          child: AnimatedSwitcher(
-            duration: Duration(milliseconds: 300),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: _linkPreviewRequestInProgress || _linkPreview == null
-                      ? _errorMessage != null
-                          ? _buildErrorMessage()
-                          : _buildRequestInProgress()
-                      : _buildLinkPreview(),
-                )
-              ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10.0),
+      child: OBHighlightedBox(
+          child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              child: _linkPreviewRequestInProgress || _linkPreview == null
+                  ? _errorMessage != null
+                      ? _buildErrorMessage()
+                      : _buildRequestInProgress()
+                  : _buildLinkPreview(),
             ),
-          ),
-        ),
-      ),
+          )
+        ],
+      )),
     );
   }
 
   Widget _buildErrorMessage() {
     return SizedBox(
       // Estimated size of the preview bottom bar
-      height: 150,
+      height: linkPreviewHeight,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +115,10 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 150),
-              child: OBText(_errorMessage, textAlign: TextAlign.center,),
+              child: OBText(
+                _errorMessage,
+                textAlign: TextAlign.center,
+              ),
             )
           ],
         ),
@@ -136,22 +127,17 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   Widget _buildLinkPreview() {
-    List<Widget> previewItems = [];
-
-    if (_linkPreview.imageUrl != null) {
-      previewItems.add(Row(
-        children: <Widget>[
-          Expanded(
-            child: _buildPreviewImage(),
-          )
-        ],
-      ));
-    }
-
-    previewItems.add(_buildPreviewBar());
-
     return GestureDetector(
-      child: Column(children: previewItems),
+      child: SizedBox(
+          height: linkPreviewHeight,
+          child: Column(
+            children: [
+              Expanded(
+                child: _buildPreviewImage(),
+              ),
+              _buildPreviewBar()
+            ],
+          )),
       onTap: () {
         _urlLauncherService.launchUrl(_linkPreview.url);
       },
@@ -161,7 +147,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   Widget _buildRequestInProgress() {
     return SizedBox(
       // Estimated size of the preview bottom bar
-      height: 150,
+      height: 300,
       child: Center(
         child: OBProgressIndicator(),
       ),
@@ -169,22 +155,40 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   Widget _buildPreviewImage() {
-    return TransitionToImage(
-      loadingWidget: SizedBox(
-        height: imagePreviewHeight,
-        child: Center(
-          child: const OBProgressIndicator(),
+    Widget previewWidget;
+
+    if (_linkPreview.imageUrl == null) {
+      previewWidget = Image.asset(
+        'assets/images/fallbacks/post-fallback.png',
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
+      );
+    } else {
+      previewWidget = TransitionToImage(
+        loadingWidget: SizedBox(
+          child: Center(
+            child: const OBProgressIndicator(),
+          ),
         ),
-      ),
-      height: imagePreviewHeight,
-      fit: BoxFit.cover,
-      alignment: Alignment.center,
-      image: AdvancedNetworkImage(_linkPreview.imageUrl,
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
+        image: AdvancedNetworkImage(
+          _linkPreview.imageUrl,
           useDiskCache: false,
           fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
           retryLimit: 3,
-          timeoutDuration: const Duration(minutes: 1)),
-      duration: const Duration(milliseconds: 300),
+          timeoutDuration: const Duration(minutes: 1),
+        ),
+        duration: const Duration(milliseconds: 300),
+      );
+    }
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: previewWidget,
+        )
+      ],
     );
   }
 
@@ -221,7 +225,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
                   child: OBSecondaryText(
                     _linkPreview.description,
                     size: OBTextSize.mediumSecondary,
-                    maxLines: 3,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 )

@@ -12,6 +12,7 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/provider.dart';
@@ -695,7 +696,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       if (widget.post.text != null &&
           _linkPreviewService.hasLinkPreviewUrl(widget.post.text)) {
         // Approx height of link preview without image..
-        finalPostHeight += 150;
+        finalPostHeight += OBLinkPreviewState.linkPreviewHeight;
       }
     }
 
