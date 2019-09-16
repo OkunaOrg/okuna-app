@@ -5,7 +5,7 @@ import 'package:Okuna/pages/home/dialogs/video_dialog.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/pages/home/modals/zoomable_photo.dart';
-import 'package:chewie/chewie.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';

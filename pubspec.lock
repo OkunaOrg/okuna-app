@@ -64,15 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
-  chewie:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "feature/dep-on-custom-video-player"
-      resolved-ref: "3195c2747b9f489bac5a239c049748e3686a3834"
-      url: "https://github.com/OkunaOrg/chewie.git"
-    source: git
-    version: "0.9.7"
   collection:
     dependency: transitive
     description:
@@ -560,7 +551,7 @@ packages:
     source: hosted
     version: "0.18.1"
   screen:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: screen
       url: "https://pub.dartlang.org"

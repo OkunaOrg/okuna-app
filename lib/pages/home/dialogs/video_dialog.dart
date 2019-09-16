@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:Okuna/widgets/video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';

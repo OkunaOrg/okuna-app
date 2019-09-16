@@ -109,24 +109,16 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   }
 
   Widget _buildVideoPlayer() {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double imageAspectRatio = widget.postVideo.width / widget.postVideo.height;
-    double imageHeight = (screenWidth / imageAspectRatio);
-
     OBVideoFormat videoFormat =
         widget.postVideo.getVideoFormatOfType(OBVideoFormatType.mp4SD);
 
     String videoUrl = videoFormat.file;
 
-    return SizedBox(
-        height: imageHeight,
-        width: screenWidth,
-        child: OBVideoPlayer(
-          videoUrl: videoUrl,
-          thumbnailUrl: widget.postVideo.thumbnail,
-          controller: _obVideoPlayerController,
-        ));
+    return OBVideoPlayer(
+      videoUrl: videoUrl,
+      thumbnailUrl: widget.postVideo.thumbnail,
+      controller: _obVideoPlayerController,
+    );
   }
 
   void _onInViewStateChanged() {

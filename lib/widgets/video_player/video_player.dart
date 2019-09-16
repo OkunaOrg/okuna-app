@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
