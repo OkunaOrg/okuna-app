@@ -19,12 +19,16 @@ typedef Widget ChewieRoutePageBuilder(
 /// `video_player` is pretty low level. Chewie wraps it in a friendly skin to
 /// make it easy to use!
 class Chewie extends StatefulWidget {
-  final double maxHeight;
+  final double height;
+  final double width;
+  final bool isConstrained;
 
   Chewie({
     Key key,
     this.controller,
-    this.maxHeight,
+    this.height,
+    this.width,
+    this.isConstrained = false,
   })  : assert(controller != null, 'You must provide a chewie controller'),
         super(key: key);
 
@@ -74,7 +78,7 @@ class ChewieState extends State<Chewie> {
   Widget build(BuildContext context) {
     return _ChewieControllerProvider(
       controller: widget.controller,
-      child: PlayerWithControls(maxHeight: widget.maxHeight),
+      child: PlayerWithControls(height: widget.height, width: widget.width, isConstrained: widget.isConstrained),
     );
   }
 

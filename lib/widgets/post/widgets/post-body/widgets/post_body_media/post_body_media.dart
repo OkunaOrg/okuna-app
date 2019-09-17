@@ -159,16 +159,19 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     switch (postMediaItemContentObject.runtimeType) {
       case PostImage:
         postMediaItemWidget = OBPostBodyImage(
-          postImage: postMediaItemContentObject,
-          hasExpandButton: _mediaIsConstrained,
-        );
+            postImage: postMediaItemContentObject,
+            hasExpandButton: _mediaIsConstrained,
+            height: _mediaHeight,
+            width: _mediaWidth);
         break;
       case PostVideo:
         postMediaItemWidget = OBPostBodyVideo(
           postVideo: postMediaItemContentObject,
           post: widget.post,
           inViewId: widget.inViewId,
-          maxHeight: _mediaHeight,
+          height: _mediaHeight,
+          width: _mediaWidth,
+          isConstrained: _mediaIsConstrained,
         );
         break;
       default:

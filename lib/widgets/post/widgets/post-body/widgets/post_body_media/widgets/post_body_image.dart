@@ -10,53 +10,51 @@ import 'dart:math';
 class OBPostBodyImage extends StatelessWidget {
   final PostImage postImage;
   final bool hasExpandButton;
+  final double height;
+  final double width;
 
-  const OBPostBodyImage({Key key, this.postImage, this.hasExpandButton = false})
+  const OBPostBodyImage(
+      {Key key,
+      this.postImage,
+      this.hasExpandButton = false,
+      this.height,
+      this.width})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String imageUrl = postImage.image;
 
-    List<Widget> stackItems = [_buildImageWidget(imageUrl)];
+    List<Widget> stackItems = [
+      _buildImageWidget(imageUrl: imageUrl, width: width, height: height)
+    ];
 
     if (hasExpandButton) {
       stackItems.add(_buildExpandIcon());
     }
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-            child: GestureDetector(
-              child: Stack(
-                children: stackItems,
-              ),
-              onTap: () {
-                var dialogService = OpenbookProvider
-                    .of(context)
-                    .dialogService;
-                dialogService.showZoomablePhotoBoxView(
-                    imageUrl: imageUrl, context: context);
-              },
-            ))
-      ],
+    return GestureDetector(
+      child: Stack(
+        children: stackItems,
+      ),
+      onTap: () {
+        var dialogService = OpenbookProvider.of(context).dialogService;
+        dialogService.showZoomablePhotoBoxView(
+            imageUrl: imageUrl, context: context);
+      },
     );
   }
 
-  Widget _buildImageWidget(String imageUrl) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-            child: Image(
-              fit: BoxFit.cover,
-              image: AdvancedNetworkImage(imageUrl,
-                  useDiskCache: true,
-                  fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-                  retryLimit: 3,
-                  timeoutDuration: const Duration(minutes: 1)),
-            ),
-        )
-      ],
+  Widget _buildImageWidget({String imageUrl, double height, double width}) {
+    return Image(
+      height: height,
+      width: width,
+      fit: BoxFit.cover,
+      image: AdvancedNetworkImage(imageUrl,
+          useDiskCache: true,
+          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+          retryLimit: 3,
+          timeoutDuration: const Duration(minutes: 1)),
     );
   }
 

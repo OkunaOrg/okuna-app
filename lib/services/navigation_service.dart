@@ -935,6 +935,6 @@ class NavigationService {
   }
 
   Key _getKeyRandomisedWithWord(String word) {
-    return _getKeyRandomisedWithWord(word + rng.nextInt(1000).toString());
+    return Key(word + rng.nextInt(1000).toString());
   }
 }

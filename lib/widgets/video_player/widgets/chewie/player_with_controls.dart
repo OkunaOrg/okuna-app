@@ -8,9 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayerWithControls extends StatelessWidget {
-  final maxHeight;
+  final height;
+  final width;
+  final bool isConstrained;
 
-  const PlayerWithControls({Key key, this.maxHeight}) : super(key: key);
+  const PlayerWithControls(
+      {Key key, this.height, this.width, this.isConstrained = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,41 +29,34 @@ class PlayerWithControls extends StatelessWidget {
 
   Container _buildPlayerWithControls(
       ChewieController chewieController, BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    bool hasMaxHeight = maxHeight != null;
+    double containerWidth = width ?? MediaQuery.of(context).size.width;
+    bool hasHeight = height != null;
 
     double aspectRatio =
         chewieController.aspectRatio ?? _calculateAspectRatio(context);
 
-    double containerHeight = (screenWidth / aspectRatio);
+    double containerHeight = (containerWidth / aspectRatio);
+
+    Widget videoWidget = Hero(
+        tag: chewieController.videoPlayerController,
+        child: AspectRatio(
+            aspectRatio: aspectRatio,
+            child: VideoPlayer(chewieController.videoPlayerController)));
 
     return Container(
-      height: maxHeight ?? null,
+      height: height ?? null,
       child: Stack(
         children: <Widget>[
-          chewieController.placeholder ?? Container(),
-          hasMaxHeight
+          chewieController.placeholder ?? const SizedBox(),
+          hasHeight && isConstrained
               ? Positioned(
-                  top: -((containerHeight - maxHeight) / 2),
+                  top: -((containerHeight - height) / 2),
                   height: containerHeight,
-                  width: screenWidth,
-                  child: Hero(
-                      tag: chewieController.videoPlayerController,
-                      child: AspectRatio(
-                          aspectRatio: aspectRatio,
-                          child: VideoPlayer(
-                              chewieController.videoPlayerController))),
+                  width: containerWidth,
+                  child: videoWidget,
                 )
               : Center(
-                  child: Hero(
-                    tag: chewieController.videoPlayerController,
-                    child: AspectRatio(
-                      aspectRatio: aspectRatio,
-                      child:
-                          VideoPlayer(chewieController.videoPlayerController),
-                    ),
-                  ),
+                  child: videoWidget,
                 ),
           chewieController.overlay ?? Container(),
           _buildControls(context, chewieController),

@@ -26,7 +26,9 @@ class OBVideoPlayer extends StatefulWidget {
   final bool isInDialog;
   final bool autoPlay;
   final OBVideoPlayerController controller;
-  final double maxHeight;
+  final double height;
+  final double width;
+  final bool isConstrained;
 
   const OBVideoPlayer(
       {Key key,
@@ -38,8 +40,10 @@ class OBVideoPlayer extends StatefulWidget {
       this.isInDialog = false,
       this.autoPlay = false,
       this.visibilityKey,
-      this.maxHeight,
-      this.controller})
+      this.height,
+      this.width,
+      this.controller,
+      this.isConstrained})
       : super(key: key);
 
   @override
@@ -159,8 +163,10 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
             key: _visibilityKey,
             onVisibilityChanged: _onVisibilityChanged,
             child: Chewie(
-              maxHeight: widget.maxHeight,
+              height: widget.height,
+              width: widget.width,
               controller: _chewieController,
+              isConstrained: widget.isConstrained
             ),
           );
         } else {
