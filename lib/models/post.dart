@@ -121,7 +121,6 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('text')) {
       text = json['text'];
-      linkPreview = null;
     }
 
     if (json.containsKey('is_muted')) isMuted = json['is_muted'];

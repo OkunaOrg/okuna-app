@@ -88,6 +88,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
     if (_linkPreview == null) {
       _retrieveLinkPreview();
     } else {
+      // No link preview, requesting
       _linkPreviewRequestInProgress = false;
     }
   }
@@ -194,6 +195,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       String proxiedImageUrl =
           _linkPreviewService.getProxiedLink(_linkPreview.imageUrl);
       String proxyAuthToken = _httpieService.getAuthorizationToken();
+
       previewWidget = Semantics(
         label: 'Link preview image',
         child: Container(
@@ -356,6 +358,6 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   void debugLog(String log) {
-    debugPrint('OBLinkPreview:$log');
+    //debugPrint('OBLinkPreview:$log');
   }
 }
