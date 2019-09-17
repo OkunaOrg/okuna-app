@@ -5,11 +5,11 @@ import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/post_community_previewer.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/post_image_previewer.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/post_video_previewer.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/post_community_previewer.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/post_image_previewer.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/post_video_previewer.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
@@ -37,23 +37,23 @@ import 'package:pigment/pigment.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:async/async.dart';
 
-class SavePostModal extends StatefulWidget {
+class OBSavePostModal extends StatefulWidget {
   final Community community;
   final String text;
   final File image;
   final Post post;
 
-  const SavePostModal(
+  const OBSavePostModal(
       {Key key, this.community, this.text, this.image, this.post})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return SavePostModalState();
+    return OBSavePostModalState();
   }
 }
 
-class SavePostModalState extends State<SavePostModal> {
+class OBSavePostModalState extends State<OBSavePostModal> {
   ValidationService _validationService;
   UserService _userService;
   NavigationService _navigationService;

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/emoji.dart';
@@ -11,11 +13,11 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/pages/home/modals/accept_guidelines/pages/confirm_reject_guidelines.dart';
 import 'package:Okuna/pages/home/modals/confirm_block_user.dart';
-import 'package:Okuna/pages/home/modals/create_post/pages/share_post/pages/share_post_with_circles.dart';
-import 'package:Okuna/pages/home/modals/create_post/pages/share_post/pages/share_post_with_community.dart';
-import 'package:Okuna/pages/home/modals/create_post/pages/share_post/share_post.dart';
 import 'package:Okuna/pages/home/modals/post_comment_reactions/post_comment_reactions.dart';
 import 'package:Okuna/pages/home/modals/post_reactions/post_reactions.dart';
+import 'package:Okuna/pages/home/modals/save_post/pages/share_post/pages/share_post_with_circles.dart';
+import 'package:Okuna/pages/home/modals/save_post/pages/share_post/pages/share_post_with_community.dart';
+import 'package:Okuna/pages/home/modals/save_post/pages/share_post/share_post.dart';
 import 'package:Okuna/pages/home/pages/community/community.dart';
 import 'package:Okuna/pages/home/pages/community/pages/community_members.dart';
 import 'package:Okuna/pages/home/pages/community/pages/community_rules.dart';
@@ -70,12 +72,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NavigationService {
+  var rng = new Random();
+
   Future navigateToUserProfile(
       {@required User user, @required BuildContext context}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('userProfileRoute'),
+          slidableKey: _getKeyRandomisedWithWord('userProfileRoute'),
           builder: (BuildContext context) {
             return OBProfilePage(
               user,
@@ -89,7 +93,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityRoute'),
+          slidableKey: _getKeyRandomisedWithWord('communityRoute'),
           builder: (BuildContext context) {
             return OBCommunityPage(
               community,
@@ -103,7 +107,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('CommunityStaffPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('CommunityStaffPageRoute'),
           builder: (BuildContext context) {
             return OBCommunityStaffPage(
               community: community,
@@ -117,7 +121,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityRulesPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('communityRulesPageRoute'),
           builder: (BuildContext context) {
             return OBCommunityRulesPage(
               community: community,
@@ -133,7 +137,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute(
-          slidableKey: Key('confirmAddCommunityAdministratorRoute'),
+          slidableKey: _getKeyRandomisedWithWord(
+              'confirmAddCommunityAdministratorRoute'),
           builder: (BuildContext context) {
             return OBConfirmAddCommunityAdministrator(
               community: community,
@@ -148,7 +153,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute(
-          slidableKey: Key('confirmDeleteAccountRoute'),
+          slidableKey: _getKeyRandomisedWithWord('confirmDeleteAccountRoute'),
           builder: (BuildContext context) {
             return OBConfirmDeleteAccount(
               userPassword: userPassword,
@@ -161,7 +166,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute(
-          slidableKey: Key('deleteAccountRoute'),
+          slidableKey: _getKeyRandomisedWithWord('deleteAccountRoute'),
           builder: (BuildContext context) {
             return OBDeleteAccountPage();
           }),
@@ -175,7 +180,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<bool>(
-          slidableKey: Key('confirmAddCommunityModeratorPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord(
+              'confirmAddCommunityModeratorPageRoute'),
           builder: (BuildContext context) {
             return OBConfirmAddCommunityModerator(
               community: community,
@@ -192,7 +198,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<bool>(
-          slidableKey: Key('confirmBanCommunityUserPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('confirmBanCommunityUserPageRoute'),
           builder: (BuildContext context) {
             return OBConfirmBanCommunityUser(
               community: community,
@@ -207,7 +214,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('navigateToManageCommunityPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('navigateToManageCommunityPageRoute'),
           builder: (BuildContext context) {
             return OBManageCommunityPage(
               community: community,
@@ -221,7 +229,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('leaveCommunityPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('leaveCommunityPageRoute'),
           builder: (BuildContext context) {
             return OBLeaveCommunityPage(
               community: community,
@@ -235,7 +243,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('deleteCommunityPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('deleteCommunityPageRoute'),
           builder: (BuildContext context) {
             return OBDeleteCommunityPage(
               community: community,
@@ -249,7 +257,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityAdministratorsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('communityAdministratorsPageRoute'),
           builder: (BuildContext context) {
             return OBCommunityAdministratorsPage(
               community: community,
@@ -263,7 +272,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityMembersPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('communityMembersPageRoute'),
           builder: (BuildContext context) {
             return OBCommunityMembersPage(
               community: community,
@@ -277,7 +286,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityModeratorsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('communityModeratorsPageRoute'),
           builder: (BuildContext context) {
             return OBCommunityModeratorsPage(
               community: community,
@@ -291,7 +301,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityBannedUsersPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('communityBannedUsersPageRoute'),
           builder: (BuildContext context) {
             return OBCommunityBannedUsersPage(
               community: community,
@@ -305,7 +316,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityClosedPostsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('communityClosedPostsPageRoute'),
           builder: (BuildContext context) {
             return OBCommunityClosedPostsPage(
               community,
@@ -319,7 +331,7 @@ class NavigationService {
     return Navigator.push(
         context,
         OBSlideRightRoute<dynamic>(
-            slidableKey: Key('commentPostPageRoute'),
+            slidableKey: _getKeyRandomisedWithWord('commentPostPageRoute'),
             builder: (BuildContext context) {
               return OBPostCommentsPage(
                   pageType: PostCommentsPageType.comments,
@@ -334,7 +346,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('postCommentsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('postCommentsPageRoute'),
           builder: (BuildContext context) {
             return OBPostCommentsPage(
                 post: post,
@@ -354,7 +366,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('postCommentRepliesPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('postCommentRepliesPageRoute'),
           builder: (BuildContext context) {
             return OBPostCommentsPage(
                 pageType: PostCommentsPageType.replies,
@@ -373,7 +385,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('postCommentsLinkedPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('postCommentsLinkedPageRoute'),
           builder: (BuildContext context) {
             return OBPostCommentsPage(
                 post: postComment.post,
@@ -392,7 +404,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('postCommentRepliesLinkedPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('postCommentRepliesLinkedPageRoute'),
           builder: (BuildContext context) {
             return OBPostCommentsPage(
                 post: postComment.post,
@@ -409,7 +422,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('postPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('postPageRoute'),
           builder: (BuildContext context) {
             return OBPostPage(post);
           }),
@@ -420,7 +433,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('settingsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('settingsPageRoute'),
           builder: (BuildContext context) {
             return OBSettingsPage();
           }),
@@ -431,7 +444,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('followersPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('followersPageRoute'),
           builder: (BuildContext context) {
             return OBFollowersPage();
           }),
@@ -442,7 +455,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('followingPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('followingPageRoute'),
           builder: (BuildContext context) {
             return OBFollowingPage();
           }),
@@ -453,7 +466,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('accountSettingsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('accountSettingsPageRoute'),
           builder: (BuildContext context) {
             return OBAccountSettingsPage();
           }),
@@ -464,7 +477,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('developerSettingsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('developerSettingsPageRoute'),
           builder: (BuildContext context) {
             return OBDeveloperSettingsPage();
           }),
@@ -475,7 +488,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('applicationSettingsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('applicationSettingsPageRoute'),
           builder: (BuildContext context) {
             return OBApplicationSettingsPage();
           }),
@@ -486,7 +500,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('themesPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('themesPageRoute'),
           builder: (BuildContext context) {
             return OBThemesPage();
           }),
@@ -497,7 +511,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('usefulLinksPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('usefulLinksPageRoute'),
           builder: (BuildContext context) {
             return OBUsefulLinksPage();
           }),
@@ -508,7 +522,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityGuidelinesPage'),
+          slidableKey: _getKeyRandomisedWithWord('communityGuidelinesPage'),
           builder: (BuildContext context) {
             return OBCommunityGuidelinesPage();
           }),
@@ -520,7 +534,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('confirmRejectGuidelinesPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('confirmRejectGuidelinesPageRoute'),
           builder: (BuildContext context) {
             return OBConfirmRejectGuidelines();
           }),
@@ -533,7 +548,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<OBNewPostData>(
-          slidableKey: Key('sharePostPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('sharePostPageRoute'),
           builder: (BuildContext context) {
             return OBSharePostPage(
               createPostData: createPostData,
@@ -548,7 +563,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<OBNewPostData>(
-          slidableKey: Key('sharePostWithCirclesPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('sharePostWithCirclesPageRoute'),
           builder: (BuildContext context) {
             return OBSharePostWithCirclesPage(
               createPostData: createPostData,
@@ -563,7 +579,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<OBNewPostData>(
-          slidableKey: Key('sharePostWithCommunityPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('sharePostWithCommunityPageRoute'),
           builder: (BuildContext context) {
             return OBSharePostWithCommunityPage(
               createPostData: createPostData,
@@ -576,7 +593,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('navigateToFollowsLists'),
+          slidableKey: _getKeyRandomisedWithWord('navigateToFollowsLists'),
           builder: (BuildContext context) {
             return OBFollowsListsPage();
           }),
@@ -587,7 +604,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('userInvitesPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('userInvitesPageRoute'),
           builder: (BuildContext context) {
             return OBUserInvitesPage();
           }),
@@ -599,7 +616,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('shareInvitePageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('shareInvitePageRoute'),
           builder: (BuildContext context) {
             return OBUserInviteDetailPage(
                 userInvite: userInvite, showEdit: false);
@@ -612,7 +629,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('inviteDetailPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('inviteDetailPageRoute'),
           builder: (BuildContext context) {
             return OBUserInviteDetailPage(
                 userInvite: userInvite, showEdit: true);
@@ -624,7 +641,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('connectionsCirclesPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('connectionsCirclesPageRoute'),
           builder: (BuildContext context) {
             return OBConnectionsCirclesPage();
           }),
@@ -636,7 +653,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('connectionsCirclePageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('connectionsCirclePageRoute'),
           builder: (BuildContext context) {
             return OBConnectionsCirclePage(connectionsCircle);
           }),
@@ -650,7 +667,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('followsListPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('followsListPageRoute'),
           builder: (BuildContext context) {
             return OBFollowsListPage(followsList);
           }),
@@ -665,7 +682,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('postReactionsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('postReactionsPageRoute'),
           builder: (BuildContext context) {
             return OBPostReactionsModal(
               post: post,
@@ -685,7 +702,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('postCommentReactionsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('postCommentReactionsPageRoute'),
           builder: (BuildContext context) {
             return OBPostCommentReactionsModal(
               post: post,
@@ -703,7 +721,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('notificationsSettingsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('notificationsSettingsPageRoute'),
           builder: (BuildContext context) {
             return OBNotificationsSettingsPage();
           }),
@@ -716,7 +735,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('userLanguageSettingsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('userLanguageSettingsPageRoute'),
           builder: (BuildContext context) {
             return OBUserLanguageSettingsPage();
           }),
@@ -729,7 +749,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('blockedUsersPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('blockedUsersPageRoute'),
           builder: (BuildContext context) {
             return OBBlockedUsersPage();
           }),
@@ -741,7 +761,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('confirmBlockUserPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('confirmBlockUserPageRoute'),
           builder: (BuildContext context) {
             return OBConfirmBlockUserModal(
               user: user,
@@ -758,7 +778,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute(
-          slidableKey: Key('confirmReportObjectPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('confirmReportObjectPageRoute'),
           builder: (BuildContext context) {
             return OBConfirmReportObject(
               extraData: extraData,
@@ -777,7 +798,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('reportObjectPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('reportObjectPageRoute'),
           builder: (BuildContext context) {
             return OBReportObjectPage(
               object: object,
@@ -793,7 +814,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('communityModeratedObjectsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('communityModeratedObjectsPageRoute'),
           builder: (BuildContext context) {
             return OBModeratedObjectsPage(
               community: community,
@@ -807,7 +829,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('globalModeratedObjectsPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('globalModeratedObjectsPageRoute'),
           builder: (BuildContext context) {
             return OBModeratedObjectsPage();
           }),
@@ -820,7 +843,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('moderatedObjectReports'),
+          slidableKey: _getKeyRandomisedWithWord('moderatedObjectReports'),
           builder: (BuildContext context) {
             return OBModeratedObjectReportsPage(
               moderatedObject: moderatedObject,
@@ -835,7 +858,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('moderatedObjectGlobalReviewPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('moderatedObjectGlobalReviewPageRoute'),
           builder: (BuildContext context) {
             return OBModeratedObjectGlobalReviewPage(
               moderatedObject: moderatedObject,
@@ -851,7 +875,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('moderatedObjectCommunityReviewPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord(
+              'moderatedObjectCommunityReviewPageRoute'),
           builder: (BuildContext context) {
             return OBModeratedObjectCommunityReviewPage(
               community: community,
@@ -866,7 +891,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('myModerationTasksPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('myModerationTasksPageRoute'),
           builder: (BuildContext context) {
             return OBMyModerationTasksPage();
           }),
@@ -878,7 +903,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('myModerationPenaltiesPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('myModerationPenaltiesPageRoute'),
           builder: (BuildContext context) {
             return OBMyModerationPenaltiesPage();
           }),
@@ -893,7 +919,8 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: Key('blankPageWithWidgetPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('blankPageWithWidgetPageRoute'),
           builder: (BuildContext context) {
             return CupertinoPageScaffold(
               navigationBar: OBThemedNavigationBar(
@@ -905,5 +932,9 @@ class NavigationService {
             );
           }),
     );
+  }
+
+  Key _getKeyRandomisedWithWord(String word) {
+    return _getKeyRandomisedWithWord(word + rng.nextInt(1000).toString());
   }
 }

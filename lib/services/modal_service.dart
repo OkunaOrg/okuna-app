@@ -14,8 +14,8 @@ import 'package:Okuna/pages/home/modals/accept_guidelines/accept_guidelines.dart
 import 'package:Okuna/pages/home/modals/invite_to_community.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_comment_reply_expanded.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_commenter_expanded.dart';
+import 'package:Okuna/pages/home/modals/save_post/create_post.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/add_community_administrator.dart';
-import 'package:Okuna/pages/home/modals/create_post/create_post.dart';
 import 'package:Okuna/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Okuna/pages/home/modals/save_community.dart';
 import 'package:Okuna/pages/home/modals/save_connections_circle.dart';
@@ -55,7 +55,7 @@ class ModalService {
                 fullscreenDialog: true,
                 builder: (BuildContext context) {
                   return Material(
-                    child: SavePostModal(
+                    child: OBSavePostModal(
                       community: community,
                       text: text,
                       image: image,
@@ -73,7 +73,7 @@ class ModalService {
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
-                child: SavePostModal(
+                child: OBSavePostModal(
                   post: post,
                 ),
               );
