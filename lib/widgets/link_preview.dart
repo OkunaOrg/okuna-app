@@ -247,7 +247,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
                   child: OBSecondaryText(
                     _linkPreview.description,
                     size: OBTextSize.mediumSecondary,
-                    maxLines: 2,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
                 )
