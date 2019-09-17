@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/services/intercom.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';
@@ -51,6 +52,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   ValidationService _validationService;
   MediaService _imagePickerService;
   UserPreferencesService _userPreferencesService;
+  LocalizationService _localizationService;
 
   int _currentIndex;
   int _lastIndex;
@@ -117,6 +119,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _validationService = openbookProvider.validationService;
       _imagePickerService = openbookProvider.mediaPickerService;
       _userPreferencesService = openbookProvider.userPreferencesService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -140,6 +143,16 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     String text;
     File image;
     File video;
+    if (share.error != null) {
+      _toastService.error(
+          message: _localizationService.trans(share.error),
+          context: context);
+      if (share.error == 'uriSchemeNotSupported') {
+        throw share.error;
+      }
+      return;
+    }
+
     if (share.image != null) {
       image = File.fromUri(Uri.parse(share.image));
       image = await _imagePickerService.processImage(image);
@@ -152,6 +165,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         return;
       }
     }
+
     if (share.video != null) {
       video = File.fromUri(Uri.parse(share.video));
       if (!await _validationService.isVideoAllowedSize(video)) {
@@ -161,6 +175,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         return;
       }
     }
+
     if (share.text != null) {
       text = share.text;
       if (!_validationService.isPostTextAllowedLength(text)) {

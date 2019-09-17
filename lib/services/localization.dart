@@ -788,6 +788,26 @@ class LocalizationService {
     return Intl.message("Unknown error", name: 'error__unknown_error');
   }
 
+  String get error__receive_share_temp_write_failed {
+    return Intl.message('Failed to copy shared file to temporary location',
+        name: 'error__receive_share_temp_write_failed');
+  }
+
+  String get error__receive_share_temp_write_denied {
+    return Intl.message('Denied permission to copy shared file to temporary location',
+        name: 'error__receive_share_temp_write_denied');
+  }
+
+  String get error__receive_share_invalid_uri_scheme {
+    return Intl.message('Failed to receive share',
+        name: 'error__receive_share_invalid_uri_scheme');
+  }
+
+  String get error__receive_share_file_not_found {
+    return Intl.message('Shared file could not be found',
+        name: 'error__receive_share_file_not_found');
+  }
+
   String get error__no_internet_connection {
     return Intl.message("No internet connection",
         name: 'error__no_internet_connection');
