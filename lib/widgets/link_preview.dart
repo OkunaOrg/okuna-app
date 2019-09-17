@@ -274,6 +274,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       faviconWidget = Image(
           fit: BoxFit.cover,
           image: AdvancedNetworkImage(_linkPreview.faviconUrl,
+              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
               useDiskCache: true));
     }
 
