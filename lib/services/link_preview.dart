@@ -9,28 +9,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:public_suffix/public_suffix_io.dart';
 
 class LinkPreviewService {
-  // We should retrieve these and cache them from the server once in a while
-  static const allowedDomains = [
-    'apple.com',
-    'twitter.com',
-    'google.com',
-    'youtube.com',
-    'youtu.be',
-    'github.com',
-    'reddit.com',
-    'wikipedia.org',
-    'imgur.com',
-    'okuna.support',
-    'okuna.io',
-    'hackblock.nl',
-    'nasa.gov',
-    'techcrunch.com',
-    'golem.de',
-    'sz.de',
-    'theguardian.com',
-    'giphy.com',
-  ];
-
   ValidationService _validationService;
   HttpieService _httpieService;
 
@@ -94,9 +72,7 @@ class LinkPreviewService {
 
       if (!isFileUrl) {
         String normalisedUrl = _normaliseLink(foundUrl);
-        PublicSuffix parsedUrl = PublicSuffix.fromString(normalisedUrl);
-        if (allowedDomains.contains(parsedUrl.domain))
-          previewUrl = normalisedUrl;
+        previewUrl = normalisedUrl;
       }
     }
     return previewUrl;
