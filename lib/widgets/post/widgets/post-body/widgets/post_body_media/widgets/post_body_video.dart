@@ -17,7 +17,8 @@ class OBPostBodyVideo extends StatefulWidget {
   final PostVideo postVideo;
   final String inViewId;
 
-  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId, this.maxHeight})
+  const OBPostBodyVideo(
+      {Key key, this.post, this.postVideo, this.inViewId, this.maxHeight})
       : super(key: key);
 
   @override
@@ -183,7 +184,10 @@ class PostVideoNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPop(Route route, Route previousRoute) {
-    if (identical(previousRoute, _state._route) && _state._wasPlaying) {
+    if (identical(previousRoute, _state._route) &&
+        _state != null &&
+        _state.mounted &&
+        _state._wasPlaying) {
       debugLog('Resuming video as blocking route has been popped.');
       _state._obVideoPlayerController.play();
     }

@@ -53,6 +53,9 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
 
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
+    _retrievePostMediaInProgress = true;
+    _needsBootstrap = true;
+    _errorMessage = '';
   }
 
   @override

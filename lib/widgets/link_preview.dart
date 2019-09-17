@@ -12,7 +12,6 @@ import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:async/async.dart';
 
@@ -57,10 +56,22 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
 
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
-    bool hasNewLinkPreview = oldWidget.linkPreview != null &&
-        oldWidget.linkPreview != widget.linkPreview;
-    bool hasNewLink = oldWidget.link != null && oldWidget.link != widget.link;
-    if (hasNewLink || hasNewLinkPreview) {
+
+    String previousLinkUrl;
+    if (oldWidget.link != null) {
+      previousLinkUrl = oldWidget.link;
+    } else {
+      previousLinkUrl = oldWidget.linkPreview.url;
+    }
+
+    String newLinkUrl;
+    if (widget.link != null) {
+      newLinkUrl = widget.link;
+    } else {
+      newLinkUrl = widget.linkPreview.url;
+    }
+
+    if (previousLinkUrl != newLinkUrl) {
       _needsBootstrap = true;
       _linkPreview = widget.linkPreview;
       _linkPreviewRequestInProgress = true;

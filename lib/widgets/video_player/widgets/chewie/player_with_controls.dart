@@ -36,7 +36,6 @@ class PlayerWithControls extends StatelessWidget {
 
     return Container(
       height: maxHeight ?? null,
-      color: Colors.black,
       child: Stack(
         children: <Widget>[
           chewieController.placeholder ?? Container(),
