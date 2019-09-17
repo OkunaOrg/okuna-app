@@ -306,11 +306,13 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       _fetchLinkPreviewOperation =
           CancelableOperation.fromFuture(_linkPreviewService.previewLink(link));
 
-      LinkPreview linkPreview = await _fetchLinkPreviewOperation.value;
+      LinkPreviewResult linkPreviewResult =
+          await _fetchLinkPreviewOperation.value;
+
       if (widget.onLinkPreviewRetrieved != null)
-        widget.onLinkPreviewRetrieved(linkPreview);
-      if (linkPreview != null) {
-        _setLinkPreview(linkPreview);
+        widget.onLinkPreviewRetrieved(linkPreviewResult.linkPreview);
+      if (linkPreviewResult.linkPreview != null) {
+        _setLinkPreview(linkPreviewResult.linkPreview);
         debugLog('Retrieved link preview for url: $link');
       } else {
         debugLog('Retrieved empty link preview for url: $link');

@@ -1,5 +1,6 @@
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class LinkPreviewService {
     return previewUrl;
   }
 
-  Future<LinkPreview> previewLink(String link) async {
+  Future<LinkPreviewResult> previewLink(String link) async {
     String normalisedLink = _normaliseLink(link);
 
     if (!_validationService.isUrl(normalisedLink))
@@ -81,8 +82,24 @@ class LinkPreviewService {
 
     _checkResponseIsOk(response);
 
-    return _getLinkPreviewFromResponseBody(
-        link: normalisedLink, responseBody: response.body);
+    print(response.httpResponse.headers);
+    String contentType = response.httpResponse.headers['content-type'];
+
+    String mimeFirstType = contentType.split('/').first;
+
+    LinkPreviewResult result;
+
+    if (mimeFirstType == 'image') {
+      result = LinkPreviewResult(rawImage: response.httpResponse.bodyBytes);
+    } else if (mimeFirstType == 'text') {
+      LinkPreview linkPreview = _getLinkPreviewFromResponseBody(
+          link: normalisedLink, responseBody: response.body);
+      result = LinkPreviewResult(linkPreview: linkPreview);
+    } else {
+      result = LinkPreviewResult();
+    }
+
+    return result;
   }
 
   LinkPreview _getLinkPreviewFromResponseBody(
@@ -196,4 +213,16 @@ class EmptyLinkToPreview implements Exception {
 
   String toString() =>
       'EmptyLinkToPreview: $link was empty, could not be previewed.';
+}
+
+class LinkPreviewResult {
+  final LinkPreview linkPreview;
+  final List<int> rawImage;
+
+  LinkPreviewResult({
+    this.linkPreview,
+    this.rawImage,
+  });
+
+  bool isEmpty() => this.linkPreview == null && this.rawImage == null;
 }
