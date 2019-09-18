@@ -147,7 +147,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService.error(
           message: _localizationService.trans(share.error),
           context: context);
-      if (share.error == 'uriSchemeNotSupported') {
+      if (share.error.contains('uri_scheme')) {
         throw share.error;
       }
       return;
