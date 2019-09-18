@@ -14,13 +14,16 @@ class LinkPreviewService {
 
   String _trustedProxyUrl = '';
 
+  static RegExp allowedProtocolsPattern = RegExp(
+      'http|https', caseSensitive: false);
+
   LinkPreviewService() {
     _initPublicSuffixes();
   }
 
   void _initPublicSuffixes() async {
     String publicSuffixes =
-        await rootBundle.loadString('assets/other/public_suffix_list.dat');
+    await rootBundle.loadString('assets/other/public_suffix_list.dat');
     SuffixRules.initFromString(publicSuffixes);
   }
 
@@ -56,7 +59,7 @@ class LinkPreviewService {
   Future<LinkPreviewResult> previewLink(String link) async {
     String normalisedLink = _normaliseLink(link);
 
-    if (!_validationService.isUrl(normalisedLink))
+    if (!_validationService.isUrl(normalisedLink.toLowerCase()))
       throw InvalidLinkToPreview(normalisedLink);
 
     bool appendAuthorizationHeader = _trustedProxyUrl.isNotEmpty;
@@ -78,11 +81,15 @@ class LinkPreviewService {
           appendAuthorizationToken: appendAuthorizationHeader);
     }
 
+    print(response.httpResponse.headers);
+
     _checkResponseIsOk(response);
 
     String contentType = response.httpResponse.headers['content-type'];
 
-    String mimeFirstType = contentType.split('/').first;
+    String mimeFirstType = contentType
+        .split('/')
+        .first;
 
     LinkPreviewResult result;
 
@@ -108,16 +115,18 @@ class LinkPreviewService {
     String linkPreviewDescription;
     String linkPreviewImageUrl;
     String linkPreviewSiteName;
-    String linkPreviewDomainUrl = Uri.parse(link).host;
+    String linkPreviewDomainUrl = Uri
+        .parse(link)
+        .host;
     // Assigned separately
     String linkPreviewFaviconUrl =
-        _getLinkPreviewFaviconUrl(document, derivedFromLink: link);
+    _getLinkPreviewFaviconUrl(document, derivedFromLink: link);
 
     var openGraphMetaTags = document.head.querySelectorAll("[property*='og:']");
 
     openGraphMetaTags.forEach((openGraphMetaTag) {
       String ogTagName =
-          openGraphMetaTag.attributes['property'].split("og:")[1];
+      openGraphMetaTag.attributes['property'].split("og:")[1];
       String ogTagValue = openGraphMetaTag.attributes['content'];
 
       if (ogTagName == 'title') {
@@ -143,11 +152,10 @@ class LinkPreviewService {
         linkPreviewImageUrl = imgElements?.first?.attributes["src"];
     }
 
-    print('GOT HERE');
-
     if (linkPreviewImageUrl != null)
       linkPreviewImageUrl =
           _normaliseLink(linkPreviewImageUrl, derivedFromLink: link);
+
     if (linkPreviewFaviconUrl != null)
       linkPreviewFaviconUrl =
           _normaliseLink(linkPreviewFaviconUrl, derivedFromLink: link);
@@ -167,7 +175,7 @@ class LinkPreviewService {
     var faviconElement = document.querySelector("link[rel*='shortcut icon']");
 
     String linkPreviewFaviconUrl =
-        faviconElement != null ? faviconElement.attributes['href'] : null;
+    faviconElement != null ? faviconElement.attributes['href'] : null;
 
     if (linkPreviewFaviconUrl == null) {
       var shortcutIconElement = document.querySelector("link[rel*='icon']");
@@ -184,18 +192,20 @@ class LinkPreviewService {
   }
 
   String _normaliseLink(String link, {String derivedFromLink}) {
-    link = link.toLowerCase();
-
-    if (link.startsWith('http') || link.startsWith('https')) {
+    if (link.startsWith(allowedProtocolsPattern)) {
       return link;
     } else if (link.startsWith('//')) {
       return 'http:$link';
     } else if (link.startsWith('/')) {
+      // Absolute path
       Uri parsedDerivedFromLink = Uri.parse(derivedFromLink);
-      return '${parsedDerivedFromLink.scheme}://${parsedDerivedFromLink.host}$link';
+      return '${parsedDerivedFromLink.scheme}://${parsedDerivedFromLink
+          .host}$link';
     }
 
-    return 'http://${link}';
+    return derivedFromLink.endsWith('/')
+        ? '$derivedFromLink$link'
+        : '$derivedFromLink/$link';
   }
 
   String getProxiedLink(String link) {

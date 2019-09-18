@@ -196,21 +196,9 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
           _linkPreviewService.getProxiedLink(_linkPreview.imageUrl);
       String proxyAuthToken = _httpieService.getAuthorizationToken();
 
-      previewWidget = Semantics(
-        label: 'Link preview image',
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AdvancedNetworkImage(proxiedImageUrl,
-                      header: {'Authorization': 'Token $proxyAuthToken'},
-                      useDiskCache: true,
-                      fallbackAssetImage:
-                          'assets/images/fallbacks/post-fallback.png',
-                      retryLimit: 3,
-                      timeoutDuration: const Duration(minutes: 1)))),
-        ),
-      );
+      previewWidget = _buildCrossCompatImageForSource(proxiedImageUrl,
+          semanticsLabel: 'Link preview image',
+          headers: {'Authorization': 'Token $proxyAuthToken'});
     }
 
     return previewWidget;
@@ -264,23 +252,13 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   Widget _buildLinkPreviewFavicon() {
     Widget faviconWidget;
 
-    String faviconExtension = _linkPreview.faviconUrl.split('.').last;
+    String proxiedFaviconImageUrl =
+        _linkPreviewService.getProxiedLink(_linkPreview.faviconUrl);
+    String proxyAuthToken = _httpieService.getAuthorizationToken();
 
-    if (faviconExtension == 'svg') {
-      faviconWidget = SvgPicture.network(
-        _linkPreview.faviconUrl,
+    faviconWidget = _buildCrossCompatImageForSource(proxiedFaviconImageUrl,
         semanticsLabel: 'Favicon',
-        fit: BoxFit.cover,
-        placeholderBuilder: (BuildContext context) =>
-            Image.asset('assets/images/fallbacks/post-fallback.png'),
-      );
-    } else {
-      faviconWidget = Image(
-          fit: BoxFit.cover,
-          image: AdvancedNetworkImage(_linkPreview.faviconUrl,
-              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-              useDiskCache: true));
-    }
+        headers: {'Authorization': 'Token $proxyAuthToken'});
 
     return Padding(
       padding: EdgeInsets.only(right: 10),
@@ -293,6 +271,42 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
         ),
       ),
     );
+  }
+
+  Widget _buildCrossCompatImageForSource(String imageSource,
+      {String semanticsLabel, Map<String, String> headers}) {
+    String faviconExtension = imageSource.split('.').last;
+
+    Widget image;
+
+    if (faviconExtension == 'svg') {
+      image = SvgPicture.network(
+        imageSource,
+        headers: headers,
+        semanticsLabel: semanticsLabel,
+        fit: BoxFit.cover,
+        placeholderBuilder: (BuildContext context) =>
+            Image.asset('assets/images/fallbacks/post-fallback.png'),
+      );
+    } else {
+      image = Semantics(
+        label: semanticsLabel,
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AdvancedNetworkImage(imageSource,
+                      header: headers,
+                      useDiskCache: true,
+                      fallbackAssetImage:
+                          'assets/images/fallbacks/post-fallback.png',
+                      retryLimit: 3,
+                      timeoutDuration: const Duration(minutes: 1)))),
+        ),
+      );
+    }
+
+    return image;
   }
 
   Future _retrieveLinkPreview() async {
