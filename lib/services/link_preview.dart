@@ -14,8 +14,8 @@ class LinkPreviewService {
 
   String _trustedProxyUrl = '';
 
-  static RegExp allowedProtocolsPattern = RegExp(
-      'http|https', caseSensitive: false);
+  static RegExp allowedProtocolsPattern =
+      RegExp('http|https', caseSensitive: false);
 
   LinkPreviewService() {
     _initPublicSuffixes();
@@ -23,7 +23,7 @@ class LinkPreviewService {
 
   void _initPublicSuffixes() async {
     String publicSuffixes =
-    await rootBundle.loadString('assets/other/public_suffix_list.dat');
+        await rootBundle.loadString('assets/other/public_suffix_list.dat');
     SuffixRules.initFromString(publicSuffixes);
   }
 
@@ -87,9 +87,7 @@ class LinkPreviewService {
 
     String contentType = response.httpResponse.headers['content-type'];
 
-    String mimeFirstType = contentType
-        .split('/')
-        .first;
+    String mimeFirstType = contentType.split('/').first;
 
     LinkPreviewResult result;
 
@@ -115,18 +113,16 @@ class LinkPreviewService {
     String linkPreviewDescription;
     String linkPreviewImageUrl;
     String linkPreviewSiteName;
-    String linkPreviewDomainUrl = Uri
-        .parse(link)
-        .host;
+    String linkPreviewDomainUrl = Uri.parse(link).host;
     // Assigned separately
     String linkPreviewFaviconUrl =
-    _getLinkPreviewFaviconUrl(document, derivedFromLink: link);
+        _getLinkPreviewFaviconUrl(document, derivedFromLink: link);
 
     var openGraphMetaTags = document.head.querySelectorAll("[property*='og:']");
 
     openGraphMetaTags.forEach((openGraphMetaTag) {
       String ogTagName =
-      openGraphMetaTag.attributes['property'].split("og:")[1];
+          openGraphMetaTag.attributes['property'].split("og:")[1];
       String ogTagValue = openGraphMetaTag.attributes['content'];
 
       if (ogTagName == 'title') {
@@ -148,8 +144,17 @@ class LinkPreviewService {
     if (linkPreviewImageUrl == null) {
       // Fallback
       var imgElements = document.getElementsByTagName("img");
-      if (imgElements != null && imgElements.isNotEmpty)
-        linkPreviewImageUrl = imgElements?.first?.attributes["src"];
+      if (imgElements != null && imgElements.isNotEmpty) {
+        try {
+          linkPreviewImageUrl = imgElements.firstWhere((var imgElement) {
+            String imgSrc = imgElement.attributes['src'];
+            if (imgSrc == null) return false;
+            return imgSrc.endsWith('jpg');
+          }).attributes["src"];
+        } catch (error) {
+          print(error);
+        }
+      }
     }
 
     if (linkPreviewImageUrl != null)
@@ -175,7 +180,7 @@ class LinkPreviewService {
     var faviconElement = document.querySelector("link[rel*='shortcut icon']");
 
     String linkPreviewFaviconUrl =
-    faviconElement != null ? faviconElement.attributes['href'] : null;
+        faviconElement != null ? faviconElement.attributes['href'] : null;
 
     if (linkPreviewFaviconUrl == null) {
       var shortcutIconElement = document.querySelector("link[rel*='icon']");
@@ -199,8 +204,7 @@ class LinkPreviewService {
     } else if (link.startsWith('/')) {
       // Absolute path
       Uri parsedDerivedFromLink = Uri.parse(derivedFromLink);
-      return '${parsedDerivedFromLink.scheme}://${parsedDerivedFromLink
-          .host}$link';
+      return '${parsedDerivedFromLink.scheme}://${parsedDerivedFromLink.host}$link';
     }
 
     return derivedFromLink.endsWith('/')
