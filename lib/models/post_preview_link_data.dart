@@ -6,6 +6,7 @@ class LinkPreview {
   String faviconUrl;
   String domainUrl;
   String url;
+  List<int> image;
 
   LinkPreview(
       {this.title,
@@ -14,6 +15,7 @@ class LinkPreview {
       this.url,
       this.imageUrl,
       this.faviconUrl,
+      this.image,
       this.domainUrl});
 
   @override
