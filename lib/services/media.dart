@@ -154,7 +154,8 @@ class MediaService {
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
     } else {
-      throw Exception('Failed to compress video');
+      debugPrint('Failed to compress video, using original file');
+      resultFile = video;
     }
 
     return resultFile;
