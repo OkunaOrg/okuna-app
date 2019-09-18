@@ -149,10 +149,9 @@ class LinkPreviewService {
           linkPreviewImageUrl = imgElements.firstWhere((var imgElement) {
             String imgSrc = imgElement.attributes['src'];
             if (imgSrc == null) return false;
-            return imgSrc.endsWith('jpg');
+            return imgSrc.endsWith('jpg') || imgSrc.endsWith('gif') || imgSrc.endsWith('png');
           }).attributes["src"];
         } catch (error) {
-          print(error);
         }
       }
     }

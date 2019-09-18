@@ -127,31 +127,56 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   Widget _buildErrorMessage() {
+    String domainHost = Uri.parse(widget.link).host;
+
     return SizedBox(
-      // Estimated size of the preview bottom bar
-      height: linkPreviewHeight,
-      child: Center(
+        // Estimated size of the preview bottom bar
+        height: linkPreviewHeight,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBIcon(
-              OBIcons.linkOff,
-              size: OBIconSize.large,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 150),
-              child: OBText(
-                _errorMessage,
-                textAlign: TextAlign.center,
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    OBIcon(
+                      OBIcons.linkOff,
+                      size: OBIconSize.large,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 150),
+                      child: OBText(
+                        _errorMessage,
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
               ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: OBHighlightedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: OBSecondaryText(domainHost.toUpperCase(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12)),
+                    ),
+                  ),
+                )
+              ],
             )
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   Widget _buildLinkPreview() {
