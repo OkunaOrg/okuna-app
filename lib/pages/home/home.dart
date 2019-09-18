@@ -157,10 +157,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       image = await _imagePickerService.processImage(image);
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {
-        int limit =
-            _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
-        _toastService.error(
-            message: 'Image too large (limit: $limit MB)', context: context);
+        _showFileTooLargeToast(
+            _validationService.getAllowedImageSize(OBImageType.post));
         return;
       }
     }
@@ -168,9 +166,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     if (share.video != null) {
       video = File.fromUri(Uri.parse(share.video));
       if (!await _validationService.isVideoAllowedSize(video)) {
-        int limit = _validationService.getAllowedVideoSize() ~/ 1048576;
-        _toastService.error(
-            message: 'Video too large (limit: $limit MB)', context: context);
+        _showFileTooLargeToast(_validationService.getAllowedVideoSize());
         return;
       }
     }
@@ -190,6 +186,13 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _timelinePageController.popUntilFirstRoute();
       _navigateToTab(OBHomePageTabs.timeline);
     }
+  }
+
+  Future _showFileTooLargeToast(int limitInBytes) async {
+    _toastService.error(
+        message: _localizationService.image_picker__error_too_large(
+            limitInBytes ~/ 1048576),
+        context: context);
   }
 
   Widget _getPageForTabIndex(int index) {
