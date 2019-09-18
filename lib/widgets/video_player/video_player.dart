@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -26,6 +26,9 @@ class OBVideoPlayer extends StatefulWidget {
   final bool isInDialog;
   final bool autoPlay;
   final OBVideoPlayerController controller;
+  final double height;
+  final double width;
+  final bool isConstrained;
 
   const OBVideoPlayer(
       {Key key,
@@ -37,7 +40,10 @@ class OBVideoPlayer extends StatefulWidget {
       this.isInDialog = false,
       this.autoPlay = false,
       this.visibilityKey,
-      this.controller})
+      this.height,
+      this.width,
+      this.controller,
+      this.isConstrained})
       : super(key: key);
 
   @override
@@ -157,7 +163,10 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
             key: _visibilityKey,
             onVisibilityChanged: _onVisibilityChanged,
             child: Chewie(
+              height: widget.height,
+              width: widget.width,
               controller: _chewieController,
+              isConstrained: widget.isConstrained
             ),
           );
         } else {
@@ -255,7 +264,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     if (_hasVideoOpenedInDialog) return;
     bool isVisible = visibilityInfo.visibleFraction != 0;
 
-    debugLog('isVisible: ${isVisible.toString()} with fraction ${visibilityInfo.visibleFraction}');
+    debugLog(
+        'isVisible: ${isVisible.toString()} with fraction ${visibilityInfo.visibleFraction}');
 
     if (!isVisible && _playerController.value.isPlaying && mounted) {
       debugLog('Its not visible and the video is playing. Now pausing. .');

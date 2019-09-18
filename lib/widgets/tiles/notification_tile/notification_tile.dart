@@ -13,6 +13,7 @@ import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/community_invite_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/connection_confirmed_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/connection_request_notification_tile.dart';
@@ -40,20 +41,29 @@ class OBNotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      initialData: notification,
-      stream: notification.updateSubject,
-      builder: _buildNotificationTile,
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: 0,
+          right: 0,
+          left: 0,
+          bottom: 0,
+          child: StreamBuilder(
+              stream: notification.updateSubject,
+              initialData: notification,
+              builder: _buildNotificationBackground),
+        ),
+        _buildNotification(notification),
+      ],
     );
   }
 
-  Widget _buildNotificationTile(
+  Widget _buildNotificationBackground(
       BuildContext context, AsyncSnapshot<OBNotification> snapshot) {
-    OBNotification notification = snapshot.data;
-    return _buildNotification(notification, context);
+    return snapshot.data.read ? const SizedBox() : OBHighlightedBox();
   }
 
-  Widget _buildNotification(OBNotification notification, BuildContext context) {
+  Widget _buildNotification(OBNotification notification) {
     Widget notificationTile;
 
     dynamic notificationContentObject = this.notification.contentObject;
@@ -138,33 +148,6 @@ class OBNotificationTile extends StatelessWidget {
       default:
         print('Unsupported notification content object type');
         return const SizedBox();
-    }
-
-    if (!notification.read) {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-      ThemeService themeService = openbookProvider.themeService;
-      ThemeValueParserService themeValueParserService =
-          openbookProvider.themeValueParserService;
-
-      return _buildDismissable(StreamBuilder(
-          stream: themeService.themeChange,
-          initialData: themeService.getActiveTheme(),
-          builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-            var theme = snapshot.data;
-            var primaryColor =
-                themeValueParserService.parseColor(theme.primaryColor);
-            final bool isDarkPrimaryColor =
-                primaryColor.computeLuminance() < 0.179;
-
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                color: isDarkPrimaryColor
-                    ? Color.fromARGB(30, 255, 255, 255)
-                    : Color.fromARGB(20, 0, 0, 0),
-              ),
-              child: notificationTile,
-            );
-          }));
     }
 
     return _buildDismissable(notificationTile);

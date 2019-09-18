@@ -12,11 +12,23 @@ import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:async/async.dart';
 
 class OBPostBodyVideo extends StatefulWidget {
+  final double height;
+  final double width;
   final Post post;
   final PostVideo postVideo;
   final String inViewId;
+  final bool hasExpandButton;
+  final bool isConstrained;
 
-  const OBPostBodyVideo({Key key, this.post, this.postVideo, this.inViewId})
+  const OBPostBodyVideo(
+      {Key key,
+      this.post,
+      this.postVideo,
+      this.inViewId,
+      this.height,
+      this.width,
+      this.hasExpandButton,
+      this.isConstrained = false})
       : super(key: key);
 
   @override
@@ -99,28 +111,29 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
       _needsBootstrap = false;
     }
 
-    return _buildVideoPlayer();
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: _buildVideoPlayer(),
+        )
+      ],
+    );
   }
 
   Widget _buildVideoPlayer() {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double imageAspectRatio = widget.postVideo.width / widget.postVideo.height;
-    double imageHeight = (screenWidth / imageAspectRatio);
-
     OBVideoFormat videoFormat =
         widget.postVideo.getVideoFormatOfType(OBVideoFormatType.mp4SD);
 
     String videoUrl = videoFormat.file;
 
-    return SizedBox(
-        height: imageHeight,
-        width: screenWidth,
-        child: OBVideoPlayer(
-          videoUrl: videoUrl,
-          thumbnailUrl: widget.postVideo.thumbnail,
-          controller: _obVideoPlayerController,
-        ));
+    return OBVideoPlayer(
+      videoUrl: videoUrl,
+      thumbnailUrl: widget.postVideo.thumbnail,
+      height: widget.height,
+      width: widget.width,
+      isConstrained: widget.isConstrained,
+      controller: _obVideoPlayerController,
+    );
   }
 
   void _onInViewStateChanged() {
@@ -183,7 +196,10 @@ class PostVideoNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPop(Route route, Route previousRoute) {
-    if (identical(previousRoute, _state._route) && _state._wasPlaying) {
+    if (identical(previousRoute, _state._route) &&
+        _state != null &&
+        _state.mounted &&
+        _state._wasPlaying) {
       debugLog('Resuming video as blocking route has been popped.');
       _state._obVideoPlayerController.play();
     }

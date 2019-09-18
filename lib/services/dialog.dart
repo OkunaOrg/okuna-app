@@ -5,7 +5,7 @@ import 'package:Okuna/pages/home/dialogs/video_dialog.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/pages/home/modals/zoomable_photo.dart';
-import 'package:chewie/chewie.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -70,7 +70,8 @@ class DialogService {
       {String videoUrl,
       File video,
       VideoPlayerController videoPlayerController,
-        ChewieController chewieController,
+      ChewieController chewieController,
+      bool autoPlay: true,
       @required BuildContext context}) async {
     SystemChrome.setEnabledSystemUIOverlays([]);
     await showGeneralDialog(
@@ -80,10 +81,11 @@ class DialogService {
         final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
         final Widget pageChild = Material(
           child: OBVideoDialog(
+            autoPlay: autoPlay,
             video: video,
             videoUrl: videoUrl,
             videoPlayerController: videoPlayerController,
-              chewieController: chewieController,
+            chewieController: chewieController,
           ),
         );
         return Builder(builder: (BuildContext context) {
@@ -98,7 +100,8 @@ class DialogService {
       transitionDuration: const Duration(milliseconds: 100),
       transitionBuilder: _buildMaterialDialogTransitions,
     );
-    SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIOverlays(
+        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
   }
 
   Widget _buildMaterialDialogTransitions(

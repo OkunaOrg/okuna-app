@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
       key: widget.openbookProviderKey,
       child: OBToast(
         child: MaterialApp(
-          navigatorObservers: [routeObserver],
+            navigatorObservers: [routeObserver],
             locale: this.locale,
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {

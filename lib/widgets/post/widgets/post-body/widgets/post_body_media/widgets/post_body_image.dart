@@ -9,60 +9,52 @@ import 'dart:math';
 
 class OBPostBodyImage extends StatelessWidget {
   final PostImage postImage;
+  final bool hasExpandButton;
+  final double height;
+  final double width;
 
-  const OBPostBodyImage({Key key, this.postImage}) : super(key: key);
+  const OBPostBodyImage(
+      {Key key,
+      this.postImage,
+      this.hasExpandButton = false,
+      this.height,
+      this.width})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String imageUrl = postImage.image;
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double maxBoxHeight = screenHeight * .75;
-
-    double imageAspectRatio = postImage.width / postImage.height;
-    double imageHeight = (screenWidth / imageAspectRatio);
-    double boxHeight = min(imageHeight, maxBoxHeight);
 
     List<Widget> stackItems = [
-      _buildImageWidget(screenWidth, imageHeight, imageUrl)
+      _buildImageWidget(imageUrl: imageUrl, width: width, height: height)
     ];
 
-    if (imageHeight > maxBoxHeight) {
+    if (hasExpandButton) {
       stackItems.add(_buildExpandIcon());
     }
 
     return GestureDetector(
-        onTap: () {
-          var dialogService = OpenbookProvider.of(context).dialogService;
-          dialogService.showZoomablePhotoBoxView(
-              imageUrl: imageUrl, context: context);
-        },
-        child: SizedBox(
-          width: screenWidth,
-          height: boxHeight,
-          child: Stack(
-            children: stackItems,
-          ),
-        ));
+      child: Stack(
+        children: stackItems,
+      ),
+      onTap: () {
+        var dialogService = OpenbookProvider.of(context).dialogService;
+        dialogService.showZoomablePhotoBoxView(
+            imageUrl: imageUrl, context: context);
+      },
+    );
   }
 
-  Widget _buildImageWidget(double width, double height, String imageUrl) {
-    return TransitionToImage(
-      width: width,
+  Widget _buildImageWidget({String imageUrl, double height, double width}) {
+    return Image(
       height: height,
-      fit: BoxFit.fitWidth,
-      alignment: Alignment.center,
+      width: width,
+      fit: BoxFit.cover,
       image: AdvancedNetworkImage(imageUrl,
           useDiskCache: true,
           fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
           retryLimit: 3,
           timeoutDuration: const Duration(minutes: 1)),
-      placeholder: postImage.thumbnail != null
-          ? Image(image: AdvancedNetworkImage(postImage.thumbnail))
-          : Center(
-              child: const OBProgressIndicator(),
-            ),
-      duration: const Duration(milliseconds: 300),
     );
   }
 
