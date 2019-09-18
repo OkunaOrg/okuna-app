@@ -76,7 +76,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   @override
   void initState() {
     super.initState();
-    enableSharing();
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
@@ -139,7 +138,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   @override
-  void onShare(Share share) async {
+  Future<void> onShare(Share share) async {
     String text;
     File image;
     File video;
@@ -370,6 +369,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   void _bootstrap() async {
+    enableShareProcessing();
+
     _loggedInUserChangeSubscription =
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
 
