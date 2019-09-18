@@ -190,7 +190,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
             ],
           )),
       onTap: () {
-        _urlLauncherService.launchUrl(_linkPreview.url);
+        _urlLauncherService.launchUrl(_linkPreview.url ?? widget.link);
       },
     );
   }
@@ -263,14 +263,14 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
           ),
           _linkPreview.title != null
               ? Padding(
-            padding: const EdgeInsets.only(top: 5),
-            child: OBText(
-              _linkPreview.title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          )
+                  padding: const EdgeInsets.only(top: 5),
+                  child: OBText(
+                    _linkPreview.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
               : const SizedBox(),
           _linkPreview.description != null
               ? Padding(

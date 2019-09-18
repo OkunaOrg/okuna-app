@@ -1,5 +1,6 @@
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:public_suffix/public_suffix_io.dart';
 class LinkPreviewService {
   ValidationService _validationService;
   HttpieService _httpieService;
+  UtilsService _utilsService;
 
   String _trustedProxyUrl = '';
 
@@ -35,6 +37,10 @@ class LinkPreviewService {
     _httpieService = httpieService;
   }
 
+  void setUtilsService(utilsService) {
+    _utilsService = utilsService;
+  }
+
   void setValidationService(validationService) {
     _validationService = validationService;
   }
@@ -51,6 +57,11 @@ class LinkPreviewService {
     }));
 
     if (matches.length > 0) {
+      String urlMimeType = _utilsService.geFileNameMimeType(matches.first);
+      if (urlMimeType != null) {
+        String urlFirstType = urlMimeType.split('/').first;
+        if (urlFirstType != 'image' && urlFirstType != 'text') return null;
+      }
       previewUrl = matches.first;
     }
     return previewUrl;

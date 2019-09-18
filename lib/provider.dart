@@ -176,6 +176,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
     linkPreviewService.setHttpieService(httpService);
+    linkPreviewService.setUtilsService(utilsService);
     linkPreviewService.setValidationService(validationService);
   }
 
