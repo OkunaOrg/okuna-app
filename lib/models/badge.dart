@@ -15,6 +15,13 @@ class Badge {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'keyword': _getBadgeKeywordFromEnum(keyword),
+      'keywordDescription': keywordDescription
+    };
+  }
+
   static BadgeKeyword _getBadgeKeywordEnum(keyword) {
 
     switch(keyword) {
@@ -26,8 +33,19 @@ class Badge {
       case 'SUPER_FOUNDER': return BadgeKeyword.super_founder; break;
       default: return BadgeKeyword.none; break;
     }
+  }
 
+  static String _getBadgeKeywordFromEnum(enumKeyword) {
 
+    switch(enumKeyword) {
+      case  BadgeKeyword.angel: return 'ANGEL'; break;
+      case BadgeKeyword.verified: return 'VERIFIED'; break;
+      case BadgeKeyword.founder: return 'FOUNDER'; break;
+      case BadgeKeyword.golden_founder: return 'GOLDEN_FOUNDER'; break;
+      case BadgeKeyword.diamond_founder: return 'DIAMOND_FOUNDER'; break;
+      case BadgeKeyword.super_founder: return 'SUPER_FOUNDER'; break;
+      default: return ''; break;
+    }
   }
 
   BadgeKeyword getKeyword() {

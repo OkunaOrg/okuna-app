@@ -65,8 +65,8 @@ class Post extends UpdatableModel<Post> {
       'uuid': uuid,
       'creatorId': creatorId,
       'creator': creator.toJson(),
-      'circles': CirclesList.toJson(),
-      'reactionsEmojiCounts': ReactionsEmojiCountList.toJson(),
+      'circles': circles.circles.map((circle) => circle.toJson()),
+      'reactionsEmojiCounts': reactionsEmojiCounts.counts.map((reactionEmojiCount) => reactionEmojiCount.toJson()),
       'reaction': reaction.toJson(),
       'reactionsCount': reactionsCount,
       'commentsCount': commentsCount,
@@ -79,6 +79,14 @@ class Post extends UpdatableModel<Post> {
       'language': language.toJson(),
       'status': status.toJson(),
       'media': media.toJson(),
+      'linkPreview': linkPreview,
+      'commentsList': PostCommentList.toJson(commentsList),
+      'community': community.toJson(),
+      'isMuted': isMuted,
+      'isEncircled': isEncircled,
+      'isEdited': isEdited,
+      'isClosed': isClosed,
+      'isReported': isReported
     };
   }
 

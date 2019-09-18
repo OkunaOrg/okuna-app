@@ -21,6 +21,16 @@ class CommunityMembership {
         isModerator: parsedJson['is_moderator']);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+    'id': id,
+    'userId': userId,
+    'communityId': communityId,
+    'isAdministrator': isAdministrator,
+    'isModerator': isModerator
+    };
+  }
+
   void updateFromJson(Map<String, dynamic> json) {
     if (json.containsKey('is_administrator'))
       isAdministrator = json['is_administrator'];

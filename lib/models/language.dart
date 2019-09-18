@@ -17,4 +17,12 @@ class Language {
         name: parsedJson['name'],
        );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'code': code,
+      'name': name
+    };
+  }
 }

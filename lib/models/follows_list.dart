@@ -18,6 +18,17 @@ class FollowsList extends UpdatableModel<FollowsList> {
     return factory.fromJson(json);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'creator': creator,
+      'users': users.users.map((user) => user.toJson()),
+      'emoji': emoji.toJson(),
+      'name': name,
+      'followsCount': followsCount
+    };
+  }
+
   FollowsList(
       {this.id,
       this.creator,

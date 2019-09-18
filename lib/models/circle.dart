@@ -26,6 +26,17 @@ class Circle extends UpdatableModel<Circle> {
     return factory.fromJson(json);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+        'id': id,
+        'creator': creator.toJson(),
+        'name': name,
+        'color': color,
+        'usersCount': usersCount,
+        'users': users.users.map((user) => user.toJson())
+    };
+  }
+
   @override
   void updateFromJson(Map json) {
     if (json.containsKey('users')) {

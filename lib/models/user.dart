@@ -68,6 +68,39 @@ class User extends UpdatableModel<User> {
         : navigationUsersFactory.fromJson(json);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'uuid': uuid,
+      'connectionsCircleId': connectionsCircleId,
+      'email': email,
+      'username': username,
+      'language': language.toJson(),
+      'profile': profile.toJson(),
+      'notificationsSettings': notificationsSettings.toJson(),
+      'followersCount': followersCount,
+      'followingCount': followingCount,
+      'unreadNotificationsCount': unreadNotificationsCount,
+      'postsCount': postsCount,
+      'inviteCount': inviteCount,
+      'pendingCommunitiesModeratedObjectsCount': pendingCommunitiesModeratedObjectsCount,
+      'activeModerationPenaltiesCount': activeModerationPenaltiesCount,
+      'areGuidelinesAccepted': areGuidelinesAccepted,
+      'isFollowing': isFollowing,
+      'isConnected': isConnected,
+      'isReported': isReported,
+      'isBlocked': isBlocked,
+      'isGlobalModerator': isGlobalModerator,
+      'isFullyConnected': isFullyConnected,
+      'isPendingConnectionConfirmation': isPendingConnectionConfirmation,
+      'isMemberOfCommunities': isMemberOfCommunities,
+      'connectedCircles': connectedCircles.circles.map((Circle circle) => circle.toJson()),
+      'followLists': followLists.lists.map((followLists) => followLists.toJson()),
+      'communitiesMemberships': communitiesMemberships.communityMemberships.map((membership) => membership.toJson()),
+      'communitiesInvites' : communitiesInvites.communityInvites.map((invite) => invite.toJson()),
+    };
+  }
+
   static void clearNavigationCache() {
     navigationUsersFactory.clearCache();
   }

@@ -28,4 +28,15 @@ class Emoji {
         order: parsedJson['order'],
         color: parsedJson['color']);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'keyword': keyword,
+      'id': id,
+      'order': order,
+      'created': created,
+      'color': color,
+      'image': image
+    };
+  }
 }
