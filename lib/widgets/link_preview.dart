@@ -237,12 +237,14 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
               ],
             ),
           ),
-          OBText(
-            _linkPreview.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
+          _linkPreview.title != null
+              ? OBText(
+                  _linkPreview.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                )
+              : const SizedBox(),
           _linkPreview.description != null
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),

@@ -1,6 +1,5 @@
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +66,6 @@ class LinkPreviewService {
     if (!normalisedLink.startsWith('https://')) {
       try {
         String secureLink = normalisedLink.replaceFirst('http', 'https');
-        print('Secure Link $secureLink');
         response = await _httpieService.get(getProxiedLink(secureLink),
             appendAuthorizationToken: appendAuthorizationHeader);
         normalisedLink = secureLink;
@@ -82,7 +80,6 @@ class LinkPreviewService {
 
     _checkResponseIsOk(response);
 
-    print(response.httpResponse.headers);
     String contentType = response.httpResponse.headers['content-type'];
 
     String mimeFirstType = contentType.split('/').first;
@@ -113,7 +110,8 @@ class LinkPreviewService {
     String linkPreviewSiteName;
     String linkPreviewDomainUrl = Uri.parse(link).host;
     // Assigned separately
-    String linkPreviewFaviconUrl = _getLinkPreviewFaviconUrl(document);
+    String linkPreviewFaviconUrl =
+        _getLinkPreviewFaviconUrl(document, derivedFromLink: link);
 
     var openGraphMetaTags = document.head.querySelectorAll("[property*='og:']");
 
@@ -123,30 +121,36 @@ class LinkPreviewService {
       String ogTagValue = openGraphMetaTag.attributes['content'];
 
       if (ogTagName == 'title') {
-        if (ogTagValue == null || ogTagValue.isEmpty) {
-          // Title fallback
-          ogTagValue = document.head.getElementsByTagName("title")[0]?.text;
-        }
         linkPreviewTitle = ogTagValue;
       } else if (ogTagName == 'description') {
         linkPreviewDescription = ogTagValue;
       } else if (ogTagName == 'image') {
-        if (ogTagValue == null || ogTagValue.isEmpty) {
-          // Image fallback
-          var imgElements = document.body.getElementsByTagName("img");
-          if (imgElements != null && imgElements.isNotEmpty)
-            ogTagValue = imgElements?.first?.attributes["src"];
-        }
         linkPreviewImageUrl = ogTagValue;
       } else if (ogTagName == 'site_name') {
         linkPreviewSiteName = ogTagValue;
       }
     });
 
-    // This is the minimum required for a LinkPreview
-    bool hasTitle = linkPreviewTitle != null && linkPreviewSiteName != null;
+    if (linkPreviewTitle == null) {
+      // Fallback
+      linkPreviewTitle = document.head.getElementsByTagName("title")[0]?.text;
+    }
 
-    if (!hasTitle) throw EmptyLinkToPreview(link);
+    if (linkPreviewImageUrl == null) {
+      // Fallback
+      var imgElements = document.getElementsByTagName("img");
+      if (imgElements != null && imgElements.isNotEmpty)
+        linkPreviewImageUrl = imgElements?.first?.attributes["src"];
+    }
+
+    print('GOT HERE');
+
+    if (linkPreviewImageUrl != null)
+      linkPreviewImageUrl =
+          _normaliseLink(linkPreviewImageUrl, derivedFromLink: link);
+    if (linkPreviewFaviconUrl != null)
+      linkPreviewFaviconUrl =
+          _normaliseLink(linkPreviewFaviconUrl, derivedFromLink: link);
 
     return LinkPreview(
         title: linkPreviewTitle,
@@ -158,7 +162,8 @@ class LinkPreviewService {
         url: link);
   }
 
-  String _getLinkPreviewFaviconUrl(Document document) {
+  String _getLinkPreviewFaviconUrl(Document document,
+      {String derivedFromLink}) {
     var faviconElement = document.querySelector("link[rel*='shortcut icon']");
 
     String linkPreviewFaviconUrl =
@@ -172,16 +177,22 @@ class LinkPreviewService {
     }
 
     if (linkPreviewFaviconUrl != null)
-      linkPreviewFaviconUrl = _normaliseLink(linkPreviewFaviconUrl);
+      linkPreviewFaviconUrl = _normaliseLink(linkPreviewFaviconUrl,
+          derivedFromLink: derivedFromLink);
 
     return linkPreviewFaviconUrl;
   }
 
-  String _normaliseLink(String link) {
+  String _normaliseLink(String link, {String derivedFromLink}) {
+    link = link.toLowerCase();
+
     if (link.startsWith('http') || link.startsWith('https')) {
       return link;
     } else if (link.startsWith('//')) {
       return 'http:$link';
+    } else if (link.startsWith('/')) {
+      Uri parsedDerivedFromLink = Uri.parse(derivedFromLink);
+      return '${parsedDerivedFromLink.scheme}://${parsedDerivedFromLink.host}$link';
     }
 
     return 'http://${link}';
