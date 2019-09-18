@@ -37,7 +37,7 @@ class OBHighlightedBox extends StatelessWidget {
               borderRadius: borderRadius,
               color: isDarkPrimaryColor
                   ? Color.fromARGB(30, 255, 255, 255)
-                  : Color.fromARGB(20, 0, 0, 0),
+                  : Color.fromARGB(10, 0, 0, 0),
             ),
             child: child,
           );

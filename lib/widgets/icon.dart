@@ -18,7 +18,11 @@ class OBIcon extends StatelessWidget {
   static const double SMALL_SIZE = 15.0;
 
   const OBIcon(this.iconData,
-      {this.size, this.customSize, this.color, this.themeColor, this.semanticLabel})
+      {this.size,
+      this.customSize,
+      this.color,
+      this.themeColor,
+      this.semanticLabel})
       : assert(!(color != null && themeColor != null));
 
   @override
@@ -154,6 +158,7 @@ class OBIcons {
   static const sad = OBIconData(nativeIcon: Icons.sentiment_dissatisfied);
   static const location = OBIconData(nativeIcon: Icons.location_on);
   static const link = OBIconData(nativeIcon: Icons.link);
+  static const linkOff = OBIconData(nativeIcon: Icons.link_off);
   static const email = OBIconData(nativeIcon: Icons.email);
   static const lock = OBIconData(nativeIcon: Icons.lock);
   static const bio = OBIconData(nativeIcon: Icons.bookmark);
@@ -208,7 +213,8 @@ class OBIcons {
   static const edit = OBIconData(nativeIcon: Icons.edit);
   static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
-  static const unmutePostComment = OBIconData(nativeIcon: Icons.notifications_off);
+  static const unmutePostComment =
+      OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const account = OBIconData(nativeIcon: Icons.account_circle);
   static const application = OBIconData(nativeIcon: Icons.phone_iphone);

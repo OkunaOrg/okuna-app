@@ -207,7 +207,7 @@ class PostComment extends UpdatableModel<PostComment> {
       throw 'Trying to remove no reaction';
     }
 
-    var newEmojiCounts = reactionsEmojiCounts.counts.toList();
+    var newEmojiCounts = reactionsEmojiCounts.counts != null ? reactionsEmojiCounts.counts.toList() : [];
 
     if (hasReaction) {
       var currentReactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {

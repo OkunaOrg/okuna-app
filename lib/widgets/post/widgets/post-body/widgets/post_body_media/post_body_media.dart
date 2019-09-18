@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
@@ -8,10 +10,12 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_image.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_video.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 
 class OBPostBodyMedia extends StatefulWidget {
   final Post post;
@@ -34,15 +38,20 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   CancelableOperation _retrievePostMediaOperation;
   bool _retrievePostMediaInProgress;
 
+  double _mediaHeight;
+  double _mediaWidth;
+  bool _mediaIsConstrained;
+
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
     _retrievePostMediaInProgress = true;
     _errorMessage = '';
+    _mediaIsConstrained = false;
   }
 
-  void didUpdateWidget(oldWidget){
+  void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
     _retrievePostMediaInProgress = true;
     _needsBootstrap = true;
@@ -64,65 +73,76 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
       _bootstrap();
       _needsBootstrap = false;
     }
-    return _errorMessage.isEmpty ? _buildPostMedia() : _buildErrorMessage();
-  }
 
-  Widget _buildErrorMessage() {
-    return Stack(
-      children: <Widget>[
-        _buildPostMediaItemsThumbnail(),
-        Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.black87,
-                    borderRadius: BorderRadius.circular(3)),
-                child: Text(
-                  _errorMessage,
-                  style: TextStyle(color: Colors.white),
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: SizedBox(
+          width: _mediaWidth,
+          height: _mediaHeight,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                child: _buildPostMediaItemsThumbnail(),
               ),
-            ))
-      ],
+              _errorMessage.isEmpty
+                  ? _retrievePostMediaInProgress
+                      ? const SizedBox()
+                      : _buildMediaItems()
+                  : Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: _buildErrorMessage(),
+                    )
+            ],
+          )),
     );
   }
 
-  Widget _buildPostMedia() {
-    return _retrievePostMediaInProgress
-        ? _buildPostMediaItemsThumbnail()
-        : StreamBuilder(
-            stream: widget.post.updateSubject,
-            initialData: widget.post,
-            builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-              List<PostMedia> postMediaItems = widget.post.getMedia();
-              return _buildPostMediaItems(postMediaItems);
-            },
-          );
+  Widget _buildErrorMessage() {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+            color: Colors.black87, borderRadius: BorderRadius.circular(3)),
+        child: Text(
+          _errorMessage,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMediaItems() {
+    return StreamBuilder(
+      stream: widget.post.updateSubject,
+      initialData: widget.post,
+      builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
+        List<PostMedia> postMediaItems = widget.post.getMedia();
+        return _buildPostMediaItems(postMediaItems);
+      },
+    );
   }
 
   Widget _buildPostMediaItemsThumbnail() {
     String thumbnailUrl = widget.post.mediaThumbnail;
-    double mediaWidth = widget.post.mediaWidth;
-    double mediaHeight = widget.post.mediaHeight;
-    double screenWidth = MediaQuery.of(context).size.width;
 
-    double thumbnailAspectRatio = mediaWidth / mediaHeight;
-    double thumbnailHeight = (screenWidth / thumbnailAspectRatio);
-
-    return SizedBox(
-        width: screenWidth,
-        height: thumbnailHeight,
-        child: Image(
-            image: AdvancedNetworkImage(thumbnailUrl,
-                useDiskCache: true,
-                fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-                retryLimit: 3,
-                timeoutDuration: const Duration(seconds: 3))));
+    return TransitionToImage(
+      height: _mediaHeight,
+      width: _mediaWidth,
+      loadingWidget: const Center(
+        child: const OBProgressIndicator(),
+      ),
+      fit: BoxFit.cover,
+      alignment: Alignment.center,
+      image: AdvancedNetworkImage(thumbnailUrl,
+          useDiskCache: true,
+          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+          retryLimit: 3,
+          timeoutDuration: const Duration(seconds: 5)),
+      duration: Duration(milliseconds: 100),
+    );
   }
 
   Widget _buildPostMediaItems(List<PostMedia> postMediaItems) {
@@ -139,14 +159,20 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     switch (postMediaItemContentObject.runtimeType) {
       case PostImage:
         postMediaItemWidget = OBPostBodyImage(
-          postImage: postMediaItemContentObject,
-        );
+            postImage: postMediaItemContentObject,
+            hasExpandButton: _mediaIsConstrained,
+            height: _mediaHeight,
+            width: _mediaWidth);
         break;
       case PostVideo:
         postMediaItemWidget = OBPostBodyVideo(
-            postVideo: postMediaItemContentObject,
-            post: widget.post,
-            inViewId: widget.inViewId);
+          postVideo: postMediaItemContentObject,
+          post: widget.post,
+          inViewId: widget.inViewId,
+          height: _mediaHeight,
+          width: _mediaWidth,
+          isConstrained: _mediaIsConstrained,
+        );
         break;
       default:
         postMediaItemWidget = Center(
@@ -158,10 +184,21 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   }
 
   void _bootstrap() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double maxBoxHeight = screenHeight * .70;
+
+    double imageAspectRatio = widget.post.mediaWidth / widget.post.mediaHeight;
+    double imageHeight = (screenWidth / imageAspectRatio);
+    _mediaHeight = min(imageHeight, maxBoxHeight);
+    if (_mediaHeight == maxBoxHeight) _mediaIsConstrained = true;
+    _mediaWidth = screenWidth;
+
     if (widget.post.media != null) {
       _retrievePostMediaInProgress = false;
       return;
     }
+
     _retrievePostMedia();
   }
 

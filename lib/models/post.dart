@@ -4,13 +4,10 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
-import 'package:Okuna/models/post_image.dart';
-import 'package:Okuna/models/post_links_list.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_media_list.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/post_reaction.dart';
-import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/updatable_model.dart';
@@ -42,8 +39,7 @@ class Post extends UpdatableModel<Post> {
   OBPostStatus status;
 
   PostMediaList media;
-  PostLinksList postLinksList;
-  PostPreviewLinkData previewLinkQueryData;
+  LinkPreview linkPreview;
   PostCommentList commentsList;
   Community community;
 
@@ -98,7 +94,6 @@ class Post extends UpdatableModel<Post> {
       this.creatorId,
       this.mediaThumbnail,
       this.media,
-      this.postLinksList,
       this.creator,
       this.language,
       this.reactionsCount,
@@ -153,7 +148,6 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('text')) {
       text = json['text'];
-      previewLinkQueryData = null;
     }
 
     if (json.containsKey('is_muted')) isMuted = json['is_muted'];
@@ -170,9 +164,6 @@ class Post extends UpdatableModel<Post> {
       mediaThumbnail = json['media_thumbnail'];
 
     if (json.containsKey('media')) media = factory.parseMedia(json['media']);
-
-    if (json.containsKey('post_links'))
-      postLinksList = factory.parsePostLinksList(json['post_links']);
 
     if (json.containsKey('community'))
       community = factory.parseCommunity(json['community']);
@@ -191,16 +182,15 @@ class Post extends UpdatableModel<Post> {
   }
 
   void updatePreviewDataFromJson(Map json) {
-    previewLinkQueryData = PostPreviewLinkData();
-    if (json.containsKey('title')) previewLinkQueryData.title = json['title'];
+    linkPreview = LinkPreview();
+    if (json.containsKey('title')) linkPreview.title = json['title'];
     if (json.containsKey('description'))
-      previewLinkQueryData.description = json['description'];
-    if (json.containsKey('image_url'))
-      previewLinkQueryData.imageUrl = json['image_url'];
+      linkPreview.description = json['description'];
+    if (json.containsKey('image_url')) linkPreview.imageUrl = json['image_url'];
     if (json.containsKey('favicon_url'))
-      previewLinkQueryData.faviconUrl = json['favicon_url'];
+      linkPreview.faviconUrl = json['favicon_url'];
     if (json.containsKey('domain_url'))
-      previewLinkQueryData.domainUrl = json['domain_url'];
+      linkPreview.domainUrl = json['domain_url'];
     notifyUpdate();
   }
 
@@ -238,12 +228,8 @@ class Post extends UpdatableModel<Post> {
     return media != null && media.postMedia.isNotEmpty;
   }
 
-  bool hasPreviewLink() {
-    return postLinksList != null && postLinksList.links.length > 0;
-  }
-
-  bool hasPreviewQueryData() {
-    return previewLinkQueryData != null;
+  bool hasLinkPreview() {
+    return linkPreview != null;
   }
 
   bool hasText() {
@@ -302,10 +288,6 @@ class Post extends UpdatableModel<Post> {
     return media.postMedia.first;
   }
 
-  String getPreviewLink() {
-    return postLinksList.links[0].link;
-  }
-
   Language getLanguage() {
     return language;
   }
@@ -326,6 +308,11 @@ class Post extends UpdatableModel<Post> {
 
   void setMedia(PostMediaList media) {
     this.media = media;
+    this.notifyUpdate();
+  }
+
+  void setLinkPreview(LinkPreview linkPreview) {
+    this.linkPreview = linkPreview;
     this.notifyUpdate();
   }
 
@@ -420,7 +407,6 @@ class PostFactory extends UpdatableModelFactory<Post> {
         creator: parseCreator(json['creator']),
         mediaThumbnail: json['media_thumbnail'],
         media: parseMedia(json['media']),
-        postLinksList: parsePostLinksList(json['post_links']),
         reaction: parseReaction(json['reaction']),
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
@@ -444,11 +430,6 @@ class PostFactory extends UpdatableModelFactory<Post> {
   PostMediaList parseMedia(List mediaRawData) {
     if (mediaRawData == null) return null;
     return PostMediaList.fromJson(mediaRawData);
-  }
-
-  PostLinksList parsePostLinksList(List linksList) {
-    if (linksList == null) return null;
-    return PostLinksList.fromJson(linksList);
   }
 
   User parseCreator(Map creator) {

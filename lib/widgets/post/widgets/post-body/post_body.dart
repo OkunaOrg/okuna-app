@@ -2,6 +2,8 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_video.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_link_preview.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_image.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/post_body_media.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_text.dart';
@@ -20,12 +22,22 @@ class OBPostBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> bodyItems = [];
-
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     if (post.hasMediaThumbnail()) {
       bodyItems.add(OBPostBodyMedia(post: post, inViewId: inViewId));
     }
 
     if (post.hasText()) {
+      if (!post.hasMediaThumbnail() &&
+          openbookProvider.linkPreviewService.hasLinkPreviewUrl(post.text)) {
+        bodyItems.add(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: OBPostBodyLinkPreview(post: post),
+          ),
+        );
+      }
+
       bodyItems.add(OBPostBodyText(
         post,
         onTextExpandedChange: onTextExpandedChange,

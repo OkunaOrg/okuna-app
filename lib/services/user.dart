@@ -60,7 +60,6 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/posts_api.dart';
-import 'package:Okuna/services/preview_url_api_service.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:Okuna/services/user_invites_api.dart';
 import 'package:Okuna/services/waitlist_service.dart';
@@ -97,7 +96,6 @@ class UserService {
   DevicesApiService _devicesApiService;
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
-  PreviewUrlApiService _previewUrlApiService;
   LocalizationService _localizationService;
 
   // If this is null, means user logged out.
@@ -180,10 +178,6 @@ class UserService {
 
   void setWaitlistApiService(WaitlistApiService waitlistApiService) {
     _waitlistApiService = waitlistApiService;
-  }
-
-  void setPreviewUrlApiService(PreviewUrlApiService previewUrlApiService) {
-    _previewUrlApiService = previewUrlApiService;
   }
 
   void setLocalizationsService(LocalizationService localizationService) {
@@ -1898,24 +1892,6 @@ class UserService {
     _checkResponseIsOk(response);
 
     return json.decode(response.body)['translated_text'];
-  }
-
-  Future getPreviewDataForPost({@required Post post}) async {
-    HttpieResponse response =
-        await _postsApiService.getPreviewDataForPostUuid(postUuid: post.uuid);
-
-    _checkResponseIsOk(response);
-
-    return post.updatePreviewDataFromJson(json.decode(response.body));
-  }
-
-  Future getPreviewDataForUrl({@required String url}) async {
-    HttpieResponse response =
-        await _previewUrlApiService.getPreviewDataForUrl(url: url);
-
-    _checkResponseIsOk(response);
-
-    return json.decode(response.body);
   }
 
   Future<UsersList> getPostParticipants(

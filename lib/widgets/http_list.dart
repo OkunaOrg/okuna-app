@@ -475,7 +475,7 @@ class OBHttpListController<T> {
   Future refresh(
       {bool shouldScrollToTop = false,
       bool shouldUseRefreshIndicator = false}) async {
-    if (!_state.mounted) return;
+    if (_state == null || !_state.mounted) return;
     _state.refreshList(
         shouldScrollToTop: shouldScrollToTop,
         shouldUseRefreshIndicator: shouldUseRefreshIndicator);
