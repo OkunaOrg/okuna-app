@@ -62,6 +62,30 @@ class Post extends UpdatableModel<Post> {
     return factory.fromJson(json);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created': created,
+      'uuid': uuid,
+      'creatorId': creatorId,
+      'creator': creator.toJson(),
+      'circles': CirclesList.toJson(),
+      'reactionsEmojiCounts': ReactionsEmojiCountList.toJson(),
+      'reaction': reaction.toJson(),
+      'reactionsCount': reactionsCount,
+      'commentsCount': commentsCount,
+      'mediaHeight': mediaHeight,
+      'mediaWidth': mediaWidth,
+      'mediaThumbnail': mediaThumbnail,
+      'areCommentsEnabled': areCommentsEnabled,
+      'publicReactions': publicReactions,
+      'text': text,
+      'language': language.toJson(),
+      'status': status.toJson(),
+      'media': media.toJson(),
+    };
+  }
+
   static void clearCache() {
     factory.clearCache();
   }

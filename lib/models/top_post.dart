@@ -32,6 +32,14 @@ class TopPost extends UpdatableModel<TopPost> {
     return factory.fromJson(json);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'post': post.toJson(post),
+      'created': created
+    };
+  }
+
   static void clearCache() {
     factory.clearCache();
   }

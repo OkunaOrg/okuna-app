@@ -38,6 +38,7 @@ import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/post_reaction_list.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/posts_list.dart';
+import 'package:Okuna/models/top_post.dart';
 import 'package:Okuna/models/top_posts_list.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
@@ -77,6 +78,8 @@ class UserService {
   static const STORAGE_KEY_AUTH_TOKEN = 'authToken';
   static const STORAGE_KEY_USER_DATA = 'data';
   static const STORAGE_FIRST_POSTS_DATA = 'firstPostsData';
+  static const STORAGE_TOP_POSTS_DATA = 'topPostsData';
+  static const STORAGE_TOP_POSTS_SCROLL_POSITION = 'topPostsScrollPosition';
 
   AuthApiService _authApiService;
   HttpieService _httpieService;
@@ -403,6 +406,36 @@ class UserService {
       return postsList;
     }
     return PostsList();
+  }
+
+  Future<void> setStoredTopPosts(List<TopPost> topPosts) async {
+    print('Storing top posts...');
+    String topPostsData = json.encode(topPosts);
+    await this._removeStoredTopPostsData();
+    await this._storeTopPostsData(topPostsData);
+  }
+
+  Future<void> setTopPostsScrollPosition(double scrollPosition) async {
+    String topPostScrollPosition = scrollPosition.toString();
+    await this._removeStoredTopPostsScrollPosition();
+    await this._storeTopPostsScrollPosition(topPostScrollPosition);
+  }
+
+  Future<TopPostsList> getStoredTopPosts() async {
+    String topPostsData = await this._getStoredTopPostsData();
+    if (topPostsData != null) {
+      var postsList = _makeTopPostsList(topPostsData);
+      return postsList;
+    }
+    return TopPostsList();
+  }
+
+  Future<double> getStoredTopPostsScrollPosition() async {
+    String topPostsPosition = await this._getStoredTopPostsScrollPosition();
+    if (topPostsPosition != null) {
+      return double.parse(topPostsPosition);
+    }
+    return 0.0;
   }
 
   Future<Post> createPost(
@@ -2036,12 +2069,40 @@ class UserService {
     return _userStorage.get(STORAGE_FIRST_POSTS_DATA);
   }
 
+  Future<void> _storeTopPostsData(String topPostsData) {
+    return _userStorage.set(STORAGE_TOP_POSTS_DATA, topPostsData);
+  }
+
+  Future<void> _removeStoredTopPostsData() async {
+    _userStorage.remove(STORAGE_TOP_POSTS_DATA);
+  }
+
+  Future<String> _getStoredTopPostsData() async {
+    return _userStorage.get(STORAGE_TOP_POSTS_DATA);
+  }
+
+  Future<void> _storeTopPostsScrollPosition(String scrollPosition) {
+    return _userStorage.set(STORAGE_TOP_POSTS_SCROLL_POSITION, scrollPosition);
+  }
+
+  Future<void> _removeStoredTopPostsScrollPosition() async {
+    _userStorage.remove(STORAGE_TOP_POSTS_SCROLL_POSITION);
+  }
+
+  Future<String> _getStoredTopPostsScrollPosition() async {
+    return _userStorage.get(STORAGE_TOP_POSTS_SCROLL_POSITION);
+  }
+
   User _makeLoggedInUser(String userData) {
     return User.fromJson(json.decode(userData), storeInSessionCache: true);
   }
 
   PostsList _makePostsList(String postsData) {
     return PostsList.fromJson(json.decode(postsData));
+  }
+
+  TopPostsList _makeTopPostsList(String postsData) {
+    return TopPostsList.fromJson((json.decode(postsData)));
   }
 }
 

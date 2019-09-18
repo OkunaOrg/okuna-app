@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/top_post.dart';
+import 'package:Okuna/models/top_posts_list.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
@@ -34,20 +36,25 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   CancelableOperation _getTrendingPostsOperation;
   OBPostsStreamController _obPostsStreamController;
 
+  bool _needsBootstrap;
   List<TopPost> _currentTopPosts = [];
   List<Post> _currentPosts = [];
   List<int> _excludedCommunities = [];
+  List<Post> _topPostsCacheData = [];
+  double _topPostScrollPosition = 0.0;
 
   @override
   void initState() {
     super.initState();
+    _needsBootstrap = true;
     _obPostsStreamController = OBPostsStreamController();
     if (widget.controller != null) widget.controller.attach(this);
   }
 
   @override
-  void dispose() {
+  void dispose() async {
     super.dispose();
+    await _userService.setStoredTopPosts(_currentTopPosts);
     if (_getTrendingPostsOperation != null) _getTrendingPostsOperation.cancel();
   }
 
@@ -66,12 +73,16 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     _localizationService = openbookProvider.localizationService;
     _navigationService = openbookProvider.navigationService;
 
+    if (_needsBootstrap) _bootstrap();
+
     return OBPostsStream(
       streamIdentifier: 'explorePostsTab',
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
       isTopPostsStream: true,
+      initialPosts: _topPostsCacheData,
+      refreshOnCreate: _topPostsCacheData.length == 0,
       postBuilder: _topPostBuilder,
       prependedItems: <Widget>[
         Padding(
@@ -92,6 +103,16 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         )
       ],
     );
+  }
+
+  void _bootstrap() async {
+    _topPostScrollPosition = await _userService.getStoredTopPostsScrollPosition();
+    TopPostsList topPostsList = await _userService.getStoredTopPosts();
+    if (topPostsList.posts != null) {
+      List<Post> posts = topPostsList.posts.map((topPost) => topPost.post).toList();
+      _topPostsCacheData = posts;
+      print(posts);
+    }
   }
 
   Widget _topPostBuilder(BuildContext context, Post post, String streamUniqueIdentifier, Function(Post) onPostDeleted) {
@@ -137,7 +158,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   Future<List<Post>> _postsStreamRefresher() async {
-    List<TopPost> topPosts = (await _userService.getTopPosts()).posts;
+    List<TopPost> topPosts = (await _userService.getTopPosts(count: 2)).posts;
     List<Post> posts = topPosts.map((topPost) => topPost.post).toList();
     _setTopPosts(topPosts);
     _setPosts(posts);
@@ -169,10 +190,11 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     });
   }
 
-  void _setTopPosts(List<TopPost> posts) {
+  void _setTopPosts(List<TopPost> posts) async {
     setState(() {
       _currentTopPosts = posts;
     });
+    await _userService.setStoredTopPosts(_currentTopPosts);
   }
 
   void _setPosts(List<Post> posts) {
