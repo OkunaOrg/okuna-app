@@ -4,7 +4,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "error_with_description": "Failed to preview link with error with website error: {description}",
+  "error_with_description": "Failed to preview link with website error: {description}",
   "@error_with_description": {
     "type": "text",
     "placeholders": {
