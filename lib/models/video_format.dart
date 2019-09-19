@@ -21,6 +21,16 @@ class OBVideoFormat {
       file: json['file'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'progress': progress,
+      'duration': duration,
+      'format': format,
+      'file': file
+    };
+  }
 }
 
 class OBVideoFormatType {

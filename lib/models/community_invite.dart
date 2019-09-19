@@ -47,12 +47,12 @@ class CommunityInvite {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'creatorId': creatorId,
-      'invitedUserId': invitedUserId,
-      'communityId': communityId,
-      'community': community,
-      'invitedUser': invitedUser,
-      'creator': creator
+      'creator_d': creatorId,
+      'invited_user_id': invitedUserId,
+      'community_id': communityId,
+      'community': community?.toJson(),
+      'invited_user': invitedUser?.toJson(),
+      'creator': creator?.toJson()
     };
   }
 

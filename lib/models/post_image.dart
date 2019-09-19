@@ -18,4 +18,13 @@ class PostImage {
         width: parsedJson['width']?.toDouble(),
         height: parsedJson['height']?.toDouble());
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'image': image,
+      'width': width,
+      'height': height,
+      'thumbnail': thumbnail
+    };
+  }
 }

@@ -24,10 +24,10 @@ class CommunityMembership {
   Map<String, dynamic> toJson() {
     return {
     'id': id,
-    'userId': userId,
-    'communityId': communityId,
-    'isAdministrator': isAdministrator,
-    'isModerator': isModerator
+    'user_id': userId,
+    'community_id': communityId,
+    'is_administrator': isAdministrator,
+    'is_moderator': isModerator
     };
   }
 

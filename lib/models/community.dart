@@ -6,6 +6,8 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/users_list.dart';
 import 'package:dcache/dcache.dart';
 
+import 'category.dart';
+
 class Community extends UpdatableModel<Community> {
   static convertTypeToString(CommunityType type) {
     String result;
@@ -156,6 +158,34 @@ class Community extends UpdatableModel<Community> {
 
   factory Community.fromJSON(Map<String, dynamic> json) {
     return factory.fromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'creator': creator?.toJson(),
+      'name': name,
+      'type': factory.typeToString(type),
+      'rules': rules,
+      'avatar': avatar,
+      'title': title,
+      'user_adjective': userAdjective,
+      'users_adjective': usersAdjective,
+      'description': description,
+      'color': color,
+      'cover': cover,
+      'is_invited': isInvited,
+      'is_creator': isCreator,
+      'is_reported': isReported,
+      'moderators': moderators?.users?.map((User user) => user.toJson())?.toList(),
+      'memberships': memberships?.communityMemberships?.map((CommunityMembership membership) => membership.toJson())?.toList(),
+      'administrators': administrators?.users?.map((User user) => user.toJson())?.toList(),
+      'is_favorite': isFavorite,
+      'invites_enabled': invitesEnabled,
+      'members_count': membersCount,
+      'pending_moderated_objects_count': pendingModeratedObjectsCount,
+      'categories': categories?.categories?.map((Category category) => category.toJson())?.toList()
+    };
   }
 
   @override
@@ -334,6 +364,13 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
     }
 
     return type;
+  }
+
+  String typeToString(CommunityType type) {
+    switch(type) {
+      case CommunityType.public: return 'P'; break;
+      case CommunityType.private: return 'T'; break;
+    }
   }
 }
 

@@ -50,16 +50,16 @@ class UserNotificationsSettings {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'connectionConfirmedNotifications': connectionConfirmedNotifications,
-      'connectionRequestNotifications': connectionRequestNotifications,
-      'followNotifications': followNotifications,
-      'postCommentNotifications': postCommentNotifications,
-      'postCommentReactionNotifications': postCommentReactionNotifications,
-      'postCommentUserMentionNotifications': postCommentUserMentionNotifications,
-      'postUserMentionNotifications': postUserMentionNotifications,
-      'postCommentReplyNotifications': postCommentReplyNotifications,
-      'postReactionNotifications': postReactionNotifications,
-      'communityInviteNotifications': communityInviteNotifications,
+      'connections_confirmed_notifications': connectionConfirmedNotifications,
+      'connection_request_notifications': connectionRequestNotifications,
+      'follow_notifications': followNotifications,
+      'post_comment_notifications': postCommentNotifications,
+      'post_comment_reaction_notifications': postCommentReactionNotifications,
+      'post_comment_user_mention_notifications': postCommentUserMentionNotifications,
+      'post_user_mention_notifications': postUserMentionNotifications,
+      'post_comment_reply_notifications': postCommentReplyNotifications,
+      'post_reaction_notifications': postReactionNotifications,
+      'community_invite_notifications': communityInviteNotifications,
     };
   }
 

@@ -21,11 +21,11 @@ class FollowsList extends UpdatableModel<FollowsList> {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'creator': creator,
-      'users': users.users.map((user) => user.toJson()),
-      'emoji': emoji.toJson(),
+      'creator': creator?.toJson(),
+      'users': users?.users.map((User user) => user.toJson()).toList(),
+      'emoji': emoji?.toJson(),
       'name': name,
-      'followsCount': followsCount
+      'follows_count': followsCount
     };
   }
 

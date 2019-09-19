@@ -21,6 +21,15 @@ class PostMedia {
             contentObjectData: json['content_object'], type: type));
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+       'id': id,
+      'type': type.code,
+      'content_object': contentObject?.toJson(),
+      'order': order
+    };
+  }
+
   static dynamic parseContentObject(
       {@required Map contentObjectData, @required PostMediaType type}) {
     if (contentObjectData == null) return null;

@@ -1,25 +1,6 @@
-import 'package:Okuna/models/circle.dart';
-import 'package:Okuna/models/circles_list.dart';
-import 'package:Okuna/models/community.dart';
-import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/post.dart';
-import 'package:Okuna/models/post_comment.dart';
-import 'package:Okuna/models/post_comment_list.dart';
-import 'package:Okuna/models/post_image.dart';
-import 'package:Okuna/models/post_links_list.dart';
-import 'package:Okuna/models/post_media.dart';
-import 'package:Okuna/models/post_media_list.dart';
-import 'package:Okuna/models/post_preview_link_data.dart';
-import 'package:Okuna/models/post_reaction.dart';
-import 'package:Okuna/models/post_video.dart';
-import 'package:Okuna/models/reactions_emoji_count.dart';
-import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/updatable_model.dart';
-import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
-import 'package:timeago/timeago.dart' as timeago;
-
-import 'language.dart';
 
 class TopPost extends UpdatableModel<TopPost> {
   final int id;
@@ -35,8 +16,8 @@ class TopPost extends UpdatableModel<TopPost> {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'post': post.toJson(post),
-      'created': created
+      'post': post.toJson(),
+      'created': created.toString()
     };
   }
 

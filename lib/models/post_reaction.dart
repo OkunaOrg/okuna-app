@@ -36,6 +36,16 @@ class PostReaction {
         post: post);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created': created?.toString(),
+      'emoji': emoji?.toJson(),
+      'reactor': reactor?.toJson(),
+      'post': post?.toJson()
+    };
+  }
+
   String getRelativeCreated() {
     return timeago.format(created);
   }

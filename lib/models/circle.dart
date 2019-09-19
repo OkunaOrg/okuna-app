@@ -29,11 +29,11 @@ class Circle extends UpdatableModel<Circle> {
   Map<String, dynamic> toJson() {
     return {
         'id': id,
-        'creator': creator.toJson(),
+        'creator': creator?.toJson(),
         'name': name,
         'color': color,
-        'usersCount': usersCount,
-        'users': users.users.map((user) => user.toJson())
+        'users_count': usersCount,
+        'users': users?.users?.map((User user) => user.toJson())?.toList()
     };
   }
 

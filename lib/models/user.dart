@@ -15,6 +15,8 @@ import 'package:Okuna/models/user_notifications_settings.dart';
 import 'package:Okuna/models/user_profile.dart';
 import 'package:dcache/dcache.dart';
 
+import 'follows_list.dart';
+
 class User extends UpdatableModel<User> {
   int id;
   String uuid;
@@ -72,32 +74,32 @@ class User extends UpdatableModel<User> {
     return {
       'id': id,
       'uuid': uuid,
-      'connectionsCircleId': connectionsCircleId,
+      'connections_circle_id': connectionsCircleId,
       'email': email,
       'username': username,
-      'language': language.toJson(),
-      'profile': profile.toJson(),
-      'notificationsSettings': notificationsSettings.toJson(),
-      'followersCount': followersCount,
-      'followingCount': followingCount,
-      'unreadNotificationsCount': unreadNotificationsCount,
-      'postsCount': postsCount,
-      'inviteCount': inviteCount,
-      'pendingCommunitiesModeratedObjectsCount': pendingCommunitiesModeratedObjectsCount,
-      'activeModerationPenaltiesCount': activeModerationPenaltiesCount,
-      'areGuidelinesAccepted': areGuidelinesAccepted,
-      'isFollowing': isFollowing,
-      'isConnected': isConnected,
-      'isReported': isReported,
-      'isBlocked': isBlocked,
-      'isGlobalModerator': isGlobalModerator,
-      'isFullyConnected': isFullyConnected,
-      'isPendingConnectionConfirmation': isPendingConnectionConfirmation,
-      'isMemberOfCommunities': isMemberOfCommunities,
-      'connectedCircles': connectedCircles.circles.map((Circle circle) => circle.toJson()),
-      'followLists': followLists.lists.map((followLists) => followLists.toJson()),
-      'communitiesMemberships': communitiesMemberships.communityMemberships.map((membership) => membership.toJson()),
-      'communitiesInvites' : communitiesInvites.communityInvites.map((invite) => invite.toJson()),
+      'language': language?.toJson(),
+      'profile': profile?.toJson(),
+      'notifications_settings': notificationsSettings?.toJson(),
+      'followers_count': followersCount,
+      'following_count': followingCount,
+      'unread_notifications_count': unreadNotificationsCount,
+      'posts_count': postsCount,
+      'invite_count': inviteCount,
+      'pending_communities_moderated_objects_count': pendingCommunitiesModeratedObjectsCount,
+      'active_moderation_penalties_count': activeModerationPenaltiesCount,
+      'are_guidelines_accepted': areGuidelinesAccepted,
+      'is_following': isFollowing,
+      'is_connected': isConnected,
+      'is_reported': isReported,
+      'is_blocked': isBlocked,
+      'is_global_moderator': isGlobalModerator,
+      'is_fully_connected': isFullyConnected,
+      'is_pending_connection_confirmation': isPendingConnectionConfirmation,
+      'is_member_of_communities': isMemberOfCommunities,
+      'connected_circles': connectedCircles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
+      'follow_lists': followLists?.lists?.map((FollowsList followList) => followList.toJson())?.toList(),
+      'communities_memberships': communitiesMemberships?.communityMemberships?.map((CommunityMembership membership) => membership.toJson())?.toList(),
+      'communities_invites' : communitiesInvites?.communityInvites?.map((CommunityInvite invite) => invite.toJson())?.toList(),
     };
   }
 

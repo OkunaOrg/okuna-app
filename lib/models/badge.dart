@@ -18,7 +18,7 @@ class Badge {
   Map<String, dynamic> toJson() {
     return {
       'keyword': _getBadgeKeywordFromEnum(keyword),
-      'keywordDescription': keywordDescription
+      'keyword_description': keywordDescription
     };
   }
 
