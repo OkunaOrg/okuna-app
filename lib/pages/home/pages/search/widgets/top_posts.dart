@@ -15,6 +15,7 @@ import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:inview_notifier_list/inview_notifier_list.dart';
 
 class OBTopPosts extends StatefulWidget {
   final OBTopPostsController controller;
@@ -41,7 +42,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   List<Post> _currentPosts = [];
   List<int> _excludedCommunities = [];
   List<Post> _topPostsCacheData = [];
-  double _topPostScrollPosition = 0.0;
+  int _topPostLastViewedId;
 
   @override
   void initState() {
@@ -75,43 +76,50 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
 
     if (_needsBootstrap) _bootstrap();
 
-    return OBPostsStream(
-      streamIdentifier: 'explorePostsTab',
-      refresher: _postsStreamRefresher,
-      onScrollLoader: _postsStreamOnScrollLoader,
-      controller: _obPostsStreamController,
-      isTopPostsStream: true,
-      initialPosts: _topPostsCacheData,
-      refreshOnCreate: _topPostsCacheData.length == 0,
-      postBuilder: _topPostBuilder,
-      prependedItems: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            OBPrimaryAccentText(
-                _localizationService.post__top_posts_title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-            OBIconButton(
-              OBIcons.settings,
-              themeColor: OBIconThemeColor.primaryAccent,
-              onPressed: _onWantsToSeeExcludedCommunities,
-            )
-    ],
-          ),
-        )
-      ],
-    );
+    if (!_needsBootstrap) {
+      return OBPostsStream(
+        streamIdentifier: 'explorePostsTab',
+        refresher: _postsStreamRefresher,
+        onScrollLoader: _postsStreamOnScrollLoader,
+        controller: _obPostsStreamController,
+        isTopPostsStream: true,
+        initialPosts: _currentPosts,
+        refreshOnCreate: _currentPosts.length == 0,
+        postBuilder: _topPostBuilder,
+        prependedItems: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                OBPrimaryAccentText(
+                    _localizationService.post__top_posts_title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 24)),
+                OBIconButton(
+                  OBIcons.settings,
+                  themeColor: OBIconThemeColor.primaryAccent,
+                  onPressed: _onWantsToSeeExcludedCommunities,
+                )
+              ],
+            ),
+          )
+        ],
+      );
+    } else {
+      return CircularProgressIndicator();
+    }
   }
 
   void _bootstrap() async {
-    _topPostScrollPosition = await _userService.getStoredTopPostsScrollPosition();
+    _topPostLastViewedId = await _userService.getStoredTopPostsLastViewedId();
     TopPostsList topPostsList = await _userService.getStoredTopPosts();
     if (topPostsList.posts != null) {
+      _currentTopPosts = topPostsList.posts;
       List<Post> posts = topPostsList.posts.map((topPost) => topPost.post).toList();
-      _topPostsCacheData = posts;
-      print(posts);
+      _currentPosts = posts;
+      _needsBootstrap = false;
+      print('This $posts');
     }
   }
 
@@ -205,9 +213,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
 
   void _appendCurrentTopPosts(List<TopPost> posts) {
     List<TopPost> newPosts = _currentTopPosts + posts;
-    setState(() {
-      _currentTopPosts = newPosts;
-    });
+    _setTopPosts(newPosts);
   }
 
   void _appendCurrentPosts(List<Post> posts) {

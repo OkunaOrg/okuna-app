@@ -78,7 +78,7 @@ class UserService {
   static const STORAGE_KEY_USER_DATA = 'data';
   static const STORAGE_FIRST_POSTS_DATA = 'firstPostsData';
   static const STORAGE_TOP_POSTS_DATA = 'topPostsData';
-  static const STORAGE_TOP_POSTS_SCROLL_POSITION = 'topPostsScrollPosition';
+  static const STORAGE_TOP_POSTS_LAST_VIEWED_ID = 'topPostsLastViewedId';
 
   AuthApiService _authApiService;
   HttpieService _httpieService;
@@ -403,16 +403,15 @@ class UserService {
   }
 
   Future<void> setStoredTopPosts(List<TopPost> topPosts) async {
-    print('Storing top posts...');
-    String topPostsData = json.encode(topPosts);
+    String topPostsData = json.encode(topPosts.map((TopPost topPost) => topPost.toJson())?.toList());
     await this._removeStoredTopPostsData();
     await this._storeTopPostsData(topPostsData);
   }
 
-  Future<void> setTopPostsScrollPosition(double scrollPosition) async {
-    String topPostScrollPosition = scrollPosition.toString();
-    await this._removeStoredTopPostsScrollPosition();
-    await this._storeTopPostsScrollPosition(topPostScrollPosition);
+  Future<void> setTopPostsLastViewedId(int lastViewedId) async {
+    String topPostId = lastViewedId.toString();
+    await this._removeStoredTopPostsLastViewedId();
+    await this._storeTopPostsLastViewedId(topPostId);
   }
 
   Future<TopPostsList> getStoredTopPosts() async {
@@ -424,12 +423,12 @@ class UserService {
     return TopPostsList();
   }
 
-  Future<double> getStoredTopPostsScrollPosition() async {
-    String topPostsPosition = await this._getStoredTopPostsScrollPosition();
-    if (topPostsPosition != null) {
-      return double.parse(topPostsPosition);
+  Future<int> getStoredTopPostsLastViewedId() async {
+    String topPostId = await this._getStoredTopPostsLastViewedId();
+    if (topPostId != null) {
+      return int.parse(topPostId);
     }
-    return 0.0;
+    return null;
   }
 
   Future<Post> createPost(
@@ -2057,16 +2056,16 @@ class UserService {
     return _userStorage.get(STORAGE_TOP_POSTS_DATA);
   }
 
-  Future<void> _storeTopPostsScrollPosition(String scrollPosition) {
-    return _userStorage.set(STORAGE_TOP_POSTS_SCROLL_POSITION, scrollPosition);
+  Future<void> _storeTopPostsLastViewedId(String scrollPosition) {
+    return _userStorage.set(STORAGE_TOP_POSTS_LAST_VIEWED_ID, scrollPosition);
   }
 
-  Future<void> _removeStoredTopPostsScrollPosition() async {
-    _userStorage.remove(STORAGE_TOP_POSTS_SCROLL_POSITION);
+  Future<void> _removeStoredTopPostsLastViewedId() async {
+    _userStorage.remove(STORAGE_TOP_POSTS_LAST_VIEWED_ID);
   }
 
-  Future<String> _getStoredTopPostsScrollPosition() async {
-    return _userStorage.get(STORAGE_TOP_POSTS_SCROLL_POSITION);
+  Future<String> _getStoredTopPostsLastViewedId() async {
+    return _userStorage.get(STORAGE_TOP_POSTS_LAST_VIEWED_ID);
   }
 
   User _makeLoggedInUser(String userData) {

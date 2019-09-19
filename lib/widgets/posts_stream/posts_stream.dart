@@ -76,7 +76,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
     _posts = widget.initialPosts != null ? widget.initialPosts.toList() : [];
     _needsBootstrap = true;
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-    _status = OBPostsStreamStatus.refreshing;
+    _status = OBPostsStreamStatus.idle;
     _streamScrollController = ScrollController();
     _streamScrollController.addListener(_onScroll);
     _streamUniqueIdentifier =
@@ -94,6 +94,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   void _bootstrap() {
     if (widget.refreshOnCreate) {
+      _status = OBPostsStreamStatus.refreshing;
       Future.delayed(Duration(milliseconds: 100), () {
         _refresh();
       });
@@ -168,6 +169,8 @@ class OBPostsStreamState extends State<OBPostsStream> {
       isTopPost: widget.isTopPostsStream,
     );
   }
+
+
 
   Widget _buildStatusTile() {
     Widget statusTile;
