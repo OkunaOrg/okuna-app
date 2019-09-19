@@ -75,7 +75,7 @@ DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_ffmpeg/full-gpl-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
@@ -115,7 +115,7 @@ EXTERNAL SOURCES:
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_exif_rotation:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_ffmpeg:
