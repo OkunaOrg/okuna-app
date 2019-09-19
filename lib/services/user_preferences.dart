@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/storage.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'localization.dart';
@@ -7,11 +11,31 @@ import 'localization.dart';
 class UserPreferencesService {
   LocalizationService _localizationService;
   OBStorage _storage;
+  ConnectivityService _connectivityService;
+
   static const postCommentsSortTypeStorageKey = 'postCommentsSortType';
   static const videosAutoPlaySettingStorageKey = 'videosAutoPlaySetting';
   static const linkPreviewsSettingStorageKey = 'linkPreviewsSetting';
   static const videosSoundSettingStorageKey = 'videoSoundSetting';
+
+  ConnectivityResult _currentConnectivity;
+  StreamSubscription _connectivityChangeSubscription;
+
   Future _getPostCommentsSortTypeCache;
+
+  Stream<bool> get videosAutoPlayEnabledChange =>
+      _videosAutoPlayEnabledChangeSubject.stream;
+
+  final _videosAutoPlayEnabledChangeSubject = BehaviorSubject<bool>();
+
+  bool _videosAutoPlayAreEnabled = false;
+
+  Stream<bool> get linkPreviewsAreEnabledChange =>
+      _linkPreviewsEnabledChangeSubject.stream;
+
+  final _linkPreviewsEnabledChangeSubject = BehaviorSubject<bool>();
+
+  bool _linkPreviewsAreEnabled = false;
 
   Stream<VideosSoundSetting> get videosSoundSettingChange =>
       _videosSoundSettingChangeSubject.stream;
@@ -36,14 +60,45 @@ class UserPreferencesService {
         namespace: 'userPreferences');
   }
 
+  // Bootstrapped after connectivity service is given in the provider
+  void bootstrap() async {
+    _currentConnectivity = _connectivityService.getConnectivity();
+    _refreshConnectivityDependentSettings();
+
+    _connectivityChangeSubscription =
+        _connectivityService.onConnectivityChange(_onConnectivityChange);
+  }
+
+  void _onConnectivityChange(ConnectivityResult newConnectivity) {
+    _currentConnectivity = newConnectivity;
+    _refreshConnectivityDependentSettings();
+  }
+
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
   }
 
-  Future setLinkPreviewsSetting(LinkPreviewsSetting linkPreviewsSetting) {
+  void setConnectivityService(ConnectivityService connectivityService) {
+    _connectivityService = connectivityService;
+  }
+
+  void dispose() {
+    _connectivityChangeSubscription?.cancel();
+    _linkPreviewsEnabledChangeSubject.close();
+    _videosSoundSettingChangeSubject.close();
+    _videosAutoPlaySettingChangeSubject.close();
+    _videosAutoPlayEnabledChangeSubject.close();
+  }
+
+  bool getLinkPreviewsAreEnabled() {
+    return _linkPreviewsAreEnabled;
+  }
+
+  Future setLinkPreviewsSetting(LinkPreviewsSetting linkPreviewsSetting) async {
     String rawValue = linkPreviewsSetting.toString();
     _linkPreviewsSettingChangeSubject.add(linkPreviewsSetting);
-    return _storage.set(linkPreviewsSettingStorageKey, rawValue);
+    await _storage.set(linkPreviewsSettingStorageKey, rawValue);
+    _refreshLinkPreviewsAreEnabled();
   }
 
   Future<LinkPreviewsSetting> getLinkPreviewsSetting() async {
@@ -63,10 +118,16 @@ class UserPreferencesService {
     };
   }
 
-  Future setVideosAutoPlaySetting(VideosAutoPlaySetting videosAutoPlaySetting) {
+  bool getVideosAutoPlayAreEnabled() {
+    return _videosAutoPlayAreEnabled;
+  }
+
+  Future setVideosAutoPlaySetting(
+      VideosAutoPlaySetting videosAutoPlaySetting) async {
     String rawValue = videosAutoPlaySetting.toString();
     _videosAutoPlaySettingChangeSubject.add(videosAutoPlaySetting);
-    return _storage.set(videosAutoPlaySettingStorageKey, rawValue);
+    await _storage.set(videosAutoPlaySettingStorageKey, rawValue);
+    _refreshVideosAutoPlayAreEnabled();
   }
 
   Future<VideosAutoPlaySetting> getVideosAutoPlaySetting() async {
@@ -132,6 +193,31 @@ class UserPreferencesService {
 
   PostCommentsSortType _getDefaultPostCommentsSortType() {
     return PostCommentsSortType.asc;
+  }
+
+  void _refreshConnectivityDependentSettings() {
+    _refreshLinkPreviewsAreEnabled();
+    _refreshVideosAutoPlayAreEnabled();
+  }
+
+  void _refreshLinkPreviewsAreEnabled() async {
+    LinkPreviewsSetting currentLinkPreviewsSetting =
+        await getLinkPreviewsSetting();
+    _linkPreviewsAreEnabled =
+        currentLinkPreviewsSetting == LinkPreviewsSetting.always ||
+            (currentLinkPreviewsSetting == LinkPreviewsSetting.wifiOnly &&
+                _currentConnectivity == ConnectivityResult.wifi);
+    _linkPreviewsEnabledChangeSubject.add(_linkPreviewsAreEnabled);
+  }
+
+  void _refreshVideosAutoPlayAreEnabled() async {
+    VideosAutoPlaySetting currentVideosAutoPlaySetting =
+        await getVideosAutoPlaySetting();
+    _videosAutoPlayAreEnabled =
+        currentVideosAutoPlaySetting == VideosAutoPlaySetting.always ||
+            (currentVideosAutoPlaySetting == VideosAutoPlaySetting.wifiOnly &&
+                _currentConnectivity == ConnectivityResult.wifi);
+    _videosAutoPlayEnabledChangeSubject.add(_linkPreviewsAreEnabled);
   }
 
   Future clear() {

@@ -1,15 +1,20 @@
+import 'dart:async';
+
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/url_launcher.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,6 +42,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   LinkPreviewService _linkPreviewService;
   UrlLauncherService _urlLauncherService;
   LocalizationService _localizationService;
+  UserPreferencesService _userPreferencesService;
 
   HttpieService _httpieService;
 
@@ -45,6 +51,10 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
 
   bool _needsBootstrap;
   String _errorMessage;
+
+  StreamSubscription _linkPreviewsAreEnabledChangeSubscription;
+
+  bool _linkPreviewsAreEnabled;
 
   @override
   void initState() {
@@ -82,15 +92,18 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   void dispose() {
     super.dispose();
     _fetchLinkPreviewOperation?.cancel();
+    _linkPreviewsAreEnabledChangeSubscription?.cancel();
   }
 
-  void _bootstrap() {
-    if (_linkPreview == null) {
-      _retrieveLinkPreview();
-    } else {
-      // No link preview, requesting
-      _linkPreviewRequestInProgress = false;
-    }
+  void _bootstrap() async {
+    _linkPreviewsAreEnabled =
+        _userPreferencesService.getLinkPreviewsAreEnabled();
+
+    _onLinkPreviewsAreEnabledChange(_linkPreviewsAreEnabled, isBootstrap: true);
+
+    _linkPreviewsAreEnabledChangeSubscription = _userPreferencesService
+        .linkPreviewsAreEnabledChange
+        .listen(_onLinkPreviewsAreEnabledChange);
   }
 
   @override
@@ -101,29 +114,32 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       _urlLauncherService = openbookProvider.urlLauncherService;
       _localizationService = openbookProvider.localizationService;
       _httpieService = openbookProvider.httpService;
+      _userPreferencesService = openbookProvider.userPreferencesService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10.0),
-      child: OBHighlightedBox(
-          child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Expanded(
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
-              child: _linkPreviewRequestInProgress || _linkPreview == null
-                  ? _errorMessage != null
-                      ? _buildErrorMessage()
-                      : _buildRequestInProgress()
-                  : _buildLinkPreview(),
-            ),
+    return _linkPreviewsAreEnabled
+        ? ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: OBHighlightedBox(
+                child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 300),
+                    child: _linkPreviewRequestInProgress || _linkPreview == null
+                        ? _errorMessage != null
+                            ? _buildErrorMessage()
+                            : _buildRequestInProgress()
+                        : _buildLinkPreview(),
+                  ),
+                )
+              ],
+            )),
           )
-        ],
-      )),
-    );
+        : const SizedBox();
   }
 
   Widget _buildErrorMessage() {
@@ -346,6 +362,24 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
     }
 
     return image;
+  }
+
+  void _onLinkPreviewsAreEnabledChange(bool newAreLinkPreviewsEnabled,
+      {bool isBootstrap = false}) {
+    if (isBootstrap) {
+      _linkPreviewsAreEnabled = newAreLinkPreviewsEnabled;
+    } else {
+      setState(() {
+        _linkPreviewsAreEnabled = newAreLinkPreviewsEnabled;
+      });
+    }
+
+    if (_linkPreview == null && newAreLinkPreviewsEnabled) {
+      _retrieveLinkPreview();
+    } else {
+      // No link preview, requesting
+      _linkPreviewRequestInProgress = false;
+    }
   }
 
   Future _retrieveLinkPreview() async {
