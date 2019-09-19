@@ -9,6 +9,7 @@ class UserPreferencesService {
   OBStorage _storage;
   static const postCommentsSortTypeStorageKey = 'postCommentsSortType';
   static const videosAutoPlaySettingStorageKey = 'videosAutoPlaySetting';
+  static const linkPreviewsSettingStorageKey = 'linkPreviewsSetting';
   static const videosSoundSettingStorageKey = 'videoSoundSetting';
   Future _getPostCommentsSortTypeCache;
 
@@ -17,6 +18,12 @@ class UserPreferencesService {
 
   final _videosSoundSettingChangeSubject =
       BehaviorSubject<VideosSoundSetting>();
+
+  Stream<LinkPreviewsSetting> get linkPreviewsSettingChange =>
+      _linkPreviewsSettingChangeSubject.stream;
+
+  final _linkPreviewsSettingChangeSubject =
+      BehaviorSubject<LinkPreviewsSetting>();
 
   Stream<VideosAutoPlaySetting> get videosAutoPlaySettingChange =>
       _videosAutoPlaySettingChangeSubject.stream;
@@ -31,6 +38,29 @@ class UserPreferencesService {
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
+  }
+
+  Future setLinkPreviewsSetting(LinkPreviewsSetting linkPreviewsSetting) {
+    String rawValue = linkPreviewsSetting.toString();
+    _linkPreviewsSettingChangeSubject.add(linkPreviewsSetting);
+    return _storage.set(linkPreviewsSettingStorageKey, rawValue);
+  }
+
+  Future<LinkPreviewsSetting> getLinkPreviewsSetting() async {
+    String rawValue = await _storage.get(linkPreviewsSettingStorageKey,
+        defaultValue: LinkPreviewsSetting.always.toString());
+    return LinkPreviewsSetting.parse(rawValue);
+  }
+
+  Map<LinkPreviewsSetting, String> getLinkPreviewsSettingLocalizationMap() {
+    return {
+      LinkPreviewsSetting.always: _localizationService
+          .application_settings__link_previews_autoplay_always,
+      LinkPreviewsSetting.never: _localizationService
+          .application_settings__link_previews_autoplay_never,
+      LinkPreviewsSetting.wifiOnly: _localizationService
+          .application_settings__link_previews_autoplay_wifi_only
+    };
   }
 
   Future setVideosAutoPlaySetting(VideosAutoPlaySetting videosAutoPlaySetting) {
@@ -175,5 +205,40 @@ class VideosSoundSetting {
     }
 
     return soundSetting;
+  }
+}
+
+class LinkPreviewsSetting {
+  final String code;
+
+  const LinkPreviewsSetting._internal(this.code);
+
+  toString() => code;
+
+  static const never = const LinkPreviewsSetting._internal('n');
+  static const always = const LinkPreviewsSetting._internal('a');
+  static const wifiOnly = const LinkPreviewsSetting._internal('w');
+
+  static const _values = const <LinkPreviewsSetting>[never, always, wifiOnly];
+
+  static values() => _values;
+
+  static LinkPreviewsSetting parse(String string) {
+    if (string == null) return null;
+
+    LinkPreviewsSetting autoPlaySetting;
+    for (var type in _values) {
+      if (string == type.code) {
+        autoPlaySetting = type;
+        break;
+      }
+    }
+
+    if (autoPlaySetting == null) {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported links previews setting');
+    }
+
+    return autoPlaySetting;
   }
 }

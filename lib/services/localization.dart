@@ -3722,9 +3722,18 @@ class LocalizationService {
     return Intl.message("Videos", name: 'application_settings__videos');
   }
 
+  String get application_settings__link_previews {
+    return Intl.message("Link previews", name: 'application_settings__link_previews');
+  }
+
   String get application_settings__videos_autoplay {
     return Intl.message("Autoplay",
         name: 'application_settings__videos_autoplay');
+  }
+
+  String get application_settings__link_previews_show {
+    return Intl.message("Show",
+        name: 'application_settings__link_previews_show');
   }
 
   String get application_settings__videos_autoplay_always {
@@ -3740,6 +3749,21 @@ class LocalizationService {
   String get application_settings__videos_autoplay_never {
     return Intl.message("Never",
         name: 'application_settings__videos_autoplay_never');
+  }
+
+  String get application_settings__link_previews_autoplay_always {
+    return Intl.message("Always",
+        name: 'application_settings__link_previews_autoplay_always');
+  }
+
+  String get application_settings__link_previews_autoplay_wifi_only {
+    return Intl.message("Wifi only",
+        name: 'application_settings__link_previews_autoplay_wifi_only');
+  }
+
+  String get application_settings__link_previews_autoplay_never {
+    return Intl.message("Never",
+        name: 'application_settings__link_previews_autoplay_never');
   }
 
   String get application_settings__videos_sound {
