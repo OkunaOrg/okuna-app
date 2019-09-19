@@ -41,14 +41,13 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
   OBVideoPlayerController _obVideoPlayerController;
   bool _needsBootstrap;
   StreamSubscription _videosSoundSettingsChangeSubscription;
-  StreamSubscription _connectivityChangeSubscription;
   Navigator _navigator;
   NavigatorObserver _navigatorObserver;
   ModalRoute _route;
   bool _wasPlaying;
 
-  VideosAutoPlaySetting _currentVideosAutoPlaySetting;
-  ConnectivityResult _connectivity;
+  bool _videosAutoPlayAreEnabled;
+  StreamSubscription _videosAutoPlayAreEnabledChangeSubscription;
 
   CancelableOperation _digestInViewStateChangeOperation;
 
@@ -59,12 +58,13 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     super.initState();
     _needsBootstrap = true;
     _obVideoPlayerController = OBVideoPlayerController();
+    _videosAutoPlayAreEnabled = false;
   }
 
   @override
   void dispose() {
     super.dispose();
-    _connectivityChangeSubscription?.cancel();
+    _videosAutoPlayAreEnabledChangeSubscription?.cancel();
     _videosSoundSettingsChangeSubscription?.cancel();
     _digestInViewStateChangeOperation?.cancel();
     _inViewState?.removeListener(_onInViewStateChanged);
@@ -88,20 +88,12 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     UserPreferencesService userPreferencesService =
         openbookProvider.userPreferencesService;
-    _currentVideosAutoPlaySetting =
-        await userPreferencesService.getVideosAutoPlaySetting();
+    _videosAutoPlayAreEnabled =
+        userPreferencesService.getVideosAutoPlayAreEnabled();
 
     _videosSoundSettingsChangeSubscription = userPreferencesService
-        .videosAutoPlaySettingChange
-        .listen(_onVideosAutoPlaySettingChange);
-
-    // Subscribe for connectivity changes
-    ConnectivityService connectivityService =
-        openbookProvider.connectivityService;
-
-    _connectivity = connectivityService.getConnectivity();
-    _connectivityChangeSubscription =
-        connectivityService.onConnectivityChange(_onConnectivityChange);
+        .videosAutoPlayAreEnabledChange
+        .listen(_onVideosAutoPlayAreEnabledChange);
   }
 
   @override
@@ -150,9 +142,7 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     if (isVideoInView) {
       if (!_obVideoPlayerController.isPausedDueToInvisibility() &&
           !_obVideoPlayerController.isPausedByUser()) {
-        if (_currentVideosAutoPlaySetting == VideosAutoPlaySetting.always ||
-            (_currentVideosAutoPlaySetting == VideosAutoPlaySetting.wifiOnly &&
-                _connectivity == ConnectivityResult.wifi)) {
+        if (_videosAutoPlayAreEnabled) {
           debugLog('Playing as item is in view and allowed by user.');
           _obVideoPlayerController.play();
         }
@@ -162,13 +152,8 @@ class OBPostVideoState extends State<OBPostBodyVideo> {
     }
   }
 
-  void _onVideosAutoPlaySettingChange(
-      VideosAutoPlaySetting videosAutoPlaySetting) {
-    _currentVideosAutoPlaySetting = videosAutoPlaySetting;
-  }
-
-  void _onConnectivityChange(ConnectivityResult connectivity) {
-    _connectivity = connectivity;
+  void _onVideosAutoPlayAreEnabledChange(bool videosAutoPlayAreEnabled) {
+    _videosAutoPlayAreEnabled = videosAutoPlayAreEnabled;
   }
 
   void debugLog(String log) {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
@@ -14,7 +13,6 @@ import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/svg.dart';

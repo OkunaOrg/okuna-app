@@ -23,7 +23,7 @@ class UserPreferencesService {
 
   Future _getPostCommentsSortTypeCache;
 
-  Stream<bool> get videosAutoPlayEnabledChange =>
+  Stream<bool> get videosAutoPlayAreEnabledChange =>
       _videosAutoPlayEnabledChangeSubject.stream;
 
   final _videosAutoPlayEnabledChangeSubject = BehaviorSubject<bool>();
@@ -217,7 +217,7 @@ class UserPreferencesService {
         currentVideosAutoPlaySetting == VideosAutoPlaySetting.always ||
             (currentVideosAutoPlaySetting == VideosAutoPlaySetting.wifiOnly &&
                 _currentConnectivity == ConnectivityResult.wifi);
-    _videosAutoPlayEnabledChangeSubject.add(_linkPreviewsAreEnabled);
+    _videosAutoPlayEnabledChangeSubject.add(_videosAutoPlayAreEnabled);
   }
 
   Future clear() {
