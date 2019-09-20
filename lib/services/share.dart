@@ -20,7 +20,7 @@ class ShareService {
 
   StreamSubscription _shareReceiveSubscription;
   List<Share> _shareQueue;
-  List<Function({String text, File image, File video})> _subscribers;
+  List<Future<bool> Function({String text, File image, File video})> _subscribers;
 
   BuildContext _context;
 
@@ -56,7 +56,7 @@ class ShareService {
     _context = context;
   }
 
-  void subscribe(Function({String text, File image, File video}) onShare) {
+  void subscribe(Future<bool> Function({String text, File image, File video}) onShare) {
     _subscribers.add(onShare);
 
     if (_subscribers.length == 1) {
@@ -64,7 +64,7 @@ class ShareService {
     }
   }
 
-  void unsubscribe(Function({String text, File image, File video}) subscriber) {
+  void unsubscribe(Future<bool> Function({String text, File image, File video}) subscriber) {
     _subscribers.remove(subscriber);
   }
 
@@ -79,13 +79,13 @@ class ShareService {
     consumed.forEach((e) => _shareQueue.remove(e));
   }
 
-  void _onReceiveShare(dynamic shared) {
+  void _onReceiveShare(dynamic shared) async {
     var share = Share.fromReceived(shared);
 
     if (_subscribers.isEmpty) {
       _shareQueue.add(share);
     } else {
-      _onShare(share);
+      await _onShare(share);
     }
   }
 
