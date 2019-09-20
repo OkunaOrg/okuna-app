@@ -12,6 +12,7 @@ class PostImage {
   });
 
   factory PostImage.fromJSON(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
     return PostImage(
         image: parsedJson['image'],
         thumbnail: parsedJson['thumbnail'],

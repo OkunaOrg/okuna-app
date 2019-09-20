@@ -11,6 +11,7 @@ class PostMedia {
   PostMedia({this.id, this.type, this.contentObject, this.order});
 
   factory PostMedia.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     PostMediaType type = PostMediaType.parse(json['type']);
 
     return PostMedia(

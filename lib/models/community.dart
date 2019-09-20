@@ -157,6 +157,7 @@ class Community extends UpdatableModel<Community> {
   static final factory = CommunityFactory();
 
   factory Community.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
   }
 

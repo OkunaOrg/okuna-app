@@ -13,6 +13,7 @@ class CommunityMembership {
       this.isModerator});
 
   factory CommunityMembership.fromJSON(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
     return CommunityMembership(
         id: parsedJson['id'],
         communityId: parsedJson['community_id'],

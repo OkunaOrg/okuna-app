@@ -34,7 +34,7 @@ class Emoji {
       'keyword': keyword,
       'id': id,
       'order': order,
-      'created': created.toString(),
+      'created': created,
       'color': color,
       'image': image
     };

@@ -55,6 +55,7 @@ class Post extends UpdatableModel<Post> {
   static final factory = PostFactory();
 
   factory Post.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
   }
 

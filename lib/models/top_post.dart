@@ -10,6 +10,7 @@ class TopPost extends UpdatableModel<TopPost> {
   static final factory = TopPostFactory();
 
   factory TopPost.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
   }
 

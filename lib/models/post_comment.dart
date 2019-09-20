@@ -81,6 +81,7 @@ class PostComment extends UpdatableModel<PostComment> {
   static final factory = PostCommentFactory();
 
   factory PostComment.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
   }
 

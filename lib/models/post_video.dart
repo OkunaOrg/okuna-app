@@ -31,6 +31,7 @@ class PostVideo {
   }
 
   factory PostVideo.fromJSON(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
     return PostVideo(
       width: parsedJson['width']?.toDouble(),
       height: parsedJson['height']?.toDouble(),

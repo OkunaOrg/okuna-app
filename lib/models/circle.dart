@@ -23,6 +23,7 @@ class Circle extends UpdatableModel<Circle> {
   static final factory = CircleFactory();
 
   factory Circle.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
   }
 

@@ -24,6 +24,7 @@ class Category extends UpdatableModel<Category> {
   static final factory = CategoryFactory();
 
   factory Category.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
   }
 

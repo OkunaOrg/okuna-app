@@ -8,6 +8,7 @@ class Badge {
       });
 
   factory Badge.fromJson(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
 
     return Badge(
         keyword: _getBadgeKeywordEnum(parsedJson['keyword']),

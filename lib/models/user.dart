@@ -56,6 +56,8 @@ class User extends UpdatableModel<User> {
 
   factory User.fromJson(Map<String, dynamic> json,
       {bool storeInSessionCache = false}) {
+    if (json == null) return null;
+
     int userId = json['id'];
 
     User user = navigationUsersFactory.getItemWithIdFromCache(userId) ??
