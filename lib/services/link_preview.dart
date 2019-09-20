@@ -215,11 +215,13 @@ class LinkPreviewService {
       // Absolute path
       Uri parsedDerivedFromLink = Uri.parse(derivedFromLink);
       return '${parsedDerivedFromLink.scheme}://${parsedDerivedFromLink.host}$link';
+    } if(derivedFromLink != null){
+      return derivedFromLink.endsWith('/')
+          ? '$derivedFromLink$link'
+          : '$derivedFromLink/$link';
     }
 
-    return derivedFromLink.endsWith('/')
-        ? '$derivedFromLink$link'
-        : '$derivedFromLink/$link';
+    return 'http://$link';
   }
 
   String getProxiedLink(String link) {

@@ -3666,6 +3666,12 @@ class LocalizationService {
         name: 'post_body_link_preview__empty');
   }
 
+  String post_body_link_preview__invalid(String link) {
+    return Intl.message("Invalid link: $link",
+        args: [link],
+        name: 'post_body_link_preview__invalid');
+  }
+
   String post_body_link_preview__error_with_description(String description) {
     return Intl.message(
         "Failed to preview link with website error: $description",

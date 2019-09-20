@@ -427,6 +427,9 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       _setErrorMessage(localizedErrorMessage);
     } else if (error is EmptyLinkToPreview) {
       _setErrorMessage(_localizationService.post_body_link_preview__empty);
+    } else if (error is InvalidLinkToPreview) {
+      _setErrorMessage(
+          _localizationService.post_body_link_preview__invalid(widget.link));
     } else {
       _setErrorMessage(_localizationService.error__unknown_error);
       throw error;
