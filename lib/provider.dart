@@ -15,6 +15,7 @@ import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
+import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/services/emoji_picker.dart';
@@ -78,6 +79,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
   MediaService mediaPickerService = MediaService();
+  ShareService shareService = ShareService();
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
@@ -179,6 +181,9 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     linkPreviewService.setHttpieService(httpService);
     linkPreviewService.setUtilsService(utilsService);
     linkPreviewService.setValidationService(validationService);
+    shareService.setMediaService(mediaPickerService);
+    shareService.setToastService(toastService);
+    shareService.setValidationService(validationService);
   }
 
   void initAsyncState() async {
@@ -237,6 +242,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setLocalizationsService(localizationService);
     modalService.setLocalizationService(localizationService);
     userPreferencesService.setLocalizationService(localizationService);
+    shareService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {
