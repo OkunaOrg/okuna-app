@@ -56,6 +56,10 @@ class ShareService {
     _context = context;
   }
 
+  /// Subscribe to share events.
+  ///
+  /// [onShare] should return [true] if it consumes the share. If [false] is
+  /// returned, the next subscriber will be sent the share as well!
   void subscribe(Future<bool> Function({String text, File image, File video}) onShare) {
     _subscribers.add(onShare);
 
@@ -119,10 +123,6 @@ class ShareService {
       if (!await _validationService.isVideoAllowedSize(video)) {
         _showFileTooLargeToast(_validationService.getAllowedVideoSize());
         return true;
-      }
-
-      if (_mediaService.isGif(video)) {
-        video = await _mediaService.convertGifToVideo(video);
       }
     }
 
