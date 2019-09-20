@@ -83,12 +83,14 @@ public class MainActivity extends FlutterActivity {
       try {
         if (intent.getType().startsWith("image/")) {
           Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-          uri = copyImageToTempFile(uri);
-          args.put("image", uri.toString());
+          if (!getExtensionFromUri(uri).equalsIgnoreCase("gif")) {
+            args.put("image", copyImageToTempFile(uri).toString());
+          } else {
+            args.put("video", copyVideoToTempFileIfNeeded(uri).toString());
+          }
         } else if (intent.getType().startsWith("video/")) {
           Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-          uri = copyVideoToTempFileIfNeeded(uri);
-          args.put("video", uri.toString());
+          args.put("video", copyVideoToTempFileIfNeeded(uri).toString());
         } else if (intent.getType().startsWith("text/")) {
           args.put("text", intent.getStringExtra(Intent.EXTRA_TEXT));
         } else {
@@ -161,7 +163,7 @@ public class MainActivity extends FlutterActivity {
     if (videoUri.getScheme().equals("file")) {
       result = videoUri;
     } else if (videoUri.getScheme().equals("content")){
-      String extension = getExtensionFromContentUri(videoUri);
+      String extension = getExtensionFromUri(videoUri);
       File tempFile = createTemporaryFile("." + extension);
 
       try (InputStream in = this.getContentResolver().openInputStream(videoUri)) {
@@ -192,9 +194,15 @@ public class MainActivity extends FlutterActivity {
     return result;
   }
 
-  private String getExtensionFromContentUri(Uri contentUri) {
-    String mime = this.getContentResolver().getType(contentUri);
-    return MimeTypeMap.getSingleton().getExtensionFromMimeType(mime);
+  private String getExtensionFromUri(Uri uri) throws KeyedException {
+    if (uri.getScheme().equals("content")) {
+      String mime = this.getContentResolver().getType(uri);
+      return MimeTypeMap.getSingleton().getExtensionFromMimeType(mime);
+    } else if (uri.getScheme().equals("file")) {
+      return MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+    } else {
+      throw new KeyedException(KeyedException.Key.UriSchemeNotSupported, uri.getScheme(), null);
+    }
   }
 
   private File createTemporaryFile(String extension) throws KeyedException {

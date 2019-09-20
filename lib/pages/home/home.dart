@@ -50,7 +50,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   ValidationService _validationService;
-  MediaService _imagePickerService;
+  MediaService _mediaService;
   UserPreferencesService _userPreferencesService;
   LocalizationService _localizationService;
 
@@ -116,7 +116,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _validationService = openbookProvider.validationService;
-      _imagePickerService = openbookProvider.mediaPickerService;
+      _mediaService = openbookProvider.mediaPickerService;
       _userPreferencesService = openbookProvider.userPreferencesService;
       _localizationService = openbookProvider.localizationService;
       _bootstrap();
@@ -154,7 +154,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
 
     if (share.image != null) {
       image = File.fromUri(Uri.parse(share.image));
-      image = await _imagePickerService.processImage(image);
+      image = await _mediaService.processImage(image);
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {
         _showFileTooLargeToast(
@@ -165,9 +165,14 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
 
     if (share.video != null) {
       video = File.fromUri(Uri.parse(share.video));
+
       if (!await _validationService.isVideoAllowedSize(video)) {
         _showFileTooLargeToast(_validationService.getAllowedVideoSize());
         return;
+      }
+
+      if (_mediaService.isGif(video)) {
+        video = await _mediaService.convertGifToVideo(video);
       }
     }
 
