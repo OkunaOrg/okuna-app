@@ -1,6 +1,6 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
@@ -264,11 +264,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
     debugLog('Autocompleting with username:$foundAccountUsername');
     setState(() {
-      _textController.text =
-          _textAccountAutocompletionService.autocompleteTextWithUsername(
-              _textController.text, foundAccountUsername);
-      _textController.selection =
-          TextSelection.collapsed(offset: _textController.text.length);
+      _textAccountAutocompletionService.autocompleteTextWithUsername(
+          _textController, foundAccountUsername);
     });
   }
 

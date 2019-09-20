@@ -20,6 +20,11 @@ rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
+ext {
+    flutterFFmpegPackage = "full-gpl-lts"
+}
+
 subprojects {
     project.evaluationDependsOn(':app')
 }

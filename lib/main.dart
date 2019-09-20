@@ -32,9 +32,11 @@ import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
 
-import 'delegates/es_es_material_localizations_delegate.dart';
-import 'delegates/pt_br_material_localizations_delegate.dart';
-import 'delegates/sv_se_material_localizations_delegate.dart';
+import 'delegates/es_es_localizations_delegate.dart';
+import 'delegates/pt_br_localizations_delegate.dart';
+import 'delegates/sv_se_localizations_delegate.dart';
+
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 class MyApp extends StatefulWidget {
   final openbookProviderKey = new GlobalKey<OpenbookProviderState>();
@@ -66,6 +68,7 @@ class _MyAppState extends State<MyApp> {
       key: widget.openbookProviderKey,
       child: OBToast(
         child: MaterialApp(
+            navigatorObservers: [routeObserver],
             locale: this.locale,
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
@@ -97,8 +100,11 @@ class _MyAppState extends State<MyApp> {
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               const MaterialLocalizationPtBRDelegate(),
+              const CupertinoLocalizationPtBRDelegate(),
               const MaterialLocalizationEsESDelegate(),
+              const CupertinoLocalizationEsESDelegate(),
               const MaterialLocalizationSvSEDelegate(),
+              const CupertinoLocalizationSvSEDelegate(),
             ],
             theme: new ThemeData(
                 buttonTheme: ButtonThemeData(

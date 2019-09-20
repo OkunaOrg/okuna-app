@@ -1,0 +1,47 @@
+{
+    "all_loaded": "🎉 Tutti i post caricati",
+    "@all_loaded": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_title": "Ancora un attimo!",
+    "@refreshing_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_subtitle": "Aggiornamento dello stream.",
+    "@refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_title": "Questo stream è vuoto.",
+    "@empty_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_subtitle": "Prova ad aggiornare tra un paio di secondi.",
+    "@empty_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_title": "Impossibile caricare lo stream.",
+    "@failed_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_subtitle": "Riprova tra un paio di secondi",
+    "@failed_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_empty": "Nessun post trovato",
+    "@status_tile_empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_no_more_to_load": "🎉  Tutti i post caricati",
+    "@status_tile_no_more_to_load": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

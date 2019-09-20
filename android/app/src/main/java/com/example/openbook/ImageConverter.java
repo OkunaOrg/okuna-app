@@ -3,7 +3,8 @@ package com.example.openbook;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 
 public class ImageConverter {
     public enum TargetFormat {
@@ -26,9 +27,5 @@ public class ImageConverter {
         }
 
         return outputStream.toByteArray();
-    }
-
-    public static byte[] convertImageDataFile(File file, TargetFormat format) throws FileNotFoundException {
-        return convertImageData(new FileInputStream(file), format);
     }
 }

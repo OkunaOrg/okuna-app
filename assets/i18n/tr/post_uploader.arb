@@ -1,0 +1,47 @@
+{
+    "generic_upload_failed": "Gönderme başarısız oldu",
+    "@generic_upload_failed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "creating_post": "Gönderi oluşturuluyor...",
+    "@creating_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "compressing_media": "Medya sıkıştırılıyor...",
+    "@compressing_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uploading_media": "Medya yükleniyor...",
+    "@uploading_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "publishing": "Gönderi yayınlanıyor...",
+    "@publishing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "processing": "Gönderi işleniyor...",
+    "@processing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "success": "Başarılı!",
+    "@success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelling": "İptal ediliyor",
+    "@cancelling": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelled": "İptal edildi!",
+    "@cancelled": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

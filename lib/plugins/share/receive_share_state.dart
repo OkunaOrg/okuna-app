@@ -9,15 +9,34 @@ import 'share.dart';
 abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
   static const stream = const EventChannel('openbook.social/receive_share');
 
-  StreamSubscription shareReceiveSubscription = null;
+  StreamSubscription shareReceiveSubscription;
+  bool queueShares;
+  List<Share> shareQueue;
 
-  void enableSharing() {
+  @override
+  void initState() {
+    super.initState();
+    shareQueue = <Share>[];
+    queueShares = true;
+    _activateShareListener();
+  }
+
+  void _activateShareListener() {
     if(Platform.isAndroid){
       if (shareReceiveSubscription == null) {
         shareReceiveSubscription =
             stream.receiveBroadcastStream().listen(_onReceiveShare);
       }
     }
+  }
+
+  Future<void> enableShareProcessing() async {
+    queueShares = false;
+    await Future.forEach(shareQueue, onShare);
+  }
+
+  void disableShareProcessing() {
+    queueShares = false;
   }
 
   void disableSharing() {
@@ -28,8 +47,14 @@ abstract class ReceiveShareState<T extends StatefulWidget> extends State<T> {
   }
 
   void _onReceiveShare(dynamic shared) {
-    onShare(Share.fromReceived(shared));
+    var share = Share.fromReceived(shared);
+
+    if (queueShares) {
+      shareQueue.add(share);
+    } else {
+      onShare(share);
+    }
   }
 
-  void onShare(Share share);
+  Future<void> onShare(Share share);
 }

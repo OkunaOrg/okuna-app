@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/services/intercom.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';
@@ -19,10 +20,11 @@ import 'package:Okuna/plugins/share/receive_share_state.dart';
 import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
@@ -48,7 +50,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   ValidationService _validationService;
-  ImagePickerService _imagePickerService;
+  MediaService _mediaService;
+  UserPreferencesService _userPreferencesService;
+  LocalizationService _localizationService;
 
   int _currentIndex;
   int _lastIndex;
@@ -72,7 +76,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   @override
   void initState() {
     super.initState();
-    enableSharing();
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
@@ -113,7 +116,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _validationService = openbookProvider.validationService;
-      _imagePickerService = openbookProvider.imagePickerService;
+      _mediaService = openbookProvider.mediaPickerService;
+      _userPreferencesService = openbookProvider.userPreferencesService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -133,21 +138,44 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   @override
-  void onShare(Share share) async {
+  Future<void> onShare(Share share) async {
     String text;
     File image;
-    if (share.path != null) {
-      image = File.fromUri(Uri.parse(share.path));
-      image = await _imagePickerService.processImage(image);
+    File video;
+    if (share.error != null) {
+      _toastService.error(
+          message: _localizationService.trans(share.error),
+          context: context);
+      if (share.error.contains('uri_scheme')) {
+        throw share.error;
+      }
+      return;
+    }
+
+    if (share.image != null) {
+      image = File.fromUri(Uri.parse(share.image));
+      image = await _mediaService.processImage(image);
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {
-        int limit =
-            _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
-        _toastService.error(
-            message: 'Image too large (limit: $limit MB)', context: context);
+        _showFileTooLargeToast(
+            _validationService.getAllowedImageSize(OBImageType.post));
         return;
       }
     }
+
+    if (share.video != null) {
+      video = File.fromUri(Uri.parse(share.video));
+
+      if (!await _validationService.isVideoAllowedSize(video)) {
+        _showFileTooLargeToast(_validationService.getAllowedVideoSize());
+        return;
+      }
+
+      if (_mediaService.isGif(video)) {
+        video = await _mediaService.convertGifToVideo(video);
+      }
+    }
+
     if (share.text != null) {
       text = share.text;
       if (!_validationService.isPostTextAllowedLength(text)) {
@@ -158,7 +186,18 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         return;
       }
     }
-    _modalService.openCreatePost(context: context, text: text, image: image);
+
+    if (await _timelinePageController.createPost(text: text, image: image, video: video)) {
+      _timelinePageController.popUntilFirstRoute();
+      _navigateToTab(OBHomePageTabs.timeline);
+    }
+  }
+
+  Future _showFileTooLargeToast(int limitInBytes) async {
+    _toastService.error(
+        message: _localizationService.image_picker__error_too_large(
+            limitInBytes ~/ 1048576),
+        context: context);
   }
 
   Widget _getPageForTabIndex(int index) {
@@ -338,6 +377,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   void _bootstrap() async {
+    enableShareProcessing();
+
     _loggedInUserChangeSubscription =
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
 
@@ -412,8 +453,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
+      _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
-      _pushNotificationsService.enablePushNotifications();
+      _pushNotificationsService.enablePushNotificationsFlagInOneSignalIfNotPrompted();
       _intercomService.enableIntercom();
 
       _loggedInUserUpdateSubscription =

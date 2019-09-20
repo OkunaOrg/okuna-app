@@ -1,14 +1,50 @@
+import 'package:Okuna/models/video_format.dart';
+import 'package:Okuna/models/video_formats_list.dart';
+
 class PostVideo {
-  final String video;
+  final int id;
   final double width;
   final double height;
+  final double duration;
+  final String file;
+  final String thumbnail;
+  final double thumbnailHeight;
+  final double thumbnailWidth;
+  final OBVideoFormatsList formatSet;
 
-  PostVideo({this.video, this.width, this.height});
+  const PostVideo({
+    this.id,
+    this.width,
+    this.height,
+    this.duration,
+    this.file,
+    this.formatSet,
+    this.thumbnail,
+    this.thumbnailHeight,
+    this.thumbnailWidth,
+  });
+
+  OBVideoFormat getVideoFormatOfType(OBVideoFormatType type) {
+    return formatSet.videoFormats.firstWhere((OBVideoFormat format) {
+      return format.type == type;
+    });
+  }
 
   factory PostVideo.fromJSON(Map<String, dynamic> parsedJson) {
     return PostVideo(
-        video: parsedJson['video'],
-        width: parsedJson['width']?.toDouble(),
-        height: parsedJson['height']?.toDouble());
+      width: parsedJson['width']?.toDouble(),
+      height: parsedJson['height']?.toDouble(),
+      duration: parsedJson['duration'],
+      file: parsedJson['file'],
+      formatSet: parseFormatSet(parsedJson['format_set']),
+      thumbnail: parsedJson['thumbnail'],
+      thumbnailHeight: parsedJson['thumbnail_height']?.toDouble(),
+      thumbnailWidth: parsedJson['thumbnail_width']?.toDouble(),
+    );
+  }
+
+  static OBVideoFormatsList parseFormatSet(List rawData) {
+    if (rawData == null) return null;
+    return OBVideoFormatsList.fromJson(rawData);
   }
 }

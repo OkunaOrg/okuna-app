@@ -4,6 +4,26 @@
     "type": "text",
     "placeholders": {}
   },
+  "receive_share_temp_write_failed": "Failed to copy shared file to temporary location",
+  "@receive_share_temp_write_failed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "receive_share_temp_write_denied": "Denied permission to copy shared file to temporary location",
+  "@receive_share_temp_write_denied": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "receive_share_invalid_uri_scheme": "Failed to receive share",
+  "@receive_share_invalid_uri_scheme": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "receive_share_file_not_found": "Shared file could not be found",
+  "@receive_share_file_not_found": {
+    "type": "text",
+    "placeholders": {}
+  },
   "no_internet_connection": "No internet connection",
   "@no_internet_connection": {
     "type": "text",

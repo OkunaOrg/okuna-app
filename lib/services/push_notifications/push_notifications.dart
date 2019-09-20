@@ -22,7 +22,7 @@ class PushNotificationsService {
   final _pushNotificationOpenedSubject =
       PublishSubject<PushNotificationOpenedResult>();
 
-  void bootstrap() {
+  void bootstrap() async {
     OneSignal.shared.init(oneSignalAppId, iOSSettings: {
       OSiOSSettings.autoPrompt: false,
       OSiOSSettings.inAppLaunchUrl: true
@@ -34,6 +34,10 @@ class PushNotificationsService {
     OneSignal.shared.setNotificationReceivedHandler(_onNotificationReceived);
     OneSignal.shared.setNotificationOpenedHandler(_onNotificationOpened);
     OneSignal.shared.setSubscriptionObserver(_onSubscriptionChanged);
+    var isSubscribed = await this.isSubscribedToPushNotifications();
+    if (isSubscribed) {
+      this.enablePushNotifications();
+    }
   }
 
   Future<bool> isSubscribedToPushNotifications() async {
@@ -44,6 +48,27 @@ class PushNotificationsService {
         osPermissionSubscriptionState.subscriptionStatus;
 
     return subscriptionState.subscribed;
+  }
+
+  Future enablePushNotificationsFlagInOneSignalIfNotPrompted() async {
+    /* There is an issue in the OneSignal flutter SDK where the
+     promptUserForPushNotificationPermission future never completes. Once this is fixed
+     (next release after 2.0.2 hopefully) we can directly call the promptUserForPushNotificationPermission()
+     method from _onLoggedInUserChange in home.dart, which will set the permissions
+     correctly. Then this function can be removed
+     Reference: https://github.com/OneSignal/OneSignal-Flutter-SDK/issues/62
+
+     Until then, this behaves as before for new signups, ie the onesignal permission
+     is set to true.
+     @todo: Replace usage of this method with promptUserForPushNotificationPermission() after new OneSignalSDK release
+     */
+
+    OSPermissionSubscriptionState osPermissionSubscriptionState =
+    await OneSignal.shared.getPermissionSubscriptionState();
+    OSPermissionState permissionStatus =
+        osPermissionSubscriptionState.permissionStatus;
+
+    if(!permissionStatus.hasPrompted) enablePushNotifications();
   }
 
   Future enablePushNotifications() async {
@@ -70,8 +95,13 @@ class PushNotificationsService {
   }
 
   void promptUserForPushNotificationPermission() async {
-    OneSignal.shared
+    bool hasAllowed = await OneSignal.shared
         .promptUserForPushNotificationPermission(fallbackToSettings: true);
+    if (hasAllowed) {
+      enablePushNotifications();
+    } else {
+      disablePushNotifications();
+    }
   }
 
   void setUserService(UserService userService) {
@@ -130,7 +160,7 @@ class PushNotificationsService {
   Future _untagDeviceFromPushNotifications() {
     return Future.wait([
       OneSignal.shared.deleteTag('user_id'),
-      OneSignal.shared.deleteTag('user_uuid')
+      OneSignal.shared.deleteTag('device_uuid')
     ]);
   }
 

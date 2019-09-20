@@ -1,0 +1,82 @@
+{
+    "videos": "Videók",
+    "@videos": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews": "Link previews",
+    "@link_previews": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay": "Automatikus lejátszás",
+    "@videos_autoplay": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_show": "Show",
+    "@link_previews_show": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_always": "Mindig",
+    "@videos_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_wifi_only": "Csak Wi-Fi hálózaton",
+    "@videos_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_never": "Soha",
+    "@videos_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_always": "Always",
+    "@link_previews_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_wifi_only": "Wifi only",
+    "@link_previews_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_never": "Never",
+    "@link_previews_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound": "Hang",
+    "@videos_sound": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tap_to_change": "(Koppints a módosításhoz)",
+    "@tap_to_change": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_enabled": "Engedélyezve",
+    "@videos_sound_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_disabled": "Letiltva",
+    "@videos_sound_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_newest_first": "Újak elől",
+    "@comment_sort_newest_first": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_oldest_first": "Régiek elől",
+    "@comment_sort_oldest_first": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

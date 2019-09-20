@@ -1,0 +1,14 @@
+{
+    "empty": "Bu bağlantı önizlenemedi",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Web sitesi hatası ile bağlantıyı önizleyemedi: {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

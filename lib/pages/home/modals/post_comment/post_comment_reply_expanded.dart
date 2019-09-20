@@ -1,8 +1,8 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
@@ -304,11 +304,8 @@ class OBPostCommentReplyExpandedModalState
 
     debugLog('Autocompleting with username:$foundAccountUsername');
     setState(() {
-      _textController.text =
-          _textAccountAutocompletionService.autocompleteTextWithUsername(
-              _textController.text, foundAccountUsername);
-      _textController.selection =
-          TextSelection.collapsed(offset: _textController.text.length);
+      _textAccountAutocompletionService.autocompleteTextWithUsername(
+          _textController, foundAccountUsername);
     });
   }
 

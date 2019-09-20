@@ -12,6 +12,7 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/widgets/search_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -90,7 +91,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
       );
     }
 
-    return CupertinoPageScaffold(
+    return OBCupertinoPageScaffold(
         backgroundColor: Colors.white,
         child: OBPrimaryColorContainer(
           child: Column(

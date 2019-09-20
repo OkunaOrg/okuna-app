@@ -6,8 +6,8 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/notification_tile_post_media_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 import 'notification_tile_skeleton.dart';
 import 'notification_tile_title.dart';
@@ -32,15 +32,9 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
     Post post = postUserMention.post;
 
     Widget postImagePreview;
-    if (post.hasImage()) {
-      postImagePreview = ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Image(
-          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
-          height: postImagePreviewSize,
-          width: postImagePreviewSize,
-          fit: BoxFit.cover,
-        ),
+    if (post.hasMediaThumbnail()) {
+      postImagePreview = OBNotificationTilePostMediaPreview(
+        post: post,
       );
     }
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -50,9 +44,10 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
       openbookProvider.navigationService.navigateToUserProfile(
           user: postUserMention.post.creator, context: context);
     };
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
-    Function onTileTapped = (){
+    Function onTileTapped = () {
       if (onPressed != null) onPressed();
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       openbookProvider.navigationService
@@ -72,7 +67,8 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
             text: _localizationService.notifications__mentioned_in_post_tile),
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

@@ -1,0 +1,19 @@
+{
+    "from_gallery": "De la galería",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "De la cámara",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_too_large": "Archivo demasiado grande (límite: {limit} MB)",
+    "@error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    }
+}

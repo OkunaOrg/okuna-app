@@ -1,0 +1,19 @@
+{
+    "from_gallery": "Dalla galleria",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Dalla fotocamera",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_too_large": "File troppo grande (limite: {limit} MB)",
+    "@error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    }
+}

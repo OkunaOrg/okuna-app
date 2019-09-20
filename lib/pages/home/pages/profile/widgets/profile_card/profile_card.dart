@@ -18,8 +18,10 @@ import 'package:flutter/material.dart';
 
 class OBProfileCard extends StatelessWidget {
   final User user;
+  final VoidCallback onUserProfileUpdated;
 
-  OBProfileCard(this.user);
+  const OBProfileCard(this.user, {Key key, this.onUserProfileUpdated}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class OBProfileCard extends StatelessWidget {
                     height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
                     width: OBAvatar.AVATAR_SIZE_EXTRA_LARGE,
                   ),
-                  Expanded(child: OBProfileActions(user)),
+                  Expanded(child: OBProfileActions(user, onUserProfileUpdated: onUserProfileUpdated,)),
                 ],
               ),
               Column(

@@ -98,6 +98,7 @@ class AuthApiService {
     String username,
     String url,
     bool followersCountVisible,
+    bool communityPostsVisible,
     String bio,
     String location,
   }) {
@@ -127,6 +128,9 @@ class AuthApiService {
 
     if (followersCountVisible != null)
       body['followers_count_visible'] = followersCountVisible;
+
+    if (communityPostsVisible != null)
+      body['community_posts_visible'] = communityPostsVisible;
 
     if (location != null) body['location'] = location;
 
@@ -294,7 +298,6 @@ class AuthApiService {
 
   Future<HttpieResponse> loginWithCredentials(
       {@required String username, @required String password}) {
-    print('$apiURL$LOGIN_PATH');
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
   }

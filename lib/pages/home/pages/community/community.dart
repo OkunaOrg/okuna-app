@@ -1,5 +1,6 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/posts_list.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/community_administrators.dart';
@@ -7,13 +8,14 @@ import 'package:Okuna/pages/home/pages/community/pages/community_staff/widgets/c
 import 'package:Okuna/pages/home/pages/community/widgets/community_card/community_card.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_cover.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_nav_bar.dart';
-import 'package:Okuna/pages/home/pages/community/widgets/community_posts.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/alerts/alert.dart';
-import 'package:Okuna/widgets/buttons/community_floating_action_button.dart';
-import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/buttons/community_new_post_button.dart';
+import 'package:Okuna/widgets/new_post_data_uploader.dart';
+import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
@@ -34,7 +36,7 @@ class OBCommunityPage extends StatefulWidget {
 class OBCommunityPageState extends State<OBCommunityPage>
     with TickerProviderStateMixin {
   Community _community;
-  OBHttpListController _httpListController;
+  OBPostsStreamController _obPostsStreamController;
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -42,16 +44,19 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   CancelableOperation _refreshCommunityOperation;
 
+  List<OBNewPostData> _newPostsData;
+
   @override
   void initState() {
     super.initState();
-    _httpListController = OBHttpListController();
+    _obPostsStreamController = OBPostsStreamController();
     _needsBootstrap = true;
     _community = widget.community;
+    _newPostsData = [];
   }
 
-  void _onPostCreated(Post post) {
-    _httpListController.insertListItem(post);
+  void _onWantsToUploadNewPostData(OBNewPostData newPostData) {
+    _insertNewPostData(newPostData);
   }
 
   @override
@@ -106,18 +111,29 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 
   Widget _buildCommunityContent() {
-    List<Widget> stackItems = [
-      OBCommunityPosts(
-        httpListController: _httpListController,
-        community: _community,
-        httpListSecondaryRefresher: _refreshCommunity,
-        prependedItems: <Widget>[
-          OBCommunityCover(_community),
-          OBCommunityCard(
-            _community,
-          )
-        ],
+    List<Widget> prependedItems = [
+      OBCommunityCover(_community),
+      OBCommunityCard(
+        _community,
       )
+    ];
+
+    if (_newPostsData.isNotEmpty) {
+      prependedItems.addAll(_newPostsData.map((OBNewPostData newPostData) {
+        return _buildNewPostDataUploader(newPostData);
+      }).toList());
+    }
+
+    List<Widget> stackItems = [
+      OBPostsStream(
+        onScrollLoader: _loadMoreCommunityPosts,
+        refresher: _refreshCommunityPosts,
+        controller: _obPostsStreamController,
+        prependedItems: prependedItems,
+        streamIdentifier: 'community_' + widget.community.name,
+        secondaryRefresher: _refreshCommunity,
+        statusIndicatorBuilder: _buildPostsStreamStatusIndicator,
+      ),
     ];
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -130,13 +146,42 @@ class OBCommunityPageState extends State<OBCommunityPage>
           right: 20.0,
           child: OBCommunityNewPostButton(
             community: _community,
-            onPostCreated: _onPostCreated,
+            onWantsToUploadNewPostData: _onWantsToUploadNewPostData,
           )));
     }
 
     return Stack(
       children: stackItems,
     );
+  }
+
+  Widget _buildPostsStreamStatusIndicator(
+      {BuildContext context,
+      OBPostsStreamStatus streamStatus,
+      List<Widget> streamPrependedItems,
+      Function streamRefresher}) {
+    return OBCommunityPostsStreamStatusIndicator(
+        streamRefresher: streamRefresher,
+        streamPrependedItems: streamPrependedItems,
+        streamStatus: streamStatus);
+  }
+
+  Widget _buildNewPostDataUploader(OBNewPostData newPostData) {
+    return OBNewPostDataUploader(
+      data: newPostData,
+      onPostPublished: _onNewPostDataUploaderPostPublished,
+      onCancelled: _onNewPostDataUploaderCancelled,
+    );
+  }
+
+  void _onNewPostDataUploaderCancelled(OBNewPostData newPostData) {
+    _removeNewPostData(newPostData);
+  }
+
+  void _onNewPostDataUploaderPostPublished(
+      Post publishedPost, OBNewPostData newPostData) {
+    _removeNewPostData(newPostData);
+    _obPostsStreamController.addPostToTop(publishedPost);
   }
 
   Widget _buildPrivateCommunityContent() {
@@ -162,8 +207,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
                 ),
                 OBText(
                   communityHasInvitesEnabled
-                      ? _localizationService.trans('community__invited_by_member')
-                      :_localizationService.trans('community__invited_by_moderator'),
+                      ? _localizationService
+                          .trans('community__invited_by_member')
+                      : _localizationService
+                          .trans('community__invited_by_moderator'),
                   textAlign: TextAlign.center,
                 )
               ],
@@ -185,9 +232,42 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _setCommunity(community);
   }
 
+  Future<List<Post>> _refreshCommunityPosts() async {
+    debugPrint('Refreshing community posts');
+    PostsList communityPosts =
+        await _userService.getPostsForCommunity(widget.community);
+    return communityPosts.posts;
+  }
+
+  Future<List<Post>> _loadMoreCommunityPosts(
+      List<Post> communityPostsList) async {
+    debugPrint('Loading more community posts');
+    var lastCommunityPost = communityPostsList.last;
+    var lastCommunityPostId = lastCommunityPost.id;
+    var moreCommunityPosts = (await _userService.getPostsForCommunity(
+      widget.community,
+      maxId: lastCommunityPostId,
+      count: 10,
+    ))
+        .posts;
+    return moreCommunityPosts;
+  }
+
   void _setCommunity(Community community) {
     setState(() {
       _community = community;
+    });
+  }
+
+  void _insertNewPostData(OBNewPostData newPostData) {
+    setState(() {
+      _newPostsData.insert(0, newPostData);
+    });
+  }
+
+  void _removeNewPostData(OBNewPostData newPostData) {
+    setState(() {
+      _newPostsData.remove(newPostData);
     });
   }
 }

@@ -1,0 +1,47 @@
+{
+    "all_loaded": "🎉 Alle indlæg loadet",
+    "@all_loaded": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_title": "Vent lidt!",
+    "@refreshing_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_subtitle": "Opdaterer stream.",
+    "@refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_title": "Denne stream er tom.",
+    "@empty_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_subtitle": "Prøv at genopfriske om nogle sekunder.",
+    "@empty_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_title": "Kunne ikke loade stream.",
+    "@failed_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_subtitle": "Prøv igen om nogle sekunder",
+    "@failed_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_empty": "Ingen indlæg fundet",
+    "@status_tile_empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_no_more_to_load": "🎉 Alle indlæg loadet",
+    "@status_tile_no_more_to_load": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -1,0 +1,747 @@
+{
+    "no": "Nee",
+    "@no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "yes": "Ja",
+    "@yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "button_staff": "Staf",
+    "@button_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "button_rules": "Reglement",
+    "@button_rules": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community": "community",
+    "@community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities": "communities",
+    "@communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "type_public": "Openbaar",
+    "@type_public": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "type_private": "Privé",
+    "@type_private": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "member_capitalized": "Lid",
+    "@member_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "members_capitalized": "Leden",
+    "@members_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "admin_desc": "Hiermee wordt een lid in staat gesteld om de community gegevens, de beheerders, de moderators en geblokkeerde gebruikers, aan te passen.",
+    "@admin_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirmation_title": "Bevestiging",
+    "@confirmation_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "admin_add_confirmation": "Weet je zeker dat je @{username} wil toevoegen als beheerder van de community?",
+    "@admin_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "ban_confirmation": "Weet je zeker dat je @{username} wil blokkeren?",
+    "@ban_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "ban_desc": "Dit zorgt ervoor dat de gebruiker verwijderd wordt uit de community en verbiedt de gebruiker nogmaals toe te treden.",
+    "@ban_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderator_add_confirmation": "Weet je zeker dat je @{username} wilt toevoegen als moderator van de community?",
+    "@moderator_add_confirmation": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "moderator_desc": "Dit stelt het lid in staat om community gegevens, moderators en verboden gebruikers te wijzigen.",
+    "@moderator_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_you": "Jij",
+    "@moderators_you": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_title": "Moderators",
+    "@moderators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_desc": "Je zult de berichten niet in je tijdslijn zien, noch bent in staat er nog in te posten.",
+    "@leave_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_confirmation": "Weet je zeker dat je deze community wil verlaten?",
+    "@leave_confirmation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderator_resource_name": "moderator",
+    "@moderator_resource_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderators_resource_name": "moderators",
+    "@moderators_resource_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_moderator_title": "Een moderator toevoegen",
+    "@add_moderator_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_confirmation": "Weet je zeker dat je deze community wil verwijderen?",
+    "@delete_confirmation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_desc": "Je zult de berichten niet meer in je tijdslijn zien, noch in staat zijn om er in te posten.",
+    "@delete_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_manage_text": "Beheer",
+    "@actions_manage_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_title": "Beheer de community",
+    "@manage_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_details_title": "Details",
+    "@manage_details_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_details_desc": "Verander de titel, naam, avatar, omslagfoto en meer.",
+    "@manage_details_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_admins_title": "Beheerders",
+    "@manage_admins_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_admins_desc": "Bekijk, voeg toe en verwijder beheerders.",
+    "@manage_admins_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mods_title": "Moderators",
+    "@manage_mods_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mods_desc": "Bekijk, voeg toe en verwijder moderators.",
+    "@manage_mods_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_banned_title": "Geblokkeerde gebruikers",
+    "@manage_banned_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_banned_desc": "Bekijk, voeg toe en verwijder geblokkeerde gebruikers.",
+    "@manage_banned_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mod_reports_title": "Moderatierapporten",
+    "@manage_mod_reports_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_mod_reports_desc": "Beoordeel de moderatierapporten van de community.",
+    "@manage_mod_reports_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_closed_posts_title": "Gesloten berichten",
+    "@manage_closed_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_closed_posts_desc": "Bekijk en beheer gesloten berichten",
+    "@manage_closed_posts_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_invite_title": "Mensen uitnodigen",
+    "@manage_invite_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_invite_desc": "Nodig je connecties en volgers uit om deel te nemen aan de community.",
+    "@manage_invite_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_delete_title": "Een community verwijderen",
+    "@manage_delete_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_delete_desc": "Voorgoed een community verwijderen.",
+    "@manage_delete_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_leave_title": "Een community verlaten",
+    "@manage_leave_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_leave_desc": "De community verlaten.",
+    "@manage_leave_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_add_favourite": "Voeg de community aan je favorieten toe",
+    "@manage_add_favourite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_remove_favourite": "Verwijder de community uit je favorieten",
+    "@manage_remove_favourite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "is_private": "Deze community is besloten.",
+    "@is_private": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invited_by_member": "Je dient uitgenodigd te worden door een lid.",
+    "@invited_by_member": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invited_by_moderator": "Je dient uitgenodigd te worden door een moderator.",
+    "@invited_by_moderator": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing": "Verversen community",
+    "@refreshing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "posts": "Posts",
+    "@posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about": "Over",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "category": "categorie.",
+    "@category": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "categories": "categorieën.",
+    "@categories": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_administrators_title": "Een beheerder toevoegen.",
+    "@add_administrators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_members": "Leden van een community",
+    "@community_members": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "member": "lid",
+    "@member": {
+        "description": "Currently not used in app, reserved for potential use. Could be used as: Showing 1 member",
+        "type": "text",
+        "placeholders": {}
+    },
+    "member_plural": "leden",
+    "@member_plural": {
+        "description": "See all members ,Search all members",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrators_title": "Beheerders",
+    "@administrators_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_text": "beheerder",
+    "@administrator_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrator",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_plural": "beheerders",
+    "@administrator_plural": {
+        "description": "Egs. Search administrators, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrator_you": "Jij",
+    "@administrator_you": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_you_text": "Jij",
+    "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pick_upto_max": "Kies {max} categorieën",
+    "@pick_upto_max": {
+        "type": "text",
+        "placeholders": {
+            "max": {}
+        }
+    },
+    "pick_atleast_min_category": "Je dient tenminste {min} categorie te selecteren.",
+    "@pick_atleast_min_category": {
+        "description": "You must pick at least 1 category",
+        "type": "text",
+        "placeholders": {
+            "min": {}
+        }
+    },
+    "pick_atleast_min_categories": "Je dient tenminste {min} categorieën te selecteren.",
+    "@pick_atleast_min_categories": {
+        "description": "Eg. Variable min will be 3-5. You must pick at least (3-5) categories",
+        "type": "text",
+        "placeholders": {
+            "min": {}
+        }
+    },
+    "ban_user_title": "Blokkeer gebruiker",
+    "@ban_user_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_users_title": "Blokkeer gebruikers",
+    "@banned_users_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_user_text": "geblokkeerde gebruiker",
+    "@banned_user_text": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 banned user",
+        "type": "text",
+        "placeholders": {}
+    },
+    "banned_users_text": "geblokkeerde gebruikers",
+    "@banned_users_text": {
+        "description": "Egs. Search banned users, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorites_title": "Favorieten",
+    "@favorites_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_community": "favoriete community",
+    "@favorite_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_communities": "favoriete communities",
+    "@favorite_communities": {
+        "description": "Egs. Search favorite communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_title": "Beheer",
+    "@administrated_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_community": "beheerders community",
+    "@administrated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "administrated_communities": "beheerders communities",
+    "@administrated_communities": {
+        "description": "Egs. Search administrated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_title": "Gemodereerd",
+    "@moderated_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_community": "gemodereerde community",
+    "@moderated_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_communities": "gemodereerde communities",
+    "@moderated_communities": {
+        "description": "Egs. Search moderated communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_title": "Lid sinds",
+    "@joined_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_community": "lid van deze community sinds",
+    "@joined_community": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 joined community",
+        "type": "text",
+        "placeholders": {}
+    },
+    "joined_communities": "lid van deze communities",
+    "@joined_communities": {
+        "description": "Egs. Search joined communities, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "join_communities_desc": "Word lid van communities om deze tab tot leven te zien komen!",
+    "@join_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refresh_text": "Ververs",
+    "@refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_none_found": "Geen trending communities gevonden. Probeer het over enkele minuten opnieuw.",
+    "@trending_none_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_refresh": "Ververs",
+    "@trending_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_in_all": "Trending in alle categorieën",
+    "@trending_in_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_in_category": "Trending in {categoryName}",
+    "@trending_in_category": {
+        "type": "text",
+        "placeholders": {
+            "categoryName": {}
+        }
+    },
+    "communities_title": "Communities",
+    "@communities_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_no_category_found": "Geen categorieën gevonden. Probeer het over een paar minuten opnieuw.",
+    "@communities_no_category_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_refresh_text": "Ververs",
+    "@communities_refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities_all_text": "Allen",
+    "@communities_all_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_title": "Uitnodiging om deel te nemen aan deze community",
+    "@invite_to_community_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_resource_singular": "connectie of volger",
+    "@invite_to_community_resource_singular": {
+        "description": "Currently unsused, reserved for potential use. Could be used as Showing 1 connection or follower",
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_to_community_resource_plural": "connecties en volgers",
+    "@invite_to_community_resource_plural": {
+        "description": "Egs. Search connections and followers, See list_search_text in user_search.arb ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "favorite_action": "Favoriete community",
+    "@favorite_action": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "unfavorite_action": "Niet favoriete community",
+    "@unfavorite_action": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_label_title": "Titel",
+    "@save_community_label_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_label_title_hint_text": "bijv. Reizen, Fotografie, Gaming.",
+    "@save_community_label_title_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_title": "Naam",
+    "@save_community_name_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_title_hint_text": " bijv. reizen, fotografie, gaming.",
+    "@save_community_name_title_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_taken": "Community naam ‘{takenName}’ is bezet",
+    "@save_community_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenName": {}
+        }
+    },
+    "save_community_name_label_color": "Kleur",
+    "@save_community_name_label_color": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_color_hint_text": "(Tik om te wijzigen)",
+    "@save_community_name_label_color_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_type": "Type",
+    "@save_community_name_label_type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_type_hint_text": "(Tik om te wijzigen)",
+    "@save_community_name_label_type_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_member_invites": "Lid uitnodigen",
+    "@save_community_name_member_invites": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_member_invites_subtitle": "Leden kunnen mensen voor de community uitnodigen",
+    "@save_community_name_member_invites_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_category": "Categorie",
+    "@save_community_name_category": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_desc_optional": "Omschrijving · Optioneel",
+    "@save_community_name_label_desc_optional": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_desc_optional_hint_text": "Wat is het onderwerp van je community?",
+    "@save_community_name_label_desc_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_rules_optional": "Regels · Optioneel",
+    "@save_community_name_label_rules_optional": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_rules_optional_hint_text": "Is er iets wat je wilt dat je gebruikers weten?",
+    "@save_community_name_label_rules_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_member_adjective": "Bijnaam lid (enkelvoud) · Optioneel",
+    "@save_community_name_label_member_adjective": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_member_adjective_hint_text": "bijv. reiziger, fotograaf, gamer.",
+    "@save_community_name_label_member_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_members_adjective": "Bijnaam leden (meervoud) · Optioneel",
+    "@save_community_name_label_members_adjective": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_name_label_members_adjective_hint_text": "bijv. reizigers, fotografen, gamers.",
+    "@save_community_name_label_members_adjective_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_edit_community": "Bewerk community",
+    "@save_community_edit_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_create_community": "Maak een community",
+    "@save_community_create_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_save_text": "Opslaan",
+    "@save_community_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_community_create_text": "Creëer",
+    "@save_community_create_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_invite_people_title": "Nodig mensen uit voor deze community",
+    "@actions_invite_people_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "join_community": "Word lid",
+    "@join_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "leave_community": "Verlaat",
+    "@leave_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_staff": "Community staf",
+    "@community_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_singular": "post bericht",
+    "@post_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_plural": "berichten",
+    "@post_plural": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_title": "Community regels",
+    "@rules_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_text": "Regels",
+    "@rules_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_characters_error": "Een gebruikersnaam kan alleen alfanumerieke tekens en onderliggende streepjes bevatten.",
+    "@name_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_range_error": "Een gebruikersnaam mag niet langer zijn dan {maxLength} tekens.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "name_empty_error": "Naam invullen is verplicht.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "title_range_error": "De titel mag niet langer zijn dan {maxLength} tekens.",
+    "@title_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "title_empty_error": "Titel invullen is verplicht.",
+    "@title_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "rules_range_error": "Regels mogen niet langer zijn dan {maxLength} tekens.",
+    "@rules_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "rules_empty_error": "Regels invullen is verplicht.",
+    "@rules_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_range_error": "Omschrijving mag niet langer zijn dan {maxLength} tekens.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "adjectives_range_error": "Bijnamen van leden mogen niet langer zijn dan {maxLength} tekens.",
+    "@adjectives_range_error": {
+        "description": "This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers",
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    }
+}
