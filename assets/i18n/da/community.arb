@@ -59,6 +59,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "retry_loading_posts": "Tryk for at prøve igen",
+    "@retry_loading_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
     "admin_add_confirmation": "Er du sikker på at du tilføje @{username} som fællesskabs administrator?",
     "@admin_add_confirmation": {
         "type": "text",

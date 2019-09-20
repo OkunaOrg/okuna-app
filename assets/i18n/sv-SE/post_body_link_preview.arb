@@ -1,0 +1,14 @@
+{
+    "empty": "Länken kunde inte förhandsvisas",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Webbsidan svarade med ett fel vid förhandsgranskning av länken: {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

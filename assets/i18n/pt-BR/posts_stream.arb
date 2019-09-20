@@ -1,0 +1,47 @@
+{
+    "all_loaded": "🎉  Todas as publicações foram carregadas",
+    "@all_loaded": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_title": "Aguenta aí!",
+    "@refreshing_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_subtitle": "Atualizando as publicações.",
+    "@refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_title": "A linha do tempo está vazia.",
+    "@empty_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_subtitle": "Tente novamente em alguns segundos.",
+    "@empty_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_title": "Não foi possível carregar as publicações.",
+    "@failed_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_subtitle": "Tente novamente em alguns segundos",
+    "@failed_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_empty": "Nenhuma publicação encontrada",
+    "@status_tile_empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_no_more_to_load": "🎉  Todas as publicações foram carregadas",
+    "@status_tile_no_more_to_load": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

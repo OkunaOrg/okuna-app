@@ -1,0 +1,14 @@
+{
+    "empty": "Dette link kunne ikke skaffes",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Mislykkedes at forhåndsvise link med hjemmeside fejl: {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

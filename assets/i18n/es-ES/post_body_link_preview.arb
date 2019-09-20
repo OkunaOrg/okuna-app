@@ -1,0 +1,14 @@
+{
+    "empty": "Este enlace no se pudo previsualizar",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Error al previsualizar el enlace con error del sitio web: {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

@@ -49,7 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m14(maxLength) => "As regras não podem ser maiores que ${maxLength} caracteres.";
 
-  static m15(takenName) => "O nome de comunidade \'${takenName}\' já está em uso";
+  static m15(takenName) => "O nome \'${takenName}\' já está sendo usado por outra comunidade";
 
   static m16(maxLength) => "O título não pode ser maior que ${maxLength} caracteres.";
 
@@ -57,94 +57,114 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m18(currentUserLanguage) => "Idioma (${currentUserLanguage})";
 
-  static m19(resourceCount, resourceName) => "Ver todas as ${resourceCount} ${resourceName}";
+  static m19(limit) => "Arquivo muito grande (limite: ${limit} MB)";
 
-  static m20(postCommentText) => "[name] [username] também comentou: ${postCommentText}";
+  static m20(resourceCount, resourceName) => "Ver todas as ${resourceCount} ${resourceName}";
 
-  static m21(postCommentText) => "[name] [username] comentou no seu post: ${postCommentText}";
+  static m21(postCommentText) => "[name] [username] também comentou: ${postCommentText}";
 
-  static m22(postCommentText) => "[name] [username] também respondeu: ${postCommentText}";
+  static m22(postCommentText) => "[name] [username] comentou no seu post: ${postCommentText}";
 
-  static m23(postCommentText) => "[name] [username] respondeu: ${postCommentText}";
+  static m23(postCommentText) => "[name] [username] também respondeu: ${postCommentText}";
 
-  static m24(postCommentText) => "[name] [username] mencionou você em um comentário: ${postCommentText}";
+  static m24(postCommentText) => "[name] [username] respondeu: ${postCommentText}";
 
-  static m25(communityName) => "[name] [username] convidou você para se juntar à comunidade /c/${communityName}.";
+  static m25(postCommentText) => "[name] [username] mencionou você em um comentário: ${postCommentText}";
 
-  static m26(maxLength) => "Um comentário não pode ter mais de ${maxLength} caracteres.";
+  static m26(communityName) => "[name] [username] convidou você para se juntar à comunidade /c/${communityName}.";
 
-  static m27(commentsCount) => "Ver todos os ${commentsCount} comentários";
+  static m27(maxLength) => "Um comentário não pode ter mais de ${maxLength} caracteres.";
 
-  static m28(circlesSearchQuery) => "\'Nenhum círculo encontrado para \'${circlesSearchQuery}\'.";
+  static m28(commentsCount) => "Ver todos os comentários (${commentsCount})";
 
-  static m29(name) => "${name} ainda não compartilhou nada.";
+  static m29(circlesSearchQuery) => "Nenhum círculo encontrado para \'${circlesSearchQuery}\'.";
 
-  static m30(postCreatorUsername) => "círculos de @${postCreatorUsername}";
+  static m30(name) => "${name} ainda não compartilhou nada.";
 
-  static m31(maxLength) => "O nome do círculo não deve ter mais de ${maxLength} caracteres.";
+  static m31(postCreatorUsername) => "círculos de @${postCreatorUsername}";
 
-  static m32(prettyUsersCount) => "${prettyUsersCount} pessoas";
+  static m32(description) => "Failed to preview link with website error: ${description}";
 
-  static m33(username) => "Tem certeza de que deseja bloquear @${username}?";
+  static m33(maxLength) => "O nome do círculo não deve ter mais de ${maxLength} caracteres.";
 
-  static m34(userName) => "Confirmar a conexão com ${userName}";
+  static m34(prettyUsersCount) => "${prettyUsersCount} pessoas";
 
-  static m35(userName) => "Conectar-se com ${userName}";
+  static m35(username) => "Tem certeza de que deseja bloquear @${username}?";
 
-  static m36(userName) => "Desconectar-se de ${userName}";
+  static m36(userName) => "Confirmar a conexão com ${userName}";
 
-  static m37(limit) => "Imagem muito grande (limite: ${limit} MB)";
+  static m37(userName) => "Conectar-se com ${userName}";
 
-  static m38(username) => "O nome de usuário @${username} já está em uso";
+  static m38(userName) => "Desconectar-se de ${userName}";
 
-  static m39(searchQuery) => "Nenhum emoji encontrado para \'${searchQuery}\'.";
+  static m39(limit) => "Imagem muito grande (limite: ${limit} MB)";
 
-  static m40(searchQuery) => "Nenhuma lista encontrada para \'${searchQuery}\'";
+  static m40(username) => "O nome de usuário @${username} já está em uso";
 
-  static m41(prettyUsersCount) => "${prettyUsersCount} contas";
+  static m41(searchQuery) => "Nenhum emoji encontrado para \'${searchQuery}\'.";
 
-  static m42(prettyUsersCount) => "${prettyUsersCount} Contas";
+  static m42(searchQuery) => "Nenhuma lista encontrada para \'${searchQuery}\'";
 
-  static m43(groupName) => "Ver ${groupName}";
+  static m43(prettyUsersCount) => "${prettyUsersCount} contas";
 
-  static m44(iosLink, androidLink, inviteLink) => "Ei! Eu gostaria de convidar você para a Okuna. Primeiro, baixe o app no iTunes (${iosLink}) ou na Play Store (${androidLink}). Depois, copie e cole o seguinte link de convite no formulário de criação de conta no app da Okuna: ${inviteLink}";
+  static m44(prettyUsersCount) => "${prettyUsersCount} Contas";
 
-  static m45(username) => "Entrou com o nome de usuário @${username}";
+  static m45(groupName) => "Ver ${groupName}";
 
-  static m46(email) => "Pendente, convite enviado para o email ${email}";
+  static m46(iosLink, androidLink, inviteLink) => "Ei! Eu gostaria de convidar você para a Okuna. Primeiro, baixe o app no iTunes (${iosLink}) ou na Play Store (${androidLink}). Depois, copie e cole o seguinte link de convite no formulário de criação de conta no app da Okuna: ${inviteLink}";
 
-  static m47(maxLength) => "O nome da lista não deve ter mais de ${maxLength} caracteres.";
+  static m47(username) => "Entrou com o nome de usuário @${username}";
 
-  static m48(maxLength) => "A bio não pode ser maior que ${maxLength} caracteres.";
+  static m48(email) => "Pendente, convite enviado para o email ${email}";
 
-  static m49(maxLength) => "O local não pode ser maior que ${maxLength} caracteres.";
+  static m49(maxLength) => "O nome da lista não deve ter mais de ${maxLength} caracteres.";
 
-  static m50(takenConnectionsCircleName) => "O nome de círculo \'${takenConnectionsCircleName}\' já está em uso";
+  static m50(maxLength) => "A bio não pode ser maior que ${maxLength} caracteres.";
 
-  static m51(listName) => "O nome de lista \'${listName}\' já está sendo usado";
+  static m51(maxLength) => "O local não pode ser maior que ${maxLength} caracteres.";
 
-  static m52(searchQuery) => "Nada encontrado para \'${searchQuery}\'.";
+  static m52(takenConnectionsCircleName) => "O nome de círculo \'${takenConnectionsCircleName}\' já está em uso";
 
-  static m53(resourcePluralName) => "Sem ${resourcePluralName}.";
+  static m53(listName) => "O nome de lista \'${listName}\' já está sendo usado";
 
-  static m54(resourcePluralName) => "Pesquisar ${resourcePluralName} ...";
+  static m54(searchQuery) => "Nada encontrado para \'${searchQuery}\'.";
 
-  static m55(searchQuery) => "Nenhuma comunidade encontrada para \'${searchQuery}\'.";
+  static m55(resourcePluralName) => "Sem ${resourcePluralName}.";
 
-  static m56(searchQuery) => "Nenhum resultado para \'${searchQuery}\'.";
+  static m56(resourcePluralName) => "Pesquisar ${resourcePluralName} ...";
 
-  static m57(searchQuery) => "Nenhum usuário encontrado para \'${searchQuery}\'.";
+  static m57(searchQuery) => "Nenhuma comunidade encontrada para \'${searchQuery}\'.";
 
-  static m58(searchQuery) => "Procurando por \'${searchQuery}\'";
+  static m58(searchQuery) => "Nenhum resultado para \'${searchQuery}\'.";
+
+  static m59(searchQuery) => "Nenhum usuário encontrado para \'${searchQuery}\'.";
+
+  static m60(searchQuery) => "Procurando por \'${searchQuery}\'";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "application_settings__comment_sort_newest_first" : MessageLookupByLibrary.simpleMessage("Mais recentes"),
+    "application_settings__comment_sort_oldest_first" : MessageLookupByLibrary.simpleMessage("Mais antigos"),
+    "application_settings__link_previews" : MessageLookupByLibrary.simpleMessage("Link previews"),
+    "application_settings__link_previews_autoplay_always" : MessageLookupByLibrary.simpleMessage("Always"),
+    "application_settings__link_previews_autoplay_never" : MessageLookupByLibrary.simpleMessage("Never"),
+    "application_settings__link_previews_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Wifi only"),
+    "application_settings__link_previews_show" : MessageLookupByLibrary.simpleMessage("Show"),
+    "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Toque para alterar)"),
+    "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Vídeos"),
+    "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Reprodução automática"),
+    "application_settings__videos_autoplay_always" : MessageLookupByLibrary.simpleMessage("Sempre"),
+    "application_settings__videos_autoplay_never" : MessageLookupByLibrary.simpleMessage("Nunca"),
+    "application_settings__videos_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Somente Wi-Fi"),
+    "application_settings__videos_sound" : MessageLookupByLibrary.simpleMessage("Som"),
+    "application_settings__videos_sound_disabled" : MessageLookupByLibrary.simpleMessage("Desabilitado"),
+    "application_settings__videos_sound_enabled" : MessageLookupByLibrary.simpleMessage("Habilitado"),
     "auth__change_password_current_pwd" : MessageLookupByLibrary.simpleMessage("Senha atual"),
-    "auth__change_password_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Digite a sua senha atual"),
+    "auth__change_password_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Digite sua senha atual"),
     "auth__change_password_current_pwd_incorrect" : MessageLookupByLibrary.simpleMessage("A senha inserida está incorreta"),
     "auth__change_password_new_pwd" : MessageLookupByLibrary.simpleMessage("Nova senha"),
     "auth__change_password_new_pwd_error" : MessageLookupByLibrary.simpleMessage("Por favor, certifique-se de que a senha tenha entre 10 e 100 caracteres"),
-    "auth__change_password_new_pwd_hint" : MessageLookupByLibrary.simpleMessage("Digite a sua nova senha"),
+    "auth__change_password_new_pwd_hint" : MessageLookupByLibrary.simpleMessage("Digite sua nova senha"),
     "auth__change_password_save_success" : MessageLookupByLibrary.simpleMessage("Tudo certo! Sua senha foi atualizada"),
     "auth__change_password_save_text" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "auth__change_password_title" : MessageLookupByLibrary.simpleMessage("Alterar senha"),
@@ -178,18 +198,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__create_acc__next" : MessageLookupByLibrary.simpleMessage("Avançar"),
     "auth__create_acc__one_last_thing" : MessageLookupByLibrary.simpleMessage("Uma última coisa..."),
     "auth__create_acc__password_empty_error" : MessageLookupByLibrary.simpleMessage("😱 Sua senha não pode ficar vazia"),
-    "auth__create_acc__password_length_error" : MessageLookupByLibrary.simpleMessage("😅 Uma senha precisa ter entre 8 e 64 caracteres."),
+    "auth__create_acc__password_length_error" : MessageLookupByLibrary.simpleMessage("😅 Sua senha precisa ter entre 10 e 100 caracteres."),
     "auth__create_acc__paste_link" : MessageLookupByLibrary.simpleMessage("Cole seu link de registro abaixo"),
     "auth__create_acc__paste_link_help_text" : MessageLookupByLibrary.simpleMessage("Use o link do seu convite recebido por email."),
     "auth__create_acc__paste_password_reset_link" : MessageLookupByLibrary.simpleMessage("Cole o link de redefinição de senha abaixo"),
     "auth__create_acc__previous" : MessageLookupByLibrary.simpleMessage("Voltar"),
-    "auth__create_acc__register" : MessageLookupByLibrary.simpleMessage("Criar uma conta"),
+    "auth__create_acc__register" : MessageLookupByLibrary.simpleMessage("Criar minha conta"),
     "auth__create_acc__request_invite" : MessageLookupByLibrary.simpleMessage("Sem convite? Solicite um aqui."),
     "auth__create_acc__submit_error_desc_server" : MessageLookupByLibrary.simpleMessage("😭 Estamos com problemas em nossos servidores, por favor tente novamente em alguns minutos."),
     "auth__create_acc__submit_error_desc_validation" : MessageLookupByLibrary.simpleMessage("😅 Parece que algumas das informações não estavam corretas, por favor, verifique e tente novamente."),
     "auth__create_acc__submit_error_title" : MessageLookupByLibrary.simpleMessage("Ah não..."),
     "auth__create_acc__submit_loading_desc" : MessageLookupByLibrary.simpleMessage("Estamos criando sua conta."),
-    "auth__create_acc__submit_loading_title" : MessageLookupByLibrary.simpleMessage("Segura aí!"),
+    "auth__create_acc__submit_loading_title" : MessageLookupByLibrary.simpleMessage("Aguenta aí!"),
     "auth__create_acc__subscribe" : MessageLookupByLibrary.simpleMessage("Solicitar"),
     "auth__create_acc__subscribe_to_waitlist_text" : MessageLookupByLibrary.simpleMessage("Solicitar um convite!"),
     "auth__create_acc__username_characters_error" : MessageLookupByLibrary.simpleMessage("😅 Um nome de usuário deve conter apenas caracteres alfanuméricos e underlines (_)."),
@@ -224,7 +244,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__login__or_text" : MessageLookupByLibrary.simpleMessage("Ou"),
     "auth__login__password_empty_error" : MessageLookupByLibrary.simpleMessage("A senha é necessária."),
     "auth__login__password_label" : MessageLookupByLibrary.simpleMessage("Senha"),
-    "auth__login__password_length_error" : MessageLookupByLibrary.simpleMessage("Sua senha deve ter entre 8 e 64 caracteres."),
+    "auth__login__password_length_error" : MessageLookupByLibrary.simpleMessage("Sua senha deve ter entre 10 e 100 caracteres."),
     "auth__login__previous" : MessageLookupByLibrary.simpleMessage("Voltar"),
     "auth__login__server_error" : MessageLookupByLibrary.simpleMessage("Ops... Estamos passando por problemas em nossos servidores. Por favor, tente novamente em alguns minutos."),
     "auth__login__subtitle" : MessageLookupByLibrary.simpleMessage("Insira suas credenciais para continuar."),
@@ -243,7 +263,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__username_empty_error" : MessageLookupByLibrary.simpleMessage("O nome de usuário não pode ficar vazio."),
     "auth__username_maxlength_error" : m4,
     "community__about" : MessageLookupByLibrary.simpleMessage("Sobre"),
-    "community__actions_invite_people_title" : MessageLookupByLibrary.simpleMessage("Convide pessoas para a comunidade"),
+    "community__actions_invite_people_title" : MessageLookupByLibrary.simpleMessage("Convidar pessoas para a comunidade"),
     "community__actions_manage_text" : MessageLookupByLibrary.simpleMessage("Gerenciar"),
     "community__add_administrators_title" : MessageLookupByLibrary.simpleMessage("Adicionar administrador."),
     "community__add_moderator_title" : MessageLookupByLibrary.simpleMessage("Adicionar moderador"),
@@ -302,18 +322,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__manage_admins_title" : MessageLookupByLibrary.simpleMessage("Administradores"),
     "community__manage_banned_desc" : MessageLookupByLibrary.simpleMessage("Ver, adicionar e remover usuários banidos."),
     "community__manage_banned_title" : MessageLookupByLibrary.simpleMessage("Usuários banidos"),
-    "community__manage_closed_posts_desc" : MessageLookupByLibrary.simpleMessage("Ver e gerenciar os posts fechados"),
-    "community__manage_closed_posts_title" : MessageLookupByLibrary.simpleMessage("Posts fechados"),
+    "community__manage_closed_posts_desc" : MessageLookupByLibrary.simpleMessage("Ver e gerenciar as publicações fechadas"),
+    "community__manage_closed_posts_title" : MessageLookupByLibrary.simpleMessage("Publicações fechadas"),
     "community__manage_delete_desc" : MessageLookupByLibrary.simpleMessage("Excluir a comunidade, para sempre."),
     "community__manage_delete_title" : MessageLookupByLibrary.simpleMessage("Excluir comunidade"),
     "community__manage_details_desc" : MessageLookupByLibrary.simpleMessage("Alterar título, nome, avatar, foto de capa e mais."),
     "community__manage_details_title" : MessageLookupByLibrary.simpleMessage("Detalhes"),
-    "community__manage_invite_desc" : MessageLookupByLibrary.simpleMessage("Convide suas conexões e seguidores para se juntar à comunidade."),
+    "community__manage_invite_desc" : MessageLookupByLibrary.simpleMessage("Convidar suas conexões e seus seguidores para a comunidade."),
     "community__manage_invite_title" : MessageLookupByLibrary.simpleMessage("Convidar pessoas"),
     "community__manage_leave_desc" : MessageLookupByLibrary.simpleMessage("Sair da comunidade."),
     "community__manage_leave_title" : MessageLookupByLibrary.simpleMessage("Sair da comunidade"),
-    "community__manage_mod_reports_desc" : MessageLookupByLibrary.simpleMessage("Revise as denúncias à moderação da comunidade."),
-    "community__manage_mod_reports_title" : MessageLookupByLibrary.simpleMessage("Reportado à moderação"),
+    "community__manage_mod_reports_desc" : MessageLookupByLibrary.simpleMessage("Revisar as denúncias para moderação da comunidade."),
+    "community__manage_mod_reports_title" : MessageLookupByLibrary.simpleMessage("Reportado para moderação"),
     "community__manage_mods_desc" : MessageLookupByLibrary.simpleMessage("Ver, adicionar e remover moderadores."),
     "community__manage_mods_title" : MessageLookupByLibrary.simpleMessage("Moderadores"),
     "community__manage_remove_favourite" : MessageLookupByLibrary.simpleMessage("Remover a comunidade de suas favoritas"),
@@ -343,6 +363,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__posts" : MessageLookupByLibrary.simpleMessage("Posts"),
     "community__refresh_text" : MessageLookupByLibrary.simpleMessage("Atualizar"),
     "community__refreshing" : MessageLookupByLibrary.simpleMessage("Atualizando a comunidade"),
+    "community__retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tentar novamente"),
     "community__rules_empty_error" : MessageLookupByLibrary.simpleMessage("As regras não podem ficar vazias."),
     "community__rules_range_error" : m14,
     "community__rules_text" : MessageLookupByLibrary.simpleMessage("Regras"),
@@ -395,11 +416,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__application_settings" : MessageLookupByLibrary.simpleMessage("Configurações do aplicativo"),
     "drawer__connections" : MessageLookupByLibrary.simpleMessage("Minhas conexões"),
     "drawer__customize" : MessageLookupByLibrary.simpleMessage("Personalizar"),
+    "drawer__developer_settings" : MessageLookupByLibrary.simpleMessage("Opções de desenvolvedor"),
     "drawer__global_moderation" : MessageLookupByLibrary.simpleMessage("Moderação global"),
     "drawer__help" : MessageLookupByLibrary.simpleMessage("Suporte e Feedback"),
     "drawer__lists" : MessageLookupByLibrary.simpleMessage("Minhas listas"),
     "drawer__logout" : MessageLookupByLibrary.simpleMessage("Sair"),
-    "drawer__main_title" : MessageLookupByLibrary.simpleMessage("Minha Okuna"),
+    "drawer__main_title" : MessageLookupByLibrary.simpleMessage("Okuna"),
     "drawer__menu_title" : MessageLookupByLibrary.simpleMessage("Menu"),
     "drawer__my_circles" : MessageLookupByLibrary.simpleMessage("Meus círculos"),
     "drawer__my_followers" : MessageLookupByLibrary.simpleMessage("Meus seguidores"),
@@ -420,7 +442,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__useful_links_guidelines_github" : MessageLookupByLibrary.simpleMessage("Projeto no Github"),
     "drawer__useful_links_guidelines_github_desc" : MessageLookupByLibrary.simpleMessage("Dê uma olhada no que estamos trabalhando atualmente"),
     "drawer__useful_links_guidelines_handbook" : MessageLookupByLibrary.simpleMessage("Manual da Okuna"),
-    "drawer__useful_links_guidelines_handbook_desc" : MessageLookupByLibrary.simpleMessage("Um livro com tudo o que há para saber sobre usar a plataforma"),
+    "drawer__useful_links_guidelines_handbook_desc" : MessageLookupByLibrary.simpleMessage("Um manual para aprender tudo sobre o uso da plataforma"),
     "drawer__useful_links_slack_channel" : MessageLookupByLibrary.simpleMessage("Canal da comunidade no Slack"),
     "drawer__useful_links_slack_channel_desc" : MessageLookupByLibrary.simpleMessage("Um lugar para discutir tudo sobre a Okuna"),
     "drawer__useful_links_support" : MessageLookupByLibrary.simpleMessage("Apoie a Okuna"),
@@ -428,6 +450,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__useful_links_title" : MessageLookupByLibrary.simpleMessage("Links úteis"),
     "error__no_internet_connection" : MessageLookupByLibrary.simpleMessage("Sem conexão com a internet"),
     "error__unknown_error" : MessageLookupByLibrary.simpleMessage("Erro desconhecido"),
+    "image_picker__error_too_large" : m19,
+    "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Câmera"),
+    "image_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Galeria"),
     "moderation__actions_chat_with_team" : MessageLookupByLibrary.simpleMessage("Converse com a equipe"),
     "moderation__actions_review" : MessageLookupByLibrary.simpleMessage("Revisar"),
     "moderation__category_text" : MessageLookupByLibrary.simpleMessage("Categoria"),
@@ -480,11 +505,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__report_account_text" : MessageLookupByLibrary.simpleMessage("Denunciar conta"),
     "moderation__report_comment_text" : MessageLookupByLibrary.simpleMessage("Denunciar comentário"),
     "moderation__report_community_text" : MessageLookupByLibrary.simpleMessage("Denunciar comunidade"),
-    "moderation__report_post_text" : MessageLookupByLibrary.simpleMessage("Denunciar publicação"),
+    "moderation__report_post_text" : MessageLookupByLibrary.simpleMessage("Denunciar post"),
     "moderation__reporter_text" : MessageLookupByLibrary.simpleMessage("Denunciante"),
     "moderation__reports_preview_resource_reports" : MessageLookupByLibrary.simpleMessage("denúncias"),
     "moderation__reports_preview_title" : MessageLookupByLibrary.simpleMessage("Denúncias"),
-    "moderation__reports_see_all" : m19,
+    "moderation__reports_see_all" : m20,
     "moderation__tap_to_retry" : MessageLookupByLibrary.simpleMessage("Toque para tentar carregar os itens novamente"),
     "moderation__update_category_save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "moderation__update_category_title" : MessageLookupByLibrary.simpleMessage("Atualizar categoria"),
@@ -499,42 +524,44 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__you_have_reported_community_text" : MessageLookupByLibrary.simpleMessage("Você denunciou esta comunidade"),
     "moderation__you_have_reported_post_text" : MessageLookupByLibrary.simpleMessage("Você denunciou esta publicação"),
     "notifications__accepted_connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] aceitou seu pedido de conexão."),
-    "notifications__comment_comment_notification_tile_user_also_commented" : m20,
-    "notifications__comment_comment_notification_tile_user_commented" : m21,
-    "notifications__comment_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém comentar uma das suas publicações ou uma que você também comentou."),
-    "notifications__comment_reaction_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém reage a um dos seus comentários."),
-    "notifications__comment_reaction_title" : MessageLookupByLibrary.simpleMessage("Reações a comentários"),
-    "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém responder a um dos seus comentários ou a um que você também respondeu."),
-    "notifications__comment_reply_notification_tile_user_also_replied" : m22,
-    "notifications__comment_reply_notification_tile_user_replied" : m23,
+    "notifications__comment_comment_notification_tile_user_also_commented" : m21,
+    "notifications__comment_comment_notification_tile_user_commented" : m22,
+    "notifications__comment_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém comentar uma das suas publicações ou uma que você também comentou"),
+    "notifications__comment_reaction_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém reagir a um dos seus comentários"),
+    "notifications__comment_reaction_title" : MessageLookupByLibrary.simpleMessage("Reações aos comentários"),
+    "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém responder a um dos seus comentários ou a um que você também respondeu"),
+    "notifications__comment_reply_notification_tile_user_also_replied" : m23,
+    "notifications__comment_reply_notification_tile_user_replied" : m24,
     "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Respostas aos comentários"),
     "notifications__comment_title" : MessageLookupByLibrary.simpleMessage("Comentários"),
     "notifications__comment_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém mencionar você em um comentário"),
     "notifications__comment_user_mention_title" : MessageLookupByLibrary.simpleMessage("Menções em comentários"),
-    "notifications__community_invite_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém convida você para entrar em uma comunidade."),
+    "notifications__community_invite_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém convidar você para uma comunidade"),
     "notifications__community_invite_title" : MessageLookupByLibrary.simpleMessage("Convites para comunidades"),
     "notifications__connection_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém quiser se conectar com você"),
     "notifications__connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] quer se conectar com você."),
     "notifications__connection_title" : MessageLookupByLibrary.simpleMessage("Pedidos de conexão"),
-    "notifications__follow_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém começar a segui-lo(a)"),
+    "notifications__follow_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém começar a seguir você"),
     "notifications__follow_title" : MessageLookupByLibrary.simpleMessage("Seguidores"),
     "notifications__following_you_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] está te seguindo agora."),
     "notifications__general_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando algo acontecer"),
     "notifications__general_title" : MessageLookupByLibrary.simpleMessage("Notificações"),
-    "notifications__mentioned_in_post_comment_tile" : m24,
-    "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] mencionou você em uma publicação."),
+    "notifications__mentioned_in_post_comment_tile" : m25,
+    "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] mencionou você em um post."),
     "notifications__mute_post_turn_off_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Desativar notificações do comentário"),
     "notifications__mute_post_turn_off_post_notifications" : MessageLookupByLibrary.simpleMessage("Desativar notificações do post"),
     "notifications__mute_post_turn_on_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Ativar notificações do comentário"),
     "notifications__mute_post_turn_on_post_notifications" : MessageLookupByLibrary.simpleMessage("Ativar notificações do post"),
-    "notifications__post_reaction_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém reage a uma das suas publicações."),
+    "notifications__post_reaction_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém reagir a uma das suas publicações"),
     "notifications__post_reaction_title" : MessageLookupByLibrary.simpleMessage("Reações aos posts"),
     "notifications__post_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Seja notificado(a) quando alguém mencionar você em uma publicação"),
-    "notifications__post_user_mention_title" : MessageLookupByLibrary.simpleMessage("Menções em publicações"),
+    "notifications__post_user_mention_title" : MessageLookupByLibrary.simpleMessage("Menções em posts"),
     "notifications__reacted_to_post_comment_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagiu ao seu comentário."),
-    "notifications__reacted_to_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagiu à sua publicação."),
-    "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Configurações de notificação"),
-    "notifications__user_community_invite_tile" : m25,
+    "notifications__reacted_to_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagiu ao seu post."),
+    "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Configurações de notificações"),
+    "notifications__tab_general" : MessageLookupByLibrary.simpleMessage("Gerais"),
+    "notifications__tab_requests" : MessageLookupByLibrary.simpleMessage("Pedidos"),
+    "notifications__user_community_invite_tile" : m26,
     "post__action_comment" : MessageLookupByLibrary.simpleMessage("Comentar"),
     "post__action_react" : MessageLookupByLibrary.simpleMessage("Reagir"),
     "post__action_reply" : MessageLookupByLibrary.simpleMessage("Responder"),
@@ -546,8 +573,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__actions_report_text" : MessageLookupByLibrary.simpleMessage("Denunciar"),
     "post__actions_reported_text" : MessageLookupByLibrary.simpleMessage("Denunciado"),
     "post__actions_show_more_text" : MessageLookupByLibrary.simpleMessage("Ver mais"),
+    "post__close_create_post_label" : MessageLookupByLibrary.simpleMessage("Close create new post"),
     "post__close_post" : MessageLookupByLibrary.simpleMessage("Fechar post"),
-    "post__comment_maxlength_error" : m26,
+    "post__comment_maxlength_error" : m27,
     "post__comment_reply_expanded_post" : MessageLookupByLibrary.simpleMessage("Enviar"),
     "post__comment_reply_expanded_reply_comment" : MessageLookupByLibrary.simpleMessage("Responder comentário"),
     "post__comment_reply_expanded_reply_hint_text" : MessageLookupByLibrary.simpleMessage("Sua resposta..."),
@@ -566,37 +594,40 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__comments_header_be_the_first_replies" : MessageLookupByLibrary.simpleMessage("Mande a primeira resposta"),
     "post__comments_header_newer" : MessageLookupByLibrary.simpleMessage("Mais recentes"),
     "post__comments_header_newest_comments" : MessageLookupByLibrary.simpleMessage("Comentários mais recentes"),
-    "post__comments_header_newest_replies" : MessageLookupByLibrary.simpleMessage("Novas respostas"),
+    "post__comments_header_newest_replies" : MessageLookupByLibrary.simpleMessage("Respostas mais recentes"),
     "post__comments_header_older" : MessageLookupByLibrary.simpleMessage("Mais antigos"),
     "post__comments_header_oldest_comments" : MessageLookupByLibrary.simpleMessage("Comentários mais antigos"),
     "post__comments_header_oldest_replies" : MessageLookupByLibrary.simpleMessage("Respostas mais antigas"),
-    "post__comments_header_see_newest_comments" : MessageLookupByLibrary.simpleMessage("Ver comentários mais recentes"),
-    "post__comments_header_see_newest_replies" : MessageLookupByLibrary.simpleMessage("Ver respostas mais recentes"),
-    "post__comments_header_see_oldest_comments" : MessageLookupByLibrary.simpleMessage("Ver comentários mais antigos"),
-    "post__comments_header_see_oldest_replies" : MessageLookupByLibrary.simpleMessage("Ver respostas mais antigas"),
-    "post__comments_header_view_newest_comments" : MessageLookupByLibrary.simpleMessage("Ver comentários mais recentes"),
-    "post__comments_header_view_newest_replies" : MessageLookupByLibrary.simpleMessage("Ver respostas mais recentes"),
-    "post__comments_header_view_oldest_comments" : MessageLookupByLibrary.simpleMessage("Ver comentários mais antigos"),
-    "post__comments_header_view_oldest_replies" : MessageLookupByLibrary.simpleMessage("Ver respostas mais antigas"),
+    "post__comments_header_see_newest_comments" : MessageLookupByLibrary.simpleMessage("Mais recentes"),
+    "post__comments_header_see_newest_replies" : MessageLookupByLibrary.simpleMessage("Mais recentes"),
+    "post__comments_header_see_oldest_comments" : MessageLookupByLibrary.simpleMessage("Mais antigos"),
+    "post__comments_header_see_oldest_replies" : MessageLookupByLibrary.simpleMessage("Mais antigas"),
+    "post__comments_header_view_newest_comments" : MessageLookupByLibrary.simpleMessage("Mais recentes"),
+    "post__comments_header_view_newest_replies" : MessageLookupByLibrary.simpleMessage("Mais recentes"),
+    "post__comments_header_view_oldest_comments" : MessageLookupByLibrary.simpleMessage("Mais antigos"),
+    "post__comments_header_view_oldest_replies" : MessageLookupByLibrary.simpleMessage("Mais antigas"),
     "post__comments_page_no_more_replies_to_load" : MessageLookupByLibrary.simpleMessage("Sem mais respostas para carregar"),
     "post__comments_page_no_more_to_load" : MessageLookupByLibrary.simpleMessage("Sem mais comentários para carregar"),
     "post__comments_page_replies_title" : MessageLookupByLibrary.simpleMessage("Respostas"),
     "post__comments_page_tap_to_retry" : MessageLookupByLibrary.simpleMessage("Toque para tentar atualizar os comentários novamente."),
     "post__comments_page_tap_to_retry_replies" : MessageLookupByLibrary.simpleMessage("Toque para tentar atualizar as respostas novamente."),
     "post__comments_page_title" : MessageLookupByLibrary.simpleMessage("Comentários"),
-    "post__comments_view_all_comments" : m27,
+    "post__comments_view_all_comments" : m28,
     "post__create_new" : MessageLookupByLibrary.simpleMessage("Novo post"),
+    "post__create_new_community_post_label" : MessageLookupByLibrary.simpleMessage("Create new communtiy post"),
+    "post__create_new_post_label" : MessageLookupByLibrary.simpleMessage("Create new post"),
     "post__create_next" : MessageLookupByLibrary.simpleMessage("Avançar"),
     "post__create_photo" : MessageLookupByLibrary.simpleMessage("Imagem"),
+    "post__create_video" : MessageLookupByLibrary.simpleMessage("Vídeo"),
     "post__disable_post_comments" : MessageLookupByLibrary.simpleMessage("Desativar comentários do post"),
     "post__edit_save" : MessageLookupByLibrary.simpleMessage("Salvar"),
-    "post__edit_title" : MessageLookupByLibrary.simpleMessage("Editar publicação"),
+    "post__edit_title" : MessageLookupByLibrary.simpleMessage("Editar post"),
     "post__enable_post_comments" : MessageLookupByLibrary.simpleMessage("Ativar comentários do post"),
     "post__have_not_shared_anything" : MessageLookupByLibrary.simpleMessage("Você ainda não compartilhou nada."),
     "post__is_closed" : MessageLookupByLibrary.simpleMessage("Post fechado"),
     "post__my_circles" : MessageLookupByLibrary.simpleMessage("Meus círculos"),
     "post__my_circles_desc" : MessageLookupByLibrary.simpleMessage("Compartilhe a publicação para um ou vários dos seus círculos."),
-    "post__no_circles_for" : m28,
+    "post__no_circles_for" : m29,
     "post__open_post" : MessageLookupByLibrary.simpleMessage("Abrir post"),
     "post__post_closed" : MessageLookupByLibrary.simpleMessage("Post fechado "),
     "post__post_opened" : MessageLookupByLibrary.simpleMessage("Post aberto"),
@@ -606,6 +637,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__profile_counts_following" : MessageLookupByLibrary.simpleMessage(" Seguindo"),
     "post__profile_counts_post" : MessageLookupByLibrary.simpleMessage(" Post"),
     "post__profile_counts_posts" : MessageLookupByLibrary.simpleMessage(" Posts"),
+    "post__profile_retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tentar novamente"),
     "post__reaction_list_tap_retry" : MessageLookupByLibrary.simpleMessage("Toque para tentar carregar as reações novamente."),
     "post__search_circles" : MessageLookupByLibrary.simpleMessage("Procurar círculos..."),
     "post__share" : MessageLookupByLibrary.simpleMessage("Compartilhar"),
@@ -615,7 +647,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__share_to" : MessageLookupByLibrary.simpleMessage("Compartilhar em"),
     "post__share_to_circles" : MessageLookupByLibrary.simpleMessage("Compartilhar nos círculos"),
     "post__share_to_community" : MessageLookupByLibrary.simpleMessage("Compartilhar na comunidade"),
-    "post__shared_privately_on" : MessageLookupByLibrary.simpleMessage("Compartilhado nos"),
+    "post__shared_privately_on" : MessageLookupByLibrary.simpleMessage("Compartilhado em particular nos"),
     "post__sharing_post_to" : MessageLookupByLibrary.simpleMessage("Compartilhando post em"),
     "post__text_copied" : MessageLookupByLibrary.simpleMessage("Texto copiado!"),
     "post__time_short_days" : MessageLookupByLibrary.simpleMessage("d"),
@@ -636,17 +668,36 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__timeline_posts_failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Tente novamente em alguns segundos"),
     "post__timeline_posts_failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Não foi possível carregar sua linha do tempo."),
     "post__timeline_posts_no_more_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Siga usuários ou junte-se a uma comunidade para começar!"),
-    "post__timeline_posts_no_more_drhoo_title" : MessageLookupByLibrary.simpleMessage("Sua linha do tempo está vazia."),
     "post__timeline_posts_refresh_posts" : MessageLookupByLibrary.simpleMessage("Atualizar publicações"),
-    "post__timeline_posts_refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Carregando sua linha do tempo."),
     "post__timeline_posts_refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Aguenta aí!"),
     "post__trending_posts_no_trending_posts" : MessageLookupByLibrary.simpleMessage("Não há publicações em alta. Tente atualizar em alguns segundos."),
     "post__trending_posts_refresh" : MessageLookupByLibrary.simpleMessage("Atualizar"),
-    "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Posts em alta"),
-    "post__user_has_not_shared_anything" : m29,
-    "post__usernames_circles" : m30,
+    "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Publicações em alta"),
+    "post__user_has_not_shared_anything" : m30,
+    "post__usernames_circles" : m31,
     "post__world_circle_name" : MessageLookupByLibrary.simpleMessage("Mundo"),
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("Você compartilhou com"),
+    "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("This link could not be previewed"),
+    "post_body_link_preview__error_with_description" : m32,
+    "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Tipo de mídia não suportado"),
+    "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Cancelado!"),
+    "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Cancelando"),
+    "post_uploader__compressing_media" : MessageLookupByLibrary.simpleMessage("Comprimindo mídia..."),
+    "post_uploader__creating_post" : MessageLookupByLibrary.simpleMessage("Criando post..."),
+    "post_uploader__generic_upload_failed" : MessageLookupByLibrary.simpleMessage("Falha ao enviar"),
+    "post_uploader__processing" : MessageLookupByLibrary.simpleMessage("Processando..."),
+    "post_uploader__publishing" : MessageLookupByLibrary.simpleMessage("Publicando..."),
+    "post_uploader__success" : MessageLookupByLibrary.simpleMessage("Pronto!"),
+    "post_uploader__uploading_media" : MessageLookupByLibrary.simpleMessage("Enviando mídia..."),
+    "posts_stream__all_loaded" : MessageLookupByLibrary.simpleMessage("🎉  Todas as publicações foram carregadas"),
+    "posts_stream__empty_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Tente novamente em alguns segundos."),
+    "posts_stream__empty_drhoo_title" : MessageLookupByLibrary.simpleMessage("A linha do tempo está vazia."),
+    "posts_stream__failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Tente novamente em alguns segundos"),
+    "posts_stream__failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Não foi possível carregar as publicações."),
+    "posts_stream__refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Atualizando as publicações."),
+    "posts_stream__refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Aguenta aí!"),
+    "posts_stream__status_tile_empty" : MessageLookupByLibrary.simpleMessage("Nenhuma publicação encontrada"),
+    "posts_stream__status_tile_no_more_to_load" : MessageLookupByLibrary.simpleMessage("🎉  Todas as publicações foram carregadas"),
     "user__add_account_done" : MessageLookupByLibrary.simpleMessage("Concluído"),
     "user__add_account_save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "user__add_account_success" : MessageLookupByLibrary.simpleMessage("Sucesso"),
@@ -662,8 +713,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__change_email_success_info" : MessageLookupByLibrary.simpleMessage("Enviamos um link de confirmação para seu novo endereço de email, clique nele para verificar seu novo email"),
     "user__change_email_title" : MessageLookupByLibrary.simpleMessage("Alterar Email"),
     "user__circle_name_empty_error" : MessageLookupByLibrary.simpleMessage("O nome do círculo não pode ficar vazio."),
-    "user__circle_name_range_error" : m31,
-    "user__circle_peoples_count" : m32,
+    "user__circle_name_range_error" : m33,
+    "user__circle_peoples_count" : m34,
     "user__clear_app_preferences_cleared_successfully" : MessageLookupByLibrary.simpleMessage("Preferências limpas com sucesso"),
     "user__clear_app_preferences_desc" : MessageLookupByLibrary.simpleMessage("Limpe as preferências do aplicativo. Atualmente, isso influencia apenas a ordem preferida dos comentários."),
     "user__clear_app_preferences_error" : MessageLookupByLibrary.simpleMessage("Não foi possível limpar as preferências"),
@@ -675,13 +726,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_block_user_blocked" : MessageLookupByLibrary.simpleMessage("Usuário bloqueado."),
     "user__confirm_block_user_info" : MessageLookupByLibrary.simpleMessage("Vocês não verão os posts um do outro nem serão capazes de interagir de qualquer forma."),
     "user__confirm_block_user_no" : MessageLookupByLibrary.simpleMessage("Não"),
-    "user__confirm_block_user_question" : m33,
+    "user__confirm_block_user_question" : m35,
     "user__confirm_block_user_title" : MessageLookupByLibrary.simpleMessage("Confirmação"),
     "user__confirm_block_user_yes" : MessageLookupByLibrary.simpleMessage("Sim"),
     "user__confirm_connection_add_connection" : MessageLookupByLibrary.simpleMessage("Adicionar conexão ao círculo"),
     "user__confirm_connection_confirm_text" : MessageLookupByLibrary.simpleMessage("Confirmar"),
     "user__confirm_connection_connection_confirmed" : MessageLookupByLibrary.simpleMessage("Conexão confirmada"),
-    "user__confirm_connection_with" : m34,
+    "user__confirm_connection_with" : m36,
     "user__confirm_guidelines_reject_chat_community" : MessageLookupByLibrary.simpleMessage("Converse com a comunidade."),
     "user__confirm_guidelines_reject_chat_immediately" : MessageLookupByLibrary.simpleMessage("Inicie o chat agora."),
     "user__confirm_guidelines_reject_chat_with_team" : MessageLookupByLibrary.simpleMessage("Converse com a equipe."),
@@ -691,7 +742,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_guidelines_reject_join_slack" : MessageLookupByLibrary.simpleMessage("Junte-se ao canal no Slack."),
     "user__confirm_guidelines_reject_title" : MessageLookupByLibrary.simpleMessage("Rejeição das diretrizes"),
     "user__connect_to_user_add_connection" : MessageLookupByLibrary.simpleMessage("Adicionar conexão ao círculo"),
-    "user__connect_to_user_connect_with_username" : m35,
+    "user__connect_to_user_connect_with_username" : m37,
     "user__connect_to_user_done" : MessageLookupByLibrary.simpleMessage("Pronto"),
     "user__connect_to_user_request_sent" : MessageLookupByLibrary.simpleMessage("Pedido de conexão enviado"),
     "user__connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Editar"),
@@ -709,28 +760,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__delete_account_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Digite a sua senha atual"),
     "user__delete_account_next" : MessageLookupByLibrary.simpleMessage("Avançar"),
     "user__delete_account_title" : MessageLookupByLibrary.simpleMessage("Excluir a minha conta"),
-    "user__disconnect_from_user" : m36,
+    "user__disconnect_from_user" : m38,
     "user__disconnect_from_user_success" : MessageLookupByLibrary.simpleMessage("Desconectado com sucesso"),
     "user__edit_profile_bio" : MessageLookupByLibrary.simpleMessage("Bio"),
+    "user__edit_profile_community_posts" : MessageLookupByLibrary.simpleMessage("Publicações em comunidades"),
     "user__edit_profile_delete" : MessageLookupByLibrary.simpleMessage("Excluir"),
     "user__edit_profile_followers_count" : MessageLookupByLibrary.simpleMessage("Número de seguidores"),
     "user__edit_profile_location" : MessageLookupByLibrary.simpleMessage("Localização"),
     "user__edit_profile_name" : MessageLookupByLibrary.simpleMessage("Nome"),
     "user__edit_profile_pick_image" : MessageLookupByLibrary.simpleMessage("Escolher imagem"),
-    "user__edit_profile_pick_image_error_too_large" : m37,
+    "user__edit_profile_pick_image_error_too_large" : m39,
     "user__edit_profile_save_text" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "user__edit_profile_title" : MessageLookupByLibrary.simpleMessage("Editar perfil"),
     "user__edit_profile_url" : MessageLookupByLibrary.simpleMessage("Url"),
-    "user__edit_profile_user_name_taken" : m38,
+    "user__edit_profile_user_name_taken" : m40,
     "user__edit_profile_username" : MessageLookupByLibrary.simpleMessage("Nome de usuário"),
     "user__email_verification_error" : MessageLookupByLibrary.simpleMessage("Opa! Seu token não era válido ou expirou, por favor tente novamente"),
     "user__email_verification_successful" : MessageLookupByLibrary.simpleMessage("Incrível! Seu email foi verificado"),
     "user__emoji_field_none_selected" : MessageLookupByLibrary.simpleMessage("Nenhum emoji selecionado"),
-    "user__emoji_search_none_found" : m39,
+    "user__emoji_search_none_found" : m41,
     "user__follow_button_follow_text" : MessageLookupByLibrary.simpleMessage("Seguir"),
-    "user__follow_button_unfollow_text" : MessageLookupByLibrary.simpleMessage("Parar de seguir"),
+    "user__follow_button_unfollow_text" : MessageLookupByLibrary.simpleMessage("Deixar de seguir"),
     "user__follow_lists_no_list_found" : MessageLookupByLibrary.simpleMessage("Nenhuma lista encontrada."),
-    "user__follow_lists_no_list_found_for" : m40,
+    "user__follow_lists_no_list_found_for" : m42,
     "user__follow_lists_search_for" : MessageLookupByLibrary.simpleMessage("Procurar por uma lista..."),
     "user__follow_lists_title" : MessageLookupByLibrary.simpleMessage("Minhas listas"),
     "user__follower_plural" : MessageLookupByLibrary.simpleMessage("seguidores"),
@@ -738,18 +790,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__followers_title" : MessageLookupByLibrary.simpleMessage("Seguidores"),
     "user__following_resource_name" : MessageLookupByLibrary.simpleMessage("usuários seguidos"),
     "user__following_text" : MessageLookupByLibrary.simpleMessage("Seguindo"),
-    "user__follows_list_accounts_count" : m41,
+    "user__follows_list_accounts_count" : m43,
     "user__follows_list_edit" : MessageLookupByLibrary.simpleMessage("Editar"),
     "user__follows_list_header_title" : MessageLookupByLibrary.simpleMessage("Usuários"),
     "user__follows_lists_account" : MessageLookupByLibrary.simpleMessage("1 Conta"),
-    "user__follows_lists_accounts" : m42,
-    "user__groups_see_all" : m43,
+    "user__follows_lists_accounts" : m44,
+    "user__groups_see_all" : m45,
     "user__guidelines_accept" : MessageLookupByLibrary.simpleMessage("Aceitar"),
     "user__guidelines_desc" : MessageLookupByLibrary.simpleMessage("Por favor, dedique este momento para ler e aceitar as nossas diretrizes."),
     "user__guidelines_reject" : MessageLookupByLibrary.simpleMessage("Rejeitar"),
     "user__invite" : MessageLookupByLibrary.simpleMessage("Convidar"),
     "user__invite_member" : MessageLookupByLibrary.simpleMessage("Membro"),
-    "user__invite_someone_message" : m44,
+    "user__invite_someone_message" : m46,
     "user__invites_accepted_group_item_name" : MessageLookupByLibrary.simpleMessage("convite aceito"),
     "user__invites_accepted_group_name" : MessageLookupByLibrary.simpleMessage("convites aceitos"),
     "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Aceitos"),
@@ -768,11 +820,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__invites_email_text" : MessageLookupByLibrary.simpleMessage("Email"),
     "user__invites_invite_a_friend" : MessageLookupByLibrary.simpleMessage("Convidar um amigo"),
     "user__invites_invite_text" : MessageLookupByLibrary.simpleMessage("Convidar"),
-    "user__invites_joined_with" : m45,
+    "user__invites_joined_with" : m47,
     "user__invites_none_left" : MessageLookupByLibrary.simpleMessage("Você não tem convites disponíveis."),
     "user__invites_none_used" : MessageLookupByLibrary.simpleMessage("Parece que você não usou nenhum convite."),
     "user__invites_pending" : MessageLookupByLibrary.simpleMessage("Pendente"),
-    "user__invites_pending_email" : m46,
+    "user__invites_pending_email" : m48,
     "user__invites_pending_group_item_name" : MessageLookupByLibrary.simpleMessage("convite pendente"),
     "user__invites_pending_group_name" : MessageLookupByLibrary.simpleMessage("convites pendentes"),
     "user__invites_refresh" : MessageLookupByLibrary.simpleMessage("Atualizar"),
@@ -785,14 +837,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__language_settings_saved_success" : MessageLookupByLibrary.simpleMessage("Idioma alterado com sucesso"),
     "user__language_settings_title" : MessageLookupByLibrary.simpleMessage("Configurações de idioma"),
     "user__list_name_empty_error" : MessageLookupByLibrary.simpleMessage("O nome da lista não pode ficar vazio."),
-    "user__list_name_range_error" : m47,
+    "user__list_name_range_error" : m49,
     "user__million_postfix" : MessageLookupByLibrary.simpleMessage("M"),
     "user__profile_action_cancel_connection" : MessageLookupByLibrary.simpleMessage("Cancelar pedido de conexão"),
     "user__profile_action_deny_connection" : MessageLookupByLibrary.simpleMessage("Recusar pedido de conexão"),
     "user__profile_action_user_blocked" : MessageLookupByLibrary.simpleMessage("Usuário bloqueado"),
     "user__profile_action_user_unblocked" : MessageLookupByLibrary.simpleMessage("Usuário desbloqueado"),
-    "user__profile_bio_length_error" : m48,
-    "user__profile_location_length_error" : m49,
+    "user__profile_bio_length_error" : m50,
+    "user__profile_location_length_error" : m51,
     "user__profile_url_invalid_error" : MessageLookupByLibrary.simpleMessage("Por favor, forneça uma url válida."),
     "user__remove_account_from_list" : MessageLookupByLibrary.simpleMessage("Remover conta das listas"),
     "user__remove_account_from_list_success" : MessageLookupByLibrary.simpleMessage("Sucesso"),
@@ -802,7 +854,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Editar círculo"),
     "user__save_connection_circle_hint" : MessageLookupByLibrary.simpleMessage("ex: Amigos, Família, Trabalho."),
     "user__save_connection_circle_name" : MessageLookupByLibrary.simpleMessage("Nome"),
-    "user__save_connection_circle_name_taken" : m50,
+    "user__save_connection_circle_name_taken" : m52,
     "user__save_connection_circle_save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "user__save_connection_circle_users" : MessageLookupByLibrary.simpleMessage("Usuários"),
     "user__save_follows_list_create" : MessageLookupByLibrary.simpleMessage("Criar lista"),
@@ -811,7 +863,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_follows_list_emoji_required_error" : MessageLookupByLibrary.simpleMessage("Emoji necessário"),
     "user__save_follows_list_hint_text" : MessageLookupByLibrary.simpleMessage("ex: Viagem, Fotografia"),
     "user__save_follows_list_name" : MessageLookupByLibrary.simpleMessage("Nome"),
-    "user__save_follows_list_name_taken" : m51,
+    "user__save_follows_list_name_taken" : m53,
     "user__save_follows_list_save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "user__save_follows_list_users" : MessageLookupByLibrary.simpleMessage("Usuários"),
     "user__thousand_postfix" : MessageLookupByLibrary.simpleMessage("k"),
@@ -821,7 +873,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__timeline_filters_circles" : MessageLookupByLibrary.simpleMessage("Círculos"),
     "user__timeline_filters_clear_all" : MessageLookupByLibrary.simpleMessage("Limpar tudo"),
     "user__timeline_filters_lists" : MessageLookupByLibrary.simpleMessage("Listas"),
-    "user__timeline_filters_no_match" : m52,
+    "user__timeline_filters_no_match" : m54,
     "user__timeline_filters_search_desc" : MessageLookupByLibrary.simpleMessage("Procurar por círculos e listas..."),
     "user__timeline_filters_title" : MessageLookupByLibrary.simpleMessage("Filtros da linha do tempo"),
     "user__translate_see_translation" : MessageLookupByLibrary.simpleMessage("Mostrar tradução"),
@@ -833,15 +885,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__update_connection_circles_title" : MessageLookupByLibrary.simpleMessage("Atualizar círculos de conexão"),
     "user_search__cancel" : MessageLookupByLibrary.simpleMessage("Cancelar"),
     "user_search__communities" : MessageLookupByLibrary.simpleMessage("Comunidades"),
-    "user_search__list_no_results_found" : m53,
+    "user_search__list_no_results_found" : m55,
     "user_search__list_refresh_text" : MessageLookupByLibrary.simpleMessage("Atualizar"),
     "user_search__list_retry" : MessageLookupByLibrary.simpleMessage("Toque para tentar novamente."),
-    "user_search__list_search_text" : m54,
-    "user_search__no_communities_for" : m55,
-    "user_search__no_results_for" : m56,
-    "user_search__no_users_for" : m57,
+    "user_search__list_search_text" : m56,
+    "user_search__no_communities_for" : m57,
+    "user_search__no_results_for" : m58,
+    "user_search__no_users_for" : m59,
     "user_search__search_text" : MessageLookupByLibrary.simpleMessage("Pesquisar..."),
-    "user_search__searching_for" : m58,
-    "user_search__users" : MessageLookupByLibrary.simpleMessage("Usuários")
+    "user_search__searching_for" : m60,
+    "user_search__users" : MessageLookupByLibrary.simpleMessage("Usuários"),
+    "video_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Câmera"),
+    "video_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Galeria")
   };
 }

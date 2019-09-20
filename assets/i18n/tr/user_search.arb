@@ -2,32 +2,24 @@
     "search_text": "Ara...",
     "@search_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "communities": "Topluluklar",
     "@communities": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "users": "Kullanıcılar",
     "@users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "list_search_text": "{resourcePluralName} Aranıyor...",
     "@list_search_text": {
         "description": "resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.",
         "type": "text",
         "placeholders": {
-            "resourcePluralName": {
-
-            }
+            "resourcePluralName": {}
         }
     },
     "list_no_results_found": "{resourcePluralName} için hiç bir bulunamadı.",
@@ -35,66 +27,50 @@
         "description": "Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ",
         "type": "text",
         "placeholders": {
-            "resourcePluralName": {
-
-            }
+            "resourcePluralName": {}
         }
     },
     "list_refresh_text": "Yenile",
     "@list_refresh_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "list_retry": "Tekrar denemek için tıkla.",
     "@list_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "cancel": "İptal et",
     "@cancel": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "searching_for": "'{searchQuery}' için arama yapılıyor",
     "@searching_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "no_results_for": "'{searchQuery}' için hiç bir sonuç bulunamadı.",
     "@no_results_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "no_communities_for": "''{searchQuery} 'için hiç topluluk bulunamadı.",
     "@no_communities_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "no_users_for": "''{searchQuery}' için hiç bir kullanıcı bulunamadı.",
     "@no_users_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     }
 }

@@ -41,16 +41,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "timeline_posts_refreshing_drhoo_subtitle": "Indlæser din tidslinje.",
-    "@timeline_posts_refreshing_drhoo_subtitle": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "timeline_posts_no_more_drhoo_title": "Tidslinjen er tom.",
-    "@timeline_posts_no_more_drhoo_title": {
-        "type": "text",
-        "placeholders": {}
-    },
     "timeline_posts_no_more_drhoo_subtitle": "Følg brugere eller deltag i et fællesskab for at komme i gang!",
     "@timeline_posts_no_more_drhoo_subtitle": {
         "type": "text",
@@ -115,6 +105,11 @@
     },
     "profile_counts_follower": " Følger",
     "@profile_counts_follower": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_retry_loading_posts": "Tryk for at prøve igen",
+    "@profile_retry_loading_posts": {
         "type": "text",
         "placeholders": {}
     },
@@ -213,6 +208,21 @@
     },
     "create_new": "Nyt opslag",
     "@create_new": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_post_label": "Opret nyt indlæg",
+    "@create_new_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_community_post_label": "Opret nyt fælleskabsindlæg",
+    "@create_new_community_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_create_post_label": "Luk \"opret nyt indlæg\"",
+    "@close_create_post_label": {
         "type": "text",
         "placeholders": {}
     },

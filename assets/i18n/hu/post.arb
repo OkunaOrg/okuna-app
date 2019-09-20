@@ -41,16 +41,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "timeline_posts_refreshing_drhoo_subtitle": "Hírfolyamod betöltése.",
-    "@timeline_posts_refreshing_drhoo_subtitle": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "timeline_posts_no_more_drhoo_title": "A hírfolyamod üres.",
-    "@timeline_posts_no_more_drhoo_title": {
-        "type": "text",
-        "placeholders": {}
-    },
     "timeline_posts_no_more_drhoo_subtitle": "A kezdéshez kövess pár felhasználót vagy csatlakozz egy közösséghez!",
     "@timeline_posts_no_more_drhoo_subtitle": {
         "type": "text",
@@ -115,6 +105,11 @@
     },
     "profile_counts_follower": " követő",
     "@profile_counts_follower": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_retry_loading_posts": "Koppints az újrapróbálkozáshoz",
+    "@profile_retry_loading_posts": {
         "type": "text",
         "placeholders": {}
     },
@@ -213,6 +208,21 @@
     },
     "create_new": "Új bejegyzés",
     "@create_new": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_post_label": "Create new post",
+    "@create_new_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_community_post_label": "Create new communtiy post",
+    "@create_new_community_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_create_post_label": "Close create new post",
+    "@close_create_post_label": {
         "type": "text",
         "placeholders": {}
     },

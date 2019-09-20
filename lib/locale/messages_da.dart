@@ -57,97 +57,106 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m18(currentUserLanguage) => "Sprog (${currentUserLanguage})";
 
-  static m19(resourceCount, resourceName) => "Se alle ${resourceCount} ${resourceName}";
+  static m19(limit) => "Fil for stor (limit: ${limit} MB)";
 
-  static m20(postCommentText) => "[name] [username] kommenterede også: ${postCommentText}";
+  static m20(resourceCount, resourceName) => "Se alle ${resourceCount} ${resourceName}";
 
-  static m21(postCommentText) => "[name] [username] kommenterede på dit indlæg: ${postCommentText}";
+  static m21(postCommentText) => "[name] [username] kommenterede også: ${postCommentText}";
 
-  static m22(postCommentText) => "[name] [username] svarede også: ${postCommentText}";
+  static m22(postCommentText) => "[name] [username] kommenterede på dit indlæg: ${postCommentText}";
 
-  static m23(postCommentText) => "[name] [username] svarede: ${postCommentText}";
+  static m23(postCommentText) => "[name] [username] svarede også: ${postCommentText}";
 
-  static m24(postCommentText) => "[name] [username] nævnte dig i en kommentar: ${postCommentText}";
+  static m24(postCommentText) => "[name] [username] svarede: ${postCommentText}";
 
-  static m25(communityName) => "[name] [username] indbyder dig til at blive medlem i fælleskabet /c/${communityName}.";
+  static m25(postCommentText) => "[name] [username] nævnte dig i en kommentar: ${postCommentText}";
 
-  static m26(maxLength) => "En kommentar kan ikke være længere end ${maxLength} tegn.";
+  static m26(communityName) => "[name] [username] indbyder dig til at blive medlem i fælleskabet /c/${communityName}.";
 
-  static m27(commentsCount) => "Se alle ${commentsCount} kommentarer";
+  static m27(maxLength) => "En kommentar kan ikke være længere end ${maxLength} tegn.";
 
-  static m28(circlesSearchQuery) => "Ingen cirkler indeholder \'${circlesSearchQuery}\'.";
+  static m28(commentsCount) => "Se alle ${commentsCount} kommentarer";
 
-  static m29(name) => "${name} har ikke delt noget endnu.";
+  static m29(circlesSearchQuery) => "Ingen cirkler indeholder \'${circlesSearchQuery}\'.";
 
-  static m30(postCreatorUsername) => "@${postCreatorUsername}\'s cirkler";
+  static m30(name) => "${name} har ikke delt noget endnu.";
 
-  static m31(maxLength) => "Kredsnavn må ikke være længere end ${maxLength} tegn.";
+  static m31(postCreatorUsername) => "@${postCreatorUsername}\'s cirkler";
 
-  static m32(prettyUsersCount) => "${prettyUsersCount} personer";
+  static m32(description) => "Mislykkedes at forhåndsvise link med hjemmeside fejl: ${description}";
 
-  static m33(username) => "Er du sikker på, at du vil blokere @${username}?";
+  static m33(maxLength) => "Kredsnavn må ikke være længere end ${maxLength} tegn.";
 
-  static m34(userName) => "Bekræft kontakt med ${userName}";
+  static m34(prettyUsersCount) => "${prettyUsersCount} personer";
 
-  static m35(userName) => "Forbind med ${userName}";
+  static m35(username) => "Er du sikker på, at du vil blokere @${username}?";
 
-  static m36(userName) => "Fjern forbindelse med ${userName}";
+  static m36(userName) => "Bekræft kontakt med ${userName}";
 
-  static m37(limit) => "Billede for stort (limit: ${limit} MB)";
+  static m37(userName) => "Forbind med ${userName}";
 
-  static m38(username) => "Brugernavnet @${username} er allerede taget";
+  static m38(userName) => "Fjern forbindelse med ${userName}";
 
-  static m39(searchQuery) => "Intet passende emoji fundet \'${searchQuery}\'.";
+  static m39(limit) => "Billede for stort (limit: ${limit} MB)";
 
-  static m40(searchQuery) => "Ingen liste fundet for \'${searchQuery}\'";
+  static m40(username) => "Brugernavnet @${username} er allerede taget";
 
-  static m41(prettyUsersCount) => "${prettyUsersCount} konti";
+  static m41(searchQuery) => "Intet passende emoji fundet \'${searchQuery}\'.";
 
-  static m42(prettyUsersCount) => "${prettyUsersCount} Konti";
+  static m42(searchQuery) => "Ingen liste fundet for \'${searchQuery}\'";
 
-  static m43(groupName) => "Se alle ${groupName}";
+  static m43(prettyUsersCount) => "${prettyUsersCount} konti";
 
-  static m44(iosLink, androidLink, inviteLink) => "Hej, jeg vil gerne invitere dig til Okuna. Først skal du downloade app\'en hos iTunes (${iosLink}) eller Play store (${androidLink}). Dernæst skal du indføje denne personlige invitationslink i \'Sign up\' skemaet i Okuna app\'en: ${inviteLink}";
+  static m44(prettyUsersCount) => "${prettyUsersCount} Konti";
 
-  static m45(username) => "Blevet medlem med brugernavn @${username}";
+  static m45(groupName) => "Se alle ${groupName}";
 
-  static m46(email) => "Verserende, invitationsemail sendt til ${email}";
+  static m46(iosLink, androidLink, inviteLink) => "Hej, jeg vil gerne invitere dig til Okuna. Først skal du downloade app\'en hos iTunes (${iosLink}) eller Play store (${androidLink}). Dernæst skal du indføje denne personlige invitationslink i \'Sign up\' skemaet i Okuna app\'en: ${inviteLink}";
 
-  static m47(maxLength) => "Listenavn må ikke være længere end ${maxLength} tegn";
+  static m47(username) => "Blevet medlem med brugernavn @${username}";
 
-  static m48(maxLength) => "Biografien kan ikke være længere end ${maxLength} tegn.";
+  static m48(email) => "Verserende, invitationsemail sendt til ${email}";
 
-  static m49(maxLength) => "Bopæl kan ikke være længere end ${maxLength} tegn.";
+  static m49(maxLength) => "Listenavn må ikke være længere end ${maxLength} tegn";
 
-  static m50(takenConnectionsCircleName) => "Kredsnavn \'${takenConnectionsCircleName}\' er allerede taget";
+  static m50(maxLength) => "Biografien kan ikke være længere end ${maxLength} tegn.";
 
-  static m51(listName) => "Listenavn \'${listName}\' er allerede taget";
+  static m51(maxLength) => "Bopæl kan ikke være længere end ${maxLength} tegn.";
 
-  static m52(searchQuery) => "Ingen overensstemmelse med \'${searchQuery}\'.";
+  static m52(takenConnectionsCircleName) => "Kredsnavn \'${takenConnectionsCircleName}\' er allerede taget";
 
-  static m53(resourcePluralName) => "Ingen ${resourcePluralName} fundet.";
+  static m53(listName) => "Listenavn \'${listName}\' er allerede taget";
 
-  static m54(resourcePluralName) => "Søg ${resourcePluralName} ...";
+  static m54(searchQuery) => "Ingen overensstemmelse med \'${searchQuery}\'.";
 
-  static m55(searchQuery) => "Ingen fællesskaber fundet for \'${searchQuery}\'.";
+  static m55(resourcePluralName) => "Ingen ${resourcePluralName} fundet.";
 
-  static m56(searchQuery) => "Ingen resultater for \'${searchQuery}\'.";
+  static m56(resourcePluralName) => "Søg ${resourcePluralName} ...";
 
-  static m57(searchQuery) => "Ingen brugere fundet for \'${searchQuery}\'.";
+  static m57(searchQuery) => "Ingen fællesskaber fundet for \'${searchQuery}\'.";
 
-  static m58(searchQuery) => "Søger efter \'${searchQuery}\'";
+  static m58(searchQuery) => "Ingen resultater for \'${searchQuery}\'.";
+
+  static m59(searchQuery) => "Ingen brugere fundet for \'${searchQuery}\'.";
+
+  static m60(searchQuery) => "Søger efter \'${searchQuery}\'";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "application_settings__comment_sort_newest_first" : MessageLookupByLibrary.simpleMessage("Nyeste først"),
     "application_settings__comment_sort_oldest_first" : MessageLookupByLibrary.simpleMessage("Ældste først"),
-    "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Tap to change)"),
-    "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Videos"),
-    "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Autoplay"),
+    "application_settings__link_previews" : MessageLookupByLibrary.simpleMessage("Link forhåndsvisninger"),
+    "application_settings__link_previews_autoplay_always" : MessageLookupByLibrary.simpleMessage("Altid"),
+    "application_settings__link_previews_autoplay_never" : MessageLookupByLibrary.simpleMessage("Aldrig"),
+    "application_settings__link_previews_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Kun Wi-Fi"),
+    "application_settings__link_previews_show" : MessageLookupByLibrary.simpleMessage("Vis"),
+    "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Tryk for at ændre)"),
+    "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Videoer"),
+    "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Automatisk afspilning"),
     "application_settings__videos_autoplay_always" : MessageLookupByLibrary.simpleMessage("Altid"),
     "application_settings__videos_autoplay_never" : MessageLookupByLibrary.simpleMessage("Aldrig"),
     "application_settings__videos_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Kun Wi-Fi"),
-    "application_settings__videos_sound" : MessageLookupByLibrary.simpleMessage("Sound"),
+    "application_settings__videos_sound" : MessageLookupByLibrary.simpleMessage("Lyd"),
     "application_settings__videos_sound_disabled" : MessageLookupByLibrary.simpleMessage("Deaktiveret"),
     "application_settings__videos_sound_enabled" : MessageLookupByLibrary.simpleMessage("Aktiveret"),
     "auth__change_password_current_pwd" : MessageLookupByLibrary.simpleMessage("Nuværende adgangskode"),
@@ -354,6 +363,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__posts" : MessageLookupByLibrary.simpleMessage("Opslag"),
     "community__refresh_text" : MessageLookupByLibrary.simpleMessage("Opdater"),
     "community__refreshing" : MessageLookupByLibrary.simpleMessage("Opdaterer fællesskab"),
+    "community__retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tryk for at prøve igen"),
     "community__rules_empty_error" : MessageLookupByLibrary.simpleMessage("Regler er obligatoriske."),
     "community__rules_range_error" : m14,
     "community__rules_text" : MessageLookupByLibrary.simpleMessage("Regler"),
@@ -440,6 +450,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__useful_links_title" : MessageLookupByLibrary.simpleMessage("Nyttige links"),
     "error__no_internet_connection" : MessageLookupByLibrary.simpleMessage("Ingen internetforbindelse"),
     "error__unknown_error" : MessageLookupByLibrary.simpleMessage("Ukendt fejl"),
+    "image_picker__error_too_large" : m19,
     "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Fra kamera"),
     "image_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Fra galleri"),
     "moderation__actions_chat_with_team" : MessageLookupByLibrary.simpleMessage("Chat med teamet"),
@@ -498,7 +509,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__reporter_text" : MessageLookupByLibrary.simpleMessage("Rapporter"),
     "moderation__reports_preview_resource_reports" : MessageLookupByLibrary.simpleMessage("anmelder"),
     "moderation__reports_preview_title" : MessageLookupByLibrary.simpleMessage("Reporter"),
-    "moderation__reports_see_all" : m19,
+    "moderation__reports_see_all" : m20,
     "moderation__tap_to_retry" : MessageLookupByLibrary.simpleMessage("Tryk for at forsøge genindlæsning"),
     "moderation__update_category_save" : MessageLookupByLibrary.simpleMessage("Gem"),
     "moderation__update_category_title" : MessageLookupByLibrary.simpleMessage("Opdater Kategori"),
@@ -513,14 +524,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__you_have_reported_community_text" : MessageLookupByLibrary.simpleMessage("Du har anmeldt dette fællesskab"),
     "moderation__you_have_reported_post_text" : MessageLookupByLibrary.simpleMessage("Du har anmeldt dette opslag"),
     "notifications__accepted_connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] godkendte din anmodning om at indgå forbindelse"),
-    "notifications__comment_comment_notification_tile_user_also_commented" : m20,
-    "notifications__comment_comment_notification_tile_user_commented" : m21,
+    "notifications__comment_comment_notification_tile_user_also_commented" : m21,
+    "notifications__comment_comment_notification_tile_user_commented" : m22,
     "notifications__comment_desc" : MessageLookupByLibrary.simpleMessage("Få besked når nogen kommenterer på et af dine indlæg eller på et du også kommenterede på"),
     "notifications__comment_reaction_desc" : MessageLookupByLibrary.simpleMessage("Få besked når nogen reagerer på en af dine kommentarer til indlægget"),
     "notifications__comment_reaction_title" : MessageLookupByLibrary.simpleMessage("Send reaktion på kommentar"),
     "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Få besked når nogen svarer på en af dine kommentarer eller på en du også svarede på"),
-    "notifications__comment_reply_notification_tile_user_also_replied" : m22,
-    "notifications__comment_reply_notification_tile_user_replied" : m23,
+    "notifications__comment_reply_notification_tile_user_also_replied" : m23,
+    "notifications__comment_reply_notification_tile_user_replied" : m24,
     "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Send svar på kommentar"),
     "notifications__comment_title" : MessageLookupByLibrary.simpleMessage("Tilføj kommentar"),
     "notifications__comment_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Få besked når nogen nævner dig i en af sine kommentarer"),
@@ -535,7 +546,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__following_you_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] følger dig nu."),
     "notifications__general_desc" : MessageLookupByLibrary.simpleMessage("Få besked når noget sker"),
     "notifications__general_title" : MessageLookupByLibrary.simpleMessage("Beskeder"),
-    "notifications__mentioned_in_post_comment_tile" : m24,
+    "notifications__mentioned_in_post_comment_tile" : m25,
     "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] nævnte dig i et indlæg."),
     "notifications__mute_post_turn_off_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Slå beskeder for kommentarer på indlæg fra"),
     "notifications__mute_post_turn_off_post_notifications" : MessageLookupByLibrary.simpleMessage("Slå beskeder for indlæg fra"),
@@ -550,7 +561,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Indstillinger for beskeder"),
     "notifications__tab_general" : MessageLookupByLibrary.simpleMessage("Overordnet"),
     "notifications__tab_requests" : MessageLookupByLibrary.simpleMessage("Forespørgsler"),
-    "notifications__user_community_invite_tile" : m25,
+    "notifications__user_community_invite_tile" : m26,
     "post__action_comment" : MessageLookupByLibrary.simpleMessage("Kommentar"),
     "post__action_react" : MessageLookupByLibrary.simpleMessage("Reager"),
     "post__action_reply" : MessageLookupByLibrary.simpleMessage("Svar"),
@@ -562,8 +573,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__actions_report_text" : MessageLookupByLibrary.simpleMessage("Anmeld"),
     "post__actions_reported_text" : MessageLookupByLibrary.simpleMessage("Anmeldt"),
     "post__actions_show_more_text" : MessageLookupByLibrary.simpleMessage("Vis mere"),
+    "post__close_create_post_label" : MessageLookupByLibrary.simpleMessage("Luk \"opret nyt indlæg\""),
     "post__close_post" : MessageLookupByLibrary.simpleMessage("Luk opslag"),
-    "post__comment_maxlength_error" : m26,
+    "post__comment_maxlength_error" : m27,
     "post__comment_reply_expanded_post" : MessageLookupByLibrary.simpleMessage("Opslag"),
     "post__comment_reply_expanded_reply_comment" : MessageLookupByLibrary.simpleMessage("Besvar kommentar"),
     "post__comment_reply_expanded_reply_hint_text" : MessageLookupByLibrary.simpleMessage("Dit svar..."),
@@ -600,8 +612,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__comments_page_tap_to_retry" : MessageLookupByLibrary.simpleMessage("Tryk for at genindlæse kommentarer."),
     "post__comments_page_tap_to_retry_replies" : MessageLookupByLibrary.simpleMessage("Tryk for at genindlæse svar."),
     "post__comments_page_title" : MessageLookupByLibrary.simpleMessage("Kommentarer"),
-    "post__comments_view_all_comments" : m27,
+    "post__comments_view_all_comments" : m28,
     "post__create_new" : MessageLookupByLibrary.simpleMessage("Nyt opslag"),
+    "post__create_new_community_post_label" : MessageLookupByLibrary.simpleMessage("Opret nyt fælleskabsindlæg"),
+    "post__create_new_post_label" : MessageLookupByLibrary.simpleMessage("Opret nyt indlæg"),
     "post__create_next" : MessageLookupByLibrary.simpleMessage("Næste"),
     "post__create_photo" : MessageLookupByLibrary.simpleMessage("Foto"),
     "post__create_video" : MessageLookupByLibrary.simpleMessage("Video"),
@@ -613,7 +627,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__is_closed" : MessageLookupByLibrary.simpleMessage("Lukket opslag"),
     "post__my_circles" : MessageLookupByLibrary.simpleMessage("Mine cirkler"),
     "post__my_circles_desc" : MessageLookupByLibrary.simpleMessage("Del opslaget til en eller flere af dine cirkler."),
-    "post__no_circles_for" : m28,
+    "post__no_circles_for" : m29,
     "post__open_post" : MessageLookupByLibrary.simpleMessage("Åben opslag"),
     "post__post_closed" : MessageLookupByLibrary.simpleMessage("Opslag lukket "),
     "post__post_opened" : MessageLookupByLibrary.simpleMessage("Opslag åbnet"),
@@ -623,6 +637,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__profile_counts_following" : MessageLookupByLibrary.simpleMessage(" Følger"),
     "post__profile_counts_post" : MessageLookupByLibrary.simpleMessage(" Opslag"),
     "post__profile_counts_posts" : MessageLookupByLibrary.simpleMessage(" Opslag"),
+    "post__profile_retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tryk for at prøve igen"),
     "post__reaction_list_tap_retry" : MessageLookupByLibrary.simpleMessage("Tryk for at genindlæse reaktioner."),
     "post__search_circles" : MessageLookupByLibrary.simpleMessage("Søg cirkler..."),
     "post__share" : MessageLookupByLibrary.simpleMessage("Del"),
@@ -653,17 +668,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__timeline_posts_failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Prøv igen om nogle sekunder"),
     "post__timeline_posts_failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Kunne ikke indlæse din tidslinje."),
     "post__timeline_posts_no_more_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Følg brugere eller deltag i et fællesskab for at komme i gang!"),
-    "post__timeline_posts_no_more_drhoo_title" : MessageLookupByLibrary.simpleMessage("Tidslinjen er tom."),
     "post__timeline_posts_refresh_posts" : MessageLookupByLibrary.simpleMessage("Genindlæs opslag"),
-    "post__timeline_posts_refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Indlæser din tidslinje."),
     "post__timeline_posts_refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Hav tålmodighed!"),
     "post__trending_posts_no_trending_posts" : MessageLookupByLibrary.simpleMessage("Der er ingen populære opslag. Prøv at opdatere om nogle sekunder."),
     "post__trending_posts_refresh" : MessageLookupByLibrary.simpleMessage("Opdater"),
     "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Populære opslag"),
-    "post__user_has_not_shared_anything" : m29,
-    "post__usernames_circles" : m30,
+    "post__user_has_not_shared_anything" : m30,
+    "post__usernames_circles" : m31,
     "post__world_circle_name" : MessageLookupByLibrary.simpleMessage("Verden"),
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("Du delte via"),
+    "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("Dette link kunne ikke skaffes"),
+    "post_body_link_preview__error_with_description" : m32,
     "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Ikke understøttet medier typ"),
     "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Annulleret!"),
     "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Annullerer"),
@@ -676,12 +691,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "post_uploader__uploading_media" : MessageLookupByLibrary.simpleMessage("Uploader medier..."),
     "posts_stream__all_loaded" : MessageLookupByLibrary.simpleMessage("🎉 Alle indlæg loadet"),
     "posts_stream__empty_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Prøv at genopfriske om nogle sekunder."),
-    "posts_stream__failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Try again in a couple seconds"),
+    "posts_stream__empty_drhoo_title" : MessageLookupByLibrary.simpleMessage("Denne stream er tom."),
+    "posts_stream__failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Prøv igen om nogle sekunder"),
     "posts_stream__failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Kunne ikke loade stream."),
-    "posts_stream__refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Indlæser din tidslinje."),
+    "posts_stream__refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Opdaterer stream."),
     "posts_stream__refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Vent lidt!"),
-    "posts_stream__status_tile_empty" : MessageLookupByLibrary.simpleMessage("No posts found"),
-    "posts_stream__status_tile_no_more_to_load" : MessageLookupByLibrary.simpleMessage("🎉  All posts loaded"),
+    "posts_stream__status_tile_empty" : MessageLookupByLibrary.simpleMessage("Ingen indlæg fundet"),
+    "posts_stream__status_tile_no_more_to_load" : MessageLookupByLibrary.simpleMessage("🎉 Alle indlæg loadet"),
     "user__add_account_done" : MessageLookupByLibrary.simpleMessage("Færdig"),
     "user__add_account_save" : MessageLookupByLibrary.simpleMessage("Gem"),
     "user__add_account_success" : MessageLookupByLibrary.simpleMessage("Succes"),
@@ -697,8 +713,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__change_email_success_info" : MessageLookupByLibrary.simpleMessage("Vi har sendt et bekræftelses link til din nye email adresse, klik det for at bekræfte din nye email"),
     "user__change_email_title" : MessageLookupByLibrary.simpleMessage("Skift Email"),
     "user__circle_name_empty_error" : MessageLookupByLibrary.simpleMessage("Kredsnavn må ikke være tom"),
-    "user__circle_name_range_error" : m31,
-    "user__circle_peoples_count" : m32,
+    "user__circle_name_range_error" : m33,
+    "user__circle_peoples_count" : m34,
     "user__clear_app_preferences_cleared_successfully" : MessageLookupByLibrary.simpleMessage("Nulstillede præferencer med succes"),
     "user__clear_app_preferences_desc" : MessageLookupByLibrary.simpleMessage("Nulstil app præferencer. I øjeblikket er dette den eneste foretrukne sortering af kommentarer."),
     "user__clear_app_preferences_error" : MessageLookupByLibrary.simpleMessage("Kunne ikke nulstille præferencer"),
@@ -710,13 +726,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_block_user_blocked" : MessageLookupByLibrary.simpleMessage("Bruger blokeret."),
     "user__confirm_block_user_info" : MessageLookupByLibrary.simpleMessage("I vil hverken se hinandens indslæg eller være i stand til at interagere på nogen måde."),
     "user__confirm_block_user_no" : MessageLookupByLibrary.simpleMessage("Nej"),
-    "user__confirm_block_user_question" : m33,
+    "user__confirm_block_user_question" : m35,
     "user__confirm_block_user_title" : MessageLookupByLibrary.simpleMessage("Bekræftelse"),
     "user__confirm_block_user_yes" : MessageLookupByLibrary.simpleMessage("Ja"),
     "user__confirm_connection_add_connection" : MessageLookupByLibrary.simpleMessage("Føj kontakt til kreds"),
     "user__confirm_connection_confirm_text" : MessageLookupByLibrary.simpleMessage("Bekræft"),
     "user__confirm_connection_connection_confirmed" : MessageLookupByLibrary.simpleMessage("Kontakt bekræftet"),
-    "user__confirm_connection_with" : m34,
+    "user__confirm_connection_with" : m36,
     "user__confirm_guidelines_reject_chat_community" : MessageLookupByLibrary.simpleMessage("Snak med fælleskabet."),
     "user__confirm_guidelines_reject_chat_immediately" : MessageLookupByLibrary.simpleMessage("Start en samtale omgående."),
     "user__confirm_guidelines_reject_chat_with_team" : MessageLookupByLibrary.simpleMessage("Snak med teamet."),
@@ -726,7 +742,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_guidelines_reject_join_slack" : MessageLookupByLibrary.simpleMessage("Deltag i Slack kanalen."),
     "user__confirm_guidelines_reject_title" : MessageLookupByLibrary.simpleMessage("Retningslinjernes afvisning"),
     "user__connect_to_user_add_connection" : MessageLookupByLibrary.simpleMessage("Føj kontakt til kreds"),
-    "user__connect_to_user_connect_with_username" : m35,
+    "user__connect_to_user_connect_with_username" : m37,
     "user__connect_to_user_done" : MessageLookupByLibrary.simpleMessage("Udført"),
     "user__connect_to_user_request_sent" : MessageLookupByLibrary.simpleMessage("Kontaktanmodning sendt"),
     "user__connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Redigér"),
@@ -744,7 +760,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__delete_account_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Indtast din aktuel adgangskode"),
     "user__delete_account_next" : MessageLookupByLibrary.simpleMessage("Næste"),
     "user__delete_account_title" : MessageLookupByLibrary.simpleMessage("Slet konto"),
-    "user__disconnect_from_user" : m36,
+    "user__disconnect_from_user" : m38,
     "user__disconnect_from_user_success" : MessageLookupByLibrary.simpleMessage("Afbrød med succes"),
     "user__edit_profile_bio" : MessageLookupByLibrary.simpleMessage("Biografi"),
     "user__edit_profile_community_posts" : MessageLookupByLibrary.simpleMessage("Fællesskabsindlæg"),
@@ -753,20 +769,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__edit_profile_location" : MessageLookupByLibrary.simpleMessage("Bopæl"),
     "user__edit_profile_name" : MessageLookupByLibrary.simpleMessage("Navn"),
     "user__edit_profile_pick_image" : MessageLookupByLibrary.simpleMessage("Vælg billede"),
-    "user__edit_profile_pick_image_error_too_large" : m37,
+    "user__edit_profile_pick_image_error_too_large" : m39,
     "user__edit_profile_save_text" : MessageLookupByLibrary.simpleMessage("Gem"),
     "user__edit_profile_title" : MessageLookupByLibrary.simpleMessage("Redigér profil"),
     "user__edit_profile_url" : MessageLookupByLibrary.simpleMessage("url"),
-    "user__edit_profile_user_name_taken" : m38,
+    "user__edit_profile_user_name_taken" : m40,
     "user__edit_profile_username" : MessageLookupByLibrary.simpleMessage("Brugernavn"),
     "user__email_verification_error" : MessageLookupByLibrary.simpleMessage("Ups! Dit token var ikke validt, eller er udløbet. Prøv igen"),
     "user__email_verification_successful" : MessageLookupByLibrary.simpleMessage("Fantastisk! Din email er nu bekræftet"),
     "user__emoji_field_none_selected" : MessageLookupByLibrary.simpleMessage("Ingen emoji valgt"),
-    "user__emoji_search_none_found" : m39,
+    "user__emoji_search_none_found" : m41,
     "user__follow_button_follow_text" : MessageLookupByLibrary.simpleMessage("Følg"),
     "user__follow_button_unfollow_text" : MessageLookupByLibrary.simpleMessage("Følg ikke længere"),
     "user__follow_lists_no_list_found" : MessageLookupByLibrary.simpleMessage("Ingen liste fundet."),
-    "user__follow_lists_no_list_found_for" : m40,
+    "user__follow_lists_no_list_found_for" : m42,
     "user__follow_lists_search_for" : MessageLookupByLibrary.simpleMessage("Søg efter en liste..."),
     "user__follow_lists_title" : MessageLookupByLibrary.simpleMessage("Mine lister"),
     "user__follower_plural" : MessageLookupByLibrary.simpleMessage("følgere"),
@@ -774,18 +790,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__followers_title" : MessageLookupByLibrary.simpleMessage("Følgere"),
     "user__following_resource_name" : MessageLookupByLibrary.simpleMessage("brugere der følger"),
     "user__following_text" : MessageLookupByLibrary.simpleMessage("Følger"),
-    "user__follows_list_accounts_count" : m41,
+    "user__follows_list_accounts_count" : m43,
     "user__follows_list_edit" : MessageLookupByLibrary.simpleMessage("Redigér"),
     "user__follows_list_header_title" : MessageLookupByLibrary.simpleMessage("Brugere"),
     "user__follows_lists_account" : MessageLookupByLibrary.simpleMessage("1 konto"),
-    "user__follows_lists_accounts" : m42,
-    "user__groups_see_all" : m43,
+    "user__follows_lists_accounts" : m44,
+    "user__groups_see_all" : m45,
     "user__guidelines_accept" : MessageLookupByLibrary.simpleMessage("Accepter"),
     "user__guidelines_desc" : MessageLookupByLibrary.simpleMessage("Tag et øjeblik til at læse og acceptere vores retningslinjer."),
     "user__guidelines_reject" : MessageLookupByLibrary.simpleMessage("Afvis"),
     "user__invite" : MessageLookupByLibrary.simpleMessage("Indbyd"),
     "user__invite_member" : MessageLookupByLibrary.simpleMessage("Medlem"),
-    "user__invite_someone_message" : m44,
+    "user__invite_someone_message" : m46,
     "user__invites_accepted_group_item_name" : MessageLookupByLibrary.simpleMessage("acceptered invitation"),
     "user__invites_accepted_group_name" : MessageLookupByLibrary.simpleMessage("accepterede invitationer"),
     "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Accepteret"),
@@ -804,11 +820,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__invites_email_text" : MessageLookupByLibrary.simpleMessage("Email"),
     "user__invites_invite_a_friend" : MessageLookupByLibrary.simpleMessage("Inviter en ven"),
     "user__invites_invite_text" : MessageLookupByLibrary.simpleMessage("Invitation"),
-    "user__invites_joined_with" : m45,
+    "user__invites_joined_with" : m47,
     "user__invites_none_left" : MessageLookupByLibrary.simpleMessage("Du har ingen invitationer tilbage."),
     "user__invites_none_used" : MessageLookupByLibrary.simpleMessage("Du har tilsyneladende ikke brugt nogen invitation endnu."),
     "user__invites_pending" : MessageLookupByLibrary.simpleMessage("verserende"),
-    "user__invites_pending_email" : m46,
+    "user__invites_pending_email" : m48,
     "user__invites_pending_group_item_name" : MessageLookupByLibrary.simpleMessage("verserende invitation"),
     "user__invites_pending_group_name" : MessageLookupByLibrary.simpleMessage("verserende invitationer"),
     "user__invites_refresh" : MessageLookupByLibrary.simpleMessage("Opdater"),
@@ -821,14 +837,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__language_settings_saved_success" : MessageLookupByLibrary.simpleMessage("Sprogændring succesfuld"),
     "user__language_settings_title" : MessageLookupByLibrary.simpleMessage("Sprogindstillinger"),
     "user__list_name_empty_error" : MessageLookupByLibrary.simpleMessage("Listenavn må ikke være tom"),
-    "user__list_name_range_error" : m47,
+    "user__list_name_range_error" : m49,
     "user__million_postfix" : MessageLookupByLibrary.simpleMessage("mega"),
     "user__profile_action_cancel_connection" : MessageLookupByLibrary.simpleMessage("Kald forspørgsel om forbindelse tilbage"),
     "user__profile_action_deny_connection" : MessageLookupByLibrary.simpleMessage("Afvis forespørgsel om forbindelse"),
     "user__profile_action_user_blocked" : MessageLookupByLibrary.simpleMessage("Bruger blokeret"),
     "user__profile_action_user_unblocked" : MessageLookupByLibrary.simpleMessage("Blokering af bruger ophævet"),
-    "user__profile_bio_length_error" : m48,
-    "user__profile_location_length_error" : m49,
+    "user__profile_bio_length_error" : m50,
+    "user__profile_location_length_error" : m51,
     "user__profile_url_invalid_error" : MessageLookupByLibrary.simpleMessage("Angiv venligst en gyldig url!"),
     "user__remove_account_from_list" : MessageLookupByLibrary.simpleMessage("Slet konto fra listen"),
     "user__remove_account_from_list_success" : MessageLookupByLibrary.simpleMessage("Succes"),
@@ -838,7 +854,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Redigér kreds"),
     "user__save_connection_circle_hint" : MessageLookupByLibrary.simpleMessage("fx venner, familie, arbejde."),
     "user__save_connection_circle_name" : MessageLookupByLibrary.simpleMessage("Navn"),
-    "user__save_connection_circle_name_taken" : m50,
+    "user__save_connection_circle_name_taken" : m52,
     "user__save_connection_circle_save" : MessageLookupByLibrary.simpleMessage("Gem"),
     "user__save_connection_circle_users" : MessageLookupByLibrary.simpleMessage("Brugere"),
     "user__save_follows_list_create" : MessageLookupByLibrary.simpleMessage("Opret liste"),
@@ -847,7 +863,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_follows_list_emoji_required_error" : MessageLookupByLibrary.simpleMessage("Emoji er krævet"),
     "user__save_follows_list_hint_text" : MessageLookupByLibrary.simpleMessage("f.eks rejse, fotografi"),
     "user__save_follows_list_name" : MessageLookupByLibrary.simpleMessage("Navn"),
-    "user__save_follows_list_name_taken" : m51,
+    "user__save_follows_list_name_taken" : m53,
     "user__save_follows_list_save" : MessageLookupByLibrary.simpleMessage("Gem"),
     "user__save_follows_list_users" : MessageLookupByLibrary.simpleMessage("Brugere"),
     "user__thousand_postfix" : MessageLookupByLibrary.simpleMessage("kilo"),
@@ -857,7 +873,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__timeline_filters_circles" : MessageLookupByLibrary.simpleMessage("Kredse"),
     "user__timeline_filters_clear_all" : MessageLookupByLibrary.simpleMessage("Slet alt"),
     "user__timeline_filters_lists" : MessageLookupByLibrary.simpleMessage("Lister"),
-    "user__timeline_filters_no_match" : m52,
+    "user__timeline_filters_no_match" : m54,
     "user__timeline_filters_search_desc" : MessageLookupByLibrary.simpleMessage("Søger efter kredse og lister..."),
     "user__timeline_filters_title" : MessageLookupByLibrary.simpleMessage("Tidslinjefiltre"),
     "user__translate_see_translation" : MessageLookupByLibrary.simpleMessage("Se oversættelse"),
@@ -869,17 +885,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__update_connection_circles_title" : MessageLookupByLibrary.simpleMessage("Aktualisér kontakternes kredse"),
     "user_search__cancel" : MessageLookupByLibrary.simpleMessage("Annuller"),
     "user_search__communities" : MessageLookupByLibrary.simpleMessage("Fælleskaber"),
-    "user_search__list_no_results_found" : m53,
+    "user_search__list_no_results_found" : m55,
     "user_search__list_refresh_text" : MessageLookupByLibrary.simpleMessage("Opdater"),
     "user_search__list_retry" : MessageLookupByLibrary.simpleMessage("Tryk for at prøve igen."),
-    "user_search__list_search_text" : m54,
-    "user_search__no_communities_for" : m55,
-    "user_search__no_results_for" : m56,
-    "user_search__no_users_for" : m57,
+    "user_search__list_search_text" : m56,
+    "user_search__no_communities_for" : m57,
+    "user_search__no_results_for" : m58,
+    "user_search__no_users_for" : m59,
     "user_search__search_text" : MessageLookupByLibrary.simpleMessage("Søg..."),
-    "user_search__searching_for" : m58,
+    "user_search__searching_for" : m60,
     "user_search__users" : MessageLookupByLibrary.simpleMessage("Brugere"),
-    "video_picker__from_camera" : MessageLookupByLibrary.simpleMessage("From camera"),
-    "video_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("From gallery")
+    "video_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Fra kamera"),
+    "video_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Fra galleri")
   };
 }

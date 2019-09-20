@@ -57,88 +57,108 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m18(currentUserLanguage) => "Språk (${currentUserLanguage})";
 
-  static m19(resourceCount, resourceName) => "Visa alla ${resourceCount} ${resourceName}";
+  static m19(limit) => "Filen är för stor (gräns: ${limit} MB)";
 
-  static m20(postCommentText) => "[name] [username] kommenterade också: ${postCommentText}";
+  static m20(resourceCount, resourceName) => "Visa alla ${resourceCount} ${resourceName}";
 
-  static m21(postCommentText) => "[name] [username] kommenterade på ditt inlägg: ${postCommentText}";
+  static m21(postCommentText) => "[name] [username] kommenterade också: ${postCommentText}";
 
-  static m22(postCommentText) => "[name] [username] svarade också: ${postCommentText}";
+  static m22(postCommentText) => "[name] [username] kommenterade på ditt inlägg: ${postCommentText}";
 
-  static m23(postCommentText) => "[name] [username] svarade: ${postCommentText}";
+  static m23(postCommentText) => "[name] [username] svarade också: ${postCommentText}";
 
-  static m24(postCommentText) => "[name] [username] nämnde dig i en kommentar: ${postCommentText}";
+  static m24(postCommentText) => "[name] [username] svarade: ${postCommentText}";
 
-  static m25(communityName) => "[name] [username] har bjudit in dig till gemenskapen /c/${communityName}.";
+  static m25(postCommentText) => "[name] [username] nämnde dig i en kommentar: ${postCommentText}";
 
-  static m26(maxLength) => "En kommentar kan inte vara längre än ${maxLength} tecken.";
+  static m26(communityName) => "[name] [username] har bjudit in dig till gemenskapen /c/${communityName}.";
 
-  static m27(commentsCount) => "Visa alla ${commentsCount} kommentarer";
+  static m27(maxLength) => "En kommentar kan inte vara längre än ${maxLength} tecken.";
 
-  static m28(circlesSearchQuery) => "Inga kretsar hittades som matchar \'${circlesSearchQuery}\'.";
+  static m28(commentsCount) => "Visa alla ${commentsCount} kommentarer";
 
-  static m29(name) => "${name} har inte delat något ännu.";
+  static m29(circlesSearchQuery) => "Inga kretsar hittades som matchar \'${circlesSearchQuery}\'.";
 
-  static m30(postCreatorUsername) => "@${postCreatorUsername}s kretsar";
+  static m30(name) => "${name} har inte delat något ännu.";
 
-  static m31(maxLength) => "Kretsens namn får inte vara längre än ${maxLength} tecken.";
+  static m31(postCreatorUsername) => "@${postCreatorUsername}s kretsar";
 
-  static m32(prettyUsersCount) => "${prettyUsersCount} personer";
+  static m32(description) => "Webbsidan svarade med ett fel vid förhandsgranskning av länken: ${description}";
 
-  static m33(username) => "Är du säker på att du vill blockera @${username}?";
+  static m33(maxLength) => "Kretsens namn får inte vara längre än ${maxLength} tecken.";
 
-  static m34(userName) => "Bekräfta ${userName}s kontaktförfrågan";
+  static m34(prettyUsersCount) => "${prettyUsersCount} personer";
 
-  static m35(userName) => "Lägg till ${userName} som kontakt";
+  static m35(username) => "Är du säker på att du vill blockera @${username}?";
 
-  static m36(userName) => "Ta bort ${userName} som kontakt";
+  static m36(userName) => "Bekräfta ${userName}s kontaktförfrågan";
 
-  static m37(limit) => "Bilden är för stor (gräns: ${limit} MB)";
+  static m37(userName) => "Lägg till ${userName} som kontakt";
 
-  static m38(username) => "Användarnamnet @${username} är upptaget";
+  static m38(userName) => "Ta bort ${userName} som kontakt";
 
-  static m39(searchQuery) => "Ingen emoji hittades som matchar \'${searchQuery}\'.";
+  static m39(limit) => "Bilden är för stor (gräns: ${limit} MB)";
 
-  static m40(searchQuery) => "Inga listor hittades för \'${searchQuery}\'";
+  static m40(username) => "Användarnamnet @${username} är upptaget";
 
-  static m41(prettyUsersCount) => "${prettyUsersCount} konton";
+  static m41(searchQuery) => "Ingen emoji hittades som matchar \'${searchQuery}\'.";
 
-  static m42(prettyUsersCount) => "${prettyUsersCount} Konton";
+  static m42(searchQuery) => "Inga listor hittades för \'${searchQuery}\'";
 
-  static m43(groupName) => "Visa alla ${groupName}";
+  static m43(prettyUsersCount) => "${prettyUsersCount} konton";
 
-  static m44(iosLink, androidLink, inviteLink) => "Hej, jag vill bjuda in dig till Okuna. Först, ladda ner appen från iTunes (${iosLink}) eller Play Store (${androidLink}). Sedan klistrar du in din personliga inbjudningslänk i \'Registrera dig\'-formuläret i Okuna-appen: ${inviteLink}";
+  static m44(prettyUsersCount) => "${prettyUsersCount} Konton";
 
-  static m45(username) => "Gick med under användarnamnet @${username}";
+  static m45(groupName) => "Visa alla ${groupName}";
 
-  static m46(email) => "Väntande, inbjudan skickad till ${email}";
+  static m46(iosLink, androidLink, inviteLink) => "Hej, jag vill bjuda in dig till Okuna. Först, ladda ner appen från iTunes (${iosLink}) eller Play Store (${androidLink}). Sedan klistrar du in din personliga inbjudningslänk i \'Registrera dig\'-formuläret i Okuna-appen: ${inviteLink}";
 
-  static m47(maxLength) => "Listans namn får inte vara längre än ${maxLength} tecken.";
+  static m47(username) => "Gick med under användarnamnet @${username}";
 
-  static m48(maxLength) => "Bion kan inte vara längre än ${maxLength} tecken.";
+  static m48(email) => "Väntande, inbjudan skickad till ${email}";
 
-  static m49(maxLength) => "En plats kan inte vara längre än ${maxLength} tecken.";
+  static m49(maxLength) => "Listans namn får inte vara längre än ${maxLength} tecken.";
 
-  static m50(takenConnectionsCircleName) => "Kretsnamnet \'${takenConnectionsCircleName}\' är upptaget";
+  static m50(maxLength) => "Bion kan inte vara längre än ${maxLength} tecken.";
 
-  static m51(listName) => "Listnamnet \'${listName}\' är upptaget";
+  static m51(maxLength) => "En plats kan inte vara längre än ${maxLength} tecken.";
 
-  static m52(searchQuery) => "Inga resultat hittades för \'${searchQuery}\'.";
+  static m52(takenConnectionsCircleName) => "Kretsnamnet \'${takenConnectionsCircleName}\' är upptaget";
 
-  static m53(resourcePluralName) => "Inga ${resourcePluralName} hittades.";
+  static m53(listName) => "Listnamnet \'${listName}\' är upptaget";
 
-  static m54(resourcePluralName) => "Sök ${resourcePluralName} ...";
+  static m54(searchQuery) => "Inga resultat hittades för \'${searchQuery}\'.";
 
-  static m55(searchQuery) => "Inga gemenskaper hittades för \'${searchQuery}\'.";
+  static m55(resourcePluralName) => "Inga ${resourcePluralName} hittades.";
 
-  static m56(searchQuery) => "Inga resultat hittades för \'${searchQuery}\'.";
+  static m56(resourcePluralName) => "Sök ${resourcePluralName} ...";
 
-  static m57(searchQuery) => "Inga användare hittades för \'${searchQuery}\'.";
+  static m57(searchQuery) => "Inga gemenskaper hittades för \'${searchQuery}\'.";
 
-  static m58(searchQuery) => "Söker efter \'${searchQuery}\'";
+  static m58(searchQuery) => "Inga resultat hittades för \'${searchQuery}\'.";
+
+  static m59(searchQuery) => "Inga användare hittades för \'${searchQuery}\'.";
+
+  static m60(searchQuery) => "Söker efter \'${searchQuery}\'";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "application_settings__comment_sort_newest_first" : MessageLookupByLibrary.simpleMessage("Nyast först"),
+    "application_settings__comment_sort_oldest_first" : MessageLookupByLibrary.simpleMessage("Äldst först"),
+    "application_settings__link_previews" : MessageLookupByLibrary.simpleMessage("Förhandsgranskning av länkar"),
+    "application_settings__link_previews_autoplay_always" : MessageLookupByLibrary.simpleMessage("Alltid"),
+    "application_settings__link_previews_autoplay_never" : MessageLookupByLibrary.simpleMessage("Aldrig"),
+    "application_settings__link_previews_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Endast Wifi"),
+    "application_settings__link_previews_show" : MessageLookupByLibrary.simpleMessage("Visa"),
+    "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Tryck för att ändra)"),
+    "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Videor"),
+    "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Automatisk uppspelning"),
+    "application_settings__videos_autoplay_always" : MessageLookupByLibrary.simpleMessage("Alltid"),
+    "application_settings__videos_autoplay_never" : MessageLookupByLibrary.simpleMessage("Aldrig"),
+    "application_settings__videos_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Endast Wifi"),
+    "application_settings__videos_sound" : MessageLookupByLibrary.simpleMessage("Ljud"),
+    "application_settings__videos_sound_disabled" : MessageLookupByLibrary.simpleMessage("Inaktiverat"),
+    "application_settings__videos_sound_enabled" : MessageLookupByLibrary.simpleMessage("Aktiverat"),
     "auth__change_password_current_pwd" : MessageLookupByLibrary.simpleMessage("Nuvarande lösenord"),
     "auth__change_password_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Ange ditt nuvarande lösenord"),
     "auth__change_password_current_pwd_incorrect" : MessageLookupByLibrary.simpleMessage("Det angivna lösenordet var felaktigt"),
@@ -213,7 +233,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__description_range_error" : m1,
     "auth__email_empty_error" : MessageLookupByLibrary.simpleMessage("Du måste ange en e-postadress."),
     "auth__email_invalid_error" : MessageLookupByLibrary.simpleMessage("Vänligen ange en giltig e-postadress."),
-    "auth__headline" : MessageLookupByLibrary.simpleMessage("Bättre socialt."),
+    "auth__headline" : MessageLookupByLibrary.simpleMessage("Better social."),
     "auth__login" : MessageLookupByLibrary.simpleMessage("Logga in"),
     "auth__login__connection_error" : MessageLookupByLibrary.simpleMessage("Vi kan inte nå våra servrar. Är du uppkopplad mot internet?"),
     "auth__login__credentials_mismatch_error" : MessageLookupByLibrary.simpleMessage("De angivna uppgifterna matchar inte."),
@@ -343,6 +363,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__posts" : MessageLookupByLibrary.simpleMessage("Inlägg"),
     "community__refresh_text" : MessageLookupByLibrary.simpleMessage("Uppdatera"),
     "community__refreshing" : MessageLookupByLibrary.simpleMessage("Uppdaterar gemenskap"),
+    "community__retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tryck för att försöka igen"),
     "community__rules_empty_error" : MessageLookupByLibrary.simpleMessage("Regelfältet kan inte vara tomt."),
     "community__rules_range_error" : m14,
     "community__rules_text" : MessageLookupByLibrary.simpleMessage("Regler"),
@@ -382,6 +403,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__unfavorite_action" : MessageLookupByLibrary.simpleMessage("Ta bort gemenskap från favoriter"),
     "community__user_you_text" : MessageLookupByLibrary.simpleMessage("Du"),
     "community__yes" : MessageLookupByLibrary.simpleMessage("Ja"),
+    "contextual_account_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Förslag"),
     "drawer__account_settings" : MessageLookupByLibrary.simpleMessage("Kontoinställningar"),
     "drawer__account_settings_blocked_users" : MessageLookupByLibrary.simpleMessage("Blockerade användare"),
     "drawer__account_settings_change_email" : MessageLookupByLibrary.simpleMessage("Ändra e-post"),
@@ -394,6 +416,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__application_settings" : MessageLookupByLibrary.simpleMessage("Programinställningar"),
     "drawer__connections" : MessageLookupByLibrary.simpleMessage("Mina kontakter"),
     "drawer__customize" : MessageLookupByLibrary.simpleMessage("Anpassa"),
+    "drawer__developer_settings" : MessageLookupByLibrary.simpleMessage("Utvecklarinställningar"),
     "drawer__global_moderation" : MessageLookupByLibrary.simpleMessage("Global moderering"),
     "drawer__help" : MessageLookupByLibrary.simpleMessage("Hjälp och feedback"),
     "drawer__lists" : MessageLookupByLibrary.simpleMessage("Mina listor"),
@@ -427,6 +450,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__useful_links_title" : MessageLookupByLibrary.simpleMessage("Användbara länkar"),
     "error__no_internet_connection" : MessageLookupByLibrary.simpleMessage("Ingen internetuppkoppling"),
     "error__unknown_error" : MessageLookupByLibrary.simpleMessage("Okänt fel"),
+    "image_picker__error_too_large" : m19,
+    "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Från kameran"),
+    "image_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Från galleriet"),
     "moderation__actions_chat_with_team" : MessageLookupByLibrary.simpleMessage("Chatta med teamet"),
     "moderation__actions_review" : MessageLookupByLibrary.simpleMessage("Granska"),
     "moderation__category_text" : MessageLookupByLibrary.simpleMessage("Kategori"),
@@ -483,7 +509,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__reporter_text" : MessageLookupByLibrary.simpleMessage("Anmälare"),
     "moderation__reports_preview_resource_reports" : MessageLookupByLibrary.simpleMessage("anmälningar"),
     "moderation__reports_preview_title" : MessageLookupByLibrary.simpleMessage("Anmälningar"),
-    "moderation__reports_see_all" : m19,
+    "moderation__reports_see_all" : m20,
     "moderation__tap_to_retry" : MessageLookupByLibrary.simpleMessage("Tryck för att försöka läsa in poster igen"),
     "moderation__update_category_save" : MessageLookupByLibrary.simpleMessage("Spara"),
     "moderation__update_category_title" : MessageLookupByLibrary.simpleMessage("Uppdatera kategori"),
@@ -498,14 +524,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__you_have_reported_community_text" : MessageLookupByLibrary.simpleMessage("Du har anmält den här gemenskapen"),
     "moderation__you_have_reported_post_text" : MessageLookupByLibrary.simpleMessage("Du har anmält det här inlägget"),
     "notifications__accepted_connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] accepterade din kontaktförfrågan."),
-    "notifications__comment_comment_notification_tile_user_also_commented" : m20,
-    "notifications__comment_comment_notification_tile_user_commented" : m21,
+    "notifications__comment_comment_notification_tile_user_also_commented" : m21,
+    "notifications__comment_comment_notification_tile_user_commented" : m22,
     "notifications__comment_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon kommenterar på ett av dina inlägg eller ett inlägg du också kommenterat på."),
     "notifications__comment_reaction_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon reagerar på en av dina inläggskommentarer."),
     "notifications__comment_reaction_title" : MessageLookupByLibrary.simpleMessage("Reaktion på kommentar"),
     "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon svarar på en av dina kommentarer eller en kommentar du också svarat på."),
-    "notifications__comment_reply_notification_tile_user_also_replied" : m22,
-    "notifications__comment_reply_notification_tile_user_replied" : m23,
+    "notifications__comment_reply_notification_tile_user_also_replied" : m23,
+    "notifications__comment_reply_notification_tile_user_replied" : m24,
     "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Svar på kommentar"),
     "notifications__comment_title" : MessageLookupByLibrary.simpleMessage("Kommentar på inlägg"),
     "notifications__comment_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när någon nämner dig i en av sina kommentarer"),
@@ -520,7 +546,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__following_you_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] har börjat följa dig."),
     "notifications__general_desc" : MessageLookupByLibrary.simpleMessage("Bli meddelad när något händer"),
     "notifications__general_title" : MessageLookupByLibrary.simpleMessage("Aviseringar"),
-    "notifications__mentioned_in_post_comment_tile" : m24,
+    "notifications__mentioned_in_post_comment_tile" : m25,
     "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] nämnde dig i ett inlägg."),
     "notifications__mute_post_turn_off_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Inaktivera aviseringar för inläggskommentarer"),
     "notifications__mute_post_turn_off_post_notifications" : MessageLookupByLibrary.simpleMessage("Inaktivera aviseringar för inlägg"),
@@ -533,7 +559,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__reacted_to_post_comment_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagerade på din inläggskommentar."),
     "notifications__reacted_to_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] reagerade på ditt inlägg."),
     "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Aviseringsinställningar"),
-    "notifications__user_community_invite_tile" : m25,
+    "notifications__tab_general" : MessageLookupByLibrary.simpleMessage("Allmänna"),
+    "notifications__tab_requests" : MessageLookupByLibrary.simpleMessage("Förfrågningar"),
+    "notifications__user_community_invite_tile" : m26,
     "post__action_comment" : MessageLookupByLibrary.simpleMessage("Kommentera"),
     "post__action_react" : MessageLookupByLibrary.simpleMessage("Reagera"),
     "post__action_reply" : MessageLookupByLibrary.simpleMessage("Svara"),
@@ -545,8 +573,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__actions_report_text" : MessageLookupByLibrary.simpleMessage("Anmäl"),
     "post__actions_reported_text" : MessageLookupByLibrary.simpleMessage("Anmäld"),
     "post__actions_show_more_text" : MessageLookupByLibrary.simpleMessage("Visa mer"),
+    "post__close_create_post_label" : MessageLookupByLibrary.simpleMessage("Stäng nytt inlägg-rutan"),
     "post__close_post" : MessageLookupByLibrary.simpleMessage("Stäng inlägg"),
-    "post__comment_maxlength_error" : m26,
+    "post__comment_maxlength_error" : m27,
     "post__comment_reply_expanded_post" : MessageLookupByLibrary.simpleMessage("Skicka"),
     "post__comment_reply_expanded_reply_comment" : MessageLookupByLibrary.simpleMessage("Svar på kommentar"),
     "post__comment_reply_expanded_reply_hint_text" : MessageLookupByLibrary.simpleMessage("Ditt svar..."),
@@ -583,10 +612,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__comments_page_tap_to_retry" : MessageLookupByLibrary.simpleMessage("Tryck för att försöka läsa in kommentarerna igen."),
     "post__comments_page_tap_to_retry_replies" : MessageLookupByLibrary.simpleMessage("Tryck för att försöka läsa in svaren igen."),
     "post__comments_page_title" : MessageLookupByLibrary.simpleMessage("Inläggskommentarer"),
-    "post__comments_view_all_comments" : m27,
+    "post__comments_view_all_comments" : m28,
     "post__create_new" : MessageLookupByLibrary.simpleMessage("Nytt inlägg"),
+    "post__create_new_community_post_label" : MessageLookupByLibrary.simpleMessage("Skapa ett nytt gemenskapsinlägg"),
+    "post__create_new_post_label" : MessageLookupByLibrary.simpleMessage("Skapa ett nytt inlägg"),
     "post__create_next" : MessageLookupByLibrary.simpleMessage("Nästa"),
     "post__create_photo" : MessageLookupByLibrary.simpleMessage("Foto"),
+    "post__create_video" : MessageLookupByLibrary.simpleMessage("Video"),
     "post__disable_post_comments" : MessageLookupByLibrary.simpleMessage("Stäng kommentarsfältet"),
     "post__edit_save" : MessageLookupByLibrary.simpleMessage("Spara"),
     "post__edit_title" : MessageLookupByLibrary.simpleMessage("Redigera inlägg"),
@@ -595,7 +627,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__is_closed" : MessageLookupByLibrary.simpleMessage("Stängt inlägg"),
     "post__my_circles" : MessageLookupByLibrary.simpleMessage("Mina kretsar"),
     "post__my_circles_desc" : MessageLookupByLibrary.simpleMessage("Dela inlägget med en eller flera av dina kretsar."),
-    "post__no_circles_for" : m28,
+    "post__no_circles_for" : m29,
     "post__open_post" : MessageLookupByLibrary.simpleMessage("Öppna inlägg"),
     "post__post_closed" : MessageLookupByLibrary.simpleMessage("Inlägg stängt "),
     "post__post_opened" : MessageLookupByLibrary.simpleMessage("Inlägg öppnat"),
@@ -605,6 +637,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__profile_counts_following" : MessageLookupByLibrary.simpleMessage(" Följer"),
     "post__profile_counts_post" : MessageLookupByLibrary.simpleMessage(" Inlägg"),
     "post__profile_counts_posts" : MessageLookupByLibrary.simpleMessage(" Inlägg"),
+    "post__profile_retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tryck för att försöka igen"),
     "post__reaction_list_tap_retry" : MessageLookupByLibrary.simpleMessage("Tryck för att försöka läsa in reaktionerna igen."),
     "post__search_circles" : MessageLookupByLibrary.simpleMessage("Sök kretsar..."),
     "post__share" : MessageLookupByLibrary.simpleMessage("Dela"),
@@ -635,17 +668,36 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__timeline_posts_failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Försök igen om några sekunder"),
     "post__timeline_posts_failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Din tidslinje kunde inte läsas in."),
     "post__timeline_posts_no_more_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Följ användare eller gå med i en gemenskap för att komma igång!"),
-    "post__timeline_posts_no_more_drhoo_title" : MessageLookupByLibrary.simpleMessage("Din tidslinje är tom."),
     "post__timeline_posts_refresh_posts" : MessageLookupByLibrary.simpleMessage("Läs in inlägg"),
-    "post__timeline_posts_refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Läser in din tidslinje."),
     "post__timeline_posts_refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Håll ut!"),
     "post__trending_posts_no_trending_posts" : MessageLookupByLibrary.simpleMessage("Det finns inga trendiga inlägg. Försök uppdatera om några sekunder."),
     "post__trending_posts_refresh" : MessageLookupByLibrary.simpleMessage("Uppdatera"),
     "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Trendiga inlägg"),
-    "post__user_has_not_shared_anything" : m29,
-    "post__usernames_circles" : m30,
+    "post__user_has_not_shared_anything" : m30,
+    "post__usernames_circles" : m31,
     "post__world_circle_name" : MessageLookupByLibrary.simpleMessage("Världen"),
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("Du delade med"),
+    "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("Länken kunde inte förhandsvisas"),
+    "post_body_link_preview__error_with_description" : m32,
+    "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Mediatypen stöds inte"),
+    "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Avbrutet!"),
+    "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Avbryter"),
+    "post_uploader__compressing_media" : MessageLookupByLibrary.simpleMessage("Komprimerar media..."),
+    "post_uploader__creating_post" : MessageLookupByLibrary.simpleMessage("Skapar inlägget..."),
+    "post_uploader__generic_upload_failed" : MessageLookupByLibrary.simpleMessage("Uppladdningen misslyckades"),
+    "post_uploader__processing" : MessageLookupByLibrary.simpleMessage("Bearbetar inlägget..."),
+    "post_uploader__publishing" : MessageLookupByLibrary.simpleMessage("Publicerar inlägget..."),
+    "post_uploader__success" : MessageLookupByLibrary.simpleMessage("Klart!"),
+    "post_uploader__uploading_media" : MessageLookupByLibrary.simpleMessage("Laddar upp media..."),
+    "posts_stream__all_loaded" : MessageLookupByLibrary.simpleMessage("🎉 Alla inlägg inlästa"),
+    "posts_stream__empty_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Försök igen om några sekunder."),
+    "posts_stream__empty_drhoo_title" : MessageLookupByLibrary.simpleMessage("Det här flödet är tomt."),
+    "posts_stream__failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Försök igen om några sekunder"),
+    "posts_stream__failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Kunde inte läsa in flödet."),
+    "posts_stream__refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Uppdaterar flödet."),
+    "posts_stream__refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Håll ut!"),
+    "posts_stream__status_tile_empty" : MessageLookupByLibrary.simpleMessage("Inga inlägg hittades"),
+    "posts_stream__status_tile_no_more_to_load" : MessageLookupByLibrary.simpleMessage("🎉 Alla inlägg inlästa"),
     "user__add_account_done" : MessageLookupByLibrary.simpleMessage("Klar"),
     "user__add_account_save" : MessageLookupByLibrary.simpleMessage("Spara"),
     "user__add_account_success" : MessageLookupByLibrary.simpleMessage("Kontot lades till"),
@@ -661,8 +713,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__change_email_success_info" : MessageLookupByLibrary.simpleMessage("Vi har skickat en bekräftelselänk till din nya e-postadress, klicka på den för att verifiera din nya e-post"),
     "user__change_email_title" : MessageLookupByLibrary.simpleMessage("Ändra e-postadress"),
     "user__circle_name_empty_error" : MessageLookupByLibrary.simpleMessage("Du måste ge kretsen ett namn."),
-    "user__circle_name_range_error" : m31,
-    "user__circle_peoples_count" : m32,
+    "user__circle_name_range_error" : m33,
+    "user__circle_peoples_count" : m34,
     "user__clear_app_preferences_cleared_successfully" : MessageLookupByLibrary.simpleMessage("Inställningarna har rensats"),
     "user__clear_app_preferences_desc" : MessageLookupByLibrary.simpleMessage("Rensa applikationsinställningarna. Just nu är detta enbart den föredragna kommentarsordningen."),
     "user__clear_app_preferences_error" : MessageLookupByLibrary.simpleMessage("Inställningarna kunde inte rensas"),
@@ -674,13 +726,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_block_user_blocked" : MessageLookupByLibrary.simpleMessage("Användare blockerad."),
     "user__confirm_block_user_info" : MessageLookupByLibrary.simpleMessage("Ni kommer inte kunna se varandras inlägg eller kunna interagera med varandra."),
     "user__confirm_block_user_no" : MessageLookupByLibrary.simpleMessage("Nej"),
-    "user__confirm_block_user_question" : m33,
+    "user__confirm_block_user_question" : m35,
     "user__confirm_block_user_title" : MessageLookupByLibrary.simpleMessage("Bekräftelse"),
     "user__confirm_block_user_yes" : MessageLookupByLibrary.simpleMessage("Ja"),
     "user__confirm_connection_add_connection" : MessageLookupByLibrary.simpleMessage("Lägg till kontakt i krets"),
     "user__confirm_connection_confirm_text" : MessageLookupByLibrary.simpleMessage("Bekräfta"),
     "user__confirm_connection_connection_confirmed" : MessageLookupByLibrary.simpleMessage("Kontaktförfrågan bekräftad"),
-    "user__confirm_connection_with" : m34,
+    "user__confirm_connection_with" : m36,
     "user__confirm_guidelines_reject_chat_community" : MessageLookupByLibrary.simpleMessage("Chatta med gemenskapen."),
     "user__confirm_guidelines_reject_chat_immediately" : MessageLookupByLibrary.simpleMessage("Starta en chat direkt."),
     "user__confirm_guidelines_reject_chat_with_team" : MessageLookupByLibrary.simpleMessage("Chatta med teamet."),
@@ -690,7 +742,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_guidelines_reject_join_slack" : MessageLookupByLibrary.simpleMessage("Gå med i Slack-kanalen."),
     "user__confirm_guidelines_reject_title" : MessageLookupByLibrary.simpleMessage("Avvisande av riktlinjer"),
     "user__connect_to_user_add_connection" : MessageLookupByLibrary.simpleMessage("Lägg till kontakt i krets"),
-    "user__connect_to_user_connect_with_username" : m35,
+    "user__connect_to_user_connect_with_username" : m37,
     "user__connect_to_user_done" : MessageLookupByLibrary.simpleMessage("Klar"),
     "user__connect_to_user_request_sent" : MessageLookupByLibrary.simpleMessage("Kontaktförfrågan skickad"),
     "user__connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Redigera"),
@@ -708,28 +760,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__delete_account_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Ange ditt nuvarande lösenord"),
     "user__delete_account_next" : MessageLookupByLibrary.simpleMessage("Nästa"),
     "user__delete_account_title" : MessageLookupByLibrary.simpleMessage("Ta bort konto"),
-    "user__disconnect_from_user" : m36,
+    "user__disconnect_from_user" : m38,
     "user__disconnect_from_user_success" : MessageLookupByLibrary.simpleMessage("Er kontakt har brutits"),
     "user__edit_profile_bio" : MessageLookupByLibrary.simpleMessage("Bio"),
+    "user__edit_profile_community_posts" : MessageLookupByLibrary.simpleMessage("Gemenskapsinlägg"),
     "user__edit_profile_delete" : MessageLookupByLibrary.simpleMessage("Ta bort"),
     "user__edit_profile_followers_count" : MessageLookupByLibrary.simpleMessage("Följarantal"),
     "user__edit_profile_location" : MessageLookupByLibrary.simpleMessage("Plats"),
     "user__edit_profile_name" : MessageLookupByLibrary.simpleMessage("Namn"),
     "user__edit_profile_pick_image" : MessageLookupByLibrary.simpleMessage("Välj bild"),
-    "user__edit_profile_pick_image_error_too_large" : m37,
+    "user__edit_profile_pick_image_error_too_large" : m39,
     "user__edit_profile_save_text" : MessageLookupByLibrary.simpleMessage("Spara"),
     "user__edit_profile_title" : MessageLookupByLibrary.simpleMessage("Redigera profil"),
     "user__edit_profile_url" : MessageLookupByLibrary.simpleMessage("Url"),
-    "user__edit_profile_user_name_taken" : m38,
+    "user__edit_profile_user_name_taken" : m40,
     "user__edit_profile_username" : MessageLookupByLibrary.simpleMessage("Användarnamn"),
     "user__email_verification_error" : MessageLookupByLibrary.simpleMessage("Hoppsan! Din kod är ogiltigt eller har gått ut, vänligen försök igen"),
     "user__email_verification_successful" : MessageLookupByLibrary.simpleMessage("Häftigt! Din e-post har verifierats"),
     "user__emoji_field_none_selected" : MessageLookupByLibrary.simpleMessage("Ingen emoji vald"),
-    "user__emoji_search_none_found" : m39,
+    "user__emoji_search_none_found" : m41,
     "user__follow_button_follow_text" : MessageLookupByLibrary.simpleMessage("Följ"),
     "user__follow_button_unfollow_text" : MessageLookupByLibrary.simpleMessage("Sluta följa"),
     "user__follow_lists_no_list_found" : MessageLookupByLibrary.simpleMessage("Inga listor hittades."),
-    "user__follow_lists_no_list_found_for" : m40,
+    "user__follow_lists_no_list_found_for" : m42,
     "user__follow_lists_search_for" : MessageLookupByLibrary.simpleMessage("Sök efter en lista..."),
     "user__follow_lists_title" : MessageLookupByLibrary.simpleMessage("Mina listor"),
     "user__follower_plural" : MessageLookupByLibrary.simpleMessage("följare"),
@@ -737,21 +790,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__followers_title" : MessageLookupByLibrary.simpleMessage("Följare"),
     "user__following_resource_name" : MessageLookupByLibrary.simpleMessage("följda användare"),
     "user__following_text" : MessageLookupByLibrary.simpleMessage("Följer"),
-    "user__follows_list_accounts_count" : m41,
+    "user__follows_list_accounts_count" : m43,
     "user__follows_list_edit" : MessageLookupByLibrary.simpleMessage("Redigera"),
     "user__follows_list_header_title" : MessageLookupByLibrary.simpleMessage("Användare"),
     "user__follows_lists_account" : MessageLookupByLibrary.simpleMessage("1 Konto"),
-    "user__follows_lists_accounts" : m42,
-    "user__groups_see_all" : m43,
+    "user__follows_lists_accounts" : m44,
+    "user__groups_see_all" : m45,
     "user__guidelines_accept" : MessageLookupByLibrary.simpleMessage("Godkänn"),
     "user__guidelines_desc" : MessageLookupByLibrary.simpleMessage("Vänligen lägg en stund på att läsa igenom och godkänna våra riktlinjer."),
     "user__guidelines_reject" : MessageLookupByLibrary.simpleMessage("Avvisa"),
     "user__invite" : MessageLookupByLibrary.simpleMessage("Bjud in"),
     "user__invite_member" : MessageLookupByLibrary.simpleMessage("Medlem"),
-    "user__invite_someone_message" : m44,
+    "user__invite_someone_message" : m46,
     "user__invites_accepted_group_item_name" : MessageLookupByLibrary.simpleMessage("accepterad inbjudan"),
     "user__invites_accepted_group_name" : MessageLookupByLibrary.simpleMessage("accepterade inbjudningar"),
-    "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Accepterad"),
+    "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Accepterade"),
     "user__invites_create_create" : MessageLookupByLibrary.simpleMessage("Skapa"),
     "user__invites_create_create_title" : MessageLookupByLibrary.simpleMessage("Skapa inbjudan"),
     "user__invites_create_edit_title" : MessageLookupByLibrary.simpleMessage("Redigera inbjudan"),
@@ -767,11 +820,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__invites_email_text" : MessageLookupByLibrary.simpleMessage("E-post"),
     "user__invites_invite_a_friend" : MessageLookupByLibrary.simpleMessage("Bjud in en vän"),
     "user__invites_invite_text" : MessageLookupByLibrary.simpleMessage("Bjud in"),
-    "user__invites_joined_with" : m45,
+    "user__invites_joined_with" : m47,
     "user__invites_none_left" : MessageLookupByLibrary.simpleMessage("Du har inga inbjudningar tillgängliga."),
     "user__invites_none_used" : MessageLookupByLibrary.simpleMessage("Det ser ut som att du inte använt några inbjudningar."),
     "user__invites_pending" : MessageLookupByLibrary.simpleMessage("Väntande"),
-    "user__invites_pending_email" : m46,
+    "user__invites_pending_email" : m48,
     "user__invites_pending_group_item_name" : MessageLookupByLibrary.simpleMessage("väntande inbjudan"),
     "user__invites_pending_group_name" : MessageLookupByLibrary.simpleMessage("väntande inbjudningar"),
     "user__invites_refresh" : MessageLookupByLibrary.simpleMessage("Uppdatera"),
@@ -784,14 +837,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__language_settings_saved_success" : MessageLookupByLibrary.simpleMessage("Språket har uppdaterats"),
     "user__language_settings_title" : MessageLookupByLibrary.simpleMessage("Språkinställningar"),
     "user__list_name_empty_error" : MessageLookupByLibrary.simpleMessage("Du måste ge listan ett namn."),
-    "user__list_name_range_error" : m47,
+    "user__list_name_range_error" : m49,
     "user__million_postfix" : MessageLookupByLibrary.simpleMessage("mn"),
     "user__profile_action_cancel_connection" : MessageLookupByLibrary.simpleMessage("Avbryt kontaktförfrågan"),
     "user__profile_action_deny_connection" : MessageLookupByLibrary.simpleMessage("Neka kontaktförfrågan"),
     "user__profile_action_user_blocked" : MessageLookupByLibrary.simpleMessage("Användare blockerad"),
     "user__profile_action_user_unblocked" : MessageLookupByLibrary.simpleMessage("Användare avblockerad"),
-    "user__profile_bio_length_error" : m48,
-    "user__profile_location_length_error" : m49,
+    "user__profile_bio_length_error" : m50,
+    "user__profile_location_length_error" : m51,
     "user__profile_url_invalid_error" : MessageLookupByLibrary.simpleMessage("Vänligen ange en giltig URL."),
     "user__remove_account_from_list" : MessageLookupByLibrary.simpleMessage("Ta bort konto från listor"),
     "user__remove_account_from_list_success" : MessageLookupByLibrary.simpleMessage("Konto borttaget från listor"),
@@ -801,7 +854,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Redigera krets"),
     "user__save_connection_circle_hint" : MessageLookupByLibrary.simpleMessage("t. ex. Vänner, Familj, Jobb."),
     "user__save_connection_circle_name" : MessageLookupByLibrary.simpleMessage("Namn"),
-    "user__save_connection_circle_name_taken" : m50,
+    "user__save_connection_circle_name_taken" : m52,
     "user__save_connection_circle_save" : MessageLookupByLibrary.simpleMessage("Spara"),
     "user__save_connection_circle_users" : MessageLookupByLibrary.simpleMessage("Användare"),
     "user__save_follows_list_create" : MessageLookupByLibrary.simpleMessage("Skapa lista"),
@@ -810,7 +863,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_follows_list_emoji_required_error" : MessageLookupByLibrary.simpleMessage("En emoji krävs"),
     "user__save_follows_list_hint_text" : MessageLookupByLibrary.simpleMessage("t. ex. Resor, Fotografering"),
     "user__save_follows_list_name" : MessageLookupByLibrary.simpleMessage("Namn"),
-    "user__save_follows_list_name_taken" : m51,
+    "user__save_follows_list_name_taken" : m53,
     "user__save_follows_list_save" : MessageLookupByLibrary.simpleMessage("Spara"),
     "user__save_follows_list_users" : MessageLookupByLibrary.simpleMessage("Användare"),
     "user__thousand_postfix" : MessageLookupByLibrary.simpleMessage("t"),
@@ -820,7 +873,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__timeline_filters_circles" : MessageLookupByLibrary.simpleMessage("Kretsar"),
     "user__timeline_filters_clear_all" : MessageLookupByLibrary.simpleMessage("Återställ"),
     "user__timeline_filters_lists" : MessageLookupByLibrary.simpleMessage("Listor"),
-    "user__timeline_filters_no_match" : m52,
+    "user__timeline_filters_no_match" : m54,
     "user__timeline_filters_search_desc" : MessageLookupByLibrary.simpleMessage("Sök efter kretsar och listor..."),
     "user__timeline_filters_title" : MessageLookupByLibrary.simpleMessage("Tidslinjefilter"),
     "user__translate_see_translation" : MessageLookupByLibrary.simpleMessage("Visa översättning"),
@@ -832,15 +885,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__update_connection_circles_title" : MessageLookupByLibrary.simpleMessage("Uppdatera kontaktkretsar"),
     "user_search__cancel" : MessageLookupByLibrary.simpleMessage("Avbryt"),
     "user_search__communities" : MessageLookupByLibrary.simpleMessage("Gemenskaper"),
-    "user_search__list_no_results_found" : m53,
+    "user_search__list_no_results_found" : m55,
     "user_search__list_refresh_text" : MessageLookupByLibrary.simpleMessage("Uppdatera"),
     "user_search__list_retry" : MessageLookupByLibrary.simpleMessage("Tryck för att försöka igen."),
-    "user_search__list_search_text" : m54,
-    "user_search__no_communities_for" : m55,
-    "user_search__no_results_for" : m56,
-    "user_search__no_users_for" : m57,
+    "user_search__list_search_text" : m56,
+    "user_search__no_communities_for" : m57,
+    "user_search__no_results_for" : m58,
+    "user_search__no_users_for" : m59,
     "user_search__search_text" : MessageLookupByLibrary.simpleMessage("Sök..."),
-    "user_search__searching_for" : m58,
-    "user_search__users" : MessageLookupByLibrary.simpleMessage("Användare")
+    "user_search__searching_for" : m60,
+    "user_search__users" : MessageLookupByLibrary.simpleMessage("Användare"),
+    "video_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Från kameran"),
+    "video_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Från galleriet")
   };
 }

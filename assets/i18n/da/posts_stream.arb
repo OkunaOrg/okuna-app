@@ -9,8 +9,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "refreshing_drhoo_subtitle": "Indlæser din tidslinje.",
+    "refreshing_drhoo_subtitle": "Opdaterer stream.",
     "@refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_title": "Denne stream er tom.",
+    "@empty_drhoo_title": {
         "type": "text",
         "placeholders": {}
     },
@@ -24,17 +29,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "failed_drhoo_subtitle": "Try again in a couple seconds",
+    "failed_drhoo_subtitle": "Prøv igen om nogle sekunder",
     "@failed_drhoo_subtitle": {
         "type": "text",
         "placeholders": {}
     },
-    "status_tile_empty": "No posts found",
+    "status_tile_empty": "Ingen indlæg fundet",
     "@status_tile_empty": {
         "type": "text",
         "placeholders": {}
     },
-    "status_tile_no_more_to_load": "🎉  All posts loaded",
+    "status_tile_no_more_to_load": "🎉 Alle indlæg loadet",
     "@status_tile_no_more_to_load": {
         "type": "text",
         "placeholders": {}
