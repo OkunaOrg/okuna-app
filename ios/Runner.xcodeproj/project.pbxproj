@@ -206,6 +206,13 @@
 			remoteGlobalIDString = C9753D7E828995FC13548AB75309010D;
 			remoteInfo = shared_preferences;
 		};
+		89F1965E2334D0FB0072EF30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 04C9ADE89F275E929D78DD9C4E6C2AF2;
+			remoteInfo = VIMediaCache;
+		};
 		89FE1BA42323BCA0007C6904 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
@@ -420,6 +427,7 @@
 				898053B422047AAF00E47AD9 /* liburl_launcher.a */,
 				898053B622047AAF00E47AD9 /* libvideo_player.a */,
 				89E6848E2320235F00E0855B /* libvideo_thumbnail.a */,
+				89F1965F2334D0FB0072EF30 /* libVIMediaCache.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -785,6 +793,13 @@
 			fileType = archive.ar;
 			path = libshared_preferences.a;
 			remoteRef = 89EE3232227B56510094ACB0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89F1965F2334D0FB0072EF30 /* libVIMediaCache.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libVIMediaCache.a;
+			remoteRef = 89F1965E2334D0FB0072EF30 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		89FE1BA52323BCA0007C6904 /* libflutter_image_compress.a */ = {
