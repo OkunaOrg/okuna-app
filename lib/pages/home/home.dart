@@ -80,6 +80,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
+    print('setting 0');
     _loggedInUserUnreadNotifications = 0;
     _lastIndex = 0;
     _currentIndex = 0;
@@ -332,8 +333,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
             overflow: Overflow.visible,
             children: <Widget>[
               const OBIcon(OBIcons.notifications),
-              _loggedInUserUnreadNotifications > 0
-                  ? Positioned(
+              _loggedInUserUnreadNotifications != null
+                  && _loggedInUserUnreadNotifications > 0 ? Positioned(
                       right: -8,
                       child: OBBadge(
                         size: 10,
