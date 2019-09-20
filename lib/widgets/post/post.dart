@@ -1,5 +1,4 @@
 import 'package:Okuna/models/post.dart';
-import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_text.dart';
@@ -11,11 +10,11 @@ import 'package:Okuna/widgets/theming/post_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 
-import '../../provider.dart';
 
-class OBPost extends StatefulWidget {
+class OBPost extends StatelessWidget {
   final Post post;
   final ValueChanged<Post> onPostDeleted;
+  final ValueChanged<Post> onPostIsInView;
   final OnTextExpandedChange onTextExpandedChange;
   final String inViewId;
   final bool isTopPost;
@@ -25,6 +24,7 @@ class OBPost extends StatefulWidget {
   const OBPost(this.post,
       {Key key,
         @required this.onPostDeleted,
+        this.onPostIsInView,
         this.onCommunityExcluded,
         this.onUndoCommunityExcluded,
         this.onTextExpandedChange,
@@ -32,30 +32,11 @@ class OBPost extends StatefulWidget {
         this.isTopPost = false})
       : super(key: key);
 
-  @override
-  OBPostState createState() {
-    return OBPostState();
-  }
-}
-
-class OBPostState extends State<OBPost> {
-  UserService _userService;
-  bool _needsBootstrap;
-  InViewState _inViewState;
-
-  @override
-  void initState() {
-    super.initState();
-    _needsBootstrap = true;
-  }
 
   @override
   Widget build(BuildContext context) {
-    _userService = OpenbookProvider.of(context).userService;
 
-    if (_needsBootstrap) {
-      _bootstrap();
-    }
+    _bootstrap(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -63,23 +44,23 @@ class OBPostState extends State<OBPost> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBPostHeader(
-          post: widget.post,
-          onPostDeleted: widget.onPostDeleted,
-          onPostReported: widget.onPostDeleted,
-          isTopPost: widget.isTopPost,
-          onCommunityExcluded: widget.onCommunityExcluded,
-          onUndoCommunityExcluded: widget.onUndoCommunityExcluded,
+          post: post,
+          onPostDeleted: onPostDeleted,
+          onPostReported: onPostDeleted,
+          isTopPost: isTopPost,
+          onCommunityExcluded: onCommunityExcluded,
+          onUndoCommunityExcluded: onUndoCommunityExcluded,
         ),
-        OBPostBody(widget.post,
-            onTextExpandedChange: widget.onTextExpandedChange,
-            inViewId: widget.inViewId),
-        OBPostReactions(widget.post),
-        OBPostCircles(widget.post),
+        OBPostBody(post,
+            onTextExpandedChange: onTextExpandedChange,
+            inViewId: inViewId),
+        OBPostReactions(post),
+        OBPostCircles(post),
         OBPostComments(
-          widget.post,
+          post,
         ),
         OBPostActions(
-          widget.post,
+          post,
         ),
         const SizedBox(
           height: 16,
@@ -89,33 +70,23 @@ class OBPostState extends State<OBPost> {
     );
   }
 
-  void _bootstrap() {
-    if (widget.inViewId != null) {
+  void _bootstrap(BuildContext context) {
+    InViewState _inViewState;
+    if (inViewId != null) {
       _inViewState = InViewNotifierList.of(context);
-      String postId = widget.post.id.toString();
-      _inViewState.addContext(context: context, id: postId);
+      _inViewState.addContext(context: context, id: inViewId);
 
-      if (widget.isTopPost) {
-        print('added listener for ${widget.inViewId}');
-        _inViewState.addListener(_onInViewStateChanged);
+      if (isTopPost) {
+        _inViewState.addListener(() =>_onInViewStateChanged(_inViewState));
       }
     }
-    _needsBootstrap = false;
   }
 
-  void _onInViewStateChanged() {
-    final bool isInView = _inViewState.inView(widget.inViewId);
-    print('$isInView, ${widget.inViewId}');
+  void _onInViewStateChanged(InViewState _inViewState) {
+    final bool isInView = _inViewState.inView(inViewId);
     if (isInView) {
-      debugPrint('Setting id ${widget.post.id} as last viewed for top posts');
-      print('Setting id ${widget.post.id} as last viewed for top posts');
-      _userService.setTopPostsLastViewedId(widget.post.id);
+      debugPrint('Setting id ${post.id} as last viewed for top posts');
+      if (onPostIsInView != null) onPostIsInView(post);
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _inViewState?.removeListener(_onInViewStateChanged);
   }
 }

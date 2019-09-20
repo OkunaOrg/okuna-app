@@ -107,7 +107,9 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         ],
       );
     } else {
-      return CircularProgressIndicator();
+      return Center(
+        child: CircularProgressIndicator(),
+      );
     }
   }
 
@@ -118,9 +120,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
       _currentTopPosts = topPostsList.posts;
       List<Post> posts = topPostsList.posts.map((topPost) => topPost.post).toList();
       _currentPosts = posts;
-      _needsBootstrap = false;
-      print('This $posts');
     }
+    _needsBootstrap = false;
   }
 
   Widget _topPostBuilder(BuildContext context, Post post, String streamUniqueIdentifier, Function(Post) onPostDeleted) {
@@ -136,11 +137,29 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
       post,
       key: Key(inViewId),
       onPostDeleted: onPostDeleted,
+      onPostIsInView: onPostIsInView,
       onCommunityExcluded: _onCommunityExcluded,
       onUndoCommunityExcluded: _onUndoCommunityExcluded,
       inViewId: inViewId,
       isTopPost: true,
     );
+  }
+
+  void onPostIsInView(Post post) {
+    List<TopPost> _cachablePosts = [];
+    int indexTopPost = _currentTopPosts.indexWhere((topPost) {
+      return topPost.post.id == post.id;
+    });
+    if (indexTopPost >= 4)  {
+      // cache 5 prev top posts 0,1,2,3,4,5,6,7
+      _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+1);
+    } else if (indexTopPost > 0 && indexTopPost < 4) {
+      _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+1);
+    } else if (indexTopPost == 0) {
+      _cachablePosts = [_currentTopPosts[0]];
+    }
+    _userService.setTopPostsLastViewedId(post.id);
+    _userService.setStoredTopPosts(_cachablePosts);
   }
 
   void _onWantsToSeeExcludedCommunities() {

@@ -203,6 +203,7 @@ class UserService {
 
   Future<void> clearCache() async {
     await _removeStoredFirstPostsData();
+    await _removeStoredTopPostsData();
     await DiskCache().clear();
     Post.clearCache();
     User.clearNavigationCache();
@@ -2077,6 +2078,7 @@ class UserService {
   }
 
   TopPostsList _makeTopPostsList(String postsData) {
+    print('stored top posts data $postsData');
     return TopPostsList.fromJson((json.decode(postsData)));
   }
 }
