@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +30,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-white-gold.png'),
+        'assets/images/theme-previews/theme-preview-white-gold.png'),
     OBTheme(
         id: 2,
         name: 'Dark Gold',
@@ -41,7 +43,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-dark-gold.png'),
+        'assets/images/theme-previews/theme-preview-dark-gold.png'),
     OBTheme(
         id: 3,
         name: 'Light',
@@ -78,7 +80,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-light-blue.png'),
+        'assets/images/theme-previews/theme-preview-light-blue.png'),
     OBTheme(
         id: 6,
         name: 'Space Blue',
@@ -91,7 +93,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-space-blue.png'),
+        'assets/images/theme-previews/theme-preview-space-blue.png'),
     OBTheme(
         id: 7,
         name: 'Light Rose',
@@ -104,7 +106,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-light-rose.png'),
+        'assets/images/theme-previews/theme-preview-light-rose.png'),
     OBTheme(
         id: 8,
         name: 'Space Rose',
@@ -117,7 +119,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-space-rose.png'),
+        'assets/images/theme-previews/theme-preview-space-rose.png'),
     OBTheme(
         id: 9,
         name: 'Light Royale',
@@ -130,7 +132,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-light-royale.png'),
+        'assets/images/theme-previews/theme-preview-light-royale.png'),
     OBTheme(
         id: 10,
         name: 'Space Royale',
@@ -143,7 +145,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-space-royale.png'),
+        'assets/images/theme-previews/theme-preview-space-royale.png'),
     OBTheme(
         id: 11,
         name: 'Light Cinnabar',
@@ -156,7 +158,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-light-cinnabar.png'),
+        'assets/images/theme-previews/theme-preview-light-cinnabar.png'),
     OBTheme(
         id: 12,
         name: 'Space Cinnabar',
@@ -169,7 +171,7 @@ class ThemeService {
         dangerColor: '#FF3860',
         dangerColorAccent: '#ffffff',
         themePreview:
-            'assets/images/theme-previews/theme-preview-space-cinnabar.png'),
+        'assets/images/theme-previews/theme-preview-space-cinnabar.png'),
   ];
 
   ThemeService() {
@@ -184,8 +186,11 @@ class ThemeService {
   void setActiveTheme(OBTheme theme) {
     _setActiveTheme(theme);
     _storeActiveThemeId(theme.id);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Pigment.fromString(theme.primaryColor)));
+    if (Platform.isAndroid) {
+      // Only android needs manual switching, iOS is smart about this
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          statusBarColor: Pigment.fromString(theme.primaryColor);
+    }
   }
 
   void _bootstrap() async {
@@ -221,7 +226,9 @@ class ThemeService {
   }
 
   bool isActiveTheme(OBTheme theme) {
-    return theme.id == this.getActiveTheme().id;
+    return theme.id == this
+        .getActiveTheme()
+        .id;
   }
 
   List<OBTheme> getCuratedThemes() {
