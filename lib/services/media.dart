@@ -149,7 +149,7 @@ class MediaService {
     final String resultFilePath = '$path/$resultFileName';
 
     int exitCode = await _flutterFFmpeg.execute(
-        '-i ${video.path} -filter:v scale=720:-2 -vcodec libx264 -crf 23 -preset veryfast ${resultFilePath}');
+        '-y -i ${video.path} -filter:v scale=720:-2 -vcodec libx264 -crf 23 -preset veryfast ${resultFilePath}');
 
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
@@ -188,7 +188,7 @@ class MediaService {
     final String resultFilePath = '$path/$resultFileName';
 
     int exitCode = await _flutterFFmpeg.execute(
-        '-f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
+        '-y -f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
 
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
