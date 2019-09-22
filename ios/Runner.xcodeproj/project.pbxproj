@@ -12,6 +12,8 @@
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57D1735EE1208D167BF5234C /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7DF2A99130AA70B5DC39C6D /* libPods-Runner.a */; };
+		8948310A233808D100A8A6E7 /* libfile_picker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89E684862320235F00E0855B /* libfile_picker.a */; };
+		894831302338090700A8A6E7 /* libsqflite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8928E32022356450001DB32A /* libsqflite.a */; };
 		89ABAE522203425900049DFB /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89ABAE512203425900049DFB /* NotificationService.m */; };
 		89ABAE562203425900049DFB /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 89ABAE4E2203425900049DFB /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		89E6848F2320235F00E0855B /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* libTOCropViewController.a */; };
@@ -331,6 +333,8 @@
 			files = (
 				89FE1B37232028F2007C6904 /* libflutter_ffmpeg.a in Frameworks */,
 				89FE1AE0232023BB007C6904 /* libvideo_thumbnail.a in Frameworks */,
+				894831302338090700A8A6E7 /* libsqflite.a in Frameworks */,
+				8948310A233808D100A8A6E7 /* libfile_picker.a in Frameworks */,
 				89FE1ABF232023A4007C6904 /* liblibwebp.a in Frameworks */,
 				89FE1A9E23202382007C6904 /* libimage_cropper.a in Frameworks */,
 				89E6848F2320235F00E0855B /* libTOCropViewController.a in Frameworks */,
@@ -883,7 +887,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (

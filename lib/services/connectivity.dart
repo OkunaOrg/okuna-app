@@ -6,11 +6,7 @@ class ConnectivityService {
   StreamSubscription _connectivityChangeSubscription;
   ConnectivityResult _connectivity;
 
-  ConnectivityService() {
-    _bootstrapConectivity();
-  }
-
-  void _bootstrapConectivity() async {
+  Future bootstrap() async {
     _connectivity = await Connectivity().checkConnectivity();
     _connectivityChangeSubscription =
         onConnectivityChange(_onConnectivityChange);
