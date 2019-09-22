@@ -189,7 +189,7 @@ class ThemeService {
     if (Platform.isAndroid) {
       // Only android needs manual switching, iOS is smart about this
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-          statusBarColor: Pigment.fromString(theme.primaryColor);
+          statusBarColor: Pigment.fromString(theme.primaryColor)));
     }
   }
 
