@@ -500,26 +500,28 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   }
 
   Future<bool> _onShare({String text, File image, File video}) async {
-    if ((image != null && _hasImage) || (video != null && _hasVideo)) {
-      _toastService.error(
-          message: _localizationService.trans('post__already_has_media'),
-          context: context);
-    } else {
-      if (text != null) {
-        _textController.text = text;
+    if (image != null || video != null) {
+      if (_hasImage) {
+        _removePostImageFile();
+      } else if (_hasVideo) {
+        _removePostVideoFile();
+      }
+    }
+
+    if (text != null) {
+      _textController.text = text;
+    }
+
+    if (image != null) {
+      _setPostImageFile(image);
+    }
+
+    if (video != null) {
+      if (_mediaService.isGif(video)) {
+        video = await _mediaService.convertGifToVideo(video);
       }
 
-      if (image != null) {
-        _setPostImageFile(image);
-      }
-
-      if (video != null) {
-        if (_mediaService.isGif(video)) {
-          video = await _mediaService.convertGifToVideo(video);
-        }
-
-        _setPostVideoFile(video);
-      }
+      _setPostVideoFile(video);
     }
 
     return true;
