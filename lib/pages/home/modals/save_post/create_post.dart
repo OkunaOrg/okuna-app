@@ -509,7 +509,10 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     }
 
     if (text != null) {
-      _textController.text = text;
+      _textController.value = TextEditingValue(
+          text: text,
+          selection: TextSelection.collapsed(offset: text.length),
+      );
     }
 
     if (image != null) {
