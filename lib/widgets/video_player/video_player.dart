@@ -108,8 +108,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         ? widget.visibilityKey
         : Key(visibilityKeyFallback);
 
-    _initializeVideoPlayerFuture =
-        _isVideoHandover ? Future.value() : _playerController.initialize();
+    _initializeVideo();
   }
 
   @override
@@ -128,6 +127,17 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       _playerController.setVolume(100);
     } else {
       _playerController.setVolume(0);
+    }
+  }
+
+  void _initializeVideo() {
+    if(_isVideoHandover){
+      debugLog('Not initializing video player as it is handover');
+      _initializeVideoPlayerFuture = Future.value();
+    } else{
+      debugLog('Initializing video player');
+      _initializeVideoPlayerFuture =
+      _playerController.initialize();
     }
   }
 
@@ -163,11 +173,10 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
             key: _visibilityKey,
             onVisibilityChanged: _onVisibilityChanged,
             child: Chewie(
-              height: widget.height,
-              width: widget.width,
-              controller: _chewieController,
-              isConstrained: widget.isConstrained
-            ),
+                height: widget.height,
+                width: widget.width,
+                controller: _chewieController,
+                isConstrained: widget.isConstrained),
           );
         } else {
           // If the VideoPlayerController is still initializing, show a
@@ -245,6 +254,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     if (widget.chewieController != null) return widget.chewieController;
     double aspectRatio = _playerController.value.aspectRatio;
     return ChewieController(
+        autoInitialize: false,
         videoPlayerController: _playerController,
         showControlsOnInitialize: false,
         customControls: OBVideoPlayerControls(

@@ -205,12 +205,12 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         iosApiKey: environment.intercomIosKey,
         androidApiKey: environment.intercomAndroidKey,
         appId: environment.intercomAppId);
-
-    userPreferencesService.bootstrap();
-
     sentryClient = SentryClient(dsn: environment.sentryDsn);
     linkPreviewService
         .setTrustedProxyUrl(environment.linkPreviewsTrustedProxyUrl);
+
+    await connectivityService.bootstrap();
+    userPreferencesService.bootstrap();
   }
 
   @override

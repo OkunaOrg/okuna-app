@@ -99,7 +99,7 @@ class MediaService {
     String tmpImageName = _uuid.v4() + videoExtension;
     final path = await _getTempPath();
     final String pickedVideoCopyPath = '$path/$tmpImageName';
-    File pickedVideoCopy = await pickedVideo.copy(pickedVideoCopyPath);
+    File pickedVideoCopy = pickedVideo.copySync(pickedVideoCopyPath);
 
     if (!await _validationService.isVideoAllowedSize(pickedVideoCopy)) {
       throw FileTooLargeException(_validationService.getAllowedVideoSize());
