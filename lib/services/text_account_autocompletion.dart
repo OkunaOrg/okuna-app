@@ -4,7 +4,7 @@ class TextAccountAutocompletionService {
   TextAccountAutocompletionResult checkTextForAutocompletion(TextEditingController textController) {
     int cursorPosition = textController.selection.baseOffset;
 
-    if (cursorPosition >= 0) {
+    if (cursorPosition >= 1) {
       String lastWord = _getWordBeforeCursor(textController.text, cursorPosition);
 
       if (lastWord.startsWith('@')) {
@@ -26,8 +26,8 @@ class TextAccountAutocompletionService {
       throw 'Tried to autocomplete text with username without @';
     }
 
-    var newText = text.substring(0, cursorPosition - lastWord.length) + '@$username' + text.substring(cursorPosition);
-    var newSelection = TextSelection.collapsed(offset: cursorPosition - lastWord.length + username.length + 1);
+    var newText = text.substring(0, cursorPosition - lastWord.length) + '@$username ' + text.substring(cursorPosition);
+    var newSelection = TextSelection.collapsed(offset: cursorPosition - lastWord.length + username.length + 2);
 
     textController.value = TextEditingValue(text: newText, selection: newSelection);
   }

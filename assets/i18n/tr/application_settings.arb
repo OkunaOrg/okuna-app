@@ -1,0 +1,82 @@
+{
+    "videos": "Videolar",
+    "@videos": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews": "Bağlantı önizlemeleri",
+    "@link_previews": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay": "Otomatik Oynat",
+    "@videos_autoplay": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_show": "Göster",
+    "@link_previews_show": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_always": "Her Zaman",
+    "@videos_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_wifi_only": "Yalnızca WiFi",
+    "@videos_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_never": "Asla",
+    "@videos_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_always": "Her Zaman",
+    "@link_previews_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_wifi_only": "Yalnızca WiFi",
+    "@link_previews_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_never": "Asla",
+    "@link_previews_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound": "Ses",
+    "@videos_sound": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tap_to_change": "(Değiştirmek için dokunun)",
+    "@tap_to_change": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_enabled": "Etkin",
+    "@videos_sound_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_disabled": "Devre Dışı",
+    "@videos_sound_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_newest_first": "Önce en yeni",
+    "@comment_sort_newest_first": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_oldest_first": "Önce en eski",
+    "@comment_sort_oldest_first": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -2,15 +2,11 @@
     "unknown_error": "Okänt fel",
     "@unknown_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "no_internet_connection": "Ingen internetuppkoppling",
     "@no_internet_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

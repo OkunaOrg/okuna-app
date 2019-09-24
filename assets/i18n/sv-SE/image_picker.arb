@@ -1,0 +1,19 @@
+{
+    "from_gallery": "Från galleriet",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Från kameran",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_too_large": "Filen är för stor (gräns: {limit} MB)",
+    "@error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    }
+}

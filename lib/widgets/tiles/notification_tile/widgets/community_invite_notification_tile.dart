@@ -7,7 +7,6 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/avatars/community_avatar.dart';
-import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +33,6 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
     User inviteCreator = communityInvite.creator;
     Community community = communityInvite.community;
 
-    String inviteCreatorUsername = inviteCreator.username;
     String communityName = community.name;
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);

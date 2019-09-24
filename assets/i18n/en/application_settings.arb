@@ -4,8 +4,18 @@
     "type": "text",
     "placeholders": {}
   },
+  "link_previews": "Link previews",
+  "@link_previews": {
+    "type": "text",
+    "placeholders": {}
+  },
   "videos_autoplay": "Autoplay",
   "@videos_autoplay": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_show": "Show",
+  "@link_previews_show": {
     "type": "text",
     "placeholders": {}
   },
@@ -21,6 +31,21 @@
   },
   "videos_autoplay_never": "Never",
   "@videos_autoplay_never": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_autoplay_always": "Always",
+  "@link_previews_autoplay_always": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_autoplay_wifi_only": "Wifi only",
+  "@link_previews_autoplay_wifi_only": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_autoplay_never": "Never",
+  "@link_previews_autoplay_never": {
     "type": "text",
     "placeholders": {}
   },

@@ -75,7 +75,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                      _localizationService.drawer__useful_links_guidelines_handbook_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl('https://openbook.support/');
+                    urlLauncherService.launchUrl('https://okuna.support/');
                   },
                 ),
                 ListTile(

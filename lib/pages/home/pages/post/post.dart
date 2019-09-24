@@ -59,7 +59,7 @@ class OBPostPageState extends State<OBPostPage> {
                     key: _refreshIndicatorKey,
                     child: ListView(
                       padding: const EdgeInsets.all(0),
-                      physics: const AlwaysScrollableScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       children: <Widget>[
                         StreamBuilder(
                             stream: widget.post.updateSubject,
@@ -79,6 +79,7 @@ class OBPostPageState extends State<OBPostPage> {
 
     return OBPost(
       latestPost,
+      key: Key(latestPost.id.toString()),
       onPostDeleted: _onPostDeleted,
     );
   }

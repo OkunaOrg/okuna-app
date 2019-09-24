@@ -58,7 +58,7 @@ android {
 
     defaultConfig {
         applicationId "social.openbook.app"
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

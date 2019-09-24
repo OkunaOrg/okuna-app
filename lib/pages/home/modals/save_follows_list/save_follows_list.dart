@@ -245,9 +245,10 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
   void _onWantsToPickEmoji() async {
     Emoji pickedEmoji = await Navigator.push(
         context,
-        OBSlideRightRoute(
-            key: Key('obSlidePickFollowsListEmojiPage'),
-            widget: OBPickFollowsListEmojiPage()));
+        OBSlideRightRoute<Emoji>(builder: (BuildContext context) {
+          return OBPickFollowsListEmojiPage();
+        }),
+    );
 
     if (pickedEmoji != null) _onPickedEmoji(pickedEmoji);
   }

@@ -1,0 +1,47 @@
+{
+    "all_loaded": "🎉 Alla inlägg inlästa",
+    "@all_loaded": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_title": "Håll ut!",
+    "@refreshing_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "refreshing_drhoo_subtitle": "Uppdaterar flödet.",
+    "@refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_title": "Det här flödet är tomt.",
+    "@empty_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_subtitle": "Försök igen om några sekunder.",
+    "@empty_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_title": "Kunde inte läsa in flödet.",
+    "@failed_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "failed_drhoo_subtitle": "Försök igen om några sekunder",
+    "@failed_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_empty": "Inga inlägg hittades",
+    "@status_tile_empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "status_tile_no_more_to_load": "🎉 Alla inlägg inlästa",
+    "@status_tile_no_more_to_load": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -211,6 +211,21 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_new_post_label": "Create new post",
+  "@create_new_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_new_community_post_label": "Create new communtiy post",
+  "@create_new_community_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "close_create_post_label": "Close create new post",
+  "@close_create_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
   "create_next": "Next",
   "@create_next": {
     "type": "text",

@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/storage.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'localization.dart';
@@ -7,16 +11,43 @@ import 'localization.dart';
 class UserPreferencesService {
   LocalizationService _localizationService;
   OBStorage _storage;
+  ConnectivityService _connectivityService;
+
   static const postCommentsSortTypeStorageKey = 'postCommentsSortType';
   static const videosAutoPlaySettingStorageKey = 'videosAutoPlaySetting';
+  static const linkPreviewsSettingStorageKey = 'linkPreviewsSetting';
   static const videosSoundSettingStorageKey = 'videoSoundSetting';
+
+  ConnectivityResult _currentConnectivity;
+  StreamSubscription _connectivityChangeSubscription;
+
   Future _getPostCommentsSortTypeCache;
+
+  Stream<bool> get videosAutoPlayAreEnabledChange =>
+      _videosAutoPlayEnabledChangeSubject.stream;
+
+  final _videosAutoPlayEnabledChangeSubject = BehaviorSubject<bool>();
+
+  bool _videosAutoPlayAreEnabled = false;
+
+  Stream<bool> get linkPreviewsAreEnabledChange =>
+      _linkPreviewsEnabledChangeSubject.stream;
+
+  final _linkPreviewsEnabledChangeSubject = BehaviorSubject<bool>();
+
+  bool _linkPreviewsAreEnabled = false;
 
   Stream<VideosSoundSetting> get videosSoundSettingChange =>
       _videosSoundSettingChangeSubject.stream;
 
   final _videosSoundSettingChangeSubject =
       BehaviorSubject<VideosSoundSetting>();
+
+  Stream<LinkPreviewsSetting> get linkPreviewsSettingChange =>
+      _linkPreviewsSettingChangeSubject.stream;
+
+  final _linkPreviewsSettingChangeSubject =
+      BehaviorSubject<LinkPreviewsSetting>();
 
   Stream<VideosAutoPlaySetting> get videosAutoPlaySettingChange =>
       _videosAutoPlaySettingChangeSubject.stream;
@@ -29,14 +60,74 @@ class UserPreferencesService {
         namespace: 'userPreferences');
   }
 
+  // Bootstrapped after connectivity service is given in the provider
+  void bootstrap() async {
+    _currentConnectivity = _connectivityService.getConnectivity();
+    _refreshConnectivityDependentSettings();
+
+    _connectivityChangeSubscription =
+        _connectivityService.onConnectivityChange(_onConnectivityChange);
+  }
+
+  void _onConnectivityChange(ConnectivityResult newConnectivity) {
+    _currentConnectivity = newConnectivity;
+    _refreshConnectivityDependentSettings();
+  }
+
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
   }
 
-  Future setVideosAutoPlaySetting(VideosAutoPlaySetting videosAutoPlaySetting) {
+  void setConnectivityService(ConnectivityService connectivityService) {
+    _connectivityService = connectivityService;
+  }
+
+  void dispose() {
+    _connectivityChangeSubscription?.cancel();
+    _linkPreviewsEnabledChangeSubject.close();
+    _videosSoundSettingChangeSubject.close();
+    _videosAutoPlaySettingChangeSubject.close();
+    _videosAutoPlayEnabledChangeSubject.close();
+  }
+
+  bool getLinkPreviewsAreEnabled() {
+    return _linkPreviewsAreEnabled;
+  }
+
+  Future setLinkPreviewsSetting(LinkPreviewsSetting linkPreviewsSetting) async {
+    String rawValue = linkPreviewsSetting.toString();
+    _linkPreviewsSettingChangeSubject.add(linkPreviewsSetting);
+    await _storage.set(linkPreviewsSettingStorageKey, rawValue);
+    _refreshLinkPreviewsAreEnabled();
+  }
+
+  Future<LinkPreviewsSetting> getLinkPreviewsSetting() async {
+    String rawValue = await _storage.get(linkPreviewsSettingStorageKey,
+        defaultValue: LinkPreviewsSetting.always.toString());
+    return LinkPreviewsSetting.parse(rawValue);
+  }
+
+  Map<LinkPreviewsSetting, String> getLinkPreviewsSettingLocalizationMap() {
+    return {
+      LinkPreviewsSetting.always: _localizationService
+          .application_settings__link_previews_autoplay_always,
+      LinkPreviewsSetting.never: _localizationService
+          .application_settings__link_previews_autoplay_never,
+      LinkPreviewsSetting.wifiOnly: _localizationService
+          .application_settings__link_previews_autoplay_wifi_only
+    };
+  }
+
+  bool getVideosAutoPlayAreEnabled() {
+    return _videosAutoPlayAreEnabled;
+  }
+
+  Future setVideosAutoPlaySetting(
+      VideosAutoPlaySetting videosAutoPlaySetting) async {
     String rawValue = videosAutoPlaySetting.toString();
     _videosAutoPlaySettingChangeSubject.add(videosAutoPlaySetting);
-    return _storage.set(videosAutoPlaySettingStorageKey, rawValue);
+    await _storage.set(videosAutoPlaySettingStorageKey, rawValue);
+    _refreshVideosAutoPlayAreEnabled();
   }
 
   Future<VideosAutoPlaySetting> getVideosAutoPlaySetting() async {
@@ -102,6 +193,31 @@ class UserPreferencesService {
 
   PostCommentsSortType _getDefaultPostCommentsSortType() {
     return PostCommentsSortType.asc;
+  }
+
+  void _refreshConnectivityDependentSettings() {
+    _refreshLinkPreviewsAreEnabled();
+    _refreshVideosAutoPlayAreEnabled();
+  }
+
+  void _refreshLinkPreviewsAreEnabled() async {
+    LinkPreviewsSetting currentLinkPreviewsSetting =
+        await getLinkPreviewsSetting();
+    _linkPreviewsAreEnabled =
+        currentLinkPreviewsSetting == LinkPreviewsSetting.always ||
+            (currentLinkPreviewsSetting == LinkPreviewsSetting.wifiOnly &&
+                _currentConnectivity == ConnectivityResult.wifi);
+    _linkPreviewsEnabledChangeSubject.add(_linkPreviewsAreEnabled);
+  }
+
+  void _refreshVideosAutoPlayAreEnabled() async {
+    VideosAutoPlaySetting currentVideosAutoPlaySetting =
+        await getVideosAutoPlaySetting();
+    _videosAutoPlayAreEnabled =
+        currentVideosAutoPlaySetting == VideosAutoPlaySetting.always ||
+            (currentVideosAutoPlaySetting == VideosAutoPlaySetting.wifiOnly &&
+                _currentConnectivity == ConnectivityResult.wifi);
+    _videosAutoPlayEnabledChangeSubject.add(_videosAutoPlayAreEnabled);
   }
 
   Future clear() {
@@ -175,5 +291,40 @@ class VideosSoundSetting {
     }
 
     return soundSetting;
+  }
+}
+
+class LinkPreviewsSetting {
+  final String code;
+
+  const LinkPreviewsSetting._internal(this.code);
+
+  toString() => code;
+
+  static const never = const LinkPreviewsSetting._internal('n');
+  static const always = const LinkPreviewsSetting._internal('a');
+  static const wifiOnly = const LinkPreviewsSetting._internal('w');
+
+  static const _values = const <LinkPreviewsSetting>[never, always, wifiOnly];
+
+  static values() => _values;
+
+  static LinkPreviewsSetting parse(String string) {
+    if (string == null) return null;
+
+    LinkPreviewsSetting autoPlaySetting;
+    for (var type in _values) {
+      if (string == type.code) {
+        autoPlaySetting = type;
+        break;
+      }
+    }
+
+    if (autoPlaySetting == null) {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported links previews setting');
+    }
+
+    return autoPlaySetting;
   }
 }

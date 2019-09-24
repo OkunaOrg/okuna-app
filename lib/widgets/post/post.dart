@@ -25,9 +25,11 @@ class OBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    InViewState state = InViewNotifierList.of(context);
-    String postId = post.id.toString();
-    state.addContext(context: context, id: postId);
+    if (inViewId != null) {
+      InViewState state = InViewNotifierList.of(context);
+      String postId = post.id.toString();
+      state.addContext(context: context, id: postId);
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -41,13 +43,7 @@ class OBPost extends StatelessWidget {
         ),
         OBPostBody(post,
             onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),
-        const SizedBox(
-          height: 20,
-        ),
         OBPostReactions(post),
-        const SizedBox(
-          height: 10,
-        ),
         OBPostCircles(post),
         OBPostComments(
           post,

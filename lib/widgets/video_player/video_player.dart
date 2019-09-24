@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_widgets/flutter_widgets.dart';
 import 'package:video_player/video_player.dart';
 
 import '../progress_indicator.dart';
+
+var rng = new Random();
 
 class OBVideoPlayer extends StatefulWidget {
   final File video;
@@ -23,6 +26,9 @@ class OBVideoPlayer extends StatefulWidget {
   final bool isInDialog;
   final bool autoPlay;
   final OBVideoPlayerController controller;
+  final double height;
+  final double width;
+  final bool isConstrained;
 
   const OBVideoPlayer(
       {Key key,
@@ -34,7 +40,10 @@ class OBVideoPlayer extends StatefulWidget {
       this.isInDialog = false,
       this.autoPlay = false,
       this.visibilityKey,
-      this.controller})
+      this.height,
+      this.width,
+      this.controller,
+      this.isConstrained})
       : super(key: key);
 
   @override
@@ -91,14 +100,15 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       throw Exception('Video dialog requires video or videoUrl.');
     }
 
+    visibilityKeyFallback += '-${rng.nextInt(1000)}';
+
     _playerController.setVolume(0);
 
     _visibilityKey = widget.visibilityKey != null
         ? widget.visibilityKey
         : Key(visibilityKeyFallback);
 
-    _initializeVideoPlayerFuture =
-        _isVideoHandover ? Future.value() : _playerController.initialize();
+    _initializeVideo();
   }
 
   @override
@@ -117,6 +127,17 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       _playerController.setVolume(100);
     } else {
       _playerController.setVolume(0);
+    }
+  }
+
+  void _initializeVideo() {
+    if(_isVideoHandover){
+      debugLog('Not initializing video player as it is handover');
+      _initializeVideoPlayerFuture = Future.value();
+    } else{
+      debugLog('Initializing video player');
+      _initializeVideoPlayerFuture =
+      _playerController.initialize();
     }
   }
 
@@ -152,8 +173,10 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
             key: _visibilityKey,
             onVisibilityChanged: _onVisibilityChanged,
             child: Chewie(
-              controller: _chewieController,
-            ),
+                height: widget.height,
+                width: widget.width,
+                controller: _chewieController,
+                isConstrained: widget.isConstrained),
           );
         } else {
           // If the VideoPlayerController is still initializing, show a
@@ -231,6 +254,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     if (widget.chewieController != null) return widget.chewieController;
     double aspectRatio = _playerController.value.aspectRatio;
     return ChewieController(
+        autoInitialize: false,
         videoPlayerController: _playerController,
         showControlsOnInitialize: false,
         customControls: OBVideoPlayerControls(
@@ -250,7 +274,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     if (_hasVideoOpenedInDialog) return;
     bool isVisible = visibilityInfo.visibleFraction != 0;
 
-    debugLog('isVisible: ${isVisible.toString()}');
+    debugLog(
+        'isVisible: ${isVisible.toString()} with fraction ${visibilityInfo.visibleFraction}');
 
     if (!isVisible && _playerController.value.isPlaying && mounted) {
       debugLog('Its not visible and the video is playing. Now pausing. .');

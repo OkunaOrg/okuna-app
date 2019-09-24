@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
-import 'package:chewie/src/chewie_player.dart';
-import 'package:chewie/src/chewie_progress_colors.dart';
-import 'package:chewie/src/material_progress_bar.dart';
-import 'package:chewie/src/utils.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_progress_colors.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/material_progress_bar.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -449,7 +449,7 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
     return new Expanded(
       child: new Padding(
         padding: new EdgeInsets.only(right: 20.0),
-        child: new MaterialVideoProgressBar(
+        child: MaterialVideoProgressBar(
           controller,
           onDragStart: () {
             setState(() {

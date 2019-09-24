@@ -35,10 +35,10 @@ class ValidationService {
   static const int PROFILE_NAME_MIN_LENGTH = 1;
   static const int PROFILE_LOCATION_MAX_LENGTH = 64;
   static const int PROFILE_BIO_MAX_LENGTH = 1000;
-  static const int POST_IMAGE_MAX_SIZE = 10971520;
-  static const int AVATAR_IMAGE_MAX_SIZE = 10485760;
-  static const int COVER_IMAGE_MAX_SIZE = 10485760;
-  static const int VIDEO_MAX_SIZE = 10971520;
+  static const int POST_IMAGE_MAX_SIZE = 20971520;
+  static const int AVATAR_IMAGE_MAX_SIZE = 20971520;
+  static const int COVER_IMAGE_MAX_SIZE = 20971520;
+  static const int VIDEO_MAX_SIZE = 20971520;
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;

@@ -2,502 +2,360 @@
     "filters_title": "Modereringsfilter",
     "@filters_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_reset": "Återställ",
     "@filters_reset": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_verified": "Verifierad",
     "@filters_verified": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_apply": "Applicera filter",
     "@filters_apply": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_type": "Typ",
     "@filters_type": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_status": "Status",
     "@filters_status": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_other": "Övrigt",
     "@filters_other": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_review": "Granska",
     "@actions_review": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_chat_with_team": "Chatta med teamet",
     "@actions_chat_with_team": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_category_title": "Uppdatera kategori",
     "@update_category_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_category_save": "Spara",
     "@update_category_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_save": "Spara",
     "@update_description_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_title": "Redigera beskrivning",
     "@update_description_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_report_desc": "Anmäl beskrivning",
     "@update_description_report_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_report_hint_text": "t. ex. anmälan var...",
     "@update_description_report_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_status_save": "Spara",
     "@update_status_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_status_title": "Uppdatera status",
     "@update_status_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_review_title": "Granska modererat objekt",
     "@community_review_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_title": "Objekt",
     "@moderated_object_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_status": "Status",
     "@moderated_object_status": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_reports_count": "Antal anmälningar",
     "@moderated_object_reports_count": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_verified_by_staff": "Verifierad av Okunas personal",
     "@moderated_object_verified_by_staff": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_verified": "Verifierad",
     "@moderated_object_verified": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_true_text": "Sant",
     "@moderated_object_true_text": {
-        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "description": "Eg. Moderated object verified by staff? true / false",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_false_text": "Falskt",
     "@moderated_object_false_text": {
-        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "description": "Eg. Moderated object verified by staff? true / false",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_review_object": "Objekt",
     "@community_review_object": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_review_approve": "Godkänn",
     "@community_review_approve": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_review_reject": "avvisa",
     "@community_review_reject": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_review_item_verified": "Den här anmälan har verifierats",
     "@community_review_item_verified": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "global_review_title": "Granska modererat objekt",
     "@global_review_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "global_review_object_text": "Objekt",
     "@global_review_object_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "global_review_verify_text": "Verifiera",
     "@global_review_verify_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "global_review_unverify_text": "Av-verifiera",
     "@global_review_unverify_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_title": "Skicka anmälan",
     "@confirm_report_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_details": "Kan du delge extra information som kan vara relevant för anmälan?",
     "@confirm_report_provide_details": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_optional_info": "(Valfritt)",
     "@confirm_report_provide_optional_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_optional_hint_text": "Skriv här...",
     "@confirm_report_provide_optional_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_happen_next": "Detta kommer hända härnäst:",
     "@confirm_report_provide_happen_next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_happen_next_desc": "- Din anmälan skickas in anonymt.\n- Om du anmäler ett inlägg eller en kommentar så kommer anmälan skickas till Okunas personal och, om tillämpligt, gemenskapens moderatorer, och inlägget kommer döljas från ditt flöde.\n- Om du anmäler ett konto eller en gemenskap kommer anmälan skickas till Okunas personal.\n- Vi granskar anmälan och om den godkänns kommer innehållet tas bort och straff utmätas till de som är inblandade, från tillfällig avstängning till borttagning av konto beroende på hur allvarlig överträdelsen var.\n- Om anmälan bedöms vara gjord för att försöka skada en annan medlem eller gemenskap på plattformen utan att den angivna överträdelsen har skett kommer straff istället utmätas mot dig. \n",
     "@confirm_report_provide_happen_next_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_submit": "Jag förstår, skicka.",
     "@confirm_report_submit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_user_reported": "Användare anmäld",
     "@confirm_report_user_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_community_reported": "Gemenskap anmäld",
     "@confirm_report_community_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_post_reported": "Inlägg anmält",
     "@confirm_report_post_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_post_comment_reported": "Inläggskommentar anmäld",
     "@confirm_report_post_comment_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_item_reported": "Objekt anmält",
     "@confirm_report_item_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_moderated_objects": "Gemenskapens modererade objekt",
     "@community_moderated_objects": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "globally_moderated_objects": "Globalt modererade objekt",
     "@globally_moderated_objects": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "tap_to_retry": "Tryck för att försöka läsa in poster igen",
     "@tap_to_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "report_post_text": "Anmäl inlägg",
     "@report_post_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_post_text": "Du har anmält det här inlägget",
     "@you_have_reported_post_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "report_account_text": "Anmäl konto",
     "@report_account_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_account_text": "Du har anmält det här kontot",
     "@you_have_reported_account_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "report_community_text": "Anmäl gemenskap",
     "@report_community_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_community_text": "Du har anmält den här gemenskapen",
     "@you_have_reported_community_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "report_comment_text": "Anmäl kommentar",
     "@report_comment_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_comment_text": "Du har anmält den här kommentaren",
     "@you_have_reported_comment_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "description_text": "Beskrivning",
     "@description_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "no_description_text": "Ingen beskrivning",
     "@no_description_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "category_text": "Kategori",
     "@category_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reporter_text": "Anmälare",
     "@reporter_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reports_preview_title": "Anmälningar",
     "@reports_preview_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reports_preview_resource_reports": "anmälningar",
     "@reports_preview_resource_reports": {
         "description": "Usage: See all reports..",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reports_see_all": "Visa alla {resourceCount} {resourceName}",
     "@reports_see_all": {
         "description": "Usage: See all 4 reports.",
         "type": "text",
         "placeholders": {
-            "resourceCount": {
-
-            },
-            "resourceName": {
-
-            }
+            "resourceCount": {},
+            "resourceName": {}
         }
     },
     "object_status_title": "Status",
     "@object_status_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_moderation_tasks_title": "Väntande modereringsuppgifter",
     "@my_moderation_tasks_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "pending_moderation_tasks_singular": "väntande modereringsuppgift",
     "@pending_moderation_tasks_singular": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "pending_moderation_tasks_plural": "väntande modereringsuppgifter",
     "@pending_moderation_tasks_plural": {
         "description": "Eg. No pending moderation tasks found",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_moderation_penalties_title": "Modereringsstraff",
     "@my_moderation_penalties_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_moderation_penalties_resouce_singular": "modereringsstraff",
     "@my_moderation_penalties_resouce_singular": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_moderation_penalties_resource_plural": "modereringsstraff",
     "@my_moderation_penalties_resource_plural": {
         "description": "See all moderation penalties, No moderation penalties found etc..",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

@@ -1,745 +1,531 @@
 {
-    "headline": "Bättre socialt.",
+    "headline": "Better social.",
     "@headline": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login": "Logga in",
     "@login": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "email_empty_error": "Du måste ange en e-postadress.",
     "@email_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "email_invalid_error": "Vänligen ange en giltig e-postadress.",
     "@email_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "username_empty_error": "Du måste ange ett användarnamn.",
     "@username_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "username_characters_error": "Ett användarnamn kan bara innehålla alfanumeriska tecken och understreck.",
     "@username_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "username_maxlength_error": "Ett användarnamn kan inte vara längre än {maxLength} tecken.",
     "@username_maxlength_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "create_account": "Registrera dig",
     "@create_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__lets_get_started": "Låt oss komma igång",
     "@create_acc__lets_get_started": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__welcome_to_beta": "Välkommen till betan!",
     "@create_acc__welcome_to_beta": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__previous": "Tillbaka",
     "@create_acc__previous": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__next": "Nästa",
     "@create_acc__next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__create_account": "Skapa konto",
     "@create_acc__create_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__paste_link": "Klistra in din registreringslänk nedan",
     "@create_acc__paste_link": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__paste_password_reset_link": "Klistra in din lösenordsåterställningslänk nedan",
     "@create_acc__paste_password_reset_link": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__paste_link_help_text": "Använd länken från Join Okuna-knappen i din inbjudan.",
     "@create_acc__paste_link_help_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__link_empty_error": "Du måste ange en länk.",
     "@create_acc__link_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__link_invalid_error": "Länken verkar vara ogiltig.",
     "@create_acc__link_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "password_empty_error": "Du måste ange ett lösenord.",
     "@password_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "password_range_error": "Lösenordet måste vara mellan {minLength} och {maxLength} tecken.",
     "@password_range_error": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "name_empty_error": "Du måste ange ett namn.",
     "@name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "name_range_error": "Namnet måste vara mellan {minLength} och {maxLength} tecken.",
     "@name_range_error": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "description_empty_error": "Du måste skriva en beskrivning.",
     "@description_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "description_range_error": "Beskrivningen måste vara mellan {minLength} och {maxLength} tecken.",
     "@description_range_error": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "reset_password_success_title": "Allt klart!",
     "@reset_password_success_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reset_password_success_info": "Ditt lösenord har uppdaterats",
     "@reset_password_success_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__request_invite": "Ingen inbjudan? Be om en här.",
     "@create_acc__request_invite": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__subscribe": "Begär",
     "@create_acc__subscribe": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__subscribe_to_waitlist_text": "Be om en inbjudan!",
     "@create_acc__subscribe_to_waitlist_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__congratulations": "Gratulerar!",
     "@create_acc__congratulations": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__your_subscribed": "Du är {0} på väntelistan.",
     "@create_acc__your_subscribed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__almost_there": "Nästan klart...",
     "@create_acc__almost_there": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_name": "Vad heter du?",
     "@create_acc__what_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_placeholder": "James Bond",
     "@create_acc__name_placeholder": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_empty_error": "😱 Du måste ange ett namn.",
     "@create_acc__name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_length_error": "😱 Ditt namn får inte vara längre än 50 tecken. (Vi är ledsna om det är det.)",
     "@create_acc__name_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_characters_error": "😅 Ett namn kan bara innehålla alfanumeriska tecken (för tillfället).",
     "@create_acc__name_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_username": "Välj ett användarnamn",
     "@create_acc__what_username": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__username_placeholder": "pablopicasso",
     "@create_acc__username_placeholder": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__username_empty_error": "😱 Du måste ange ett användarnamn.",
     "@create_acc__username_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__username_length_error": "😅 Ett användarnamn kan inte vara längre än 30 tecken.",
     "@create_acc__username_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__username_characters_error": "😅 Ett användarnamn kan bara innehålla alfanumeriska tecken och understreck.",
     "@create_acc__username_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__username_taken_error": "😩 Användarnamnet @%s är upptaget.",
     "@create_acc__username_taken_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__username_server_error": "😭 Vi har serverproblem, vänligen försök igen om några minuter.",
     "@create_acc__username_server_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_email": "Vad är din e-post?",
     "@create_acc__what_email": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__email_placeholder": "john_travolta@mail.com",
     "@create_acc__email_placeholder": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__email_empty_error": "😱 Du måste ange en e-postadress",
     "@create_acc__email_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__email_invalid_error": "😅 Vänligen ange en giltig e-postadress.",
     "@create_acc__email_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__email_taken_error": "🤔 Det finns redan ett konto med den e-postadressen.",
     "@create_acc__email_taken_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__email_server_error": "😭 Vi har serverproblem, vänligen försök igen om några minuter.",
     "@create_acc__email_server_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_password": "Välj ett lösenord",
     "@create_acc__what_password": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc_password_hint_text": "({minLength}-{maxLength} tecken)",
     "@create_acc_password_hint_text": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "create_acc__what_password_subtext": "(minst 10 tecken)",
     "@create_acc__what_password_subtext": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__password_empty_error": "😱 Du måste ange ett lösenord",
     "@create_acc__password_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__password_length_error": "😅 Ett lösenord måste vara mellan 8 och 64 tecken.",
     "@create_acc__password_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_avatar": "Välj en profilbild",
     "@create_acc__what_avatar": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_tap_to_change": "Tryck för att ändra",
     "@create_acc__avatar_tap_to_change": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_choose_camera": "Ta ett foto",
     "@create_acc__avatar_choose_camera": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_choose_gallery": "Använd ett existerande foto",
     "@create_acc__avatar_choose_gallery": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_remove_photo": "Ta bort foto",
     "@create_acc__avatar_remove_photo": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done": "Skapa konto",
     "@create_acc__done": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_subtext": "Du kan ändra detta i dina profilinställningar.",
     "@create_acc__done_subtext": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_created": "Ditt konto har skapats med användarnamnet ",
     "@create_acc__done_created": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_loading_title": "Håll ut!",
     "@create_acc__submit_loading_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_loading_desc": "Vi skapar ditt konto.",
     "@create_acc__submit_loading_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_error_title": "Åh, nej...",
     "@create_acc__submit_error_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_error_desc_server": "😭 Vi har serverproblem, vänligen försök igen om några minuter.",
     "@create_acc__submit_error_desc_server": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_error_desc_validation": "😅 Det ser ut som att en del av informationen var felaktig, vänligen kontrollera den och försök igen.",
     "@create_acc__submit_error_desc_validation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_title": "Hurra!",
     "@create_acc__done_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_description": "Ditt konto har skapats.",
     "@create_acc__done_description": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__your_username_is": "Ditt användarnamn är ",
     "@create_acc__your_username_is": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__can_change_username": "Om du vill så kan du ändra det när som helst från din profilsida.",
     "@create_acc__can_change_username": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_continue": "Logga in",
     "@create_acc__done_continue": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__one_last_thing": "En sista sak...",
     "@create_acc__one_last_thing": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__register": "Registrera",
     "@create_acc__register": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__are_you_legal_age": "Är du äldre än 16 år?",
     "@create_acc__are_you_legal_age": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__login": "Fortsätt",
     "@login__login": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__previous": "Tillbaka",
     "@login__previous": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__title": "Välkommen tillbaka!",
     "@login__title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__subtitle": "Ange dina inloggningsuppgifter för att fortsätta.",
     "@login__subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__forgot_password": "Glömt lösenordet",
     "@login__forgot_password": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__forgot_password_subtitle": "Ange ditt användarnamn eller e-postadress",
     "@login__forgot_password_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_label": "Användarnamn",
     "@login__username_label": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__password_label": "Lösenord",
     "@login__password_label": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__email_label": "E-postadress",
     "@login__email_label": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__or_text": "Eller",
     "@login__or_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__password_empty_error": "Ett lösenord krävs.",
     "@login__password_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__password_length_error": "Lösenordet måste vara mellan 8 och 64 tecken.",
     "@login__password_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_empty_error": "Ett användarnamn krävs.",
     "@login__username_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_length_error": "Användarnamnet kan inte vara längre än 30 tecken.",
     "@login__username_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_characters_error": "Användarnamnet kan bara innehålla alfanumeriska tecken och understreck.",
     "@login__username_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__credentials_mismatch_error": "De angivna uppgifterna matchar inte.",
     "@login__credentials_mismatch_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__server_error": "Åh nej.. Vi har serverproblem. Vänligen försök igen om några minuter.",
     "@login__server_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__connection_error": "Vi kan inte nå våra servrar. Är du uppkopplad mot internet?",
     "@login__connection_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_title": "Ändra lösenord",
     "@change_password_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_current_pwd": "Nuvarande lösenord",
     "@change_password_current_pwd": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_current_pwd_hint": "Ange ditt nuvarande lösenord",
     "@change_password_current_pwd_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_current_pwd_incorrect": "Det angivna lösenordet var felaktigt",
     "@change_password_current_pwd_incorrect": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_new_pwd": "Nytt lösenord",
     "@change_password_new_pwd": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_new_pwd_hint": "Ange ditt nya lösenord",
     "@change_password_new_pwd_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_new_pwd_error": "Vänligen se till att lösenordet är mellan 10 och 100 tecken långt",
     "@change_password_new_pwd_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_save_text": "Spara",
     "@change_password_save_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_save_success": "Allt klart! Ditt lösenord har uppdaterats",
     "@change_password_save_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

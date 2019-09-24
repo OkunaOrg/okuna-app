@@ -2,809 +2,600 @@
     "open_post": "Öppna inlägg",
     "@open_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "close_post": "Stäng inlägg",
     "@close_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_opened": "Inlägg öppnat",
     "@post_opened": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_closed": "Inlägg stängt ",
     "@post_closed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_required_error": "Kommentaren kan inte vara tom.",
     "@comment_required_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_maxlength_error": "En kommentar kan inte vara längre än {maxLength} tecken.",
     "@comment_maxlength_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "timeline_posts_all_loaded": "🎉 Alla inlägg inlästa",
     "@timeline_posts_all_loaded": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_refreshing_drhoo_title": "Håll ut!",
     "@timeline_posts_refreshing_drhoo_title": {
         "type": "text",
-        "placeholders": {
-
-        }
-    },
-    "timeline_posts_refreshing_drhoo_subtitle": "Läser in din tidslinje.",
-    "@timeline_posts_refreshing_drhoo_subtitle": {
-        "type": "text",
-        "placeholders": {
-
-        }
-    },
-    "timeline_posts_no_more_drhoo_title": "Din tidslinje är tom.",
-    "@timeline_posts_no_more_drhoo_title": {
-        "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_no_more_drhoo_subtitle": "Följ användare eller gå med i en gemenskap för att komma igång!",
     "@timeline_posts_no_more_drhoo_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_failed_drhoo_title": "Din tidslinje kunde inte läsas in.",
     "@timeline_posts_failed_drhoo_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_failed_drhoo_subtitle": "Försök igen om några sekunder",
     "@timeline_posts_failed_drhoo_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_default_drhoo_title": "Det är något som inte stämmer.",
     "@timeline_posts_default_drhoo_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_default_drhoo_subtitle": "Försök läsa in tidslinjen igen.",
     "@timeline_posts_default_drhoo_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_refresh_posts": "Läs in inlägg",
     "@timeline_posts_refresh_posts": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "no_circles_for": "Inga kretsar hittades som matchar '{circlesSearchQuery}'.",
     "@no_circles_for": {
         "type": "text",
         "placeholders": {
-            "circlesSearchQuery": {
-
-            }
+            "circlesSearchQuery": {}
         }
     },
     "share_to_circles": "Dela med kretsar",
     "@share_to_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_post": " Inlägg",
     "@profile_counts_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_posts": " Inlägg",
     "@profile_counts_posts": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_followers": " Följare",
     "@profile_counts_followers": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_following": " Följer",
     "@profile_counts_following": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_follower": " Följare",
     "@profile_counts_follower": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "profile_retry_loading_posts": "Tryck för att försöka igen",
+    "@profile_retry_loading_posts": {
+        "type": "text",
+        "placeholders": {}
     },
     "action_comment": "Kommentera",
     "@action_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "action_react": "Reagera",
     "@action_react": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "action_reply": "Svara",
     "@action_reply": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share": "Dela",
     "@share": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_to": "Dela med",
     "@share_to": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "sharing_post_to": "Delar inlägg med",
     "@sharing_post_to": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_shared_with": "Du delade med",
     "@you_shared_with": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "shared_privately_on": "Delat privat i",
     "@shared_privately_on": {
         "description": "Eg. Shared privately on @shantanu's circles. See following string, usernames_circles . Will combine this in future, needs refactoring.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "usernames_circles": "@{postCreatorUsername}s kretsar",
     "@usernames_circles": {
         "type": "text",
         "placeholders": {
-            "postCreatorUsername": {
-
-            }
+            "postCreatorUsername": {}
         }
     },
     "share_community": "Dela",
     "@share_community": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_to_community": "Dela med en gemenskap",
     "@share_to_community": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_community_title": "En gemenskap",
     "@share_community_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_community_desc": "Dela inlägget med en gemenskap du är del av.",
     "@share_community_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_circles": "Mina kretsar",
     "@my_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_circles_desc": "Dela inlägget med en eller flera av dina kretsar.",
     "@my_circles_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "world_circle_name": "Världen",
     "@world_circle_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "search_circles": "Sök kretsar...",
     "@search_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reaction_list_tap_retry": "Tryck för att försöka läsa in reaktionerna igen.",
     "@reaction_list_tap_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_new": "Nytt inlägg",
     "@create_new": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "create_new_post_label": "Skapa ett nytt inlägg",
+    "@create_new_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_community_post_label": "Skapa ett nytt gemenskapsinlägg",
+    "@create_new_community_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_create_post_label": "Stäng nytt inlägg-rutan",
+    "@close_create_post_label": {
+        "type": "text",
+        "placeholders": {}
     },
     "create_next": "Nästa",
     "@create_next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_photo": "Foto",
     "@create_photo": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "create_video": "Video",
+    "@create_video": {
+        "type": "text",
+        "placeholders": {}
     },
     "commenter_post_text": "Skicka",
     "@commenter_post_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_write_something": "Skriv något...",
     "@commenter_write_something": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_title": "Redigera inlägg",
     "@edit_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_save": "Spara",
     "@edit_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_save": "Spara",
     "@commenter_expanded_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_join_conversation": "Gå med i konversationen...",
     "@commenter_expanded_join_conversation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_start_conversation": "Starta en konversation...",
     "@commenter_expanded_start_conversation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_edit_comment": "Redigera kommentar",
     "@commenter_expanded_edit_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "is_closed": "Stängt inlägg",
     "@is_closed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_expanded_reply_comment": "Svar på kommentar",
     "@comment_reply_expanded_reply_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_expanded_post": "Skicka",
     "@comment_reply_expanded_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_expanded_reply_hint_text": "Ditt svar...",
     "@comment_reply_expanded_reply_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "trending_posts_title": "Trendiga inlägg",
     "@trending_posts_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "trending_posts_no_trending_posts": "Det finns inga trendiga inlägg. Försök uppdatera om några sekunder.",
     "@trending_posts_no_trending_posts": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "trending_posts_refresh": "Uppdatera",
     "@trending_posts_refresh": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_view_all_comments": "Visa alla {commentsCount} kommentarer",
     "@comments_view_all_comments": {
         "type": "text",
         "placeholders": {
-            "commentsCount": {
-
-            }
+            "commentsCount": {}
         }
     },
     "comments_closed_post": "Stängt inlägg",
     "@comments_closed_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_disabled": "Kommentarsfältet avstängt",
     "@comments_disabled": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "text_copied": "Text kopierad!",
     "@text_copied": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_reactions_title": "Reaktioner på inlägget",
     "@post_reactions_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "have_not_shared_anything": "Du har inte delat något ännu.",
     "@have_not_shared_anything": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "user_has_not_shared_anything": "{name} har inte delat något ännu.",
     "@user_has_not_shared_anything": {
         "type": "text",
         "placeholders": {
-            "name": {
-
-            }
+            "name": {}
         }
     },
     "comments_header_newest_replies": "Senaste svaren",
     "@comments_header_newest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_newer": "Senare",
     "@comments_header_newer": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_view_newest_replies": "Visa de senaste svaren",
     "@comments_header_view_newest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_see_newest_replies": "Visa de senaste svaren",
     "@comments_header_see_newest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_oldest_replies": "Äldsta svaren",
     "@comments_header_oldest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_older": "Äldre",
     "@comments_header_older": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_view_oldest_replies": "Visa de äldsta svaren",
     "@comments_header_view_oldest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_see_oldest_replies": "Visa de äldsta svaren",
     "@comments_header_see_oldest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_be_the_first_replies": "Bli den första som skriver ett svar",
     "@comments_header_be_the_first_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_newest_comments": "Senaste kommentarerna",
     "@comments_header_newest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_view_newest_comments": "Visa de senaste kommentarerna",
     "@comments_header_view_newest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_see_newest_comments": "Visa de senaste kommentarerna",
     "@comments_header_see_newest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_oldest_comments": "Äldsta kommentarerna",
     "@comments_header_oldest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_view_oldest_comments": "Visa de äldsta kommentarerna",
     "@comments_header_view_oldest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_see_oldest_comments": "Visa de äldsta kommentarerna",
     "@comments_header_see_oldest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_be_the_first_comments": "Bli den första som skriver en kommentar",
     "@comments_header_be_the_first_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_title": "Inläggskommentarer",
     "@comments_page_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_no_more_to_load": "Inga fler kommentarer att läsa in",
     "@comments_page_no_more_to_load": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_tap_to_retry": "Tryck för att försöka läsa in kommentarerna igen.",
     "@comments_page_tap_to_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_tap_to_retry_replies": "Tryck för att försöka läsa in svaren igen.",
     "@comments_page_tap_to_retry_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_no_more_replies_to_load": "Inga fler svar att läsa in",
     "@comments_page_no_more_replies_to_load": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_replies_title": "Inläggssvar",
     "@comments_page_replies_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "disable_post_comments": "Stäng kommentarsfältet",
     "@disable_post_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "enable_post_comments": "Öppna kommentarsfältet",
     "@enable_post_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_enabled_message": "Kommentarer aktiverade för inlägget",
     "@comments_enabled_message": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_disabled_message": "Kommentarer inaktiverade för inlägget",
     "@comments_disabled_message": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_delete": "Ta bort inlägg",
     "@actions_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_deleted": "Inlägg borttaget",
     "@actions_deleted": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_delete_comment": "Ta bort kommentar",
     "@actions_delete_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_edit_comment": "Redigera kommentar",
     "@actions_edit_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_comment_deleted": "Kommentar borttagen",
     "@actions_comment_deleted": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_report_text": "Anmäl",
     "@actions_report_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_reported_text": "Anmäld",
     "@actions_reported_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_show_more_text": "Visa mer",
     "@actions_show_more_text": {
         "description": "Shown for posts with long text to expand the entire text.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_years": "å",
     "@time_short_years": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3y. Keep it as short as possible",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3y. Keep it as short as possible",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_year": "1å",
     "@time_short_one_year": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_weeks": "v",
     "@time_short_weeks": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 5w.Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 5w.Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_week": "1v",
     "@time_short_one_week": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_days": "d",
     "@time_short_days": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3d. Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3d. Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_day": "1d",
     "@time_short_one_day": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_hours": "h",
     "@time_short_hours": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3h.Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3h.Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_hour": "1h",
     "@time_short_one_hour": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_minutes": "m",
     "@time_short_minutes": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13m.Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13m.Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_seconds": "s",
     "@time_short_seconds": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13s Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13s Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_minute": "1m",
     "@time_short_one_minute": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_now_text": "nu",
     "@time_short_now_text": {
         "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

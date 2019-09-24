@@ -3,1345 +3,978 @@
     "@thousand_postfix": {
         "description": "For eg. communty has 3k members",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "million_postfix": "m",
     "@million_postfix": {
         "description": "For eg. user has 3m followers",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "billion_postfix": "b",
     "@billion_postfix": {
         "description": "For eg. World circle has 7.5b people",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "translate_see_translation": "Çeviriyi gör",
     "@translate_see_translation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "translate_show_original": "Orjinali göster",
     "@translate_show_original": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_lists_account": "1 Hesap",
     "@follows_lists_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_lists_accounts": "{prettyUsersCount} Hesap",
     "@follows_lists_accounts": {
         "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
         "type": "text",
         "placeholders": {
-            "prettyUsersCount": {
-
-            }
+            "prettyUsersCount": {}
         }
     },
     "edit_profile_user_name_taken": "Kullanıcı adı @{username} alındı",
     "@edit_profile_user_name_taken": {
         "type": "text",
         "placeholders": {
-            "username": {
-
-            }
+            "username": {}
         }
     },
     "profile_action_deny_connection": "Bağlantı isteğini reddet",
     "@profile_action_deny_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_action_user_blocked": "Kullanıcı engellendi",
     "@profile_action_user_blocked": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_action_user_unblocked": "Kullanıcının engeli kaldırıldı",
     "@profile_action_user_unblocked": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_action_cancel_connection": "Bağlantı isteğini iptal et",
     "@profile_action_cancel_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_url_invalid_error": "Lütfen geçerli bir url adresi girin.",
     "@profile_url_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_location_length_error": "Konum adı {maxLength} karakterden daha uzun olamaz.",
     "@profile_location_length_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "profile_bio_length_error": "Biyografi kısmı {maxLength} karakterden daha uzun olamaz.",
     "@profile_bio_length_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "follow_button_follow_text": "Takip et",
     "@follow_button_follow_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_button_unfollow_text": "Takip etmekten vazgeç",
     "@follow_button_unfollow_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_username": "Kullanıcı adı",
     "@edit_profile_username": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_update_account_lists": "Hesap listelerini güncelle",
     "@add_account_update_account_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_to_lists": "Listeye hesap ekle",
     "@add_account_to_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_update_lists": "Listeleri güncelle",
     "@add_account_update_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_save": "Kaydet",
     "@add_account_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_done": "Tamam",
     "@add_account_done": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_success": "Başarılı",
     "@add_account_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "emoji_field_none_selected": "Emoji seçilmedi",
     "@emoji_field_none_selected": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "emoji_search_none_found": "'{searchQuery}' ile eşleşen hiçbir emoji bulunamadı.",
     "@emoji_search_none_found": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "follow_lists_title": "Listelerim",
     "@follow_lists_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_lists_search_for": "Liste ara...",
     "@follow_lists_search_for": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_lists_no_list_found": "Hiç liste bulunmadı.",
     "@follow_lists_no_list_found": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_lists_no_list_found_for": "'{searchQuery}' için hiç bir liste bulunamadı",
     "@follow_lists_no_list_found_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "list_name_empty_error": "Liste adı boş olamaz.",
     "@list_name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "list_name_range_error": "Liste adı {maxLength} karakterden daha uzun olamaz.",
     "@list_name_range_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "circle_name_empty_error": "Çevre adı boş bırakılmaz.",
     "@circle_name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "circle_name_range_error": "Çevre adı {maxLength} karakterden daha uzun olamaz.",
     "@circle_name_range_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "save_follows_list_name": "İsim",
     "@save_follows_list_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_hint_text": "örneğin Seyahat, Fotoğrafçılık",
     "@save_follows_list_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_name_taken": "Liste adı '{listName}' olarak alındı",
     "@save_follows_list_name_taken": {
         "type": "text",
         "placeholders": {
-            "listName": {
-
-            }
+            "listName": {}
         }
     },
     "save_follows_list_emoji": "Emoji",
     "@save_follows_list_emoji": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_users": "Kullanıcılar",
     "@save_follows_list_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_edit": "Listeyi düzenle",
     "@save_follows_list_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_create": "Liste oluştur",
     "@save_follows_list_create": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_save": "Kaydet",
     "@save_follows_list_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_emoji_required_error": "Emoji gerekli",
     "@save_follows_list_emoji_required_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_list_edit": "Düzenle",
     "@follows_list_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_list_header_title": "Kullanıcılar",
     "@follows_list_header_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_name": "İsim",
     "@edit_profile_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_url": "Url",
     "@edit_profile_url": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_location": "Konum",
     "@edit_profile_location": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_bio": "Biyografi",
     "@edit_profile_bio": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_followers_count": "Takipçi sayısı",
     "@edit_profile_followers_count": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "edit_profile_community_posts": "Topluluk gönderileri",
+    "@edit_profile_community_posts": {
+        "type": "text",
+        "placeholders": {}
     },
     "edit_profile_title": "Profili düzenle",
     "@edit_profile_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_save_text": "Kaydet",
     "@edit_profile_save_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_pick_image": "Resim seç",
     "@edit_profile_pick_image": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_delete": "Sil",
     "@edit_profile_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_pick_image_error_too_large": "Resim çok büyük (limit: {limit} MB)",
     "@edit_profile_pick_image_error_too_large": {
         "type": "text",
         "placeholders": {
-            "limit": {
-
-            }
+            "limit": {}
         }
     },
     "tile_following": " · Takip et",
     "@tile_following": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "following_text": "Takip edilen",
     "@following_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "following_resource_name": "takip edilen kullanıcılar",
     "@following_resource_name": {
         "description": "Eg: Search followed users.., No followed users found. etc ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "tile_delete": "Sil",
     "@tile_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invite": "Davet et",
     "@invite": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "uninvite": "Davet isteğini geri al",
     "@uninvite": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invite_member": "Üyeler",
     "@invite_member": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invite_someone_message": "Hey, seni Okuna'ya davet etmek istiyorum. Öncelikle, iTunes ({iosLink}) veya Google Play Store'dan ({androidLink}) uygulamayı indirin. İkinci olarak, bu kişiselleştirilmiş davet bağlantısını Okuna Uygulamasındaki 'Kayıt ol' formuna yapıştırın: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
-            "iosLink": {
-
-            },
-            "androidLink": {
-
-            },
-            "inviteLink": {
-
-            }
+            "iosLink": {},
+            "androidLink": {},
+            "inviteLink": {}
         }
     },
     "connections_header_circle_desc": "Tüm bağlantılarınızın ekleneceği çevre.",
     "@connections_header_circle_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connections_header_users": "Kullanıcılar",
     "@connections_header_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connection_pending": "Beklet",
     "@connection_pending": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connection_circle_edit": "Düzenle",
     "@connection_circle_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connections_circle_delete": "Sil",
     "@connections_circle_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_name": "İsim",
     "@save_connection_circle_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_hint": "örneğin Arkadaşlar, Aile, İş.",
     "@save_connection_circle_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_color_name": "Renk",
     "@save_connection_circle_color_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_color_hint": "(Değiştirmek için dokunun)",
     "@save_connection_circle_color_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_users": "Kullanıcılar",
     "@save_connection_circle_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_edit": "Çevreni düzenle",
     "@save_connection_circle_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_create": "Çevre oluştur",
     "@save_connection_circle_create": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_save": "Kaydet",
     "@save_connection_circle_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_connection_circle_save": "Kaydet",
     "@update_connection_circle_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_connection_circle_updated": "Bağlantı güncellendi",
     "@update_connection_circle_updated": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_connection_circles_title": "Çevre bağlantılarını güncelle",
     "@update_connection_circles_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_connection_with": "{userName} ile bağlantıyı onaylayın",
     "@confirm_connection_with": {
         "type": "text",
         "placeholders": {
-            "userName": {
-
-            }
+            "userName": {}
         }
     },
     "confirm_connection_add_connection": "Çevrene bağlantı ekle",
     "@confirm_connection_add_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_connection_connection_confirmed": "Bağlantı onaylandı",
     "@confirm_connection_connection_confirmed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_connection_confirm_text": "Onayla",
     "@confirm_connection_confirm_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connect_to_user_connect_with_username": "{userName} ile bağlan",
     "@connect_to_user_connect_with_username": {
         "type": "text",
         "placeholders": {
-            "userName": {
-
-            }
+            "userName": {}
         }
     },
     "connect_to_user_add_connection": "Çevrene bağlantı ekle",
     "@connect_to_user_add_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connect_to_user_done": "Tamam",
     "@connect_to_user_done": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connect_to_user_request_sent": "Bağlantı isteği gönderildi",
     "@connect_to_user_request_sent": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "remove_account_from_list": "Hesabı listelerden kaldır",
     "@remove_account_from_list": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "remove_account_from_list_success": "Başarılı",
     "@remove_account_from_list_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_title": "Onay",
     "@confirm_block_user_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_info": "Birbiriniz ile hiçbir paylaşımda bulunamazsınız ve hiçbir şekilde etkileşime giremezsiniz.",
     "@confirm_block_user_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_yes": "Evet",
     "@confirm_block_user_yes": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_no": "Hayır",
     "@confirm_block_user_no": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_blocked": "Kullanıcı engellendi.",
     "@confirm_block_user_blocked": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_question": "@{username} adlı kullanıcıyı engellemek istediğinizden emin misiniz?",
     "@confirm_block_user_question": {
         "type": "text",
         "placeholders": {
-            "username": {
-
-            }
+            "username": {}
         }
     },
     "save_connection_circle_name_taken": "Çevre adı '{takenConnectionsCircleName}' olarak alındı",
     "@save_connection_circle_name_taken": {
         "type": "text",
         "placeholders": {
-            "takenConnectionsCircleName": {
-
-            }
+            "takenConnectionsCircleName": {}
         }
     },
     "timeline_filters_title": "Zaman Tüneli filtreleri",
     "@timeline_filters_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_search_desc": "Çevreleri ve listeleri ara...",
     "@timeline_filters_search_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_clear_all": "Tümünü temizle",
     "@timeline_filters_clear_all": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_apply_all": "Filtreleri uygula",
     "@timeline_filters_apply_all": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_circles": "Çevreler",
     "@timeline_filters_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_lists": "Listeler",
     "@timeline_filters_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "followers_title": "Takipçiler",
     "@followers_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follower_singular": "takipçi",
     "@follower_singular": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follower_plural": "takipçiler",
     "@follower_plural": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_title": "Hesabı sil",
     "@delete_account_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_current_pwd": "Mevcut Şifre",
     "@delete_account_current_pwd": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_current_pwd_hint": "Mevcut şifrenizi giriniz",
     "@delete_account_current_pwd_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_next": "Sonraki",
     "@delete_account_next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_title": "Onay",
     "@delete_account_confirmation_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_desc": "Hesabınızı silmek istediğinizden emin misiniz?",
     "@delete_account_confirmation_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_desc_info": "Bu kalıcı bir eylemdir ve geri alınamaz.",
     "@delete_account_confirmation_desc_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_no": "Hayır",
     "@delete_account_confirmation_no": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_yes": "Evet",
     "@delete_account_confirmation_yes": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_goodbye": "Hoşçakal 😢",
     "@delete_account_confirmation_goodbye": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_create_title": "Davet oluştur",
     "@invites_create_create_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_edit_title": "Davetiyeyi düzenle",
     "@invites_create_edit_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_save": "Kaydet",
     "@invites_create_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_create": "Oluştur",
     "@invites_create_create": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_name_title": "Kullanıcı adı",
     "@invites_create_name_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_name_hint": "örneğin Ali Ayşe",
     "@invites_create_name_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_pending": "Beklet",
     "@invites_pending": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_delete": "Sil",
     "@invites_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_invite_text": "Davet et",
     "@invites_invite_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_yourself": "Kendinize daveti paylaşın",
     "@invites_share_yourself": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_yourself_desc": "Mesajlaşma uygulamaları ve benzerleri arasından seçim yapın.",
     "@invites_share_yourself_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_email": "Davetiyeyi e-posta ile paylaş",
     "@invites_share_email": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_text": "E-posta",
     "@invites_email_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_hint": "örneğin epostanız@email.com",
     "@invites_email_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_invite_text": "E-posta ile davet et",
     "@invites_email_invite_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_send_text": "Gönder",
     "@invites_email_send_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_sent_text": "E-posta ile davet gönder",
     "@invites_email_sent_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_email_desc": "Sizin adınıza talimatlar içeren bir davetiye e-postası göndereceğiz",
     "@invites_share_email_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_edit_text": "Düzenle",
     "@invites_edit_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_title": "Davet ettiklerim",
     "@invites_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_accepted_title": "Kabul edilen",
     "@invites_accepted_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_accepted_group_name": "kabul edilen davetler",
     "@invites_accepted_group_name": {
         "description": "Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_accepted_group_item_name": "kabul edilen davet",
     "@invites_accepted_group_item_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_pending_group_name": "bekleyen davetler",
     "@invites_pending_group_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_pending_group_item_name": "bekleyen davet",
     "@invites_pending_group_item_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_none_used": "Görünüşe göre hiç davet etmeyi kullanmadın.",
     "@invites_none_used": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_none_left": "Hiç davetiniz yok.",
     "@invites_none_left": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_invite_a_friend": "Bir arkadaşını davet et",
     "@invites_invite_a_friend": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_refresh": "Yenile",
     "@invites_refresh": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "language_settings_title": "Dil ayarları",
     "@language_settings_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "language_settings_save": "Kaydet",
     "@language_settings_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "language_settings_saved_success": "Dil başarıyla değiştirildi",
     "@language_settings_saved_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "groups_see_all": "{groupName} Tümünü gör",
     "@groups_see_all": {
         "description": "Can be, See all joined communities, See all pending invites, See all moderated communities etc. ",
         "type": "text",
         "placeholders": {
-            "groupName": {
-
-            }
+            "groupName": {}
         }
     },
     "invites_joined_with": "@{username} kullanıcı adı ile katıldı",
     "@invites_joined_with": {
         "type": "text",
         "placeholders": {
-            "username": {
-
-            }
+            "username": {}
         }
     },
     "invites_pending_email": "{email} adresine gönderilen e-posta davetiyesi beklemede",
     "@invites_pending_email": {
         "type": "text",
         "placeholders": {
-            "email": {
-
-            }
+            "email": {}
         }
     },
     "timeline_filters_no_match": "'{searchQuery}' ile ilgili bir eşleşme yok.",
     "@timeline_filters_no_match": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "clear_application_cache_text": "Önbelleği temizle",
     "@clear_application_cache_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_application_cache_desc": "Önbelleğe alınmış gönderileri, hesapları, resimleri ve daha fazlasını temizleyin.",
     "@clear_application_cache_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_application_cache_success": "Önbellek başarıyla temizlendi",
     "@clear_application_cache_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_application_cache_failure": "Önbellek temizlenemedi",
     "@clear_application_cache_failure": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_title": "Kurallar Redded",
     "@confirm_guidelines_reject_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "confirm_guidelines_reject_info": "Kuralları kabul edene kadar Openspace'i kullanamazsınız.",
+    "confirm_guidelines_reject_info": "Kuralları kabul edene kadar Okuna'yı kullanamazsınız.",
     "@confirm_guidelines_reject_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_chat_with_team": "Ekiple sohbet et.",
     "@confirm_guidelines_reject_chat_with_team": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_chat_immediately": "Hemen bir sohbet başlat.",
     "@confirm_guidelines_reject_chat_immediately": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_chat_community": "Topluluk ile sohbet edin.",
     "@confirm_guidelines_reject_chat_community": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_join_slack": "Çözüm kanalına katılın.",
     "@confirm_guidelines_reject_join_slack": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_go_back": "Geri dön",
     "@confirm_guidelines_reject_go_back": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_delete_account": "Hesabı sil",
     "@confirm_guidelines_reject_delete_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "guidelines_desc": "Lütfen kurallarımızı okumak ve kabul etmek için bir dakikanızı ayırın.",
     "@guidelines_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "guidelines_accept": "Kabul et",
     "@guidelines_accept": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "guidelines_reject": "Reddet",
     "@guidelines_reject": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_title": "E-postanı değiştir",
     "@change_email_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_email_text": "E-posta",
     "@change_email_email_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_hint_text": "Yeni E-posta adresinizi giriniz",
     "@change_email_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_error": "Bu E-posta zaten kayıtlı",
     "@change_email_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_save": "Kaydet",
     "@change_email_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_success_info": "Yeni e-posta adresinize bir onay linki gönderdik, yeni e-postanızı doğrulamak için tıklayın",
     "@change_email_success_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_title": "Tercihleri temizle",
     "@clear_app_preferences_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_desc": "Uygulama tercihlerini temizleyin. Şu anda bu sadece tercih edilen yorumların sırası için geçerlidir.",
     "@clear_app_preferences_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_cleared_successfully": "Tercihler başarıyla temizlendi",
     "@clear_app_preferences_cleared_successfully": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "email_verification_successful": "Harika! E-postanız şimdi doğrulandı",
     "@email_verification_successful": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "email_verification_error": "Oops! Belirteciniz geçerli veya süresi doldu, lütfen yeniden deneyin",
     "@email_verification_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_error": "Tercihler temizlenemedi",
     "@clear_app_preferences_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "disconnect_from_user_success": "Bağlantı başarıyla kesildi",
     "@disconnect_from_user_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "block_user": "Kullanıcıyı engelle",
     "@block_user": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "unblock_user": "Kullanıcının engelini kaldır",
     "@unblock_user": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "disconnect_from_user": "{userName} ile bağlantını kes",
     "@disconnect_from_user": {
         "type": "text",
         "placeholders": {
-            "userName": {
-
-            }
+            "userName": {}
         }
     },
     "circle_peoples_count": "{prettyUsersCount} kişi",
     "@circle_peoples_count": {
         "type": "text",
         "placeholders": {
-            "prettyUsersCount": {
-
-            }
+            "prettyUsersCount": {}
         }
     },
     "follows_list_accounts_count": "{prettyUsersCount} hesap",
     "@follows_list_accounts_count": {
         "type": "text",
         "placeholders": {
-            "prettyUsersCount": {
-
-            }
+            "prettyUsersCount": {}
         }
     }
 }

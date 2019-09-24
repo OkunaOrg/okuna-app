@@ -11,6 +11,7 @@ import 'package:Okuna/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/connection_circles_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
@@ -102,6 +103,18 @@ class BottomSheetService {
         context: context,
         builder: (BuildContext context) {
           return OBVideosAutoPlaySettingPickerBottomSheet(
+              onTypeChanged: onChanged, initialValue: initialValue);
+        });
+  }
+
+  Future<void> showLinkPreviewsSettingPicker(
+      {@required BuildContext context,
+        ValueChanged<LinkPreviewsSetting> onChanged,
+        LinkPreviewsSetting initialValue}) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBLinkPreviewsSettingPickerBottomSheet(
               onTypeChanged: onChanged, initialValue: initialValue);
         });
   }
