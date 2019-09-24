@@ -33,6 +33,8 @@ class _CommentDraftEditingController extends DraftTextEditingController {
       : super(draftService) {
     if (text == null) {
       this.text = _draftService.getCommentDraft(postId, commentId);
+    } else {
+      this.text = text;
     }
   }
 
@@ -53,6 +55,8 @@ class _PostDraftEditingController extends DraftTextEditingController {
       : super(draftService) {
     if (text == null) {
       this.text = _draftService.getPostDraft(communityId);
+    } else {
+      this.text = text;
     }
   }
 

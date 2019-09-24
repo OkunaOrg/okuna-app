@@ -120,10 +120,12 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   }
 
   void _bootstrap() {
-
     if (_isEditingPost) {
       _saveInProgress = false;
       _textController = TextEditingController(text: widget.post?.text ?? '');
+      _postItemsWidgets = [
+        OBCreatePostText(controller: _textController, focusNode: _focusNode)
+      ];
       if (widget.post.hasMedia()) {
         PostMedia postMedia = widget.post.getFirstMedia();
         if (postMedia.type == PostMediaType.video) {
@@ -142,6 +144,9 @@ class OBSavePostModalState extends State<OBSavePostModal> {
           text: widget.text,
           communityId: widget.community != null ? widget.community.id : null,
           draftService: _draftService);
+      _postItemsWidgets = [
+        OBCreatePostText(controller: _textController, focusNode: _focusNode)
+      ];
       _hasImage = false;
       _hasVideo = false;
       if (widget.image != null) {
@@ -151,10 +156,6 @@ class OBSavePostModalState extends State<OBSavePostModal> {
         _setPostVideoFile(widget.video);
       }
     }
-
-    _postItemsWidgets = [
-      OBCreatePostText(controller: _textController, focusNode: _focusNode)
-    ];
 
     if (!_isEditingPost && widget.community != null)
       _postItemsWidgets.add(OBPostCommunityPreviewer(
