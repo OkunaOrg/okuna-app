@@ -50,7 +50,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   ValidationService _validationService;
-  MediaService _imagePickerService;
+  MediaService _mediaService;
   UserPreferencesService _userPreferencesService;
   LocalizationService _localizationService;
 
@@ -76,7 +76,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   @override
   void initState() {
     super.initState();
-    enableSharing();
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
@@ -117,7 +116,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _validationService = openbookProvider.validationService;
-      _imagePickerService = openbookProvider.mediaPickerService;
+      _mediaService = openbookProvider.mediaPickerService;
       _userPreferencesService = openbookProvider.userPreferencesService;
       _localizationService = openbookProvider.localizationService;
       _bootstrap();
@@ -139,7 +138,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   @override
-  void onShare(Share share) async {
+  Future<void> onShare(Share share) async {
     String text;
     File image;
     File video;
@@ -147,7 +146,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _toastService.error(
           message: _localizationService.trans(share.error),
           context: context);
-      if (share.error == 'uriSchemeNotSupported') {
+      if (share.error.contains('uri_scheme')) {
         throw share.error;
       }
       return;
@@ -155,24 +154,25 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
 
     if (share.image != null) {
       image = File.fromUri(Uri.parse(share.image));
-      image = await _imagePickerService.processImage(image);
+      image = await _mediaService.processImage(image);
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {
-        int limit =
-            _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
-        _toastService.error(
-            message: 'Image too large (limit: $limit MB)', context: context);
+        _showFileTooLargeToast(
+            _validationService.getAllowedImageSize(OBImageType.post));
         return;
       }
     }
 
     if (share.video != null) {
       video = File.fromUri(Uri.parse(share.video));
+
       if (!await _validationService.isVideoAllowedSize(video)) {
-        int limit = _validationService.getAllowedVideoSize() ~/ 1048576;
-        _toastService.error(
-            message: 'Video too large (limit: $limit MB)', context: context);
+        _showFileTooLargeToast(_validationService.getAllowedVideoSize());
         return;
+      }
+
+      if (_mediaService.isGif(video)) {
+        video = await _mediaService.convertGifToVideo(video);
       }
     }
 
@@ -191,6 +191,13 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _timelinePageController.popUntilFirstRoute();
       _navigateToTab(OBHomePageTabs.timeline);
     }
+  }
+
+  Future _showFileTooLargeToast(int limitInBytes) async {
+    _toastService.error(
+        message: _localizationService.image_picker__error_too_large(
+            limitInBytes ~/ 1048576),
+        context: context);
   }
 
   Widget _getPageForTabIndex(int index) {
@@ -370,6 +377,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   void _bootstrap() async {
+    enableShareProcessing();
+
     _loggedInUserChangeSubscription =
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
 

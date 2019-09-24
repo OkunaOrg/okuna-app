@@ -2,304 +2,223 @@
     "menu_title": "Menú",
     "@menu_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "main_title": "Mi Okuna",
     "@main_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_circles": "Mis círculos",
     "@my_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_lists": "Mis listas",
     "@my_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_followers": "Mis seguidores",
     "@my_followers": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_following": "Mis seguidos",
     "@my_following": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_invites": "Mis invitaciones",
     "@my_invites": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_pending_mod_tasks": "Mis tareas de moderación pendientes",
     "@my_pending_mod_tasks": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_mod_penalties": "Mis penalizaciones de moderación",
     "@my_mod_penalties": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "app_account_text": "App & cuenta",
     "@app_account_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "themes": "Temas",
     "@themes": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "global_moderation": "Moderación global",
     "@global_moderation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile": "Perfil",
     "@profile": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connections": "Mis conexiones",
     "@connections": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "lists": "Mis listas",
     "@lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "settings": "Configuración",
     "@settings": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "application_settings": "Configuración de la aplicación",
     "@application_settings": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings": "Configuración de cuenta",
     "@account_settings": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "developer_settings": "Configuración de desarrollador",
+    "@developer_settings": {
+        "type": "text",
+        "placeholders": {}
     },
     "account_settings_change_email": "Cambiar email",
     "@account_settings_change_email": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_change_password": "Cambiar contraseña",
     "@account_settings_change_password": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_notifications": "Notificaciones",
     "@account_settings_notifications": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_language_text": "Idioma",
     "@account_settings_language_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_language": "Idioma ({currentUserLanguage})",
     "@account_settings_language": {
         "type": "text",
         "placeholders": {
-            "currentUserLanguage": {
-
-            }
+            "currentUserLanguage": {}
         }
     },
     "account_settings_blocked_users": "Usuarios bloqueados",
     "@account_settings_blocked_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_delete_account": "Eliminar cuenta",
     "@account_settings_delete_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "help": "Asistencia y comentarios",
     "@help": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "customize": "Personalizar",
     "@customize": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "logout": "Cerrar sesión",
     "@logout": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_title": "Enlaces útiles",
     "@useful_links_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines": "Reglas de Okuna",
     "@useful_links_guidelines": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_desc": "Las reglas que todos esperamos sigan para una coexistencia sana y amistosa.",
     "@useful_links_guidelines_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_github": "Tabla de proyectos Github",
     "@useful_links_guidelines_github": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_github_desc": "Echa un vistazo a lo que estamos trabajando actualmente",
     "@useful_links_guidelines_github_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_feature_requests": "Solicitudes de funcionalidad",
     "@useful_links_guidelines_feature_requests": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_feature_requests_desc": "Solicitar una función o votar peticiones existentes",
     "@useful_links_guidelines_feature_requests_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_bug_tracker": "Rastreador de errores",
     "@useful_links_guidelines_bug_tracker": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_bug_tracker_desc": "Reportar un error o votar errores existentes",
     "@useful_links_guidelines_bug_tracker_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_handbook": "Manual de usuario",
     "@useful_links_guidelines_handbook": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_handbook_desc": "Un libro con todo lo que hay que saber sobre el uso de la plataforma",
     "@useful_links_guidelines_handbook_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "useful_links_support": "Soporte Okuna",
+    "useful_links_support": "Contribuir a Okuna",
     "@useful_links_support": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_support_desc": "Encuentra una forma de ayudarnos en nuestro viaje!",
     "@useful_links_support_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_slack_channel": "Slack de la comunidad",
     "@useful_links_slack_channel": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_slack_channel_desc": "Un lugar para discutir todo sobre Okuna",
     "@useful_links_slack_channel_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

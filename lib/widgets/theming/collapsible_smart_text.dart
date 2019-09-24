@@ -72,7 +72,7 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
             return GestureDetector(
                 onTap: _toggleExpandable,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[

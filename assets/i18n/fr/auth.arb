@@ -2,744 +2,530 @@
     "headline": "Un meilleur réseau social.",
     "@headline": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login": "Ouvrir une session",
     "@login": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "email_empty_error": "Le courriel ne peut pas être vide.",
+    "email_empty_error": "L'email ne peut pas être vide.",
     "@email_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "email_invalid_error": "Veuillez fournir une adresse courriel valide.",
+    "email_invalid_error": "Veuillez fournir un email valide.",
     "@email_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "username_empty_error": "Le nom d'utilisateur.trice ne peut pas être vide.",
     "@username_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "username_characters_error": "Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des soulignements.",
+    "username_characters_error": "Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des underscores.",
     "@username_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "username_maxlength_error": "Un nom d'utilisateur.trice ne peut pas être plus long que {maxLength} caractères.",
     "@username_maxlength_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
-    "create_account": "Inscription",
+    "create_account": "S'inscrire",
     "@create_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__lets_get_started": "Commençons",
     "@create_acc__lets_get_started": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__welcome_to_beta": "Bienvenue sur la version bêta !",
     "@create_acc__welcome_to_beta": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__previous": "Précédent",
     "@create_acc__previous": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__next": "Suivant",
     "@create_acc__next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__create_account": "Créer un compte",
     "@create_acc__create_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__paste_link": "Collez votre lien d'inscription ci-dessous",
     "@create_acc__paste_link": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__paste_password_reset_link": "Coller votre lien de réinitialisation de mot de passe ci-dessous",
+    "create_acc__paste_password_reset_link": "Collez votre lien de réinitialisation de mot de passe ci-dessous",
     "@create_acc__paste_password_reset_link": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__paste_link_help_text": "Utilisez le lien du bouton « Rejoignez Okuna » dans votre courriel d'invitation.",
+    "create_acc__paste_link_help_text": "Utilisez le lien du bouton « Rejoignez Okuna » dans votre email d'invitation.",
     "@create_acc__paste_link_help_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__link_empty_error": "Le lien ne peut pas être vide.",
     "@create_acc__link_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__link_invalid_error": "Ce lien semble invalide.",
     "@create_acc__link_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "password_empty_error": "Le mot de passe ne peut pas être vide.",
     "@password_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "password_range_error": "Le mot de passe doit comporter entre {minLength} et {maxLength} caractères.",
     "@password_range_error": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "name_empty_error": "Le nom ne peut pas être vide.",
     "@name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "name_range_error": "Le nom doit comporter entre {minLength} et {maxLength} caractères.",
     "@name_range_error": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "description_empty_error": "La description ne peut pas être vide.",
     "@description_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "description_range_error": "Le description doit comporter entre {minLength} et {maxLength} caractères.",
     "@description_range_error": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "reset_password_success_title": "Tout est prêt !",
     "@reset_password_success_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reset_password_success_info": "Votre mot de passe a été mis à jour avec succès",
     "@reset_password_success_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__request_invite": "Pas d'invitation ? Demandez-en une ici.",
     "@create_acc__request_invite": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__subscribe": "Demander",
     "@create_acc__subscribe": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__subscribe_to_waitlist_text": "Demandez une invitation !",
     "@create_acc__subscribe_to_waitlist_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__congratulations": "Félicitations !",
     "@create_acc__congratulations": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__your_subscribed": "Vous êtes à la position {0} sur la liste d'attente.",
     "@create_acc__your_subscribed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__almost_there": "Presque fini...",
     "@create_acc__almost_there": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_name": "Quel est votre nom ?",
     "@create_acc__what_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_placeholder": "Céline Dion",
     "@create_acc__name_placeholder": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_empty_error": "😱 Votre nom ne peut pas être vide.",
     "@create_acc__name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_length_error": "😱 Votre nom ne peut pas dépasser 50 caractères. (Si c'est le cas, nous sommes sincèrement désolé.e.s.)",
     "@create_acc__name_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__name_characters_error": "😅 Un nom ne peut contenir que des caractères alphanumériques (pour l'instant).",
     "@create_acc__name_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__what_username": "Choisissez un nom d'utilisateur.trice",
+    "create_acc__what_username": "Choisissez un pseudo",
     "@create_acc__what_username": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__username_placeholder": "armandvaillancourt",
+    "create_acc__username_placeholder": "claudemonnet",
     "@create_acc__username_placeholder": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__username_empty_error": "😱 Le nom d'utilisateur.trice ne peut pas être vide.",
+    "create_acc__username_empty_error": "😱 Le pseudo ne peut pas être vide.",
     "@create_acc__username_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__username_length_error": "😅 Un nom d'utilisateur.trice ne peut pas être plus long que 30 caractères.",
+    "create_acc__username_length_error": "😅 Un pseudo ne peut pas être plus long que 30 caractères.",
     "@create_acc__username_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__username_characters_error": "😅 Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des soulignements.",
+    "create_acc__username_characters_error": "😅 Un pseudo ne peut contenir que des caractères alphanumériques et des underscores.",
     "@create_acc__username_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__username_taken_error": "😩 Le nom d'utilisateur.trice @%s est pris.",
+    "create_acc__username_taken_error": "😩 Le pseudo @%s est déjà pris.",
     "@create_acc__username_taken_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__username_server_error": "😭 Nous éprouvons des problèmes avec nos serveurs, veuillez s.v.p. réessayer dans quelques minutes.",
+    "create_acc__username_server_error": "😭 Nous avons des problèmes avec nos serveurs, veuillez réessayer dans quelques minutes.",
     "@create_acc__username_server_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__what_email": "Quelle est votre adresse courriel?",
+    "create_acc__what_email": "Quelle est votre email?",
     "@create_acc__what_email": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__email_placeholder": "karine_vanasse@courriel.com",
+    "create_acc__email_placeholder": "louis_de_funes@mail.com",
     "@create_acc__email_placeholder": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__email_empty_error": "😱 Votre adresse courriel ne peut pas être vide",
+    "create_acc__email_empty_error": "😱 Votre email ne peut pas être vide",
     "@create_acc__email_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__email_invalid_error": "😅 Veuillez fournir une adresse courriel valide.",
+    "create_acc__email_invalid_error": "😅 Veuillez fournir un email valide.",
     "@create_acc__email_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__email_taken_error": "🤔 Un compte existe déjà pour cette adresse courriel.",
+    "create_acc__email_taken_error": "🤔 Un compte existe déjà avec cet email.",
     "@create_acc__email_taken_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "create_acc__email_server_error": "😭 Nous éprouvons des problèmes avec nos serveurs, veuillez s.v.p. réessayer dans quelques minutes.",
+    "create_acc__email_server_error": "😭 Nous avons des problèmes avec nos serveurs, veuillez réessayer dans quelques minutes.",
     "@create_acc__email_server_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_password": "Choisissez un mot de passe",
     "@create_acc__what_password": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc_password_hint_text": "({minLength}-{maxLength} caractères)",
     "@create_acc_password_hint_text": {
         "type": "text",
         "placeholders": {
-            "minLength": {
-
-            },
-            "maxLength": {
-
-            }
+            "minLength": {},
+            "maxLength": {}
         }
     },
     "create_acc__what_password_subtext": "(minimum 8 caractères.)",
     "@create_acc__what_password_subtext": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__password_empty_error": "😱 Votre mot de passe ne peut pas être vide",
     "@create_acc__password_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__password_length_error": "😅 Un mot de passe doit comporter entre 8 et 64 caractères.",
     "@create_acc__password_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__what_avatar": "Choisissez une photo de profil",
     "@create_acc__what_avatar": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_tap_to_change": "Appuyer pour changer",
     "@create_acc__avatar_tap_to_change": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_choose_camera": "Prendre une photo",
     "@create_acc__avatar_choose_camera": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_choose_gallery": "Utiliser une photo existante",
     "@create_acc__avatar_choose_gallery": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__avatar_remove_photo": "Supprimer la photo",
     "@create_acc__avatar_remove_photo": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done": "Créer un compte",
     "@create_acc__done": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_subtext": "Vous pouvez le changer plus tard dans vos praramètres de profil.",
     "@create_acc__done_subtext": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_created": "Votre compte a été créé avec le nom d'utilisateur.trice suivant :",
     "@create_acc__done_created": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_loading_title": "Tenez bon !",
     "@create_acc__submit_loading_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_loading_desc": "Nous sommes en train de créer votre compte.",
     "@create_acc__submit_loading_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_error_title": "Ah non...",
     "@create_acc__submit_error_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_error_desc_server": "😭 Nous éprouvons des difficultés avec nos serveurs, veuillez s.v.p. réessayer dans quelques minutes.",
     "@create_acc__submit_error_desc_server": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__submit_error_desc_validation": "😭 Il semble que certaines informations n'étaient pas correctes, veuillez s.v.p. vérifier et réessayer.",
     "@create_acc__submit_error_desc_validation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_title": "Hourra !",
     "@create_acc__done_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_description": "Votre compte a été créé.",
     "@create_acc__done_description": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__your_username_is": "Votre nom d'utilisateur.trice est :",
     "@create_acc__your_username_is": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__can_change_username": "Si vous le souhaitez, vous pouvez le changer à tout moment via votre page de profil.",
     "@create_acc__can_change_username": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__done_continue": "Ouverture de session",
     "@create_acc__done_continue": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__one_last_thing": "Une dernière chose...",
     "@create_acc__one_last_thing": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__register": "Inscription",
     "@create_acc__register": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_acc__are_you_legal_age": "Êtes-vous agé.e de plus 16 ans ?",
     "@create_acc__are_you_legal_age": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__login": "Continuer",
     "@login__login": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__previous": "Précédent",
     "@login__previous": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__title": "Bon retour !",
     "@login__title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__subtitle": "Entrez vos informations d'identification afin de continuer.",
     "@login__subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__forgot_password": "Mot de passe oublié ",
     "@login__forgot_password": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__forgot_password_subtitle": "Entrez votre nom d'utilisateur.trice ou votre adresse courriel",
     "@login__forgot_password_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_label": "Nom d'utilisateur.trice",
     "@login__username_label": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__password_label": "Mot de passe",
     "@login__password_label": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__email_label": "Adresse courriel",
     "@login__email_label": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__or_text": "Ou",
     "@login__or_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__password_empty_error": "Le mot de passe est requis.",
     "@login__password_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__password_length_error": "Le mot de passe doit comporter entre 8 et 64 caractères.",
     "@login__password_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_empty_error": "Le nom d’utilisateur.trice est requis.",
     "@login__username_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_length_error": "Le nom d'utilisateur.trice ne peut pas être plus long que 30 caractères.",
     "@login__username_length_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__username_characters_error": "Le nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des soulignements.",
     "@login__username_characters_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__credentials_mismatch_error": "Les informations d'identification fournies ne correspondent pas.",
     "@login__credentials_mismatch_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__server_error": "Oh oh... Nous éprouvons des problèmes de serveur. Veuillez s.v.p. réessayer dans quelques minutes.",
     "@login__server_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "login__connection_error": "Nous ne pouvons pas établir de connexion avec nos serveurs. Êtes-vous connecté.e à Internet ?",
     "@login__connection_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_title": "Changer le mot de passe",
     "@change_password_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_current_pwd": "Mot de passe actuel",
     "@change_password_current_pwd": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_current_pwd_hint": "Entrez votre mot de passe actuel",
     "@change_password_current_pwd_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_current_pwd_incorrect": "Le mot de passe entré est incorrect",
     "@change_password_current_pwd_incorrect": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_new_pwd": "Nouveau mot de passe",
     "@change_password_new_pwd": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_new_pwd_hint": "Entrez votre nouveau mot de passe",
     "@change_password_new_pwd_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_new_pwd_error": "Veuillez vous assurer que le mot de passe comporte entre 10 et 100 caractères",
     "@change_password_new_pwd_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_save_text": "Enregistrer",
     "@change_password_save_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_password_save_success": "C'est fait ! Votre mot de passe a été mis à jour",
     "@change_password_save_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

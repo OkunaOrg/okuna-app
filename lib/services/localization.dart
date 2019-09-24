@@ -794,7 +794,8 @@ class LocalizationService {
   }
 
   String get error__receive_share_temp_write_denied {
-    return Intl.message('Denied permission to copy shared file to temporary location',
+    return Intl.message(
+        'Denied permission to copy shared file to temporary location',
         name: 'error__receive_share_temp_write_denied');
   }
 
@@ -864,8 +865,7 @@ class LocalizationService {
   }
 
   String get community__retry_loading_posts {
-    return Intl.message("Tap to retry",
-        name: 'community__retry_loading_posts');
+    return Intl.message("Tap to retry", name: 'community__retry_loading_posts');
   }
 
   String community__admin_add_confirmation(String username) {
@@ -1779,8 +1779,7 @@ class LocalizationService {
   }
 
   String get post__create_new_post_label {
-    return Intl.message("Create new post",
-        name: 'post__create_new_post_label');
+    return Intl.message("Create new post", name: 'post__create_new_post_label');
   }
 
   String get post__create_new_community_post_label {
@@ -3616,6 +3615,7 @@ class LocalizationService {
   String get image_picker__from_camera {
     return Intl.message("From camera", name: 'image_picker__from_camera');
   }
+
   String image_picker__error_too_large(int limit) {
     return Intl.message("File too large (limit: $limit MB)",
         args: [limit], name: 'image_picker__error_too_large');
@@ -3677,8 +3677,21 @@ class LocalizationService {
   }
 
   String get post_body_link_preview__empty {
-    return Intl.message("Preview was empty",
+    return Intl.message("This link could not be previewed",
         name: 'post_body_link_preview__empty');
+  }
+
+  String post_body_link_preview__invalid(String link) {
+    return Intl.message("Invalid link: $link",
+        args: [link],
+        name: 'post_body_link_preview__invalid');
+  }
+
+  String post_body_link_preview__error_with_description(String description) {
+    return Intl.message(
+        "Failed to preview link with website error: $description",
+        args: [description],
+        name: 'post_body_link_preview__error_with_description');
   }
 
   String get posts_stream__all_loaded {
@@ -3730,9 +3743,18 @@ class LocalizationService {
     return Intl.message("Videos", name: 'application_settings__videos');
   }
 
+  String get application_settings__link_previews {
+    return Intl.message("Link previews", name: 'application_settings__link_previews');
+  }
+
   String get application_settings__videos_autoplay {
     return Intl.message("Autoplay",
         name: 'application_settings__videos_autoplay');
+  }
+
+  String get application_settings__link_previews_show {
+    return Intl.message("Show",
+        name: 'application_settings__link_previews_show');
   }
 
   String get application_settings__videos_autoplay_always {
@@ -3748,6 +3770,21 @@ class LocalizationService {
   String get application_settings__videos_autoplay_never {
     return Intl.message("Never",
         name: 'application_settings__videos_autoplay_never');
+  }
+
+  String get application_settings__link_previews_autoplay_always {
+    return Intl.message("Always",
+        name: 'application_settings__link_previews_autoplay_always');
+  }
+
+  String get application_settings__link_previews_autoplay_wifi_only {
+    return Intl.message("Wifi only",
+        name: 'application_settings__link_previews_autoplay_wifi_only');
+  }
+
+  String get application_settings__link_previews_autoplay_never {
+    return Intl.message("Never",
+        name: 'application_settings__link_previews_autoplay_never');
   }
 
   String get application_settings__videos_sound {

@@ -1,0 +1,12 @@
+{
+    "from_gallery": "Dalla galleria",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Dalla fotocamera",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

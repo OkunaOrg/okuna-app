@@ -2,809 +2,600 @@
     "open_post": "Abrir post",
     "@open_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "close_post": "Fechar post",
     "@close_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_opened": "Post aberto",
     "@post_opened": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_closed": "Post fechado ",
     "@post_closed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_required_error": "O comentário não pode ficar vazio.",
     "@comment_required_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_maxlength_error": "Um comentário não pode ter mais de {maxLength} caracteres.",
     "@comment_maxlength_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "timeline_posts_all_loaded": "🎉  Todas as publicações carregadas",
     "@timeline_posts_all_loaded": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_refreshing_drhoo_title": "Aguenta aí!",
     "@timeline_posts_refreshing_drhoo_title": {
         "type": "text",
-        "placeholders": {
-
-        }
-    },
-    "timeline_posts_refreshing_drhoo_subtitle": "Carregando sua linha do tempo.",
-    "@timeline_posts_refreshing_drhoo_subtitle": {
-        "type": "text",
-        "placeholders": {
-
-        }
-    },
-    "timeline_posts_no_more_drhoo_title": "Sua linha do tempo está vazia.",
-    "@timeline_posts_no_more_drhoo_title": {
-        "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_no_more_drhoo_subtitle": "Siga usuários ou junte-se a uma comunidade para começar!",
     "@timeline_posts_no_more_drhoo_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_failed_drhoo_title": "Não foi possível carregar sua linha do tempo.",
     "@timeline_posts_failed_drhoo_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_failed_drhoo_subtitle": "Tente novamente em alguns segundos",
     "@timeline_posts_failed_drhoo_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_default_drhoo_title": "Algo não está certo.",
     "@timeline_posts_default_drhoo_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_default_drhoo_subtitle": "Tente atualizar a linha do tempo.",
     "@timeline_posts_default_drhoo_subtitle": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_posts_refresh_posts": "Atualizar publicações",
     "@timeline_posts_refresh_posts": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "no_circles_for": "'Nenhum círculo encontrado para '{circlesSearchQuery}'.",
+    "no_circles_for": "Nenhum círculo encontrado para '{circlesSearchQuery}'.",
     "@no_circles_for": {
         "type": "text",
         "placeholders": {
-            "circlesSearchQuery": {
-
-            }
+            "circlesSearchQuery": {}
         }
     },
     "share_to_circles": "Compartilhar nos círculos",
     "@share_to_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_post": " Post",
     "@profile_counts_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_posts": " Posts",
     "@profile_counts_posts": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_followers": " Seguidores",
     "@profile_counts_followers": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_following": " Seguindo",
     "@profile_counts_following": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_counts_follower": " Seguidor",
     "@profile_counts_follower": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "profile_retry_loading_posts": "Tentar novamente",
+    "@profile_retry_loading_posts": {
+        "type": "text",
+        "placeholders": {}
     },
     "action_comment": "Comentar",
     "@action_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "action_react": "Reagir",
     "@action_react": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "action_reply": "Responder",
     "@action_reply": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share": "Compartilhar",
     "@share": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_to": "Compartilhar em",
     "@share_to": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "sharing_post_to": "Compartilhando post em",
     "@sharing_post_to": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_shared_with": "Você compartilhou com",
     "@you_shared_with": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "shared_privately_on": "Compartilhado nos",
+    "shared_privately_on": "Compartilhado em particular nos",
     "@shared_privately_on": {
         "description": "Eg. Shared privately on @shantanu's circles. See following string, usernames_circles . Will combine this in future, needs refactoring.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "usernames_circles": "círculos de @{postCreatorUsername}",
     "@usernames_circles": {
         "type": "text",
         "placeholders": {
-            "postCreatorUsername": {
-
-            }
+            "postCreatorUsername": {}
         }
     },
     "share_community": "Compartilhar",
     "@share_community": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_to_community": "Compartilhar na comunidade",
     "@share_to_community": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_community_title": "Uma comunidade",
     "@share_community_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "share_community_desc": "Compartilhe a publicação com uma comunidade da qual você faz parte.",
     "@share_community_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_circles": "Meus círculos",
     "@my_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_circles_desc": "Compartilhe a publicação para um ou vários dos seus círculos.",
     "@my_circles_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "world_circle_name": "Mundo",
     "@world_circle_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "search_circles": "Procurar círculos...",
     "@search_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reaction_list_tap_retry": "Toque para tentar carregar as reações novamente.",
     "@reaction_list_tap_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_new": "Novo post",
     "@create_new": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "create_new_post_label": "Create new post",
+    "@create_new_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_community_post_label": "Create new communtiy post",
+    "@create_new_community_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_create_post_label": "Close create new post",
+    "@close_create_post_label": {
+        "type": "text",
+        "placeholders": {}
     },
     "create_next": "Avançar",
     "@create_next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "create_photo": "Imagem",
     "@create_photo": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "create_video": "Vídeo",
+    "@create_video": {
+        "type": "text",
+        "placeholders": {}
     },
     "commenter_post_text": "Enviar",
     "@commenter_post_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_write_something": "Escreva algo...",
     "@commenter_write_something": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "edit_title": "Editar publicação",
+    "edit_title": "Editar post",
     "@edit_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_save": "Salvar",
     "@edit_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_save": "Salvar",
     "@commenter_expanded_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_join_conversation": "Entrar na conversa...",
     "@commenter_expanded_join_conversation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_start_conversation": "Começar uma conversa...",
     "@commenter_expanded_start_conversation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "commenter_expanded_edit_comment": "Editar comentário",
     "@commenter_expanded_edit_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "is_closed": "Post fechado",
     "@is_closed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_expanded_reply_comment": "Responder comentário",
     "@comment_reply_expanded_reply_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_expanded_post": "Enviar",
     "@comment_reply_expanded_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comment_reply_expanded_reply_hint_text": "Sua resposta...",
     "@comment_reply_expanded_reply_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "trending_posts_title": "Posts em alta",
+    "trending_posts_title": "Publicações em alta",
     "@trending_posts_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "trending_posts_no_trending_posts": "Não há publicações em alta. Tente atualizar em alguns segundos.",
     "@trending_posts_no_trending_posts": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "trending_posts_refresh": "Atualizar",
     "@trending_posts_refresh": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_view_all_comments": "Ver todos os {commentsCount} comentários",
+    "comments_view_all_comments": "Ver todos os comentários ({commentsCount})",
     "@comments_view_all_comments": {
         "type": "text",
         "placeholders": {
-            "commentsCount": {
-
-            }
+            "commentsCount": {}
         }
     },
     "comments_closed_post": "Post fechado",
     "@comments_closed_post": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_disabled": "Comentários desativados",
     "@comments_disabled": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "text_copied": "Texto copiado!",
     "@text_copied": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "post_reactions_title": "Reações ao post",
     "@post_reactions_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "have_not_shared_anything": "Você ainda não compartilhou nada.",
     "@have_not_shared_anything": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "user_has_not_shared_anything": "{name} ainda não compartilhou nada.",
     "@user_has_not_shared_anything": {
         "type": "text",
         "placeholders": {
-            "name": {
-
-            }
+            "name": {}
         }
     },
-    "comments_header_newest_replies": "Novas respostas",
+    "comments_header_newest_replies": "Respostas mais recentes",
     "@comments_header_newest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_newer": "Mais recentes",
     "@comments_header_newer": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_view_newest_replies": "Ver respostas mais recentes",
+    "comments_header_view_newest_replies": "Mais recentes",
     "@comments_header_view_newest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_see_newest_replies": "Ver respostas mais recentes",
+    "comments_header_see_newest_replies": "Mais recentes",
     "@comments_header_see_newest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_oldest_replies": "Respostas mais antigas",
     "@comments_header_oldest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_older": "Mais antigos",
     "@comments_header_older": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_view_oldest_replies": "Ver respostas mais antigas",
+    "comments_header_view_oldest_replies": "Mais antigas",
     "@comments_header_view_oldest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_see_oldest_replies": "Ver respostas mais antigas",
+    "comments_header_see_oldest_replies": "Mais antigas",
     "@comments_header_see_oldest_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_be_the_first_replies": "Mande a primeira resposta",
     "@comments_header_be_the_first_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_newest_comments": "Comentários mais recentes",
     "@comments_header_newest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_view_newest_comments": "Ver comentários mais recentes",
+    "comments_header_view_newest_comments": "Mais recentes",
     "@comments_header_view_newest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_see_newest_comments": "Ver comentários mais recentes",
+    "comments_header_see_newest_comments": "Mais recentes",
     "@comments_header_see_newest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_oldest_comments": "Comentários mais antigos",
     "@comments_header_oldest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_view_oldest_comments": "Ver comentários mais antigos",
+    "comments_header_view_oldest_comments": "Mais antigos",
     "@comments_header_view_oldest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "comments_header_see_oldest_comments": "Ver comentários mais antigos",
+    "comments_header_see_oldest_comments": "Mais antigos",
     "@comments_header_see_oldest_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_header_be_the_first_comments": "Mande o primeiro comentário",
     "@comments_header_be_the_first_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_title": "Comentários",
     "@comments_page_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_no_more_to_load": "Sem mais comentários para carregar",
     "@comments_page_no_more_to_load": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_tap_to_retry": "Toque para tentar atualizar os comentários novamente.",
     "@comments_page_tap_to_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_tap_to_retry_replies": "Toque para tentar atualizar as respostas novamente.",
     "@comments_page_tap_to_retry_replies": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_no_more_replies_to_load": "Sem mais respostas para carregar",
     "@comments_page_no_more_replies_to_load": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_page_replies_title": "Respostas",
     "@comments_page_replies_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "disable_post_comments": "Desativar comentários do post",
     "@disable_post_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "enable_post_comments": "Ativar comentários do post",
     "@enable_post_comments": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_enabled_message": "Comentários ativados no post",
     "@comments_enabled_message": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "comments_disabled_message": "Comentários desativados no post",
     "@comments_disabled_message": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_delete": "Excluir post",
     "@actions_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_deleted": "Post excluído",
     "@actions_deleted": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_delete_comment": "Excluir comentário",
     "@actions_delete_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_edit_comment": "Editar comentário",
     "@actions_edit_comment": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_comment_deleted": "Comentário excluído",
     "@actions_comment_deleted": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_report_text": "Denunciar",
     "@actions_report_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_reported_text": "Denunciado",
     "@actions_reported_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_show_more_text": "Ver mais",
     "@actions_show_more_text": {
         "description": "Shown for posts with long text to expand the entire text.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_years": "a",
     "@time_short_years": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3y. Keep it as short as possible",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3y. Keep it as short as possible",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_year": "1a",
     "@time_short_one_year": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_weeks": "sem",
     "@time_short_weeks": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 5w.Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 5w.Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_week": "1sem",
     "@time_short_one_week": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_days": "d",
     "@time_short_days": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3d. Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3d. Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_day": "1d",
     "@time_short_one_day": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_hours": "h",
     "@time_short_hours": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 3h.Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3h.Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_hour": "1h",
     "@time_short_one_hour": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_minutes": "min",
     "@time_short_minutes": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13m.Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13m.Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_seconds": "s",
     "@time_short_seconds": {
-        "description": "Shown in timestamps next to post to indicate how long ago the post\/notification was created for.eg 13s Keep it as short as possible ",
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13s Keep it as short as possible ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_one_minute": "1min",
     "@time_short_one_minute": {
         "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "time_short_now_text": "agora",
     "@time_short_now_text": {
         "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

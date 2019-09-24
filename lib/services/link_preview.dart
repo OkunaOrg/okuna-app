@@ -1,5 +1,6 @@
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:public_suffix/public_suffix_io.dart';
 class LinkPreviewService {
   ValidationService _validationService;
   HttpieService _httpieService;
+  UtilsService _utilsService;
 
   String _trustedProxyUrl = '';
 
@@ -35,6 +37,10 @@ class LinkPreviewService {
     _httpieService = httpieService;
   }
 
+  void setUtilsService(utilsService) {
+    _utilsService = utilsService;
+  }
+
   void setValidationService(validationService) {
     _validationService = validationService;
   }
@@ -51,12 +57,17 @@ class LinkPreviewService {
     }));
 
     if (matches.length > 0) {
+      String urlMimeType = _utilsService.geFileNameMimeType(matches.first);
+      if (urlMimeType != null) {
+        String urlFirstType = urlMimeType.split('/').first;
+        if (urlFirstType != 'image' && urlFirstType != 'text') return null;
+      }
       previewUrl = matches.first;
     }
     return previewUrl;
   }
 
-  Future<LinkPreviewResult> previewLink(String link) async {
+  Future<LinkPreview> previewLink(String link) async {
     String normalisedLink = _normaliseLink(link);
 
     if (!_validationService.isUrl(normalisedLink.toLowerCase()))
@@ -81,24 +92,19 @@ class LinkPreviewService {
           appendAuthorizationToken: appendAuthorizationHeader);
     }
 
-    print(response.httpResponse.headers);
-
     _checkResponseIsOk(response);
 
     String contentType = response.httpResponse.headers['content-type'];
 
     String mimeFirstType = contentType.split('/').first;
 
-    LinkPreviewResult result;
+    LinkPreview result;
 
     if (mimeFirstType == 'image') {
-      result = LinkPreviewResult(rawImage: response.httpResponse.bodyBytes);
+      result = LinkPreview(image: response.httpResponse.bodyBytes);
     } else if (mimeFirstType == 'text') {
-      LinkPreview linkPreview = _getLinkPreviewFromResponseBody(
+      result = _getLinkPreviewFromResponseBody(
           link: normalisedLink, responseBody: response.body);
-      result = LinkPreviewResult(linkPreview: linkPreview);
-    } else {
-      result = LinkPreviewResult();
     }
 
     return result;
@@ -138,7 +144,9 @@ class LinkPreviewService {
 
     if (linkPreviewTitle == null) {
       // Fallback
-      linkPreviewTitle = document.head.getElementsByTagName("title")[0]?.text;
+      var titleElement = document.head.getElementsByTagName("title");
+      if (titleElement != null && titleElement.isNotEmpty)
+        linkPreviewTitle = titleElement[0]?.text;
     }
 
     if (linkPreviewImageUrl == null) {
@@ -149,10 +157,11 @@ class LinkPreviewService {
           linkPreviewImageUrl = imgElements.firstWhere((var imgElement) {
             String imgSrc = imgElement.attributes['src'];
             if (imgSrc == null) return false;
-            return imgSrc.endsWith('jpg') || imgSrc.endsWith('gif') || imgSrc.endsWith('png');
+            return imgSrc.endsWith('jpg') ||
+                imgSrc.endsWith('gif') ||
+                imgSrc.endsWith('png');
           }).attributes["src"];
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     }
 
@@ -163,6 +172,8 @@ class LinkPreviewService {
     if (linkPreviewFaviconUrl != null)
       linkPreviewFaviconUrl =
           _normaliseLink(linkPreviewFaviconUrl, derivedFromLink: link);
+
+    print(linkPreviewImageUrl);
 
     return LinkPreview(
         title: linkPreviewTitle,
@@ -204,11 +215,13 @@ class LinkPreviewService {
       // Absolute path
       Uri parsedDerivedFromLink = Uri.parse(derivedFromLink);
       return '${parsedDerivedFromLink.scheme}://${parsedDerivedFromLink.host}$link';
+    } if(derivedFromLink != null){
+      return derivedFromLink.endsWith('/')
+          ? '$derivedFromLink$link'
+          : '$derivedFromLink/$link';
     }
 
-    return derivedFromLink.endsWith('/')
-        ? '$derivedFromLink$link'
-        : '$derivedFromLink/$link';
+    return 'http://$link';
   }
 
   String getProxiedLink(String link) {
@@ -237,16 +250,4 @@ class EmptyLinkToPreview implements Exception {
 
   String toString() =>
       'EmptyLinkToPreview: $link was empty, could not be previewed.';
-}
-
-class LinkPreviewResult {
-  final LinkPreview linkPreview;
-  final List<int> rawImage;
-
-  LinkPreviewResult({
-    this.linkPreview,
-    this.rawImage,
-  });
-
-  bool isEmpty() => this.linkPreview == null && this.rawImage == null;
 }

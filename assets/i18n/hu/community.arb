@@ -59,6 +59,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "retry_loading_posts": "Koppints az újrapróbálkozáshoz",
+    "@retry_loading_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
     "admin_add_confirmation": "Biztosan ki szeretnéd nevezni @{username}-t a közösség adminisztrátoraként?",
     "@admin_add_confirmation": {
         "type": "text",

@@ -1,0 +1,19 @@
+{
+    "from_gallery": "Galeriden",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Kameradan",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_too_large": "Dosya çok büyük (limit: {limit} MB)",
+    "@error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    }
+}

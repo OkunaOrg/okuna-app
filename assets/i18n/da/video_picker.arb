@@ -1,10 +1,10 @@
 {
-    "from_gallery": "From gallery",
+    "from_gallery": "Fra galleri",
     "@from_gallery": {
         "type": "text",
         "placeholders": {}
     },
-    "from_camera": "From camera",
+    "from_camera": "Fra kamera",
     "@from_camera": {
         "type": "text",
         "placeholders": {}

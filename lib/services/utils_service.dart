@@ -28,6 +28,10 @@ class UtilsService {
     return lookupExtension(mimeType);
   }
 
+  String geFileNameMimeType(String fileName) {
+    return lookupMimeType(fileName);
+  }
+
   Future<String> getFileMimeType(File file) async {
     String mimeType = lookupMimeType(file.path);
 
@@ -37,6 +41,7 @@ class UtilsService {
 
     return mimeType;
   }
+
   // LocalizationService localizationService
   String timeAgo(DateTime date, LocalizationService _localizationService) {
     /// Originally from https://gist.github.com/DineshKachhot/bc8cee616f30c323c1dd1e63a4bf65df

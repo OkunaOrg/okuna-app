@@ -118,6 +118,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     initAsyncState();
     imageCache.maximumSize = 200 << 20; // 200MB
     userPreferencesService.setStorageService(storageService);
+    userPreferencesService.setConnectivityService(connectivityService);
     connectionsCirclesApiService.setHttpService(httpService);
     httpService.setUtilsService(utilsService);
     connectionsCirclesApiService
@@ -176,6 +177,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
     linkPreviewService.setHttpieService(httpService);
+    linkPreviewService.setUtilsService(utilsService);
     linkPreviewService.setValidationService(validationService);
   }
 
@@ -203,10 +205,12 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         iosApiKey: environment.intercomIosKey,
         androidApiKey: environment.intercomAndroidKey,
         appId: environment.intercomAppId);
-
     sentryClient = SentryClient(dsn: environment.sentryDsn);
     linkPreviewService
         .setTrustedProxyUrl(environment.linkPreviewsTrustedProxyUrl);
+
+    await connectivityService.bootstrap();
+    userPreferencesService.bootstrap();
   }
 
   @override
@@ -223,6 +227,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     universalLinksService.dispose();
     pushNotificationsService.dispose();
     connectivityService.dispose();
+    userPreferencesService.dispose();
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {

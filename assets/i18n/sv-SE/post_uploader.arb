@@ -1,0 +1,47 @@
+{
+    "generic_upload_failed": "Uppladdningen misslyckades",
+    "@generic_upload_failed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "creating_post": "Skapar inlägget...",
+    "@creating_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "compressing_media": "Komprimerar media...",
+    "@compressing_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uploading_media": "Laddar upp media...",
+    "@uploading_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "publishing": "Publicerar inlägget...",
+    "@publishing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "processing": "Bearbetar inlägget...",
+    "@processing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "success": "Klart!",
+    "@success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelling": "Avbryter",
+    "@cancelling": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelled": "Avbrutet!",
+    "@cancelled": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

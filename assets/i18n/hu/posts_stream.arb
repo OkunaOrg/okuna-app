@@ -9,8 +9,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "refreshing_drhoo_subtitle": "Hírfolyamod betöltése.",
+    "refreshing_drhoo_subtitle": "Hírfolyam újratöltése.",
     "@refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_title": "Ez a hírfolyam üres.",
+    "@empty_drhoo_title": {
         "type": "text",
         "placeholders": {}
     },

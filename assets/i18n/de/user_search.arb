@@ -2,32 +2,24 @@
     "search_text": "Suchen...",
     "@search_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "communities": "Communities",
     "@communities": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "users": "Benutzer",
     "@users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "list_search_text": "Suche {resourcePluralName} ...",
     "@list_search_text": {
         "description": "resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.",
         "type": "text",
         "placeholders": {
-            "resourcePluralName": {
-
-            }
+            "resourcePluralName": {}
         }
     },
     "list_no_results_found": "Keine {resourcePluralName} gefunden.",
@@ -35,66 +27,50 @@
         "description": "Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ",
         "type": "text",
         "placeholders": {
-            "resourcePluralName": {
-
-            }
+            "resourcePluralName": {}
         }
     },
     "list_refresh_text": "Aktualisieren",
     "@list_refresh_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "list_retry": "Tippen zum Wiederholen.",
+    "list_retry": "Nochmal versuchen.",
     "@list_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "cancel": "Abbrechen",
     "@cancel": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "searching_for": "Suche nach {searchQuery}",
     "@searching_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "no_results_for": "Keine Suchergebnisse für '{searchQuery}'.",
     "@no_results_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "no_communities_for": "Keine Communities zu '{searchQuery}' gefunden.",
     "@no_communities_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "no_users_for": "Keine Benutzer für '{searchQuery}' gefunden.",
     "@no_users_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     }
 }

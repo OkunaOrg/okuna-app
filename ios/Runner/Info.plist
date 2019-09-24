@@ -23,11 +23,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.51</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>51</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -51,7 +51,7 @@
 	<string>We use this permission to allow you to share photos/videos from your library.</string>
 	<key>UIBackgroundModes</key>
 	<array>
-	   <string>fetch</string>
+		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

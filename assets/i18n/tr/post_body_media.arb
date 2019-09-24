@@ -1,0 +1,7 @@
+{
+    "unsupported": "Desteklenmeyen medya türü",
+    "@unsupported": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

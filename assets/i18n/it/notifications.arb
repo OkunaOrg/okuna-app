@@ -1,5 +1,15 @@
 {
-    "settings_title": "Impostazioni Notifiche",
+    "tab_general": "Generali",
+    "@tab_general": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tab_requests": "Richieste",
+    "@tab_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "settings_title": "Impostazioni notifiche",
     "@settings_title": {
         "type": "text",
         "placeholders": {}
@@ -154,9 +164,9 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] [username] ti ha invitato a unirti alla comunità \/c\/{communityName}.",
+    "user_community_invite_tile": "[name] [username] ti ha invitato a unirti alla comunità /c/{communityName}.",
     "@user_community_invite_tile": {
-        "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
+        "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}
@@ -184,7 +194,7 @@
             "postCommentText": {}
         }
     },
-    "comment_comment_notification_tile_user_also_commented": "anche [name] [username] ha commentato il tuo post: {postCommentText}",
+    "comment_comment_notification_tile_user_also_commented": "anche [name] [username] ha commentato: {postCommentText}",
     "@comment_comment_notification_tile_user_also_commented": {
         "type": "text",
         "placeholders": {

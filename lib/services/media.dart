@@ -99,7 +99,7 @@ class MediaService {
     String tmpImageName = _uuid.v4() + videoExtension;
     final path = await _getTempPath();
     final String pickedVideoCopyPath = '$path/$tmpImageName';
-    File pickedVideoCopy = await pickedVideo.copy(pickedVideoCopyPath);
+    File pickedVideoCopy = pickedVideo.copySync(pickedVideoCopyPath);
 
     if (!await _validationService.isVideoAllowedSize(pickedVideoCopy)) {
       throw FileTooLargeException(_validationService.getAllowedVideoSize());
@@ -154,7 +154,8 @@ class MediaService {
     if (exitCode == 0) {
       resultFile = File(resultFilePath);
     } else {
-      throw Exception('Failed to compress video');
+      debugPrint('Failed to compress video, using original file');
+      resultFile = video;
     }
 
     return resultFile;

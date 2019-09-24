@@ -1,0 +1,82 @@
+{
+    "videos": "Video",
+    "@videos": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews": "Anteprime link",
+    "@link_previews": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay": "Riproduzione automatica",
+    "@videos_autoplay": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_show": "Mostra",
+    "@link_previews_show": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_always": "Sempre",
+    "@videos_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_wifi_only": "Solo Wi-Fi",
+    "@videos_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_never": "Mai",
+    "@videos_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_always": "Sempre",
+    "@link_previews_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_wifi_only": "Solo WiFi",
+    "@link_previews_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_never": "Mai",
+    "@link_previews_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound": "Suono",
+    "@videos_sound": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tap_to_change": "(Tocca per cambiare)",
+    "@tap_to_change": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_enabled": "Abilitato",
+    "@videos_sound_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_disabled": "Disabilitato",
+    "@videos_sound_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_newest_first": "Prima i più recenti",
+    "@comment_sort_newest_first": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_oldest_first": "Prima i più vecchi",
+    "@comment_sort_oldest_first": {
+        "type": "text",
+        "placeholders": {}
+    }
+}
