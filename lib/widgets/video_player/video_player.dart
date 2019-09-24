@@ -108,8 +108,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
         ? widget.visibilityKey
         : Key(visibilityKeyFallback);
 
-    _initializeVideoPlayerFuture =
-        _isVideoHandover ? Future.value() : _playerController.initialize();
+    _initializeVideo();
   }
 
   @override
@@ -128,6 +127,17 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       _playerController.setVolume(100);
     } else {
       _playerController.setVolume(0);
+    }
+  }
+
+  void _initializeVideo() {
+    if(_isVideoHandover){
+      debugLog('Not initializing video player as it is handover');
+      _initializeVideoPlayerFuture = Future.value();
+    } else{
+      debugLog('Initializing video player');
+      _initializeVideoPlayerFuture =
+      _playerController.initialize();
     }
   }
 
