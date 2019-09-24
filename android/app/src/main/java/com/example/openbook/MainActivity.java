@@ -89,11 +89,11 @@ public class MainActivity extends FlutterActivity {
           if (!getExtensionFromUri(uri).equalsIgnoreCase("gif")) {
             args.put("image", copyImageToTempFile(uri).toString());
           } else {
-            args.put("video", copyVideoToTempFileIfNeeded(uri).toString());
+            args.put("video", copyVideoToTempFile(uri).toString());
           }
         } else if (intent.getType().startsWith("video/")) {
           Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-          args.put("video", copyVideoToTempFileIfNeeded(uri).toString());
+          args.put("video", copyVideoToTempFile(uri).toString());
         } else if (intent.getType().startsWith("text/")) {
           args.put("text", intent.getStringExtra(Intent.EXTRA_TEXT));
         } else {
@@ -140,12 +140,10 @@ public class MainActivity extends FlutterActivity {
     }
   }
 
-  private Uri copyVideoToTempFileIfNeeded(Uri videoUri) throws KeyedException {
+  private Uri copyVideoToTempFile(Uri videoUri) throws KeyedException {
     Uri result = null;
 
-    if (videoUri.getScheme().equals("file")) {
-      result = videoUri;
-    } else if (videoUri.getScheme().equals("content")){
+    if (videoUri.getScheme().equals("content") || videoUri.getScheme().equals("file")) {
       String extension = getExtensionFromUri(videoUri);
       File tempFile = createTemporaryFile("." + extension);
       copyResourceToFile(() -> getContentResolver().openInputStream(videoUri), tempFile);
