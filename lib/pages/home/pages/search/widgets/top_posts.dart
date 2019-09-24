@@ -15,7 +15,6 @@ import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:inview_notifier_list/inview_notifier_list.dart';
 
 class OBTopPosts extends StatefulWidget {
   final OBTopPostsController controller;
@@ -75,7 +74,6 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     _navigationService = openbookProvider.navigationService;
 
     if (_needsBootstrap) _bootstrap();
-
     if (!_needsBootstrap) {
       return OBPostsStream(
         streamIdentifier: 'explorePostsTab',
@@ -121,7 +119,12 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
       List<Post> posts = topPostsList.posts.map((topPost) => topPost.post).toList();
       _currentPosts = posts;
     }
-    _needsBootstrap = false;
+
+    Future.delayed(Duration(milliseconds: 0), () {
+      setState(() {
+        _needsBootstrap = false;
+      });
+    });
   }
 
   Widget _topPostBuilder(BuildContext context, Post post, String streamUniqueIdentifier, Function(Post) onPostDeleted) {

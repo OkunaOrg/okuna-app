@@ -80,7 +80,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
-    print('setting 0');
     _loggedInUserUnreadNotifications = 0;
     _lastIndex = 0;
     _currentIndex = 0;
