@@ -15,6 +15,7 @@
 		8948310A233808D100A8A6E7 /* libfile_picker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89E684862320235F00E0855B /* libfile_picker.a */; };
 		894831302338090700A8A6E7 /* libsqflite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8928E32022356450001DB32A /* libsqflite.a */; };
 		8954FC1E233A20F000CADD38 /* libflutter_image_compress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89FE1BA52323BCA0007C6904 /* libflutter_image_compress.a */; };
+		895F0B97233CF51700511ADD /* libflutter_secure_storage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */; };
 		89ABAE522203425900049DFB /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89ABAE512203425900049DFB /* NotificationService.m */; };
 		89ABAE562203425900049DFB /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 89ABAE4E2203425900049DFB /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		89E6848F2320235F00E0855B /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* libTOCropViewController.a */; };
@@ -335,6 +336,7 @@
 				89FE1B37232028F2007C6904 /* libflutter_ffmpeg.a in Frameworks */,
 				89FE1AE0232023BB007C6904 /* libvideo_thumbnail.a in Frameworks */,
 				894831302338090700A8A6E7 /* libsqflite.a in Frameworks */,
+				895F0B97233CF51700511ADD /* libflutter_secure_storage.a in Frameworks */,
 				8948310A233808D100A8A6E7 /* libfile_picker.a in Frameworks */,
 				89FE1ABF232023A4007C6904 /* liblibwebp.a in Frameworks */,
 				89FE1A9E23202382007C6904 /* libimage_cropper.a in Frameworks */,
