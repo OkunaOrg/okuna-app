@@ -1859,7 +1859,7 @@ class LocalizationService {
   }
 
   String get post__top_posts_title {
-    return Intl.message("Explore Okuna", name: 'post__top_posts_title');
+    return Intl.message("Explore", name: 'post__top_posts_title');
   }
 
   String get post__trending_posts_no_trending_posts {

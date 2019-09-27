@@ -35,8 +35,9 @@ class OBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String postInViewId = inViewId + '_' + post.id.toString();
 
-    _bootstrap(context);
+    _bootstrap(context, postInViewId);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -70,20 +71,20 @@ class OBPost extends StatelessWidget {
     );
   }
 
-  void _bootstrap(BuildContext context) {
+  void _bootstrap(BuildContext context, String postInViewId) {
     InViewState _inViewState;
-    if (inViewId != null) {
+    if (postInViewId != null) {
       _inViewState = InViewNotifierList.of(context);
-      _inViewState.addContext(context: context, id: inViewId);
+      _inViewState.addContext(context: context, id: postInViewId);
 
       if (isTopPost) {
-        _inViewState.addListener(() =>_onInViewStateChanged(_inViewState));
+        _inViewState.addListener(() =>_onInViewStateChanged(_inViewState, postInViewId));
       }
     }
   }
 
-  void _onInViewStateChanged(InViewState _inViewState) {
-    final bool isInView = _inViewState.inView(inViewId);
+  void _onInViewStateChanged(InViewState _inViewState, String postInViewId) {
+    final bool isInView = _inViewState.inView(postInViewId);
     if (isInView) {
       debugPrint('Setting id ${post.id} as last viewed for top posts');
       if (onPostIsInView != null) onPostIsInView(post);

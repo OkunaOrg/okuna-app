@@ -8,6 +8,7 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:async/async.dart';
 
 class OBExcludeCommunityTile extends StatefulWidget {
   final Post post;
@@ -31,6 +32,8 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
+  CancelableOperation _excludeCommunityOperation;
+  CancelableOperation _undoExcludeCommunityOperation;
 
   bool _requestInProgress;
 
@@ -67,30 +70,43 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    if (_excludeCommunityOperation != null) _excludeCommunityOperation.cancel();
+    if (_undoExcludeCommunityOperation != null) _undoExcludeCommunityOperation.cancel();
+  }
+
   void _excludePostCommunity() async {
+    if (_excludeCommunityOperation != null) return;
     _setRequestInProgress(true);
     try {
-      String message = await _userService.excludePostCommunityFromTopPosts(widget.post.community);
+      _excludeCommunityOperation = CancelableOperation.fromFuture(_userService.excludePostCommunityFromTopPosts(widget.post.community));
+      String message = await _excludeCommunityOperation.value;
       if (widget.onExcludedPostCommunity != null) widget.onExcludedPostCommunity();
       widget.post.updateIsFromExcludedCommunity(true);
       _toastService.success(message: message, context: context);
     } catch (e) {
       _onError(e);
     } finally {
+      _excludeCommunityOperation = null;
       _setRequestInProgress(false);
     }
   }
 
   void _undoExcludePostCommunity() async {
+    if (_undoExcludeCommunityOperation != null) return;
     _setRequestInProgress(true);
     try {
-      String message = await _userService.undoExcludePostCommunityFromTopPosts(widget.post.community);
+      _undoExcludeCommunityOperation = CancelableOperation.fromFuture(_userService.undoExcludePostCommunityFromTopPosts(widget.post.community));
+      String message = await _undoExcludeCommunityOperation.value;
       if (widget.onUndoExcludedPostCommunity != null) widget.onUndoExcludedPostCommunity();
       _toastService.success(message: message, context: context);
       widget.post.updateIsFromExcludedCommunity(false);
     } catch (e) {
       _onError(e);
     } finally {
+      _undoExcludeCommunityOperation = null;
       _setRequestInProgress(false);
     }
   }
