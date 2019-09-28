@@ -39,7 +39,7 @@ dependencies:
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
-  onesignal_flutter: ^2.0.2
+  onesignal_flutter: ^2.1.0
   flutter_advanced_networkimage: ^0.5.0
   dcache: ^0.1.0
   validators: ^1.0.0+1
