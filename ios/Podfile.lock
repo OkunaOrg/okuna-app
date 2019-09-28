@@ -42,10 +42,10 @@ PODS:
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
   - mobile-ffmpeg-full-gpl (4.2.2.LTS)
-  - OneSignal (2.10.1)
-  - onesignal_flutter (2.0.2):
+  - OneSignal (2.11.0)
+  - onesignal_flutter (2.1.0):
     - Flutter
-    - OneSignal (= 2.10.1)
+    - OneSignal (= 2.11.0)
   - path_provider (0.0.1):
     - Flutter
   - Reachability (3.2)
@@ -75,7 +75,7 @@ DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
-  - Flutter (from `.symlinks/flutter/ios-release`)
+  - Flutter (from `.symlinks/flutter/ios`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_ffmpeg/full-gpl-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
@@ -115,7 +115,7 @@ EXTERNAL SOURCES:
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios-release"
+    :path: ".symlinks/flutter/ios"
   flutter_exif_rotation:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_ffmpeg:
@@ -168,8 +168,8 @@ SPEC CHECKSUMS:
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   mobile-ffmpeg-full-gpl: efbd28ed385c931e90421f4f3a78a2349c3c76d0
-  OneSignal: 8fb749fa07f88006403c9b659a570fb7fb74519a
-  onesignal_flutter: f0eab25765dd95978c19dc64a87a8a33387909fa
+  OneSignal: 1e2ed98358f87cb755e7262412ddb2949b8e5c55
+  onesignal_flutter: 4b1a299c510913d6ab15ee493b554b3a4f33f43c
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
