@@ -41,6 +41,21 @@ class UserProfile {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'avatar': avatar,
+      'cover': cover,
+      'bio': bio,
+      'url': url,
+      'location': location,
+      'badges': badges?.map((Badge badge) => badge.toJson())?.toList(),
+      'followers_count_visible': followersCountVisible,
+      'community_posts_visible': communityPostsVisible,
+    };
+  }
+
   static List<Badge> parseBadges(List<dynamic> badges) {
     if (badges == null) return null;
     return BadgesList.fromJson(badges).badges;

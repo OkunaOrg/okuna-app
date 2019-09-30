@@ -339,8 +339,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
             overflow: Overflow.visible,
             children: <Widget>[
               const OBIcon(OBIcons.notifications),
-              _loggedInUserUnreadNotifications > 0
-                  ? Positioned(
+              _loggedInUserUnreadNotifications != null
+                  && _loggedInUserUnreadNotifications > 0 ? Positioned(
                       right: -8,
                       child: OBBadge(
                         size: 10,

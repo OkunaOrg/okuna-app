@@ -1530,6 +1530,11 @@ class LocalizationService {
         name: 'community__adjectives_range_error');
   }
 
+  String get community__top_posts_excluded_communities {
+    return Intl.message("Excluded communities",
+        name: 'community__top_posts_excluded_communities');
+  }
+
   String get user_search__search_text {
     return Intl.message("Search...", name: 'user_search__search_text');
   }
@@ -1853,8 +1858,8 @@ class LocalizationService {
         name: 'post__comment_reply_expanded_reply_hint_text');
   }
 
-  String get post__trending_posts_title {
-    return Intl.message("Trending posts", name: 'post__trending_posts_title');
+  String get post__top_posts_title {
+    return Intl.message("Explore", name: 'post__top_posts_title');
   }
 
   String get post__trending_posts_no_trending_posts {
@@ -2013,6 +2018,16 @@ class LocalizationService {
   String get post__enable_post_comments {
     return Intl.message("Enable post comments",
         name: 'post__enable_post_comments');
+  }
+
+  String get post__exclude_post_community {
+    return Intl.message("Don't show posts from this community",
+        name: 'post__exclude_post_community');
+  }
+
+  String get post__undo_exclude_post_community {
+    return Intl.message("Show posts from this community",
+        name: 'post__undo_exclude_post_community');
   }
 
   String get post__comments_enabled_message {

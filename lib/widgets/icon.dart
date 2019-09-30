@@ -206,8 +206,9 @@ class OBIcons {
       OBIconData(nativeIcon: Icons.remove_circle);
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
-  static const mutePostComment =
-      OBIconData(nativeIcon: Icons.notifications_active);
+  static const excludePostCommunity = OBIconData(nativeIcon: Icons.not_interested);
+  static const undoExcludePostCommunity = OBIconData(nativeIcon: Icons.check);
+  static const mutePostComment = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const edit = OBIconData(nativeIcon: Icons.edit);
   static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);

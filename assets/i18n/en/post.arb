@@ -475,6 +475,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "exclude_post_community": "Don't show posts from this community in this feed",
+  "@exclude_post_community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "undo_exclude_post_community": "Show posts from this community in this feed",
+  "@undo_exclude_post_community": {
+    "type": "text",
+    "placeholders": {}
+  },
   "comments_enabled_message": "Comments enabled for post",
   "@comments_enabled_message": {
     "type": "text",

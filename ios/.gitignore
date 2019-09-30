@@ -41,6 +41,7 @@ Icon?
 /Flutter/Generated.xcconfig
 /Flutter/flutter_export_environment.sh
 /ServiceDefinitions.json
+/Flutter/flutter_export_environment.sh
 
 Pods/
 .symlinks/

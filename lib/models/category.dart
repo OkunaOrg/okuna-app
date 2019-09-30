@@ -24,7 +24,20 @@ class Category extends UpdatableModel<Category> {
   static final factory = CategoryFactory();
 
   factory Category.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'creator': creator?.toJson(),
+      'avatar': avatar,
+      'color': color,
+      'title': title,
+      'description': description,
+      'name': name
+    };
   }
 
   @override
