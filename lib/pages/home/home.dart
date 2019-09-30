@@ -455,7 +455,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     } else {
       _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
-      _pushNotificationsService.enablePushNotificationsFlagInOneSignalIfNotPrompted();
+      _pushNotificationsService.promptUserForPushNotificationPermission();
       _intercomService.enableIntercom();
 
       _loggedInUserUpdateSubscription =

@@ -50,27 +50,6 @@ class PushNotificationsService {
     return subscriptionState.subscribed;
   }
 
-  Future enablePushNotificationsFlagInOneSignalIfNotPrompted() async {
-    /* There is an issue in the OneSignal flutter SDK where the
-     promptUserForPushNotificationPermission future never completes. Once this is fixed
-     (next release after 2.0.2 hopefully) we can directly call the promptUserForPushNotificationPermission()
-     method from _onLoggedInUserChange in home.dart, which will set the permissions
-     correctly. Then this function can be removed
-     Reference: https://github.com/OneSignal/OneSignal-Flutter-SDK/issues/62
-
-     Until then, this behaves as before for new signups, ie the onesignal permission
-     is set to true.
-     @todo: Replace usage of this method with promptUserForPushNotificationPermission() after new OneSignalSDK release
-     */
-
-    OSPermissionSubscriptionState osPermissionSubscriptionState =
-    await OneSignal.shared.getPermissionSubscriptionState();
-    OSPermissionState permissionStatus =
-        osPermissionSubscriptionState.permissionStatus;
-
-    if(!permissionStatus.hasPrompted) enablePushNotifications();
-  }
-
   Future enablePushNotifications() async {
     OSPermissionSubscriptionState osPermissionSubscriptionState =
         await OneSignal.shared.getPermissionSubscriptionState();
