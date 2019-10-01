@@ -16,6 +16,7 @@ import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
@@ -62,6 +63,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   ToastService _toastService;
   LocalizationService _localizationService;
   LinkPreviewService _linkPreviewService;
+  ShareService _shareService;
 
   TextEditingController _textController;
   FocusNode _focusNode;
@@ -161,6 +163,9 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   void _bootstrap() {
     _isPostTextAllowedLength =
         _validationService.isPostTextAllowedLength(_textController.text);
+    if (!_isEditingPost) {
+      _shareService.subscribe(_onShare);
+    }
   }
 
   @override
@@ -169,6 +174,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     _textController.removeListener(_onPostTextChanged);
     _focusNode.removeListener(_onFocusNodeChanged);
     _saveOperation?.cancel();
+    _shareService.unsubscribe(_onShare);
   }
 
   @override
@@ -184,6 +190,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       _textAccountAutocompletionService =
           openbookProvider.textAccountAutocompletionService;
       _userService = openbookProvider.userService;
+      _shareService = openbookProvider.shareService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -490,6 +497,37 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     );
 
     _addPostItemWidget(postImageWidget);
+  }
+
+  Future<bool> _onShare({String text, File image, File video}) async {
+    if (image != null || video != null) {
+      if (_hasImage) {
+        _removePostImageFile();
+      } else if (_hasVideo) {
+        _removePostVideoFile();
+      }
+    }
+
+    if (text != null) {
+      _textController.value = TextEditingValue(
+          text: text,
+          selection: TextSelection.collapsed(offset: text.length),
+      );
+    }
+
+    if (image != null) {
+      _setPostImageFile(image);
+    }
+
+    if (video != null) {
+      if (_mediaService.isGif(video)) {
+        video = await _mediaService.convertGifToVideo(video);
+      }
+
+      _setPostVideoFile(video);
+    }
+
+    return true;
   }
 
   Future<void> _createCommunityPost() async {
