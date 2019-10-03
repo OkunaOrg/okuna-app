@@ -2453,11 +2453,13 @@ class LocalizationService {
   }
 
   String user__invite_someone_message(
-      String iosLink, String androidLink, String inviteLink) {
+      String iosLink, String testFlightLink, String androidLink, String inviteLink) {
     return Intl.message(
-        "Hey, I'd like to invite you to Okuna. First, Download the app on iTunes ($iosLink) or the Play store ($androidLink). "
+        "Hey, I'd like to invite you to Okuna.\n\n"
+        "For Apple, first, download the TestFlight app on iTunes ($testFlightLink) and then download the Okuna app ($iosLink)\n\n"
+        "For Android, download it from the Play store ($androidLink).\n\n"
         "Second, paste this personalised invite link in the 'Sign up' form in the Okuna App: $inviteLink",
-        args: [iosLink, androidLink, inviteLink],
+        args: [iosLink, testFlightLink, androidLink, inviteLink],
         name: 'user__invite_someone_message');
   }
 

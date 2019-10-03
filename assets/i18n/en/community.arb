@@ -748,5 +748,10 @@
     "placeholders": {
       "maxLength": {}
     }
+  },
+  "top_posts_excluded_communities": "Excluded communities",
+  "@top_posts_excluded_communities": {
+    "type": "text",
+    "placeholders": {}
   }
 }

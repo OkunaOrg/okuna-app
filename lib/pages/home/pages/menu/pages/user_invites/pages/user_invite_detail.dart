@@ -124,10 +124,16 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
 
   String getShareMessageForInviteWithToken(String token, String apiURL) {
     const IOS_DOWNLOAD_LINK = UserInvite.IOS_DOWNLOAD_LINK;
+    const TESTFLIGHT_DOWNLOAD_LINK = UserInvite.TESTFLIGHT_DOWNLOAD_LINK;
     const ANDROID_DOWNLOAD_LINK = UserInvite.ANDROID_DOWNLOAD_LINK;
+
     String inviteLink = _stringTemplateService.parse(UserInvite.INVITE_LINK, {'token': token, 'apiURL': apiURL});
 
-    String message = _localizationService.user__invite_someone_message(IOS_DOWNLOAD_LINK, ANDROID_DOWNLOAD_LINK, inviteLink);
+    String message = _localizationService.user__invite_someone_message(
+        IOS_DOWNLOAD_LINK,
+        TESTFLIGHT_DOWNLOAD_LINK,
+        ANDROID_DOWNLOAD_LINK,
+        inviteLink);
 
     return message;
   }
