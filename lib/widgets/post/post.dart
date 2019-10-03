@@ -35,7 +35,8 @@ class OBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String postInViewId = inViewId + '_' + post.id.toString();
+    String postInViewId;
+    if (this.isTopPost) postInViewId = inViewId + '_' + post.id.toString();
 
     _bootstrap(context, postInViewId);
 

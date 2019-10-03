@@ -19,5 +19,12 @@ String getPrettyCount(int value, LocalizationService localizationService) {
     finalValue = value / 1000000000;
   }
 
+  var finalValueInt = finalValue.round();
+
+  if (finalValue != finalValueInt) {
+    // shows 3.8k etc.
+    return finalValue.toStringAsFixed(1) + postfix;
+  }
+
   return finalValue.round().toString() + postfix;
 }
