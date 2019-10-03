@@ -1525,6 +1525,14 @@ class UserService {
     return NotificationsList.fromJson(json.decode(response.body));
   }
 
+  Future<int> getUnreadNotificationsCount(
+      {int maxId, List<NotificationType> types}) async {
+    HttpieResponse response = await _notificationsApiService.getUnreadNotificationsCount(
+        maxId: maxId, types: types);
+    _checkResponseIsOk(response);
+    return (json.decode(response.body))['count'];
+  }
+
   Future<OBNotification> getNotificationWithId(int notificationId) async {
     HttpieResponse response =
         await _notificationsApiService.getNotificationWithId(notificationId);
