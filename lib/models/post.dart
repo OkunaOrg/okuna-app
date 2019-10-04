@@ -49,10 +49,46 @@ class Post extends UpdatableModel<Post> {
   bool isClosed;
   bool isReported;
 
+  // stored only in the app
+  bool isFromExcludedCommunity = false;
+
   static final factory = PostFactory();
 
   factory Post.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created': created.toString(),
+      'uuid': uuid,
+      'creator_id': creatorId,
+      'creator': creator?.toJson(),
+      'circles': circles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
+      'reactions_emoji_counts': reactionsEmojiCounts?.counts?.map((ReactionsEmojiCount reactionEmojiCount) => reactionEmojiCount.toJson())?.toList(),
+      'reaction': reaction?.toJson(),
+      'reactions_count': reactionsCount,
+      'comments_count': commentsCount,
+      'media_height': mediaHeight,
+      'media_width': mediaWidth,
+      'media_thumbnail': mediaThumbnail,
+      'are_comments_enabled': areCommentsEnabled,
+      'public_reactions': publicReactions,
+      'text': text,
+      'language': language?.toJson(),
+      'status': status?.code,
+      'media': media?.postMedia?.map((PostMedia mediaObj) => mediaObj.toJson())?.toList(),
+      'link_preview': linkPreview,
+      'comments_list': commentsList?.comments?.map((PostComment comment) => comment.toJson())?.toList(),
+      'community': community?.toJson(),
+      'is_muted': isMuted,
+      'is_encircled': isEncircled,
+      'is_edited': isEdited,
+      'is_closed': isClosed,
+      'is_reported': isReported
+    };
   }
 
   static void clearCache() {
@@ -166,6 +202,12 @@ class Post extends UpdatableModel<Post> {
       linkPreview.domainUrl = json['domain_url'];
     notifyUpdate();
   }
+
+  void updateIsFromExcludedCommunity(bool isExcluded) {
+    isFromExcludedCommunity = isExcluded;
+    notifyUpdate();
+  }
+
 
   bool hasReaction() {
     return reaction != null;

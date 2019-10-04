@@ -13,12 +13,23 @@ class CommunityMembership {
       this.isModerator});
 
   factory CommunityMembership.fromJSON(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
     return CommunityMembership(
         id: parsedJson['id'],
         communityId: parsedJson['community_id'],
         userId: parsedJson['user_id'],
         isAdministrator: parsedJson['is_administrator'],
         isModerator: parsedJson['is_moderator']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+    'id': id,
+    'user_id': userId,
+    'community_id': communityId,
+    'is_administrator': isAdministrator,
+    'is_moderator': isModerator
+    };
   }
 
   void updateFromJson(Map<String, dynamic> json) {

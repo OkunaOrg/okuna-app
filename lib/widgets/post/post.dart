@@ -10,26 +10,35 @@ import 'package:Okuna/widgets/theming/post_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 
+
 class OBPost extends StatelessWidget {
   final Post post;
   final ValueChanged<Post> onPostDeleted;
+  final ValueChanged<Post> onPostIsInView;
   final OnTextExpandedChange onTextExpandedChange;
   final String inViewId;
+  final bool isTopPost;
+  final Function onCommunityExcluded;
+  final Function onUndoCommunityExcluded;
 
   const OBPost(this.post,
       {Key key,
-      @required this.onPostDeleted,
-      this.onTextExpandedChange,
-      this.inViewId})
+        @required this.onPostDeleted,
+        this.onPostIsInView,
+        this.onCommunityExcluded,
+        this.onUndoCommunityExcluded,
+        this.onTextExpandedChange,
+        this.inViewId,
+        this.isTopPost = false})
       : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    if (inViewId != null) {
-      InViewState state = InViewNotifierList.of(context);
-      String postId = post.id.toString();
-      state.addContext(context: context, id: postId);
-    }
+    String postInViewId;
+    if (this.isTopPost) postInViewId = inViewId + '_' + post.id.toString();
+
+    _bootstrap(context, postInViewId);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -40,9 +49,13 @@ class OBPost extends StatelessWidget {
           post: post,
           onPostDeleted: onPostDeleted,
           onPostReported: onPostDeleted,
+          isTopPost: isTopPost,
+          onCommunityExcluded: onCommunityExcluded,
+          onUndoCommunityExcluded: onUndoCommunityExcluded,
         ),
         OBPostBody(post,
-            onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),
+            onTextExpandedChange: onTextExpandedChange,
+            inViewId: inViewId),
         OBPostReactions(post),
         OBPostCircles(post),
         OBPostComments(
@@ -57,5 +70,25 @@ class OBPost extends StatelessWidget {
         OBPostDivider(),
       ],
     );
+  }
+
+  void _bootstrap(BuildContext context, String postInViewId) {
+    InViewState _inViewState;
+    if (postInViewId != null) {
+      _inViewState = InViewNotifierList.of(context);
+      _inViewState.addContext(context: context, id: postInViewId);
+
+      if (isTopPost) {
+        _inViewState.addListener(() =>_onInViewStateChanged(_inViewState, postInViewId));
+      }
+    }
+  }
+
+  void _onInViewStateChanged(InViewState _inViewState, String postInViewId) {
+    final bool isInView = _inViewState.inView(postInViewId);
+    if (isInView) {
+      debugPrint('Setting id ${post.id} as last viewed for top posts');
+      if (onPostIsInView != null) onPostIsInView(post);
+    }
   }
 }

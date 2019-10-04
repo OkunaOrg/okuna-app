@@ -15,14 +15,17 @@ import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/badges/badge.dart';
 import 'package:Okuna/widgets/http_list.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/notification_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:async/async.dart';
 
 class OBNotificationsPage extends StatefulWidget {
   final OBNotificationsPageController controller;
@@ -66,8 +69,13 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   OBNotificationsPageController _controller;
   TabController _tabController;
 
+  CancelableOperation _getUnreadGeneralNotificationsCountOperation;
+  CancelableOperation _getUnreadRequestNotificationsCountOperation;
+
   bool _needsBootstrap;
   bool _isActivePage;
+  int _unreadRequestNotificationsCount;
+  int _unreadGeneralNotificationsCount;
 
   // Should be the case when the page is visible to the user
   bool _shouldMarkNotificationsAsRead;
@@ -95,6 +103,8 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     }
 
     _needsBootstrap = true;
+    _unreadRequestNotificationsCount = 0;
+    _unreadGeneralNotificationsCount = 0;
     _shouldMarkNotificationsAsRead = true;
     if (_isActivePage == null) _isActivePage = false;
   }
@@ -140,12 +150,38 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: Tab(
-                      text: _localizationService.notifications__tab_general()),
+                    child: Stack(
+                      overflow: Overflow.visible,
+                      children: <Widget>[
+                        OBText(_localizationService.notifications__tab_general()),
+                        _unreadGeneralNotificationsCount != null
+                            && _unreadGeneralNotificationsCount > 0 ? Positioned(
+                          right: -15,
+                          child: OBBadge(
+                            size: 10,
+                          ),
+                        ) : const SizedBox()
+                      ],
+                    ),
+                  )
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: Tab(
-                      text: _localizationService.notifications__tab_requests()),
+                    child: Stack(
+                      overflow: Overflow.visible,
+                      children: <Widget>[
+                        OBText(_localizationService.notifications__tab_requests()),
+                        _unreadRequestNotificationsCount != null
+                            && _unreadRequestNotificationsCount > 0 ? Positioned(
+                          right: -15,
+                          child: OBBadge(
+                            size: 10,
+                          ),
+                        ) : const SizedBox()
+                      ],
+                    ),
+                  ),
                 ),
               ],
               isScrollable: false,
@@ -188,6 +224,13 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
   void dispose() {
     super.dispose();
+
+    if (_getUnreadGeneralNotificationsCountOperation != null)
+      _getUnreadGeneralNotificationsCountOperation.cancel();
+
+    if (_getUnreadRequestNotificationsCountOperation != null)
+      _getUnreadRequestNotificationsCountOperation.cancel();
+
     WidgetsBinding.instance.removeObserver(this);
     _pushNotificationSubscription.cancel();
   }
@@ -205,6 +248,18 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     });
   }
 
+  void setUnreadGeneralNotificationsCount(int count) {
+    setState(() {
+      _unreadGeneralNotificationsCount = count;
+    });
+  }
+
+  void setUnreadRequestNotificationsCount(int count) {
+    setState(() {
+      _unreadRequestNotificationsCount = count;
+    });
+  }
+
   Widget _buildNotification(BuildContext context, OBNotification notification) {
     return OBNotificationTile(
       key: Key(notification.id.toString()),
@@ -215,10 +270,12 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshGeneralNotifications() async {
+    _refreshUnreadGeneralNotificationsCount();
     return _refreshNotifications(_generalTypes);
   }
 
   Future<List<OBNotification>> _refreshRequestNotifications() async {
+    _refreshUnreadRequestNotificationsCount();
     return _refreshNotifications(_requestTypes);
   }
 
@@ -229,6 +286,20 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     NotificationsList notificationsList =
         await _userService.getNotifications(types: types);
     return notificationsList.notifications;
+  }
+
+  void _refreshUnreadGeneralNotificationsCount() async {
+    _getUnreadGeneralNotificationsCountOperation = CancelableOperation.fromFuture(
+        _userService.getUnreadNotificationsCount(types: _generalTypes));
+    int unreadCount = await _getUnreadGeneralNotificationsCountOperation.value;
+    setUnreadGeneralNotificationsCount(unreadCount);
+  }
+
+  void _refreshUnreadRequestNotificationsCount() async {
+    _getUnreadRequestNotificationsCountOperation = CancelableOperation.fromFuture(
+        _userService.getUnreadNotificationsCount(types: _requestTypes));
+    int unreadCount = await _getUnreadRequestNotificationsCountOperation.value;
+    setUnreadRequestNotificationsCount(unreadCount);
   }
 
   Future _readNotifications({List<NotificationType> types}) async {
@@ -303,6 +374,8 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   void _bootstrap() {
     _pushNotificationSubscription =
         _pushNotificationsService.pushNotification.listen(_onPushNotification);
+    _refreshUnreadGeneralNotificationsCount();
+    _refreshUnreadRequestNotificationsCount();
   }
 
   void _onPushNotification(PushNotification pushNotification) {
@@ -377,11 +450,15 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     try {
       _userService.readNotification(notification);
       notification.markNotificationAsRead();
+      if (_generalTypes.contains(notification.type)) {
+        setUnreadGeneralNotificationsCount(--_unreadGeneralNotificationsCount);
+      } else if (_requestTypes.contains(notification.type)) {
+        setUnreadRequestNotificationsCount(--_unreadRequestNotificationsCount);
+      }
     } on HttpieRequestError {
       // Nothing
     } catch (error) {
-      print(
-          'Couldnt mark notification as read with error: ' + error.toString());
+      print('Couldnt mark notification as read with error: ' + error.toString());
     }
   }
 }

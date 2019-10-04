@@ -1530,6 +1530,11 @@ class LocalizationService {
         name: 'community__adjectives_range_error');
   }
 
+  String get community__top_posts_excluded_communities {
+    return Intl.message("Excluded communities",
+        name: 'community__top_posts_excluded_communities');
+  }
+
   String get user_search__search_text {
     return Intl.message("Search...", name: 'user_search__search_text');
   }
@@ -1853,8 +1858,8 @@ class LocalizationService {
         name: 'post__comment_reply_expanded_reply_hint_text');
   }
 
-  String get post__trending_posts_title {
-    return Intl.message("Trending posts", name: 'post__trending_posts_title');
+  String get post__top_posts_title {
+    return Intl.message("Explore", name: 'post__top_posts_title');
   }
 
   String get post__trending_posts_no_trending_posts {
@@ -2013,6 +2018,16 @@ class LocalizationService {
   String get post__enable_post_comments {
     return Intl.message("Enable post comments",
         name: 'post__enable_post_comments');
+  }
+
+  String get post__exclude_post_community {
+    return Intl.message("Don't show posts from this community",
+        name: 'post__exclude_post_community');
+  }
+
+  String get post__undo_exclude_post_community {
+    return Intl.message("Show posts from this community",
+        name: 'post__undo_exclude_post_community');
   }
 
   String get post__comments_enabled_message {
@@ -2438,11 +2453,13 @@ class LocalizationService {
   }
 
   String user__invite_someone_message(
-      String iosLink, String androidLink, String inviteLink) {
+      String iosLink, String testFlightLink, String androidLink, String inviteLink) {
     return Intl.message(
-        "Hey, I'd like to invite you to Okuna. First, Download the app on iTunes ($iosLink) or the Play store ($androidLink). "
+        "Hey, I'd like to invite you to Okuna.\n\n"
+        "For Apple, first, download the TestFlight app on iTunes ($testFlightLink) and then download the Okuna app ($iosLink)\n\n"
+        "For Android, download it from the Play store ($androidLink).\n\n"
         "Second, paste this personalised invite link in the 'Sign up' form in the Okuna App: $inviteLink",
-        args: [iosLink, androidLink, inviteLink],
+        args: [iosLink, testFlightLink, androidLink, inviteLink],
         name: 'user__invite_someone_message');
   }
 

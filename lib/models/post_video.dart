@@ -31,6 +31,7 @@ class PostVideo {
   }
 
   factory PostVideo.fromJSON(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
     return PostVideo(
       width: parsedJson['width']?.toDouble(),
       height: parsedJson['height']?.toDouble(),
@@ -46,5 +47,19 @@ class PostVideo {
   static OBVideoFormatsList parseFormatSet(List rawData) {
     if (rawData == null) return null;
     return OBVideoFormatsList.fromJson(rawData);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'width': width,
+      'height': height,
+      'thumbnail': thumbnail,
+      'duration': duration,
+      'file': file,
+      'thumbnail_height': thumbnailHeight,
+      'thumbnail_width': thumbnailWidth,
+      'format_set': formatSet?.videoFormats?.map((OBVideoFormat format) => format.toJson())?.toList()
+    };
   }
 }

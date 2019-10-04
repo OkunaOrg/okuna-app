@@ -27,6 +27,8 @@ class OBPostsStream extends StatefulWidget {
   final bool refreshOnCreate;
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
+  final bool isTopPostsStream;
+  final Widget Function(BuildContext, Post, String, Function(Post)) postBuilder;
 
   const OBPostsStream(
       {Key key,
@@ -39,6 +41,8 @@ class OBPostsStream extends StatefulWidget {
       this.onPostsRefreshed,
       this.refreshOnCreate = true,
       this.secondaryRefresher,
+      this.isTopPostsStream = false,
+      this.postBuilder,
       this.statusIndicatorBuilder})
       : super(key: key);
 
@@ -62,6 +66,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   CancelableOperation _refreshOperation;
   CancelableOperation _secondaryRefresherOperation;
   CancelableOperation _loadMoreOperation;
+  CancelableOperation _cachePostsInStorage;
 
   String _streamUniqueIdentifier;
 
@@ -72,7 +77,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
     _posts = widget.initialPosts != null ? widget.initialPosts.toList() : [];
     _needsBootstrap = true;
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-    _status = OBPostsStreamStatus.refreshing;
+    _status = OBPostsStreamStatus.idle;
     _streamScrollController = ScrollController();
     _streamScrollController.addListener(_onScroll);
     _streamUniqueIdentifier =
@@ -86,12 +91,19 @@ class OBPostsStreamState extends State<OBPostsStream> {
     _secondaryRefresherOperation?.cancel();
     _refreshOperation?.cancel();
     _loadMoreOperation?.cancel();
+    _cachePostsInStorage?.cancel();
   }
 
   void _bootstrap() {
     if (widget.refreshOnCreate) {
+      _status = OBPostsStreamStatus.refreshing;
       Future.delayed(Duration(milliseconds: 100), () {
         _refresh();
+      });
+    }
+    if (widget.isTopPostsStream && widget.initialPosts != null) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        _scrollToBottom();
       });
     }
   }
@@ -146,6 +158,10 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   List<Widget> _buildStreamPosts() {
+    if (widget.postBuilder != null) {
+      return _posts.map((Post post) => widget.postBuilder(context, post, _streamUniqueIdentifier, _onPostDeleted)).toList();
+    }
+
     return _posts.map(_buildStreamPost).toList();
   }
 
@@ -157,6 +173,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
       key: Key(inViewId),
       onPostDeleted: _onPostDeleted,
       inViewId: inViewId,
+      isTopPost: widget.isTopPostsStream,
     );
   }
 
@@ -223,6 +240,14 @@ class OBPostsStreamState extends State<OBPostsStream> {
     }
   }
 
+  void _scrollToBottom() {
+    _streamScrollController.animateTo(
+      _streamScrollController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 100),
+    );
+  }
+
   void _addPostToTop(Post post) {
     setState(() {
       this._posts.insert(0, post);
@@ -234,6 +259,7 @@ class OBPostsStreamState extends State<OBPostsStream> {
   void _onScroll() {
     if (_status == OBPostsStreamStatus.loadingMore ||
         _status == OBPostsStreamStatus.noMoreToLoad) return;
+
     if (_streamScrollController.position.pixels >
         _streamScrollController.position.maxScrollExtent * 0.1) {
       _loadMorePosts();

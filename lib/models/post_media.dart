@@ -11,6 +11,7 @@ class PostMedia {
   PostMedia({this.id, this.type, this.contentObject, this.order});
 
   factory PostMedia.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     PostMediaType type = PostMediaType.parse(json['type']);
 
     return PostMedia(
@@ -19,6 +20,15 @@ class PostMedia {
         order: json['oder'],
         contentObject: parseContentObject(
             contentObjectData: json['content_object'], type: type));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+       'id': id,
+      'type': type.code,
+      'content_object': contentObject?.toJson(),
+      'order': order
+    };
   }
 
   static dynamic parseContentObject(

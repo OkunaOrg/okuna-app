@@ -10,6 +10,7 @@ class NotificationsApiService {
 
   static const NOTIFICATIONS_PATH = 'api/notifications/';
   static const NOTIFICATIONS_READ_PATH = 'api/notifications/read/';
+  static const NOTIFICATIONS_UNREAD_COUNT_PATH = 'api/notifications/unread/count/';
   static const NOTIFICATION_PATH = 'api/notifications/{notificationId}/';
   static const NOTIFICATION_READ_PATH =
       'api/notifications/{notificationId}/read/';
@@ -38,6 +39,20 @@ class NotificationsApiService {
       queryParams['types'] = types.map<String>((type) => type.code).toList();
 
     String url = _makeApiUrl(NOTIFICATIONS_PATH);
+    return _httpService.get(url,
+        appendAuthorizationToken: true, queryParameters: queryParams);
+  }
+
+  Future<HttpieResponse> getUnreadNotificationsCount(
+      {int maxId, List<NotificationType> types}) {
+    Map<String, dynamic> queryParams = {};
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (types != null && types.isNotEmpty)
+      queryParams['types'] = types.map<String>((type) => type.code).toList();
+
+    String url = _makeApiUrl(NOTIFICATIONS_UNREAD_COUNT_PATH);
     return _httpService.get(url,
         appendAuthorizationToken: true, queryParameters: queryParams);
   }

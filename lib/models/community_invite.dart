@@ -44,6 +44,18 @@ class CommunityInvite {
         creator: creator);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'creator_d': creatorId,
+      'invited_user_id': invitedUserId,
+      'community_id': communityId,
+      'community': community?.toJson(),
+      'invited_user': invitedUser?.toJson(),
+      'creator': creator?.toJson()
+    };
+  }
+
   void updateFromJson(Map<String, dynamic> json) {
     // No dynamic fields, nothing to update
   }
