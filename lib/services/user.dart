@@ -70,6 +70,8 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Okuna/services/httpie.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class UserService {
   OBStorage _userStorage;
@@ -205,10 +207,23 @@ class UserService {
     await _removeStoredFirstPostsData();
     await _removeStoredTopPostsData();
     await DiskCache().clear();
+    await clearViMediaCache();
     Post.clearCache();
     User.clearNavigationCache();
     PostComment.clearCache();
     Community.clearCache();
+  }
+
+  Future<bool> clearViMediaCache() async {
+      try {
+        Directory vimediaDir = Directory(
+            join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
+        if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
+        return true;
+      } catch (e) {
+        print(e);
+        return false;
+      }
   }
 
   Future<void> loginWithCredentials(
