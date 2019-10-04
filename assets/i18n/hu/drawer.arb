@@ -1,0 +1,224 @@
+{
+    "menu_title": "Menü",
+    "@menu_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "main_title": "Saját Okuna",
+    "@main_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_circles": "Köreim",
+    "@my_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_lists": "Listáim",
+    "@my_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_followers": "Követőim",
+    "@my_followers": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_following": "Követéseim",
+    "@my_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_invites": "Meghívóim",
+    "@my_invites": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_pending_mod_tasks": "Függő moderációs feladataim",
+    "@my_pending_mod_tasks": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_mod_penalties": "Moderációs büntetéseim",
+    "@my_mod_penalties": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "app_account_text": "App és fiók",
+    "@app_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "themes": "Témák",
+    "@themes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_moderation": "Globális moderáció",
+    "@global_moderation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile": "Profilom",
+    "@profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections": "Kapcsolataim",
+    "@connections": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "lists": "Listáim",
+    "@lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "settings": "Beállítások",
+    "@settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "application_settings": "Alkalmazás beállításai",
+    "@application_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings": "Fiók beállításai",
+    "@account_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "developer_settings": "Fejlesztői beállítások",
+    "@developer_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_change_email": "E-mail cím módosítása",
+    "@account_settings_change_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_change_password": "Jelszó módosítása",
+    "@account_settings_change_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_notifications": "Értesítések",
+    "@account_settings_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_language_text": "Nyelv",
+    "@account_settings_language_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_language": "Nyelv ({currentUserLanguage})",
+    "@account_settings_language": {
+        "type": "text",
+        "placeholders": {
+            "currentUserLanguage": {}
+        }
+    },
+    "account_settings_blocked_users": "Letiltott felhasználók",
+    "@account_settings_blocked_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_delete_account": "Fiók törlése",
+    "@account_settings_delete_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "help": "Segítség és visszajelzés",
+    "@help": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "customize": "Testreszabás",
+    "@customize": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "logout": "Kijelentkezés",
+    "@logout": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_title": "Hasznos linkek",
+    "@useful_links_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines": "Okuna irányelvek",
+    "@useful_links_guidelines": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_desc": "Az irányelvek, melyeket mindenkinek be kell tartania a barátságos és kényelmes körülmények megteremtéséhez.",
+    "@useful_links_guidelines_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_github": "GitHub projekttábla",
+    "@useful_links_guidelines_github": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_github_desc": "Tekintsd meg, min dolgozunk jelenleg",
+    "@useful_links_guidelines_github_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_feature_requests": "Funkciójavaslatok",
+    "@useful_links_guidelines_feature_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_feature_requests_desc": "Javasolj egy funkciót vagy szavazz a már létezőekre",
+    "@useful_links_guidelines_feature_requests_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_bug_tracker": "Hibakövető",
+    "@useful_links_guidelines_bug_tracker": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_bug_tracker_desc": "Jelents be egy hibát vagy szavazz a már létezőekre",
+    "@useful_links_guidelines_bug_tracker_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_handbook": "Okuna kézikönyv",
+    "@useful_links_guidelines_handbook": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_handbook_desc": "Egy kézikönyv, mely mindent leír a platform használatáról",
+    "@useful_links_guidelines_handbook_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_support": "Az Okuna támogatása",
+    "@useful_links_support": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_support_desc": "Segíthetsz, hogy tovább tudjunk evezni a terveink tengerén!",
+    "@useful_links_support_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_slack_channel": "Közösségi Slack csatorna",
+    "@useful_links_slack_channel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_slack_channel_desc": "A hely ahol bármit megbeszélhetsz az Okunával kapcsolatban",
+    "@useful_links_slack_channel_desc": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

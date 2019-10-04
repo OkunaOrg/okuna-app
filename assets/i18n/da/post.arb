@@ -1,0 +1,601 @@
+{
+    "open_post": "Åben opslag",
+    "@open_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_post": "Luk opslag",
+    "@close_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_opened": "Opslag åbnet",
+    "@post_opened": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_closed": "Opslag lukket ",
+    "@post_closed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_required_error": "Kommentar er obligatorisk.",
+    "@comment_required_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_maxlength_error": "En kommentar kan ikke være længere end {maxLength} tegn.",
+    "@comment_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "timeline_posts_all_loaded": "🎉 Alle opslag hentet",
+    "@timeline_posts_all_loaded": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_refreshing_drhoo_title": "Hav tålmodighed!",
+    "@timeline_posts_refreshing_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_no_more_drhoo_subtitle": "Følg brugere eller deltag i et fællesskab for at komme i gang!",
+    "@timeline_posts_no_more_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_failed_drhoo_title": "Kunne ikke indlæse din tidslinje.",
+    "@timeline_posts_failed_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_failed_drhoo_subtitle": "Prøv igen om nogle sekunder",
+    "@timeline_posts_failed_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_default_drhoo_title": "Der er noget galt.",
+    "@timeline_posts_default_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_default_drhoo_subtitle": "Prøv at genindlæse tidslinjen.",
+    "@timeline_posts_default_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_refresh_posts": "Genindlæs opslag",
+    "@timeline_posts_refresh_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_circles_for": "Ingen cirkler indeholder '{circlesSearchQuery}'.",
+    "@no_circles_for": {
+        "type": "text",
+        "placeholders": {
+            "circlesSearchQuery": {}
+        }
+    },
+    "share_to_circles": "Del til cirkler",
+    "@share_to_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_post": " Opslag",
+    "@profile_counts_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_posts": " Opslag",
+    "@profile_counts_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_followers": " Følgere",
+    "@profile_counts_followers": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_following": " Følger",
+    "@profile_counts_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_follower": " Følger",
+    "@profile_counts_follower": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_retry_loading_posts": "Tryk for at prøve igen",
+    "@profile_retry_loading_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "action_comment": "Kommentar",
+    "@action_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "action_react": "Reager",
+    "@action_react": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "action_reply": "Svar",
+    "@action_reply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share": "Del",
+    "@share": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_to": "Del via",
+    "@share_to": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "sharing_post_to": "Deler opslag via",
+    "@sharing_post_to": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_shared_with": "Du delte via",
+    "@you_shared_with": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "shared_privately_on": "Delt privat i",
+    "@shared_privately_on": {
+        "description": "Eg. Shared privately on @shantanu's circles. See following string, usernames_circles . Will combine this in future, needs refactoring.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "usernames_circles": "@{postCreatorUsername}'s cirkler",
+    "@usernames_circles": {
+        "type": "text",
+        "placeholders": {
+            "postCreatorUsername": {}
+        }
+    },
+    "share_community": "Del",
+    "@share_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_to_community": "Del til fællesskab",
+    "@share_to_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_community_title": "Et fællesskab",
+    "@share_community_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_community_desc": "Del opslaget til et fællesskab du er del af.",
+    "@share_community_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_circles": "Mine cirkler",
+    "@my_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_circles_desc": "Del opslaget til en eller flere af dine cirkler.",
+    "@my_circles_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "world_circle_name": "Verden",
+    "@world_circle_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "search_circles": "Søg cirkler...",
+    "@search_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reaction_list_tap_retry": "Tryk for at genindlæse reaktioner.",
+    "@reaction_list_tap_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new": "Nyt opslag",
+    "@create_new": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_post_label": "Opret nyt indlæg",
+    "@create_new_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_community_post_label": "Opret nyt fælleskabsindlæg",
+    "@create_new_community_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_create_post_label": "Luk \"opret nyt indlæg\"",
+    "@close_create_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_next": "Næste",
+    "@create_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_photo": "Foto",
+    "@create_photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_video": "Video",
+    "@create_video": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_post_text": "Opslag",
+    "@commenter_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_write_something": "Skriv noget...",
+    "@commenter_write_something": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_title": "Rediger opslag",
+    "@edit_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_save": "Gem",
+    "@edit_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_save": "Gem",
+    "@commenter_expanded_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_join_conversation": "Deltag i samtalen...",
+    "@commenter_expanded_join_conversation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_start_conversation": "Start en ny samtale...",
+    "@commenter_expanded_start_conversation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_edit_comment": "Rediger kommentar",
+    "@commenter_expanded_edit_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "is_closed": "Lukket opslag",
+    "@is_closed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_expanded_reply_comment": "Besvar kommentar",
+    "@comment_reply_expanded_reply_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_expanded_post": "Opslag",
+    "@comment_reply_expanded_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_expanded_reply_hint_text": "Dit svar...",
+    "@comment_reply_expanded_reply_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_title": "Populære opslag",
+    "@trending_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_no_trending_posts": "Der er ingen populære opslag. Prøv at opdatere om nogle sekunder.",
+    "@trending_posts_no_trending_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_refresh": "Opdater",
+    "@trending_posts_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_view_all_comments": "Se alle {commentsCount} kommentarer",
+    "@comments_view_all_comments": {
+        "type": "text",
+        "placeholders": {
+            "commentsCount": {}
+        }
+    },
+    "comments_closed_post": "Lukket opslag",
+    "@comments_closed_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_disabled": "Kommentarer deaktiveret",
+    "@comments_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "text_copied": "Tekst kopieret!",
+    "@text_copied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_reactions_title": "Opslags reaktioner",
+    "@post_reactions_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "have_not_shared_anything": "Du har ikke delt noget endnu.",
+    "@have_not_shared_anything": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_has_not_shared_anything": "{name} har ikke delt noget endnu.",
+    "@user_has_not_shared_anything": {
+        "type": "text",
+        "placeholders": {
+            "name": {}
+        }
+    },
+    "comments_header_newest_replies": "Nyeste svar",
+    "@comments_header_newest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_newer": "Nyere",
+    "@comments_header_newer": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_newest_replies": "Se nyeste svar",
+    "@comments_header_view_newest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_newest_replies": "Se nyeste svar",
+    "@comments_header_see_newest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_oldest_replies": "Ældste svar",
+    "@comments_header_oldest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_older": "Ældre",
+    "@comments_header_older": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_oldest_replies": "Se ældste svar",
+    "@comments_header_view_oldest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_oldest_replies": "Se ældste svar",
+    "@comments_header_see_oldest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_be_the_first_replies": "Vær den første til at svare",
+    "@comments_header_be_the_first_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_newest_comments": "Nyeste kommentarer",
+    "@comments_header_newest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_newest_comments": "Se nyeste kommentarer",
+    "@comments_header_view_newest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_newest_comments": "Se nyeste kommentarer",
+    "@comments_header_see_newest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_oldest_comments": "Ældste kommentarer",
+    "@comments_header_oldest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_oldest_comments": "Se ældste kommentarer",
+    "@comments_header_view_oldest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_oldest_comments": "Se ældste kommentarer",
+    "@comments_header_see_oldest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_be_the_first_comments": "Vær den første til at kommentere",
+    "@comments_header_be_the_first_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_title": "Kommentarer",
+    "@comments_page_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_no_more_to_load": "Ikke flere kommentarer at hente",
+    "@comments_page_no_more_to_load": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_tap_to_retry": "Tryk for at genindlæse kommentarer.",
+    "@comments_page_tap_to_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_tap_to_retry_replies": "Tryk for at genindlæse svar.",
+    "@comments_page_tap_to_retry_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_no_more_replies_to_load": "Ikke flere svar at hente",
+    "@comments_page_no_more_replies_to_load": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_replies_title": "Svar på opslag",
+    "@comments_page_replies_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disable_post_comments": "Deaktiver kommentarer",
+    "@disable_post_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "enable_post_comments": "Aktiver kommentarer",
+    "@enable_post_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_enabled_message": "Kommentarer aktiveret for opslag",
+    "@comments_enabled_message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_disabled_message": "Kommentarer deaktiveret for opslag",
+    "@comments_disabled_message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete": "Slet opslag",
+    "@actions_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_deleted": "Opslag slettet",
+    "@actions_deleted": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete_comment": "Slet kommentar",
+    "@actions_delete_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_edit_comment": "Rediger kommentar",
+    "@actions_edit_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_comment_deleted": "Kommentar slettet",
+    "@actions_comment_deleted": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_report_text": "Anmeld",
+    "@actions_report_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_reported_text": "Anmeldt",
+    "@actions_reported_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_show_more_text": "Vis mere",
+    "@actions_show_more_text": {
+        "description": "Shown for posts with long text to expand the entire text.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_years": "å",
+    "@time_short_years": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3y. Keep it as short as possible",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_year": "1å",
+    "@time_short_one_year": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_weeks": "u",
+    "@time_short_weeks": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 5w.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_week": "1u",
+    "@time_short_one_week": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_days": "d",
+    "@time_short_days": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3d. Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_day": "1d",
+    "@time_short_one_day": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_hours": "t",
+    "@time_short_hours": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3h.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_hour": "1t",
+    "@time_short_one_hour": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_minutes": "m",
+    "@time_short_minutes": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13m.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_seconds": "s",
+    "@time_short_seconds": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13s Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_minute": "1m",
+    "@time_short_one_minute": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_now_text": "nu",
+    "@time_short_now_text": {
+        "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
+        "type": "text",
+        "placeholders": {}
+    }
+}

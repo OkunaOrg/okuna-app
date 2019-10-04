@@ -1,0 +1,218 @@
+{
+    "tab_general": "Általános",
+    "@tab_general": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tab_requests": "Kérelmek",
+    "@tab_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "settings_title": "Értesítési beálllítások",
+    "@settings_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "general_title": "Értesítések",
+    "@general_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "general_desc": "Értesülj, ha történik valami",
+    "@general_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_title": "Követés",
+    "@follow_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_desc": "Értesülj, ha valaki követni kezd téged",
+    "@follow_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_title": "Függő kapcsolat",
+    "@connection_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_desc": "Értesülj, ha valaki kapcsolatfelkérést küldött neked",
+    "@connection_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_title": "Hozzászólás küldése",
+    "@comment_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_desc": "Értesülj, ha valaki hozzászólt egy bejegyzésedhez vagy egy bejegyzéshez amelyhez te is hozzászóltál",
+    "@comment_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_title": "Válasz hozzászólásra",
+    "@comment_reply_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_desc": "Értesülj, ha valaki válaszol egy hozzászólásodra vagy egy hozzászólásra melyre te is válaszoltál",
+    "@comment_reply_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_user_mention_title": "Megjelölés hozzászólásban",
+    "@comment_user_mention_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_user_mention_desc": "Értesülj, ha valaki megjelöl téged egy hozzászólásban",
+    "@comment_user_mention_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_user_mention_title": "Megjelölés bejegyzésben",
+    "@post_user_mention_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_user_mention_desc": "Értesülj, ha valaki megjelöl téged egy bejegyzésben",
+    "@post_user_mention_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reaction_title": "Reagálás hozzászólásra",
+    "@comment_reaction_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reaction_desc": "Értesülj, ha valaki reagált egy hozzászólásodra",
+    "@comment_reaction_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_reaction_title": "Reagálás bejegyzésre",
+    "@post_reaction_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_reaction_desc": "Értesülj, ha valaki reagált egy bejegyzésedre",
+    "@post_reaction_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_invite_title": "Meghívás közösségbe",
+    "@community_invite_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_invite_desc": "Értesülj, ha valaki meghív téged egy közösségbe",
+    "@community_invite_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "mute_post_turn_on_post_notifications": "Bejegyzésértesítések bekapcsolása",
+    "@mute_post_turn_on_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "mute_post_turn_off_post_notifications": "Bejegyzésértesítések kikapcsolása",
+    "@mute_post_turn_off_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "mute_post_turn_on_post_comment_notifications": "Hozzászólás-értesítések bekapcsolása",
+    "@mute_post_turn_on_post_comment_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "mute_post_turn_off_post_comment_notifications": "Hozzászólás-értesítések kikapcsolása",
+    "@mute_post_turn_off_post_comment_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_request_tile": "[name] [username] kapcsolatfelkérést küldött.",
+    "@connection_request_tile": {
+        "description": "Eg.: James @jamest wants to connect with you.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "accepted_connection_request_tile": "[name] [username] elfogadta a kapcsolatfelkérési kérelmedet.",
+    "@accepted_connection_request_tile": {
+        "description": "Eg.: James @jamest accepted your connection request.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "reacted_to_post_tile": "[name] [username] reagált a bejegyzésedre.",
+    "@reacted_to_post_tile": {
+        "description": "Eg.: James @jamest reacted to your post.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "reacted_to_post_comment_tile": "[name] [username] reagált a hozzászólásodra.",
+    "@reacted_to_post_comment_tile": {
+        "description": "Eg.: James @jamest reacted to your post comment.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "following_you_tile": "[name] [username] mostantól követ téged.",
+    "@following_you_tile": {
+        "description": "Eg.: James @jamest is now following you.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_community_invite_tile": "[name] [username] meghívott téged a(z) /c/{communityName} közösségbe.",
+    "@user_community_invite_tile": {
+        "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
+        "type": "text",
+        "placeholders": {
+            "communityName": {}
+        }
+    },
+    "comment_reply_notification_tile_user_replied": "[name] [username] válaszolt: {postCommentText}",
+    "@comment_reply_notification_tile_user_replied": {
+        "description": "For.eg. James @jamest replied.",
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {}
+        }
+    },
+    "comment_reply_notification_tile_user_also_replied": "[name] [username] is válaszolt: {postCommentText}",
+    "@comment_reply_notification_tile_user_also_replied": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {}
+        }
+    },
+    "comment_comment_notification_tile_user_commented": "[name] [username] hozzászólt a bejegyzésedhez: {postCommentText}",
+    "@comment_comment_notification_tile_user_commented": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {}
+        }
+    },
+    "comment_comment_notification_tile_user_also_commented": "[name] [username] is hozzászólt: {postCommentText}",
+    "@comment_comment_notification_tile_user_also_commented": {
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {}
+        }
+    },
+    "mentioned_in_post_comment_tile": "[name] [username] megjelölt egy hozzászólásban: {postCommentText}",
+    "@mentioned_in_post_comment_tile": {
+        "description": "Eg.: James @jamest mentioned you on a comment: hello @jamest",
+        "type": "text",
+        "placeholders": {
+            "postCommentText": {}
+        }
+    },
+    "mentioned_in_post_tile": "[name] [username] megjelölt egy bejegyzésben.",
+    "@mentioned_in_post_tile": {
+        "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {}
+    }
+}

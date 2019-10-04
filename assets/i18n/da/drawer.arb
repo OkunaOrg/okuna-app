@@ -1,0 +1,224 @@
+{
+    "menu_title": "Menu",
+    "@menu_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "main_title": "Mit Okuna",
+    "@main_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_circles": "Mine cirkler",
+    "@my_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_lists": "Mine lister",
+    "@my_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_followers": "Mine følgere",
+    "@my_followers": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_following": "Hvem jeg følger",
+    "@my_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_invites": "Mine invitationer",
+    "@my_invites": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_pending_mod_tasks": "Mine udestående moderations opgaver",
+    "@my_pending_mod_tasks": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_mod_penalties": "Mine moderations straffe points",
+    "@my_mod_penalties": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "app_account_text": "App & Konto",
+    "@app_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "themes": "Temaer",
+    "@themes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_moderation": "Global moderation",
+    "@global_moderation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile": "Profil",
+    "@profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections": "Mine forbindelser",
+    "@connections": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "lists": "Mine lister",
+    "@lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "settings": "Indstillinger",
+    "@settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "application_settings": "App-indstillinger",
+    "@application_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings": "Konto Indstillinger",
+    "@account_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "developer_settings": "Udviklerindstillinger",
+    "@developer_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_change_email": "Skift Email",
+    "@account_settings_change_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_change_password": "Skift Adgangskode",
+    "@account_settings_change_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_notifications": "Notifikationer",
+    "@account_settings_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_language_text": "Sprog",
+    "@account_settings_language_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_language": "Sprog ({currentUserLanguage})",
+    "@account_settings_language": {
+        "type": "text",
+        "placeholders": {
+            "currentUserLanguage": {}
+        }
+    },
+    "account_settings_blocked_users": "Blokerede brugere",
+    "@account_settings_blocked_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_delete_account": "Slet konto",
+    "@account_settings_delete_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "help": "Support & Feedback",
+    "@help": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "customize": "Tilpas",
+    "@customize": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "logout": "Log ud",
+    "@logout": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_title": "Nyttige links",
+    "@useful_links_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines": "Okuna retningslinjer",
+    "@useful_links_guidelines": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_desc": "De retningslinjer, som vi alle forventes at følge for et sundt og venskabeligt samvær.",
+    "@useful_links_guidelines_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_github": "Github project board",
+    "@useful_links_guidelines_github": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_github_desc": "Se hvad vi i øjeblikket arbejder med",
+    "@useful_links_guidelines_github_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_feature_requests": "Foreslå ny funktionalitet",
+    "@useful_links_guidelines_feature_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_feature_requests_desc": "Foreslå ny funktionalitet eller stem på eksisterende forslag",
+    "@useful_links_guidelines_feature_requests_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_bug_tracker": "Indberetning af fejl",
+    "@useful_links_guidelines_bug_tracker": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_bug_tracker_desc": "Indberet fejl eller stem på foreslåede rettelser",
+    "@useful_links_guidelines_bug_tracker_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_handbook": "Okuna håndbog",
+    "@useful_links_guidelines_handbook": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_handbook_desc": "En bog med alt hvad der er værd at vide om at benytte platformen",
+    "@useful_links_guidelines_handbook_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_support": "Støt Okuna",
+    "@useful_links_support": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_support_desc": "Find en vej at støtte os på vores tur!",
+    "@useful_links_support_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_slack_channel": "Fællesskabets Slack Channel",
+    "@useful_links_slack_channel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_slack_channel_desc": "Stedet hvor alt om Okuna diskuteres",
+    "@useful_links_slack_channel_desc": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

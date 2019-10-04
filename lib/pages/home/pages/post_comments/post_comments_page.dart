@@ -5,12 +5,14 @@ import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controll
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
+import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/provider.dart';
@@ -57,6 +59,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   UserPreferencesService _userPreferencesService;
   ToastService _toastService;
   ThemeService _themeService;
+  LinkPreviewService _linkPreviewService;
   LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   Post _post;
@@ -141,6 +144,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       _themeValueParserService = provider.themeValueParserService;
       _themeService = provider.themeService;
       _localizationService = provider.localizationService;
+      _linkPreviewService = provider.linkPreviewService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -653,12 +657,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     double screenWidth = MediaQuery.of(context).size.width;
 
     if (widget.showPostPreview && widget.post != null) {
-      if (_post.hasImage()) {
-        aspectRatio = _post.getImageWidth() / _post.getImageHeight();
-        finalMediaScreenHeight = screenWidth / aspectRatio;
-      }
-      if (_post.hasVideo()) {
-        aspectRatio = _post.getVideoWidth() / _post.getVideoHeight();
+      if (_post.hasMediaThumbnail()) {
+        aspectRatio = _post.mediaWidth / _post.mediaHeight;
         finalMediaScreenHeight = screenWidth / aspectRatio;
       }
 
@@ -692,6 +692,12 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           finalTextHeight +
           finalMediaScreenHeight +
           TOTAL_FIXED_OFFSET_Y;
+
+      if (widget.post.text != null &&
+          _linkPreviewService.hasLinkPreviewUrl(widget.post.text)) {
+        // Approx height of link preview without image..
+        finalPostHeight += OBLinkPreviewState.linkPreviewHeight;
+      }
     }
 
     // linked comment

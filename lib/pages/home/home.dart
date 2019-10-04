@@ -15,15 +15,13 @@ import 'package:Okuna/pages/home/pages/search/search.dart';
 import 'package:Okuna/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Okuna/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Okuna/pages/home/widgets/tab-scaffold.dart';
-import 'package:Okuna/plugins/share/receive_share_state.dart';
-import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
 import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
-import 'package:Okuna/services/validation.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/badges/badge.dart';
@@ -39,7 +37,7 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends ReceiveShareState<OBHomePage>
+class OBHomePageState extends State<OBHomePage>
     with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
@@ -47,8 +45,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   PushNotificationsService _pushNotificationsService;
   IntercomService _intercomService;
   ModalService _modalService;
-  ValidationService _validationService;
-  ImagePickerService _imagePickerService;
+  UserPreferencesService _userPreferencesService;
+  ShareService _shareService;
 
   int _currentIndex;
   int _lastIndex;
@@ -72,7 +70,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   @override
   void initState() {
     super.initState();
-    enableSharing();
     BackButtonInterceptor.add(_backButtonInterceptor);
     WidgetsBinding.instance.addObserver(this);
     _needsBootstrap = true;
@@ -112,8 +109,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _intercomService = openbookProvider.intercomService;
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
-      _validationService = openbookProvider.validationService;
-      _imagePickerService = openbookProvider.imagePickerService;
+      _userPreferencesService = openbookProvider.userPreferencesService;
+      _shareService = openbookProvider.shareService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -130,35 +127,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         tabBar: _createTabBar(),
       ),
     );
-  }
-
-  @override
-  void onShare(Share share) async {
-    String text;
-    File image;
-    if (share.path != null) {
-      image = File.fromUri(Uri.parse(share.path));
-      image = await _imagePickerService.processImage(image);
-      if (!await _validationService.isImageAllowedSize(
-          image, OBImageType.post)) {
-        int limit =
-            _validationService.getAllowedImageSize(OBImageType.post) ~/ 1048576;
-        _toastService.error(
-            message: 'Image too large (limit: $limit MB)', context: context);
-        return;
-      }
-    }
-    if (share.text != null) {
-      text = share.text;
-      if (!_validationService.isPostTextAllowedLength(text)) {
-        _toastService.error(
-            message:
-                'Text too long (limit: ${ValidationService.POST_MAX_LENGTH} characters)',
-            context: context);
-        return;
-      }
-    }
-    _modalService.openCreatePost(context: context, text: text, image: image);
   }
 
   Widget _getPageForTabIndex(int index) {
@@ -300,8 +268,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
             overflow: Overflow.visible,
             children: <Widget>[
               const OBIcon(OBIcons.notifications),
-              _loggedInUserUnreadNotifications > 0
-                  ? Positioned(
+              _loggedInUserUnreadNotifications != null
+                  && _loggedInUserUnreadNotifications > 0 ? Positioned(
                       right: -8,
                       child: OBBadge(
                         size: 10,
@@ -341,24 +309,26 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     _loggedInUserChangeSubscription =
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
 
-    if (_userService.isLoggedIn()) return;
-
-    try {
-      await _userService.loginWithStoredUserData();
-    } catch (error) {
-      if (error is AuthTokenMissingError) {
-        _logout();
-      } else if (error is HttpieRequestError) {
-        HttpieResponse response = error.response;
-        if (response.isForbidden() || response.isUnauthorized()) {
+    if (!_userService.isLoggedIn()) {
+      try {
+        await _userService.loginWithStoredUserData();
+      } catch (error) {
+        if (error is AuthTokenMissingError) {
           _logout();
+        } else if (error is HttpieRequestError) {
+          HttpieResponse response = error.response;
+          if (response.isForbidden() || response.isUnauthorized()) {
+            _logout();
+          } else {
+            _onError(error);
+          }
         } else {
           _onError(error);
         }
-      } else {
-        _onError(error);
       }
     }
+
+    _shareService.subscribe(_onShare);
   }
 
   Future _logout() async {
@@ -412,8 +382,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
+      _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
-      _pushNotificationsService.enablePushNotifications();
+      _pushNotificationsService.promptUserForPushNotificationPermission();
       _intercomService.enableIntercom();
 
       _loggedInUserUpdateSubscription =
@@ -453,6 +424,18 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   void _onPushNotificationOpened(
       PushNotificationOpenedResult pushNotificationOpenedResult) {
     //_navigateToTab(OBHomePageTabs.notifications);
+  }
+
+  Future<bool> _onShare({String text, File image, File video}) async {
+    bool postCreated = await _timelinePageController.createPost(
+        text: text, image: image, video: video);
+
+    if (postCreated) {
+      _timelinePageController.popUntilFirstRoute();
+      _navigateToTab(OBHomePageTabs.timeline);
+    }
+
+    return true;
   }
 
   void _navigateToTab(OBHomePageTabs tab) {

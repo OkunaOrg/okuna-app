@@ -1,4 +1,14 @@
 {
+    "tab_general": "General",
+    "@tab_general": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tab_requests": "Solicitudes",
+    "@tab_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
     "settings_title": "Configuración de notificaciones",
     "@settings_title": {
         "type": "text",
@@ -154,9 +164,9 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] [username] te ha invitado a unirte a la comunidad \/c\/{communityName}.",
+    "user_community_invite_tile": "[name] [username] te ha invitado a unirte a la comunidad /c/{communityName}.",
     "@user_community_invite_tile": {
-        "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
+        "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}

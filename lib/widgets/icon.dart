@@ -10,6 +10,7 @@ class OBIcon extends StatelessWidget {
   final double customSize;
   final Color color;
   final OBIconThemeColor themeColor;
+  final String semanticLabel;
 
   static const double EXTRA_LARGE = 45.0;
   static const double LARGE_SIZE = 30.0;
@@ -17,7 +18,11 @@ class OBIcon extends StatelessWidget {
   static const double SMALL_SIZE = 15.0;
 
   const OBIcon(this.iconData,
-      {this.size, this.customSize, this.color, this.themeColor})
+      {this.size,
+      this.customSize,
+      this.color,
+      this.themeColor,
+      this.semanticLabel})
       : assert(!(color != null && themeColor != null));
 
   @override
@@ -95,6 +100,7 @@ class OBIcon extends StatelessWidget {
                 iconData.nativeIcon,
                 size: iconSize,
                 color: iconColor,
+                semanticLabel: semanticLabel,
               );
             } else {
               icon = ShaderMask(
@@ -138,6 +144,7 @@ class OBIcons {
   static const logout = OBIconData(nativeIcon: Icons.exit_to_app);
   static const help = OBIconData(nativeIcon: Icons.help);
   static const refresh = OBIconData(nativeIcon: Icons.refresh);
+  static const retry = OBIconData(nativeIcon: Icons.refresh);
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
   static const add = OBIconData(nativeIcon: Icons.add);
@@ -147,9 +154,12 @@ class OBIcons {
   static const comment = OBIconData(nativeIcon: Icons.chat_bubble_outline);
   static const chat = OBIconData(nativeIcon: Icons.chat);
   static const close = OBIconData(nativeIcon: Icons.close);
+  static const cancel = OBIconData(nativeIcon: Icons.close);
   static const sad = OBIconData(nativeIcon: Icons.sentiment_dissatisfied);
   static const location = OBIconData(nativeIcon: Icons.location_on);
   static const link = OBIconData(nativeIcon: Icons.link);
+  static const linkOff = OBIconData(nativeIcon: Icons.link_off);
+  static const url = OBIconData(nativeIcon: Icons.public);
   static const email = OBIconData(nativeIcon: Icons.email);
   static const lock = OBIconData(nativeIcon: Icons.lock);
   static const bio = OBIconData(nativeIcon: Icons.bookmark);
@@ -197,12 +207,15 @@ class OBIcons {
       OBIconData(nativeIcon: Icons.remove_circle);
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
+  static const excludePostCommunity = OBIconData(nativeIcon: Icons.not_interested);
+  static const undoExcludePostCommunity = OBIconData(nativeIcon: Icons.check);
   static const mutePostComment = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const edit = OBIconData(nativeIcon: Icons.edit);
   static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);
   static const unmutePost = OBIconData(nativeIcon: Icons.notifications_off);
-  static const unmutePostComment = OBIconData(nativeIcon: Icons.notifications_off);
+  static const unmutePostComment =
+      OBIconData(nativeIcon: Icons.notifications_off);
   static const deleteAccount = OBIconData(nativeIcon: Icons.delete_forever);
   static const account = OBIconData(nativeIcon: Icons.account_circle);
   static const application = OBIconData(nativeIcon: Icons.phone_iphone);
@@ -232,6 +245,8 @@ class OBIcons {
   static const communityStaff = OBIconData(nativeIcon: Icons.tag_faces);
   static const reply = OBIconData(nativeIcon: Icons.reply);
   static const support = OBIconData(nativeIcon: Icons.favorite);
+  static const sound = OBIconData(nativeIcon: Icons.volume_up);
+  static const linkPreviews = OBIconData(nativeIcon: Icons.library_books);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

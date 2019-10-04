@@ -1,0 +1,47 @@
+{
+    "generic_upload_failed": "Falha ao enviar",
+    "@generic_upload_failed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "creating_post": "Criando post...",
+    "@creating_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "compressing_media": "Comprimindo mídia...",
+    "@compressing_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uploading_media": "Enviando mídia...",
+    "@uploading_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "publishing": "Publicando...",
+    "@publishing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "processing": "Processando...",
+    "@processing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "success": "Pronto!",
+    "@success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelling": "Cancelando",
+    "@cancelling": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelled": "Cancelado!",
+    "@cancelled": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

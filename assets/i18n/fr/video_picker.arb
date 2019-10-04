@@ -1,0 +1,12 @@
+{
+    "from_gallery": "Depuis la galerie",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Depuis l'appareil photo",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

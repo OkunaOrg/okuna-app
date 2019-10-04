@@ -1,5 +1,15 @@
 {
-    "settings_title": "Configurações de notificação",
+    "tab_general": "Gerais",
+    "@tab_general": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tab_requests": "Pedidos",
+    "@tab_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "settings_title": "Configurações de notificações",
     "@settings_title": {
         "type": "text",
         "placeholders": {}
@@ -19,7 +29,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "follow_desc": "Seja notificado(a) quando alguém começar a segui-lo(a)",
+    "follow_desc": "Seja notificado(a) quando alguém começar a seguir você",
     "@follow_desc": {
         "type": "text",
         "placeholders": {}
@@ -39,7 +49,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "comment_desc": "Seja notificado(a) quando alguém comentar uma das suas publicações ou uma que você também comentou.",
+    "comment_desc": "Seja notificado(a) quando alguém comentar uma das suas publicações ou uma que você também comentou",
     "@comment_desc": {
         "type": "text",
         "placeholders": {}
@@ -49,7 +59,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "comment_reply_desc": "Seja notificado(a) quando alguém responder a um dos seus comentários ou a um que você também respondeu.",
+    "comment_reply_desc": "Seja notificado(a) quando alguém responder a um dos seus comentários ou a um que você também respondeu",
     "@comment_reply_desc": {
         "type": "text",
         "placeholders": {}
@@ -64,7 +74,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "post_user_mention_title": "Menções em publicações",
+    "post_user_mention_title": "Menções em posts",
     "@post_user_mention_title": {
         "type": "text",
         "placeholders": {}
@@ -74,12 +84,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "comment_reaction_title": "Reações a comentários",
+    "comment_reaction_title": "Reações aos comentários",
     "@comment_reaction_title": {
         "type": "text",
         "placeholders": {}
     },
-    "comment_reaction_desc": "Seja notificado(a) quando alguém reage a um dos seus comentários.",
+    "comment_reaction_desc": "Seja notificado(a) quando alguém reagir a um dos seus comentários",
     "@comment_reaction_desc": {
         "type": "text",
         "placeholders": {}
@@ -89,7 +99,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "post_reaction_desc": "Seja notificado(a) quando alguém reage a uma das suas publicações.",
+    "post_reaction_desc": "Seja notificado(a) quando alguém reagir a uma das suas publicações",
     "@post_reaction_desc": {
         "type": "text",
         "placeholders": {}
@@ -99,7 +109,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "community_invite_desc": "Seja notificado(a) quando alguém convida você para entrar em uma comunidade.",
+    "community_invite_desc": "Seja notificado(a) quando alguém convidar você para uma comunidade",
     "@community_invite_desc": {
         "type": "text",
         "placeholders": {}
@@ -136,7 +146,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "reacted_to_post_tile": "[name] [username] reagiu à sua publicação.",
+    "reacted_to_post_tile": "[name] [username] reagiu ao seu post.",
     "@reacted_to_post_tile": {
         "description": "Eg.: James @jamest reacted to your post.",
         "type": "text",
@@ -154,9 +164,9 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] [username] convidou você para se juntar à comunidade \/c\/{communityName}.",
+    "user_community_invite_tile": "[name] [username] convidou você para se juntar à comunidade /c/{communityName}.",
     "@user_community_invite_tile": {
-        "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
+        "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}
@@ -199,7 +209,7 @@
             "postCommentText": {}
         }
     },
-    "mentioned_in_post_tile": "[name] [username] mencionou você em uma publicação.",
+    "mentioned_in_post_tile": "[name] [username] mencionou você em um post.",
     "@mentioned_in_post_tile": {
         "description": "Eg.: James @jamest mentioned you on a post.",
         "type": "text",

@@ -41,16 +41,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "timeline_posts_refreshing_drhoo_subtitle": "Loading your timeline.",
-  "@timeline_posts_refreshing_drhoo_subtitle": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "timeline_posts_no_more_drhoo_title": "Your timeline is empty.",
-  "@timeline_posts_no_more_drhoo_title": {
-    "type": "text",
-    "placeholders": {}
-  },
   "timeline_posts_no_more_drhoo_subtitle": "Follow users or join a community to get started!",
   "@timeline_posts_no_more_drhoo_subtitle": {
     "type": "text",
@@ -115,6 +105,11 @@
   },
   "profile_counts_follower": " Follower",
   "@profile_counts_follower": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_retry_loading_posts": "Tap to retry",
+  "@profile_retry_loading_posts": {
     "type": "text",
     "placeholders": {}
   },
@@ -216,6 +211,21 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_new_post_label": "Create new post",
+  "@create_new_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_new_community_post_label": "Create new communtiy post",
+  "@create_new_community_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "close_create_post_label": "Close create new post",
+  "@close_create_post_label": {
+    "type": "text",
+    "placeholders": {}
+  },
   "create_next": "Next",
   "@create_next": {
     "type": "text",
@@ -223,6 +233,11 @@
   },
   "create_photo": "Photo",
   "@create_photo": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_video": "Video",
+  "@create_video": {
     "type": "text",
     "placeholders": {}
   },
@@ -286,8 +301,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "trending_posts_title": "Trending posts",
-  "@trending_posts_title": {
+  "top_posts_title": "Explore",
+  "@top_posts_title": {
     "type": "text",
     "placeholders": {}
   },
@@ -457,6 +472,16 @@
   },
   "enable_post_comments": "Enable post comments",
   "@enable_post_comments": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_post_community": "Don't show posts from this community",
+  "@exclude_post_community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "undo_exclude_post_community": "Show posts from this community",
+  "@undo_exclude_post_community": {
     "type": "text",
     "placeholders": {}
   },

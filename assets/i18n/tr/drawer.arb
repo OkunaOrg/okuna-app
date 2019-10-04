@@ -2,304 +2,223 @@
     "menu_title": "Menü",
     "@menu_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "main_title": "Openspace'im",
+    "main_title": "Benim Okuna'm",
     "@main_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_circles": "Çevrelerim",
     "@my_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_lists": "Listelerim",
     "@my_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_followers": "Takipçilerim",
     "@my_followers": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_following": "Takip ettiklerim",
     "@my_following": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_invites": "Davetlerim",
     "@my_invites": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_pending_mod_tasks": "Bekleyen Moderasyon görevlerim",
     "@my_pending_mod_tasks": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_mod_penalties": "Moderasyon cezalarım",
     "@my_mod_penalties": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "app_account_text": "Uygulama ve Hesap",
     "@app_account_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "themes": "Temalar",
     "@themes": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "global_moderation": "Global denetim",
     "@global_moderation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile": "Profil",
     "@profile": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connections": "Bağlantılarım",
     "@connections": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "lists": "Listelerim",
     "@lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "settings": "Ayarlar",
     "@settings": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "application_settings": "Uygulama Ayarları",
     "@application_settings": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings": "Hesap Ayarları",
     "@account_settings": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "developer_settings": "Geliştirici Ayarları",
+    "@developer_settings": {
+        "type": "text",
+        "placeholders": {}
     },
     "account_settings_change_email": "E-Postanı Değiştir",
     "@account_settings_change_email": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_change_password": "Şifreni Değiştir",
     "@account_settings_change_password": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_notifications": "Bildirimler",
     "@account_settings_notifications": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_language_text": "Dil",
     "@account_settings_language_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_language": "Dil ({currentUserLanguage})",
     "@account_settings_language": {
         "type": "text",
         "placeholders": {
-            "currentUserLanguage": {
-
-            }
+            "currentUserLanguage": {}
         }
     },
     "account_settings_blocked_users": "Engellenmiş kullanıcılar",
     "@account_settings_blocked_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "account_settings_delete_account": "Hesabı sil",
     "@account_settings_delete_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "help": "Destek ve Geri Bildirim",
     "@help": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "customize": "Kişiselleştir",
     "@customize": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "logout": "Oturumu Kapat",
     "@logout": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_title": "Faydalı bağlantılar",
     "@useful_links_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "useful_links_guidelines": "Openspace'in ilkeleri",
+    "useful_links_guidelines": "Okuna'nın ilkeleri",
     "@useful_links_guidelines": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_desc": "Hepinizin sağlıklı ve dostça bir ortak varlığınızı korumak için izlemeniz gereken kurallar.",
     "@useful_links_guidelines_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_github": "Github proje panosu",
     "@useful_links_guidelines_github": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_github_desc": "Şu anda üzerinde çalıştığımıza bir göz atın",
     "@useful_links_guidelines_github_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_feature_requests": "Özellik istekleri",
     "@useful_links_guidelines_feature_requests": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_feature_requests_desc": "Bir özellik isteyin veya var olan istekleri oylayın",
     "@useful_links_guidelines_feature_requests_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_bug_tracker": "Hata izleyici",
     "@useful_links_guidelines_bug_tracker": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_bug_tracker_desc": "Bir hata rapor edin veya var olan hataları oylayın",
     "@useful_links_guidelines_bug_tracker_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "useful_links_guidelines_handbook": "Openspace el kitabı",
+    "useful_links_guidelines_handbook": "Okuna el kitabı",
     "@useful_links_guidelines_handbook": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_guidelines_handbook_desc": "Platformu kullanma hakkında bilmeniz gereken her şeyi içeren bir kitap",
     "@useful_links_guidelines_handbook_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_support": "Okuna Destek",
     "@useful_links_support": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "useful_links_support_desc": "Yolculuğumuzda bizi destekleyebilecek bir yola bakın!",
+    "useful_links_support_desc": "Yolculuğumuzda bizi destekleyebilecek bir yönteme bakın!",
     "@useful_links_support_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "useful_links_slack_channel": "Topluluk çözüm kanalı",
     "@useful_links_slack_channel": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "useful_links_slack_channel_desc": "Openspace hakkında her şeyi tartışacağınız bir yer",
+    "useful_links_slack_channel_desc": "Okuna hakkında her şeyi tartışacağınız bir yer",
     "@useful_links_slack_channel_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

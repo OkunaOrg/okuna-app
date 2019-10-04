@@ -76,7 +76,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                      _localizationService.drawer__useful_links_guidelines_handbook_desc),
                   onTap: () {
                     urlLauncherService.
-                        launchUrlWithoutConfirmation('https://openbook.support/');
+                        launchUrlWithoutConfirmation('https://okuna.support/');
                   },
                 ),
                 ListTile(

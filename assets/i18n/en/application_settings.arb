@@ -1,7 +1,98 @@
 {
+  "videos": "Videos",
+  "@videos": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews": "Link previews",
+  "@link_previews": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay": "Autoplay",
+  "@videos_autoplay": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_show": "Show",
+  "@link_previews_show": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay_always": "Always",
+  "@videos_autoplay_always": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay_wifi_only": "Wifi only",
+  "@videos_autoplay_wifi_only": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_autoplay_never": "Never",
+  "@videos_autoplay_never": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_autoplay_always": "Always",
+  "@link_previews_autoplay_always": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_autoplay_wifi_only": "Wifi only",
+  "@link_previews_autoplay_wifi_only": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "link_previews_autoplay_never": "Never",
+  "@link_previews_autoplay_never": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_sound": "Sound",
+  "@videos_sound": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tap_to_change": "(Tap to change)",
+  "@tap_to_change": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_sound_enabled": "Enabled",
+  "@videos_sound_enabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "videos_sound_disabled": "Disabled",
+  "@videos_sound_disabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment_sort_newest_first": "Newest first",
+  "@comment_sort_newest_first": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment_sort_oldest_first": "Oldest first",
+  "@comment_sort_oldest_first": {
+    "type": "text",
+    "placeholders": {}
+  },
   "trusted_domains_title": "Manage trusted domains",
   "@trusted_domains_title": {
     "description": "Title for the Trusted Domains settings page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ask_for_urls": "Link confirmation",
+  "@ask_for_urls": {
+    "description": "Header for the \"ask to open URLs\" and \"trusted domains\" settings.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ask_for_urls_setting": "Ask to open links",
+  "@ask_for_urls_setting": {
     "type": "text",
     "placeholders": {}
   },
@@ -26,8 +117,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "ask_for_urls": "Ask to open untrusted URLs",
-  "@ask_for_urls": {
+  "confirm_url_enabled": "Only untrusted",
+  "@confirm_url_enabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm_url_disabled": "Never",
+  "@confirm_url_disabled": {
     "type": "text",
     "placeholders": {}
   }

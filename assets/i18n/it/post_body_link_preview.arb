@@ -1,0 +1,14 @@
+{
+    "empty": "Non può essere creata l’anteprima per questo link",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Impossibile creare l’anteprima del link, il sito web riporta errore: {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

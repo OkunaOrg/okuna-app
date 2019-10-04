@@ -1,0 +1,361 @@
+{
+    "filters_title": "Moderációs szűrők",
+    "@filters_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_reset": "Visszaállítás",
+    "@filters_reset": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_verified": "Ellenőrizve",
+    "@filters_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_apply": "Szűrők alkalmazása",
+    "@filters_apply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_type": "Típus",
+    "@filters_type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_status": "Állapot",
+    "@filters_status": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_other": "Egyéb",
+    "@filters_other": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_review": "Áttekintés",
+    "@actions_review": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_chat_with_team": "Beszélgess a csapattal",
+    "@actions_chat_with_team": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_category_title": "Kategória módosítása",
+    "@update_category_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_category_save": "Mentés",
+    "@update_category_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_save": "Mentés",
+    "@update_description_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_title": "Leírás szerkesztése",
+    "@update_description_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_report_desc": "Leírás jelentése",
+    "@update_description_report_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_report_hint_text": "pl.: A bejelentett elem az alábbi irányelveket sértette meg...",
+    "@update_description_report_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_status_save": "Mentés",
+    "@update_status_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_status_title": "Állapot frissítése",
+    "@update_status_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_title": "Tekintse át a moderált tárgyat",
+    "@community_review_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_title": "Tárgy",
+    "@moderated_object_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_status": "Állapot",
+    "@moderated_object_status": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_reports_count": "Jelentések száma",
+    "@moderated_object_reports_count": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_verified_by_staff": "Az Okuna csapata által ellenőrizve",
+    "@moderated_object_verified_by_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_verified": "Ellenőrizve",
+    "@moderated_object_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_true_text": "Igaz",
+    "@moderated_object_true_text": {
+        "description": "Eg. Moderated object verified by staff? true / false",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_false_text": "Hamis",
+    "@moderated_object_false_text": {
+        "description": "Eg. Moderated object verified by staff? true / false",
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_object": "Tárgy",
+    "@community_review_object": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_approve": "Jóváhagy",
+    "@community_review_approve": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_reject": "Elutasít",
+    "@community_review_reject": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_item_verified": "Ez a tárgy ellenőrizve van",
+    "@community_review_item_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_title": "Moderált tárgy áttekintése",
+    "@global_review_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_object_text": "Tárgy",
+    "@global_review_object_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_verify_text": "Ellenőrzés",
+    "@global_review_verify_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_unverify_text": "Ellenőrzés visszavonása",
+    "@global_review_unverify_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_title": "Bejelentés elküldése",
+    "@confirm_report_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_details": "Tudnál további részleteket szolgáltatni amelyek lényegesek lennének a bejelentéshez?",
+    "@confirm_report_provide_details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_optional_info": "(Nem kötelező)",
+    "@confirm_report_provide_optional_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_optional_hint_text": "Írj ide...",
+    "@confirm_report_provide_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_happen_next": "Ez fog történni most:",
+    "@confirm_report_provide_happen_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_happen_next_desc": "- A jelentés névtelenül lesz elküldve. \n- Ha egy bejegyzést vagy hozzászólást jelentesz, a jelentés el lesz küldve az Okuna vezetőségéhez és adott esetben a közösség moderátoraihoz, valamint a bejegyzés el lesz rejtve a hírfolyamodból. \n- Ha egy fiókot vagy közösséget jelentesz, a jelentés el lesz küldve az Okuna vezetőségéhez. \n- Felülvizsgáljuk a jelentést és amennyiben ütközik irányelveinkkel, a jelentett tartalmat törölni fogjuk és kiszabjuk a megfelelő büntetést az érintett felekre, mely az áthágás súlyosságának függvényében lehet ideiglenes felfüggesztés vagy a teljes fiók törlése. \n- Ha a jelentett tartalom nem ütközik irányelveinkkel és a jelentés azért lett létrehozva, hogy más felhasználó vagy közösség hírnevét csökkentse, a büntetést terád fogjuk kiszabni.\n",
+    "@confirm_report_provide_happen_next_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_submit": "Megértettem, küldés.",
+    "@confirm_report_submit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_user_reported": "Jelentett felhasználó",
+    "@confirm_report_user_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_community_reported": "Jelentett közösség",
+    "@confirm_report_community_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_post_reported": "Jelentett bejegyzés",
+    "@confirm_report_post_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_post_comment_reported": "Jelentett hozzászólás",
+    "@confirm_report_post_comment_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_item_reported": "Jelentett tárgy",
+    "@confirm_report_item_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_moderated_objects": "Közösség által moderált tárgyak",
+    "@community_moderated_objects": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "globally_moderated_objects": "Globálisan moderált tárgyak",
+    "@globally_moderated_objects": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tap_to_retry": "Koppints az elemek betöltésének újrapróbálásához",
+    "@tap_to_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_post_text": "Bejegyzés jelentése",
+    "@report_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_post_text": "Sikeresen jelentetted ezt a bejegyzést",
+    "@you_have_reported_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_account_text": "Fiók bejelentése",
+    "@report_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_account_text": "Sikeresen jelentetted ezt a fiókot",
+    "@you_have_reported_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_community_text": "Közösség jelentése",
+    "@report_community_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_community_text": "Sikeresen jelentetted ezt a közösséget",
+    "@you_have_reported_community_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_comment_text": "Hozzászólás jelentése",
+    "@report_comment_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_comment_text": "Sikeresen jelentetted ezt a hozzászólást",
+    "@you_have_reported_comment_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_text": "Leírás",
+    "@description_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_description_text": "Nincs leírás",
+    "@no_description_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "category_text": "Kategória",
+    "@category_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reporter_text": "Bejelentő",
+    "@reporter_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_preview_title": "Jelentések",
+    "@reports_preview_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_preview_resource_reports": "jelentés",
+    "@reports_preview_resource_reports": {
+        "description": "Usage: See all reports..",
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_see_all": "Mind a(z) {resourceCount} {resourceName} megtekintése",
+    "@reports_see_all": {
+        "description": "Usage: See all 4 reports.",
+        "type": "text",
+        "placeholders": {
+            "resourceCount": {},
+            "resourceName": {}
+        }
+    },
+    "object_status_title": "Állapot",
+    "@object_status_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_tasks_title": "Függő moderációs feladatok",
+    "@my_moderation_tasks_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pending_moderation_tasks_singular": "függő moderációs feladat",
+    "@pending_moderation_tasks_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pending_moderation_tasks_plural": "függő moderációs feladat",
+    "@pending_moderation_tasks_plural": {
+        "description": "Eg. No pending moderation tasks found",
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_title": "Moderációs büntetések",
+    "@my_moderation_penalties_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_resouce_singular": "moderációs büntetés",
+    "@my_moderation_penalties_resouce_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_resource_plural": "moderációs büntetés",
+    "@my_moderation_penalties_resource_plural": {
+        "description": "See all moderation penalties, No moderation penalties found etc..",
+        "type": "text",
+        "placeholders": {}
+    }
+}

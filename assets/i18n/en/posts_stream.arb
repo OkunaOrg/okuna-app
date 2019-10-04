@@ -1,0 +1,47 @@
+{
+  "all_loaded": "🎉  All posts loaded",
+  "@all_loaded": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "refreshing_drhoo_title": "Hang in there!",
+  "@refreshing_drhoo_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "refreshing_drhoo_subtitle": "Refreshing the stream.",
+  "@refreshing_drhoo_subtitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "empty_drhoo_title": "This stream is empty.",
+  "@empty_drhoo_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "empty_drhoo_subtitle": "Try refreshing in a couple of seconds.",
+  "@empty_drhoo_subtitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "failed_drhoo_title": "Could not load the stream.",
+  "@failed_drhoo_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "failed_drhoo_subtitle": "Try again in a couple seconds",
+  "@failed_drhoo_subtitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "status_tile_empty": "No posts found",
+  "@status_tile_empty": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "status_tile_no_more_to_load": "🎉  All posts loaded",
+  "@status_tile_no_more_to_load": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

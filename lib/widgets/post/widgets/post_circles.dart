@@ -18,28 +18,31 @@ class OBPostCircles extends StatelessWidget {
   Widget build(BuildContext context) {
     LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
     if (_post.hasCircles()) {
-      return SizedBox(
-        height: 26.0,
-        child: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          physics: const ClampingScrollPhysics(),
-          itemCount: 1,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (BuildContext context, int index) {
-            return OBCirclesWrap(
-                textSize: OBTextSize.small,
-                circlePreviewSize: OBCircleColorPreviewSize.extraSmall,
-                leading: OBText(_localizationService.trans('post__you_shared_with'), size: OBTextSize.small),
-                circles: _post.getPostCircles()
-            );
-          },
+      return Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: SizedBox(
+          height: 26.0,
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            physics: const ClampingScrollPhysics(),
+            itemCount: 1,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              return OBCirclesWrap(
+                  textSize: OBTextSize.small,
+                  circlePreviewSize: OBCircleColorPreviewSize.extraSmall,
+                  leading: OBText(_localizationService.trans('post__you_shared_with'), size: OBTextSize.small),
+                  circles: _post.getPostCircles()
+              );
+            },
+          ),
         ),
       );
     } else if (_post.isEncircled != null && _post.isEncircled) {
       String postCreatorUsername = _post.creator.username;
 
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
         child: Row(
           children: <Widget>[
             OBText(

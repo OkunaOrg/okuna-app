@@ -1,0 +1,12 @@
+{
+    "from_gallery": "Uit Galerij",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Van camera",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -47,6 +47,22 @@ class UserNotificationsSettings {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'connections_confirmed_notifications': connectionConfirmedNotifications,
+      'connection_request_notifications': connectionRequestNotifications,
+      'follow_notifications': followNotifications,
+      'post_comment_notifications': postCommentNotifications,
+      'post_comment_reaction_notifications': postCommentReactionNotifications,
+      'post_comment_user_mention_notifications': postCommentUserMentionNotifications,
+      'post_user_mention_notifications': postUserMentionNotifications,
+      'post_comment_reply_notifications': postCommentReplyNotifications,
+      'post_reaction_notifications': postReactionNotifications,
+      'community_invite_notifications': communityInviteNotifications,
+    };
+  }
+
   void updateFromJson(Map<String, dynamic> json) {
     if (json.containsKey('connections_confirmed_notifications'))
       connectionConfirmedNotifications =

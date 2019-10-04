@@ -12,6 +12,13 @@ class ReactionsEmojiCount {
     return ReactionsEmojiCount(emoji: emoji, count: parsedJson['count']);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'emoji': emoji.toJson(),
+      'count': count
+    };
+  }
+
   ReactionsEmojiCount copy({newEmoji, newCount, newReacted}) {
     return ReactionsEmojiCount(
         emoji: newEmoji ?? this.emoji, count: newCount ?? this.count);

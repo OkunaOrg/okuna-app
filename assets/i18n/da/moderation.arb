@@ -1,0 +1,361 @@
+{
+    "filters_title": "Moderations Filtre",
+    "@filters_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_reset": "Nulstil",
+    "@filters_reset": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_verified": "Verificerede",
+    "@filters_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_apply": "Anvend filtre",
+    "@filters_apply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_type": "Type",
+    "@filters_type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_status": "Status",
+    "@filters_status": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "filters_other": "Andre",
+    "@filters_other": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_review": "Gennemgå",
+    "@actions_review": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_chat_with_team": "Chat med teamet",
+    "@actions_chat_with_team": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_category_title": "Opdater Kategori",
+    "@update_category_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_category_save": "Gem",
+    "@update_category_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_save": "Gem",
+    "@update_description_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_title": "Rediger beskrivelse",
+    "@update_description_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_report_desc": "Anmeldelses beskrivelse",
+    "@update_description_report_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_description_report_hint_text": "f.eks Det anmeldte blev vurderet at...",
+    "@update_description_report_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_status_save": "Gem",
+    "@update_status_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_status_title": "Opdater status",
+    "@update_status_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_title": "Gennemse moderet objekt",
+    "@community_review_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_title": "Objekt",
+    "@moderated_object_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_status": "Status",
+    "@moderated_object_status": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_reports_count": "Anmeldelses antal",
+    "@moderated_object_reports_count": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_verified_by_staff": "Gennemset af Okuna personale",
+    "@moderated_object_verified_by_staff": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_verified": "Gennemset",
+    "@moderated_object_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_true_text": "Ja",
+    "@moderated_object_true_text": {
+        "description": "Eg. Moderated object verified by staff? true / false",
+        "type": "text",
+        "placeholders": {}
+    },
+    "moderated_object_false_text": "Nej",
+    "@moderated_object_false_text": {
+        "description": "Eg. Moderated object verified by staff? true / false",
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_object": "Objekt",
+    "@community_review_object": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_approve": "Godkend",
+    "@community_review_approve": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_reject": "afvis",
+    "@community_review_reject": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_review_item_verified": "Denne anmeldelse er gennemgået",
+    "@community_review_item_verified": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_title": "Gennemse moderet objekt",
+    "@global_review_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_object_text": "Objekt",
+    "@global_review_object_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_verify_text": "Verificer",
+    "@global_review_verify_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_review_unverify_text": "Fjern verificering",
+    "@global_review_unverify_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_title": "Indsend anmeldelse",
+    "@confirm_report_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_details": "Kan du tilføje ekstra detaljer som kan være relevante for anmeldelsen?",
+    "@confirm_report_provide_details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_optional_info": "(Valgfrit)",
+    "@confirm_report_provide_optional_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_optional_hint_text": "Skriv her...",
+    "@confirm_report_provide_optional_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_happen_next": "Her er hvad der vil ske efterfølgende:",
+    "@confirm_report_provide_happen_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_provide_happen_next_desc": "- Din anmeldelse vil blive indsendt anonymt. \n- Hvis du anmelder et opslag eller en kommentar, vil anmeldelsen blive sendt til Okuna personalet og fællesskabs moderatorerne hvis relevant og opslaget vil blive skjult fra dit feed. \n- Hvis du anmelder en konto eller et fællesskab, vil det blive sendt til Okuna personalet. \n- Vi vil gennemgå det og hvis det godkendes, vil indhold blive slettet og sanktioner givet til de involverede, gående fra en midlertidig udelukkelse til sletning a kontoen, afhængig af alvorligheden af overtrædelsen. \n- Hvis anmeldelsen vurderes at være lavet i et forsøg på at skade et andet medlem eller fællesskab på platformen, uden nogen overtrædelse af den angivne type, vil sanktioner blive givet til dig. \n",
+    "@confirm_report_provide_happen_next_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_submit": "Forstået, indsend.",
+    "@confirm_report_submit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_user_reported": "Bruger anmeldelse",
+    "@confirm_report_user_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_community_reported": "Fællesskabs anmeldelse",
+    "@confirm_report_community_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_post_reported": "Opslags anmeldelse",
+    "@confirm_report_post_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_post_comment_reported": "Opslags kommentar anmeldelse",
+    "@confirm_report_post_comment_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_report_item_reported": "Objekt anmeldt",
+    "@confirm_report_item_reported": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_moderated_objects": "Fællesskabs modererede objekter",
+    "@community_moderated_objects": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "globally_moderated_objects": "Globalt modererede objekter",
+    "@globally_moderated_objects": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tap_to_retry": "Tryk for at forsøge genindlæsning",
+    "@tap_to_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_post_text": "Anmeld opslag",
+    "@report_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_post_text": "Du har anmeldt dette opslag",
+    "@you_have_reported_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_account_text": "Anmeld konto",
+    "@report_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_account_text": "Du har anmeldt denne konto",
+    "@you_have_reported_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_community_text": "Anmeld fællesskab",
+    "@report_community_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_community_text": "Du har anmeldt dette fællesskab",
+    "@you_have_reported_community_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "report_comment_text": "Anmeld kommentar",
+    "@report_comment_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_comment_text": "Du har anmeldt denne kommentar",
+    "@you_have_reported_comment_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_text": "Beskrivelse",
+    "@description_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_description_text": "Ingen beskrivelse",
+    "@no_description_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "category_text": "Kategori",
+    "@category_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reporter_text": "Rapporter",
+    "@reporter_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_preview_title": "Reporter",
+    "@reports_preview_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_preview_resource_reports": "anmelder",
+    "@reports_preview_resource_reports": {
+        "description": "Usage: See all reports..",
+        "type": "text",
+        "placeholders": {}
+    },
+    "reports_see_all": "Se alle {resourceCount} {resourceName}",
+    "@reports_see_all": {
+        "description": "Usage: See all 4 reports.",
+        "type": "text",
+        "placeholders": {
+            "resourceCount": {},
+            "resourceName": {}
+        }
+    },
+    "object_status_title": "Status",
+    "@object_status_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_tasks_title": "Udestående moderationsopgaver",
+    "@my_moderation_tasks_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pending_moderation_tasks_singular": "udestående moderationsopgave",
+    "@pending_moderation_tasks_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "pending_moderation_tasks_plural": "udestående moderationsopgaver",
+    "@pending_moderation_tasks_plural": {
+        "description": "Eg. No pending moderation tasks found",
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_title": "Moderations straffer",
+    "@my_moderation_penalties_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_resouce_singular": "moderations straffe",
+    "@my_moderation_penalties_resouce_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_moderation_penalties_resource_plural": "moderations straffer",
+    "@my_moderation_penalties_resource_plural": {
+        "description": "See all moderation penalties, No moderation penalties found etc..",
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "generic_upload_failed": "Hochladen fehlgeschlagen",
+    "@generic_upload_failed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "creating_post": "Beitrag wird erstellt...",
+    "@creating_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "compressing_media": "Medien werden komprimiert...",
+    "@compressing_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uploading_media": "Medien werden hochgeladen...",
+    "@uploading_media": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "publishing": "Beitrag wird veröffentlicht ...",
+    "@publishing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "processing": "Beitrag wird verarbeitet...",
+    "@processing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "success": "Erfolgreich!",
+    "@success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelling": "breche ab",
+    "@cancelling": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancelled": "Abgebrochen!",
+    "@cancelled": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

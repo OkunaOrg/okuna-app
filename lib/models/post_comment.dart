@@ -81,7 +81,28 @@ class PostComment extends UpdatableModel<PostComment> {
   static final factory = PostCommentFactory();
 
   factory PostComment.fromJSON(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created': created.toString(),
+      'text': text,
+      'language': language.toJson(),
+      'creator_id': creatorId,
+      'commenter': commenter.toJson(),
+      'post': post.toJson(),
+      'is_edited': isEdited,
+      'is_reported': isReported,
+      'is_muted': isMuted,
+      'parent_comment': parentComment.toJson(),
+      'replies': replies.comments.map((PostComment reply) => reply.toJson())?.toList(),
+      'replies_count': repliesCount,
+      'reactions_emoji_counts': reactionsEmojiCounts.counts.map((ReactionsEmojiCount reaction) => reaction.toJson())?.toList(),
+      'reaction': reaction.toJson()
+    };
   }
 
   @override
@@ -207,7 +228,7 @@ class PostComment extends UpdatableModel<PostComment> {
       throw 'Trying to remove no reaction';
     }
 
-    var newEmojiCounts = reactionsEmojiCounts.counts.toList();
+    var newEmojiCounts = reactionsEmojiCounts.counts != null ? reactionsEmojiCounts.counts.toList() : [];
 
     if (hasReaction) {
       var currentReactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {

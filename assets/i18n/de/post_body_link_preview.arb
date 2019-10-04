@@ -1,0 +1,14 @@
+{
+    "empty": "Für diesen Link kann keine Vorschau erstellt werden",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Fehler beim Erstellen der Vorschau mit Websitefehler: {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

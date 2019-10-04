@@ -1,9 +1,7 @@
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
-import 'package:Okuna/services/url_parser.dart';
 import 'package:Okuna/services/user_preferences.dart';
-import 'package:Okuna/widgets/fields/toggle_field.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
@@ -25,10 +23,8 @@ class OBTrustedDomainsPage extends StatefulWidget {
 class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
   LocalizationService _localizationService;
   UserPreferencesService _preferencesService;
-  UrlParserService _urlParserService;
   ToastService _toastService;
 
-  bool _alwaysAsk;
   List<String> _trustedDomains;
   List<String> _searchResults;
   String _searchQuery;
@@ -41,7 +37,6 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
     super.initState();
     _needsBootstrap = true;
     _bootstrapInProgress = true;
-    _alwaysAsk = true;
     _hasSearch = false;
     _searchQuery = '';
     _trustedDomains = [];
@@ -54,7 +49,6 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
       var provider = OpenbookProvider.of(context);
       _localizationService = provider.localizationService;
       _preferencesService = provider.userPreferencesService;
-      _urlParserService = provider.urlParserService;
       _toastService = provider.toastService;
       _bootstrap();
       _needsBootstrap = false;
@@ -62,8 +56,7 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: _localizationService
-            .application_settings__trusted_domains_title,
+        title: _localizationService.application_settings__trusted_domains_title,
       ),
       child: OBPrimaryColorContainer(
         child: _bootstrapInProgress
@@ -92,17 +85,6 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
   Widget _buildSettings() {
     return Column(
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: OBToggleField(
-            key: Key('alwaysAsk'),
-            value: _alwaysAsk,
-            title:
-                _localizationService.application_settings__ask_for_urls,
-            onTap: _toggleAlwaysAsk,
-            onChanged: _setAlwaysAsk,
-          ),
-        ),
         OBSearchBar(
           onSearch: _onSearch,
           hintText: _localizationService.user_search__list_search_text(
@@ -147,22 +129,10 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
       });
     } else {
       _toastService.error(
-          message: _localizationService
-              .application_settings__delete_domain_failure,
+          message:
+              _localizationService.application_settings__delete_domain_failure,
           context: context);
     }
-  }
-
-  void _toggleAlwaysAsk() {
-    _setAlwaysAsk(!_alwaysAsk);
-  }
-
-  void _setAlwaysAsk(bool alwaysAsk) async {
-    await _preferencesService.setAskToConfirmOpenUrl(alwaysAsk);
-
-    setState(() {
-      _alwaysAsk = alwaysAsk;
-    });
   }
 
   void _onSearch(String query) {
@@ -176,16 +146,8 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
   }
 
   void _bootstrap() async {
-    await Future.wait([_refreshAlwaysAsk(), _refreshTrustedDomains()]);
+    await _refreshTrustedDomains();
     _bootstrapInProgress = false;
-  }
-
-  Future _refreshAlwaysAsk() async {
-    bool alwaysAsk = await _preferencesService.getAskToConfirmOpenUrl();
-
-    setState(() {
-      _alwaysAsk = alwaysAsk;
-    });
   }
 
   Future _refreshTrustedDomains() async {

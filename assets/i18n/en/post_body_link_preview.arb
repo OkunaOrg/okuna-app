@@ -1,0 +1,21 @@
+{
+  "empty": "This link could not be previewed",
+  "@empty": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "invalid": "Invalid link: {link}",
+  "@invalid": {
+    "type": "text",
+    "placeholders": {
+      "link": {}
+    }
+  },
+  "error_with_description": "Failed to preview link with website error: {description}",
+  "@error_with_description": {
+    "type": "text",
+    "placeholders": {
+      "description": {}
+    }
+  }
+}

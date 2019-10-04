@@ -2,502 +2,360 @@
     "filters_title": "Moderationsfilter",
     "@filters_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_reset": "Zurücksetzen",
     "@filters_reset": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_verified": "Verifiziert",
     "@filters_verified": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "filters_apply": "Filter anwenden",
+    "filters_apply": "Anwenden",
     "@filters_apply": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_type": "Typ",
     "@filters_type": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_status": "Status",
     "@filters_status": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "filters_other": "Sonstige",
     "@filters_other": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_review": "Überprüfen",
     "@actions_review": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "actions_chat_with_team": "Chatte mit dem Team",
     "@actions_chat_with_team": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_category_title": "Kategorie aktualisieren",
     "@update_category_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_category_save": "Speichern",
     "@update_category_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_save": "Speichern",
     "@update_description_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_title": "Beschreibung bearbeiten",
     "@update_description_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_report_desc": "Beschreibung melden",
     "@update_description_report_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_description_report_hint_text": "z.B. der Bericht wurde als zu ... empfunden.",
     "@update_description_report_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_status_save": "Speichern",
     "@update_status_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_status_title": "Status aktualisieren",
     "@update_status_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "community_review_title": "Moderiertes Objekt überprüfen",
+    "community_review_title": "Gemeldetes Element überprüfen",
     "@community_review_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "moderated_object_title": "Objekt",
+    "moderated_object_title": "Element",
     "@moderated_object_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_status": "Status",
     "@moderated_object_status": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "moderated_object_reports_count": "Anzahl der Berichte",
+    "moderated_object_reports_count": "Anzahl der Meldungen",
     "@moderated_object_reports_count": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "moderated_object_verified_by_staff": "Verifiziert durch Okuna-Mitarbeiter",
+    "moderated_object_verified_by_staff": "Geprüft durch das Okuna-Team",
     "@moderated_object_verified_by_staff": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "moderated_object_verified": "Verifiziert",
+    "moderated_object_verified": "Geprüft",
     "@moderated_object_verified": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_true_text": "Wahr",
     "@moderated_object_true_text": {
-        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "description": "Eg. Moderated object verified by staff? true / false",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "moderated_object_false_text": "Falsch",
     "@moderated_object_false_text": {
-        "description": "Eg. Moderated object verified by staff? true \/ false",
+        "description": "Eg. Moderated object verified by staff? true / false",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "community_review_object": "Objekt",
+    "community_review_object": "Element",
     "@community_review_object": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_review_approve": "Bestätigen",
     "@community_review_approve": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "community_review_reject": "zurückweisen",
+    "community_review_reject": "Ablehnen",
     "@community_review_reject": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "community_review_item_verified": "Dieses Element wurde überprüft",
     "@community_review_item_verified": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "global_review_title": "Moderiertes Objekt überprüfen",
+    "global_review_title": "Gemeldetes Element überprüfen",
     "@global_review_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "global_review_object_text": "Objekt",
+    "global_review_object_text": "Element",
     "@global_review_object_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "global_review_verify_text": "Bestätigen",
+    "global_review_verify_text": "Verify",
     "@global_review_verify_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "global_review_unverify_text": "Bestätigung aufheben",
+    "global_review_unverify_text": "Unverify",
     "@global_review_unverify_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_title": "Bericht einreichen",
     "@confirm_report_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_details": "Kannst du zusätzliche Details angeben, die für den Bericht relevant sein könnten?",
     "@confirm_report_provide_details": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_optional_info": "(Optional)",
     "@confirm_report_provide_optional_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_optional_hint_text": "Schreibe hier...",
     "@confirm_report_provide_optional_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "confirm_report_provide_happen_next": "Hier ist, was als nächstes passieren wird:",
+    "confirm_report_provide_happen_next": "Das passiert als nächstes:",
     "@confirm_report_provide_happen_next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_provide_happen_next_desc": "- Dein Bericht wird anonym übermittelt. \n- Wenn du einen Beitrag oder Kommentar meldest, wird der Bericht an die Okuna-Mitarbeiter und ggf. an die Community-Moderatoren gesendet und der Beitrag wird in deinem Feed ausgeblendet. \n- Wenn du ein Account oder eine Community meldest, wird dies an die Okuna-Mitarbeiter gesendet. \n- Wir werden das überprüfen und wenn es bestätigt wird, werden die Inhalte gelöscht und Strafen für die betroffenen Personen verhängt. Diese reichen von einer vorübergehenden Sperrung bis zur Löschung des Accounts - je nach Schwere der Überschreitung. \n- Wenn sich herausstellt, dass die Meldung in dem Versuch erstellt wurde, einem anderen Mitglied oder einer Community auf der Plattform ohne Verletzung des angegebenen Grundes Schaden zuzufügen, werden Strafen gegenüber dir verhängt.\n",
     "@confirm_report_provide_happen_next_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_submit": "Ich verstehe, einreichen.",
     "@confirm_report_submit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_user_reported": "Benutzer gemeldet",
     "@confirm_report_user_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_community_reported": "Community gemeldet",
     "@confirm_report_community_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_post_reported": "Beitrag gemeldet",
     "@confirm_report_post_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_post_comment_reported": "Kommentar gemeldet",
     "@confirm_report_post_comment_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_report_item_reported": "Element gemeldet",
     "@confirm_report_item_reported": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "community_moderated_objects": "Moderierte Objekte",
+    "community_moderated_objects": "Gemeldete Elemente der Community",
     "@community_moderated_objects": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "globally_moderated_objects": "Global moderierte Objekte",
+    "globally_moderated_objects": "Global gemeldete Elemente",
     "@globally_moderated_objects": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "tap_to_retry": "Tippe hier, um das Laden von Elementen zu wiederholen",
+    "tap_to_retry": "Tippe hier, um neu zu laden",
     "@tap_to_retry": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "report_post_text": "Beitrag melden",
     "@report_post_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_post_text": "Du hast diesen Beitrag gemeldet",
     "@you_have_reported_post_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "report_account_text": "Account melden",
+    "report_account_text": "Benutzer melden",
     "@report_account_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_account_text": "Du hast diesen Account gemeldet",
     "@you_have_reported_account_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "report_community_text": "Community melden",
     "@report_community_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_community_text": "Du hast diese Community gemeldet",
     "@you_have_reported_community_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "report_comment_text": "Kommentar melden",
     "@report_comment_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "you_have_reported_comment_text": "Du hast diesen Kommentar gemeldet",
     "@you_have_reported_comment_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "description_text": "Beschreibung",
     "@description_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "no_description_text": "Keine Beschreibung",
     "@no_description_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "category_text": "Kategorie",
     "@category_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reporter_text": "Meldender",
     "@reporter_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reports_preview_title": "Berichte",
     "@reports_preview_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reports_preview_resource_reports": "Berichte",
     "@reports_preview_resource_reports": {
         "description": "Usage: See all reports..",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "reports_see_all": "Alle {resourceCount} {resourceName} anzeigen",
     "@reports_see_all": {
         "description": "Usage: See all 4 reports.",
         "type": "text",
         "placeholders": {
-            "resourceCount": {
-
-            },
-            "resourceName": {
-
-            }
+            "resourceCount": {},
+            "resourceName": {}
         }
     },
     "object_status_title": "Status",
     "@object_status_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "my_moderation_tasks_title": "Offene Moderatoraufgaben",
+    "my_moderation_tasks_title": "Offene Moderationsaufgaben",
     "@my_moderation_tasks_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "pending_moderation_tasks_singular": "offene Moderatoraufgabe",
+    "pending_moderation_tasks_singular": "offene Moderationsaufgabe",
     "@pending_moderation_tasks_singular": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "pending_moderation_tasks_plural": "offene Moderatoraufgaben",
+    "pending_moderation_tasks_plural": "offenen Moderationsaufgaben",
     "@pending_moderation_tasks_plural": {
         "description": "Eg. No pending moderation tasks found",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_moderation_penalties_title": "Meine Strafen",
     "@my_moderation_penalties_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_moderation_penalties_resouce_singular": "gegen mich verhängte Strafe",
     "@my_moderation_penalties_resouce_singular": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "my_moderation_penalties_resource_plural": "gegen mich verhängte Strafen",
     "@my_moderation_penalties_resource_plural": {
         "description": "See all moderation penalties, No moderation penalties found etc..",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     }
 }

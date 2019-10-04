@@ -1,0 +1,531 @@
+{
+    "headline": "Egy jobb közösségi hálózat.",
+    "@headline": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login": "Belépés",
+    "@login": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_empty_error": "Az email nem lehet üres.",
+    "@email_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_invalid_error": "Kérünk, adj meg egy érvényes email címet.",
+    "@email_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_empty_error": "A felhasználónév nem lehet üres.",
+    "@username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_characters_error": "A felhasználónév csak alfanumerikus karaktereket és alulvonásokat tartalmazhat.",
+    "@username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "username_maxlength_error": "A felhasználónév nem lehet {maxLength} karakternél hosszabb.",
+    "@username_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "create_account": "Regisztráció",
+    "@create_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__lets_get_started": "Lássunk neki",
+    "@create_acc__lets_get_started": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__welcome_to_beta": "Üdv a bétában!",
+    "@create_acc__welcome_to_beta": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__previous": "Vissza",
+    "@create_acc__previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__next": "Következő",
+    "@create_acc__next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__create_account": "Fiók létrehozása",
+    "@create_acc__create_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_link": "Illeszd be a regisztrációs linkedet",
+    "@create_acc__paste_link": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_password_reset_link": "Illeszd be a jelszó-visszaállítási linkedet",
+    "@create_acc__paste_password_reset_link": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__paste_link_help_text": "Használd a \"Join Openbook\" gomb linkjét a meghívó e-mail-edből.",
+    "@create_acc__paste_link_help_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__link_empty_error": "A link mező nem lehet üres.",
+    "@create_acc__link_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__link_invalid_error": "A megadott link érvénytelen.",
+    "@create_acc__link_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "password_empty_error": "A jelszó mező nem lehet üres.",
+    "@password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "password_range_error": "A jelszó hosszúsága {minLength} és {maxLength} kell legyen.",
+    "@password_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "name_empty_error": "A név mező nem lehet üres.",
+    "@name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "name_range_error": "A név hosszúsága {minLength} és {maxLength} kell legyen.",
+    "@name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "description_empty_error": "A leírás mező nem lehet üres.",
+    "@description_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "description_range_error": "A leírás hosszúsága {minLength} és {maxLength} kell legyen.",
+    "@description_range_error": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "reset_password_success_title": "Készen állunk!",
+    "@reset_password_success_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reset_password_success_info": "A jelszavad sikeresen meg lett változtatva",
+    "@reset_password_success_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__request_invite": "Nincs meghívód? Kérj egyet itt.",
+    "@create_acc__request_invite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__subscribe": "Kérés",
+    "@create_acc__subscribe": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__subscribe_to_waitlist_text": "Kérj egy meghívót!",
+    "@create_acc__subscribe_to_waitlist_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__congratulations": "Gratulálunk!",
+    "@create_acc__congratulations": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__your_subscribed": "Te vagy a(z) {0}. a várólistán.",
+    "@create_acc__your_subscribed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__almost_there": "Mindjárt kész...",
+    "@create_acc__almost_there": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_name": "Hogy hívnak?",
+    "@create_acc__what_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_placeholder": "Kis Árpád",
+    "@create_acc__name_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_empty_error": "😱 A neved nem lehet üres.",
+    "@create_acc__name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_length_error": "😱 A neved nem lehet 50 karakternél hosszabb. (Ha az, akkor elnézést kérünk.)",
+    "@create_acc__name_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__name_characters_error": "😅 Egy név (jelenleg) csak alfanumerikus karakterekből állhat.",
+    "@create_acc__name_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_username": "Válassz egy felhasználónevet",
+    "@create_acc__what_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_placeholder": "szegenylegeny",
+    "@create_acc__username_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_empty_error": "😱 A felhasználónév nem lehet üres.",
+    "@create_acc__username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_length_error": "😅 A felhasználónév nem lehet 30 karakternél hosszabb.",
+    "@create_acc__username_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_characters_error": "😅 A felhasználónév csak alfanumerikus karaktereket és alulvonásokat tartalmazhat.",
+    "@create_acc__username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_taken_error": "😩 A(z) @%s felhasználónév foglalt.",
+    "@create_acc__username_taken_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__username_server_error": "😭 Problémákba ütköztek a szervereink! Kérünk, próbáld újra pár perc múlva.",
+    "@create_acc__username_server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_email": "Mi az e-mail címed?",
+    "@create_acc__what_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_placeholder": "kis_otto@mail.com",
+    "@create_acc__email_placeholder": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_empty_error": "😱 Az e-mail címed nem lehet üres",
+    "@create_acc__email_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_invalid_error": "😅 Kérünk, adj meg egy érvényes e-mail címet.",
+    "@create_acc__email_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_taken_error": "🤔 Már létezik egy fiók ezzel az e-mail címmel.",
+    "@create_acc__email_taken_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__email_server_error": "😭 Problémákba ütköztek a szervereink! Kérünk, próbáld újra pár perc múlva.",
+    "@create_acc__email_server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_password": "Adj meg egy jelszót",
+    "@create_acc__what_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc_password_hint_text": "({minLength}-{maxLength} karakter)",
+    "@create_acc_password_hint_text": {
+        "type": "text",
+        "placeholders": {
+            "minLength": {},
+            "maxLength": {}
+        }
+    },
+    "create_acc__what_password_subtext": "(min. 10 karakter)",
+    "@create_acc__what_password_subtext": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__password_empty_error": "😱 A jelszavad nem lehet üres",
+    "@create_acc__password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__password_length_error": "😅 A jelszónak min. 8 és max. 64 karakter hosszúnak kell lennie.",
+    "@create_acc__password_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__what_avatar": "Válassz ki egy profilképet",
+    "@create_acc__what_avatar": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_tap_to_change": "Koppints a módosításhoz",
+    "@create_acc__avatar_tap_to_change": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_choose_camera": "Készíts fotót",
+    "@create_acc__avatar_choose_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_choose_gallery": "Meglévő fotó használata",
+    "@create_acc__avatar_choose_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__avatar_remove_photo": "Fotó törlése",
+    "@create_acc__avatar_remove_photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done": "Fiók létrehozása",
+    "@create_acc__done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_subtext": "Ezt a profilod beállításaiban módosíthatod.",
+    "@create_acc__done_subtext": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_created": "A fiókod sikeresen létrejött! Íme a felhasználóneved: ",
+    "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_loading_title": "Csak egy pillanat!",
+    "@create_acc__submit_loading_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_loading_desc": "Létrehozzuk a fiókodat.",
+    "@create_acc__submit_loading_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_title": "Óh ne...",
+    "@create_acc__submit_error_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_desc_server": "😭 Problémákba ütköztek a szervereink! Kérünk, próbáld újra pár perc múlva.",
+    "@create_acc__submit_error_desc_server": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__submit_error_desc_validation": "😅 Úgy fest, valamelyik információ nem volt megfelelő. Kérünk, ellenőrizd és próbáld újra.",
+    "@create_acc__submit_error_desc_validation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_title": "Hurrá!",
+    "@create_acc__done_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_description": "A fiókod sikeresen létrejött.",
+    "@create_acc__done_description": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__your_username_is": "A felhasználóneved ",
+    "@create_acc__your_username_is": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__can_change_username": "Ha akarod, bármikor megváltoztathatod azt a profiloldaladon keresztül.",
+    "@create_acc__can_change_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__done_continue": "Belépés",
+    "@create_acc__done_continue": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__one_last_thing": "Még egy apró dolog...",
+    "@create_acc__one_last_thing": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__register": "Regisztráció",
+    "@create_acc__register": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__are_you_legal_age": "Elmúltál már 16 éves?",
+    "@create_acc__are_you_legal_age": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__login": "Folytatás",
+    "@login__login": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__previous": "Előző",
+    "@login__previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__title": "Üdv újra!",
+    "@login__title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__subtitle": "A folytatáshoz add meg a belépési adataidat.",
+    "@login__subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__forgot_password": "Elfelejtett jelszó",
+    "@login__forgot_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__forgot_password_subtitle": "Add meg a felhasználóneved vagy e-mail címed",
+    "@login__forgot_password_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_label": "Felhasználónév",
+    "@login__username_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_label": "Jelszó",
+    "@login__password_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__email_label": "E-mail cím",
+    "@login__email_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__or_text": "vagy",
+    "@login__or_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_empty_error": "A jelszó szükséges.",
+    "@login__password_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__password_length_error": "A jelszónak min. 8 és max. 64 karakter hosszúnak kell lennie.",
+    "@login__password_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_empty_error": "A felhasználónév szükséges.",
+    "@login__username_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_length_error": "A felhasználónév nem lehet 30 karakternél hosszabb.",
+    "@login__username_length_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__username_characters_error": "A felhasználónév csak alfanumerikus karaktereket és alulvonásokat tartalmazhat.",
+    "@login__username_characters_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__credentials_mismatch_error": "A megadott belépési adatok nem megfelelőek.",
+    "@login__credentials_mismatch_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__server_error": "Hoppsz... Szerverproblémákba ütköztünk. Kérünk, próbáld újra pár perc múlva.",
+    "@login__server_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "login__connection_error": "Nem tudjuk elérni a szervereinket. Van működő internetkapcsolatod?",
+    "@login__connection_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_title": "Jelszó megváltoztatása",
+    "@change_password_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd": "Jelenlegi jelszó",
+    "@change_password_current_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd_hint": "Írd be a jelenlegi jelszavad",
+    "@change_password_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_current_pwd_incorrect": "A megadott jelszó helytelen",
+    "@change_password_current_pwd_incorrect": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd": "Új jelszó",
+    "@change_password_new_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd_hint": "Add meg az új jelszavad",
+    "@change_password_new_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_new_pwd_error": "Kérünk, bizonyosodj meg arról, hogy a jelszavad hosszúsága 10 és 100 karakter között van",
+    "@change_password_new_pwd_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_save_text": "Mentés",
+    "@change_password_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_password_save_success": "Remek! Jelszavad sikeresen módosításra került",
+    "@change_password_save_success": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -271,6 +271,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "edit_profile_community_posts": "Community posts",
+  "@edit_profile_community_posts": {
+    "type": "text",
+    "placeholders": {}
+  },
   "edit_profile_title": "Edit profile",
   "@edit_profile_title": {
     "type": "text",
@@ -334,11 +339,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "invite_someone_message": "Hey, I'd like to invite you to Okuna. First, Download the app on iTunes ({iosLink}) or the Play store ({androidLink}). Second, paste this personalised invite link in the 'Sign up' form in the Okuna App: {inviteLink}",
+  "invite_someone_message": "Hey, I'd like to invite you to Okuna.\n\nFor Apple, first, download the TestFlight app on iTunes ({testFlightLink}) and then download the Okuna app ({iosLink})\n\nFor Android, download it from the Play store ({androidLink}).\n\nSecond, paste this personalised invite link in the 'Sign up' form in the Okuna App: {inviteLink}",
   "@invite_someone_message": {
     "type": "text",
     "placeholders": {
       "iosLink": {},
+      "testFlightLink": {},
       "androidLink": {},
       "inviteLink": {}
     }

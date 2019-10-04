@@ -4,15 +4,13 @@ import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
-import 'package:Okuna/models/post_image.dart';
-import 'package:Okuna/models/post_link.dart';
-import 'package:Okuna/models/post_links_list.dart';
+import 'package:Okuna/models/post_media.dart';
+import 'package:Okuna/models/post_media_list.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/updatable_model.dart';
-import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -31,14 +29,17 @@ class Post extends UpdatableModel<Post> {
   PostReaction reaction;
   int reactionsCount;
   int commentsCount;
+  double mediaHeight;
+  double mediaWidth;
+  String mediaThumbnail;
   bool areCommentsEnabled;
   bool publicReactions;
   String text;
   Language language;
-  PostImage image;
-  PostVideo video;
-  PostLinksList postLinksList;
-  PostPreviewLinkData previewLinkQueryData;
+  OBPostStatus status;
+
+  PostMediaList media;
+  LinkPreview linkPreview;
   PostCommentList commentsList;
   Community community;
 
@@ -48,10 +49,46 @@ class Post extends UpdatableModel<Post> {
   bool isClosed;
   bool isReported;
 
+  // stored only in the app
+  bool isFromExcludedCommunity = false;
+
   static final factory = PostFactory();
 
   factory Post.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return factory.fromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created': created.toString(),
+      'uuid': uuid,
+      'creator_id': creatorId,
+      'creator': creator?.toJson(),
+      'circles': circles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
+      'reactions_emoji_counts': reactionsEmojiCounts?.counts?.map((ReactionsEmojiCount reactionEmojiCount) => reactionEmojiCount.toJson())?.toList(),
+      'reaction': reaction?.toJson(),
+      'reactions_count': reactionsCount,
+      'comments_count': commentsCount,
+      'media_height': mediaHeight,
+      'media_width': mediaWidth,
+      'media_thumbnail': mediaThumbnail,
+      'are_comments_enabled': areCommentsEnabled,
+      'public_reactions': publicReactions,
+      'text': text,
+      'language': language?.toJson(),
+      'status': status?.code,
+      'media': media?.postMedia?.map((PostMedia mediaObj) => mediaObj.toJson())?.toList(),
+      'link_preview': linkPreview,
+      'comments_list': commentsList?.comments?.map((PostComment comment) => comment.toJson())?.toList(),
+      'community': community?.toJson(),
+      'is_muted': isMuted,
+      'is_encircled': isEncircled,
+      'is_edited': isEdited,
+      'is_closed': isClosed,
+      'is_reported': isReported
+    };
   }
 
   static void clearCache() {
@@ -64,19 +101,21 @@ class Post extends UpdatableModel<Post> {
       this.created,
       this.text,
       this.creatorId,
-      this.image,
-      this.video,
-      this.postLinksList,
+      this.mediaThumbnail,
+      this.media,
       this.creator,
       this.language,
       this.reactionsCount,
       this.commentsCount,
+      this.mediaHeight,
+      this.mediaWidth,
       this.commentsList,
       this.reaction,
       this.reactionsEmojiCounts,
       this.areCommentsEnabled,
       this.circles,
       this.community,
+      this.status,
       this.publicReactions,
       this.isMuted,
       this.isEncircled,
@@ -92,6 +131,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('reaction'))
       reaction = factory.parseReaction(json['reaction']);
 
+    if (json.containsKey('status')) status = OBPostStatus.parse(json['status']);
+
     if (json.containsKey('reactions_count'))
       reactionsCount = json['reactions_count'];
 
@@ -104,13 +145,18 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('public_reactions'))
       publicReactions = json['public_reactions'];
 
+    if (json.containsKey('media_height'))
+      mediaHeight = factory.parseMediaHeight(json['media_height']);
+
+    if (json.containsKey('media_width'))
+      mediaWidth = factory.parseMediaWidth(json['media_width']);
+
     if (json.containsKey('language')) {
       language = factory.parseLanguage(json['language']);
     }
 
     if (json.containsKey('text')) {
       text = json['text'];
-      previewLinkQueryData = null;
     }
 
     if (json.containsKey('is_muted')) isMuted = json['is_muted'];
@@ -123,11 +169,10 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('is_reported')) isReported = json['is_reported'];
 
-    if (json.containsKey('image')) image = factory.parseImage(json['image']);
+    if (json.containsKey('media_thumbnail'))
+      mediaThumbnail = json['media_thumbnail'];
 
-    if (json.containsKey('video')) video = factory.parseVideo(json['video']);
-
-    if (json.containsKey('post_links')) postLinksList = factory.parsePostLinksList(json['post_links']);
+    if (json.containsKey('media')) media = factory.parseMedia(json['media']);
 
     if (json.containsKey('community'))
       community = factory.parseCommunity(json['community']);
@@ -146,14 +191,23 @@ class Post extends UpdatableModel<Post> {
   }
 
   void updatePreviewDataFromJson(Map json) {
-    previewLinkQueryData = PostPreviewLinkData();
-    if (json.containsKey('title')) previewLinkQueryData.title = json['title'];
-    if (json.containsKey('description')) previewLinkQueryData.description = json['description'];
-    if (json.containsKey('image_url')) previewLinkQueryData.imageUrl = json['image_url'];
-    if (json.containsKey('favicon_url')) previewLinkQueryData.faviconUrl = json['favicon_url'];
-    if (json.containsKey('domain_url')) previewLinkQueryData.domainUrl = json['domain_url'];
+    linkPreview = LinkPreview();
+    if (json.containsKey('title')) linkPreview.title = json['title'];
+    if (json.containsKey('description'))
+      linkPreview.description = json['description'];
+    if (json.containsKey('image_url')) linkPreview.imageUrl = json['image_url'];
+    if (json.containsKey('favicon_url'))
+      linkPreview.faviconUrl = json['favicon_url'];
+    if (json.containsKey('domain_url'))
+      linkPreview.domainUrl = json['domain_url'];
     notifyUpdate();
   }
+
+  void updateIsFromExcludedCommunity(bool isExcluded) {
+    isFromExcludedCommunity = isExcluded;
+    notifyUpdate();
+  }
+
 
   bool hasReaction() {
     return reaction != null;
@@ -171,24 +225,20 @@ class Post extends UpdatableModel<Post> {
     return publicReactions && areCommentsEnabled;
   }
 
-  bool hasImage() {
-    return image != null;
-  }
-
   bool isCommunityPost() {
     return community != null;
   }
 
-  bool hasVideo() {
-    return video != null;
+  bool hasMediaThumbnail() {
+    return mediaThumbnail != null;
   }
 
-  bool hasPreviewLink() {
-    return postLinksList != null && postLinksList.links.length > 0;
+  bool hasMedia() {
+    return media != null && media.postMedia.isNotEmpty;
   }
 
-  bool hasPreviewQueryData() {
-    return previewLinkQueryData != null;
+  bool hasLinkPreview() {
+    return linkPreview != null;
   }
 
   bool hasText() {
@@ -239,32 +289,12 @@ class Post extends UpdatableModel<Post> {
     return creator.profile.avatar;
   }
 
-  String getImage() {
-    return image.image;
+  List<PostMedia> getMedia() {
+    return media.postMedia;
   }
 
-  double getImageHeight() {
-    return image.height;
-  }
-
-  double getImageWidth() {
-    return image.width;
-  }
-
-  double getVideoHeight() {
-    return video.height;
-  }
-
-  double getVideoWidth() {
-    return video.width;
-  }
-
-  String getVideo() {
-    return video.video;
-  }
-
-  String getPreviewLink() {
-    return postLinksList.links[0].link;
+  PostMedia getFirstMedia() {
+    return media.postMedia.first;
   }
 
   Language getLanguage() {
@@ -282,6 +312,16 @@ class Post extends UpdatableModel<Post> {
 
   void decreaseCommentsCount() {
     this.commentsCount -= 1;
+    this.notifyUpdate();
+  }
+
+  void setMedia(PostMediaList media) {
+    this.media = media;
+    this.notifyUpdate();
+  }
+
+  void setLinkPreview(LinkPreview linkPreview) {
+    this.linkPreview = linkPreview;
     this.notifyUpdate();
   }
 
@@ -339,6 +379,11 @@ class Post extends UpdatableModel<Post> {
     notifyUpdate();
   }
 
+  void setStatus(OBPostStatus status) {
+    this.status = status;
+    this.notifyUpdate();
+  }
+
   void _setReactionsEmojiCounts(ReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
   }
@@ -356,19 +401,21 @@ class PostFactory extends UpdatableModelFactory<Post> {
         uuid: json['uuid'],
         creatorId: json['creator_id'],
         created: parseCreated(json['created']),
+        status: OBPostStatus.parse(json['status']),
         text: json['text'],
         language: parseLanguage(json['language']),
         circles: parseCircles(json['circles']),
         reactionsCount: json['reactions_count'],
         commentsCount: json['comments_count'],
+        mediaHeight: parseMediaHeight(json['media_height']),
+        mediaWidth: parseMediaWidth(json['media_width']),
         isMuted: json['is_muted'],
         isReported: json['is_reported'],
         areCommentsEnabled: json['comments_enabled'],
         publicReactions: json['public_reactions'],
         creator: parseCreator(json['creator']),
-        image: parseImage(json['image']),
-        video: parseVideo(json['video']),
-        postLinksList: parsePostLinksList(json['post_links']),
+        mediaThumbnail: json['media_thumbnail'],
+        media: parseMedia(json['media']),
         reaction: parseReaction(json['reaction']),
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
@@ -389,19 +436,9 @@ class PostFactory extends UpdatableModelFactory<Post> {
     return DateTime.parse(created).toLocal();
   }
 
-  PostImage parseImage(Map image) {
-    if (image == null) return null;
-    return PostImage.fromJSON(image);
-  }
-
-  PostVideo parseVideo(Map video) {
-    if (video == null) return null;
-    return PostVideo.fromJSON(video);
-  }
-
-  PostLinksList parsePostLinksList(List linksList) {
-    if (linksList == null) return null;
-    return PostLinksList.fromJson(linksList);
+  PostMediaList parseMedia(List mediaRawData) {
+    if (mediaRawData == null) return null;
+    return PostMediaList.fromJson(mediaRawData);
   }
 
   User parseCreator(Map creator) {
@@ -419,8 +456,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
     return Community.fromJSON(communityData);
   }
 
-  ReactionsEmojiCountList parseReactionsEmojiCounts(
-      List reactionsEmojiCounts) {
+  ReactionsEmojiCountList parseReactionsEmojiCounts(List reactionsEmojiCounts) {
     if (reactionsEmojiCounts == null) return null;
     return ReactionsEmojiCountList.fromJson(reactionsEmojiCounts);
   }
@@ -438,5 +474,52 @@ class PostFactory extends UpdatableModelFactory<Post> {
   Language parseLanguage(Map languageData) {
     if (languageData == null) return null;
     return Language.fromJson(languageData);
+  }
+
+  double parseMediaWidth(dynamic mediaWidth) {
+    if (mediaWidth == null) return null;
+    if (mediaWidth is int) return mediaWidth.toDouble();
+    if (mediaWidth is double) return mediaWidth;
+  }
+
+  double parseMediaHeight(dynamic mediaHeight) {
+    if (mediaHeight == null) return null;
+    if (mediaHeight is int) return mediaHeight.toDouble();
+    if (mediaHeight is double) return mediaHeight;
+  }
+}
+
+class OBPostStatus {
+  final String code;
+
+  const OBPostStatus._internal(this.code);
+
+  toString() => code;
+
+  static const draft = const OBPostStatus._internal('D');
+  static const processing = const OBPostStatus._internal('PG');
+  static const published = const OBPostStatus._internal('P');
+
+  static const _values = const <OBPostStatus>[draft, processing, published];
+
+  static values() => _values;
+
+  static OBPostStatus parse(String string) {
+    if (string == null) return null;
+
+    OBPostStatus postStatus;
+    for (var type in _values) {
+      if (string == type.code) {
+        postStatus = type;
+        break;
+      }
+    }
+
+    if (postStatus == null) {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported post status type: ' + string);
+    }
+
+    return postStatus;
   }
 }

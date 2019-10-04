@@ -5,15 +5,18 @@ import 'package:Okuna/services/categories_api.dart';
 import 'package:Okuna/services/communities_api.dart';
 import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/connections_api.dart';
+import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/date_picker.dart';
 import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/intercom.dart';
+import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
-import 'package:Okuna/services/preview_url_api_service.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
+import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/services/emoji_picker.dart';
@@ -21,7 +24,7 @@ import 'package:Okuna/services/emojis_api.dart';
 import 'package:Okuna/services/environment_loader.dart';
 import 'package:Okuna/services/follows_api.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
@@ -77,7 +80,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
-  ImagePickerService imagePickerService = ImagePickerService();
+  MediaService mediaPickerService = MediaService();
+  ShareService shareService = ShareService();
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
@@ -94,7 +98,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ModalService modalService = ModalService();
   NavigationService navigationService = NavigationService();
   WaitlistApiService waitlistApiService = WaitlistApiService();
-  PreviewUrlApiService previewUrlApiService = PreviewUrlApiService();
 
   LocalizationService localizationService;
   UniversalLinksService universalLinksService = UniversalLinksService();
@@ -109,6 +112,9 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DocumentsService documentsService = DocumentsService();
   TextAccountAutocompletionService textAccountAutocompletionService =
       TextAccountAutocompletionService();
+  ConnectivityService connectivityService = ConnectivityService();
+  LinkPreviewService linkPreviewService = LinkPreviewService();
+  DraftService draftService = DraftService();
 
   SentryClient sentryClient;
 
@@ -118,6 +124,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     initAsyncState();
     imageCache.maximumSize = 200 << 20; // 200MB
     userPreferencesService.setStorageService(storageService);
+    userPreferencesService.setConnectivityService(connectivityService);
     connectionsCirclesApiService.setHttpService(httpService);
     httpService.setUtilsService(utilsService);
     connectionsCirclesApiService
@@ -151,9 +158,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setCreateAccountBlocService(createAccountBloc);
     userService.setWaitlistApiService(waitlistApiService);
     userService.setUserPreferenceService(userPreferencesService);
+    userService.setDraftService(draftService);
     waitlistApiService.setHttpService(httpService);
-    userService.setPreviewUrlApiService(previewUrlApiService);
-    previewUrlApiService.setHttpService(httpService);
     userService.setModerationApiService(moderationApiService);
     emojisApiService.setHttpService(httpService);
     categoriesApiService.setHttpService(httpService);
@@ -173,13 +179,20 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
-    imagePickerService.setValidationService(validationService);
+    mediaPickerService.setValidationService(validationService);
+    mediaPickerService.setBottomSheetService(bottomSheetService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
     urlLauncherService.setBottomSheetService(bottomSheetService);
     urlLauncherService.setUserPreferencesService(userPreferencesService);
     urlLauncherService.setUrlParserService(urlParserService);
+    linkPreviewService.setHttpieService(httpService);
+    linkPreviewService.setUtilsService(utilsService);
+    linkPreviewService.setValidationService(validationService);
+    shareService.setMediaService(mediaPickerService);
+    shareService.setToastService(toastService);
+    shareService.setValidationService(validationService);
   }
 
   void initAsyncState() async {
@@ -200,7 +213,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);
-    previewUrlApiService.setApiURL(environment.apiUrl);
     urlParserService.loadSuffixRules();
     waitlistApiService
         .setOpenbookSocialApiURL(environment.openbookSocialApiUrl);
@@ -208,8 +220,12 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         iosApiKey: environment.intercomIosKey,
         androidApiKey: environment.intercomAndroidKey,
         appId: environment.intercomAppId);
-
     sentryClient = SentryClient(dsn: environment.sentryDsn);
+    linkPreviewService
+        .setTrustedProxyUrl(environment.linkPreviewsTrustedProxyUrl);
+
+    await connectivityService.bootstrap();
+    userPreferencesService.bootstrap();
   }
 
   @override
@@ -225,6 +241,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     super.dispose();
     universalLinksService.dispose();
     pushNotificationsService.dispose();
+    connectivityService.dispose();
+    userPreferencesService.dispose();
   }
 
   setLocalizationService(LocalizationService newLocalizationService) {
@@ -232,6 +250,9 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setLocalizationService(localizationService);
     httpService.setLocalizationService(localizationService);
     userService.setLocalizationsService(localizationService);
+    modalService.setLocalizationService(localizationService);
+    userPreferencesService.setLocalizationService(localizationService);
+    shareService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {

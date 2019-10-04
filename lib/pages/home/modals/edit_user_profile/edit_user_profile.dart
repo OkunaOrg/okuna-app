@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/image_picker.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
@@ -39,7 +39,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
 
   UserService _userService;
   ToastService _toastService;
-  ImagePickerService _imagePickerService;
+  MediaService _imagePickerService;
   ValidationService _validationService;
   LocalizationService _localizationService;
 
@@ -91,7 +91,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
-    _imagePickerService = openbookProvider.imagePickerService;
+    _imagePickerService = openbookProvider.mediaPickerService;
     _validationService = openbookProvider.validationService;
     _localizationService = openbookProvider.localizationService;
 
@@ -357,10 +357,10 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
               onTap: () async {
                 try {
                   var image =
-                      await _imagePickerService.pickImage(imageType: imageType);
+                      await _imagePickerService.pickImage(imageType: imageType, context: context);
 
                   _onUserImageSelected(image: image, imageType: imageType);
-                } on ImageTooLargeException catch (e) {
+                } on FileTooLargeException catch (e) {
                   int limit = e.getLimitInMB();
                   toastService.error(
                       message: _localizationService

@@ -47,7 +47,7 @@ class OBUserBadge extends StatelessWidget {
               return _getSuperFounderBadge(badge); break;
             case BadgeKeyword.angel:
               return _getAngelBadge(badge); break;
-            case BadgeKeyword.none:
+            default:
               return const SizedBox(); break;
           }
         });

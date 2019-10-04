@@ -6,7 +6,7 @@ class UrlParserService {
 
   void loadSuffixRules() async {
     String suffixListString =
-        await rootBundle.loadString('assets/public_suffix_list.dat');
+        await rootBundle.loadString('assets/other/public_suffix_list.dat');
     SuffixRules.initFromString(suffixListString);
   }
 

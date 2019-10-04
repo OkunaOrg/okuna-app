@@ -1,0 +1,7 @@
+{
+    "unsupported": "Tipo di file multimediale non supportato",
+    "@unsupported": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

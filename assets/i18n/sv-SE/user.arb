@@ -3,1345 +3,978 @@
     "@thousand_postfix": {
         "description": "For eg. communty has 3k members",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "million_postfix": "mn",
     "@million_postfix": {
         "description": "For eg. user has 3m followers",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "billion_postfix": "md",
     "@billion_postfix": {
         "description": "For eg. World circle has 7.5b people",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "translate_see_translation": "Visa översättning",
     "@translate_see_translation": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "translate_show_original": "Visa original",
     "@translate_show_original": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_lists_account": "1 Konto",
     "@follows_lists_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_lists_accounts": "{prettyUsersCount} Konton",
     "@follows_lists_accounts": {
         "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
         "type": "text",
         "placeholders": {
-            "prettyUsersCount": {
-
-            }
+            "prettyUsersCount": {}
         }
     },
     "edit_profile_user_name_taken": "Användarnamnet @{username} är upptaget",
     "@edit_profile_user_name_taken": {
         "type": "text",
         "placeholders": {
-            "username": {
-
-            }
+            "username": {}
         }
     },
     "profile_action_deny_connection": "Neka kontaktförfrågan",
     "@profile_action_deny_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_action_user_blocked": "Användare blockerad",
     "@profile_action_user_blocked": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_action_user_unblocked": "Användare avblockerad",
     "@profile_action_user_unblocked": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_action_cancel_connection": "Avbryt kontaktförfrågan",
     "@profile_action_cancel_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_url_invalid_error": "Vänligen ange en giltig URL.",
     "@profile_url_invalid_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "profile_location_length_error": "En plats kan inte vara längre än {maxLength} tecken.",
     "@profile_location_length_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "profile_bio_length_error": "Bion kan inte vara längre än {maxLength} tecken.",
     "@profile_bio_length_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "follow_button_follow_text": "Följ",
     "@follow_button_follow_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_button_unfollow_text": "Sluta följa",
     "@follow_button_unfollow_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_username": "Användarnamn",
     "@edit_profile_username": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_update_account_lists": "Uppdatera kontolistor",
     "@add_account_update_account_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_to_lists": "Lägg till konto i lista",
     "@add_account_to_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_update_lists": "Uppdatera listor",
     "@add_account_update_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_save": "Spara",
     "@add_account_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_done": "Klar",
     "@add_account_done": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "add_account_success": "Kontot lades till",
     "@add_account_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "emoji_field_none_selected": "Ingen emoji vald",
     "@emoji_field_none_selected": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "emoji_search_none_found": "Ingen emoji hittades som matchar '{searchQuery}'.",
     "@emoji_search_none_found": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "follow_lists_title": "Mina listor",
     "@follow_lists_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_lists_search_for": "Sök efter en lista...",
     "@follow_lists_search_for": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_lists_no_list_found": "Inga listor hittades.",
     "@follow_lists_no_list_found": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follow_lists_no_list_found_for": "Inga listor hittades för '{searchQuery}'",
     "@follow_lists_no_list_found_for": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "list_name_empty_error": "Du måste ge listan ett namn.",
     "@list_name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "list_name_range_error": "Listans namn får inte vara längre än {maxLength} tecken.",
     "@list_name_range_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "circle_name_empty_error": "Du måste ge kretsen ett namn.",
     "@circle_name_empty_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "circle_name_range_error": "Kretsens namn får inte vara längre än {maxLength} tecken.",
     "@circle_name_range_error": {
         "type": "text",
         "placeholders": {
-            "maxLength": {
-
-            }
+            "maxLength": {}
         }
     },
     "save_follows_list_name": "Namn",
     "@save_follows_list_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_hint_text": "t. ex. Resor, Fotografering",
     "@save_follows_list_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_name_taken": "Listnamnet '{listName}' är upptaget",
     "@save_follows_list_name_taken": {
         "type": "text",
         "placeholders": {
-            "listName": {
-
-            }
+            "listName": {}
         }
     },
     "save_follows_list_emoji": "Emoji",
     "@save_follows_list_emoji": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_users": "Användare",
     "@save_follows_list_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_edit": "Redigera lista",
     "@save_follows_list_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_create": "Skapa lista",
     "@save_follows_list_create": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_save": "Spara",
     "@save_follows_list_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_follows_list_emoji_required_error": "En emoji krävs",
     "@save_follows_list_emoji_required_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_list_edit": "Redigera",
     "@follows_list_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follows_list_header_title": "Användare",
     "@follows_list_header_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_name": "Namn",
     "@edit_profile_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_url": "Url",
     "@edit_profile_url": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_location": "Plats",
     "@edit_profile_location": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_bio": "Bio",
     "@edit_profile_bio": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_followers_count": "Följarantal",
     "@edit_profile_followers_count": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
+    },
+    "edit_profile_community_posts": "Gemenskapsinlägg",
+    "@edit_profile_community_posts": {
+        "type": "text",
+        "placeholders": {}
     },
     "edit_profile_title": "Redigera profil",
     "@edit_profile_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_save_text": "Spara",
     "@edit_profile_save_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_pick_image": "Välj bild",
     "@edit_profile_pick_image": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_delete": "Ta bort",
     "@edit_profile_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "edit_profile_pick_image_error_too_large": "Bilden är för stor (gräns: {limit} MB)",
     "@edit_profile_pick_image_error_too_large": {
         "type": "text",
         "placeholders": {
-            "limit": {
-
-            }
+            "limit": {}
         }
     },
     "tile_following": " · Följer",
     "@tile_following": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "following_text": "Följer",
     "@following_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "following_resource_name": "följda användare",
     "@following_resource_name": {
         "description": "Eg: Search followed users.., No followed users found. etc ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "tile_delete": "Ta bort",
     "@tile_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invite": "Bjud in",
     "@invite": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "uninvite": "Avbryt inbjudan",
     "@uninvite": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invite_member": "Medlem",
     "@invite_member": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invite_someone_message": "Hej, jag vill bjuda in dig till Okuna. Först, ladda ner appen från iTunes ({iosLink}) eller Play Store ({androidLink}). Sedan klistrar du in din personliga inbjudningslänk i 'Registrera dig'-formuläret i Okuna-appen: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
-            "iosLink": {
-
-            },
-            "androidLink": {
-
-            },
-            "inviteLink": {
-
-            }
+            "iosLink": {},
+            "androidLink": {},
+            "inviteLink": {}
         }
     },
     "connections_header_circle_desc": "Kretsen alla dina kontakter läggs till i.",
     "@connections_header_circle_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connections_header_users": "Användare",
     "@connections_header_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connection_pending": "Väntande",
     "@connection_pending": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connection_circle_edit": "Redigera",
     "@connection_circle_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connections_circle_delete": "Ta bort",
     "@connections_circle_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_name": "Namn",
     "@save_connection_circle_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_hint": "t. ex. Vänner, Familj, Jobb.",
     "@save_connection_circle_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_color_name": "Färg",
     "@save_connection_circle_color_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_color_hint": "(Tryck för att ändra)",
     "@save_connection_circle_color_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_users": "Användare",
     "@save_connection_circle_users": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_edit": "Redigera krets",
     "@save_connection_circle_edit": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_create": "Skapa krets",
     "@save_connection_circle_create": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "save_connection_circle_save": "Spara",
     "@save_connection_circle_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_connection_circle_save": "Spara",
     "@update_connection_circle_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_connection_circle_updated": "Kontakt uppdaterad",
     "@update_connection_circle_updated": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "update_connection_circles_title": "Uppdatera kontaktkretsar",
     "@update_connection_circles_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_connection_with": "Bekräfta {userName}s kontaktförfrågan",
     "@confirm_connection_with": {
         "type": "text",
         "placeholders": {
-            "userName": {
-
-            }
+            "userName": {}
         }
     },
     "confirm_connection_add_connection": "Lägg till kontakt i krets",
     "@confirm_connection_add_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_connection_connection_confirmed": "Kontaktförfrågan bekräftad",
     "@confirm_connection_connection_confirmed": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_connection_confirm_text": "Bekräfta",
     "@confirm_connection_confirm_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connect_to_user_connect_with_username": "Lägg till {userName} som kontakt",
     "@connect_to_user_connect_with_username": {
         "type": "text",
         "placeholders": {
-            "userName": {
-
-            }
+            "userName": {}
         }
     },
     "connect_to_user_add_connection": "Lägg till kontakt i krets",
     "@connect_to_user_add_connection": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connect_to_user_done": "Klar",
     "@connect_to_user_done": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "connect_to_user_request_sent": "Kontaktförfrågan skickad",
     "@connect_to_user_request_sent": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "remove_account_from_list": "Ta bort konto från listor",
     "@remove_account_from_list": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "remove_account_from_list_success": "Konto borttaget från listor",
     "@remove_account_from_list_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_title": "Bekräftelse",
     "@confirm_block_user_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_info": "Ni kommer inte kunna se varandras inlägg eller kunna interagera med varandra.",
     "@confirm_block_user_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_yes": "Ja",
     "@confirm_block_user_yes": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_no": "Nej",
     "@confirm_block_user_no": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_blocked": "Användare blockerad.",
     "@confirm_block_user_blocked": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_block_user_question": "Är du säker på att du vill blockera @{username}?",
     "@confirm_block_user_question": {
         "type": "text",
         "placeholders": {
-            "username": {
-
-            }
+            "username": {}
         }
     },
     "save_connection_circle_name_taken": "Kretsnamnet '{takenConnectionsCircleName}' är upptaget",
     "@save_connection_circle_name_taken": {
         "type": "text",
         "placeholders": {
-            "takenConnectionsCircleName": {
-
-            }
+            "takenConnectionsCircleName": {}
         }
     },
     "timeline_filters_title": "Tidslinjefilter",
     "@timeline_filters_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_search_desc": "Sök efter kretsar och listor...",
     "@timeline_filters_search_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_clear_all": "Återställ",
     "@timeline_filters_clear_all": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_apply_all": "Applicera filter",
     "@timeline_filters_apply_all": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_circles": "Kretsar",
     "@timeline_filters_circles": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "timeline_filters_lists": "Listor",
     "@timeline_filters_lists": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "followers_title": "Följare",
     "@followers_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follower_singular": "följare",
     "@follower_singular": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "follower_plural": "följare",
     "@follower_plural": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_title": "Ta bort konto",
     "@delete_account_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_current_pwd": "Nuvarande lösenord",
     "@delete_account_current_pwd": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_current_pwd_hint": "Ange ditt nuvarande lösenord",
     "@delete_account_current_pwd_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_next": "Nästa",
     "@delete_account_next": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_title": "Bekräftelse",
     "@delete_account_confirmation_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_desc": "Är du säker på att du vill ta bort ditt konto?",
     "@delete_account_confirmation_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_desc_info": "Detta är permanent och kan inte ångras senare.",
     "@delete_account_confirmation_desc_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_no": "Nej",
     "@delete_account_confirmation_no": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_yes": "Ja",
     "@delete_account_confirmation_yes": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "delete_account_confirmation_goodbye": "Hej då 😢",
     "@delete_account_confirmation_goodbye": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_create_title": "Skapa inbjudan",
     "@invites_create_create_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_edit_title": "Redigera inbjudan",
     "@invites_create_edit_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_save": "Spara",
     "@invites_create_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_create": "Skapa",
     "@invites_create_create": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_name_title": "Smeknamn",
     "@invites_create_name_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_create_name_hint": "t. ex. Sven Svensson",
     "@invites_create_name_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_pending": "Väntande",
     "@invites_pending": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_delete": "Ta bort",
     "@invites_delete": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_invite_text": "Bjud in",
     "@invites_invite_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_yourself": "Dela inbjudan själv",
     "@invites_share_yourself": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_yourself_desc": "Välj mellan meddelandeappar, etc.",
     "@invites_share_yourself_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_email": "Dela inbjudan via e-post",
     "@invites_share_email": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_text": "E-post",
     "@invites_email_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_hint": "t. ex. svensvensson@email.com",
     "@invites_email_hint": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_invite_text": "E-postinbjudan",
     "@invites_email_invite_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_send_text": "Skicka",
     "@invites_email_send_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_email_sent_text": "E-postinbjudan skickad",
     "@invites_email_sent_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_share_email_desc": "Vi kommer skicka en inbjudan med instruktioner å dina vägnar",
     "@invites_share_email_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_edit_text": "Redigera",
     "@invites_edit_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_title": "Mina inbjudningar",
     "@invites_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
-    "invites_accepted_title": "Accepterad",
+    "invites_accepted_title": "Accepterade",
     "@invites_accepted_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_accepted_group_name": "accepterade inbjudningar",
     "@invites_accepted_group_name": {
         "description": "Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ",
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_accepted_group_item_name": "accepterad inbjudan",
     "@invites_accepted_group_item_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_pending_group_name": "väntande inbjudningar",
     "@invites_pending_group_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_pending_group_item_name": "väntande inbjudan",
     "@invites_pending_group_item_name": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_none_used": "Det ser ut som att du inte använt några inbjudningar.",
     "@invites_none_used": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_none_left": "Du har inga inbjudningar tillgängliga.",
     "@invites_none_left": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_invite_a_friend": "Bjud in en vän",
     "@invites_invite_a_friend": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "invites_refresh": "Uppdatera",
     "@invites_refresh": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "language_settings_title": "Språkinställningar",
     "@language_settings_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "language_settings_save": "Spara",
     "@language_settings_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "language_settings_saved_success": "Språket har uppdaterats",
     "@language_settings_saved_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "groups_see_all": "Visa alla {groupName}",
     "@groups_see_all": {
         "description": "Can be, See all joined communities, See all pending invites, See all moderated communities etc. ",
         "type": "text",
         "placeholders": {
-            "groupName": {
-
-            }
+            "groupName": {}
         }
     },
     "invites_joined_with": "Gick med under användarnamnet @{username}",
     "@invites_joined_with": {
         "type": "text",
         "placeholders": {
-            "username": {
-
-            }
+            "username": {}
         }
     },
     "invites_pending_email": "Väntande, inbjudan skickad till {email}",
     "@invites_pending_email": {
         "type": "text",
         "placeholders": {
-            "email": {
-
-            }
+            "email": {}
         }
     },
     "timeline_filters_no_match": "Inga resultat hittades för '{searchQuery}'.",
     "@timeline_filters_no_match": {
         "type": "text",
         "placeholders": {
-            "searchQuery": {
-
-            }
+            "searchQuery": {}
         }
     },
     "clear_application_cache_text": "Rensa cacheminnet",
     "@clear_application_cache_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_application_cache_desc": "Rensa cachelagrade inlägg, konton, bilder & mer.",
     "@clear_application_cache_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_application_cache_success": "Cacheminnet har rensats",
     "@clear_application_cache_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_application_cache_failure": "Kunde inte rensa cacheminnet",
     "@clear_application_cache_failure": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_title": "Avvisande av riktlinjer",
     "@confirm_guidelines_reject_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_info": "Du kan inte använda Okuna förrän du har godkänt riktlinjerna.",
     "@confirm_guidelines_reject_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_chat_with_team": "Chatta med teamet.",
     "@confirm_guidelines_reject_chat_with_team": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_chat_immediately": "Starta en chat direkt.",
     "@confirm_guidelines_reject_chat_immediately": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_chat_community": "Chatta med gemenskapen.",
     "@confirm_guidelines_reject_chat_community": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_join_slack": "Gå med i Slack-kanalen.",
     "@confirm_guidelines_reject_join_slack": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_go_back": "Tillbaka",
     "@confirm_guidelines_reject_go_back": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "confirm_guidelines_reject_delete_account": "Ta bort konto",
     "@confirm_guidelines_reject_delete_account": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "guidelines_desc": "Vänligen lägg en stund på att läsa igenom och godkänna våra riktlinjer.",
     "@guidelines_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "guidelines_accept": "Godkänn",
     "@guidelines_accept": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "guidelines_reject": "Avvisa",
     "@guidelines_reject": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_title": "Ändra e-postadress",
     "@change_email_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_email_text": "E-post",
     "@change_email_email_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_hint_text": "Ange din nya e-postadress",
     "@change_email_hint_text": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_error": "E-postadressen är redan registrerad",
     "@change_email_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_save": "Spara",
     "@change_email_save": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "change_email_success_info": "Vi har skickat en bekräftelselänk till din nya e-postadress, klicka på den för att verifiera din nya e-post",
     "@change_email_success_info": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_title": "Rensa inställningar",
     "@clear_app_preferences_title": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_desc": "Rensa applikationsinställningarna. Just nu är detta enbart den föredragna kommentarsordningen.",
     "@clear_app_preferences_desc": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_cleared_successfully": "Inställningarna har rensats",
     "@clear_app_preferences_cleared_successfully": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "email_verification_successful": "Häftigt! Din e-post har verifierats",
     "@email_verification_successful": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "email_verification_error": "Hoppsan! Din kod är ogiltigt eller har gått ut, vänligen försök igen",
     "@email_verification_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "clear_app_preferences_error": "Inställningarna kunde inte rensas",
     "@clear_app_preferences_error": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "disconnect_from_user_success": "Er kontakt har brutits",
     "@disconnect_from_user_success": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "block_user": "Blockera användare",
     "@block_user": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "unblock_user": "Avblockera användare",
     "@unblock_user": {
         "type": "text",
-        "placeholders": {
-
-        }
+        "placeholders": {}
     },
     "disconnect_from_user": "Ta bort {userName} som kontakt",
     "@disconnect_from_user": {
         "type": "text",
         "placeholders": {
-            "userName": {
-
-            }
+            "userName": {}
         }
     },
     "circle_peoples_count": "{prettyUsersCount} personer",
     "@circle_peoples_count": {
         "type": "text",
         "placeholders": {
-            "prettyUsersCount": {
-
-            }
+            "prettyUsersCount": {}
         }
     },
     "follows_list_accounts_count": "{prettyUsersCount} konton",
     "@follows_list_accounts_count": {
         "type": "text",
         "placeholders": {
-            "prettyUsersCount": {
-
-            }
+            "prettyUsersCount": {}
         }
     }
 }

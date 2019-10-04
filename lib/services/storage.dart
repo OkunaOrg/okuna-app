@@ -10,7 +10,8 @@ class StorageService {
   }
 
   OBStorage getSystemPreferencesStorage({String namespace}) {
-    return OBStorage(store: _SystemPreferencesStorage(namespace), namespace: namespace);
+    return OBStorage(
+        store: _SystemPreferencesStorage(namespace), namespace: namespace);
   }
 }
 
@@ -20,8 +21,15 @@ class OBStorage {
 
   OBStorage({this.store, this.namespace});
 
-  Future<String> get(String key) {
-    return this.store.get(_makeKey(key));
+  Future<String> get(String key, {String defaultValue}) async {
+    String finalKey = _makeKey(key);
+    String value = await this.store.get(finalKey);
+    if (value == null && defaultValue != null) {
+      await store.set(finalKey, defaultValue);
+      value = defaultValue;
+    }
+
+    return value;
   }
 
   Future<List<String>> getList(String key) {
@@ -64,7 +72,8 @@ class _SecureStore implements _Store<String> {
     // stored data and send it back, which is unnecessary. On top of that,
     // readAll() doesn't work on iOS (https://github.com/mogol/flutter_secure_storage/issues/70).
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    _storedKeys.addAll(preferences.getStringList('secure_store.keylist'));
+    List<String> storedKeys = preferences.getStringList('secure_store.keylist');
+    if(storedKeys != null && storedKeys.isNotEmpty)  _storedKeys.addAll(storedKeys);
   }
 
   void _saveStoredKeys() async {

@@ -148,7 +148,7 @@ class OBButton extends StatelessWidget {
         Color primaryColor = themeValueParser.parseColor(theme.primaryColor);
         final bool isDarkPrimaryColor = primaryColor.computeLuminance() < 0.179;
         Color gradientColor = isDarkPrimaryColor
-            ? Color.fromARGB(20, 255, 255, 255)
+            ? Color.fromARGB(30, 255, 255, 255)
             : Color.fromARGB(10, 0, 0, 0);
 
         buttonGradient = themeValueParser

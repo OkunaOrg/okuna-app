@@ -1,4 +1,14 @@
 {
+    "tab_general": "Genel",
+    "@tab_general": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tab_requests": "İstekler",
+    "@tab_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
     "settings_title": "Bildirim ayarları",
     "@settings_title": {
         "type": "text",
@@ -44,12 +54,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "comment_reply_title": "Gönderideki cevap bildirildi",
+    "comment_reply_title": "Gönderideki yorum cevabı",
     "@comment_reply_title": {
         "type": "text",
         "placeholders": {}
     },
-    "comment_reply_desc": "Birisi yorumlarınızdan birini veya yanıtladığınız birini yanıtladığında haberdar olun.",
+    "comment_reply_desc": "Birisi yorumlarınızdan birini veya cevapladığınız birini cevapladığında haberdar olun",
     "@comment_reply_desc": {
         "type": "text",
         "placeholders": {}
@@ -74,17 +84,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "comment_reaction_title": "Yorum tepkisi gönderisi",
+    "comment_reaction_title": "Gönderi yorumundaki reaksiyon",
     "@comment_reaction_title": {
         "type": "text",
         "placeholders": {}
     },
-    "comment_reaction_desc": "Birisi yorumlarınızdan birine tepki verdiğinde haberdar olun.",
+    "comment_reaction_desc": "Birisi yorumlarınızdan birine reaksiyon verdiğinde haberdar olun",
     "@comment_reaction_desc": {
         "type": "text",
         "placeholders": {}
     },
-    "post_reaction_title": "Gönderi tepkisi",
+    "post_reaction_title": "Gönderi reaksiyonu",
     "@post_reaction_title": {
         "type": "text",
         "placeholders": {}
@@ -142,7 +152,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "reacted_to_post_comment_tile": "[name] [username] yorumunuza tepki verdi.",
+    "reacted_to_post_comment_tile": "[name] [username] yorumunuza reaksiyon verdi.",
     "@reacted_to_post_comment_tile": {
         "description": "Eg.: James @jamest reacted to your post comment.",
         "type": "text",
@@ -154,9 +164,9 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] [username] sizi \/c\/{communityName} topluluğuna davet etti.",
+    "user_community_invite_tile": "[name] [username] sizi /c/{communityName} topluluğuna davet etti.",
     "@user_community_invite_tile": {
-        "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
+        "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}

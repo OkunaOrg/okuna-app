@@ -1,0 +1,12 @@
+{
+    "from_gallery": "Galeriden",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Kameradan",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

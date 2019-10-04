@@ -5,15 +5,15 @@ class PushNotification {
     if (pushNotificationTypeStr == null) return null;
 
     PushNotificationType pushNotificationType;
-    if (pushNotificationTypeStr == OBNotification.postReaction) {
+    if (pushNotificationTypeStr == NotificationType.postReaction.code) {
       pushNotificationType = PushNotificationType.postReaction;
-    } else if (pushNotificationTypeStr == OBNotification.postComment) {
+    } else if (pushNotificationTypeStr == NotificationType.postComment.code) {
       pushNotificationType = PushNotificationType.postComment;
-    } else if (pushNotificationTypeStr == OBNotification.connectionRequest) {
+    } else if (pushNotificationTypeStr == NotificationType.connectionRequest.code) {
       pushNotificationType = PushNotificationType.connectionRequest;
-    } else if (pushNotificationTypeStr == OBNotification.follow) {
+    } else if (pushNotificationTypeStr == NotificationType.follow.code) {
       pushNotificationType = PushNotificationType.follow;
-    } else if (pushNotificationTypeStr == OBNotification.communityInvite) {
+    } else if (pushNotificationTypeStr == NotificationType.communityInvite.code) {
       pushNotificationType = PushNotificationType.communityInvite;
     } else {
       throw 'Unsupported push notification type';

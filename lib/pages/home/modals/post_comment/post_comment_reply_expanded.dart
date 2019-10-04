@@ -1,10 +1,12 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
@@ -48,8 +50,9 @@ class OBPostCommentReplyExpandedModalState
   ToastService _toastService;
   LocalizationService _localizationService;
   UserService _userService;
+  DraftService _draftService;
 
-  TextEditingController _textController;
+  DraftTextEditingController _textController;
   int _charactersCount;
   bool _isPostCommentTextAllowedLength;
   List<Widget> _postCommentItemsWidgets;
@@ -67,9 +70,7 @@ class OBPostCommentReplyExpandedModalState
   void initState() {
     super.initState();
     _needsBootstrap = true;
-    _textController = TextEditingController();
     _scrollController = ScrollController();
-    _textController.addListener(_onPostCommentTextChanged);
     _charactersCount = 0;
     _isPostCommentTextAllowedLength = false;
     _requestInProgress = false;
@@ -93,6 +94,13 @@ class OBPostCommentReplyExpandedModalState
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
+      _draftService = openbookProvider.draftService;
+
+      _textController = DraftTextEditingController.comment(widget.post.id,
+          commentId: widget.postComment != null ? widget.postComment.id : null,
+          draftService: _draftService);
+      _textController.addListener(_onPostCommentTextChanged);
+
       _textAccountAutocompletionService =
           openbookProvider.textAccountAutocompletionService;
       String hintText =
@@ -100,7 +108,6 @@ class OBPostCommentReplyExpandedModalState
       _postCommentItemsWidgets = [
         OBCreatePostText(controller: _textController, hintText: hintText)
       ];
-
 
       //Scroll to bottom
       Future.delayed(Duration(milliseconds: 0), () {
@@ -120,7 +127,7 @@ class OBPostCommentReplyExpandedModalState
       )
     ];
 
-    if(_isSearchingAccount){
+    if (_isSearchingAccount) {
       bodyItems.add(Expanded(
           flex: _isSearchingAccount ? 7 : null,
           child: _buildAccountSearchBox()
@@ -132,8 +139,8 @@ class OBPostCommentReplyExpandedModalState
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: bodyItems
+                mainAxisSize: MainAxisSize.max,
+                children: bodyItems
             )));
   }
 
@@ -180,6 +187,7 @@ class OBPostCommentReplyExpandedModalState
     } catch (error) {
       _onError(error);
     } finally {
+      _textController.clearDraft();
       _setRequestInProgress(false);
       _postCommentReplyOperation = null;
     }
@@ -304,11 +312,8 @@ class OBPostCommentReplyExpandedModalState
 
     debugLog('Autocompleting with username:$foundAccountUsername');
     setState(() {
-      _textController.text =
-          _textAccountAutocompletionService.autocompleteTextWithUsername(
-              _textController.text, foundAccountUsername);
-      _textController.selection =
-          TextSelection.collapsed(offset: _textController.text.length);
+      _textAccountAutocompletionService.autocompleteTextWithUsername(
+          _textController, foundAccountUsername);
     });
   }
 

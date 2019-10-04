@@ -1,4 +1,14 @@
 {
+  "tab_general": "General",
+  "@tab_general": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tab_requests": "Requests",
+  "@tab_requests": {
+    "type": "text",
+    "placeholders": {}
+  },
   "settings_title": "Notifications settings",
   "@settings_title": {
     "type": "text",

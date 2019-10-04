@@ -1,0 +1,980 @@
+{
+    "thousand_postfix": "k",
+    "@thousand_postfix": {
+        "description": "For eg. communty has 3k members",
+        "type": "text",
+        "placeholders": {}
+    },
+    "million_postfix": "M",
+    "@million_postfix": {
+        "description": "For eg. user has 3m followers",
+        "type": "text",
+        "placeholders": {}
+    },
+    "billion_postfix": "b",
+    "@billion_postfix": {
+        "description": "For eg. World circle has 7.5b people",
+        "type": "text",
+        "placeholders": {}
+    },
+    "translate_see_translation": "Bekijk vertaling",
+    "@translate_see_translation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "translate_show_original": "Toon het origineel",
+    "@translate_show_original": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_lists_account": "1 Account",
+    "@follows_lists_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_lists_accounts": "{prettyUsersCount} Accounts",
+    "@follows_lists_accounts": {
+        "description": "prettyUsersCount will be 3m, 50k etc.. so we endup with final string 3k Accounts",
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    },
+    "edit_profile_user_name_taken": "De gebruikersnaam @{username} is al bezet",
+    "@edit_profile_user_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "profile_action_deny_connection": "Negeer het verzoek tot connectie",
+    "@profile_action_deny_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_blocked": "Gebruiker geblokkeerd",
+    "@profile_action_user_blocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_unblocked": "Gebruiker gedeblokkeerd",
+    "@profile_action_user_unblocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_cancel_connection": "Annuleer verzoek tot connectie",
+    "@profile_action_cancel_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_url_invalid_error": "Geef een geldige URL op.",
+    "@profile_url_invalid_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_location_length_error": "De locatie mag niet langer zijn dan {maxLength} tekens.",
+    "@profile_location_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "profile_bio_length_error": "De biografie kan niet langer zijn dan {maxLength} tekens.",
+    "@profile_bio_length_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "follow_button_follow_text": "Volg",
+    "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_unfollow_text": "Ontvolgen",
+    "@follow_button_unfollow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_username": "Gebruikersnaam",
+    "@edit_profile_username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_update_account_lists": "Accountlijsten bijwerken",
+    "@add_account_update_account_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_to_lists": "Account toevoegen aan lijst",
+    "@add_account_to_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_update_lists": "Lijsten bijwerken",
+    "@add_account_update_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_save": "Opslaan",
+    "@add_account_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_done": "Voltooid",
+    "@add_account_done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "add_account_success": "Geslaagd",
+    "@add_account_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "emoji_field_none_selected": "Geen emoji geselecteerd",
+    "@emoji_field_none_selected": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "emoji_search_none_found": "Geen emoji gevonden die overeenkomen met '{searchQuery}'.",
+    "@emoji_search_none_found": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "follow_lists_title": "Mijn lijsten",
+    "@follow_lists_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_search_for": "Naar een lijst zoeken...",
+    "@follow_lists_search_for": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_no_list_found": "Geen lijst gevonden.",
+    "@follow_lists_no_list_found": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_lists_no_list_found_for": "Geen lijst gevonden voor '{searchQuery}'",
+    "@follow_lists_no_list_found_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "list_name_empty_error": "Het veld met de naam van de lijst mag niet leeg zijn.",
+    "@list_name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_name_range_error": "De naam van de lijst mag niet langer zijn dan {maxLength} tekens.",
+    "@list_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "circle_name_empty_error": "Het veld met de naam van de cirkel mag niet leeg zijn.",
+    "@circle_name_empty_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "circle_name_range_error": "De naam van de cirkel mag niet langer zijn dan {maxLength} tekens.",
+    "@circle_name_range_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "save_follows_list_name": "Naam",
+    "@save_follows_list_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_hint_text": "bijv. Reizen, Fotografie",
+    "@save_follows_list_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_name_taken": "De naam van de lijst ‘{listName}’ is al bezet",
+    "@save_follows_list_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "listName": {}
+        }
+    },
+    "save_follows_list_emoji": "Emoji",
+    "@save_follows_list_emoji": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_users": "Gebruikers",
+    "@save_follows_list_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_edit": "Bewerk lijst",
+    "@save_follows_list_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_create": "Maak een lijst aan",
+    "@save_follows_list_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_save": "Opslaan",
+    "@save_follows_list_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_follows_list_emoji_required_error": "Een emoji is vereist",
+    "@save_follows_list_emoji_required_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_list_edit": "Wijzig",
+    "@follows_list_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follows_list_header_title": "Gebruikers",
+    "@follows_list_header_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_name": "Naam",
+    "@edit_profile_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_url": "URL",
+    "@edit_profile_url": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_location": "Locatie",
+    "@edit_profile_location": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_bio": "Bio",
+    "@edit_profile_bio": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_followers_count": "Aantal volgers",
+    "@edit_profile_followers_count": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_community_posts": "Community berichten",
+    "@edit_profile_community_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_title": "Wijzig profiel",
+    "@edit_profile_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_save_text": "Opslaan",
+    "@edit_profile_save_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_pick_image": "Kies afbeelding",
+    "@edit_profile_pick_image": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_delete": "Verwijderen",
+    "@edit_profile_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_profile_pick_image_error_too_large": "Afbeelding is te groot (limiet: {limit} MB)",
+    "@edit_profile_pick_image_error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    },
+    "tile_following": " · Mijn volgers",
+    "@tile_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "following_text": "Aan het volgen",
+    "@following_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "following_resource_name": "gebruikers die ik volg",
+    "@following_resource_name": {
+        "description": "Eg: Search followed users.., No followed users found. etc ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Verwijderen",
+    "@tile_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite": "Uitnodigen",
+    "@invite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "uninvite": "Uitnodiging annuleren",
+    "@uninvite": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_member": "Lid",
+    "@invite_member": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invite_someone_message": "Hi, ik wil je graag uitnodigen voor Okuna. Download eerst de app in iTunes ({iosLink}) of de Play store ({androidLink}). Plak vervolgens deze gepersonaliseerde link met de uitnodiginging het formulier 'Aanmelden' in de Okuna App: {inviteLink}",
+    "@invite_someone_message": {
+        "type": "text",
+        "placeholders": {
+            "iosLink": {},
+            "androidLink": {},
+            "inviteLink": {}
+        }
+    },
+    "connections_header_circle_desc": "De cirkel waar je all je connecties aan toegevoegd worden.",
+    "@connections_header_circle_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections_header_users": "Gebruikers",
+    "@connections_header_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_pending": "In behandeling",
+    "@connection_pending": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connection_circle_edit": "Wijzig",
+    "@connection_circle_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections_circle_delete": "Verwijderen",
+    "@connections_circle_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_name": "Naam",
+    "@save_connection_circle_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_hint": "bijv. vrienden, familie, werk.",
+    "@save_connection_circle_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_color_name": "Kleur",
+    "@save_connection_circle_color_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_color_hint": "(Klik om te wijzigen)",
+    "@save_connection_circle_color_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_users": "Gebruikers",
+    "@save_connection_circle_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_edit": "Wijzig de cirkel",
+    "@save_connection_circle_edit": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_create": "Maak een cirkel",
+    "@save_connection_circle_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "save_connection_circle_save": "Opslaan",
+    "@save_connection_circle_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circle_save": "Opslaan",
+    "@update_connection_circle_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circle_updated": "Contact bijgewerkt",
+    "@update_connection_circle_updated": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "update_connection_circles_title": "Connectie cirkels bijwerken",
+    "@update_connection_circles_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_with": "Bevestig connectie met {userName}",
+    "@confirm_connection_with": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "confirm_connection_add_connection": "Voeg connectie toe aan de cirkel",
+    "@confirm_connection_add_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_connection_confirmed": "Connectie bevestigd",
+    "@confirm_connection_connection_confirmed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_connection_confirm_text": "Bevestig",
+    "@confirm_connection_confirm_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_connect_with_username": "Verbind met {userName}",
+    "@connect_to_user_connect_with_username": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "connect_to_user_add_connection": "Voeg connectie toe aan de cirkel",
+    "@connect_to_user_add_connection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_done": "Voltooid",
+    "@connect_to_user_done": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connect_to_user_request_sent": "Uitnodiging verzonden",
+    "@connect_to_user_request_sent": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "remove_account_from_list": "Account uit de lijst verwijderen",
+    "@remove_account_from_list": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "remove_account_from_list_success": "Geslaagd",
+    "@remove_account_from_list_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_title": "Bevestiging",
+    "@confirm_block_user_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_info": "Je ziet elkaars posts niet, noch ben je instaat om op welke wijze dan ook interactie met elkaar te hebben.",
+    "@confirm_block_user_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_yes": "Ja",
+    "@confirm_block_user_yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_no": "Nee",
+    "@confirm_block_user_no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_blocked": "Gebruiker geblokkeerd.",
+    "@confirm_block_user_blocked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_block_user_question": "Weet je zeker dat je @{username} wil blokkeren?",
+    "@confirm_block_user_question": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "save_connection_circle_name_taken": "De naam van de cirkel ‘{takenConnectionsCircleName}’ is al bezet",
+    "@save_connection_circle_name_taken": {
+        "type": "text",
+        "placeholders": {
+            "takenConnectionsCircleName": {}
+        }
+    },
+    "timeline_filters_title": "Tijdlijn filters",
+    "@timeline_filters_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_search_desc": "Zoek naar cirkels en lijsten...",
+    "@timeline_filters_search_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_clear_all": "Wis alles",
+    "@timeline_filters_clear_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_apply_all": "Filters toepassen",
+    "@timeline_filters_apply_all": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_circles": "Kringen",
+    "@timeline_filters_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_filters_lists": "Lijsten",
+    "@timeline_filters_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "followers_title": "Volgers",
+    "@followers_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follower_singular": "volger",
+    "@follower_singular": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follower_plural": "volgers",
+    "@follower_plural": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_title": "Verwijder account",
+    "@delete_account_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_current_pwd": "Huidige wachtwoord",
+    "@delete_account_current_pwd": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_current_pwd_hint": "Voer je huidige wachtwoord in",
+    "@delete_account_current_pwd_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_next": "Volgende",
+    "@delete_account_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_title": "Bevestiging",
+    "@delete_account_confirmation_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_desc": "Weet je zeker dat je je account wilt verwijderen?",
+    "@delete_account_confirmation_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_desc_info": "Dit is een permanente actie en kan niet ongedaan worden gemaakt.",
+    "@delete_account_confirmation_desc_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_no": "Nee",
+    "@delete_account_confirmation_no": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_yes": "Ja",
+    "@delete_account_confirmation_yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "delete_account_confirmation_goodbye": "Tot ziens 😢",
+    "@delete_account_confirmation_goodbye": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_create_title": "Een uitnodiging aanmaken",
+    "@invites_create_create_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_edit_title": "Wijzig een uitnodiging",
+    "@invites_create_edit_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_save": "Opslaan",
+    "@invites_create_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_create": "Aanmaken",
+    "@invites_create_create": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_name_title": "Bijnaam",
+    "@invites_create_name_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_create_name_hint": "bijv. Pietje Puk",
+    "@invites_create_name_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending": "In behandeling",
+    "@invites_pending": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_delete": "Verwijderen",
+    "@invites_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_invite_text": "Uitnodigen",
+    "@invites_invite_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_yourself": "Deel zelf je uitnodiging",
+    "@invites_share_yourself": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_yourself_desc": "Kies uit berichten apps, etc.",
+    "@invites_share_yourself_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_email": "Deel je uitnodiging via email",
+    "@invites_share_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_text": "E-mail",
+    "@invites_email_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_hint": "bijvoorbeeld v.vangogh@kwasten.nl",
+    "@invites_email_hint": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_invite_text": "E-Mail uitnodiging",
+    "@invites_email_invite_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_send_text": "Verzenden",
+    "@invites_email_send_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_email_sent_text": "Uitnodigings-mail verzonden",
+    "@invites_email_sent_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_share_email_desc": "Uit jouw naam sturen we een uitnodigings-mail met instructies",
+    "@invites_share_email_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_edit_text": "Bewerken",
+    "@invites_edit_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_title": "Mijn uitnodigingen",
+    "@invites_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_title": "Geaccepteerd",
+    "@invites_accepted_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_group_name": "geaccepteerde uitnodigingen",
+    "@invites_accepted_group_name": {
+        "description": "Egs where this will end up: Accepted invites (capitalised title), Search accepted invites, See all accepted invites ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_accepted_group_item_name": "geaccepteerde uitnodiging",
+    "@invites_accepted_group_item_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending_group_name": "openstaande uitnodigingen",
+    "@invites_pending_group_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_pending_group_item_name": "openstaande uitnodiging",
+    "@invites_pending_group_item_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_none_used": "Het lijkt erop dat je geen uitnodiging hebt gebruikt.",
+    "@invites_none_used": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_none_left": "Je hebt geen uitnodigingen meer.",
+    "@invites_none_left": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_invite_a_friend": "Nodig een vriend uit",
+    "@invites_invite_a_friend": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "invites_refresh": "Verversen",
+    "@invites_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_title": "Taalinstellingen",
+    "@language_settings_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_save": "Opslaan",
+    "@language_settings_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "language_settings_saved_success": "Taal is succesvol gewijzigd",
+    "@language_settings_saved_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "groups_see_all": "Zie alle {groupName}",
+    "@groups_see_all": {
+        "description": "Can be, See all joined communities, See all pending invites, See all moderated communities etc. ",
+        "type": "text",
+        "placeholders": {
+            "groupName": {}
+        }
+    },
+    "invites_joined_with": "Doet mee met gebruikersnaam @{username}",
+    "@invites_joined_with": {
+        "type": "text",
+        "placeholders": {
+            "username": {}
+        }
+    },
+    "invites_pending_email": "In afwachting, uitnodigings-mail verzonden naar {email}",
+    "@invites_pending_email": {
+        "type": "text",
+        "placeholders": {
+            "email": {}
+        }
+    },
+    "timeline_filters_no_match": "Geen resultaat voor '{searchQuery}'.",
+    "@timeline_filters_no_match": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "clear_application_cache_text": "Cache wissen",
+    "@clear_application_cache_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_desc": "Verwijder ge-cache-te berichten, accounts, afbeeldingen en meer.",
+    "@clear_application_cache_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_success": "Cache succesvol gewist",
+    "@clear_application_cache_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_application_cache_failure": "Kon cache niet wissen",
+    "@clear_application_cache_failure": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_title": "Afwijzing van richtlijnen",
+    "@confirm_guidelines_reject_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_info": "Je kunt Okuna niet gebruiken totdat je de richtlijnen accepteert.",
+    "@confirm_guidelines_reject_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_with_team": "Met het team chatten.",
+    "@confirm_guidelines_reject_chat_with_team": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_immediately": "Start nu een chat.",
+    "@confirm_guidelines_reject_chat_immediately": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_chat_community": "Chat met de community.",
+    "@confirm_guidelines_reject_chat_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_join_slack": "Neem deel aan het Slack-kanaal.",
+    "@confirm_guidelines_reject_join_slack": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_go_back": "Terug",
+    "@confirm_guidelines_reject_go_back": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_guidelines_reject_delete_account": "Verwijder account",
+    "@confirm_guidelines_reject_delete_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_desc": "Neem alstublieft een moment om onze richtlijnen te lezen en te aanvaarden.",
+    "@guidelines_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_accept": "Accepteren",
+    "@guidelines_accept": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "guidelines_reject": "Afwijzen",
+    "@guidelines_reject": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_title": "Verander e-mail",
+    "@change_email_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_email_text": "E-mail",
+    "@change_email_email_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_hint_text": "Voer je nieuwe e-mail in",
+    "@change_email_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_error": "E-mail is al geregistreerd",
+    "@change_email_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_save": "Bewaren",
+    "@change_email_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "change_email_success_info": "We hebben een bevestigingslink naar je nieuwe e-mailadres gestuurd, klik erop om je nieuwe e-mailadres te verifiëren",
+    "@change_email_success_info": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_title": "Verwijder voorkeuren",
+    "@clear_app_preferences_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_desc": "Verwijder de applicatie voorkeuren. Momenteel is dit alleen de voorkeursvolgorde van commentaren.",
+    "@clear_app_preferences_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_cleared_successfully": "Voorkeuren succesvol gewist",
+    "@clear_app_preferences_cleared_successfully": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_verification_successful": "Hoera! Je e-mailadres is nu geverifieerd",
+    "@email_verification_successful": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "email_verification_error": "Oeps! Je token was niet geldig of verlopen, probeer het opnieuw",
+    "@email_verification_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "clear_app_preferences_error": "Kan voorkeuren niet wissen",
+    "@clear_app_preferences_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disconnect_from_user_success": "Verbinding met succes verbroken",
+    "@disconnect_from_user_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "block_user": "Blokkeer Gebruiker",
+    "@block_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "unblock_user": "Gebruiker deblokkeren",
+    "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disconnect_from_user": "Verbinding verbreken met {userName}",
+    "@disconnect_from_user": {
+        "type": "text",
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "circle_peoples_count": "{prettyUsersCount} mensen",
+    "@circle_peoples_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    },
+    "follows_list_accounts_count": "{prettyUsersCount} accounts",
+    "@follows_list_accounts_count": {
+        "type": "text",
+        "placeholders": {
+            "prettyUsersCount": {}
+        }
+    }
+}

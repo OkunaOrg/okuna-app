@@ -1,0 +1,76 @@
+{
+    "search_text": "Søg...",
+    "@search_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "communities": "Fælleskaber",
+    "@communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "users": "Brugere",
+    "@users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_search_text": "Søg {resourcePluralName} ...",
+    "@list_search_text": {
+        "description": "resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.",
+        "type": "text",
+        "placeholders": {
+            "resourcePluralName": {}
+        }
+    },
+    "list_no_results_found": "Ingen {resourcePluralName} fundet.",
+    "@list_no_results_found": {
+        "description": "Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ",
+        "type": "text",
+        "placeholders": {
+            "resourcePluralName": {}
+        }
+    },
+    "list_refresh_text": "Opdater",
+    "@list_refresh_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "list_retry": "Tryk for at prøve igen.",
+    "@list_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "cancel": "Annuller",
+    "@cancel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "searching_for": "Søger efter '{searchQuery}'",
+    "@searching_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_results_for": "Ingen resultater for '{searchQuery}'.",
+    "@no_results_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_communities_for": "Ingen fællesskaber fundet for '{searchQuery}'.",
+    "@no_communities_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_users_for": "Ingen brugere fundet for '{searchQuery}'.",
+    "@no_users_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    }
+}

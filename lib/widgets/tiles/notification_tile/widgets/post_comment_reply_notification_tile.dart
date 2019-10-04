@@ -7,9 +7,8 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/notification_tile_post_media_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
-
 import 'notification_tile_skeleton.dart';
 import 'notification_tile_title.dart';
 
@@ -41,15 +40,9 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
         openbookProvider.userService.getLoggedInUser().id == postCreatorId;
 
     Widget postImagePreview;
-    if (post.hasImage()) {
-      postImagePreview = ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Image(
-          image: AdvancedNetworkImage(post.getImage(), useDiskCache: true),
-          height: postImagePreviewSize,
-          width: postImagePreviewSize,
-          fit: BoxFit.cover,
-        ),
+    if (post.hasMediaThumbnail()) {
+      postImagePreview = OBNotificationTilePostMediaPreview(
+        post: post,
       );
     }
 

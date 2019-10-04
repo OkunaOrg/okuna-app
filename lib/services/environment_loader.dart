@@ -25,6 +25,7 @@ class Environment {
   final String intercomAppId;
   final String sentryDsn;
   final String openbookSocialApiUrl;
+  final String linkPreviewsTrustedProxyUrl;
 
   const Environment(
       {this.sentryDsn = '',
@@ -34,6 +35,7 @@ class Environment {
       this.magicHeaderValue = '',
       this.intercomAndroidKey = '',
       this.intercomAppId = '',
+      this.linkPreviewsTrustedProxyUrl = '',
       this.intercomIosKey = ''});
 
   factory Environment.fromJson(Map<String, dynamic> jsonMap) {
@@ -45,7 +47,8 @@ class Environment {
       intercomIosKey: jsonMap["INTERCOM_IOS_KEY"],
       intercomAndroidKey: jsonMap["INTERCOM_ANDROID_KEY"],
       sentryDsn: jsonMap["SENTRY_DSN"],
-      openbookSocialApiUrl: jsonMap["OPENBOOK_SOCIAL_API_URL"]
+      openbookSocialApiUrl: jsonMap["OPENBOOK_SOCIAL_API_URL"],
+      linkPreviewsTrustedProxyUrl: jsonMap["LINK_PREVIEWS_TRUSTED_PROXY_URL"],
     );
   }
 }

@@ -1,4 +1,14 @@
 {
+    "tab_general": "Général",
+    "@tab_general": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tab_requests": "Requêtes",
+    "@tab_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
     "settings_title": "Paramètres de notifications",
     "@settings_title": {
         "type": "text",
@@ -44,7 +54,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "comment_reply_title": "Réponse à l'un de vos commentaires sur une publication",
+    "comment_reply_title": "Réponse à l'un de vos commentaires",
     "@comment_reply_title": {
         "type": "text",
         "placeholders": {}
@@ -54,12 +64,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "comment_user_mention_title": "Mention sur un commentaire d'une publication",
+    "comment_user_mention_title": "Mention dans un commentaire",
     "@comment_user_mention_title": {
         "type": "text",
         "placeholders": {}
     },
-    "comment_user_mention_desc": "Soyez averti.e lorsque quelqu'un vous mentionne sur l'un de leurs commentaires",
+    "comment_user_mention_desc": "Soyez averti.e lorsque quelqu'un vous mentionne dans l'un de leurs commentaires",
     "@comment_user_mention_desc": {
         "type": "text",
         "placeholders": {}
@@ -69,17 +79,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "post_user_mention_desc": "Soyez averti.e lorsque quelqu'un vous mentionne sur l'une de leurs publications",
+    "post_user_mention_desc": "Soyez averti.e lorsque quelqu'un vous mentionne dans l'une de leurs publications",
     "@post_user_mention_desc": {
         "type": "text",
         "placeholders": {}
     },
-    "comment_reaction_title": "Réaction à l'un de vos commentaires sur une publication",
+    "comment_reaction_title": "Réaction à l'un de vos commentaires",
     "@comment_reaction_title": {
         "type": "text",
         "placeholders": {}
     },
-    "comment_reaction_desc": "Soyez averti.e lorsque quelqu'un réagit à l'un de vos commentaires sur une publication",
+    "comment_reaction_desc": "Soyez averti.e lorsque quelqu'un réagit à l'un de vos commentaires",
     "@comment_reaction_desc": {
         "type": "text",
         "placeholders": {}
@@ -142,7 +152,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "reacted_to_post_comment_tile": "[name] · [username] a réagi à votre commentaire sur une publication.",
+    "reacted_to_post_comment_tile": "[name] · [username] a réagi à votre commentaire.",
     "@reacted_to_post_comment_tile": {
         "description": "Eg.: James @jamest reacted to your post comment.",
         "type": "text",
@@ -154,9 +164,9 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] · [username] vous a invité.e à rejoindre la communauté \/c\/{communityName}.",
+    "user_community_invite_tile": "[name] · [username] vous a invité.e à rejoindre la communauté /c/{communityName}.",
     "@user_community_invite_tile": {
-        "description": "Eg.: James @jamest has invited you to join community \/c\/okuna.",
+        "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}
@@ -191,7 +201,7 @@
             "postCommentText": {}
         }
     },
-    "mentioned_in_post_comment_tile": "[name] [username] vous a mentionné.e sur un commentaire: {postCommentText}",
+    "mentioned_in_post_comment_tile": "[name] [username] vous a mentionné.e sur un commentaire : {postCommentText}",
     "@mentioned_in_post_comment_tile": {
         "description": "Eg.: James @jamest mentioned you on a comment: hello @jamest",
         "type": "text",

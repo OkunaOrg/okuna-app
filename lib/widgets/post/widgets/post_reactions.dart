@@ -59,9 +59,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
               post.reactionsEmojiCounts?.counts;
 
           if (emojiCounts == null || emojiCounts.length == 0)
-            return const SizedBox(
-              height: 35,
-            );
+            return const SizedBox();
 
           return Opacity(
             opacity: _requestInProgress ? 0.6 : 1,
@@ -69,7 +67,9 @@ class OBPostReactionsState extends State<OBPostReactions> {
               height: 35,
               child: ListView.separated(
                 separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(width: 10,);
+                  return const SizedBox(
+                    width: 10,
+                  );
                 },
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 physics: const ClampingScrollPhysics(),
@@ -107,7 +107,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
     } else {
       // React
       PostReaction newPostReaction =
-      await _reactToPost(pressedEmojiCount.emoji);
+          await _reactToPost(pressedEmojiCount.emoji);
       widget.post.setReaction(newPostReaction);
     }
   }

@@ -89,6 +89,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "developer_settings": "Developer Settings",
+  "@developer_settings": {
+    "type": "text",
+    "placeholders": {}
+  },
   "account_settings_change_email": "Change Email",
   "@account_settings_change_email": {
     "type": "text",

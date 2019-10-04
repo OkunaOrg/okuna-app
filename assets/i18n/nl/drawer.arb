@@ -1,0 +1,224 @@
+{
+    "menu_title": "Menu",
+    "@menu_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "main_title": "Mijn Okuna",
+    "@main_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_circles": "Mijn cirkels",
+    "@my_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_lists": "Mijn lijsten",
+    "@my_lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_followers": "Mijn volgers",
+    "@my_followers": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_following": "Mijn volgers",
+    "@my_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_invites": "Mijn uitnodigingen",
+    "@my_invites": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_pending_mod_tasks": "Mijn wachtende moderatie taken",
+    "@my_pending_mod_tasks": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_mod_penalties": "Mijn strafpunten",
+    "@my_mod_penalties": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "app_account_text": "App & Account",
+    "@app_account_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "themes": "Thema’s",
+    "@themes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "global_moderation": "Algemene moderatie",
+    "@global_moderation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile": "Profiel",
+    "@profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "connections": "Mijn connecties",
+    "@connections": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "lists": "Mijn lijsten",
+    "@lists": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "settings": "Instellingen",
+    "@settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "application_settings": "Applicatie instellingen",
+    "@application_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings": "Account instellingen",
+    "@account_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "developer_settings": "Ontwikkelaarinstellingen",
+    "@developer_settings": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_change_email": "E-mailadres wijzigen",
+    "@account_settings_change_email": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_change_password": "Wachtwoord wijzigen",
+    "@account_settings_change_password": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_notifications": "Notificaties",
+    "@account_settings_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_language_text": "Taal",
+    "@account_settings_language_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_language": "Taal ({currentUserLanguage})",
+    "@account_settings_language": {
+        "type": "text",
+        "placeholders": {
+            "currentUserLanguage": {}
+        }
+    },
+    "account_settings_blocked_users": "Geblokkeerde gebruikers",
+    "@account_settings_blocked_users": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "account_settings_delete_account": "Verwijder account",
+    "@account_settings_delete_account": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "help": "Ondersteuning & Feedback",
+    "@help": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "customize": "Personaliseren",
+    "@customize": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "logout": "Afmelden",
+    "@logout": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_title": "Handige links",
+    "@useful_links_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines": "Okuna richtlijnen",
+    "@useful_links_guidelines": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_desc": "De richtlijnen die we allemaal horen te volgen voor een gezond en gezellig samenzijn.",
+    "@useful_links_guidelines_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_github": "Github projectbord",
+    "@useful_links_guidelines_github": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_github_desc": "Kijk eens naar waar we nu aan werken",
+    "@useful_links_guidelines_github_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_feature_requests": "Feature-aanvragen",
+    "@useful_links_guidelines_feature_requests": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_feature_requests_desc": "Vraag een feature aan of stem op een bestaande",
+    "@useful_links_guidelines_feature_requests_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_bug_tracker": "Bug Tracker",
+    "@useful_links_guidelines_bug_tracker": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_bug_tracker_desc": "Meld een bug of stem op een bestaande",
+    "@useful_links_guidelines_bug_tracker_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_handbook": "Okuna gebruikershandleiding",
+    "@useful_links_guidelines_handbook": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_guidelines_handbook_desc": "Een website met alles wat er te weten is over het gebruik van het platform",
+    "@useful_links_guidelines_handbook_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_support": "Okuna ondersteunen",
+    "@useful_links_support": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_support_desc": "Vind een manier om ons te steunen op onze reis!",
+    "@useful_links_support_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_slack_channel": "Slack kanaal voor de community",
+    "@useful_links_slack_channel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "useful_links_slack_channel_desc": "Een plek om alles te bespreken over Okuna",
+    "@useful_links_slack_channel_desc": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

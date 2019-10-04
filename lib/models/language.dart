@@ -10,11 +10,20 @@ class Language {
        });
 
   factory Language.fromJson(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
 
     return Language(
         id: parsedJson['id'],
         code: parsedJson['code'],
         name: parsedJson['name'],
        );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'code': code,
+      'name': name
+    };
   }
 }

@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:Okuna/models/theme.dart';
+import 'package:Okuna/pages/home/dialogs/video_dialog.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/pages/home/modals/zoomable_photo.dart';
+import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:video_player/video_player.dart';
 
 class DialogService {
   ThemeService _themeService;
@@ -46,26 +52,62 @@ class DialogService {
           Animation<double> secondaryAnimation) {
         final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
         final Widget pageChild = OBZoomablePhotoModal(imageUrl);
-        return Builder(
-            builder: (BuildContext context) {
-              return theme != null
-                  ? Theme(data: theme, child: pageChild)
-                  : pageChild;
-            }
-        );
+        return Builder(builder: (BuildContext context) {
+          return theme != null
+              ? Theme(data: theme, child: pageChild)
+              : pageChild;
+        });
       },
       barrierDismissible: true,
-      barrierLabel: MaterialLocalizations
-          .of(context)
-          .modalBarrierDismissLabel,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black87,
       transitionDuration: const Duration(milliseconds: 100),
       transitionBuilder: _buildMaterialDialogTransitions,
     );
   }
 
-  Widget _buildMaterialDialogTransitions(BuildContext context,
-      Animation<double> animation, Animation<double> secondaryAnimation,
+  Future<void> showVideo(
+      {String videoUrl,
+      File video,
+      VideoPlayerController videoPlayerController,
+      ChewieController chewieController,
+      bool autoPlay: true,
+      @required BuildContext context}) async {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    await showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext buildContext, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+        final Widget pageChild = Material(
+          child: OBVideoDialog(
+            autoPlay: autoPlay,
+            video: video,
+            videoUrl: videoUrl,
+            videoPlayerController: videoPlayerController,
+            chewieController: chewieController,
+          ),
+        );
+        return Builder(builder: (BuildContext context) {
+          return theme != null
+              ? Theme(data: theme, child: pageChild)
+              : pageChild;
+        });
+      },
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black,
+      transitionDuration: const Duration(milliseconds: 100),
+      transitionBuilder: _buildMaterialDialogTransitions,
+    );
+    SystemChrome.setEnabledSystemUIOverlays(
+        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  }
+
+  Widget _buildMaterialDialogTransitions(
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
       Widget child) {
     return FadeTransition(
       opacity: CurvedAnimation(

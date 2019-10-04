@@ -36,6 +36,8 @@ import 'delegates/es_es_localizations_delegate.dart';
 import 'delegates/pt_br_localizations_delegate.dart';
 import 'delegates/sv_se_localizations_delegate.dart';
 
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
 class MyApp extends StatefulWidget {
   final openbookProviderKey = new GlobalKey<OpenbookProviderState>();
 
@@ -66,6 +68,7 @@ class _MyAppState extends State<MyApp> {
       key: widget.openbookProviderKey,
       child: OBToast(
         child: MaterialApp(
+            navigatorObservers: [routeObserver],
             locale: this.locale,
             debugShowCheckedModeBanner: false,
             localeResolutionCallback: (deviceLocale, supportedLocales) {
@@ -218,6 +221,7 @@ class _MyAppState extends State<MyApp> {
     universalLinksService.digestLinksWithContext(context);
     openbookProvider.validationService
         .setLocalizationService(localizationService);
+    openbookProvider.shareService.setContext(context);
   }
 }
 

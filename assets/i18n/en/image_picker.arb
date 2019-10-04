@@ -1,0 +1,19 @@
+{
+  "from_gallery": "From gallery",
+  "@from_gallery": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "from_camera": "From camera",
+  "@from_camera": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "error_too_large": "File too large (limit: {limit} MB)",
+  "@error_too_large": {
+    "type": "text",
+    "placeholders": {
+      "limit": {}
+    }
+  }
+}

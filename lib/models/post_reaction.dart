@@ -13,6 +13,7 @@ class PostReaction {
   PostReaction({this.id, this.created, this.emoji, this.reactor, this.post});
 
   factory PostReaction.fromJson(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
     DateTime created;
     var createdData = parsedJson['created'];
     if (createdData != null) created = DateTime.parse(createdData).toLocal();
@@ -34,6 +35,16 @@ class PostReaction {
         reactor: reactor,
         emoji: emoji,
         post: post);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created': created?.toString(),
+      'emoji': emoji?.toJson(),
+      'reactor': reactor?.toJson(),
+      'post': post?.toJson()
+    };
   }
 
   String getRelativeCreated() {

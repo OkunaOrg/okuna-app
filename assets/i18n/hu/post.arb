@@ -1,0 +1,601 @@
+{
+    "open_post": "Bejegyzés megnyitása",
+    "@open_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_post": "Bejegyzés bezárása",
+    "@close_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_opened": "Nyitott bejegyzés",
+    "@post_opened": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_closed": "Zárt bejegyzés ",
+    "@post_closed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_required_error": "A hozzászólás nem lehet üres.",
+    "@comment_required_error": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_maxlength_error": "A hozzászólás nem lehet {maxLength} karakternél hosszabb.",
+    "@comment_maxlength_error": {
+        "type": "text",
+        "placeholders": {
+            "maxLength": {}
+        }
+    },
+    "timeline_posts_all_loaded": "🎉  Összes bejegyzés betöltve",
+    "@timeline_posts_all_loaded": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_refreshing_drhoo_title": "Csak egy pillanat!",
+    "@timeline_posts_refreshing_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_no_more_drhoo_subtitle": "A kezdéshez kövess pár felhasználót vagy csatlakozz egy közösséghez!",
+    "@timeline_posts_no_more_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_failed_drhoo_title": "Nem sikerült betölteni a hírfolyamodat.",
+    "@timeline_posts_failed_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_failed_drhoo_subtitle": "Próbáld újra pár másodperc múlva",
+    "@timeline_posts_failed_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_default_drhoo_title": "Valami nincs rendben.",
+    "@timeline_posts_default_drhoo_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_default_drhoo_subtitle": "Próbáld meg frissíteni a hírfolyamot.",
+    "@timeline_posts_default_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "timeline_posts_refresh_posts": "Bejegyzések frissítése",
+    "@timeline_posts_refresh_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_circles_for": "Nem találhatóak körök a(z) \"{circlesSearchQuery}\" keresésre.",
+    "@no_circles_for": {
+        "type": "text",
+        "placeholders": {
+            "circlesSearchQuery": {}
+        }
+    },
+    "share_to_circles": "Megosztás körökben",
+    "@share_to_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_post": " bejegyzés",
+    "@profile_counts_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_posts": " bejegyzés",
+    "@profile_counts_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_followers": " követő",
+    "@profile_counts_followers": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_following": " követés",
+    "@profile_counts_following": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_counts_follower": " követő",
+    "@profile_counts_follower": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_retry_loading_posts": "Koppints az újrapróbálkozáshoz",
+    "@profile_retry_loading_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "action_comment": "Hozzászólás",
+    "@action_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "action_react": "Reagálás",
+    "@action_react": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "action_reply": "Válasz",
+    "@action_reply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share": "Megosztás",
+    "@share": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_to": "Megosztás itt...",
+    "@share_to": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "sharing_post_to": "Bejegyzés megosztása itt:",
+    "@sharing_post_to": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_shared_with": "Itt megosztva:",
+    "@you_shared_with": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "shared_privately_on": "Bizalmasan megosztva",
+    "@shared_privately_on": {
+        "description": "Eg. Shared privately on @shantanu's circles. See following string, usernames_circles . Will combine this in future, needs refactoring.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "usernames_circles": "@{postCreatorUsername} köreiben",
+    "@usernames_circles": {
+        "type": "text",
+        "placeholders": {
+            "postCreatorUsername": {}
+        }
+    },
+    "share_community": "Megosztás",
+    "@share_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_to_community": "Megosztás közösségben...",
+    "@share_to_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_community_title": "Egy közösség",
+    "@share_community_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "share_community_desc": "Bejegyzés megosztása egy közösségben, amelynek tagja vagy.",
+    "@share_community_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_circles": "Köreim",
+    "@my_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "my_circles_desc": "Bejegyzés megosztása egy vagy több körödben.",
+    "@my_circles_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "world_circle_name": "Világ",
+    "@world_circle_name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "search_circles": "Körök keresése...",
+    "@search_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "reaction_list_tap_retry": "Koppints a reakciók betöltésének újrapróbálásához.",
+    "@reaction_list_tap_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new": "Új bejegyzés",
+    "@create_new": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_post_label": "Create new post",
+    "@create_new_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_community_post_label": "Create new communtiy post",
+    "@create_new_community_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_create_post_label": "Close create new post",
+    "@close_create_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_next": "Tovább",
+    "@create_next": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_photo": "Fotó",
+    "@create_photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_video": "Videó",
+    "@create_video": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_post_text": "Bejegyzés",
+    "@commenter_post_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_write_something": "Írj valamit...",
+    "@commenter_write_something": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_title": "Bejegyzés szerkesztése",
+    "@edit_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "edit_save": "Mentés",
+    "@edit_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_save": "Mentés",
+    "@commenter_expanded_save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_join_conversation": "Csatlakozz a beszélgetéshez...",
+    "@commenter_expanded_join_conversation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_start_conversation": "Új beszélgetés indítása...",
+    "@commenter_expanded_start_conversation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "commenter_expanded_edit_comment": "Hozzászólás szerkesztése",
+    "@commenter_expanded_edit_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "is_closed": "Zárt bejegyzés",
+    "@is_closed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_expanded_reply_comment": "Válasz a hozzászólásra",
+    "@comment_reply_expanded_reply_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_expanded_post": "Bejegyzés",
+    "@comment_reply_expanded_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_reply_expanded_reply_hint_text": "A válaszod...",
+    "@comment_reply_expanded_reply_hint_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_title": "Felkapott bejegyzések",
+    "@trending_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_no_trending_posts": "Nincsenek felkapott bejegyzések. Próbáld újra pár másodperc múlva.",
+    "@trending_posts_no_trending_posts": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_refresh": "Frissítés",
+    "@trending_posts_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_view_all_comments": "Mind a(z) {commentsCount} hozzászólás betöltése",
+    "@comments_view_all_comments": {
+        "type": "text",
+        "placeholders": {
+            "commentsCount": {}
+        }
+    },
+    "comments_closed_post": "Zárt bejegyzés",
+    "@comments_closed_post": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_disabled": "A hozzászólások le vannak tiltva",
+    "@comments_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "text_copied": "Szöveg kimásolva!",
+    "@text_copied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "post_reactions_title": "Bejegyzés reakciói",
+    "@post_reactions_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "have_not_shared_anything": "Még nem osztottál meg semmit sem.",
+    "@have_not_shared_anything": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_has_not_shared_anything": "{name} még nem osztott meg semmit.",
+    "@user_has_not_shared_anything": {
+        "type": "text",
+        "placeholders": {
+            "name": {}
+        }
+    },
+    "comments_header_newest_replies": "Legutóbbiak",
+    "@comments_header_newest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_newer": "Újabb",
+    "@comments_header_newer": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_newest_replies": "Újabb válaszok megtekintése",
+    "@comments_header_view_newest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_newest_replies": "Újabb válaszok megtekintése",
+    "@comments_header_see_newest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_oldest_replies": "Legkorábbiak",
+    "@comments_header_oldest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_older": "Korábbi",
+    "@comments_header_older": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_oldest_replies": "Legkorábbi válaszok megtekintése",
+    "@comments_header_view_oldest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_oldest_replies": "Legkorábbi válaszok megtekintése",
+    "@comments_header_see_oldest_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_be_the_first_replies": "Legyél az első hozzászóló",
+    "@comments_header_be_the_first_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_newest_comments": "Legutóbbiak",
+    "@comments_header_newest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_newest_comments": "Legutóbbi hozzászólások megtekintése",
+    "@comments_header_view_newest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_newest_comments": "Legutóbbi hozzászólások megtekintése",
+    "@comments_header_see_newest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_oldest_comments": "Legkorábbiak",
+    "@comments_header_oldest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_view_oldest_comments": "Legkorábbi hozzászólások megtekintése",
+    "@comments_header_view_oldest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_see_oldest_comments": "Legkorábbi hozzászólások megtekintése",
+    "@comments_header_see_oldest_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_header_be_the_first_comments": "Legyél az első hozzászóló",
+    "@comments_header_be_the_first_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_title": "Bejegyzés hozzászólásai",
+    "@comments_page_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_no_more_to_load": "Nincs több betölthető hozzászólás",
+    "@comments_page_no_more_to_load": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_tap_to_retry": "Koppints a hozzászólások betöltésének újrapróbálásához.",
+    "@comments_page_tap_to_retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_tap_to_retry_replies": "Koppints a válaszok betöltésének újrapróbálásához.",
+    "@comments_page_tap_to_retry_replies": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_no_more_replies_to_load": "Nincs több betölthető válasz",
+    "@comments_page_no_more_replies_to_load": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_page_replies_title": "Hozzászólás válaszai",
+    "@comments_page_replies_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disable_post_comments": "Hozzászólások letiltása",
+    "@disable_post_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "enable_post_comments": "Hozzászólások engedélyezése",
+    "@enable_post_comments": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_enabled_message": "A hozzászólások engedélyezve",
+    "@comments_enabled_message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comments_disabled_message": "A hozzászólások letiltva",
+    "@comments_disabled_message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete": "Bejegyzés törlése",
+    "@actions_delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_deleted": "Bejegyzés törölve",
+    "@actions_deleted": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete_comment": "Hozzászólás törlése",
+    "@actions_delete_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_edit_comment": "Hozzászólás szerkesztése",
+    "@actions_edit_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_comment_deleted": "Hozzászólás törölve",
+    "@actions_comment_deleted": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_report_text": "Jelentés",
+    "@actions_report_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_reported_text": "Jelentve",
+    "@actions_reported_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_show_more_text": "Bővebben",
+    "@actions_show_more_text": {
+        "description": "Shown for posts with long text to expand the entire text.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_years": "év",
+    "@time_short_years": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3y. Keep it as short as possible",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_year": "1év",
+    "@time_short_one_year": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_weeks": "h",
+    "@time_short_weeks": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 5w.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_week": "1h",
+    "@time_short_one_week": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_days": "n",
+    "@time_short_days": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3d. Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_day": "1n",
+    "@time_short_one_day": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_hours": "ó",
+    "@time_short_hours": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 3h.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_hour": "1ó",
+    "@time_short_one_hour": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_minutes": "p",
+    "@time_short_minutes": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13m.Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_seconds": "mp",
+    "@time_short_seconds": {
+        "description": "Shown in timestamps next to post to indicate how long ago the post/notification was created for.eg 13s Keep it as short as possible ",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_one_minute": "1p",
+    "@time_short_one_minute": {
+        "description": "No space is intentional, should be as few characters as possible. Since there is not much space where we show this",
+        "type": "text",
+        "placeholders": {}
+    },
+    "time_short_now_text": "most",
+    "@time_short_now_text": {
+        "description": "Shown when a post was immediately posted, as in time posted is 'now'.Should be as few characters as possible.",
+        "type": "text",
+        "placeholders": {}
+    }
+}

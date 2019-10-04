@@ -1,15 +1,12 @@
-import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/create_post_text.dart';
-import 'package:Okuna/pages/home/modals/create_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
@@ -20,7 +17,6 @@ import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
-import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -232,11 +228,8 @@ class OBPostCommenterExpandedModalState
 
     debugLog('Autocompleting with username:$foundAccountUsername');
     setState(() {
-      _textController.text =
-          _textAccountAutocompletionService.autocompleteTextWithUsername(
-              _textController.text, foundAccountUsername);
-      _textController.selection =
-          TextSelection.collapsed(offset: _textController.text.length);
+      _textAccountAutocompletionService.autocompleteTextWithUsername(
+          _textController, foundAccountUsername);
     });
   }
 

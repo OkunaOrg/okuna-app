@@ -59,6 +59,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "retry_loading_posts": "Tap to retry",
+  "@retry_loading_posts": {
+    "type": "text",
+    "placeholders": {}
+  },
   "admin_add_confirmation": "Are you sure you want to add @{username} as a community administrator?",
   "@admin_add_confirmation": {
     "type": "text",
@@ -743,5 +748,10 @@
     "placeholders": {
       "maxLength": {}
     }
+  },
+  "top_posts_excluded_communities": "Excluded communities",
+  "@top_posts_excluded_communities": {
+    "type": "text",
+    "placeholders": {}
   }
 }
