@@ -1,7 +1,9 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
+import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
@@ -44,7 +46,7 @@ class OBPostCommenter extends StatefulWidget {
 }
 
 class OBPostCommenterState extends State<OBPostCommenter> {
-  TextEditingController _textController;
+  DraftTextEditingController _textController;
   bool _commentInProgress;
   bool _formWasSubmitted;
   bool _needsBootstrap;
@@ -53,11 +55,15 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   int _charactersCount;
   bool _isMultiline;
 
+  int _postId;
+  int _commentId;
+
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
   LocalizationService _localizationService;
   TextAccountAutocompletionService _textAccountAutocompletionService;
+  DraftService _draftService;
 
   CancelableOperation _submitFormOperation;
 
@@ -66,14 +72,14 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
     _commentInProgress = false;
     _formWasSubmitted = false;
     _needsBootstrap = true;
     _charactersCount = 0;
     _isMultiline = false;
     _isSearchingAccount = false;
-    _textController.addListener(_onPostCommentChanged);
+    _postId = widget.post.id;
+    if (widget.postComment != null) _commentId = widget.postComment.id;
 
     if (widget.controller != null) widget.controller.attach(this);
   }
@@ -94,6 +100,11 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _localizationService = provider.localizationService;
       _textAccountAutocompletionService =
           provider.textAccountAutocompletionService;
+      _draftService = provider.draftService;
+
+      _textController = DraftTextEditingController.comment(_postId,
+          commentId: _commentId, draftService: _draftService);
+      _textController.addListener(_onPostCommentChanged);
       _needsBootstrap = false;
     }
 
@@ -238,6 +249,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _onError(error);
     } finally {
       _submitFormOperation = null;
+      _textController.clearDraft();
       _setCommentInProgress(false);
     }
   }

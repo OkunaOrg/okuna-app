@@ -10,6 +10,7 @@ import 'package:Okuna/services/date_picker.dart';
 import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
@@ -111,6 +112,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
       TextAccountAutocompletionService();
   ConnectivityService connectivityService = ConnectivityService();
   LinkPreviewService linkPreviewService = LinkPreviewService();
+  DraftService draftService = DraftService();
 
   SentryClient sentryClient;
 
@@ -153,6 +155,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setDevicesApiService(devicesApiService);
     userService.setCreateAccountBlocService(createAccountBloc);
     userService.setWaitlistApiService(waitlistApiService);
+    userService.setDraftService(draftService);
     waitlistApiService.setHttpService(httpService);
     userService.setModerationApiService(moderationApiService);
     emojisApiService.setHttpService(httpService);
