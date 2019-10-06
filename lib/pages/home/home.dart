@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/services/intercom.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';
@@ -47,6 +48,7 @@ class OBHomePageState extends State<OBHomePage>
   ModalService _modalService;
   UserPreferencesService _userPreferencesService;
   ShareService _shareService;
+  MediaService _mediaService;
 
   int _currentIndex;
   int _lastIndex;
@@ -111,6 +113,7 @@ class OBHomePageState extends State<OBHomePage>
       _modalService = openbookProvider.modalService;
       _userPreferencesService = openbookProvider.userPreferencesService;
       _shareService = openbookProvider.shareService;
+      _mediaService = openbookProvider.mediaPickerService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -405,6 +408,7 @@ class OBHomePageState extends State<OBHomePage>
       if (newUser.language == null || !supportedLanguages.contains(newUser.language.code)) {
         _userService.setLanguageFromDefaults();
       }
+      _mediaService.setAdvancedNetworkImageDiskCacheParams();
     }
   }
 
