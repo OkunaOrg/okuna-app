@@ -213,7 +213,7 @@ class MediaService {
 
   void setAdvancedNetworkImageDiskCacheParams() {
     DiskCache().maxEntries = 1000;
-    DiskCache().maxSizeBytes = 100000000; // 200mb
+    DiskCache().maxSizeBytes = 200000000; // 200mb
   }
 }
 
