@@ -207,18 +207,17 @@ class UserService {
     await _removeStoredFirstPostsData();
     await _removeStoredTopPostsData();
     await DiskCache().clear();
-    await clearViMediaCache();
+    await clearTemporaryDirectory();
     Post.clearCache();
     User.clearNavigationCache();
     PostComment.clearCache();
     Community.clearCache();
   }
 
-  Future<bool> clearViMediaCache() async {
+  Future<bool> clearTemporaryDirectory() async {
       try {
-        Directory vimediaDir = Directory(
-            join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
-        if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
+        Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
+        if (tempDir.existsSync()) await tempDir.delete(recursive: true);
         return true;
       } catch (e) {
         print(e);

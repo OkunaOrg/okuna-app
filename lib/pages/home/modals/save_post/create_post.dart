@@ -237,6 +237,8 @@ class OBSavePostModalState extends State<OBSavePostModal> {
         child: OBIcon(OBIcons.close,
             semanticLabel: _localizationService.post__close_create_post_label),
         onTap: () {
+          if (this._postImageFile != null) this._postImageFile.delete();
+          if (this._postVideoFile != null) this._postVideoFile.delete();
           Navigator.pop(context);
         },
       ),

@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 import 'bottom_sheet.dart';
 export 'package:image_picker/image_picker.dart';
@@ -130,7 +131,7 @@ class MediaService {
     );
 
     String videoExtension = basename(videoFile.path);
-    String tmpImageName = 'thumbnail_' + _uuid.v4() + videoExtension;
+    String tmpImageName = 'thumbnail_' + _uuid.v4() + '.jpeg';
     final tempPath = await _getTempPath();
     final String thumbnailPath = '$tempPath/$tmpImageName';
     final file = File(thumbnailPath);
@@ -208,6 +209,11 @@ class MediaService {
 
   String getMimeType(File file) {
     return lookupMimeType(file.path);
+  }
+
+  void setAdvancedNetworkImageDiskCacheParams() {
+    DiskCache().maxEntries = 1000;
+    DiskCache().maxSizeBytes = 100000000; // 200mb
   }
 }
 
