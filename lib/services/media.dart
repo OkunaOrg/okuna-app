@@ -131,7 +131,7 @@ class MediaService {
     );
 
     String videoExtension = basename(videoFile.path);
-    String tmpImageName = 'thumbnail_' + _uuid.v4() + '.jpeg';
+    String tmpImageName = 'thumbnail_' + _uuid.v4() + videoExtension;
     final tempPath = await _getTempPath();
     final String thumbnailPath = '$tempPath/$tmpImageName';
     final file = File(thumbnailPath);
