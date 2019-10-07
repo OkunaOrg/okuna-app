@@ -49,6 +49,14 @@ class OBSettingsPage extends StatelessWidget {
                     context: context);
               },
             ),
+            ListTile(
+              leading: const OBIcon(OBIcons.nativeInfo),
+              title: OBText(localizationService.drawer__about),
+              onTap: () {
+                navigationService.navigateToAboutPage(
+                    context: context);
+              },
+            ),
           ],
         ),
       ),
