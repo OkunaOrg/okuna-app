@@ -409,6 +409,7 @@ class OBHomePageState extends State<OBHomePage>
         _userService.setLanguageFromDefaults();
       }
       _mediaService.setAdvancedNetworkImageDiskCacheParams();
+      _userService.checkAndClearTempDirectory();
     }
   }
 

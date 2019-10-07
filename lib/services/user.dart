@@ -111,6 +111,8 @@ class UserService {
 
   Future<Device> _getOrCreateCurrentDeviceCache;
 
+  static const MAX_TEMP_DIRECTORY_CACHE_MB = 200; // 200mb
+
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
   }
@@ -215,14 +217,39 @@ class UserService {
   }
 
   Future<bool> clearTemporaryDirectory() async {
+      debugPrint('Clearing /tmp files and vimedia');
       try {
         Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
-        if (tempDir.existsSync()) await tempDir.delete(recursive: true);
+        Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
+        if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) {
+          if (entity is File) {
+            entity.delete();
+          }
+        });
+        if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
         return true;
       } catch (e) {
         print(e);
         return false;
       }
+  }
+
+  void checkAndClearTempDirectory() async {
+    int size = 0;
+    try {
+      Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
+      Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
+
+      if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) => size += entity.statSync().size);
+      if (vimediaDir.existsSync()) vimediaDir.listSync().forEach((var entity) => size += entity.statSync().size);
+
+      if (size > MAX_TEMP_DIRECTORY_CACHE_MB * 1000000) {
+        clearTemporaryDirectory();
+      }
+    } catch (e) {
+    debugPrint(e);
+    return null;
+    }
   }
 
   Future<void> loginWithCredentials(
