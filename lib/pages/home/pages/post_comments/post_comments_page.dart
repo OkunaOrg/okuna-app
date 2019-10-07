@@ -108,6 +108,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       HEIGHT_POST_DIVIDER;
 
   CancelableOperation _refreshPostOperation;
+  CancelableOperation _refreshPostCommentOperation;
 
   @override
   void initState() {
@@ -170,7 +171,14 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   void _bootstrap() async {
     await _setPostCommentsSortTypeFromPreferences();
     _initialiseCommentsPageController();
-    if (widget.post != null) await _refreshPost();
+
+    List<Future> bootstrapFutures = [];
+    if (widget.post != null) bootstrapFutures.add(_refreshPost());
+    if (widget.postComment != null) bootstrapFutures.add(_refreshPostComment());
+
+    await Future.wait(bootstrapFutures);
+
+    _setPositionTopCommentSection();
   }
 
   Future _setPostCommentsSortTypeFromPreferences() async {
@@ -515,11 +523,27 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           _userService.getPostWithUuid(_post.uuid));
 
       await _refreshPostOperation.value;
-      _setPositionTopCommentSection();
     } catch (error) {
       _onError(error);
     } finally {
       _refreshPostOperation = null;
+    }
+  }
+
+  Future<void> _refreshPostComment() async {
+    if (_refreshPostCommentOperation != null)
+      _refreshPostCommentOperation.cancel();
+    try {
+      // This will trigger the updateSubject of the postComment
+      _refreshPostCommentOperation = CancelableOperation.fromFuture(_userService
+          .getPostComment(post: widget.post, postComment: widget.postComment));
+
+      await _refreshPostCommentOperation.value;
+      _setPositionTopCommentSection();
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _refreshPostCommentOperation = null;
     }
   }
 
