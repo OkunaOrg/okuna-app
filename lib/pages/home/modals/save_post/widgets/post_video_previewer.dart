@@ -25,8 +25,7 @@ class OBPostVideoPreview extends StatelessWidget {
 
     Widget videoPreview = isFileVideo
         ? FutureBuilder<File>(
-            future: openbookProvider.mediaPickerService
-                .getVideoThumbnail(postVideoFile),
+            future: openbookProvider.mediaPickerService.getVideoThumbnail(postVideoFile),
             builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
               if (snapshot.data == null) return const SizedBox();
 

@@ -424,6 +424,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     debugLog('Clearing local cached media for post');
     _data.originalMedia?.forEach((File mediaObject) => mediaObject.delete());
     _data.compressedMedia?.forEach((File mediaObject) => mediaObject.delete());
+    _data.mediaThumbnail?.delete();
   }
 
   Future _publishPost() async {

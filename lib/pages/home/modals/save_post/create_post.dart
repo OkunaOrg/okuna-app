@@ -292,6 +292,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
 
     if (createPostData != null) {
       // Remove modal
+      if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
       Navigator.pop(context, createPostData);
     }
   }
@@ -534,6 +535,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
 
   Future<void> _createCommunityPost() async {
     OBNewPostData newPostData = _makeNewPostData();
+    if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
     Navigator.pop(context, newPostData);
   }
 
@@ -656,6 +658,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
 
   void _removePostVideoFile() {
     setState(() {
+      _mediaService.clearThumbnailForFile(this._postVideoFile);
       if (this._postVideoFile != null) this._postVideoFile.delete();
       _hasVideo = false;
       _postVideoWidgetRemover();

@@ -19,11 +19,15 @@ export 'package:image_picker/image_picker.dart';
 
 class MediaService {
   static Uuid _uuid = new Uuid();
+  static const MAX_NETWORK_IMAGE_CACHE_MB = 200;
+  static const MAX_NETWORK_IMAGE_CACHE_ENTRIES = 1000;
 
   static const Map IMAGE_RATIOS = {
     OBImageType.avatar: {'x': 1.0, 'y': 1.0},
     OBImageType.cover: {'x': 16.0, 'y': 9.0}
   };
+
+  Map _THUMBNAIL_CACHE = {};
 
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
@@ -135,6 +139,7 @@ class MediaService {
     final tempPath = await _getTempPath();
     final String thumbnailPath = '$tempPath/$tmpImageName';
     final file = File(thumbnailPath);
+    _THUMBNAIL_CACHE[videoFile.path] = file;
     file.writeAsBytesSync(thumbnailData);
 
     return file;
@@ -200,6 +205,15 @@ class MediaService {
     return resultFile;
   }
 
+  void clearThumbnailForFile(File videoFile) {
+    if (_THUMBNAIL_CACHE[videoFile.path] != null) {
+      debugPrint('Clearing thumbnail');
+      File thumbnail = _THUMBNAIL_CACHE[videoFile.path];
+      thumbnail.delete();
+      _THUMBNAIL_CACHE.remove(videoFile.path);
+    }
+  }
+
   bool isGif(File file) {
     String mediaMime = getMimeType(file);
     String mediaMimeSubtype = mediaMime.split('/')[1];
@@ -212,8 +226,8 @@ class MediaService {
   }
 
   void setAdvancedNetworkImageDiskCacheParams() {
-    DiskCache().maxEntries = 1000;
-    DiskCache().maxSizeBytes = 200000000; // 200mb
+    DiskCache().maxEntries = MAX_NETWORK_IMAGE_CACHE_ENTRIES;
+    DiskCache().maxSizeBytes = MAX_NETWORK_IMAGE_CACHE_MB * 1000000; // 200mb
   }
 }
 
