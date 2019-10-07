@@ -56,7 +56,7 @@ dependencies:
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
-  intl: ^0.15.0
+  intl: ^0.16.0
   rxdart: ^0.18.1
   video_player:
     git:
