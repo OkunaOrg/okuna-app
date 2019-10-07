@@ -248,7 +248,6 @@ class UserService {
       }
     } catch (e) {
     debugPrint(e);
-    return null;
     }
   }
 
