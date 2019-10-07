@@ -2,14 +2,15 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/alerts/button_alert.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
-import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/search_bar.dart';
 import 'package:Okuna/widgets/theming/actionable_smart_text.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,22 +26,30 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
   UserPreferencesService _preferencesService;
   ToastService _toastService;
 
+  GlobalKey<RefreshIndicatorState> _listRefreshIndicatorKey = GlobalKey();
+  CancelableOperation _refreshOperation;
+
   List<String> _trustedDomains;
   List<String> _searchResults;
   String _searchQuery;
   bool _hasSearch;
   bool _needsBootstrap;
-  bool _bootstrapInProgress;
+  bool _refreshInProgress;
 
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
-    _bootstrapInProgress = true;
     _hasSearch = false;
     _searchQuery = '';
     _trustedDomains = [];
     _searchResults = [];
+    _refreshInProgress = true;
+  }
+
+  void _bootstrap() async {
+    Future.delayed(Duration(),
+        () async => await _listRefreshIndicatorKey.currentState.show());
   }
 
   @override
@@ -59,26 +68,8 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
         title: _localizationService.application_settings__trusted_domains_title,
       ),
       child: OBPrimaryColorContainer(
-        child: _bootstrapInProgress
-            ? _buildBootstrapInProgressIndicator()
-            : _buildSettings(),
+        child: _buildSettings(),
       ),
-    );
-  }
-
-  Widget _buildBootstrapInProgressIndicator() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Padding(
-              padding: const EdgeInsets.all(20),
-              child: const OBProgressIndicator(),
-            ),
-          ],
-        ),
-      ],
     );
   }
 
@@ -92,8 +83,12 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
                   .application_settings__trusted_domains_resource),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: _buildList(),
+          child: RefreshIndicator(
+            key: _listRefreshIndicatorKey,
+            child: SingleChildScrollView(
+              child: _buildList(),
+            ),
+            onRefresh: _refreshTrustedDomains,
           ),
         ),
       ],
@@ -102,10 +97,31 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
 
   Widget _buildList() {
     List<Widget> children = [];
-    List<String> domainList = (_hasSearch ? _searchResults : _trustedDomains);
 
-    for (var domain in domainList) {
-      children.add(ListTile(
+    if (_hasSearch) {
+      if (_searchResults.isNotEmpty || _refreshInProgress) {
+        children.addAll(_buildListItems(_searchResults));
+      } else {
+        children.add(_buildNoSearchResults());
+      }
+    } else {
+      if (_trustedDomains.isNotEmpty || _refreshInProgress) {
+        children.addAll(_buildListItems(_trustedDomains));
+      } else {
+        children.add(_buildNoList());
+      }
+    }
+
+    return Padding(
+        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 40),
+        child: Column(children: children));
+  }
+
+  List<Widget> _buildListItems(List<String> items) {
+    List<Widget> list = [];
+
+    for (var domain in items) {
+      list.add(ListTile(
         title: OBText(domain),
         trailing: OBIconButton(
           OBIcons.remove,
@@ -114,9 +130,27 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
       ));
     }
 
-    return Padding(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 40),
-        child: Column(children: children));
+    return list;
+  }
+
+  Widget _buildNoList() {
+    return OBButtonAlert(
+      text: _localizationService.user_search__list_no_results_found(
+          _localizationService.application_settings__trusted_domains_resource),
+      onPressed: _refreshTrustedDomains,
+      buttonText: _localizationService.user_search__list_refresh_text,
+      buttonIcon: OBIcons.refresh,
+      assetImage: 'assets/images/stickers/perplexed-owl.png',
+    );
+  }
+
+  Widget _buildNoSearchResults() {
+    return ListTile(
+      leading: const OBIcon(OBIcons.sad),
+      title: OBText(
+        _localizationService.user_search__no_results_for(_searchQuery),
+      ),
+    );
   }
 
   void _deleteDomain(String domain) async {
@@ -145,17 +179,33 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
     });
   }
 
-  void _bootstrap() async {
-    await _refreshTrustedDomains();
-    _bootstrapInProgress = false;
-  }
-
-  Future _refreshTrustedDomains() async {
-    List<String> trustedDomains = await _preferencesService.getTrustedDomains();
-
+  void _setList(List<String> trustedDomains) {
     setState(() {
       _trustedDomains = trustedDomains.toList();
       _trustedDomains.sort((a, b) => a.compareTo(b));
+      _onSearch(_searchQuery);
     });
+  }
+
+  void _setRefreshInProgress(bool refreshInProgress) {
+    setState(() {
+      _refreshInProgress = refreshInProgress;
+    });
+  }
+
+  Future _refreshTrustedDomains() async {
+    if (_refreshOperation != null) {
+      _refreshOperation.cancel();
+    }
+    _setRefreshInProgress(true);
+
+    _refreshOperation =
+        CancelableOperation.fromFuture(_preferencesService.getTrustedDomains());
+    List<String> trustedDomains = await _refreshOperation.value;
+
+    _setList(trustedDomains);
+
+    _setRefreshInProgress(false);
+    _refreshOperation = null;
   }
 }
