@@ -238,6 +238,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
             semanticLabel: _localizationService.post__close_create_post_label),
         onTap: () {
           if (this._postImageFile != null) this._postImageFile.delete();
+          if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
           if (this._postVideoFile != null) this._postVideoFile.delete();
           Navigator.pop(context);
         },
