@@ -80,7 +80,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
-  MediaService mediaPickerService = MediaService();
+  MediaService mediaService = MediaService();
   ShareService shareService = ShareService();
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
@@ -177,15 +177,15 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
-    mediaPickerService.setValidationService(validationService);
-    mediaPickerService.setBottomSheetService(bottomSheetService);
+    mediaService.setValidationService(validationService);
+    mediaService.setBottomSheetService(bottomSheetService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
     linkPreviewService.setHttpieService(httpService);
     linkPreviewService.setUtilsService(utilsService);
     linkPreviewService.setValidationService(validationService);
-    shareService.setMediaService(mediaPickerService);
+    shareService.setMediaService(mediaService);
     shareService.setToastService(toastService);
     shareService.setValidationService(validationService);
   }
@@ -249,6 +249,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     modalService.setLocalizationService(localizationService);
     userPreferencesService.setLocalizationService(localizationService);
     shareService.setLocalizationService(localizationService);
+    mediaService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {

@@ -188,7 +188,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       var openbookProvider = OpenbookProvider.of(context);
       _validationService = openbookProvider.validationService;
       _navigationService = openbookProvider.navigationService;
-      _mediaService = openbookProvider.mediaPickerService;
+      _mediaService = openbookProvider.mediaService;
       _linkPreviewService = openbookProvider.linkPreviewService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;

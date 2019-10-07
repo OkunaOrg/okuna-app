@@ -3834,6 +3834,11 @@ class LocalizationService {
         name: 'application_settings__comment_sort_oldest_first');
   }
 
+  String get media_service__crop_image {
+    return Intl.message("Crop image",
+        name: 'media_service__crop_image');
+  }
+
   Locale getLocale() {
     return locale;
   }

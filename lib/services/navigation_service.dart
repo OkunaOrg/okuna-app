@@ -501,9 +501,12 @@ class NavigationService {
   Future navigateToAboutPage({@required BuildContext context}) {
     return Navigator.push(
       context,
-      OBSlideRightRoute(
-        key: Key('obAboutPage'),
-        widget: OBAboutPage()));
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('aboutPage'),
+          builder: (BuildContext context) {
+            return OBAboutPage();
+          }),
+    );
   }
 
   Future navigateToThemesPage({@required BuildContext context}) {
