@@ -6,7 +6,7 @@ buildscript {
     dependencies {
         // ...
         // OneSignal-Gradle-Plugin
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.2, 0.99.99]'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 0.99.99]'
     }
 }
 
@@ -103,4 +103,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
 }
