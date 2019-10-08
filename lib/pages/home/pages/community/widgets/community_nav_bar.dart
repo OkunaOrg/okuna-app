@@ -1,11 +1,8 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
-import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tinycolor/tinycolor.dart';
 
 class OBCommunityNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -48,5 +45,10 @@ class OBCommunityNavBar extends StatelessWidget
   @override
   Size get preferredSize {
     return const Size.fromHeight(44);
+  }
+
+  @override
+  bool shouldFullyObstruct(BuildContext context) {
+    return true;
   }
 }

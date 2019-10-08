@@ -1,4 +1,5 @@
 import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/plugins/proxy_settings.dart';
 import 'package:Okuna/services/auth_api.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/categories_api.dart';
@@ -80,7 +81,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
-  MediaService mediaPickerService = MediaService();
+  MediaService mediaService = MediaService();
   ShareService shareService = ShareService();
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
@@ -179,8 +180,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
-    mediaPickerService.setValidationService(validationService);
-    mediaPickerService.setBottomSheetService(bottomSheetService);
+    mediaService.setValidationService(validationService);
+    mediaService.setBottomSheetService(bottomSheetService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
@@ -190,7 +191,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     linkPreviewService.setHttpieService(httpService);
     linkPreviewService.setUtilsService(utilsService);
     linkPreviewService.setValidationService(validationService);
-    shareService.setMediaService(mediaPickerService);
+    shareService.setMediaService(mediaService);
     shareService.setToastService(toastService);
     shareService.setValidationService(validationService);
   }
@@ -200,6 +201,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         await EnvironmentLoader(environmentPath: ".env.json").load();
     httpService.setMagicHeader(
         environment.magicHeaderName, environment.magicHeaderValue);
+    httpService
+        .setProxy(await ProxySettings.findProxy(Uri.parse(environment.apiUrl)));
     authApiService.setApiURL(environment.apiUrl);
     postsApiService.setApiURL(environment.apiUrl);
     emojisApiService.setApiURL(environment.apiUrl);
@@ -253,6 +256,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     modalService.setLocalizationService(localizationService);
     userPreferencesService.setLocalizationService(localizationService);
     shareService.setLocalizationService(localizationService);
+    mediaService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {

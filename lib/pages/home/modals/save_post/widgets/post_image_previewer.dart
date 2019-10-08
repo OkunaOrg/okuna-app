@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:Okuna/models/post_image.dart';
+import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 class OBPostImagePreviewer extends StatelessWidget {
   final PostImage postImage;
@@ -61,7 +61,7 @@ class OBPostImagePreviewer extends StatelessWidget {
             ? Positioned(
                 bottom: 10,
                 left: 10,
-                child: _buildEditButton(),
+                child: _buildEditButton(context),
               )
             : const SizedBox()
       ],
@@ -88,15 +88,19 @@ class OBPostImagePreviewer extends StatelessWidget {
     );
   }
 
-  Widget _buildEditButton() {
+  Widget _buildEditButton(BuildContext context) {
+    Function onWantsToEditImage = () {
+      _onWantsToEditImage(context);
+    };
+
     return GestureDetector(
-      onTap: _onWantsToEditImage,
+      onTap: onWantsToEditImage,
       child: SizedBox(
         width: buttonSize,
         height: buttonSize,
         child: FloatingActionButton(
           heroTag: Key('postImagePreviewerEditButton'),
-          onPressed: _onWantsToEditImage,
+          onPressed: onWantsToEditImage,
           backgroundColor: Colors.black54,
           child: Icon(
             Icons.edit,
@@ -108,17 +112,13 @@ class OBPostImagePreviewer extends StatelessWidget {
     );
   }
 
-  void _onWantsToEditImage() async {
+  void _onWantsToEditImage(BuildContext context) async {
     if (onWillEditImage != null) onWillEditImage();
 
-    File croppedFile = await ImageCropper.cropImage(
-      toolbarTitle: 'Edit image',
-      toolbarColor: Colors.black,
-      statusBarColor: Colors.black,
-      toolbarWidgetColor: Colors.white,
-      sourcePath: postImageFile.path,
-    );
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
+    File croppedFile =
+        await openbookProvider.mediaService.cropImage(postImageFile);
     if (croppedFile != null) onPostImageEdited(croppedFile);
   }
 }

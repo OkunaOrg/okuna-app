@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
@@ -26,6 +26,11 @@ class MediaService {
 
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
+  LocalizationService _localizationService;
+
+  void setLocalizationService(LocalizationService localizationService) {
+    _localizationService = localizationService;
+  }
 
   void setValidationService(ValidationService validationService) {
     _validationService = validationService;
@@ -76,15 +81,8 @@ class MediaService {
     double ratioX = IMAGE_RATIOS[imageType]['x'];
     double ratioY = IMAGE_RATIOS[imageType]['y'];
 
-    File croppedFile = await ImageCropper.cropImage(
-      toolbarTitle: 'Crop image',
-      toolbarColor: Colors.black,
-      statusBarColor: Colors.black,
-      toolbarWidgetColor: Colors.white,
-      sourcePath: processedPickedImage.path,
-      ratioX: ratioX,
-      ratioY: ratioY,
-    );
+    File croppedFile =
+        await cropImage(processedPickedImage, ratioX: ratioX, ratioY: ratioY);
 
     return croppedFile;
   }
@@ -110,8 +108,6 @@ class MediaService {
 
   Future<File> processImage(File image) async {
     /// Fix rotation issue on android
-    if (Platform.isAndroid)
-      return await FlutterExifRotation.rotateImage(path: image.path);
     return image;
   }
 
@@ -208,6 +204,20 @@ class MediaService {
 
   String getMimeType(File file) {
     return lookupMimeType(file.path);
+  }
+
+  Future<File> cropImage(File image, {double ratioX, double ratioY}) async {
+    return ImageCropper.cropImage(
+        sourcePath: image.path,
+        aspectRatio: ratioX != null && ratioY != null
+            ? CropAspectRatio(ratioX: ratioX, ratioY: ratioY)
+            : null,
+        androidUiSettings: AndroidUiSettings(
+          toolbarTitle: _localizationService.media_service__crop_image,
+          toolbarColor: Colors.black,
+          statusBarColor: Colors.black,
+          toolbarWidgetColor: Colors.white,
+        ));
   }
 }
 
