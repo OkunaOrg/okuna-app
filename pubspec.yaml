@@ -59,11 +59,7 @@ dependencies:
   http: ^0.12.0
   intl: ^0.16.0
   rxdart: ^0.18.1
-  video_player:
-    git:
-      url: https://github.com/999eagle/plugins.git
-      ref: feature/caching
-      path: packages/video_player
+  video_player: ^0.10.2+3
   sprintf: "^4.0.0"
   image_picker: 0.6.1
   image_cropper: ^1.0.1

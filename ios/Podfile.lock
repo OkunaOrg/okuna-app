@@ -65,11 +65,9 @@ PODS:
     - Flutter
   - video_player (0.0.1):
     - Flutter
-    - VIMediaCache
   - video_thumbnail (0.0.1):
     - Flutter
     - libwebp
-  - VIMediaCache (0.4)
 
 DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
@@ -105,7 +103,6 @@ SPEC REPOS:
     - OneSignal
     - Reachability
     - TOCropViewController
-    - VIMediaCache
 
 EXTERNAL SOURCES:
   connectivity:
@@ -179,9 +176,8 @@ SPEC CHECKSUMS:
   TOCropViewController: 00dc36c4e4a0f4a45efa91adbf22df8a4fae01d3
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
-  video_player: c0fe23822450df713f9ce34bddbc97ed8b55e4f5
+  video_player: 3964090a33353060ed7f58aa6427c7b4b208ec21
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
-  VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
 
 PODFILE CHECKSUM: 43ead701385d268ad85aa42b0bb96ad47cef7863
 
