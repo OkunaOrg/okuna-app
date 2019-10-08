@@ -4,7 +4,6 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/alerts/button_alert.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/widgets/search_bar.dart';
@@ -13,6 +12,7 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class OBTrustedDomainsPage extends StatefulWidget {
   @override
@@ -113,7 +113,7 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
     }
 
     return Padding(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 40),
+        padding: EdgeInsets.only(left: 20.0),
         child: Column(children: children));
   }
 
@@ -121,12 +121,20 @@ class OBTrustedDomainsPageState extends State<OBTrustedDomainsPage> {
     List<Widget> list = [];
 
     for (var domain in items) {
-      list.add(ListTile(
-        title: OBText(domain),
-        trailing: OBIconButton(
-          OBIcons.remove,
-          onPressed: () => _deleteDomain(domain),
+      list.add(Slidable(
+        delegate: const SlidableDrawerDelegate(),
+        actionExtentRatio: 0.25,
+        child: ListTile(
+          title: OBText(domain),
         ),
+        secondaryActions: <Widget>[
+          new IconSlideAction(
+            caption: _localizationService.application_settings__delete_domain,
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () => _deleteDomain(domain),
+          )
+        ],
       ));
     }
 

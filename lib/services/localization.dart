@@ -3889,6 +3889,10 @@ class LocalizationService {
         name: "application_settings__confirm_url_disabled");
   }
 
+  String get application_settings__delete_domain {
+    return Intl.message("Delete", name: 'application_settings__delete_domain');
+  }
+
   Locale getLocale() {
     return locale;
   }

@@ -126,5 +126,10 @@
   "@confirm_url_disabled": {
     "type": "text",
     "placeholders": {}
+  },
+  "delete_domain": "Delete",
+  "@delete_domain": {
+    "type": "text",
+    "placeholders": {}
   }
 }
