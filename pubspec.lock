@@ -126,7 +126,7 @@ packages:
       name: device_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+2"
+    version: "0.4.0+3"
   expandable:
     dependency: "direct main"
     description:
@@ -167,13 +167,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.6"
-  flutter_exif_rotation:
-    dependency: "direct main"
-    description:
-      name: flutter_exif_rotation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.4"
   flutter_ffmpeg:
     dependency: "direct main"
     description:
@@ -220,7 +213,7 @@ packages:
       name: flutter_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.1+1"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -254,13 +247,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.19"
-  get_version:
-    dependency: "direct main"
-    description:
-      name: get_version
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   glob:
     dependency: transitive
     description:
@@ -274,7 +260,7 @@ packages:
       name: html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0+2"
+    version: "0.14.0+3"
   http:
     dependency: "direct main"
     description:
@@ -316,7 +302,7 @@ packages:
       name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -388,7 +374,7 @@ packages:
       name: markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.1.1"
   matcher:
     dependency: transitive
     description:
@@ -427,10 +413,12 @@ packages:
   onesignal_flutter:
     dependency: "direct main"
     description:
-      name: onesignal_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
+      path: "."
+      ref: HEAD
+      resolved-ref: "58fccdcc0e872a10c6313e22e1f885f58f793bd4"
+      url: "https://github.com/OkunaOrg/OneSignal-Flutter-SDK.git"
+    source: git
+    version: "2.1.0"
   open_iconic_flutter:
     dependency: "direct main"
     description:
@@ -542,7 +530,7 @@ packages:
       name: public_suffix
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   punycode:
     dependency: transitive
     description:
@@ -584,7 +572,7 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2+1"
+    version: "0.6.2+3"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -666,7 +654,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.6+4"
+    version: "1.1.7"
   stack_trace:
     dependency: transitive
     description:
@@ -736,7 +724,7 @@ packages:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.19"
+    version: "2.0.20"
   tinycolor:
     dependency: "direct main"
     description:
@@ -796,19 +784,17 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      path: "packages/video_player"
-      ref: "feature/caching"
-      resolved-ref: "7655d0961e3cae431fbf3aa8a98817461708d7dc"
-      url: "https://github.com/999eagle/plugins.git"
-    source: git
-    version: "0.10.2+1"
+      name: video_player
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.2+3"
   video_thumbnail:
     dependency: "direct main"
     description:
       name: video_thumbnail
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.5+1"
+    version: "0.1.6"
   vm_service_client:
     dependency: transitive
     description:
@@ -843,7 +829,7 @@ packages:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.16"
+    version: "2.2.0"
 sdks:
-  dart: ">=2.4.0 <3.0.0"
+  dart: ">=2.5.0 <3.0.0"
   flutter: ">=1.9.1 <2.0.0"
