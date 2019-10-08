@@ -113,7 +113,7 @@ class OBHomePageState extends State<OBHomePage>
       _modalService = openbookProvider.modalService;
       _userPreferencesService = openbookProvider.userPreferencesService;
       _shareService = openbookProvider.shareService;
-      _mediaService = openbookProvider.mediaPickerService;
+      _mediaService = openbookProvider.mediaService;
       _bootstrap();
       _needsBootstrap = false;
     }
