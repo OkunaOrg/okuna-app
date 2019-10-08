@@ -32,6 +32,7 @@ import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/co
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/about.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/community_guidelines.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
@@ -493,6 +494,17 @@ class NavigationService {
               _getKeyRandomisedWithWord('applicationSettingsPageRoute'),
           builder: (BuildContext context) {
             return OBApplicationSettingsPage();
+          }),
+    );
+  }
+
+  Future navigateToAboutPage({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('aboutPage'),
+          builder: (BuildContext context) {
+            return OBAboutPage();
           }),
     );
   }

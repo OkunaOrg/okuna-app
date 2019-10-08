@@ -1,12 +1,12 @@
 buildscript {
     repositories {
         // ...
-        maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
+        maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin P
     }
     dependencies {
         // ...
         // OneSignal-Gradle-Plugin
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.2, 0.99.99]'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.6'
     }
 }
 
@@ -103,4 +103,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
 }

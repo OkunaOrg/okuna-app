@@ -45,4 +45,9 @@ class OBColoredNavBar extends StatelessWidget implements ObstructingPreferredSiz
   Size get preferredSize {
     return const Size.fromHeight(44);
   }
+
+  @override
+  bool shouldFullyObstruct(BuildContext context) {
+    return true;
+  }
 }

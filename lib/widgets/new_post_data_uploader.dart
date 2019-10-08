@@ -78,7 +78,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
-      _mediaPickerService = openbookProvider.mediaPickerService;
+      _mediaPickerService = openbookProvider.mediaService;
       _bootstrap();
       _needsBootstrap = false;
     }

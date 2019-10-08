@@ -314,6 +314,7 @@ class OBVideoPlayerController {
       debugLog('State is not ready. Wont pause.');
       return;
     }
+    print('paused');
     _state._pause();
   }
 
@@ -322,12 +323,12 @@ class OBVideoPlayerController {
       debugLog('State is not ready. Wont play.');
       return;
     }
+    print('playing');
     _state._play();
   }
 
   bool isPlaying() {
     if (!isReady()) return false;
-
     return _state._playerController.value.isPlaying;
   }
 

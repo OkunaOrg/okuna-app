@@ -705,6 +705,16 @@ class LocalizationService {
     return Intl.message("Customize", name: 'drawer__customize');
   }
 
+  String get drawer__about {
+    return Intl.message("About", name: 'drawer__about');
+  }
+
+  String drawer__about_platform(String platform) {
+    return Intl.message("Running on $platform",
+      args: [platform],
+      name: 'drawer__about_platform');
+  }
+
   String get drawer__logout {
     return Intl.message("Log out", name: 'drawer__logout');
   }
@@ -3816,6 +3826,11 @@ class LocalizationService {
   String get application_settings__comment_sort_oldest_first {
     return Intl.message("Oldest first",
         name: 'application_settings__comment_sort_oldest_first');
+  }
+
+  String get media_service__crop_image {
+    return Intl.message("Crop image",
+        name: 'media_service__crop_image');
   }
 
   Locale getLocale() {
