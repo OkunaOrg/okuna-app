@@ -253,7 +253,7 @@ class PostsApiService {
   Future<HttpieResponse> getPostComment(
       {@required String postUuid, @required int postCommentId}) {
     String path = _makeGetCommentPostPath(postUuid, postCommentId);
-    return _httpService.patchJSON(_makeApiUrl(path),
+    return _httpService.get(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 

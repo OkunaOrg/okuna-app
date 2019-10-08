@@ -172,13 +172,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     await _setPostCommentsSortTypeFromPreferences();
     _initialiseCommentsPageController();
 
-    List<Future> bootstrapFutures = [];
-    if (widget.post != null) bootstrapFutures.add(_refreshPost());
-    if (widget.postComment != null) bootstrapFutures.add(_refreshPostComment());
-
-    await Future.wait(bootstrapFutures);
-
-    _setPositionTopCommentSection();
+    if (widget.post != null) _refreshPost();
+    if (widget.postComment != null) _refreshPostComment();
   }
 
   Future _setPostCommentsSortTypeFromPreferences() async {
