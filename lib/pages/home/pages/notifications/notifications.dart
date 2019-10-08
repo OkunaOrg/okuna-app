@@ -148,37 +148,42 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
               controller: _tabController,
               tabs: <Widget>[
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Tab(
-                    child: Stack(
-                      overflow: Overflow.visible,
-                      children: <Widget>[
-                        OBText(_localizationService.notifications__tab_general()),
-                        _unreadGeneralNotificationsCount != null
-                            && _unreadGeneralNotificationsCount > 0 ? Positioned(
-                          right: -15,
-                          child: OBBadge(
-                            size: 10,
-                          ),
-                        ) : const SizedBox()
-                      ],
-                    ),
-                  )
-                ),
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Tab(
+                      child: Stack(
+                        overflow: Overflow.visible,
+                        children: <Widget>[
+                          OBText(_localizationService
+                              .notifications__tab_general()),
+                          _unreadGeneralNotificationsCount != null &&
+                                  _unreadGeneralNotificationsCount > 0
+                              ? Positioned(
+                                  right: -15,
+                                  child: OBBadge(
+                                    size: 10,
+                                  ),
+                                )
+                              : const SizedBox()
+                        ],
+                      ),
+                    )),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: Tab(
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        OBText(_localizationService.notifications__tab_requests()),
-                        _unreadRequestNotificationsCount != null
-                            && _unreadRequestNotificationsCount > 0 ? Positioned(
-                          right: -15,
-                          child: OBBadge(
-                            size: 10,
-                          ),
-                        ) : const SizedBox()
+                        OBText(
+                            _localizationService.notifications__tab_requests()),
+                        _unreadRequestNotificationsCount != null &&
+                                _unreadRequestNotificationsCount > 0
+                            ? Positioned(
+                                right: -15,
+                                child: OBBadge(
+                                  size: 10,
+                                ),
+                              )
+                            : const SizedBox()
                       ],
                     ),
                   ),
@@ -270,13 +275,17 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshGeneralNotifications() async {
-    _refreshUnreadGeneralNotificationsCount();
-    return _refreshNotifications(_generalTypes);
+    List<OBNotification> newNotifications =
+        await _refreshNotifications(_generalTypes);
+    await _refreshUnreadGeneralNotificationsCount();
+    return newNotifications;
   }
 
   Future<List<OBNotification>> _refreshRequestNotifications() async {
-    _refreshUnreadRequestNotificationsCount();
-    return _refreshNotifications(_requestTypes);
+    List<OBNotification> newNotifications =
+        await _refreshNotifications(_requestTypes);
+    await _refreshUnreadRequestNotificationsCount();
+    return newNotifications;
   }
 
   Future<List<OBNotification>> _refreshNotifications(
@@ -288,16 +297,18 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     return notificationsList.notifications;
   }
 
-  void _refreshUnreadGeneralNotificationsCount() async {
-    _getUnreadGeneralNotificationsCountOperation = CancelableOperation.fromFuture(
-        _userService.getUnreadNotificationsCount(types: _generalTypes));
+  Future _refreshUnreadGeneralNotificationsCount() async {
+    _getUnreadGeneralNotificationsCountOperation =
+        CancelableOperation.fromFuture(
+            _userService.getUnreadNotificationsCount(types: _generalTypes));
     int unreadCount = await _getUnreadGeneralNotificationsCountOperation.value;
     setUnreadGeneralNotificationsCount(unreadCount);
   }
 
-  void _refreshUnreadRequestNotificationsCount() async {
-    _getUnreadRequestNotificationsCountOperation = CancelableOperation.fromFuture(
-        _userService.getUnreadNotificationsCount(types: _requestTypes));
+  Future _refreshUnreadRequestNotificationsCount() async {
+    _getUnreadRequestNotificationsCountOperation =
+        CancelableOperation.fromFuture(
+            _userService.getUnreadNotificationsCount(types: _requestTypes));
     int unreadCount = await _getUnreadRequestNotificationsCountOperation.value;
     setUnreadRequestNotificationsCount(unreadCount);
   }
@@ -451,14 +462,17 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
       _userService.readNotification(notification);
       notification.markNotificationAsRead();
       if (_generalTypes.contains(notification.type)) {
-        setUnreadGeneralNotificationsCount(--_unreadGeneralNotificationsCount);
+        setUnreadGeneralNotificationsCount(
+            _unreadGeneralNotificationsCount - 1);
       } else if (_requestTypes.contains(notification.type)) {
-        setUnreadRequestNotificationsCount(--_unreadRequestNotificationsCount);
+        setUnreadRequestNotificationsCount(
+            _unreadRequestNotificationsCount - 1);
       }
     } on HttpieRequestError {
       // Nothing
     } catch (error) {
-      print('Couldnt mark notification as read with error: ' + error.toString());
+      print(
+          'Couldnt mark notification as read with error: ' + error.toString());
     }
   }
 }
