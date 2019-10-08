@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 abstract class DraftTextEditingController extends TextEditingController {
   final DraftService _draftService;
+  String _previousText;
 
   DraftTextEditingController(this._draftService) {
-    addListener(_textChanged);
+    addListener(_onChanged);
   }
 
   factory DraftTextEditingController.comment(int postId,
@@ -17,6 +18,14 @@ abstract class DraftTextEditingController extends TextEditingController {
   factory DraftTextEditingController.post(
       {int communityId, String text, @required DraftService draftService}) {
     return _PostDraftEditingController(communityId, text, draftService);
+  }
+
+  void _onChanged() {
+    if (text != _previousText) {
+      _textChanged();
+    }
+
+    _previousText = text;
   }
 
   void _textChanged();

@@ -297,9 +297,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     if (createPostData != null) {
       // Remove modal
       Navigator.pop(context, createPostData);
-      if (_textController is DraftTextEditingController) {
-        (_textController as DraftTextEditingController).clearDraft();
-      }
+      _clearDraft();
     }
   }
 
@@ -542,6 +540,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   Future<void> _createCommunityPost() async {
     OBNewPostData newPostData = _makeNewPostData();
     Navigator.pop(context, newPostData);
+    _clearDraft();
   }
 
   void _savePost() async {
@@ -557,9 +556,13 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       _onError(error);
     } finally {
       _setSaveInProgress(false);
-      if (_textController is DraftTextEditingController) {
-        (_textController as DraftTextEditingController).clearDraft();
-      }
+      _clearDraft();
+    }
+  }
+
+  void _clearDraft() {
+    if (_textController is DraftTextEditingController) {
+      (_textController as DraftTextEditingController).clearDraft();
     }
   }
 
