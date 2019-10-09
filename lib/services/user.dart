@@ -651,6 +651,15 @@ class UserService {
     return PostComment.fromJSON(json.decode(response.body));
   }
 
+  Future<PostComment> getPostComment(
+      {@required Post post,
+        @required PostComment postComment}) async {
+    HttpieResponse response = await _postsApiService.getPostComment(
+        postUuid: post.uuid, postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
+  }
+
   Future<PostComment> replyPostComment(
       {@required Post post,
       @required PostComment postComment,
