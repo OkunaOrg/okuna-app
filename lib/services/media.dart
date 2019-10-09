@@ -27,7 +27,7 @@ class MediaService {
     OBImageType.cover: {'x': 16.0, 'y': 9.0}
   };
 
-  Map _THUMBNAIL_CACHE = {};
+  Map _thumbnail_cache = {};
 
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
@@ -117,9 +117,11 @@ class MediaService {
   }
 
   Future<String> _getTempPath() async {
-    final directory = await getApplicationDocumentsDirectory();
+    Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+    if (await mediaCacheDir.exists()) return mediaCacheDir.path;
 
-    return directory.path;
+    mediaCacheDir = await new Directory(mediaCacheDir.path).create();
+    return mediaCacheDir.path;
   }
 
   Future<File> getVideoThumbnail(File videoFile) async {
@@ -135,7 +137,7 @@ class MediaService {
     final tempPath = await _getTempPath();
     final String thumbnailPath = '$tempPath/$tmpImageName';
     final file = File(thumbnailPath);
-    _THUMBNAIL_CACHE[videoFile.path] = file;
+    _thumbnail_cache[videoFile.path] = file;
     file.writeAsBytesSync(thumbnailData);
 
     return file;
@@ -202,11 +204,11 @@ class MediaService {
   }
 
   void clearThumbnailForFile(File videoFile) {
-    if (_THUMBNAIL_CACHE[videoFile.path] != null) {
+    if (_thumbnail_cache[videoFile.path] != null) {
+      File thumbnail = _thumbnail_cache[videoFile.path];
       debugPrint('Clearing thumbnail');
-      File thumbnail = _THUMBNAIL_CACHE[videoFile.path];
       thumbnail.delete();
-      _THUMBNAIL_CACHE.remove(videoFile.path);
+      _thumbnail_cache.remove(videoFile.path);
     }
   }
 

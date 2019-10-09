@@ -216,24 +216,29 @@ class UserService {
     await _removeStoredFirstPostsData();
     await _removeStoredTopPostsData();
     await DiskCache().clear();
-    await clearTemporaryDirectory();
+    await clearTemporaryDirectories();
     Post.clearCache();
     User.clearNavigationCache();
     PostComment.clearCache();
     Community.clearCache();
   }
 
-  Future<bool> clearTemporaryDirectory() async {
+  Future<bool> clearTemporaryDirectories() async {
       debugPrint('Clearing /tmp files and vimedia');
       try {
         Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
         Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
+        Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+        Directory videoDirAndroid = Directory(join((await getTemporaryDirectory()).path, 'video'));
+
         if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) {
           if (entity is File) {
             entity.delete();
           }
         });
         if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
+        if (mediaCacheDir.existsSync()) await mediaCacheDir.delete(recursive: true);
+        if (videoDirAndroid.existsSync()) await videoDirAndroid.delete(recursive: true);
         return true;
       } catch (e) {
         print(e);
@@ -241,17 +246,21 @@ class UserService {
       }
   }
 
-  void checkAndClearTempDirectory() async {
+  void checkAndClearTempDirectories() async {
     int size = 0;
     try {
       Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
       Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
+      Directory videoDirAndroid = Directory(join((await getTemporaryDirectory()).path, 'video'));
+      Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
 
       if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) => size += entity.statSync().size);
       if (vimediaDir.existsSync()) vimediaDir.listSync().forEach((var entity) => size += entity.statSync().size);
+      if (mediaCacheDir.existsSync()) mediaCacheDir.listSync().forEach((var entity) => size += entity.statSync().size);
+      if (videoDirAndroid.existsSync()) videoDirAndroid.listSync().forEach((var entity) => size += entity.statSync().size);
 
       if (size > MAX_TEMP_DIRECTORY_CACHE_MB * 1000000) {
-        clearTemporaryDirectory();
+        clearTemporaryDirectories();
       }
     } catch (e) {
     debugPrint(e);
