@@ -62,7 +62,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   ToastService _toastService;
   ValidationService _validationService;
   LocalizationService _localizationService;
-  TextAccountAutocompletionService _textAccountAutocompletionService;
+  TextAutocompletionService _textAccountAutocompletionService;
   DraftService _draftService;
 
   CancelableOperation _submitFormOperation;
@@ -297,7 +297,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _checkAutocomplete() {
-    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+    TextAutocompletionResult result = _textAccountAutocompletionService
         .checkTextForAutocompletion(_textController);
 
     if (result.isAutocompleting) {

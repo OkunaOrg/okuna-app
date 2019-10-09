@@ -3,7 +3,7 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
-import 'package:Okuna/widgets/contextual_account_search_box.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_account_search_box.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
@@ -50,7 +50,7 @@ class OBPostCommenterExpandedModalState
   bool _requestInProgress;
   bool _needsBootstrap;
   bool _isSearchingAccount;
-  TextAccountAutocompletionService _textAccountAutocompletionService;
+  TextAutocompletionService _textAccountAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
 
   CancelableOperation _postCommentOperation;
@@ -201,7 +201,7 @@ class OBPostCommenterExpandedModalState
   }
 
   void _checkAutocomplete() {
-    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+    TextAutocompletionResult result = _textAccountAutocompletionService
         .checkTextForAutocompletion(_textController);
 
     if (result.isAutocompleting) {

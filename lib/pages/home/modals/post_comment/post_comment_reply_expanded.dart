@@ -16,7 +16,7 @@ import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
-import 'package:Okuna/widgets/contextual_account_search_box.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/post_divider.dart';
@@ -63,7 +63,7 @@ class OBPostCommentReplyExpandedModalState
   bool _isSearchingAccount;
   bool _needsBootstrap;
 
-  TextAccountAutocompletionService _textAccountAutocompletionService;
+  TextAutocompletionService _textAccountAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
 
   @override
@@ -285,7 +285,7 @@ class OBPostCommentReplyExpandedModalState
   }
 
   void _checkAutocomplete() {
-    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+    TextAutocompletionResult result = _textAccountAutocompletionService
         .checkTextForAutocompletion(_textController);
 
     if (result.isAutocompleting) {

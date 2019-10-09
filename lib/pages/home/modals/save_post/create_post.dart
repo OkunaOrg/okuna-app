@@ -27,7 +27,8 @@ import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/pill_button.dart';
-import 'package:Okuna/widgets/contextual_account_search_box.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_account_search_box.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_community_search_box.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
@@ -95,9 +96,14 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   bool _needsBootstrap;
   bool _isCreateCommunityPostInProgress;
 
-  TextAccountAutocompletionService _textAccountAutocompletionService;
+  TextAutocompletionService _textAccountAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
-  bool _isSearchingAccount;
+  OBContextualCommunitySearchBoxController
+      _contextualCommunitySearchBoxController;
+
+  bool _isAutocompleting;
+  TextAutocompletionType _autocompletionType;
+
   bool _isEditingPost;
 
   bool _saveInProgress;
@@ -115,7 +121,9 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     _isCreateCommunityPostInProgress = false;
     _contextualAccountSearchBoxController =
         OBContextualAccountSearchBoxController();
-    _isSearchingAccount = false;
+    _contextualCommunitySearchBoxController =
+        OBContextualCommunitySearchBoxController();
+    _isAutocompleting = false;
     _needsBootstrap = true;
 
     _focusNode.addListener(_onFocusNodeChanged);
@@ -208,18 +216,20 @@ class OBSavePostModalState extends State<OBSavePostModal> {
             child: Column(
           children: <Widget>[
             Expanded(
-                flex: _isSearchingAccount ? 3 : 1,
+                flex: _isAutocompleting ? 3 : 1,
                 child: Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   child: _buildNewPostContent(),
                 )),
-            _isSearchingAccount
+            _isAutocompleting
                 ? Expanded(
                     flex: 7,
-                    child: _buildAccountSearchBox(),
+                    child: _autocompletionType == TextAutocompletionType.account
+                        ? _buildAccountSearchBox()
+                        : _buildCommunitySearchBox(),
                   )
                 : const SizedBox(),
-            _isSearchingAccount || (_hasImage || _hasVideo)
+            _isAutocompleting || (_hasImage || _hasVideo)
                 ? const SizedBox()
                 : Container(
                     height: _hasFocus == true ? 51 : 67,
@@ -341,6 +351,18 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       onPostParticipantPressed: _onAccountSearchBoxUserPressed,
       initialSearchQuery:
           _contextualAccountSearchBoxController.getLastSearchQuery(),
+    );
+  }
+
+  Widget _buildCommunitySearchBox() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: OBContextualCommunitySearchBox(
+        controller: _contextualCommunitySearchBoxController,
+        onCommunityPressed: _onCommunitySearchBoxUserPressed,
+        initialSearchQuery:
+            _contextualCommunitySearchBoxController.getLastSearchQuery(),
+      ),
     );
   }
 
@@ -517,8 +539,8 @@ class OBSavePostModalState extends State<OBSavePostModal> {
 
     if (text != null) {
       _textController.value = TextEditingValue(
-          text: text,
-          selection: TextSelection.collapsed(offset: text.length),
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
       );
     }
 
@@ -583,17 +605,22 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   }
 
   void _checkForAutocomplete() {
-    TextAccountAutocompletionResult result = _textAccountAutocompletionService
+    TextAutocompletionResult result = _textAccountAutocompletionService
         .checkTextForAutocompletion(_textController);
 
     if (result.isAutocompleting) {
-      debugLog('Wants to search account with searchQuery:' +
+      debugLog('Wants to autocomplete with type ${result.type} searchQuery:' +
           result.autocompleteQuery);
-      _setIsSearchingAccount(true);
-      _contextualAccountSearchBoxController.search(result.autocompleteQuery);
-    } else if (_isSearchingAccount) {
-      debugLog('Finished searching account');
-      _setIsSearchingAccount(false);
+      _setIsAutocompleting(true);
+      _setAutocompletionType(result.type);
+      result.type == TextAutocompletionType.account
+          ? _contextualAccountSearchBoxController
+              .search(result.autocompleteQuery)
+          : _contextualCommunitySearchBoxController
+              .search(result.autocompleteQuery);
+    } else if (_isAutocompleting) {
+      debugLog('Finished autocompleting');
+      _setIsAutocompleting(false);
     }
   }
 
@@ -601,8 +628,12 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     _autocompleteFoundAccountUsername(user.username);
   }
 
+  void _onCommunitySearchBoxUserPressed(Community community) {
+    _autocompleteFoundCommunityName(community.name);
+  }
+
   void _autocompleteFoundAccountUsername(String foundAccountUsername) {
-    if (!_isSearchingAccount) {
+    if (!_isAutocompleting) {
       debugLog(
           'Tried to autocomplete found account username but was not searching account');
       return;
@@ -612,6 +643,20 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     setState(() {
       _textAccountAutocompletionService.autocompleteTextWithUsername(
           _textController, foundAccountUsername);
+    });
+  }
+
+  void _autocompleteFoundCommunityName(String foundCommunityName) {
+    if (!_isAutocompleting) {
+      debugLog(
+          'Tried to autocomplete found community name but was not searching community');
+      return;
+    }
+
+    debugLog('Autocompleting with community name:$foundCommunityName');
+    setState(() {
+      _textAccountAutocompletionService.autocompleteTextWithCommunityName(
+          _textController, foundCommunityName);
     });
   }
 
@@ -633,9 +678,15 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     });
   }
 
-  void _setIsSearchingAccount(bool isSearchingAccount) {
+  void _setIsAutocompleting(bool isSearchingAccount) {
     setState(() {
-      _isSearchingAccount = isSearchingAccount;
+      _isAutocompleting = isSearchingAccount;
+    });
+  }
+
+  void _setAutocompletionType(TextAutocompletionType autocompletionType) {
+    setState(() {
+      _autocompletionType = autocompletionType;
     });
   }
 
