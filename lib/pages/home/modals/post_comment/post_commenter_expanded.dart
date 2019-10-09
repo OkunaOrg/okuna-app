@@ -36,7 +36,7 @@ class OBPostCommenterExpandedModal extends StatefulWidget {
 }
 
 class OBPostCommenterExpandedModalState
-    extends ContextualSearchBoxState<OBPostCommenterExpandedModal> {
+    extends OBContextualSearchBoxState<OBPostCommenterExpandedModal> {
   ValidationService _validationService;
   ToastService _toastService;
   UserService _userService;

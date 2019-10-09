@@ -6,7 +6,7 @@ import 'package:Okuna/widgets/contextual_search_boxes/contextual_account_search_
 import 'package:Okuna/widgets/contextual_search_boxes/contextual_community_search_box.dart';
 import 'package:flutter/material.dart';
 
-abstract class ContextualSearchBoxState<T extends StatefulWidget>
+abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     extends State<T> {
   TextAutocompletionService _textAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
@@ -19,6 +19,7 @@ abstract class ContextualSearchBoxState<T extends StatefulWidget>
 
   bool isAutocompleting;
 
+  @override
   void initState() {
     super.initState();
     _contextualAccountSearchBoxController =
@@ -26,6 +27,12 @@ abstract class ContextualSearchBoxState<T extends StatefulWidget>
     _contextualCommunitySearchBoxController =
         OBContextualCommunitySearchBoxController();
     isAutocompleting = false;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _autocompleteTextController?.removeListener(_checkForAutocomplete);
   }
 
   void bootstrap() {

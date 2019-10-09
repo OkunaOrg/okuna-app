@@ -56,7 +56,7 @@ class OBSavePostModal extends StatefulWidget {
   }
 }
 
-class OBSavePostModalState extends ContextualSearchBoxState<OBSavePostModal>{
+class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
   ValidationService _validationService;
   UserService _userService;
   NavigationService _navigationService;
