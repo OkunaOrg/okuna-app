@@ -142,7 +142,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
           text: widget.text,
           communityId: widget.community != null ? widget.community.id : null,
           draftService: _draftService);
-      setAutocompleteTextController(_textController);
       _postItemsWidgets = [
         OBCreatePostText(controller: _textController, focusNode: _focusNode)
       ];
@@ -155,6 +154,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
         _setPostVideoFile(widget.video);
       }
     }
+
+    setAutocompleteTextController(_textController);
 
     if (!_isEditingPost && widget.community != null)
       _postItemsWidgets.add(OBPostCommunityPreviewer(
