@@ -784,12 +784,10 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      path: "packages/video_player"
-      ref: "feature/caching"
-      resolved-ref: "70660e66e490d83c9020d4899f224f480c456074"
-      url: "https://github.com/999eagle/plugins.git"
-    source: git
-    version: "0.10.3"
+      name: video_player
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.2+3"
   video_thumbnail:
     dependency: "direct main"
     description:
@@ -804,13 +802,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.6+3"
-  wakelock:
-    dependency: "direct main"
-    description:
-      name: wakelock
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
   watcher:
     dependency: transitive
     description:

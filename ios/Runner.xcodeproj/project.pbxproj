@@ -18,6 +18,7 @@
 		895F0B97233CF51700511ADD /* libflutter_secure_storage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */; };
 		89ABAE522203425900049DFB /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89ABAE512203425900049DFB /* NotificationService.m */; };
 		89ABAE562203425900049DFB /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 89ABAE4E2203425900049DFB /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		89CAD521234CD30C00A0698F /* libvideo_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053B622047AAF00E47AD9 /* libvideo_player.a */; };
 		89E6848F2320235F00E0855B /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053AE22047AAF00E47AD9 /* libTOCropViewController.a */; };
 		89FE1A9E23202382007C6904 /* libimage_cropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898053A022047AAF00E47AD9 /* libimage_cropper.a */; };
 		89FE1ABF232023A4007C6904 /* liblibwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89E6848A2320235F00E0855B /* liblibwebp.a */; };
@@ -62,13 +63,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 603FA97A9EAECDA6694299BF06D80C42;
 			remoteInfo = sqflite;
-		};
-		8958C894234B7D5E000280FF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DEE4F5A2C503F9E4AEFA5801786C2EE5;
-			remoteInfo = get_version;
 		};
 		8958C896234B7D5E000280FF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -217,13 +211,6 @@
 			remoteGlobalIDString = C9753D7E828995FC13548AB75309010D;
 			remoteInfo = shared_preferences;
 		};
-		89F1965E2334D0FB0072EF30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 04C9ADE89F275E929D78DD9C4E6C2AF2;
-			remoteInfo = VIMediaCache;
-		};
 		89FE1BA42323BCA0007C6904 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8980538D22047AAE00E47AD9 /* Pods.xcodeproj */;
@@ -350,6 +337,7 @@
 				89E6848F2320235F00E0855B /* libTOCropViewController.a in Frameworks */,
 				8954FC1E233A20F000CADD38 /* libflutter_image_compress.a in Frameworks */,
 				D6996A4C1A7351BC3C767F92 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
+				89CAD521234CD30C00A0698F /* libvideo_player.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +409,6 @@
 				89FE1BA52323BCA0007C6904 /* libflutter_image_compress.a */,
 				8980539E22047AAF00E47AD9 /* libflutter_secure_storage.a */,
 				8928E31E22356450001DB32A /* libFMDB.a */,
-				8958C895234B7D5E000280FF /* libget_version.a */,
 				898053A022047AAF00E47AD9 /* libimage_cropper.a */,
 				898053A222047AAF00E47AD9 /* libimage_picker.a */,
 				8902A1062236D5BF005F914D /* libintercom_flutter.a */,
@@ -443,7 +430,6 @@
 				898053B422047AAF00E47AD9 /* liburl_launcher.a */,
 				898053B622047AAF00E47AD9 /* libvideo_player.a */,
 				89E6848E2320235F00E0855B /* libvideo_thumbnail.a */,
-				89F1965F2334D0FB0072EF30 /* libVIMediaCache.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -670,13 +656,6 @@
 			remoteRef = 8928E31F22356450001DB32A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8958C895234B7D5E000280FF /* libget_version.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libget_version.a;
-			remoteRef = 8958C894234B7D5E000280FF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		8958C897234B7D5E000280FF /* libpackage_info.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -817,13 +796,6 @@
 			remoteRef = 89EE3232227B56510094ACB0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		89F1965F2334D0FB0072EF30 /* libVIMediaCache.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libVIMediaCache.a;
-			remoteRef = 89F1965E2334D0FB0072EF30 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		89FE1BA52323BCA0007C6904 /* libflutter_image_compress.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -905,7 +877,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (

@@ -301,9 +301,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       // Remove modal
       if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
       Navigator.pop(context, createPostData);
-      if (_textController is DraftTextEditingController) {
-        (_textController as DraftTextEditingController).clearDraft();
-      }
+      _clearDraft();
     }
   }
 
@@ -547,6 +545,7 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     OBNewPostData newPostData = _makeNewPostData();
     if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
     Navigator.pop(context, newPostData);
+    _clearDraft();
   }
 
   void _savePost() async {
@@ -562,9 +561,13 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       _onError(error);
     } finally {
       _setSaveInProgress(false);
-      if (_textController is DraftTextEditingController) {
-        (_textController as DraftTextEditingController).clearDraft();
-      }
+      _clearDraft();
+    }
+  }
+
+  void _clearDraft() {
+    if (_textController is DraftTextEditingController) {
+      (_textController as DraftTextEditingController).clearDraft();
     }
   }
 
