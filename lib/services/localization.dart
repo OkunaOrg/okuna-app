@@ -3620,6 +3620,13 @@ class LocalizationService {
         name: 'contextual_account_search_box__suggestions');
   }
 
+  String get contextual_community_search_box__suggestions {
+    return Intl.message("Suggestions",
+        desc:
+        "The title to display on the suggestions when searching for communitys when trying to mention someone.",
+        name: 'contextual_community_search_box__suggestions');
+  }
+
   String get image_picker__from_gallery {
     return Intl.message("From gallery", name: 'image_picker__from_gallery');
   }

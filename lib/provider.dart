@@ -109,8 +109,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
   DocumentsService documentsService = DocumentsService();
-  TextAccountAutocompletionService textAccountAutocompletionService =
-      TextAccountAutocompletionService();
+  TextAutocompletionService textAccountAutocompletionService =
+      TextAutocompletionService();
   ConnectivityService connectivityService = ConnectivityService();
   LinkPreviewService linkPreviewService = LinkPreviewService();
   DraftService draftService = DraftService();

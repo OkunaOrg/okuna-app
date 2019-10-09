@@ -4,7 +4,6 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_video.dart';
-import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_community_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_image_previewer.dart';
@@ -27,7 +26,7 @@ import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/pill_button.dart';
-import 'package:Okuna/widgets/contextual_account_search_box.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_search_box_state.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
@@ -57,7 +56,7 @@ class OBSavePostModal extends StatefulWidget {
   }
 }
 
-class OBSavePostModalState extends State<OBSavePostModal> {
+class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
   ValidationService _validationService;
   UserService _userService;
   NavigationService _navigationService;
@@ -95,9 +94,6 @@ class OBSavePostModalState extends State<OBSavePostModal> {
   bool _needsBootstrap;
   bool _isCreateCommunityPostInProgress;
 
-  TextAccountAutocompletionService _textAccountAutocompletionService;
-  OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
-  bool _isSearchingAccount;
   bool _isEditingPost;
 
   bool _saveInProgress;
@@ -113,15 +109,15 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     _linkPreviewUrl = '';
     _isPostTextAllowedLength = false;
     _isCreateCommunityPostInProgress = false;
-    _contextualAccountSearchBoxController =
-        OBContextualAccountSearchBoxController();
-    _isSearchingAccount = false;
     _needsBootstrap = true;
 
     _focusNode.addListener(_onFocusNodeChanged);
   }
 
-  void _bootstrap() {
+  @override
+  void bootstrap() {
+    super.bootstrap();
+
     if (_isEditingPost) {
       _saveInProgress = false;
       _textController = TextEditingController(text: widget.post?.text ?? '');
@@ -159,6 +155,8 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       }
     }
 
+    setAutocompleteTextController(_textController);
+
     if (!_isEditingPost && widget.community != null)
       _postItemsWidgets.add(OBPostCommunityPreviewer(
         community: widget.community,
@@ -192,12 +190,10 @@ class OBSavePostModalState extends State<OBSavePostModal> {
       _linkPreviewService = openbookProvider.linkPreviewService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
-      _textAccountAutocompletionService =
-          openbookProvider.textAccountAutocompletionService;
       _userService = openbookProvider.userService;
       _draftService = openbookProvider.draftService;
       _shareService = openbookProvider.shareService;
-      _bootstrap();
+      bootstrap();
       _needsBootstrap = false;
     }
 
@@ -208,18 +204,18 @@ class OBSavePostModalState extends State<OBSavePostModal> {
             child: Column(
           children: <Widget>[
             Expanded(
-                flex: _isSearchingAccount ? 3 : 1,
+                flex: isAutocompleting ? 3 : 1,
                 child: Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   child: _buildNewPostContent(),
                 )),
-            _isSearchingAccount
+            isAutocompleting
                 ? Expanded(
                     flex: 7,
-                    child: _buildAccountSearchBox(),
+                    child: buildSearchBox(),
                   )
                 : const SizedBox(),
-            _isSearchingAccount || (_hasImage || _hasVideo)
+            isAutocompleting || (_hasImage || _hasVideo)
                 ? const SizedBox()
                 : Container(
                     height: _hasFocus == true ? 51 : 67,
@@ -335,15 +331,6 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     );
   }
 
-  Widget _buildAccountSearchBox() {
-    return OBContextualAccountSearchBox(
-      controller: _contextualAccountSearchBoxController,
-      onPostParticipantPressed: _onAccountSearchBoxUserPressed,
-      initialSearchQuery:
-          _contextualAccountSearchBoxController.getLastSearchQuery(),
-    );
-  }
-
   Widget _buildPostActions() {
     List<Widget> postActions = [];
 
@@ -426,7 +413,6 @@ class OBSavePostModalState extends State<OBSavePostModal> {
 
   void _onPostTextChanged() {
     String text = _textController.text;
-    _checkForAutocomplete();
     _checkForLinkPreview();
     setState(() {
       _charactersCount = text.length;
@@ -517,8 +503,8 @@ class OBSavePostModalState extends State<OBSavePostModal> {
 
     if (text != null) {
       _textController.value = TextEditingValue(
-          text: text,
-          selection: TextSelection.collapsed(offset: text.length),
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
       );
     }
 
@@ -582,39 +568,6 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     }
   }
 
-  void _checkForAutocomplete() {
-    TextAccountAutocompletionResult result = _textAccountAutocompletionService
-        .checkTextForAutocompletion(_textController);
-
-    if (result.isAutocompleting) {
-      debugLog('Wants to search account with searchQuery:' +
-          result.autocompleteQuery);
-      _setIsSearchingAccount(true);
-      _contextualAccountSearchBoxController.search(result.autocompleteQuery);
-    } else if (_isSearchingAccount) {
-      debugLog('Finished searching account');
-      _setIsSearchingAccount(false);
-    }
-  }
-
-  void _onAccountSearchBoxUserPressed(User user) {
-    _autocompleteFoundAccountUsername(user.username);
-  }
-
-  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
-    if (!_isSearchingAccount) {
-      debugLog(
-          'Tried to autocomplete found account username but was not searching account');
-      return;
-    }
-
-    debugLog('Autocompleting with username:$foundAccountUsername');
-    setState(() {
-      _textAccountAutocompletionService.autocompleteTextWithUsername(
-          _textController, foundAccountUsername);
-    });
-  }
-
   void _setLinkPreviewUrl(String url) {
     if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
 
@@ -630,12 +583,6 @@ class OBSavePostModalState extends State<OBSavePostModal> {
     setState(() {
       _linkPreviewUrl = null;
       if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
-    });
-  }
-
-  void _setIsSearchingAccount(bool isSearchingAccount) {
-    setState(() {
-      _isSearchingAccount = isSearchingAccount;
     });
   }
 

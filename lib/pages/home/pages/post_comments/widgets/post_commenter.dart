@@ -3,9 +3,7 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
@@ -25,19 +23,15 @@ class OBPostCommenter extends StatefulWidget {
   final FocusNode commentTextFieldFocusNode;
   final ValueChanged<PostComment> onPostCommentCreated;
   final VoidCallback onPostCommentWillBeCreated;
-  final OBPostCommenterController controller;
-  final ValueChanged<String> onWantsToSearchAccount;
-  final VoidCallback onFinishedSearchingAccount;
+  final DraftTextEditingController textController;
 
   OBPostCommenter(this.post,
       {this.postComment,
       this.autofocus = false,
-      this.controller,
-      this.onWantsToSearchAccount,
       this.commentTextFieldFocusNode,
       this.onPostCommentCreated,
       this.onPostCommentWillBeCreated,
-      this.onFinishedSearchingAccount});
+      @required this.textController});
 
   @override
   State<StatefulWidget> createState() {
@@ -46,24 +40,17 @@ class OBPostCommenter extends StatefulWidget {
 }
 
 class OBPostCommenterState extends State<OBPostCommenter> {
-  DraftTextEditingController _textController;
   bool _commentInProgress;
   bool _formWasSubmitted;
   bool _needsBootstrap;
-  bool _isSearchingAccount;
 
   int _charactersCount;
   bool _isMultiline;
-
-  int _postId;
-  int _commentId;
 
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
   LocalizationService _localizationService;
-  TextAccountAutocompletionService _textAccountAutocompletionService;
-  DraftService _draftService;
 
   CancelableOperation _submitFormOperation;
 
@@ -77,11 +64,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _needsBootstrap = true;
     _charactersCount = 0;
     _isMultiline = false;
-    _isSearchingAccount = false;
-    _postId = widget.post.id;
-    if (widget.postComment != null) _commentId = widget.postComment.id;
-
-    if (widget.controller != null) widget.controller.attach(this);
   }
 
   @override
@@ -98,13 +80,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _toastService = provider.toastService;
       _validationService = provider.validationService;
       _localizationService = provider.localizationService;
-      _textAccountAutocompletionService =
-          provider.textAccountAutocompletionService;
-      _draftService = provider.draftService;
-
-      _textController = DraftTextEditingController.comment(_postId,
-          commentId: _commentId, draftService: _draftService);
-      _textController.addListener(_onPostCommentChanged);
+      widget.textController.addListener(_onPostCommentChanged);
       _needsBootstrap = false;
     }
 
@@ -146,7 +122,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                     TextStyle style = TextStyle(
                         fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
                     TextSpan text =
-                        new TextSpan(text: _textController.text, style: style);
+                        new TextSpan(text: widget.textController.text, style: style);
 
                     TextPainter tp = new TextPainter(
                       text: text,
@@ -190,7 +166,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
 
     return OBTextFormField(
-      controller: _textController,
+      controller: widget.textController,
       focusNode: focusNode,
       textCapitalization: TextCapitalization.sentences,
       keyboardType: TextInputType.multiline,
@@ -206,7 +182,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       autocorrect: true,
       validator: (String comment) {
         if (!_formWasSubmitted) return null;
-        return _validationService.validatePostComment(_textController.text);
+        return _validationService.validatePostComment(widget.textController.text);
       },
     );
   }
@@ -224,7 +200,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       await (widget.onPostCommentWillBeCreated != null
           ? widget.onPostCommentWillBeCreated()
           : Future.value());
-      String commentText = _textController.text;
+      String commentText = widget.textController.text;
       if (widget.postComment != null) {
         _submitFormOperation = CancelableOperation.fromFuture(
             _userService.replyPostComment(
@@ -239,7 +215,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       PostComment createdPostComment = await _submitFormOperation.value;
       if (createdPostComment.parentComment == null)
         widget.post.incrementCommentsCount();
-      _textController.clear();
+      widget.textController.clear();
       _setFormWasSubmitted(false);
       _validateForm();
       _setCommentInProgress(false);
@@ -249,15 +225,14 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _onError(error);
     } finally {
       _submitFormOperation = null;
-      _textController.clearDraft();
+      widget.textController.clearDraft();
       _setCommentInProgress(false);
     }
   }
 
   void _onPostCommentChanged() {
-    int charactersCount = _textController.text.length;
+    int charactersCount = widget.textController.text.length;
     _setCharactersCount(charactersCount);
-    _checkAutocomplete();
     if (charactersCount == 0) _setFormWasSubmitted(false);
     if (!_formWasSubmitted) return;
     _validateForm();
@@ -265,20 +240,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
   bool _validateForm() {
     return _formKey.currentState.validate();
-  }
-
-  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
-    if (!_isSearchingAccount) {
-      debugLog(
-          'Tried to autocomplete found account username but was not searching account');
-      return;
-    }
-
-    debugLog('Autocompleting with username:$foundAccountUsername');
-    setState(() {
-      _textAccountAutocompletionService.autocompleteTextWithUsername(
-          _textController, foundAccountUsername);
-    });
   }
 
   void _onError(error) async {
@@ -296,34 +257,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     }
   }
 
-  void _checkAutocomplete() {
-    TextAccountAutocompletionResult result = _textAccountAutocompletionService
-        .checkTextForAutocompletion(_textController);
-
-    if (result.isAutocompleting) {
-      debugLog('Wants to search account with searchQuery:' +
-          result.autocompleteQuery);
-      _setIsSearchingAccount(true);
-      if (widget.onWantsToSearchAccount != null) {
-        widget.onWantsToSearchAccount(result.autocompleteQuery);
-      }
-    } else if (_isSearchingAccount) {
-      debugLog('Finished searching account');
-      if (widget.onFinishedSearchingAccount != null)
-        widget.onFinishedSearchingAccount();
-      _setIsSearchingAccount(false);
-    }
-  }
-
   void _setCommentInProgress(bool commentInProgress) {
     setState(() {
       _commentInProgress = commentInProgress;
-    });
-  }
-
-  void _setIsSearchingAccount(bool isSearchingAccount) {
-    setState(() {
-      _isSearchingAccount = isSearchingAccount;
     });
   }
 
@@ -341,17 +277,5 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
   void debugLog(String log) {
     debugPrint('OBPostCommenter:$log');
-  }
-}
-
-class OBPostCommenterController {
-  OBPostCommenterState _state;
-
-  void attach(OBPostCommenterState state) {
-    _state = state;
-  }
-
-  void autocompleteFoundAccountUsername(String foundAccountUsername) {
-    _state._autocompleteFoundAccountUsername(foundAccountUsername);
   }
 }
