@@ -71,6 +71,8 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Okuna/services/httpie.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class UserService {
   OBStorage _userStorage;
@@ -110,6 +112,8 @@ class UserService {
   final _loggedInUserChangeSubject = ReplaySubject<User>(maxSize: 1);
 
   Future<Device> _getOrCreateCurrentDeviceCache;
+
+  static const MAX_TEMP_DIRECTORY_CACHE_MB = 200; // 200mb
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
@@ -212,10 +216,55 @@ class UserService {
     await _removeStoredFirstPostsData();
     await _removeStoredTopPostsData();
     await DiskCache().clear();
+    await clearTemporaryDirectories();
     Post.clearCache();
     User.clearNavigationCache();
     PostComment.clearCache();
     Community.clearCache();
+  }
+
+  Future<bool> clearTemporaryDirectories() async {
+      debugPrint('Clearing /tmp files and vimedia');
+      try {
+        Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
+        Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
+        Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+        Directory videoDirAndroid = Directory(join((await getTemporaryDirectory()).path, 'video'));
+
+        if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) {
+          if (entity is File) {
+            entity.delete();
+          }
+        });
+        if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
+        if (mediaCacheDir.existsSync()) await mediaCacheDir.delete(recursive: true);
+        if (videoDirAndroid.existsSync()) await videoDirAndroid.delete(recursive: true);
+        return true;
+      } catch (e) {
+        print(e);
+        return false;
+      }
+  }
+
+  void checkAndClearTempDirectories() async {
+    int size = 0;
+    try {
+      Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
+      Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
+      Directory videoDirAndroid = Directory(join((await getTemporaryDirectory()).path, 'video'));
+      Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+
+      if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) => size += entity.statSync().size);
+      if (vimediaDir.existsSync()) vimediaDir.listSync().forEach((var entity) => size += entity.statSync().size);
+      if (mediaCacheDir.existsSync()) mediaCacheDir.listSync().forEach((var entity) => size += entity.statSync().size);
+      if (videoDirAndroid.existsSync()) videoDirAndroid.listSync().forEach((var entity) => size += entity.statSync().size);
+
+      if (size > MAX_TEMP_DIRECTORY_CACHE_MB * 1000000) {
+        clearTemporaryDirectories();
+      }
+    } catch (e) {
+    debugPrint(e);
+    }
   }
 
   Future<void> loginWithCredentials(

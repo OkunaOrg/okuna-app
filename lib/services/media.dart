@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
@@ -18,11 +19,15 @@ export 'package:image_picker/image_picker.dart';
 
 class MediaService {
   static Uuid _uuid = new Uuid();
+  static const MAX_NETWORK_IMAGE_CACHE_MB = 200;
+  static const MAX_NETWORK_IMAGE_CACHE_ENTRIES = 1000;
 
   static const Map IMAGE_RATIOS = {
     OBImageType.avatar: {'x': 1.0, 'y': 1.0},
     OBImageType.cover: {'x': 16.0, 'y': 9.0}
   };
+
+  Map _thumbnail_cache = {};
 
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
@@ -112,9 +117,11 @@ class MediaService {
   }
 
   Future<String> _getTempPath() async {
-    final directory = await getApplicationDocumentsDirectory();
+    Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+    if (await mediaCacheDir.exists()) return mediaCacheDir.path;
 
-    return directory.path;
+    mediaCacheDir = await new Directory(mediaCacheDir.path).create();
+    return mediaCacheDir.path;
   }
 
   Future<File> getVideoThumbnail(File videoFile) async {
@@ -130,6 +137,7 @@ class MediaService {
     final tempPath = await _getTempPath();
     final String thumbnailPath = '$tempPath/$tmpImageName';
     final file = File(thumbnailPath);
+    _thumbnail_cache[videoFile.path] = file;
     file.writeAsBytesSync(thumbnailData);
 
     return file;
@@ -195,6 +203,15 @@ class MediaService {
     return resultFile;
   }
 
+  void clearThumbnailForFile(File videoFile) {
+    if (_thumbnail_cache[videoFile.path] != null) {
+      File thumbnail = _thumbnail_cache[videoFile.path];
+      debugPrint('Clearing thumbnail');
+      thumbnail.delete();
+      _thumbnail_cache.remove(videoFile.path);
+    }
+  }
+
   bool isGif(File file) {
     String mediaMime = getMimeType(file);
     String mediaMimeSubtype = mediaMime.split('/')[1];
@@ -204,6 +221,11 @@ class MediaService {
 
   String getMimeType(File file) {
     return lookupMimeType(file.path);
+  }
+
+  void setAdvancedNetworkImageDiskCacheParams() {
+    DiskCache().maxEntries = MAX_NETWORK_IMAGE_CACHE_ENTRIES;
+    DiskCache().maxSizeBytes = MAX_NETWORK_IMAGE_CACHE_MB * 1000000; // 200mb
   }
 
   Future<File> cropImage(File image, {double ratioX, double ratioY}) async {

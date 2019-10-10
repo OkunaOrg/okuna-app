@@ -232,6 +232,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     Post publishedPost =
         await _userService.getPostWithUuid(_data.createdDraftPost.uuid);
     widget.onPostPublished(publishedPost, widget.data);
+    _removeMediaFromCache();
   }
 
   Future _compressPostMedia() {
@@ -249,18 +250,20 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       File compressedImage =
           await _mediaPickerService.compressImage(postMediaItem);
       _data.remainingCompressedMediaToUpload.add(compressedImage);
+      _data.compressedMedia.add(compressedImage);
       debugLog(
           'Compressed image from ${postMediaItem.lengthSync()} to ${compressedImage.lengthSync()}');
     } else if (mediaMimeType == 'video') {
       File compressedVideo =
           await _mediaPickerService.compressVideo(postMediaItem);
       _data.remainingCompressedMediaToUpload.add(compressedVideo);
+      _data.compressedMedia.add(compressedVideo);
       debugLog(
           'Compressed video from ${postMediaItem.lengthSync()} to ${compressedVideo.lengthSync()}');
     } else {
       debugLog('Unsupported media type for compression');
     }
-
+    _data.originalMedia.add(postMediaItem);
     _data.remainingMediaToCompress.remove(postMediaItem);
   }
 
@@ -414,6 +417,14 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
 
     _setStatus(OBPostUploaderStatus.cancelled);
     widget.onCancelled(widget.data);
+    _removeMediaFromCache();
+  }
+
+  void _removeMediaFromCache() {
+    debugLog('Clearing local cached media for post');
+    _data.originalMedia?.forEach((File mediaObject) => mediaObject.delete());
+    _data.compressedMedia?.forEach((File mediaObject) => mediaObject.delete());
+    _data.mediaThumbnail?.delete();
   }
 
   Future _publishPost() async {
@@ -466,7 +477,9 @@ class OBNewPostData {
   Post createdDraftPost;
   OBPostStatus createdDraftPostStatus;
   List<File> remainingMediaToCompress;
+  List<File> compressedMedia = [];
   List<File> remainingCompressedMediaToUpload = [];
+  List<File> originalMedia = [];
   bool postPublishRequested = false;
   File mediaThumbnail;
 

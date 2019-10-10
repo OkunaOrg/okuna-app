@@ -327,7 +327,6 @@ class OBVideoPlayerController {
 
   bool isPlaying() {
     if (!isReady()) return false;
-
     return _state._playerController.value.isPlaying;
   }
 
