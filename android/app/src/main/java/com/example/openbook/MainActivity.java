@@ -170,7 +170,7 @@ public class MainActivity extends FlutterActivity {
     String name = UUID.randomUUID().toString();
 
     try {
-      return File.createTempFile(name, extension, this.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+      return File.createTempFile(name, extension, new File(getCacheDir(), "mediaCache"));
     } catch (IOException e) {
       throw new KeyedException(KeyedException.Key.TempCreationFailed, e);
     } catch (SecurityException e) {
