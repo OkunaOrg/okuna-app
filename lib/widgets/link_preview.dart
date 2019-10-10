@@ -221,10 +221,16 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
 
   Widget _buildPreviewImage() {
     if (_linkPreview.imageUrl == null && _linkPreview.image == null) {
-      return Image.asset(
-        'assets/images/fallbacks/post-fallback.png',
-        fit: BoxFit.cover,
-        alignment: Alignment.center,
+      return Semantics(
+        label: 'Link preview image',
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(
+                    'assets/images/fallbacks/post-fallback.png',
+                  ))),
+        ),
       );
     }
 
