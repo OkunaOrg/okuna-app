@@ -151,10 +151,10 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   void onPostIsInView(Post post) async {
-    _storeLastViewedIdAndCachablePostsDebouncer.debounce(() => storeLastViewedIdAndCachedPosts(post));
+    _storeLastViewedIdAndCachablePostsDebouncer.debounce(() => _storeLastViewedIdAndCachedPosts(post));
   }
 
-  void storeLastViewedIdAndCachedPosts(Post post) async {
+  void _storeLastViewedIdAndCachedPosts(Post post) async {
     List<TopPost> _cachablePosts = [];
     int indexTopPost = _currentTopPosts.indexWhere((topPost) {
       return topPost.post.id == post.id;
