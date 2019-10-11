@@ -15,6 +15,7 @@ import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:throttling/throttling.dart';
 
 class OBTopPosts extends StatefulWidget {
   final OBTopPostsController controller;
@@ -41,12 +42,13 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   List<Post> _currentPosts = [];
   List<int> _excludedCommunities = [];
   int _topPostLastViewedId;
-  CancelableOperation _setLastViewedIdAndCachablePosts;
+  Debouncing _storeLastViewedIdAndCachablePostsDebouncer;
 
   @override
   void initState() {
     super.initState();
     _needsBootstrap = true;
+    _storeLastViewedIdAndCachablePostsDebouncer = new Debouncing(duration: Duration(milliseconds: 500));
     _obPostsStreamController = OBPostsStreamController();
     if (widget.controller != null) widget.controller.attach(this);
   }
@@ -149,33 +151,24 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   void onPostIsInView(Post post) async {
-    if (_setLastViewedIdAndCachablePosts != null) _setLastViewedIdAndCachablePosts.cancel();
-    _setLastViewedIdAndCachablePosts = CancelableOperation.fromFuture(_setCachedTopPostsData(post.id));
-
-    int postId = await _setLastViewedIdAndCachablePosts.value;
-
-    if (postId == post.id) {
-      List<TopPost> _cachablePosts = [];
-      int indexTopPost = _currentTopPosts.indexWhere((topPost) {
-        return topPost.post.id == post.id;
-      });
-      if (indexTopPost >= 4)  {
-        // cache 5 prev top posts 0,1,2,3,4,5,6,7
-        _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+1);
-      } else if (indexTopPost > 0 && indexTopPost < 5) {
-        _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+1);
-      } else if (indexTopPost == 0) {
-        _cachablePosts = [_currentTopPosts[0]];
-      }
-      _userService.setTopPostsLastViewedId(post.id);
-      _userService.setStoredTopPosts(_cachablePosts);
-    }
+    _storeLastViewedIdAndCachablePostsDebouncer.debounce(() => storeLastViewedIdAndCachedPosts(post));
   }
 
-  Future<int> _setCachedTopPostsData(int postId) async {
-    return Future.delayed(Duration(milliseconds: 500), () {
-      return postId;
+  void storeLastViewedIdAndCachedPosts(Post post) async {
+    List<TopPost> _cachablePosts = [];
+    int indexTopPost = _currentTopPosts.indexWhere((topPost) {
+      return topPost.post.id == post.id;
     });
+    if (indexTopPost >= 4)  {
+      // cache 5 prev top posts 0,1,2,3,4,5,6,7
+      _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+1);
+    } else if (indexTopPost > 0 && indexTopPost < 5) {
+      _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+1);
+    } else if (indexTopPost == 0) {
+      _cachablePosts = [_currentTopPosts[0]];
+    }
+    _userService.setTopPostsLastViewedId(post.id);
+    _userService.setStoredTopPosts(_cachablePosts);
   }
 
   void _onWantsToSeeExcludedCommunities() {
