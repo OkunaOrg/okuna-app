@@ -16,7 +16,6 @@ import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
-import 'package:Okuna/widgets/contextual_search_boxes/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/contextual_search_boxes/contextual_search_box_state.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
