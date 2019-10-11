@@ -188,7 +188,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   Future<List<Post>> _postsStreamRefresher() async {
-    List<TopPost> topPosts = (await _userService.getTopPosts(count: 2)).posts;
+    List<TopPost> topPosts = (await _userService.getTopPosts(count: 10)).posts;
     List<Post> posts = topPosts.map((topPost) => topPost.post).toList();
     _setTopPosts(topPosts);
     _setPosts(posts);
