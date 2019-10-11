@@ -161,7 +161,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     });
     if (indexTopPost >= 4)  {
       // cache 5 prev top posts 0,1,2,3,4,5,6,7
-      _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+1);
+      _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+2);
     } else if (indexTopPost > 0 && indexTopPost < 5) {
       _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+1);
     } else if (indexTopPost == 0) {
