@@ -96,14 +96,13 @@ class OBPostsStreamState extends State<OBPostsStream> {
 
   void _bootstrap() {
     if (widget.refreshOnCreate && widget.initialPosts == null) {
-      print('REFRESH ON CREATE');
       _status = OBPostsStreamStatus.refreshing;
       Future.delayed(Duration(milliseconds: 100), () {
         _refresh();
       });
     }
     if (widget.isTopPostsStream && widget.initialPosts != null) {
-      Future.delayed(Duration(milliseconds: 500), () {
+      Future.delayed(Duration(milliseconds: 100), () {
         _scrollToBottom();
       });
     }
