@@ -87,7 +87,6 @@ class OBPost extends StatelessWidget {
   void _onInViewStateChanged(InViewState _inViewState, String postInViewId) {
     final bool isInView = _inViewState.inView(postInViewId);
     if (isInView) {
-      debugPrint('Setting id ${post.id} as last viewed for top posts');
       if (onPostIsInView != null) onPostIsInView(post);
     }
   }

@@ -95,14 +95,15 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   void _bootstrap() {
-    if (widget.refreshOnCreate) {
+    if (widget.refreshOnCreate && widget.initialPosts == null) {
+      print('REFRESH ON CREATE');
       _status = OBPostsStreamStatus.refreshing;
       Future.delayed(Duration(milliseconds: 100), () {
         _refresh();
       });
     }
     if (widget.isTopPostsStream && widget.initialPosts != null) {
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(Duration(milliseconds: 500), () {
         _scrollToBottom();
       });
     }
@@ -241,9 +242,10 @@ class OBPostsStreamState extends State<OBPostsStream> {
   }
 
   void _scrollToBottom() {
+    var position = _streamScrollController.position.maxScrollExtent;
     _streamScrollController.animateTo(
-      _streamScrollController.position.maxScrollExtent,
-      curve: Curves.easeOut,
+      position,
+      curve: Curves.easeIn,
       duration: const Duration(milliseconds: 100),
     );
   }

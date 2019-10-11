@@ -40,8 +40,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   List<TopPost> _currentTopPosts = [];
   List<Post> _currentPosts = [];
   List<int> _excludedCommunities = [];
-  List<Post> _topPostsCacheData = [];
   int _topPostLastViewedId;
+  CancelableOperation _setLastViewedIdAndCachablePosts;
 
   @override
   void initState() {
@@ -148,21 +148,34 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     );
   }
 
-  void onPostIsInView(Post post) {
-    List<TopPost> _cachablePosts = [];
-    int indexTopPost = _currentTopPosts.indexWhere((topPost) {
-      return topPost.post.id == post.id;
-    });
-    if (indexTopPost >= 4)  {
-      // cache 5 prev top posts 0,1,2,3,4,5,6,7
-      _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+1);
-    } else if (indexTopPost > 0 && indexTopPost < 4) {
-      _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+1);
-    } else if (indexTopPost == 0) {
-      _cachablePosts = [_currentTopPosts[0]];
+  void onPostIsInView(Post post) async {
+    if (_setLastViewedIdAndCachablePosts != null) _setLastViewedIdAndCachablePosts.cancel();
+    _setLastViewedIdAndCachablePosts = CancelableOperation.fromFuture(_setCachedTopPostsData(post.id));
+
+    int postId = await _setLastViewedIdAndCachablePosts.value;
+
+    if (postId == post.id) {
+      List<TopPost> _cachablePosts = [];
+      int indexTopPost = _currentTopPosts.indexWhere((topPost) {
+        return topPost.post.id == post.id;
+      });
+      if (indexTopPost >= 4)  {
+        // cache 5 prev top posts 0,1,2,3,4,5,6,7
+        _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+1);
+      } else if (indexTopPost > 0 && indexTopPost < 5) {
+        _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+1);
+      } else if (indexTopPost == 0) {
+        _cachablePosts = [_currentTopPosts[0]];
+      }
+      _userService.setTopPostsLastViewedId(post.id);
+      _userService.setStoredTopPosts(_cachablePosts);
     }
-    _userService.setTopPostsLastViewedId(post.id);
-    _userService.setStoredTopPosts(_cachablePosts);
+  }
+
+  Future<int> _setCachedTopPostsData(int postId) async {
+    return Future.delayed(Duration(milliseconds: 500), () {
+      return postId;
+    });
   }
 
   void _onWantsToSeeExcludedCommunities() {
@@ -224,7 +237,6 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     setState(() {
       _currentTopPosts = posts;
     });
-    await _userService.setStoredTopPosts(_currentTopPosts);
   }
 
   void _setPosts(List<Post> posts) {
