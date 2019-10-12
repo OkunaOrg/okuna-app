@@ -468,6 +468,7 @@ class UserService {
   Future<void> setTopPostsLastViewedId(int lastViewedId) async {
     String topPostId = lastViewedId.toString();
     await this._removeStoredTopPostsLastViewedId();
+    debugPrint('Setting id $lastViewedId as last viewed post for top posts');
     await this._storeTopPostsLastViewedId(topPostId);
   }
 
@@ -2151,7 +2152,6 @@ class UserService {
   }
 
   TopPostsList _makeTopPostsList(String postsData) {
-    print('stored top posts data $postsData');
     return TopPostsList.fromJson((json.decode(postsData)));
   }
 }

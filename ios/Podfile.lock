@@ -97,7 +97,7 @@ DEPENDENCIES:
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - FMDB
     - Intercom
     - libwebp
@@ -187,4 +187,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 43ead701385d268ad85aa42b0bb96ad47cef7863
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.1
