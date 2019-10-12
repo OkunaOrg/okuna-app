@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/top_post.dart';
@@ -38,8 +37,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   OBPostsStreamController _obPostsStreamController;
 
   bool _needsBootstrap;
-  List<TopPost> _currentTopPosts = [];
-  List<Post> _currentPosts = [];
+  List<TopPost> _currentTopPosts;
+  List<Post> _currentPosts;
   List<int> _excludedCommunities = [];
   int _topPostLastViewedId;
   Debouncing _storeLastViewedIdAndCachablePostsDebouncer;
@@ -84,7 +83,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         controller: _obPostsStreamController,
         isTopPostsStream: true,
         initialPosts: _currentPosts,
-        refreshOnCreate: _currentPosts.length == 0,
+        refreshOnCreate: _currentPosts == null,
         postBuilder: _topPostBuilder,
         prependedItems: <Widget>[
           Padding(
