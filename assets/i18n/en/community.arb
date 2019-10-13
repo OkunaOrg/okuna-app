@@ -339,6 +339,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "tile_delete": "Delete",
+  "@tile_delete": {
+    "type": "text",
+    "placeholders": {}
+  },
   "pick_upto_max": "Pick up to {max} categories",
   "@pick_upto_max": {
     "type": "text",
