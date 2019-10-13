@@ -1145,6 +1145,10 @@ class LocalizationService {
     return Intl.message("You", name: 'community__user_you_text');
   }
 
+  String get community__tile_delete {
+    return Intl.message("Delete", name: 'community__tile_delete');
+  }
+
   String community__pick_upto_max(int max) {
     return Intl.message("Pick up to $max categories",
         args: [max], name: 'community__pick_upto_max');

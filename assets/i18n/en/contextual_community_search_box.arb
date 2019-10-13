@@ -1,0 +1,8 @@
+{
+  "suggestions": "Suggestions",
+  "@suggestions": {
+    "description": "The title to display on the suggestions when searching for communitys when trying to mention someone.",
+    "type": "text",
+    "placeholders": {}
+  }
+}
