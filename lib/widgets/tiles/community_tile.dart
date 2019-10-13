@@ -1,6 +1,8 @@
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/avatars/letter_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
@@ -32,10 +34,12 @@ class OBCommunityTile extends StatelessWidget {
   Widget build(BuildContext context) {
     String communityHexColor = community.color;
     LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    ThemeService themeService = OpenbookProvider.of(context).themeService;
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
     Color communityColor =
         themeValueParserService.parseColor(communityHexColor);
+    OBTheme theme = themeService.getActiveTheme();
     Color textColor;
 
     BoxDecoration containerDecoration;
@@ -156,7 +160,8 @@ class OBCommunityTile extends StatelessWidget {
         ),
         secondaryActions: <Widget>[
           new IconSlideAction(
-              caption: 'Delete',
+              caption: localizationService.community__tile_delete,
+              foregroundColor: themeValueParserService.parseColor(theme.primaryTextColor),
               color: Colors.transparent,
               icon: Icons.delete,
               onTap: () {

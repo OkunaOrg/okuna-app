@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
-import 'package:Okuna/models/user.dart';
-import 'package:Okuna/models/users_list.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
@@ -14,7 +12,6 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/tiles/community_tile.dart';
-import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
