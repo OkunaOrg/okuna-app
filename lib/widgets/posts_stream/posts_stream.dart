@@ -110,7 +110,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   }
 
   void _bootstrap() {
-    if (widget.refreshOnCreate && widget.initialPosts == null) {
+    if (widget.refreshOnCreate) {
       _status = OBPostsStreamStatus.refreshing;
       Future.delayed(Duration(milliseconds: 100), () {
         _refresh();
