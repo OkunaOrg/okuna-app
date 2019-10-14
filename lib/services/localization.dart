@@ -848,6 +848,14 @@ class LocalizationService {
     return Intl.message("communities", name: 'community__communities');
   }
 
+  String get community__excluded_community {
+    return Intl.message("excluded community", name: 'community__excluded_community');
+  }
+
+  String get community__excluded_communities {
+    return Intl.message("excluded communities", name: 'community__excluded_communities');
+  }
+
   String get community__type_public {
     return Intl.message("Public", name: 'community__type_public');
   }

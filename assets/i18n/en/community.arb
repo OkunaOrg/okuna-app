@@ -29,6 +29,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "excluded_community": "excluded community",
+  "@excluded_community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "excluded_communities": "excluded communities",
+  "@excluded_communities": {
+    "type": "text",
+    "placeholders": {}
+  },
   "type_public": "Public",
   "@type_public": {
     "type": "text",

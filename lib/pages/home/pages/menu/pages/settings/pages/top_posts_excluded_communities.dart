@@ -62,8 +62,8 @@ class OBTopPostsExcludedCommunitiesState extends State<OBTopPostsExcludedCommuni
           listRefresher: _refreshExcludedCommunities,
           listOnScrollLoader: _loadMoreExcludedCommunities,
           listSearcher: _searchExcludedCommunities,
-          resourceSingularName: _localizationService.community__community,
-          resourcePluralName: _localizationService.community__communities,
+          resourceSingularName: _localizationService.community__excluded_community,
+          resourcePluralName: _localizationService.community__excluded_communities,
         ),
       ),
     );
