@@ -76,7 +76,8 @@ class PushNotificationsService {
   void promptUserForPushNotificationPermission() async {
     bool hasAllowed = await OneSignal.shared
         .promptUserForPushNotificationPermission(fallbackToSettings: true) ?? false;
-    if (hasAllowed) {
+    var isSubscribed = await this.isSubscribedToPushNotifications();
+    if (hasAllowed && isSubscribed) {
       enablePushNotifications();
     } else {
       disablePushNotifications();
