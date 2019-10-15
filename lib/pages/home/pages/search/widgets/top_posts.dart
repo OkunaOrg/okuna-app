@@ -98,7 +98,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
                 OBIconButton(
                   OBIcons.settings,
                   themeColor: OBIconThemeColor.primaryAccent,
-                  onPressed: _onWantsToSeeExcludedCommunities,
+                  onPressed: _onWantsToSeeTopPostSettings,
                 )
               ],
             ),
@@ -170,8 +170,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     _userService.setStoredTopPosts(_cachablePosts);
   }
 
-  void _onWantsToSeeExcludedCommunities() {
-    _navigationService.navigateToTopPostsExcludedCommunities(context: context);
+  void _onWantsToSeeTopPostSettings() {
+    _navigationService.navigateToTopPostsSettings(context: context);
   }
 
   void _onCommunityExcluded(Community community) {

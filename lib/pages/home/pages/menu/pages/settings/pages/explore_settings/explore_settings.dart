@@ -1,0 +1,97 @@
+import 'dart:async';
+
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/widgets/exclude_joined_communities_tile.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/fields/toggle_field.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/theming/divider.dart';
+import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tile_group_title.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class OBTopPostsSettingsPage extends StatefulWidget {
+  @override
+  State<OBTopPostsSettingsPage> createState() {
+    return OBTopPostsSettingsState();
+  }
+}
+
+class OBTopPostsSettingsState extends State<OBTopPostsSettingsPage> {
+  UserService _userService;
+  NavigationService _navigationService;
+  LocalizationService _localizationService;
+  ToastService _toastService;
+
+  bool _needsBootstrap;
+
+  @override
+  void initState() {
+    super.initState();
+    _needsBootstrap = true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_needsBootstrap) {
+      var provider = OpenbookProvider.of(context);
+      _userService = provider.userService;
+      _navigationService = provider.navigationService;
+      _localizationService = provider.localizationService;
+      _toastService = provider.toastService;
+      _needsBootstrap = false;
+    }
+
+    return OBCupertinoPageScaffold(
+        navigationBar: OBThemedNavigationBar(
+          title: _localizationService.community__top_posts_settings,
+        ),
+        child: OBPrimaryColorContainer(
+          child: Column(
+            children: <Widget>[
+              ListView(
+                physics: const ClampingScrollPhysics(),
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                children: <Widget>[
+                  ListTile(
+                    leading: const OBIcon(OBIcons.excludePostCommunity),
+                    subtitle: OBSecondaryText(
+                        _localizationService
+                            .community__top_posts_excluded_communities_desc),
+                    title:
+                    OBText(_localizationService
+                        .community__top_posts_excluded_communities),
+                    onTap: () {
+                      _navigationService
+                          .navigateToTopPostsExcludedCommunities(
+                          context: context);
+                    },
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    OBDivider(),
+                    OBExcludeJoinedCommunitiesTile()
+                  ]
+                )
+              ),
+            ],
+          )
+        )
+    );
+  }
+}
