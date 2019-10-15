@@ -12,6 +12,7 @@ import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
 import 'package:Okuna/services/draft.dart';
+import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
@@ -68,6 +69,7 @@ class OpenbookProvider extends StatefulWidget {
 
 class OpenbookProviderState extends State<OpenbookProvider> {
   UserPreferencesService userPreferencesService = UserPreferencesService();
+  ExploreTimelinePreferencesService exploreTimelinePreferencesService = ExploreTimelinePreferencesService();
   CreateAccountBloc createAccountBloc = CreateAccountBloc();
   ValidationService validationService = ValidationService();
   HttpieService httpService = HttpieService();
@@ -124,6 +126,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     imageCache.maximumSize = 200 << 20; // 200MB
     userPreferencesService.setStorageService(storageService);
     userPreferencesService.setConnectivityService(connectivityService);
+    exploreTimelinePreferencesService.setStorageService(storageService);
     connectionsCirclesApiService.setHttpService(httpService);
     httpService.setUtilsService(utilsService);
     connectionsCirclesApiService

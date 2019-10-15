@@ -856,6 +856,14 @@ class LocalizationService {
     return Intl.message("excluded communities", name: 'community__excluded_communities');
   }
 
+  String get community__exclude_joined_communities {
+    return Intl.message("Exclude joined communities", name: 'community__exclude_joined_communities');
+  }
+
+  String get community__exclude_joined_communities_desc {
+    return Intl.message("Don't show posts from communities I'm a member of", name: 'community__exclude_joined_communities_desc');
+  }
+
   String get community__type_public {
     return Intl.message("Public", name: 'community__type_public');
   }
@@ -1555,6 +1563,16 @@ class LocalizationService {
   String get community__top_posts_excluded_communities {
     return Intl.message("Excluded communities",
         name: 'community__top_posts_excluded_communities');
+  }
+
+  String get community__top_posts_excluded_communities_desc {
+    return Intl.message("Manage communities excluded from the explore timeline",
+        name: 'community__top_posts_excluded_communities_desc');
+  }
+
+  String get community__top_posts_settings {
+    return Intl.message("Explore settings",
+        name: 'community__top_posts_settings');
   }
 
   String get user_search__search_text {
