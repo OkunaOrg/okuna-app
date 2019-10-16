@@ -1902,6 +1902,10 @@ class LocalizationService {
     return Intl.message("Explore", name: 'post__top_posts_title');
   }
 
+  String get post__trending_posts_title {
+    return Intl.message("Trending", name: 'post__trending_posts_title');
+  }
+
   String get post__trending_posts_no_trending_posts {
     return Intl.message(
         "There are no trending posts. Try refreshing in a couple seconds.",

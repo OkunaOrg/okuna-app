@@ -43,4 +43,8 @@ class ExploreTimelinePreferencesService {
     _excludeJoinedCommunitiesSettingChangeSubject.add(_isExcludeJoinedCommunitiesEnabled);
   }
 
+  void dispose() {
+    _excludeJoinedCommunitiesSettingChangeSubject.close();
+  }
+
 }

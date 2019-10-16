@@ -12,6 +12,7 @@ class PostsApiService {
 
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TOP_POSTS_PATH = 'api/posts/top/';
+  static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';
   static const EDIT_POST_PATH = 'api/posts/{postUuid}/';
@@ -82,7 +83,7 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> getTopPosts(
-      {int maxId, int minId, int count, bool authenticatedRequest = true}) {
+      {int maxId, int minId, int count, bool excludeJoinedCommunities = false, bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
@@ -90,8 +91,15 @@ class PostsApiService {
 
     if (minId != null) queryParams['min_id'] = minId;
 
+    if (excludeJoinedCommunities != null) queryParams['exclude_joined_communities'] = excludeJoinedCommunities;
+
     return _httpService.get('$apiURL$GET_TOP_POSTS_PATH',
         queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
+  Future<HttpieResponse> getTrendingPosts({bool authenticatedRequest = true}) {
+    return _httpService.get('$apiURL$GET_TRENDING_POSTS_PATH',
         appendAuthorizationToken: authenticatedRequest);
   }
 
