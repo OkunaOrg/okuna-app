@@ -33,8 +33,9 @@ class OBExcludeJoinedCommunitiesTile extends StatelessWidget {
               title: localizationService
                   .community__exclude_joined_communities,
               subtitle: OBSecondaryText(localizationService.community__exclude_joined_communities_desc),
-              onChanged: (bool value) {print('changed to  $value');},
-              onTap: () {exploreTimelinePreferencesService.setExcludeJoinedCommunitiesSetting(!currentExcludeJoinedCommunitiesSetting)},
+              onChanged: (bool value) {
+                exploreTimelinePreferencesService.setExcludeJoinedCommunitiesSetting(!currentExcludeJoinedCommunitiesSetting);
+              },
               hasDivider: false,
             );
           },

@@ -1,20 +1,14 @@
-import 'dart:async';
-
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/widgets/exclude_joined_communities_tile.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
-import 'package:Okuna/services/toast.dart';
-import 'package:Okuna/widgets/fields/toggle_field.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/theming/divider.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
-import 'package:Okuna/widgets/tile_group_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +20,8 @@ class OBTopPostsSettingsPage extends StatefulWidget {
 }
 
 class OBTopPostsSettingsState extends State<OBTopPostsSettingsPage> {
-  UserService _userService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
-  ToastService _toastService;
 
   bool _needsBootstrap;
 
@@ -43,10 +35,8 @@ class OBTopPostsSettingsState extends State<OBTopPostsSettingsPage> {
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);
-      _userService = provider.userService;
       _navigationService = provider.navigationService;
       _localizationService = provider.localizationService;
-      _toastService = provider.toastService;
       _needsBootstrap = false;
     }
 
