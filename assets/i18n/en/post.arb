@@ -306,6 +306,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "trending_posts_title": "Trending",
+  "@trending_posts_title": {
+    "type": "text",
+    "placeholders": {}
+  },
   "trending_posts_no_trending_posts": "There are no trending posts. Try refreshing in a couple seconds.",
   "@trending_posts_no_trending_posts": {
     "type": "text",
