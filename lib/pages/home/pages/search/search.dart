@@ -130,6 +130,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
             ),
             Expanded(
                 child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: <Widget>[
                     OBTrendingPosts(
