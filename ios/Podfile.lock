@@ -7,9 +7,12 @@ PODS:
   - file_picker (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_ffmpeg/full-gpl-lts (0.2.7):
+  - flutter_ffmpeg (0.2.7):
     - Flutter
-    - mobile-ffmpeg-full-gpl (= 4.2.2.LTS)
+    - flutter_ffmpeg/https (= 0.2.7)
+  - flutter_ffmpeg/https (0.2.7):
+    - Flutter
+    - mobile-ffmpeg-https (= 4.2.2)
   - flutter_image_compress (0.0.1):
     - Flutter
     - Mantle
@@ -23,7 +26,7 @@ PODS:
     - TOCropViewController (~> 2.5.1)
   - image_picker (0.0.1):
     - Flutter
-  - Intercom (5.4.1)
+  - Intercom (5.5.1)
   - intercom_flutter (1.0.7):
     - Flutter
     - Intercom
@@ -39,7 +42,7 @@ PODS:
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
-  - mobile-ffmpeg-full-gpl (4.2.2.LTS)
+  - mobile-ffmpeg-https (4.2.2)
   - OneSignal (2.11.0)
   - onesignal_flutter (2.1.0):
     - Flutter
@@ -65,9 +68,11 @@ PODS:
     - Flutter
   - video_player (0.0.1):
     - Flutter
+    - VIMediaCache
   - video_thumbnail (0.0.1):
     - Flutter
     - libwebp
+  - VIMediaCache (0.4)
   - wakelock (0.0.1):
     - Flutter
 
@@ -75,14 +80,13 @@ DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
-  - flutter_ffmpeg/full-gpl-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_ffmpeg (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - intercom_flutter (from `.symlinks/plugins/intercom_flutter/ios`)
-  - OneSignal (< 3.0, >= 2.9.5)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -97,15 +101,16 @@ DEPENDENCIES:
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - FMDB
     - Intercom
     - libwebp
     - Mantle
-    - mobile-ffmpeg-full-gpl
+    - mobile-ffmpeg-https
     - OneSignal
     - Reachability
     - TOCropViewController
+    - VIMediaCache
 
 EXTERNAL SOURCES:
   connectivity:
@@ -115,7 +120,7 @@ EXTERNAL SOURCES:
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   flutter_ffmpeg:
     :path: ".symlinks/plugins/flutter_ffmpeg/ios"
   flutter_image_compress:
@@ -164,11 +169,11 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: 966bf742cd9cee8d78010ec5c67dd9e7826e6b19
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
-  Intercom: d189cf8cc8591e7e63dbb10ee4401a70a7fdc9d6
+  Intercom: a9dac939be35ba163304fbbdc101817a47992992
   intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
-  mobile-ffmpeg-full-gpl: efbd28ed385c931e90421f4f3a78a2349c3c76d0
+  mobile-ffmpeg-https: 9474e6e0958b6c12d981073d81a3b9484da02f48
   OneSignal: 1e2ed98358f87cb755e7262412ddb2949b8e5c55
   onesignal_flutter: 4b1a299c510913d6ab15ee493b554b3a4f33f43c
   package_info: 78cabb3c322943c55d39676f4a5bfc748c01d055
@@ -181,10 +186,11 @@ SPEC CHECKSUMS:
   TOCropViewController: 00dc36c4e4a0f4a45efa91adbf22df8a4fae01d3
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
-  video_player: 3964090a33353060ed7f58aa6427c7b4b208ec21
+  video_player: fd8b6188941ec5a530d6ab0830a34f78faa0452e
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
+  VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   wakelock: da5012e206ec8978df58d8642e4cdd4fe506185f
 
-PODFILE CHECKSUM: 43ead701385d268ad85aa42b0bb96ad47cef7863
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
-COCOAPODS: 1.8.1
+COCOAPODS: 1.7.5

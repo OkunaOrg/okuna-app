@@ -41,7 +41,9 @@ dependencies:
   onesignal_flutter:
     git:
       url: https://github.com/OkunaOrg/OneSignal-Flutter-SDK.git
-  flutter_advanced_networkimage: ^0.5.0
+  flutter_advanced_networkimage:
+    git:
+      url: https://github.com/mchome/flutter_advanced_networkimage.git
   dcache: ^0.1.0
   validators: ^1.0.0+1
   url_launcher: ^4.0.1
@@ -53,7 +55,7 @@ dependencies:
   public_suffix: ^1.2.0
   pigment: ^1.0.3
   photo_view: ^0.4.2
-  flutter_svg: ^0.13.0
+  flutter_svg: ^0.14.0
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
@@ -61,7 +63,11 @@ dependencies:
   throttling: ^0.8.0
   wakelock: ^0.1.3
   rxdart: ^0.18.1
-  video_player: ^0.10.2+3
+  video_player:
+    git:
+      url: https://github.com/OkunaOrg/plugins.git
+      ref: feature/caching
+      path: packages/video_player
   sprintf: "^4.0.0"
   image_picker: 0.6.1
   image_cropper: ^1.0.1

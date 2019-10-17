@@ -149,10 +149,12 @@ packages:
   flutter_advanced_networkimage:
     dependency: "direct main"
     description:
-      name: flutter_advanced_networkimage
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.0"
+      path: "."
+      ref: HEAD
+      resolved-ref: "806effc5429459cdd53558196d79dd5db8894c59"
+      url: "https://github.com/mchome/flutter_advanced_networkimage.git"
+    source: git
+    version: "0.6.0"
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -227,7 +229,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.1"
+    version: "0.14.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -791,10 +793,12 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      name: video_player
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.2+3"
+      path: "packages/video_player"
+      ref: "feature/caching"
+      resolved-ref: "89cf1a47c56bb55d080990e06c5cbea09bb4bf21"
+      url: "https://github.com/OkunaOrg/plugins.git"
+    source: git
+    version: "0.10.3"
   video_thumbnail:
     dependency: "direct main"
     description:
