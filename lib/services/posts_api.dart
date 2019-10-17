@@ -83,7 +83,7 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> getTopPosts(
-      {int maxId, int minId, int count, bool excludeJoinedCommunities = false, bool authenticatedRequest = true}) {
+      {int maxId, int minId, int count, bool excludeJoinedCommunities, bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 

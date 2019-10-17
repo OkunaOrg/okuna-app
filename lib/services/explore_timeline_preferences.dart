@@ -8,7 +8,7 @@ class ExploreTimelinePreferencesService {
 
   static const excludeJoinedCommunitiesStorageKey = 'excludeJoinedCommunitiesSetting';
 
-  bool _isExcludeJoinedCommunitiesEnabled = false;
+  bool _isExcludeJoinedCommunitiesEnabled = true;
 
   Stream<bool> get excludeJoinedCommunitiesSettingChange =>
       _excludeJoinedCommunitiesSettingChangeSubject.stream;
@@ -33,7 +33,7 @@ class ExploreTimelinePreferencesService {
 
   Future<bool> getExcludeJoinedCommunitiesSetting() async {
     String rawValue = await _storage.get(excludeJoinedCommunitiesStorageKey,
-        defaultValue: 'false');
+        defaultValue: 'true');
     return rawValue == 'true';
   }
 
