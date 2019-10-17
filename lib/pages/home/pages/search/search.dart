@@ -65,6 +65,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     if (widget.controller != null)
       widget.controller.attach(context: context, state: this);
     _topPostsController = OBTopPostsController();
+    _trendingPostsController = OBTrendingPostsController();
     _userSearchRequestInProgress = false;
     _communitySearchRequestInProgress = false;
     _hasSearch = false;
@@ -299,7 +300,11 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   void scrollToTop() {
-    _topPostsController.scrollToTop();
+    if (_tabController.index == 0) {
+      _trendingPostsController.scrollToTop();
+    } else if (_tabController.index == 1) {
+      _topPostsController.scrollToTop();
+    }
   }
 }
 
