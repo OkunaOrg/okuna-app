@@ -157,6 +157,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       throw OBVideoPlayerInitializationException('Player controller had error');
     }
 
+    if(widget.controller._attemptedToPlayWhileNotReady) _playerController.play();
+
     setState((){
       _videoInitialized = true;
     });
@@ -322,6 +324,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
 class OBVideoPlayerController {
   OBVideoPlayerState _state;
+  bool _attemptedToPlayWhileNotReady = false;
 
   void attach(state) {
     _state = state;
@@ -329,6 +332,7 @@ class OBVideoPlayerController {
 
   void pause() {
     if (!isReady()) {
+      _attemptedToPlayWhileNotReady = false;
       debugLog('State is not ready. Wont pause.');
       return;
     }
@@ -337,6 +341,7 @@ class OBVideoPlayerController {
 
   void play() {
     if (!isReady()) {
+      _attemptedToPlayWhileNotReady = true;
       debugLog('State is not ready. Wont play.');
       return;
     }
@@ -349,7 +354,7 @@ class OBVideoPlayerController {
   }
 
   bool isReady() {
-    return _state != null && _state.mounted && _state._playerController != null;
+    return _state != null && _state.mounted && _state._videoInitialized;
   }
 
   bool hasVideoOpenedInDialog() {

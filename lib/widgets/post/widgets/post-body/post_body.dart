@@ -1,13 +1,8 @@
 import 'package:Okuna/models/post.dart';
-import 'package:Okuna/models/post_image.dart';
-import 'package:Okuna/models/post_media.dart';
-import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_link_preview.dart';
-import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_image.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/post_body_media.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_text.dart';
-import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_video.dart';
 import 'package:flutter/material.dart';
 
 class OBPostBody extends StatelessWidget {
