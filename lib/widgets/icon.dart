@@ -128,6 +128,8 @@ class OBIcon extends StatelessWidget {
 
 class OBIcons {
   static const home = OBIconData(nativeIcon: Icons.home);
+  static const explore = OBIconData(nativeIcon: Icons.public);
+  static const trending = OBIconData(nativeIcon: Icons.whatshot);
   static const pause = OBIconData(nativeIcon: Icons.pause);
   static const play_arrow = OBIconData(nativeIcon: Icons.play_arrow);
   static const search = OBIconData(nativeIcon: Icons.search);

@@ -39,6 +39,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "exclude_joined_communities": "Exclude joined communities",
+  "@exclude_joined_communities": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_joined_communities_desc": "Don't show posts from communities I'm a member of",
+  "@exclude_joined_communities_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
   "type_public": "Public",
   "@type_public": {
     "type": "text",
@@ -766,6 +776,16 @@
   },
   "top_posts_excluded_communities": "Excluded communities",
   "@top_posts_excluded_communities": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "top_posts_excluded_communities_desc": "Manage communities excluded from the explore timeline",
+  "@top_posts_excluded_communities_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "top_posts_settings": "Explore settings",
+  "@top_posts_settings": {
     "type": "text",
     "placeholders": {}
   }

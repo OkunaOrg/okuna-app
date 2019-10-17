@@ -415,17 +415,27 @@ class UserService {
     return _loggedInUser != null;
   }
 
-  Future<TopPostsList> getTopPosts({int maxId, int minId, int count}) async {
+  Future<TopPostsList> getTopPosts({int maxId, int minId, int count, bool excludeJoinedCommunities}) async {
     HttpieResponse response =
         await _postsApiService.getTopPosts(
             maxId: maxId,
             minId: minId,
             count: count,
+            excludeJoinedCommunities: excludeJoinedCommunities,
             authenticatedRequest: true);
 
     _checkResponseIsOk(response);
 
     return TopPostsList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostsList> getTrendingPosts() async {
+    HttpieResponse response =
+    await _postsApiService.getTrendingPosts(authenticatedRequest: true);
+
+    _checkResponseIsOk(response);
+
+    return PostsList.fromJson(json.decode(response.body));
   }
 
   Future<PostsList> getTimelinePosts(

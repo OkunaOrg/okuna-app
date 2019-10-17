@@ -4,6 +4,7 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/top_post.dart';
 import 'package:Okuna/models/top_posts_list.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/user.dart';
@@ -12,7 +13,6 @@ import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:throttling/throttling.dart';
 
@@ -33,10 +33,12 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   UserService _userService;
   LocalizationService _localizationService;
   NavigationService _navigationService;
-  CancelableOperation _getTrendingPostsOperation;
+  ExploreTimelinePreferencesService _exploreTimelinePreferencesService;
   OBPostsStreamController _obPostsStreamController;
+  StreamSubscription _excludeJoinedCommunitiesChangeSubscription;
 
   bool _needsBootstrap;
+  bool _excludeJoinedCommunitiesEnabled;
   List<TopPost> _currentTopPosts;
   List<Post> _currentPosts;
   List<int> _excludedCommunities = [];
@@ -56,7 +58,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   void dispose() async {
     super.dispose();
     await _userService.setStoredTopPosts(_currentTopPosts);
-    if (_getTrendingPostsOperation != null) _getTrendingPostsOperation.cancel();
+    _excludeJoinedCommunitiesChangeSubscription?.cancel();
   }
 
   Future refresh() {
@@ -73,6 +75,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
     _navigationService = openbookProvider.navigationService;
+    _exploreTimelinePreferencesService = openbookProvider.exploreTimelinePreferencesService;
 
     if (_needsBootstrap) _bootstrap();
     if (!_needsBootstrap) {
@@ -98,7 +101,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
                 OBIconButton(
                   OBIcons.settings,
                   themeColor: OBIconThemeColor.primaryAccent,
-                  onPressed: _onWantsToSeeExcludedCommunities,
+                  onPressed: _onWantsToSeeTopPostSettings,
                 )
               ],
             ),
@@ -113,6 +116,13 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   void _bootstrap() async {
+    _excludeJoinedCommunitiesEnabled = await _exploreTimelinePreferencesService.getExcludeJoinedCommunitiesSetting();
+
+    _excludeJoinedCommunitiesChangeSubscription =
+        _exploreTimelinePreferencesService.
+        excludeJoinedCommunitiesSettingChange.
+        listen(_onExcludeJoinedCommunitiesEnabledChanged);
+
     _topPostLastViewedId = await _userService.getStoredTopPostsLastViewedId();
     TopPostsList topPostsList = await _userService.getStoredTopPosts();
     if (topPostsList.posts != null) {
@@ -126,6 +136,13 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         _needsBootstrap = false;
       });
     });
+  }
+
+  void _onExcludeJoinedCommunitiesEnabledChanged(bool excludeJoinedCommunitiesEnabled) {
+    setState(() {
+      _excludeJoinedCommunitiesEnabled = excludeJoinedCommunitiesEnabled;
+    });
+    refresh();
   }
 
   Widget _topPostBuilder(BuildContext context, Post post, String streamUniqueIdentifier, Function(Post) onPostDeleted) {
@@ -170,8 +187,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     _userService.setStoredTopPosts(_cachablePosts);
   }
 
-  void _onWantsToSeeExcludedCommunities() {
-    _navigationService.navigateToTopPostsExcludedCommunities(context: context);
+  void _onWantsToSeeTopPostSettings() {
+    _navigationService.navigateToTopPostsSettings(context: context);
   }
 
   void _onCommunityExcluded(Community community) {
@@ -193,7 +210,10 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   Future<List<Post>> _postsStreamRefresher() async {
-    List<TopPost> topPosts = (await _userService.getTopPosts(count: 10)).posts;
+    List<TopPost> topPosts = (await _userService.getTopPosts(
+        count: 10,
+        excludeJoinedCommunities: _excludeJoinedCommunitiesEnabled)
+    ).posts;
     List<Post> posts = topPosts.map((topPost) => topPost.post).toList();
     _setTopPosts(topPosts);
     _setPosts(posts);
@@ -208,6 +228,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
 
     List<TopPost> moreTopPosts = (await _userService.getTopPosts(
         maxId: lastTopPostId,
+        excludeJoinedCommunities: _excludeJoinedCommunitiesEnabled,
         count: 10))
         .posts;
 

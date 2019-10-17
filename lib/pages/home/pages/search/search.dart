@@ -1,27 +1,35 @@
 import 'dart:async';
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/users_list.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/top_posts.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/trending_posts.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/user_search_results.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/widgets/search_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMainSearchPage extends StatefulWidget {
   final OBMainSearchPageController controller;
+  final OBSearchPageTab selectedTab;
 
-  const OBMainSearchPage({Key key, this.controller}) : super(key: key);
+  const OBMainSearchPage({Key key, this.controller,
+    this.selectedTab = OBSearchPageTab.trending}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -29,7 +37,8 @@ class OBMainSearchPage extends StatefulWidget {
   }
 }
 
-class OBMainSearchPageState extends State<OBMainSearchPage> {
+class OBMainSearchPageState extends State<OBMainSearchPage> 
+    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
@@ -42,6 +51,8 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   List<User> _userSearchResults;
   List<Community> _communitySearchResults;
   OBTopPostsController _topPostsController;
+  OBTrendingPostsController _trendingPostsController;
+  TabController _tabController;
 
   OBUserSearchResultsTab _selectedSearchResultsTab;
 
@@ -54,12 +65,25 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     if (widget.controller != null)
       widget.controller.attach(context: context, state: this);
     _topPostsController = OBTopPostsController();
+    _trendingPostsController = OBTrendingPostsController();
     _userSearchRequestInProgress = false;
     _communitySearchRequestInProgress = false;
     _hasSearch = false;
     _userSearchResults = [];
     _communitySearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
+    _tabController = new TabController(length: 2, vsync: this);
+
+    switch (widget.selectedTab) {
+      case OBSearchPageTab.explore:
+        _tabController.index = 1;
+        break;
+      case OBSearchPageTab.trending:
+        _tabController.index = 0;
+        break;
+      default:
+        throw "Unhandled tab index: ${widget.selectedTab}";
+    }
   }
 
   @override
@@ -70,11 +94,53 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
     _navigationService = openbookProvider.navigationService;
     _localizationService = openbookProvider.localizationService;
 
+    ThemeService themeService = openbookProvider.themeService;
+    ThemeValueParserService themeValueParser =
+        openbookProvider.themeValueParserService;
+    OBTheme theme = themeService.getActiveTheme();
+
+    Color tabIndicatorColor =
+    themeValueParser.parseGradient(theme.primaryAccentColor).colors[1];
+    Color tabLabelColor = themeValueParser.parseColor(theme.primaryTextColor);
+
     Widget indexedStackWidget = IndexedStack(
       index: _hasSearch ? 1: 0,
       children: <Widget>[
-        OBTopPosts(
-          controller: _topPostsController,
+        Column(
+          children: <Widget>[
+            TabBar(
+              controller: _tabController,
+              tabs: <Widget>[
+                Padding(
+                  padding: EdgeInsets.zero,
+                  child: Tab(
+                    icon: OBIcon(OBIcons.trending),
+                  )
+                ),
+                Padding(
+                    padding: EdgeInsets.zero,
+                    child: Tab(
+                      icon: OBIcon(OBIcons.explore),
+                    )
+                ),
+              ],
+              isScrollable: false,
+              indicatorColor: tabIndicatorColor,
+              labelColor: tabLabelColor,
+            ),
+            Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: <Widget>[
+                    OBTrendingPosts(
+                      controller: _trendingPostsController,
+                    ),
+                    OBTopPosts(
+                      controller: _topPostsController,
+                    ),
+                  ],
+                ))
+          ],
         ),
         OBUserSearchResults(
           searchQuery: _searchQuery,
@@ -234,7 +300,11 @@ class OBMainSearchPageState extends State<OBMainSearchPage> {
   }
 
   void scrollToTop() {
-    _topPostsController.scrollToTop();
+    if (_tabController.index == 0) {
+      _trendingPostsController.scrollToTop();
+    } else if (_tabController.index == 1) {
+      _topPostsController.scrollToTop();
+    }
   }
 }
 
@@ -250,3 +320,5 @@ class OBMainSearchPageController extends PoppablePageController {
     _state.scrollToTop();
   }
 }
+
+enum OBSearchPageTab { explore, trending }
