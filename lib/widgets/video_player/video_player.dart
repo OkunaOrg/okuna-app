@@ -58,8 +58,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   OBVideoPlayerControlsController _obVideoPlayerControlsController;
   UserPreferencesService _userPreferencesService;
 
-  Future _initializeVideoPlayerFuture;
-
+  bool _videoInitialized;
   bool _needsChewieBootstrap;
 
   bool _isVideoHandover;
@@ -82,33 +81,12 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     _isPausedDueToInvisibility = false;
     _isPausedByUser = false;
     _needsBootstrap = true;
+    _videoInitialized = false;
 
     _isVideoHandover =
         widget.videoPlayerController != null && widget.chewieController != null;
 
-    String visibilityKeyFallback;
-    if (widget.videoUrl != null) {
-      _playerController = VideoPlayerController.network(widget.videoUrl);
-      visibilityKeyFallback = widget.videoUrl;
-    } else if (widget.video != null) {
-      _playerController = VideoPlayerController.file(widget.video);
-      visibilityKeyFallback = widget.video.path;
-    } else if (widget.videoPlayerController != null) {
-      _playerController = widget.videoPlayerController;
-      visibilityKeyFallback = widget.videoPlayerController.dataSource;
-    } else {
-      throw Exception('Video dialog requires video or videoUrl.');
-    }
-
-    visibilityKeyFallback += '-${rng.nextInt(1000)}';
-
-    _playerController.setVolume(0);
-
-    _visibilityKey = widget.visibilityKey != null
-        ? widget.visibilityKey
-        : Key(visibilityKeyFallback);
-
-    _initializeVideo();
+    _prepareVideo();
   }
 
   @override
@@ -130,30 +108,58 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     }
   }
 
-  void _initializeVideo() async {
+  Future _prepareVideo() async {
     if (_isVideoHandover) {
       debugLog('Not initializing video player as it is handover');
-      _initializeVideoPlayerFuture = Future.value();
-    } else {
-      debugLog('Initializing video player');
-      try {
-        _initializeVideoPlayerFuture = retry(
-          () {
-                return _playerController.initialize().timeout(Duration(seconds: 2));
-          },
-          retryIf: (e) {
-            debugLog('Checking retry condition');
-            bool willRetry = e is SocketException || e is TimeoutException;
-            if (willRetry) debugLog('Retrying video initializing');
-            return willRetry;
-          },
-        );
-      } catch (error) {
-        debugLog(
-            'Failed to initialize video player with error: ${error.toString()}');
-        throw error;
-      }
+      _videoInitialized = true;
+      return;
     }
+
+    await retry(
+      () => _initializeVideo(),
+      retryIf: (e) {
+        debugLog('Checking retry condition');
+        bool willRetry = e is SocketException || e is TimeoutException || e is OBVideoPlayerInitializationException;
+        if (willRetry) debugLog('Retrying video initializing');
+        return willRetry;
+      },
+    );
+  }
+
+  Future _initializeVideo() async {
+    String visibilityKeyFallback;
+
+    if (widget.videoUrl != null) {
+      _playerController = VideoPlayerController.network(widget.videoUrl);
+      visibilityKeyFallback = widget.videoUrl;
+    } else if (widget.video != null) {
+      _playerController = VideoPlayerController.file(widget.video);
+      visibilityKeyFallback = widget.video.path;
+    } else if (widget.videoPlayerController != null) {
+      _playerController = widget.videoPlayerController;
+      visibilityKeyFallback = widget.videoPlayerController.dataSource;
+    } else {
+      throw Exception('Video dialog requires video or videoUrl.');
+    }
+
+    _playerController.setVolume(0);
+
+    visibilityKeyFallback += '-${rng.nextInt(1000)}';
+
+    _visibilityKey = widget.visibilityKey != null
+        ? widget.visibilityKey
+        : Key(visibilityKeyFallback);
+
+    debugLog('Initializing video player');
+    await _playerController.initialize().timeout(Duration(seconds: 2));
+    if (_playerController.value?.hasError == true) {
+      debugLog('Player controller has error');
+      throw OBVideoPlayerInitializationException('Player controller had error');
+    }
+
+    setState((){
+      _videoInitialized = true;
+    });
   }
 
   void _bootstrap() async {
@@ -175,53 +181,50 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       _needsBootstrap = false;
     }
 
-    return FutureBuilder(
-      future: _initializeVideoPlayerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (_needsChewieBootstrap) {
-            _chewieController = _getChewieController();
-            _needsChewieBootstrap = false;
-          }
+    return _videoInitialized ? _buildVideoPlayer() : _buildLoadingIndicator();
+  }
 
-          return VisibilityDetector(
-            key: _visibilityKey,
-            onVisibilityChanged: _onVisibilityChanged,
-            child: Chewie(
-                height: widget.height,
-                width: widget.width,
-                controller: _chewieController,
-                isConstrained: widget.isConstrained),
-          );
-        } else {
-          // If the VideoPlayerController is still initializing, show a
-          // loading spinner.
-          return Stack(
-            children: <Widget>[
-              widget.thumbnailUrl != null
-                  ? Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AdvancedNetworkImage(widget.thumbnailUrl,
-                            useDiskCache: true),
-                      )),
-                    )
-                  : const SizedBox(),
-              Positioned(
-                top: 0,
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Center(
-                    child: OBProgressIndicator(
-                  color: Colors.white,
+  Widget _buildVideoPlayer() {
+    if (_needsChewieBootstrap) {
+      _chewieController = _getChewieController();
+      _needsChewieBootstrap = false;
+    }
+
+    return VisibilityDetector(
+      key: _visibilityKey,
+      onVisibilityChanged: _onVisibilityChanged,
+      child: Chewie(
+          height: widget.height,
+          width: widget.width,
+          controller: _chewieController,
+          isConstrained: widget.isConstrained),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return Stack(
+      children: <Widget>[
+        widget.thumbnailUrl != null
+            ? Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AdvancedNetworkImage(widget.thumbnailUrl,
+                      useDiskCache: true),
                 )),
               )
-            ],
-          );
-        }
-      },
+            : const SizedBox(),
+        Positioned(
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+          child: Center(
+              child: OBProgressIndicator(
+            color: Colors.white,
+          )),
+        )
+      ],
     );
   }
 
@@ -377,4 +380,10 @@ class OBVideoPlayerController {
   void debugLog(String log) {
     debugPrint('OBVideoPlayerController: $log');
   }
+}
+
+class OBVideoPlayerInitializationException implements Exception {
+  String cause;
+
+  OBVideoPlayerInitializationException(this.cause);
 }
