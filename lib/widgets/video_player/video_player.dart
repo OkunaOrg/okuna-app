@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-
+import 'package:retry/retry.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
@@ -130,14 +130,29 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     }
   }
 
-  void _initializeVideo() {
-    if(_isVideoHandover){
+  void _initializeVideo() async {
+    if (_isVideoHandover) {
       debugLog('Not initializing video player as it is handover');
       _initializeVideoPlayerFuture = Future.value();
-    } else{
+    } else {
       debugLog('Initializing video player');
-      _initializeVideoPlayerFuture =
-      _playerController.initialize();
+      try {
+        _initializeVideoPlayerFuture = retry(
+          () {
+                return _playerController.initialize().timeout(Duration(seconds: 2));
+          },
+          retryIf: (e) {
+            debugLog('Checking retry condition');
+            bool willRetry = e is SocketException || e is TimeoutException;
+            if (willRetry) debugLog('Retrying video initializing');
+            return willRetry;
+          },
+        );
+      } catch (error) {
+        debugLog(
+            'Failed to initialize video player with error: ${error.toString()}');
+        throw error;
+      }
     }
   }
 
@@ -297,8 +312,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   }
 
   void debugLog(String log) {
-    //ValueKey<String> key = _visibilityKey;
-    //debugPrint('OBVideoPlayer:${key.value}: $log');
+    ValueKey<String> key = _visibilityKey;
+    debugPrint('OBVideoPlayer:${key.value}: $log');
   }
 }
 

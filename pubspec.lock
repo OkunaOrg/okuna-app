@@ -56,7 +56,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "2.0.0-rc"
   charcode:
     dependency: transitive
     description:
@@ -150,9 +150,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "806effc5429459cdd53558196d79dd5db8894c59"
-      url: "https://github.com/mchome/flutter_advanced_networkimage.git"
+      ref: "bugfix/fix-breaking-master-change"
+      resolved-ref: "5819c4bb6bdd755dabe134bceb1ed2934a311248"
+      url: "https://github.com/OkunaOrg/flutter_advanced_networkimage.git"
     source: git
     version: "0.6.0"
   flutter_cache_manager:
@@ -161,7 +161,7 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -547,6 +547,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  retry:
+    dependency: "direct main"
+    description:
+      name: retry
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0+1"
   rxdart:
     dependency: "direct main"
     description:
@@ -794,11 +801,11 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/video_player"
-      ref: "feature/caching"
-      resolved-ref: "89cf1a47c56bb55d080990e06c5cbea09bb4bf21"
+      ref: "ricardo/develop2"
+      resolved-ref: "7c584243c4960ba9aa0bd4f144545191c0ccf87e"
       url: "https://github.com/OkunaOrg/plugins.git"
     source: git
-    version: "0.10.3"
+    version: "0.11.0"
   video_thumbnail:
     dependency: "direct main"
     description:
@@ -850,4 +857,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.5.0 <3.0.0"
-  flutter: ">=1.9.1 <2.0.0"
+  flutter: ">=1.10.15-pre.148 <2.0.0"
