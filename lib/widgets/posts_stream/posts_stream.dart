@@ -31,12 +31,14 @@ class OBPostsStream extends StatefulWidget {
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
   final bool isTopPostsStream;
   final Widget Function(BuildContext, Post, String, Function(Post)) postBuilder;
+  final Function(ScrollPosition) onScrollCallback;
 
   const OBPostsStream(
       {Key key,
       this.prependedItems,
       @required this.refresher,
       @required this.onScrollLoader,
+      this.onScrollCallback,
       this.controller,
       this.initialPosts,
       @required this.streamIdentifier,
@@ -330,6 +332,12 @@ class OBPostsStreamState extends State<OBPostsStream>
   }
 
   void _onScroll() {
+    if (widget.onScrollCallback != null && _shouldHideStackedLoadingScreen) {
+      // trigger this callback only after loading overlay is hidden
+      // so that its not registered as a manual scroll
+      widget.onScrollCallback(_streamScrollController.position);
+    }
+
     if (_status == OBPostsStreamStatus.loadingMore ||
         _status == OBPostsStreamStatus.noMoreToLoad) return;
 

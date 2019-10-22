@@ -18,9 +18,11 @@ import 'package:throttling/throttling.dart';
 
 class OBTopPosts extends StatefulWidget {
   final OBTopPostsController controller;
+  final Function(ScrollPosition) onScrollCallback;
 
   OBTopPosts({
     this.controller,
+    this.onScrollCallback,
   });
 
   @override
@@ -84,6 +86,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         refresher: _postsStreamRefresher,
         onScrollLoader: _postsStreamOnScrollLoader,
         controller: _obPostsStreamController,
+        onScrollCallback: widget.onScrollCallback,
         isTopPostsStream: true,
         initialPosts: _currentPosts,
         refreshOnCreate: _currentPosts == null,

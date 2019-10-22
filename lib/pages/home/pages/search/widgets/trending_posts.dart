@@ -10,8 +10,12 @@ import 'package:flutter/material.dart';
 
 class OBTrendingPosts extends StatefulWidget {
   final OBTrendingPostsController controller;
+  final Function(ScrollPosition) onScrollCallback;
 
-  const OBTrendingPosts({this.controller});
+  const OBTrendingPosts({
+    this.controller,
+    this.onScrollCallback,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -63,6 +67,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
+      onScrollCallback: widget.onScrollCallback,
       prependedItems: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
