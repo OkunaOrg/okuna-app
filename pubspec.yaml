@@ -35,17 +35,14 @@ dependencies:
   screen: ^0.0.5
   back_button_interceptor: ^4.0.1
   flutter_colorpicker: any
-  intercom_flutter: ^1.0.11
+  intercom_flutter: ^2.0.5+2
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
   onesignal_flutter:
     git:
       url: https://github.com/OkunaOrg/OneSignal-Flutter-SDK.git
-  flutter_advanced_networkimage:
-    git:
-      url: https://github.com/OkunaOrg/flutter_advanced_networkimage.git
-      ref: bugfix/fix-breaking-master-change
+  flutter_advanced_networkimage: 0.6.0-alpha.1
   dcache: ^0.1.0
   validators: ^1.0.0+1
   url_launcher: ^4.0.1

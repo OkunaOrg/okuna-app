@@ -19,8 +19,6 @@ export 'package:image_picker/image_picker.dart';
 
 class MediaService {
   static Uuid _uuid = new Uuid();
-  static const MAX_NETWORK_IMAGE_CACHE_MB = 200;
-  static const MAX_NETWORK_IMAGE_CACHE_ENTRIES = 1000;
 
   static const Map IMAGE_RATIOS = {
     OBImageType.avatar: {'x': 1.0, 'y': 1.0},
@@ -221,11 +219,6 @@ class MediaService {
 
   String getMimeType(File file) {
     return lookupMimeType(file.path);
-  }
-
-  void setAdvancedNetworkImageDiskCacheParams() {
-    DiskCache().maxEntries = MAX_NETWORK_IMAGE_CACHE_ENTRIES;
-    DiskCache().maxSizeBytes = MAX_NETWORK_IMAGE_CACHE_MB * 1000000; // 200mb
   }
 
   Future<File> cropImage(File image, {double ratioX, double ratioY}) async {
