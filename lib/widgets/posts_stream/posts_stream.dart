@@ -32,6 +32,7 @@ class OBPostsStream extends StatefulWidget {
   final bool isTopPostsStream;
   final Widget Function(BuildContext, Post, String, Function(Post)) postBuilder;
   final Function(ScrollPosition) onScrollCallback;
+  final double refreshIndicatorDisplacement;
 
   const OBPostsStream(
       {Key key,
@@ -44,6 +45,7 @@ class OBPostsStream extends StatefulWidget {
       @required this.streamIdentifier,
       this.onPostsRefreshed,
       this.refreshOnCreate = true,
+      this.refreshIndicatorDisplacement = 40.0,
       this.secondaryRefresher,
       this.isTopPostsStream = false,
       this.postBuilder,
@@ -138,6 +140,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     }
 
     return RefreshIndicator(
+      displacement: widget.refreshIndicatorDisplacement,
       key: _refreshIndicatorKey,
       onRefresh: _refreshPosts,
       child: _buildStream(),

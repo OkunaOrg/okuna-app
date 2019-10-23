@@ -89,6 +89,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         onScrollLoader: _postsStreamOnScrollLoader,
         controller: _obPostsStreamController,
         onScrollCallback: widget.onScrollCallback,
+        refreshIndicatorDisplacement: 110.0,
         isTopPostsStream: true,
         initialPosts: _currentPosts,
         refreshOnCreate: _currentPosts == null,

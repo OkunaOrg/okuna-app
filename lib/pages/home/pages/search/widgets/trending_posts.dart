@@ -70,6 +70,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
       onScrollCallback: widget.onScrollCallback,
+      refreshIndicatorDisplacement: 110.0,
       prependedItems: <Widget>[
         Padding(
           padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),

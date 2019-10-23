@@ -88,7 +88,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _communitySearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0)).animate(_animationController);
 
     switch (widget.selectedTab) {
@@ -251,14 +251,16 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     bool isScrollingUp = position.userScrollDirection == ScrollDirection.forward;
     _hideKeyboard();
     if (position.pixels < (HEIGHT_SEARCH_BAR + HEIGHT_TABS_SECTION)) {
-      if (_offset.value.dy == -1.0) _showTabSection(true);
+      if (_offset.value.dy == -1.0) _showTabSection();
       return;
     }
 
+    if (isScrollingUp == _isScrollingUp) return;
+
     if (isScrollingUp) {
-      _showTabSection(isScrollingUp);
+      _showTabSection();
     } else {
-      _hideTabSection(isScrollingUp);
+      _hideTabSection();
     }
   }
 
@@ -351,19 +353,17 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     });
   }
 
-  void _hideTabSection(bool isScrollingUp) {
+  void _hideTabSection() {
+    _animationController.forward();
     setState(() {
-      _animationController.forward();
-      setState(() {
-        _isScrollingUp = isScrollingUp;
-      });
+      _isScrollingUp = false;
     });
   }
 
-  void _showTabSection(bool isScrollingUp) {
+  void _showTabSection() {
     _animationController.reverse();
     setState(() {
-      _isScrollingUp = isScrollingUp;
+      _isScrollingUp = true;
     });
   }
 
