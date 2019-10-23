@@ -163,7 +163,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: HEIGHT_SEARCH_BAR),
+          padding: EdgeInsets.only(top: HEIGHT_SEARCH_BAR + _getExtraPaddingForSlidableSection()),
           child: OBUserSearchResults(
             searchQuery: _searchQuery,
             userResults: _userSearchResults,
