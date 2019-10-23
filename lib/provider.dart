@@ -144,6 +144,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setAuthApiService(authApiService);
     createAccountBloc.setUserService(userService);
     userService.setAuthApiService(authApiService);
+    userService.setPushNotificationsService(pushNotificationsService);
     userService.setPostsApiService(postsApiService);
     userService.setEmojisApiService(emojisApiService);
     userService.setHttpieService(httpService);
@@ -177,6 +178,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
     pushNotificationsService.setUserService(userService);
+    pushNotificationsService.setStorageService(storageService);
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
