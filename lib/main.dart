@@ -29,6 +29,7 @@ import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'dart:async';
@@ -56,14 +57,29 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale locale;
+  bool _needsBootstrap;
+
+  static const MAX_NETWORK_IMAGE_CACHE_MB = 200;
+  static const MAX_NETWORK_IMAGE_CACHE_ENTRIES = 1000;
 
   @override
   void initState() {
     super.initState();
+    _needsBootstrap = true;
+  }
+
+  void bootstrap() {
+    DiskCache().maxEntries = MAX_NETWORK_IMAGE_CACHE_ENTRIES;
+    //DiskCache().maxSizeBytes = MAX_NETWORK_IMAGE_CACHE_MB * 1000000; // 200mb
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_needsBootstrap) {
+      bootstrap();
+      _needsBootstrap = false;
+    }
+
     var textTheme = _defaultTextTheme();
     return OpenbookProvider(
       key: widget.openbookProviderKey,
@@ -269,18 +285,21 @@ Future<Null> main() async {
 
   MyApp app;
   // run the entire app with our own HttpieOverride
-  HttpOverrides.runWithHttpOverrides<Future<Null>>(() async {
-    app = MyApp();
-    runApp(app);
-  }, HttpieOverrides(), onError: (error, stackTrace) async {
-    if (isOnDesktop) {
-      DesktopErrorReporting.reportError(error, stackTrace);
-      return;
-    }
-    SentryClient sentryClient =
-        app.openbookProviderKey.currentState.sentryClient;
-    await _reportError(error, stackTrace, sentryClient);
-  });
+  HttpOverrides.runWithHttpOverrides<Future<Null>>(
+      () async {
+        app = MyApp();
+        runApp(app);
+      },
+      HttpieOverrides(),
+      onError: (error, stackTrace) async {
+        if (isOnDesktop) {
+          DesktopErrorReporting.reportError(error, stackTrace);
+          return;
+        }
+        SentryClient sentryClient =
+            app.openbookProviderKey.currentState.sentryClient;
+        await _reportError(error, stackTrace, sentryClient);
+      });
 }
 
 /// Reports [error] along with its [stackTrace] to Sentry.io.
