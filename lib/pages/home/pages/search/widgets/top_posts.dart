@@ -19,10 +19,12 @@ import 'package:throttling/throttling.dart';
 class OBTopPosts extends StatefulWidget {
   final OBTopPostsController controller;
   final Function(ScrollPosition) onScrollCallback;
+  final double extraTopPadding;
 
   OBTopPosts({
     this.controller,
     this.onScrollCallback,
+    this.extraTopPadding = 0.0,
   });
 
   @override
@@ -93,7 +95,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         postBuilder: _topPostBuilder,
         prependedItems: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
