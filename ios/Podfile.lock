@@ -24,9 +24,9 @@ PODS:
   - image_picker (0.0.1):
     - Flutter
   - Intercom (5.5.1)
-  - intercom_flutter (1.0.7):
+  - "intercom_flutter (2.0.5+2)":
     - Flutter
-    - Intercom
+    - Intercom (~> 5.5.1)
   - libwebp (1.0.3):
     - libwebp/demux (= 1.0.3)
     - libwebp/mux (= 1.0.3)
@@ -169,7 +169,7 @@ SPEC CHECKSUMS:
   image_cropper: 966bf742cd9cee8d78010ec5c67dd9e7826e6b19
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   Intercom: a9dac939be35ba163304fbbdc101817a47992992
-  intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
+  intercom_flutter: bfadb1c7e3d0af65b91cef2a53a29f5a9abc32c1
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   mobile-ffmpeg-full-gpl: efbd28ed385c931e90421f4f3a78a2349c3c76d0

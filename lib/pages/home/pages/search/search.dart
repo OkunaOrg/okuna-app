@@ -48,7 +48,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   bool _hasSearch;
   bool _isScrollingUp;
-  bool _needsBootstrap;
   bool _userSearchRequestInProgress;
   bool _communitySearchRequestInProgress;
   String _searchQuery;
@@ -60,7 +59,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   AnimationController _animationController;
   Animation<Offset> _offset;
   double _heightTabs;
-  OverlayEntry _searchBarAndTabsOverlay;
+  double _extraPaddingForSlidableSection;
 
   OBUserSearchResultsTab _selectedSearchResultsTab;
 
@@ -82,7 +81,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _communitySearchRequestInProgress = false;
     _hasSearch = false;
     _isScrollingUp = true;
-    _needsBootstrap = true;
     _heightTabs = HEIGHT_TABS_SECTION;
     _userSearchResults = [];
     _communitySearchResults = [];
@@ -113,28 +111,20 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _themeService = openbookProvider.themeService;
     _themeValueParserService = openbookProvider.themeValueParserService;
 
-    if (_needsBootstrap) _bootstrap();
+    if (_extraPaddingForSlidableSection == null)
+      _extraPaddingForSlidableSection = _getExtraPaddingForSlidableSection();
 
     return OBCupertinoPageScaffold(
-        backgroundColor: Colors.white,
-        child: OBPrimaryColorContainer(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Expanded(
-                child: _getIndexedStackWidget(),
-              )
-            ],
-          ),
-        ));
-  }
-
-  void _bootstrap() {
-    Future.delayed(Duration(milliseconds: 0), () {
-      this._searchBarAndTabsOverlay = this._createSearchBarAndTabsOverlayEntry();
-      Overlay.of(context).insert(this._searchBarAndTabsOverlay);
-    });
-    _needsBootstrap = false;
+      backgroundColor: Colors.white,
+      child: OBPrimaryColorContainer(
+        child: Stack(
+          children: <Widget>[
+            _getIndexedStackWidget(),
+            _createSearchBarAndTabsOverlay()
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _getIndexedStackWidget() {
@@ -163,7 +153,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: HEIGHT_SEARCH_BAR + _getExtraPaddingForSlidableSection()),
+          padding: EdgeInsets.only(top: HEIGHT_SEARCH_BAR + _extraPaddingForSlidableSection),
           child: OBUserSearchResults(
             searchQuery: _searchQuery,
             userResults: _userSearchResults,
@@ -184,28 +174,25 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   double _getExtraPaddingForSlidableSection() {
     MediaQueryData existingMediaQuery = MediaQuery.of(context);
     // flutter has diff heights for notched phones, see also issues with bottom tab bar
-    // iphone with notches have a bottom padding, every other phone its 0
+    // iphone with notches have a top/bottom padding
     // this adds 20.0 extra padding for notched phones
-    double extraPadding = existingMediaQuery.padding.bottom != 0 ? 20.0 : 0;
-    return extraPadding;
+    if (existingMediaQuery.padding.top != 0 && existingMediaQuery.padding.bottom != 0) return 20.0;
+    return 0.0;
   }
 
-  OverlayEntry _createSearchBarAndTabsOverlayEntry() {
+  Widget _createSearchBarAndTabsOverlay() {
     MediaQueryData existingMediaQuery = MediaQuery.of(context);
-    final double extraPadding = _getExtraPaddingForSlidableSection();
 
-    return OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          left: 0,
-          top: 0,
-          height: HEIGHT_SEARCH_BAR + _heightTabs + extraPadding,
-          width: existingMediaQuery.size.width,
-          child: OBCupertinoPageScaffold(
-          backgroundColor: Colors.transparent,
-          child: _getSlideTransitionWidget(),
-        ));
-      });
+    return Positioned(
+      left: 0,
+      top: 0,
+      height: HEIGHT_SEARCH_BAR + _heightTabs + _extraPaddingForSlidableSection,
+      width: existingMediaQuery.size.width,
+      child: OBCupertinoPageScaffold(
+      backgroundColor: Colors.transparent,
+      child: _getSlideTransitionWidget(),
+      )
+    );
   }
 
   Widget _getSlideTransitionWidget() {
