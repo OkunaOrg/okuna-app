@@ -10,8 +10,14 @@ import 'package:flutter/material.dart';
 
 class OBTrendingPosts extends StatefulWidget {
   final OBTrendingPostsController controller;
+  final Function(ScrollPosition) onScrollCallback;
+  final double extraTopPadding;
 
-  const OBTrendingPosts({this.controller});
+  const OBTrendingPosts({
+    this.controller,
+    this.onScrollCallback,
+    this.extraTopPadding = 0.0,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -63,9 +69,11 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
+      onScrollCallback: widget.onScrollCallback,
+      refreshIndicatorDisplacement: 110.0,
       prependedItems: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
           child: OBPrimaryAccentText(
               _localizationService.post__trending_posts_title,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
