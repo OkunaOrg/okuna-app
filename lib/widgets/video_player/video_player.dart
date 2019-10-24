@@ -71,6 +71,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   StreamSubscription _videosSoundSettingsChangeSubscription;
 
+  Future _videoPreparationFuture;
+
   @override
   void initState() {
     super.initState();
@@ -86,7 +88,26 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     _isVideoHandover =
         widget.videoPlayerController != null && widget.chewieController != null;
 
-    _prepareVideo();
+    String visibilityKeyFallback;
+
+    if (widget.videoUrl != null) {
+      visibilityKeyFallback = widget.videoUrl;
+    } else if (widget.video != null) {
+      visibilityKeyFallback = widget.video.path;
+    } else if (widget.videoPlayerController != null) {
+      visibilityKeyFallback = widget.videoPlayerController.dataSource;
+    } else {
+      throw Exception(
+          'Video dialog requires video, videoUrl or videoPlayerController.');
+    }
+
+    visibilityKeyFallback += '-${rng.nextInt(1000)}';
+
+    _visibilityKey = widget.visibilityKey != null
+        ? widget.visibilityKey
+        : Key(visibilityKeyFallback);
+
+    _videoPreparationFuture = _prepareVideo();
   }
 
   @override
@@ -110,6 +131,8 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   Future _prepareVideo() async {
     if (_isVideoHandover) {
+      _playerController = widget.videoPlayerController;
+      _chewieController = widget.chewieController;
       debugLog('Not initializing video player as it is handover');
       _videoInitialized = true;
       return;
@@ -119,7 +142,9 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       () => _initializeVideo(),
       retryIf: (e) {
         debugLog('Checking retry condition');
-        bool willRetry = e is SocketException || e is TimeoutException || e is OBVideoPlayerInitializationException;
+        bool willRetry = e is SocketException ||
+            e is TimeoutException ||
+            e is OBVideoPlayerInitializationException;
         if (willRetry) debugLog('Retrying video initializing');
         return willRetry;
       },
@@ -127,28 +152,18 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   }
 
   Future _initializeVideo() async {
-    String visibilityKeyFallback;
-
     if (widget.videoUrl != null) {
       _playerController = VideoPlayerController.network(widget.videoUrl);
-      visibilityKeyFallback = widget.videoUrl;
     } else if (widget.video != null) {
       _playerController = VideoPlayerController.file(widget.video);
-      visibilityKeyFallback = widget.video.path;
     } else if (widget.videoPlayerController != null) {
       _playerController = widget.videoPlayerController;
-      visibilityKeyFallback = widget.videoPlayerController.dataSource;
     } else {
-      throw Exception('Video dialog requires video or videoUrl.');
+      throw Exception(
+          'Failed to initialize video. Video dialog requires video, videoUrl or videoPlayerController.');
     }
 
     _playerController.setVolume(0);
-
-    visibilityKeyFallback += '-${rng.nextInt(1000)}';
-
-    _visibilityKey = widget.visibilityKey != null
-        ? widget.visibilityKey
-        : Key(visibilityKeyFallback);
 
     debugLog('Initializing video player');
     await _playerController.initialize().timeout(Duration(seconds: 2));
@@ -157,14 +172,16 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       throw OBVideoPlayerInitializationException('Player controller had error');
     }
 
-    if(widget.controller._attemptedToPlayWhileNotReady) _playerController.play();
+    if (widget.controller._attemptedToPlayWhileNotReady)
+      _playerController.play();
 
-    setState((){
+    setState(() {
       _videoInitialized = true;
     });
   }
 
   void _bootstrap() async {
+    await _videoPreparationFuture;
     VideosSoundSetting videosSoundSetting =
         await _userPreferencesService.getVideosSoundSetting();
     _onUserPreferencesVideosSoundSettingsChange(videosSoundSetting);
