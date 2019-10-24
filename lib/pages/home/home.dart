@@ -385,7 +385,6 @@ class OBHomePageState extends State<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
-      _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
       _intercomService.enableIntercom();
 
