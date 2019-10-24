@@ -58,6 +58,11 @@ class OBTextField extends StatelessWidget {
             hintTextStyle = hintTextStyle.merge(decoration.hintStyle);
           }
 
+          var primaryColor =
+              themeValueParserService.parseColor(theme.primaryColor);
+          final bool isDarkPrimaryColor =
+              primaryColor.computeLuminance() < 0.179;
+
           return TextField(
             textInputAction: textInputAction,
             focusNode: focusNode,
@@ -67,6 +72,8 @@ class OBTextField extends StatelessWidget {
             maxLines: maxLines,
             obscureText: obscureText,
             textCapitalization: textCapitalization,
+            keyboardAppearance:
+                isDarkPrimaryColor ? Brightness.dark : Brightness.light,
             decoration: InputDecoration(
                 hintText: decoration.hintText,
                 hintStyle: hintTextStyle,
