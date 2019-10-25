@@ -56,7 +56,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-rc"
+    version: "1.1.2+1"
   charcode:
     dependency: transitive
     description:
@@ -152,7 +152,7 @@ packages:
       name: flutter_advanced_networkimage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0-alpha.1"
+    version: "0.5.0"
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -227,7 +227,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.2"
+    version: "0.13.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -323,7 +323,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.0"
+    version: "0.15.8"
   intl_translation:
     dependency: "direct dev"
     description:
@@ -855,4 +855,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.5.0 <3.0.0"
-  flutter: ">=1.10.15-pre.148 <2.0.0"
+  flutter: ">=1.9.1 <2.0.0"

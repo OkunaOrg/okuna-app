@@ -87,7 +87,7 @@ class OBCupertinoPageScaffold extends StatelessWidget {
       // If navigation bar is opaquely obstructing, directly shift the main content
       // down. If translucent, let main content draw behind navigation bar but hint the
       // obstructed area.
-      if (navigationBar.shouldFullyObstruct(context)) {
+      if (navigationBar.fullObstruction) {
         paddedContent = Padding(
           padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
           child: child,
