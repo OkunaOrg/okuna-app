@@ -352,6 +352,7 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   void _ensureNoRefreshPostsInProgress() {
     if (_refreshOperation != null) {
+      print('cancelling refresh posts');
       _refreshOperation.cancel();
       _refreshOperation = null;
     }
@@ -370,6 +371,7 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   Future<void> _refreshPosts() async {
     debugLog('Refreshing posts');
+    print('Refreshing posts');
     _ensureNoRefreshPostsInProgress();
     _setStatus(OBPostsStreamStatus.refreshing);
     try {
@@ -494,6 +496,10 @@ class OBPostsStreamController {
 
   Future refreshPosts() {
     return _state._refreshPosts();
+  }
+
+  Future refresh() {
+    return _state._refresh();
   }
 
   bool isAttached() {
