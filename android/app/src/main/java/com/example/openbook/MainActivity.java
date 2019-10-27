@@ -101,8 +101,14 @@ public class MainActivity extends FlutterActivity {
           return;
         }
       } catch (KeyedException e) {
-        String msg = String.format("an exception occurred while receiving share of type %s" +
-                "%n %s", intent.getType(), e.getCause() != null ? e.getCause().toString() : e.toString());
+        String msg;
+        if (e.getCause() != null) {
+          msg = String.format("an exception occurred while receiving share of type %s" +
+                  "%n %s%n caused by %s", intent.getType(), e.toString(), e.getCause().toString());
+        } else {
+          msg = String.format("an exception occurred while receiving share of type %s" +
+                  "%n %s", intent.getType(), e.toString());
+        }
         String errorTextKey = getLocalizationKey(e);
 
         args.put("error", errorTextKey);
@@ -251,7 +257,7 @@ class KeyedException extends Exception {
   private final Key key;
 
   public KeyedException(Key key, Throwable cause) {
-    super(cause);
+    super("", cause);
     this.key = key;
   }
 
