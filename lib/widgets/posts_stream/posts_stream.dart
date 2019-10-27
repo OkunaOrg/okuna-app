@@ -88,7 +88,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _posts = widget.initialPosts != null ? widget.initialPosts.toList() : [];
-    if (widget.initialPosts != null) _shouldHideStackedLoadingScreen = false;
+    if (_posts.isNotEmpty) _shouldHideStackedLoadingScreen = false;
     _needsBootstrap = true;
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _status = OBPostsStreamStatus.idle;
@@ -120,7 +120,7 @@ class OBPostsStreamState extends State<OBPostsStream>
         _refresh();
       });
     }
-    if (widget.isTopPostsStream && widget.initialPosts != null) {
+    if (widget.isTopPostsStream && _posts.isNotEmpty) {
       Future.delayed(Duration(milliseconds: 0), () {
         _scrollToBottom();
       });
@@ -219,7 +219,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   List<Widget> _buildStreamPosts() {
     if (widget.postBuilder != null) {
       return _posts.map((Post post) {
-        if (widget.initialPosts != null && post.id == widget.initialPosts.last.id) {
+        if (_posts.isNotEmpty && post.id == _posts.last.id) {
           _hideInitialPostsLoadingOverlay();
         }
         return widget.postBuilder(context, post, _streamUniqueIdentifier, _onPostDeleted);
@@ -231,7 +231,7 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   Widget _buildStreamPost(Post post) {
     String inViewId = '${_streamUniqueIdentifier}_${post.id.toString()}';
-    if (widget.initialPosts != null && post.id == widget.initialPosts.last.id) {
+    if (_posts.isNotEmpty && post.id == _posts.last.id) {
       _hideInitialPostsLoadingOverlay();
     }
 
