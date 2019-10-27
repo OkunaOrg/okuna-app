@@ -170,7 +170,12 @@ public class MainActivity extends FlutterActivity {
     String name = UUID.randomUUID().toString();
 
     try {
-      return File.createTempFile(name, extension, new File(getCacheDir(), "mediaCache"));
+	  File directory = new File(getCacheDir(), "mediaCache");
+	  if (!directory.exists()) {
+		directory.mkdirs();
+	  }
+	  
+      return File.createTempFile(name, extension, directory);
     } catch (IOException e) {
       throw new KeyedException(KeyedException.Key.TempCreationFailed, e);
     } catch (SecurityException e) {
@@ -235,7 +240,7 @@ class KeyedException extends Exception {
     WriteTempFailed(WriteTempDenied.message),
     WriteTempMissing(WriteTempDenied.message),
     ReadFileMissing("Failed to read the shared file."),
-    UriSchemeNotSupported("Unsupported UR scheme: ");
+    UriSchemeNotSupported("Unsupported URI scheme: ");
 
     private String message;
 
