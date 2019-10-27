@@ -66,7 +66,7 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   Future refresh() {
-    return _obPostsStreamController.refreshPosts();
+    return _obPostsStreamController.refresh();
   }
 
   void scrollToTop() {
@@ -148,7 +148,6 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     setState(() {
       _excludeJoinedCommunitiesEnabled = excludeJoinedCommunitiesEnabled;
     });
-    refresh();
   }
 
   Widget _topPostBuilder(BuildContext context, Post post, String streamUniqueIdentifier, Function(Post) onPostDeleted) {
@@ -184,17 +183,18 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     if (indexTopPost >= 4)  {
       // cache 5 prev top posts 0,1,2,3,4,5,6,7
       _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+2);
-    } else if (indexTopPost > 0 && indexTopPost < 5) {
-      _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+1);
-    } else if (indexTopPost == 0) {
-      _cachablePosts = [_currentTopPosts[0]];
+    } else if (indexTopPost >= 0 && indexTopPost < 5) {
+      _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+2);
     }
     _userService.setTopPostsLastViewedId(post.id);
     _userService.setStoredTopPosts(_cachablePosts);
   }
 
-  void _onWantsToSeeTopPostSettings() {
-    _navigationService.navigateToTopPostsSettings(context: context);
+  void _onWantsToSeeTopPostSettings() async {
+    bool excludeJoinedCommunitiesEnabled = _excludeJoinedCommunitiesEnabled;
+    Future routePopFuture = _navigationService.navigateToTopPostsSettings(context: context);
+    await routePopFuture;
+    if (excludeJoinedCommunitiesEnabled != _excludeJoinedCommunitiesEnabled) refresh();
   }
 
   void _onCommunityExcluded(Community community) {

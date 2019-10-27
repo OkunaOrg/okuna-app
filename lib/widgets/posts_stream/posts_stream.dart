@@ -496,6 +496,10 @@ class OBPostsStreamController {
     return _state._refreshPosts();
   }
 
+  Future refresh() {
+    return _state._refresh();
+  }
+
   bool isAttached() {
     return _state != null;
   }
