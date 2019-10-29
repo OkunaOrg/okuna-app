@@ -115,6 +115,16 @@ class LocalizationService {
         name: 'auth__create_acc__welcome_to_beta');
   }
 
+  String get auth__create_acc__invalid_token_title {
+    return Intl.message("Oops!",
+        name: 'auth__create_acc__invalid_token_title');
+  }
+
+  String get auth__create_acc__validating_token {
+    return Intl.message("Validating token...",
+        name: 'auth__create_acc__validating_token');
+  }
+
   String get auth__create_acc__previous {
     return Intl.message("Back", name: 'auth__create_acc__previous');
   }
