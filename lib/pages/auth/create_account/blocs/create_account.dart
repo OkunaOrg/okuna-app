@@ -37,6 +37,11 @@ class CreateAccountBloc {
 
   final _createAccountErrorFeedbackSubject = ReplaySubject<String>();
 
+  Stream<String> get tokenValidationErrorFeedback =>
+      _tokenValidationErrorFeedbackSubject.stream;
+
+  final _tokenValidationErrorFeedbackSubject = ReplaySubject<String>();
+
   // Create account ends
 
   CreateAccountBloc() {
@@ -269,6 +274,29 @@ class CreateAccountBloc {
 
   //Password Reset Token ends
 
+  Future<bool> isTokenValid() async {
+    bool isTokenValid = false;
+    try {
+      HttpieResponse response =
+      await _authApiService.verifyRegisterToken(token: userRegistrationData.token);
+
+      if (!response.isAccepted()) throw HttpieRequestError(response);
+      isTokenValid = true;
+    } catch (error) {
+      if (error is HttpieConnectionRefusedError) {
+        _onTokenValidationError(error.toHumanReadableMessage());
+      } else if (error is HttpieRequestError) {
+        String errorMessage = await error.toHumanReadableMessage();
+        _onTokenValidationError(errorMessage);
+      } else {
+        _onTokenValidationError('Unknown error');
+        rethrow;
+      }
+    }
+
+    return isTokenValid;
+  }
+
   Future<bool> createAccount() async {
     _clearCreateAccount();
 
@@ -312,9 +340,15 @@ class CreateAccountBloc {
     _clearToken();
   }
 
+  void _onTokenValidationError(String errorMessage) {
+    _tokenValidationErrorFeedbackSubject.add(errorMessage);
+    _clearToken();
+  }
+
   void _clearCreateAccount() {
     _createAccountInProgressSubject.add(null);
     _createAccountErrorFeedbackSubject.add(null);
+    _tokenValidationErrorFeedbackSubject.add(null);
   }
 
   void clearAll() {
