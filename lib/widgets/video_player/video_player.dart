@@ -175,9 +175,11 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     if (widget.controller._attemptedToPlayWhileNotReady)
       _playerController.play();
 
-    setState(() {
-      _videoInitialized = true;
-    });
+    if (mounted) {
+      setState(() {
+        _videoInitialized = true;
+      });
+    }
   }
 
   void _bootstrap() async {
