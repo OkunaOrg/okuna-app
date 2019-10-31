@@ -146,7 +146,7 @@ class MediaService {
 
     final FlutterFFmpeg _flutterFFmpeg = new FlutterFFmpeg();
 
-    String resultFileName = _uuid.v4() + '.mp4';
+    String resultFileName = 'compressed_video_' + _uuid.v4() + '.mp4';
     final path = await _getTempPath();
     final String resultFilePath = '$path/$resultFileName';
 
