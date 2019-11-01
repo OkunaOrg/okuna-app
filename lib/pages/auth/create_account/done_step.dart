@@ -1,7 +1,9 @@
 import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:Okuna/widgets/buttons/success_button.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +33,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
                     Colors.white.withOpacity(0.1), BlendMode.dstATop),
                 image: new AssetImage('assets/images/confetti-background.gif'),
                 fit: BoxFit.cover)),
-        padding: EdgeInsets.symmetric(horizontal: 40.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Center(child: SingleChildScrollView(child: _buildHooray())),
       ),
       bottomNavigationBar: _buildBottomBar(),
@@ -43,16 +45,31 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
       color: Colors.transparent,
       elevation: 0.0,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Expanded(
-              child: _buildNextButton(context: context),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: _buildLoginButton(context: context),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10.0),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: _buildJoinAllLoginButton(context: context),
+                ),
+              ],
             ),
           ],
-        ),
+        )
       ),
     );
   }
@@ -65,6 +82,8 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     String username = createAccountBloc.getUsername();
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
           '🐣‍',
@@ -101,18 +120,13 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         const SizedBox(
           height: 20.0,
         ),
-        Text(usernameSubtext,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16
-                //color: Colors.white
-                )),
+        OBSuggestedCommunities(),
       ],
     );
   }
 
-  Widget _buildNextButton({@required BuildContext context}) {
-    String buttonText =
-        localizationService.trans('auth__create_acc__done_continue');
+  Widget _buildJoinAllLoginButton({@required BuildContext context}) {
+    String buttonText = localizationService.auth__create_acc__join_all_login;
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -132,4 +146,25 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
       },
     );
   }
+
+  Widget _buildLoginButton({@required BuildContext context}) {
+    String buttonText = localizationService.auth__login__login;
+
+    return OBSecondaryButton(
+      isLarge: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            buttonText,
+            style: TextStyle(fontSize: 18.0),
+          )
+        ],
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/');
+      },
+    );
+  }
+
 }

@@ -449,6 +449,10 @@ class LocalizationService {
     return Intl.message("Login", name: 'auth__create_acc__done_continue');
   }
 
+  String get auth__create_acc__join_all_login {
+    return Intl.message("Join all and login", name: 'auth__create_acc__join_all_login');
+  }
+
   String get auth__create_acc__one_last_thing {
     return Intl.message("One last thing...",
         name: 'auth__create_acc__one_last_thing');
@@ -1309,6 +1313,16 @@ class LocalizationService {
   String community__trending_in_category(String categoryName) {
     return Intl.message("Trending in $categoryName",
         args: [categoryName], name: 'community__trending_in_category');
+  }
+
+  String get community__suggested_title {
+    return Intl.message("Recommended communities",
+        name: 'community__suggested_title');
+  }
+
+  String get community__suggested_desc {
+    return Intl.message("Some communities we highly recommend to get you started",
+        name: 'community__suggested_desc');
   }
 
   String get community__communities_title {

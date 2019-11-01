@@ -1162,6 +1162,13 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> getSuggestedCommunities() async {
+    HttpieResponse response = await _communitiesApiService
+        .getSuggestedCommunities();
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<Post> createPostForCommunity(Community community,
       {String text, File image, File video, bool isDraft}) async {
     HttpieStreamedResponse response = await _communitiesApiService
