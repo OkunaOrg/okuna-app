@@ -55,7 +55,7 @@ class OBSavePostModal extends StatefulWidget {
   }
 }
 
-class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
+class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   ValidationService _validationService;
   UserService _userService;
   NavigationService _navigationService;
@@ -239,7 +239,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
             semanticLabel: _localizationService.post__close_create_post_label),
         onTap: () {
           if (this._postImageFile != null) this._postImageFile.delete();
-          if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
+          if (this._postVideoFile != null)
+            _mediaService.clearThumbnailForFile(this._postVideoFile);
           if (this._postVideoFile != null) this._postVideoFile.delete();
           Navigator.pop(context);
         },
@@ -294,7 +295,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
 
     if (createPostData != null) {
       // Remove modal
-      if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
+      if (this._postVideoFile != null)
+        _mediaService.clearThumbnailForFile(this._postVideoFile);
       Navigator.pop(context, createPostData);
       _clearDraft();
     }
@@ -434,6 +436,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
       _hasImage = true;
 
       var postImageWidget = OBPostImagePreviewer(
+        key: Key(_postImageFile.path),
         postImageFile: _postImageFile,
         onRemove: () {
           _removePostImageFile();
@@ -459,6 +462,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
       _hasVideo = true;
 
       var postVideoWidget = OBPostVideoPreview(
+        key: Key(_postVideoFile.path),
         postVideoFile: _postVideoFile,
         onRemove: () {
           _removePostVideoFile();
@@ -528,7 +532,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
 
   Future<void> _createCommunityPost() async {
     OBNewPostData newPostData = _makeNewPostData();
-    if (this._postVideoFile != null) _mediaService.clearThumbnailForFile(this._postVideoFile);
+    if (this._postVideoFile != null)
+      _mediaService.clearThumbnailForFile(this._postVideoFile);
     Navigator.pop(context, newPostData);
     _clearDraft();
   }
@@ -612,7 +617,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
 
   void _removePostImageFile() {
     setState(() {
-      if (this._postImageFile != null) this._postImageFile.delete();
+      if (this._postImageFile != null) this._postImageFile.deleteSync();
+      this._postImage = null;
       _hasImage = false;
       _postImageWidgetRemover();
     });
@@ -621,7 +627,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal>{
   void _removePostVideoFile() {
     setState(() {
       _mediaService.clearThumbnailForFile(this._postVideoFile);
-      if (this._postVideoFile != null) this._postVideoFile.delete();
+      if (this._postVideoFile != null) this._postVideoFile.deleteSync();
+      this._postVideoFile = null;
       _hasVideo = false;
       _postVideoWidgetRemover();
     });
