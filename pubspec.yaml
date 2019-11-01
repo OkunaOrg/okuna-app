@@ -72,7 +72,6 @@ dependencies:
   share: ^0.6.1
   path: ^1.6.2
   package_info: ^0.4.0
-  permission: ^0.1.5
   flutter_exif_rotation: ^0.2.6
   flutter:
     sdk: flutter

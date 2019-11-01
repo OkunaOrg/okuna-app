@@ -118,7 +118,7 @@ class MediaService {
 
   Future<String> _getTempPath() async {
     Directory mediaCacheDir =
-        Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+        Directory(join((await getApplicationDocumentsDirectory()).path, 'mediaCache'));
     if (await mediaCacheDir.exists()) return mediaCacheDir.path;
 
     mediaCacheDir = await new Directory(mediaCacheDir.path).create();
