@@ -337,6 +337,10 @@ class OBSmartText extends StatelessWidget {
     }).toList());
   }
 
+  String runeSubstring({String input, int start, int end}) {
+    return String.fromCharCodes(input.runes.toList().sublist(start, end));
+  }
+
   void _enforceMaxLength(List<SmartTextElement> elements, int maxlength) {
     int length = 0;
 
@@ -352,8 +356,7 @@ class OBSmartText extends StatelessWidget {
 
       if (length + elementLength > maxlength) {
         elements.removeRange(i + 1, elements.length);
-        element.text =
-            element.text.substring(0, maxlength - length).trimRight();
+        element.text = runeSubstring(input: element.text, start: 0, end: maxlength - length).trimRight();
 
         if (lengthOverflow == TextOverflow.ellipsis) {
           element.text = element.text + '...';
