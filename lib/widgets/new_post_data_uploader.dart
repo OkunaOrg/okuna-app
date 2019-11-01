@@ -189,7 +189,6 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
           _getPostStatusOperation = null;
         });
       } else {
-        print('calling from else');
         _getPublishedPost();
       }
     } catch (error) {
