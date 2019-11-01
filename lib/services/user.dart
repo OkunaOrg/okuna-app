@@ -232,6 +232,8 @@ class UserService {
   }
 
   Future<bool> clearTemporaryDirectories() async {
+    // TODO Handle every service clearing its own things responsible for, not have it
+    // spread over the place...
     debugPrint('Clearing /tmp files and vimedia');
     try {
       Directory tempDir = Directory((await getApplicationDocumentsDirectory())
@@ -242,10 +244,10 @@ class UserService {
               .path
               .replaceFirst('Documents', 'tmp'),
           'vimedia'));
-      Directory mediaCacheDir =
-          Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
-      Directory videoDirAndroid =
-          Directory(join((await getTemporaryDirectory()).path, 'video'));
+      Directory mediaCacheDir = Directory(
+          join((await getApplicationDocumentsDirectory()).path, 'mediaCache'));
+      Directory videoDirAndroid = Directory(
+          join((await getApplicationDocumentsDirectory()).path, 'video'));
 
       if (tempDir.existsSync())
         tempDir.listSync().forEach((var entity) {

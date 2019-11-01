@@ -54,9 +54,11 @@ class MediaService {
     final tempPath = await _getTempPath();
 
     final String processedImageUuid = _uuid.v4();
+    String imageExtension = basename(pickedImage.path);
 
     // The image picker gives us the real image, lets copy it into a temp path
-    pickedImage = pickedImage.copySync('$tempPath/$processedImageUuid');
+    pickedImage =
+        pickedImage.copySync('$tempPath/$processedImageUuid$imageExtension');
 
     File processedPickedImage;
 
@@ -126,11 +128,10 @@ class MediaService {
   }
 
   Future<String> _getTempPath() async {
-    Directory mediaCacheDir = Directory(
-        join((await getApplicationDocumentsDirectory()).path, 'mediaCache'));
-    if (await mediaCacheDir.exists()) return mediaCacheDir.path;
-
-    mediaCacheDir = await new Directory(mediaCacheDir.path).create();
+    Directory applicationsDocumentsDir =
+        await getApplicationDocumentsDirectory();
+    Directory mediaCacheDir =
+        Directory(join(applicationsDocumentsDir.path, 'mediaCache'));
     return mediaCacheDir.path;
   }
 
