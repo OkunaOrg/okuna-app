@@ -50,6 +50,8 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - permission (0.0.1):
+    - Flutter
   - Reachability (3.2)
   - screen (0.0.1):
     - Flutter
@@ -185,6 +187,7 @@ SPEC CHECKSUMS:
   onesignal_flutter: 5a6041629e3f93a61cf7ae8193c3d1702f2ef78d
   package_info: 78cabb3c322943c55d39676f4a5bfc748c01d055
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  permission: 51e2d3a8ef3490da0537667d7f1a6a1c5ba8ec47
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
