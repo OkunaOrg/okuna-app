@@ -110,10 +110,9 @@ class MediaService {
   }
 
   Future<File> processImage(File image) async {
-    if(Platform.isAndroid){
-      File rotatedImage = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
-      if(rotatedImage != null) return rotatedImage;
-    }
+    File rotatedImage = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
+    if(rotatedImage != null) return rotatedImage;
+
     return image;
   }
 
