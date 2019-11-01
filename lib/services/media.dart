@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
@@ -110,12 +110,16 @@ class MediaService {
   }
 
   Future<File> processImage(File image) async {
-    /// Fix rotation issue on android
+    if(Platform.isAndroid){
+      File rotatedImage = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
+      if(rotatedImage != null) return rotatedImage;
+    }
     return image;
   }
 
   Future<String> _getTempPath() async {
-    Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+    Directory mediaCacheDir =
+        Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
     if (await mediaCacheDir.exists()) return mediaCacheDir.path;
 
     mediaCacheDir = await new Directory(mediaCacheDir.path).create();

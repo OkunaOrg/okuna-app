@@ -39,9 +39,7 @@ dependencies:
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
-  onesignal_flutter:
-    git:
-      url: https://github.com/OkunaOrg/OneSignal-Flutter-SDK.git
+  onesignal_flutter: ^2.2.0
   flutter_advanced_networkimage: 0.6.0-alpha.1
   dcache: ^0.1.0
   validators: ^1.0.0+1
@@ -74,6 +72,7 @@ dependencies:
   share: ^0.6.1
   path: ^1.6.2
   package_info: ^0.4.0
+  flutter_exif_rotation: ^0.2.6
   flutter:
     sdk: flutter
   flutter_localizations:

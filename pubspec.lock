@@ -167,6 +167,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.6"
+  flutter_exif_rotation:
+    dependency: "direct main"
+    description:
+      name: flutter_exif_rotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.6"
   flutter_ffmpeg:
     dependency: "direct main"
     description:
@@ -413,12 +420,10 @@ packages:
   onesignal_flutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "58fccdcc0e872a10c6313e22e1f885f58f793bd4"
-      url: "https://github.com/OkunaOrg/OneSignal-Flutter-SDK.git"
-    source: git
-    version: "2.1.0"
+      name: onesignal_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   open_iconic_flutter:
     dependency: "direct main"
     description:
