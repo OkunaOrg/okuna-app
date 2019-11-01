@@ -52,7 +52,12 @@ class MediaService {
 
     if (pickedImage == null) return null;
     final tempPath = await _getTempPath();
+
     final String processedImageUuid = _uuid.v4();
+
+    // The image picker gives us the real image, lets copy it into a temp path
+    pickedImage = pickedImage.copySync('$tempPath/$processedImageUuid');
+
     File processedPickedImage;
 
     bool pickedImageIsGif = isGif(pickedImage);
@@ -68,6 +73,9 @@ class MediaService {
       processedPickedImage =
           pickedImage.copySync('$tempPath/$processedImageName');
     }
+
+    // We now have a processed one
+    pickedImage.deleteSync();
 
     if (!await _validationService.isImageAllowedSize(
         processedPickedImage, imageType)) {
@@ -110,15 +118,16 @@ class MediaService {
   }
 
   Future<File> processImage(File image) async {
-    File rotatedImage = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
-    if(rotatedImage != null) return rotatedImage;
+    File rotatedImage =
+        await FlutterExifRotation.rotateAndSaveImage(path: image.path);
+    if (rotatedImage != null) return rotatedImage;
 
     return image;
   }
 
   Future<String> _getTempPath() async {
-    Directory mediaCacheDir =
-        Directory(join((await getApplicationDocumentsDirectory()).path, 'mediaCache'));
+    Directory mediaCacheDir = Directory(
+        join((await getApplicationDocumentsDirectory()).path, 'mediaCache'));
     if (await mediaCacheDir.exists()) return mediaCacheDir.path;
 
     mediaCacheDir = await new Directory(mediaCacheDir.path).create();
