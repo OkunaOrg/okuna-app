@@ -251,7 +251,9 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       File compressedImage =
           await _mediaPickerService.compressImage(postMediaItem);
       _data.remainingCompressedMediaToUpload.add(compressedImage);
-      _data.compressedMedia.add(compressedImage);
+      if (compressedImage.path.indexOf('compressed') > -1) {
+        _data.compressedMedia.add(compressedImage);
+      }
       debugLog(
           'Compressed image from ${postMediaItem.lengthSync()} to ${compressedImage.lengthSync()}');
     } else if (mediaMimeType == 'video') {
