@@ -1,5 +1,5 @@
 import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities/suggested_communities.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/buttons/button.dart';

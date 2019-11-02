@@ -1,8 +1,8 @@
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities/widgets/suggested_community_tile.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/theming/text.dart';
@@ -25,7 +25,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   bool _needsBootstrap;
   UserService _userService;
   ToastService _toastService;
-  NavigationService _navigationService;
   LocalizationService _localizationService;
   List<Community> _suggestedCommunities;
   bool _requestInProgress;
@@ -44,7 +43,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
-      _navigationService = openbookProvider.navigationService;
       _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
@@ -66,11 +64,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-//        OBText(_localizationService.community__suggested_title,
-//          textAlign: TextAlign.center,
-//          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-//        ),
-//        const SizedBox(height: 10.0),
         OBText(_localizationService.community__suggested_desc,
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 18, color: Colors.black,),
@@ -89,10 +82,11 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
 
   Widget _buildCommunity(BuildContext context, index) {
     Community community = _suggestedCommunities[index];
-    return OBCommunityTile(
+    return OBSuggestedCommunityTile(
       community,
-      key: Key(community.name),
-    //  onCommunityTilePressed: _onTrendingCommunityPressed,
+      onCommunityPressed: (Community selectedCommunity) {
+        print('tapped ${selectedCommunity.name}');
+      },
     );
   }
 
@@ -133,11 +127,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
       throw error;
     }
   }
-
-//  void _onTrendingCommunityPressed(Community community) {
-//    _navigationService.navigateToCommunity(
-//        community: community, context: context);
-//  }
 
   void _setSuggestedCommunities(List<Community> communities) {
     setState(() {
