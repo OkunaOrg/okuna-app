@@ -57,6 +57,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
   ChewieController _chewieController;
   OBVideoPlayerControlsController _obVideoPlayerControlsController;
   UserPreferencesService _userPreferencesService;
+  OBVideoPlayerController _controller;
 
   bool _videoInitialized;
   bool _needsChewieBootstrap;
@@ -73,10 +74,13 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   Future _videoPreparationFuture;
 
+
+
   @override
   void initState() {
     super.initState();
-    if (widget.controller != null) widget.controller.attach(this);
+    _controller = widget.controller == null ? OBVideoPlayerController() : widget.controller;
+    _controller.attach(this);
     _obVideoPlayerControlsController = OBVideoPlayerControlsController();
     _hasVideoOpenedInDialog = widget.isInDialog ?? false;
     _needsChewieBootstrap = true;
@@ -172,7 +176,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       throw OBVideoPlayerInitializationException('Player controller had error');
     }
 
-    if (widget.controller._attemptedToPlayWhileNotReady)
+    if (_controller._attemptedToPlayWhileNotReady)
       _playerController.play();
 
     if (mounted) {
