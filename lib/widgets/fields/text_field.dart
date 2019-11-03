@@ -75,6 +75,7 @@ class OBTextField extends StatelessWidget {
             keyboardAppearance:
                 isDarkPrimaryColor ? Brightness.dark : Brightness.light,
             decoration: InputDecoration(
+                isDense: true,
                 hintText: decoration.hintText,
                 hintStyle: hintTextStyle,
                 contentPadding: decoration.contentPadding,

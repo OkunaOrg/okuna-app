@@ -95,6 +95,7 @@ class OBTextFormField extends StatelessWidget {
                 obscureText: obscureText,
                 style: finalStyle,
                 decoration: InputDecoration(
+                    isDense: true,
                     hintText: decoration?.hintText,
                     labelStyle: TextStyle(
                         height: labelHeight,
