@@ -12,7 +12,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
-import 'package:image/image.dart';
 import 'bottom_sheet.dart';
 export 'package:image_picker/image_picker.dart';
 
@@ -51,7 +50,6 @@ class MediaService {
       {@required OBImageType imageType,
       @required BuildContext context,
       bool flattenGifs = true}) async {
-
     File pickedImage =
         await _bottomSheetService.showImagePicker(context: context);
 
@@ -124,20 +122,15 @@ class MediaService {
     return pickedVideoCopy;
   }
 
-  Future<File> processImage(File originalImage) async {
-    // Read a jpeg image from file.
-    final parsedImage = decodeJpg(originalImage.readAsBytesSync());
-
-    // Resize the image to a 1024 image maintaining the aspect ratio.
-    final thumbnail = copyResize(parsedImage, width: 1024);
-
-    // Remove contents of the original image
-    originalImage.deleteSync();
-
-    // Save the image as JPG
-    originalImage.writeAsBytesSync(encodeJpg(thumbnail));
-
-    return originalImage;
+  Future<File> processImage(File image) async {
+    // This is supposed to solve the rotated images bug from flutter
+    // https://github.com/flutter/flutter/issues/35334
+    final imageBytes = await image.readAsBytes();
+    await image.delete();
+    final compressedImageBytes =
+        await FlutterImageCompress.compressWithList(imageBytes);
+    await image.writeAsBytes(compressedImageBytes);
+    return image;
   }
 
   Future<String> _getTempPath() async {

@@ -7,8 +7,6 @@ PODS:
   - file_picker (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_exif_rotation (0.0.1):
-    - Flutter
   - flutter_ffmpeg/full-gpl-lts (0.2.7):
     - Flutter
     - mobile-ffmpeg-full-gpl (= 4.2.2.LTS)
@@ -80,7 +78,6 @@ DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
-  - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_ffmpeg/full-gpl-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
@@ -122,8 +119,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
-  flutter_exif_rotation:
-    :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_ffmpeg:
     :path: ".symlinks/plugins/flutter_ffmpeg/ios"
   flutter_image_compress:
@@ -166,13 +161,12 @@ SPEC CHECKSUMS:
   device_info: 3ebad48f726348f69abd802f3334a8d1ed795fbd
   file_picker: 408623be2125b79a4539cf703be3d4b3abe5e245
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
   flutter_ffmpeg: 05ee218287a2b55a13df8f7970aab1a52094083e
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: 966bf742cd9cee8d78010ec5c67dd9e7826e6b19
-  image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
+  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
   Intercom: 1151a15e5e7931d8e401671a4357239d44325159
   intercom_flutter: bfadb1c7e3d0af65b91cef2a53a29f5a9abc32c1
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
