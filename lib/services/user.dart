@@ -270,7 +270,7 @@ class UserService {
   void checkAndClearTempDirectories() async {
     int size = 0;
     try {
-      Directory tempDir = Directory((await getApplicationDocumentsDirectory())
+      Directory tempDir = Directory((await getTemporaryDirectory())
           .path
           .replaceFirst('Documents', 'tmp'));
       Directory vimediaDir = Directory(join(
