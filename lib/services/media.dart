@@ -1,19 +1,18 @@
 import 'dart:io';
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
 import 'package:Okuna/services/validation.dart';
-import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
-
+import 'package:image/image.dart';
 import 'bottom_sheet.dart';
 export 'package:image_picker/image_picker.dart';
 
@@ -30,9 +29,14 @@ class MediaService {
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
   LocalizationService _localizationService;
+  UtilsService _utilsService;
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
+  }
+
+  void setUtilsService(UtilsService utilsService) {
+    _utilsService = utilsService;
   }
 
   void setValidationService(ValidationService validationService) {
@@ -47,6 +51,7 @@ class MediaService {
       {@required OBImageType imageType,
       @required BuildContext context,
       bool flattenGifs = true}) async {
+
     File pickedImage =
         await _bottomSheetService.showImagePicker(context: context);
 
@@ -62,7 +67,7 @@ class MediaService {
 
     File processedPickedImage;
 
-    bool pickedImageIsGif = isGif(pickedImage);
+    bool pickedImageIsGif = await isGif(pickedImage);
 
     if (!pickedImageIsGif || flattenGifs) {
       String processedImageName = processedImageUuid + '.jpg';
@@ -119,17 +124,24 @@ class MediaService {
     return pickedVideoCopy;
   }
 
-  Future<File> processImage(File image) async {
-    File rotatedImage =
-        await FlutterExifRotation.rotateAndSaveImage(path: image.path);
-    if (rotatedImage != null) return rotatedImage;
+  Future<File> processImage(File originalImage) async {
+    // Read a jpeg image from file.
+    final parsedImage = decodeJpg(originalImage.readAsBytesSync());
 
-    return image;
+    // Resize the image to a 1024 image maintaining the aspect ratio.
+    final thumbnail = copyResize(parsedImage, width: 1024);
+
+    // Remove contents of the original image
+    originalImage.deleteSync();
+
+    // Save the image as JPG
+    originalImage.writeAsBytesSync(encodeJpg(thumbnail));
+
+    return originalImage;
   }
 
   Future<String> _getTempPath() async {
-    Directory applicationsDocumentsDir =
-        await getTemporaryDirectory();
+    Directory applicationsDocumentsDir = await getTemporaryDirectory();
     Directory mediaCacheDir =
         Directory(join(applicationsDocumentsDir.path, 'mediaCache'));
 
@@ -228,15 +240,12 @@ class MediaService {
     }
   }
 
-  bool isGif(File file) {
-    String mediaMime = getMimeType(file);
+  Future<bool> isGif(File file) async {
+    String mediaMime = await _utilsService.getFileMimeType(file);
+
     String mediaMimeSubtype = mediaMime.split('/')[1];
 
     return mediaMimeSubtype == 'gif';
-  }
-
-  String getMimeType(File file) {
-    return lookupMimeType(file.path);
   }
 
   Future<File> cropImage(File image, {double ratioX, double ratioY}) async {

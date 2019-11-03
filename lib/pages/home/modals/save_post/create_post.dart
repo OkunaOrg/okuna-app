@@ -385,7 +385,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                 context: context,
                 flattenGifs: false);
             if (pickedPhoto != null) {
-              bool photoIsGif = _mediaService.isGif(pickedPhoto);
+              bool photoIsGif = await _mediaService.isGif(pickedPhoto);
               if (photoIsGif) {
                 File gifVideo =
                     await _mediaService.convertGifToVideo(pickedPhoto);
@@ -520,7 +520,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     }
 
     if (video != null) {
-      if (_mediaService.isGif(video)) {
+      final isGif = await _mediaService.isGif(video);
+      if (isGif) {
         video = await _mediaService.convertGifToVideo(video);
       }
 
