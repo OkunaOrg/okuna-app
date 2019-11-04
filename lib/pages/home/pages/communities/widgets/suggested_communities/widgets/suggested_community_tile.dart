@@ -16,8 +16,10 @@ class OBSuggestedCommunityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => this.onCommunityPressed(community),
+    Widget field = GestureDetector(
+      onTap: () {
+        if (!isDisabled) this.onCommunityPressed(community);
+      },
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -27,12 +29,22 @@ class OBSuggestedCommunityTile extends StatelessWidget {
               key: Key(community.name),
             ),
           ),
+          const SizedBox(width: 10.0),
           OBCheckbox(
             value: isSelected,
           )
         ],
       ),
     );
+
+    if (isDisabled) {
+      field = Opacity(
+        opacity: 0.5,
+        child: field,
+      );
+    }
+
+    return field;
   }
 }
 

@@ -449,10 +449,6 @@ class LocalizationService {
     return Intl.message("Login", name: 'auth__create_acc__done_continue');
   }
 
-  String get auth__create_acc__join_all_login {
-    return Intl.message("Join all and login", name: 'auth__create_acc__join_all_login');
-  }
-
   String get auth__create_acc__one_last_thing {
     return Intl.message("One last thing...",
         name: 'auth__create_acc__one_last_thing');

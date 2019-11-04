@@ -54,17 +54,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Expanded(
-                  child: _buildLoginButton(context: context),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: _buildJoinAllLoginButton(context: context),
+                  child: _buildContinueButton(context: context),
                 ),
               ],
             ),
@@ -76,7 +66,6 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
 
   Widget _buildHooray() {
     String title = localizationService.trans('auth__create_acc__done_title');
-    String usernameSubtext = localizationService.trans('auth__create_acc__done_subtext');
     String accCreated = localizationService.trans('auth__create_acc__done_created');
 
     String username = createAccountBloc.getUsername();
@@ -125,8 +114,8 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     );
   }
 
-  Widget _buildJoinAllLoginButton({@required BuildContext context}) {
-    String buttonText = localizationService.auth__create_acc__join_all_login;
+  Widget _buildContinueButton({@required BuildContext context}) {
+    String buttonText = localizationService.auth__login__login;
 
     return OBSuccessButton(
       minWidth: double.infinity,
@@ -146,25 +135,4 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
       },
     );
   }
-
-  Widget _buildLoginButton({@required BuildContext context}) {
-    String buttonText = localizationService.auth__login__login;
-
-    return OBSecondaryButton(
-      isLarge: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            buttonText,
-            style: TextStyle(fontSize: 18.0),
-          )
-        ],
-      ),
-      onPressed: () {
-        Navigator.pushNamed(context, '/');
-      },
-    );
-  }
-
 }

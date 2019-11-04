@@ -27,6 +27,8 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   ToastService _toastService;
   LocalizationService _localizationService;
   List<Community> _suggestedCommunities;
+  List<Community> _selectedCommunities;
+  List<Community> _requestInProgressCommunities;
   bool _requestInProgress;
 
   @override
@@ -34,6 +36,8 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     super.initState();
     _needsBootstrap = true;
     _suggestedCommunities = [];
+    _selectedCommunities = [];
+    _requestInProgressCommunities = [];
     _requestInProgress = false;
   }
 
@@ -84,10 +88,52 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     Community community = _suggestedCommunities[index];
     return OBSuggestedCommunityTile(
       community,
+      isDisabled: _requestInProgressCommunities?.contains(community),
+      isSelected: _selectedCommunities?.contains(community),
       onCommunityPressed: (Community selectedCommunity) {
-        print('tapped ${selectedCommunity.name}');
+        if (_selectedCommunities.contains(community)) {
+          _leaveCommunity(community);
+        } else {
+          _joinCommunity(community);
+        }
       },
     );
+  }
+
+  void _addCommunityToSelectedCommunities(Community community) {
+    setState(() {
+      _selectedCommunities.add(community);
+    });
+  }
+
+  void _removeCommunityFromSelectedCommunities(Community community) {
+    setState(() {
+      _selectedCommunities.remove(community);
+    });
+  }
+
+  void _joinCommunity(Community community) async {
+    _setRequestInProgressForCommunity(community);
+    try {
+      await _userService.joinCommunity(community);
+      _addCommunityToSelectedCommunities(community);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _removeRequestInProgressForCommunity(community);
+    }
+  }
+
+  void _leaveCommunity(Community community) async {
+    _setRequestInProgressForCommunity(community);
+    try {
+      await _userService.leaveCommunity(community);
+      _removeCommunityFromSelectedCommunities(community);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _removeRequestInProgressForCommunity(community);
+    }
   }
 
   Widget _buildCommunitySeparator(BuildContext context, int index) {
@@ -137,6 +183,18 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   void _setRequestInProgress(bool refreshInProgress) {
     setState(() {
       _requestInProgress = refreshInProgress;
+    });
+  }
+
+  void _setRequestInProgressForCommunity(Community community) {
+    setState(() {
+      _requestInProgressCommunities.add(community);
+    });
+  }
+
+  void _removeRequestInProgressForCommunity(Community community) {
+    setState(() {
+      _requestInProgressCommunities.remove(community);
     });
   }
 
