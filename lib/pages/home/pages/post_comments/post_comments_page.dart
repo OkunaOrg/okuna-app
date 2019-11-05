@@ -1,17 +1,19 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/link_preview.dart';
-import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_search_box_state.dart';
 import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
@@ -53,12 +55,14 @@ class OBPostCommentsPage extends StatefulWidget {
   }
 }
 
-class OBPostCommentsPageState extends State<OBPostCommentsPage>
+class OBPostCommentsPageState
+    extends OBContextualSearchBoxState<OBPostCommentsPage>
     with SingleTickerProviderStateMixin {
   UserService _userService;
   UserPreferencesService _userPreferencesService;
   ToastService _toastService;
   ThemeService _themeService;
+  DraftService _draftService;
   LinkPreviewService _linkPreviewService;
   LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
@@ -80,9 +84,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   OBPostCommentsPageController _commentsPageController;
   Map<String, String> _pageTextMap;
 
-  OBPostCommenterController _postCommenterController;
-  OBContextualAccountSearchBoxController _postParticipantsSearchBoxController;
-  bool _postCommenterIsSearchingAccount;
+  DraftTextEditingController _postCommenterTextController;
 
   static const int MAX_POST_TEXT_LENGTH_LIMIT = 1300;
   static const int MAX_COMMENT_TEXT_LENGTH_LIMIT = 500;
@@ -108,6 +110,7 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       HEIGHT_POST_DIVIDER;
 
   CancelableOperation _refreshPostOperation;
+  CancelableOperation _refreshPostCommentOperation;
 
   @override
   void initState() {
@@ -128,10 +131,27 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
         duration: const Duration(milliseconds: 300), vsync: this);
     _animation = new Tween(begin: 1.0, end: 0.0).animate(_animationController);
     _animation.addStatusListener(_onAnimationStatusChanged);
-    _postCommenterController = OBPostCommenterController();
-    _postParticipantsSearchBoxController =
-        OBContextualAccountSearchBoxController();
-    _postCommenterIsSearchingAccount = false;
+  }
+
+  @override
+  void bootstrap() {
+    super.bootstrap();
+
+    _bootstrapAsync();
+
+    _postCommenterTextController = DraftTextEditingController.comment(
+        widget.post.id,
+        commentId: widget.postComment?.id,
+        draftService: _draftService);
+
+    setAutocompleteTextController(_postCommenterTextController);
+  }
+
+  void _bootstrapAsync() async {
+    await _setPostCommentsSortTypeFromPreferences();
+    _initialiseCommentsPageController();
+    if (widget.post != null) _refreshPost();
+    if (widget.postComment != null) _refreshPostComment();
   }
 
   @override
@@ -145,7 +165,8 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
       _themeService = provider.themeService;
       _localizationService = provider.localizationService;
       _linkPreviewService = provider.linkPreviewService;
-      _bootstrap();
+      _draftService = provider.draftService;
+      bootstrap();
       _needsBootstrap = false;
     }
 
@@ -165,12 +186,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
             children: _getStackChildren(),
           ),
         ));
-  }
-
-  void _bootstrap() async {
-    await _setPostCommentsSortTypeFromPreferences();
-    _initialiseCommentsPageController();
-    if (widget.post != null) await _refreshPost();
   }
 
   Future _setPostCommentsSortTypeFromPreferences() async {
@@ -319,24 +334,18 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           onRefresh: () => _commentsPageController.onWantsToRefreshComments())
     ];
 
-    postCommentsStackItems.add(Positioned(
-      child: IgnorePointer(
-        ignoring: !_postCommenterIsSearchingAccount,
-        child: Opacity(
-            opacity: _postCommenterIsSearchingAccount ? 1 : 0,
-            child: OBContextualAccountSearchBox(
-              key: Key('postCommentsParticipantsSearchBox'),
-              post: widget.post,
-              controller: _postParticipantsSearchBoxController,
-              onPostParticipantPressed:
-                  _onPostParticipantsSearchBoxParticipantPressed,
-            )),
-      ),
-      left: 0,
-      right: 0,
-      bottom: 0,
-      top: 0,
-    ));
+    if (isAutocompleting) {
+      postCommentsStackItems.add(Positioned(
+        key: Key('obPostCommentsAutoComplete'),
+        child: OBPrimaryColorContainer(
+          child: buildSearchBox(),
+        ),
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0,
+      ));
+    }
 
     return Expanded(
       child: Stack(
@@ -345,30 +354,13 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
     );
   }
 
-  void _onPostParticipantsSearchBoxParticipantPressed(User postParticipant) {
-    _postCommenterController
-        .autocompleteFoundAccountUsername(postParticipant.username);
-  }
-
   Widget _buildPostCommenter() {
     return OBPostCommenter(_post,
         postComment: widget.postComment,
         autofocus: widget.autofocusCommentInput,
         commentTextFieldFocusNode: _commentInputFocusNode,
-        controller: _postCommenterController,
-        onPostCommentCreated: _onPostCommentCreated,
-        onWantsToSearchAccount: _onPostCommenterWantsToSearchAccount,
-        onFinishedSearchingAccount: _onFinishedSearchingAccount);
-  }
-
-  void _onPostCommenterWantsToSearchAccount(String query) {
-    _setPostCommenterIsSearchingAccount(true);
-    _postParticipantsSearchBoxController.search(query);
-  }
-
-  void _onFinishedSearchingAccount() {
-    _setPostCommenterIsSearchingAccount(false);
-    _postParticipantsSearchBoxController.clearSearch();
+        textController: _postCommenterTextController,
+        onPostCommentCreated: _onPostCommentCreated);
   }
 
   void _onPostCommentCreated(PostComment createdPostComment) {
@@ -515,11 +507,27 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
           _userService.getPostWithUuid(_post.uuid));
 
       await _refreshPostOperation.value;
-      _setPositionTopCommentSection();
     } catch (error) {
       _onError(error);
     } finally {
       _refreshPostOperation = null;
+    }
+  }
+
+  Future<void> _refreshPostComment() async {
+    if (_refreshPostCommentOperation != null)
+      _refreshPostCommentOperation.cancel();
+    try {
+      // This will trigger the updateSubject of the postComment
+      _refreshPostCommentOperation = CancelableOperation.fromFuture(_userService
+          .getPostComment(post: widget.post, postComment: widget.postComment));
+
+      await _refreshPostCommentOperation.value;
+      _setPositionTopCommentSection();
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _refreshPostCommentOperation = null;
     }
   }
 
@@ -582,12 +590,6 @@ class OBPostCommentsPageState extends State<OBPostCommentsPage>
   void _showNoMoreTopItemsToLoadToast() {
     _toastService.info(
         context: context, message: _pageTextMap['NO_MORE_TO_LOAD']);
-  }
-
-  void _setPostCommenterIsSearchingAccount(postCommenterIsSearchingAccount) {
-    setState(() {
-      _postCommenterIsSearchingAccount = postCommenterIsSearchingAccount;
-    });
   }
 
   void _setCurrentSortValue(PostCommentsSortType newSortValue) {

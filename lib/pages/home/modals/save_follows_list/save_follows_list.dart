@@ -247,7 +247,7 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
         context,
         OBSlideRightRoute<Emoji>(builder: (BuildContext context) {
           return OBPickFollowsListEmojiPage();
-        }),
+        }, slidableKey: Key('obPickEmojiFollowsList')),
     );
 
     if (pickedEmoji != null) _onPickedEmoji(pickedEmoji);

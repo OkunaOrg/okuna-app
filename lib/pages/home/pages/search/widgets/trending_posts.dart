@@ -1,14 +1,8 @@
 import 'dart:async';
 import 'package:Okuna/models/post.dart';
-import 'package:Okuna/models/posts_list.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
-import 'package:Okuna/widgets/alerts/button_alert.dart';
-import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
 import 'package:async/async.dart';
@@ -16,9 +10,13 @@ import 'package:flutter/material.dart';
 
 class OBTrendingPosts extends StatefulWidget {
   final OBTrendingPostsController controller;
+  final Function(ScrollPosition) onScrollCallback;
+  final double extraTopPadding;
 
-  OBTrendingPosts({
+  const OBTrendingPosts({
     this.controller,
+    this.onScrollCallback,
+    this.extraTopPadding = 0.0,
   });
 
   @override
@@ -27,7 +25,8 @@ class OBTrendingPosts extends StatefulWidget {
   }
 }
 
-class OBTrendingPostsState extends State<OBTrendingPosts> {
+class OBTrendingPostsState extends State<OBTrendingPosts>
+ with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -41,6 +40,9 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
     _obPostsStreamController = OBPostsStreamController();
     if (widget.controller != null) widget.controller.attach(this);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void dispose() {
@@ -67,9 +69,11 @@ class OBTrendingPostsState extends State<OBTrendingPosts> {
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
+      onScrollCallback: widget.onScrollCallback,
+      refreshIndicatorDisplacement: 110.0,
       prependedItems: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
           child: OBPrimaryAccentText(
               _localizationService.post__trending_posts_title,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),

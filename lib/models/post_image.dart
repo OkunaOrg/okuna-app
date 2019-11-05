@@ -12,10 +12,20 @@ class PostImage {
   });
 
   factory PostImage.fromJSON(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null) return null;
     return PostImage(
         image: parsedJson['image'],
         thumbnail: parsedJson['thumbnail'],
         width: parsedJson['width']?.toDouble(),
         height: parsedJson['height']?.toDouble());
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'image': image,
+      'width': width,
+      'height': height,
+      'thumbnail': thumbnail
+    };
   }
 }

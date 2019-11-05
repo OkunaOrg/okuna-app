@@ -1,4 +1,5 @@
 import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Okuna/plugins/proxy_settings.dart';
 import 'package:Okuna/services/auth_api.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/categories_api.dart';
@@ -10,11 +11,15 @@ import 'package:Okuna/services/date_picker.dart';
 import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
+import 'package:Okuna/services/draft.dart';
+import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
+import 'package:Okuna/services/permissions.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
+import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/services/emoji_picker.dart';
@@ -65,6 +70,8 @@ class OpenbookProvider extends StatefulWidget {
 
 class OpenbookProviderState extends State<OpenbookProvider> {
   UserPreferencesService userPreferencesService = UserPreferencesService();
+  ExploreTimelinePreferencesService exploreTimelinePreferencesService =
+      ExploreTimelinePreferencesService();
   CreateAccountBloc createAccountBloc = CreateAccountBloc();
   ValidationService validationService = ValidationService();
   HttpieService httpService = HttpieService();
@@ -77,10 +84,12 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   StringTemplateService stringTemplateService = StringTemplateService();
   EmojisApiService emojisApiService = EmojisApiService();
   ThemeService themeService = ThemeService();
-  MediaService mediaPickerService = MediaService();
+  MediaService mediaService = MediaService();
+  ShareService shareService = ShareService();
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
+  PermissionsService permissionService = PermissionsService();
   CommunitiesApiService communitiesApiService = CommunitiesApiService();
   CategoriesApiService categoriesApiService = CategoriesApiService();
   NotificationsApiService notificationsApiService = NotificationsApiService();
@@ -105,10 +114,11 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DialogService dialogService = DialogService();
   UtilsService utilsService = UtilsService();
   DocumentsService documentsService = DocumentsService();
-  TextAccountAutocompletionService textAccountAutocompletionService =
-      TextAccountAutocompletionService();
+  TextAutocompletionService textAccountAutocompletionService =
+      TextAutocompletionService();
   ConnectivityService connectivityService = ConnectivityService();
   LinkPreviewService linkPreviewService = LinkPreviewService();
+  DraftService draftService = DraftService();
 
   SentryClient sentryClient;
 
@@ -119,6 +129,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     imageCache.maximumSize = 200 << 20; // 200MB
     userPreferencesService.setStorageService(storageService);
     userPreferencesService.setConnectivityService(connectivityService);
+    exploreTimelinePreferencesService.setStorageService(storageService);
     connectionsCirclesApiService.setHttpService(httpService);
     httpService.setUtilsService(utilsService);
     connectionsCirclesApiService
@@ -136,6 +147,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setAuthApiService(authApiService);
     createAccountBloc.setUserService(userService);
     userService.setAuthApiService(authApiService);
+    userService.setPushNotificationsService(pushNotificationsService);
     userService.setPostsApiService(postsApiService);
     userService.setEmojisApiService(emojisApiService);
     userService.setHttpieService(httpService);
@@ -151,6 +163,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setDevicesApiService(devicesApiService);
     userService.setCreateAccountBlocService(createAccountBloc);
     userService.setWaitlistApiService(waitlistApiService);
+    userService.setDraftService(draftService);
     waitlistApiService.setHttpService(httpService);
     userService.setModerationApiService(moderationApiService);
     emojisApiService.setHttpService(httpService);
@@ -168,17 +181,23 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
     pushNotificationsService.setUserService(userService);
+    pushNotificationsService.setStorageService(storageService);
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
-    mediaPickerService.setValidationService(validationService);
-    mediaPickerService.setBottomSheetService(bottomSheetService);
+    mediaService.setValidationService(validationService);
+    mediaService.setBottomSheetService(bottomSheetService);
+    mediaService.setUtilsService(utilsService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
     linkPreviewService.setHttpieService(httpService);
     linkPreviewService.setUtilsService(utilsService);
     linkPreviewService.setValidationService(validationService);
+    shareService.setMediaService(mediaService);
+    shareService.setToastService(toastService);
+    shareService.setValidationService(validationService);
+    permissionService.setToastService(toastService);
   }
 
   void initAsyncState() async {
@@ -186,6 +205,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         await EnvironmentLoader(environmentPath: ".env.json").load();
     httpService.setMagicHeader(
         environment.magicHeaderName, environment.magicHeaderValue);
+    httpService
+        .setProxy(await ProxySettings.findProxy(Uri.parse(environment.apiUrl)));
     authApiService.setApiURL(environment.apiUrl);
     postsApiService.setApiURL(environment.apiUrl);
     emojisApiService.setApiURL(environment.apiUrl);
@@ -237,6 +258,9 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setLocalizationsService(localizationService);
     modalService.setLocalizationService(localizationService);
     userPreferencesService.setLocalizationService(localizationService);
+    shareService.setLocalizationService(localizationService);
+    mediaService.setLocalizationService(localizationService);
+    permissionService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {

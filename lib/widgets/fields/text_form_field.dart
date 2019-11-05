@@ -72,6 +72,11 @@ class OBTextFormField extends StatelessWidget {
               color:
                   themeValueParserService.parseColor(theme.primaryTextColor)));
 
+          var primaryColor =
+              themeValueParserService.parseColor(theme.primaryColor);
+          final bool isDarkPrimaryColor =
+              primaryColor.computeLuminance() < 0.179;
+
           return Column(
             children: <Widget>[
               TextFormField(
@@ -83,29 +88,31 @@ class OBTextFormField extends StatelessWidget {
                 controller: controller,
                 validator: validator,
                 keyboardType: keyboardType,
+                keyboardAppearance:
+                    isDarkPrimaryColor ? Brightness.dark : Brightness.light,
                 autocorrect: autocorrect,
                 maxLines: maxLines,
                 obscureText: obscureText,
                 style: finalStyle,
                 decoration: InputDecoration(
-                  hintText: decoration?.hintText,
-                  labelStyle: TextStyle(
-                      height: labelHeight,
-                      fontWeight: FontWeight.bold,
-                      color: themeValueParserService
-                          .parseColor(theme.secondaryTextColor),
-                      fontSize: fontSize),
-                  hintStyle: TextStyle(
-                      color: themeValueParserService
-                          .parseColor(theme.primaryTextColor)),
-                  contentPadding: decoration?.contentPadding ??
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-                  border: InputBorder.none,
-                  labelText: decoration?.labelText,
-                  prefixIcon: decoration?.prefixIcon,
-                  prefixText: decoration?.prefixText,
-                  errorMaxLines: decoration?.errorMaxLines ?? 3
-                ),
+                    isDense: true,
+                    hintText: decoration?.hintText,
+                    labelStyle: TextStyle(
+                        height: labelHeight,
+                        fontWeight: FontWeight.bold,
+                        color: themeValueParserService
+                            .parseColor(theme.secondaryTextColor),
+                        fontSize: fontSize),
+                    hintStyle: TextStyle(
+                        color: themeValueParserService
+                            .parseColor(theme.primaryTextColor)),
+                    contentPadding: decoration?.contentPadding ??
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                    border: InputBorder.none,
+                    labelText: decoration?.labelText,
+                    prefixIcon: decoration?.prefixIcon,
+                    prefixText: decoration?.prefixText,
+                    errorMaxLines: decoration?.errorMaxLines ?? 3),
               ),
               hasBorder ? const OBDivider() : const SizedBox()
             ],

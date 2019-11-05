@@ -83,7 +83,7 @@ class OBSearchBarState extends State<OBSearchBar> {
                           textInputAction: TextInputAction.go,
                           focusNode: _textFocusNode,
                           controller: _textController,
-                          keyboardType: TextInputType.multiline,
+                          keyboardType: TextInputType.text,
                           style: TextStyle(fontSize: 14.0),
                           decoration: InputDecoration(
                               hintText: widget.hintText,

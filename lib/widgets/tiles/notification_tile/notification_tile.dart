@@ -9,10 +9,6 @@ import 'package:Okuna/models/notifications/post_comment_reply_notification.dart'
 import 'package:Okuna/models/notifications/post_comment_user_mention_notification.dart';
 import 'package:Okuna/models/notifications/post_reaction_notification.dart';
 import 'package:Okuna/models/notifications/post_user_mention_notification.dart';
-import 'package:Okuna/models/theme.dart';
-import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/theme.dart';
-import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/community_invite_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/connection_confirmed_notification_tile.dart';

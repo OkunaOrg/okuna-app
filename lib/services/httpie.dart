@@ -20,10 +20,7 @@ class HttpieService {
   Client client;
 
   HttpieService() {
-    var httpClient = HttpClient();
-    // This doesn't pick up proxy settings on Android and iOS
-    httpClient.findProxy = HttpClient.findProxyFromEnvironment;
-    client = IOClient(httpClient);
+    client = IOClient();
     client = RetryClient(client,
         when: _retryWhenResponse, whenError: _retryWhenError);
   }
@@ -59,6 +56,13 @@ class HttpieService {
   void setMagicHeader(String name, String value) {
     magicHeaderName = name;
     magicHeaderValue = value;
+  }
+
+  void setProxy(String proxy) {
+    var overrides = HttpOverrides.current as HttpieOverrides;
+    if (overrides != null) {
+      overrides.setProxy(proxy);
+    }
   }
 
   Future<HttpieResponse> post(url,
@@ -600,4 +604,32 @@ class HttpieArgumentsError implements Exception {
   const HttpieArgumentsError(this.msg);
 
   String toString() => 'HttpieArgumentsError: $msg';
+}
+
+// These overrides are used by the standard dart:http/HttpClient to change how
+// it behaves. All settings changed here will apply to every single HttpClient
+// used by any other package, as long as they're running inside a zone with
+// these set.
+class HttpieOverrides extends HttpOverrides {
+  String _proxy;
+  final HttpOverrides _previous = HttpOverrides.current;
+
+  HttpieOverrides();
+
+  void setProxy(String proxy) {
+    _proxy = proxy;
+  }
+
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    if (_previous != null) return _previous.createHttpClient(context);
+    return super.createHttpClient(context);
+  }
+
+  @override
+  String findProxyFromEnvironment(Uri uri, Map<String, String> environment) {
+    if (_proxy != null) return _proxy;
+    if (_previous != null) return _previous.findProxyFromEnvironment(uri, environment);
+    return super.findProxyFromEnvironment(uri, environment);
+  }
 }

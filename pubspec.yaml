@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.53+59
+version: 0.0.57+66
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -24,10 +24,10 @@ dependencies:
   connectivity: ^0.4.4
   flutter_widgets: ^0.1.6
   http_retry: ^0.1.1+3
-  flutter_exif_rotation: ^0.2.2
   video_thumbnail: ^0.1.5+1
   flutter_ffmpeg: ^0.2.7
   open_iconic_flutter: ^0.3.0
+  retry: ^3.0.0+1
   shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0
   file_picker: ^1.4.2
@@ -35,40 +35,43 @@ dependencies:
   screen: ^0.0.5
   back_button_interceptor: ^4.0.1
   flutter_colorpicker: any
-  intercom_flutter: ^1.0.11
+  intercom_flutter: ^2.0.5+2
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
-  onesignal_flutter: ^2.0.2
-  flutter_advanced_networkimage: ^0.5.0
+  onesignal_flutter: ^2.2.0
+  flutter_advanced_networkimage: 0.6.0-alpha.1
   dcache: ^0.1.0
   validators: ^1.0.0+1
   url_launcher: ^4.0.1
   uni_links: ^0.1.4
   flutter_slidable: "^0.4.9"
   flutter_cache_manager: ^1.1.1
-  cached_network_image: ^1.1.1
+  cached_network_image: ^2.0.0-rc
   timeago: ^2.0.9
   public_suffix: ^1.2.0
   pigment: ^1.0.3
   photo_view: ^0.4.2
-  flutter_svg: ^0.13.0
+  flutter_svg: ^0.14.0
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
   intl: ^0.16.0
+  throttling: ^0.8.0
+  wakelock: ^0.1.3
   rxdart: ^0.18.1
   video_player:
     git:
-      url: https://github.com/999eagle/plugins.git
-      ref: feature/caching
+      url: https://github.com/OkunaOrg/plugins.git
+      ref: ricardo/develop2
       path: packages/video_player
   sprintf: "^4.0.0"
-  image_picker: 0.6.1
+  image_picker: 0.6.1+10
   image_cropper: ^1.0.1
   shimmer: ^1.0.0
   share: ^0.6.1
   path: ^1.6.2
+  package_info: ^0.4.0
   flutter:
     sdk: flutter
   flutter_localizations:

@@ -38,6 +38,8 @@ import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/post_reaction_list.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/posts_list.dart';
+import 'package:Okuna/models/top_post.dart';
+import 'package:Okuna/models/top_posts_list.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/models/user_invites_list.dart';
@@ -50,6 +52,7 @@ import 'package:Okuna/services/communities_api.dart';
 import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/connections_api.dart';
 import 'package:Okuna/services/devices_api.dart';
+import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/emojis_api.dart';
 import 'package:Okuna/services/follows_api.dart';
 import 'package:Okuna/services/httpie.dart';
@@ -58,6 +61,7 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/posts_api.dart';
+import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:Okuna/services/user_invites_api.dart';
 import 'package:Okuna/services/waitlist_service.dart';
@@ -68,6 +72,8 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Okuna/services/httpie.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class UserService {
   OBStorage _userStorage;
@@ -75,6 +81,8 @@ class UserService {
   static const STORAGE_KEY_AUTH_TOKEN = 'authToken';
   static const STORAGE_KEY_USER_DATA = 'data';
   static const STORAGE_FIRST_POSTS_DATA = 'firstPostsData';
+  static const STORAGE_TOP_POSTS_DATA = 'topPostsData';
+  static const STORAGE_TOP_POSTS_LAST_VIEWED_ID = 'topPostsLastViewedId';
 
   AuthApiService _authApiService;
   HttpieService _httpieService;
@@ -93,6 +101,8 @@ class UserService {
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
   LocalizationService _localizationService;
+  DraftService _draftService;
+  PushNotificationsService _pushNotificationService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -105,8 +115,15 @@ class UserService {
 
   Future<Device> _getOrCreateCurrentDeviceCache;
 
+  static const MAX_TEMP_DIRECTORY_CACHE_MB = 200; // 200mb
+
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
+  }
+
+  void setPushNotificationsService(
+      PushNotificationsService pushNotificationsService) {
+    _pushNotificationService = pushNotificationsService;
   }
 
   void setModerationApiService(ModerationApiService moderationApiService) {
@@ -180,6 +197,10 @@ class UserService {
     _localizationService = localizationService;
   }
 
+  void setDraftService(DraftService draftService) {
+    _draftService = draftService;
+  }
+
   Future<void> deleteAccountWithPassword(String password) async {
     HttpieResponse response =
         await _authApiService.deleteUser(password: password);
@@ -191,6 +212,8 @@ class UserService {
     await _removeStoredUserData();
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
+    _draftService.clear();
+    _pushNotificationService.clearPromptedUserForPermission();
     _removeLoggedInUser();
     await clearCache();
     User.clearSessionCache();
@@ -199,11 +222,90 @@ class UserService {
 
   Future<void> clearCache() async {
     await _removeStoredFirstPostsData();
+    await _removeStoredTopPostsData();
     await DiskCache().clear();
+    await clearTemporaryDirectories();
     Post.clearCache();
     User.clearNavigationCache();
     PostComment.clearCache();
     Community.clearCache();
+  }
+
+  Future<bool> clearTemporaryDirectories() async {
+    // TODO Handle every service clearing its own things responsible for, not have it
+    // spread over the place...
+    debugPrint('Clearing /tmp files and vimedia');
+    try {
+      Directory tempDir = Directory((await getApplicationDocumentsDirectory())
+          .path
+          .replaceFirst('Documents', 'tmp'));
+      Directory vimediaDir = Directory(join(
+          (await getApplicationDocumentsDirectory())
+              .path
+              .replaceFirst('Documents', 'tmp'),
+          'vimedia'));
+      Directory mediaCacheDir = Directory(
+          join((await getApplicationDocumentsDirectory()).path, 'mediaCache'));
+      Directory videoDirAndroid = Directory(
+          join((await getApplicationDocumentsDirectory()).path, 'video'));
+
+      if (tempDir.existsSync())
+        tempDir.listSync().forEach((var entity) {
+          if (entity is File) {
+            entity.delete();
+          }
+        });
+      if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
+      if (mediaCacheDir.existsSync())
+        await mediaCacheDir.delete(recursive: true);
+      if (videoDirAndroid.existsSync())
+        await videoDirAndroid.delete(recursive: true);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  void checkAndClearTempDirectories() async {
+    int size = 0;
+    try {
+      Directory tempDir = Directory((await getTemporaryDirectory())
+          .path
+          .replaceFirst('Documents', 'tmp'));
+      Directory vimediaDir = Directory(join(
+          (await getApplicationDocumentsDirectory())
+              .path
+              .replaceFirst('Documents', 'tmp'),
+          'vimedia'));
+      Directory videoDirAndroid =
+          Directory(join((await getTemporaryDirectory()).path, 'video'));
+      Directory mediaCacheDir =
+          Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+
+      if (tempDir.existsSync())
+        tempDir
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
+      if (vimediaDir.existsSync())
+        vimediaDir
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
+      if (mediaCacheDir.existsSync())
+        mediaCacheDir
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
+      if (videoDirAndroid.existsSync())
+        videoDirAndroid
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
+
+      if (size > MAX_TEMP_DIRECTORY_CACHE_MB * 1000000) {
+        clearTemporaryDirectories();
+      }
+    } catch (e) {
+      debugPrint(e);
+    }
   }
 
   Future<void> loginWithCredentials(
@@ -354,6 +456,20 @@ class UserService {
     return _loggedInUser != null;
   }
 
+  Future<TopPostsList> getTopPosts(
+      {int maxId, int minId, int count, bool excludeJoinedCommunities}) async {
+    HttpieResponse response = await _postsApiService.getTopPosts(
+        maxId: maxId,
+        minId: minId,
+        count: count,
+        excludeJoinedCommunities: excludeJoinedCommunities,
+        authenticatedRequest: true);
+
+    _checkResponseIsOk(response);
+
+    return TopPostsList.fromJson(json.decode(response.body));
+  }
+
   Future<PostsList> getTrendingPosts() async {
     HttpieResponse response =
         await _postsApiService.getTrendingPosts(authenticatedRequest: true);
@@ -392,6 +508,37 @@ class UserService {
       return postsList;
     }
     return PostsList();
+  }
+
+  Future<void> setStoredTopPosts(List<TopPost> topPosts) async {
+    String topPostsData = json
+        .encode(topPosts.map((TopPost topPost) => topPost.toJson())?.toList());
+    await this._removeStoredTopPostsData();
+    await this._storeTopPostsData(topPostsData);
+  }
+
+  Future<void> setTopPostsLastViewedId(int lastViewedId) async {
+    String topPostId = lastViewedId.toString();
+    await this._removeStoredTopPostsLastViewedId();
+    debugPrint('Setting id $lastViewedId as last viewed post for top posts');
+    await this._storeTopPostsLastViewedId(topPostId);
+  }
+
+  Future<TopPostsList> getStoredTopPosts() async {
+    String topPostsData = await this._getStoredTopPostsData();
+    if (topPostsData != null) {
+      var postsList = _makeTopPostsList(topPostsData);
+      return postsList;
+    }
+    return TopPostsList();
+  }
+
+  Future<int> getStoredTopPostsLastViewedId() async {
+    String topPostId = await this._getStoredTopPostsLastViewedId();
+    if (topPostId != null) {
+      return int.parse(topPostId);
+    }
+    return null;
   }
 
   Future<Post> createPost(
@@ -606,6 +753,14 @@ class UserService {
     return PostComment.fromJSON(json.decode(response.body));
   }
 
+  Future<PostComment> getPostComment(
+      {@required Post post, @required PostComment postComment}) async {
+    HttpieResponse response = await _postsApiService.getPostComment(
+        postUuid: post.uuid, postCommentId: postComment.id);
+    _checkResponseIsOk(response);
+    return PostComment.fromJSON(json.decode(response.body));
+  }
+
   Future<PostComment> replyPostComment(
       {@required Post post,
       @required PostComment postComment,
@@ -635,6 +790,23 @@ class UserService {
         await _postsApiService.unmutePostWithUuid(post.uuid);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<String> excludePostCommunityFromTopPosts(Community community) async {
+    HttpieResponse response = await _communitiesApiService
+        .excludeCommunityFromTopPosts(communityName: community.name);
+    _checkResponseIsAccepted(response);
+
+    return (json.decode(response.body))['message'];
+  }
+
+  Future<String> undoExcludePostCommunityFromTopPosts(
+      Community community) async {
+    HttpieResponse response = await _communitiesApiService
+        .undoExcludeCommunityFromTopPosts(communityName: community.name);
+    _checkResponseIsAccepted(response);
+
+    return (json.decode(response.body))['message'];
   }
 
   Future<PostComment> mutePostComment(
@@ -786,6 +958,22 @@ class UserService {
         await _authApiService.getBlockedUsers(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> searchExcludedCommunities(
+      {@required String query, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .searchExcludedCommunities(query: query, count: count);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> getExcludedCommunities(
+      {int offset, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .getExcludedCommunities(count: count, offset: offset);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
   }
 
   Future<UsersList> searchFollowers({@required String query, int count}) async {
@@ -1454,6 +1642,14 @@ class UserService {
     return NotificationsList.fromJson(json.decode(response.body));
   }
 
+  Future<int> getUnreadNotificationsCount(
+      {int maxId, List<NotificationType> types}) async {
+    HttpieResponse response = await _notificationsApiService
+        .getUnreadNotificationsCount(maxId: maxId, types: types);
+    _checkResponseIsOk(response);
+    return (json.decode(response.body))['count'];
+  }
+
   Future<OBNotification> getNotificationWithId(int notificationId) async {
     HttpieResponse response =
         await _notificationsApiService.getNotificationWithId(notificationId);
@@ -1914,6 +2110,11 @@ class UserService {
     throw HttpieRequestError(response);
   }
 
+  void _checkResponseIsAccepted(HttpieBaseResponse response) {
+    if (response.isAccepted()) return;
+    throw HttpieRequestError(response);
+  }
+
   void _setLoggedInUser(User user) {
     if (_loggedInUser == null || _loggedInUser.id != user.id)
       _loggedInUserChangeSubject.add(user);
@@ -1969,12 +2170,40 @@ class UserService {
     return _userStorage.get(STORAGE_FIRST_POSTS_DATA);
   }
 
+  Future<void> _storeTopPostsData(String topPostsData) {
+    return _userStorage.set(STORAGE_TOP_POSTS_DATA, topPostsData);
+  }
+
+  Future<void> _removeStoredTopPostsData() async {
+    _userStorage.remove(STORAGE_TOP_POSTS_DATA);
+  }
+
+  Future<String> _getStoredTopPostsData() async {
+    return _userStorage.get(STORAGE_TOP_POSTS_DATA);
+  }
+
+  Future<void> _storeTopPostsLastViewedId(String scrollPosition) {
+    return _userStorage.set(STORAGE_TOP_POSTS_LAST_VIEWED_ID, scrollPosition);
+  }
+
+  Future<void> _removeStoredTopPostsLastViewedId() async {
+    _userStorage.remove(STORAGE_TOP_POSTS_LAST_VIEWED_ID);
+  }
+
+  Future<String> _getStoredTopPostsLastViewedId() async {
+    return _userStorage.get(STORAGE_TOP_POSTS_LAST_VIEWED_ID);
+  }
+
   User _makeLoggedInUser(String userData) {
     return User.fromJson(json.decode(userData), storeInSessionCache: true);
   }
 
   PostsList _makePostsList(String postsData) {
     return PostsList.fromJson(json.decode(postsData));
+  }
+
+  TopPostsList _makeTopPostsList(String postsData) {
+    return TopPostsList.fromJson((json.decode(postsData)));
   }
 }
 

@@ -301,7 +301,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "trending_posts_title": "Trending posts",
+  "top_posts_title": "Explore",
+  "@top_posts_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "trending_posts_title": "Trending",
   "@trending_posts_title": {
     "type": "text",
     "placeholders": {}
@@ -472,6 +477,16 @@
   },
   "enable_post_comments": "Enable post comments",
   "@enable_post_comments": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_post_community": "Don't show posts from this community",
+  "@exclude_post_community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "undo_exclude_post_community": "Show posts from this community",
+  "@undo_exclude_post_community": {
     "type": "text",
     "placeholders": {}
   },

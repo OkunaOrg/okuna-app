@@ -61,6 +61,7 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
 
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       child: OBCupertinoPageScaffold(
           backgroundColor: Colors.black26,
@@ -125,6 +126,13 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
           imageProvider: AdvancedNetworkImage(widget.imageUrl,
               retryLimit: 0,
               useDiskCache: true,
+              getRealUrl: () {
+                return Future.delayed((Duration(milliseconds: 0)),() => widget.imageUrl);
+              },
+              cacheRule: CacheRule(
+                maxAge: const Duration(days: 7),
+                checksum: true,
+              ),
               fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png'),
           maxScale: PhotoViewComputedScale.covered,
           minScale: PhotoViewComputedScale.contained,

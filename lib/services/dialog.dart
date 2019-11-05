@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
 
 class DialogService {
   ThemeService _themeService;
@@ -74,6 +75,7 @@ class DialogService {
       bool autoPlay: true,
       @required BuildContext context}) async {
     SystemChrome.setEnabledSystemUIOverlays([]);
+    Wakelock.enable();
     await showGeneralDialog(
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,
@@ -100,6 +102,7 @@ class DialogService {
       transitionDuration: const Duration(milliseconds: 100),
       transitionBuilder: _buildMaterialDialogTransitions,
     );
+    Wakelock.disable();
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
   }

@@ -30,4 +30,9 @@ class OBProfileNavBar extends StatelessWidget
   Size get preferredSize {
     return const Size.fromHeight(44);
   }
+
+  @override
+  bool shouldFullyObstruct(BuildContext context) {
+    return true;
+  }
 }

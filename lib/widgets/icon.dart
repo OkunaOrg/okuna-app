@@ -128,6 +128,8 @@ class OBIcon extends StatelessWidget {
 
 class OBIcons {
   static const home = OBIconData(nativeIcon: Icons.home);
+  static const explore = OBIconData(nativeIcon: Icons.public);
+  static const trending = OBIconData(nativeIcon: Icons.whatshot);
   static const pause = OBIconData(nativeIcon: Icons.pause);
   static const play_arrow = OBIconData(nativeIcon: Icons.play_arrow);
   static const search = OBIconData(nativeIcon: Icons.search);
@@ -206,8 +208,9 @@ class OBIcons {
       OBIconData(nativeIcon: Icons.remove_circle);
   static const expand = OBIconData(filename: 'expand-icon.png');
   static const mutePost = OBIconData(nativeIcon: Icons.notifications_active);
-  static const mutePostComment =
-      OBIconData(nativeIcon: Icons.notifications_active);
+  static const excludePostCommunity = OBIconData(nativeIcon: Icons.not_interested);
+  static const undoExcludePostCommunity = OBIconData(nativeIcon: Icons.check);
+  static const mutePostComment = OBIconData(nativeIcon: Icons.notifications_active);
   static const editPost = OBIconData(nativeIcon: Icons.edit);
   static const edit = OBIconData(nativeIcon: Icons.edit);
   static const reviewModeratedObject = OBIconData(nativeIcon: Icons.gavel);
@@ -245,6 +248,7 @@ class OBIcons {
   static const support = OBIconData(nativeIcon: Icons.favorite);
   static const sound = OBIconData(nativeIcon: Icons.volume_up);
   static const linkPreviews = OBIconData(nativeIcon: Icons.library_books);
+  static const nativeInfo = OBIconData(nativeIcon: Icons.info);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

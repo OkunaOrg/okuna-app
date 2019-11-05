@@ -11,6 +11,7 @@ class PostsApiService {
   String apiURL;
 
   static const GET_POSTS_PATH = 'api/posts/';
+  static const GET_TOP_POSTS_PATH = 'api/posts/top/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';
@@ -22,6 +23,8 @@ class PostsApiService {
   static const CLOSE_POST_PATH = 'api/posts/{postUuid}/close/';
   static const COMMENT_POST_PATH = 'api/posts/{postUuid}/comments/';
   static const EDIT_COMMENT_POST_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/';
+  static const GET_COMMENT_POST_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/';
   static const REPLY_COMMENT_POST_PATH =
       'api/posts/{postUuid}/comments/{postCommentId}/replies/';
@@ -77,6 +80,22 @@ class PostsApiService {
 
   void setApiURL(String newApiURL) {
     apiURL = newApiURL;
+  }
+
+  Future<HttpieResponse> getTopPosts(
+      {int maxId, int minId, int count, bool excludeJoinedCommunities, bool authenticatedRequest = true}) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (minId != null) queryParams['min_id'] = minId;
+
+    if (excludeJoinedCommunities != null) queryParams['exclude_joined_communities'] = excludeJoinedCommunities;
+
+    return _httpService.get('$apiURL$GET_TOP_POSTS_PATH',
+        queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
   }
 
   Future<HttpieResponse> getTrendingPosts({bool authenticatedRequest = true}) {
@@ -237,6 +256,13 @@ class PostsApiService {
     String path = _makeEditCommentPostPath(postUuid, postCommentId);
     return _httpService.patchJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getPostComment(
+      {@required String postUuid, @required int postCommentId}) {
+    String path = _makeGetCommentPostPath(postUuid, postCommentId);
+    return _httpService.get(_makeApiUrl(path),
+        appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> replyPostComment(
@@ -547,6 +573,11 @@ class PostsApiService {
 
   String _makeEditCommentPostPath(String postUuid, int postCommentId) {
     return _stringTemplateService.parse(EDIT_COMMENT_POST_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
+  }
+
+  String _makeGetCommentPostPath(String postUuid, int postCommentId) {
+    return _stringTemplateService.parse(GET_COMMENT_POST_PATH,
         {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 

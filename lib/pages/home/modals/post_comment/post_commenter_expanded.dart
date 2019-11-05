@@ -1,19 +1,17 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
-import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
-import 'package:Okuna/widgets/contextual_account_search_box.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/text_account_autocompletion.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_search_box_state.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
@@ -35,7 +33,7 @@ class OBPostCommenterExpandedModal extends StatefulWidget {
 }
 
 class OBPostCommenterExpandedModalState
-    extends State<OBPostCommenterExpandedModal> {
+    extends OBContextualSearchBoxState<OBPostCommenterExpandedModal> {
   ValidationService _validationService;
   ToastService _toastService;
   UserService _userService;
@@ -49,9 +47,6 @@ class OBPostCommenterExpandedModalState
   String _originalText;
   bool _requestInProgress;
   bool _needsBootstrap;
-  bool _isSearchingAccount;
-  TextAccountAutocompletionService _textAccountAutocompletionService;
-  OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
 
   CancelableOperation _postCommentOperation;
 
@@ -61,15 +56,13 @@ class OBPostCommenterExpandedModalState
     _textController = TextEditingController(
         text: widget.postComment != null ? widget.postComment.text : '');
     _textController.addListener(_onPostCommentTextChanged);
+    setAutocompleteTextController(_textController);
     _charactersCount = 0;
     _isPostCommentTextAllowedLength = false;
     _isPostCommentTextOriginal = false;
     _originalText = widget.postComment.text;
     _requestInProgress = false;
-    _isSearchingAccount = false;
     _needsBootstrap = true;
-    _contextualAccountSearchBoxController =
-        OBContextualAccountSearchBoxController();
   }
 
   @override
@@ -80,6 +73,17 @@ class OBPostCommenterExpandedModalState
   }
 
   @override
+  void bootstrap() {
+    super.bootstrap();
+    String hintText = widget.post.commentsCount > 0
+        ? _localizationService.post__commenter_expanded_join_conversation
+        : _localizationService.post__commenter_expanded_start_conversation;
+    _postCommentItemsWidgets = [
+      OBCreatePostText(controller: _textController, hintText: hintText)
+    ];
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
@@ -87,15 +91,7 @@ class OBPostCommenterExpandedModalState
       _userService = openbookProvider.userService;
       _toastService = openbookProvider.toastService;
       _localizationService = openbookProvider.localizationService;
-      _textAccountAutocompletionService =
-          openbookProvider.textAccountAutocompletionService;
-
-      String hintText = widget.post.commentsCount > 0
-          ? _localizationService.post__commenter_expanded_join_conversation
-          : _localizationService.post__commenter_expanded_start_conversation;
-      _postCommentItemsWidgets = [
-        OBCreatePostText(controller: _textController, hintText: hintText)
-      ];
+      bootstrap();
       _needsBootstrap = false;
     }
 
@@ -106,7 +102,9 @@ class OBPostCommenterExpandedModalState
             child: Column(
           children: <Widget>[
             _buildPostCommentEditor(),
-            _isSearchingAccount ? _buildAccountSearchBox() : const SizedBox()
+            isAutocompleting
+                ? Expanded(flex: 7, child: buildSearchBox())
+                : const SizedBox()
           ],
         )));
   }
@@ -141,7 +139,7 @@ class OBPostCommenterExpandedModalState
 
   Widget _buildPostCommentEditor() {
     return Expanded(
-        flex: _isSearchingAccount ? 3 : 10,
+        flex: isAutocompleting ? 3 : 10,
         child: Padding(
           padding: EdgeInsets.only(left: 20.0, top: 20.0),
           child: Row(
@@ -177,65 +175,13 @@ class OBPostCommenterExpandedModalState
         ));
   }
 
-  Widget _buildAccountSearchBox() {
-    return Expanded(
-        flex: 7,
-        child: OBContextualAccountSearchBox(
-          post: widget.post,
-          controller: _contextualAccountSearchBoxController,
-          onPostParticipantPressed: _onAccountSearchBoxUserPressed,
-          initialSearchQuery:
-              _contextualAccountSearchBoxController.getLastSearchQuery(),
-        ));
-  }
-
   void _onPostCommentTextChanged() {
     String text = _textController.text;
-    _checkAutocomplete();
     setState(() {
       _charactersCount = text.length;
       _isPostCommentTextAllowedLength =
           _validationService.isPostCommentAllowedLength(text);
       _isPostCommentTextOriginal = _originalText == _textController.text;
-    });
-  }
-
-  void _checkAutocomplete() {
-    TextAccountAutocompletionResult result = _textAccountAutocompletionService
-        .checkTextForAutocompletion(_textController);
-
-    if (result.isAutocompleting) {
-      debugLog('Wants to search account with searchQuery:' +
-          result.autocompleteQuery);
-      _setIsSearchingAccount(true);
-      _contextualAccountSearchBoxController.search(result.autocompleteQuery);
-    } else if (_isSearchingAccount) {
-      debugLog('Finished searching accoun');
-      _setIsSearchingAccount(false);
-    }
-  }
-
-  void _onAccountSearchBoxUserPressed(User user) {
-    _autocompleteFoundAccountUsername(user.username);
-  }
-
-  void _autocompleteFoundAccountUsername(String foundAccountUsername) {
-    if (!_isSearchingAccount) {
-      debugLog(
-          'Tried to autocomplete found account username but was not searching account');
-      return;
-    }
-
-    debugLog('Autocompleting with username:$foundAccountUsername');
-    setState(() {
-      _textAccountAutocompletionService.autocompleteTextWithUsername(
-          _textController, foundAccountUsername);
-    });
-  }
-
-  void _setIsSearchingAccount(bool isSearchingAccount) {
-    setState(() {
-      _isSearchingAccount = isSearchingAccount;
     });
   }
 

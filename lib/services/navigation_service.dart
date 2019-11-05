@@ -32,6 +32,7 @@ import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/co
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/about.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/community_guidelines.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/connections_circles/connections_circles.dart';
@@ -48,6 +49,8 @@ import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_setting
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/explore_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/widgets/top_posts_excluded_communities.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
@@ -496,6 +499,17 @@ class NavigationService {
     );
   }
 
+  Future navigateToAboutPage({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('aboutPage'),
+          builder: (BuildContext context) {
+            return OBAboutPage();
+          }),
+    );
+  }
+
   Future navigateToThemesPage({@required BuildContext context}) {
     return Navigator.push(
       context,
@@ -752,6 +766,32 @@ class NavigationService {
           slidableKey: _getKeyRandomisedWithWord('blockedUsersPageRoute'),
           builder: (BuildContext context) {
             return OBBlockedUsersPage();
+          }),
+    );
+  }
+
+  Future<void> navigateToTopPostsExcludedCommunities({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('topPostsExcludedCommunitiesPageRoute'),
+          builder: (BuildContext context) {
+            return OBTopPostsExcludedCommunitiesPage();
+          }),
+    );
+  }
+
+  Future<void> navigateToTopPostsSettings({
+    @required BuildContext context,
+  }) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('topPostsSettingsPageRoute'),
+          builder: (BuildContext context) {
+            return OBTopPostsSettingsPage();
           }),
     );
   }

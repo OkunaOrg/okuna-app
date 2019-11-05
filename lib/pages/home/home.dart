@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/services/intercom.dart';
-import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';
@@ -16,16 +16,13 @@ import 'package:Okuna/pages/home/pages/search/search.dart';
 import 'package:Okuna/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Okuna/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Okuna/pages/home/widgets/tab-scaffold.dart';
-import 'package:Okuna/plugins/share/receive_share_state.dart';
-import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/user_preferences.dart';
-import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/badges/badge.dart';
@@ -41,7 +38,7 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends ReceiveShareState<OBHomePage>
+class OBHomePageState extends State<OBHomePage>
     with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
@@ -49,10 +46,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   PushNotificationsService _pushNotificationsService;
   IntercomService _intercomService;
   ModalService _modalService;
-  ValidationService _validationService;
-  MediaService _mediaService;
   UserPreferencesService _userPreferencesService;
-  LocalizationService _localizationService;
+  ShareService _shareService;
+  MediaService _mediaService;
 
   int _currentIndex;
   int _lastIndex;
@@ -115,10 +111,9 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       _intercomService = openbookProvider.intercomService;
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
-      _validationService = openbookProvider.validationService;
-      _mediaService = openbookProvider.mediaPickerService;
       _userPreferencesService = openbookProvider.userPreferencesService;
-      _localizationService = openbookProvider.localizationService;
+      _shareService = openbookProvider.shareService;
+      _mediaService = openbookProvider.mediaService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -135,69 +130,6 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
         tabBar: _createTabBar(),
       ),
     );
-  }
-
-  @override
-  Future<void> onShare(Share share) async {
-    String text;
-    File image;
-    File video;
-    if (share.error != null) {
-      _toastService.error(
-          message: _localizationService.trans(share.error),
-          context: context);
-      if (share.error.contains('uri_scheme')) {
-        throw share.error;
-      }
-      return;
-    }
-
-    if (share.image != null) {
-      image = File.fromUri(Uri.parse(share.image));
-      image = await _mediaService.processImage(image);
-      if (!await _validationService.isImageAllowedSize(
-          image, OBImageType.post)) {
-        _showFileTooLargeToast(
-            _validationService.getAllowedImageSize(OBImageType.post));
-        return;
-      }
-    }
-
-    if (share.video != null) {
-      video = File.fromUri(Uri.parse(share.video));
-
-      if (!await _validationService.isVideoAllowedSize(video)) {
-        _showFileTooLargeToast(_validationService.getAllowedVideoSize());
-        return;
-      }
-
-      if (_mediaService.isGif(video)) {
-        video = await _mediaService.convertGifToVideo(video);
-      }
-    }
-
-    if (share.text != null) {
-      text = share.text;
-      if (!_validationService.isPostTextAllowedLength(text)) {
-        _toastService.error(
-            message:
-                'Text too long (limit: ${ValidationService.POST_MAX_LENGTH} characters)',
-            context: context);
-        return;
-      }
-    }
-
-    if (await _timelinePageController.createPost(text: text, image: image, video: video)) {
-      _timelinePageController.popUntilFirstRoute();
-      _navigateToTab(OBHomePageTabs.timeline);
-    }
-  }
-
-  Future _showFileTooLargeToast(int limitInBytes) async {
-    _toastService.error(
-        message: _localizationService.image_picker__error_too_large(
-            limitInBytes ~/ 1048576),
-        context: context);
   }
 
   Widget _getPageForTabIndex(int index) {
@@ -339,8 +271,8 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
             overflow: Overflow.visible,
             children: <Widget>[
               const OBIcon(OBIcons.notifications),
-              _loggedInUserUnreadNotifications > 0
-                  ? Positioned(
+              _loggedInUserUnreadNotifications != null
+                  && _loggedInUserUnreadNotifications > 0 ? Positioned(
                       right: -8,
                       child: OBBadge(
                         size: 10,
@@ -377,33 +309,33 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   }
 
   void _bootstrap() async {
-    enableShareProcessing();
-
     _loggedInUserChangeSubscription =
         _userService.loggedInUserChange.listen(_onLoggedInUserChange);
 
-    if (_userService.isLoggedIn()) return;
-
-    try {
-      await _userService.loginWithStoredUserData();
-    } catch (error) {
-      if (error is AuthTokenMissingError) {
-        _logout();
-      } else if (error is HttpieRequestError) {
-        HttpieResponse response = error.response;
-        if (response.isForbidden() || response.isUnauthorized()) {
+    if (!_userService.isLoggedIn()) {
+      try {
+        await _userService.loginWithStoredUserData();
+      } catch (error) {
+        if (error is AuthTokenMissingError) {
           _logout();
+        } else if (error is HttpieRequestError) {
+          HttpieResponse response = error.response;
+          if (response.isForbidden() || response.isUnauthorized()) {
+            _logout();
+          } else {
+            _onError(error);
+          }
         } else {
           _onError(error);
         }
-      } else {
-        _onError(error);
       }
     }
+
+    _shareService.subscribe(_onShare);
   }
 
   Future _logout() async {
-    _pushNotificationsService.disablePushNotifications();
+    _pushNotificationsService.unsubscribeFromPushNotifications();
     _intercomService.disableIntercom();
     await _userService.logout();
   }
@@ -453,9 +385,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
-      _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
-      _pushNotificationsService.enablePushNotificationsFlagInOneSignalIfNotPrompted();
       _intercomService.enableIntercom();
 
       _loggedInUserUpdateSubscription =
@@ -476,6 +406,7 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
       if (newUser.language == null || !supportedLanguages.contains(newUser.language.code)) {
         _userService.setLanguageFromDefaults();
       }
+      _userService.checkAndClearTempDirectories();
     }
   }
 
@@ -495,6 +426,18 @@ class OBHomePageState extends ReceiveShareState<OBHomePage>
   void _onPushNotificationOpened(
       PushNotificationOpenedResult pushNotificationOpenedResult) {
     //_navigateToTab(OBHomePageTabs.notifications);
+  }
+
+  Future<bool> _onShare({String text, File image, File video}) async {
+    bool postCreated = await _timelinePageController.createPost(
+        text: text, image: image, video: video);
+
+    if (postCreated) {
+      _timelinePageController.popUntilFirstRoute();
+      _navigateToTab(OBHomePageTabs.timeline);
+    }
+
+    return true;
   }
 
   void _navigateToTab(OBHomePageTabs tab) {

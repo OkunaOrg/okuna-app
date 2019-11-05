@@ -111,7 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m45(groupName) => "Összes ${groupName} megtekintése";
 
-  static m46(iosLink, androidLink, inviteLink) => "Szia! Meg szeretnélek hívni az Okuna közösségi hálózatra. Először is töltsd le az alkalmazást az iTunes-ról (${iosLink}) vagy a Play áruházból (${androidLink}). Utána illeszd be ezt a személyre szabott meghívó linket az Okuna alkalmazásban: ${inviteLink}";
+  static m46(iosLink, testFlightLink, androidLink, inviteLink) => "Szia! Meg szeretnélek hívni az Okuna közösségi hálózatra. Először is töltsd le az alkalmazást az iTunes-ról (${iosLink}) vagy a Play áruházból (${androidLink}). Utána illeszd be ezt a személyre szabott meghívó linket az Okuna alkalmazásban: ${inviteLink}";
 
   static m47(username) => "Regisztrált a(z) @${username} felhasználónévvel";
 

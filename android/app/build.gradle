@@ -1,12 +1,12 @@
 buildscript {
     repositories {
         // ...
-        maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
+        maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin P
     }
     dependencies {
         // ...
         // OneSignal-Gradle-Plugin
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.2, 0.99.99]'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.6'
     }
 }
 
@@ -45,7 +45,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     lintOptions {
         disable 'InvalidPackage'
@@ -59,7 +59,7 @@ android {
     defaultConfig {
         applicationId "social.openbook.app"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -103,4 +103,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
 }

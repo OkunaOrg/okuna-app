@@ -78,7 +78,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
-      _mediaPickerService = openbookProvider.mediaPickerService;
+      _mediaPickerService = openbookProvider.mediaService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -200,9 +200,10 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       } else {
         _setStatusMessage(
             _localizationService.post_uploader__generic_upload_failed);
+        // only throw error if its not one of the above handled errors
+        throw error;
       }
       _setStatus(OBPostUploaderStatus.failed);
-      throw error;
     }
   }
 
@@ -232,6 +233,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     Post publishedPost =
         await _userService.getPostWithUuid(_data.createdDraftPost.uuid);
     widget.onPostPublished(publishedPost, widget.data);
+    _removeMediaFromCache();
   }
 
   Future _compressPostMedia() {
@@ -249,18 +251,23 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       File compressedImage =
           await _mediaPickerService.compressImage(postMediaItem);
       _data.remainingCompressedMediaToUpload.add(compressedImage);
+      if (compressedImage.path.indexOf('compressed') > -1) {
+        _data.compressedMedia.add(compressedImage);
+      }
       debugLog(
           'Compressed image from ${postMediaItem.lengthSync()} to ${compressedImage.lengthSync()}');
     } else if (mediaMimeType == 'video') {
       File compressedVideo =
           await _mediaPickerService.compressVideo(postMediaItem);
+      if (compressedVideo.path.indexOf('compressed') > -1) {
+        _data.compressedMedia.add(compressedVideo);
+      }
       _data.remainingCompressedMediaToUpload.add(compressedVideo);
       debugLog(
           'Compressed video from ${postMediaItem.lengthSync()} to ${compressedVideo.lengthSync()}');
     } else {
       debugLog('Unsupported media type for compression');
     }
-
     _data.remainingMediaToCompress.remove(postMediaItem);
   }
 
@@ -407,24 +414,25 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
       }
     }
 
-    if (_data.media.isNotEmpty) {
-      debugLog('Deleting local post media files');
-      _deleteMediaFiles();
-    }
-
     _setStatus(OBPostUploaderStatus.cancelled);
     widget.onCancelled(widget.data);
+    _removeMediaFromCache();
+  }
+
+  void _removeMediaFromCache() async {
+    debugLog('Clearing local cached media for post');
+    _data.media?.forEach((File mediaObject) {
+      if (mediaObject.existsSync()) mediaObject.delete();
+    });
+    _data.compressedMedia?.forEach((File mediaObject) => mediaObject.delete());
+    if (_data.mediaThumbnail != _data.media.first) {
+      _data.mediaThumbnail?.delete();
+    }
   }
 
   Future _publishPost() async {
     debugLog('Publishing post');
     return _userService.publishPost(post: _data.createdDraftPost);
-  }
-
-  void _deleteMediaFiles() async {
-    _data.media.forEach((File mediaFile) {
-      mediaFile.delete();
-    });
   }
 
   void _setStatus(OBPostUploaderStatus status) {
@@ -466,6 +474,7 @@ class OBNewPostData {
   Post createdDraftPost;
   OBPostStatus createdDraftPostStatus;
   List<File> remainingMediaToCompress;
+  List<File> compressedMedia = [];
   List<File> remainingCompressedMediaToUpload = [];
   bool postPublishRequested = false;
   File mediaThumbnail;

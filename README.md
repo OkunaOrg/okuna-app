@@ -237,19 +237,19 @@ To build the iOS archive
 
 ```flutter build ios```
 
-## Official work-around's list
+## Official workaround's list
 
-Unfourtunately, Flutter is still in it's early steps as a framework and ecosystem.
+Unfortunately, Flutter is still in its early steps as a framework and ecosystem.
 
-Work-arounds to get the app to work are something we see frequently.
+Workarounds to get the app to work are something we see frequently.
 
-This is the section where we'll be documenting the work-arounds to avoid confusion in the future.
+This is the section where we'll be documenting the workarounds to avoid confusion in the future.
 
 ### OneSignal iOS Build Failing
 
 The [OneSignal Flutter SDK](https://github.com/OneSignal/OneSignal-Flutter-SDK) does not work out of the box.
 
-In Android, the SDK Setup Guide contains wrong instructions which were adressed on [this Github Issue](https://github.com/OneSignal/OneSignal-Flutter-SDK/issues/56).
+In Android, the SDK Setup Guide contains wrong instructions which were addressed on [this Github Issue](https://github.com/OneSignal/OneSignal-Flutter-SDK/issues/56).
 
 In iOS, there was no official solution to it and the fix was an absolute "hack".
 
@@ -277,11 +277,11 @@ The audience composed of the entire internet! Everyone can post to it.
 
 #### Connection
 
-A connection between two users, initiated by any of the two. It's linked to an specific circle.
+A connection between two users, initiated by any of the two. It's linked to a specific circle.
 
 #### Connections Circle
 
-The audience composed by all of the people you're connected with
+The audience composed of all of the people you're connected with
 
 #### Linked users
 
@@ -297,7 +297,7 @@ Members of a community that have the power to ban, unban, review community post/
 
 #### Community member
 
-A member of a community with the power to post to it and receive it's content in it's timeline.
+A member of a community with the power to post to it and receive its content in its timeline.
 
 <br>
 
