@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media.dart';
@@ -25,8 +24,12 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
           localizationService.video_picker__from_gallery,
         ),
         onTap: () async {
-          File file = await FilePicker.getFile(type: FileType.VIDEO);
-          Navigator.pop(context, file);
+          bool permissionGranted = await provider.permissionService
+              .requestStoragePermissions(context: context);
+          if (permissionGranted) {
+            File file = await FilePicker.getFile(type: FileType.VIDEO);
+            Navigator.pop(context, file);
+          }
         },
       ),
       ListTile(
@@ -35,9 +38,13 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
           localizationService.video_picker__from_camera,
         ),
         onTap: () async {
-          File pickedVideo =
-          await ImagePicker.pickVideo(source: ImageSource.camera);
-          Navigator.pop(context, pickedVideo);
+          bool permissionGranted = await provider.permissionService
+              .requestCameraPermissions(context: context);
+          if (permissionGranted) {
+            File pickedVideo =
+                await ImagePicker.pickVideo(source: ImageSource.camera);
+            Navigator.pop(context, pickedVideo);
+          }
         },
       )
     ];

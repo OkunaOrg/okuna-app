@@ -711,8 +711,7 @@ class LocalizationService {
 
   String drawer__about_platform(String platform) {
     return Intl.message("Running on $platform",
-      args: [platform],
-      name: 'drawer__about_platform');
+        args: [platform], name: 'drawer__about_platform');
   }
 
   String get drawer__logout {
@@ -846,6 +845,26 @@ class LocalizationService {
 
   String get community__communities {
     return Intl.message("communities", name: 'community__communities');
+  }
+
+  String get community__excluded_community {
+    return Intl.message("excluded community",
+        name: 'community__excluded_community');
+  }
+
+  String get community__excluded_communities {
+    return Intl.message("excluded communities",
+        name: 'community__excluded_communities');
+  }
+
+  String get community__exclude_joined_communities {
+    return Intl.message("Exclude joined communities",
+        name: 'community__exclude_joined_communities');
+  }
+
+  String get community__exclude_joined_communities_desc {
+    return Intl.message("Don't show posts from communities I'm a member of",
+        name: 'community__exclude_joined_communities_desc');
   }
 
   String get community__type_public {
@@ -1143,6 +1162,10 @@ class LocalizationService {
 
   String get community__user_you_text {
     return Intl.message("You", name: 'community__user_you_text');
+  }
+
+  String get community__tile_delete {
+    return Intl.message("Delete", name: 'community__tile_delete');
   }
 
   String community__pick_upto_max(int max) {
@@ -1545,6 +1568,16 @@ class LocalizationService {
         name: 'community__top_posts_excluded_communities');
   }
 
+  String get community__top_posts_excluded_communities_desc {
+    return Intl.message("Manage communities excluded from the explore timeline",
+        name: 'community__top_posts_excluded_communities_desc');
+  }
+
+  String get community__top_posts_settings {
+    return Intl.message("Explore settings",
+        name: 'community__top_posts_settings');
+  }
+
   String get user_search__search_text {
     return Intl.message("Search...", name: 'user_search__search_text');
   }
@@ -1870,6 +1903,10 @@ class LocalizationService {
 
   String get post__top_posts_title {
     return Intl.message("Explore", name: 'post__top_posts_title');
+  }
+
+  String get post__trending_posts_title {
+    return Intl.message("Trending", name: 'post__trending_posts_title');
   }
 
   String get post__trending_posts_no_trending_posts {
@@ -2462,8 +2499,8 @@ class LocalizationService {
     return Intl.message("Member", name: 'user__invite_member');
   }
 
-  String user__invite_someone_message(
-      String iosLink, String testFlightLink, String androidLink, String inviteLink) {
+  String user__invite_someone_message(String iosLink, String testFlightLink,
+      String androidLink, String inviteLink) {
     return Intl.message(
         "Hey, I'd like to invite you to Okuna.\n\n"
         "For Apple, first, download the TestFlight app on iTunes ($testFlightLink) and then download the Okuna app ($iosLink)\n\n"
@@ -3623,7 +3660,7 @@ class LocalizationService {
   String get contextual_community_search_box__suggestions {
     return Intl.message("Suggestions",
         desc:
-        "The title to display on the suggestions when searching for communitys when trying to mention someone.",
+            "The title to display on the suggestions when searching for communitys when trying to mention someone.",
         name: 'contextual_community_search_box__suggestions');
   }
 
@@ -3702,8 +3739,7 @@ class LocalizationService {
 
   String post_body_link_preview__invalid(String link) {
     return Intl.message("Invalid link: $link",
-        args: [link],
-        name: 'post_body_link_preview__invalid');
+        args: [link], name: 'post_body_link_preview__invalid');
   }
 
   String post_body_link_preview__error_with_description(String description) {
@@ -3763,7 +3799,8 @@ class LocalizationService {
   }
 
   String get application_settings__link_previews {
-    return Intl.message("Link previews", name: 'application_settings__link_previews');
+    return Intl.message("Link previews",
+        name: 'application_settings__link_previews');
   }
 
   String get application_settings__videos_autoplay {
@@ -3836,8 +3873,19 @@ class LocalizationService {
   }
 
   String get media_service__crop_image {
-    return Intl.message("Crop image",
-        name: 'media_service__crop_image');
+    return Intl.message("Crop image", name: 'media_service__crop_image');
+  }
+
+  String get permissions_service__storage_permission_denied {
+    return Intl.message(
+        "We require the storage permission to allow you to pick media items, please grant it in your settings.",
+        name: 'permissions_service__storage_permission_denied');
+  }
+
+  String get permissions_service__camera_permission_denied {
+    return Intl.message(
+        "We require the camera permission to allow you to take photos and record videos, please grant it in your settings.",
+        name: 'permissions_service__camera_permission_denied');
   }
 
   Locale getLocale() {

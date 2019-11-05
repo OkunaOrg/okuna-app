@@ -335,7 +335,7 @@ class OBHomePageState extends State<OBHomePage>
   }
 
   Future _logout() async {
-    _pushNotificationsService.disablePushNotifications();
+    _pushNotificationsService.unsubscribeFromPushNotifications();
     _intercomService.disableIntercom();
     await _userService.logout();
   }
@@ -385,9 +385,7 @@ class OBHomePageState extends State<OBHomePage>
     if (newUser == null) {
       Navigator.pushReplacementNamed(context, '/auth');
     } else {
-      _userPreferencesService.setVideosSoundSetting(VideosSoundSetting.disabled);
       _pushNotificationsService.bootstrap();
-      _pushNotificationsService.promptUserForPushNotificationPermission();
       _intercomService.enableIntercom();
 
       _loggedInUserUpdateSubscription =
@@ -408,7 +406,6 @@ class OBHomePageState extends State<OBHomePage>
       if (newUser.language == null || !supportedLanguages.contains(newUser.language.code)) {
         _userService.setLanguageFromDefaults();
       }
-      _mediaService.setAdvancedNetworkImageDiskCacheParams();
       _userService.checkAndClearTempDirectories();
     }
   }

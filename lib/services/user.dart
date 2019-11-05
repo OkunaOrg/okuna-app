@@ -61,6 +61,7 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/posts_api.dart';
+import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:Okuna/services/user_invites_api.dart';
 import 'package:Okuna/services/waitlist_service.dart';
@@ -101,6 +102,7 @@ class UserService {
   WaitlistApiService _waitlistApiService;
   LocalizationService _localizationService;
   DraftService _draftService;
+  PushNotificationsService _pushNotificationService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -117,6 +119,11 @@ class UserService {
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
+  }
+
+  void setPushNotificationsService(
+      PushNotificationsService pushNotificationsService) {
+    _pushNotificationService = pushNotificationsService;
   }
 
   void setModerationApiService(ModerationApiService moderationApiService) {
@@ -206,6 +213,7 @@ class UserService {
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
     _draftService.clear();
+    _pushNotificationService.clearPromptedUserForPermission();
     _removeLoggedInUser();
     await clearCache();
     User.clearSessionCache();
@@ -224,46 +232,79 @@ class UserService {
   }
 
   Future<bool> clearTemporaryDirectories() async {
-      debugPrint('Clearing /tmp files and vimedia');
-      try {
-        Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
-        Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
-        Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
-        Directory videoDirAndroid = Directory(join((await getTemporaryDirectory()).path, 'video'));
+    // TODO Handle every service clearing its own things responsible for, not have it
+    // spread over the place...
+    debugPrint('Clearing /tmp files and vimedia');
+    try {
+      Directory tempDir = Directory((await getApplicationDocumentsDirectory())
+          .path
+          .replaceFirst('Documents', 'tmp'));
+      Directory vimediaDir = Directory(join(
+          (await getApplicationDocumentsDirectory())
+              .path
+              .replaceFirst('Documents', 'tmp'),
+          'vimedia'));
+      Directory mediaCacheDir = Directory(
+          join((await getApplicationDocumentsDirectory()).path, 'mediaCache'));
+      Directory videoDirAndroid = Directory(
+          join((await getApplicationDocumentsDirectory()).path, 'video'));
 
-        if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) {
+      if (tempDir.existsSync())
+        tempDir.listSync().forEach((var entity) {
           if (entity is File) {
             entity.delete();
           }
         });
-        if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
-        if (mediaCacheDir.existsSync()) await mediaCacheDir.delete(recursive: true);
-        if (videoDirAndroid.existsSync()) await videoDirAndroid.delete(recursive: true);
-        return true;
-      } catch (e) {
-        print(e);
-        return false;
-      }
+      if (vimediaDir.existsSync()) await vimediaDir.delete(recursive: true);
+      if (mediaCacheDir.existsSync())
+        await mediaCacheDir.delete(recursive: true);
+      if (videoDirAndroid.existsSync())
+        await videoDirAndroid.delete(recursive: true);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   void checkAndClearTempDirectories() async {
     int size = 0;
     try {
-      Directory tempDir = Directory((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'));
-      Directory vimediaDir = Directory(join((await getApplicationDocumentsDirectory()).path.replaceFirst('Documents', 'tmp'), 'vimedia'));
-      Directory videoDirAndroid = Directory(join((await getTemporaryDirectory()).path, 'video'));
-      Directory mediaCacheDir = Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
+      Directory tempDir = Directory((await getTemporaryDirectory())
+          .path
+          .replaceFirst('Documents', 'tmp'));
+      Directory vimediaDir = Directory(join(
+          (await getApplicationDocumentsDirectory())
+              .path
+              .replaceFirst('Documents', 'tmp'),
+          'vimedia'));
+      Directory videoDirAndroid =
+          Directory(join((await getTemporaryDirectory()).path, 'video'));
+      Directory mediaCacheDir =
+          Directory(join((await getTemporaryDirectory()).path, 'mediaCache'));
 
-      if (tempDir.existsSync()) tempDir.listSync().forEach((var entity) => size += entity.statSync().size);
-      if (vimediaDir.existsSync()) vimediaDir.listSync().forEach((var entity) => size += entity.statSync().size);
-      if (mediaCacheDir.existsSync()) mediaCacheDir.listSync().forEach((var entity) => size += entity.statSync().size);
-      if (videoDirAndroid.existsSync()) videoDirAndroid.listSync().forEach((var entity) => size += entity.statSync().size);
+      if (tempDir.existsSync())
+        tempDir
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
+      if (vimediaDir.existsSync())
+        vimediaDir
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
+      if (mediaCacheDir.existsSync())
+        mediaCacheDir
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
+      if (videoDirAndroid.existsSync())
+        videoDirAndroid
+            .listSync()
+            .forEach((var entity) => size += entity.statSync().size);
 
       if (size > MAX_TEMP_DIRECTORY_CACHE_MB * 1000000) {
         clearTemporaryDirectories();
       }
     } catch (e) {
-    debugPrint(e);
+      debugPrint(e);
     }
   }
 
@@ -415,17 +456,27 @@ class UserService {
     return _loggedInUser != null;
   }
 
-  Future<TopPostsList> getTopPosts({int maxId, int minId, int count}) async {
-    HttpieResponse response =
-        await _postsApiService.getTopPosts(
-            maxId: maxId,
-            minId: minId,
-            count: count,
-            authenticatedRequest: true);
+  Future<TopPostsList> getTopPosts(
+      {int maxId, int minId, int count, bool excludeJoinedCommunities}) async {
+    HttpieResponse response = await _postsApiService.getTopPosts(
+        maxId: maxId,
+        minId: minId,
+        count: count,
+        excludeJoinedCommunities: excludeJoinedCommunities,
+        authenticatedRequest: true);
 
     _checkResponseIsOk(response);
 
     return TopPostsList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostsList> getTrendingPosts() async {
+    HttpieResponse response =
+        await _postsApiService.getTrendingPosts(authenticatedRequest: true);
+
+    _checkResponseIsOk(response);
+
+    return PostsList.fromJson(json.decode(response.body));
   }
 
   Future<PostsList> getTimelinePosts(
@@ -460,7 +511,8 @@ class UserService {
   }
 
   Future<void> setStoredTopPosts(List<TopPost> topPosts) async {
-    String topPostsData = json.encode(topPosts.map((TopPost topPost) => topPost.toJson())?.toList());
+    String topPostsData = json
+        .encode(topPosts.map((TopPost topPost) => topPost.toJson())?.toList());
     await this._removeStoredTopPostsData();
     await this._storeTopPostsData(topPostsData);
   }
@@ -702,8 +754,7 @@ class UserService {
   }
 
   Future<PostComment> getPostComment(
-      {@required Post post,
-        @required PostComment postComment}) async {
+      {@required Post post, @required PostComment postComment}) async {
     HttpieResponse response = await _postsApiService.getPostComment(
         postUuid: post.uuid, postCommentId: postComment.id);
     _checkResponseIsOk(response);
@@ -742,18 +793,17 @@ class UserService {
   }
 
   Future<String> excludePostCommunityFromTopPosts(Community community) async {
-    HttpieResponse response =
-        await _communitiesApiService.excludeCommunityFromTopPosts(
-            communityName: community.name);
+    HttpieResponse response = await _communitiesApiService
+        .excludeCommunityFromTopPosts(communityName: community.name);
     _checkResponseIsAccepted(response);
 
     return (json.decode(response.body))['message'];
   }
 
-  Future<String> undoExcludePostCommunityFromTopPosts(Community community) async {
-    HttpieResponse response =
-        await _communitiesApiService.undoExcludeCommunityFromTopPosts(
-            communityName: community.name);
+  Future<String> undoExcludePostCommunityFromTopPosts(
+      Community community) async {
+    HttpieResponse response = await _communitiesApiService
+        .undoExcludeCommunityFromTopPosts(communityName: community.name);
     _checkResponseIsAccepted(response);
 
     return (json.decode(response.body))['message'];
@@ -912,15 +962,16 @@ class UserService {
 
   Future<CommunitiesList> searchExcludedCommunities(
       {@required String query, int count}) async {
-    HttpieResponse response =
-        await _communitiesApiService.searchExcludedCommunities(query: query, count: count);
+    HttpieResponse response = await _communitiesApiService
+        .searchExcludedCommunities(query: query, count: count);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getExcludedCommunities({int offset, int count}) async {
-    HttpieResponse response =
-        await _communitiesApiService.getExcludedCommunities(count: count, offset: offset);
+  Future<CommunitiesList> getExcludedCommunities(
+      {int offset, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .getExcludedCommunities(count: count, offset: offset);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
@@ -1593,8 +1644,8 @@ class UserService {
 
   Future<int> getUnreadNotificationsCount(
       {int maxId, List<NotificationType> types}) async {
-    HttpieResponse response = await _notificationsApiService.getUnreadNotificationsCount(
-        maxId: maxId, types: types);
+    HttpieResponse response = await _notificationsApiService
+        .getUnreadNotificationsCount(maxId: maxId, types: types);
     _checkResponseIsOk(response);
     return (json.decode(response.body))['count'];
   }

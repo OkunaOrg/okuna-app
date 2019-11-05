@@ -104,10 +104,11 @@ class OBContextualCommunitySearchBoxState
         ),
         _all.isNotEmpty && !_getAllInProgress
             ? Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
                   itemBuilder: _buildAllItem,
                   itemCount: _all.length,
                   padding: const EdgeInsets.all(0),
+                  separatorBuilder: _buildListItemSeparator,
                 ),
               )
             : _buildProgressIndicator()
@@ -119,14 +120,19 @@ class OBContextualCommunitySearchBoxState
     return Column(
       children: <Widget>[
         Expanded(
-          child: ListView.builder(
+          child: ListView.separated(
             itemBuilder: _buildResultItem,
             itemCount: _searchResults.length + 1,
             padding: const EdgeInsets.all(0),
+            separatorBuilder: _buildListItemSeparator,
           ),
         )
       ],
     );
+  }
+
+  Widget _buildListItemSeparator(BuildContext context, int index) {
+    return const SizedBox(height: 10);
   }
 
   Widget _buildResultItem(BuildContext context, int index) {

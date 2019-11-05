@@ -1,0 +1,7 @@
+{
+  "crop_image": "Crop image",
+  "@crop_image": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

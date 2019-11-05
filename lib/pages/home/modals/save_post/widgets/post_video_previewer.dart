@@ -14,8 +14,13 @@ class OBPostVideoPreview extends StatelessWidget {
   final double playIconSize;
   static double avatarBorderRadius = 10.0;
 
-  OBPostVideoPreview(
-      {this.onRemove, this.postVideoFile, this.playIconSize, this.postVideo});
+  const OBPostVideoPreview(
+      {Key key,
+      this.postVideoFile,
+      this.postVideo,
+      this.onRemove,
+      this.playIconSize})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +30,8 @@ class OBPostVideoPreview extends StatelessWidget {
 
     Widget videoPreview = isFileVideo
         ? FutureBuilder<File>(
-            future: openbookProvider.mediaService
-                .getVideoThumbnail(postVideoFile),
+            future:
+                openbookProvider.mediaService.getVideoThumbnail(postVideoFile),
             builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
               if (snapshot.data == null) return const SizedBox();
 

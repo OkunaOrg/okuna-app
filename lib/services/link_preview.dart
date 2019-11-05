@@ -57,7 +57,8 @@ class LinkPreviewService {
     }));
 
     if (matches.length > 0) {
-      String urlMimeType = _utilsService.geFileNameMimeType(matches.first);
+      Uri url = Uri.parse(matches.first);
+      String urlMimeType = _utilsService.geFileNameMimeType(url.path);
       if (urlMimeType != null) {
         String urlFirstType = urlMimeType.split('/').first;
         if (urlFirstType != 'image' && urlFirstType != 'text') return null;

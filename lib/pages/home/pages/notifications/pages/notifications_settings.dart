@@ -244,8 +244,8 @@ class OBNotificationsSettingsPageState
     });
 
     return pushNotifications
-        ? _pushNotificationsService.enablePushNotifications()
-        : _pushNotificationsService.disablePushNotifications();
+        ? _pushNotificationsService.subscribeToPushNotifications()
+        : _pushNotificationsService.unsubscribeFromPushNotifications();
   }
 
   void _toggleConnectionRequestNotifications() {

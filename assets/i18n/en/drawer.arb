@@ -146,14 +146,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "about_version": "{name} v{version}",
-  "@about_version": {
-    "type": "text",
-    "placeholders": {
-      "name": {},
-      "version": {}
-    }
-  },
   "about_platform": "Running on {platform}",
   "@about_platform": {
     "type": "text",
