@@ -6,6 +6,7 @@ import 'package:Okuna/pages/auth/create_account/done_step.dart';
 import 'package:Okuna/pages/auth/create_account/email_step.dart';
 import 'package:Okuna/pages/auth/create_account/guidelines_step.dart';
 import 'package:Okuna/pages/auth/create_account/register_token_invalid.dart';
+import 'package:Okuna/pages/auth/create_account/username_step.dart';
 import 'package:Okuna/pages/auth/reset_password/forgot_password_step.dart';
 import 'package:Okuna/pages/auth/create_account/get_started.dart';
 import 'package:Okuna/pages/auth/create_account/legal_age_step.dart';
@@ -164,6 +165,10 @@ class _MyAppState extends State<MyApp> {
               '/auth/email_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthEmailStepPage();
+              },
+              '/auth/username_step': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBAuthUsernameStepPage();
               },
               '/auth/password_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);

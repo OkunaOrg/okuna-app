@@ -9,16 +9,16 @@ import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:Okuna/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
-class OBAuthEmailStepPage extends StatefulWidget {
+class OBAuthUsernameStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return OBAuthEmailStepPageState();
+    return OBAuthUsernameStepPageState();
   }
 }
 
-class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
-  bool _emailCheckInProgress;
-  bool _emailTaken;
+class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
+  bool _usernameCheckInProgress;
+  bool _usernameTaken;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   CreateAccountBloc _createAccountBloc;
@@ -26,11 +26,11 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
   ValidationService _validationService;
   ToastService _toastService;
 
-  TextEditingController _emailController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
 
   @override
   void initState() {
-    _emailCheckInProgress = false;
+    _usernameCheckInProgress = false;
     super.initState();
   }
 
@@ -49,15 +49,15 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildWhatYourEmail(context: context),
+                    _buildWhatsYourUsername(context: context),
                     const SizedBox(
                       height: 20.0,
                     ),
-                    _buildEmailForm()
+                    _buildUsernameForm()
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFFFF3939),
+      backgroundColor: Color(0xFF236677),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -83,34 +83,34 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     return _formKey.currentState.validate();
   }
 
-  void _setEmailTaken(bool isEmailTaken) {
+  void _setUsernameTaken(bool isUsernameTaken) {
     setState(() {
-      _emailTaken = isEmailTaken;
+      _usernameTaken = isUsernameTaken;
     });
   }
 
-  Future<bool> _checkEmailAvailable(String email, BuildContext context) async {
-    _setEmailCheckInProgress(true);
-    bool isEmailTaken = false;
+  Future<bool> _checkUsernameAvailable(String username, BuildContext context) async {
+    _setUsernameCheckInProgress(true);
+    bool isUsernameTaken = false;
     try {
-     isEmailTaken = await _validationService.isEmailTaken(email);
-     _setEmailTaken(isEmailTaken);
+     isUsernameTaken = await _validationService.isUsernameTaken(username);
+     _setUsernameTaken(isUsernameTaken);
     } catch (error) {
-      String errorFeedback = _localizationService.trans('auth__create_acc__email_server_error');
+      String errorFeedback = _localizationService.auth__create_acc__username_server_error;
       _toastService.error(message: errorFeedback, context: context);
     } finally {
-      _setEmailCheckInProgress(false);
+      _setUsernameCheckInProgress(false);
     }
-    return isEmailTaken;
+    return isUsernameTaken;
   }
 
   void onPressedNextStep(BuildContext context) async {
-    await _checkEmailAvailable(_emailController.text.trim(), context);
-    bool isEmailValid = _validateForm();
-    if (isEmailValid && !_emailTaken) {
+    bool isUsernameValid = _validateForm();
+    await _checkUsernameAvailable(_usernameController.text.trim(), context);
+    if (isUsernameValid && !_usernameTaken) {
       setState(() {
-        _createAccountBloc.setEmail(_emailController.text.trim());
-        Navigator.pushNamed(context, '/auth/username_step');
+        _createAccountBloc.setUsername(_usernameController.text.trim());
+        Navigator.pushNamed(context, '/auth/password_step');
       });
     }
   }
@@ -121,7 +121,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      isLoading: _emailCheckInProgress,
+      isLoading: _usernameCheckInProgress,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
       onPressed: () {
         onPressedNextStep(context);
@@ -156,20 +156,20 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     );
   }
 
-  Widget _buildWhatYourEmail({@required BuildContext context}) {
-    String whatEmailText =
-        _localizationService.trans('auth__create_acc__what_email');
+  Widget _buildWhatsYourUsername({@required BuildContext context}) {
+    String whatsUsernameText =
+        _localizationService.auth__create_acc__what_username;
 
     return Column(
       children: <Widget>[
         Text(
-          '💌',
+          '😍',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
         ),
         const SizedBox(
           height: 20.0,
         ),
-        Text(whatEmailText,
+        Text(whatsUsernameText,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 24.0,
@@ -179,12 +179,10 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     );
   }
 
-  Widget _buildEmailForm() {
+  Widget _buildUsernameForm() {
 
-    String emailInputPlaceholder =
-        _localizationService.trans('auth__create_acc__email_placeholder');
-    String errorEmailTaken =
-    _localizationService.trans('auth__create_acc__email_taken_error');
+    String usernameInputPlaceholder = _localizationService.auth__create_acc__username_placeholder;
+    String errorUsernameTaken = _localizationService.auth__create_acc__username_taken_error;
 
     return Form(
       key: _formKey,
@@ -194,15 +192,15 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
               color: Colors.transparent,
               child: OBAuthTextField(
                 autocorrect: false,
-                hintText: emailInputPlaceholder,
-                validator: (String email) {
-                  String validateEMail = _validationService.validateUserEmail(email.trim());
-                  if (validateEMail != null) return validateEMail;
-                  if (_emailTaken != null && _emailTaken) {
-                    return errorEmailTaken;
+                hintText: usernameInputPlaceholder,
+                validator: (String username) {
+                  String validateUsernameResult = _validationService.validateUserUsername(username.trim());
+                  if (validateUsernameResult != null) return validateUsernameResult;
+                  if (_usernameTaken != null && _usernameTaken) {
+                    return errorUsernameTaken.replaceFirst('%s', username);
                   }
                 },
-                controller: _emailController,
+                controller: _usernameController,
               )
           ),
         ),
@@ -210,9 +208,9 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
     );
   }
 
-  void _setEmailCheckInProgress(bool newEmailCheckInProgress) {
+  void _setUsernameCheckInProgress(bool newUsernameCheckInProgress) {
     setState(() {
-      _emailCheckInProgress = newEmailCheckInProgress;
+      _usernameCheckInProgress = newUsernameCheckInProgress;
     });
   }
 }

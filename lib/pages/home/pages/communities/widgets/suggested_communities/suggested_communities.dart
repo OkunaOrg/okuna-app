@@ -1,18 +1,17 @@
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
-import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities/widgets/suggested_community_tile.dart';
+import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities/widgets/selectable_community_tile.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/theming/text.dart';
-import 'package:Okuna/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBSuggestedCommunities extends StatefulWidget {
-
-  const OBSuggestedCommunities();
+  final OnCommunitySelectionInProgress onCommunitySelectionInProgress;
+  const OBSuggestedCommunities({this.onCommunitySelectionInProgress});
 
   @override
   OBSuggestedCommunitiesState createState() {
@@ -86,7 +85,7 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
 
   Widget _buildCommunity(BuildContext context, index) {
     Community community = _suggestedCommunities[index];
-    return OBSuggestedCommunityTile(
+    return OBSelectableCommunityTile(
       community,
       isDisabled: _requestInProgressCommunities?.contains(community),
       isSelected: _selectedCommunities?.contains(community),
@@ -187,12 +186,14 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   }
 
   void _setRequestInProgressForCommunity(Community community) {
+    if (widget.onCommunitySelectionInProgress != null) widget.onCommunitySelectionInProgress(true);
     setState(() {
       _requestInProgressCommunities.add(community);
     });
   }
 
   void _removeRequestInProgressForCommunity(Community community) {
+    if (widget.onCommunitySelectionInProgress != null) widget.onCommunitySelectionInProgress(false);
     setState(() {
       _requestInProgressCommunities.remove(community);
     });
@@ -201,3 +202,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   @override
   bool get wantKeepAlive => true;
 }
+
+
+typedef void OnCommunitySelectionInProgress(bool isInProgress);

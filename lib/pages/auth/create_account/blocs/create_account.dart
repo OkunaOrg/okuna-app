@@ -309,6 +309,7 @@ class CreateAccountBloc {
           email: userRegistrationData.email,
           isOfLegalAge: userRegistrationData.isOfLegalAge,
           name: userRegistrationData.name,
+          username: userRegistrationData.username,
           token: userRegistrationData.token,
           password: userRegistrationData.password,
           areGuidelinesAccepted: userRegistrationData.areGuidelinesAccepted,

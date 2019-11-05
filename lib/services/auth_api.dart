@@ -143,6 +143,7 @@ class AuthApiService {
       {@required String email,
       @required String token,
       @required String name,
+      @required String username,
       @required bool isOfLegalAge,
       @required bool areGuidelinesAccepted,
       @required String password,
@@ -151,6 +152,7 @@ class AuthApiService {
       'email': email,
       'token': token,
       'name': name,
+      'username': username,
       'is_of_legal_age': isOfLegalAge,
       'are_guidelines_accepted': areGuidelinesAccepted,
       'password': password

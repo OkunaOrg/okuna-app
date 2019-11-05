@@ -4,13 +4,13 @@ import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:Okuna/widgets/tiles/community_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBSuggestedCommunityTile extends StatelessWidget {
+class OBSelectableCommunityTile extends StatelessWidget {
   final Community community;
   final OnCommunityPressed onCommunityPressed;
   final bool isSelected;
   final bool isDisabled;
 
-  const OBSuggestedCommunityTile(this.community,
+  const OBSelectableCommunityTile(this.community,
       {Key key, this.onCommunityPressed, this.isSelected = false, this.isDisabled = false})
       : super(key: key);
 

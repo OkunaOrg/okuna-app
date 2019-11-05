@@ -3,14 +3,12 @@ import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
-import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:Okuna/widgets/buttons/success_button.dart';
 import 'package:flutter/material.dart';
 
 class OBAuthDonePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return OBAuthDonePageState();
   }
 }
@@ -18,6 +16,7 @@ class OBAuthDonePage extends StatefulWidget {
 class OBAuthDonePageState extends State<OBAuthDonePage> {
   LocalizationService localizationService;
   CreateAccountBloc createAccountBloc;
+  bool _isCommunitySelectionInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +108,17 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         const SizedBox(
           height: 20.0,
         ),
-        OBSuggestedCommunities(),
+        OBSuggestedCommunities(
+            onCommunitySelectionInProgress: onCommunitySelectionInProgress
+        ),
       ],
     );
+  }
+
+  void onCommunitySelectionInProgress(bool isCommunitySelectionInProgress) {
+    setState(() {
+      _isCommunitySelectionInProgress = isCommunitySelectionInProgress;
+    });
   }
 
   Widget _buildContinueButton({@required BuildContext context}) {
@@ -120,6 +127,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
+      isDisabled: _isCommunitySelectionInProgress,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
