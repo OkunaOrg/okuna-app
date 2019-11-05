@@ -105,8 +105,8 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
   }
 
   void onPressedNextStep(BuildContext context) async {
-    bool isUsernameValid = _validateForm();
     await _checkUsernameAvailable(_usernameController.text.trim(), context);
+    bool isUsernameValid = _validateForm();
     if (isUsernameValid && !_usernameTaken) {
       setState(() {
         _createAccountBloc.setUsername(_usernameController.text.trim());
