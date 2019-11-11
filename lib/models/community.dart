@@ -62,6 +62,9 @@ class Community extends UpdatableModel<Community> {
   // Whether the user has been invited to the community
   bool isInvited;
 
+  // Whether the user has subscribed to the community
+  bool isSubscribed;
+
   // Whether the user is the creator of the community
   bool isCreator;
 
@@ -93,6 +96,7 @@ class Community extends UpdatableModel<Community> {
       this.color,
       this.cover,
       this.isInvited,
+      this.isSubscribed,
       this.isCreator,
       this.isReported,
       this.moderators,
@@ -176,6 +180,7 @@ class Community extends UpdatableModel<Community> {
       'color': color,
       'cover': cover,
       'is_invited': isInvited,
+      'is_subscribed': isSubscribed,
       'is_creator': isCreator,
       'is_reported': isReported,
       'moderators': moderators?.users?.map((User user) => user.toJson())?.toList(),
@@ -201,6 +206,10 @@ class Community extends UpdatableModel<Community> {
 
     if (json.containsKey('is_invited')) {
       isInvited = json['is_invited'];
+    }
+
+    if (json.containsKey('is_subscribed')) {
+      isSubscribed = json['is_subscribed'];
     }
 
     if (json.containsKey('is_favorite')) {
@@ -314,6 +323,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         rules: json['rules'],
         avatar: json['avatar'],
         isInvited: json['is_invited'],
+        isSubscribed: json['is_subscribed'],
         isCreator: json['is_creator'],
         isReported: json['is_reported'],
         isFavorite: json['is_favorite'],
