@@ -31,17 +31,21 @@ class OBPostsStream extends StatefulWidget {
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
   final bool isTopPostsStream;
   final Widget Function(BuildContext, Post, String, Function(Post)) postBuilder;
+  final Function(ScrollPosition) onScrollCallback;
+  final double refreshIndicatorDisplacement;
 
   const OBPostsStream(
       {Key key,
       this.prependedItems,
       @required this.refresher,
       @required this.onScrollLoader,
+      this.onScrollCallback,
       this.controller,
       this.initialPosts,
       @required this.streamIdentifier,
       this.onPostsRefreshed,
       this.refreshOnCreate = true,
+      this.refreshIndicatorDisplacement = 40.0,
       this.secondaryRefresher,
       this.isTopPostsStream = false,
       this.postBuilder,
@@ -84,7 +88,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _posts = widget.initialPosts != null ? widget.initialPosts.toList() : [];
-    if (widget.initialPosts != null) _shouldHideStackedLoadingScreen = false;
+    if (_posts.isNotEmpty) _shouldHideStackedLoadingScreen = false;
     _needsBootstrap = true;
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _status = OBPostsStreamStatus.idle;
@@ -116,7 +120,7 @@ class OBPostsStreamState extends State<OBPostsStream>
         _refresh();
       });
     }
-    if (widget.isTopPostsStream && widget.initialPosts != null) {
+    if (widget.isTopPostsStream && _posts.isNotEmpty) {
       Future.delayed(Duration(milliseconds: 0), () {
         _scrollToBottom();
       });
@@ -136,6 +140,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     }
 
     return RefreshIndicator(
+      displacement: widget.refreshIndicatorDisplacement,
       key: _refreshIndicatorKey,
       onRefresh: _refreshPosts,
       child: _buildStream(),
@@ -214,7 +219,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   List<Widget> _buildStreamPosts() {
     if (widget.postBuilder != null) {
       return _posts.map((Post post) {
-        if (widget.initialPosts != null && post.id == widget.initialPosts.last.id) {
+        if (_posts.isNotEmpty && post.id == _posts.last.id) {
           _hideInitialPostsLoadingOverlay();
         }
         return widget.postBuilder(context, post, _streamUniqueIdentifier, _onPostDeleted);
@@ -226,7 +231,7 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   Widget _buildStreamPost(Post post) {
     String inViewId = '${_streamUniqueIdentifier}_${post.id.toString()}';
-    if (widget.initialPosts != null && post.id == widget.initialPosts.last.id) {
+    if (_posts.isNotEmpty && post.id == _posts.last.id) {
       _hideInitialPostsLoadingOverlay();
     }
 
@@ -330,6 +335,12 @@ class OBPostsStreamState extends State<OBPostsStream>
   }
 
   void _onScroll() {
+    if (widget.onScrollCallback != null && _shouldHideStackedLoadingScreen) {
+      // trigger this callback only after loading overlay is hidden
+      // so that its not registered as a manual scroll
+      widget.onScrollCallback(_streamScrollController.position);
+    }
+
     if (_status == OBPostsStreamStatus.loadingMore ||
         _status == OBPostsStreamStatus.noMoreToLoad) return;
 
@@ -483,6 +494,10 @@ class OBPostsStreamController {
 
   Future refreshPosts() {
     return _state._refreshPosts();
+  }
+
+  Future refresh() {
+    return _state._refresh();
   }
 
   bool isAttached() {

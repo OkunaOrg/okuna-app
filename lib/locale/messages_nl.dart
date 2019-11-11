@@ -107,7 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m45(groupName) => "Zie alle ${groupName}";
 
-  static m46(iosLink, androidLink, inviteLink) => "Hi, ik wil je graag uitnodigen voor Okuna. Download eerst de app in iTunes (${iosLink}) of de Play store (${androidLink}). Plak vervolgens deze gepersonaliseerde link met de uitnodiginging het formulier \'Aanmelden\' in de Okuna App: ${inviteLink}";
+  static m46(iosLink, testFlightLink, androidLink, inviteLink) => "Hi, ik wil je graag uitnodigen voor Okuna. Download eerst de app in iTunes (${iosLink}) of de Play store (${androidLink}). Plak vervolgens deze gepersonaliseerde link met de uitnodiginging het formulier \'Aanmelden\' in de Okuna App: ${inviteLink}";
 
   static m47(username) => "Doet mee met gebruikersnaam @${username}";
 

@@ -25,8 +25,12 @@ class OBImagePickerBottomSheet extends StatelessWidget {
           localizationService.image_picker__from_gallery,
         ),
         onTap: () async {
-          File file = await FilePicker.getFile(type: FileType.IMAGE);
-          Navigator.pop(context, file);
+          bool permissionGranted = await provider.permissionService
+              .requestStoragePermissions(context: context);
+          if (permissionGranted) {
+            File file = await FilePicker.getFile(type: FileType.IMAGE);
+            Navigator.pop(context, file);
+          }
         },
       ),
       ListTile(
@@ -35,9 +39,13 @@ class OBImagePickerBottomSheet extends StatelessWidget {
           localizationService.image_picker__from_camera,
         ),
         onTap: () async {
-          File pickedImage =
-              await ImagePicker.pickImage(source: ImageSource.camera);
-          Navigator.pop(context, pickedImage);
+          bool permissionGranted = await provider.permissionService
+              .requestCameraPermissions(context: context);
+          if (permissionGranted) {
+            File pickedImage =
+                await ImagePicker.pickImage(source: ImageSource.camera);
+            Navigator.pop(context, pickedImage);
+          }
         },
       )
     ];

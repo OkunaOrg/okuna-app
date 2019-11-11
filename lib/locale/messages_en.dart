@@ -55,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m17(categoryName) => "Trending in ${categoryName}";
 
+  static m61(platform) => "Running on ${platform}";
+
   static m18(currentUserLanguage) => "Language (${currentUserLanguage})";
 
   static m19(limit) => "File too large (limit: ${limit} MB)";
@@ -85,6 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m32(description) => "Failed to preview link with website error: ${description}";
 
+  static m62(link) => "Invalid link: ${link}";
+
   static m33(maxLength) => "Circle name must be no longer than ${maxLength} characters.";
 
   static m34(prettyUsersCount) => "${prettyUsersCount} people";
@@ -111,7 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m45(groupName) => "See all ${groupName}";
 
-  static m46(iosLink, androidLink, inviteLink) => "Hey, I\'d like to invite you to Okuna. First, Download the app on iTunes (${iosLink}) or the Play store (${androidLink}). Second, paste this personalised invite link in the \'Sign up\' form in the Okuna App: ${inviteLink}";
+  static m46(iosLink, testFlightLink, androidLink, inviteLink) => "Hey, I\'d like to invite you to Okuna.\n\nFor Apple, first, download the TestFlight app on iTunes (${testFlightLink}) and then download the Okuna app (${iosLink})\n\nFor Android, download it from the Play store (${androidLink}).\n\nSecond, paste this personalised invite link in the \'Sign up\' form in the Okuna App: ${inviteLink}";
 
   static m47(username) => "Joined with username @${username}";
 
@@ -299,6 +303,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__delete_confirmation" : MessageLookupByLibrary.simpleMessage("Are you sure you want to delete the community?"),
     "community__delete_desc" : MessageLookupByLibrary.simpleMessage("You won\'t see it\'s posts in your timeline nor will be able to post to it anymore."),
     "community__description_range_error" : m8,
+    "community__exclude_joined_communities" : MessageLookupByLibrary.simpleMessage("Exclude joined communities"),
+    "community__exclude_joined_communities_desc" : MessageLookupByLibrary.simpleMessage("Don\'t show posts from communities I\'m a member of"),
+    "community__excluded_communities" : MessageLookupByLibrary.simpleMessage("excluded communities"),
+    "community__excluded_community" : MessageLookupByLibrary.simpleMessage("excluded community"),
     "community__favorite_action" : MessageLookupByLibrary.simpleMessage("Favorite community"),
     "community__favorite_communities" : MessageLookupByLibrary.simpleMessage("favorite communities"),
     "community__favorite_community" : MessageLookupByLibrary.simpleMessage("favorite community"),
@@ -392,8 +400,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__save_community_name_title" : MessageLookupByLibrary.simpleMessage("Name"),
     "community__save_community_name_title_hint_text" : MessageLookupByLibrary.simpleMessage(" e.g. travel, photography, gaming."),
     "community__save_community_save_text" : MessageLookupByLibrary.simpleMessage("Save"),
+    "community__tile_delete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "community__title_empty_error" : MessageLookupByLibrary.simpleMessage("Title cannot be empty."),
     "community__title_range_error" : m16,
+    "community__top_posts_excluded_communities" : MessageLookupByLibrary.simpleMessage("Excluded communities"),
+    "community__top_posts_excluded_communities_desc" : MessageLookupByLibrary.simpleMessage("Manage communities excluded from the explore timeline"),
+    "community__top_posts_settings" : MessageLookupByLibrary.simpleMessage("Explore settings"),
     "community__trending_in_all" : MessageLookupByLibrary.simpleMessage("Trending in all categories"),
     "community__trending_in_category" : m17,
     "community__trending_none_found" : MessageLookupByLibrary.simpleMessage("No trending communities found. Try again in a few minutes."),
@@ -404,6 +416,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__user_you_text" : MessageLookupByLibrary.simpleMessage("You"),
     "community__yes" : MessageLookupByLibrary.simpleMessage("Yes"),
     "contextual_account_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Suggestions"),
+    "contextual_community_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Suggestions"),
+    "drawer__about" : MessageLookupByLibrary.simpleMessage("About"),
+    "drawer__about_platform" : m61,
     "drawer__account_settings" : MessageLookupByLibrary.simpleMessage("Account Settings"),
     "drawer__account_settings_blocked_users" : MessageLookupByLibrary.simpleMessage("Blocked users"),
     "drawer__account_settings_change_email" : MessageLookupByLibrary.simpleMessage("Change Email"),
@@ -457,6 +472,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "image_picker__error_too_large" : m19,
     "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("From camera"),
     "image_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("From gallery"),
+    "media_service__crop_image" : MessageLookupByLibrary.simpleMessage("Crop image"),
     "moderation__actions_chat_with_team" : MessageLookupByLibrary.simpleMessage("Chat with the team"),
     "moderation__actions_review" : MessageLookupByLibrary.simpleMessage("Review"),
     "moderation__category_text" : MessageLookupByLibrary.simpleMessage("Category"),
@@ -627,6 +643,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__edit_save" : MessageLookupByLibrary.simpleMessage("Save"),
     "post__edit_title" : MessageLookupByLibrary.simpleMessage("Edit post"),
     "post__enable_post_comments" : MessageLookupByLibrary.simpleMessage("Enable post comments"),
+    "post__exclude_post_community" : MessageLookupByLibrary.simpleMessage("Don\'t show posts from this community"),
     "post__have_not_shared_anything" : MessageLookupByLibrary.simpleMessage("You have not shared anything yet."),
     "post__is_closed" : MessageLookupByLibrary.simpleMessage("Closed post"),
     "post__my_circles" : MessageLookupByLibrary.simpleMessage("My circles"),
@@ -674,15 +691,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__timeline_posts_no_more_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Follow users or join a community to get started!"),
     "post__timeline_posts_refresh_posts" : MessageLookupByLibrary.simpleMessage("Refresh posts"),
     "post__timeline_posts_refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Hang in there!"),
+    "post__top_posts_title" : MessageLookupByLibrary.simpleMessage("Explore"),
     "post__trending_posts_no_trending_posts" : MessageLookupByLibrary.simpleMessage("There are no trending posts. Try refreshing in a couple seconds."),
     "post__trending_posts_refresh" : MessageLookupByLibrary.simpleMessage("Refresh"),
-    "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Trending posts"),
+    "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Trending"),
+    "post__undo_exclude_post_community" : MessageLookupByLibrary.simpleMessage("Show posts from this community"),
     "post__user_has_not_shared_anything" : m30,
     "post__usernames_circles" : m31,
     "post__world_circle_name" : MessageLookupByLibrary.simpleMessage("World"),
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("You shared with"),
     "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("This link could not be previewed"),
     "post_body_link_preview__error_with_description" : m32,
+    "post_body_link_preview__invalid" : m62,
     "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Unsupported media type"),
     "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Cancelled!"),
     "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Cancelling"),

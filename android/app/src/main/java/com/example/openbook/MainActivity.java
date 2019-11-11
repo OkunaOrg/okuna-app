@@ -101,8 +101,14 @@ public class MainActivity extends FlutterActivity {
           return;
         }
       } catch (KeyedException e) {
-        String msg = String.format("an exception occurred while receiving share of type %s" +
-                "%n %s", intent.getType(), e.getCause() != null ? e.getCause().toString() : e.toString());
+        String msg;
+        if (e.getCause() != null) {
+          msg = String.format("an exception occurred while receiving share of type %s" +
+                  "%n %s%n caused by %s", intent.getType(), e.toString(), e.getCause().toString());
+        } else {
+          msg = String.format("an exception occurred while receiving share of type %s" +
+                  "%n %s", intent.getType(), e.toString());
+        }
         String errorTextKey = getLocalizationKey(e);
 
         args.put("error", errorTextKey);
@@ -170,7 +176,12 @@ public class MainActivity extends FlutterActivity {
     String name = UUID.randomUUID().toString();
 
     try {
-      return File.createTempFile(name, extension, new File(getCacheDir(), "mediaCache"));
+	  File directory = new File(getCacheDir(), "mediaCache");
+	  if (!directory.exists()) {
+		directory.mkdirs();
+	  }
+	  
+      return File.createTempFile(name, extension, directory);
     } catch (IOException e) {
       throw new KeyedException(KeyedException.Key.TempCreationFailed, e);
     } catch (SecurityException e) {
@@ -235,7 +246,7 @@ class KeyedException extends Exception {
     WriteTempFailed(WriteTempDenied.message),
     WriteTempMissing(WriteTempDenied.message),
     ReadFileMissing("Failed to read the shared file."),
-    UriSchemeNotSupported("Unsupported UR scheme: ");
+    UriSchemeNotSupported("Unsupported URI scheme: ");
 
     private String message;
 
@@ -246,7 +257,7 @@ class KeyedException extends Exception {
   private final Key key;
 
   public KeyedException(Key key, Throwable cause) {
-    super(cause);
+    super("", cause);
     this.key = key;
   }
 
