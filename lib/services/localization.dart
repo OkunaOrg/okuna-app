@@ -1492,6 +1492,26 @@ class LocalizationService {
         name: 'community__actions_invite_people_title');
   }
 
+  String get community__actions_subscribe_to_community_title {
+    return Intl.message("Subscribe to community posts",
+        name: 'community__actions_subscribe_to_community_title');
+  }
+
+  String get community__actions_subscribe_to_community_success {
+    return Intl.message("You're now subscribed to this community",
+        name: 'community__actions_subscribe_to_community_success');
+  }
+
+  String get community__actions_unsubscribe_from_community_title {
+    return Intl.message("Unsubscribe from community posts",
+        name: 'community__actions_unsubscribe_from_community_title');
+  }
+
+  String get community__actions_unsubscribe_from_community_success {
+    return Intl.message("You're now unsubscribed from this community",
+        name: 'community__actions_unsubscribe_from_community_success');
+  }
+
   String get community__join_community {
     return Intl.message("Join", name: 'community__join_community');
   }

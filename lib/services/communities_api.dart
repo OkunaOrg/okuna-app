@@ -44,6 +44,8 @@ class CommunitiesApiService {
       'api/communities/{communityName}/search/';
   static const FAVORITE_COMMUNITY_PATH =
       'api/communities/{communityName}/favorite/';
+  static const SUBSCRIBE_COMMUNITY_PATH =
+      'api/communities/{communityName}/subscribe/';
   static const EXCLUDE_COMMUNITY_PATH =
       'api/communities/{communityName}/top-posts/exclude/';
   static const GET_EXCLUDED_COMMUNITIES_PATH = 'api/communities/top-posts/exclusions/';
@@ -575,6 +577,18 @@ class CommunitiesApiService {
         appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> subscribeToCommunity({@required String communityName}) {
+    String path = _makeSubscribeCommunityPath(communityName);
+    return _httpService.putJSON(_makeApiUrl(path),
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> unsubscribeToCommunity({@required String communityName}) {
+    String path = _makeSubscribeCommunityPath(communityName);
+    return _httpService.delete(_makeApiUrl(path),
+        appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> getExcludedCommunities(
       {bool authenticatedRequest = true, int offset, int count}) {
     return _httpService.get('$apiURL$GET_EXCLUDED_COMMUNITIES_PATH',
@@ -746,6 +760,11 @@ class CommunitiesApiService {
   String _makeFavoriteCommunityPath(String communityName) {
     return _stringTemplateService
         .parse(FAVORITE_COMMUNITY_PATH, {'communityName': communityName});
+  }
+
+  String _makeSubscribeCommunityPath(String communityName) {
+    return _stringTemplateService
+        .parse(SUBSCRIBE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
   String _makeExcludeCommunityPath(String communityName) {

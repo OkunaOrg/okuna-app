@@ -1566,6 +1566,22 @@ class UserService {
     return Community.fromJSON(json.decode(response.body));
   }
 
+  Future<void> subscribeToCommunity(Community community) async {
+    HttpieResponse response = await _communitiesApiService.subscribeToCommunity(
+        communityName: community.name);
+    _checkResponseIsCreated(response);
+
+    return Community.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> unsubscribeToCommunity(Community community) async {
+    HttpieResponse response = await _communitiesApiService.unsubscribeToCommunity(
+        communityName: community.name);
+    _checkResponseIsOk(response);
+
+    return Community.fromJSON(json.decode(response.body));
+  }
+
   Future<CommunitiesList> getAdministratedCommunities({int offset}) async {
     HttpieResponse response = await _communitiesApiService
         .getAdministratedCommunities(offset: offset);
