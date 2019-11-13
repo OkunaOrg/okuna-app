@@ -1762,6 +1762,7 @@ class UserService {
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
+    bool communityNewPostNotifications,
   }) async {
     HttpieResponse response =
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
@@ -1775,7 +1776,8 @@ class UserService {
             followNotifications: followNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
             communityInviteNotifications: communityInviteNotifications,
-            connectionRequestNotifications: connectionRequestNotifications);
+            connectionRequestNotifications: connectionRequestNotifications,
+            communityNewPostNotifications: communityNewPostNotifications);
     _checkResponseIsOk(response);
     return UserNotificationsSettings.fromJSON(json.decode(response.body));
   }

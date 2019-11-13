@@ -44,6 +44,7 @@ class OBNotificationsSettingsPageState
   bool _followNotifications;
   bool _connectionRequestNotifications;
   bool _communityInviteNotifications;
+  bool _communityNewPostNotifications;
 
   @override
   void initState() {
@@ -57,6 +58,7 @@ class OBNotificationsSettingsPageState
     _followNotifications = true;
     _connectionRequestNotifications = true;
     _communityInviteNotifications = true;
+    _communityNewPostNotifications = true;
     _postUserMentionNotifications = true;
     _postCommentUserMentionNotifications = true;
   }
@@ -220,6 +222,16 @@ class OBNotificationsSettingsPageState
           onChanged: _setCommunityInviteNotifications,
           onTap: _toggleCommunityInviteNotifications,
           hasDivider: false,
+        ),
+        OBToggleField(
+          key: Key('Community new post'),
+          value: _communityNewPostNotifications,
+          title: _localizationService.notifications__community_new_post_title,
+          subtitle: OBText(_localizationService
+              .notifications__community_new_post_desc),
+          onChanged: _setCommunityNewPostNotifications,
+          onTap: _toggleCommunityNewPostNotifications,
+          hasDivider: false,
         )
       ]);
     }
@@ -279,6 +291,18 @@ class OBNotificationsSettingsPageState
   void _setCommunityInviteNotifications(bool newValue) {
     setState(() {
       _communityInviteNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
+  void _toggleCommunityNewPostNotifications() {
+    _setCommunityNewPostNotifications(!_communityNewPostNotifications);
+  }
+
+  void _setCommunityNewPostNotifications(bool newValue) {
+    setState(() {
+      _communityNewPostNotifications = newValue;
     });
 
     _submitNotificationsSettings();
@@ -396,6 +420,7 @@ class OBNotificationsSettingsPageState
           postCommentReactionNotifications: _postCommentReactionNotifications,
           postReactionNotifications: _postReactionNotifications,
           connectionRequestNotifications: _connectionRequestNotifications,
+          communityNewPostNotifications: _communityNewPostNotifications,
           communityInviteNotifications: _communityInviteNotifications);
     } catch (error) {
       _onError(error);
@@ -436,6 +461,8 @@ class OBNotificationsSettingsPageState
       _followNotifications = notificationSettings.followNotifications;
       _communityInviteNotifications =
           notificationSettings.communityInviteNotifications;
+      _communityNewPostNotifications =
+          notificationSettings.communityNewPostNotifications;
     });
   }
 

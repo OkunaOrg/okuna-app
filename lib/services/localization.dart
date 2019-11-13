@@ -3216,6 +3216,17 @@ class LocalizationService {
         name: 'notifications__community_invite_desc');
   }
 
+  String get notifications__community_new_post_title {
+    return Intl.message("Community new post",
+        name: 'notifications__community_new_post_title');
+  }
+
+  String get notifications__community_new_post_desc {
+    return Intl.message(
+        "Be notified when there is a new post in a community you are subscribed to",
+        name: 'notifications__community_new_post_desc');
+  }
+
   String get notifications__mute_post_turn_on_post_notifications {
     return Intl.message("Turn on post notifications",
         name: 'notifications__mute_post_turn_on_post_notifications');
@@ -3272,6 +3283,14 @@ class LocalizationService {
         args: [communityName],
         desc: "Eg.: James @jamest has invited you to join community /c/okuna.",
         name: 'notifications__user_community_invite_tile');
+  }
+
+  String notifications__community_new_post_tile(String communityName) {
+    return Intl.message(
+        "There was a new post in /c/$communityName.",
+        args: [communityName],
+        desc: "Eg.: There was a new post in /c/okuna.",
+        name: 'notifications__community_new_post_tile');
   }
 
   String notifications__comment_reply_notification_tile_user_replied(
