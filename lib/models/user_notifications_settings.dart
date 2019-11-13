@@ -10,6 +10,7 @@ class UserNotificationsSettings {
   bool connectionRequestNotifications;
   bool connectionConfirmedNotifications;
   bool communityInviteNotifications;
+  bool communityNewPostNotifications;
 
   UserNotificationsSettings(
       {this.id,
@@ -22,7 +23,8 @@ class UserNotificationsSettings {
       this.postUserMentionNotifications,
       this.postCommentReplyNotifications,
       this.postReactionNotifications,
-      this.communityInviteNotifications});
+      this.communityInviteNotifications,
+      this.communityNewPostNotifications});
 
   factory UserNotificationsSettings.fromJSON(Map<String, dynamic> parsedJson) {
     return UserNotificationsSettings(
@@ -44,6 +46,8 @@ class UserNotificationsSettings {
       postReactionNotifications: parsedJson['post_reaction_notifications'],
       communityInviteNotifications:
           parsedJson['community_invite_notifications'],
+      communityNewPostNotifications:
+          parsedJson['community_new_post_notifications'],
     );
   }
 
@@ -60,6 +64,7 @@ class UserNotificationsSettings {
       'post_comment_reply_notifications': postCommentReplyNotifications,
       'post_reaction_notifications': postReactionNotifications,
       'community_invite_notifications': communityInviteNotifications,
+      'community_new_post_notifications': communityNewPostNotifications,
     };
   }
 
@@ -91,5 +96,7 @@ class UserNotificationsSettings {
       postReactionNotifications = json['post_reaction_notifications'];
     if (json.containsKey('community_invite_notifications'))
       communityInviteNotifications = json['community_invite_notifications'];
+    if (json.containsKey('community_new_post_notifications'))
+      communityInviteNotifications = json['community_new_post_notifications'];
   }
 }

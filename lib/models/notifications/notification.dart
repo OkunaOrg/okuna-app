@@ -1,4 +1,5 @@
 import 'package:Okuna/models/notifications/community_invite_notification.dart';
+import 'package:Okuna/models/notifications/community_new_post_notification.dart';
 import 'package:Okuna/models/notifications/connection_confirmed_notification.dart';
 import 'package:Okuna/models/notifications/connection_request_notification.dart';
 import 'package:Okuna/models/notifications/follow_notification.dart';
@@ -136,6 +137,9 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       case NotificationType.communityInvite:
         contentObject = CommunityInviteNotification.fromJson(contentObjectData);
         break;
+      case NotificationType.communityNewPost:
+        contentObject = CommunityNewPostNotification.fromJson(contentObjectData);
+        break;
       default:
     }
     return contentObject;
@@ -166,6 +170,7 @@ class NotificationType {
   static const communityInvite = const NotificationType._internal('CI');
   static const postCommentUserMention = const NotificationType._internal('PCUM');
   static const postUserMention = const NotificationType._internal('PUM');
+  static const communityNewPost = const NotificationType._internal('CNP');
 
   static const _values = const <NotificationType>[
     postReaction,
@@ -177,7 +182,8 @@ class NotificationType {
     follow,
     communityInvite,
     postCommentUserMention,
-    postUserMention
+    postUserMention,
+    communityNewPost
   ];
 
   static values() => _values;
