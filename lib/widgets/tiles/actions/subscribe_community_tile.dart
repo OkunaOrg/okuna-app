@@ -13,12 +13,16 @@ class OBSubscribeCommunityTile extends StatefulWidget {
   final Community community;
   final VoidCallback onSubscribeToCommunity;
   final VoidCallback onUnsubscribeFromCommunity;
+  final Widget subscribeSubtitle;
+  final Widget unsubscribeSubtitle;
 
   const OBSubscribeCommunityTile({
     Key key,
     @required this.community,
     this.onSubscribeToCommunity,
     this.onUnsubscribeFromCommunity,
+    this.subscribeSubtitle,
+    this.unsubscribeSubtitle
   }) : super(key: key);
 
   @override
@@ -54,12 +58,13 @@ class OBSubscribeCommunityTileState extends State<OBSubscribeCommunityTile> {
 
         bool isSubscribed = community.isSubscribed ?? false;
 
-        return OBLoadingTile(
-          isLoading: _requestInProgress,
-          leading: OBIcon(OBIcons.report),
+        return ListTile(
+          enabled: !_requestInProgress,
+          leading: OBIcon(isSubscribed ? OBIcons.notifications_off : OBIcons.notifications),
           title: OBText(isSubscribed
               ? _localizationService.community__actions_unsubscribe_from_community_title
               : _localizationService.community__actions_subscribe_to_community_title),
+          subtitle: isSubscribed ? widget.unsubscribeSubtitle : widget.subscribeSubtitle,
           onTap: isSubscribed ? _unsubscribeCommunity : _subscribeCommunity,
         );
       },

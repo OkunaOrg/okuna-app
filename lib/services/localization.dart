@@ -1082,8 +1082,18 @@ class LocalizationService {
   }
 
   String get community__manage_remove_favourite {
-    return Intl.message("Remove the community to your favorites",
+    return Intl.message("Remove the community from your favorites",
         name: 'community__manage_remove_favourite');
+  }
+
+  String get community__manage_subscribe_community {
+    return Intl.message("Subscribe to notifications when there are new posts in this community",
+        name: 'community__manage_subscribe_community');
+  }
+
+  String get community__manage_unsubscribe_community {
+    return Intl.message("Unsubscribe to notifications from this community",
+        name: 'community__manage_unsubscribe_community');
   }
 
   String get community__is_private {
